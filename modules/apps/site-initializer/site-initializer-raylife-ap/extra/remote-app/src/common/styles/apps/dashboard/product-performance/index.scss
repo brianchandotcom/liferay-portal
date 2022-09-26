@@ -56,5 +56,28 @@ $product-performance-border-config: 1px solid hsl(209, 36%, 85%);
 .bb-legend-item-achieved {
 	color: black;
 	font-size: 12px;
+}
+
+.ray-dashboard-product-performance {
+	overflow: hidden;
+	@media screen and (max-width: $breakpoint-phone) {
+		overflow: hidden;
+	}
+}
+
+.dashboard-value-product-performance {
+	display: none;
+	@media screen and (max-width: $breakpoint-phone) {
+		display: block;
+	}
+}
+.product-performance-value {
+	color: black;
+	font-size: 28px;
 	font-weight: 700;
+}
+.product-performance-goals {
+	color: rgba(39, 40, 50, 0.35);
+	font-size: 16px;
+	font-weight: 500;
 }

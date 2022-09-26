@@ -33,40 +33,33 @@ import {
 	sixMonthsAgoDate,
 	threeMonthsAgoDate,
 } from '../../../common/utils/dateFormatter';
+import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import {
-	BarChartPerformanceTypes,
-	Policy,
+	PolicyTypes,
 	ProductListType,
-	SalesGoal,
-} from './ProductPerfomanceTypes';
+	SalesGoalTypes,
+} from './ProductPerformanceTypes';
 import {annualRule, sixMonthRule, threeMonthRule} from './businessRules';
 import {populateDataByPeriod} from './filterPeriodRules';
 
-const BarChartPerformancee: BarChartPerformanceTypes = {
-	colors: [],
-	dataColumns: [],
-	groups: [''],
-	height: 400,
-	labelColumns: [],
-	showLegend: false,
-	showTooltip: true,
-	titleTotal: true,
-	totalSum: 0,
-	width: 600,
-};
+enum PERIODS {
+	YEAR = '0',
+	THREE_MONTH = '2',
+	SIX_MONTH = '1',
+}
 
 const TIME_PERIODS = [
 	{
 		label: '3 MO',
-		value: '2',
+		value: PERIODS.THREE_MONTH,
 	},
 	{
 		label: '6 MO',
-		value: '1',
+		value: PERIODS.SIX_MONTH,
 	},
 	{
 		label: 'YTD',
-		value: '0',
+		value: PERIODS.YEAR,
 	},
 ];
 
@@ -76,12 +69,11 @@ const colors: {[keys: string]: {}} = {
 	goals: '#DCF1FD',
 };
 
-let paddingValue = 100;
-let widthValue = 20;
+let widthValue = 15;
 
 const ProductPerformance = () => {
 	const [products, setProducts] = useState<ProductCell[]>([]);
-	const [timePeriod, setTimePeriod] = useState('0');
+	const [timePeriod, setTimePeriod] = useState<string>(PERIODS.YEAR);
 	const labelRef = useRef<any>();
 	const [isLoading, setIsLoading] = useState(false);
 	const [threeMonthsSalesData, setThreeMonthsSalesData] = useState<number[]>(
@@ -99,7 +91,61 @@ const ProductPerformance = () => {
 	);
 	const inicialProductValue = 'All';
 	const [productValues, setProductsValues] = useState(inicialProductValue);
-	let categoryLabelTooltip = '';
+
+	const {width} = useWindowDimensions();
+
+	const chartContainer = document.getElementById(
+		'dashboard-product-performance-chart-container'
+	); // mudar id
+
+	let chartWidth = 0;
+	if (chartContainer) {
+		const styles = getComputedStyle(chartContainer);
+		chartWidth = Number(styles.width.replace('px', ''));
+	}
+
+	useEffect(() => {
+		if (labelRef.current) {
+			const chartContainer = document.getElementById(
+				'dashboard-product-performance-chart-container'
+			);
+
+			if (chartContainer) {
+				const styles = getComputedStyle(chartContainer);
+				const chartContainerWidth = Number(
+					styles.width.replace('px', '')
+				);
+				const calculatedWidth = chartContainerWidth - 10;
+				labelRef.current.resize({
+					height: 440,
+					width: calculatedWidth,
+				});
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [width]);
+
+	const tooltip = {
+		format: {
+			name(categoryLabel: string) {
+				return categoryLabel;
+			},
+			value(value: number, _id: number, _index: string, x: number) {
+				if (value !== 0) {
+					if (_index === 'goals') {
+						const tooltipGoals = (value = currentTooltip[x]);
+
+						return tooltipGoals;
+					}
+					else {
+						return value;
+					}
+				}
+			},
+		},
+		grouped: false,
+		show: true,
+	};
 
 	function getExceededValues(goalValue: number[], salesValue: number[]) {
 		const exceededValue = goalValue?.map((goal: number, index: number) => {
@@ -139,7 +185,6 @@ const ProductPerformance = () => {
 
 		return achievedValues;
 	}
-
 	const threeMonthsSalesArray: string[] = [];
 	const threeMonthsGoalsArray: string[] = [];
 	const sixMonthsSalesArray: string[] = [];
@@ -196,8 +241,7 @@ const ProductPerformance = () => {
 				...getGoalsValues(threeMonthsGoalsData, threeMonthsSalesData),
 			],
 			label: threeMonthsLabel,
-			period: 2,
-			periodDate: 'Period',
+			period: Number(PERIODS.THREE_MONTH),
 		},
 		{
 			achieved: [
@@ -214,8 +258,7 @@ const ProductPerformance = () => {
 				...getGoalsValues(sixMonthsGoalsData, sixMonthsSalesData),
 			],
 			label: sixMonthsLabel,
-			period: 1,
-			periodDate: 'Period',
+			period: Number(PERIODS.SIX_MONTH),
 		},
 		{
 			achieved: [
@@ -232,9 +275,7 @@ const ProductPerformance = () => {
 				...getGoalsValues(yearToDateGoals, yearToDateSales),
 			],
 			label: yearToDateLabel,
-			period: 0,
-			periodDate: 'Period',
-			tooltip: yearToDateGoals,
+			period: Number(PERIODS.YEAR),
 		},
 	];
 
@@ -244,6 +285,7 @@ const ProductPerformance = () => {
 
 	const lengthExceededColumn = getData()[0]?.exceeded.length - 1;
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const dataChart = {
 		colors,
 		columns: [
@@ -260,25 +302,6 @@ const ProductPerformance = () => {
 			},
 		},
 		type: 'bar',
-	};
-
-	const tooltip = {
-		format: {
-			name(categoryLabel: string) {
-				categoryLabelTooltip = categoryLabel;
-
-				return categoryLabel;
-			},
-
-			value(value: number, _id: number, _index: number, x: number) {
-				return categoryLabelTooltip === 'goals'
-					? currentTooltip[x]
-					: value;
-			},
-		},
-		grouped: false,
-		linked: false,
-		show: true,
 	};
 
 	const productsBaseSetup = async () => {
@@ -304,7 +327,7 @@ const ProductPerformance = () => {
 				productExternalReferenceCode,
 				productName,
 				termPremium,
-			}: Policy) => {
+			}: PolicyTypes) => {
 				if (!yearlyProductsTotal[productExternalReferenceCode]) {
 					let productNameAbbrevation = productName;
 
@@ -331,7 +354,7 @@ const ProductPerformance = () => {
 		);
 
 		yearlySalesGoal?.data?.items?.forEach(
-			({goalValue, productExternalReferenceCode}: SalesGoal) => {
+			({goalValue, productExternalReferenceCode}: SalesGoalTypes) => {
 				yearlyProductsTotal[productExternalReferenceCode][
 					'goalValue'
 				] += goalValue;
@@ -374,9 +397,9 @@ const ProductPerformance = () => {
 			yearToDateSalesArray,
 			productValues
 		);
+		setCurrentTooltip(annualRuleValues[0]);
 		setYearToDateGoals(annualRuleValues[0]);
 		setYearToDateSales(annualRuleValues[1]);
-		setCurrentTooltip(annualRuleValues[0]);
 
 		if (lengthExceededColumn === indexOfCurrentMonth + 1) {
 			setIsLoading(true);
@@ -392,11 +415,12 @@ const ProductPerformance = () => {
 			sixMonthsGoalsArray,
 			sixMonthsSalesArray
 		);
+
+		setCurrentTooltip(sixMonthRuleValues[0]);
 		setSixMonthsGoalsData(sixMonthRuleValues[0]);
 		setSixMonthsSalesData(sixMonthRuleValues[1]);
 
 		if (lengthExceededColumn === 6) {
-			setCurrentTooltip(sixMonthRuleValues[0]);
 			setIsLoading(true);
 			settingLabelsPeriod();
 		}
@@ -425,22 +449,19 @@ const ProductPerformance = () => {
 	}, []);
 
 	useEffect(() => {
-		if (timePeriod === '0') {
+		if (timePeriod === PERIODS.YEAR) {
 			settingAnnualRules();
-			paddingValue = 100;
 			widthValue = 15;
 		}
 
-		if (timePeriod === '1') {
+		if (timePeriod === PERIODS.SIX_MONTH) {
 			settingSixMonthRule();
-			paddingValue = 100;
-			widthValue = 20;
+			widthValue = 24;
 		}
 
-		if (timePeriod === '2') {
+		if (timePeriod === PERIODS.THREE_MONTH) {
 			settingThreeMonthRule();
-			paddingValue = 100;
-			widthValue = 30;
+			widthValue = 36;
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -457,15 +478,28 @@ const ProductPerformance = () => {
 
 			return product;
 		});
-
 		setProductsValues(productExternalReferenceCode);
 		setProducts(newProducts);
 		setIsLoading(false);
 	};
 
+	const currencyConversion = (value: number) =>
+		value.toLocaleString('en-US', {
+			currency: 'USD',
+			style: 'currency',
+		});
+
 	const findActiveProduct = products.find((product) => product.active)
 		?.productName;
+
 	const isFilterAllActive = (product: ProductCell) => !product.active;
+
+	const findActiveProducttotalSales = products.find(
+		(product) => product.active
+	)?.totalSales;
+	const findActiveProductgoalValue = products.find(
+		(product) => product.active
+	)?.goalValue;
 
 	return (
 		<div className="d-flex flex-wrap ray-dashboard-product-performance">
@@ -533,17 +567,36 @@ const ProductPerformance = () => {
 					</ClaySelect>
 				</div>
 
-				<div className="p-md-5 px-2 py-3">
+				{!products.every(isFilterAllActive) && (
+					<div className="dashboard-value-product-performance my-5">
+						<div className="justify-content-between product-performance-value text-center">
+							{currencyConversion(
+								Number(findActiveProducttotalSales)
+							)}
+						</div>
+
+						<div className="justify-content-between product-performance-goals text-center">
+							Yearly Goal:
+							{currencyConversion(
+								Number(findActiveProductgoalValue)
+							)}
+						</div>
+					</div>
+				)}
+
+				<div
+					className="p-md-5 px-2 py-3"
+					id="dashboard-product-performance-chart-container"
+				>
 					{isLoading && (
 						<ClayChart
 							axis={{
 								x: {
-									height: 65,
+									height: 75,
 									label: {
 										position: 'outer-center',
 										text: 'Period (Month)',
 									},
-									position: {x: 30},
 									show: true,
 									type: 'category',
 								},
@@ -583,15 +636,16 @@ const ProductPerformance = () => {
 										return false;
 									},
 								},
+								padding: 5,
 								show: true,
 							}}
 							padding={{
-								right: paddingValue,
+								right: 42.5,
 							}}
 							ref={labelRef}
 							size={{
-								height: BarChartPerformancee.height,
-								width: BarChartPerformancee.width,
+								height: 440,
+								width: chartWidth,
 							}}
 							tooltip={tooltip}
 						/>

@@ -16,7 +16,7 @@ import {
 	getPoliciesForSalesGoal,
 	getSalesGoal,
 } from '../../../../common/services';
-import {SalesGoal, SalesPolices} from '../ProductPerfomanceTypes';
+import {SalesGoalTypes, SalesPolicesTypes} from '../ProductPerformanceTypes';
 
 function getValuesFromArrayOfObjects(arrayOfObjects: any) {
 	const valuesArray = arrayOfObjects?.map((values: any) => {
@@ -27,11 +27,11 @@ function getValuesFromArrayOfObjects(arrayOfObjects: any) {
 }
 
 function populateGoalsProducts(
-	goalsResult: SalesGoal[],
+	goalsResult: SalesGoalTypes[],
 	goalsArray: string[],
 	productExternalReferenceCode: string
 ) {
-	goalsResult.forEach((policy: SalesGoal) => {
+	goalsResult.forEach((policy: SalesGoalTypes) => {
 		const month = new Date(policy.finalReferenceDate)
 			.toUTCString()
 			.split(' ')[2];
@@ -54,11 +54,11 @@ function populateGoalsProducts(
 }
 
 function populateSalesProducts(
-	policiesResult: SalesPolices[],
+	policiesResult: SalesPolicesTypes[],
 	policiesArray: string[],
 	productExternalReferenceCode: string
 ) {
-	policiesResult.forEach((policy: SalesPolices) => {
+	policiesResult.forEach((policy: SalesPolicesTypes) => {
 		const month = new Date(policy?.boundDate).toUTCString().split(' ')[2];
 		policiesArray?.forEach((policyElement: any) => {
 			if (month in policyElement) {
@@ -79,7 +79,7 @@ function populateSalesProducts(
 }
 
 const getArrayOfSalesProducts = (
-	response: SalesPolices[],
+	response: SalesPolicesTypes[],
 	arrayOfMonthsArray: string[],
 	productExternalReferenceCode: string
 ) => {
@@ -94,7 +94,7 @@ const getArrayOfSalesProducts = (
 };
 
 const getArrayOfGoalsProducts = (
-	response: SalesGoal[],
+	response: SalesGoalTypes[],
 	monthsAgoGoalsArray: string[],
 	productExternalReferenceCode: string
 ) => {
@@ -108,11 +108,8 @@ const getArrayOfGoalsProducts = (
 	return getValuesFromArrayOfObjects(monthsAgoGoals);
 };
 
-const compareProducts = async (
-	data: any,
-	productExternalReferenceCode: string
-) => {
-	return data.filter((item: SalesGoal | SalesPolices) => {
+const compareProducts = (data: any, productExternalReferenceCode: string) => {
+	return data.filter((item: SalesGoalTypes | SalesPolicesTypes) => {
 		if (
 			item.productExternalReferenceCode === productExternalReferenceCode
 		) {

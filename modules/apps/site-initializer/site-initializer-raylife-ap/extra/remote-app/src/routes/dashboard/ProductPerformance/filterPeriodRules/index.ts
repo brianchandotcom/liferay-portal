@@ -13,6 +13,7 @@
  */
 
 import {CONSTANTS} from '../../../../common/utils/constants';
+import {currentYear} from '../../../../common/utils/dateFormatter';
 
 const numberOfMonths = 12;
 const maxIndexOfMonthsArray = 11;
@@ -30,6 +31,7 @@ export function populateDataByPeriod(
 		indexBaseMonth < 0 ? numberOfMonths + indexBaseMonth : indexBaseMonth;
 
 	let month = 0;
+	let yearAdjustment = false;
 
 	for (let count = 0; count <= period; count++) {
 		const monthsSalesFilter: any = {};
@@ -41,13 +43,22 @@ export function populateDataByPeriod(
 			}
 			if (month > maxIndexOfMonthsArray) {
 				month = 0;
+				yearAdjustment = true;
 			}
 		}
 
 		monthsSalesFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
 		monthsGoalsFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
 
-		monthsLabel[count] = CONSTANTS.MONTHS_ABREVIATIONS[month];
+		if (month > 6 && !yearAdjustment && indexOfCurrentMonth <= 5) {
+			monthsLabel[count] =
+				CONSTANTS.MONTHS_ABREVIATIONS[month] + ` ${currentYear - 1}`;
+		}
+		else {
+			monthsLabel[count] =
+				CONSTANTS.MONTHS_ABREVIATIONS[month] + ` ${currentYear}`;
+		}
+
 		monthsSalesArray[count] = monthsSalesFilter;
 		monthsGoalsArray[count] = monthsGoalsFilter;
 		month++;

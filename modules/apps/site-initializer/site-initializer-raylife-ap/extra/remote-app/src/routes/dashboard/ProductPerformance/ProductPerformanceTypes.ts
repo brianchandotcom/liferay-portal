@@ -12,16 +12,16 @@
  * details.
  */
 
-export type DataProperties = {
+export type DataPropertiesTypes = {
 	columns: Array<string | number>[];
 	groups: Array<string | number>[];
 };
 
-export type DataChart = {
-	[keys: string]: DataProperties;
+export type DataChartType = {
+	[keys: string]: DataPropertiesTypes;
 };
 
-export type Policy = {
+export type PolicyTypes = {
 	boundDate: string;
 	productExternalReferenceCode: string;
 	productName: string;
@@ -40,11 +40,11 @@ export type MonthTypes = [
 	}
 ];
 
-export type MonthList = {
+export type MonthListType = {
 	[keys: string]: MonthTypes;
 };
 
-export type MonthProperties = [
+export type MonthPropertiesTypes = [
 	{
 		achieved: number;
 		exceeded: number;
@@ -56,35 +56,35 @@ export type MonthProperties = [
 	}
 ];
 
-export type FilterMonth = {
-	[keys: string]: MonthProperties;
+export type FilterMonthType = {
+	[keys: string]: MonthPropertiesTypes;
 };
 
 export type ProductListType = {
-	[keys: string]: ProductType;
+	[keys: string]: ProductTypes;
 };
 
-type ProductType = {
+type ProductTypes = {
 	goalValue: number;
 	productName: string;
 	totalSales: number;
 };
 
-export type SalesGoal = {
+export type SalesGoalTypes = {
 	finalReferenceDate: string;
 	goalValue: number;
 	initialReferenceDate?: string;
 	productExternalReferenceCode: string;
 };
 
-export type SalesPolices = {
+export type SalesPolicesTypes = {
 	boundDate: string;
 	productExternalReferenceCode: string;
 	productName: string;
 	termPremium: number;
 };
 
-export type GoalsArray = {
+export type GoalsArrayType = {
 	year: {month: number}[];
 };
 

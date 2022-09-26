@@ -288,6 +288,10 @@
 			<contains>java.sql.SQLIntegrityConstraintViolationException</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-163680">
+			<contains>The iframe tag contained an attribute that we could not process</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

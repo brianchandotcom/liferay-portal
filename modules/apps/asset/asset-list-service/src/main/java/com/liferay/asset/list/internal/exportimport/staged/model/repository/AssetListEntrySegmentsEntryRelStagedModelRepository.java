@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.List;
 
@@ -164,9 +163,6 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;

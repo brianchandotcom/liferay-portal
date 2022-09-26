@@ -579,15 +579,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
-		int y = methodContent.indexOf(");", x) + 2;
-
-		String methodCall = methodContent.substring(x, y);
-
-		while (getLevel(methodCall) != 0) {
-			y = methodContent.indexOf(");", y) + 2;
-
-			methodCall = methodContent.substring(x, y);
-		}
+		String methodCall = JavaSourceUtil.getMethodCall(methodContent, x);
 
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
@@ -599,7 +591,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				return content;
 			}
 
-			y = methodContent.lastIndexOf(StringPool.NEW_LINE, x);
+			int y = methodContent.lastIndexOf(StringPool.NEW_LINE, x);
 
 			String precedingPlaceholder = methodContent.substring(y, x);
 
@@ -620,7 +612,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			Objects.equals(parameterList.get(2), "new DummyUpgradeStep()")) {
 
 			String newMethodContent = StringUtil.replaceFirst(
-				methodContent, methodCall, "registry.registerInitialization();",
+				methodContent, methodCall, "registry.registerInitialization()",
 				x);
 
 			return StringUtil.replaceFirst(

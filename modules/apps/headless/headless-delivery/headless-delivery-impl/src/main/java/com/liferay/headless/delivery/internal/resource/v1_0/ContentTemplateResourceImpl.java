@@ -40,6 +40,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -63,7 +64,13 @@ public class ContentTemplateResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return getSiteContentTemplatesPage(
+		return _getContentTemplatePage(
+			Collections.singletonMap(
+				"get",
+				addAction(
+					ActionKeys.MANAGE_LAYOUTS,
+					"getAssetLibraryContentTemplatesPage",
+					Group.class.getName(), assetLibraryId)),
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -92,12 +99,23 @@ public class ContentTemplateResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
+		return _getContentTemplatePage(
 			Collections.singletonMap(
 				"get",
 				addAction(
 					ActionKeys.MANAGE_LAYOUTS, "getSiteContentTemplatesPage",
 					Group.class.getName(), siteId)),
+			siteId, search, aggregation, filter, pagination, sorts);
+	}
+
+	private Page<ContentTemplate> _getContentTemplatePage(
+			Map<String, Map<String, String>> actions, Long assetLibraryId,
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			actions,
 			booleanQuery -> {
 			},
 			filter, DDMTemplate.class.getName(), search, pagination,
@@ -112,7 +130,7 @@ public class ContentTemplateResourceImpl
 					_classNameLocalService.getClassNameId(
 						JournalArticle.class));
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.setGroupIds(new long[] {assetLibraryId});
 			},
 			sorts,
 			document -> {

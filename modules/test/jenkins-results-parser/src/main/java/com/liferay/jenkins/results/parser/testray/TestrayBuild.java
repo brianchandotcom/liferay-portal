@@ -269,11 +269,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public TestrayCaseResult getTopLevelTestrayCaseResult() {
-		TestrayCaseType testrayCaseType = _testrayServer.getTestrayCaseType(
-			"Batch");
-
 		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults(
-			testrayCaseType, null);
+			_testrayServer.getTestrayCaseType("Batch"), null);
 
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			if (!Objects.equals(

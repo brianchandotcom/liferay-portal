@@ -18,7 +18,6 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.item.selector.web.internal.display.context.AssetListEntryItemSelectorDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
@@ -93,10 +92,6 @@ public class AssetListPortletItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new InfoListItemSelectorReturnType());
-
-	@Reference
-	private ItemSelectorViewDescriptorRenderer<InfoListItemSelectorCriterion>
-		_itemSelectorViewDescriptorRenderer;
 
 	@Reference
 	private Language _language;

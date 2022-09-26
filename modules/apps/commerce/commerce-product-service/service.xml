@@ -1148,6 +1148,7 @@
 		<exception>DuplicateCommerceChannelRel</exception>
 		<exception>DuplicateCPAttachmentFileEntry</exception>
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
+		<exception>DuplicateCPInstance</exception>
 		<exception>DuplicateCPMeasurementUnitExternalReferenceCode</exception>
 		<exception>DuplicateCPMeasurementUnitKey</exception>
 		<exception>DuplicateCProduct</exception>

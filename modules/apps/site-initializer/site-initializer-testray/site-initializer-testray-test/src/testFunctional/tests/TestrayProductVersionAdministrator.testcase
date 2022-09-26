@@ -48,7 +48,7 @@ definition {
 
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
-				nameOptions = "Product_Ver_1 Project",
+				nameOptions = "Projects_1 Project",
 				version = "1.x");
 
 			Testray.assertItemName(key_name = "1.x");
@@ -73,7 +73,7 @@ definition {
 
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
-				nameOptions = "Product_Ver_2 Project",
+				nameOptions = "Projects_1 Project",
 				version = "1.x");
 		}
 
@@ -104,7 +104,7 @@ definition {
 
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
-				nameOptions = "Product_Ver_3 Project",
+				nameOptions = "Projects_1 Project",
 				version = "1.x");
 		}
 
@@ -136,7 +136,7 @@ definition {
 
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
-				nameOptions = "Product_Ver_4 Project",
+				nameOptions = "Projects_1 Project",
 				version = "1.x");
 
 			Click(locator1 = "TestrayManage#CLOSE_MODAL");
@@ -144,9 +144,9 @@ definition {
 			TestrayManage.specificVersion(
 				caseName = "1.x",
 				manageOption = "Manage Product Versions",
-				nameOptions = "Product_Ver_4 Project");
+				nameOptions = "Projects_1 Project");
 
-			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+			Alert.viewErrorMessage(errorMessage = "The Product Version name already exists");
 		}
 	}
 
@@ -169,7 +169,7 @@ definition {
 			TestrayManage.specificVersion(
 				caseName = "",
 				manageOption = "Manage Product Versions",
-				nameOptions = "Product_Ver_5 Project");
+				nameOptions = "Projects_1 Project");
 
 			AssertElementPresent(
 				key_fieldLabel = "Name",

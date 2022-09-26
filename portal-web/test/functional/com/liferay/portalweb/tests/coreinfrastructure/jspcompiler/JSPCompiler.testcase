@@ -1,0 +1,51 @@
+@component-name = "portal-jsp-compiler"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "JSP Compiler";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify custom code in a deployed OSGI fragments is executed"
+	@priority = "3"
+	test OSGIFragmentsAreDetectedAsOutdated {
+		property test.name.skip.portal.instance = "JSPCompiler#OSGIFragmentsAreDetectedAsOutdated";
+
+		task ("Given an OSGI fragment with custom code is deployed") {
+			var customCode = '''<p style="color: red">changed</p>''';
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+			var moduleBaseDir = "modules/apps/adaptive-media/adaptive-media-blogs-web-fragment";
+			var projectDir = PropsUtil.get("project.dir");
+
+			FileUtil.write("${projectDir}/${moduleBaseDir}/src/main/resources/META-INF/resources/init-ext.jsp", "${customCode}");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=${moduleBaseDir} -DliferayHome=${liferayHome}");
+
+			WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.blogs.web_");
+		}
+
+		task ("Then the custom code is executed") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			Refresh();
+
+			AssertElementPresent(locator1 = "//p[contains(@style,'color: red')][text()='changed']");
+		}
+	}
+
+}

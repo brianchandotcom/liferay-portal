@@ -1036,6 +1036,38 @@ public class AccountEntryLocalServiceTest {
 		_assertPaginationSort(expectedAccountEntries, keywords, true);
 	}
 
+	@Test
+	public void testUpdateDomains() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		Assert.assertArrayEquals(new String[0], accountEntry.getDomainsArray());
+
+		String[] expectedDomains = {"foo.com", "bar.com"};
+
+		accountEntry = _accountEntryLocalService.updateDomains(
+			accountEntry.getAccountEntryId(), expectedDomains);
+
+		Assert.assertArrayEquals(
+			ArrayUtil.sortedUnique(expectedDomains),
+			ArrayUtil.sortedUnique(accountEntry.getDomainsArray()));
+
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
+			_accountEntryLocalService.searchAccountEntries(
+				accountEntry.getCompanyId(), null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"domains", expectedDomains
+				).build(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, false);
+
+		Assert.assertEquals(1, baseModelSearchResult.getLength());
+
+		List<AccountEntry> accountEntries =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(accountEntry, accountEntries.get(0));
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

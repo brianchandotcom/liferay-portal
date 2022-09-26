@@ -1,5 +1,5 @@
 {
-	"@generated": "984c0b4e3e9210428e26946e5e442cd135e496c3",
+	"@generated": "00de2e271fc8162d1d26d9ea3e6017578042087c",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,6 +13,12 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"data-engine-js-components-web": [
+				"../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
+			],
+			"frontend-js-web": [
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
 		},
 		"sourceMap": false,
 		"strict": true,
@@ -29,5 +35,11 @@
 		"../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../data-engine/data-engine-js-components-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-web"
+		}
 	]
 }

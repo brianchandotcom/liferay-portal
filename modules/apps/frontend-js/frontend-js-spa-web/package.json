@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*"
 	},
 	"main": "init.js",
 	"name": "frontend-js-spa-web",

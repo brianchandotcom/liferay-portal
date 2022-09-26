@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
 	"name": "@liferay/commerce-product-measurement-unit-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

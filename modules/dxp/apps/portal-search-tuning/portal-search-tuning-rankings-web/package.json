@@ -1,7 +1,9 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*",
 		"lodash.isfunction": "3.0.9",
-		"lodash.times": "^4.3.2"
+		"lodash.times": "^4.3.2",
+		"react": "16.12.0"
 	},
 	"jest": {
 		"setupFilesAfterEnv": [

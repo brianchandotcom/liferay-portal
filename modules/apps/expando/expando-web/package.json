@@ -1,5 +1,7 @@
 {
 	"dependencies": {
+		"@liferay/map-common": "*",
+		"frontend-js-web": "*"
 	},
 	"name": "expando-web",
 	"scripts": {

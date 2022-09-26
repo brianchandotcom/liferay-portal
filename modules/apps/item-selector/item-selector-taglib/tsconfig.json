@@ -1,5 +1,5 @@
 {
-	"@generated": "532e2df2004697a0639d5926b0a7cfbaeba36e2a",
+	"@generated": "9153a0f7c977e173bc7413bc73f16462b7e15369",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,8 +13,17 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/frontend-js-react-web": [
+				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"@liferay/frontend-js-state-web": [
 				"../../frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"frontend-js-web": [
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
 		},
 		"sourceMap": false,
@@ -33,7 +42,16 @@
 	],
 	"references": [
 		{
+			"path": "../../frontend-icons/frontend-icons-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-react-web"
+		},
+		{
 			"path": "../../frontend-js/frontend-js-state-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-web"
 		}
 	]
 }

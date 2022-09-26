@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*",
 		"resize-observer-polyfill": "^1.5.1"
 	},
 	"name": "commerce-dashboard-web",

@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*"
 	},
 	"main": "index.es.js",
 	"name": "item-selector-web",

@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@liferay/frontend-js-state-web": "*",
+		"frontend-js-web": "*",
+		"item-selector-taglib": "*"
 	},
 	"name": "blogs-web",
 	"scripts": {

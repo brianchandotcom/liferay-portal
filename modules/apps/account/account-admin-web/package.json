@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"@liferay/address-web": "*",
+		"frontend-js-web": "*"
+	},
 	"name": "account-admin-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

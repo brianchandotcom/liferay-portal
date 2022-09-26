@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*",
 		"pkce-challenge": "^3.0.0"
 	},
 	"main": "js/liferay.js",

@@ -1,5 +1,5 @@
 {
-	"@generated": "984c0b4e3e9210428e26946e5e442cd135e496c3",
+	"@generated": "c6bb4db386b5727f7ae8f43e3139ccf9b49604b5",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,6 +13,21 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/frontend-js-react-web": [
+				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"data-engine-js-components-web": [
+				"../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
+			],
+			"data-engine-taglib": [
+				"../../data-engine/data-engine-taglib/src/main/resources/META-INF/resources/data_layout_builder/js/index.d.ts"
+			],
+			"frontend-js-web": [
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
 		},
 		"sourceMap": false,
 		"strict": true,
@@ -29,5 +44,20 @@
 		"../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../frontend-icons/frontend-icons-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-react-web"
+		},
+		{
+			"path": "../../data-engine/data-engine-js-components-web"
+		},
+		{
+			"path": "../../data-engine/data-engine-taglib"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-web"
+		}
 	]
 }

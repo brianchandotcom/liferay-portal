@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/map-common": "*"
 	},
 	"name": "@liferay/map-openstreetmap",
 	"private": true,

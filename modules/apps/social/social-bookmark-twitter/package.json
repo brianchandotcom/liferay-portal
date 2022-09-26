@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"social-bookmarks-taglib": "*"
 	},
 	"name": "@liferay/social-bookmark-twitter",
 	"scripts": {

@@ -99,7 +99,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			}
 			else {
 				content = _fixMissingRegisterInitialization(
-					content, childJavaTerm, fileName);
+					absolutePath, content, childJavaTerm, fileName);
 			}
 		}
 
@@ -276,7 +276,14 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 	}
 
 	private String _fixMissingRegisterInitialization(
-		String content, JavaTerm javaTerm, String fileName) {
+		String absolutePath, String content, JavaTerm javaTerm,
+		String fileName) {
+
+		if (!isAttributeValue(
+				_CHECK_MISSING_REGISTER_INITIALIZATION_KEY, absolutePath)) {
+
+			return content;
+		}
 
 		String methodContent = javaTerm.getContent();
 
@@ -631,6 +638,9 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 
 		return true;
 	}
+
+	private static final String _CHECK_MISSING_REGISTER_INITIALIZATION_KEY =
+		"checkMissingRegisterInitialization";
 
 	private static final String _INCREMENT_TYPE_MAJOR = "MAJOR";
 

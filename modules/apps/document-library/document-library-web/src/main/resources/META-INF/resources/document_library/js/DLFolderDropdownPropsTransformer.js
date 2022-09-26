@@ -98,41 +98,36 @@ const ACTIONS = {
 	},
 };
 
-export default function propsTransformer({items, portletNamespace, ...props}) {
+export default function propsTransformer({
+	actions,
+	items,
+	portletNamespace,
+	...props
+}) {
+	const updateItem = (item) => {
+		const newItem = {
+			...item,
+			onClick(event) {
+				const action = item.data?.action;
+
+				if (action) {
+					event.preventDefault();
+
+					ACTIONS[action]?.(item.data, portletNamespace);
+				}
+			},
+		};
+
+		if (Array.isArray(item.items)) {
+			newItem.items = item.items.map(updateItem);
+		}
+
+		return newItem;
+	};
+
 	return {
 		...props,
-		items: items.map((item) =>
-			item?.type === 'group'
-				? {
-						...item,
-						items: item.items?.map((child) => ({
-							...child,
-							onClick(event) {
-								const action = child.data?.action;
-
-								if (action) {
-									event.preventDefault();
-
-									ACTIONS[action](
-										child.data,
-										portletNamespace
-									);
-								}
-							},
-						})),
-				  }
-				: {
-						...item,
-						onClick(event) {
-							const action = item.data?.action;
-
-							if (action) {
-								event.preventDefault();
-
-								ACTIONS[action](item.data, portletNamespace);
-							}
-						},
-				  }
-		),
+		actions: actions?.map(updateItem),
+		items: items?.map(updateItem),
 	};
 }

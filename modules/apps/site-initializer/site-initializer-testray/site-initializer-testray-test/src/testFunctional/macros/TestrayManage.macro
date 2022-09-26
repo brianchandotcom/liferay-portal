@@ -184,8 +184,6 @@ definition {
 			value1 = "${category}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro editNewName {

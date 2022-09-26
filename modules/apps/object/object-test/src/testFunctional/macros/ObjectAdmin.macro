@@ -66,6 +66,7 @@ definition {
 			inputExpression = "${inputExpression}",
 			inputMethod = "${inputMethod}",
 			inputValue = "${inputValue}",
+			notRefreshAttribute = "true",
 			objectLabel = "${objectLabel}",
 			scriptValidation = "${scriptValidation}",
 			secretAction = "${secretAction}",
@@ -1035,14 +1036,19 @@ definition {
 		}
 
 		if (isSet(click)) {
-			if ("${click}" == "cancel") {
+			if (("${click}" == "save") && ("${notRefreshAttribute}" == "true")) {
+				Button.clickSave();
+			}
+			else if ("${click}" == "cancel") {
 				Button.clickCancel();
+
+				Refresh();
 			}
 			else if ("${click}" == "save") {
 				Button.clickSave();
-			}
 
-			Refresh();
+				Refresh();
+			}
 		}
 	}
 

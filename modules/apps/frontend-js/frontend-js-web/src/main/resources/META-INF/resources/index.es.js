@@ -24,12 +24,9 @@ export {default as autoSize} from './liferay/autosize/autosize.es';
 
 // Cookie API
 
-export {
-	COOKIE_TYPES,
-	getCookie,
-	setCookie,
-	removeCookie,
-} from './liferay/util/cookie/cookie';
+export {CONSENT_TYPES as COOKIE_TYPES} from './liferay/util/consent';
+
+export {getCookie, setCookie, removeCookie} from './liferay/util/cookie/cookie';
 
 // Debounce API
 

@@ -2678,8 +2678,13 @@ definition {
 	@priority = "5"
 	test ViewCompletedItems {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewCompletedItems";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

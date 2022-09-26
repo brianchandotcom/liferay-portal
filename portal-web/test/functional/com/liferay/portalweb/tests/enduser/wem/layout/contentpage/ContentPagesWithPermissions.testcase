@@ -129,6 +129,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161974. The user with Update-limited or basic permission should not be able to add custom value to margin and padding."
+	@priority = "4"
+	test CannotAddCustomValuesToSpacingWithLimitedPermission {
+		task ("Given a new user with update-limited and basic permission has a Heading fragment on content page") {
+			task ("Define the permission of new role") {
+				for (var resourceActionIndex : list "UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_LIMITED") {
+					Permissions.definePermissionViaJSONAPI(
+						resourceAction = "${resourceActionIndex}",
+						resourceName = "com.liferay.portal.kernel.model.Layout",
+						roleTitle = "Roles Siterole Name",
+						roleType = "site");
+				}
+			}
+
+			task ("Assign the site role to new user") {
+				JSONRole.assignSiteRoleToUser(
+					groupName = "Test Site Name",
+					roleTitle = "Roles Siterole Name",
+					userEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Sign in as new user") {
+				User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Add a Heading fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+			}
+		}
+
+		task ("When the new user opens the dropdown menu of Spacing") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			Click(
+				ariaLabel = "Padding Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+
+		task ("Then the new user should not see the input field for custom values") {
+			AssertElementNotPresent(
+				ariaLabel = "Padding Top",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Padding Top",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+		}
+
+		task ("When the new user selects an existing token on Padding Top of Spacing") {
+			DropdownMenuItem.click(menuItem = "Spacer 3");
+		}
+
+		task ("Then the new user could view the custom value of Spacing") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Heading",
+				paddingTop = "3");
+		}
+	}
+
 	@description = "This is a test for LPS-96795. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
 	@priority = "2"
 	test CannotEditAssetWithoutAssetUpdatePermission {

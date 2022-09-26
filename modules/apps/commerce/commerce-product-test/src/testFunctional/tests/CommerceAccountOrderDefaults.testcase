@@ -30,6 +30,111 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9734. As admin, I want to set a default billing and default shipping address for one account and channel, then buyer cannot use the default addresses in a different channel to make an order"
+	@priority = "3"
+	test CanNotUseDefaultAddressesInADifferentChannel {
+		task ("Given 2 minium sites, 2 accounts and 2 buyer users are created and associated with the respected accounts and sites") {
+			for (var num : list "1,2") {
+				CommerceAccelerators.initializeNewSiteViaAccelerator(
+					siteName = "Minium ${num}",
+					siteTemplateName = "Minium");
+
+				CommerceEntry.addAccountEntryUser(
+					accountName = "Test Account ${num}",
+					accountType = "Business",
+					agreeToTermsAndAnswerReminderQuery = "true",
+					createNewAccount = "true",
+					requireReset = "false",
+					userEmailAddress = "buyer${num}@liferay.com",
+					userFirstName = "Buyer${num}",
+					userLastName = "User${num}",
+					userRole = "Buyer",
+					userScreenName = "buyeruser${num}",
+					userSiteMembership = "Minium ${num}");
+
+				Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+				task ("And 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+					for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+						Accounts.addAddressViaSetDefaultAddress(
+							addressCity = "Diamond Bar",
+							addressCountry = "United States",
+							addressName = "${typeList} Address Entry 1",
+							addressPostalCode = "91765",
+							addressRegion = "California",
+							addressStreet1 = "1400 Montefino Ave",
+							addressType = "${typeList}",
+							phoneNumber = "+1-877-543-3729");
+					}
+				}
+			}
+		}
+
+		task ("Given a default billing and default shipping address is selected for Minium 1 Portal Channel for Test Account 1") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			for (var typeList : list "Billing,Shipping") {
+				Accounts.addDefaultCommerceAddressEntry(
+					addressEntry = "${typeList} Address Entry 1",
+					addressType = "${typeList}",
+					channelEntry = "Minium 1 Portal");
+			}
+		}
+
+		task ("And buyer user 2 from Test Account 2 and Minium 2 Portal Channel adds an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium-3",
+				userEmailAddress = "buyer2@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("And starts the checkout process") {
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("When arrives to the shipping and billing address sections, there is no default address pre-selected") {
+			AssertElementPresent(
+				key_selectFieldLabel = "Choose Shipping Address",
+				locator1 = "Select#ANY",
+				value1 = "Add New Address");
+
+			for (var fieldNames : list "Name,Address,Zip,City") {
+				AssertElementNotPresent(
+					key_fieldName = "${fieldNames}",
+					locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+			}
+		}
+
+		task ("Then after completing the checkout by giving new addresses, the shipping and the billing address given by buyer 2 are visible in the Order Summary") {
+			CommerceCheckout.initializersCheckout(
+				billingAddressAddress = "United States",
+				billingAddressCity = "Test Billing City",
+				billingAddressCountry = "United States",
+				billingAddressName = "New Billing Address Name",
+				billingAddressZipCode = "Test Zip Code",
+				newAddressAddress = "Test Shipping Address",
+				newAddressCity = "Test Shipping City",
+				newAddressCountry = "United States",
+				newAddressName = "New Shipping Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard",
+				viewBillingAddressPermission = "true");
+		}
+	}
+
 	@description = "COMMERCE-9876. As a Sales Manager, I want to remove default billing and shipping addresses from the account"
 	@priority = "3"
 	test CanRemoveDefaultAddresses {

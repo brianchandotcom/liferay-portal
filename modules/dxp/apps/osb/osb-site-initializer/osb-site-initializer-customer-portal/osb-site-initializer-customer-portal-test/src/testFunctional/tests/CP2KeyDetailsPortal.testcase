@@ -18,8 +18,8 @@ definition {
 			User.firstLoginPG();
 		}
 
-		 task ("Create a new Customer Portal Site") {
-		 	CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 
 		task ("Add test user access to all Accounts") {
@@ -38,7 +38,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-		 	JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 	}
 

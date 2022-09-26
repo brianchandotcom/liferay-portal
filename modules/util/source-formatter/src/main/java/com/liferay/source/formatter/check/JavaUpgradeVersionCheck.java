@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -584,6 +585,8 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
 
+		String newMethodContent = null;
+
 		if (!Objects.equals(parameterList.get(0), "\"0.0.0\"")) {
 			String version = StringUtil.unquote(parameterList.get(0));
 
@@ -595,26 +598,28 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 
 			String precedingPlaceholder = methodContent.substring(y, x);
 
-			String newMethodContent = StringUtil.insert(
+			newMethodContent = StringUtil.insert(
 				methodContent,
 				precedingPlaceholder + "registry.registerInitialization();\n",
 				y);
+		}
+		else {
+			if (parameterList.size() != 3) {
+				return content;
+			}
 
-			return StringUtil.replaceFirst(
-				content, methodContent, newMethodContent);
+			if (Objects.equals(
+					parameterList.get(2), "new DummyUpgradeProcess()") ||
+				Objects.equals(
+					parameterList.get(2), "new DummyUpgradeStep()")) {
+
+				newMethodContent = StringUtil.replaceFirst(
+					methodContent, methodCall,
+					"registry.registerInitialization()", x);
+			}
 		}
 
-		if (parameterList.size() != 3) {
-			return content;
-		}
-
-		if (Objects.equals(parameterList.get(2), "new DummyUpgradeProcess()") ||
-			Objects.equals(parameterList.get(2), "new DummyUpgradeStep()")) {
-
-			String newMethodContent = StringUtil.replaceFirst(
-				methodContent, methodCall, "registry.registerInitialization()",
-				x);
-
+		if (Validator.isNotNull(newMethodContent)) {
 			return StringUtil.replaceFirst(
 				content, methodContent, newMethodContent);
 		}

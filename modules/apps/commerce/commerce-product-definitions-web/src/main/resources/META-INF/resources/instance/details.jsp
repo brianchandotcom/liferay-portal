@@ -53,6 +53,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 
 	<liferay-ui:error exception="<%= CPInstanceReplacementCPInstanceUuidException.class %>" message="please-enter-a-valid-replacement" />
 	<liferay-ui:error exception="<%= CPInstanceSkuException.class %>" message="please-enter-a-valid-sku" />
+	<liferay-ui:error exception="<%= DuplicateCPInstanceException.class %>" message="there-is-already-one-sku-with-the-external-reference-code" />
 
 	<commerce-ui:panel
 		title='<%= LanguageUtil.get(request, "details") %>'
@@ -60,6 +61,8 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		<div class="row">
 			<div class="col-6">
 				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="sku" />
+
+				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="externalReferenceCode" />
 
 				<c:if test="<%= !cpDefinition.isIgnoreSKUCombinations() %>">
 					<c:choose>

@@ -530,6 +530,48 @@ definition {
 		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
+	@description = "LPS-156319 - Verify that the Expression Builder field is required"
+	@priority = "3"
+	test CannotSaveWithoutExpressionBuilder {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "true",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Custom Action",
+			active = "true",
+			inputExpression = "",
+			notRefreshAttribute = "true",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		AssertElementPresent(
+			locator1 = "Message#WARNING_FEEDBACK",
+			value1 = "Required");
+
+		Refresh();
+
+		ObjectAdmin.assertNoResultsWereFound();
+	}
+
 	@description = "LPS-139008 - Verify that it is possible to reactivate an Action"
 	@priority = "4"
 	test CanReactivateAction {

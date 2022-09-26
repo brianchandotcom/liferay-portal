@@ -323,6 +323,77 @@ definition {
 			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
 	}
 
+	@description = "Verify that it's possible to view the custom object after restarting portal"
+	@priority = "5"
+	test CanViewObjectAfterRestart {
+		property portal.acceptance = "true";
+
+		task ("Create Custom Object and Custom Field (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 163066",
+				objectName = "CustomObject163066",
+				pluralLabelName = "Custom Objects 163066");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject163066");
+		}
+
+		task ("Go to Custom Object, change the panel category key and publish") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 163066");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
+
+			ObjectAdmin.publishObjectViaUI();
+		}
+
+		task ("Create an Entry (via API)") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject163066",
+				value = "Entry Test");
+		}
+
+		task ("Restart portal") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Assert the Custom Object is present in Object Admin") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.assertCustomObject(labelName = "Custom Object 163066");
+		}
+
+		task ("Assert the Custom Object is present on the application menu and go to it") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementPresent(
+				key_category = "Users",
+				key_portlet = "Custom Objects 163066",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			ApplicationsMenuHelper.gotoPortlet(
+				category = "Users",
+				portlet = "Custom Objects 163066");
+		}
+
+		task ("Assert that entry is present") {
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+		}
+	}
+
 	@description = "LPS-150886 - Verify that the delete modal contains a warning message with the number of entries that will be deleted"
 	@priority = "4"
 	test CanViewWarningMessageDeleteModal {

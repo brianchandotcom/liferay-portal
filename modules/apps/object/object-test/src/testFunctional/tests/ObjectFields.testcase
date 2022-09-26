@@ -1201,6 +1201,68 @@ definition {
 		ObjectField.viewToogleOnSidePanelShowFilesInDM(isDisabled = "Yes");
 	}
 
+	@description = "LPS-158821 - Verify that the user is able to use the ERC field in View Builder, on the Custom Views tab"
+	@priority = "5"
+	test CanUseERCFieldWithCustomView {
+		property portal.acceptance = "true";
+
+		task ("Create Custom Object and Custom Field (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162180",
+				objectName = "CustomObject162180",
+				pluralLabelName = "Custom Objects 162180");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject162180");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162180");
+		}
+
+		task ("Go to Custom Object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162180");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark Custom View as default, go to View Builder and add ERC") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,External Reference Code");
+
+			Button.clickSave();
+		}
+
+		task ("Create an entry via API") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject162180",
+				value = "Entry Test");
+		}
+
+		task ("Assert the entry is visible with an ERC column") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162180");
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+
+			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"
 	@priority = "4"
 	test CanValidOnlyPathsDefinedOnShowFilesOption {

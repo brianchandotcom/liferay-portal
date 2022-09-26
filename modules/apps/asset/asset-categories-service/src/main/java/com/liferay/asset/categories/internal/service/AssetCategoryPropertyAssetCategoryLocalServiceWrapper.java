@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -240,9 +239,6 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 	@Reference
 	private AssetCategoryPropertyLocalService
 		_assetCategoryPropertyLocalService;
-
-	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

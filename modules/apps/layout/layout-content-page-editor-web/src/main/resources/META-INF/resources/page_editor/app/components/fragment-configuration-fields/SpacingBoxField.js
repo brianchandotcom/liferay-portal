@@ -32,7 +32,7 @@ export function SpacingBoxField({disabled, field, item, onValueSelect, value}) {
 
 	const handleChange = (key, value, {isReset = false} = {}) => {
 		if (isReset) {
-			const previousResponseValue = getPreviousResponsiveStyle(
+			const previousResponsiveValue = getPreviousResponsiveStyle(
 				key,
 				item.config,
 				selectedViewportSize
@@ -40,11 +40,11 @@ export function SpacingBoxField({disabled, field, item, onValueSelect, value}) {
 
 			setNextValue((previousvalue) => ({
 				...previousvalue,
-				[key]: previousResponseValue,
+				[key]: previousResponsiveValue,
 			}));
 		}
 		else {
-			setNextValue((previousvalue) => ({...previousvalue, [key]: value}));
+			setNextValue((previousValue) => ({...previousValue, [key]: value}));
 		}
 
 		onValueSelect(key, value);

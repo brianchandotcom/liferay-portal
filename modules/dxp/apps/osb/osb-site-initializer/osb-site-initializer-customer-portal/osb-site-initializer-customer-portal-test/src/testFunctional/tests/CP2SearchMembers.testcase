@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account Portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -18,11 +19,17 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		 	CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 
 		task ("Adding a user to the project") {
 			CustomerPortal.createUserForCP();
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -37,7 +44,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		 	JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 	}
 

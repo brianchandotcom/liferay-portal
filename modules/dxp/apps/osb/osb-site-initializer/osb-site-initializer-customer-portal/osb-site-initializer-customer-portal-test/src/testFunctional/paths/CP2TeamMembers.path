@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUPPORT_SEATS</td>
+	<td>//p[contains(@class, 'text-neutral-7') and contains(text(), '${key_number}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEAM_MEMBERS_TABLE</td>
 	<td>//div[contains(@class, 'table-responsive') and contains(.,'${key_name}')]//span[contains(text(), '${key_status}')]</td>
 	<td></td>
@@ -88,11 +93,6 @@
 <tr>
 	<td>TABLE</td>
 	<td>//div[contains(@class, 'table-responsive')]//p[contains(text(),'${value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEAM_MEMBERS_TABLE</td>
-	<td>//div[contains(@class, 'table-responsive') and contains(.,'${key_name}')]//span[contains(text(), '${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

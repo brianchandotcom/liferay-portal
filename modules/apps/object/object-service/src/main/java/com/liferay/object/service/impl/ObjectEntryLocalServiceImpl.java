@@ -600,6 +600,19 @@ public class ObjectEntryLocalServiceImpl
 			groupId, companyId, externalReferenceCode);
 	}
 
+	@Override
+	public ObjectEntry getObjectEntryByERC_ODI(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		return objectEntryPersistence.fetchByC_ERC_ODI(
+			objectDefinition.getCompanyId(), externalReferenceCode,
+			objectDefinitionId);
+	}
+
 	public List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, int start, int end)

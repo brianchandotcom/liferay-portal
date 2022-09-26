@@ -498,8 +498,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("ReplaceDummyUpgradeStepForInitialize1.testjava");
 		test("ReplaceDummyUpgradeStepForInitialize2.testjava");
 		test("ReplaceDummyUpgradeStepForInitialize3.testjava",
-			"Registered starting with '0.0.0' should be replace for " +
-			"registry.registerInitialization();");
+			 "Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
+				"replaced by 'registry.registerInitialization()'");
 	}
 
 	@Test

@@ -98,7 +98,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				_checkServiceUpgradeStepVersion(fileName, childJavaTerm);
 			}
 			else {
-				content = _replaceDummyUpgradeStepForInitialize(
+				content = _fixMissingRegisterInitialization(
 					content, childJavaTerm, fileName);
 			}
 		}
@@ -273,6 +273,76 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 					javaTerm.getLineNumber(x));
 			}
 		}
+	}
+
+	private String _fixMissingRegisterInitialization(
+		String content, JavaTerm javaTerm, String fileName) {
+
+		String methodContent = javaTerm.getContent();
+
+		if (methodContent.contains(
+				"registry.registerInitialDeploymentUpgradeSteps") ||
+			methodContent.contains("registry.registerInitialization()")) {
+
+			return content;
+		}
+
+		int x = methodContent.indexOf("registry.register(");
+
+		if (x == -1) {
+			return content;
+		}
+
+		String methodCall = JavaSourceUtil.getMethodCall(methodContent, x);
+
+		List<String> parameterList = JavaSourceUtil.getParameterList(
+			methodCall);
+
+		String newMethodContent = null;
+
+		if (!Objects.equals(parameterList.get(0), "\"0.0.0\"")) {
+			String version = StringUtil.unquote(parameterList.get(0));
+
+			if (!version.matches("\\d+\\.\\d+\\.\\d+")) {
+				return content;
+			}
+
+			int y = methodContent.lastIndexOf(StringPool.NEW_LINE, x);
+
+			String precedingPlaceholder = methodContent.substring(y, x);
+
+			newMethodContent = StringUtil.insert(
+				methodContent,
+				precedingPlaceholder + "registry.registerInitialization();\n",
+				y);
+		}
+		else {
+			if (parameterList.size() != 3) {
+				return content;
+			}
+
+			if (Objects.equals(
+					parameterList.get(2), "new DummyUpgradeProcess()") ||
+				Objects.equals(
+					parameterList.get(2), "new DummyUpgradeStep()")) {
+
+				newMethodContent = StringUtil.replaceFirst(
+					methodContent, methodCall,
+					"registry.registerInitialization()", x);
+			}
+		}
+
+		if (Validator.isNotNull(newMethodContent)) {
+			return StringUtil.replaceFirst(
+				content, methodContent, newMethodContent);
+		}
+
+		addMessage(
+			fileName,
+			"Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
+				"replaced by 'registry.registerInitialization()'");
+
+		return content;
 	}
 
 	private String _getColumnType(
@@ -560,76 +630,6 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		}
 
 		return true;
-	}
-
-	private String _replaceDummyUpgradeStepForInitialize(
-		String content, JavaTerm javaTerm, String fileName) {
-
-		String methodContent = javaTerm.getContent();
-
-		if (methodContent.contains(
-				"registry.registerInitialDeploymentUpgradeSteps") ||
-			methodContent.contains("registry.registerInitialization()")) {
-
-			return content;
-		}
-
-		int x = methodContent.indexOf("registry.register(");
-
-		if (x == -1) {
-			return content;
-		}
-
-		String methodCall = JavaSourceUtil.getMethodCall(methodContent, x);
-
-		List<String> parameterList = JavaSourceUtil.getParameterList(
-			methodCall);
-
-		String newMethodContent = null;
-
-		if (!Objects.equals(parameterList.get(0), "\"0.0.0\"")) {
-			String version = StringUtil.unquote(parameterList.get(0));
-
-			if (!version.matches("\\d+\\.\\d+\\.\\d+")) {
-				return content;
-			}
-
-			int y = methodContent.lastIndexOf(StringPool.NEW_LINE, x);
-
-			String precedingPlaceholder = methodContent.substring(y, x);
-
-			newMethodContent = StringUtil.insert(
-				methodContent,
-				precedingPlaceholder + "registry.registerInitialization();\n",
-				y);
-		}
-		else {
-			if (parameterList.size() != 3) {
-				return content;
-			}
-
-			if (Objects.equals(
-					parameterList.get(2), "new DummyUpgradeProcess()") ||
-				Objects.equals(
-					parameterList.get(2), "new DummyUpgradeStep()")) {
-
-				newMethodContent = StringUtil.replaceFirst(
-					methodContent, methodCall,
-					"registry.registerInitialization()", x);
-			}
-		}
-
-		if (Validator.isNotNull(newMethodContent)) {
-			return StringUtil.replaceFirst(
-				content, methodContent, newMethodContent);
-		}
-
-		addMessage(
-			fileName,
-			"Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
-				"replaced by 'registry.registerInitialization()'");
-
-		return content;
 	}
 
 	private static final String _INCREMENT_TYPE_MAJOR = "MAJOR";

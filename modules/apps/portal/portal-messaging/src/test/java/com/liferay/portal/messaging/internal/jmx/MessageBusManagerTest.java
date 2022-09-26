@@ -15,6 +15,7 @@
 package com.liferay.portal.messaging.internal.jmx;
 
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -45,7 +46,8 @@ public class MessageBusManagerTest {
 
 		MessageBusManager messageBusManager = new MessageBusManager();
 
-		messageBusManager.setMessageBus(
+		ReflectionTestUtil.setFieldValue(
+			messageBusManager, "_messageBus",
 			ProxyFactory.newDummyInstance(MessageBus.class));
 
 		ObjectName objectName = new ObjectName(

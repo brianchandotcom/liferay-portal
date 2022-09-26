@@ -143,18 +143,16 @@ public class MessageBusManager
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageBusManager.class);
 
 	private BundleContext _bundleContext;
 	private final Map<String, ServiceRegistration<DynamicMBean>>
 		_mbeanServiceRegistrations = new ConcurrentHashMap<>();
+
+	@Reference
 	private MessageBus _messageBus;
+
 	private final Set<Destination> _queuedDestinations =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 

@@ -40,6 +40,7 @@ const SimpleInputModal = ({
 	mainFieldLabel,
 	mainFieldName,
 	mainFieldValue = '',
+	method = 'POST',
 	namespace,
 	onFormSuccess,
 	placeholder,
@@ -72,7 +73,7 @@ const SimpleInputModal = ({
 
 		fetch(formSubmitURL, {
 			body: formData,
-			method: 'POST',
+			method,
 		})
 			.then((response) => response.json())
 			.then((responseContent) => {

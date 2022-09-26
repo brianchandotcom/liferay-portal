@@ -52,6 +52,7 @@ export function CreateAnAccount() {
 	const [captcha, setCaptcha] = useState('');
 	const [hasError, setHasError] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [createAnAccount, setCreateAnAccount] = useState(false);
 
 	useEffect(() => {
 		setAlert(NATURAL_VALUE);
@@ -116,10 +117,12 @@ export function CreateAnAccount() {
 
 	return (
 		<div className="create-account mb-md-4 ml-lg-5 ml-md-4 mt-0 mt-md-4">
-			<h5 className="font-weight-bolder mb-5 mx-0">
-				Create a Raylife account to continue. This will be used to login
-				to your dashboard.
-			</h5>
+			{createAnAccount && (
+				<h5 className="font-weight-bolder mb-5 mx-0">
+					Create a Raylife account to continue. This will be used to
+					login to your dashboard.
+				</h5>
+			)}
 
 			<ClayForm autoComplete="off" className="create-account__form">
 				<div className="create-account__form__content-input filled form-condensed form-group mb-1 mt-4">
@@ -181,49 +184,87 @@ export function CreateAnAccount() {
 					/>
 
 					<label htmlFor="password">{passwordLabel}</label>
-				</div>
 
-				<div
-					className={classNames(
-						'create-account__form__content-input form-condensed form-group mt-4',
-						{
-							filled: confirmPassword,
-						}
+					{!createAnAccount && (
+						<ClayButton displayType="link text-paragraph-sm text-neutral-7">
+							Forget password?
+						</ClayButton>
 					)}
-				>
-					<ClayInput
-						autoComplete="off"
-						className="w-100"
-						id="rePassword"
-						onChange={(event) => {
-							setConfirmPassword(event.target.value);
-							setObjValidate(
-								validadePassword(event.target.value, password)
-							);
-						}}
-						required
-						type="password"
-						value={confirmPassword}
-					/>
-
-					<label htmlFor="rePassword">Re-enter Password</label>
 				</div>
 
-				<ListRules objValidate={objValidate} />
+				{createAnAccount && (
+					<div
+						className={classNames(
+							'create-account__form__content-input form-condensed form-group mt-4',
+							{
+								filled: confirmPassword,
+							}
+						)}
+					>
+						<ClayInput
+							autoComplete="off"
+							className="w-100"
+							id="rePassword"
+							onChange={(event) => {
+								setConfirmPassword(event.target.value);
+								setObjValidate(
+									validadePassword(
+										event.target.value,
+										password
+									)
+								);
+							}}
+							required
+							type="password"
+							value={confirmPassword}
+						/>
 
-				<Captcha captchaValue={captcha} setCaptchaValue={setCaptcha} />
+						<label htmlFor="rePassword">Re-enter Password</label>
+					</div>
+				)}
+
+				{createAnAccount && <ListRules objValidate={objValidate} />}
+
+				{createAnAccount && (
+					<Captcha
+						captchaValue={captcha}
+						setCaptchaValue={setCaptcha}
+					/>
+				)}
 			</ClayForm>
 
-			<div className="align-items-center d-flex justify-content-center justify-content-md-end">
-				<ClayButton
-					className="align-items-center d-flex"
-					disabled={!matchAllRules || loading || !captcha}
-					displayType="primary"
-					onClick={onCreateAccount}
-				>
-					CREATE ACCOUNT
-				</ClayButton>
-			</div>
+			{createAnAccount ? (
+				<div className="align-items-center d-flex justify-content-center justify-content-md-end">
+					<ClayButton
+						className="align-items-center d-flex"
+						disabled={!matchAllRules || loading || !captcha}
+						displayType="primary"
+						onClick={onCreateAccount}
+					>
+						CREATE ACCOUNT
+					</ClayButton>
+				</div>
+			) : (
+				<div className="align-items-center d-flex justify-content-center justify-content-md-end">
+					<ClayButton
+						className="align-items-center d-flex mr-3 mt-6"
+						displayType="secondary"
+						onClick={() => {
+							setCreateAnAccount(true);
+						}}
+					>
+						CREATE NEW ACCOUNT
+					</ClayButton>
+
+					<ClayButton
+						className="align-items-center d-flex mt-6"
+						disabled={!isEmailValid || password === ''}
+						displayType="primary"
+					>
+						LOGIN
+					</ClayButton>
+				</div>
+			)}
 
 			{(email && alert === UNCHECKED_VALUE) ||
 				(hasError && (

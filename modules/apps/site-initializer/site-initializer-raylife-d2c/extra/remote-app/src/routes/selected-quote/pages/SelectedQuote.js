@@ -55,7 +55,7 @@ const SelectedQuote = () => {
 				<Panel
 					Right={CheckButton}
 					id="createAnAccount"
-					title="Create an Account"
+					title="Create an Login or Create an Account"
 					titleNumber="1"
 				>
 					<CreateAnAccount />

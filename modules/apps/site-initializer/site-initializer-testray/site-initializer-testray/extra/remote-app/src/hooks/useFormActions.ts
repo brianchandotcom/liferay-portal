@@ -108,7 +108,8 @@ const useFormActions = (): Form => {
 			setSubmitting(false);
 
 			return response;
-		} catch (error) {
+		}
+		catch (error) {
 			setSubmitting(false);
 
 			throw error;

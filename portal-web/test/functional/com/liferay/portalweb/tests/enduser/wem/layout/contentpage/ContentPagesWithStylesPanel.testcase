@@ -35,6 +35,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161974. Add custom values to margin and padding on fragment of content page."
+	@priority = "4"
+	test AddCustomValuesToSpacing {
+		task ("Given a page creator has a Button fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page creator selects an existing token on Marging Left of Spacing") {
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(marginLeft = "1");
+		}
+
+		task ("Then the page creator should see the cleared input field and selected token on dropdown menu") {
+			Click(
+				ariaLabel = "Margin Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			AssertTextEquals(
+				ariaLabel = "Margin Left",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				value1 = "");
+
+			AssertCssValue(
+				ariaLabel = "Set Margin Left to 1",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("When the page creator adds a value on input field of Marging Left") {
+			Type(
+				ariaLabel = "Margin Left",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				value1 = "20");
+		}
+
+		task ("Then the page creator should see all items on dropdown menu are unselected") {
+			for (var i : list "0,1,2,3,4,5,6,7,8,9,10") {
+				AssertCssValue(
+					ariaLabel = "Set Margin Left to ${i}",
+					locator1 = "Button#ANY_WITH_ARIA_LABEL",
+					locator2 = "background-color",
+					value1 = "rgba(0, 0, 0, 0)");
+			}
+		}
+
+		task ("When the page creator adds a value on input field of Padding Left") {
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			Type(
+				ariaLabel = "Padding Left",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				value1 = "20");
+		}
+
+		task ("Then the page creator should see all items on dropdown menu are unselected") {
+			for (var i : list "0,1,2,3,4,5,6,7,8,9,10") {
+				AssertCssValue(
+					ariaLabel = "Set Padding Left to ${i}",
+					locator1 = "Button#ANY_WITH_ARIA_LABEL",
+					locator2 = "background-color",
+					value1 = "rgba(0, 0, 0, 0)");
+			}
+		}
+
+		task ("When the page creator selects an existing token on Padding Left of Spacing") {
+			DropdownMenuItem.click(menuItem = "Spacer 2");
+		}
+
+		task ("Then the page creator should see the cleared input field and second token as selected on dropdown menu") {
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			AssertTextEquals(
+				ariaLabel = "Padding Left",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				value1 = "");
+
+			AssertCssValue(
+				ariaLabel = "Set Padding Left to 2",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+	}
+
 	@description = "This is a test for LPS-142050. In page editor, selecting Custom in units could insert any type of character."
 	@priority = "4"
 	test ConfigureCustomUnit {

@@ -290,9 +290,7 @@ function SelectVocabularies({
 
 	return (
 		<div className="select-vocabularies">
-			<label className="select-vocabularies-label">
-				{Liferay.Language.get('select-vocabularies')}
-			</label>
+			<label>{Liferay.Language.get('select-vocabularies')}</label>
 
 			<input
 				hidden
@@ -306,17 +304,11 @@ function SelectVocabularies({
 				}
 			/>
 
-			{selection === SELECT_OPTIONS.SELECT &&
-				_isDisplayInfoSelectedVocabulariesHidden() && (
-					<ClayAlert
-						displayType="info"
-						title={`${Liferay.Language.get('info')}:`}
-					>
-						{Liferay.Language.get(
-							'there-are-selected-vocabularies-you-do-not-have-permission-to-view'
-						)}
-					</ClayAlert>
+			<div className="select-vocabularies-helptext text-3 text-secondary">
+				{Liferay.Language.get(
+					'select-vocabularies-configuration-description'
 				)}
+			</div>
 
 			<ClayRadioGroup onChange={_handleSelectionChange} value={selection}>
 				<ClayRadio
@@ -330,6 +322,18 @@ function SelectVocabularies({
 				/>
 			</ClayRadioGroup>
 
+			{selection === SELECT_OPTIONS.SELECT &&
+				_isDisplayInfoSelectedVocabulariesHidden() && (
+					<ClayAlert
+						displayType="info"
+						title={`${Liferay.Language.get('info')}:`}
+					>
+						{Liferay.Language.get(
+							'there-are-selected-vocabularies-you-do-not-have-permission-to-view'
+						)}
+					</ClayAlert>
+				)}
+
 			{selection === SELECT_OPTIONS.SELECT && (
 				<VocabularyTree
 					loading={vocabularyTreeLoading}
@@ -338,12 +342,6 @@ function SelectVocabularies({
 					vocabularyTree={vocabularyTree}
 				/>
 			)}
-
-			<div className="text-3 text-secondary">
-				{Liferay.Language.get(
-					'select-vocabularies-configuration-description'
-				)}
-			</div>
 		</div>
 	);
 }

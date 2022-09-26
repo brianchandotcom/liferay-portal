@@ -608,23 +608,23 @@ definition {
 
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
-			newNodeLabel = "review2",
-			nodeLabel = "review",
-			nodeType = "task");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+				newNodeLabel = "review2",
+				nodeLabel = "review",
+				nodeType = "task");
 
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
-			infoValue = "review2");
+			ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+				infoOption = "Id",
+				infoValue = "review2");
 
-		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
-			newNodeLabel = "update2",
-			nodeLabel = "update",
-			nodeType = "task");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+				newNodeLabel = "update2",
+				nodeLabel = "update",
+				nodeType = "task");
 
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
-			infoValue = "update2");
+			ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+				infoOption = "Id",
+				infoValue = "update2");
 
 			ProcessBuilderKaleoDesignerReact.editConnector(
 				connectorLabel = "APPROVE",

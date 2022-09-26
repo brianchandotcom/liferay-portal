@@ -41,8 +41,14 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -245,6 +251,45 @@ public class NotificationTemplateLocalServiceTest {
 			).build());
 	}
 
+	@Test
+	public void testSendNotificationTemplateForMultipleEmailsWithSpecificFormats()
+		throws Exception {
+
+		String to =
+			"ava@gmail.com, bryn@gmail.com;caleb@gmail.com\ndavid@gmail.com";
+
+		NotificationTemplate notificationTemplate =
+			_notificationTemplateLocalService.addNotificationTemplate(
+				TestPropsValues.getUserId(), 0, "",
+				Collections.singletonMap(LocaleUtil.US, ""), "", "",
+				"test@liferay.com", Collections.singletonMap(LocaleUtil.US, ""),
+				"New Template", Collections.singletonMap(LocaleUtil.US, ""),
+				Collections.singletonMap(LocaleUtil.US, to),
+				Collections.emptyList());
+
+		_notificationTemplateLocalService.sendNotificationTemplate(
+			TestPropsValues.getUserId(),
+			notificationTemplate.getNotificationTemplateId(),
+			_NOTIFICATION_TYPE_KEY, new Object());
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Stream<NotificationQueueEntry> stream =
+			notificationQueueEntries.stream();
+
+		Set<String> tos = stream.map(
+			NotificationQueueEntry::getTo
+		).collect(
+			Collectors.toSet()
+		);
+
+		Set<String> emails = _formatEmails(to);
+
+		Assert.assertTrue(tos.containsAll(emails));
+	}
+
 	private NotificationTemplate _addNotificationTemplate(
 			String name, String from)
 		throws PortalException {
@@ -264,7 +309,23 @@ public class NotificationTemplateLocalServiceTest {
 			Collections.emptyList());
 	}
 
+	private Set<String> _formatEmails(String to) {
+		Set<String> emails = new HashSet<>();
+
+		Matcher matcher = _emailAddressPattern.matcher(to);
+
+		while (matcher.find()) {
+			emails.add(matcher.group());
+		}
+
+		return emails;
+	}
+
 	private static final String _NOTIFICATION_TYPE_KEY = "notificationTypeKey";
+
+	private static final Pattern _emailAddressPattern = Pattern.compile(
+		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
+			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
 
 	@Inject
 	private NotificationQueueEntryLocalService

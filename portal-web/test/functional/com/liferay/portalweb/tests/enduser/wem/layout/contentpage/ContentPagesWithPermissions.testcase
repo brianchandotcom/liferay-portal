@@ -65,6 +65,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161974. The user with Update permission should be able to add custom value to margin and padding."
+	@priority = "4"
+	test AddCustomValuesToSpacingWithUpdatePermission {
+		task ("Given a new user with update permission has a Heading fragment on content page") {
+			task ("Define the permission of new role") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "UPDATE",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+
+			task ("Assign the site role to new user") {
+				JSONRole.assignSiteRoleToUser(
+					groupName = "Test Site Name",
+					roleTitle = "Roles Siterole Name",
+					userEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Sign in as new user") {
+				User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Add a Heading fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+			}
+		}
+
+		task ("When the new user adds a custom value on Spacing") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			Click(
+				ariaLabel = "Padding Right",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			PageEditor.configureFragment(
+				fieldLabel = "Padding Right",
+				unit = "%");
+
+			Type(
+				ariaLabel = "Padding Right",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				value1 = "20");
+		}
+
+		task ("Then the new user could view the custom value of Spacing") {
+			Click(
+				ariaLabel = "Padding Right",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Heading",
+				index = "1",
+				styleName = "paddingRight",
+				styleValue = "20%");
+		}
+	}
+
 	@description = "This is a test for LPS-96795. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
 	@priority = "2"
 	test CannotEditAssetWithoutAssetUpdatePermission {

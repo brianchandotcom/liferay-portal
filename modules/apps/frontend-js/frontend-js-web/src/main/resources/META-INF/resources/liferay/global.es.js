@@ -183,12 +183,9 @@ Liferay.Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
 Liferay.Util.addParams = addParams;
 
 Liferay.Util.openAlertModal = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/index',
-		({openAlertModal}) => {
-			openAlertModal(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openAlertModal}) => {
+		openAlertModal(...args);
+	});
 };
 
 /**
@@ -288,12 +285,9 @@ Liferay.Util.toCharCode = toCharCode;
 Liferay.Util.toggleDisabled = toggleDisabled;
 
 Liferay.Util.openConfirmModal = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/index',
-		({openConfirmModal}) => {
-			openConfirmModal(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openConfirmModal}) => {
+		openConfirmModal(...args);
+	});
 };
 
 Liferay.Util.openModal = (...args) => {

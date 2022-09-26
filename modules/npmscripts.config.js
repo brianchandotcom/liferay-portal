@@ -396,7 +396,6 @@ module.exports = {
 			'dynamic-data-mapping-form-renderer',
 		],
 		imports: {
-			'@liferay/frontend-js-state-web': [],
 			'@liferay/frontend-js-react-web': [
 				'classnames',
 				'formik',
@@ -406,6 +405,7 @@ module.exports = {
 				'react-dnd-html5-backend',
 				'react-dom',
 			],
+			'@liferay/frontend-js-state-web': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [

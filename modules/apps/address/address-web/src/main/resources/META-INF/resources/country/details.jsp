@@ -95,7 +95,7 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 </liferay-frontend:edit-form>
 
 <c:if test="<%= country == null %>">
-<aui:script require="frontend-js-web/index as frontendJsWeb">
+	<aui:script require="frontend-js-web/index as frontendJsWeb">
 		var {debounce} = frontendJsWeb;
 
 		var form = document.getElementById('<portlet:namespace />fm');

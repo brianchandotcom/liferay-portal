@@ -79,7 +79,7 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 </liferay-frontend:edit-form>
 
 <c:if test="<%= region == null %>">
-<aui:script require="frontend-js-web/index as frontendJsWeb">
+	<aui:script require="frontend-js-web/index as frontendJsWeb">
 		var {debounce} = frontendJsWeb;
 
 		var form = document.getElementById('<portlet:namespace />fm');

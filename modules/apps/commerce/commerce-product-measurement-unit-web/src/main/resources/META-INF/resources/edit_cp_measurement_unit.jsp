@@ -90,7 +90,7 @@ else {
 </aui:form>
 
 <c:if test="<%= cpMeasurementUnit == null %>">
-<aui:script require="frontend-js-web/index as frontendJsWeb, commerce-frontend-js/utilities/slugify as slugify">
+	<aui:script require="frontend-js-web/index as frontendJsWeb, commerce-frontend-js/utilities/slugify as slugify">
 		var {debounce} = frontendJsWeb;
 
 		var form = document.getElementById('<portlet:namespace />fm');

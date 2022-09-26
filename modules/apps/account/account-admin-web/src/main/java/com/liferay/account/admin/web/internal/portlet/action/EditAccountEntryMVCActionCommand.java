@@ -142,7 +142,7 @@ public class EditAccountEntryMVCActionCommand
 
 		String[] domains = accountEntry.getDomainsArray();
 
-		if (_isAllowUpdateDomains(actionRequest, accountEntry.getType())) {
+		if (_isAllowUpdateDomains(accountEntry.getType())) {
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
@@ -198,7 +198,7 @@ public class EditAccountEntryMVCActionCommand
 			actionRequest, "type",
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 
-		if (_isAllowUpdateDomains(actionRequest, type)) {
+		if (_isAllowUpdateDomains(type)) {
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
@@ -237,14 +237,9 @@ public class EditAccountEntryMVCActionCommand
 		return WorkflowConstants.STATUS_INACTIVE;
 	}
 
-	private boolean _isAllowUpdateDomains(
-		ActionRequest actionRequest, String type) {
-
+	private boolean _isAllowUpdateDomains(String type) {
 		if (Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type) &&
-			Objects.equals(
-				AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-				_portal.getPortletId(actionRequest))) {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type)) {
 
 			return true;
 		}

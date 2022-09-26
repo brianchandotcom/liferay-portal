@@ -21,7 +21,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 List<String> domains = accountEntryDisplay.getDomains();
 
-boolean allowUpdateDomains = portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN);
+boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), AccountActionKeys.MANAGE_DOMAINS);
 %>
 
 <liferay-ui:error exception="<%= AccountEntryDomainsException.class %>" message="please-enter-a-valid-mail-domain" />

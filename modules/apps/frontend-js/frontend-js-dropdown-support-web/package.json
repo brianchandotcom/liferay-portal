@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"dom-align": "1.10.4",
+		"dom-align": "1.12.2",
 		"frontend-js-web": "*"
 	},
 	"main": "index.js",

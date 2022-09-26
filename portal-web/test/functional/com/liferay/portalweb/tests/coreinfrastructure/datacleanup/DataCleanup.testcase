@@ -15,6 +15,76 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
+	@description = "LPS-163807 This is a test to cover LPS-158824 | Data cleanup does not remove portlet preferences"
+	@priority = "4"
+	test CanCleanupHelloWorldDataAfterUpgrade {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mysql";
+		property portal.version = "6.2.10.21";
+
+		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.hello.world.web%';";
+		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%com.liferay.hello.world.web%';";
+		var resourceActionQuery = "SELECT * FROM ResourceAction WHERE name LIKE '%com.liferay.hello.world.web%';";
+
+		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.UpgradeHelloWorld");
+
+		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = "${classNameQuery}");
+		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
+		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
+
+		if (!(contains("${classNameTable}", "com.liferay.hello.world.web"))) {
+			echo("${classNameTable} - Failed to find Hello World in ClassName_ table.");
+		}
+		else if (!(contains("${releaseTable}", "com.liferay.hello.world.web"))) {
+			echo("${releaseTable}");
+
+			fail("Failed to find Hello World in Release_ table.");
+		}
+		else if (!(contains("${resourceActionTable}", "com.liferay.hello.world.web"))) {
+			echo("${resourceActionTable} - Failed to find Hello World in ResourceAction table.");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Cleanup",
+			configurationScope = "System Scope");
+
+		var key_settingFieldName = "Clean up hello world module data.";
+
+		Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.UpgradeHelloWorld");
+
+		var classNameTable = SQL.executeMySQLStatement(mysqlStatement = "${classNameQuery}");
+		var releaseTable = SQL.executeMySQLStatement(mysqlStatement = "${releaseQuery}");
+		var resourceActionTable = SQL.executeMySQLStatement(mysqlStatement = "${resourceActionQuery}");
+
+		if (contains("${classNameTable}", "com.liferay.hello.world.web")) {
+			echo("${classNameTable}");
+
+			fail("Failed: Hello World data still present in ClassName_ table.");
+		}
+		else if (contains("${releaseTable}", "com.liferay.hello.world.web")) {
+			echo("${releaseTable}");
+
+			fail("Failed: Hello World data still present in Release_ table.");
+		}
+		else if (contains("${resourceActionTable}", "com.liferay.hello.world.web")) {
+			echo("${resourceActionTable}");
+
+			fail("Failed: Hello World data still present in ResourceAction table.");
+		}
+
+
+	}
+
 	@priority = "3"
 	test CanCleanupOpensocialDataAfterUpgrade {
 		property data.archive.type = "data-archive-opensocial";

@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "NASA ICE";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -17,8 +18,14 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		 task ("Create a new Customer Portal Site") {
+		 	CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -31,7 +38,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		 	JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 	}
 

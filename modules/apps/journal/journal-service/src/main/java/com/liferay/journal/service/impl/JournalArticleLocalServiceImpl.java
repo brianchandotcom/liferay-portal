@@ -5846,6 +5846,8 @@ public class JournalArticleLocalServiceImpl
 
 				throw new ArticleFriendlyURLException();
 			}
+
+			urlTitle = latestArticle.getUrlTitle();
 		}
 
 		article.setFolderId(folderId);

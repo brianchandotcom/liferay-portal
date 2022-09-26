@@ -616,8 +616,8 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
-		if (Objects.equals(parameterList.get(2), "new DummyUpgradeStep()") ||
-			Objects.equals(parameterList.get(2), "new DummyUpgradeProcess()")) {
+		if (Objects.equals(parameterList.get(2), "new DummyUpgradeProcess()") ||
+			Objects.equals(parameterList.get(2), "new DummyUpgradeStep()")) {
 
 			String newMethodContent = StringUtil.replaceFirst(
 				methodContent, methodCall, "registry.registerInitialization();",

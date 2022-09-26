@@ -32,23 +32,35 @@ export function FragmentPreview({fragment, namespace}) {
 				className="fragment-preview__list"
 				style={{'--variation-count': variations.length}}
 			>
-				{variations.map((variation) => {
-					const label = `${fragment.label} ${variation
-						.map((part) => part.label)
-						.join(' ')}`;
+				{variations.length ? (
+					variations.map((variation) => {
+						const label = `${fragment.label} ${variation
+							.map((part) => part.label)
+							.join(' ')}`;
 
-					return (
-						<VariationPreview
-							fragmentEntryKey={fragment.fragmentEntryKey}
-							key={label}
-							label={label}
-							namespace={namespace}
-							previewURL={fragment.previewURL}
-							showLabel={variations.length > 1}
-							variation={variation}
-						/>
-					);
-				})}
+						return (
+							<VariationPreview
+								fragmentEntryKey={fragment.fragmentEntryKey}
+								key={label}
+								label={label}
+								namespace={namespace}
+								previewURL={fragment.previewURL}
+								showLabel={variations.length > 1}
+								variation={variation}
+							/>
+						);
+					})
+				) : (
+					<VariationPreview
+						fragmentEntryKey={fragment.fragmentEntryKey}
+						key={fragment.label}
+						label={fragment.label}
+						namespace={namespace}
+						previewURL={fragment.previewURL}
+						showLabel={variations.length > 1}
+						variation={[]}
+					/>
+				)}
 			</div>
 		</section>
 	);

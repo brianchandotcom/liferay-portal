@@ -963,7 +963,6 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = "4"
 	test DeletedObjectDoesNotAppearInManyToManyRelationshipDetailsNestedFields_2 {
 		property portal.acceptance = "true";
@@ -1022,15 +1021,22 @@ definition {
 				objectEntryId = "${universityId1}");
 		}
 
-		task ("Then receiving correct information about the related objects in universities GET endpoint with nestedFields=universitiesSubjects") {
+		task ("Then the subject is going to be deleted and will be disassociated from other universities") {
 			var responseToParse = ObjectDefinitionAPI.getObjectsWithNestedField(
 				nestedField = "universitiesSubjects",
 				objects = "universities");
 
-			ObjectDefinitionAPI.assertResponseIncludeCorrectDetailsOfNotDeletedObject(
-				expectedValue = "Liferay Foundations,Liferay Foundations",
-				objectEntryId = "${subjectId}",
+			ObjectDefinitionAPI.assertResponseNotIncludeDetailsOfDeletedObject(
+				expectedValue = "[],[]",
 				responseToParse = "${responseToParse}");
+
+			var responseToParse = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "subjects");
+
+			var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "0");
 		}
 	}
 

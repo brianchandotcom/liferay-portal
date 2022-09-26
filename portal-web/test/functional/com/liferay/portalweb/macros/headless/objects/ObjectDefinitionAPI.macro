@@ -209,7 +209,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/c/employees/${employeeId} \
+			${portalURL}/o/c/employees/${employeeId} \
 			-u test@liferay.com:test
 		''';
 
@@ -224,7 +224,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/c/managers/${managerId} \
+			${portalURL}/o/c/managers/${managerId} \
 			-u test@liferay.com:test
 		''';
 
@@ -251,7 +251,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
 			-u test@liferay.com:test
 		''';
 
@@ -267,7 +267,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId} \
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId} \
 			-u test@liferay.com:test
 		''';
 
@@ -283,7 +283,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId}/${relationshipName} \
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId}/${relationshipName} \
 			-H accept: application/json \
 			-u test@liferay.com:test
 		''';
@@ -320,7 +320,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/c/${objects}?nestedFields=${nestedField} \
+			${portalURL}/o/c/${objects}?nestedFields=${nestedField} \
 			-u test@liferay.com:test
 		''';
 
@@ -335,7 +335,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships \
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships \
 			-u test@liferay.com:test
 		''';
 
@@ -350,7 +350,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
+			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
 			-u test@liferay.com:test
 		''';
 
@@ -365,7 +365,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
+			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
 			-H accept: application/json \
@@ -385,7 +385,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-        	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish \
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish \
 			-u test@liferay.com:test
 		''';
 
@@ -401,7 +401,7 @@ definition {
 		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
 
 		var curl = '''
-        	${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntry1}/${relationshipName}/${objectEntry2} \
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntry1}/${relationshipName}/${objectEntry2} \
 			-u test@liferay.com:test
 		''';
 
@@ -638,6 +638,22 @@ definition {
 		var objectDefinitionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${name}')]['id']");
 
 		return "${objectDefinitionId}";
+	}
+
+	macro getObjectEntries {
+		Variables.assertDefined(parameterList = "${en_US_plural_label}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/ \
+			-u test@liferay.com:test
+		''';
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
 	}
 
 	macro getObjectEntryRelation {

@@ -54,8 +54,8 @@ public class EmailAddressTable extends BaseTable<EmailAddressTable> {
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<EmailAddressTable, String> address = createColumn(
 		"address", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<EmailAddressTable, Long> typeId = createColumn(
-		"typeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<EmailAddressTable, Long> listTypeId = createColumn(
+		"listTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<EmailAddressTable, Boolean> primary = createColumn(
 		"primary_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 

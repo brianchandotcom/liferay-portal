@@ -670,7 +670,7 @@
 			<hint name="display-width">210</hint>
 			<validator name="email" />
 		</field>
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.Group">

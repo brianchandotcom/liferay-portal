@@ -101,8 +101,8 @@ public class EmailAddressCacheModel
 		sb.append(classPK);
 		sb.append(", address=");
 		sb.append(address);
-		sb.append(", typeId=");
-		sb.append(typeId);
+		sb.append(", listTypeId=");
+		sb.append(listTypeId);
 		sb.append(", primary=");
 		sb.append(primary);
 		sb.append("}");
@@ -158,7 +158,7 @@ public class EmailAddressCacheModel
 			emailAddressImpl.setAddress(address);
 		}
 
-		emailAddressImpl.setTypeId(typeId);
+		emailAddressImpl.setListTypeId(listTypeId);
 		emailAddressImpl.setPrimary(primary);
 
 		emailAddressImpl.resetOriginalValues();
@@ -185,7 +185,7 @@ public class EmailAddressCacheModel
 		classPK = objectInput.readLong();
 		address = objectInput.readUTF();
 
-		typeId = objectInput.readLong();
+		listTypeId = objectInput.readLong();
 
 		primary = objectInput.readBoolean();
 	}
@@ -228,7 +228,7 @@ public class EmailAddressCacheModel
 			objectOutput.writeUTF(address);
 		}
 
-		objectOutput.writeLong(typeId);
+		objectOutput.writeLong(listTypeId);
 
 		objectOutput.writeBoolean(primary);
 	}
@@ -244,7 +244,7 @@ public class EmailAddressCacheModel
 	public long classNameId;
 	public long classPK;
 	public String address;
-	public long typeId;
+	public long listTypeId;
 	public boolean primary;
 
 }

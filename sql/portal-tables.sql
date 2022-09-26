@@ -483,7 +483,7 @@ create table EmailAddress (
 	classNameId LONG,
 	classPK LONG,
 	address VARCHAR(254) null,
-	typeId LONG,
+	listTypeId LONG,
 	primary_ BOOLEAN
 );
 

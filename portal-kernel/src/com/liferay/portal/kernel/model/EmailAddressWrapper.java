@@ -53,7 +53,7 @@ public class EmailAddressWrapper
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("address", getAddress());
-		attributes.put("typeId", getTypeId());
+		attributes.put("listTypeId", getListTypeId());
 		attributes.put("primary", isPrimary());
 
 		return attributes;
@@ -127,10 +127,10 @@ public class EmailAddressWrapper
 			setAddress(address);
 		}
 
-		Long typeId = (Long)attributes.get("typeId");
+		Long listTypeId = (Long)attributes.get("listTypeId");
 
-		if (typeId != null) {
-			setTypeId(typeId);
+		if (listTypeId != null) {
+			setListTypeId(listTypeId);
 		}
 
 		Boolean primary = (Boolean)attributes.get("primary");
@@ -216,6 +216,16 @@ public class EmailAddressWrapper
 	}
 
 	/**
+	 * Returns the list type ID of this email address.
+	 *
+	 * @return the list type ID of this email address
+	 */
+	@Override
+	public long getListTypeId() {
+		return model.getListTypeId();
+	}
+
+	/**
 	 * Returns the modified date of this email address.
 	 *
 	 * @return the modified date of this email address
@@ -260,16 +270,6 @@ public class EmailAddressWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getType();
-	}
-
-	/**
-	 * Returns the type ID of this email address.
-	 *
-	 * @return the type ID of this email address
-	 */
-	@Override
-	public long getTypeId() {
-		return model.getTypeId();
 	}
 
 	/**
@@ -393,6 +393,16 @@ public class EmailAddressWrapper
 	}
 
 	/**
+	 * Sets the list type ID of this email address.
+	 *
+	 * @param listTypeId the list type ID of this email address
+	 */
+	@Override
+	public void setListTypeId(long listTypeId) {
+		model.setListTypeId(listTypeId);
+	}
+
+	/**
 	 * Sets the modified date of this email address.
 	 *
 	 * @param modifiedDate the modified date of this email address
@@ -430,16 +440,6 @@ public class EmailAddressWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the type ID of this email address.
-	 *
-	 * @param typeId the type ID of this email address
-	 */
-	@Override
-	public void setTypeId(long typeId) {
-		model.setTypeId(typeId);
 	}
 
 	/**

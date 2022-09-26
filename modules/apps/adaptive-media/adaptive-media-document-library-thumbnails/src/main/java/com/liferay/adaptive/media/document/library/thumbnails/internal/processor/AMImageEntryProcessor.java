@@ -33,7 +33,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -400,10 +399,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	private AMImageValidator _amImageValidator;
 
 	private volatile AMSystemImagesConfiguration _amSystemImagesConfiguration;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
 	private final ImageProcessor _imageProcessor = new ImageProcessorImpl();
 
 	@Reference

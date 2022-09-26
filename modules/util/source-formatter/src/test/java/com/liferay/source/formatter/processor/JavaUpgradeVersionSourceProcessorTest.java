@@ -59,6 +59,16 @@ public class JavaUpgradeVersionSourceProcessorTest
 		test("MinorUpgradeByAlterTableAddColumnClause.testjava", "1.1.0", 31);
 	}
 
+	@Test
+	public void testReplaceDummyUpgradeStepForInitialize() throws Exception {
+		test("ReplaceDummyUpgradeStepForInitialize1.testjava");
+		test("ReplaceDummyUpgradeStepForInitialize2.testjava");
+		test(
+			"ReplaceDummyUpgradeStepForInitialize3.testjava",
+			"Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
+				"replaced by 'registry.registerInitialization()'");
+	}
+
 	@Override
 	protected void test(
 			String fileName, String expectedSchemaVersion, int lineNumber)

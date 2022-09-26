@@ -21,6 +21,87 @@ definition {
 		}
 	}
 
+	@description = "LPS-151766 - Verify that it's possible to create an object entry related to Commerce Product Group"
+	@priority = "4"
+	test CanCreateEntryRelatedToCommerceProductGroup {
+		task ("Create a Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 288",
+				objectName = "CustomObject288",
+				pluralLabelName = "Custom Objects 288");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CommercePricingClass",
+				objectName_2 = "CustomObject288",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject288");
+		}
+
+		task ("Change the Commerce Product Group title field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product Group");
+
+			CreateObject.selectTitleField(fieldLabel = "Title");
+
+			Button.clickSave();
+		}
+
+		task ("Create a Commerce Product Group") {
+			Navigator.openURL();
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Groups");
+
+			Click(locator1 = "ContentDashboard#SEARCH_FIELD");
+
+			Type(
+				locator1 = "ContentDashboard#SEARCH_FIELD",
+				value1 = "PG2");
+
+			Click(
+				key_text = "Create New",
+				locator1 = "Button#ANY");
+
+			Refresh();
+
+			AssertElementPresent(
+				key_tableEntryName = "PG2",
+				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+			Button.clickPublish();
+		}
+
+		task ("Create an object entry related to Commerce Product Group") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject288");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "PG2");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject288");
+
+			AssertElementPresent(
+				key_entry = "PG2",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+	}
+
 	@description = "LPS-136741 - Verify that Commerce notification works for creating an entry"
 	@ignore = "Test Stub"
 	@priority = "4"

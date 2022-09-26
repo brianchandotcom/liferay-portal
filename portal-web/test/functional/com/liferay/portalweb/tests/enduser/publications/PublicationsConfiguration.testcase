@@ -20,6 +20,55 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-163875. It shouldn't be possible to enable Publications is a remote live site."
+	@priority = "4"
+	test CannotEnablePublicationsInRemoteLiveSite {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property minimum.slave.ram = "24";
+		property test.name.skip.portal.instance = "Publications#CanEnablePublicationsInRemoteLiveSite";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
+	}
+
 	@priority = "5"
 	test CannotEnablePublicationsWhenStagingIsTurnedOn {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

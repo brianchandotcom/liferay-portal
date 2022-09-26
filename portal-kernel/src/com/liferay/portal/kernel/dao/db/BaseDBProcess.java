@@ -319,19 +319,10 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected Connection getConnection() throws Exception {
-		if (GetterUtil.getBoolean(
-				PropsUtil.get("database.partition.enabled")) &&
-			GetterUtil.getBoolean(
-				PropsUtil.get("database.partition.thread.pool.enabled"),
-				true)) {
-
-			return (Connection)ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(),
-				new Class<?>[] {Connection.class},
-				new ConnectionThreadProxyInvocationHandler());
-		}
-
-		return _getConnection();
+		return (Connection)ProxyUtil.newProxyInstance(
+			ClassLoader.getSystemClassLoader(),
+			new Class<?>[] {Connection.class},
+			new ConnectionThreadProxyInvocationHandler());
 	}
 
 	protected String[] getPrimaryKeyColumnNames(

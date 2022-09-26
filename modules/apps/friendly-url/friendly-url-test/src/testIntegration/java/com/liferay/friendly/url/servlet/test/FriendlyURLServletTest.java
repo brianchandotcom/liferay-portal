@@ -22,16 +22,25 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -203,6 +212,47 @@ public class FriendlyURLServletTest {
 		testGetRedirect(
 			mockHttpServletRequest, getPath(userGroup, _layout),
 			Portal.PATH_MAIN,
+			_redirectConstructor1.newInstance(getURL(_layout)));
+	}
+
+	@Test
+	public void testGetRedirectWithRedirectEntryLayoutViewAction()
+		throws Throwable {
+
+		Layout redirectionLayout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		_redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), redirectionLayout.getName(LocaleUtil.US), null,
+			false, _layout.getName(LocaleUtil.US),
+			ServiceContextTestUtil.getServiceContext());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader(
+			HttpHeaders.REFERER,
+			StringBundler.concat(
+				_group.getFriendlyURL(),
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
+				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
+				GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			_role, Layout.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), ActionKeys.UPDATE);
+
+		_user = UserTestUtil.addUser();
+
+		RoleLocalServiceUtil.addUserRole(_user.getUserId(), _role);
+
+		mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
+
+		mockHttpServletRequest.setPathInfo(_layout.getFriendlyURL());
+
+		testGetRedirect(
+			mockHttpServletRequest, getPath(_group, _layout), Portal.PATH_MAIN,
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
@@ -571,6 +621,9 @@ public class FriendlyURLServletTest {
 
 	@Inject
 	private RedirectEntryLocalService _redirectEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Role _role;
 
 	@Inject(
 		filter = "(&(servlet.type=friendly-url)(servlet.init.private=false))"

@@ -1,0 +1,245 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+        task ("Login and create a Testray Site") {
+            TestCase.setUpPortalInstance();
+
+            User.firstLoginPG();
+
+            Testray.createTestraySite(siteName = "Testray 2");
+
+            Refresh();
+        }
+
+        task ("Go to Categories on Manage Sidebar and Add two Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category A");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category B");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Go to Options on Manage Sidebar and Add New Option") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category A",
+				option = "Option 1");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category A",
+				option = "Option 2");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category B",
+				option = "Option 3");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Create project, create Product Version and create Routine") {
+            Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+            TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = "Projects_1 Project",
+				version = "1.x");
+
+            Refresh();
+
+            Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Add Environmental Factors and create build") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Environments_1 Category A",
+				label1 = "Environments_1 Category B",
+				listCategory = "Environments_1 Category A,Environments_1 Category B",
+				listOption = "Option 2",
+				listOption1 = "Option 3");
+
+            TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+            TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.x",
+				routine = "Routines_1 Routine");
+        }
+
+        task ("Go to Testray 2 and change the pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        task ("Delete routine in setup") {
+            TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+
+            CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		TestrayManage.deleteAllCategories();
+
+		Testray.deleteAllProjects();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-160590 - Verify if as an Administrator I should be able to add and delete a Run"
+	@priority = "5"
+	test AdminCanAddAndDeleteRun {
+		task ("Given that the user goes into build") {
+            Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+            TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+		}
+
+        task ("And create run that should appear on the list") {
+			Testray.projectTabNavigator(navTabName = "Runs");
+
+            TestrayRun.addRun(
+                label = "Environments_1 Category A",
+				label1 = "Environments_1 Category B",
+				listOption = "Option 1",
+				listOption1 = "Option 3");
+
+            Testray.assertItemName(key_name = "01");
+
+            CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Then run should not appear on the list") {
+			TestrayRun.deleteRun(runName = "01");
+
+            Testray.assertItemNotPresent(key_name = "01");
+		}
+	}
+
+	@description = "This is a test for LPS-160591 - Verify if as an Administrator I should not be able to add a duplicate run"
+    @ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotAddDuplicateRun {
+		
+        // TODO LPS-160591 AdminCanNotAddDuplicateRun pending implementation
+
+	}
+
+	@description = "This is a test for LPS-160592 - Verify if as an administrator I should not be allowed to add runs with identical environments"
+    @ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanNotAddRunWithIdenticalEnvironments {
+		
+        // TODO LPS-160592 AdminCanNotAddRunWithIdenticalEnvironments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-160593 - Verify if as an Administrator I should be able to delete a run that contains Case Results"
+    @ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteRunsWithCaseResults {
+
+		// TODO LPS-160593 AdminCanDeleteRunsWithCaseResults pending implementation
+
+	}
+
+	@description = "This is a test for LPS-163959 - Verify if as an Administrator I should be able to edit a Run"
+	@priority = "5"
+	test AdminCanEditRun {
+        task ("Given that the user goes into build") {
+            Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+            TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+		}
+
+        task ("And edit run") {
+			Testray.projectTabNavigator(navTabName = "Runs");
+
+            TestrayRun.addRun(
+                label = "Environments_1 Category A",
+				label1 = "Environments_1 Category B",
+				listOption = "Option 1",
+				listOption1 = "Option 3");
+
+            Testray.assertItemName(key_name = "01");
+
+            TestrayRun.assertValueRun(valueRun = "Option 1");
+
+            CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Then run should appear on the list edited") {
+			TestrayRun.editRun(
+                runName = "01",
+                label = "Environments_1 Category A",
+				label1 = "Environments_1 Category B",
+				listOption = "Option 2",
+				listOption1 = "Option 3");
+
+            TestrayRun.assertValueRun(valueRun = "Option 2");
+		}
+		
+	}
+
+}

@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
+import com.liferay.commerce.product.exception.DuplicateCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
@@ -128,13 +129,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		_validateSku(cpDefinitionId, 0, sku);
 
-		// Commerce product instance
+		_validateExternalReferenceCode(
+			0, serviceContext.getCompanyId(), externalReferenceCode);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		Date expirationDate = null;
 		Date date = new Date();
@@ -299,9 +297,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 			if (cpInstance != null) {
 				return cpInstanceLocalService.updateCPInstance(
-					cpInstance.getCPInstanceId(), sku, gtin,
-					manufacturerPartNumber, purchasable, width, height, depth,
-					weight, price, promoPrice, cost, published,
+					externalReferenceCode, cpInstance.getCPInstanceId(), sku,
+					gtin, manufacturerPartNumber, purchasable, width, height,
+					depth, weight, price, promoPrice, cost, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -770,21 +768,23 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, boolean discontinued,
-			String replacementCPInstanceUuid, long replacementCProductId,
-			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, ServiceContext serviceContext)
+			String externalReferenceCode, long cpInstanceId, String sku,
+			String gtin, String manufacturerPartNumber, boolean purchasable,
+			double width, double height, double depth, double weight,
+			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, String unspsc,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
+			int discontinuedDateDay, int discontinuedDateYear,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce product instance
+		_validateExternalReferenceCode(
+			cpInstanceId, serviceContext.getCompanyId(), externalReferenceCode);
 
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
@@ -822,6 +822,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPInstanceExpirationDateException.class);
 		}
+
+		cpInstance.setExternalReferenceCode(externalReferenceCode);
 
 		cpInstance.setSku(sku);
 		cpInstance.setGtin(gtin);
@@ -1630,6 +1632,28 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds;
+	}
+
+	private void _validateExternalReferenceCode(
+			long cpInstanceId, long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		CPInstance cpInstance = cpInstancePersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+
+		if (cpInstance == null) {
+			return;
+		}
+
+		if (cpInstance.getCPInstanceId() != cpInstanceId) {
+			throw new DuplicateCPInstanceException(
+				"There is another commerce product instance with external " +
+					"reference code " + externalReferenceCode);
+		}
 	}
 
 	private void _validateReplacementCPInstance(

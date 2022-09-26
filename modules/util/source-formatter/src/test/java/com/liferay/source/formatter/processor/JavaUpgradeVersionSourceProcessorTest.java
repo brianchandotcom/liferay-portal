@@ -14,13 +14,15 @@
 
 package com.liferay.source.formatter.processor;
 
+import org.junit.Test;
+
 /**
  * @author Alberto Chaparro
  */
 public class JavaUpgradeVersionSourceProcessorTest
 	extends BaseSourceProcessorTestCase {
 
-	/*@Test
+	@Test
 	public void testDummyUpgradeStepVersion() throws Exception {
 		test("DummyUpgradeStepVersion.testjava");
 	}
@@ -55,7 +57,7 @@ public class JavaUpgradeVersionSourceProcessorTest
 	@Test
 	public void testMinorUpgradeByAlterTableAddColumnClause() throws Exception {
 		test("MinorUpgradeByAlterTableAddColumnClause.testjava", "1.1.0", 31);
-	}*/
+	}
 
 	@Override
 	protected void test(

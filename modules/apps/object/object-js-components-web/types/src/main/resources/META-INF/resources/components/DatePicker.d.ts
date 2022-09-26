@@ -34,7 +34,7 @@ interface IProps
 	id?: string;
 	label?: string;
 	name?: string;
-	onChange?: (value: string) => void;
+	onChange: (value: string) => void;
 	range?: boolean;
 	required?: boolean;
 	value?: string;

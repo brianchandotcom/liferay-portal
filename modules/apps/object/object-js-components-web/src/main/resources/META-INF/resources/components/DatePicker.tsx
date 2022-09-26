@@ -13,9 +13,12 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
+import moment from 'moment';
 import React from 'react';
 
 import {FieldBase} from './FieldBase';
+
+const NON_NUMERIC_REGEX = /[^0-9-]/;
 
 export function DatePicker({
 	className,
@@ -40,13 +43,15 @@ export function DatePicker({
 			required={required}
 		>
 			<ClayDatePicker
-				onChange={onChange}
+				onChange={(value: string) => {
+					onChange(value.replace(NON_NUMERIC_REGEX, ''));
+				}}
 				placeholder="YYYY-MM-DD"
 				range={range}
 				value={value}
 				years={{
-					end: 2024,
-					start: 1997,
+					end: moment().year() + 5,
+					start: moment().year() - 5,
 				}}
 			/>
 		</FieldBase>
@@ -62,7 +67,7 @@ interface IProps
 	id?: string;
 	label?: string;
 	name?: string;
-	onChange?: (value: string) => void;
+	onChange: (value: string) => void;
 	range?: boolean;
 	required?: boolean;
 	value?: string;

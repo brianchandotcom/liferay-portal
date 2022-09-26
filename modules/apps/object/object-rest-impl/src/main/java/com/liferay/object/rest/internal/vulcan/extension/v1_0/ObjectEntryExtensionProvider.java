@@ -18,24 +18,19 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.vulcan.dto.converter.DTOMapper;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(immediate = true, service = ExtensionProvider.class)
-public class ObjectEntryExtensionProvider implements ExtensionProvider {
+public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 	@Override
 	public Map<String, Serializable> getExtendedProperties(
@@ -57,8 +52,8 @@ public class ObjectEntryExtensionProvider implements ExtensionProvider {
 		try {
 			return _objectEntryLocalService.
 				getExtensionDynamicObjectDefinitionTableValues(
-					_getObjectDefinition(companyId, className),
-					_getPrimaryKey(entity));
+					getObjectDefinition(companyId, className),
+					getPrimaryKey(entity));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -76,7 +71,7 @@ public class ObjectEntryExtensionProvider implements ExtensionProvider {
 		Map<String, PropertyDefinition> extendedPropertyDefinitions =
 			new HashMap<>();
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
+		ObjectDefinition objectDefinition = getObjectDefinition(
 			companyId, className);
 
 		for (ObjectField objectField :
@@ -103,26 +98,12 @@ public class ObjectEntryExtensionProvider implements ExtensionProvider {
 	}
 
 	@Override
-	public Collection<String> getFilteredPropertyNames(
-		long companyId, Object entity) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
 	public boolean isApplicableExtension(long companyId, String className) {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135404"))) {
 			return false;
 		}
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
-			companyId, className);
-
-		if ((objectDefinition != null) && objectDefinition.isSystem()) {
-			return true;
-		}
-
-		return false;
+		return super.isApplicableExtension(companyId, className);
 	}
 
 	@Override
@@ -133,8 +114,8 @@ public class ObjectEntryExtensionProvider implements ExtensionProvider {
 		try {
 			_objectEntryLocalService.
 				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
-					userId, _getObjectDefinition(companyId, className),
-					_getPrimaryKey(entity), extendedProperties,
+					userId, getObjectDefinition(companyId, className),
+					getPrimaryKey(entity), extendedProperties,
 					new ServiceContext() {
 						{
 							setCompanyId(companyId);
@@ -149,48 +130,8 @@ public class ObjectEntryExtensionProvider implements ExtensionProvider {
 		}
 	}
 
-	private ObjectDefinition _getObjectDefinition(
-		long companyId, String className) {
-
-		String internalDTOClassName = _dtoMapper.toInternalDTOClassName(
-			className);
-
-		if (internalDTOClassName == null) {
-			return null;
-		}
-
-		try {
-			return _objectDefinitionLocalService.
-				fetchObjectDefinitionByClassName(
-					companyId, internalDTOClassName);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return null;
-		}
-	}
-
-	private long _getPrimaryKey(Object entity) throws PortalException {
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_jsonFactory.looseSerializeDeep(entity));
-
-		return jsonObject.getLong("id");
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryExtensionProvider.class);
-
-	@Reference
-	private DTOMapper _dtoMapper;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

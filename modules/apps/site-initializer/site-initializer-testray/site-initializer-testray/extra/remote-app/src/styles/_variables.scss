@@ -230,9 +230,9 @@ $table-row-focused-color: #d3f6ff;
 $sidebar-divider-color: #8b8db2;
 
 :root {
-	--primary: #373ecc;
-	--btn-primary-hover-border-color: #0e1387;
-	--btn-primary-hover-background-color: #0e1387;
+	--primary: #373ecc !important;
+	--btn-primary-hover-border-color: #0e1387 !important;
+	--btn-primary-hover-background-color: #0e1387 !important;
 }
 
 // ---------- Result status colors ----------

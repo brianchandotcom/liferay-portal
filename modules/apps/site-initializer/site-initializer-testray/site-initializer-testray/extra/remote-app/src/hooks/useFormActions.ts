@@ -52,7 +52,7 @@ export type FormComponent = Omit<Form, 'forceRefetch'>;
 const onError = (error: any) => {
 	let errorMessage = i18n.translate('an-unexpected-error-occurred');
 
-	if (process.env.NODE_ENV === 'development') {
+	if (['development', 'test'].includes(process.env.NODE_ENV as string)) {
 		console.error(error);
 
 		errorMessage = error.message;
@@ -108,8 +108,7 @@ const useFormActions = (): Form => {
 			setSubmitting(false);
 
 			return response;
-		}
-		catch (error) {
+		} catch (error) {
 			setSubmitting(false);
 
 			throw error;

@@ -102,6 +102,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-152408 - Verify that it's possible to create an object entry related to Commerce Products"
+	@priority = "4"
+	test CanCreateEntryRelatedToCommerceProducts {
+		task ("Create a Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 289",
+				objectName = "CustomObject289",
+				pluralLabelName = "Custom Objects 289");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CPDefinition",
+				objectName_2 = "CustomObject289",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject289");
+		}
+
+		task ("Change the Commerce Product title field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product");
+
+			CreateObject.selectTitleField(fieldLabel = "Name");
+
+			Button.clickSave();
+		}
+
+		task ("Create a Commerce Product") {
+			Navigator.openURL();
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
+
+		task ("Create an object entry related to Commerce Product") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject289");
+
+			LexiconEntry.gotoAdd();
+
+			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+
+			AssertElementPresent(
+				key_picklistOption = "Simple T-Shirt",
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Simple T-Shirt");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			CreateObject.assertEntrySelectedOnRelationshipField(entry = "Simple T-Shirt");
+		}
+	}
+
 	@description = "LPS-136741 - Verify that Commerce notification works for creating an entry"
 	@ignore = "Test Stub"
 	@priority = "4"

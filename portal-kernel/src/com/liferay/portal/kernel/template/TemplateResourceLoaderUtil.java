@@ -68,8 +68,7 @@ public class TemplateResourceLoaderUtil {
 			String templateResourceLoaderName)
 		throws TemplateException {
 
-		return _templateResourceLoaderUtil._getTemplateResourceLoader(
-			templateResourceLoaderName);
+		return _getTemplateResourceLoader(templateResourceLoaderName);
 	}
 
 	public static Set<String> getTemplateResourceLoaderNames() {
@@ -125,8 +124,5 @@ public class TemplateResourceLoaderUtil {
 
 				_bundleContext.ungetService(serviceReference);
 			});
-
-	private static final TemplateResourceLoaderUtil
-		_templateResourceLoaderUtil = new TemplateResourceLoaderUtil();
 
 }

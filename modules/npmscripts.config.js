@@ -300,6 +300,7 @@ module.exports = {
 						'/': '*',
 					},
 				},
+				strictGlobalDependencies: true,
 			},
 			exclude: {
 				'*': ['**/tests/**/*', '**/test/**/*', '**/__tests__/**/*'],

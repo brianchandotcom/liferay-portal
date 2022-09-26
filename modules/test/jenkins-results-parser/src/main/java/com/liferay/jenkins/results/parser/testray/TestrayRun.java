@@ -104,8 +104,6 @@ public class TestrayRun {
 				continue;
 			}
 
-			boolean factorsMatch = true;
-
 			for (int j = 0; j < testrayFactorsJSONArray.length(); j++) {
 				JSONObject testrayFactorJSONObject =
 					testrayFactorsJSONArray.getJSONObject(j);
@@ -119,12 +117,8 @@ public class TestrayRun {
 						factorCategoryName) ||
 					JenkinsResultsParserUtil.isNullOrEmpty(factorOptionName)) {
 
-					factorsMatch = false;
-
 					break;
 				}
-
-				boolean factorFound = false;
 
 				for (Factor factor : getFactors()) {
 					if (!Objects.equals(factor.getName(), factorCategoryName)) {
@@ -141,23 +135,11 @@ public class TestrayRun {
 							factorValue.toLowerCase(),
 							factorOptionName.toLowerCase())) {
 
-						factorFound = true;
-
-						break;
+						return dataJSONObject.getString("testrayRunId");
 					}
 				}
 
-				if (!factorFound) {
-					factorsMatch = false;
-				}
-
-				if (!factorsMatch) {
-					break;
-				}
-			}
-
-			if (factorsMatch) {
-				return dataJSONObject.getString("testrayRunId");
+				break;
 			}
 		}
 

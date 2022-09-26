@@ -3,80 +3,130 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.fragment.renderer.menu.display.internal;
+package com.liferay.fragment.internal.util.configuration;
+
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Víctor Galán
+ * @author Evan Thibodeau
  */
 public class MenuDisplayFragmentConfiguration {
 
-	public static final Source DEFAULT_SOURCE = new SiteNavigationMenuSource(
-		0, false, 0);
+	public MenuDisplayFragmentConfiguration(String source) {
+		_rootLayoutUUID = null;
+		_siteNavigationMenuId = 0;
 
-	public MenuDisplayFragmentConfiguration(
-		DisplayStyle displayStyle, String hoveredItemColor,
-		String selectedItemColor, Source source, int sublevels) {
-
-		_displayStyle = displayStyle;
-		_hoveredItemColor = hoveredItemColor;
-		_selectedItemColor = selectedItemColor;
-		_source = source;
-		_sublevels = sublevels;
-	}
-
-	public DisplayStyle getDisplayStyle() {
-		return _displayStyle;
-	}
-
-	public Optional<String> getHoveredItemColorOptional() {
-		return Optional.ofNullable(_hoveredItemColor);
-	}
-
-	public Optional<String> getSelectedItemColorOptional() {
-		return Optional.ofNullable(_selectedItemColor);
-	}
-
-	public Source getSource() {
-		return _source;
-	}
-
-	public int sublevels() {
-		return _sublevels;
-	}
-
-	public static class SiteNavigationMenuSource implements Source {
-
-		public SiteNavigationMenuSource(
-			long parentSiteNavigationMenuItemId, boolean privateLayout,
-			long siteNavigationMenuId) {
-
-			_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
-			_privateLayout = privateLayout;
-			_siteNavigationMenuId = siteNavigationMenuId;
+		if (!JSONUtil.isValid(source)) {
+			_navigationMenuMode = NavigationMenuMode.PUBLIC_PAGES;
+			_rootLayoutType = "select";
 		}
+		else {
+			JSONObject jsonObject = _createJSONObject(source);
 
-		public long getParentSiteNavigationMenuItemId() {
-			return _parentSiteNavigationMenuItemId;
+			if (jsonObject.has("contextualMenu")) {
+				_rootLayoutType = "relative";
+
+				ContextualMenu contextualMenu = ContextualMenu.parse(
+					jsonObject.getString("contextualMenu"));
+
+				if (contextualMenu == ContextualMenu.CHILDREN) {
+					_rootLayoutLevel = 0;
+				}
+				else if (contextualMenu ==
+							ContextualMenu.PARENT_AND_ITS_SIBLINGS) {
+
+					_rootLayoutLevel = 2;
+				}
+				else if (contextualMenu == ContextualMenu.SELF_AND_SIBLINGS) {
+					_rootLayoutLevel = 1;
+				}
+			}
+			else if (jsonObject.has("siteNavigationMenuId")) {
+				_rootLayoutType = "select";
+
+				if (jsonObject.getBoolean("privateLayout")) {
+					_navigationMenuMode = NavigationMenuMode.PRIVATE_PAGES;
+				}
+				else {
+					_navigationMenuMode = NavigationMenuMode.PUBLIC_PAGES;
+				}
+
+				long siteNavigationMenuId = jsonObject.getLong(
+					"siteNavigationMenuId");
+
+				_siteNavigationMenuId = siteNavigationMenuId;
+
+				long parentSiteNavigationMenuItemId = jsonObject.getLong(
+					"parentSiteNavigationMenuItemId");
+
+				if (parentSiteNavigationMenuItemId > 0) {
+					if (_isLayoutHierarchy(siteNavigationMenuId)) {
+						Layout layout = LayoutLocalServiceUtil.fetchLayout(
+							parentSiteNavigationMenuItemId);
+
+						_rootLayoutUUID = layout.getUuid();
+					}
+					else {
+						_rootLayoutUUID = String.valueOf(
+							parentSiteNavigationMenuItemId);
+					}
+				}
+			}
 		}
-
-		public long getSiteNavigationMenuId() {
-			return _siteNavigationMenuId;
-		}
-
-		public boolean isPrivateLayout() {
-			return _privateLayout;
-		}
-
-		private final long _parentSiteNavigationMenuItemId;
-		private final boolean _privateLayout;
-		private final long _siteNavigationMenuId;
-
 	}
 
-	public enum ContextualMenu implements Source {
+	public NavigationMenuMode getNavigationMenuMode() {
+		return _navigationMenuMode;
+	}
+
+	public int getRootLayoutLevel() {
+		return _rootLayoutLevel;
+	}
+
+	public String getRootLayoutType() {
+		return _rootLayoutType;
+	}
+
+	public String getRootLayoutUUID() {
+		return _rootLayoutUUID;
+	}
+
+	public long getSiteNavigationMenuId() {
+		return _siteNavigationMenuId;
+	}
+
+	public void setNavigationMenuMode(NavigationMenuMode navigationMenuMode) {
+		_navigationMenuMode = navigationMenuMode;
+	}
+
+	public void setRootLayoutLevel(int rootLayoutLevel) {
+		_rootLayoutLevel = rootLayoutLevel;
+	}
+
+	public void setRootLayoutType(String rootLayoutType) {
+		_rootLayoutType = rootLayoutType;
+	}
+
+	public void setRootLayoutUUID(String rootLayoutUUID) {
+		_rootLayoutUUID = rootLayoutUUID;
+	}
+
+	public void setSiteNavigationMenuId(long siteNavigationMenuId) {
+		_siteNavigationMenuId = siteNavigationMenuId;
+	}
+
+	public enum ContextualMenu {
 
 		CHILDREN("children"),
 		PARENT_AND_ITS_SIBLINGS("parent-and-its-siblings"),
@@ -104,39 +154,34 @@ public class MenuDisplayFragmentConfiguration {
 
 	}
 
-	public enum DisplayStyle {
-
-		HORIZONTAL("horizontal"), STACKED("stacked");
-
-		public static DisplayStyle parse(String stringValue) {
-			for (DisplayStyle displayStyle : values()) {
-				if (Objects.equals(displayStyle.getValue(), stringValue)) {
-					return displayStyle;
-				}
+	private JSONObject _createJSONObject(String value) {
+		try {
+			return JSONFactoryUtil.createJSONObject(value);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
 			}
 
-			return HORIZONTAL;
+			return JSONFactoryUtil.createJSONObject();
 		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		private DisplayStyle(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
-	public interface Source {
+	private boolean _isLayoutHierarchy(long siteNavigationMenuId) {
+		if (siteNavigationMenuId == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
-	private final DisplayStyle _displayStyle;
-	private final String _hoveredItemColor;
-	private final String _selectedItemColor;
-	private final Source _source;
-	private final int _sublevels;
+	private static final Log _log = LogFactoryUtil.getLog(
+		MenuDisplayFragmentConfiguration.class);
+
+	private NavigationMenuMode _navigationMenuMode = NavigationMenuMode.DEFAULT;
+	private int _rootLayoutLevel = 1;
+	private String _rootLayoutType = "absolute";
+	private String _rootLayoutUUID;
+	private long _siteNavigationMenuId;
 
 }

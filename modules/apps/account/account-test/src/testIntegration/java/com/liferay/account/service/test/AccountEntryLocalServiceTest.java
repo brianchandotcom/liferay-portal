@@ -327,9 +327,14 @@ public class AccountEntryLocalServiceTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, domains);
 
-		Assert.assertEquals(
-			StringUtil.merge(ArrayUtil.distinct(expectedDomains), ","),
-			accountEntry.getDomains());
+		Assert.assertArrayEquals(
+			ArrayUtil.sortedUnique(expectedDomains),
+			ArrayUtil.sortedUnique(accountEntry.getDomainsArray()));
+
+		accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService, null);
+
+		Assert.assertArrayEquals(new String[0], accountEntry.getDomainsArray());
 	}
 
 	@Test
@@ -1034,6 +1039,36 @@ public class AccountEntryLocalServiceTest {
 
 		_assertPaginationSort(expectedAccountEntries, keywords, false);
 		_assertPaginationSort(expectedAccountEntries, keywords, true);
+	}
+
+	@Test
+	public void testUpdateAccountEntry() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		String[] expectedDomains = {"update1.com", "update2.com"};
+
+		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getAccountEntryId(),
+			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+			accountEntry.getDescription(), false, expectedDomains,
+			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
+			accountEntry.getStatus(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertArrayEquals(
+			expectedDomains, accountEntry.getDomainsArray());
+
+		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getAccountEntryId(),
+			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+			accountEntry.getDescription(), false, null,
+			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),
+			accountEntry.getStatus(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertArrayEquals(
+			expectedDomains, accountEntry.getDomainsArray());
 	}
 
 	@Test

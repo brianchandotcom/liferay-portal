@@ -48,7 +48,7 @@ definition {
 
 			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-				nameOptions = "Teams_1 Project",
+				nameOptions = "Projects_1 Project",
 				version = "Teams_1 Team");
 
 			Testray.assertItemName(key_name = "Teams_1 Team");
@@ -73,7 +73,7 @@ definition {
 
 			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-				nameOptions = "Teams_2 Project",
+				nameOptions = "Projects_1 Project",
 				version = "Teams_2 Team");
 		}
 
@@ -104,7 +104,7 @@ definition {
 
 			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-				nameOptions = "Teams_3 Project",
+				nameOptions = "Projects_1 Project",
 				version = "Teams_3 Team");
 		}
 
@@ -118,6 +118,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162501 - Verify if as an Administrator I should not be able to add a duplicate Teams"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanNotAddDuplicateTeams {
 		task ("Go to Testray and Create Project") {
@@ -135,7 +136,7 @@ definition {
 
 			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-				nameOptions = "Teams_2 Project",
+				nameOptions = "Projects_1 Project",
 				version = "Teams_2 Team");
 
 			Click(locator1 = "TestrayManage#CLOSE_MODAL");
@@ -143,7 +144,7 @@ definition {
 			TestrayManage.specificVersion(
 				caseName = "Teams_2 Team",
 				manageOption = "Manage Teams",
-				nameOptions = "Teams_2 Project");
+				nameOptions = "Projects_1 Project");
 
 			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
 		}
@@ -168,7 +169,7 @@ definition {
 			TestrayManage.specificVersion(
 				caseName = "",
 				manageOption = "Manage Teams",
-				nameOptions = "Teams_2 Project");
+				nameOptions = "Projects_1 Project");
 
 			AssertElementPresent(
 				key_fieldLabel = "Name",

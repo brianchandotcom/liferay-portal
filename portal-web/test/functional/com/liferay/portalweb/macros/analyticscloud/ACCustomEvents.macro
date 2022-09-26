@@ -104,7 +104,7 @@ definition {
 
 		var sampleJavascript = StringUtil.replace("${sampleJavascript}", " ", "");
 
-		if (!(isSet(oldCustomEventName))) {
+		if (isSet(oldCustomEventName)) {
 
 			// Change the custom event name to the new name
 

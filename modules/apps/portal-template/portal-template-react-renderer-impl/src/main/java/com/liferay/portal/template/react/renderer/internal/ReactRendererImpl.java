@@ -15,13 +15,16 @@
 package com.liferay.portal.template.react.renderer.internal;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -42,9 +45,74 @@ public class ReactRendererImpl implements ReactRenderer {
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
-		ReactRendererUtil.renderReact(
-			componentDescriptor, data, httpServletRequest,
-			NPMResolvedPackageNameUtil.get(_servletContext), _portal, writer);
+		String placeholderId = StringUtil.randomId();
+
+		_renderPlaceholder(writer, placeholderId);
+
+		ReactRendererUtil.renderJavaScript(
+			componentDescriptor,
+			_prepareProps(componentDescriptor, data, httpServletRequest),
+			httpServletRequest, NPMResolvedPackageNameUtil.get(_servletContext),
+			placeholderId, _portal, writer);
+	}
+
+	private Map<String, Object> _prepareProps(
+		ComponentDescriptor componentDescriptor, Map<String, Object> props,
+		HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> modifiedProps = null;
+
+		if (!props.containsKey("componentId")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
+			}
+
+			modifiedProps.put(
+				"componentId", componentDescriptor.getComponentId());
+		}
+
+		if (!props.containsKey("locale")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
+			}
+
+			modifiedProps.put("locale", LocaleUtil.getMostRelevantLocale());
+		}
+
+		String portletId = (String)props.get("portletId");
+
+		if (portletId == null) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
+			}
+
+			portletId = _portal.getPortletId(httpServletRequest);
+
+			modifiedProps.put("portletId", portletId);
+		}
+
+		if ((portletId != null) && !props.containsKey("portletNamespace")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
+			}
+
+			modifiedProps.put(
+				"portletNamespace", _portal.getPortletNamespace(portletId));
+		}
+
+		if (modifiedProps == null) {
+			return props;
+		}
+
+		return modifiedProps;
+	}
+
+	private void _renderPlaceholder(Writer writer, String placeholderId)
+		throws IOException {
+
+		writer.append("<div id=\"");
+		writer.append(placeholderId);
+		writer.append("\"></div>");
 	}
 
 	@Reference

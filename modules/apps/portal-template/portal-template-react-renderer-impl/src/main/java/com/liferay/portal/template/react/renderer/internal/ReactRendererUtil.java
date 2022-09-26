@@ -18,9 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -28,7 +26,6 @@ import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,73 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ReactRendererUtil {
 
-	public static void renderReact(
-			ComponentDescriptor componentDescriptor, Map<String, Object> props,
-			HttpServletRequest httpServletRequest,
-			String npmResolvedPackageName, Portal portal, Writer writer)
-		throws IOException {
-
-		String placeholderId = StringUtil.randomId();
-
-		_renderPlaceholder(writer, placeholderId);
-
-		_renderJavaScript(
-			componentDescriptor, props, httpServletRequest,
-			npmResolvedPackageName, placeholderId, portal, writer);
-	}
-
-	private static Map<String, Object> _prepareProps(
-		ComponentDescriptor componentDescriptor, Map<String, Object> props,
-		HttpServletRequest httpServletRequest, Portal portal) {
-
-		Map<String, Object> modifiedProps = null;
-
-		if (!props.containsKey("componentId")) {
-			if (modifiedProps == null) {
-				modifiedProps = new HashMap<>(props);
-			}
-
-			modifiedProps.put(
-				"componentId", componentDescriptor.getComponentId());
-		}
-
-		if (!props.containsKey("locale")) {
-			if (modifiedProps == null) {
-				modifiedProps = new HashMap<>(props);
-			}
-
-			modifiedProps.put("locale", LocaleUtil.getMostRelevantLocale());
-		}
-
-		String portletId = (String)props.get("portletId");
-
-		if (portletId == null) {
-			if (modifiedProps == null) {
-				modifiedProps = new HashMap<>(props);
-			}
-
-			portletId = portal.getPortletId(httpServletRequest);
-
-			modifiedProps.put("portletId", portletId);
-		}
-
-		if ((portletId != null) && !props.containsKey("portletNamespace")) {
-			if (modifiedProps == null) {
-				modifiedProps = new HashMap<>(props);
-			}
-
-			modifiedProps.put(
-				"portletNamespace", portal.getPortletNamespace(portletId));
-		}
-
-		if (modifiedProps == null) {
-			return props;
-		}
-
-		return modifiedProps;
-	}
-
-	private static void _renderJavaScript(
+	public static void renderJavaScript(
 			ComponentDescriptor componentDescriptor, Map<String, Object> props,
 			HttpServletRequest httpServletRequest,
 			String npmResolvedPackageName, String placeholderId, Portal portal,
@@ -144,19 +75,11 @@ public class ReactRendererUtil {
 			javascriptSB.append("propsTransformer");
 			javascriptSB.append(placeholderId);
 			javascriptSB.append(".default(");
-			javascriptSB.append(
-				jsonSerializer.serializeDeep(
-					_prepareProps(
-						componentDescriptor, props, httpServletRequest,
-						portal)));
+			javascriptSB.append(jsonSerializer.serializeDeep(props));
 			javascriptSB.append(")");
 		}
 		else {
-			javascriptSB.append(
-				jsonSerializer.serializeDeep(
-					_prepareProps(
-						componentDescriptor, props, httpServletRequest,
-						portal)));
+			javascriptSB.append(jsonSerializer.serializeDeep(props));
 		}
 
 		javascriptSB.append(", '");
@@ -189,14 +112,6 @@ public class ReactRendererUtil {
 				javascriptSB.toString(), dependenciesSB.toString(),
 				ScriptData.ModulesType.ES6);
 		}
-	}
-
-	private static void _renderPlaceholder(Writer writer, String placeholderId)
-		throws IOException {
-
-		writer.append("<div id=\"");
-		writer.append(placeholderId);
-		writer.append("\"></div>");
 	}
 
 }

@@ -1092,6 +1092,111 @@ definition {
 		}
 	}
 
+	@description = "LPS-151676 - Verify that it's possible to relate a Custom Object entry with many Native Object entries (One-to-Many)"
+	@priority = "5"
+	test CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries {
+		property portal.acceptance = "true";
+
+		task ("Add 3 users entries to relate to custom object entries") {
+			for (var userNum : list "1,2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "user_${userNum}@liferay.com",
+					userFirstName = "userfn_${userNum}",
+					userLastName = "userln",
+					userScreenName = "user_${userNum}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user_${userNum}@liferay.com");
+			}
+		}
+
+		task ("Add a custom object, a field, and create a one-to-many relationship with the User object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "User",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Define First Name as a title field on the native object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			CreateObject.selectTitleField(fieldLabel = "First Name");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Add layout with relationship tab") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			Button.clickSave();
+		}
+
+		task ("Add a custom object entry per UI and relate the entries to the native object") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry A");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			for (var entryName : list "userfn_1,userfn_2,userfn_3") {
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "${entryName}");
+			}
+
+			ObjectPortlet.viewEntry(entry = "userfn_1");
+
+			ObjectPortlet.viewEntry(entry = "userfn_2");
+
+			ObjectPortlet.viewEntry(entry = "userfn_3");
+		}
+	}
+
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"
 	@priority = "4"
 	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {

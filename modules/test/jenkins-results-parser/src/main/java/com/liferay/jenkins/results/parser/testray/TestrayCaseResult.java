@@ -68,6 +68,15 @@ public class TestrayCaseResult {
 		return jsonObject.optString("errors");
 	}
 
+	public URL getHistoryURL() {
+		try {
+			return new URL(getURL() + "/history");
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	public String getID() {
 		return jsonObject.optString("testrayCaseResultId");
 	}

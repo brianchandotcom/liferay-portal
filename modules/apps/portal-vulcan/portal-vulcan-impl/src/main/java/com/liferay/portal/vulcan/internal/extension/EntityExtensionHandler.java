@@ -58,7 +58,8 @@ public class EntityExtensionHandler {
 	}
 
 	public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(
-		long companyId, String className) {
+			long companyId, String className)
+		throws Exception {
 
 		Map<String, PropertyDefinition> propertyDefinitions = new HashMap<>();
 
@@ -111,8 +112,9 @@ public class EntityExtensionHandler {
 	}
 
 	public void validate(
-		long companyId, Map<String, Serializable> extendedProperties,
-		boolean partialUpdate) {
+			long companyId, Map<String, Serializable> extendedProperties,
+			boolean partialUpdate)
+		throws Exception {
 
 		Map<String, PropertyDefinition> propertyDefinitions = new HashMap<>();
 

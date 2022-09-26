@@ -279,8 +279,9 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	}
 
 	private List<PropertyDefinition> _getExtendedPropertyDefinitions(
-		String className, long companyId,
-		ExtensionProviderRegistry extensionProviderRegistry) {
+			String className, long companyId,
+			ExtensionProviderRegistry extensionProviderRegistry)
+		throws Exception {
 
 		List<PropertyDefinition> propertyDefinitions = null;
 
@@ -404,8 +405,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
-		String basePath, ExtensionProviderRegistry extensionProviderRegistry,
-		Set<Class<?>> resourceClasses) {
+			String basePath,
+			ExtensionProviderRegistry extensionProviderRegistry,
+			Set<Class<?>> resourceClasses)
+		throws Exception {
 
 		Set<String> classNames = _getDTOClassNames(resourceClasses);
 

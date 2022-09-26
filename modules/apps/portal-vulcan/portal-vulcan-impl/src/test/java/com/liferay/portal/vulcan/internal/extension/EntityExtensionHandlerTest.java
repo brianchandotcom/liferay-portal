@@ -272,7 +272,7 @@ public class EntityExtensionHandlerTest {
 	}
 
 	@Test
-	public void testValidate() {
+	public void testValidate() throws Exception {
 		ExtensionProvider extensionProviderMock1 = Mockito.mock(
 			ExtensionProvider.class);
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
@@ -350,7 +350,7 @@ public class EntityExtensionHandlerTest {
 	}
 
 	@Test(expected = ValidationException.class)
-	public void testValidateInvalidProperty() {
+	public void testValidateInvalidProperty() throws Exception {
 		ExtensionProvider extensionProviderMock1 = Mockito.mock(
 			ExtensionProvider.class);
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
@@ -428,7 +428,7 @@ public class EntityExtensionHandlerTest {
 	}
 
 	@Test(expected = ValidationException.class)
-	public void testValidateMissingRequiredProperty() {
+	public void testValidateMissingRequiredProperty() throws Exception {
 		ExtensionProvider extensionProviderMock1 = Mockito.mock(
 			ExtensionProvider.class);
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
@@ -504,7 +504,9 @@ public class EntityExtensionHandlerTest {
 	}
 
 	@Test
-	public void testValidateMissingRequiredPropertyInPartialUpdate() {
+	public void testValidateMissingRequiredPropertyInPartialUpdate()
+		throws Exception {
+
 		ExtensionProvider extensionProviderMock1 = Mockito.mock(
 			ExtensionProvider.class);
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
@@ -580,7 +582,7 @@ public class EntityExtensionHandlerTest {
 	}
 
 	@Test(expected = ValidationException.class)
-	public void testValidateUnknownProperty() {
+	public void testValidateUnknownProperty() throws Exception {
 		ExtensionProvider extensionProviderMock1 = Mockito.mock(
 			ExtensionProvider.class);
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(

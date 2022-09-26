@@ -102,13 +102,18 @@ public abstract class BaseMessageBodyReader
 			Map<String, Serializable> extendedProperties =
 				_getExtendedProperties(clazz, jsonNode, objectMapper);
 
-			entityExtensionHandler.validate(
-				_company.getCompanyId(), extendedProperties,
-				Objects.equals(
-					_httpServletRequest.getMethod(), HttpMethod.PATCH));
+			try {
+				entityExtensionHandler.validate(
+					_company.getCompanyId(), extendedProperties,
+					Objects.equals(
+						_httpServletRequest.getMethod(), HttpMethod.PATCH));
 
-			EntityExtensionThreadLocal.setExtendedProperties(
-				extendedProperties);
+				EntityExtensionThreadLocal.setExtendedProperties(
+					extendedProperties);
+			}
+			catch (Exception exception) {
+				throw new IOException(exception);
+			}
 		}
 		else {
 			object = objectReader.readValue(inputStream);

@@ -571,8 +571,8 @@ public class UsersAdminImpl implements UsersAdmin {
 				continue;
 			}
 
-			long typeId = ParamUtil.getLong(
-				actionRequest, "emailAddressTypeId" + emailAddressesIndex);
+			long listTypeId = ParamUtil.getLong(
+				actionRequest, "emailAddressListTypeId" + emailAddressesIndex);
 
 			boolean primary = false;
 
@@ -587,7 +587,7 @@ public class UsersAdminImpl implements UsersAdmin {
 				EmailAddressLocalServiceUtil.createEmailAddress(emailAddressId);
 
 			emailAddress.setAddress(address);
-			emailAddress.setTypeId(typeId);
+			emailAddress.setListTypeId(listTypeId);
 			emailAddress.setPrimary(primary);
 
 			emailAddresses.add(emailAddress);
@@ -1289,19 +1289,19 @@ public class UsersAdminImpl implements UsersAdmin {
 			long emailAddressId = emailAddress.getEmailAddressId();
 
 			String address = emailAddress.getAddress();
-			long typeId = emailAddress.getTypeId();
+			long listTypeId = emailAddress.getListTypeId();
 			boolean primary = emailAddress.isPrimary();
 
 			if (emailAddressId <= 0) {
 				emailAddress = EmailAddressServiceUtil.addEmailAddress(
-					className, classPK, address, typeId, primary,
+					className, classPK, address, listTypeId, primary,
 					new ServiceContext());
 
 				emailAddressId = emailAddress.getEmailAddressId();
 			}
 			else {
 				EmailAddressServiceUtil.updateEmailAddress(
-					emailAddressId, address, typeId, primary);
+					emailAddressId, address, listTypeId, primary);
 			}
 
 			emailAddressIds.add(emailAddressId);

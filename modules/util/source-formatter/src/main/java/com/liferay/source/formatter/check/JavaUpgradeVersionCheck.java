@@ -621,8 +621,8 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 
 		addMessage(
 			fileName,
-			"Registered starting with '0.0.0' should be replace for " +
-				"registry.registerInitialization();");
+			"Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
+				"replaced by 'registry.registerInitialization()'");
 
 		return content;
 	}

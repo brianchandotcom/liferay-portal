@@ -6,5 +6,6 @@ dependencies {
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:frontend-js:frontend-js-module-launcher-api")
 	compileOnly project(":apps:portal-template:portal-template-react-renderer-api")
+	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
 	compileOnly project(":core:petra:petra-string")
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -49,11 +50,24 @@ public class ReactRendererImpl implements ReactRenderer {
 
 		_renderPlaceholder(writer, placeholderId);
 
-		ReactRendererUtil.renderJavaScript(
-			componentDescriptor,
-			_prepareProps(componentDescriptor, data, httpServletRequest),
-			httpServletRequest, NPMResolvedPackageNameUtil.get(_servletContext),
-			placeholderId, _portal, writer);
+		String module = componentDescriptor.getModule();
+
+		if (module.contains(" from ")) {
+			ReactRendererUtil.renderEcmaScript(
+				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					httpServletRequest),
+				componentDescriptor, httpServletRequest, placeholderId, _portal,
+				_prepareProps(componentDescriptor, data, httpServletRequest),
+				writer);
+		}
+		else {
+			ReactRendererUtil.renderJavaScript(
+				componentDescriptor,
+				_prepareProps(componentDescriptor, data, httpServletRequest),
+				httpServletRequest,
+				NPMResolvedPackageNameUtil.get(_servletContext), placeholderId,
+				_portal, writer);
+		}
 	}
 
 	private Map<String, Object> _prepareProps(
@@ -114,6 +128,9 @@ public class ReactRendererImpl implements ReactRenderer {
 		writer.append(placeholderId);
 		writer.append("\"></div>");
 	}
+
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private Portal _portal;

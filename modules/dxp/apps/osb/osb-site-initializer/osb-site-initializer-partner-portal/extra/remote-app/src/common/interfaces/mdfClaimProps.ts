@@ -9,16 +9,15 @@
  * distribution rights of the Software.
  */
 
-import useSWR from 'swr';
+import {FormikHelpers} from 'formik';
 
-import {Liferay} from '../..';
-import MDFRequest from '../../../../interfaces/mdfRequest';
-import {LiferayAPIs} from '../../common/enums/apis';
-import liferayFetcher from '../../common/utils/fetcher';
-
-export default function useGetMDFRequest(id: number) {
-	return useSWR(
-		[`/o/${LiferayAPIs.OBJECT}/mdfrequests/${id}`, Liferay.authToken],
-		(url, token) => liferayFetcher<MDFRequest>(url, token)
-	);
+export default interface mdfClaimProps<T> {
+	onSaveAsDraft?: (
+		values: T,
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
+	onSubmit?: (
+		values: T,
+		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+	) => void;
 }

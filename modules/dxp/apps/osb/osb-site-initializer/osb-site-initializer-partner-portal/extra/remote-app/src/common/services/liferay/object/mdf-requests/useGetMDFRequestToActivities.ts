@@ -8,7 +8,9 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
 import useSWR from 'swr';
+
 import {Liferay} from '../..';
 import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
 import {LiferayAPIs} from '../../common/enums/apis';

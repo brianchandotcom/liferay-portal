@@ -1,15 +1,26 @@
-import ClayModal from '@clayui/modal';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import ClayButton from '@clayui/button';
-import PRMFormik from '../../../../../../common/components/PRMFormik';
-import PRMForm from '../../../../../../common/components/PRMForm';
-import {useModal} from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
+
+import PRMForm from '../../../../../../common/components/PRMForm';
+import PRMFormik from '../../../../../../common/components/PRMFormik';
 import MDFClaimBudget from '../../../../../../common/interfaces/mdfClaimBudget';
 
 interface IProps {
-	currentBudgetIndex: number | undefined;
-	currentActivityIndex: number | undefined;
 	activityId?: number;
+	currentActivityIndex: number | undefined;
+	currentBudgetIndex: number | undefined;
 	setFieldValue: (
 		field: string,
 		value: any,
@@ -18,19 +29,19 @@ interface IProps {
 }
 type BugetCost = {
 	[key: number]: {
-		savedValue?: number;
 		inputedValue?: number;
+		savedValue?: number;
 	};
 };
 
 const BudgetModal = ({
-	currentActivityIndex,
 	activityId,
+	currentActivityIndex,
+	currentBudgetIndex,
 	observer,
-	setFieldValue,
 	onOpenChange,
 	open,
-	currentBudgetIndex,
+	setFieldValue,
 	...budget
 }: Omit<ReturnType<typeof useModal>, 'onClose'> & MDFClaimBudget & IProps) => {
 	const [bugetCost, setBugetCost] = useState<BugetCost>({});
@@ -50,13 +61,14 @@ const BudgetModal = ({
 								performance
 							</h6>
 						</ClayModal.Header>
+
 						<ClayModal.Body>
 							<div>
 								<PRMFormik.Field
 									component={PRMForm.InputCurrency}
+									description="Silver Partner can claim up to 50%"
 									label="Claim Amount"
 									name={`mdfClaimActivities[${currentActivityIndex}].mdfClaimBudgets[${currentBudgetIndex}].cost`}
-									placeholder={budget.cost}
 									onAccept={(value: number) => {
 										setBugetCost(
 											key
@@ -64,13 +76,13 @@ const BudgetModal = ({
 														...bugetCost,
 														[key]: {
 															...bugetCost[key],
+															inputedValue: value,
 															savedValue: bugetCost[
 																key
 															]?.savedValue
 																? bugetCost[key]
 																		?.savedValue
 																: budget.cost,
-															inputedValue: value,
 														},
 												  }
 												: bugetCost
@@ -80,22 +92,23 @@ const BudgetModal = ({
 											value
 										);
 									}}
+									placeholder={budget.cost}
 									required
-									description="Silver Partner can claim up to 50%"
 								/>
 
 								<PRMFormik.Field
+									activityId={activityId}
+									budgetId={budget.id}
 									component={PRMForm.InputFile}
 									label="Third Party Invoices"
 									name={`mdfClaimDocuments.budgets[${currentActivityIndex}.thirdPartyInvoices]`}
-									budgetId={budget.id}
-									activityId={activityId}
+									required
 									setFieldValue={setFieldValue}
 									typeDocument="ListLeads"
-									required
 								/>
 							</div>
 						</ClayModal.Body>
+
 						<ClayModal.Footer
 							last={
 								<div>
@@ -120,6 +133,7 @@ const BudgetModal = ({
 									>
 										Cancel
 									</ClayButton>
+
 									<ClayButton
 										onClick={() => {
 											onOpenChange(false);

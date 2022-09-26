@@ -12,18 +12,19 @@
 import ClayButton from '@clayui/button';
 import {useFormikContext} from 'formik';
 import {useEffect, useMemo} from 'react';
+
 import PRMForm from '../../common/components/PRMForm';
 import PRMFormik from '../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFClaim from '../../common/interfaces/mdfClaim';
+import mdfClaimProps from '../../common/interfaces/mdfClaimProps';
 import useGetMDFRequest from '../../common/services/liferay/object/mdf-requests/useGetMDFRequest';
 import useGetMDFRequestToActivities from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestToActivities';
 import getIntlNumberFormat from '../../common/utils/getIntlNumberFormat';
-import getTotalBudgetByClaim from './utils/getTotalBudgetByClaim';
 import isObjectEmpty from '../MDFRequestForm/utils/isObjectEmpty';
 import ClaimPanel from './components/ClaimPanel';
 import ClaimTotalResumeCard from './components/ClaimTotalResumeCard';
-import mdfClaimProps from './interfaces/mdfClaimProps';
+import getTotalBudgetByClaim from './utils/getTotalBudgetByClaim';
 
 const MDFClaimForm = ({
 	onSaveAsDraft,
@@ -48,7 +49,7 @@ const MDFClaimForm = ({
 				getTotalBudgetByClaim(values.mdfClaimActivities) * 0.5
 			);
 		}
-	}, [values.mdfClaimActivities]);
+	}, [values.mdfClaimActivities, setFieldValue]);
 
 	const claimErrors = useMemo(() => {
 		return errors;
@@ -61,15 +62,16 @@ const MDFClaimForm = ({
 				title={mdfRequest?.overallCampaign}
 			>
 				<h5 className="my-4">Upload Proof of Performance Documents </h5>
+
 				{activities &&
 					activities.items.map((activity, index) => (
 						<ClaimPanel
 							activity={activity}
 							currentActivityIndex={index}
-							mdfRequest={mdfRequest}
-							mdfClaim={values}
-							setFieldValue={setFieldValue}
 							key={`${activity.id}-${index}`}
+							mdfClaim={values}
+							mdfRequest={mdfRequest}
+							setFieldValue={setFieldValue}
 						/>
 					))}
 			</PRMForm.Section>
@@ -100,11 +102,11 @@ const MDFClaimForm = ({
 				<PRMFormik.Field
 					component={PRMForm.InputFile}
 					label="Reimbursement Invoice"
-					name={`mdfClaimDocuments.claims[0.reimbursementInvoice]`}
 					mdfRequestId={mdfRequest?.id}
+					name="mdfClaimDocuments.claims[0.reimbursementInvoice]"
+					required
 					setFieldValue={setFieldValue}
 					typeDocument="reimbursementInvoice"
-					required
 				/>
 			</PRMForm.Section>
 

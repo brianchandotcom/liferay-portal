@@ -9,16 +9,16 @@
  * distribution rights of the Software.
  */
 
-import useSWR from 'swr';
+import LiferayObject from './liferayObject';
 
-import {Liferay} from '../..';
-import MDFRequest from '../../../../interfaces/mdfRequest';
-import {LiferayAPIs} from '../../common/enums/apis';
-import liferayFetcher from '../../common/utils/fetcher';
-
-export default function useGetMDFRequest(id: number) {
-	return useSWR(
-		[`/o/${LiferayAPIs.OBJECT}/mdfrequests/${id}`, Liferay.authToken],
-		(url, token) => liferayFetcher<MDFRequest>(url, token)
-	);
+interface thirdPartyInvoices {
+	budgetId: number;
+}
+export default interface MDFClaimDocuments extends Partial<LiferayObject> {
+	activityId: number;
+	budgetId: number;
+	fileURL: string;
+	mdfRequestId: number;
+	thirdPartyInvoices: thirdPartyInvoices;
+	type: string;
 }

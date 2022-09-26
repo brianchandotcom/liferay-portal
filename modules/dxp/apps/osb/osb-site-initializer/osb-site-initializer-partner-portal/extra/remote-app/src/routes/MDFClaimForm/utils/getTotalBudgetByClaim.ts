@@ -26,6 +26,7 @@ export default function getTotalBudgetByClaim(
 						0
 					);
 			}
+
 			return previousValue + +sumBudgets;
 		},
 		0

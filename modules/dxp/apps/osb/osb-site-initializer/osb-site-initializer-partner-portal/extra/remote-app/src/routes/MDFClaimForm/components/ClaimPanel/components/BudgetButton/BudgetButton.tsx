@@ -12,6 +12,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
+
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFRequestBudget from '../../../../../../common/interfaces/mdfRequestBudget';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
@@ -23,10 +24,10 @@ interface IProps {
 }
 
 const BudgetButton = ({
-	onClick,
 	budget,
 	cost,
 	mdfClaim,
+	onClick,
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => {
 	const [checkInvoice, setCheckInvoice] = useState<boolean>(false);
 
@@ -42,7 +43,7 @@ const BudgetButton = ({
 				setCheckInvoice(true);
 			}
 		}
-	}, [mdfClaim.mdfClaimDocuments.budgets]);
+	}, [mdfClaim.mdfClaimDocuments.budgets, budget.id]);
 
 	return (
 		<div
@@ -52,11 +53,12 @@ const BudgetButton = ({
 			onClick={onClick}
 		>
 			<div className="w-100">
-				<div className="d-flex justify-content-between align-items-center">
+				<div className="align-items-center d-flex justify-content-between">
 					<div>
 						<div className="font-weight-bold text-neutral-10 text-paragraph">
 							{budget?.expense?.name}
 						</div>
+
 						<div
 							className={classNames({
 								'text-neutral-7': checkInvoice === false,
@@ -67,6 +69,7 @@ const BudgetButton = ({
 								className="mr-2"
 								symbol="check-circle-full"
 							/>
+
 							{checkInvoice ? 'Invoice Added' : 'Pedding Invoice'}
 						</div>
 					</div>

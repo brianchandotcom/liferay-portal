@@ -9,27 +9,28 @@
  * distribution rights of the Software.
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
-import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
-import useGetActivityToBudgets from '../../../../common/services/liferay/object/activity/useGetActivityToBudgets';
-import BudgetModal from './components/BudgetModal/BudgetModal';
-import BudgetButton from './components/BudgetButton/BudgetButton';
-import {useState, useEffect} from 'react';
-import MDFRequestBudget from '../../../../common/interfaces/mdfRequestBudget';
-import MDFClaim from '../../../../common/interfaces/mdfClaim';
-import PRMFormik from '../../../../common/components/PRMFormik';
+import {useEffect, useState} from 'react';
+
 import PRMForm from '../../../../common/components/PRMForm';
+import PRMFormik from '../../../../common/components/PRMFormik';
+import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
+import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
+import MDFRequestBudget from '../../../../common/interfaces/mdfRequestBudget';
+import useGetActivityToBudgets from '../../../../common/services/liferay/object/activity/useGetActivityToBudgets';
 import getBudgetCost from '../../utils/getBudgetCost';
 import getSumBudgetsOfActivity from '../../utils/getSumBudgetsOfActivity';
-import {ClayCheckbox} from '@clayui/form';
+import BudgetButton from './components/BudgetButton/BudgetButton';
+import BudgetModal from './components/BudgetModal/BudgetModal';
 
 interface IProps {
 	activity: MDFRequestActivity;
 	currentActivityIndex: number | 0;
-	mdfRequest?: MDFRequest | undefined;
 	mdfClaim: MDFClaim;
+	mdfRequest?: MDFRequest | undefined;
 	setFieldValue: (
 		field: string,
 		value: any,
@@ -40,8 +41,8 @@ interface IProps {
 const ClaimPanel = ({
 	activity,
 	currentActivityIndex,
-	mdfRequest,
 	mdfClaim,
+	mdfRequest,
 	setFieldValue,
 }: IProps) => {
 	const budgets = useGetActivityToBudgets(activity.id)?.data;
@@ -58,16 +59,16 @@ const ClaimPanel = ({
 				budget.cost
 			);
 		});
-	}, [budgets]);
+	}, [budgets, setFieldValue, currentActivityIndex]);
 
 	return (
 		<ClayPanel
-			className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 text-neutral-7 "
+			className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 text-neutral-7"
 			collapsable
 			displayTitle={
 				<ClayPanel.Title>
 					<div className="d-flex">
-						<div className="mr-3 mb-2 d-flex align-items-center">
+						<div className="align-items-center d-flex mb-2 mr-3">
 							<ClayCheckbox
 								checked={valueCheckBox}
 								onChange={() => {
@@ -86,6 +87,7 @@ const ClaimPanel = ({
 							<h4 className="text-neutral-10">
 								{activity.name} ({activity.id})
 							</h4>
+
 							<div className="d-flex justify-content-end">
 								<div>
 									<h5 className="text-neutral-10">
@@ -106,8 +108,14 @@ const ClaimPanel = ({
 			<ClayPanel.Body>
 				{budgets?.items.map((budget, index) => (
 					<BudgetButton
-						mdfClaim={mdfClaim}
 						budget={budget}
+						cost={getBudgetCost(
+							index,
+							mdfClaim,
+							currentActivityIndex
+						)}
+						key={`${budget.id}-${index}`}
+						mdfClaim={mdfClaim}
 						onClick={() => {
 							if (budget) {
 								setCurrentBudget(budget);
@@ -115,36 +123,33 @@ const ClaimPanel = ({
 								onOpenChange(true);
 							}
 						}}
-						key={`${budget.id}-${index}`}
-						cost={getBudgetCost(
-							index,
-							mdfClaim,
-							currentActivityIndex
-						)}
 					/>
 				))}
+
 				<div className="mt-4">
 					<PRMFormik.Field
+						activityId={activity.id}
 						component={PRMForm.InputFile}
 						label="List of Qualified Leads"
 						name={`mdfClaimDocuments.activities[${currentActivityIndex}.listLeads]`}
-						activityId={activity.id}
+						required
 						setFieldValue={setFieldValue}
 						typeDocument="listLeads"
-						required
 					/>
 				</div>
+
 				<div className="mt-4">
 					<PRMFormik.Field
+						activityId={activity.id}
 						component={PRMForm.InputFile}
 						label="All Contents"
 						name={`mdfClaimDocuments.activities[${currentActivityIndex}.contents]`}
-						activityId={activity.id}
+						required
 						setFieldValue={setFieldValue}
 						typeDocument="contents"
-						required
 					/>
 				</div>
+
 				<div className="mt-4">
 					<PRMFormik.Field
 						component={PRMForm.InputText}
@@ -153,15 +158,16 @@ const ClaimPanel = ({
 					/>
 				</div>
 			</ClayPanel.Body>
+
 			<BudgetModal
 				{...currentBudget}
-				open={open}
+				activityId={activity.id}
 				currentActivityIndex={currentActivityIndex}
 				currentBudgetIndex={currentBudgetIndex}
-				onOpenChange={onOpenChange}
 				observer={observer}
+				onOpenChange={onOpenChange}
+				open={open}
 				setFieldValue={setFieldValue}
-				activityId={activity.id}
 			/>
 		</ClayPanel>
 	);

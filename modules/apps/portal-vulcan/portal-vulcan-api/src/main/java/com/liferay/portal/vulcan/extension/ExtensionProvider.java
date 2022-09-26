@@ -29,7 +29,8 @@ public interface ExtensionProvider {
 		throws Exception;
 
 	public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(
-		long companyId, String className);
+			long companyId, String className)
+		throws Exception;
 
 	public Collection<String> getFilteredPropertyNames(
 		long companyId, Object entity);

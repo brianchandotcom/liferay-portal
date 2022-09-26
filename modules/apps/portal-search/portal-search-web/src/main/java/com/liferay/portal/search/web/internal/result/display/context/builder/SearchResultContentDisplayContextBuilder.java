@@ -76,7 +76,7 @@ public class SearchResultContentDisplayContextBuilder {
 
 		searchResultContentDisplayContext.setVisible(visible);
 
-		if (visible) {
+		if (visible && (assetRenderer != null)) {
 			String title = assetRenderer.getTitle(_locale);
 
 			searchResultContentDisplayContext.setHeaderTitle(title);

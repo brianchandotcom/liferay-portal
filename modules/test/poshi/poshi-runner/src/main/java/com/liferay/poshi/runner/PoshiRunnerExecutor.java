@@ -31,7 +31,6 @@ import com.liferay.poshi.runner.util.TableUtil;
 import com.liferay.poshi.runner.var.type.BaseTable;
 import com.liferay.poshi.runner.var.type.TableFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -1175,46 +1174,38 @@ public class PoshiRunnerExecutor {
 		Callable<Object> task = new Callable<Object>() {
 
 			public Object call() throws Exception {
-				try {
-					return method.invoke(liferaySelenium, args);
-				}
-				catch (InvocationTargetException invocationTargetException) {
-					Throwable throwable = invocationTargetException.getCause();
+				int maxRetries = 1;
+				int retryCount = 0;
 
-					if (throwable instanceof StaleElementReferenceException) {
-						StringBuilder sb = new StringBuilder();
-
-						sb.append("\nElement turned stale while running ");
-						sb.append(methodName);
-						sb.append(". Retrying in ");
-						sb.append(PropsValues.TEST_RETRY_COMMAND_WAIT_TIME);
-						sb.append("seconds.");
-
-						System.out.println(sb.toString());
-
-						try {
-							return method.invoke(liferaySelenium, args);
-						}
-						catch (Exception exception) {
-							throwable = exception.getCause();
-
-							if (PropsValues.DEBUG_STACKTRACE) {
-								throw new Exception(
-									throwable.getMessage(), exception);
-							}
-
-							if (throwable instanceof Error) {
-								throw (Error)throwable;
-							}
-
-							throw (Exception)throwable;
-						}
+				while (true) {
+					try {
+						return method.invoke(liferaySelenium, args);
 					}
-					else {
+					catch (Exception exception) {
+						Throwable throwable = exception.getCause();
+
+						if ((throwable instanceof
+								StaleElementReferenceException) &&
+							(retryCount < maxRetries)) {
+
+							retryCount++;
+
+							StringBuilder sb = new StringBuilder();
+
+							sb.append("\nElement turned stale while running ");
+							sb.append(methodName);
+							sb.append(". Retrying in ");
+							sb.append(PropsValues.TEST_RETRY_COMMAND_WAIT_TIME);
+							sb.append("seconds.");
+
+							System.out.println(sb.toString());
+
+							continue;
+						}
+
 						if (PropsValues.DEBUG_STACKTRACE) {
 							throw new Exception(
-								throwable.getMessage(),
-								invocationTargetException);
+								throwable.getMessage(), exception);
 						}
 
 						if (throwable instanceof Error) {

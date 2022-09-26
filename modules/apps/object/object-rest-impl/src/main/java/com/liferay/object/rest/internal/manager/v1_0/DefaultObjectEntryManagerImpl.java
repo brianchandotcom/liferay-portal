@@ -842,12 +842,19 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		HashMap<String, Map<String, String>> actions = new HashMap<>();
+		Map<String, Map<String, String>> actions =
+			dtoConverterContext.getActions();
 
 		if (GetterUtil.getBoolean(
 				dtoConverterContext.getAttribute("addActions"), true)) {
 
-			actions = HashMapBuilder.<String, Map<String, String>>put(
+			if (actions == null) {
+				actions = Collections.emptyMap();
+			}
+
+			actions = HashMapBuilder.create(
+				actions
+			).<String, Map<String, String>>put(
 				"delete",
 				() -> {
 					if (_hasRelatedObjectEntries(

@@ -15,12 +15,12 @@
 	</parent>
 	<dependencies>
 #if (${liferayVersion.startsWith("7.0")})
-        <dependency>
-            <groupId>biz.aQute.bnd</groupId>
-            <artifactId>biz.aQute.bnd.annotation</artifactId>
-            <version>@biz.aQute.bnd.version@</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bnd.annotation</artifactId>
+			<version>@biz.aQute.bnd.version@</version>
+			<scope>provided</scope>
+		</dependency>
 #end
 		<dependency>
 			<groupId>com.liferay.portal</groupId>

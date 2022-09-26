@@ -62,8 +62,8 @@ public class ProjectTemplatesFormFieldTest
 	public void testBuildTemplateFormField70() throws Exception {
 		String liferayVersion = "7.0.10.17";
 		String name = "foobar";
-		String template = "form-field";
 		String product = "dxp";
+		String template = "form-field";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
@@ -139,8 +139,8 @@ public class ProjectTemplatesFormFieldTest
 	public void testBuildTemplateFormField71() throws Exception {
 		String liferayVersion = "7.1.10.7";
 		String name = "foobar";
-		String template = "form-field";
 		String product = "dxp";
+		String template = "form-field";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
@@ -242,8 +242,8 @@ public class ProjectTemplatesFormFieldTest
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
 		String liferayVersion = "7.1.10.7";
 		String name = "foo-bar";
-		String template = "form-field";
 		String product = "dxp";
+		String template = "form-field";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);

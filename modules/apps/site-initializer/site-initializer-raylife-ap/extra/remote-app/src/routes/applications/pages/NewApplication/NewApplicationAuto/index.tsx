@@ -227,7 +227,8 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 								Exit
 							</ClayButton>
 
-							{!state.isAbleToBeSave ? (
+							{!state.isAbleToBeSave ||
+							state.currentStep === 5 ? (
 								<ClayTooltipProvider>
 									<ClayButton
 										aria-disabled="true"
@@ -297,6 +298,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 					>
 						{state.currentStep > 0 && (
 							<ClayButton
+								disabled={state.currentStep === 5}
 								displayType={null}
 								onClick={() => handlePreviousClick()}
 								small={true}

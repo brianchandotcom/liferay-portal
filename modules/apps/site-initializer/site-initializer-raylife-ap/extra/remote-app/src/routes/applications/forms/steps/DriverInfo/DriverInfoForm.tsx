@@ -64,9 +64,7 @@ const DriverInfoForm = ({
 		setMillitaryAffiliationOptions,
 	] = useState<any[]>([]);
 
-	const [_millitaryAffiliation, setMillitaryAffiliation] = useState<string>(
-		''
-	);
+	const [millitaryAffiliation, setMillitaryAffiliation] = useState<any>('');
 
 	enum dropdownAlign {
 		topCenter = 0,
@@ -232,30 +230,41 @@ const DriverInfoForm = ({
 		dispatch({payload, type: ACTIONS.SET_REMOVE_ACCIDENT_CITATION});
 	};
 
+	const [
+		millitaryAffiliationSearch,
+		setMillitaryAffiliationSearch,
+	] = useState<any>('');
+
+	const millitaryAffiliationOptionsAddClick = () => {
+		return millitaryAffiliationOptions.map((millitaryAffiliationOption) => {
+			return {
+				...millitaryAffiliationOption,
+				id,
+				onClick: (event: any) => {
+					let value = event.target.textContent || '';
+
+					value = value === 'Choose an option' ? '' : value;
+					setMillitaryAffiliation(value);
+					handleChangeField('millitaryAffiliation', value, id);
+					setHasError({
+						...hasError,
+						millitaryAffiliation: value === '',
+					});
+				},
+			};
+		});
+	};
+
 	useEffect(() => {
-		const millitaryAffiliationOptionsAddClick = millitaryAffiliationOptions.map(
-			(millitaryAffiliationOption) => {
-				return {
-					...millitaryAffiliationOption,
-					onClick: (event: any) => {
-						let value = event.target.textContent || '';
-
-						value = value === 'Choose an option' ? '' : value;
-
-						handleChangeField('millitaryAffiliation', value, id);
-						setMillitaryAffiliation(value);
-						setHasError({
-							...hasError,
-							millitaryAffiliation: value === '' ? true : false,
-						});
-					},
-				};
-			}
-		);
-
-		setMillitaryAffiliationOptions(millitaryAffiliationOptionsAddClick);
+		setMillitaryAffiliationOptions(millitaryAffiliationOptionsAddClick());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		setMillitaryAffiliationSearch('');
+		setMillitaryAffiliationOptions(millitaryAffiliationOptionsAddClick());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [millitaryAffiliation]);
 
 	return (
 		<div className="bg-neutral-0">
@@ -714,7 +723,7 @@ const DriverInfoForm = ({
 					</div>
 				</div>
 
-				<div className="mb-3 row">
+				<div className="row">
 					<div
 						className={classNames(
 							'col filled form-condensed form-group',
@@ -787,17 +796,24 @@ const DriverInfoForm = ({
 						<ClayDropDownWithItems
 							alignmentByViewport={true}
 							alignmentPosition={dropdownAlign.bottomCenter}
-							items={_millitaryAffiliationOptions.filter(
-								(millitaryAffiliationOption) => {
-									return millitaryAffiliationOption.label.includes(
-										_millitaryAffiliation
-									);
-								}
-							)}
-							onSearchValueChange={(value) => {
-								setMillitaryAffiliation(value);
+							items={_millitaryAffiliationOptions}
+							onSearchValueChange={(value: string) => {
+								const filterOptions = millitaryAffiliationOptionsAddClick().filter(
+									(millitaryAffiliationOption) => {
+										if (
+											millitaryAffiliationOption.label
+												.toLowerCase()
+												.includes(value)
+										) {
+											return millitaryAffiliationOption;
+										}
+									}
+								);
+
+								setMillitaryAffiliationOptions(filterOptions);
+								setMillitaryAffiliationSearch(value);
 							}}
-							searchValue={_millitaryAffiliation}
+							searchValue={millitaryAffiliationSearch}
 							searchable={true}
 							trigger={
 								<div className="d-flex select-millitary-affiliation text-neutral-10">
@@ -811,12 +827,11 @@ const DriverInfoForm = ({
 										}
 									>
 										<ClaySelect.Option
-											className="py-4 text-brand-primary text-center text-paragraph"
+											className="cursor-pointer font-weight-bold py-4 text-brand-primary text-center text-paragraph-sm text-uppercase"
 											label={
 												form[formNumber - 1]
 													.millitaryAffiliation
 											}
-											selected
 											value={
 												form[formNumber - 1]
 													.millitaryAffiliation
@@ -827,7 +842,7 @@ const DriverInfoForm = ({
 							}
 						/>
 
-						<label htmlFor="millitaryAffiliation">
+						<label htmlFor="year">
 							Millitary Affiliation&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>

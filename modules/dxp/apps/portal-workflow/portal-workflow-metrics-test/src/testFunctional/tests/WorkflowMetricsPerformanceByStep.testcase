@@ -180,7 +180,6 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the filter offers an option to see all version together"
-	@ignore = "true"
 	@priority = "4"
 	test CanSeeAllVersionsTogether {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CanSeeAllVersionsTogether";
@@ -247,10 +246,18 @@ definition {
 			nodeLabel = "review",
 			nodeType = "task");
 
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Id",
+			infoValue = "review2");
+
 		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
 			newNodeLabel = "update2",
 			nodeLabel = "update",
 			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Id",
+			infoValue = "update2");
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",

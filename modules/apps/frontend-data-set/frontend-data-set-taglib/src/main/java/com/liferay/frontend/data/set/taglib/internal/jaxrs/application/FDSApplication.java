@@ -98,7 +98,7 @@ public class FDSApplication extends Application {
 				fdsSettingsNamespace, "customViews",
 				customViewsJSONObject.toString());
 
-			return Response.ok(
+			return Response.noContent(
 			).build();
 		}
 		catch (Exception exception) {

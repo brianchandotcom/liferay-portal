@@ -115,6 +115,8 @@ definition {
 	@priority = "4"
 	test AdminCanDesignSuite {
 		task ("Given that the user goes to add a new case") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			
 			Testray.projectTabNavigator(navTabName = "Cases");
 
 			TestrayCases.typeCasesField(

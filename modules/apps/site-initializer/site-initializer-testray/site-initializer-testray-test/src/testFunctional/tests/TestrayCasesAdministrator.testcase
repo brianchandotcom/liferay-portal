@@ -50,6 +50,10 @@ definition {
 				componentName = "Components_1 Project 1",
 				teamName = "Components_1 Team");
 
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 2",
+				teamName = "Components_1 Team");
+
 			Refresh();
 		}
 
@@ -177,7 +181,7 @@ definition {
 			TestrayCases.editCases(
 				caseName = "Cases_1 Case Edited",
 				caseTypeId = "Automated Functional Test",
-				componentId = "Smoke",
+				componentId = "Components_1 Project 2",
 				description = "Cases_1 Case Description Edited",
 				duration = "30",
 				priority = "4",
@@ -188,7 +192,7 @@ definition {
 			TestrayCases.verifyCase(
 				caseName = "Cases_1 Case Edited",
 				casePriority = "4",
-				key_caseComponent = "Smoke");
+				key_caseComponent = "Components_1 Project 2");
 		}
 	}
 

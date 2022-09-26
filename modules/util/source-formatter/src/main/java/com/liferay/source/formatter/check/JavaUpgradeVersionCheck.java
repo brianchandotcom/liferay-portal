@@ -600,19 +600,14 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				return content;
 			}
 
-			int index = methodContent.lastIndexOf(StringPool.NEW_LINE, x);
+			y = methodContent.lastIndexOf(StringPool.NEW_LINE, x);
 
-			StringBundler leadTabSB = new StringBundler();
-
-			leadTabSB.append(StringPool.NEW_LINE);
-
-			for (int i = 1; i < (x - index); i++) {
-				leadTabSB.append(StringPool.TAB);
-			}
+			String precedingPlaceholder = methodContent.substring(y, x);
 
 			String newMethodContent = StringUtil.insert(
 				methodContent,
-				leadTabSB + "registry.registerInitialization();\n", index);
+				precedingPlaceholder + "registry.registerInitialization();\n",
+				y);
 
 			return StringUtil.replaceFirst(
 				content, methodContent, newMethodContent);

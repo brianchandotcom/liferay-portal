@@ -41,6 +41,12 @@ export default function LocalesList({
 	const sortedLocales = useMemo(() => {
 		const availableLocalesArray = Array.from(availableLocales.values());
 
+		if (
+			!availableLocalesArray.some((locale) => locale.id === defaultLocale)
+		) {
+			return availableLocalesArray;
+		}
+
 		return [
 			availableLocalesArray.find((locale) => locale.id === defaultLocale),
 			...availableLocalesArray.filter(

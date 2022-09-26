@@ -190,18 +190,19 @@ public interface CPInstanceService extends BaseService {
 		throws PortalException;
 
 	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, boolean discontinued,
-			String replacementCPInstanceUuid, long replacementCProductId,
-			int discontinuedDateMonth, int discontinuedDateDay,
-			int discontinuedDateYear, ServiceContext serviceContext)
+			String externalReferenceCode, long cpInstanceId, String sku,
+			String gtin, String manufacturerPartNumber, boolean purchasable,
+			double width, double height, double depth, double weight,
+			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, String unspsc,
+			boolean discontinued, String replacementCPInstanceUuid,
+			long replacementCProductId, int discontinuedDateMonth,
+			int discontinuedDateDay, int discontinuedDateYear,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPInstance updatePricingInfo(

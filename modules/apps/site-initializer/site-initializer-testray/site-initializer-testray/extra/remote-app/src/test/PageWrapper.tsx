@@ -18,15 +18,29 @@ import {SWRConfig} from 'swr';
 
 type PageWrapperProps = {
 	children: ReactElement;
+	clearCache?: boolean;
+	customRoutes?: ReactElement;
 	fetcher: () => any;
 };
 
-const PageWrapper: React.FC<PageWrapperProps> = ({children, fetcher}) => {
+const PageWrapper: React.FC<PageWrapperProps> = ({
+	children,
+	clearCache,
+	customRoutes,
+	fetcher,
+}) => {
 	return (
-		<SWRConfig value={{fetcher}}>
+		<SWRConfig
+			value={{
+				fetcher,
+				provider: clearCache ? () => new Map() : undefined,
+			}}
+		>
 			<BrowserRouter>
 				<Routes>
 					<Route element={children} path="/" />
+
+					{customRoutes}
 				</Routes>
 			</BrowserRouter>
 		</SWRConfig>

@@ -3,7 +3,7 @@
 exports[`StatusBadge > renders StatusBadge with success 1`] = `
 <DocumentFragment>
   <span
-    class="label text-uppercase text-nowrap label-inverse-secondary"
+    class="label label-chart text-uppercase text-nowrap blocked"
   >
     Blocked
   </span>

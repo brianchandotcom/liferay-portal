@@ -123,39 +123,50 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		</c:if>
 
 		<c:if test="<%= (!rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY) || DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR)) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
-			<liferay-portlet:renderURL var="editURL">
-				<portlet:param name="mvcPath" value="/admin/common/edit_kb_article.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-				<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_ANY) %>" />
-			</liferay-portlet:renderURL>
-
 			<liferay-ui:icon
 				icon="pencil"
 				label="<%= true %>"
 				markupView="lexicon"
 				message="edit"
 				method="get"
-				url="<%= editURL %>"
+				url='<%=
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(renderRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, PortletRequest.RENDER_PHASE)
+					).setMVCPath(
+						"/admin/common/edit_kb_article.jsp"
+					).setRedirect(
+						redirect
+					).setParameter(
+						"resourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).setParameter(
+						"status", WorkflowConstants.STATUS_ANY
+					).buildString()
+				%>'
 			/>
 		</c:if>
 
 		<c:if test="<%= (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) || (DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) && DisplayPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADMINISTRATOR) && rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) %>">
-			<liferay-portlet:renderURL var="addKBArticleURL">
-				<portlet:param name="mvcPath" value="/admin/common/edit_kb_article.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-				<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-			</liferay-portlet:renderURL>
-
 			<liferay-ui:icon
 				icon="plus"
 				label="<%= true %>"
 				markupView="lexicon"
 				message="add-child-article"
 				method="get"
-				url="<%= addKBArticleURL %>"
+				url='<%=
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(renderRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, PortletRequest.RENDER_PHASE)
+					).setMVCPath(
+						"/admin/common/edit_kb_article.jsp"
+					).setRedirect(
+						redirect
+					).setParameter(
+						"parentResourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"parentResourcePrimKey", kbArticle.getResourcePrimKey()
+					).buildString()
+				%>'
 			/>
 		</c:if>
 
@@ -180,22 +191,29 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		</c:if>
 
 		<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.MOVE_KB_ARTICLE) %>">
-			<liferay-portlet:renderURL var="moveKBArticleURL">
-				<portlet:param name="mvcPath" value="/admin/common/move_object.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-				<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getParentResourceClassNameId()) %>" />
-				<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getParentResourcePrimKey()) %>" />
-			</liferay-portlet:renderURL>
-
 			<liferay-ui:icon
 				icon="move"
 				label="<%= true %>"
 				markupView="lexicon"
 				message="move"
 				method="get"
-				url="<%= moveKBArticleURL %>"
+				url='<%=
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(renderRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, PortletRequest.RENDER_PHASE)
+					).setMVCPath(
+						"/admin/common/move_object.jsp"
+					).setRedirect(
+						redirect
+					).setParameter(
+						"parentResourceClassNameId", kbArticle.getParentResourceClassNameId()
+					).setParameter(
+						"parentResourcePrimKey", kbArticle.getParentResourcePrimKey()
+					).setParameter(
+						"resourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).buildString()
+				%>'
 			/>
 		</c:if>
 

@@ -1598,9 +1598,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					new String[] {
 						group.getFriendlyURL(),
 						String.valueOf(serviceContext.getScopeGroupId()),
-						group.getGroupKey(),
-						objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues.
-							toString()
+						group.getGroupKey()
 					});
 
 				String css = _replace(
@@ -1628,13 +1626,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					json);
 			}
 			else {
-				if (StringUtil.endsWith(
-						urlPath, "display-page-template.json")) {
-
-					json = _replace(
-						json, "[$", "$]",
-						objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
-				}
+				json = _replace(
+					json, "[$", "$]",
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
 
 				zipWriter.addEntry(
 					StringUtil.removeFirst(

@@ -264,27 +264,29 @@ function SpacingSelectorButton({
 						<>
 							<li
 								aria-hidden="true"
-								className="align-items-center d-flex dropdown-subheader justify-content-between pr-2"
+								className={`align-items-center d-flex dropdown-subheader justify-content-between my-2 pr-2 py-0  text-3 ${DROPDOWN_CLASSNAME}__header`}
 								id={headerId}
 								role="presentation"
 							>
 								{field?.label}
 
-								<ClayButtonWithIcon
-									borderless
-									className="lfr-portal-tooltip text-3"
-									displayType="secondary"
-									onClick={() => {
-										onChange(field.name, null, {
-											isReset: true,
-										});
-									}}
-									small
-									symbol="restore"
-									title={getResetLabelByViewport(
-										selectedViewportSize
-									)}
-								/>
+								{value && (
+									<ClayButtonWithIcon
+										borderless
+										className="lfr-portal-tooltip text-3"
+										displayType="secondary"
+										onClick={() => {
+											onChange(field.name, null, {
+												isReset: true,
+											});
+										}}
+										small
+										symbol="restore"
+										title={getResetLabelByViewport(
+											selectedViewportSize
+										)}
+									/>
+								)}
 							</li>
 
 							<li role="presentation">

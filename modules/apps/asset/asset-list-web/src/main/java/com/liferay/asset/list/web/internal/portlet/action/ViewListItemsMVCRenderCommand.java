@@ -18,7 +18,6 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Objects;
@@ -28,7 +27,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -67,8 +65,5 @@ public class ViewListItemsMVCRenderCommand implements MVCRenderCommand {
 
 		return "/error.jsp";
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

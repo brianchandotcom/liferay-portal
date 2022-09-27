@@ -39,12 +39,6 @@ public interface MBModerationGroupConfiguration {
 	public boolean enableMessageBoardsModeration();
 
 	@Meta.AD(
-		deflt = "false", description = "enable-company-mx-help",
-		name = "enable-company-mx", required = false
-	)
-	public boolean enableCompanyMx();
-
-	@Meta.AD(
 		description = "authorized-domain-names-help",
 		name = "authorized-domain-names", required = false
 	)

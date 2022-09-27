@@ -473,8 +473,7 @@ const Collection = React.memo(
 				)}
 
 				{collectionIsMapped(collectionConfig) &&
-					paginationIsEnabled(collectionConfig) &&
-					!flexEnabled && (
+					paginationIsEnabled(collectionConfig) && (
 						<CollectionPagination
 							activePage={activePage}
 							collectionConfig={collectionConfig}

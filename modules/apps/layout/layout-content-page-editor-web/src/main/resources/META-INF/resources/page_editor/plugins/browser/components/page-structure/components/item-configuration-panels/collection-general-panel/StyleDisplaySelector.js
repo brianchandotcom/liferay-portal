@@ -79,12 +79,6 @@ export function StyleDisplaySelector({
 				onChange={(event) =>
 					handleConfigurationChanged({
 						listStyle: event.target.value,
-						...(event.target.value ===
-							CONTENT_DISPLAY_OPTIONS.flexColumn ||
-							(event.target.value ===
-								CONTENT_DISPLAY_OPTIONS.flexRow && {
-								paginationType: 'none',
-							})),
 					})
 				}
 				options={availableListStyles}

@@ -352,31 +352,17 @@ export function CollectionGeneralPanel({item}) {
 										}
 									/>
 
-									{!flexEnabled && (
-										<PaginationSelector
-											collectionPaginationTypeId={
-												collectionPaginationTypeId
-											}
-											handleConfigurationChanged={
-												handleConfigurationChanged
-											}
-											value={paginationType || 'none'}
-										/>
-									)}
+									<PaginationSelector
+										collectionPaginationTypeId={
+											collectionPaginationTypeId
+										}
+										handleConfigurationChanged={
+											handleConfigurationChanged
+										}
+										value={paginationType || 'none'}
+									/>
 
-									{paginationType === 'none' ||
-									flexEnabled ? (
-										<NoPaginationOptions
-											collection={collection}
-											displayAllItems={displayAllItems}
-											handleConfigurationChanged={
-												handleConfigurationChanged
-											}
-											initialNumberOfItems={
-												initialNumberOfItems
-											}
-										/>
-									) : (
+									{paginationType !== 'none' ? (
 										<PaginationOptions
 											displayAllPages={displayAllPages}
 											handleConfigurationChanged={
@@ -387,6 +373,17 @@ export function CollectionGeneralPanel({item}) {
 											}
 											initialNumberOfPages={
 												initialNumberOfPages
+											}
+										/>
+									) : (
+										<NoPaginationOptions
+											collection={collection}
+											displayAllItems={displayAllItems}
+											handleConfigurationChanged={
+												handleConfigurationChanged
+											}
+											initialNumberOfItems={
+												initialNumberOfItems
 											}
 										/>
 									)}

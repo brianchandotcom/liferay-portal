@@ -1,6 +1,6 @@
 {
 	"contentType": {
-		"className": "com.liferay.object.model.ObjectDefinition#44306"
+		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]"
 	},
 	"name": "MDF Request Details"
 }

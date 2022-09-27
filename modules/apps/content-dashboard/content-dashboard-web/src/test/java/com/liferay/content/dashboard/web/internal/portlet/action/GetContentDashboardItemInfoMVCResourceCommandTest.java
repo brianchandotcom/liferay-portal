@@ -816,7 +816,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 					return Collections.singletonList(
 						new ContentDashboardItemVersion(
-							"version", "style", "0.1", null, "user", null));
+							null, null, "version", "style", "user", "0.1"));
 				}
 
 				@Override

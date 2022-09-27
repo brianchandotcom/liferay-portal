@@ -132,13 +132,13 @@ public class FileEntryContentDashboardItem
 
 		return stream.map(
 			fileVersion -> new ContentDashboardItemVersion(
+				fileVersion.getChangeLog(), fileVersion.getCreateDate(),
 				_language.get(
 					themeDisplay.getLocale(),
 					WorkflowConstants.getStatusLabel(fileVersion.getStatus())),
 				WorkflowConstants.getStatusStyle(fileVersion.getStatus()),
-				String.valueOf(fileVersion.getVersion()),
-				fileVersion.getChangeLog(), fileVersion.getUserName(),
-				fileVersion.getCreateDate())
+				fileVersion.getUserName(),
+				String.valueOf(fileVersion.getVersion()))
 		).collect(
 			Collectors.toList()
 		);
@@ -561,13 +561,13 @@ public class FileEntryContentDashboardItem
 			fileVersion
 		).map(
 			curFileVersion -> new ContentDashboardItemVersion(
+				curFileVersion.getChangeLog(), curFileVersion.getCreateDate(),
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(
 						curFileVersion.getStatus())),
 				WorkflowConstants.getStatusStyle(curFileVersion.getStatus()),
-				curFileVersion.getVersion(), curFileVersion.getChangeLog(),
-				curFileVersion.getUserName(), curFileVersion.getCreateDate())
+				curFileVersion.getUserName(), curFileVersion.getVersion())
 		);
 	}
 

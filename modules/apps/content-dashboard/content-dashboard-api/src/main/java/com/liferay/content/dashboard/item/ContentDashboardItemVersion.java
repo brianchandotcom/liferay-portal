@@ -25,15 +25,15 @@ import java.util.Date;
 public class ContentDashboardItemVersion {
 
 	public ContentDashboardItemVersion(
-		String label, String style, String version, String changeLog,
-		String userName, Date createDate) {
+		String changeLog, Date createDate, String label, String style,
+		String userName, String version) {
 
+		_changeLog = changeLog;
+		_createDate = createDate;
 		_label = label;
 		_style = style;
-		_version = version;
-		_changeLog = changeLog;
 		_userName = userName;
-		_createDate = createDate;
+		_version = version;
 	}
 
 	public String getChangeLog() {

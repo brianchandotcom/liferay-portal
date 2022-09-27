@@ -175,6 +175,15 @@ public class SegmentsExperimentRelLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsExperimentRel>
+		getSegmentsExperimentRelsBySegmentsExperienceId(
+			long segmentsExperienceId) {
+
+		return segmentsExperimentRelPersistence.findBySegmentsExperienceId(
+			segmentsExperienceId);
+	}
+
+	@Override
 	public SegmentsExperimentRel updateSegmentsExperimentRel(
 			long segmentsExperimentRelId, double split)
 		throws PortalException {

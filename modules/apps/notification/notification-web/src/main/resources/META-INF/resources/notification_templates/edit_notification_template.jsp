@@ -46,6 +46,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 			"editorConfig", viewNotificationTemplatesDisplayContext.getEditorConfig("rich_text")
 		).put(
 			"notificationTemplateId", notificationTemplateId
+		).put(
+			"notificationTemplateType", viewNotificationTemplatesDisplayContext.getNotificationTemplateType()
 		).build()
 	%>'
 />

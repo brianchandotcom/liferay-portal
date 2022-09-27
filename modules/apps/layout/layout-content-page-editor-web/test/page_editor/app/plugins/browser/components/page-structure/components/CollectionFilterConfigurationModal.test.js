@@ -166,9 +166,7 @@ describe('CollectionFilterConfigurationModal', () => {
 			fireEvent.blur(titleInput);
 		});
 
-		expect(
-			getByText('there-are-4-results-for-This is a test')
-		).toBeInTheDocument();
+		expect(getByText('there-are-x-results-for-x')).toBeInTheDocument();
 	});
 
 	it('clears the filter when the clear button is clicked', async () => {

@@ -179,9 +179,7 @@ describe('IssuesList', () => {
 
 		expect(getByText('SEO')).toBeInTheDocument();
 		expect(getByText('0')).toBeInTheDocument();
-		expect(
-			getByText('there-are-no-SEO-related-issues')
-		).toBeInTheDocument();
+		expect(getByText('there-are-no-x-related-issues')).toBeInTheDocument();
 	});
 
 	it('renders no issues message (no seo and accessibility issues)', () => {

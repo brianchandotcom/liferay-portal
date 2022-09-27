@@ -17,6 +17,10 @@ import {StoreStateContext} from '../../../src/main/resources/META-INF/resources/
 
 import '@testing-library/jest-dom/extend-expect';
 
+jest.mock('frontend-js-web', () => ({
+	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
+}));
+
 describe('BasicInformation', () => {
 	it('renders author, publish date and title', () => {
 		const testProps = {

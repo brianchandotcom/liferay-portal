@@ -39,6 +39,11 @@ jest.mock(
 	}
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((key, arg) => key.replace('x', arg)),
+}));
+
 const DEFAULT_WIDGETS = [
 	{
 		categories: [],

@@ -131,6 +131,11 @@ jest.mock(
 	})
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((key, arg) => key.replace('x', arg)),
+}));
+
 function renderMappingSelector({
 	mappedItem = {},
 	mappingFields = defaultMappingFields,

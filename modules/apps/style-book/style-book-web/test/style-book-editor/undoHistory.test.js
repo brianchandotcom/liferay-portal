@@ -66,6 +66,11 @@ const STATE = {
 	],
 };
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, arg) => langKey.replace('-x', ` ${arg}`)),
+}));
+
 function renderUndoHistory() {
 	return render(
 		<StyleBookEditorContextProvider
@@ -84,10 +89,6 @@ function renderUndoHistory() {
 }
 
 describe('UndoHistory', () => {
-	Liferay.Util.sub.mockImplementation((key, args) =>
-		key.replace('-x', ` ${args}`)
-	);
-
 	it('shows all redo and undo history items in the list', () => {
 		const {getByText} = renderUndoHistory();
 

@@ -251,7 +251,7 @@ describe('CollectionGeneralPanel', () => {
 
 		expect(
 			await screen.findByText(
-				'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-50.-we-strongly-recommend-using-pagination-instead'
+				'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x.-we-strongly-recommend-using-pagination-instead'
 			)
 		).toBeInTheDocument();
 	});
@@ -303,7 +303,7 @@ describe('CollectionGeneralPanel', () => {
 
 			expect(
 				await screen.findByText(
-					'the-current-number-of-items-in-this-collection-is-32'
+					'the-current-number-of-items-in-this-collection-is-x'
 				)
 			).toBeInTheDocument();
 		});
@@ -313,7 +313,7 @@ describe('CollectionGeneralPanel', () => {
 
 			expect(
 				await screen.findByText(
-					'setting-a-value-above-50-can-affect-page-performance-severely'
+					'setting-a-value-above-x-can-affect-page-performance-severely'
 				)
 			).toBeInTheDocument();
 		});
@@ -373,7 +373,7 @@ describe('CollectionGeneralPanel', () => {
 
 			expect(
 				await screen.findByText(
-					'you-can-only-display-a-maximum-of-50-items-per-page'
+					'you-can-only-display-a-maximum-of-x-items-per-page'
 				)
 			).toBeInTheDocument();
 		});

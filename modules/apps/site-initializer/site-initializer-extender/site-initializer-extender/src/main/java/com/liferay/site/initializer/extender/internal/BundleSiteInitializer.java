@@ -429,7 +429,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
-			_invoke(() -> _addSAPEntries(serviceContext));
+			_invoke(() -> _addOrUpdateSAPEntries(serviceContext));
 			_invoke(() -> _addSegmentsEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addSiteSettings(serviceContext));
@@ -2954,7 +2954,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/resource-permissions.json", serviceContext);
 	}
 
-	private void _addSAPEntries(ServiceContext serviceContext)
+	private void _addOrUpdateSAPEntries(ServiceContext serviceContext)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(

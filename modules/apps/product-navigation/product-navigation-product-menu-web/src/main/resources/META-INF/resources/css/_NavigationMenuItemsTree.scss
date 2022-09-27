@@ -9,24 +9,12 @@ html#{$cadmin-selector} {
 			padding-top: 1rem;
 
 			.component-expander {
-				&:hover {
-					color: $cadmin-secondary-l1;
-				}
 				.lexicon-icon {
 					background-color: $cadmin-dark-l2;
 					border-radius: 2px;
 					height: 12px;
 					padding: 3px;
 					width: 12px;
-				}
-			}
-
-			.treeview-link {
-				padding-left: 3rem;
-
-				&:hover {
-					background-color: transparent;
-					text-decoration: underline;
 				}
 			}
 
@@ -71,15 +59,16 @@ html#{$cadmin-selector} {
 				}
 			}
 
-			.navigation-menu-items-tree-node {
-				color: $cadmin-gray-500;
+			.navigation-menu-items-tree-node.treeview-link {
+				color: $cadmin-secondary-l3;
 
-				a {
-					color: $cadmin-gray-500;
+				&:hover {
+					background-color: transparent;
+					text-decoration: underline;
 
-					&:hover {
+					a,
+					p {
 						color: $cadmin-white;
-						text-decoration: none;
 					}
 				}
 

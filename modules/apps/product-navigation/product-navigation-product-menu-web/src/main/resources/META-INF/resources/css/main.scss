@@ -19,24 +19,20 @@ html#{$cadmin-selector} {
 				display: none;
 			}
 
-			.dropdown-toggle {
-				color: $cadmin-gray-500 !important;
-
-				&:active {
-					color: $cadmin-white;
-				}
-			}
-
 			.layout-finder {
 				border-bottom: 1px solid $cadmin-dark;
 				padding: 24px 16px 0;
 
 				input {
 					background-color: $cadmin-gray-800;
+
+					&::placeholder {
+						color: $cadmin-secondary-l1;
+					}
 				}
 
 				.back-to-menu {
-					color: $cadmin-gray-500;
+					color: $cadmin-secondary-l3;
 				}
 
 				.breadcrumb {
@@ -109,8 +105,9 @@ html#{$cadmin-selector} {
 				margin-top: 20px;
 				padding-top: 16px;
 
+				.add-page-button,
 				.configure-link {
-					color: $cadmin-secondary-l1;
+					color: $cadmin-secondary-l3;
 				}
 
 				.form-control {
@@ -126,7 +123,7 @@ html#{$cadmin-selector} {
 					&:focus {
 						background-color: $cadmin-dark;
 						border-color: $cadmin-gray-800;
-						color: $cadmin-gray-500;
+						color: $cadmin-secondary-l3;
 					}
 				}
 			}
@@ -189,6 +186,10 @@ html#{$cadmin-selector} {
 				}
 
 				.tree-node {
+					.dropdown-toggle {
+						color: $cadmin-white;
+					}
+
 					.tree-hitarea {
 						background-color: $cadmin-gray-800;
 						border: 1px solid $cadmin-gray-800;
@@ -212,7 +213,7 @@ html#{$cadmin-selector} {
 					}
 
 					.tree-label > span a.layout-tree {
-						color: $cadmin-gray-500;
+						color: $cadmin-secondary-l3;
 						padding-left: 1px;
 						width: 100%;
 

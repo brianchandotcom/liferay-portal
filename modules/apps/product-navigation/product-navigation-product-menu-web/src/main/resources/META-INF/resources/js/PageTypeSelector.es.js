@@ -150,7 +150,7 @@ function PageTypeSelector({
 						trigger={
 							<ClayButton
 								aria-haspopup="true"
-								className="dropdown-toggle"
+								className="add-page-button"
 								displayType="unstyled"
 							>
 								<ClayIcon symbol="plus" />

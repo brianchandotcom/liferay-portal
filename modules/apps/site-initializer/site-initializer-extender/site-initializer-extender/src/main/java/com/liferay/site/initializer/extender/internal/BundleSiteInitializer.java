@@ -465,7 +465,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues =
-				_invoke(() -> _addListTypeDefinitions(serviceContext));
+				_invoke(() -> _addOrUpdateListTypeDefinitions(serviceContext));
 
 			ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
 				_objectDefinitionResourceFactory.create();
@@ -1693,7 +1693,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
 	}
 
-	private Map<String, String> _addListTypeDefinitions(
+	private Map<String, String> _addOrUpdateListTypeDefinitions(
 			ServiceContext serviceContext)
 		throws Exception {
 

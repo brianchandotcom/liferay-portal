@@ -283,8 +283,8 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public List<ContentDashboardItemVersion> getLatestVersions(
-				Locale locale) {
+			public List<ContentDashboardItemVersion>
+				getLatestContentDashboardItemVersions(Locale locale) {
 
 				return null;
 			}

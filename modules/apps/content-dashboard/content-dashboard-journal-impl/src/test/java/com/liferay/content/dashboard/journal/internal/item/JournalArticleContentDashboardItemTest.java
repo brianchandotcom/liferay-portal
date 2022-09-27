@@ -550,16 +550,21 @@ public class JournalArticleContentDashboardItemTest {
 				null, null, null, null, null, null, journalArticle, null,
 				_getLanguage(), null, null);
 
-		List<ContentDashboardItemVersion> versions =
-			journalArticleContentDashboardItem.getLatestVersions(LocaleUtil.US);
-
-		Assert.assertEquals(versions.toString(), 1, versions.size());
-
-		ContentDashboardItemVersion version = versions.get(0);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			journalArticleContentDashboardItem.
+				getLatestContentDashboardItemVersions(LocaleUtil.US);
 
 		Assert.assertEquals(
-			WorkflowConstants.LABEL_APPROVED, version.getLabel());
-		Assert.assertEquals("success", version.getStyle());
+			contentDashboardItemVersions.toString(), 1,
+			contentDashboardItemVersions.size());
+
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			contentDashboardItemVersions.get(0);
+
+		Assert.assertEquals(
+			WorkflowConstants.LABEL_APPROVED,
+			contentDashboardItemVersion.getLabel());
+		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
 	}
 
 	@Test
@@ -597,21 +602,30 @@ public class JournalArticleContentDashboardItemTest {
 				null, null, null, null, null, null, journalArticle1, null,
 				_getLanguage(), journalArticle2, null);
 
-		List<ContentDashboardItemVersion> versions =
-			journalArticleContentDashboardItem.getLatestVersions(LocaleUtil.US);
-
-		Assert.assertEquals(versions.toString(), 2, versions.size());
-
-		ContentDashboardItemVersion version1 = versions.get(0);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			journalArticleContentDashboardItem.
+				getLatestContentDashboardItemVersions(LocaleUtil.US);
 
 		Assert.assertEquals(
-			WorkflowConstants.LABEL_APPROVED, version1.getLabel());
-		Assert.assertEquals("success", version1.getStyle());
+			contentDashboardItemVersions.toString(), 2,
+			contentDashboardItemVersions.size());
 
-		ContentDashboardItemVersion version2 = versions.get(1);
+		ContentDashboardItemVersion contentDashboardItemVersion1 =
+			contentDashboardItemVersions.get(0);
 
-		Assert.assertEquals(WorkflowConstants.LABEL_DRAFT, version2.getLabel());
-		Assert.assertEquals("secondary", version2.getStyle());
+		Assert.assertEquals(
+			WorkflowConstants.LABEL_APPROVED,
+			contentDashboardItemVersion1.getLabel());
+		Assert.assertEquals("success", contentDashboardItemVersion1.getStyle());
+
+		ContentDashboardItemVersion contentDashboardItemVersion2 =
+			contentDashboardItemVersions.get(1);
+
+		Assert.assertEquals(
+			WorkflowConstants.LABEL_DRAFT,
+			contentDashboardItemVersion2.getLabel());
+		Assert.assertEquals(
+			"secondary", contentDashboardItemVersion2.getStyle());
 	}
 
 	@Test

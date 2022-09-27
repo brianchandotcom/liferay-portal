@@ -109,7 +109,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<ContentDashboardItemVersion> getAllVersions(
+	public List<ContentDashboardItemVersion> getAllContentDashboardItemVersions(
 		ThemeDisplay themeDisplay) {
 
 		int status = WorkflowConstants.STATUS_APPROVED;
@@ -228,11 +228,12 @@ public class FileEntryContentDashboardItem
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		ContentDashboardItemVersion version = _getLastVersion(locale);
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			_getLastContentDashboardItemVersion(locale);
 
 		if ((getUserId() == userId) &&
 			Objects.equals(
-				version.getLabel(),
+				contentDashboardItemVersion.getLabel(),
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(
@@ -309,7 +310,9 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale) {
+	public List<ContentDashboardItemVersion>
+		getLatestContentDashboardItemVersions(Locale locale) {
+
 		try {
 			FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
 			FileVersion latestTrustedFileVersion =
@@ -449,10 +452,14 @@ public class FileEntryContentDashboardItem
 		return _getStringValue("fileName");
 	}
 
-	private ContentDashboardItemVersion _getLastVersion(Locale locale) {
-		List<ContentDashboardItemVersion> versions = getLatestVersions(locale);
+	private ContentDashboardItemVersion _getLastContentDashboardItemVersion(
+		Locale locale) {
 
-		return versions.get(versions.size() - 1);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			getLatestContentDashboardItemVersions(locale);
+
+		return contentDashboardItemVersions.get(
+			contentDashboardItemVersions.size() - 1);
 	}
 
 	private URL _getLatestVersionURL() {

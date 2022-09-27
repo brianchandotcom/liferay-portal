@@ -267,7 +267,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					>
 
 						<%
-						List<ContentDashboardItemVersion> versions = contentDashboardItem.getLatestVersions(locale);
+						List<ContentDashboardItemVersion> versions = contentDashboardItem.getLatestContentDashboardItemVersions(locale);
 
 						for (ContentDashboardItemVersion version : versions) {
 						%>

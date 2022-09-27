@@ -515,12 +515,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	private void _assertContentDashboardItemLatestVersions(
 		ContentDashboardItem<?> contentDashboardItem, JSONObject jsonObject) {
 
-		List<ContentDashboardItemVersion> versions =
-			contentDashboardItem.getLatestVersions(LocaleUtil.US);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			contentDashboardItem.getLatestContentDashboardItemVersions(
+				LocaleUtil.US);
 
-		ContentDashboardItemVersion version = versions.get(0);
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			contentDashboardItemVersions.get(0);
 
-		JSONObject expectedJSONObject = version.toJSONObject();
+		JSONObject expectedJSONObject =
+			contentDashboardItemVersion.toJSONObject();
 
 		JSONArray actualJSONArray = jsonObject.getJSONArray("latestVersions");
 
@@ -808,8 +811,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public List<ContentDashboardItemVersion> getLatestVersions(
-					Locale locale) {
+				public List<ContentDashboardItemVersion>
+					getLatestContentDashboardItemVersions(Locale locale) {
 
 					return Collections.singletonList(
 						new ContentDashboardItemVersion(

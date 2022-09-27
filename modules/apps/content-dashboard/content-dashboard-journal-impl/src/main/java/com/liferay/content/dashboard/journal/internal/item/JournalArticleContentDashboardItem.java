@@ -118,7 +118,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public List<ContentDashboardItemVersion> getAllVersions(
+	public List<ContentDashboardItemVersion> getAllContentDashboardItemVersions(
 		ThemeDisplay themeDisplay) {
 
 		int status = WorkflowConstants.STATUS_APPROVED;
@@ -243,11 +243,12 @@ public class JournalArticleContentDashboardItem
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		ContentDashboardItemVersion version = _getLastVersion(locale);
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			_getLastContentDashboardItemVersion(locale);
 
 		if ((getUserId() == userId) &&
 			Objects.equals(
-				version.getLabel(),
+				contentDashboardItemVersion.getLabel(),
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(
@@ -319,7 +320,9 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale) {
+	public List<ContentDashboardItemVersion>
+		getLatestContentDashboardItemVersions(Locale locale) {
+
 		return Stream.of(
 			_toVersionOptional(_journalArticle, locale),
 			_toVersionOptional(_latestApprovedJournalArticle, locale)
@@ -450,10 +453,14 @@ public class JournalArticleContentDashboardItem
 		);
 	}
 
-	private ContentDashboardItemVersion _getLastVersion(Locale locale) {
-		List<ContentDashboardItemVersion> versions = getLatestVersions(locale);
+	private ContentDashboardItemVersion _getLastContentDashboardItemVersion(
+		Locale locale) {
 
-		return versions.get(versions.size() - 1);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			getLatestContentDashboardItemVersions(locale);
+
+		return contentDashboardItemVersions.get(
+			contentDashboardItemVersions.size() - 1);
 	}
 
 	private String _getStringValue(String infoFieldName, Locale locale) {

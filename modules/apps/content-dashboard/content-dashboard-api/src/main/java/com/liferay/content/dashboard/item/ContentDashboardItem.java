@@ -57,7 +57,8 @@ public interface ContentDashboardItem<T> {
 
 	public InfoItemReference getInfoItemReference();
 
-	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale);
+	public List<ContentDashboardItemVersion>
+		getLatestContentDashboardItemVersions(Locale locale);
 
 	public Date getModifiedDate();
 

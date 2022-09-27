@@ -25,7 +25,17 @@ html#{$cadmin-selector} .cadmin .page-editor__select-field {
 
 	#{$prefix}__select,
 	#{$prefix}__label {
+		align-items: center;
 		grid-area: 1 / 2 / 2 / 3;
+
+		.inherited {
+			background-color: $cadmin-blue;
+			border-radius: 50%;
+			flex-shrink: 0;
+			height: 6px;
+			margin-left: 8px;
+			width: 6px;
+		}
 	}
 
 	#{$prefix}__select {

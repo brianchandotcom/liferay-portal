@@ -31,6 +31,15 @@ html#{$cadmin-selector} {
 					padding-right: 9px;
 				}
 
+				.inherited {
+					background-color: $cadmin-blue;
+					border-radius: 50%;
+					flex-shrink: 0;
+					height: 6px;
+					margin-left: 8px;
+					width: 6px;
+				}
+
 				&-splotch {
 					border: 1px solid $cadmin-gray-300;
 					height: 20px;

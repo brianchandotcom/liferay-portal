@@ -74,7 +74,9 @@ export function ColorPickerField({field, isCustomStyle, onValueSelect, value}) {
 			canDetachTokenValues={canDetachTokenValues}
 			defaultTokenLabel={
 				computedValue
-					? `${DEFAULT_TOKEN_LABEL} · ${computedValue}`
+					? Liferay.FeatureFlags['LPS-163362']
+						? computedValue
+						: `${DEFAULT_TOKEN_LABEL} · ${computedValue}`
 					: DEFAULT_TOKEN_LABEL
 			}
 			defaultTokenValue={computedValue}

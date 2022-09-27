@@ -38,6 +38,7 @@ export function DropdownColorPicker({
 	showSelector = true,
 	small,
 	value = '#FFFFFF',
+	inherited = false,
 }) {
 	const dropdownContainerRef = useRef(null);
 	const triggerElementRef = useRef(null);
@@ -148,6 +149,10 @@ export function DropdownColorPicker({
 						/>
 
 						<span className="text-truncate">{label}</span>
+
+						{Liferay.FeatureFlags['LPS-163362'] && inherited ? (
+							<span className="inherited"></span>
+						) : null}
 					</span>
 				</ClayButton>
 			) : (

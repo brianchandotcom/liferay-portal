@@ -265,6 +265,17 @@ const SingleSelectWithIcon = ({
 	);
 
 	const selectedOptionLabel = useMemo(() => {
+		if (Liferay.FeatureFlags['LPS-163362']) {
+			if (value === field.defaultValue) {
+				return defaultOptionComputedValue;
+			}
+
+			return (
+				options.find((option) => option.value === value)?.label ||
+				defaultOptionComputedValue
+			);
+		}
+
 		if (value === field.defaultValue) {
 			if (defaultOptionComputedValue) {
 				return `${defaultOptionLabel} · ${defaultOptionComputedValue}`;
@@ -330,15 +341,31 @@ const SingleSelectWithIcon = ({
 				value={value || ''}
 			/>
 
-			<div
-				className={classNames(
-					'page-editor__single-select-with-icon__label p-2 text-truncate w-100',
-					{disabled}
-				)}
-				role="presentation"
-			>
-				<span>{selectedOptionLabel}</span>
-			</div>
+			{Liferay.FeatureFlags['LPS-163362'] ? (
+				<div
+					className={classNames(
+						'page-editor__single-select-with-icon__label p-2 w-100 d-flex',
+						{disabled}
+					)}
+					role="presentation"
+				>
+					<span className="text-truncate">{selectedOptionLabel}</span>
+
+					{!value && field.inherited ? (
+						<span className="inherited"></span>
+					) : null}
+				</div>
+			) : (
+				<div
+					className={classNames(
+						'page-editor__single-select-with-icon__label p-2 text-truncate w-100',
+						{disabled}
+					)}
+					role="presentation"
+				>
+					<span>{selectedOptionLabel}</span>
+				</div>
+			)}
 		</div>
 	);
 };

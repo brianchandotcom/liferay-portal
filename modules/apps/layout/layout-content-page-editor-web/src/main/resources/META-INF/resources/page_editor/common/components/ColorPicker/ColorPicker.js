@@ -231,6 +231,7 @@ export function ColorPicker({
 						active={activeDropdownColorPicker}
 						colors={colors}
 						fieldLabel={showLabel ? null : field.label}
+						inherited={field.inherited}
 						label={tokenLabel}
 						onSetActive={setActiveDropdownColorPicker}
 						onValueChange={({label, name, value}) =>

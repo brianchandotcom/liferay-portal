@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -432,11 +434,18 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			List<ObjectViewFilterColumn> objectViewFilterColumns)
 		throws PortalException {
 
-		Set<String> filterableObjectFieldBusinessTypes =
-			Collections.unmodifiableSet(
+		Set<String> filterableObjectFieldBusinessTypes;
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152650"))) {
+			filterableObjectFieldBusinessTypes = Collections.unmodifiableSet(
 				SetUtil.fromArray(
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP));
+		}
+		else {
+			filterableObjectFieldBusinessTypes = Collections.unmodifiableSet(
+				SetUtil.fromArray(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST));
+		}
 
 		Set<String> filterableObjectFieldNames = Collections.unmodifiableSet(
 			SetUtil.fromArray("status", "createDate", "modifiedDate"));

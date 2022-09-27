@@ -911,6 +911,108 @@ definition {
 		}
 	}
 
+	@description = "LPS-154872 - Verify that it's possible to filter and sort entries using metadata fields"
+	@priority = "4"
+	test CanFilterAndSortEntriesViaMetadataFields {
+		task ("Create Custom Object and Custom Field (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161889",
+				objectName = "CustomObject161889",
+				pluralLabelName = "Custom Objects 161889");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject161889");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161889");
+		}
+
+		task ("Go to Custom Object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161889");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		var listMetaData = "Author,Create Date,Custom Field,External Reference Code,ID,Modified Date,Status";
+
+		task ("Mark Custom View as default, go to View Builder and add ERC") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+		}
+
+		task ("Set order to ERC on Default Sort") {
+			ObjectCustomViews.goToDefaultSortTab();
+
+			for (var columnName : list "${listMetaData}") {
+				ObjectCustomViews.addDefaultSort(
+					columnOption = "${columnName}",
+					sortOption = "Ascending");
+			}
+
+			for (var columnName : list "${listMetaData}") {
+				ObjectCustomViews.assertColumnPresentOnDefaultSort(
+					columnName = "${columnName}",
+					sortingLabel = "Ascending");
+			}
+
+			Button.clickSave();
+		}
+
+		task ("Create an entry via API") {
+			for (var letters : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customField",
+					objectName = "CustomObject161889",
+					value = "Entry ${letters}");
+			}
+		}
+
+		task ("Go to the Custom Object entries and assert the columns are present") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161889");
+
+			for (var columnName : list "${listMetaData}") {
+				ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+			}
+		}
+
+		task ("Click on arrows and assert the entries change the position") {
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry A",
+				position = "1");
+
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry B",
+				position = "2");
+
+			Click(
+				key_orderColumn = "External Reference Code",
+				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
+
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry B",
+				position = "1");
+
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry A",
+				position = "2");
+		}
+	}
+
 	@description = "LPS-161887 - Verify that it's not possible to create an Object without adding a field."
 	@priority = "5"
 	test CannotCreateEmptyObject {

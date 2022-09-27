@@ -522,7 +522,7 @@ definition {
 
 		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries.");
 
-		AssertConsoleTextPresent(value1 = "Finished indexing dictionary for spellchecker/dictionary_de_DE.txt");
+		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 
 		Navigator.openURL();
 

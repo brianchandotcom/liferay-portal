@@ -69,37 +69,50 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	@Test
 	public void testGetRolesPage() throws Exception {
 		Page<Role> page = roleResource.getRolesPage(
-			null, Pagination.of(1, 100));
+			null, null, Pagination.of(1, 100));
 
 		List<Role> roles = new ArrayList<>(page.getItems());
 
-		roles.add(_addRole(randomRole()));
-		roles.add(_addRole(randomRole()));
+		Role role1 = _addRole(randomRole());
+		Role role2 = _addRole(randomRole());
 
-		page = roleResource.getRolesPage(null, Pagination.of(1, roles.size()));
+		roles.add(role1);
+		roles.add(role2);
+
+		page = roleResource.getRolesPage(
+			null, null, Pagination.of(1, roles.size()));
 
 		Assert.assertEquals(roles.size(), page.getTotalCount());
 
 		assertEqualsIgnoringOrder(roles, (List<Role>)page.getItems());
 		assertValid(page);
+
+		page = roleResource.getRolesPage(
+			null, role1.getName(), Pagination.of(1, roles.size()));
+
+		List<Role> roleList = (List<Role>)page.getItems();
+
+		assertEquals(role1, roleList.get(0));
 	}
 
 	@Override
 	@Test
 	public void testGetRolesPageWithPagination() throws Exception {
-		Page<Role> rolesPage = roleResource.getRolesPage(null, null);
+		Page<Role> rolesPage = roleResource.getRolesPage(null, null, null);
 
 		testGetRolesPage_addRole(randomRole());
 		testGetRolesPage_addRole(randomRole());
 		testGetRolesPage_addRole(randomRole());
 
-		Page<Role> page1 = roleResource.getRolesPage(null, Pagination.of(1, 2));
+		Page<Role> page1 = roleResource.getRolesPage(
+			null, null, Pagination.of(1, 2));
 
 		List<Role> roles1 = (List<Role>)page1.getItems();
 
 		Assert.assertEquals(roles1.toString(), 2, roles1.size());
 
-		Page<Role> page2 = roleResource.getRolesPage(null, Pagination.of(2, 2));
+		Page<Role> page2 = roleResource.getRolesPage(
+			null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(
 			rolesPage.getTotalCount() + 3, page2.getTotalCount());

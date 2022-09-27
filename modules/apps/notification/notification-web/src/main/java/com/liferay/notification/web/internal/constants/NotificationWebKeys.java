@@ -22,6 +22,9 @@ public class NotificationWebKeys {
 	public static final String NOTIFICATION_QUEUE_ENTRIES =
 		"NOTIFICATION_QUEUE_ENTRIES";
 
+	public static final String NOTIFICATION_TEMPLATE_TYPE =
+		"NOTIFICATION_TEMPLATE_TYPE";
+
 	public static final String NOTIFICATION_TEMPLATES =
 		"NOTIFICATION_TEMPLATES";
 

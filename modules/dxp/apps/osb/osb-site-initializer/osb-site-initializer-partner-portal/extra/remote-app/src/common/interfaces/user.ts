@@ -8,9 +8,6 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-import LiferayObject from './liferayObject';
-
 export default interface User {
 	emailAddress: string;
 	givenName: string;

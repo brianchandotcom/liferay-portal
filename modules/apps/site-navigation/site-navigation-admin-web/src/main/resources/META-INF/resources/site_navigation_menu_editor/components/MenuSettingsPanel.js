@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {useConstants} from '../contexts/ConstantsContext';
 import {SidebarPanelContent} from './SidebarPanelContent';
@@ -24,11 +24,13 @@ export function MenuSettingsPanel() {
 		siteNavigationMenuName,
 	} = useConstants();
 
+	const contentRequestBody = useMemo(() => ({siteNavigationMenuId}), [
+		siteNavigationMenuId,
+	]);
+
 	return (
 		<SidebarPanelContent
-			contentRequestBody={{
-				siteNavigationMenuId,
-			}}
+			contentRequestBody={contentRequestBody}
 			contentUrl={editSiteNavigationMenuSettingsURL}
 			title={siteNavigationMenuName}
 		/>

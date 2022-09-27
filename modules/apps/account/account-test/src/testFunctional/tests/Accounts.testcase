@@ -3230,6 +3230,58 @@ definition {
 		}
 	}
 
+	@description = "This test asserts accurate results when searching for available users in Assign User to person account modal"
+	@priority = "4"
+	test CanSearchInAssignUserToPersonAccountModal {
+		task ("Given a person account and a few users") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person Account",
+				accountEntryType = "Person");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.addUser(
+				userEmailAddress = "second@liferay.com",
+				userFirstName = "secondfirstname",
+				userLastName = "secondlastname",
+				userScreenName = "secondscreenname");
+		}
+
+		task ("When a user assigns a user to a person account") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.goToEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Person Account");
+
+			AssertClick(
+				locator1 = "Account#USER_SELECT_BUTTON",
+				value1 = "Select");
+
+			SelectFrame(
+				key_title = "Assign User",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Then the user can search for available users") {
+			Search.searchCP(searchTerm = "userea@liferay.com");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			LexiconEntry.viewNoEntry(rowEntry = "secondfirstname secondlastname");
+
+			Search.searchCP(searchTerm = "second@liferay.com");
+
+			LexiconEntry.viewEntryName(rowEntry = "secondfirstname secondlastname");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+		}
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

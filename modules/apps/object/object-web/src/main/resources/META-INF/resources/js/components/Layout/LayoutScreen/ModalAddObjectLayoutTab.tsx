@@ -122,21 +122,13 @@ function TabType({
 	);
 }
 
-function getRelationshipInfo(reverse: boolean, type: string): TLabelInfo {
-	if (Liferay.FeatureFlags['LPS-158478']) {
-		return {
-			displayType: reverse ? 'info' : 'success',
-			labelContent: reverse
-				? Liferay.Language.get('child')
-				: Liferay.Language.get('parent'),
-		};
-	}
-	else {
-		return {
-			displayType: 'secondary',
-			labelContent: type,
-		};
-	}
+function getRelationshipInfo(reverse: boolean): TLabelInfo {
+	return {
+		displayType: reverse ? 'info' : 'success',
+		labelContent: reverse
+			? Liferay.Language.get('child')
+			: Liferay.Language.get('parent'),
+	};
 }
 
 export function ModalAddObjectLayoutTab({
@@ -169,10 +161,7 @@ export function ModalAddObjectLayoutTab({
 	}, [objectRelationships, query]);
 
 	const selectedRelationshipInfo: TLabelInfo = useMemo(() => {
-		return getRelationshipInfo(
-			selectedRelationship?.reverse ?? false,
-			selectedRelationship?.type ?? ''
-		);
+		return getRelationshipInfo(selectedRelationship?.reverse ?? false);
 	}, [selectedRelationship]);
 
 	const onSubmit = (values: TObjectLayoutTab) => {
@@ -302,10 +291,9 @@ export function ModalAddObjectLayoutTab({
 								] ?? selectedRelationship?.name
 							}
 						>
-							{({label, name, reverse, type}) => {
+							{({label, name, reverse}) => {
 								const relationshipInfo = getRelationshipInfo(
-									reverse,
-									type
+									reverse
 								);
 
 								return (

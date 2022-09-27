@@ -45,18 +45,12 @@ export function ObjectLayoutRelationship({
 
 					<ClayLabel
 						displayType={
-							Liferay.FeatureFlags['LPS-158478']
-								? objectRelationship.reverse
-									? 'info'
-									: 'success'
-								: 'secondary'
+							objectRelationship.reverse ? 'info' : 'success'
 						}
 					>
-						{Liferay.FeatureFlags['LPS-158478']
-							? objectRelationship.reverse
-								? Liferay.Language.get('child')
-								: Liferay.Language.get('parent')
-							: objectRelationship?.type}
+						{objectRelationship.reverse
+							? Liferay.Language.get('child')
+							: Liferay.Language.get('parent')}
 					</ClayLabel>
 				</PanelSimpleBody>
 			</Panel>

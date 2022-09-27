@@ -53,13 +53,13 @@ public class GlobalJournalArticleUrlTitleUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select urlTitle from FriendlyURLEntryLocalization where " +
-					"classNameId = ? and classPK = ? and groupId = ? and " +
-						"languageId = ?")) {
+					"languageId = ? and groupId = ? and classNameId = ? and " +
+						"classPK = ?")) {
 
-			preparedStatement.setLong(1, classNameId);
-			preparedStatement.setLong(2, classPK);
-			preparedStatement.setLong(3, groupId);
-			preparedStatement.setString(4, languageId);
+			preparedStatement.setString(1, languageId);
+			preparedStatement.setLong(2, groupId);
+			preparedStatement.setLong(3, classNameId);
+			preparedStatement.setLong(4, classPK);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -88,7 +88,7 @@ public class GlobalJournalArticleUrlTitleUpgradeProcess extends UpgradeProcess {
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select defaultLanguageId, id_, resourcePrimKey from " +
+				"select id_, resourcePrimKey, defaultLanguageId from " +
 					"JournalArticle where groupId = ? and (urlTitle is null " +
 						"or urlTitle = '')");
 			PreparedStatement preparedStatement2 =

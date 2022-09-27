@@ -26,7 +26,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorStatisticsUti
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
@@ -84,7 +83,7 @@ public class MessageBoardMessageDTOConverter
 				anonymous = mbMessage.isAnonymous();
 				articleBody = mbMessage.getBody();
 				companyMxName = _getCompanyMxName(
-					mbMessage.getCompanyId(), mbMessage.getGroupId(), user);
+					mbMessage.getCompanyId(), user);
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
@@ -160,13 +159,12 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
-	private String _getCompanyMxName(long companyId, long groupId, User user)
+	private String _getCompanyMxName(long companyId, User user)
 		throws Exception {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
 		if (company.hasCompanyMx(user.getEmailAddress())) {
-
 			return user.getCompanyMx();
 		}
 

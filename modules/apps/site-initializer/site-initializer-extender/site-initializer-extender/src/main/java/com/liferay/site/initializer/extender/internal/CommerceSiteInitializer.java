@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
 
@@ -268,7 +269,21 @@ public class CommerceSiteInitializer {
 			return null;
 		}
 
-		channel = channelResource.postChannel(channel);
+		Page<Channel> channelsPage = channelResource.getChannelsPage(
+			null,
+			channelResource.toFilter(
+				"siteGroupId eq" + serviceContext.getScopeGroupId()),
+			null, null);
+
+		Channel existingChannel = channelsPage.fetchFirstItem();
+
+		if (existingChannel == null) {
+			channel = channelResource.postChannel(channel);
+		}
+		else {
+			channel = channelResource.putChannel(
+				existingChannel.getId(), channel);
+		}
 
 		_addDefaultCPDisplayLayout(
 			channel,

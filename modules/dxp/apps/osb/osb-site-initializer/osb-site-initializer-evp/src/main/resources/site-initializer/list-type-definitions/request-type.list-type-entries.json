@@ -1,0 +1,18 @@
+[
+	{
+		"key": "grant",
+		"name": "Grant",
+		"name_i18n": {
+			"en-US": "Grant"
+		},
+		"type": "string"
+	},
+	{
+		"key": "service",
+		"name": "Service",
+		"name_i18n": {
+			"en-US": "Service"
+		},
+		"type": "string"
+	}
+]

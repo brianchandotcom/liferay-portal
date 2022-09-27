@@ -151,7 +151,14 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 						).put(
 							"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
 						).put(
-							"uploadItemURL", uploadURL.toString()
+							"uploadItemURL",
+							() -> {
+								if (uploadURL != null) {
+									return uploadURL.toString();
+								}
+
+								return null;
+							}
 						).put(
 							"validExtensions", StringUtil.merge(extensions)
 						).build()
@@ -182,7 +189,14 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 						).put(
 							"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
 						).put(
-							"uploadItemURL", uploadURL.toString()
+							"uploadItemURL",
+							() -> {
+								if (uploadURL != null) {
+									return uploadURL.toString();
+								}
+
+								return null;
+							}
 						).put(
 							"validExtensions", StringUtil.merge(extensions)
 						).build()

@@ -228,8 +228,6 @@ definition {
 
 		LexiconEntry.delete(rowEntry = "Delete AG");
 
-		Search.searchCP(searchTerm = "Delete");
-
 		AccountGroups.viewDefault(tabName = "Account Groups");
 	}
 

@@ -80,12 +80,11 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		List<Long> plids = new ArrayList<>();
 
-		try (PreparedStatement preparedStatement1 =
-				connection.prepareStatement(
-					SQLTransformer.transform(
-						"select layoutPageTemplateStructureId, classPK from " +
-							"LayoutPageTemplateStructure where classPK in " +
-								"(select plid from Layout where type_ = ?)"));
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				SQLTransformer.transform(
+					"select layoutPageTemplateStructureId, classPK from " +
+						"LayoutPageTemplateStructure where classPK in " +
+							"(select plid from Layout where type_ = ?)"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

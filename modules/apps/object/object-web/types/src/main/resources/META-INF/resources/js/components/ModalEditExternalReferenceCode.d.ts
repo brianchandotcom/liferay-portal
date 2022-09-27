@@ -15,7 +15,6 @@
 /// <reference types="react" />
 
 import {Observer} from '@clayui/modal/lib/types';
-import './ModalEditExternalReferenceCode.scss';
 export declare function ModalEditExternalReferenceCode({
 	externalReferenceCode,
 	objectDefinitionId,

@@ -118,19 +118,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		task ("Delete routine in setup") {
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-		}
+		TestrayRoutines.deleteRoutineSetup();
 
 		TestrayManage.deleteAllCategories();
 

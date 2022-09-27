@@ -160,6 +160,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getEnableComments());
 		}
 
+		if (objectDefinition.getEnableObjectEntryHistory() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableObjectEntryHistory\": ");
+
+			sb.append(objectDefinition.getEnableObjectEntryHistory());
+		}
+
 		if (objectDefinition.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -550,6 +560,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getEnableComments()));
 		}
 
+		if (objectDefinition.getEnableObjectEntryHistory() == null) {
+			map.put("enableObjectEntryHistory", null);
+		}
+		else {
+			map.put(
+				"enableObjectEntryHistory",
+				String.valueOf(objectDefinition.getEnableObjectEntryHistory()));
+		}
+
 		if (objectDefinition.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -787,6 +806,14 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "enableComments")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setEnableComments(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "enableObjectEntryHistory")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setEnableObjectEntryHistory(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

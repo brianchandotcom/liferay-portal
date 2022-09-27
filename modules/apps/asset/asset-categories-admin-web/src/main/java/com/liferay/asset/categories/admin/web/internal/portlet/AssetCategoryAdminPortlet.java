@@ -31,13 +31,11 @@ import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
-import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -144,16 +142,10 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		_assetCategoriesAdminWebConfiguration;
 
 	@Reference
-	private AssetCategoryService _assetCategoryService;
-
-	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
-
-	@Reference
-	private Portal _portal;
 
 }

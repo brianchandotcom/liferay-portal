@@ -182,29 +182,30 @@ function appendXMLAssignments(
 		const roleTypeName = exporting ? 'depot' : 'asset library';
 
 		if (assignmentType === 'resourceActions') {
-			const xmlResourceAction = createTagWithEscapedContent(
-				'resourceAction',
-				dataAssignments.resourceAction
-			);
+			const xmlResourceAction = XMLUtil.createObj('resourceActions');
+
+			const resourceAction = dataAssignments.resourceAction;
 
 			buffer.push(
-				createTagWithEscapedContent(
-					'resourceActions',
-					xmlResourceAction
-				)
+				xmlResourceAction.open,
+				createTagWithEscapedContent('resourceAction', resourceAction),
+				xmlResourceAction.close
 			);
 		}
 		else if (assignmentType === 'roleId') {
-			const xmlRoleId = createTagWithEscapedContent(
-				'roleId',
-				dataAssignments.roleId
-			);
+			buffer.push(xmlRoles.open);
+
+			const xmlRole = XMLUtil.createObj('role');
+
+			const roleId = dataAssignments.roleId;
 
 			buffer.push(
-				xmlRoles.open,
-				createTagWithEscapedContent('role', xmlRoleId),
-				xmlRoles.close
+				xmlRole.open,
+				createTagWithEscapedContent('roleId', roleId),
+				xmlRole.close
 			);
+
+			buffer.push(xmlRoles.close);
 		}
 		else if (assignmentType === 'roleType') {
 			buffer.push(xmlRoles.open);

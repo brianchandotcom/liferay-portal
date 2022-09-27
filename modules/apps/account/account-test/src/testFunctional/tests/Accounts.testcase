@@ -3168,6 +3168,68 @@ definition {
 		}
 	}
 
+	@description = "This test asserts accurate results when searching for available users in Assign Users to account role modal"
+	@priority = "4"
+	test CanSearchInAssignUsersToAccountRoleModal {
+		task ("Given a business account and two users, but only one user is a member of the account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			JSONUser.addUser(
+				userEmailAddress = "first@liferay.com",
+				userFirstName = "firstname",
+				userLastName = "lastname",
+				userScreenName = "screenname");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When a user assigns a user to an account role") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Navigator.gotoNavTab(navTab = "Roles");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Assign Users",
+				rowEntry = "Account Administrator");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no users associated with this role.");
+
+			LexiconEntry.gotoAdd();
+
+			SelectFrame(
+				key_title = "Assign Users to Account Administrator",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Then the user can search for available users") {
+			Search.searchCP(searchTerm = "userea@liferay.com");
+
+			LexiconEntry.viewEntryName(rowEntry = "userea@liferay.com");
+		}
+
+		task ("and cannot search for users that are not member of the account") {
+			Search.searchCP(searchTerm = "first@liferay.com");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No users were found.");
+		}
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

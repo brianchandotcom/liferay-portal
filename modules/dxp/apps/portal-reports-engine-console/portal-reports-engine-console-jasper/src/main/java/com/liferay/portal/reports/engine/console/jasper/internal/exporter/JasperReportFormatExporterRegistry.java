@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Brian Greenwald
  */
-@Component(immediate = true, service = ReportFormatExporterRegistry.class)
+@Component(service = ReportFormatExporterRegistry.class)
 public class JasperReportFormatExporterRegistry
 	extends ReportFormatExporterRegistry {
 

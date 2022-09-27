@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gavin Wan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 		"mvc.command.name=/reports_admin/delete_report"

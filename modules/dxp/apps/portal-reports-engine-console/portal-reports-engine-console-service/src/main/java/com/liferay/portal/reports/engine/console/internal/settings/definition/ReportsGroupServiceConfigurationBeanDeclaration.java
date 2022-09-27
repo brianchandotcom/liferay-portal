@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Prathima Shreenath
  */
-@Component(immediate = true, service = ConfigurationBeanDeclaration.class)
+@Component(service = ConfigurationBeanDeclaration.class)
 public class ReportsGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

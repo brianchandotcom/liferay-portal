@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Brian Wing Shun Chan
  * @author Brian Greenwald
  */
-@Component(immediate = true, service = ReportFillManagerRegistry.class)
+@Component(service = ReportFillManagerRegistry.class)
 public class ReportFillManagerRegistry {
 
 	public ReportFillManager getReportFillManager(

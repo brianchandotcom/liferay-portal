@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leon Chi
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DefinitionPermissionChecker {
 
 	public static boolean contains(

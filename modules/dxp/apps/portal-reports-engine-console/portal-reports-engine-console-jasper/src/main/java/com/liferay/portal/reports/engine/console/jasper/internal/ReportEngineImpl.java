@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Brian Wing Shun Chan
  * @author Brian Greenwald
  */
-@Component(immediate = true, service = ReportEngine.class)
+@Component(service = ReportEngine.class)
 public class ReportEngineImpl implements ReportEngine {
 
 	@Override

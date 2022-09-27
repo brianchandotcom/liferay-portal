@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ReportCompiler.class)
+@Component(service = ReportCompiler.class)
 public class DefaultReportCompiler implements ReportCompiler {
 
 	@Override

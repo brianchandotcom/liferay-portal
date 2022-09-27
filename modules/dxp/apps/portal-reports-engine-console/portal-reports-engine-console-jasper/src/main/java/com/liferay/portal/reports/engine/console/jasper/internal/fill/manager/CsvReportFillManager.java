@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = "reportDataSourceType=csv",
-	service = ReportFillManager.class
+	property = "reportDataSourceType=csv", service = ReportFillManager.class
 )
 public class CsvReportFillManager extends BaseReportFillManager {
 

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = XStreamConfigurator.class)
+@Component(service = XStreamConfigurator.class)
 public class ReportsEngineConsoleXStreamConfigurator
 	implements XStreamConfigurator {
 

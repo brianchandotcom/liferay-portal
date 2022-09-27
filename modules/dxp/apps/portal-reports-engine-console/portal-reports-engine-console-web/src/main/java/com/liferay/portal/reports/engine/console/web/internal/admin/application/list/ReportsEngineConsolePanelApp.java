@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Prathima Shreenath
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION,
 		"service.ranking:Integer=600"

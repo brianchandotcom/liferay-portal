@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true, property = "reportFormat=xls",
-	service = ReportFormatExporter.class
-)
+@Component(property = "reportFormat=xls", service = ReportFormatExporter.class)
 public class XlsReportFormatExporter extends BaseReportFormatExporter {
 
 	@Override

@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ReportsEngineConsolePortletKeys.DISPLAY_REPORTS,
 	service = PortletDataHandler.class
 )

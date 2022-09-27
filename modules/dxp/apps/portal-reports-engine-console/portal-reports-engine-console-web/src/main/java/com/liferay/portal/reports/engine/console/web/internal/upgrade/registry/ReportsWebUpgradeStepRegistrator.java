@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Prathima Shreenath
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class ReportsWebUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

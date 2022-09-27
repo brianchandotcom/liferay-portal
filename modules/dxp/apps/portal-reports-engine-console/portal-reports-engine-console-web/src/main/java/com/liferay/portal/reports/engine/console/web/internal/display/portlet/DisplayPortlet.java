@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Gavin Wan
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=reports-portlet",
 		"com.liferay.portlet.display-category=category.bi",

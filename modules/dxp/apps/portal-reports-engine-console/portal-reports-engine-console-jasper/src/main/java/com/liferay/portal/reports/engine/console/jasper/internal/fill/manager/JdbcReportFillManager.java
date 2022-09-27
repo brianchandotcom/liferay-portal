@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = "reportDataSourceType=jdbc",
-	service = ReportFillManager.class
+	property = "reportDataSourceType=jdbc", service = ReportFillManager.class
 )
 public class JdbcReportFillManager extends BaseReportFillManager {
 

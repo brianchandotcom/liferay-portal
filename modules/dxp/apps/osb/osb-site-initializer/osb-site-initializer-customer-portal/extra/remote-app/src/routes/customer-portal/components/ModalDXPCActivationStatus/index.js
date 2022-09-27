@@ -124,7 +124,7 @@ const ModalDXPCActivationStatus = ({
 	return (
 		<>
 			<ClayModal center observer={observer}>
-				<div className="bg-neutral-1 cp-analytics-cloud-status-modal">
+				<div className="bg-neutral-1 cp-liferay-experience-cloud-status-modal">
 					<div className="d-flex justify-content-between">
 						<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
 							{i18n.translate('lxc-sm-setup').toUpperCase()}

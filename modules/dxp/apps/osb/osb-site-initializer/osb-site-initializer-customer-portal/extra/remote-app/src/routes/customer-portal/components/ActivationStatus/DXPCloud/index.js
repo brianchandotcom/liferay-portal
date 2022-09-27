@@ -41,7 +41,7 @@ const submittedModalTexts = {
 		'return-to-the-product-activation-page-to-view-the-current-activation-status'
 	),
 	subtitle: i18n.translate(
-		'we-ll-need-a-few-details-to-finish-building-your-dxp-environment'
+		'we-ll-need-a-few-details-to-finish-building-your-lxc-sm-environment'
 	),
 	text: i18n.translate(
 		'another-user-already-submitted-the-lxc-sm-activation-request'

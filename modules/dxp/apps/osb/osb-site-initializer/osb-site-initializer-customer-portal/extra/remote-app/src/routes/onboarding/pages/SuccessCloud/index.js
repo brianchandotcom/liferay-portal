@@ -26,7 +26,7 @@ const successTexts = {
 	},
 	[PRODUCT_TYPES.dxpCloud]: {
 		helper: i18n.translate(
-			'we-ll-need-a-few-details-to-finish-building-your-dxp-environments'
+			'we-ll-need-a-few-details-to-finish-building-your-lxc-sm-environment'
 		),
 		paragraph: i18n.translate(
 			'thank-you-for-submitting-this-request-your-lxc-sm-project-will-be-provisioned-in-2-3-business-days-at-that-time-lxc-sm-administrators-will-receive-several-onboarding-emails-giving-them-access-to-all-the-lxc-sm-environments-and-tools-included-in-your-subscription'

@@ -290,6 +290,7 @@
 		<check name="GradleMissingJarManifestTaskCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing `jarManifest` task when using `jarPatched` task in gradle build files." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="GradlePropertiesCheck">
 			<category name="Bug Prevention" />

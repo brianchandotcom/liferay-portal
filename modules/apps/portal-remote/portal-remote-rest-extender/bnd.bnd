@@ -10,6 +10,4 @@ Import-Package:\
 	!org.apache.log.*,\
 	!org.apache.xmlbeans.*,\
 	\
-	!org.codehaus.jettison.*,\
-	\
 	*

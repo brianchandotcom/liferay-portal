@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	immediate = true,
 	property = "object.field.setting.type.key=" + ObjectFieldSettingConstants.NAME_STATE_FLOW,
 	service = ObjectFieldSettingContributor.class
 )

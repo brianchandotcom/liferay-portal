@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gleice Lisbino
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ObjectRelationshipSearchRegistrar {
 
 	@Activate

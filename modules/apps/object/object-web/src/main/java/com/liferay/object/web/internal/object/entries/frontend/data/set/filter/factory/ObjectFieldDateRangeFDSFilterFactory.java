@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	immediate = true,
 	property = {
 		"object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_DATE,
 		"object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_DATE_RANGE

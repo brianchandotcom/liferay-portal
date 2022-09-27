@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = SystemObjectDefinitionMetadata.class)
+@Component(service = SystemObjectDefinitionMetadata.class)
 public class UserSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 

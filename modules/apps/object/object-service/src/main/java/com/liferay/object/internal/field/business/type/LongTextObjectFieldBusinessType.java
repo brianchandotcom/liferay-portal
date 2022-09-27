@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 	service = {
 		LongTextObjectFieldBusinessType.class, ObjectFieldBusinessType.class

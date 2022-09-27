@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	immediate = true, service = ObjectFieldSettingContributorTracker.class
-)
+@Component(service = ObjectFieldSettingContributorTracker.class)
 public class ObjectFieldSettingContributorTracker {
 
 	public ObjectFieldSettingContributor getObjectFieldSettingContributor(

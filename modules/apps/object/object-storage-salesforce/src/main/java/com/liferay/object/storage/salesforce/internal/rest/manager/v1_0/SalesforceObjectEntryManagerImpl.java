@@ -70,7 +70,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Guilherme Camacho
  */
 @Component(
-	immediate = true,
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 	service = ObjectEntryManager.class
 )

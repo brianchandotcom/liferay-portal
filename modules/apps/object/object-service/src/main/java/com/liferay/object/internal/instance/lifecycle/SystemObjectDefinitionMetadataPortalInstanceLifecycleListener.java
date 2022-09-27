@@ -74,7 +74,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Feliphe Marinho
  */
-@Component(immediate = true, service = ObjectScriptingValidator.class)
+@Component(service = ObjectScriptingValidator.class)
 public class ObjectScriptingValidatorImpl implements ObjectScriptingValidator {
 
 	@Override

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcela Cunha
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class ObjectFieldSettingModelListener
 	extends BaseModelListener<ObjectFieldSetting> {
 

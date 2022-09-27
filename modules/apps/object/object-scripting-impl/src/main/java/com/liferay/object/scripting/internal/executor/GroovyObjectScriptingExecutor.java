@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	immediate = true, property = "scripting.language=groovy",
+	property = "scripting.language=groovy",
 	service = ObjectScriptingExecutor.class
 )
 public class GroovyObjectScriptingExecutor implements ObjectScriptingExecutor {

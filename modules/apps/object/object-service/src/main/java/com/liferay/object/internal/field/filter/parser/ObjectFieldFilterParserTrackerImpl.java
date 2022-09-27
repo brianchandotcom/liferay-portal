@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Feliphe Marinho
  */
-@Component(immediate = true, service = ObjectFieldFilterParserTracker.class)
+@Component(service = ObjectFieldFilterParserTracker.class)
 public class ObjectFieldFilterParserTrackerImpl
 	implements ObjectFieldFilterParserTracker {
 

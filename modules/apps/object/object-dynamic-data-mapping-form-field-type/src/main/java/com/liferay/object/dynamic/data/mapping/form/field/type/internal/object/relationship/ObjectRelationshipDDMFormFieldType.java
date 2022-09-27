@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=list",
 		"ddm.form.field.type.description=object-relationship-field-type-description",

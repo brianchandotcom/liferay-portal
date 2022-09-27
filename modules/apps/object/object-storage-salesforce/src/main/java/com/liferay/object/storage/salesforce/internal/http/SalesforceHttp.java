@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Guilherme Camacho
  */
-@Component(immediate = true, service = SalesforceHttp.class)
+@Component(service = SalesforceHttp.class)
 public class SalesforceHttp {
 
 	public JSONObject delete(long companyId, long groupId, String location) {

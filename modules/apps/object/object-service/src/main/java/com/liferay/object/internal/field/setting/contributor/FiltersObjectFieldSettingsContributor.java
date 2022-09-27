@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	immediate = true,
 	property = "object.field.setting.type.key=" + ObjectFieldSettingConstants.NAME_FILTERS,
 	service = ObjectFieldSettingContributor.class
 )

@@ -58,7 +58,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.object.configuration.ObjectConfiguration",
-	immediate = true,
 	property = "ddm.form.field.type.name=" + ObjectDDMFormFieldTypeConstants.ATTACHMENT,
 	service = DDMFormFieldTemplateContextContributor.class
 )

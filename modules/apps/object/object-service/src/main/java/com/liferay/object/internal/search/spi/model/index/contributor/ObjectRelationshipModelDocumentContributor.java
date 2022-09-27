@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Gleice Lisbino
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.object.model.ObjectRelationship",
 	service = ModelDocumentContributor.class
 )

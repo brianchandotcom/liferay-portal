@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rodrigo Paulino
  */
-@Component(
-	immediate = true, service = SystemObjectDefinitionMetadataTracker.class
-)
+@Component(service = SystemObjectDefinitionMetadataTracker.class)
 public class SystemObjectDefinitionMetadataTrackerImpl
 	implements SystemObjectDefinitionMetadataTracker {
 

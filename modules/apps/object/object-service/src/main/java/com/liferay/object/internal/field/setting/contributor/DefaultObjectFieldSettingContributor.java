@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	immediate = true, property = "object.field.setting.type.key=default",
+	property = "object.field.setting.type.key=default",
 	service = ObjectFieldSettingContributor.class
 )
 public class DefaultObjectFieldSettingContributor

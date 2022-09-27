@@ -45,7 +45,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	service = SystemObjectDefinitionMetadataServiceTrackerCustomizer.class
 )
 public class SystemObjectDefinitionMetadataServiceTrackerCustomizer

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = ObjectScopeProviderRegistry.class)
+@Component(service = ObjectScopeProviderRegistry.class)
 public class ObjectScopeProviderRegistryImpl
 	implements ObjectScopeProviderRegistry {
 

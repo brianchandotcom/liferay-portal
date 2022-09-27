@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Feliphe Marinho
  */
-@Component(immediate = true, service = ObjectFieldFDSFilterFactoryTracker.class)
+@Component(service = ObjectFieldFDSFilterFactoryTracker.class)
 public class ObjectFieldFDSFilterFactoryTracker {
 
 	public ObjectFieldFDSFilterFactory getObjectFieldFDSFilterFactory(

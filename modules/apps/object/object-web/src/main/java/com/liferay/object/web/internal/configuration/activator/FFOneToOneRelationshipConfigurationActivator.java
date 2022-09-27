@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.object.web.internal.configuration.FFOneToOneRelationshipConfiguration",
-	immediate = true,
 	service = FFOneToOneRelationshipConfigurationActivator.class
 )
 public class FFOneToOneRelationshipConfigurationActivator {

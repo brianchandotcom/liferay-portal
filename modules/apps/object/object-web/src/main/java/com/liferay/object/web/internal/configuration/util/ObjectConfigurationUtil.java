@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.object.configuration.ObjectConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class ObjectConfigurationUtil {
 

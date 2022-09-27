@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	immediate = true, property = "ddm.storage.adapter.type=object",
+	property = "ddm.storage.adapter.type=object",
 	service = DDMStorageAdapter.class
 )
 public class ObjectDDMStorageAdapter implements DDMStorageAdapter {

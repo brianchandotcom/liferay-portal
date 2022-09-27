@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carolina Barbosa
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ObjectFieldSearchRegistrar {
 
 	@Activate

@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carolina Barbosa
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.object.model.ObjectLayout",
 	service = KeywordQueryContributor.class
 )

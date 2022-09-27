@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.object.model.ObjectDefinition",
 	service = ModelResourcePermission.class
 )

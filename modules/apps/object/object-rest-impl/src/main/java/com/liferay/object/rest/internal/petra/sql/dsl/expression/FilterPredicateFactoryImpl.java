@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = FilterPredicateFactory.class)
+@Component(service = FilterPredicateFactory.class)
 public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 
 	@Override

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = ObjectValidationRuleEngineTracker.class)
+@Component(service = ObjectValidationRuleEngineTracker.class)
 public class ObjectValidationRuleEngineTrackerImpl
 	implements ObjectValidationRuleEngineTracker {
 

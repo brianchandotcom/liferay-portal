@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Guilherme Camacho
  */
-@Component(immediate = true, service = ObjectEntryManagerTracker.class)
+@Component(service = ObjectEntryManagerTracker.class)
 public class ObjectEntryManagerTrackerImpl
 	implements ObjectEntryManagerTracker {
 

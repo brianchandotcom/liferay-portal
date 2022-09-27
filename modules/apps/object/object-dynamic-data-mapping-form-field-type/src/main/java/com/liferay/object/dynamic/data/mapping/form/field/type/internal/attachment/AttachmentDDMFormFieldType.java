@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carolina Barbosa
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.name=" + ObjectDDMFormFieldTypeConstants.ATTACHMENT,
 		"ddm.form.field.type.system=true"

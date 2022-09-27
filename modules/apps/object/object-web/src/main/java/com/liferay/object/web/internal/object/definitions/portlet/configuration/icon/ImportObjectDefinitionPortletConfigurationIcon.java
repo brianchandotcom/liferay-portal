@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
 	service = PortletConfigurationIcon.class
 )

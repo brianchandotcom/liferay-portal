@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.object.model.ObjectValidationRule",
 	service = ModelPreFilterContributor.class
 )

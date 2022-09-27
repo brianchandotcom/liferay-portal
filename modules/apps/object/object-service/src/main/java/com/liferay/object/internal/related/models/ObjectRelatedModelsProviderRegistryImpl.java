@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true, service = ObjectRelatedModelsProviderRegistry.class
-)
+@Component(service = ObjectRelatedModelsProviderRegistry.class)
 public class ObjectRelatedModelsProviderRegistryImpl
 	implements ObjectRelatedModelsProviderRegistry {
 

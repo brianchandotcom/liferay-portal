@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.object.model.ObjectAction",
 	service = ModelPreFilterContributor.class
 )

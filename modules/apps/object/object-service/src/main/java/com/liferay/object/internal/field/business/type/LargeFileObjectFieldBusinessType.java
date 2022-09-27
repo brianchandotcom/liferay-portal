@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE,
 	service = {
 		LargeFileObjectFieldBusinessType.class, ObjectFieldBusinessType.class

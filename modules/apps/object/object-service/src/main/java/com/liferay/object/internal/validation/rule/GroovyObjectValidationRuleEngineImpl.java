@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = ObjectValidationRuleEngine.class)
+@Component(service = ObjectValidationRuleEngine.class)
 public class GroovyObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 

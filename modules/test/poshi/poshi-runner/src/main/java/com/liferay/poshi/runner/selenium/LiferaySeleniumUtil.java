@@ -78,7 +78,7 @@ public class LiferaySeleniumUtil {
 			return;
 		}
 
-		PoshiRunnerWarningException poshiRunnerWarningException = null;
+		LiferayLogException liferayLogException = null;
 
 		SAXReader saxReader = new SAXReader();
 
@@ -123,19 +123,19 @@ public class LiferaySeleniumUtil {
 
 				System.out.println(sb.toString());
 
-				if (poshiRunnerWarningException == null) {
-					poshiRunnerWarningException =
-						new PoshiRunnerWarningException(sb.toString());
+				if (liferayLogException == null) {
+					liferayLogException = new LiferayLogException(
+						sb.toString());
 				}
 				else {
 					PoshiRunnerWarningException.addException(
-						new PoshiRunnerWarningException(sb.toString()));
+						new LiferayLogException(sb.toString()));
 				}
 			}
 		}
 
-		if (poshiRunnerWarningException != null) {
-			throw poshiRunnerWarningException;
+		if (liferayLogException != null) {
+			throw liferayLogException;
 		}
 	}
 

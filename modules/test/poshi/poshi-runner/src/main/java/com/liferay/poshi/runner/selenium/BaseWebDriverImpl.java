@@ -28,6 +28,7 @@ import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.ElementNotFoundPoshiRunnerException;
+import com.liferay.poshi.runner.exception.JavaScriptException;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
@@ -451,7 +452,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return;
 		}
 
-		PoshiRunnerWarningException poshiRunnerWarningException = null;
+		JavaScriptException javaScriptException = null;
 
 		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
 			getWrappedWebDriver("//body"));
@@ -471,18 +472,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			System.out.println(message);
 
-			if (poshiRunnerWarningException == null) {
-				poshiRunnerWarningException = new PoshiRunnerWarningException(
-					message);
+			if (javaScriptException == null) {
+				javaScriptException = new JavaScriptException(message);
 			}
 			else {
 				PoshiRunnerWarningException.addException(
-					new PoshiRunnerWarningException(message));
+					new JavaScriptException(message));
 			}
 		}
 
-		if (poshiRunnerWarningException != null) {
-			throw poshiRunnerWarningException;
+		if (javaScriptException != null) {
+			throw javaScriptException;
 		}
 	}
 

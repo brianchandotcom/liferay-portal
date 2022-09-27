@@ -31,7 +31,6 @@ import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.i
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.DeleteIndexRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.IndicesOptionsTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.IndicesOptionsTranslatorImpl;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
@@ -112,21 +111,22 @@ public class RequestExecutorFixture {
 	}
 
 	public void setUp() {
-		_createIndexRequestExecutor = new CreateIndexRequestExecutorImpl() {
-			{
-				setElasticsearchClientResolver(_elasticsearchClientResolver);
-			}
-		};
+		_createIndexRequestExecutor = new CreateIndexRequestExecutorImpl();
 
-		IndicesOptionsTranslator indicesOptionsTranslator =
-			new IndicesOptionsTranslatorImpl();
+		ReflectionTestUtil.setFieldValue(
+			_createIndexRequestExecutor, "_elasticsearchClientResolver",
+			_elasticsearchClientResolver);
 
-		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutorImpl() {
-			{
-				setIndicesOptionsTranslator(indicesOptionsTranslator);
-				setElasticsearchClientResolver(_elasticsearchClientResolver);
-			}
-		};
+		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_deleteIndexRequestExecutor, "_elasticsearchClientResolver",
+			_elasticsearchClientResolver);
+		ReflectionTestUtil.setFieldValue(
+			_deleteIndexRequestExecutor, "_indicesOptionsTranslator",
+			new IndicesOptionsTranslatorImpl());
+
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutorImpl();
 
 		ElasticsearchBulkableDocumentRequestTranslator
 			elasticsearchBulkableDocumentRequestTranslator =
@@ -137,12 +137,11 @@ public class RequestExecutorFixture {
 			"_elasticsearchDocumentFactory",
 			new DefaultElasticsearchDocumentFactory());
 
-		_getDocumentRequestExecutor = new GetDocumentRequestExecutorImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			_getDocumentRequestExecutor,
 			"_elasticsearchBulkableDocumentRequestTranslator",
 			elasticsearchBulkableDocumentRequestTranslator);
+
 		ReflectionTestUtil.setFieldValue(
 			_getDocumentRequestExecutor, "_elasticsearchClientResolver",
 			_elasticsearchClientResolver);

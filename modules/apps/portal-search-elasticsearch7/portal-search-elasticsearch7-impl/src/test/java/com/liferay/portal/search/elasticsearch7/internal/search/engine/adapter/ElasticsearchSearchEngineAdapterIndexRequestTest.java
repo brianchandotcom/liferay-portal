@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
@@ -553,12 +554,14 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				setIndexRequestExecutor(
-					_createIndexRequestExecutor(elasticsearchClientResolver));
-			}
-		};
+		SearchEngineAdapter searchEngineAdapter =
+			new ElasticsearchSearchEngineAdapterImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			searchEngineAdapter, "_indexRequestExecutor",
+			_createIndexRequestExecutor(elasticsearchClientResolver));
+
+		return searchEngineAdapter;
 	}
 
 	private static IndexRequestExecutor _createIndexRequestExecutor(

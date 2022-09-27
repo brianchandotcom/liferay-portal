@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.synonym;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
@@ -213,12 +214,14 @@ public class SynonymFiltersTest {
 	private static SearchEngineAdapter _createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				setIndexRequestExecutor(
-					_createIndexRequestExecutor(elasticsearchClientResolver));
-			}
-		};
+		SearchEngineAdapter searchEngineAdapter =
+			new ElasticsearchSearchEngineAdapterImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			searchEngineAdapter, "_indexRequestExecutor",
+			_createIndexRequestExecutor(elasticsearchClientResolver));
+
+		return searchEngineAdapter;
 	}
 
 	private void _assertMatchPhraseQuerySearch(

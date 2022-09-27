@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.document.DefaultElasticsearchDocumentFactory;
@@ -247,12 +248,14 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 	protected SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				setSearchRequestExecutor(
-					_createSearchRequestExecutor(elasticsearchClientResolver));
-			}
-		};
+		SearchEngineAdapter searchEngineAdapter =
+			new ElasticsearchSearchEngineAdapterImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			searchEngineAdapter, "_searchRequestExecutor",
+			_createSearchRequestExecutor(elasticsearchClientResolver));
+
+		return searchEngineAdapter;
 	}
 
 	private void _assertSuggestion(

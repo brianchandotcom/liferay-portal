@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorFixture;
@@ -291,13 +292,14 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				setSnapshotRequestExecutor(
-					_createSnapshotRequestExecutor(
-						elasticsearchClientResolver));
-			}
-		};
+		SearchEngineAdapter searchEngineAdapter =
+			new ElasticsearchSearchEngineAdapterImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			searchEngineAdapter, "_snapshotRequestExecutor",
+			_createSnapshotRequestExecutor(elasticsearchClientResolver));
+
+		return searchEngineAdapter;
 	}
 
 	private static SnapshotRequestExecutor _createSnapshotRequestExecutor(

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
@@ -39,16 +40,18 @@ public class ElasticsearchIndexRequestExecutorTest {
 	@Before
 	public void setUp() throws Exception {
 		_elasticsearchIndexRequestExecutor =
-			new ElasticsearchIndexRequestExecutor() {
-				{
-					setGetFieldMappingIndexRequestExecutor(
-						_getFieldMappingIndexRequestExecutor);
-					setGetMappingIndexRequestExecutor(
-						_getMappingIndexRequestExecutor);
-					setPutMappingIndexRequestExecutor(
-						_putMappingIndexRequestExecutor);
-				}
-			};
+			new ElasticsearchIndexRequestExecutor();
+
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchIndexRequestExecutor,
+			"_getFieldMappingIndexRequestExecutor",
+			_getFieldMappingIndexRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchIndexRequestExecutor,
+			"_getMappingIndexRequestExecutor", _getMappingIndexRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchIndexRequestExecutor,
+			"_putMappingIndexRequestExecutor", _putMappingIndexRequestExecutor);
 	}
 
 	@Test

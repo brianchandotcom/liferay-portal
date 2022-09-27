@@ -44,6 +44,8 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Picklist#ADD_ITEM_BUTTON");
 
+		SelectFrame(locator1 = "Picklist#DIV_PICKLIST_MODAL");
+
 		if (isSet(picklistItemName)) {
 			Type(
 				locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
@@ -185,6 +187,8 @@ definition {
 	}
 
 	macro assertPicklistItem {
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+
 		var key_picklistItemName = "${picklistItemName}";
 		var key_picklistItemKey = "${picklistItemKey}";
 

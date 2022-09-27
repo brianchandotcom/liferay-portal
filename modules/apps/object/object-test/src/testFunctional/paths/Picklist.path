@@ -160,6 +160,11 @@
 		<td>//input[@id=('_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_key') and @value=('${key_itemKey}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DIV_PICKLIST_MODAL</td>
+		<td>//div[@class=('fade modal d-block show')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

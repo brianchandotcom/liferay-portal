@@ -1,0 +1,63 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "feature.flag.LPS-125653=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that a KB article is displayed with the default template when accessing the KB display page URL."
+	@priority = "4"
+	test CanViewArticleWithDefaultTemplate {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Test Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Knowledge Base Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Knowledge Base Article Navigation");
+
+		PageEditor.publish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/k/knowledge-base-article-title");
+
+		AssertTextEquals.assertPartialText(
+			key_kbArticleTitle = "Knowledge Base Article Title",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_TEXT",
+			value1 = "Knowledge Base Article Title");
+	}
+
+}

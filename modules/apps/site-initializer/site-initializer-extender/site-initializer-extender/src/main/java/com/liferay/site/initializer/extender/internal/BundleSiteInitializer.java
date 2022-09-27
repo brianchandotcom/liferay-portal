@@ -2775,7 +2775,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_classLoader, serviceContext, _servletContext);
 	}
 
-	private void _addResourcePermissions(
+	private void _addOrUpdateResourcePermissions(
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
@@ -2949,7 +2949,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addRole(jsonArray.getJSONObject(i), serviceContext);
 		}
 
-		_addResourcePermissions(
+		_addOrUpdateResourcePermissions(
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			"/site-initializer/resource-permissions.json", serviceContext);
 	}

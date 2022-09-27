@@ -2559,25 +2559,9 @@ definition {
 
 		ObjectPortlet.viewEntry(entry = "Test text 011");
 
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 1");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 2");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 3");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 4");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 5");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 6");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 7");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 8");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 9");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 10");
+		for (var number : list "1,2,3,4,5,6,7,8,9,10") {
+			ObjectPortlet.assertEntryNotPresent(entry = "Test text ${number}");
+		}
 	}
 
 	@description = "LPS-135393 - Verify the table is updated when changing the pagination number on the Custom Object Portlet"
@@ -2609,21 +2593,13 @@ definition {
 
 		ObjectPortlet.changePagination(itemsPerPage = "10 items");
 
-		ObjectPortlet.viewEntry(entry = "Test text 1");
+		for (var number : list "1,2,3,4") {
+			ObjectPortlet.viewEntry(entry = "Test text ${number}");
+		}
 
-		ObjectPortlet.viewEntry(entry = "Test text 2");
-
-		ObjectPortlet.viewEntry(entry = "Test text 3");
-
-		ObjectPortlet.viewEntry(entry = "Test text 4");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 011");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 012");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 013");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test text 014");
+		for (var number : list "011,012,013,014") {
+			ObjectPortlet.assertEntryNotPresent(entry = "Test text ${number}");
+		}
 	}
 
 }

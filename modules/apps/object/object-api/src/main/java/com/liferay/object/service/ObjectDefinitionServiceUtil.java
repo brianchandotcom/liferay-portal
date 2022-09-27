@@ -124,6 +124,7 @@ public class ObjectDefinitionServiceUtil {
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
 			boolean enableCategorization, boolean enableComments,
+			boolean enableObjectEntryHistory,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			Map<java.util.Locale, String> pluralLabelMap, String scope)
@@ -133,8 +134,9 @@ public class ObjectDefinitionServiceUtil {
 			externalReferenceCode, objectDefinitionId,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			titleObjectFieldId, accountEntryRestricted, active,
-			enableCategorization, enableComments, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope);
+			enableCategorization, enableComments, enableObjectEntryHistory,
+			labelMap, name, panelAppOrder, panelCategoryKey, portlet,
+			pluralLabelMap, scope);
 	}
 
 	public static ObjectDefinition updateExternalReferenceCode(

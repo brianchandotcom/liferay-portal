@@ -480,6 +480,27 @@ public interface ObjectDefinitionModel
 	public void setEnableComments(boolean enableComments);
 
 	/**
+	 * Returns the enable object entry history of this object definition.
+	 *
+	 * @return the enable object entry history of this object definition
+	 */
+	public boolean getEnableObjectEntryHistory();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable object entry history.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry history; <code>false</code> otherwise
+	 */
+	public boolean isEnableObjectEntryHistory();
+
+	/**
+	 * Sets whether this object definition is enable object entry history.
+	 *
+	 * @param enableObjectEntryHistory the enable object entry history of this object definition
+	 */
+	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory);
+
+	/**
 	 * Returns the name of this object definition.
 	 *
 	 * @return the name of this object definition

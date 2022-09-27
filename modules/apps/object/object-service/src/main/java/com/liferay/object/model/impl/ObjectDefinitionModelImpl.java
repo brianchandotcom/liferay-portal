@@ -91,7 +91,8 @@ public class ObjectDefinitionModelImpl
 		{"accountEntryRestricted", Types.BOOLEAN}, {"active_", Types.BOOLEAN},
 		{"dbTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"className", Types.VARCHAR}, {"enableCategorization", Types.BOOLEAN},
-		{"enableComments", Types.BOOLEAN}, {"name", Types.VARCHAR},
+		{"enableComments", Types.BOOLEAN},
+		{"enableObjectEntryHistory", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"panelAppOrder", Types.VARCHAR}, {"panelCategoryKey", Types.VARCHAR},
 		{"pkObjectFieldDBColumnName", Types.VARCHAR},
 		{"pkObjectFieldName", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
@@ -123,6 +124,7 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("enableCategorization", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableComments", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("enableObjectEntryHistory", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("panelAppOrder", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("panelCategoryKey", Types.VARCHAR);
@@ -138,7 +140,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,titleObjectFieldId LONG,accountEntryRestricted BOOLEAN,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,enableCategorization BOOLEAN,enableComments BOOLEAN,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,titleObjectFieldId LONG,accountEntryRestricted BOOLEAN,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,enableCategorization BOOLEAN,enableComments BOOLEAN,enableObjectEntryHistory BOOLEAN,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -422,6 +424,13 @@ public class ObjectDefinitionModelImpl
 			"enableComments",
 			(BiConsumer<ObjectDefinition, Boolean>)
 				ObjectDefinition::setEnableComments);
+		attributeGetterFunctions.put(
+			"enableObjectEntryHistory",
+			ObjectDefinition::getEnableObjectEntryHistory);
+		attributeSetterBiConsumers.put(
+			"enableObjectEntryHistory",
+			(BiConsumer<ObjectDefinition, Boolean>)
+				ObjectDefinition::setEnableObjectEntryHistory);
 		attributeGetterFunctions.put("name", ObjectDefinition::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -994,6 +1003,27 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public boolean getEnableObjectEntryHistory() {
+		return _enableObjectEntryHistory;
+	}
+
+	@JSON
+	@Override
+	public boolean isEnableObjectEntryHistory() {
+		return _enableObjectEntryHistory;
+	}
+
+	@Override
+	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_enableObjectEntryHistory = enableObjectEntryHistory;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -1518,6 +1548,8 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setClassName(getClassName());
 		objectDefinitionImpl.setEnableCategorization(isEnableCategorization());
 		objectDefinitionImpl.setEnableComments(isEnableComments());
+		objectDefinitionImpl.setEnableObjectEntryHistory(
+			isEnableObjectEntryHistory());
 		objectDefinitionImpl.setName(getName());
 		objectDefinitionImpl.setPanelAppOrder(getPanelAppOrder());
 		objectDefinitionImpl.setPanelCategoryKey(getPanelCategoryKey());
@@ -1579,6 +1611,8 @@ public class ObjectDefinitionModelImpl
 			this.<Boolean>getColumnOriginalValue("enableCategorization"));
 		objectDefinitionImpl.setEnableComments(
 			this.<Boolean>getColumnOriginalValue("enableComments"));
+		objectDefinitionImpl.setEnableObjectEntryHistory(
+			this.<Boolean>getColumnOriginalValue("enableObjectEntryHistory"));
 		objectDefinitionImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		objectDefinitionImpl.setPanelAppOrder(
@@ -1775,6 +1809,9 @@ public class ObjectDefinitionModelImpl
 
 		objectDefinitionCacheModel.enableComments = isEnableComments();
 
+		objectDefinitionCacheModel.enableObjectEntryHistory =
+			isEnableObjectEntryHistory();
+
 		objectDefinitionCacheModel.name = getName();
 
 		String name = objectDefinitionCacheModel.name;
@@ -1965,6 +2002,7 @@ public class ObjectDefinitionModelImpl
 	private String _className;
 	private boolean _enableCategorization;
 	private boolean _enableComments;
+	private boolean _enableObjectEntryHistory;
 	private String _name;
 	private String _panelAppOrder;
 	private String _panelCategoryKey;
@@ -2032,6 +2070,8 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put(
 			"enableCategorization", _enableCategorization);
 		_columnOriginalValues.put("enableComments", _enableComments);
+		_columnOriginalValues.put(
+			"enableObjectEntryHistory", _enableObjectEntryHistory);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("panelAppOrder", _panelAppOrder);
 		_columnOriginalValues.put("panelCategoryKey", _panelCategoryKey);
@@ -2110,29 +2150,31 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("enableComments", 262144L);
 
-		columnBitmasks.put("name", 524288L);
+		columnBitmasks.put("enableObjectEntryHistory", 524288L);
 
-		columnBitmasks.put("panelAppOrder", 1048576L);
+		columnBitmasks.put("name", 1048576L);
 
-		columnBitmasks.put("panelCategoryKey", 2097152L);
+		columnBitmasks.put("panelAppOrder", 2097152L);
 
-		columnBitmasks.put("pkObjectFieldDBColumnName", 4194304L);
+		columnBitmasks.put("panelCategoryKey", 4194304L);
 
-		columnBitmasks.put("pkObjectFieldName", 8388608L);
+		columnBitmasks.put("pkObjectFieldDBColumnName", 8388608L);
 
-		columnBitmasks.put("pluralLabel", 16777216L);
+		columnBitmasks.put("pkObjectFieldName", 16777216L);
 
-		columnBitmasks.put("portlet", 33554432L);
+		columnBitmasks.put("pluralLabel", 33554432L);
 
-		columnBitmasks.put("scope", 67108864L);
+		columnBitmasks.put("portlet", 67108864L);
 
-		columnBitmasks.put("storageType", 134217728L);
+		columnBitmasks.put("scope", 134217728L);
 
-		columnBitmasks.put("system_", 268435456L);
+		columnBitmasks.put("storageType", 268435456L);
 
-		columnBitmasks.put("version", 536870912L);
+		columnBitmasks.put("system_", 536870912L);
 
-		columnBitmasks.put("status", 1073741824L);
+		columnBitmasks.put("version", 1073741824L);
+
+		columnBitmasks.put("status", 2147483648L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

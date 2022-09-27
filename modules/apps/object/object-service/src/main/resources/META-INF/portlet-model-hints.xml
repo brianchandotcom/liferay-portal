@@ -48,6 +48,7 @@
 		<field name="className" type="String" />
 		<field name="enableCategorization" type="boolean" />
 		<field name="enableComments" type="boolean" />
+		<field name="enableObjectEntryHistory" type="boolean" />
 		<field name="name" type="String" />
 		<field name="panelAppOrder" type="String" />
 		<field name="panelCategoryKey" type="String" />

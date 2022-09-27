@@ -114,7 +114,7 @@ public class CommerceAccountDisplayContext {
 
 		for (CommerceShippingMethod commerceShippingMethod :
 				_commerceShippingMethodService.getCommerceShippingMethods(
-					_commerceChannel.getGroupId(), QueryUtil.ALL_POS,
+					_commerceChannel.getGroupId(), true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
 					new CommerceShippingMethodNameComparator(true, locale))) {
 

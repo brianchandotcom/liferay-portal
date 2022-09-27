@@ -14,6 +14,7 @@
 
 package com.liferay.expando.kernel.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
@@ -25,8 +26,13 @@ public class ValueDataException extends PortalException {
 
 	public static class MismatchColumnType extends ValueDataException {
 
-		public MismatchColumnType(String msg) {
-			super(msg);
+		public MismatchColumnType(
+			long columnId, String columnType, String expectedColumnType) {
+
+			super(
+				StringBundler.concat(
+					"Column ", columnId, " has type ", columnType,
+					" and is not compatible with type ", expectedColumnType));
 		}
 
 	}
@@ -41,11 +47,12 @@ public class ValueDataException extends PortalException {
 
 	}
 
-	public static class UnsupportedColumnType
-		extends ValueDataException {
+	public static class UnsupportedColumnType extends ValueDataException {
 
-		public UnsupportedColumnType(String msg) {
-			super(msg);
+		public UnsupportedColumnType(long columnId, String columnType) {
+			super(
+				StringBundler.concat(
+					"Unsupported column ", columnId, " type ", columnType));
 		}
 
 	}

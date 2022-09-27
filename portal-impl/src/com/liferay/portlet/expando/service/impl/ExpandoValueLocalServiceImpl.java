@@ -829,8 +829,8 @@ public class ExpandoValueLocalServiceImpl
 				if (Validator.isNull(defaultValuesMap.get(defaultLocale))) {
 					for (String defaultValue : defaultValuesMap.values()) {
 						if (Validator.isNotNull(defaultValue)) {
-							throw new ValueDataException.MustInformDefaultLocale(
-								defaultLocale);
+							throw new ValueDataException.
+								MustInformDefaultLocale(defaultLocale);
 						}
 					}
 				}

@@ -117,13 +117,13 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-160536. Verify if as an Administrator I am able to view a Project"
-	@priority = "3"
-	test AdminCanViewProject {
+	@description = "This is a test for LPS-160536. Verify that as an Administrator I am able to add a Project from the dropdown"
+	@priority = "4"
+	test AdminCanAddProjectFromDropdown {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-			Testray.createProjectTestray(
+			Testray.createProjectByDropdown(
 				description = "Projects_1 Description",
 				key_name = "Projects_1 Project");
 		}
@@ -133,11 +133,7 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayDropdown.assertTitleBreadcrumbs(key_projectName = "Projects_1 Project");
+			Testray.assertItemName(key_name = "Projects_1 Project");
 		}
 	}
 

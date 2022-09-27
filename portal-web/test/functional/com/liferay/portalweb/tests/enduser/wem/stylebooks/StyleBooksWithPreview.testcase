@@ -956,7 +956,9 @@ definition {
 		}
 
 		task ("View the help information") {
-			Tooltip.viewHelpInformation(info = "Edit the style book using the sidebar form. You can preview the changes instantly.");
+			Tooltip.viewHelpInformation(
+				header = "Help Information",
+				info = "Edit the style book using the sidebar form. You can preview the changes instantly.");
 		}
 
 		task ("Change Font Family Base to times in Typography form") {

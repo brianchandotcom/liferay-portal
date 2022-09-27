@@ -428,7 +428,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
-			_invoke(() -> _addOrganizations(serviceContext));
+			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addSegmentsEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
@@ -2310,7 +2310,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addOrganizations(ServiceContext serviceContext)
+	private void _addOrUpdateOrganizations(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(

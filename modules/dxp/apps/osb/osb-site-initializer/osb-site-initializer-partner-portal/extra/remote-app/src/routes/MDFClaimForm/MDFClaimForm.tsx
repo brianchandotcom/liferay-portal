@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import {useFormikContext} from 'formik';
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 
 import PRMForm from '../../common/components/PRMForm';
 import PRMFormik from '../../common/components/PRMFormik';

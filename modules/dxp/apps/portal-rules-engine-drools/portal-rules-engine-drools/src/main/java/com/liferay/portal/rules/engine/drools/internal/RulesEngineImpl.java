@@ -73,7 +73,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
 		"proxy.bean=false", "rules.engine.default.language=DRL",
 		"rules.engine.language.mapping.DROOLS_BRL=BRL",

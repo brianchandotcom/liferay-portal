@@ -15,20 +15,16 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.internal.instance.lifecycle.IndexOnStartupPortalInstanceLifecycleListener;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,8 +47,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ServiceTrackerCustomizer.class)
-public class IndexOnStartupIndexerServiceCustomizer
+@Component(service = {})
+public class IndexOnStartupExecutor
 	implements ServiceTrackerCustomizer<Indexer<?>, Indexer<?>> {
 
 	@Override
@@ -62,8 +58,7 @@ public class IndexOnStartupIndexerServiceCustomizer
 		Indexer<?> indexer = _bundleContext.getService(serviceReference);
 
 		boolean indexerIndexOnStartup = GetterUtil.getBoolean(
-			serviceReference.getProperty(PropsKeys.INDEX_ON_STARTUP),
-			GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP)));
+			serviceReference.getProperty(PropsKeys.INDEX_ON_STARTUP));
 
 		String className = indexer.getClassName();
 
@@ -90,8 +85,7 @@ public class IndexOnStartupIndexerServiceCustomizer
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _bundleContext.registerService(
 					PortalInstanceLifecycleListener.class,
-					portalInstanceLifecycleListener,
-					new HashMapDictionary<String, Object>());
+					portalInstanceLifecycleListener, null);
 
 			_serviceRegistrations.put(className, serviceRegistration);
 		}
@@ -123,25 +117,24 @@ public class IndexOnStartupIndexerServiceCustomizer
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		long indexOnStartupDelay = GetterUtil.getInteger(
-			_props.get(PropsKeys.INDEX_ON_STARTUP_DELAY));
+		if (PropsValues.INDEX_ON_STARTUP) {
+			ScheduledExecutorService scheduledExecutorService =
+				Executors.newSingleThreadScheduledExecutor();
 
-		ScheduledExecutorService scheduledExecutorService =
-			Executors.newSingleThreadScheduledExecutor();
+			scheduledExecutorService.schedule(
+				() -> {
+					if (_bundleContext != null) {
+						_serviceTracker = new ServiceTracker<>(
+							_bundleContext,
+							(Class<Indexer<?>>)(Class<?>)Indexer.class, this);
 
-		scheduledExecutorService.schedule(
-			() -> {
-				if (_bundleContext != null) {
-					_serviceTracker = new ServiceTracker<>(
-						_bundleContext,
-						(Class<Indexer<?>>)(Class<?>)Indexer.class, this);
+						_serviceTracker.open();
+					}
+				},
+				PropsValues.INDEX_ON_STARTUP_DELAY, TimeUnit.SECONDS);
 
-					_serviceTracker.open();
-				}
-			},
-			indexOnStartupDelay, TimeUnit.SECONDS);
-
-		scheduledExecutorService.shutdown();
+			scheduledExecutorService.shutdown();
+		}
 	}
 
 	@Deactivate
@@ -186,24 +179,12 @@ public class IndexOnStartupIndexerServiceCustomizer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		IndexOnStartupIndexerServiceCustomizer.class);
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
+		IndexOnStartupExecutor.class);
 
 	private BundleContext _bundleContext;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private Props _props;
-
-	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)")
-	private SearchEngine _searchEngine;
 
 	private final Map
 		<String, ServiceRegistration<PortalInstanceLifecycleListener>>

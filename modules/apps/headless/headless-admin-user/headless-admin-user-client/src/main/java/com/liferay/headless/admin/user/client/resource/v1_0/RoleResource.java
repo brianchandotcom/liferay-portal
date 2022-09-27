@@ -40,11 +40,12 @@ public interface RoleResource {
 		return new Builder();
 	}
 
-	public Page<Role> getRolesPage(Integer[] types, Pagination pagination)
+	public Page<Role> getRolesPage(
+			Integer[] types, String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getRolesPageHttpResponse(
-			Integer[] types, Pagination pagination)
+			Integer[] types, String search, Pagination pagination)
 		throws Exception;
 
 	public Role getRole(Long roleId) throws Exception;
@@ -182,11 +183,12 @@ public interface RoleResource {
 
 	public static class RoleResourceImpl implements RoleResource {
 
-		public Page<Role> getRolesPage(Integer[] types, Pagination pagination)
+		public Page<Role> getRolesPage(
+				Integer[] types, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getRolesPageHttpResponse(
-				types, pagination);
+				types, search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -226,7 +228,7 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse getRolesPageHttpResponse(
-				Integer[] types, Pagination pagination)
+				Integer[] types, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -254,6 +256,10 @@ public interface RoleResource {
 				for (int i = 0; i < types.length; i++) {
 					httpInvoker.parameter("types", String.valueOf(types[i]));
 				}
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (pagination != null) {

@@ -91,6 +91,10 @@ public abstract class BaseRoleResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
 			)
 		}
 	)
@@ -105,6 +109,9 @@ public abstract class BaseRoleResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("types")
 			Integer[] types,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -476,7 +483,8 @@ public abstract class BaseRoleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getRolesPage((Integer[])parameters.get("types"), pagination);
+		return getRolesPage(
+			(Integer[])parameters.get("types"), search, pagination);
 	}
 
 	@Override

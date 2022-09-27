@@ -2062,7 +2062,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
-			() -> _addObjectEntries(
+			() -> _addOrUpdateObjectEntries(
 				serviceContext, siteNavigationMenuItemSettingsBuilder));
 
 		return HashMapBuilder.putAll(
@@ -2072,7 +2072,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
-	private Map<String, String> _addObjectEntries(
+	private Map<String, String> _addOrUpdateObjectEntries(
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)

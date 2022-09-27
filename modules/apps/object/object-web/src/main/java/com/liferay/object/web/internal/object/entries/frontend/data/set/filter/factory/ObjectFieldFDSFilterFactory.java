@@ -16,7 +16,6 @@ package com.liferay.object.web.internal.object.entries.frontend.data.set.filter.
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.object.model.ObjectViewFilterColumn;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
 
@@ -28,6 +27,6 @@ public interface ObjectFieldFDSFilterFactory {
 	public FDSFilter create(
 			Locale locale, long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
-		throws PortalException;
+		throws Exception;
 
 }

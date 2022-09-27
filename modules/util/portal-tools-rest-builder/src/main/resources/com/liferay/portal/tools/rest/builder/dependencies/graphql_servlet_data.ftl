@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author ${configYAML.author}
  * @generated
  */
-@Component(<#if configYAML.liferayEnterpriseApp>enabled = false,</#if> immediate = true, service = ServletData.class)
+@Component(<#if configYAML.liferayEnterpriseApp>enabled = false,</#if> service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
 

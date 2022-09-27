@@ -157,6 +157,7 @@
 						"navigationMenuSelector",
 						"select",
 						"text",
+						"url",
 						"videoSelector"
 					],
 					"title": "The Type Schema",

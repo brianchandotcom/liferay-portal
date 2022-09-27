@@ -28,6 +28,7 @@ import {NavigationMenuSelectorField} from './NavigationMenuSelectorField';
 import {SelectField} from './SelectField';
 import {SpacingBoxField} from './SpacingBoxField';
 import {TextField} from './TextField';
+import URLField from './URLField';
 import {VideoSelectorField} from './VideoSelectorField';
 
 export const FRAGMENT_CONFIGURATION_FIELDS = {
@@ -47,5 +48,6 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	select: SelectField,
 	spacing: SpacingBoxField,
 	text: TextField,
+	url: URLField,
 	videoSelector: VideoSelectorField,
 };

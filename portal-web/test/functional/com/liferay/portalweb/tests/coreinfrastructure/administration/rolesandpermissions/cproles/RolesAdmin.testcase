@@ -427,7 +427,7 @@ definition {
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
-		Role.deleteCP(roleTitle = "Roles Orgrole Name");
+		LexiconEntry.delete(rowEntry = "Roles Orgrole Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -467,7 +467,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.deleteCP(roleTitle = "Roles Regrole Name");
+		LexiconEntry.delete(rowEntry = "Roles Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -706,7 +706,7 @@ definition {
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
-		Role.deleteCP(roleTitle = "Roles Siterole Name");
+		LexiconEntry.delete(rowEntry = "Roles Siterole Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

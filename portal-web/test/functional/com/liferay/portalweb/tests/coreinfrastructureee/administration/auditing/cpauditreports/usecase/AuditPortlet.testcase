@@ -373,7 +373,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.deleteCP(roleTitle = "Role1 Name");
+		LexiconEntry.delete(rowEntry = "Role1 Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

@@ -596,6 +596,66 @@ definition {
 		}
 	}
 
+	@description = "LPS-163525. Validate Remote Apps UI has an understandable error message when user inputs an invalid URL."
+	@priority = "4"
+	test HasAnUnderstandableErrorMessageWhenURLInvalid {
+		task ("Given Add IFrame Remote Apps") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Remote Apps");
+
+			RemoteApps.addType(type = "IFrame");
+		}
+
+		task ("When type testurl in URL field and a valid name is entered") {
+			RemoteApps.addApp(
+				entryName = "Test Name",
+				entryURL = "$testurl");
+		}
+
+		task ("And When attempt to save the remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then error message 'Please enter a valid URL' appears") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_ENTER_A_VALID_URL",
+				value1 = "Please enter a valid URL.");
+		}
+	}
+
+	@description = "LPS-163525. Validate Remote apps UI has a clear error message when all the mandatory fields are empty."
+	@priority = "4"
+	test HasMandatoryFieldErrorMessagesWhenEmpty {
+		task ("Given Add IFrame Remote Apps admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Remote Apps");
+
+			RemoteApps.addType(type = "IFrame");
+		}
+
+		task ("When attempt to save remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then an error message 'field is required' appears under URL") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "This field is required.");
+		}
+
+		task ("And then Remote App is not added") {
+			Navigator.gotoBack();
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "Verify an iframe remote app can be created"
 	@priority = "5"
 	test IFrameCanBeCreated {

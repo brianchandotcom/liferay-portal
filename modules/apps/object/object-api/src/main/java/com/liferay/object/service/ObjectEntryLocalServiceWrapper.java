@@ -367,23 +367,25 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntry>
 			getManyToManyObjectEntries(
-				long groupId, long objectRelationshipId, long primaryKey,
-				boolean related, boolean reverse, int start, int end)
+				boolean bypassPermission, long groupId,
+				long objectRelationshipId, long primaryKey, boolean related,
+				boolean reverse, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getManyToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, reverse, start,
-			end);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, reverse, start, end);
 	}
 
 	@Override
 	public int getManyToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, boolean reverse)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, reverse);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, reverse);
 	}
 
 	/**
@@ -521,22 +523,25 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntry>
 			getOneToManyObjectEntries(
-				long groupId, long objectRelationshipId, long primaryKey,
-				boolean related, int start, int end)
+				boolean bypassPermission, long groupId,
+				long objectRelationshipId, long primaryKey, boolean related,
+				int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, start, end);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, start, end);
 	}
 
 	@Override
 	public int getOneToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related);
 	}
 
 	/**

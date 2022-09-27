@@ -324,22 +324,24 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<ObjectEntry> getManyToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, int start, int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, boolean reverse, int start,
+			int end)
 		throws PortalException {
 
 		return getService().getManyToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, reverse, start,
-			end);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, reverse, start, end);
 	}
 
 	public static int getManyToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, boolean reverse)
 		throws PortalException {
 
 		return getService().getManyToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, reverse);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, reverse);
 	}
 
 	/**
@@ -457,21 +459,23 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<ObjectEntry> getOneToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, int start, int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, int start, int end)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, start, end);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, start, end);
 	}
 
 	public static int getOneToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related);
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related);
 	}
 
 	/**

@@ -33,6 +33,8 @@ import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.L
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectEntryStatusSelectionFDSFilter;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.OneToManyAutocompleteFDSFilter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -93,49 +95,54 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 				objectField.getListTypeDefinitionId(), preloadedData);
 		}
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.
-				fetchObjectRelationshipByObjectFieldId2(
-					objectField.getObjectFieldId());
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152650"))) {
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectFieldId2(
+						objectField.getObjectFieldId());
 
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
 
-		ObjectField titleObjectField = null;
+			ObjectField titleObjectField = null;
 
-		if (Validator.isNull(objectDefinition1.getTitleObjectFieldId())) {
-			titleObjectField = _objectFieldLocalService.getObjectField(
-				objectDefinition1.getObjectDefinitionId(), "id");
+			if (Validator.isNull(objectDefinition1.getTitleObjectFieldId())) {
+				titleObjectField = _objectFieldLocalService.getObjectField(
+					objectDefinition1.getObjectDefinitionId(), "id");
+			}
+			else {
+				titleObjectField = _objectFieldLocalService.getObjectField(
+					objectDefinition1.getTitleObjectFieldId());
+			}
+
+			if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
+				preloadedData = _objectFieldFilterParser.parse(
+					0L, objectDefinitionId, locale, objectViewFilterColumn);
+			}
+
+			String restContextPath = null;
+
+			if (objectDefinition1.isSystem()) {
+				SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+					_systemObjectDefinitionMetadataTracker.
+						getSystemObjectDefinitionMetadata(
+							objectDefinition1.getName());
+
+				restContextPath =
+					"/o/" + systemObjectDefinitionMetadata.getRESTContextPath();
+			}
+			else {
+				restContextPath = "/o" + objectDefinition1.getRESTContextPath();
+			}
+
+			return new OneToManyAutocompleteFDSFilter(
+				preloadedData, restContextPath,
+				titleObjectField.getLabel(locale),
+				objectField.getDBColumnName(), titleObjectField.getName());
 		}
-		else {
-			titleObjectField = _objectFieldLocalService.getObjectField(
-				objectDefinition1.getTitleObjectFieldId());
-		}
 
-		if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
-			preloadedData = _objectFieldFilterParser.parse(
-				0L, objectDefinitionId, locale, objectViewFilterColumn);
-		}
-
-		String restContextPath = null;
-
-		if (objectDefinition1.isSystem()) {
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				_systemObjectDefinitionMetadataTracker.
-					getSystemObjectDefinitionMetadata(
-						objectDefinition1.getName());
-
-			restContextPath =
-				"/o/" + systemObjectDefinitionMetadata.getRESTContextPath();
-		}
-		else {
-			restContextPath = "/o" + objectDefinition1.getRESTContextPath();
-		}
-
-		return new OneToManyAutocompleteFDSFilter(
-			preloadedData, restContextPath, titleObjectField.getLabel(locale),
-			objectField.getDBColumnName(), titleObjectField.getName());
+		throw new UnsupportedOperationException();
 	}
 
 	@Reference

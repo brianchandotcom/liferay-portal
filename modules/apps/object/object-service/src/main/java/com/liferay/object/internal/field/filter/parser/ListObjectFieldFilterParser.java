@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +97,15 @@ public class ListObjectFieldFilterParser implements ObjectFieldFilterParser {
 						objectField.getBusinessType(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-					return _toIdsList(
-						objectDefinitionId, jsonArray,
-						objectViewFilterColumn.getObjectFieldName());
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-152650"))) {
+
+						return _toIdsList(
+							objectDefinitionId, jsonArray,
+							objectViewFilterColumn.getObjectFieldName());
+					}
+
+					throw new UnsupportedOperationException();
 				}
 
 				List<Map<String, String>> map = new ArrayList<>();

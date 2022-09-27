@@ -42,7 +42,7 @@ const useRequirementActions = ({
 			name: i18n.translate('resync-with-jira'),
 		},
 		{
-			action: ({id}) => alert(id),
+			action: ({id}) => navigate(`${id}`),
 			icon: 'list-ul',
 			name: i18n.translate('link-cases'),
 			permission: !isHeaderActions,

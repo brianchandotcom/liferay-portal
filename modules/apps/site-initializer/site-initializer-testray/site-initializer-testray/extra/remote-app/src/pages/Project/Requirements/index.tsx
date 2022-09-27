@@ -98,20 +98,24 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 						value: 'Link',
 					},
 					{
+						clickable: true,
 						key: 'team',
 						render: (_, {component}) => component?.team?.name,
 						value: i18n.translate('team'),
 					},
 					{
+						clickable: true,
 						key: 'component',
 						render: (component) => component?.name,
 						value: i18n.translate('component'),
 					},
 					{
+						clickable: true,
 						key: 'components',
 						value: i18n.translate('jira-components'),
 					},
 					{
+						clickable: true,
 						key: 'summary',
 						size: 'md',
 						value: i18n.translate('summary'),

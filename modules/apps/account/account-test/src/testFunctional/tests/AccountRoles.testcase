@@ -543,7 +543,7 @@ definition {
 		}
 	}
 
-	@description = "This test assert the account manager can only view account organizations by default and can not change organization associations."
+	@description = "This is a use case for LPS-158344. This test assert the account manager can only view account organizations by default and can not change organization associations."
 	@priority = "4"
 	test CanOnlyViewOrganizationsByDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

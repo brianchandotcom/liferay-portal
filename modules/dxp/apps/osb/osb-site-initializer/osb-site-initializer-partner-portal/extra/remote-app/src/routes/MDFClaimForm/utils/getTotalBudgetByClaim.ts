@@ -22,12 +22,12 @@ export default function getTotalBudgetByClaim(
 					currentValue.mdfClaimBudgets &&
 					currentValue.mdfClaimBudgets.reduce(
 						(previousValue, currentValue) =>
-							previousValue + +(currentValue.cost || 0),
+							previousValue + Number(currentValue.cost || 0),
 						0
 					);
 			}
 
-			return previousValue + +sumBudgets;
+			return previousValue + Number(sumBudgets);
 		},
 		0
 	);

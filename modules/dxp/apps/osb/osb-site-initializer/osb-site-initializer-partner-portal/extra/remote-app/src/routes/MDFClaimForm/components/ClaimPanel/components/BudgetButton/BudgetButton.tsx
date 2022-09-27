@@ -34,9 +34,7 @@ const BudgetButton = ({
 	useEffect(() => {
 		if (mdfClaim.mdfClaimDocuments.budgets.length) {
 			const resultDocument = mdfClaim.mdfClaimDocuments.budgets.find(
-				(element) => {
-					return element.thirdPartyInvoices.budgetId === budget.id;
-				}
+				(element) => element.thirdPartyInvoices.budgetId === budget.id
 			);
 
 			if (resultDocument) {
@@ -61,8 +59,8 @@ const BudgetButton = ({
 
 						<div
 							className={classNames({
-								'text-neutral-7': checkInvoice === false,
-								'text-success': checkInvoice === true,
+								'text-neutral-7': !checkInvoice,
+								'text-success': checkInvoice,
 							})}
 						>
 							<ClayIcon
@@ -70,13 +68,13 @@ const BudgetButton = ({
 								symbol="check-circle-full"
 							/>
 
-							{checkInvoice ? 'Invoice Added' : 'Pedding Invoice'}
+							{checkInvoice ? 'Invoice Added' : 'Pending Invoice'}
 						</div>
 					</div>
 
 					<div>
 						<div className="font-weight-bold text-neutral-10 text-paragraph">
-							{getIntlNumberFormat().format(cost ? cost : 0)}
+							{getIntlNumberFormat().format(cost ?? 0)}
 						</div>
 					</div>
 				</div>

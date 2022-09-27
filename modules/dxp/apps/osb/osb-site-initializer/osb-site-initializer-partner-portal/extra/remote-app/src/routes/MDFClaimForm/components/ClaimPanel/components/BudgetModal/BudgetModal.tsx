@@ -19,15 +19,15 @@ import MDFClaimBudget from '../../../../../../common/interfaces/mdfClaimBudget';
 
 interface IProps {
 	activityId?: number;
-	currentActivityIndex: number | undefined;
-	currentBudgetIndex: number | undefined;
+	currentActivityIndex?: number;
+	currentBudgetIndex?: number;
 	setFieldValue: (
 		field: string,
 		value: any,
-		shouldValidate?: boolean | undefined
+		shouldValidate?: boolean
 	) => void;
 }
-type BugetCost = {
+type BudgetCost = {
 	[key: number]: {
 		inputedValue?: number;
 		savedValue?: number;
@@ -44,9 +44,9 @@ const BudgetModal = ({
 	setFieldValue,
 	...budget
 }: Omit<ReturnType<typeof useModal>, 'onClose'> & MDFClaimBudget & IProps) => {
-	const [bugetCost, setBugetCost] = useState<BugetCost>({});
+	const [budgetCost, setBudgetCost] = useState<BudgetCost>({});
 
-	const key = budget.id || '';
+	const key = budget.id ?? '';
 
 	return (
 		<>
@@ -70,22 +70,23 @@ const BudgetModal = ({
 									label="Claim Amount"
 									name={`mdfClaimActivities[${currentActivityIndex}].mdfClaimBudgets[${currentBudgetIndex}].cost`}
 									onAccept={(value: number) => {
-										setBugetCost(
+										setBudgetCost(
 											key
 												? {
-														...bugetCost,
+														...budgetCost,
 														[key]: {
-															...bugetCost[key],
+															...budgetCost[key],
 															inputedValue: value,
-															savedValue: bugetCost[
+															savedValue: budgetCost[
 																key
 															]?.savedValue
-																? bugetCost[key]
-																		?.savedValue
+																? budgetCost[
+																		key
+																  ]?.savedValue
 																: budget.cost,
 														},
 												  }
-												: bugetCost
+												: budgetCost
 										);
 										setFieldValue(
 											`mdfClaimActivities[${currentActivityIndex}].mdfClaimBudgets[${currentBudgetIndex}].cost`,
@@ -121,13 +122,13 @@ const BudgetModal = ({
 												`mdfClaimActivities[${currentActivityIndex}].mdfClaimBudgets[${currentBudgetIndex}].cost`,
 
 												key &&
-													bugetCost[key]?.savedValue
+													budgetCost[key]?.savedValue
 											);
 											setFieldValue(
 												`mdfClaimActivities[${currentActivityIndex}].mdfClaimBudgets[${currentBudgetIndex}].cost`,
 
 												key &&
-													bugetCost[key]?.savedValue
+													budgetCost[key]?.savedValue
 											);
 										}}
 									>
@@ -141,24 +142,25 @@ const BudgetModal = ({
 												`mdfClaimActivities[${currentActivityIndex}].mdfClaimBudgets[${currentBudgetIndex}].cost`,
 
 												key &&
-													bugetCost[key]?.inputedValue
+													budgetCost[key]
+														?.inputedValue
 											);
-											setBugetCost(
+											setBudgetCost(
 												key
 													? {
-															...bugetCost,
+															...budgetCost,
 															[key]: {
-																...bugetCost[
+																...budgetCost[
 																	key
 																],
 																savedValue:
-																	bugetCost[
+																	budgetCost[
 																		key
 																	]
 																		?.inputedValue,
 															},
 													  }
-													: bugetCost
+													: budgetCost
 											);
 										}}
 									>

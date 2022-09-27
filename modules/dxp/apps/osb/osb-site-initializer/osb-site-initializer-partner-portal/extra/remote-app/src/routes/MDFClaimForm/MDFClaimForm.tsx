@@ -38,22 +38,22 @@ const MDFClaimForm = ({
 		...formikHelpers
 	} = useFormikContext<MDFClaim>();
 
-	const mdfRequest = useGetMDFRequest(45314)?.data;
+	const MDF_ID = 45314;
 
-	const activities = useGetMDFRequestToActivities(45314)?.data;
+	const mdfRequest = useGetMDFRequest(MDF_ID)?.data;
+
+	const activities = useGetMDFRequestToActivities(MDF_ID)?.data;
+
+	const partnerLevel = 0.5;
 
 	useEffect(() => {
 		if (values.mdfClaimActivities) {
 			setFieldValue(
 				'totalClaimAmount',
-				getTotalBudgetByClaim(values.mdfClaimActivities) * 0.5
+				getTotalBudgetByClaim(values.mdfClaimActivities) * partnerLevel
 			);
 		}
 	}, [values.mdfClaimActivities, setFieldValue]);
-
-	const claimErrors = useMemo(() => {
-		return errors;
-	}, [errors]);
 
 	return (
 		<PRMForm className="mb-4" name="NEW" title="Reimbursement Claim">
@@ -129,8 +129,7 @@ const MDFClaimForm = ({
 
 					<ClayButton
 						disabled={
-							(!isValid && !isObjectEmpty(claimErrors)) ||
-							isSubmitting
+							(!isValid && !isObjectEmpty(errors)) || isSubmitting
 						}
 						type="submit"
 					>

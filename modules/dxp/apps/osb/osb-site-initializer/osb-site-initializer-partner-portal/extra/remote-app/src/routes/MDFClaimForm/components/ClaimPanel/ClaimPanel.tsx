@@ -28,13 +28,13 @@ import BudgetModal from './components/BudgetModal/BudgetModal';
 
 interface IProps {
 	activity: MDFRequestActivity;
-	currentActivityIndex: number | 0;
+	currentActivityIndex: number;
 	mdfClaim: MDFClaim;
-	mdfRequest?: MDFRequest | undefined;
+	mdfRequest?: MDFRequest;
 	setFieldValue: (
 		field: string,
 		value: any,
-		shouldValidate?: boolean | undefined
+		shouldValidate?: boolean
 	) => void;
 }
 
@@ -103,7 +103,7 @@ const ClaimPanel = ({
 				</ClayPanel.Title>
 			}
 			displayType="secondary"
-			showCollapseIcon={true}
+			showCollapseIcon
 		>
 			<ClayPanel.Body>
 				{budgets?.items.map((budget, index) => (

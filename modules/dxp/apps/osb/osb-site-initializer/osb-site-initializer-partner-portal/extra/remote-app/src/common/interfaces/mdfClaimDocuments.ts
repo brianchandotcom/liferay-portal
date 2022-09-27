@@ -11,14 +11,15 @@
 
 import LiferayObject from './liferayObject';
 
-interface thirdPartyInvoices {
+interface ThirdPartyInvoices {
 	budgetId: number;
 }
+
 export default interface MDFClaimDocuments extends Partial<LiferayObject> {
 	activityId: number;
 	budgetId: number;
 	fileURL: string;
 	mdfRequestId: number;
-	thirdPartyInvoices: thirdPartyInvoices;
+	thirdPartyInvoices: ThirdPartyInvoices;
 	type: string;
 }

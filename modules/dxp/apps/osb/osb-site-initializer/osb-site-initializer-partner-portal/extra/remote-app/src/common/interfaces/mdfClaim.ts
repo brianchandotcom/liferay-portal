@@ -12,6 +12,7 @@
 import LiferayObject from './liferayObject';
 import MDFClaimActivity from './mdfClaimActivity';
 import MDFClaimDocuments from './mdfClaimDocuments';
+
 export default interface MDFClaim extends Partial<LiferayObject> {
 	mdfClaimActivities: MDFClaimActivity[];
 	mdfClaimDocuments: {

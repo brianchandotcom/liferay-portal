@@ -50,6 +50,78 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "Verify buyers without the View Addresses permission cannot view addresses on the addresses list."
+	@priority = "3"
+	test CanBuyerRoleViewAddressesWithPermission {
+		task ("Given the buyer role doesn't have permission to view addresses") {
+			Permissions.removePermissionViaAPI(
+				groupName = "Minium",
+				resourceAction = "VIEW_ADDRESSES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("When the buyer checks out an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("Then the buyer can't see the addresses list") {
+			AssertElementNotPresent(
+				key_selectFieldLabel = "Choose Shipping Address",
+				locator1 = "Select#ANY");
+		}
+
+		task ("When the admin logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And adds the view addresses permission to the buyer role") {
+			Permissions.definePermissionViaJSONAPI(
+				groupName = "Minium",
+				resourceAction = "VIEW_ADDRESSES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("And the buyer goes to checkout") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("Then he can see the addresses in the list") {
+			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+				AssertElementPresent(
+					key_selectFieldLabel = "Choose Shipping Address",
+					locator1 = "Select#ANY",
+					value1 = "Liferay ${typeList}");
+			}
+		}
+	}
+
 	@description = "Verify buyers without the Manage Addresses permission cannot add a shipping and billing address at checkout, only select existing ones."
 	@priority = "3"
 	test CanOnlySelectPreDefinedShippingAndBillingAddressesWhithouPermission {

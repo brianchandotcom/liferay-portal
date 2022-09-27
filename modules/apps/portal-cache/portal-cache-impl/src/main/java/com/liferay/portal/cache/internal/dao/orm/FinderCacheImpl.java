@@ -14,8 +14,6 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
@@ -41,7 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -157,7 +154,10 @@ public class FinderCacheImpl
 	}
 
 	@Override
-	public Object getResult(FinderPath finderPath, Object[] args) {
+	public Object getResult(
+		FinderPath finderPath, Object[] args,
+		BasePersistence<?> basePersistence) {
+
 		if (!_valueObjectFinderCacheEnabled || !CacheRegistryUtil.isActive()) {
 			return null;
 		}
@@ -208,14 +208,6 @@ public class FinderCacheImpl
 		Map.Entry<String, Serializable> cacheResultEntry =
 			(Map.Entry<String, Serializable>)cacheValue;
 
-		BasePersistence<?> basePersistence =
-			_basePersistenceServiceTrackerMap.getService(
-				cacheResultEntry.getKey());
-
-		if (basePersistence == null) {
-			return null;
-		}
-
 		cacheValue = cacheResultEntry.getValue();
 
 		if (cacheValue instanceof List<?>) {
@@ -240,19 +232,6 @@ public class FinderCacheImpl
 		}
 
 		return basePersistence.fetchByPrimaryKey(cacheValue);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * 			#getResult(FinderPath, Object[])}
-	 */
-	@Deprecated
-	@Override
-	public Object getResult(
-		FinderPath finderPath, Object[] args,
-		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl) {
-
-		return getResult(finderPath, args);
 	}
 
 	@Override
@@ -547,30 +526,11 @@ public class FinderCacheImpl
 		_argumentsResolverServiceTracker = ServiceTrackerFactory.open(
 			bundleContext, ArgumentsResolver.class,
 			new ArgumentsResolverServiceTrackerCustomizer());
-
-		_basePersistenceServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<BasePersistence<?>>)(Class<?>)BasePersistence.class,
-				"(|(component.name=*PersistenceImpl)(&(bean.id=*Persistence)" +
-					"(!(bean.id=*Trash*Persistence))))",
-				(serviceReference, emitter) -> {
-					BasePersistence<?> basePersistence =
-						bundleContext.getService(serviceReference);
-
-					Class<?> modelClass = basePersistence.getModelClass();
-
-					emitter.emit(modelClass.getName());
-
-					bundleContext.ungetService(serviceReference);
-				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_argumentsResolverServiceTracker.close();
-
-		_basePersistenceServiceTrackerMap.close();
 	}
 
 	private void _clearCache(String cacheName) {
@@ -737,8 +697,6 @@ public class FinderCacheImpl
 	private ServiceTracker<ArgumentsResolver, ArgumentsResolver>
 		_argumentsResolverServiceTracker;
 	private volatile CacheKeyGenerator _baseModelCacheKeyGenerator;
-	private ServiceTrackerMap<String, BasePersistence<?>>
-		_basePersistenceServiceTrackerMap;
 	private BundleContext _bundleContext;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
 

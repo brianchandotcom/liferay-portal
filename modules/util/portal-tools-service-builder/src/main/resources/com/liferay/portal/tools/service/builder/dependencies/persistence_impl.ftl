@@ -1586,11 +1586,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		List<${entity.name}> list = null;
 
 		if (${useCache}) {
-			list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs
-				<#if serviceBuilder.isVersionLTE_7_3_0()>
-					, this
-				</#if>
-				);
+			list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1668,18 +1664,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			Long count = null;
 
 			if (productionMode) {
-				count = (Long)${finderCache}.getResult(_finderPathCountAll, FINDER_ARGS_EMPTY
-					<#if serviceBuilder.isVersionLTE_7_3_0()>
-						, this
-					</#if>
-					);
+				count = (Long)${finderCache}.getResult(_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 			}
 		<#else>
-			Long count = (Long)${finderCache}.getResult(_finderPathCountAll, FINDER_ARGS_EMPTY
-					<#if serviceBuilder.isVersionLTE_7_3_0()>
-						, this
-					</#if>
-					);
+			Long count = (Long)${finderCache}.getResult(_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		</#if>
 
 		if (count == null) {
@@ -2182,11 +2170,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public long countAncestors(${entity.name} ${entity.variableName}) {
 			Object[] finderArgs = new Object[] {${entity.variableName}.get${scopeEntityColumn.methodName}(), ${entity.variableName}.getLeft${pkEntityColumn.methodName}(), ${entity.variableName}.getRight${pkEntityColumn.methodName}()};
 
-			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountAncestors, finderArgs
-				<#if serviceBuilder.isVersionLTE_7_3_0()>
-					, this
-				</#if>
-				);
+			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountAncestors, finderArgs, this);
 
 			if (count == null) {
 				try {
@@ -2210,11 +2194,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public long countDescendants(${entity.name} ${entity.variableName}) {
 			Object[] finderArgs = new Object[] {${entity.variableName}.get${scopeEntityColumn.methodName}(), ${entity.variableName}.getLeft${pkEntityColumn.methodName}(), ${entity.variableName}.getRight${pkEntityColumn.methodName}()};
 
-			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountDescendants, finderArgs
-				<#if serviceBuilder.isVersionLTE_7_3_0()>
-					, this
-				</#if>
-				);
+			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountDescendants, finderArgs, this);
 
 			if (count == null) {
 				try {
@@ -2238,11 +2218,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public List<${entity.name}> getAncestors(${entity.name} ${entity.variableName}) {
 			Object[] finderArgs = new Object[] {${entity.variableName}.get${scopeEntityColumn.methodName}(), ${entity.variableName}.getLeft${pkEntityColumn.methodName}(), ${entity.variableName}.getRight${pkEntityColumn.methodName}()};
 
-			List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationGetAncestors, finderArgs
-				<#if serviceBuilder.isVersionLTE_7_3_0()>
-					, this
-				</#if>
-				);
+			List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationGetAncestors, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (${entity.name} temp${entity.name} : list) {
@@ -2278,11 +2254,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public List<${entity.name}> getDescendants(${entity.name} ${entity.variableName}) {
 			Object[] finderArgs = new Object[] {${entity.variableName}.get${scopeEntityColumn.methodName}(), ${entity.variableName}.getLeft${pkEntityColumn.methodName}(), ${entity.variableName}.getRight${pkEntityColumn.methodName}()};
 
-			List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationGetDescendants, finderArgs
-				<#if serviceBuilder.isVersionLTE_7_3_0()>
-					, this
-				</#if>
-				);
+			List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationGetDescendants, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (${entity.name} temp${entity.name} : list) {

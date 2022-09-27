@@ -14,8 +14,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,16 +32,9 @@ public interface FinderCache {
 
 	public void clearLocalCache();
 
-	public Object getResult(FinderPath finderPath, Object[] args);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getResult(FinderPath, Object[])}
-	 */
-	@Deprecated
 	public Object getResult(
 		FinderPath finderPath, Object[] args,
-		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl);
+		BasePersistence<?> basePersistence);
 
 	public void invalidate();
 

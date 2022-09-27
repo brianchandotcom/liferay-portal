@@ -14,8 +14,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -43,20 +42,11 @@ public class FinderCacheUtil {
 		return _finderCache;
 	}
 
-	public static Object getResult(FinderPath finderPath, Object[] args) {
-		return _finderCache.getResult(finderPath, args);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getResult(FinderPath, Object[])}
-	 */
-	@Deprecated
 	public static Object getResult(
 		FinderPath finderPath, Object[] args,
-		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl) {
+		BasePersistence<?> basePersistence) {
 
-		return _finderCache.getResult(finderPath, args, basePersistenceImpl);
+		return _finderCache.getResult(finderPath, args, basePersistence);
 	}
 
 	public static void invalidate() {

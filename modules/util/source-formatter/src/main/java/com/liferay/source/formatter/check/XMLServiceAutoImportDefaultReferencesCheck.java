@@ -36,7 +36,14 @@ public class XMLServiceAutoImportDefaultReferencesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws DocumentException {
 
-		if (!fileName.endsWith("/service.xml")) {
+		if (!fileName.endsWith("/service.xml") ||
+			(!absolutePath.contains("/modules/apps/") &&
+			 !absolutePath.contains("/modules/dxp/apps/"))) {
+
+			return content;
+		}
+
+		if (absolutePath.contains("/modules/apps/archived/")) {
 			return content;
 		}
 

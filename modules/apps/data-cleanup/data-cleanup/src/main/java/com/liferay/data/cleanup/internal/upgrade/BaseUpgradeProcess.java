@@ -92,16 +92,16 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 	protected void removeServiceData(
 			String buildNamespace, String[] bundleSymbolicNames,
-			String[] classNames, String[] tableNames)
+			String[] modelResourceNames, String[] tableNames)
 		throws Exception {
 
-		_deleteFromClassName(classNames);
+		_deleteFromClassName(modelResourceNames);
 
 		_deleteFromRelease(bundleSymbolicNames);
 
-		_deleteFromResourceAction(classNames);
+		_deleteFromResourceAction(modelResourceNames);
 
-		_deleteFromResourcePermission(classNames);
+		_deleteFromResourcePermission(modelResourceNames);
 
 		_deleteFromServiceComponent(buildNamespace);
 

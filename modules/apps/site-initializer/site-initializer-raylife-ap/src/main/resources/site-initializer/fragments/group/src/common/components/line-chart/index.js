@@ -70,11 +70,11 @@ const LineChart = ({
 							contents: (data) => {
 								const title = Liferay.Language.get(data[0].id);
 
-								const value = data[0].value.toFixed(1);
+								const value = data[0].value;
 
 								const formatedValue = hasPersonalizedTooltip
 									? value
-									: `$${value}`;
+									: `$${value.toFixed(1)}`;
 
 								return `<div class="line-chart-tooltip w-100 bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex font-weight-normal mr-2 w-100">${title}</span> ${formatedValue}</div>`;
 							},

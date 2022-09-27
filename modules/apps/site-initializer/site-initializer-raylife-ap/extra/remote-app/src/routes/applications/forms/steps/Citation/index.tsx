@@ -23,10 +23,19 @@ const DrivingUnderTheInfluence = () => {
 					src={`${getWebDavUrl()}/${'exclamation_icon.svg'}`}
 				/>
 
-				<h2>Sorry, we cannot proceed with a quote at this time.</h2>
+				<h2 className="mb-4">
+					Sorry, we cannot proceed with a quote at this time.
+				</h2>
 
 				<p className="text-neutral-7 text-paragraph">
-					Further description of why we cannot proceed goes here.
+					This application has been <b>Rejected</b> due to not meeting
+					minimum requirements. Please follow up with applicant
+					accordingly.
+				</p>
+
+				<p className="text-neutral-7 text-paragraph">
+					<b>Rejection Reason:</b> Applicants who have a DUI on their
+					record are not eligible to be insured.
 				</p>
 			</div>
 		</div>

@@ -434,7 +434,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addSiteSettings(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
-			_invoke(() -> _addUserGroups(serviceContext));
+			_invoke(() -> _addOrUpdateUserGroups(serviceContext));
 
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues =
 				_invoke(
@@ -3615,7 +3615,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addUserGroups(ServiceContext serviceContext)
+	private void _addOrUpdateUserGroups(ServiceContext serviceContext)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(

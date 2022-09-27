@@ -10,6 +10,7 @@
  */
 
 export default interface LiferayAccountBrief {
+	externalReferenceCodeSF?: string;
 	id?: number;
 	name?: string;
 }

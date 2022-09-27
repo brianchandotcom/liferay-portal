@@ -223,6 +223,39 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro avalaraConnection {
+		AssertTextEquals(
+			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
+			value1 = "Avalara Connector");
+
+		AssertElementPresent(
+			key_menuTab = "Credentials",
+			locator1 = "CommerceEntry#MENU_TAB");
+
+		Type(
+			key_text = "Account Number",
+			locator1 = "TextInput#ANY",
+			value1 = "test");
+
+		Type(
+			key_text = "License Key",
+			locator1 = "TextInput#ANY",
+			value1 = "test");
+
+		Type(
+			key_text = "Service URL",
+			locator1 = "TextInput#ANY",
+			value1 = "test");
+
+		AssertElementPresent(
+			key_text = "Verify Connection",
+			locator1 = "Button#ANY");
+
+		Button.clickSave();
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+	}
+
 	macro chooseDefaultDisplayPage {
 		Button.click(button = "Choose");
 

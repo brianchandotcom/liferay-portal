@@ -19,9 +19,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 jest.useFakeTimers();
 
-const onTitleAndDescriptionChange = jest.fn();
-const onSubmit = jest.fn();
-
 const context = {
 	availableLanguages: {
 		de_DE: 'German (Germany)',
@@ -33,14 +30,17 @@ const context = {
 	locale: 'en_US',
 };
 
-const title = {
-	'en-US': 'Title in English',
-	'es-ES': 'Titulo en Espanol',
-};
 const description = {
 	'en-US': 'Description in English',
 	'es-ES': 'Descripcion en Espanol',
 };
+const title = {
+	'en-US': 'Title in English',
+	'es-ES': 'Titulo en Espanol',
+};
+
+const onSubmit = jest.fn();
+const onTitleAndDescriptionChange = jest.fn();
 
 function PageToolbarComponent(props) {
 	return (

@@ -3074,6 +3074,46 @@ definition {
 		}
 	}
 
+	@description = "This test asserts accurate results when searching for available organizations in Assign Organizations to account modal"
+	@priority = "4"
+	test CanSearchInAssignOrganizationsToAccountModal {
+		task ("Given a business account and a few organizations") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			JSONOrganization.addOrganization(organizationName = "One");
+
+			JSONOrganization.addOrganization(organizationName = "Two");
+		}
+
+		task ("When a user assigns an organization to an account") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.goToEntryMenuItem(
+				menuItem = "Manage Organizations",
+				rowEntry = "Account Name");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no organizations associated with this account.");
+
+			LexiconEntry.gotoAdd();
+
+			SelectFrame(
+				key_title = "Assign Organizations to Account Name",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Then the user can search for available organizations") {
+			Search.searchCP(searchTerm = "One");
+
+			LexiconEntry.viewEntryName(rowEntry = "One");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Two");
+		}
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

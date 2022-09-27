@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -153,13 +151,12 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getContentPageEditorActionURL(String action) {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
 		return HttpComponentsUtil.addParameter(
 			PortletURLBuilder.create(
-				requestBackedPortletURLFactory.createActionURL(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET)
+				_portal.getControlPanelPortletURL(
+					_httpServletRequest, _themeDisplay.getScopeGroup(),
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET, 0,
+					0, PortletRequest.ACTION_PHASE)
 			).setActionName(
 				action
 			).buildString(),

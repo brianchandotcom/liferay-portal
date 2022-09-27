@@ -627,9 +627,6 @@ public abstract class BaseSamlTestCase {
 					"/credential/dependencies/keystore.jks"
 			).build());
 
-		ReflectionTestUtil.invoke(
-			metadataManagerImpl, "activate", new Class<?>[0]);
-
 		credentialResolver = new KeyStoreCredentialResolver();
 
 		ReflectionTestUtil.setFieldValue(
@@ -654,6 +651,9 @@ public abstract class BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_samlProviderConfigurationHelper",
 			samlProviderConfigurationHelper);
+
+		ReflectionTestUtil.invoke(
+			metadataManagerImpl, "activate", new Class<?>[0]);
 	}
 
 	private void _setupParserPool() {

@@ -12,7 +12,10 @@
  * details.
  */
 
-import React, {useContext, useState} from 'react';
+import {useSessionState} from '@liferay/layout-content-page-editor-web';
+import React, {useContext} from 'react';
+
+import {useConstants} from './ConstantsContext';
 
 const SelectedMenuItemIdContext = React.createContext(null);
 const SetSelectedMenuItemIdContext = React.createContext(() => {});
@@ -26,7 +29,12 @@ export function useSelectedMenuItemId() {
 }
 
 export function SelectedMenuItemIdProvider({children}) {
-	const [selectedMenuItemId, setSelectedMenuItemId] = useState(null);
+	const {portletNamespace} = useConstants();
+
+	const [selectedMenuItemId, setSelectedMenuItemId] = useSessionState(
+		`${portletNamespace}_selectedMenuItemId`,
+		null
+	);
 
 	return (
 		<SetSelectedMenuItemIdContext.Provider value={setSelectedMenuItemId}>

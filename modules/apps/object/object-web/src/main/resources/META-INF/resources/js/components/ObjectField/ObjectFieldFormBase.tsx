@@ -18,8 +18,8 @@ import {
 	AutoComplete,
 	FormError,
 	Input,
-	Select,
 	SingleSelect,
+	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import React, {
 	ChangeEventHandler,
@@ -95,6 +95,7 @@ export default function ObjectFieldFormBase({
 		string
 	>('');
 	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
+	const [picklistQuery, setPicklistQuery] = useState<string>('');
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
 		TObjectRelationship
@@ -155,11 +156,15 @@ export default function ObjectFieldFormBase({
 
 	const filteredPicklistItems = useMemo(() => {
 		return pickListItems.filter(({name}) => {
-			return name
-				.toLowerCase()
-				.includes(picklistDefaultValueQuery.toLocaleLowerCase());
+			return stringIncludesQuery(name, picklistDefaultValueQuery);
 		});
 	}, [picklistDefaultValueQuery, pickListItems]);
+
+	const filteredPicklist = useMemo(() => {
+		return pickLists.filter(({name}) => {
+			return stringIncludesQuery(name as string, picklistQuery);
+		});
+	}, [picklistQuery, pickLists]);
 
 	const selectedPicklist = useMemo(() => {
 		return pickLists.find(({id}) => values.listTypeDefinitionId === id);
@@ -330,30 +335,32 @@ export default function ObjectFieldFormBase({
 				/>
 			)}
 
-			{(values.businessType === 'Picklist' ||
-				values.businessType === 'MultiselectPicklist') && (
-				<Select
+			{values.businessType === 'Picklist' || values.businessType === 'MultiselectPicklist' && (
+				<AutoComplete
 					disabled={disabled}
+					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}
+					items={filteredPicklist}
 					label={Liferay.Language.get('picklist')}
-					onChange={({target: {value}}) => {
+					onChangeQuery={setPicklistQuery}
+					onSelectItem={(item) => {
 						setValues({
 							defaultValue: '',
-							listTypeDefinitionExternalReferenceCode: pickLists.find(
-								({name}) => name === value
-							)?.externalReferenceCode,
-							listTypeDefinitionId: Number(
-								pickLists.find(({name}) => name === value)?.id
-							),
+							listTypeDefinitionExternalReferenceCode:
+								item.externalReferenceCode,
+							listTypeDefinitionId: item.id,
 							state: false,
 						});
 					}}
-					options={pickLists}
-					required
-					value={
-						validListTypeDefinitionId ? selectedPicklist?.name : ''
-					}
-				/>
+					query={picklistQuery}
+					value={selectedPicklist?.name}
+				>
+					{({name}) => (
+						<div className="d-flex justify-content-between">
+							<div>{name}</div>
+						</div>
+					)}
+				</AutoComplete>
 			)}
 
 			{children}

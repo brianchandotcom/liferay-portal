@@ -32,6 +32,16 @@ export default function ({
 
 		const name = form.querySelector(`#${namespace}name`).value;
 
+		if (!name) {
+			openToast({
+				message: Liferay.Language.get('please-enter-a-valid-name'),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+
+			return;
+		}
+
 		const commerceInventoryWarehouseData = {
 			active: false,
 			name: {[defaultLanguageId]: name},

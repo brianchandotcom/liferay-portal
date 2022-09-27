@@ -187,7 +187,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_FIELDS_ENTRY_BY_POSITION</td>
-		<td>//div[contains(@class,'dnd-tbody')]//div[${key_position}]//span[contains(text(),'${key_entryName}')]</td>
+		<td>//div[contains(@class,'dnd-tbody')]//div[${key_position}]//*[contains(.,'${key_entryName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

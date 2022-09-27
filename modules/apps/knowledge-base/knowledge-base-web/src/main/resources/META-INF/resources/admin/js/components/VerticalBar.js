@@ -50,7 +50,7 @@ const VerticalNavigationBar = ({
 	);
 
 	useEffect(() => {
-		if (productMenu) {
+		if (productMenu && activePanel !== SUGGESTION_KEY) {
 			const productMenuOpenListener = productMenu.on(
 				'openStart.lexicon.sidenav',
 				() => {
@@ -71,13 +71,19 @@ const VerticalNavigationBar = ({
 				productMenuCloseListener.removeListener();
 			};
 		}
-	}, [productMenu]);
+	}, [activePanel, productMenu]);
 
 	useEffect(() => {
 		parentContainer.classList.toggle(
 			CSS_EXPANDED,
-			Boolean(verticalBarOpen && activePanel)
+			Boolean(
+				activePanel !== SUGGESTION_KEY && verticalBarOpen && activePanel
+			)
 		);
+
+		if (activePanel === SUGGESTION_KEY) {
+			parentContainer.classList.add('not-expandable');
+		}
 	}, [activePanel, parentContainer, verticalBarOpen]);
 
 	const onActiveChange = (currentActivePanelKey) => {
@@ -103,7 +109,10 @@ const VerticalNavigationBar = ({
 					({key}) => key === currentActivePanelKey
 				)?.href;
 
-				if (productMenuOpen) {
+				if (
+					productMenuOpen &&
+					currentActivePanelKey !== SUGGESTION_KEY
+				) {
 					const productMenuOpenListener = productMenu.on(
 						'closed.lexicon.sidenav',
 						() => {
@@ -117,7 +126,7 @@ const VerticalNavigationBar = ({
 				}
 			}
 
-			if (productMenuOpen) {
+			if (productMenuOpen && currentActivePanelKey !== SUGGESTION_KEY) {
 				productMenu.hide();
 			}
 		}

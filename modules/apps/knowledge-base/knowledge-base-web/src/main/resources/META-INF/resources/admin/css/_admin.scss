@@ -58,4 +58,9 @@ $controlMenuHeight: 56px;
 	.knowledge-base-vertical-bar.expanded + .knowledge-base-admin-content {
 		margin-left: 360px;
 	}
+
+	.knowledge-base-vertical-bar.not-expandable
+		+ .knowledge-base-admin-content {
+		transition: none;
+	}
 }

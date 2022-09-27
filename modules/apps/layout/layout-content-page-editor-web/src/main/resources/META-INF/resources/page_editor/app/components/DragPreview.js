@@ -41,7 +41,7 @@ function getItemIcon(item, fragmentEntryLinks, fragments, widgets) {
 		return fragmentEntries.find(
 			(fragment) =>
 				fragment.fragmentEntryKey === fragmentEntryLink.fragmentEntryKey
-		).icon;
+		)?.icon;
 	}
 
 	return fragmentEntries.find((fragment) => fragment.type === item.type)

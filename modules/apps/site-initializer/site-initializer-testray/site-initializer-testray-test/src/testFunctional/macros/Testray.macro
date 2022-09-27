@@ -115,10 +115,10 @@ definition {
 			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
 	}
 
-	macro createProjectTestray {
-		Click(locator1 = "Testray#ADD_PROJECT");
+	macro createProjectByDropdown {
+		TestrayLayout.clickManageOnSidebar();
 
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
+		TestrayManage.selectOptionsManage(itemValue = "Add Project");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -131,10 +131,10 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro createProjectByDropdown {
-		TestrayLayout.clickManageOnSidebar();
+	macro createProjectTestray {
+		Click(locator1 = "Testray#ADD_PROJECT");
 
-		TestrayManage.selectOptionsManage(itemValue = "Add Project");
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",

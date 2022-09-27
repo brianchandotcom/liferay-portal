@@ -21,17 +21,18 @@ export function getDTOFromMDFRequest(
 	return {
 		...getSummaryActivities(mdfRequest.activities),
 		additionalOption: mdfRequest.additionalOption,
-		campaignName: mdfRequest.campaignName,
 		country: mdfRequest.country,
+		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCodeSF: externalReferenceCode,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
-			', '
+			'; '
 		),
+		liferaysUserID: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		r_userToMDFRequests_userId: +Liferay.ThemeDisplay.getUserId(),
 		requestStatus: mdfRequest.requestStatus,
-		targetAudienceRoles: mdfRequest.targetAudienceRoles.join(', '),
-		targetMarkets: mdfRequest.targetMarkets.join(', '),
+		targetAudienceRoles: mdfRequest.targetAudienceRoles.join('; '),
+		targetMarkets: mdfRequest.targetMarkets.join('; '),
 	};
 }

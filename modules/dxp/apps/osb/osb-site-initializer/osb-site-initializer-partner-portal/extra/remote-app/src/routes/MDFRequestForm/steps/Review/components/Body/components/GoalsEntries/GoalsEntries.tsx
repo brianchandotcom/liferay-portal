@@ -45,7 +45,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Liferay business/sales goals',
-					value: mdfRequest.liferayBusinessSalesGoals.join(', '),
+					value: mdfRequest.liferayBusinessSalesGoals.join('; '),
 				},
 			]}
 			title="Activity Summary"
@@ -55,7 +55,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 			items={[
 				{
 					title: 'Target Market(s)',
-					value: mdfRequest.targetMarkets.join(', '),
+					value: mdfRequest.targetMarkets.join('; '),
 				},
 				{
 					title: 'Additional Options',
@@ -65,7 +65,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Target Audience/Role',
-					value: mdfRequest.targetAudienceRoles.join(', '),
+					value: mdfRequest.targetAudienceRoles.join('; '),
 				},
 			]}
 			title="Target Market"

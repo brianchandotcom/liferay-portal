@@ -19,11 +19,13 @@ export default function EditNotificationTemplate({
 	baseResourceURL,
 	editorConfig,
 	notificationTemplateId,
+	notificationTemplateType,
 }: IProps): JSX.Element;
 interface IProps {
 	baseResourceURL: string;
 	editorConfig: object;
 	notificationTemplateId: number;
+	notificationTemplateType: string;
 }
 export declare type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
@@ -37,5 +39,6 @@ export declare type TNotificationTemplate = {
 	objectDefinitionId: number | null;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
+	type: string;
 };
 export {};

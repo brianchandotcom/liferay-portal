@@ -34,6 +34,7 @@ interface NotificationTemplate {
 	objectDefinitionId: number | null;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
+	type: string;
 }
 
 type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';

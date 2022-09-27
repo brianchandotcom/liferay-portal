@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {
 	API,
@@ -44,6 +45,7 @@ export default function EditNotificationTemplate({
 	baseResourceURL,
 	editorConfig,
 	notificationTemplateId,
+	notificationTemplateType,
 }: IProps) {
 	notificationTemplateId = Number(notificationTemplateId);
 
@@ -144,6 +146,10 @@ export default function EditNotificationTemplate({
 
 	const [templateTitle, setTemplateTitle] = useState<string>();
 
+	const [notificationType, setNotificationType] = useState<string>(
+		notificationTemplateType
+	);
+
 	useEffect(() => {
 		if (notificationTemplateId !== 0) {
 			API.getNotificationTemplate(notificationTemplateId).then(
@@ -159,6 +165,7 @@ export default function EditNotificationTemplate({
 					objectDefinitionId,
 					subject,
 					to,
+					type,
 				}) => {
 					setValues({
 						...values,
@@ -173,9 +180,11 @@ export default function EditNotificationTemplate({
 						objectDefinitionId,
 						subject,
 						to,
+						type,
 					});
 
 					setTemplateTitle(name);
+					setNotificationType(type);
 				}
 			);
 		}
@@ -192,6 +201,20 @@ export default function EditNotificationTemplate({
 			<ClayManagementToolbar className="lfr__notification-template-management-tollbar">
 				<ClayManagementToolbar.ItemList>
 					<h2>{templateTitle}</h2>
+
+					{Liferay.FeatureFlags['LPS-162133'] && (
+						<div className="lfr__notification-template-label">
+							{notificationType === 'email' ? (
+								<ClayLabel displayType="success">
+									{Liferay.Language.get('email')}
+								</ClayLabel>
+							) : (
+								<ClayLabel displayType="info">
+									{Liferay.Language.get('user-notification')}
+								</ClayLabel>
+							)}
+						</div>
+					)}
 				</ClayManagementToolbar.ItemList>
 
 				<ClayManagementToolbar.ItemList>
@@ -241,12 +264,14 @@ export default function EditNotificationTemplate({
 									value={values.description}
 								/>
 
-								<SingleSelect
-									disabled
-									label={Liferay.Language.get('type')}
-									options={[]}
-									value={Liferay.Language.get('email')}
-								/>
+								{!Liferay.FeatureFlags['LPS-162133'] && (
+									<SingleSelect
+										disabled
+										label={Liferay.Language.get('type')}
+										options={[]}
+										value={Liferay.Language.get('email')}
+									/>
+								)}
 							</Card>
 						</div>
 
@@ -385,6 +410,7 @@ interface IProps {
 	baseResourceURL: string;
 	editorConfig: object;
 	notificationTemplateId: number;
+	notificationTemplateType: string;
 }
 
 export type TNotificationTemplate = {
@@ -399,4 +425,5 @@ export type TNotificationTemplate = {
 	objectDefinitionId: number | null;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
+	type: string;
 };

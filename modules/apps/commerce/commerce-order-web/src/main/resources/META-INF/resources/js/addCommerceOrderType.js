@@ -14,7 +14,7 @@
 
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import {CLOSE_MODAL} from 'commerce-frontend-js/utilities/eventsDefinitions';
-import {createPortletURL} from 'frontend-js-web';
+import {createPortletURL, openToast} from 'frontend-js-web';
 
 export default function ({
 	defaultLanguageId,
@@ -32,13 +32,23 @@ export default function ({
 			.value;
 		const name = form.querySelector(`#${namespace}name`).value;
 
+		if (!name) {
+			openToast({
+				message: Liferay.Language.get('please-enter-a-valid-name'),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+
+			return;
+		}
+
 		const orderTypeData = {
 			description: {[defaultLanguageId]: description},
 			name: {[defaultLanguageId]: name},
 		};
 
-		return CommerceOrderTypeResource.addOrderType(orderTypeData).then(
-			(payload) => {
+		return CommerceOrderTypeResource.addOrderType(orderTypeData)
+			.then((payload) => {
 				const redirectURL = createPortletURL(
 					editCommerceOrderTypePortletURL
 				);
@@ -58,7 +68,21 @@ export default function ({
 						showSuccessNotification: true,
 					},
 				});
-			}
-		);
+			})
+			.catch((error) => {
+				const errorsMap = {
+					'please-enter-a-valid-name': Liferay.Language.get(
+						'please-enter-a-valid-name'
+					),
+				};
+
+				openToast({
+					message:
+						errorsMap[error.message] ||
+						Liferay.Language.get('an-unexpected-error-occurred'),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			});
 	});
 }

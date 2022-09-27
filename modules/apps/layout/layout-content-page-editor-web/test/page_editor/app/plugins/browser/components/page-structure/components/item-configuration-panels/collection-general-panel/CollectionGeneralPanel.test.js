@@ -149,6 +149,25 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
+	it('hides vertical alignment and layout selects when flex is selected', () => {
+		renderComponent({itemConfig: {listStyle: 'flex-column'}});
+
+		expect(
+			screen.queryByLabelText('vertical-alignment')
+		).not.toBeInTheDocument();
+		expect(screen.queryByLabelText('layout')).not.toBeInTheDocument();
+	});
+
+	it('hides flex options when flex is not selected', () => {
+		renderComponent();
+
+		expect(screen.queryByLabelText('flex-wrap')).not.toBeInTheDocument();
+		expect(screen.queryByLabelText('align-items')).not.toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('justify-content')
+		).not.toBeInTheDocument();
+	});
+
 	it('allows changing the Show Empty Collection Alert checkbox', () => {
 		renderComponent();
 
@@ -222,7 +241,7 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('shows a message saying that enabling Display All Collection Items could affeect performance', async () => {
+	it('shows a message saying that enabling Display All Collection Items could affect performance', async () => {
 		renderComponent({
 			itemConfig: {
 				displayAllItems: true,

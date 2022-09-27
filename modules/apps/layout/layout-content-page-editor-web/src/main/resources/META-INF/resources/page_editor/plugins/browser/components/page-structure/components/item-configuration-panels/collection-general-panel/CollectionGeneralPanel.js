@@ -195,7 +195,11 @@ export function CollectionGeneralPanel({item}) {
 	);
 
 	useEffect(() => {
-		if (collection && listStyle && listStyle !== LIST_STYLES.grid) {
+		if (
+			collection &&
+			listStyle &&
+			!Object.values(LIST_STYLES).includes(listStyle)
+		) {
 			InfoItemService.getAvailableListItemRenderers({
 				itemSubtype: collection.itemSubtype,
 				itemType: collection.itemType,

@@ -291,10 +291,10 @@ function EditSXPBlueprintForm({
 							const configError =
 								validateRequired(
 									configValue,
-									type,
-									typeOptions.required,
+									name,
 									typeOptions.nullable,
-									name
+									typeOptions.required,
+									type
 								) ||
 								validateBoost(configValue, type) ||
 								validateNumberRange(
@@ -314,8 +314,13 @@ function EditSXPBlueprintForm({
 					const configValue = uiConfigurationValues?.sxpElement;
 
 					const configError =
-						validateRequired(configValue, INPUT_TYPES.JSON) ||
-						validateJSON(configValue, INPUT_TYPES.JSON);
+						validateRequired(
+							configValue,
+							'',
+							false,
+							true,
+							INPUT_TYPES.JSON
+						) || validateJSON(configValue, INPUT_TYPES.JSON);
 
 					if (configError) {
 						configErrors.sxpElement = configError;

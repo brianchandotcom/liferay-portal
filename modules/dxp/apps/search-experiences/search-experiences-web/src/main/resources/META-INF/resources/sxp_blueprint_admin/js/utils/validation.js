@@ -73,10 +73,10 @@ export function validateNumberRange(configValue, type, typeOptions) {
 
 export function validateRequired(
 	configValue,
-	type,
-	required = true,
+	name,
 	nullable = false,
-	name = ''
+	required = true,
+	type
 ) {
 	if (!required || nullable) {
 		return;

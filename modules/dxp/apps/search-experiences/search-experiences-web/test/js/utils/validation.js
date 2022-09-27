@@ -170,25 +170,31 @@ describe('validation', () => {
 
 	describe('validateRequired', () => {
 		it('returns error message for empty string', () => {
-			expect(validateRequired('', INPUT_TYPES.NUMBER)).toEqual(
-				ERROR_MESSAGES.REQUIRED
-			);
+			expect(
+				validateRequired('', 'boost', false, true, INPUT_TYPES.NUMBER)
+			).toEqual(ERROR_MESSAGES.REQUIRED);
 		});
 
 		it('returns error message for empty array', () => {
-			expect(validateRequired([], INPUT_TYPES.MULTISELECT)).toEqual(
-				ERROR_MESSAGES.REQUIRED
-			);
+			expect(
+				validateRequired(
+					[],
+					'selection',
+					false,
+					true,
+					INPUT_TYPES.MULTISELECT
+				)
+			).toEqual(ERROR_MESSAGES.REQUIRED);
 		});
 
 		it('returns error message for empty category selector list', () => {
 			expect(
 				validateRequired(
 					[],
-					INPUT_TYPES.NUMBER,
-					true,
+					'asset_category_id',
 					false,
-					'asset_category_id'
+					true,
+					INPUT_TYPES.NUMBER
 				)
 			).toEqual(ERROR_MESSAGES.REQUIRED_CATEGORY_SELECTOR);
 		});
@@ -200,6 +206,9 @@ describe('validation', () => {
 						field: '',
 						locale: '',
 					},
+					'field',
+					false,
+					true,
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toEqual(ERROR_MESSAGES.REQUIRED);
@@ -220,6 +229,9 @@ describe('validation', () => {
 							locale: '${context.language_id}',
 						},
 					],
+					'fields',
+					false,
+					true,
 					INPUT_TYPES.FIELD_MAPPING_LIST
 				)
 			).toEqual(ERROR_MESSAGES.REQUIRED);
@@ -227,7 +239,37 @@ describe('validation', () => {
 
 		it('returns undefined for non-empty string', () => {
 			expect(
-				validateRequired('test', INPUT_TYPES.NUMBER)
+				validateRequired(
+					'test',
+					'boost',
+					false,
+					true,
+					INPUT_TYPES.NUMBER
+				)
+			).toBeUndefined();
+		});
+
+		it('returns undefined when nullable is true', () => {
+			expect(
+				validateRequired(
+					'',
+					'boost',
+					true,
+					undefined,
+					INPUT_TYPES.NUMBER
+				)
+			).toBeUndefined();
+		});
+
+		it('returns undefined for required is false', () => {
+			expect(
+				validateRequired(
+					'',
+					'boost',
+					undefined,
+					false,
+					INPUT_TYPES.NUMBER
+				)
 			).toBeUndefined();
 		});
 
@@ -235,6 +277,9 @@ describe('validation', () => {
 			expect(
 				validateRequired(
 					[{label: 'test', value: 'test'}],
+					'selection',
+					false,
+					true,
 					INPUT_TYPES.MULTISELECT
 				)
 			).toBeUndefined();
@@ -247,6 +292,9 @@ describe('validation', () => {
 						field: 'localized_title',
 						locale: '${context.language_id}',
 					},
+					'field',
+					false,
+					true,
 					INPUT_TYPES.FIELD_MAPPING
 				)
 			).toBeUndefined();
@@ -267,6 +315,9 @@ describe('validation', () => {
 							locale: '${context.language_id}',
 						},
 					],
+					'fields',
+					false,
+					true,
 					INPUT_TYPES.FIELD_MAPPING_LIST
 				)
 			).toBeUndefined();

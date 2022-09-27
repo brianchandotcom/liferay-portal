@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Gustavo Lima
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.notification.model.NotificationTemplate",
 	service = ModelDocumentContributor.class
 )

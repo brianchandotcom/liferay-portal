@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Gustavo Lima
  */
-@Component(immediate = true, service = NotificationTypeRegistry.class)
+@Component(service = NotificationTypeRegistry.class)
 public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
 
 	@Override

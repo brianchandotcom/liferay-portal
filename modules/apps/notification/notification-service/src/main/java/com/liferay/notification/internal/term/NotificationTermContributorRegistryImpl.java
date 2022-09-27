@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Gustavo Lima
  */
-@Component(
-	immediate = true, service = NotificationTermContributorRegistry.class
-)
+@Component(service = NotificationTermContributorRegistry.class)
 public class NotificationTermContributorRegistryImpl
 	implements NotificationTermContributorRegistry {
 

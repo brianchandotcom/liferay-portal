@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mateus Santana
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_TEMPLATES,
 		"mvc.command.name=/notification_templates/notification_template_terms"

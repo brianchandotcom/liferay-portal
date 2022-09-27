@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Albuquerque
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.notification.model.NotificationQueueEntry",
 	service = ModelIndexerWriterContributor.class
 )

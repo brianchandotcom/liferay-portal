@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Albuquerque
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.notification.model.NotificationQueueEntry",
 	service = ModelResourcePermission.class
 )

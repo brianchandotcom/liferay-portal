@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Paulo Albuquerque
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class NotificationQueueEntrySearchRegistrar {
 
 	@Activate

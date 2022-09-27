@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class NotificationTemplateSearchRegistrar {
 
 	@Activate

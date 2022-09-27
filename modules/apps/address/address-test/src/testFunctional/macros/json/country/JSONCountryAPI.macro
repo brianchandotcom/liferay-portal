@@ -16,7 +16,7 @@ definition {
 				-d idd='' \
 				-d name=${countryName} \
 				-d number=${countryNumber} \
-				-d position=${countryPosition} \
+				-d position=${countryPriority} \
 				-d shippingAllowed=${shippingAllowed} \
 				-d subjectToVAT=${subjectToVAT} \
 				-d zipRequired=false

@@ -33,10 +33,10 @@ definition {
 				text = "${countryCallingCode}");
 		}
 
-		if (isSet(countryPosition)) {
+		if (isSet(countryPriority)) {
 			PortletEntry.inputText(
-				fieldLabel = "Position",
-				text = "${countryPosition}");
+				fieldLabel = "Priority",
+				text = "${countryPriority}");
 		}
 	}
 
@@ -55,10 +55,10 @@ definition {
 				text = "${regionCode}");
 		}
 
-		if (isSet(regionPosition)) {
+		if (isSet(regionPriority)) {
 			PortletEntry.inputText(
-				fieldLabel = "Position",
-				text = "${regionPosition}");
+				fieldLabel = "Priority",
+				text = "${regionPriority}");
 		}
 	}
 
@@ -104,7 +104,7 @@ definition {
 			countryKey = "${countryKey}",
 			countryName = "${countryName}",
 			countryNumber = "${countryNumber}",
-			countryPosition = "${countryPosition}",
+			countryPriority = "${countryPriority}",
 			threeLetterISOCode = "${threeLetterISOCode}",
 			twoLetterISOCode = "${twoLetterISOCode}");
 
@@ -146,7 +146,7 @@ definition {
 			regionCode = "${regionCode}",
 			regionKey = "${regionKey}",
 			regionName = "${regionName}",
-			regionPosition = "${regionPosition}");
+			regionPriority = "${regionPriority}");
 
 		if ("${regionStatus}" == "Inactive") {
 			Uncheck.uncheckToggleSwitch(
@@ -293,10 +293,10 @@ definition {
 				text = "${regionCodeEdit}");
 		}
 
-		if (isSet(regionPositionEdit)) {
+		if (isSet(regionPriorityEdit)) {
 			PortletEntry.inputText(
-				fieldLabel = "Position",
-				text = "${regionPositionEdit}");
+				fieldLabel = "Priority",
+				text = "${regionPriorityEdit}");
 		}
 
 		if ("${regionStatusEdit}" == "Inactive") {

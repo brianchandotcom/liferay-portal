@@ -187,7 +187,7 @@ definition {
 				countryName = "Philippines",
 				regionCode = "13",
 				regionName = "National Capital Region",
-				regionPosition = "1.0");
+				regionPriority = "1.0");
 		}
 
 		task ("Then region is successfully saved") {
@@ -198,7 +198,7 @@ definition {
 			CountriesManagement.viewRegionsInTable(
 				regionCode = "13",
 				regionName = "National Capital Region",
-				regionPosition = "1.0",
+				regionPriority = "1.0",
 				regionStatus = "Active");
 		}
 	}
@@ -393,7 +393,7 @@ definition {
 				regionKeyEdit = "bicol-region",
 				regionName = "Calabarzon",
 				regionNameEdit = "Bicol Region",
-				regionPositionEdit = "2.0",
+				regionPriorityEdit = "2.0",
 				regionStatusEdit = "Inactive");
 		}
 
@@ -405,7 +405,7 @@ definition {
 			CountriesManagement.viewRegionsInTable(
 				regionCode = "05",
 				regionName = "Bicol Region",
-				regionPosition = "2.0",
+				regionPriority = "2.0",
 				regionStatus = "Inactive");
 		}
 	}
@@ -447,11 +447,11 @@ definition {
 			CountriesManagement.goToRegions(countryName = "United States");
 		}
 
-		task ("When a user attempts to add a region but only inputs position") {
+		task ("When a user attempts to add a region but only inputs priority") {
 			LexiconEntry.gotoAdd();
 
 			PortletEntry.inputText(
-				fieldLabel = "Position",
+				fieldLabel = "Priority",
 				text = "1.0");
 
 			Button.clickSave();
@@ -506,7 +506,7 @@ definition {
 				billingAllowed = "false",
 				countryName = "ZZ Test",
 				countryNumber = "01",
-				countryPosition = "5.0",
+				countryPriority = "5.0",
 				countryStatus = "active",
 				shippingAllowed = "false",
 				subjectToVAT = "false",
@@ -579,7 +579,7 @@ definition {
 				countryName = "China",
 				regionCode = "01",
 				regionName = "A Region",
-				regionPosition = "5.0");
+				regionPriority = "5.0");
 
 			Navigator.gotoBack();
 		}

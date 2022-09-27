@@ -17,7 +17,7 @@ definition {
 			billingAllowed = "${billingAllowed}",
 			countryName = "${countryName}",
 			countryNumber = "${countryNumber}",
-			countryPosition = "${countryPosition}",
+			countryPriority = "${countryPriority}",
 			countryStatus = "${countryStatus}",
 			creatorEmailAddress = "${creatorEmailAddress}",
 			creatorPassword = "${creatorPassword}",

@@ -303,6 +303,186 @@ public class SegmentsExperimentRelUtil {
 	}
 
 	/**
+	 * Returns all the segments experiment rels where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the matching segments experiment rels
+	 */
+	public static List<SegmentsExperimentRel> findBySegmentsExperienceId(
+		long segmentsExperienceId) {
+
+		return getPersistence().findBySegmentsExperienceId(
+			segmentsExperienceId);
+	}
+
+	/**
+	 * Returns a range of all the segments experiment rels where segmentsExperienceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param start the lower bound of the range of segments experiment rels
+	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
+	 * @return the range of matching segments experiment rels
+	 */
+	public static List<SegmentsExperimentRel> findBySegmentsExperienceId(
+		long segmentsExperienceId, int start, int end) {
+
+		return getPersistence().findBySegmentsExperienceId(
+			segmentsExperienceId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiment rels where segmentsExperienceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param start the lower bound of the range of segments experiment rels
+	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiment rels
+	 */
+	public static List<SegmentsExperimentRel> findBySegmentsExperienceId(
+		long segmentsExperienceId, int start, int end,
+		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
+
+		return getPersistence().findBySegmentsExperienceId(
+			segmentsExperienceId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiment rels where segmentsExperienceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param start the lower bound of the range of segments experiment rels
+	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments experiment rels
+	 */
+	public static List<SegmentsExperimentRel> findBySegmentsExperienceId(
+		long segmentsExperienceId, int start, int end,
+		OrderByComparator<SegmentsExperimentRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findBySegmentsExperienceId(
+			segmentsExperienceId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments experiment rel
+	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel findBySegmentsExperienceId_First(
+			long segmentsExperienceId,
+			OrderByComparator<SegmentsExperimentRel> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperimentRelException {
+
+		return getPersistence().findBySegmentsExperienceId_First(
+			segmentsExperienceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel fetchBySegmentsExperienceId_First(
+		long segmentsExperienceId,
+		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
+
+		return getPersistence().fetchBySegmentsExperienceId_First(
+			segmentsExperienceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments experiment rel
+	 * @throws NoSuchExperimentRelException if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel findBySegmentsExperienceId_Last(
+			long segmentsExperienceId,
+			OrderByComparator<SegmentsExperimentRel> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperimentRelException {
+
+		return getPersistence().findBySegmentsExperienceId_Last(
+			segmentsExperienceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
+	 */
+	public static SegmentsExperimentRel fetchBySegmentsExperienceId_Last(
+		long segmentsExperienceId,
+		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
+
+		return getPersistence().fetchBySegmentsExperienceId_Last(
+			segmentsExperienceId, orderByComparator);
+	}
+
+	/**
+	 * Returns the segments experiment rels before and after the current segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperimentRelId the primary key of the current segments experiment rel
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next segments experiment rel
+	 * @throws NoSuchExperimentRelException if a segments experiment rel with the primary key could not be found
+	 */
+	public static SegmentsExperimentRel[]
+			findBySegmentsExperienceId_PrevAndNext(
+				long segmentsExperimentRelId, long segmentsExperienceId,
+				OrderByComparator<SegmentsExperimentRel> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperimentRelException {
+
+		return getPersistence().findBySegmentsExperienceId_PrevAndNext(
+			segmentsExperimentRelId, segmentsExperienceId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the segments experiment rels where segmentsExperienceId = &#63; from the database.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 */
+	public static void removeBySegmentsExperienceId(long segmentsExperienceId) {
+		getPersistence().removeBySegmentsExperienceId(segmentsExperienceId);
+	}
+
+	/**
+	 * Returns the number of segments experiment rels where segmentsExperienceId = &#63;.
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @return the number of matching segments experiment rels
+	 */
+	public static int countBySegmentsExperienceId(long segmentsExperienceId) {
+		return getPersistence().countBySegmentsExperienceId(
+			segmentsExperienceId);
+	}
+
+	/**
 	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.
 	 *
 	 * @param segmentsExperimentId the segments experiment ID

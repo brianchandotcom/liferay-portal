@@ -208,6 +208,13 @@ public class SegmentsExperimentRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountBySegmentsExperienceId() throws Exception {
+		_persistence.countBySegmentsExperienceId(RandomTestUtil.nextLong());
+
+		_persistence.countBySegmentsExperienceId(0L);
+	}
+
+	@Test
 	public void testCountByS_S() throws Exception {
 		_persistence.countByS_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

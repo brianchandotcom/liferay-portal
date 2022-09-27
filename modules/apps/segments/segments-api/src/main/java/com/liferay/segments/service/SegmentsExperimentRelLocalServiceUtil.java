@@ -245,8 +245,7 @@ public class SegmentsExperimentRelLocalServiceUtil {
 	}
 
 	public static SegmentsExperimentRel fetchSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
-		throws PortalException {
+		long segmentsExperimentId, long segmentsExperienceId) {
 
 		return getService().fetchSegmentsExperimentRel(
 			segmentsExperimentId, segmentsExperienceId);
@@ -326,6 +325,14 @@ public class SegmentsExperimentRelLocalServiceUtil {
 		long segmentsExperimentId) {
 
 		return getService().getSegmentsExperimentRels(segmentsExperimentId);
+	}
+
+	public static List<SegmentsExperimentRel>
+		getSegmentsExperimentRelsBySegmentsExperienceId(
+			long segmentsExperienceId) {
+
+		return getService().getSegmentsExperimentRelsBySegmentsExperienceId(
+			segmentsExperienceId);
 	}
 
 	/**

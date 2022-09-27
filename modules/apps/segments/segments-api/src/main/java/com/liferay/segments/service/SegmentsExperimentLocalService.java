@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.exception.NoSuchExperimentException;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 
 import java.io.Serializable;
@@ -231,10 +230,6 @@ public interface SegmentsExperimentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsExperience fetchControlSegmentExperience(
-		SegmentsExperience segmentsExperience);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(

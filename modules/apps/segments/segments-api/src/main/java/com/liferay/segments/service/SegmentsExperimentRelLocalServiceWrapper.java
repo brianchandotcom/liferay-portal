@@ -277,8 +277,7 @@ public class SegmentsExperimentRelLocalServiceWrapper
 
 	@Override
 	public SegmentsExperimentRel fetchSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long segmentsExperimentId, long segmentsExperienceId) {
 
 		return _segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
 			segmentsExperimentId, segmentsExperienceId);
@@ -371,6 +370,16 @@ public class SegmentsExperimentRelLocalServiceWrapper
 
 		return _segmentsExperimentRelLocalService.getSegmentsExperimentRels(
 			segmentsExperimentId);
+	}
+
+	@Override
+	public java.util.List<SegmentsExperimentRel>
+		getSegmentsExperimentRelsBySegmentsExperienceId(
+			long segmentsExperienceId) {
+
+		return _segmentsExperimentRelLocalService.
+			getSegmentsExperimentRelsBySegmentsExperienceId(
+				segmentsExperienceId);
 	}
 
 	/**

@@ -45,5 +45,6 @@ create index IX_BB044BF5 on SegmentsExperiment (uuid_[$COLUMN_LENGTH:75$], compa
 create index IX_E4D8A44F on SegmentsExperiment (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_9B420837 on SegmentsExperiment (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
+create index IX_76A679B9 on SegmentsExperimentRel (segmentsExperienceId, ctCollectionId);
 create index IX_3FA9F4CC on SegmentsExperimentRel (segmentsExperimentId, ctCollectionId);
 create unique index IX_9EDCFAE5 on SegmentsExperimentRel (segmentsExperimentId, segmentsExperienceId, ctCollectionId);

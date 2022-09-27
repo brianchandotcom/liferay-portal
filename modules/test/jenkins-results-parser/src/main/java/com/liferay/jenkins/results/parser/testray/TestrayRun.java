@@ -20,8 +20,9 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -92,6 +93,14 @@ public class TestrayRun {
 			return null;
 		}
 
+		Map<String, String> targetFactors = new HashMap<>();
+
+		for (Factor factor : getFactors()) {
+			String factorValue = factor.getValue();
+
+			targetFactors.put(factor.getName(), factorValue.toLowerCase());
+		}
+
 		for (int i = 0; i < dataJSONArray.length(); i++) {
 			JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
 
@@ -103,6 +112,8 @@ public class TestrayRun {
 
 				continue;
 			}
+
+			Map<String, String> currentFactors = new HashMap<>();
 
 			for (int j = 0; j < testrayFactorsJSONArray.length(); j++) {
 				JSONObject testrayFactorJSONObject =
@@ -117,29 +128,15 @@ public class TestrayRun {
 						factorCategoryName) ||
 					JenkinsResultsParserUtil.isNullOrEmpty(factorOptionName)) {
 
-					break;
+					continue;
 				}
 
-				for (Factor factor : getFactors()) {
-					if (!Objects.equals(factor.getName(), factorCategoryName)) {
-						continue;
-					}
+				currentFactors.put(
+					factorCategoryName, factorOptionName.toLowerCase());
+			}
 
-					String factorValue = factor.getValue();
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(factorValue)) {
-						continue;
-					}
-
-					if (Objects.equals(
-							factorValue.toLowerCase(),
-							factorOptionName.toLowerCase())) {
-
-						return dataJSONObject.getString("testrayRunId");
-					}
-				}
-
-				break;
+			if (targetFactors.equals(currentFactors)) {
+				return dataJSONObject.getString("testrayRunId");
 			}
 		}
 

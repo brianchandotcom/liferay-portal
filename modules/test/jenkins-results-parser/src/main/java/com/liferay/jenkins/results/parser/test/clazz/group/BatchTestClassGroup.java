@@ -16,11 +16,14 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
 
+import com.liferay.jenkins.results.parser.BatchHistory;
+import com.liferay.jenkins.results.parser.HistoryUtil;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.TestHistory;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
 import com.liferay.jenkins.results.parser.job.property.GlobJobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
@@ -57,54 +60,59 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public long getAverageDuration() {
-		Job job = getJob();
+		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
+			batchName, getJob());
 
-		Long averageDuration = job.getAverageBatchDuration(getBatchName());
-
-		if (averageDuration == null) {
+		if (batchHistory == null) {
 			return 0L;
 		}
 
-		return averageDuration;
+		return batchHistory.getAverageDuration();
 	}
 
 	public long getAverageOverheadDuration() {
-		Job job = getJob();
+		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
+			batchName, getJob());
 
-		Long averageOverheadDuration = job.getAverageBatchOverheadDuration(
-			getBatchName());
-
-		if (averageOverheadDuration == null) {
+		if (batchHistory == null) {
 			return 0L;
 		}
 
-		return averageOverheadDuration;
+		return batchHistory.getAverageOverheadDuration();
 	}
 
 	public long getAverageTestDuration(String testName) {
-		Job job = getJob();
+		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
+			batchName, getJob());
 
-		Long averageDuration = job.getAverageTestDuration(
-			getBatchName(), testName);
-
-		if (averageDuration != null) {
-			return averageDuration;
+		if (batchHistory == null) {
+			return _getDefaultTestDuration();
 		}
 
-		return _getDefaultTestDuration();
+		TestHistory testHistory = batchHistory.getTestHistory(testName);
+
+		if (testHistory == null) {
+			return _getDefaultTestDuration();
+		}
+
+		return testHistory.getAverageDuration();
 	}
 
 	public long getAverageTestOverheadDuration(String testName) {
-		Job job = getJob();
+		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
+			batchName, getJob());
 
-		Long averageOverheadDuration = job.getAverageTestOverheadDuration(
-			getBatchName(), testName);
-
-		if (averageOverheadDuration != null) {
-			return averageOverheadDuration;
+		if (batchHistory == null) {
+			return _getDefaultTestDuration();
 		}
 
-		return 0L;
+		TestHistory testHistory = batchHistory.getTestHistory(testName);
+
+		if (testHistory == null) {
+			return _getDefaultTestDuration();
+		}
+
+		return testHistory.getAverageOverheadDuration();
 	}
 
 	public int getAxisCount() {

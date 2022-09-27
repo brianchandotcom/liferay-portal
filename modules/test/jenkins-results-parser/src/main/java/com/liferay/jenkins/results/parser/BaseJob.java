@@ -53,29 +53,6 @@ import org.json.JSONObject;
 public abstract class BaseJob implements Job {
 
 	@Override
-	public Long getAverageBatchDuration(String batchName) {
-		return _getAverageBatchDuration(batchName, "averageDuration");
-	}
-
-	@Override
-	public Long getAverageBatchOverheadDuration(String batchName) {
-		return _getAverageBatchDuration(batchName, "averageOverheadDuration");
-	}
-
-	@Override
-	public Long getAverageTestDuration(String batchName, String testName) {
-		return _getAverageTestDuration(batchName, testName, "averageDuration");
-	}
-
-	@Override
-	public Long getAverageTestOverheadDuration(
-		String batchName, String testName) {
-
-		return _getAverageTestDuration(
-			batchName, testName, "averageOverheadDuration");
-	}
-
-	@Override
 	public int getAxisCount() {
 		List<AxisTestClassGroup> axisTestClassGroups = getAxisTestClassGroups();
 

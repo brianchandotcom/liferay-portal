@@ -491,6 +491,52 @@ definition {
 		}
 	}
 
+	@description = "Assert searching for account user in Account Users portlet will yield accurate results"
+	@priority = "4"
+	test CanSearchForAccountUser {
+		task ("Given an account with account users") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Liferay Inc",
+				accountEntryType = "Business");
+
+			for (var accountUser : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${accountUser}@liferay.com",
+					userFirstName = "userfn${accountUser}",
+					userLastName = "userln${accountUser}",
+					userScreenName = "usersn${accountUser}");
+
+				JSONAccountEntryUser.addExistUsertoAccount(
+					accountEntryName = "Liferay Inc",
+					userEmailAddress = "userea${accountUser}@liferay.com");
+			}
+		}
+
+		task ("When a user searches for an account user via first name and last name") {
+			AccountUsers.openAccountUsersAdmin();
+
+			Search.searchCP(searchTerm = "userfn1 userln1");
+		}
+
+		task ("Then accurate results display") {
+			LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+		}
+
+		task ("When a user searches for an account user via email address") {
+			AccountUsers.openAccountUsersAdmin();
+
+			Search.searchCP(searchTerm = "userea2@liferay.com");
+		}
+
+		task ("Then accurate results display") {
+			LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
+		}
+	}
+
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveAccountUser {

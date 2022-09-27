@@ -228,18 +228,16 @@ export default function FragmentsSidebar() {
 						onChange={setSearchValue}
 					/>
 
-					{Liferay.FeatureFlags['LPS-158737'] && (
-						<ClayButtonWithIcon
-							borderless
-							className="lfr-portal-tooltip ml-2 mt-0"
-							data-tooltip-align="bottom-right"
-							displayType="secondary"
-							onClick={() => setShowReorderModal(true)}
-							small
-							symbol="order-arrow"
-							title={Liferay.Language.get('reorder-sets')}
-						/>
-					)}
+					<ClayButtonWithIcon
+						borderless
+						className="lfr-portal-tooltip ml-2 mt-0"
+						data-tooltip-align="bottom-right"
+						displayType="secondary"
+						onClick={() => setShowReorderModal(true)}
+						small
+						symbol="order-arrow"
+						title={Liferay.Language.get('reorder-sets')}
+					/>
 
 					<ClayButtonWithIcon
 						borderless

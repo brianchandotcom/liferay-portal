@@ -223,7 +223,7 @@ CardItem.propTypes = {
 };
 
 const HighlightButton = ({item, onToggleHighlighted}) => {
-	if (!Liferay.FeatureFlags['LPS-158737'] || item.data.portletItemId) {
+	if (item.data.portletItemId) {
 		return null;
 	}
 

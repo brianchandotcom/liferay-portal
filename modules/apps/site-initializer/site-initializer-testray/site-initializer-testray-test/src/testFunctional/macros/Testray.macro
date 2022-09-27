@@ -219,8 +219,6 @@ definition {
 		TestrayContextMenu.clickContextMenuProjects(name = "${nameProject}");
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro editComponent {

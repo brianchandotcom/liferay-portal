@@ -26,6 +26,24 @@ definition {
 		Testray.deleteComponent(itemName = "${itemName}");
 	}
 
+	macro deleteRoutineSetup {
+		TestrayLayout.clickResultsOnSidebar();
+
+		Refresh();
+
+		Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+		if (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#ITEM_NAME")) {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+	}
+
 	macro editRoutine {
 		TestrayManage.editProductVersion(
 			caseName = "${newNameRoutine}",

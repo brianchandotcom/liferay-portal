@@ -21,6 +21,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		TestrayRoutines.deleteRoutineSetup();
+
 		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
@@ -166,12 +168,75 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160897. Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
+		task ("Go to Testray, Create Project and create product version") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-160897 CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds pending implementation
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
 
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = "Projects_1 Project",
+				version = "1.0");
+
+			Refresh();
+		}
+
+		task ("Go to project page and add a new routine") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+
+			Testray.assertItemName(key_name = "Routines_1 Routine");
+		}
+
+		task ("Go to routine page and add a new build") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+
+			Testray.assertItemName(key_name = "Builds_1 Project");
+		}
+
+		task ("Delete project and assert which Error Message appears") {
+			Testray.deleteProject(nameProject = "Projects_1 Project");
+
+			Alert.viewErrorMessage(errorMessage = "The Project cannot be deleted because it has associated builds");
+		}
+	}
+
+	@description = "This is a test for LPS-164076 Verify that the user can not create a project if all the required fields are not filled in"
+	@priority = "3"
+	test AdminCanViewWarningMessage {
+		task ("Go to Testray, Create Project and create product version") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "",
+				key_name = "");
+		}
+
+		task ("Assert Error Message appears") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "name is a required field");
+		}
 	}
 
 }

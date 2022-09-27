@@ -1677,6 +1677,11 @@
 
 		<!-- Module Source Checks -->
 
+		<check name="XMLServiceAutoImportDefaultReferencesCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the `auto-import-default-references` in `service.xml` does not equal `false`." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="XMLSpringExtenderServiceCheck">
 			<category name="Performance" />
 			<description name="Finds cases where Spring extender service is used as a dependency injection." />

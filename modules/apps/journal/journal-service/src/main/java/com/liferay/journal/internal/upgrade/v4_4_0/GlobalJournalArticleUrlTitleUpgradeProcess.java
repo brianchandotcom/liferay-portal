@@ -48,7 +48,7 @@ public class GlobalJournalArticleUrlTitleUpgradeProcess extends UpgradeProcess {
 	}
 
 	private String _getUrlTitle(
-			long classNameId, long classPK, String languageId, long groupId)
+			long classNameId, long classPK, long groupId, String languageId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -107,8 +107,8 @@ public class GlobalJournalArticleUrlTitleUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setString(
 						1,
 						_getUrlTitle(
-							classNameId, classPK, defaultLanguageId,
-							companyGroup.getGroupId()));
+							classNameId, classPK, companyGroup.getGroupId(),
+							defaultLanguageId));
 
 					long id = resultSet.getLong("id_");
 

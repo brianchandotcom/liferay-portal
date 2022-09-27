@@ -430,7 +430,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
 			_invoke(() -> _addOrUpdateSAPEntries(serviceContext));
-			_invoke(() -> _addSegmentsEntries(serviceContext));
+			_invoke(() -> _addOrUpdateSegmentsEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addSiteSettings(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
@@ -3005,7 +3005,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addSegmentsEntries(ServiceContext serviceContext)
+	private void _addOrUpdateSegmentsEntries(ServiceContext serviceContext)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(

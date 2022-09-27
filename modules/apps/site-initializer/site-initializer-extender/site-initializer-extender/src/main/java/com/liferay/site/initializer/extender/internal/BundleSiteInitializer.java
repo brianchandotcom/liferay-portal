@@ -3316,7 +3316,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			if (parentTaxonomyCategoryId == null) {
-				taxonomyCategory = _addTaxonomyVocabularyTaxonomyCategory(
+				taxonomyCategory = _addOrUpdateTaxonomyVocabularyTaxonomyCategory(
 					serviceContext, taxonomyCategory, taxonomyVocabularyId);
 			}
 			else {
@@ -3488,7 +3488,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
-	private TaxonomyCategory _addTaxonomyVocabularyTaxonomyCategory(
+	private TaxonomyCategory _addOrUpdateTaxonomyVocabularyTaxonomyCategory(
 			ServiceContext serviceContext, TaxonomyCategory taxonomyCategory,
 			long vocabularyId)
 		throws Exception {

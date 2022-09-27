@@ -137,8 +137,8 @@ public class MBMessageModelIndexerWriterContributor
 			return;
 		}
 
-		Indexer<MBMessage> indexer2 =
-			IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
+		Indexer<MBMessage> indexer2 = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBMessage.class);
 
 		try {
 			MBThread mbThread = _mbThreadLocalService.fetchThread(

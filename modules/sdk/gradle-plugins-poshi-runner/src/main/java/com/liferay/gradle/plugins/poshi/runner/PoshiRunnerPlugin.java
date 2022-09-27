@@ -923,6 +923,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put("102", "102.0.5005.61");
 				put("103", "103.0.5060.53");
 				put("104", "104.0.5112.20");
+				put("105", "105.0.5195.52");
+				put("106", "106.0.5249.21");
 			}
 		};
 	private static final Pattern _chromeVersionPattern = Pattern.compile(

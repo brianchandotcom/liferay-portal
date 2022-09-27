@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Iterator;
@@ -92,7 +93,11 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try {
-			if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
+			if (PrefsPropsUtil.getBoolean(
+					company.getCompanyId(),
+					PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
+					PropsValues.USERS_REMINDER_QUERIES_ENABLED)) {
+
 				_checkReminderQueries(actionRequest, actionResponse);
 			}
 			else {
@@ -307,7 +312,10 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _getUser(actionRequest);
 
-		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
+		if (PrefsPropsUtil.getBoolean(
+				user.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
+				PropsValues.USERS_REMINDER_QUERIES_ENABLED)) {
+
 			if (user.isDefaultUser()) {
 				throw new UserReminderQueryException(
 					"Reminder query answer does not match answer");

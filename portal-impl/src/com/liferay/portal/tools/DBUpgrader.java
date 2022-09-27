@@ -246,7 +246,7 @@ public class DBUpgrader {
 				}
 			}
 
-			IndexUpdaterUtil.updatePortalIndexes(true);
+			IndexUpdaterUtil.updatePortalIndexes();
 
 			_updateReleaseBuildInfo();
 

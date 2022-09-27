@@ -69,13 +69,13 @@ export function AppLayout({
 
 			<div
 				className={classNames(
-					'align-items-stretch d-flex site_navigation_menu_editor_AppLayout-content',
+					'site_navigation_menu_editor_AppLayout-content',
 					{
 						'site_navigation_menu_editor_AppLayout-content--with-sidebar': !!SidebarPanel,
 					}
 				)}
 			>
-				<div className="flex-grow-1">{contentChildren}</div>
+				{contentChildren}
 
 				<div
 					className={classNames(

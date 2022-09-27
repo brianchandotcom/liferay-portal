@@ -21,4 +21,8 @@ public class NotificationConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.notification";
 
+	public static final String TYPE_EMAIL = "email";
+
+	public static final String TYPE_USER_NOTIFICATION = "userNotification";
+
 }

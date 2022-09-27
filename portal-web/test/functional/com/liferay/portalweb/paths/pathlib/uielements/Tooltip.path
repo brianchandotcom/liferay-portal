@@ -35,6 +35,11 @@
 	<td>//div[contains(@class, 'popover-body')]//p[contains(@class, 'text-neutral') and contains(text(), '${key_content}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>POPOVER_HEADER</td>
+	<td>//div[contains(@class,'popover-header')][normalize-space(text())='${key_content}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

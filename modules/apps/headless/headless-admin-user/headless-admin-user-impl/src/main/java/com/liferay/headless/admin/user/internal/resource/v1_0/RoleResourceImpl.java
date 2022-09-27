@@ -98,7 +98,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	}
 
 	@Override
-	public Page<Role> getRolesPage(Integer[] types, Pagination pagination)
+	public Page<Role> getRolesPage(
+			Integer[] types, String search, Pagination pagination)
 		throws Exception {
 
 		if (types == null) {
@@ -116,13 +117,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 			).build(),
 			transform(
 				_roleService.search(
-					contextCompany.getCompanyId(), null, types, null,
+					contextCompany.getCompanyId(), search, types, null,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				this::_toRole),
 			pagination,
 			_roleService.searchCount(
-				contextCompany.getCompanyId(), null, types, null));
+				contextCompany.getCompanyId(), search, types, null));
 	}
 
 	@Override

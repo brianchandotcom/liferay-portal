@@ -3452,6 +3452,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

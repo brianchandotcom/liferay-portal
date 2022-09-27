@@ -310,9 +310,11 @@ const ProductPerformance = () => {
 
 		yearlySalesGoal?.data?.items?.forEach(
 			({goalValue, productExternalReferenceCode}: SalesGoal) => {
-				yearlyProductsTotal[productExternalReferenceCode][
-					'goalValue'
-				] += goalValue;
+				if (yearlyProductsTotal[productExternalReferenceCode]) {
+					yearlyProductsTotal[productExternalReferenceCode][
+						'goalValue'
+					] += goalValue;
+				}
 			}
 		);
 

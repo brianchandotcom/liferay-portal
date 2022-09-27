@@ -163,14 +163,9 @@ public class MessageBoardMessageDTOConverter
 	private String _getCompanyMxName(long companyId, long groupId, User user)
 		throws Exception {
 
-		MBModerationGroupConfiguration mbModerationGroupConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				MBModerationGroupConfiguration.class, groupId);
-
 		Company company = _companyLocalService.getCompany(companyId);
 
-		if (mbModerationGroupConfiguration.enableCompanyMx() &&
-			company.hasCompanyMx(user.getEmailAddress())) {
+		if (company.hasCompanyMx(user.getEmailAddress())) {
 
 			return user.getCompanyMx();
 		}

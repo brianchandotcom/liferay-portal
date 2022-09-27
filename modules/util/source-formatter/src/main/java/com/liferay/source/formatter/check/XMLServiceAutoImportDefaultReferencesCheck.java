@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import org.dom4j.Document;
@@ -51,11 +51,9 @@ public class XMLServiceAutoImportDefaultReferencesCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
-		String autoImportDefaultReferences = rootElement.attributeValue(
-			"auto-import-default-references");
-
-		if (Validator.isNull(autoImportDefaultReferences) ||
-			!autoImportDefaultReferences.equals("false")) {
+		if (GetterUtil.getBoolean(
+				rootElement.attributeValue("auto-import-default-references"),
+				true)) {
 
 			addMessage(
 				fileName,

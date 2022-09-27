@@ -67,11 +67,17 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 
 							<%
 							row.setCssClass("card-page-item card-page-item-directory entry " + row.getCssClass());
+
+							HorizontalCard horizontalCard = itemDescriptor.getHorizontalCard(renderRequest, searchContainer.getRowChecker());
+
+							if (horizontalCard == null) {
+								horizontalCard = new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker());
+							}
 							%>
 
 							<liferay-ui:search-container-column-text>
 								<clay:horizontal-card
-									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
+									horizontalCard="<%= horizontalCard %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -79,11 +85,17 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 
 							<%
 							row.setCssClass("card-page-item card-page-item-asset entry " + row.getCssClass());
+
+							VerticalCard verticalCard = itemDescriptor.getVerticalCard(renderRequest, searchContainer.getRowChecker());
+
+							if (verticalCard == null) {
+								verticalCard = new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker());
+							}
 							%>
 
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
-									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
+									verticalCard="<%= verticalCard %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:otherwise>

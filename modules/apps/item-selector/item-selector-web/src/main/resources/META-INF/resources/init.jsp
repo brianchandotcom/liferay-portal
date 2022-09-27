@@ -26,7 +26,9 @@ taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigat
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.item.selector.ItemSelectorViewDescriptor" %><%@
 page import="com.liferay.item.selector.ItemSelectorViewRenderer" %><%@
 page import="com.liferay.item.selector.web.internal.display.context.ItemSelectorViewDescriptorRendererDisplayContext" %><%@

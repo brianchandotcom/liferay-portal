@@ -17,6 +17,7 @@ package com.liferay.notification.web.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.notification.constants.NotificationActionKeys;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.web.internal.constants.NotificationWebKeys;
 import com.liferay.notification.web.internal.display.context.helper.NotificationRequestHelper;
@@ -31,8 +32,10 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -76,17 +79,16 @@ public class ViewNotificationTemplatesDisplayContext {
 			return creationMenu;
 		}
 
-		return creationMenu.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					_getPortletURL(), "mvcRenderCommandName",
-					"/notification_templates/edit_notification_template",
-					"backURL", _notificationRequestHelper.getCurrentURL());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_notificationRequestHelper.getRequest(),
-						"add-notification-template"));
-			});
+		_addDropdownItem(
+			creationMenu, "email", NotificationConstants.TYPE_EMAIL);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162133"))) {
+			_addDropdownItem(
+				creationMenu, "user-notification",
+				NotificationConstants.TYPE_USER_NOTIFICATION);
+		}
+
+		return creationMenu;
 	}
 
 	public Object getEditorConfig(String editorConfigKey) {
@@ -146,6 +148,31 @@ public class ViewNotificationTemplatesDisplayContext {
 
 		return (NotificationTemplate)httpServletRequest.getAttribute(
 			NotificationWebKeys.NOTIFICATION_TEMPLATES);
+	}
+
+	public String getNotificationTemplateType() {
+		HttpServletRequest httpServletRequest =
+			_notificationRequestHelper.getRequest();
+
+		return GetterUtil.getString(
+			httpServletRequest.getAttribute(
+				NotificationWebKeys.NOTIFICATION_TEMPLATE_TYPE));
+	}
+
+	private void _addDropdownItem(
+		CreationMenu creationMenu, String labelKey, String templateType) {
+
+		creationMenu.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getPortletURL(), "mvcRenderCommandName",
+					"/notification_templates/edit_notification_template",
+					"backURL", _notificationRequestHelper.getCurrentURL(),
+					"templateType", templateType);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_notificationRequestHelper.getRequest(), labelKey));
+			});
 	}
 
 	private String _getPermissionsURL() throws Exception {

@@ -12,6 +12,7 @@ GradleExportedPackageDependenciesCheck | [Bug Prevention](bug_prevention_checks.
 GradleImportsCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.gradle` files. |
 GradleIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect indentation in gradle build files. |
 GradleJavaVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks values of properties `sourceCompatibility` and `targetCompatibility` in gradle build files. |
+GradleMissingJarManifestTaskCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing `jarManifest` task when using `jarPatched` task in gradle build files. |
 GradlePropertiesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the scope of dependencies in build gradle files. |
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |

@@ -60,6 +60,10 @@ definition {
 			key_dmDocumentTitle = "Check in as major version",
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 
+		// Workaround LPS-160420
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
@@ -69,6 +73,10 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		// Workaround LPS-160420
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document Title");
 

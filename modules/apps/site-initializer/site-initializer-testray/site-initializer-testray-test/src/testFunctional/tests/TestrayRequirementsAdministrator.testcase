@@ -148,9 +148,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
+	@description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link and unlink a Case to a Requirement"
 	@priority = "5"
-	test AdminCanLinkCaseToRequirement {
+	test AdminCanLinkAndUnlinkCaseToRequirement {
 		task ("Given that the user goes to project page") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 		}
@@ -161,7 +161,7 @@ definition {
 			TestrayCases.typeCasesField(
 				caseName = "ATF_Requirements Case",
 				caseTypeId = "Automated Functional Test",
-				componentId = "Smoke",
+				componentId = "Components_1 Project 1",
 				description = "ATF_Requirements Case Description",
 				duration = "10",
 				priority = "5",
@@ -181,6 +181,14 @@ definition {
 				requirementCaseName = "ATF_Requirements Case",
 				requirementComponent = "Components_1 Project 1",
 				requirementPriority = "5");
+		}
+
+		task ("When the user goes to requirements and unlink a case") {
+			TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
+		}
+
+		task ("Then the case should not be displayed on Requirement page") {
+			Testray.assertItemNotPresent(itemName = "ATF_Requirements Case");
 		}
 	}
 

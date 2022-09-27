@@ -18,6 +18,9 @@ definition {
 		else if ("${contentType}" == "Category") {
 			var value = "com.liferay.asset.kernel.model.AssetCategory";
 		}
+		else if ("${contentType}" == "Knowledge Base Article") {
+			var value = "com.liferay.knowledge.base.model.KBArticle";
+		}
 		else {
 			fail("'value' is either invalid or not yet set.");
 		}

@@ -11,7 +11,7 @@ definition {
 			site = "${site}");
 		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = "${contentType}");
 
-		if (("${subType}" == "Basic Document") || ("${contentType}" == "Blogs Entry") || ("${contentType}" == "Category") || ("${contentType}" == "Commerce Product")) {
+		if (("${subType}" == "Basic Document") || ("${contentType}" == "Blogs Entry") || ("${contentType}" == "Category") || ("${contentType}" == "Commerce Product") || ("${contentType}" == "Knowledge Base Article")) {
 			var classTypeId = "0";
 		}
 		else {

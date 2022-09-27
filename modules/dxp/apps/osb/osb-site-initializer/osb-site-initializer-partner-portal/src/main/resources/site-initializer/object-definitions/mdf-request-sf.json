@@ -1,57 +1,21 @@
 {
 	"label": {
-		"en_US": "MDF Request"
+		"en_US": "MDF Request SF"
 	},
-	"name": "MDFRequest",
+	"name": "MDFRequestSF",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "External Reference Code SF"
-			},
-			"name": "externalReferenceCodeSF",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Country"
-			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
-			"name": "country",
-			"required": false,
-			"type": "String"
-		},
-		{
 			"DBType": "Clob",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Campaign Name"
+				"en_US": "Overall Campaign"
 			},
-			"name": "campaignName",
+			"name": "overallCampaign",
 			"required": false,
-			"type": "Clob"
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Overall Campaign Description"
-			},
-			"name": "overallCampaignDescription",
-			"required": false,
-			"type": "Clob"
+			"type": "Clob",
+			"externalReferenceCode": "Campaign_Name__c"
 		},
 		{
 			"DBType": "Clob",
@@ -63,7 +27,8 @@
 			},
 			"name": "emailAddress",
 			"required": false,
-			"type": "Clob"
+			"type": "Clob",
+			"externalReferenceCode": "Email_Address__c"
 		},
 		{
 			"DBType": "Clob",
@@ -75,7 +40,8 @@
 			},
 			"name": "liferayBusinessSalesGoals",
 			"required": false,
-			"type": "Clob"
+			"type": "Clob",
+			"externalReferenceCode": "Liferay_Business_Sales_Goals__c"
 		},
 		{
 			"DBType": "Clob",
@@ -87,7 +53,8 @@
 			},
 			"name": "targetMarkets",
 			"required": false,
-			"type": "Clob"
+			"type": "Clob",
+			"externalReferenceCode": "Target_Market_s__c"
 		},
 		{
 			"DBType": "String",
@@ -100,7 +67,8 @@
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
 			"name": "additionalOption",
 			"required": false,
-			"type": "String"
+			"type": "String",
+			"externalReferenceCode": "Additional_Option__c"
 		},
 		{
 			"DBType": "Clob",
@@ -112,35 +80,12 @@
 			},
 			"name": "targetAudienceRoles",
 			"required": false,
-			"type": "Clob"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Minimum Activity Date"
-			},
-			"name": "minDateActivity",
-			"required": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Maximum Activity Date"
-			},
-			"name": "maxDateActivity",
-			"required": false,
-			"type": "Date"
+			"type": "Clob",
+			"externalReferenceCode": "Target_Audience_Role__c"
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
+			"businessType": "PrecisionDecimal",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -148,11 +93,12 @@
 			},
 			"name": "totalCostOfExpense",
 			"required": false,
-			"type": "String"
+			"type": "BigDecimal",
+			"externalReferenceCode": "Total_Cost__c"
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
+			"businessType": "PrecisionDecimal",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -160,23 +106,26 @@
 			},
 			"name": "totalMDFRequestAmount",
 			"required": false,
-			"type": "String"
+			"type": "BigDecimal",
+			"externalReferenceCode": "Total_MDF_Requested_Amount__c"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Integer",
+			"businessType": "PrecisionDecimal",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "MDF Request Status"
+				"en_US": "Liferay's User ID"
 			},
-			"name": "requestStatus",
+			"name": "liferaysUserID",
 			"required": false,
-			"type": "String"
+			"type": "Integer",
+			"externalReferenceCode": "User_ID__c"
 		}
 	],
 	"pluralLabel": {
-		"en_US": "MDF Requests"
+		"en_US": "MDF Requests SF"
 	},
+	"storageType": "salesforce",
 	"scope": "company"
 }

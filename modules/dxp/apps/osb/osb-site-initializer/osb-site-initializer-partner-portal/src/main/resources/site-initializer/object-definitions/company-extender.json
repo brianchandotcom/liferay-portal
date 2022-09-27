@@ -5,6 +5,18 @@
 	"name": "CompanyExtender",
 	"objectFields": [
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Code SF"
+			},
+			"name": "externalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"indexed": true,

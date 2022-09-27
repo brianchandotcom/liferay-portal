@@ -596,6 +596,48 @@ definition {
 		}
 	}
 
+	@description = "This test asserts accurate results when searching for available accounts in Assign Accounts to account group modal"
+	@priority = "4"
+	test CanSearchInAssignAccountsToAccountGroupModal {
+		task ("Given an account group and few business accounts") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Auto Parts",
+				accountEntryType = "Business");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "S Food Corp",
+				accountEntryType = "Business");
+
+			JSONAccountGroup.addAccountGroup(accountGroupName = "Test Account Group");
+		}
+
+		task ("When a user assigns an account to an account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
+
+			Navigator.gotoNavTab(navTab = "Accounts");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No accounts were found.");
+
+			LexiconEntry.gotoAdd();
+
+			SelectFrame(
+				key_title = "Assign Accounts to Test Account Group",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Then the user can search for available accounts") {
+			Search.searchCP(searchTerm = "S Food Corp");
+
+			LexiconEntry.viewEntryName(rowEntry = "S Food Corp");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Auto Parts");
+		}
+	}
+
 	@description = "This test asserts the user with Assign Account permission can unassign account from account group."
 	@priority = "3"
 	test CanUnassignAccountFromAccountGroupWithPermissions {

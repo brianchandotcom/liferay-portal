@@ -852,7 +852,7 @@ definition {
 
 			AppManager.searchApp(searchName = "Control Panel Documentation");
 
-			WaitForPageLoad();
+			WaitForSPARefresh();
 
 			AppManager.purchaseApp(
 				searchName = "Control Panel Documentation",

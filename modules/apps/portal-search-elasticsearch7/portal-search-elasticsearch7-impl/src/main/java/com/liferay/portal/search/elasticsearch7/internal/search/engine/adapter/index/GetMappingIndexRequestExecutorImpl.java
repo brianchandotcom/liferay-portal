@@ -76,13 +76,6 @@ public class GetMappingIndexRequestExecutorImpl
 		return getMappingsRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private GetMappingsResponse _getGetMappingsResponse(
 		GetMappingsRequest getMappingsRequest,
 		GetMappingIndexRequest getMappingIndexRequest) {
@@ -103,6 +96,7 @@ public class GetMappingIndexRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

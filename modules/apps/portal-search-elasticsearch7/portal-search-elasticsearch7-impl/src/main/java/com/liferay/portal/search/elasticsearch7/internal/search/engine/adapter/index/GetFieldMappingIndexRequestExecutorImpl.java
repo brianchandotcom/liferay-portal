@@ -104,13 +104,6 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		return getFieldMappingsRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private GetFieldMappingsResponse _getGetFieldMappingsResponse(
 		GetFieldMappingsRequest getFieldMappingsRequest,
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
@@ -131,6 +124,7 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

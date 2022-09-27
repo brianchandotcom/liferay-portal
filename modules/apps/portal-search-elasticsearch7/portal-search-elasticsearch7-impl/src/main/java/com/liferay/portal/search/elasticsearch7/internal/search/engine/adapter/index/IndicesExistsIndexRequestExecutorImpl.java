@@ -55,13 +55,6 @@ public class IndicesExistsIndexRequestExecutorImpl
 		return getIndexRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private boolean _indicesExists(
 		GetIndexRequest getIndexRequest,
 		IndicesExistsIndexRequest indicesExistsIndexRequest) {
@@ -82,6 +75,7 @@ public class IndicesExistsIndexRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

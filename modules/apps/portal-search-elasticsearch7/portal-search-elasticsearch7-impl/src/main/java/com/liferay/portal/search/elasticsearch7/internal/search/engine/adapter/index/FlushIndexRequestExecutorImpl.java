@@ -89,21 +89,6 @@ public class FlushIndexRequestExecutorImpl
 		return flushRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexRequestShardFailureTranslator(
-		IndexRequestShardFailureTranslator indexRequestShardFailureTranslator) {
-
-		_indexRequestShardFailureTranslator =
-			indexRequestShardFailureTranslator;
-	}
-
 	private FlushResponse _getFlushResponse(
 		FlushRequest flushRequest, FlushIndexRequest flushIndexRequest) {
 
@@ -122,7 +107,10 @@ public class FlushIndexRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference
 	private IndexRequestShardFailureTranslator
 		_indexRequestShardFailureTranslator;
 

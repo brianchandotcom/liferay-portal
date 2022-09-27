@@ -92,21 +92,10 @@ public class UpdateIndexSettingsIndexRequestExecutorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndicesOptionsTranslator(
-		IndicesOptionsTranslator indicesOptionsTranslator) {
-
-		_indicesOptionsTranslator = indicesOptionsTranslator;
-	}
-
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference
 	private IndicesOptionsTranslator _indicesOptionsTranslator;
 
 }

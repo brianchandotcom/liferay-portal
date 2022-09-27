@@ -16,15 +16,15 @@ package com.liferay.layout.internal.list.retriever;
 
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eudaldo Alonso
@@ -35,29 +35,30 @@ public class ListObjectReferenceTrackerImpl
 
 	@Override
 	public ListObjectReferenceFactory<?> getListObjectReference(String type) {
-		return _listObjectReferenceFactories.get(type);
+		return _listObjectReferenceFactoryServiceTrackerMap.getService(type);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setListObjectReferenceFactories(
-		ListObjectReferenceFactory<?> listObjectReferenceFactory) {
-
-		_listObjectReferenceFactories.put(
-			GenericUtil.getGenericClassName(listObjectReferenceFactory),
-			listObjectReferenceFactory);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_listObjectReferenceFactoryServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<ListObjectReferenceFactory<?>>)
+					(Class<?>)ListObjectReferenceFactory.class,
+				null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(listObjectReferenceFactory, emitter) -> emitter.emit(
+						GenericUtil.getGenericClassName(
+							listObjectReferenceFactory))));
 	}
 
-	protected void unsetListObjectReferenceFactories(
-		ListObjectReferenceFactory<?> listObjectReferenceFactory) {
-
-		_listObjectReferenceFactories.remove(
-			GenericUtil.getGenericClassName(listObjectReferenceFactory));
+	@Deactivate
+	protected void deactivate() {
+		_listObjectReferenceFactoryServiceTrackerMap.close();
 	}
 
-	private final Map<String, ListObjectReferenceFactory<?>>
-		_listObjectReferenceFactories = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, ListObjectReferenceFactory<?>>
+		_listObjectReferenceFactoryServiceTrackerMap;
 
 }

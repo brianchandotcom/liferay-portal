@@ -13,13 +13,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {createPortletURL, openSelectionModal, sub} from 'frontend-js-web';
+import {
+	createPortletURL,
+	fetch,
+	openSelectionModal,
+	sub,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -41,37 +45,37 @@ function AssetVocabulariesCategoriesSelector({
 	const [inputValue, setInputValue] = useState('');
 
 	const [invalidItems, setInvalidItems] = useState([]);
-
-	const {refetch, resource} = useResource({
-		fetchOptions: {
-			'body': new URLSearchParams({
-				cmd: JSON.stringify({
-					'/assetcategory/search': {
-						'-obc': null,
-						'end': 20,
-						groupIds,
-						'name': `%${inputValue.toLowerCase()}%`,
-						'start': 0,
-						'vocabularyIds': sourceItemsVocabularyIds,
-					},
-				}),
-				p_auth: Liferay.authToken,
-			}),
-			'credentials': 'include',
-			'method': 'POST',
-			'x-csrf-token': Liferay.authToken,
-		},
-		link: `${window.location.origin}${themeDisplay.getPathContext()}
-				/api/jsonws/invoke`,
-	});
+	const [resource, setResource] = useState([]);
 
 	const previousInputValue = usePrevious(inputValue);
 
 	useEffect(() => {
 		if (inputValue && inputValue !== previousInputValue) {
-			refetch();
+			fetch(
+				`${
+					window.location.origin
+				}${themeDisplay.getPathContext()}/api/jsonws/invoke`,
+				{
+					body: new URLSearchParams({
+						cmd: JSON.stringify({
+							'/assetcategory/search': {
+								'-obc': null,
+								'end': 20,
+								groupIds,
+								'name': `%${inputValue.toLowerCase()}%`,
+								'start': 0,
+								'vocabularyIds': sourceItemsVocabularyIds,
+							},
+						}),
+						p_auth: Liferay.authToken,
+					}),
+					method: 'POST',
+				}
+			)
+				.then((response) => response.json())
+				.then((response) => setResource(response));
 		}
-	}, [inputValue, previousInputValue, refetch]);
+	}, [groupIds, inputValue, previousInputValue, sourceItemsVocabularyIds]);
 
 	const getUnique = (array, property) => {
 		return array

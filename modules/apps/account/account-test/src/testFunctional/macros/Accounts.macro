@@ -1102,14 +1102,6 @@ definition {
 			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 	}
 
-	macro removeDefaultPaymentCommerceTerms {
-		Click(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_REMOVE_DEFAULT_PAYMENT");
-
-		AssertElementPresent(
-			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS",
-			value1 = "Use Priority Settings");
-	}
-
 	macro removeDefaultShippingAddress {
 		Click(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_REMOVE_DEFAULT_SHIPPING");
 
@@ -1565,25 +1557,6 @@ definition {
 			AssertElementPresent(
 				key_termType = "${termType}",
 				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
-		}
-	}
-
-	macro viewDefaultPaymentCommerceTermsEntry {
-		if (isSet(termEntry)) {
-			AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PAYMENT_TEXT");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY",
-				value1 = "${termEntry}");
-
-			if ("${inactive}" == "true") {
-				AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY_INACTIVE_ICON");
-			}
-		}
-		else {
-			AssertElementPresent(
-				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_USE_PRIORITY_SETTINGS",
-				value1 = "Use Priority Settings");
 		}
 	}
 

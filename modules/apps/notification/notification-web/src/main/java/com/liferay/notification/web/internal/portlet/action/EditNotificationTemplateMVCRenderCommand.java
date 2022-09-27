@@ -52,6 +52,9 @@ public class EditNotificationTemplateMVCRenderCommand
 		throws PortletException {
 
 		renderRequest.setAttribute(
+			NotificationWebKeys.NOTIFICATION_TEMPLATE_TYPE,
+			ParamUtil.getString(renderRequest, "templateType"));
+		renderRequest.setAttribute(
 			NotificationWebKeys.NOTIFICATION_TEMPLATES,
 			_notificationTemplateLocalService.fetchNotificationTemplate(
 				ParamUtil.getLong(renderRequest, "notificationTemplateId")));

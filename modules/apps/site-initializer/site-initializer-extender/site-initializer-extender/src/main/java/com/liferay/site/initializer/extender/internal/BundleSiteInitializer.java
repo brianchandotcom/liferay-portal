@@ -447,7 +447,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(
-				() -> _addDDMTemplates(
+				() -> _addOrUpdateDDMTemplates(
 					_ddmStructureLocalService, serviceContext));
 			_invoke(
 				() -> _addOrUpdateJournalArticles(
@@ -765,7 +765,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return ddmStructuresIdsStringUtilReplaceValues;
 	}
 
-	private void _addDDMTemplates(
+	private void _addOrUpdateDDMTemplates(
 			DDMStructureLocalService ddmStructureLocalService,
 			ServiceContext serviceContext)
 		throws Exception {

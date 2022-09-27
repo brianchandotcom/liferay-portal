@@ -860,6 +860,10 @@ definition {
 		}
 
 		task ("Then view the Control Panel Documentation app displays in Purchased portlet") {
+			WaitForElementPresent(
+				key_text = "See Purchased",
+				locator1 = "Button#ANY");
+
 			Click(
 				key_text = "See Purchased",
 				locator1 = "Button#ANY");

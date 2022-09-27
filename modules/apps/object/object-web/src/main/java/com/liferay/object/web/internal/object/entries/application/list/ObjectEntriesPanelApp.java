@@ -21,6 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 
@@ -76,6 +78,15 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 		}
 
 		return super.isShow(permissionChecker, group);
+	}
+
+	@Override
+	protected Group getGroup(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getControlPanelGroup();
 	}
 
 	private final ObjectDefinition _objectDefinition;

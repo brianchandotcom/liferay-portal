@@ -144,13 +144,14 @@ public class JournalArticleContentDashboardItem
 		return ListUtil.toList(
 			journalArticles,
 			journalArticle -> new ContentDashboardItemVersion(
+				null, journalArticle.getStatusDate(),
 				_language.get(
 					themeDisplay.getLocale(),
 					WorkflowConstants.getStatusLabel(
 						journalArticle.getStatus())),
 				WorkflowConstants.getStatusStyle(journalArticle.getStatus()),
-				String.valueOf(journalArticle.getVersion()), null,
-				journalArticle.getUserName(), journalArticle.getStatusDate()));
+				journalArticle.getUserName(),
+				String.valueOf(journalArticle.getVersion())));
 	}
 
 	@Override
@@ -502,14 +503,14 @@ public class JournalArticleContentDashboardItem
 			journalArticle
 		).map(
 			curJournalArticle -> new ContentDashboardItemVersion(
+				null, curJournalArticle.getCreateDate(),
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(
 						curJournalArticle.getStatus())),
 				WorkflowConstants.getStatusStyle(curJournalArticle.getStatus()),
-				String.valueOf(curJournalArticle.getVersion()), null,
 				curJournalArticle.getUserName(),
-				curJournalArticle.getCreateDate())
+				String.valueOf(curJournalArticle.getVersion()))
 		);
 	}
 

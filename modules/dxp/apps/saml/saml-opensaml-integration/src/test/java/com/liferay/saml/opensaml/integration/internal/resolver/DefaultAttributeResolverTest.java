@@ -70,6 +70,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultAttributeResolver, "_beanProperties", _beanProperties);
+
 		ReflectionTestUtil.setFieldValue(
 			_defaultAttributeResolver, "_groupLocalService", groupLocalService);
 

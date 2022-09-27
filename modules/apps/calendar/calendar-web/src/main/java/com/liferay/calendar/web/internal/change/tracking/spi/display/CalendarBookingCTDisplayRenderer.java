@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cheryl Tang
  */
-@Component(immediate = true, service = CTDisplayRenderer.class)
+@Component(service = CTDisplayRenderer.class)
 public class CalendarBookingCTDisplayRenderer
 	extends BaseCTDisplayRenderer<CalendarBooking> {
 

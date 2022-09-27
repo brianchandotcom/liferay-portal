@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = WorkflowHandler.class)
+@Component(service = WorkflowHandler.class)
 public class CalendarBookingWorkflowHandler
 	extends BaseWorkflowHandler<CalendarBooking> {
 

@@ -53,7 +53,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuel de la Peña
  */
 @Component(
-	immediate = true,
 	service = {
 		CalendarServiceUpgradeStepRegistrator.class,
 		UpgradeStepRegistrator.class

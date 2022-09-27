@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabio Pezzutto
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
 	service = ConfigurationAction.class
 )

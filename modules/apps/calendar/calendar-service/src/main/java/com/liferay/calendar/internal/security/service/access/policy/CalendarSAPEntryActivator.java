@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class CalendarSAPEntryActivator {
 
 	@Activate

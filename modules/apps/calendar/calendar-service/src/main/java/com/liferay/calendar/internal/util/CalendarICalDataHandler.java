@@ -115,9 +115,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcellus Tavares
  */
-@org.osgi.service.component.annotations.Component(
-	immediate = true, service = {}
-)
+@org.osgi.service.component.annotations.Component(service = {})
 public class CalendarICalDataHandler implements CalendarDataHandler {
 
 	@Override

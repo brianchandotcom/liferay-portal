@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.calendar.model.CalendarBooking",
 	service = KeywordQueryContributor.class
 )

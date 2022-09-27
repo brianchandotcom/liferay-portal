@@ -20,11 +20,18 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterParser;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectViewFilterColumn;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ListTypeEntryAutocompleteFDSFilter;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectEntryStatusSelectionFDSFilter;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.OneToManyAutocompleteFDSFilter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -61,7 +68,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 
 			if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
 				preloadedData = _objectFieldFilterParser.parse(
-					0L, locale, objectViewFilterColumn);
+					0L, objectDefinitionId, locale, objectViewFilterColumn);
 			}
 
 			return new ObjectEntryStatusSelectionFDSFilter(preloadedData);
@@ -70,23 +77,72 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectDefinitionId, objectViewFilterColumn.getObjectFieldName());
 
-		if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
-			preloadedData = _objectFieldFilterParser.parse(
-				objectField.getListTypeDefinitionId(), locale,
-				objectViewFilterColumn);
+		if (Validator.isNotNull(objectField.getListTypeDefinitionId())) {
+			if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
+				preloadedData = _objectFieldFilterParser.parse(
+					objectField.getListTypeDefinitionId(), objectDefinitionId,
+					locale, objectViewFilterColumn);
+			}
+
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionLocalService.getListTypeDefinition(
+					objectField.getListTypeDefinitionId());
+
+			return new ListTypeEntryAutocompleteFDSFilter(
+				objectField.getName(), listTypeDefinition.getName(locale),
+				objectField.getListTypeDefinitionId(), preloadedData);
 		}
 
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.getListTypeDefinition(
-				objectField.getListTypeDefinitionId());
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
 
-		return new ListTypeEntryAutocompleteFDSFilter(
-			objectField.getName(), listTypeDefinition.getName(locale),
-			objectField.getListTypeDefinitionId(), preloadedData);
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		ObjectField titleObjectField = null;
+
+		if (Validator.isNull(objectDefinition1.getTitleObjectFieldId())) {
+			titleObjectField = _objectFieldLocalService.getObjectField(
+				objectDefinition1.getObjectDefinitionId(), "id");
+		}
+		else {
+			titleObjectField = _objectFieldLocalService.getObjectField(
+				objectDefinition1.getTitleObjectFieldId());
+		}
+
+		if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
+			preloadedData = _objectFieldFilterParser.parse(
+				0L, objectDefinitionId, locale, objectViewFilterColumn);
+		}
+
+		String restContextPath = null;
+
+		if (objectDefinition1.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataTracker.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition1.getName());
+
+			restContextPath =
+				"/o/" + systemObjectDefinitionMetadata.getRESTContextPath();
+		}
+		else {
+			restContextPath = "/o" + objectDefinition1.getRESTContextPath();
+		}
+
+		return new OneToManyAutocompleteFDSFilter(
+			preloadedData, restContextPath, titleObjectField.getLabel(locale),
+			objectField.getDBColumnName(), titleObjectField.getName());
 	}
 
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES + ")"
@@ -95,5 +151,12 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 }

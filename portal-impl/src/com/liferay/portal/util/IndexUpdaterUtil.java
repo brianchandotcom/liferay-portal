@@ -37,7 +37,7 @@ import org.osgi.framework.BundleContext;
 public class IndexUpdaterUtil {
 
 	public static void updateAllIndexes() {
-		updatePortalIndexes(true);
+		updatePortalIndexes();
 
 		updateModulesIndexes(true);
 	}
@@ -87,7 +87,7 @@ public class IndexUpdaterUtil {
 			});
 	}
 
-	public static void updatePortalIndexes(boolean dropIndexes) {
+	public static void updatePortalIndexes() {
 		DB db = DBManagerUtil.getDB();
 
 		try {
@@ -105,7 +105,7 @@ public class IndexUpdaterUtil {
 					try (Connection connection = DataAccess.getConnection();
 						LoggingTimer loggingTimer = new LoggingTimer(message)) {
 
-						_updatePortalIndexes(db, connection, dropIndexes);
+						_updatePortalIndexes(db, connection);
 					}
 					catch (SQLException sqlException) {
 						if (_log.isWarnEnabled()) {
@@ -136,8 +136,7 @@ public class IndexUpdaterUtil {
 		}
 	}
 
-	private static void _updatePortalIndexes(
-			DB db, Connection connection, boolean dropIndexes)
+	private static void _updatePortalIndexes(DB db, Connection connection)
 		throws Exception {
 
 		Thread currentThread = Thread.currentThread();
@@ -152,7 +151,7 @@ public class IndexUpdaterUtil {
 			classLoader,
 			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
 
-		db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
+		db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

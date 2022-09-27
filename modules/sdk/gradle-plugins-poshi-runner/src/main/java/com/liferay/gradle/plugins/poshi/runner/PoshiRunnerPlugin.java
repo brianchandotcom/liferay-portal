@@ -60,6 +60,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.testing.JUnitXmlReport;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
@@ -507,10 +508,12 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			directoryReport.setDestination(project.file("tests"));
 		}
 
-		directoryReport = testTaskReports.getJunitXml();
+		JUnitXmlReport jUnitXmlReport = testTaskReports.getJunitXml();
 
-		if (directoryReport.getDestination() == null) {
-			directoryReport.setDestination(project.file("test-results"));
+		jUnitXmlReport.setOutputPerTestCase(true);
+
+		if (jUnitXmlReport.getDestination() == null) {
+			jUnitXmlReport.setDestination(project.file("test-results"));
 		}
 	}
 

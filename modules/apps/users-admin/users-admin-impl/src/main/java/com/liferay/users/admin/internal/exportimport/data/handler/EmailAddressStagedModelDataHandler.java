@@ -108,13 +108,13 @@ public class EmailAddressStagedModelDataHandler
 
 			importedEmailAddress = _emailAddressLocalService.addEmailAddress(
 				userId, emailAddress.getClassName(), emailAddress.getClassPK(),
-				emailAddress.getAddress(), emailAddress.getTypeId(),
+				emailAddress.getAddress(), emailAddress.getListTypeId(),
 				emailAddress.isPrimary(), serviceContext);
 		}
 		else {
 			importedEmailAddress = _emailAddressLocalService.updateEmailAddress(
 				existingEmailAddress.getEmailAddressId(),
-				emailAddress.getAddress(), emailAddress.getTypeId(),
+				emailAddress.getAddress(), emailAddress.getListTypeId(),
 				emailAddress.isPrimary());
 		}
 

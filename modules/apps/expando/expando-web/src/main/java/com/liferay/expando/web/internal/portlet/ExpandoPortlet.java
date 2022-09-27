@@ -184,12 +184,14 @@ public class ExpandoPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, DuplicateColumnNameException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, ValueDataException.MismatchColumnType.class.getName()) ||
+				renderRequest,
+				ValueDataException.MismatchColumnType.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest,
 				ValueDataException.MustInformDefaultLocale.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, ValueDataException.UnsupportedColumnType.class.getName())) {
+				renderRequest,
+				ValueDataException.UnsupportedColumnType.class.getName())) {
 
 			include("/edit/expando.jsp", renderRequest, renderResponse);
 		}

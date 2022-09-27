@@ -16,6 +16,9 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime';
+
 const spritemap =
 	Liferay.ThemeDisplay.getCDNBaseURL() +
 	'/o/admin-theme/images/clay/icons.svg';

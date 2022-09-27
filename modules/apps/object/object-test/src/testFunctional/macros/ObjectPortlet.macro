@@ -47,9 +47,16 @@ definition {
 	}
 
 	macro assertDeleteEntryButtonNotPresent {
-		AssertElementNotPresent(
-			key_entry = "${entry}",
-			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		if (IsElementPresent(key_entry = "", locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
+			Click(
+				key_entry = "${entry}",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
+		else {
+			AssertElementNotPresent(
+				key_entry = "${entry}",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
 
 		AssertElementNotPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 	}

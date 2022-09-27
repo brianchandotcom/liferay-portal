@@ -326,7 +326,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
 
-		ObjectPortlet.deleteEntry(entry = "Entry A");
+		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
 	}

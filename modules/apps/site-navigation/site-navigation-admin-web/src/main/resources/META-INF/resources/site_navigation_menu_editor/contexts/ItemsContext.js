@@ -28,7 +28,7 @@ export function useSetItems() {
 }
 
 export function ItemsProvider({children, initialItems}) {
-	const [items, setItems] = useState(getFlatItems(initialItems));
+	const [items, setItems] = useState(() => getFlatItems(initialItems));
 
 	return (
 		<SetItemsContext.Provider value={setItems}>

@@ -22,8 +22,6 @@ import java.util.Set;
  */
 public interface SearchEngineHelper {
 
-	public static final String GENERIC_ENGINE_ID = "GENERIC_ENGINE";
-
 	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
 
 	public void flushQueuedSearchEngine();

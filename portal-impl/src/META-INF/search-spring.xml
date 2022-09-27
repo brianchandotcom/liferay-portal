@@ -37,8 +37,4 @@
 	<bean class="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" id="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" />
 	<bean class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
 	<bean class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />
-
-	<!-- Generic search engine -->
-
-	<bean class="com.liferay.portal.kernel.search.BaseSearchEngine" id="com.liferay.portal.search.generic.GenericSearchEngineImpl" />
 </beans>

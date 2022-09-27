@@ -323,7 +323,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241 and LPS-128667. The user could configure the Image fragment in page editor."
+	@description = "This is a test for LPS-98241, LPS-128667 and LPS-158084. The user could configure the Image fragment in page editor."
 	@priority = "5"
 	@uitest
 	test ConfigureBasicComponentImage {
@@ -337,6 +337,18 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Image");
+		}
+
+		task ("Select editable field of Image fragment") {
+			PageEditor.clickEditableField(
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("View the help information") {
+			Tooltip.viewHelpInformation(
+				header = "Image Description",
+				info = "This value is used as ALT text.");
 		}
 
 		task ("Configure the Image") {

@@ -37,7 +37,9 @@ definition {
 
 		if (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#ITEM_NAME")) {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
 
+		if (IsElementPresent(key_projectName = "Routines_1 Routine", locator1 = "Testray#ITEM_NAME")) {
 			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
 
 			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();

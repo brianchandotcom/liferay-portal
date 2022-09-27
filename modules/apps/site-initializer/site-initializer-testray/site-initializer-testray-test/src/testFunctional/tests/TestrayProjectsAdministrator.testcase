@@ -59,14 +59,14 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Projects_2 Description",
-				key_name = "Projects_2 Project");
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Delete the project and assert has been deleted") {
-			Testray.deleteProject(nameProject = "Projects_2 Project");
+			Testray.deleteProject(nameProject = "Projects_1 Project");
 
-			Testray.assertItemNotPresent(key_name = "Projects_2 Project");
+			Testray.assertItemNotPresent(key_name = "Projects_1 Project");
 		}
 	}
 
@@ -77,8 +77,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Projects_3 Description",
-				key_name = "Projects_3 Project");
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
 				numberItems = "20",
@@ -86,13 +86,13 @@ definition {
 		}
 
 		task ("Edit Project name and description and change pagination") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_3 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 			Testray.editProjectTestray(
-				description = "Projects_3 Project Description Edited",
-				name = "Projects_3 Project Edited");
+				description = "Projects_1 Project Description Edited",
+				name = "Projects_1 Project Edited");
 
 			Testray.changePagination(
 				numberItems = "20",
@@ -102,9 +102,9 @@ definition {
 		task ("Go to Home Page and Assert it the name and description has been edited") {
 			TestrayLayout.clickResultsOnSidebar();
 
-			Testray.assertItemName(key_name = "Projects_3 Project Edited");
+			Testray.assertItemName(key_name = "Projects_1 Project Edited");
 
-			Testray.assertProjectDescription(value = "Projects_3 Project Description Edited");
+			Testray.assertProjectDescription(value = "Projects_1 Project Description Edited");
 		}
 	}
 
@@ -124,8 +124,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Projects_4 Description",
-				key_name = "Projects_4 Project");
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, go to project and Assert project title") {
@@ -135,9 +135,9 @@ definition {
 
 			TestrayLayout.clickResultsOnSidebar();
 
-			Testray.goToProjectPage(projectName = "Projects_4 Project");
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-			TestrayDropdown.assertTitleBreadcrumbs(key_projectName = "Projects_4 Project");
+			TestrayDropdown.assertTitleBreadcrumbs(key_projectName = "Projects_1 Project");
 		}
 	}
 
@@ -148,22 +148,22 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Projects_4 Description",
-				key_name = "Projects_4 Project");
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
 
-			Testray.goToProjectPage(projectName = "Projects_4 Project");
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-			TestrayRoutines.createRoutine(key_name = "Projects_4 Routine");
+			TestrayRoutines.createRoutine(key_name = "Projects_1 Routine");
 		}
 
 		task ("Delete the project and assert it was deleted") {
-			Testray.deleteProject(nameProject = "Projects_4 Project");
+			Testray.deleteProject(nameProject = "Projects_1 Project");
 
-			Testray.assertItemNotPresent(key_name = "Projects_4 Project");
+			Testray.assertItemNotPresent(key_name = "Projects_1 Project");
 		}
 	}
 

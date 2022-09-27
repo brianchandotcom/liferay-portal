@@ -1,9 +1,9 @@
-@component-name = "portal-user-management-and-portal-configuration"
+@component-name = "portal-wcm"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Site Teams";
+	property testray.main.component.name = "Site Administration";
 
 	setUp {
 		TestCase.setUpPortalInstance();

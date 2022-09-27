@@ -30,6 +30,124 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9730. As a sales manager, I want to set default account payment terms per channel"
+	@priority = "3"
+	test CanHaveAllChannelsLinkedToAPaymentTerm {
+		task ("Given the admin created two payment terms entries with different priorities") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "2",
+				termsType = "Payment");
+		}
+
+		task ("When the admin goes into the "Order Defaults" for the account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+		}
+
+		task ("And goes into the section "Payment Terms And Conditions"") {
+			Click(
+				key_termType = "Payment",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+		}
+
+		task ("Then the admin will see only the option "All Channels" and channel "Minium Portal"") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var channelEntries : list "All Channels,Minium Portal") {
+				AssertTextPresent(
+					key_fieldLabel = "Channel",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+					row = "1",
+					value1 = "${channelEntries}");
+			}
+
+			AssertTextNotEquals(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "All Other Channels");
+		}
+
+		task ("But if the admin link channel "Minium Portal" to a payment") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultCommerceTermsEntry(
+				channelEntry = "Minium Portal",
+				termEntry = "Payment Term 1",
+				termType = "Payment");
+		}
+
+		task ("Then the option "All Channels" will become "All Other Channels"") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Click(
+				key_termType = "Payment",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "All Other Channels");
+
+			AssertTextNotEquals(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "All Channels");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.removeDefaultCommerceTerms(
+				entryDetails = "Payment Term 1",
+				termType = "Payment");
+		}
+
+		task ("But if the admin link "All Channels" to a payment") {
+			Accounts.setDefaultCommerceTermsEntry(
+				termEntry = "Payment Term 1",
+				termType = "Payment");
+		}
+
+		task ("And check that into the entries table we have "All Channels" linked to the payment") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Channels,Payment Term 1,Yes,No",
+				termType = "Payment");
+		}
+
+		task ("And admin will link channel "Minium Portal" to a payment") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultCommerceTermsEntry(
+				channelEntry = "Minium Portal",
+				termEntry = "Payment Term 2",
+				termType = "Payment");
+		}
+
+		task ("Then into the entries tables, "All Channel" will become "All Other Channels"") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				termEntry = "All Other Channels,Payment Term 1,Yes,No",
+				termType = "Payment");
+		}
+	}
+
 	@description = "COMMERCE-9734. As admin, I want to set a default billing and default shipping address for one account and channel, then buyer cannot use the default addresses in a different channel to make an order"
 	@priority = "3"
 	test CanNotUseDefaultAddressesInADifferentChannel {

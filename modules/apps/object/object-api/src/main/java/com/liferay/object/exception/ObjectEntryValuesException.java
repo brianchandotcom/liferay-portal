@@ -192,6 +192,35 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class InvalidObjectStateTransition
+		extends ObjectEntryValuesException {
+
+		public InvalidObjectStateTransition(
+			String sourceObjectState, String targetObjectState) {
+
+			super(
+				String.format(
+					"Object state '%s' cannot be transited to object state " +
+						"'%s'",
+					sourceObjectState, targetObjectState));
+
+			_sourceObjectState = sourceObjectState;
+			_targetObjectState = targetObjectState;
+		}
+
+		public String getSourceObjectState() {
+			return _sourceObjectState;
+		}
+
+		public String getTargetObjectState() {
+			return _targetObjectState;
+		}
+
+		private final String _sourceObjectState;
+		private final String _targetObjectState;
+
+	}
+
 	public static class ListTypeEntry extends ObjectEntryValuesException {
 
 		public ListTypeEntry(String objectFieldName) {

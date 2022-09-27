@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true, service = SLATaskResultWorkflowMetricsIndexer.class
-)
+@Component(service = SLATaskResultWorkflowMetricsIndexer.class)
 public class SLATaskResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {
 

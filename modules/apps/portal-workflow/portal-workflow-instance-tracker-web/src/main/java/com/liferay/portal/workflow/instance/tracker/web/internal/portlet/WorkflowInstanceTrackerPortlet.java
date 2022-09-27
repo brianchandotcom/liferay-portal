@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Feliphe Marinho
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"javax.portlet.display-name=Workflow Instance Tracker",

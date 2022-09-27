@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, service = NotificationRecipientBuilderRegistry.class
-)
+@Component(service = NotificationRecipientBuilderRegistry.class)
 public class DefaultNotificationRecipientBuilderRegistry
 	implements NotificationRecipientBuilderRegistry {
 

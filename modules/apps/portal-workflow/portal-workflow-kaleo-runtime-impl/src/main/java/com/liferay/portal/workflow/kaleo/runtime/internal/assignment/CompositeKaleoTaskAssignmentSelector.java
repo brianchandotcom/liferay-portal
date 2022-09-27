@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, service = CompositeKaleoTaskAssignmentSelector.class
-)
+@Component(service = CompositeKaleoTaskAssignmentSelector.class)
 public class CompositeKaleoTaskAssignmentSelector
 	implements KaleoTaskAssignmentSelector {
 

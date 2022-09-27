@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = WorkflowMetricsIndexCreator.class)
+@Component(service = WorkflowMetricsIndexCreator.class)
 public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {

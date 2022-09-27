@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class KaleoDesignerPermission {
 
 	public static final String RESOURCE_NAME =

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = GraphWalkerPortalExecutor.class)
+@Component(service = GraphWalkerPortalExecutor.class)
 public class GraphWalkerPortalExecutor {
 
 	public void execute(PathElement pathElement, boolean waitForCompletion) {

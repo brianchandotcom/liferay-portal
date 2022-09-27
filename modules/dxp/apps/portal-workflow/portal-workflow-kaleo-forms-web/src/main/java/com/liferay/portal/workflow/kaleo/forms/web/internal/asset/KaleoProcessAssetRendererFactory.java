@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
 	service = AssetRendererFactory.class
 )

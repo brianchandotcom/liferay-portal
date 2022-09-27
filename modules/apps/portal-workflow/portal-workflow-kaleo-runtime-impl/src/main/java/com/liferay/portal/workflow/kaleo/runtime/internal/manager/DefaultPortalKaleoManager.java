@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = PortalKaleoManager.class)
+@Component(service = PortalKaleoManager.class)
 public class DefaultPortalKaleoManager
 	extends BaseKaleoBean implements PortalKaleoManager {
 

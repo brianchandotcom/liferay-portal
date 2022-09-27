@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
 		"mvc.command.name=/kaleo_forms_admin/deactivate_workflow_definition"

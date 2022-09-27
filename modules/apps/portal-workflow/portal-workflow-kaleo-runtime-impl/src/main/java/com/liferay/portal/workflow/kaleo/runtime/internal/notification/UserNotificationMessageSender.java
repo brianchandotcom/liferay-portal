@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = "notification.type=user-notification",
+	property = "notification.type=user-notification",
 	service = NotificationSender.class
 )
 public class UserNotificationMessageSender

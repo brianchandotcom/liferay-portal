@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NotificationSenderFactory.class)
+@Component(service = NotificationSenderFactory.class)
 public class NotificationSenderFactory {
 
 	public NotificationSender getNotificationSender(String notificationType)

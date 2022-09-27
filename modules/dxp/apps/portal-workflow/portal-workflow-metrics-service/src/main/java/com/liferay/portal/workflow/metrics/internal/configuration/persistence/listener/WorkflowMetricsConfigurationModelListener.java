@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration",
 	service = ConfigurationModelListener.class
 )

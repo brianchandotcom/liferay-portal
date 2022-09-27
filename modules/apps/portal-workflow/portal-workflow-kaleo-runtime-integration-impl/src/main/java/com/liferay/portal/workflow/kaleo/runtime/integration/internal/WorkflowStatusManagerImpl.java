@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bruno Farache
  */
-@Component(
-	immediate = true, property = "proxy.bean=false",
-	service = WorkflowStatusManager.class
-)
+@Component(property = "proxy.bean=false", service = WorkflowStatusManager.class)
 public class WorkflowStatusManagerImpl implements WorkflowStatusManager {
 
 	@Override

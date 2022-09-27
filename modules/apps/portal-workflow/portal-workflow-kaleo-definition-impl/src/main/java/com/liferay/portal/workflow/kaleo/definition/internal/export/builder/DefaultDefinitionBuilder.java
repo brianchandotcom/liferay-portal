@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DefinitionBuilder.class)
+@Component(service = DefinitionBuilder.class)
 public class DefaultDefinitionBuilder implements DefinitionBuilder {
 
 	@Override

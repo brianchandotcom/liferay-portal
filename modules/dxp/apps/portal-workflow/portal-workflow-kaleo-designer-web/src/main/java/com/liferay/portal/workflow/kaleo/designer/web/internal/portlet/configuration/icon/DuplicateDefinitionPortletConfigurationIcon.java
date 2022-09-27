@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"path=/designer/edit_kaleo_definition_version.jsp"

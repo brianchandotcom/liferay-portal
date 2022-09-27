@@ -22,10 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=JOIN_XOR",
-	service = NodeBuilder.class
-)
+@Component(property = "node.type=JOIN_XOR", service = NodeBuilder.class)
 public class JoinXorNodeBuilder
 	extends BaseNodeBuilder<JoinXor> implements NodeBuilder {
 

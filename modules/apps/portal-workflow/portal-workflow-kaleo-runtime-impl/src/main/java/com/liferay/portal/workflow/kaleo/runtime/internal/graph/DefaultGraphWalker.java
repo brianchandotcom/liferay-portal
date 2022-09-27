@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = AopService.class)
+@Component(service = AopService.class)
 @CTAware
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,

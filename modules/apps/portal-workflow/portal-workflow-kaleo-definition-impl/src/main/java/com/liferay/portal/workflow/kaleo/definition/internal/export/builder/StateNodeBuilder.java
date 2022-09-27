@@ -22,9 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=STATE", service = NodeBuilder.class
-)
+@Component(property = "node.type=STATE", service = NodeBuilder.class)
 public class StateNodeBuilder
 	extends BaseNodeBuilder<State> implements NodeBuilder {
 

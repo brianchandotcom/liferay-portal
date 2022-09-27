@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=beanshell",
 		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=groovy",

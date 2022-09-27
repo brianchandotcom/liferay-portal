@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = WorkflowMetricsPortalExecutor.class)
+@Component(service = WorkflowMetricsPortalExecutor.class)
 public class WorkflowMetricsPortalExecutor {
 
 	public <T extends Throwable> NoticeableFuture<?> execute(

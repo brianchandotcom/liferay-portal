@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class AddDefaultKaleoProcessStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

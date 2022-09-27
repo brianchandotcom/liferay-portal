@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NotificationRecipientEvaluator.class)
+@Component(service = NotificationRecipientEvaluator.class)
 public class MultiLanguageNotificationRecipientEvaluator
 	implements NotificationRecipientEvaluator {
 

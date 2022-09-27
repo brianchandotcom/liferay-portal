@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
 		"path=/admin/view_kaleo_process.jsp"

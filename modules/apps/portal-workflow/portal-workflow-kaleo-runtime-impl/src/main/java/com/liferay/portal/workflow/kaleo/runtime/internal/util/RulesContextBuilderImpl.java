@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = RulesContextBuilder.class)
+@Component(service = RulesContextBuilder.class)
 public class RulesContextBuilderImpl implements RulesContextBuilder {
 
 	@Override

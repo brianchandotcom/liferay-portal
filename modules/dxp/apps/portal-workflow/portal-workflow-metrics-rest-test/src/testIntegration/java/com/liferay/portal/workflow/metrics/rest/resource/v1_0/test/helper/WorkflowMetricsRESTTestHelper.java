@@ -105,7 +105,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = WorkflowMetricsRESTTestHelper.class)
+@Component(service = WorkflowMetricsRESTTestHelper.class)
 public class WorkflowMetricsRESTTestHelper {
 
 	public Instance addInstance(

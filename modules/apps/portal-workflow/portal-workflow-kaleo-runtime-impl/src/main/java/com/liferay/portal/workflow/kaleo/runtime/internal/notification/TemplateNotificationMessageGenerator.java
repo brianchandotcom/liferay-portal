@@ -52,7 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = {
 		"template.language=freemarker", "template.language=soy",
 		"template.language=velocity"

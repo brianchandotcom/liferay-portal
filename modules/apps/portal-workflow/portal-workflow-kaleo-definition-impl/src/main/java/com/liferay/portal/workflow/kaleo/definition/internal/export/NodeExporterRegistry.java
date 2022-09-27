@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NodeExporterRegistry.class)
+@Component(service = NodeExporterRegistry.class)
 public class NodeExporterRegistry {
 
 	public NodeExporter getNodeExporter(NodeType nodeType)

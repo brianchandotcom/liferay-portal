@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, property = "node.type=STATE",
-	service = NodeValidator.class
-)
+@Component(property = "node.type=STATE", service = NodeValidator.class)
 public class StateNodeValidator extends BaseNodeValidator<State> {
 
 	@Override

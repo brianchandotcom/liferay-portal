@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = WorkflowMetricsSLAProcessor.class)
+@Component(service = WorkflowMetricsSLAProcessor.class)
 public class WorkflowMetricsSLAProcessor {
 
 	public WorkflowMetricsSLAInstanceResult process(

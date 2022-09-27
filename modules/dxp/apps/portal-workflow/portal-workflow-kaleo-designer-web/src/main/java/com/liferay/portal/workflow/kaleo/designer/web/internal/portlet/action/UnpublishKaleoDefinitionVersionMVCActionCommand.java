@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,

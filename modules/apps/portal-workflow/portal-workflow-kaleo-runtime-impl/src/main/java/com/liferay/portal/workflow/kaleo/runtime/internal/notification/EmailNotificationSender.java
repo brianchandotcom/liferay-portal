@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = {
 		"fromAddress=no-reply@liferay.com",
 		"fromName=Liferay Portal Workflow Notifications",

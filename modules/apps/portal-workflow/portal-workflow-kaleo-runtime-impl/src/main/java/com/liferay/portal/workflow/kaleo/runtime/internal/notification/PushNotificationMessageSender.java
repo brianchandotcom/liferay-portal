@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true,
 	property = {
 		"fromName=Liferay Portal Workflow Notifications",
 		"notification.type=push-notification"

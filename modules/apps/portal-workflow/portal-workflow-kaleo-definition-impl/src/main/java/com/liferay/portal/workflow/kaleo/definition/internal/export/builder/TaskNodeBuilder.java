@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=TASK", service = NodeBuilder.class
-)
+@Component(property = "node.type=TASK", service = NodeBuilder.class)
 public class TaskNodeBuilder
 	extends BaseNodeBuilder<Task> implements NodeBuilder {
 

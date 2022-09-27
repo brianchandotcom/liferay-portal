@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=CONDITION",
-	service = NodeExporter.class
-)
+@Component(property = "node.type=CONDITION", service = NodeExporter.class)
 public class ConditionNodeExporter
 	extends BaseNodeExporter implements NodeExporter {
 

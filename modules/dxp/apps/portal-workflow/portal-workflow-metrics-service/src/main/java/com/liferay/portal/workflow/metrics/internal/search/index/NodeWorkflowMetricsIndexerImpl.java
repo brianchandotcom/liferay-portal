@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
+@Component(service = NodeWorkflowMetricsIndexer.class)
 public class NodeWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements NodeWorkflowMetricsIndexer {
 

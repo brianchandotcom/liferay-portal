@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 	service = {
 		DDMStructurePermissionSupport.class, DDMTemplatePermissionSupport.class

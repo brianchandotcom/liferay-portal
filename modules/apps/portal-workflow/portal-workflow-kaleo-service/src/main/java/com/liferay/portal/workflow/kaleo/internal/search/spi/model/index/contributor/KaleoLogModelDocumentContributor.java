@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoLog",
 	service = ModelDocumentContributor.class
 )

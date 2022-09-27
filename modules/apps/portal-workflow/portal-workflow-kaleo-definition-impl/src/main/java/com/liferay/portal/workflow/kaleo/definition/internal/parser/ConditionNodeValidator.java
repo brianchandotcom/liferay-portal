@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, property = "node.type=CONDITION",
-	service = NodeValidator.class
-)
+@Component(property = "node.type=CONDITION", service = NodeValidator.class)
 public class ConditionNodeValidator extends BaseNodeValidator<Condition> {
 
 	@Override

@@ -55,9 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	immediate = true, service = WorkflowMetricsSLADefinitionTransformer.class
-)
+@Component(service = WorkflowMetricsSLADefinitionTransformer.class)
 public class WorkflowMetricsSLADefinitionTransformer {
 
 	public void transform(

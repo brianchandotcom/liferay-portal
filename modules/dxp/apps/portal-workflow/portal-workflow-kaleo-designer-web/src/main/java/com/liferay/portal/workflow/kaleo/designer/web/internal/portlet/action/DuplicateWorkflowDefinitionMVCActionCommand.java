@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jeyvison Nascimento
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"mvc.command.name=/kaleo_designer/duplicate_workflow_definition"

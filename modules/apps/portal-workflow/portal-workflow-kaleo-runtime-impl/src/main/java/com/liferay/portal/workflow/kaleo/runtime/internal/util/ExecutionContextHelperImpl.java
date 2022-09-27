@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = ExecutionContextHelper.class)
+@Component(service = ExecutionContextHelper.class)
 public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 
 	@Override

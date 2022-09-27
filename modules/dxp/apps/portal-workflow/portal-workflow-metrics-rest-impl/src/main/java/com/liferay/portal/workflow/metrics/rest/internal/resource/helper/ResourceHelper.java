@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = ResourceHelper.class)
+@Component(service = ResourceHelper.class)
 public class ResourceHelper {
 
 	public ScriptedMetricAggregation createBreachedScriptedMetricAggregation() {

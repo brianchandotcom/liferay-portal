@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true, property = "workflow.metrics.index.entity.name=node",
+	property = "workflow.metrics.index.entity.name=node",
 	service = WorkflowMetricsReindexer.class
 )
 public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {

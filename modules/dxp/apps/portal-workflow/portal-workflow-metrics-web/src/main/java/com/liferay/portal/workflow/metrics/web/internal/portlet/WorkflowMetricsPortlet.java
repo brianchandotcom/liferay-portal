@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-metrics-web",
 		"com.liferay.portlet.display-category=category.hidden",

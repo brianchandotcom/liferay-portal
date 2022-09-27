@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = TransitionWorkflowMetricsIndexer.class)
+@Component(service = TransitionWorkflowMetricsIndexer.class)
 public class TransitionWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
 	implements TransitionWorkflowMetricsIndexer {

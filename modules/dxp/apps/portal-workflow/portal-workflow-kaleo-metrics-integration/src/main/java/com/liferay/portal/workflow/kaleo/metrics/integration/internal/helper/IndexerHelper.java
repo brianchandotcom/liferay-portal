@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = IndexerHelper.class)
+@Component(service = IndexerHelper.class)
 public class IndexerHelper {
 
 	public AddNodeRequest createAddNodeRequest(

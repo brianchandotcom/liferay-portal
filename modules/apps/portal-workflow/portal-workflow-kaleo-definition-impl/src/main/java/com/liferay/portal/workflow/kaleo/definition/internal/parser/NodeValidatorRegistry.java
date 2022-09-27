@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NodeValidatorRegistry.class)
+@Component(service = NodeValidatorRegistry.class)
 public class NodeValidatorRegistry {
 
 	public NodeValidator<Node> getNodeValidator(NodeType nodeType)

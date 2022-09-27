@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NodeExecutorFactory.class)
+@Component(service = NodeExecutorFactory.class)
 public class NodeExecutorFactory {
 
 	public NodeExecutor getNodeExecutor(String nodeTypeString)

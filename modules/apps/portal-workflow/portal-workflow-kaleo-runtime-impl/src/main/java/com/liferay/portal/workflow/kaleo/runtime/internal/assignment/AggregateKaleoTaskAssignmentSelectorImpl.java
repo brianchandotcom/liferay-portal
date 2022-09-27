@@ -33,9 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	immediate = true, service = AggregateKaleoTaskAssignmentSelector.class
-)
+@Component(service = AggregateKaleoTaskAssignmentSelector.class)
 public class AggregateKaleoTaskAssignmentSelectorImpl
 	implements AggregateKaleoTaskAssignmentSelector {
 

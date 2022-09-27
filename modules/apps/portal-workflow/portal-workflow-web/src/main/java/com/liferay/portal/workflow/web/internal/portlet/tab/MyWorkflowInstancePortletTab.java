@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Adam Brandizzi
  */
 @Component(
-	immediate = true,
 	property = "portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS,
 	service = WorkflowPortletTab.class
 )

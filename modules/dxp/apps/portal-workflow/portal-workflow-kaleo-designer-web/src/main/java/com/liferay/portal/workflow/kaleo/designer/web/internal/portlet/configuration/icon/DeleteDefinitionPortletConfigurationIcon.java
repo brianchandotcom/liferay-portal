@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adam Brandizzi
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"path=/designer/edit_kaleo_definition_version.jsp"

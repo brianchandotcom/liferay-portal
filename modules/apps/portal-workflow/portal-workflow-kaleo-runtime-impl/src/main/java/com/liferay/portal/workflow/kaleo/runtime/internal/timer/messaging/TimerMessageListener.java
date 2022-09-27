@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = TimerMessageListener.class)
+@Component(service = TimerMessageListener.class)
 public class TimerMessageListener extends BaseMessageListener {
 
 	@Override

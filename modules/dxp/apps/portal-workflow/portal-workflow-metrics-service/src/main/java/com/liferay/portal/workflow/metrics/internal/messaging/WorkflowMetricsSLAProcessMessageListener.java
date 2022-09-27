@@ -59,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration",
-	immediate = true,
 	service = {
 		MessageListener.class, WorkflowMetricsSLAProcessMessageListener.class
 	}

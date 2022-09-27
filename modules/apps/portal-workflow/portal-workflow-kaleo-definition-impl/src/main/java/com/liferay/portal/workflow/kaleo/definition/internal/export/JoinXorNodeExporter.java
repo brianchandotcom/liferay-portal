@@ -23,10 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "node.type=JOIN_XOR",
-	service = NodeExporter.class
-)
+@Component(property = "node.type=JOIN_XOR", service = NodeExporter.class)
 public class JoinXorNodeExporter
 	extends BaseNodeExporter implements NodeExporter {
 

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dante Wang
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class KaleoFormsPermission {
 
 	public static void check(

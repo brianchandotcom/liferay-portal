@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lino Alves
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 		"path=/definition/edit_workflow_definition.jsp"

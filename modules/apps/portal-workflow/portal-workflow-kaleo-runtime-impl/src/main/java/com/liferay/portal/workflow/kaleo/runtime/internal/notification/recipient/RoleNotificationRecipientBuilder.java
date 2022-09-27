@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = "recipient.type=ROLE",
+	property = "recipient.type=ROLE",
 	service = {
 		NotificationRecipientBuilder.class,
 		RoleNotificationRecipientBuilder.class

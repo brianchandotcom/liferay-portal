@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"mvc.command.name=/kaleo_designer/publish_kaleo_definition_version"

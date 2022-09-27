@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Feliphe Marinho
  */
-@Component(immediate = true, service = WorkflowInstanceTrackerURLProvider.class)
+@Component(service = WorkflowInstanceTrackerURLProvider.class)
 public class WorkflowInstanceTrackerURLProviderImpl
 	implements WorkflowInstanceTrackerURLProvider {
 

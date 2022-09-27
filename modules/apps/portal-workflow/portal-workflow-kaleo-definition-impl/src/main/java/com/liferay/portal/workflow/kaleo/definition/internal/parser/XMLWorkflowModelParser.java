@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
-@Component(immediate = true, service = WorkflowModelParser.class)
+@Component(service = WorkflowModelParser.class)
 public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	@Override

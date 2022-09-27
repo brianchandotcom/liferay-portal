@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author István András Dézsi
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken",
 	service = ModelIndexerWriterContributor.class
 )

@@ -11,7 +11,7 @@
 
 import LiferayObject from './liferayObject';
 
-export default interface User extends Partial<LiferayObject> {
+export default interface User {
 	emailAddress: string;
 	givenName: string;
 }

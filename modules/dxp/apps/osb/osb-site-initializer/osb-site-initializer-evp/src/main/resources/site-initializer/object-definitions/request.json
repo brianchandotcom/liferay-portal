@@ -13,29 +13,122 @@
 	},
 	"active": true,
 	"label": {
-		"en_US": "EVP Grant Transaction"
+		"en_US": "EVP Request"
 	},
-	"name": "EVPGrantTransaction",
+	"name": "EVPRequest",
 	"objectActions": [
 	],
 	"objectFields": [
 		{
-			"DBType": "Double",
-			"businessType": "Decimal",
+			"DBType": "String",
+			"businessType": "Text",
 			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Amount"
+				"en_US": "Full Name"
 			},
-			"name": "amount",
+			"name": "fullName",
 			"objectFieldSettings": [
 			],
-			"required": true,
+			"required": false,
 			"state": false,
 			"system": false,
-			"type": "Double"
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Email Address"
+			},
+			"name": "emailAddress",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Phone Number"
+			},
+			"name": "phoneNumber",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Manager Email Address"
+			},
+			"name": "managerEmailAddress",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Request type"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Type$]",
+			"name": "requestType",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Request Purposes"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Purposes$]",
+			"name": "requestPurposes",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Request Behalf"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Behalf$]",
+			"name": "requestBehalf",
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Date",
@@ -45,67 +138,27 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Create Date"
+				"en_US": "Service Start Date"
 			},
-			"name": "createDate",
+			"name": "startDate",
 			"objectFieldSettings": [
 			],
 			"required": false,
 			"state": false,
-			"system": true,
+			"system": false,
 			"type": "Date"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Date",
+			"businessType": "Date",
 			"defaultValue": "",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Author"
+				"en_US": "Service End Date"
 			},
-			"name": "creator",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Currency Code"
-			},
-			"name": "currencyCode",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Date"
-			},
-			"name": "date",
+			"name": "endDate",
 			"objectFieldSettings": [
 			],
 			"required": false,
@@ -121,33 +174,28 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "File Entry Id"
+				"en_US": "Total Hours Requested"
 			},
-			"name": "fileEntryId",
+			"name": "totalHoursRequested",
 			"objectFieldSettings": [
 			],
-			"required": true,
+			"required": false,
 			"state": false,
 			"system": false,
 			"type": "Long"
 		},
 		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
+			"DBType": "String",
+			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Grant Type"
+				"en_US": "Grant Request Type"
 			},
-			"name": "grantType",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Integer"
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Grant Request Type$]",
+			"name": "grantRequestType",
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Long",
@@ -157,50 +205,46 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "ID"
+				"en_US": "Grant Amount"
 			},
-			"name": "id",
+			"name": "grantAmount",
 			"objectFieldSettings": [
 			],
 			"required": false,
 			"state": false,
-			"system": true,
+			"system": false,
 			"type": "Long"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"defaultValue": "",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Modified Date"
-			},
-			"name": "modifiedDate",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Date"
 		},
 		{
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Status"
+				"en_US": "Request Description"
 			},
-			"name": "status",
+			"name": "requestDescription",
 			"objectFieldSettings": [
 			],
 			"required": false,
 			"state": false,
-			"system": true,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Request Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Status$]",
+			"name": "requestStatus",
+			"required": false,
+			"state": true,
 			"type": "String"
 		}
 	],
@@ -219,7 +263,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVP Grant Transactions"
+		"en_US": "EVP Requests"
 	},
 	"portlet": false,
 	"scope": "company",

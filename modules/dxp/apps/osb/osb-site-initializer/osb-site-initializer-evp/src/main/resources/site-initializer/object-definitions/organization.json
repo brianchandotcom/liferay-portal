@@ -8,36 +8,38 @@
 		},
 		"permissions": {
 		},
-		"publish": {
-		},
 		"update": {
 		}
 	},
-	"active": false,
+	"active": true,
 	"label": {
-		"en_US": "EVP Request Organization"
+		"en_US": "EVP Organization"
 	},
-	"name": "EVPRequestOrganization",
+	"name": "EVPOrganization",
 	"objectActions": [
 	],
 	"objectFields": [
 		{
-			"DBType": "Date",
-			"businessType": "Date",
+			"DBType": "String",
+			"businessType": "Text",
 			"defaultValue": "",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Create Date"
+				"en_US": "City"
 			},
-			"name": "createDate",
+			"name": "city",
 			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
 			],
 			"required": false,
 			"state": false,
-			"system": true,
-			"type": "Date"
+			"system": false,
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -52,7 +54,29 @@
 			"name": "contactEmail",
 			"objectFieldSettings": [
 			],
-			"required": true,
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Contact Name"
+			},
+			"name": "contactName",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
 			"state": false,
 			"system": false,
 			"type": "String"
@@ -70,10 +94,28 @@
 			"name": "contactPhone",
 			"objectFieldSettings": [
 			],
-			"required": true,
+			"required": false,
 			"state": false,
 			"system": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
 		},
 		{
 			"DBType": "String",
@@ -101,9 +143,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Description"
+				"en_US": "Organization Name"
 			},
-			"name": "description",
+			"name": "organizationName",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
@@ -113,6 +155,24 @@
 			"required": false,
 			"state": false,
 			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
 			"type": "String"
 		},
 		{
@@ -152,42 +212,6 @@
 			"type": "Date"
 		},
 		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Nonprofit Type"
-			},
-			"name": "nonprofitType",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Integer"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Organization Id"
-			},
-			"name": "organizationId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "",
@@ -195,9 +219,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Contact Benefit"
+				"en_US": "Organization Site/Social Media Link"
 			},
-			"name": "contactBenefit",
+			"name": "organizationSiteSocialMediaLink",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
@@ -217,9 +241,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Contact Comments"
+				"en_US": "Small Description"
 			},
-			"name": "contactComments",
+			"name": "smallDescription",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
@@ -239,9 +263,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Contact Name"
+				"en_US": "State"
 			},
-			"name": "contactName",
+			"name": "state",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
@@ -252,24 +276,6 @@
 			"state": false,
 			"system": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Shared"
-			},
-			"name": "shared",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Boolean"
 		},
 		{
 			"DBType": "String",
@@ -290,22 +296,26 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
+			"DBType": "String",
+			"businessType": "Text",
 			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Subsidiary Group Id"
+				"en_US": "Street"
 			},
-			"name": "subsidiaryGroupId",
+			"name": "street",
 			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
 			],
-			"required": true,
+			"required": false,
 			"state": false,
 			"system": false,
-			"type": "Long"
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -330,22 +340,48 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
+			"DBType": "String",
+			"businessType": "Text",
 			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
+			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Verified"
+				"en_US": "Zip"
 			},
-			"name": "verified",
+			"name": "zip",
 			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
 			],
-			"required": true,
+			"required": false,
 			"state": false,
 			"system": false,
-			"type": "Boolean"
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Country"
+			},
+			"name": "country",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
 		}
 	],
 	"objectLayouts": [
@@ -355,14 +391,15 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVP Request Organizations"
+		"en_US": "EVP Organizations"
 	},
 	"portlet": false,
 	"scope": "company",
 	"status": {
-		"code": 2,
-		"label": "draft",
-		"label_i18n": "Draft"
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
 	},
-	"system": false
+	"system": false,
+	"titleObjectFieldName": "organizationName"
 }

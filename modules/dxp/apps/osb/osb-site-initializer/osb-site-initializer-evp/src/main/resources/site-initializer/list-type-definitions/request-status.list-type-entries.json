@@ -1,58 +1,58 @@
 [
-    {
-        "key": "approved",
-        "name": "Approved",
-        "name_i18n": {
-            "en-US": "Approved"
-        },
-        "type": "string"
-    },
-    {
-        "key": "rejected",
-        "name": "Rejected",
-        "name_i18n": {
-            "en-US": "Rejected"
-        },
-        "type": "string"
-	}, 
-    {
-        "key": "closed",
-        "name": "Closed",
-        "name_i18n": {
-            "en-US": "Closed"
-        },
-        "type": "string"
-    },
-    {
-        "key": "pendingFinanceApproval",
-        "name": "Pending Finance Approval",
-        "name_i18n": {
-            "en-US": "Pending Finance Approval"
-        },
-        "type": "string"
-    },
-    {
-        "key": "needMoreInfo",
-        "name": "Need More Info",
-        "name_i18n": {
-            "en-US": "Need More Info"
-        },
-        "type": "string"
-     },
-     {
-        "key": "pendingEVPApproval",
-        "name": "Pending EVP Approval",
-        "name_i18n": {
-            "en-US": "Pending EVP Approval"
-        },
-        "type": "string"
-     },
-     {
-        "key": "pendingCompanyApproval",
-        "name": "Pending Company Approval",
-        "name_i18n": {
-            "en-US": "Pending Company Approval"
-        },
-        "type": "string"
-     }
+	{
+		"key": "approved",
+		"name": "Approved",
+		"name_i18n": {
+			"en-US": "Approved"
+		},
+		"type": "string"
+	},
+	{
+		"key": "rejected",
+		"name": "Rejected",
+		"name_i18n": {
+			"en-US": "Rejected"
+		},
+		"type": "string"
+	},
+	{
+		"key": "closed",
+		"name": "Closed",
+		"name_i18n": {
+			"en-US": "Closed"
+		},
+		"type": "string"
+	},
+	{
+		"key": "pendingFinanceApproval",
+		"name": "Pending Finance Approval",
+		"name_i18n": {
+			"en-US": "Pending Finance Approval"
+		},
+		"type": "string"
+	},
+	{
+		"key": "needMoreInfo",
+		"name": "Need More Info",
+		"name_i18n": {
+			"en-US": "Need More Info"
+		},
+		"type": "string"
+	},
+	{
+		"key": "pendingEVPApproval",
+		"name": "Pending EVP Approval",
+		"name_i18n": {
+			"en-US": "Pending EVP Approval"
+		},
+		"type": "string"
+	},
+	{
+		"key": "pendingCompanyApproval",
+		"name": "Pending Company Approval",
+		"name_i18n": {
+			"en-US": "Pending Company Approval"
+		},
+		"type": "string"
+	}
 ]

@@ -363,16 +363,14 @@ public class ProjectTemplatesWorkspaceTest
 
 	@Test
 	public void testCreateMavenWorksapce() throws Exception {
-		//		Assume.assumeTrue(isBuildProjects());
+		Assume.assumeTrue(isBuildProjects());
 
 		String liferayVersion = "7.2.10.4";
 
 		File destinationDir = temporaryFolder.newFolder("mavenWorkspace");
 
-		String groupId = "com.test";
-
 		File workspaceDir = buildTemplateWithMaven(
-			destinationDir, destinationDir, "workspace", "mavenWS", groupId,
+			destinationDir, destinationDir, "workspace", "mavenWS", "com.test",
 			mavenExecutor, "-DliferayVersion=" + liferayVersion,
 			"-Dpackage=com.test", "-Dproduct=dxp");
 

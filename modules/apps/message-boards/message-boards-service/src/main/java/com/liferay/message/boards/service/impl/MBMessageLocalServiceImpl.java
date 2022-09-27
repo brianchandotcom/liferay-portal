@@ -865,15 +865,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<MBThread> indexer1 = IndexerRegistryUtil.nullSafeGetIndexer(
 				MBThread.class);
 
-			indexer.reindex(thread);
+			indexer1.reindex(thread);
 
-			Indexer<MBMessage> mbMessageIndexer =
+			Indexer<MBMessage> indexer2 =
 				IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
-			mbMessageIndexer.reindex(
+			indexer2.reindex(
 				mbMessageLocalService.getMBMessage(thread.getRootMessageId()));
 		}
 

@@ -116,14 +116,14 @@ public class MBMessageModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(MBMessage mbMessage) {
-		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<DLFileEntry> indexer1 = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
 		try {
 			for (FileEntry attachmentsFileEntry :
 					mbMessage.getAttachmentsFileEntries()) {
 
-				indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
+				indexer1.reindex((DLFileEntry)attachmentsFileEntry.getModel());
 			}
 		}
 		catch (SearchException searchException) {
@@ -137,14 +137,14 @@ public class MBMessageModelIndexerWriterContributor
 			return;
 		}
 
-		Indexer<MBMessage> mbThreadIndexer =
+		Indexer<MBMessage> indexer2 =
 			IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
 		try {
 			MBThread mbThread = _mbThreadLocalService.fetchThread(
 				mbMessage.getThreadId());
 
-			mbThreadIndexer.reindex(
+			indexer2.reindex(
 				_mbMessageLocalService.fetchMBMessage(
 					mbThread.getRootMessageId()));
 		}

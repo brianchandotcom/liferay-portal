@@ -33,7 +33,7 @@ definition {
 	@description = "COMMERCE-9729. As a sales manager, I want to set default account delivery terms per channel"
 	@priority = "3"
 	test CanHaveAllChannelsLinkedToADeliveryTerm {
-		task ("Given the admin created two delivery terms entries with different priorities") {
+		task ("Given the admin creates two delivery terms entries with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = "2",
 				termsType = "Delivery");
@@ -71,7 +71,7 @@ definition {
 				value1 = "All Other Channels");
 		}
 
-		task ("But if the admin link channel "Minium Portal" to a delivery") {
+		task ("When the admin links the channel "Minium Portal" to a delivery") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
@@ -116,13 +116,13 @@ definition {
 				termType = "Delivery");
 		}
 
-		task ("But if the admin link "All Channels" to a delivery") {
+		task ("When the admin links "All Channels" to a delivery") {
 			Accounts.setDefaultCommerceTermsEntry(
 				termEntry = "Delivery Term 1",
 				termType = "Delivery");
 		}
 
-		task ("And check that into the entries table we have "All Channels" linked to the delivery") {
+		task ("And the entries table contains "All Channels" linked to the delivery") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
@@ -130,7 +130,7 @@ definition {
 				termType = "Delivery");
 		}
 
-		task ("And admin will link channel "Minium Portal" to a delivery") {
+		task ("And admin links the channel "Minium Portal" to a delivery") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
@@ -139,7 +139,7 @@ definition {
 				termType = "Delivery");
 		}
 
-		task ("Then into the entries tables, "All Channel" will become "All Other Channels"") {
+		task ("Then entries tables should show "All Other Channels" instead of "All Channels" ") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
@@ -151,7 +151,7 @@ definition {
 	@description = "COMMERCE-9730. As a sales manager, I want to set default account payment terms per channel"
 	@priority = "3"
 	test CanHaveAllChannelsLinkedToAPaymentTerm {
-		task ("Given the admin created two payment terms entries with different priorities") {
+		task ("Given the admin creates two payment terms entries with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = "2",
 				termsType = "Payment");
@@ -189,7 +189,7 @@ definition {
 				value1 = "All Other Channels");
 		}
 
-		task ("But if the admin link channel "Minium Portal" to a payment") {
+		task ("And when the admin links the channel "Minium Portal" to a payment") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
@@ -234,13 +234,13 @@ definition {
 				termType = "Payment");
 		}
 
-		task ("But if the admin link "All Channels" to a payment") {
+		task ("And when the admin links "All Channels" to a payment") {
 			Accounts.setDefaultCommerceTermsEntry(
 				termEntry = "Payment Term 1",
 				termType = "Payment");
 		}
 
-		task ("And check that into the entries table we have "All Channels" linked to the payment") {
+		task ("And the entries table contains "All Channels" linked to the payment") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
@@ -248,7 +248,7 @@ definition {
 				termType = "Payment");
 		}
 
-		task ("And admin will link channel "Minium Portal" to a payment") {
+		task ("And admin links the channel "Minium Portal" to a payment") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
@@ -257,7 +257,7 @@ definition {
 				termType = "Payment");
 		}
 
-		task ("Then into the entries tables, "All Channel" will become "All Other Channels"") {
+		task ("Then entries tables should show "All Other Channels" instead of "All Channels" ") {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
@@ -290,7 +290,7 @@ definition {
 
 				Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
-				task ("And 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+				task ("And each account having 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 					for (var typeList : list "Billing,Shipping,Billing and Shipping") {
 						Accounts.addAddressViaSetDefaultAddress(
 							addressCity = "Diamond Bar",
@@ -306,7 +306,7 @@ definition {
 			}
 		}
 
-		task ("Given a default billing and default shipping address is selected for Minium 1 Portal Channel for Test Account 1") {
+		task ("And a default billing and default shipping address is selected for Minium 1 Portal Channel for Test Account 1") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
@@ -321,7 +321,7 @@ definition {
 			}
 		}
 
-		task ("And buyer user 2 from Test Account 2 and Minium 2 Portal Channel adds an order") {
+		task ("And buyer user 2 from Test Account 2 and Minium 2 Portal Channel adds an order and starts the checkout process") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -332,13 +332,11 @@ definition {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
-		}
 
-		task ("And starts the checkout process") {
 			CommerceCheckout.gotoCheckout();
 		}
 
-		task ("When arrives to the shipping and billing address sections, there is no default address pre-selected") {
+		task ("When the buyer views the shipping and billing address sections, there should be no default address pre-selected") {
 			AssertElementPresent(
 				key_selectFieldLabel = "Choose Shipping Address",
 				locator1 = "Select#ANY",

@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.journal.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
@@ -117,7 +118,9 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
+	public List<ContentDashboardItemVersion> getAllVersions(
+		ThemeDisplay themeDisplay) {
+
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		PermissionChecker permissionChecker =
@@ -140,7 +143,7 @@ public class JournalArticleContentDashboardItem
 
 		return ListUtil.toList(
 			journalArticles,
-			journalArticle -> new Version(
+			journalArticle -> new ContentDashboardItemVersion(
 				_language.get(
 					themeDisplay.getLocale(),
 					WorkflowConstants.getStatusLabel(
@@ -240,7 +243,7 @@ public class JournalArticleContentDashboardItem
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		Version version = _getLastVersion(locale);
+		ContentDashboardItemVersion version = _getLastVersion(locale);
 
 		if ((getUserId() == userId) &&
 			Objects.equals(
@@ -316,7 +319,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getLatestVersions(Locale locale) {
+	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale) {
 		return Stream.of(
 			_toVersionOptional(_journalArticle, locale),
 			_toVersionOptional(_latestApprovedJournalArticle, locale)
@@ -325,7 +328,7 @@ public class JournalArticleContentDashboardItem
 		).map(
 			Optional::get
 		).sorted(
-			Comparator.comparing(Version::getVersion)
+			Comparator.comparing(ContentDashboardItemVersion::getVersion)
 		).collect(
 			Collectors.toList()
 		);
@@ -447,8 +450,8 @@ public class JournalArticleContentDashboardItem
 		);
 	}
 
-	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getLatestVersions(locale);
+	private ContentDashboardItemVersion _getLastVersion(Locale locale) {
+		List<ContentDashboardItemVersion> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
 	}
@@ -485,13 +488,13 @@ public class JournalArticleContentDashboardItem
 		}
 	}
 
-	private Optional<Version> _toVersionOptional(
+	private Optional<ContentDashboardItemVersion> _toVersionOptional(
 		JournalArticle journalArticle, Locale locale) {
 
 		return Optional.ofNullable(
 			journalArticle
 		).map(
-			curJournalArticle -> new Version(
+			curJournalArticle -> new ContentDashboardItemVersion(
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
@@ -157,10 +158,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			contentDashboardItem.getScopeName(locale)
 		).cell(
 			() -> {
-				List<ContentDashboardItem.Version> latestVersions =
+				List<ContentDashboardItemVersion> latestVersions =
 					contentDashboardItem.getLatestVersions(locale);
 
-				ContentDashboardItem.Version version = latestVersions.get(0);
+				ContentDashboardItemVersion version = latestVersions.get(0);
 
 				return version.getLabel();
 			}

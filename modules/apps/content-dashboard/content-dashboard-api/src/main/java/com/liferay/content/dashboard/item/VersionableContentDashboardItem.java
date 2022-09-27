@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface VersionableContentDashboardItem<T>
 	extends ContentDashboardItem<T> {
 
-	public List<ContentDashboardItem.Version> getAllVersions(
+	public List<ContentDashboardItemVersion> getAllVersions(
 		ThemeDisplay themeDisplay);
 
 	public String getViewVersionsURL(HttpServletRequest httpServletRequest);

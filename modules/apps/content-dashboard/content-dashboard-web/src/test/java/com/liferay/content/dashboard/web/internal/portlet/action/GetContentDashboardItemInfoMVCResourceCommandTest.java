@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
@@ -514,10 +515,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	private void _assertContentDashboardItemLatestVersions(
 		ContentDashboardItem<?> contentDashboardItem, JSONObject jsonObject) {
 
-		List<ContentDashboardItem.Version> versions =
+		List<ContentDashboardItemVersion> versions =
 			contentDashboardItem.getLatestVersions(LocaleUtil.US);
 
-		ContentDashboardItem.Version version = versions.get(0);
+		ContentDashboardItemVersion version = versions.get(0);
 
 		JSONObject expectedJSONObject = version.toJSONObject();
 
@@ -807,9 +808,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public List<Version> getLatestVersions(Locale locale) {
+				public List<ContentDashboardItemVersion> getLatestVersions(
+					Locale locale) {
+
 					return Collections.singletonList(
-						new Version(
+						new ContentDashboardItemVersion(
 							"version", "style", "0.1", null, "user", null));
 				}
 

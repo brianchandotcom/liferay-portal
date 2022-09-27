@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.document.library.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
@@ -108,7 +109,9 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
+	public List<ContentDashboardItemVersion> getAllVersions(
+		ThemeDisplay themeDisplay) {
+
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		PermissionChecker permissionChecker =
@@ -128,7 +131,7 @@ public class FileEntryContentDashboardItem
 		).stream();
 
 		return stream.map(
-			fileVersion -> new Version(
+			fileVersion -> new ContentDashboardItemVersion(
 				_language.get(
 					themeDisplay.getLocale(),
 					WorkflowConstants.getStatusLabel(fileVersion.getStatus())),
@@ -225,7 +228,7 @@ public class FileEntryContentDashboardItem
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		Version version = _getLastVersion(locale);
+		ContentDashboardItemVersion version = _getLastVersion(locale);
 
 		if ((getUserId() == userId) &&
 			Objects.equals(
@@ -306,7 +309,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getLatestVersions(Locale locale) {
+	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale) {
 		try {
 			FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
 			FileVersion latestTrustedFileVersion =
@@ -329,7 +332,7 @@ public class FileEntryContentDashboardItem
 			).map(
 				Optional::get
 			).sorted(
-				Comparator.comparing(Version::getVersion)
+				Comparator.comparing(ContentDashboardItemVersion::getVersion)
 			).collect(
 				Collectors.toList()
 			);
@@ -446,8 +449,8 @@ public class FileEntryContentDashboardItem
 		return _getStringValue("fileName");
 	}
 
-	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getLatestVersions(locale);
+	private ContentDashboardItemVersion _getLastVersion(Locale locale) {
+		List<ContentDashboardItemVersion> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
 	}
@@ -544,13 +547,13 @@ public class FileEntryContentDashboardItem
 		}
 	}
 
-	private Optional<Version> _toVersionOptional(
+	private Optional<ContentDashboardItemVersion> _toVersionOptional(
 		FileVersion fileVersion, Locale locale) {
 
 		return Optional.ofNullable(
 			fileVersion
 		).map(
-			curFileVersion -> new Version(
+			curFileVersion -> new ContentDashboardItemVersion(
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(

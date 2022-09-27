@@ -215,6 +215,11 @@
 		<td>//div[contains(text(),'${key_entryName}')]/..//a[@title = 'Delete']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ARROW_ORDER_COLUMN</td>
+		<td>//button[contains(@class,'btn-sorting') and contains(.,'${key_orderColumn}')]//*[contains(@class,'lexicon-icon-order')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

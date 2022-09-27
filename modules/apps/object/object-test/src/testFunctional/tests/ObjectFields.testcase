@@ -1119,6 +1119,100 @@ definition {
 		}
 	}
 
+	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Sort, on the Custom Views tab"
+	@priority = "4"
+	test CanSortWithERCField {
+		task ("Create Custom Object and Custom Field (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162181",
+				objectName = "CustomObject162181",
+				pluralLabelName = "Custom Objects 162181");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject162181");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162181");
+		}
+
+		task ("Go to Custom Object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162181");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark Custom View as default, go to View Builder and add ERC") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,External Reference Code");
+		}
+
+		task ("Set order to ERC on Default Sort") {
+			ObjectCustomViews.goToDefaultSortTab();
+
+			ObjectCustomViews.addDefaultSort(
+				columnOption = "External Reference Code",
+				sortOption = "Ascending");
+
+			ObjectCustomViews.assertColumnPresentOnDefaultSort(
+				columnName = "External Reference Code",
+				sortingLabel = "Ascending");
+
+			Button.clickSave();
+		}
+
+		task ("Create an entry via API") {
+			for (var letters : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customField",
+					objectName = "CustomObject162181",
+					value = "Entry ${letters}");
+			}
+		}
+
+		task ("Go to Custom Object entries and assert that the column ERC is present") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162181");
+
+			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
+		}
+
+		task ("Click on arrows and assert the entries change the position") {
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry A",
+				position = "1");
+
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry B",
+				position = "2");
+
+			Click(
+				key_orderColumn = "External Reference Code",
+				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
+
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry B",
+				position = "1");
+
+			ObjectCustomViews.viewFieldsEntryByPosition(
+				entryName = "Entry A",
+				position = "2");
+		}
+	}
+
 	@description = "LPS-135404 - Verify that it's possible to update created custom fields in a System Object"
 	@priority = "4"
 	test CanUpdateCustomFieldInSystemObject {

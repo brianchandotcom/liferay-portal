@@ -22,7 +22,6 @@ import {
 import {BoxesVisitor, RowsVisitor} from '../../utils/visitor';
 import {
 	BoxType,
-	TName,
 	TObjectField,
 	TObjectLayout,
 	TObjectRelationship,
@@ -49,13 +48,17 @@ type TAction =
 	  }
 	| {
 			payload: {
-				name: TName;
+				name: LocalizedValue<string>;
 				objectRelationshipId: number;
 			};
 			type: TYPES.ADD_OBJECT_LAYOUT_TAB;
 	  }
 	| {
-			payload: {name: TName; tabIndex?: number; type: BoxType};
+			payload: {
+				name: LocalizedValue<string>;
+				tabIndex?: number;
+				type: BoxType;
+			};
 			type: TYPES.ADD_OBJECT_LAYOUT_BOX;
 	  }
 	| {
@@ -72,7 +75,7 @@ type TAction =
 			type: TYPES.ADD_OBJECT_LAYOUT_FIELD;
 	  }
 	| {
-			payload: {name: TName};
+			payload: {name: LocalizedValue<string>};
 			type: TYPES.CHANGE_OBJECT_LAYOUT_NAME;
 	  }
 	| {

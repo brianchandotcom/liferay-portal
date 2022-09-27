@@ -15,7 +15,6 @@
 import React, {createContext, useContext, useReducer} from 'react';
 
 import {
-	TName,
 	TObjectView,
 	TObjectViewColumn,
 	TObjectViewFilterColumn,
@@ -156,7 +155,7 @@ export type TAction =
 	| {
 			payload: {
 				editingObjectFieldName: string;
-				translations: TName;
+				translations: LocalizedValue<string>;
 			};
 			type: TYPES.EDIT_OBJECT_VIEW_COLUMN_LABEL;
 	  }
@@ -374,7 +373,7 @@ const viewReducer = (state: TState, action: TAction) => {
 		case TYPES.ADD_OBJECT_VIEW_FILTER_COLUMN: {
 			const {filterType, objectFieldName, valueList} = action.payload;
 
-			const labels: TName[] = [];
+			const labels: LocalizedValue<string>[] = [];
 			let objectFieldBusinessType;
 			const {objectFields} = state;
 
@@ -464,7 +463,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				}
 			});
 
-			const labels: TName[] = [];
+			const labels: LocalizedValue<string>[] = [];
 			objectFields.forEach((objectField: ObjectField) => {
 				if (objectField.name === objectFieldName) {
 					labels.push(objectField.label);

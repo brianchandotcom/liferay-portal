@@ -12,9 +12,6 @@
  * details.
  */
 
-export declare type TName = {
-	[key: string]: string;
-};
 export declare type TWorkflowStatus = {
 	label: string;
 	value: string;
@@ -23,7 +20,7 @@ export declare type TObjectColumn = {
 	defaultSort?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;
@@ -35,14 +32,14 @@ export declare type TObjectColumn = {
 export declare type TObjectViewColumn = {
 	defaultSort?: boolean;
 	fieldLabel?: string;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;
 };
 export declare type TObjectViewSortColumn = {
 	fieldLabel?: string;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldName: string;
 	priority?: number;
 	sortOrder?: string;
@@ -55,7 +52,7 @@ export declare type TObjectViewFilterColumn = {
 	fieldLabel?: string;
 	filterBy?: string;
 	filterType: string | null;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	value?: string;
@@ -63,7 +60,7 @@ export declare type TObjectViewFilterColumn = {
 };
 export declare type TObjectView = {
 	defaultObjectView: boolean;
-	name: TName;
+	name: LocalizedValue<string>;
 	objectDefinitionId: number;
 	objectViewColumns: TObjectViewColumn[];
 	objectViewFilterColumns: TObjectViewFilterColumn[];

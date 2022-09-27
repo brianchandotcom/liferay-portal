@@ -74,14 +74,11 @@ declare type CurrentFilter = {
 	fieldLabel?: string;
 	filterBy?: string;
 	filterType: string | null;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName?: string;
 	value?: string;
 	valueList?: LabelValueObject[];
-};
-declare type TName = {
-	[key: string]: string;
 };
 export declare function ModalAddFilter({
 	currentFilters,

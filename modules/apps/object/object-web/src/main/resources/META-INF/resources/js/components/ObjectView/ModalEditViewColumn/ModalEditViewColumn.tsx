@@ -54,7 +54,7 @@ export function ModalEditViewColumn({
 
 		Object.entries(translations).forEach(([key, value]) => {
 			if (value === '' && key !== defaultLanguageId) {
-				delete translations[key];
+				delete translations[key as Locale];
 			}
 		});
 

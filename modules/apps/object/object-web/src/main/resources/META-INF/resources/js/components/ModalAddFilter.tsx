@@ -102,15 +102,11 @@ type CurrentFilter = {
 	fieldLabel?: string;
 	filterBy?: string;
 	filterType: string | null;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName?: string;
 	value?: string;
 	valueList?: LabelValueObject[];
-};
-
-type TName = {
-	[key: string]: string;
 };
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();

@@ -15,7 +15,6 @@
 import React from 'react';
 import {
 	BoxType,
-	TName,
 	TObjectField,
 	TObjectLayout,
 	TObjectRelationship,
@@ -40,14 +39,14 @@ declare type TAction =
 	  }
 	| {
 			payload: {
-				name: TName;
+				name: LocalizedValue<string>;
 				objectRelationshipId: number;
 			};
 			type: TYPES.ADD_OBJECT_LAYOUT_TAB;
 	  }
 	| {
 			payload: {
-				name: TName;
+				name: LocalizedValue<string>;
 				tabIndex?: number;
 				type: BoxType;
 			};
@@ -70,7 +69,7 @@ declare type TAction =
 	  }
 	| {
 			payload: {
-				name: TName;
+				name: LocalizedValue<string>;
 			};
 			type: TYPES.CHANGE_OBJECT_LAYOUT_NAME;
 	  }

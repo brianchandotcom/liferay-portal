@@ -190,10 +190,6 @@ export function BuilderScreen({
 	);
 }
 
-type TName = {
-	[key: string]: string;
-};
-
 type TLabelValueObject = {
 	label: string;
 	value: string;
@@ -204,7 +200,7 @@ type TBuilderScreenColumn = {
 	disableEdit?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
-	label: TName;
+	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;

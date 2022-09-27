@@ -14,7 +14,6 @@
 
 import React from 'react';
 import {
-	TName,
 	TObjectView,
 	TObjectViewSortColumn,
 	TState,
@@ -120,7 +119,7 @@ export declare type TAction =
 	| {
 			payload: {
 				editingObjectFieldName: string;
-				translations: TName;
+				translations: LocalizedValue<string>;
 			};
 			type: TYPES.EDIT_OBJECT_VIEW_COLUMN_LABEL;
 	  }

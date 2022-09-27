@@ -13,10 +13,9 @@
  */
 
 export declare type BoxType = 'regular' | 'categorization';
-export declare type TName = LocalizedValue<string>;
 export declare type TObjectLayout = {
 	defaultObjectLayout: boolean;
-	name: TName;
+	name: LocalizedValue<string>;
 	objectDefinitionId: number;
 	objectLayoutTabs: TObjectLayoutTab[];
 };
@@ -28,7 +27,7 @@ export declare type TObjectLayoutTab = {
 };
 export declare type TObjectLayoutBox = {
 	collapsable: boolean;
-	name: TName;
+	name: LocalizedValue<string>;
 	objectLayoutRows: TObjectLayoutRow[];
 	priority: number;
 	type: BoxType;

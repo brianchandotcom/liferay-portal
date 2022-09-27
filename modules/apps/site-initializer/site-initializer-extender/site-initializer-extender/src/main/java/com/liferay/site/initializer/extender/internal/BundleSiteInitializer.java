@@ -438,7 +438,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues =
 				_invoke(
-					() -> _addTaxonomyVocabularies(
+					() -> _addOrUpdateTaxonomyVocabularies(
 						serviceContext, siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(() -> _addPortletSettings(serviceContext));
@@ -3390,7 +3390,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
-	private Map<String, String> _addTaxonomyVocabularies(
+	private Map<String, String> _addOrUpdateTaxonomyVocabularies(
 			long groupId, String parentResourcePath,
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
@@ -3466,7 +3466,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategoryIdsStringUtilReplaceValues;
 	}
 
-	private Map<String, String> _addTaxonomyVocabularies(
+	private Map<String, String> _addOrUpdateTaxonomyVocabularies(
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
@@ -3476,12 +3476,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getCompanyId());
 
 		return HashMapBuilder.putAll(
-			_addTaxonomyVocabularies(
+			_addOrUpdateTaxonomyVocabularies(
 				group.getGroupId(),
 				"/site-initializer/taxonomy-vocabularies/company",
 				serviceContext, siteNavigationMenuItemSettingsBuilder)
 		).putAll(
-			_addTaxonomyVocabularies(
+			_addOrUpdateTaxonomyVocabularies(
 				serviceContext.getScopeGroupId(),
 				"/site-initializer/taxonomy-vocabularies/group", serviceContext,
 				siteNavigationMenuItemSettingsBuilder)

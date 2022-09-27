@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -187,29 +188,34 @@ public class ObjectViewDTOConverter
 							StringPool.COMMA_AND_SPACE);
 					}
 
-					ObjectRelationship objectRelationship =
-						_objectRelationshipLocalService.
-							fetchObjectRelationshipByObjectFieldId2(
-								objectField.getObjectFieldId());
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-152650"))) {
 
-					return StringUtil.merge(
-						ListUtil.toList(
-							(List<Map<String, Object>>)preloadedData.get(
-								"itemsValues"),
-							itemValue -> {
-								try {
-									return _objectEntryLocalServiceImpl.
-										getTitleValue(
-											GetterUtil.getLong(
-												itemValue.get("value")),
-											objectRelationship.
-												getObjectDefinitionId1());
-								}
-								catch (PortalException portalException) {
-									throw new RuntimeException(portalException);
-								}
-							}),
-						StringPool.COMMA_AND_SPACE);
+						ObjectRelationship objectRelationship =
+							_objectRelationshipLocalService.
+								fetchObjectRelationshipByObjectFieldId2(
+									objectField.getObjectFieldId());
+
+						return StringUtil.merge(
+							ListUtil.toList(
+								(List<Map<String, Object>>)preloadedData.get(
+									"itemsValues"),
+								itemValue -> {
+									try {
+										return _objectEntryLocalServiceImpl.
+											getTitleValue(
+												GetterUtil.getLong(
+													itemValue.get("value")),
+												objectRelationship.
+													getObjectDefinitionId1());
+									}
+									catch (PortalException portalException) {
+										throw new RuntimeException(
+											portalException);
+									}
+								}),
+							StringPool.COMMA_AND_SPACE);
+					}
 				}
 
 				Map<String, Object> preloadedData =

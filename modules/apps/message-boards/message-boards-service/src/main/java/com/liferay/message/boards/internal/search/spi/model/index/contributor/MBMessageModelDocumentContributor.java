@@ -42,12 +42,13 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -135,11 +136,12 @@ public class MBMessageModelDocumentContributor
 
 			document.addKeyword("question", mbThread.isQuestion());
 
-			document.addNumber("ratingValue", _ratingsStatsLocalService.fetchStats(
-				MBMessage.class.getName(), mbThread.getRootMessageId()).getTotalScore());
+			RatingsStats ratingsStats = _ratingsStatsLocalService.fetchStats(
+				MBMessage.class.getName(), mbThread.getRootMessageId());
+
+			document.addNumber("ratingValue", ratingsStats.getTotalScore());
 
 			document.addNumber("viewCount", mbThread.getViewCount());
-			
 		}
 
 		document.addKeyword("threadId", mbMessage.getThreadId());

@@ -26,7 +26,7 @@ import java.util.Map;
 public interface ObjectFieldFilterParser {
 
 	public Map<String, Object> parse(
-			long listTypeDefinitionId, Locale locale,
+			long listTypeDefinitionId, long objectDefinitionId, Locale locale,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException;
 

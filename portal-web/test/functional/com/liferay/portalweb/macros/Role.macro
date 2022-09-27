@@ -51,8 +51,6 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 
-		Search.searchCP(searchTerm = "${assigneeName}");
-
 		var key_assigneeName = "${assigneeName}";
 
 		AssertTextEquals(
@@ -145,8 +143,6 @@ definition {
 	}
 
 	macro deleteCP {
-		Search.searchCP(searchTerm = "Name");
-
 		LexiconEntry.delete(rowEntry = "${roleTitle}");
 	}
 
@@ -159,8 +155,6 @@ definition {
 		else {
 			Navigator.gotoNavItem(navItem = "Regular Roles");
 		}
-
-		Search.searchCP(searchTerm = "${roleTitle}");
 
 		if (isSet(roleUser)) {
 			var key_itemName = "${roleUser}";
@@ -415,8 +409,6 @@ definition {
 		Role._goToRoleAssigneeType(
 			assigneeType = "${assigneeType}",
 			roleTitle = "${roleTitle}");
-
-		Search.searchCP(searchTerm = "${assigneeName}");
 
 		LexiconEntry.selectEntry(key_rowEntry = "${assigneeName}");
 

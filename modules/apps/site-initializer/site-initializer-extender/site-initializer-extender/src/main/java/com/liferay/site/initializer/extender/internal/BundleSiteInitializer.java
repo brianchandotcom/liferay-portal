@@ -502,7 +502,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
 				_invoke(
-					() -> _addClientExtensionEntries(
+					() -> _addOrUpdateClientExtensionEntries(
 						documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(
@@ -626,7 +626,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return assetListEntryIdsStringUtilReplaceValues;
 	}
 
-	private Map<String, String> _addClientExtensionEntries(
+	private Map<String, String> _addOrUpdateClientExtensionEntries(
 			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {

@@ -318,7 +318,7 @@ public class PortalLog4jTest {
 				LogFactoryUtil.class, "_logWrappers");
 
 		String[] classList = ReflectionTestUtil.getFieldValue(
-			Log4jLogFactoryImpl.class, "_CLASSES_BY_NAME_UPGRADE");
+			Log4jLogFactoryImpl.class, "_CLASS_NAMES_UPGRADE");
 
 		for (String clazz : classList) {
 			boolean wrapperFound = false;

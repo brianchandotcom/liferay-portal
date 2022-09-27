@@ -51,7 +51,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 
 	private boolean _isUpgradeClass(String name) {
 		try {
-			for (String className : _CLASSES_BY_NAME_UPGRADE) {
+			for (String className : _CLASS_NAMES_UPGRADE) {
 				if (name.equals(className)) {
 					return true;
 				}
@@ -80,13 +80,13 @@ public class Log4jLogFactoryImpl implements LogFactory {
 		return false;
 	}
 
+	private static final String[] _CLASS_NAMES_UPGRADE = {
+		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl"
+	};
+
 	private static final Class<?>[] _CLASSES_BASE_UPGRADE = {
 		BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
 		LoggingTimer.class, UpgradeStep.class
-	};
-
-	private static final String[] _CLASSES_BY_NAME_UPGRADE = {
-		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl"
 	};
 
 	private static final Class<?>[] _CLASSES_STATIC_UPGRADE = {

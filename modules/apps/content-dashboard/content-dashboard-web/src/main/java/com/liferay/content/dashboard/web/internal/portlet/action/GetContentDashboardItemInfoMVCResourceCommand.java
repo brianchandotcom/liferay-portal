@@ -173,7 +173,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"latestVersions",
-					_getLatestVersionsJSONArray(contentDashboardItem, locale)
+					_getLatestContentDashboardItemVersionsJSONArray(
+						contentDashboardItem, locale)
 				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
@@ -367,16 +368,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return null;
 	}
 
-	private JSONArray _getLatestVersionsJSONArray(
+	private JSONArray _getLatestContentDashboardItemVersionsJSONArray(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<ContentDashboardItemVersion> latestVersions =
-			contentDashboardItem.getLatestVersions(locale);
+		List<ContentDashboardItemVersion> latestContentDashboardItemVersions =
+			contentDashboardItem.getLatestContentDashboardItemVersions(locale);
 
-		for (ContentDashboardItemVersion version : latestVersions) {
-			jsonArray.put(version.toJSONObject());
+		for (ContentDashboardItemVersion contentDashboardItemVersion :
+				latestContentDashboardItemVersions) {
+
+			jsonArray.put(contentDashboardItemVersion.toJSONObject());
 		}
 
 		return jsonArray;

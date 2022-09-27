@@ -102,7 +102,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 				return;
 			}
 
-			JSONObject jsonObject = _getVersionsJSONObject(
+			JSONObject jsonObject = _getContentDashboardItemVersionsJSONObject(
 				resourceRequest,
 				(VersionableContentDashboardItem<?>)contentDashboardItem);
 
@@ -124,7 +124,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		}
 	}
 
-	private JSONArray _getVersionsJSONArray(
+	private JSONArray _getContentDashboardItemVersionsJSONArray(
 		int displayVersions, HttpServletRequest httpServletRequest,
 		VersionableContentDashboardItem versionableContentDashboardItem) {
 
@@ -134,23 +134,27 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<ContentDashboardItemVersion> versions =
-			versionableContentDashboardItem.getAllVersions(themeDisplay);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			versionableContentDashboardItem.getAllContentDashboardItemVersions(
+				themeDisplay);
 
-		if (ListUtil.isEmpty(versions)) {
+		if (ListUtil.isEmpty(contentDashboardItemVersions)) {
 			return jsonArray;
 		}
 
-		versions = ListUtil.subList(versions, 0, displayVersions);
+		contentDashboardItemVersions = ListUtil.subList(
+			contentDashboardItemVersions, 0, displayVersions);
 
-		for (ContentDashboardItemVersion version : versions) {
-			jsonArray.put(version.toJSONObject());
+		for (ContentDashboardItemVersion contentDashboardItemVersion :
+				contentDashboardItemVersions) {
+
+			jsonArray.put(contentDashboardItemVersion.toJSONObject());
 		}
 
 		return jsonArray;
 	}
 
-	private JSONObject _getVersionsJSONObject(
+	private JSONObject _getContentDashboardItemVersionsJSONObject(
 		ResourceRequest resourceRequest,
 		VersionableContentDashboardItem<?> versionableContentDashboardItem) {
 
@@ -164,7 +168,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 					resourceRequest, "maxDisplayVersions",
 					_DEFAULT_MAX_DISPLAY_VERSIONS);
 
-				return _getVersionsJSONArray(
+				return _getContentDashboardItemVersionsJSONArray(
 					displayVersions, httpServletRequest,
 					versionableContentDashboardItem);
 			}

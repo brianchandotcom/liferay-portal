@@ -158,12 +158,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			contentDashboardItem.getScopeName(locale)
 		).cell(
 			() -> {
-				List<ContentDashboardItemVersion> latestVersions =
-					contentDashboardItem.getLatestVersions(locale);
+				List<ContentDashboardItemVersion>
+					latestContentDashboardItemVersions =
+						contentDashboardItem.
+							getLatestContentDashboardItemVersions(locale);
 
-				ContentDashboardItemVersion version = latestVersions.get(0);
+				ContentDashboardItemVersion contentDashboardItemVersion =
+					latestContentDashboardItemVersions.get(0);
 
-				return version.getLabel();
+				return contentDashboardItemVersion.getLabel();
 			}
 		).cell(
 			StringUtil.merge(

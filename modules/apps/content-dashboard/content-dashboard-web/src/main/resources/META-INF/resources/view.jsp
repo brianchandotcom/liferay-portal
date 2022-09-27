@@ -267,14 +267,14 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					>
 
 						<%
-						List<ContentDashboardItemVersion> versions = contentDashboardItem.getLatestVersions(locale);
+						List<ContentDashboardItemVersion> contentDashboardItemVersions = contentDashboardItem.getLatestContentDashboardItemVersions(locale);
 
-						for (ContentDashboardItemVersion version : versions) {
+						for (ContentDashboardItemVersion contentDashboardItemVersion : contentDashboardItemVersions) {
 						%>
 
 							<clay:label
-								displayType="<%= version.getStyle() %>"
-								label="<%= version.getLabel() %>"
+								displayType="<%= contentDashboardItemVersion.getStyle() %>"
+								label="<%= contentDashboardItemVersion.getLabel() %>"
 							/>
 
 						<%

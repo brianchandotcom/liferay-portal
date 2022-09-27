@@ -169,7 +169,8 @@ public class BlogsEntryContentDashboardItem
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		ContentDashboardItemVersion version = _getLastVersion(locale);
+		ContentDashboardItemVersion version =
+			_getLastContentDashboardItemVersion(locale);
 
 		if ((getUserId() == userId) &&
 			Objects.equals(
@@ -250,7 +251,9 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
-	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale) {
+	public List<ContentDashboardItemVersion>
+		getLatestContentDashboardItemVersions(Locale locale) {
+
 		return Collections.singletonList(
 			new ContentDashboardItemVersion(
 				_language.get(
@@ -338,10 +341,14 @@ public class BlogsEntryContentDashboardItem
 		);
 	}
 
-	private ContentDashboardItemVersion _getLastVersion(Locale locale) {
-		List<ContentDashboardItemVersion> versions = getLatestVersions(locale);
+	private ContentDashboardItemVersion _getLastContentDashboardItemVersion(
+		Locale locale) {
 
-		return versions.get(versions.size() - 1);
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			getLatestContentDashboardItemVersions(locale);
+
+		return contentDashboardItemVersions.get(
+			contentDashboardItemVersions.size() - 1);
 	}
 
 	private ContentDashboardItemAction _toContentDashboardItemAction(

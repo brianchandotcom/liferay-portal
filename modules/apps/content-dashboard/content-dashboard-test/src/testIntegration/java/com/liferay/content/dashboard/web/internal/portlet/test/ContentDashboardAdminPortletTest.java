@@ -1389,8 +1389,8 @@ public class ContentDashboardAdminPortletTest {
 		List<Object> results = searchContainer.getResults();
 
 		List<Object> versions = ReflectionTestUtil.invoke(
-			results.get(0), "getLatestVersions", new Class<?>[] {Locale.class},
-			LocaleUtil.US);
+			results.get(0), "getLatestContentDashboardItemVersions",
+			new Class<?>[] {Locale.class}, LocaleUtil.US);
 
 		Assert.assertEquals(versions.toString(), 2, versions.size());
 		Assert.assertEquals(

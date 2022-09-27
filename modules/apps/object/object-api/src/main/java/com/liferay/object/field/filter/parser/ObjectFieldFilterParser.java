@@ -31,7 +31,7 @@ public interface ObjectFieldFilterParser {
 		throws PortalException;
 
 	public void validate(
-			long listTypeDefinitionId,
+			long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException;
 

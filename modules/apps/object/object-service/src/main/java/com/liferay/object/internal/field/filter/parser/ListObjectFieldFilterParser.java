@@ -95,7 +95,7 @@ public class ListObjectFieldFilterParser implements ObjectFieldFilterParser {
 
 	@Override
 	public void validate(
-			long listTypeDefinitionId,
+			long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException {
 

@@ -57,7 +57,7 @@ export function FragmentPreview({fragment, namespace}) {
 						label={fragment.label}
 						namespace={namespace}
 						previewURL={fragment.previewURL}
-						showLabel={variations.length > 1}
+						showLabel={false}
 						variation={[]}
 					/>
 				)}

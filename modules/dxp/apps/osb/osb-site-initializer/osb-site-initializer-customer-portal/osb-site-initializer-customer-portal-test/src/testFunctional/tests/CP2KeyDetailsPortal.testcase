@@ -44,7 +44,7 @@ definition {
 
 	@description = "Automation ID: LPS-150670 | Test Summary: Verify if the elements of Environment group are present. (Product - Version - Environment Type - Subscription vs Complimentary)"
 	@priority = "5"
-	test CanViewElementsOfEnvironment {
+	test VerifyActivationKeyDetails {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
@@ -75,32 +75,6 @@ definition {
 				subscriptionType = "Subscription",
 				version = "6.2 EE");
 		}
-	}
-
-	@description = "Automation ID: LPS-150672 | Test Summary: Verify if the elements of Server group are present. (Key Type: On Premise - Host Name - IP Address - MAC Address)"
-	@priority = "5"
-	test CanViewElementsOfServerGroup {
-		property portal.upstream = "quarantine";
-
-		// "Reason: Not able to reproduce scenario without OKTA workaround."
-
-		task ("Given a user signs in on OKTA to update Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Portal");
-
-			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
-		}
 
 		task ("Then the modal will show all elements of the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
@@ -109,64 +83,12 @@ definition {
 				keyType = "On-Premise",
 				macAddress = "Redacted");
 		}
-	}
-
-	@description = "Automation ID: LPS-150673 | Test Summary: Verify the elements of Status column. (Start Date - Expiration Date - Status)"
-	@priority = "5"
-	test CanViewElementsOfStatusColumn {
-		property portal.upstream = "quarantine";
-
-		// "Reason: Not able to reproduce scenario without OKTA workaround."
-
-		task ("Given a user signs in on OKTA to update Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Portal");
-
-			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
-		}
 
 		task ("Then the modal will show all elements of the Activation Status group") {
 			CP2ActivationKeys.assertKeyDetailsStatusElements(
 				expirationDate = "Jun 7, 2023",
 				startDate = "Jun 7, 2022",
 				status = "Activated");
-		}
-	}
-
-	@description = "Automation ID: LPS-150676 | Test Summary: Verify the success message after downloading the activation key"
-	@priority = "5"
-	test CanViewSuccessMessage {
-		property portal.upstream = "quarantine";
-
-		// "Reason: Not able to reproduce scenario without OKTA workaround."
-
-		task ("Given a user signs in on OKTA to update Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Portal");
-
-			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
 		}
 
 		task ("Then clicking the copy icon for each value will save the value to the clipboard") {
@@ -175,32 +97,6 @@ definition {
 
 				Alert.viewSuccessMessage();
 			}
-		}
-	}
-
-	@description = "Automation ID: LPS-150677 | Test Summary: Verify if the Close button works"
-	@priority = "4"
-	test TheCloseButtonWorks {
-		property portal.upstream = "quarantine";
-
-		// "Reason: Not able to reproduce scenario without OKTA workaround."
-
-		task ("Given a user signs in on OKTA to update Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When a user selects a project and clicks on a key") {
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Portal");
-
-			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
 		}
 
 		task ("Then the user will have the option to close the pop up modal") {

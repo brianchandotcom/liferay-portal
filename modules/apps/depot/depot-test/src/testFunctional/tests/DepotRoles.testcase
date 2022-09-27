@@ -517,7 +517,7 @@ definition {
 
 		RoleNavigator.gotoRoleType(roleType = "Asset Library");
 
-		Role.deleteCP(roleTitle = "AL Role Name");
+		LexiconEntry.delete(rowEntry = "AL Role Name");
 
 		Role.openRolesAdmin();
 

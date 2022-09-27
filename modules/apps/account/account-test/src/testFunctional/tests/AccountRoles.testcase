@@ -125,69 +125,6 @@ definition {
 		}
 	}
 
-	@description = "This test assert the account manager can view account organizations by default."
-	@priority = "4"
-	test AccountManagersCanViewOrganizationsbyDefault {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Given add 2 organizations and assign one to an account") {
-			JSONOrganization.addOrganization(organizationName = "Account Org1");
-
-			JSONOrganization.addOrganization(organizationName = "Company Org");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "AM Account",
-				accountEntryType = "Business");
-
-			JSONAccountEntry.addAccountEntryOrganization(
-				accountEntryName = "AM Account",
-				organizationName = "Account Org1");
-		}
-
-		task ("And add user useramsn as Account Manager") {
-			AccountConfiguration.addAccountManager(
-				accountName = "AM Account",
-				orgName = "AM Organization",
-				orgRoleTitle = "Account Manager",
-				userEmailAddress = "useramea@liferay.com",
-				userFirstName = "useramfn",
-				userLastName = "useramln",
-				userScreenName = "useramsn");
-		}
-
-		task ("When the account manager navigates into the Organizations tab of AM Account") {
-			User.logoutPG();
-
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "useramea@liferay.com");
-
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
-		}
-
-		task ("Then the account manager should be able to see the organization listed in that account") {
-			Navigator.viewActivatedNavTab(navTab = "Organizations");
-
-			LexiconEntry.viewNoEntry(rowEntry = "Company Org");
-
-			AssertTextNotPresent(value1 = "There are no organizations associated with this account.");
-
-			AssertElementPresent(locator1 = "Icon#PLUS");
-
-			for (var orgName : list "AM Organization,Account Org1") {
-				LexiconEntry.viewEntryName(rowEntry = "${orgName}");
-
-				AssertElementPresent(
-					key_assigneeName = "${orgName}",
-					locator1 = "Icon#REMOVE_ASSIGNEE");
-			}
-		}
-	}
-
 	@description = "This test assert the account manager can view account users by default."
 	@priority = "4"
 	test AccountManagersCanViewUsersbyDefault {
@@ -603,6 +540,77 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.viewNoEntry(rowEntry = "Account Specific Role");
+		}
+	}
+
+	@description = "This test assert the account manager can only view account organizations by default and can not change organization associations."
+	@priority = "4"
+	test CanOnlyViewOrganizationsByDefault {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add 2 organizations and assign one to an account") {
+			JSONOrganization.addOrganization(organizationName = "Account Org1");
+
+			JSONOrganization.addOrganization(organizationName = "Company Org");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "AM Account",
+				accountEntryType = "Business");
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "AM Account",
+				organizationName = "Account Org1");
+		}
+
+		task ("And add user useramsn as Account Manager") {
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+		}
+
+		task ("When the account manager navigates into the Organizations tab of AM Account") {
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+		}
+
+		task ("Then the account manager should only be able to see not be able to change the organizations listed in that account") {
+			Navigator.viewActivatedNavTab(navTab = "Organizations");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Company Org");
+
+			AssertTextNotPresent(value1 = "There are no organizations associated with this account.");
+
+			AssertElementNotPresent(locator1 = "Icon#PLUS");
+
+			AssertElementNotPresent(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			for (var orgName : list "AM Organization,Account Org1") {
+				LexiconEntry.viewEntryName(rowEntry = "${orgName}");
+
+				AssertElementNotPresent(
+					key_assigneeName = "${orgName}",
+					locator1 = "Icon#REMOVE_ASSIGNEE");
+
+				AssertElementNotPresent(
+					key_rowEntry = "${orgName}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+			}
 		}
 	}
 

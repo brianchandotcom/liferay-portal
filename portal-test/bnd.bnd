@@ -30,8 +30,6 @@ Export-Package:\
 	org.junit.runner.*,\
 	org.junit.*,\
 	\
-	org.osgi.service.*,\
-	\
 	org.springframework.mock.web
 Import-Package: *;resolution:=optional
 Include-Resource:\

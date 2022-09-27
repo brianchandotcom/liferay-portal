@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
@@ -371,10 +372,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<ContentDashboardItem.Version> latestVersions =
+		List<ContentDashboardItemVersion> latestVersions =
 			contentDashboardItem.getLatestVersions(locale);
 
-		for (ContentDashboardItem.Version version : latestVersions) {
+		for (ContentDashboardItemVersion version : latestVersions) {
 			jsonArray.put(version.toJSONObject());
 		}
 

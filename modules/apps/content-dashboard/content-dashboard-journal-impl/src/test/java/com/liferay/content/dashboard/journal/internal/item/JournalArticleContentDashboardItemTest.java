@@ -16,7 +16,7 @@ package com.liferay.content.dashboard.journal.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.content.dashboard.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
@@ -550,12 +550,12 @@ public class JournalArticleContentDashboardItemTest {
 				null, null, null, null, null, null, journalArticle, null,
 				_getLanguage(), null, null);
 
-		List<ContentDashboardItem.Version> versions =
+		List<ContentDashboardItemVersion> versions =
 			journalArticleContentDashboardItem.getLatestVersions(LocaleUtil.US);
 
 		Assert.assertEquals(versions.toString(), 1, versions.size());
 
-		ContentDashboardItem.Version version = versions.get(0);
+		ContentDashboardItemVersion version = versions.get(0);
 
 		Assert.assertEquals(
 			WorkflowConstants.LABEL_APPROVED, version.getLabel());
@@ -597,18 +597,18 @@ public class JournalArticleContentDashboardItemTest {
 				null, null, null, null, null, null, journalArticle1, null,
 				_getLanguage(), journalArticle2, null);
 
-		List<ContentDashboardItem.Version> versions =
+		List<ContentDashboardItemVersion> versions =
 			journalArticleContentDashboardItem.getLatestVersions(LocaleUtil.US);
 
 		Assert.assertEquals(versions.toString(), 2, versions.size());
 
-		ContentDashboardItem.Version version1 = versions.get(0);
+		ContentDashboardItemVersion version1 = versions.get(0);
 
 		Assert.assertEquals(
 			WorkflowConstants.LABEL_APPROVED, version1.getLabel());
 		Assert.assertEquals("success", version1.getStyle());
 
-		ContentDashboardItem.Version version2 = versions.get(1);
+		ContentDashboardItemVersion version2 = versions.get(1);
 
 		Assert.assertEquals(WorkflowConstants.LABEL_DRAFT, version2.getLabel());
 		Assert.assertEquals("secondary", version2.getStyle());

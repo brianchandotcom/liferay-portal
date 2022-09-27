@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
@@ -133,7 +134,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<ContentDashboardItem.Version> versions =
+		List<ContentDashboardItemVersion> versions =
 			versionableContentDashboardItem.getAllVersions(themeDisplay);
 
 		if (ListUtil.isEmpty(versions)) {
@@ -142,7 +143,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 
 		versions = ListUtil.subList(versions, 0, displayVersions);
 
-		for (ContentDashboardItem.Version version : versions) {
+		for (ContentDashboardItemVersion version : versions) {
 			jsonArray.put(version.toJSONObject());
 		}
 

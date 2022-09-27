@@ -19,8 +19,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -59,7 +57,7 @@ public interface ContentDashboardItem<T> {
 
 	public InfoItemReference getInfoItemReference();
 
-	public List<Version> getLatestVersions(Locale locale);
+	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale);
 
 	public Date getModifiedDate();
 
@@ -76,68 +74,5 @@ public interface ContentDashboardItem<T> {
 	public String getUserName();
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);
-
-	public static class Version {
-
-		public Version(
-			String label, String style, String version, String changeLog,
-			String userName, Date createDate) {
-
-			_label = label;
-			_style = style;
-			_version = version;
-			_changeLog = changeLog;
-			_userName = userName;
-			_createDate = createDate;
-		}
-
-		public String getChangeLog() {
-			return _changeLog;
-		}
-
-		public Date getCreateDate() {
-			return _createDate;
-		}
-
-		public String getLabel() {
-			return _label;
-		}
-
-		public String getStyle() {
-			return _style;
-		}
-
-		public String getUserName() {
-			return _userName;
-		}
-
-		public String getVersion() {
-			return _version;
-		}
-
-		public JSONObject toJSONObject() {
-			return JSONUtil.put(
-				"changeLog", getChangeLog()
-			).put(
-				"createDate", getCreateDate()
-			).put(
-				"statusLabel", getLabel()
-			).put(
-				"statusStyle", getStyle()
-			).put(
-				"userName", getUserName()
-			).put(
-				"version", getVersion()
-			);
-		}
-
-		private final String _changeLog;
-		private final Date _createDate;
-		private final String _label;
-		private final String _style;
-		private final String _userName;
-		private final String _version;
-
-	}
 
 }

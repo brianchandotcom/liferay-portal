@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
@@ -168,7 +169,7 @@ public class BlogsEntryContentDashboardItem
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		Version version = _getLastVersion(locale);
+		ContentDashboardItemVersion version = _getLastVersion(locale);
 
 		if ((getUserId() == userId) &&
 			Objects.equals(
@@ -249,9 +250,9 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getLatestVersions(Locale locale) {
+	public List<ContentDashboardItemVersion> getLatestVersions(Locale locale) {
 		return Collections.singletonList(
-			new Version(
+			new ContentDashboardItemVersion(
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(_blogsEntry.getStatus())),
@@ -337,8 +338,8 @@ public class BlogsEntryContentDashboardItem
 		);
 	}
 
-	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getLatestVersions(locale);
+	private ContentDashboardItemVersion _getLastVersion(Locale locale) {
+		List<ContentDashboardItemVersion> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
 	}

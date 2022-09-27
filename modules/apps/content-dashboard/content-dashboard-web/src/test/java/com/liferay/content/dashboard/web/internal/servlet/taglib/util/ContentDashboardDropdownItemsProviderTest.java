@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.servlet.taglib.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -282,7 +283,9 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public List<Version> getLatestVersions(Locale locale) {
+			public List<ContentDashboardItemVersion> getLatestVersions(
+				Locale locale) {
+
 				return null;
 			}
 

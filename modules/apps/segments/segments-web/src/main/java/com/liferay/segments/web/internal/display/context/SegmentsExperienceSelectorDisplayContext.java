@@ -14,7 +14,6 @@
 
 package com.liferay.segments.web.internal.display.context;
 
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,7 +33,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
-import com.liferay.segments.model.SegmentsExperimentRelTable;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
@@ -149,15 +147,9 @@ public class SegmentsExperienceSelectorDisplayContext {
 		SegmentsExperience segmentsExperience) {
 
 		List<SegmentsExperimentRel> segmentsExperimentRels =
-			SegmentsExperimentRelLocalServiceUtil.dslQuery(
-				DSLQueryFactoryUtil.select(
-					SegmentsExperimentRelTable.INSTANCE
-				).from(
-					SegmentsExperimentRelTable.INSTANCE
-				).where(
-					SegmentsExperimentRelTable.INSTANCE.segmentsExperienceId.eq(
-						segmentsExperience.getSegmentsExperienceId())
-				));
+			SegmentsExperimentRelLocalServiceUtil.
+				getSegmentsExperimentRelsBySegmentsExperienceId(
+					segmentsExperience.getSegmentsExperienceId());
 
 		if (segmentsExperimentRels.isEmpty()) {
 			return null;

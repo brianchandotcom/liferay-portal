@@ -39,7 +39,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -68,7 +67,6 @@ import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperimentRel;
-import com.liferay.segments.model.SegmentsExperimentRelTable;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil;
@@ -656,16 +654,9 @@ public class ContentPageLayoutEditorDisplayContext
 
 		if (segmentsExperience != null) {
 			List<SegmentsExperimentRel> segmentsExperimentRels =
-				SegmentsExperimentRelLocalServiceUtil.dslQuery(
-					DSLQueryFactoryUtil.select(
-						SegmentsExperimentRelTable.INSTANCE
-					).from(
-						SegmentsExperimentRelTable.INSTANCE
-					).where(
-						SegmentsExperimentRelTable.INSTANCE.
-							segmentsExperienceId.eq(
-								segmentsExperience.getSegmentsExperienceId())
-					));
+				SegmentsExperimentRelLocalServiceUtil.
+					getSegmentsExperimentRelsBySegmentsExperienceId(
+						segmentsExperience.getSegmentsExperienceId());
 
 			if (segmentsExperimentRels.isEmpty()) {
 				return false;

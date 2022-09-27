@@ -30,6 +30,7 @@ const GET_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
 					accountKey
 					activationStatus
 					externalReferenceCode
+					hasActivation
 					name
 					tabOrder
 					menuOrder

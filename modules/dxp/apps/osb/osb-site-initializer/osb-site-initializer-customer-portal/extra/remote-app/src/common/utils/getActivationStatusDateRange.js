@@ -14,14 +14,13 @@ import getDateCustomFormat from './getDateCustomFormat';
 
 export default function getActivationStatusDateRange(orderItems) {
 	const dates = orderItems.reduce(
-		(dateAccumulator, orderItem) => {
-			const options = JSON.parse(orderItem.options);
-
-			return {
-				endDates: [...dateAccumulator.endDates, options.endDate],
-				startDates: [...dateAccumulator.startDates, options.startDate],
-			};
-		},
+		(dateAccumulator, orderItem) => ({
+			endDates: [...dateAccumulator.endDates, orderItem.options.endDate],
+			startDates: [
+				...dateAccumulator.startDates,
+				orderItem.options.startDate,
+			],
+		}),
 		{endDates: [], startDates: []}
 	);
 	const earliestStartDate = new Date(

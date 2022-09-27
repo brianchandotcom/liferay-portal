@@ -54,15 +54,7 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => (
 						'autofit-col autofit-col-expand': compressed,
 					})}
 				>
-					<div
-						className={classNames(
-							'mb-1 text-neutral-7 text-truncate',
-							{
-								h3: !compressed,
-								h4: compressed,
-							}
-						)}
-					>
+					<h4 className="mb-1 text-neutral-7 text-truncate">
 						{loading ? (
 							<Skeleton
 								className="mb-1"
@@ -72,7 +64,7 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => (
 						) : (
 							koroneikiAccount.name
 						)}
-					</div>
+					</h4>
 
 					{compressed &&
 						(loading ? (

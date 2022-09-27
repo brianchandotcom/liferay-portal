@@ -540,6 +540,7 @@ export const updateAccountSubscriptionGroups = gql`
 				accountSubscriptionGroupId
 				accountKey
 				activationStatus
+				externalReferenceCode
 				name
 			}
 		}

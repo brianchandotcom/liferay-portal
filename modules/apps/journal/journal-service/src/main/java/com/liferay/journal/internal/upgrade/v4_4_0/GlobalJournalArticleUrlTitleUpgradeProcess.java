@@ -100,16 +100,17 @@ public class GlobalJournalArticleUrlTitleUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
+					long classPK = resultSet.getLong("resourcePrimKey");
 					String defaultLanguageId = resultSet.getString(
 						"defaultLanguageId");
-					long id = resultSet.getLong("id_");
-					long classPK = resultSet.getLong("resourcePrimKey");
 
 					preparedStatement2.setString(
 						1,
 						_getUrlTitle(
 							classNameId, classPK, defaultLanguageId,
 							companyGroup.getGroupId()));
+
+					long id = resultSet.getLong("id_");
 
 					preparedStatement2.setLong(2, id);
 

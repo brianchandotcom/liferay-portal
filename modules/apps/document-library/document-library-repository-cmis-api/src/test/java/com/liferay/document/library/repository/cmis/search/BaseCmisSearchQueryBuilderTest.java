@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.repository.search.RepositorySearchQueryTermBuil
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -457,8 +456,6 @@ public class BaseCmisSearchQueryBuilderTest {
 
 	protected SearchContext getSearchContext() {
 		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(SearchEngineHelper.GENERIC_ENGINE_ID);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

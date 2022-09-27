@@ -23,7 +23,8 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	liferayBusinessSalesGoals: string[];
 	maxDateActivity?: Date;
 	minDateActivity?: Date;
-	overallCampaign: string;
+	overallCampaignDescription: string;
+	overallCampaignName: string;
 	requestStatus?: RequestStatus;
 	targetAudienceRoles: string[];
 	targetMarkets: string[];

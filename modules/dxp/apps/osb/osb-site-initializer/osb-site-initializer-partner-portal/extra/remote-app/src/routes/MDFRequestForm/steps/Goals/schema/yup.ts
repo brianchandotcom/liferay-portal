@@ -25,8 +25,11 @@ const goalsSchema = object({
 	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),
-	overallCampaign: string()
-		.max(350, 'You have exceeded the character limit')
+	overallCampaignDescription: string()
+		.max(255, 'You have exceeded the character limit')
+		.required('Required'),
+	overallCampaignName: string()
+		.max(255, 'You have exceeded the character limit')
 		.required('Required'),
 	targetAudienceRoles: array().min(1, 'Required'),
 	targetMarkets: array()

@@ -66,7 +66,7 @@ const Activities = ({
 			})}
 			description="Choose the activities that best match your Campaign MDF request"
 			name="Activities"
-			title={values.overallCampaign}
+			title={values.overallCampaignName}
 		>
 			{isForm ? (
 				<Form
@@ -80,7 +80,7 @@ const Activities = ({
 					activities={values.activities}
 					isValid={isValid}
 					onAdd={onAdd}
-					overallCampaign={values.overallCampaign}
+					overallCampaignName={values.overallCampaignName}
 				/>
 			)}
 

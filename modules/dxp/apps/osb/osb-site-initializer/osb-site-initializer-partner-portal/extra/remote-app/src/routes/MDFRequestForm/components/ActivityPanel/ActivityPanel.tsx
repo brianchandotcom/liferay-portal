@@ -21,7 +21,7 @@ interface IProps {
 	children?: React.ReactNode;
 	detail?: boolean;
 	onRemove?: () => void;
-	overallCampaign: string;
+	overallCampaignName: string;
 }
 
 const ActivityPanel = ({
@@ -29,7 +29,7 @@ const ActivityPanel = ({
 	children,
 	detail,
 	onRemove,
-	overallCampaign,
+	overallCampaignName,
 }: IProps) => {
 	return (
 		<ClayPanel
@@ -45,7 +45,7 @@ const ActivityPanel = ({
 					<div className="d-flex justify-content-between">
 						<div>
 							<div className="mb-1 text-neutral-7 text-paragraph-sm">
-								{overallCampaign}
+								{overallCampaignName}
 							</div>
 
 							<h5 className="mb-1">{activity.name}</h5>

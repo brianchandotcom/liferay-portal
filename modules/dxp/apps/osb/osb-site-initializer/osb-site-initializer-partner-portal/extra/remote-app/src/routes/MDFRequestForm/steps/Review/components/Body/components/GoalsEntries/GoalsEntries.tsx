@@ -35,9 +35,13 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 		<Table
 			items={[
 				{
+					title: 'Provide a short name of the overall campaign',
+					value: mdfRequest.overallCampaignName,
+				},
+				{
 					title:
-						'Provide a name and short description of the overall campaign',
-					value: mdfRequest.overallCampaign,
+						'Provide a short description of the overall campaign',
+					value: mdfRequest.overallCampaignDescription,
 				},
 				{
 					title: 'Liferay business/sales goals',

@@ -63,7 +63,7 @@ const Review = ({
 							activity={activity}
 							detail
 							key={index}
-							overallCampaign={values.overallCampaign}
+							overallCampaignName={values.overallCampaignName}
 						>
 							<ActivityReviewEntry
 								mdfRequestActivity={activity}

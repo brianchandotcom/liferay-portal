@@ -22,14 +22,14 @@ interface IProps {
 	activities: MDFRequestActivity[];
 	isValid: boolean;
 	onAdd: () => void;
-	overallCampaign: string;
+	overallCampaignName: string;
 }
 
 const Listing = ({
 	activities,
 	isValid,
 	onAdd,
-	overallCampaign,
+	overallCampaignName,
 	push,
 	remove,
 }: IProps & ArrayHelpers) => {
@@ -48,7 +48,7 @@ const Listing = ({
 							activity={activity}
 							key={index}
 							onRemove={() => remove(index)}
-							overallCampaign={overallCampaign}
+							overallCampaignName={overallCampaignName}
 						/>
 					))}
 

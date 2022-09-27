@@ -21,7 +21,8 @@ export function getDTOFromMDFRequest(mdfRequest: MDFRequest): MDFRequestDTO {
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			', '
 		),
-		overallCampaign: mdfRequest.overallCampaign,
+		overallCampaignDescription: mdfRequest.overallCampaignDescription,
+		overallCampaignName: mdfRequest.overallCampaignName,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		requestStatus: mdfRequest.requestStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles.join(', '),

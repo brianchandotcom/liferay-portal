@@ -101,8 +101,15 @@ const Goals = ({
 			<PRMForm.Section title="Campaign">
 				<PRMFormik.Field
 					component={PRMForm.InputText}
-					label="Provide a name and short description of the overall campaign"
-					name="overallCampaign"
+					label="Provide a short name of the overall campaign"
+					name="overallCampaignName"
+					required
+				/>
+
+				<PRMFormik.Field
+					component={PRMForm.InputText}
+					label="Provide a short description of the overall campaign"
+					name="overallCampaignDescription"
 					required
 				/>
 

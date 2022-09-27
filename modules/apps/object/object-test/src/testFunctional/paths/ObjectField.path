@@ -19,7 +19,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_HOME_FOLDER</td>
-		<td>//span[@class='active breadcrumb-text-truncate' and contains(text(),'${key_viewHomeFolder}')]</td>
+		<td>//span[@class='breadcrumb-text-truncate' and contains(text(),'${key_viewHomeFolder}')]</td>
 		<td></td>
 	</tr>
 	<tr>

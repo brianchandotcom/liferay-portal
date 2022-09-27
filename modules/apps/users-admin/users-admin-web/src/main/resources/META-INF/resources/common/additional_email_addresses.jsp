@@ -88,7 +88,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 		/>
 
 		<%
-		ListType emailAddressListType = ListTypeServiceUtil.getListType(emailAddress.getTypeId());
+		ListType emailAddressListType = ListTypeServiceUtil.getListType(emailAddress.getListTypeId());
 
 		String emailAddressTypeKey = emailAddressListType.getName();
 		%>

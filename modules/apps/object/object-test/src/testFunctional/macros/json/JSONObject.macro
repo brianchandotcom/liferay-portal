@@ -521,6 +521,32 @@ definition {
 		JSONCurlUtil.delete("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to filter an entry in an object"
+	macro filterObjectEntry {
+		var portalURL = JSONCompany.getPortalURL();
+		var entryId = JSONObject.getObjectEntryId(
+			entryValue = "${value}",
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase("${objectName}");
+
+		var curl = '''
+			${portalURL}/o/c/${objectName}s/${entryId} \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+	}
+
 	@summary = "Get a objectDefinitionId by name"
 	macro getObjectDefinitionId {
 		Variables.assertDefined(parameterList = "${name}");

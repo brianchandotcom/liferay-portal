@@ -142,6 +142,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-158615 - Verify that it's possible to filter object entries by API"
+	@priority = "4"
+	test CanFilterObjectEntriesViaAPI {
+		task ("Given a custom object with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 158615",
+				objectName = "CustomObject158615",
+				pluralLabelName = "Custom Objects 158615");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Food",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject158615");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject158615");
+		}
+
+		task ("When entries are added to the object") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject158615",
+				value = "Apple");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject158615",
+				value = "Apple Sauce");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject158615",
+				value = "Banana");
+		}
+
+		task ("Then the object's entries can be filtered") {
+			ObjectAdmin.filterObjectEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject158615",
+				value = "Apple");
+		}
+	}
+
 	@description = "LPS-150886 - Verify that it's not possible to delete an object that has a relationship"
 	@priority = "5"
 	test CannotDeleteCustomObjectWithRelationship {

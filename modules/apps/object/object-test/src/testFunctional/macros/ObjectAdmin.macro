@@ -1034,6 +1034,15 @@ definition {
 		}
 	}
 
+	macro filterObjectEntryViaAPI {
+		JSONObject.filterObjectEntry(
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			value = "${value}");
+	}
+
 	macro goToActionDetails {
 		Click(
 			key_objectLabel = "${viewEntry}",

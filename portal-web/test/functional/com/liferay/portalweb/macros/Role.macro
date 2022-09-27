@@ -684,14 +684,6 @@ definition {
 					value1 = "${siteNameScope}");
 			}
 		}
-
-		if (isSet(assigneeName)) {
-			Navigator.gotoNavItem(navItem = "Assignees");
-
-			Navigator.gotoNavItem(navItem = "${assigneeType}");
-
-			LexiconEntry.viewEntryName(rowEntry = "${assigneeName}");
-		}
 	}
 
 	macro viewPermissionPG {

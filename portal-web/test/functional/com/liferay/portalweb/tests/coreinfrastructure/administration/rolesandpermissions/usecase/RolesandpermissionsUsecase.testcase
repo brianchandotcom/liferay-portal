@@ -446,6 +446,11 @@ definition {
 			permissionDefinitionValue = "Update Discussion",
 			permissionNavigationValue = "Web Content > Web Content Article");
 
+		Role.viewAssignee(
+			assigneeName = "Site Name",
+			assigneeType = "Sites",
+			roleTitle = "Web Content Comment Reviewer");
+
 		Role.openRolesAdmin();
 
 		LAR.deleteCurrentAndPreviousProcess(

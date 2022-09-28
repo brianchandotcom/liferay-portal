@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.renderer.internal.helper;
+package com.liferay.frontend.taglib.soy.internal.template;
 
 import com.liferay.frontend.js.module.launcher.JSModuleDependency;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
 
 import java.io.IOException;
 import java.io.InputStream;

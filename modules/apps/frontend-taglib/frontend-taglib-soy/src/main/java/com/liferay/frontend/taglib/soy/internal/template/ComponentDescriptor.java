@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.renderer;
+package com.liferay.frontend.taglib.soy.internal.template;
 
 import java.util.Collection;
 import java.util.HashSet;

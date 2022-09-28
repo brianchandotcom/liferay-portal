@@ -256,7 +256,7 @@ definition {
 			}
 
 			if ("${deleteApplicationData}" == "true") {
-				Check(
+				Check.checkNotVisible(
 					checkboxName = "Delete Application Data Before Importing",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 			}

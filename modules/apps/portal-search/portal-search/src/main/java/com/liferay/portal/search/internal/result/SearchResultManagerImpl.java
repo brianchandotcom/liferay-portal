@@ -65,18 +65,6 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		return _createSearchResultWithEntryClass(document);
 	}
 
-	@Reference(unbind = "-")
-	public void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setSummaryFactory(SummaryFactory newSummaryFactory) {
-		_summaryFactory = newSummaryFactory;
-	}
-
 	@Override
 	public void updateSearchResult(
 			SearchResult searchResult, Document document, Locale locale,
@@ -190,9 +178,13 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		return false;
 	}
 
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
 	private ServiceTrackerMap<String, SearchResultContributor>
 		_serviceTrackerMap;
+
+	@Reference
 	private SummaryFactory _summaryFactory;
 
 }

@@ -55,7 +55,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -120,7 +123,7 @@ public class CommerceTermEntryLocalServiceImpl
 
 		commerceTermEntry.setExternalReferenceCode(externalReferenceCode);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceTermEntry.setCompanyId(user.getCompanyId());
 		commerceTermEntry.setUserId(user.getUserId());
@@ -174,7 +177,7 @@ public class CommerceTermEntryLocalServiceImpl
 
 		// Resource
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			commerceTermEntry, serviceContext);
 
 		// Workflow
@@ -199,7 +202,7 @@ public class CommerceTermEntryLocalServiceImpl
 		commerceTermEntry = commerceTermEntryPersistence.remove(
 			commerceTermEntry);
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceTermEntry.getCompanyId(), CommerceTermEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			commerceTermEntry.getCommerceTermEntryId());
@@ -374,7 +377,7 @@ public class CommerceTermEntryLocalServiceImpl
 
 		commerceTermEntry.setActive(active);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceTermEntry.setDisplayDate(
 			_portal.getDate(
@@ -474,7 +477,7 @@ public class CommerceTermEntryLocalServiceImpl
 
 		commerceTermEntry.setStatus(status);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceTermEntry.setStatusByUserId(user.getUserId());
 		commerceTermEntry.setStatusByUserName(user.getFullName());
@@ -718,7 +721,7 @@ public class CommerceTermEntryLocalServiceImpl
 		).innerJoinON(
 			CommerceShippingFixedOptionQualifierTable.INSTANCE,
 			commerceShippingFixedOptionQualifierTableClassNameIdColumn.eq(
-				classNameLocalService.getClassNameId(
+				_classNameLocalService.getClassNameId(
 					CommerceTermEntry.class.getName())
 			).and(
 				CommerceShippingFixedOptionQualifierTable.INSTANCE.classPK.eq(
@@ -727,7 +730,7 @@ public class CommerceTermEntryLocalServiceImpl
 		).leftJoinOn(
 			commerceOrderTypeCommerceTermEntryRel,
 			commerceTermEntryRelTableClassNameIdColumn.eq(
-				classNameLocalService.getClassNameId(
+				_classNameLocalService.getClassNameId(
 					CommerceOrderType.class.getName())
 			).and(
 				commerceOrderTypeCommerceTermEntryRel.commerceTermEntryId.eq(
@@ -784,7 +787,7 @@ public class CommerceTermEntryLocalServiceImpl
 		).innerJoinON(
 			CommercePaymentMethodGroupRelQualifierTable.INSTANCE,
 			commercePaymentMethodGroupRelQualifierTableClassNameIdColumn.eq(
-				classNameLocalService.getClassNameId(
+				_classNameLocalService.getClassNameId(
 					CommerceTermEntry.class.getName())
 			).and(
 				CommercePaymentMethodGroupRelQualifierTable.INSTANCE.classPK.eq(
@@ -793,7 +796,7 @@ public class CommerceTermEntryLocalServiceImpl
 		).leftJoinOn(
 			commerceOrderTypeCommerceTermEntryRel,
 			commerceTermEntryRelTableClassNameIdColumn.eq(
-				classNameLocalService.getClassNameId(
+				_classNameLocalService.getClassNameId(
 					CommerceOrderType.class.getName())
 			).and(
 				commerceOrderTypeCommerceTermEntryRel.commerceTermEntryId.eq(
@@ -905,6 +908,9 @@ public class CommerceTermEntryLocalServiceImpl
 		CommerceTermEntryLocalServiceImpl.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 
@@ -913,6 +919,12 @@ public class CommerceTermEntryLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +66,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 			long commerceTermEntryId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		_validate(classNameId, classPK, commerceTermEntryId);
 
@@ -72,7 +74,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 			commerceTermEntryRelPersistence.create(
 				counterLocalService.increment());
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		commerceTermEntryRel.setCompanyId(user.getCompanyId());
 		commerceTermEntryRel.setUserId(user.getUserId());
@@ -139,7 +141,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 		List<CommerceTermEntryRel> commerceTermEntryRels =
 			commerceTermEntryRelPersistence.findByC_C(
-				classNameLocalService.getClassNameId(className),
+				_classNameLocalService.getClassNameId(className),
 				commerceTermEntryId);
 
 		for (CommerceTermEntryRel commerceTermEntryRel :
@@ -155,7 +157,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 		String className, long classPK, long commerceTermEntryId) {
 
 		return commerceTermEntryRelPersistence.fetchByC_C_C(
-			classNameLocalService.getClassNameId(className), classPK,
+			_classNameLocalService.getClassNameId(className), classPK,
 			commerceTermEntryId);
 	}
 
@@ -244,7 +246,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 				commerceTermEntryId
 			).and(
 				CommerceTermEntryRelTable.INSTANCE.classNameId.eq(
-					classNameLocalService.getClassNameId(className))
+					_classNameLocalService.getClassNameId(className))
 			).and(
 				() -> {
 					if (Validator.isNotNull(keywords)) {
@@ -274,6 +276,12 @@ public class CommerceTermEntryRelLocalServiceImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

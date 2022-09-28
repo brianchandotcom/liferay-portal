@@ -25,4 +25,20 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _getCountryAbbreviation {
+		Variables.assertDefined(parameterList = "${countryName}");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		var curl = '''
+			${portalURL}/api/jsonws/country/get-country-by-name \
+			-u test@liferay.com:test \
+			-d name=${countryName} \
+		''';
+
+		var countryAbbreviation = JSONCurlUtil.post("${curl}", "$.a2");
+
+		return "${countryAbbreviation}";
+	}
+
 }

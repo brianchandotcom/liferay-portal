@@ -27,4 +27,12 @@ definition {
 			twoLetterISOCode = "${twoLetterISOCode}");
 	}
 
+	macro getCountryAbbreviation {
+		Variables.assertDefined(parameterList = "${countryName}");
+
+		var countryAbbreviation = JSONCountryAPI._getCountryAbbreviation(countryName = "${countryName}");
+
+		return "${countryAbbreviation}";
+	}
+
 }

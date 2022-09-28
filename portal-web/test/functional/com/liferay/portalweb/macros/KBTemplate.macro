@@ -25,6 +25,25 @@ definition {
 			rowEntry = "${kbTemplateTitle}");
 	}
 
+	macro gotoTemplateMenuItemThroughPageTreePanel {
+		MouseOver(
+			key_itemLinkName = "${kbTemplateTitle}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_LINK");
+
+		Click.waitForMenuToggleJSClick(
+			key_itemName = "${kbTemplateTitle}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if ("${menuItem}" == "Delete") {
+			MenuItem.clickNoError(menuItem = "${menuItem}");
+		}
+		else {
+			MenuItem.click(menuItem = "${menuItem}");
+		}
+	}
+
 	macro tearDownCP {
 		Navigator.openURL();
 

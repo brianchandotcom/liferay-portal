@@ -33,10 +33,7 @@ import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -83,9 +80,9 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	public void testActivityInterpreter() throws Exception {
 		addActivities();
 
-		long time = System.currentTimeMillis();
-
 		renameModels();
+
+		checkRenaming();
 
 		if (isSupportsTrash()) {
 			moveModelsToTrash();
@@ -95,39 +92,20 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 			restoreModelsFromTrash();
 		}
 
-		checkInterpret(time);
+		checkInterpret();
 	}
 
 	protected abstract void addActivities() throws Exception;
 
-	protected void checkInterpret(long time) throws Exception {
+	protected void checkInterpret() throws Exception {
 		List<SocialActivity> activities = getActivities();
 
 		Assert.assertFalse(activities.toString(), activities.isEmpty());
-
-		Map<String, String> entryTitles = new HashMap<>();
 
 		SocialActivityInterpreter activityInterpreter =
 			getActivityInterpreter();
 
 		for (SocialActivity activity : activities) {
-			String title = activity.getExtraDataValue(
-				"title", serviceContext.getLocale());
-
-			if (isSupportsRename(activity.getClassName()) &&
-				Validator.isNotNull(title)) {
-
-				if (activity.getCreateDate() < time) {
-					entryTitles.put(activity.getClassName(), title);
-				}
-				else {
-					Assert.assertNotNull(
-						entryTitles.get(activity.getClassName()));
-					Assert.assertNotEquals(
-						entryTitles.get(activity.getClassName()), title);
-				}
-			}
-
 			if (hasClassName(activityInterpreter, activity.getClassName()) &&
 				hasActivityType(activity.getType())) {
 
@@ -136,7 +114,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 				Assert.assertNotNull(activityFeedEntry);
 
-				title = activityFeedEntry.getTitle();
+				String title = activityFeedEntry.getTitle();
 
 				Assert.assertFalse(
 					"Title contains parameters: " + title,
@@ -176,14 +154,31 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
+	protected void checkRenaming() throws Exception {
+		List<SocialActivity> activities = getActivities();
+
+		Assert.assertFalse(activities.toString(), activities.isEmpty());
+
+		String previousTitle = null;
+
+		for (SocialActivity activity : activities) {
+			String title = activity.getExtraDataValue(
+				"title", serviceContext.getLocale());
+
+			if (isSupportsRename(activity.getClassName()) &&
+				Validator.isNotNull(title)) {
+
+				Assert.assertNotEquals(previousTitle, title);
+			}
+
+			previousTitle = title;
+		}
+	}
+
 	protected List<SocialActivity> getActivities() throws Exception {
-		List<SocialActivity> activities = new ArrayList<>(
+		return new ArrayList<>(
 			SocialActivityLocalServiceUtil.getGroupActivities(
 				group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-
-		Collections.reverse(activities);
-
-		return activities;
 	}
 
 	protected abstract SocialActivityInterpreter getActivityInterpreter();

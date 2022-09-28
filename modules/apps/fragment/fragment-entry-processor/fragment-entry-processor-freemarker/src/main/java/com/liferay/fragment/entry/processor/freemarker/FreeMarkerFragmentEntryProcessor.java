@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,9 +129,14 @@ public class FreeMarkerFragmentEntryProcessor
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);
 
+		Optional<Object> displayObjectOptional =
+			fragmentEntryProcessorContext.getDisplayObjectOptional();
+
+		Object displayObject = displayObjectOptional.orElse(null);
+
 		JSONObject configurationValuesJSONObject =
 			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
-				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getConfiguration(), displayObject,
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getLocale());
 
@@ -149,7 +155,7 @@ public class FreeMarkerFragmentEntryProcessor
 			).putAll(
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
-					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getConfiguration(), displayObject,
 					fragmentEntryProcessorContext.getSegmentsEntryIds())
 			).build());
 
@@ -251,7 +257,7 @@ public class FreeMarkerFragmentEntryProcessor
 					).putAll(
 						_fragmentEntryConfigurationParser.getContextObjects(
 							configurationDefaultValuesJSONObject, configuration,
-							new long[0])
+							null, new long[0])
 					).build());
 
 				template.prepareTaglib(httpServletRequest, httpServletResponse);

@@ -88,6 +88,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -240,6 +241,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
 		OrganizationLocalService organizationLocalService,
@@ -304,6 +306,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
 		_organizationLocalService = organizationLocalService;
@@ -2219,20 +2222,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			Page<ObjectRelationship> objectRelationshipsPage =
-				objectRelationshipResource.
-					getObjectDefinitionObjectRelationshipsPage(
-						objectRelationship.getObjectDefinitionId1(), null,
-						objectRelationshipResource.toFilter(
-							StringBundler.concat(
-								"name eq '", objectRelationship.getName(),
-								"'")),
-						null);
+			com.liferay.object.model.ObjectRelationship objectRelationship1 =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectDefinitionId(
+						objectRelationship.getObjectDefinitionId1(),
+						objectRelationship.getName());
 
-			ObjectRelationship existingObjectRelationship =
-				objectRelationshipsPage.fetchFirstItem();
-
-			if (existingObjectRelationship == null) {
+			if (objectRelationship1 == null) {
 				objectRelationshipResource.
 					postObjectDefinitionObjectRelationship(
 						objectRelationship.getObjectDefinitionId1(),
@@ -2240,7 +2236,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				objectRelationshipResource.putObjectRelationship(
-					existingObjectRelationship.getId(), objectRelationship);
+					objectRelationship1.getObjectRelationshipId(),
+					objectRelationship);
 			}
 		}
 	}
@@ -4202,6 +4199,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
 	private final OrganizationLocalService _organizationLocalService;

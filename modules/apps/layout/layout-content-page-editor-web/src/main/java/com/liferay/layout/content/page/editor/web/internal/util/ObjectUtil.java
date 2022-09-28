@@ -19,11 +19,15 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashMap;
@@ -49,6 +53,10 @@ public class ObjectUtil {
 	}
 
 	public static Boolean hideInputFragments(long companyId) {
+		if (_isLayoutTypeAssetDisplay()) {
+			return true;
+		}
+
 		List<ObjectDefinition> objectDefinitions =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
 				companyId, true, false, WorkflowConstants.STATUS_APPROVED);
@@ -83,6 +91,29 @@ public class ObjectUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+		}
+
+		return false;
+	}
+
+	private static boolean _isLayoutTypeAssetDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout != null) && layout.isTypeAssetDisplay()) {
+			return true;
 		}
 
 		return false;

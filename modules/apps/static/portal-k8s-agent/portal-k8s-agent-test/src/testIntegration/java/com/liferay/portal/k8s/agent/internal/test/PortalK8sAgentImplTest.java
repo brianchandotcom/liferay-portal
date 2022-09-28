@@ -269,6 +269,15 @@ public class PortalK8sAgentImplTest {
 
 	@Test
 	public void testListenForExtProvisionMetadata() throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(2);
+
+		ServiceRegistration<ManagedService> serviceRegistration =
+			_bundleContext.registerService(
+				ManagedService.class, properties -> countDownLatch.countDown(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_PID, "test.pid"
+				).build());
+
 		ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
 
 		String serviceId = RandomTestUtil.randomString();
@@ -303,17 +312,8 @@ public class PortalK8sAgentImplTest {
 			).build()
 		);
 
-		CountDownLatch countDownLatch = new CountDownLatch(2);
-
-		ServiceRegistration<ManagedService> serviceRegistration =
-			_bundleContext.registerService(
-				ManagedService.class, properties -> countDownLatch.countDown(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_PID, "test.pid"
-				).build());
-
 		try {
-			countDownLatch.await(10000, TimeUnit.MILLISECONDS);
+			countDownLatch.await();
 		}
 		finally {
 			serviceRegistration.unregister();

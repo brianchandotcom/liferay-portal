@@ -1940,6 +1940,80 @@ definition {
 		}
 	}
 
+	@description = "LPS-163095 Bug: SegmentRequestContentContributor are not propertly registered"
+	@priority = "4"
+	test AddNewExperienceSessionIPGeocoderCountry {
+		property portal.acceptance = "true";
+
+		task ("Add a session IP Geocoder Country segment") {
+			JSONSegmentsentry.addSegment(
+				conditionType = "Session",
+				fieldName = "IP Geocoder Country",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "IP Geocoder Country Segment",
+				selectedOption = "Spain");
+		}
+
+		task ("Navigate to page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add a heading fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Default");
+
+			Button.clickPublish();
+		}
+
+		task ("Add a experience to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addExperience(
+				experienceName = "IP Geocoder Country Experience",
+				segmentName = "IP Geocoder Country Segment");
+
+			Button.clickPublish();
+		}
+
+		task ("Modify the experience created") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.changeExperience(newExperience = "IP Geocoder Country Experience");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Spanish Segment Heading");
+		}
+
+		task ("Priotitize the experience created") {
+			PageEditor.prioritizeExperience(experienceName = "IP Geocoder Country Experience");
+
+			Button.clickPublish();
+		}
+
+		task ("Check that correct experience is displayed using an spanish IP address") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page?mockIPGeocoderRemoteAddr=57.78.128.0");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Spanish Segment Heading");
+		}
+	}
+
 	@description = "LPS-130265: Validate if it's posible to create a experience using a segment based on Session > Last sign in date criteria"
 	@priority = "5"
 	test AddNewExperienceSessionLastSignInDateSegment {

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.internal.client.exception.DataSourceConnectionException;
 import com.liferay.analytics.settings.rest.internal.client.model.DataSource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -80,9 +81,8 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 				_log.debug("Response code " + response.getResponseCode());
 			}
 
-			// TODO Throw a specific exception
-
-			throw new PortalException("Unable to connect data source");
+			throw new DataSourceConnectionException(
+				"Unable to connect data source");
 		}
 
 		JSONObject contentJSONObject = JSONFactoryUtil.createJSONObject(

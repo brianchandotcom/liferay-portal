@@ -185,7 +185,11 @@ export function AdvancedSelectField({
 							}}
 							small
 							symbol="chain-broken"
-							title={Liferay.Language.get('detach-token')}
+							title={
+								Liferay.FeatureFlags['LPS-163362']
+									? Liferay.Language.get('detach-style')
+									: Liferay.Language.get('detach-token')
+							}
 						/>
 					) : (
 						<ClayDropDown

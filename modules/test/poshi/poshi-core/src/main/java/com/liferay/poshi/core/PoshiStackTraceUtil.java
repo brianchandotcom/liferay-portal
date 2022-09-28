@@ -89,10 +89,7 @@ public final class PoshiStackTraceUtil {
 	public static String getStackTrace(String msg) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\nBUILD FAILED:");
-
 		if (Validator.isNotNull(msg)) {
-			sb.append(" ");
 			sb.append(msg);
 		}
 
@@ -107,8 +104,6 @@ public final class PoshiStackTraceUtil {
 			sb.append("\n");
 			sb.append(stackTrace.pop());
 		}
-
-		sb.append("\n");
 
 		return sb.toString();
 	}

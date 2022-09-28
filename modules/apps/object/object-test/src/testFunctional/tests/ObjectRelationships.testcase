@@ -1033,6 +1033,62 @@ definition {
 		}
 	}
 
+	@description = "LPS-155537 - Verify that it's not possible to see the parameter when adding relationships that don't require it"
+	@priority = "3"
+	test CannotSeeParameterWhenNotRequiredByRelationship {
+		task ("Create a custom object, and a relationship non-require by API") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "AccountEntry",
+				relationshipLabel = "Non-require relationship",
+				relationshipName = "Non-requirerelationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Verify it's not possible to see the parameter when adding relationships that don't require it") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Postal Address");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			LexiconEntry.gotoAdd();
+
+			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
+
+			Click(
+				key_type = "One to Many",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			Click(
+				key_columnOption = "Custom Object",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			Click(locator1 = "ObjectRelationships#SELECT_PARAMETER_FORM");
+
+			AssertElementNotPresent(
+				key_parameterOption = "Non-require relationship",
+				locator1 = "ObjectRelationships#SELECT_PARAMETER_OPTION");
+		}
+	}
+
 	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"
 	@priority = "4"
 	test CannotSelectRelationshipFieldForObjectEntryTitle {

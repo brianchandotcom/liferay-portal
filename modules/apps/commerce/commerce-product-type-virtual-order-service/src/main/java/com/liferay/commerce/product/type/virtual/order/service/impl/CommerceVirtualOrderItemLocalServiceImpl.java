@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -77,7 +78,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
 		CommerceOrderItem commerceOrderItem =
@@ -376,7 +377,7 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			return new Date(Long.MIN_VALUE);
 		}
 
-		User defaultUser = userLocalService.getDefaultUser(
+		User defaultUser = _userLocalService.getDefaultUser(
 			commerceVirtualOrderItem.getCompanyId());
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
@@ -465,5 +466,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

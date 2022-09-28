@@ -13,7 +13,6 @@
  */
 
 import {Align} from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useContext} from 'react';
 
@@ -23,6 +22,7 @@ import {ForwardIcon} from '../../images';
 import {Liferay} from '../../services/liferay';
 import Avatar from '../Avatar';
 import DropDown from '../DropDown';
+import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
 import useSidebarActions from './useSidebarActions';
 
@@ -68,7 +68,12 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							}
 						>
 							<div className="testray-sidebar-item">
-								<ClayIcon fontSize={16} symbol="cog" />
+								<TestrayIcons
+									className="testray-icon"
+									fill="#8b8db2"
+									size={30}
+									symbol="cog"
+								/>
 
 								<span
 									className={classNames(

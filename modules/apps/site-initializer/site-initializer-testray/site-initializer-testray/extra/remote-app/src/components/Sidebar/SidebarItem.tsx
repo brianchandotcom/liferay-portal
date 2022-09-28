@@ -12,11 +12,11 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
 import i18n from '../../i18n';
+import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
 
 type SidebarItemProps = {
@@ -53,9 +53,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 				)}
 				to={path as string}
 			>
-				<ClayIcon
-					color={active ? 'white' : undefined}
-					fontSize={20}
+				<TestrayIcons
+					className="testray-icon"
+					fill={active ? 'white' : '#8b8db2'}
+					size={35}
 					symbol={icon}
 				/>
 

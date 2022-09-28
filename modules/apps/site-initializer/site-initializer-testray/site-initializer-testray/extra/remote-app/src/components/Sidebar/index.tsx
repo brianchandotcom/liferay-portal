@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
@@ -22,6 +21,7 @@ import {Link, useLocation} from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
+import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
 import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
@@ -68,7 +68,12 @@ const Sidebar = () => {
 										'cursor-pointer testray-sidebar-item'
 									)}
 								>
-									<ClayIcon fontSize={20} symbol="drop" />
+									<TestrayIcons
+										className="testray-icon"
+										fill="#8b8db2"
+										size={35}
+										symbol="drop"
+									/>
 
 									<span
 										className={classNames(

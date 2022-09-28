@@ -95,7 +95,7 @@ public class DataRemovalTest {
 
 	private static final String _CONFIGURATION_PID =
 		"com.liferay.data.cleanup.internal.configuration." +
-			"DataRemovalConfiguration";
+			"DataCleanupConfiguration";
 
 	@DeleteAfterTestRun
 	private Group _group;

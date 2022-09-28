@@ -33,7 +33,7 @@ DispatchLog latestDispatchLog = (DispatchLog)GetterUtil.getObject(request.getAtt
 		<c:otherwise>
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.IN_PROGRESS.getStatus() %>">
 				<aui:alert type="info">
-					<liferay-ui:message key="tax-rates-syncing-this-may-take-some-time" />
+					<liferay-ui:message key="tax-rates-are-syncing" />
 				</aui:alert>
 			</c:if>
 

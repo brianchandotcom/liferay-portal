@@ -25,6 +25,7 @@ import com.liferay.redirect.service.RedirectEntryLocalService;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -95,6 +96,18 @@ public class RedirectProviderImpl
 		}
 
 		return null;
+	}
+
+	@Override
+	public Map<Pattern, String> getRedirectionPatternsMap(long groupId) {
+		Map<Pattern, String> patternStringMap = _groupPatternStrings.get(
+			groupId);
+
+		if (patternStringMap != null) {
+			return patternStringMap;
+		}
+
+		return new LinkedHashMap<>();
 	}
 
 	@Override

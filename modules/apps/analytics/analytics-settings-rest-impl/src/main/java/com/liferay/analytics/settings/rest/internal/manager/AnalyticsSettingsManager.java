@@ -83,11 +83,6 @@ public class AnalyticsSettingsManager {
 			long companyId, Map<String, Object> properties)
 		throws Exception {
 
-		SettingsDescriptor settingsDescriptor =
-			_settingsFactory.getSettingsDescriptor(_getConfigurationPid());
-
-		Set<String> allKeys = settingsDescriptor.getAllKeys();
-
 		Configuration configuration = _getFactoryConfiguration(
 			_getConfigurationPid(), ExtendedObjectClassDefinition.Scope.COMPANY,
 			companyId);
@@ -98,10 +93,23 @@ public class AnalyticsSettingsManager {
 			configurationProperties = _toMap(configuration.getProperties());
 		}
 
+		SettingsDescriptor settingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(_getConfigurationPid());
+
+		Set<String> allKeys = settingsDescriptor.getAllKeys();
+
+		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();
+
 		for (Map.Entry<String, Object> entry : properties.entrySet()) {
 			if (allKeys.contains(entry.getKey())) {
 				configurationProperties.put(entry.getKey(), entry.getValue());
 			}
+		}
+
+		multiValuedKeys.removeAll(configurationProperties.keySet());
+
+		for (String multiValuedKey : multiValuedKeys) {
+			configurationProperties.put(multiValuedKey, new String[0]);
 		}
 
 		_configurationProvider.saveCompanyConfiguration(

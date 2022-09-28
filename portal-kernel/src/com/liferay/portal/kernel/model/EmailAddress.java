@@ -55,7 +55,7 @@ public interface EmailAddress extends EmailAddressModel, PersistedModel {
 
 		};
 
-	public ListType getType()
+	public ListType getListType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

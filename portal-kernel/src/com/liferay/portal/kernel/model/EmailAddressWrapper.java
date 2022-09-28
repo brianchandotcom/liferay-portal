@@ -215,6 +215,13 @@ public class EmailAddressWrapper
 		return model.getEmailAddressId();
 	}
 
+	@Override
+	public ListType getListType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getListType();
+	}
+
 	/**
 	 * Returns the list type ID of this email address.
 	 *
@@ -263,13 +270,6 @@ public class EmailAddressWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	@Override
-	public ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getType();
 	}
 
 	/**

@@ -18,6 +18,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration;
@@ -121,9 +124,16 @@ public class OfflineOpenIdConnectSessionManager {
 
 			message.put("openIdConnectSessionId", openIdConnectSessionId);
 
-			_messageBus.sendMessage(
-				OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH,
-				message);
+			if (!_clusterMasterExecutor.isEnabled() ||
+				_clusterMasterExecutor.isMaster()) {
+
+				_messageBus.sendMessage(
+					OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH,
+					message);
+			}
+			else {
+				_sendMessageOnMaster(message);
+			}
 		}
 
 		return false;
@@ -288,6 +298,22 @@ public class OfflineOpenIdConnectSessionManager {
 			_tokensRefreshMessageListener, schedulerEntry, destinationName);
 	}
 
+	private void _sendMessageOnMaster(Message message) {
+		try {
+			_clusterMasterExecutor.executeOnMaster(
+				new MethodHandler(
+					MessageBusUtil.class.getDeclaredMethod(
+						"sendMessage", String.class, Message.class),
+					OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH,
+					message));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+	}
+
 	private void _unregisterServices() {
 		if (_messageListenerServiceRegistration != null) {
 			_messageListenerServiceRegistration.unregister();
@@ -365,6 +391,9 @@ public class OfflineOpenIdConnectSessionManager {
 		_authorizationServerMetadataResolver;
 
 	private volatile BundleContext _bundleContext;
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

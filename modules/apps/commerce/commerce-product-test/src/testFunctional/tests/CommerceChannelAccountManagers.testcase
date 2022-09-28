@@ -1,0 +1,824 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Order Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Manage Available Accounts Via User Channel Rel permission is added to the Sales Agent role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Sales Agent");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-10000 | Multiple users can be set as Channel Account Manager for the account"
+	@priority = "4"
+	test CanAccountHaveChannelAccountManagers {
+		task ("Given 2 business accounts are created") {
+			for (var account : list "A,B") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And Manage Available Accounts permission is removed for the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("And 2 users with the Sales Agent role and Minium site membership are created") {
+			for (var user : list "1,2") {
+				JSONUser.addUserWithRole(
+					roleTitle = "Sales Agent",
+					userEmailAddress = "sales.agent${user}@liferay.com",
+					userFirstName = "Sales",
+					userLastName = "Agent ${user}",
+					userScreenName = "salesagent${user}");
+
+				JSONUser.addUserToSite(
+					groupName = "Minium",
+					userEmailAddress = "sales.agent${user}@liferay.com");
+			}
+		}
+
+		task ("And Channel Account Managers entries are created for Account A and Account B") {
+			for (var account : list "A,B") {
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account ${account}");
+
+				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+				for (var user : list "1,2") {
+					CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+						channelName = "Minium Portal",
+						userName = "salesagent${user}");
+				}
+			}
+		}
+
+		task ("When salesagent1 logs in -> Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent1@liferay.com");
+		}
+
+		task ("Then both accounts are visible for salesagent1") {
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_accountName = "Account ${account}",
+					locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+			}
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_tableEntry = "Account ${account}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+			}
+		}
+
+		task ("When salesagent2 logs in -> Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent2@liferay.com");
+		}
+
+		task ("Then both accounts are visible for salesagent2") {
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_accountName = "Account ${account}",
+					locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+			}
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_tableEntry = "Account ${account}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+			}
+		}
+	}
+
+	@description = "COMMERCE-9988 | Can add a Channel Account Managers entry"
+	@priority = "4"
+	test CanAddChannelAccountManagersEntry {
+		task ("Given a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And the admin user navigates to the account Channel Defaults tab") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+		}
+
+		task ("When the admin user tries to create a new Channel Account Managers entry") {
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userName = "salesagent");
+		}
+
+		task ("Then the new entry is successfully created") {
+			AssertElementPresent(
+				key_firstColumnValue = "Minium Portal",
+				key_secondColumnValue = "Sales Agent",
+				key_table = "defaultUsers",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+		}
+
+		task ("And if the admin user tries to create an entry using the same options, an error will be thrown") {
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				assertError = "true",
+				channelName = "Minium Portal",
+				userName = "salesagent");
+		}
+	}
+
+	@description = "COMMERCE-10004 | Can add account entry user as Channel Account Manager"
+	@priority = "4"
+	test CanAddNewUserToAccountAsChannelAccountManager {
+		task ("Given a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And a Channel Account Managers entry is created for Commerce Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userName = "salesagent");
+		}
+
+		task ("When the Channel Account Manager goes into the Users tab of the Commerce Account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		}
+
+		task ("And create a new user by clicking on the + button") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+		}
+
+		task ("Then when the admin login again, he will see the new User inside Commerce Account A that the Sales Agent created previously") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			Accounts.viewAssignee(assigneeName = "Buyer User");
+		}
+	}
+
+	@description = "COMMERCE-9993 | Can assert eligibles accounts list as Channel Account Manager"
+	@priority = "4"
+	test CanAssertEligibleAccountsListAsChannelAccountManager {
+		task ("Given 3 business accounts are created") {
+			for (var account : list "A,B,C") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And Manage Available Accounts permission is removed for the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And Channel Account Managers entries are created for Account A and Account B") {
+			for (var account : list "A,B") {
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account ${account}");
+
+				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+				CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+					channelName = "Minium Portal",
+					userName = "salesagent");
+			}
+		}
+
+		task ("And assert a Channel Account Managers entry is not created for Account C") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account C");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			AssertElementNotPresent(
+				key_firstColumnValue = "Minium Portal",
+				key_secondColumnValue = "Sales Agent",
+				key_table = "defaultUsers",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+		}
+
+		task ("When salesagent logs in -> Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("Then Account A and Account B are visible and Account C is not visible") {
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_accountName = "Account ${account}",
+					locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+			}
+
+			AssertElementNotPresent(
+				key_accountName = "Account C",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_tableEntry = "Account ${account}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+			}
+
+			AssertElementNotPresent(
+				key_tableEntry = "Account C",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+		}
+	}
+
+	@description = "COMMERCE-9996 | Can assert that accounts valid for both permissions(Manage Available Accounts and Manage Available Account Via User Channel Rel) are not duplicated"
+	@priority = "4"
+	test CanAssertEligibleAccountsNotDuplicated {
+		task ("Given 3 business accounts are created") {
+			for (var account : list "A,B,C") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And an organization is created") {
+			JSONOrganization.addOrganization(organizationName = "Test Organization");
+		}
+
+		task ("And a user with the Sales Agent role, Minium site membership and linked to the organization is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Test Organization",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And Channel Account Managers entries are created for Account A and Account B") {
+			for (var account : list "A,B") {
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account ${account}");
+
+				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+				CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+					channelName = "Minium Portal",
+					userName = "salesagent");
+			}
+		}
+
+		task ("And Account B and Account C accounts are linked to the organization") {
+			for (var account : list "B,C") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = "Account ${account}",
+					organizationName = "Test Organization");
+			}
+		}
+
+		task ("When salesagent logs in -> Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("Then Accounts A, B and C are visible") {
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			for (var account : list "A,B,C") {
+				AssertElementPresent(
+					key_accountName = "Account ${account}",
+					locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+			}
+		}
+
+		task ("And Account B is not duplicated") {
+			AssertElementNotPresent(
+				key_accountName = "Account B",
+				key_index = "2",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM_N");
+		}
+	}
+
+	@description = "COMMERCE-9992 | Can assert ineligible accounts are not present as Channel Account Manager"
+	@priority = "4"
+	test CanAssertIneligibleAccountsNotPresentAsChannelAccountManager {
+		task ("Given 2 business accounts are created") {
+			for (var account : list "A,B") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And Manage Available Accounts permission is removed for the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("When salesagent logs in -> Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("Then no accounts are visible(account selector, account management)") {
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No accounts were found.");
+		}
+	}
+
+	@description = "COMMERCE-10005 | Can edit account details as Channel Account Manager"
+	@priority = "4"
+	test CanEditAccountDetailsAsChannelAccountManager {
+		task ("Given a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And a Channel Account Managers entry is created for Commerce Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userName = "salesagent");
+		}
+
+		task ("And the Channel Account Manager creates a new address") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Accounts.addAddressViaSetDefaultAddress(
+				addressCity = "Test Address",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
+		}
+
+		task ("When the user goes into the Details tab of the Commerce Account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+		}
+
+		task ("And edit the fields: ACCOUNT NAME, TAX ID, DESCRIPTION, SET A DEFAULT SHIPPING AND BILLING ADDRESS And clicks on the Save button") {
+			PortletEntry.inputName(name = "Commerce Account Edit");
+
+			PortletEntry.inputDescription(description = "Commerce Account Edit Description");
+
+			PortletEntry.inputText(
+				fieldLabel = "Tax ID",
+				text = "123456");
+
+			Button.clickSave();
+
+			for (var addressType : list "Billing,Shipping") {
+				var addressTypeUppercase = StringUtil.upperCase("${addressType}");
+
+				AssertClick(
+					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_${addressTypeUppercase}",
+					value1 = "Set Default Address");
+
+				SelectFrame(
+					key_title = "Set Default ${addressType} Address",
+					locator1 = "IFrame#MODAL_ANY");
+
+				Click(
+					key_addressName = "Test Name",
+					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
+
+				SelectFrameTop();
+
+				AssertClick(
+					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
+					value1 = "Save");
+
+				Alert.viewSuccessMessage();
+			}
+		}
+
+		task ("Then when the admin login again, he will see all the changes that the Channel Account Manager marked previously") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Commerce Account Edit Description",
+				accountName = "Commerce Account Edit",
+				accountTaxId = "123456");
+
+			Accounts.viewDefaultBillingAddress(
+				addressCity = "Test Address",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
+
+			Accounts.viewDefaultShippingAddress(
+				addressCity = "Test Address",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
+		}
+	}
+
+	@description = "COMMERCE-9989 | Can edit a Channel Account Managers entry and assert the changes for the user"
+	@priority = "4"
+	test CanEditChannelAccountManagersEntry {
+		task ("Given a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And 2 users with the Sales Agent role and Minium site membership are created") {
+			for (var user : list "1,2") {
+				JSONUser.addUserWithRole(
+					roleTitle = "Sales Agent",
+					userEmailAddress = "sales.agent${user}@liferay.com",
+					userFirstName = "Sales",
+					userLastName = "Agent ${user}",
+					userScreenName = "salesagent${user}");
+
+				JSONUser.addUserToSite(
+					groupName = "Minium",
+					userEmailAddress = "sales.agent${user}@liferay.com");
+			}
+		}
+
+		task ("And a Channel Account Managers entry is created for Commerce Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userName = "salesagent1");
+		}
+
+		task ("And salesagent1 can see the account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent1@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(
+				key_accountName = "Commerce Account",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+		}
+
+		task ("And salesagent2 cannot see the account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent2@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
+		}
+
+		task ("When the admin user edits the entry(salesagent1 -> salesagent2)") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.editChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				newUserName = "salesagent2",
+				userFullName = "Sales Agent 1");
+		}
+
+		task ("Then the changes are successfully applied") {
+			AssertElementPresent(
+				key_firstColumnValue = "Minium Portal",
+				key_secondColumnValue = "Sales Agent 2",
+				key_table = "defaultUsers",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+		}
+
+		task ("And salesagent1 cannot see the account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent1@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
+		}
+
+		task ("And salesagent2 can see the account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent2@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(
+				key_accountName = "Commerce Account",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+		}
+	}
+
+	@description = "COMMERCE-9990 | Can remove a Channel Account Managers entry and assert that it's removed for the user"
+	test CanRemoveChannelAccountManagersEntry {
+		task ("Given a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And a Channel Account Managers entry is created for Commerce Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userName = "salesagent");
+		}
+
+		task ("And salesagent can see the account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(
+				key_accountName = "Commerce Account",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+		}
+
+		task ("When the admin user removes the entry") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.deleteChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userFullName = "Sales Agent");
+
+			AssertElementNotPresent(
+				key_firstColumnValue = "Minium Portal",
+				key_secondColumnValue = "Sales Agent",
+				key_table = "defaultUsers",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+		}
+
+		task ("Then salesagent cannot see the account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementNotPresent(
+				key_accountName = "Commerce Account",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+		}
+	}
+
+}

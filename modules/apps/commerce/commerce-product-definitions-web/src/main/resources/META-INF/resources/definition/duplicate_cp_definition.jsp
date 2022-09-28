@@ -28,8 +28,6 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 	<aui:form cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="duplicatefm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<aui:input name="name" required="<%= true %>" type="text" value='<%= LanguageUtil.format(locale, "copy-of-x", cpDefinition.getName(languageId)) %>' />
-
 		<label class="control-label" for="catalogId"><liferay-ui:message key="catalog" /></label>
 
 		<div id="autocomplete-root"></div>
@@ -68,10 +66,6 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 							name: {},
 							productType: <portlet:namespace />product.productType,
 						};
-
-						formattedData.name[
-							<portlet:namespace />defaultLanguageId
-						] = document.getElementById('<portlet:namespace />name').value;
 
 						var redirectURL = new Liferay.PortletURL.createURL(
 							'<%= editProductDefinitionURL %>'

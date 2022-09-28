@@ -176,7 +176,7 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionsCP(
+		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Remove Permission Scope",
@@ -189,7 +189,7 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionsCP(
+		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			removeSiteScope = "${siteName}",
@@ -214,7 +214,7 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionsCP(
+		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Permission Scope",

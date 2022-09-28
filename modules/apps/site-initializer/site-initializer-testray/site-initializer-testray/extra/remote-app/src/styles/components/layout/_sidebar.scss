@@ -46,7 +46,7 @@ $normal-transition: opacity 1s ease;
 	.testray-sidebar-item {
 		color: #8b8db2;
 		display: block;
-		padding: 10px 30px;
+		padding: 10px 22px;
 		position: relative;
 		white-space: nowrap;
 
@@ -57,6 +57,10 @@ $normal-transition: opacity 1s ease;
 			color: white;
 			text-decoration: none;
 			transition: $hover-transition;
+		}
+		&:active,
+		&:hover > .testray-icon {
+			fill: #fff;
 		}
 
 		&.active {
@@ -124,7 +128,7 @@ $normal-transition: opacity 1s ease;
 
 .testray-avatar-dropdown {
 	color: #8b8db2;
-	padding: 10px 20px !important;
+	padding: 10px 14px !important;
 }
 
 .testray-sidebar .testray-avatar-dropdown-text {
@@ -139,12 +143,20 @@ $normal-transition: opacity 1s ease;
 
 .forward-icon {
 	cursor: pointer;
-	padding: 10px 30px;
+	padding: 10px 32px;
 	transform: rotateY(0deg);
 	transition: transform 0.5s ease 0.4s;
 
 	&:hover {
 		background-color: #303376;
+		fill: #fff;
+		transition: transform 0.5s ease 0.4s;
+		color: #fff;
+	}
+	&:hover > svg path {
+		fill: #fff;
+		color: #fff;
+		transition: transform 0.5s ease 0.4s;
 	}
 }
 

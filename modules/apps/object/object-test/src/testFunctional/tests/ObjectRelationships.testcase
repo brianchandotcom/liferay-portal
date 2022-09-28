@@ -773,6 +773,56 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry B");
 	}
 
+	@description = "LPS-155537 - Verify that it's possible to edit a relationship parameter"
+	@priority = "4"
+	test CanEditRelationshipParameter {
+		task ("Create a custom object, and a self relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Self Relationship",
+				relationshipName = "selfRelationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Create an realtionship from Postal Address to custom object created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Postal Address");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.addObjectRelationshipViaUI(
+				label = "Relationship with Custom Object",
+				object = "Custom Object",
+				parameter = "Self Relationship",
+				type = "One to Many");
+		}
+
+		task ("Verify it's possible to edit a relationship parameter") {
+			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship with Custom Object");
+
+			ObjectRelationships.editRelationshipsParameter(parameter = "Relationship with Custom Object");
+
+			Button.clickSave();
+		}
+	}
+
 	@description = "LPS-146754 - Verify that it's not possible for a Custom Object to create a Many-to-Many relationship with itself"
 	@priority = "4"
 	test CannotCreateManytoManyRelationshipWithItself {

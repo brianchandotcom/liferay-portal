@@ -188,7 +188,11 @@ export function SelectLayoutTree({
 
 						<ClayIcon symbol={item.icon} />
 
-						{item.name}
+						<div className="d-flex">
+							<span className="flex-grow-0" title={item.url}>
+								{item.name}
+							</span>
+						</div>
 					</ClayTreeView.ItemStack>
 
 					<ClayTreeView.Group items={item.children}>
@@ -217,7 +221,14 @@ export function SelectLayoutTree({
 
 								<ClayIcon symbol={item.icon} />
 
-								{item.name}
+								<div className="d-flex">
+									<span
+										className="flex-grow-0"
+										title={item.url}
+									>
+										{item.name}
+									</span>
+								</div>
 							</ClayTreeView.Item>
 						)}
 					</ClayTreeView.Group>

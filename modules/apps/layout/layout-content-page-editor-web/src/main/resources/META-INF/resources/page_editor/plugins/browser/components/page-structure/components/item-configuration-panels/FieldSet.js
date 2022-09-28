@@ -70,7 +70,7 @@ function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
 }
 
 export function FieldSet({
-	customStyles = false,
+	isCustomStylesFieldSet = false,
 	fields,
 	item = {},
 	label,
@@ -92,8 +92,8 @@ export function FieldSet({
 	return !!availableFields.length && label ? (
 		<Collapse label={label} open>
 			<FieldSetContent
-				customStyles={customStyles}
 				fields={availableFields}
+				isCustomStylesFieldSet={isCustomStylesFieldSet}
 				item={item}
 				languageId={languageId}
 				onValueSelect={onValueSelect}
@@ -102,8 +102,8 @@ export function FieldSet({
 		</Collapse>
 	) : (
 		<FieldSetContent
-			customStyles={customStyles}
 			fields={availableFields}
+			isCustomStylesFieldSet={isCustomStylesFieldSet}
 			item={item}
 			languageId={languageId}
 			onValueSelect={onValueSelect}
@@ -113,8 +113,8 @@ export function FieldSet({
 }
 
 function FieldSetContent({
-	customStyles,
 	fields,
+	isCustomStylesFieldSet,
 	item,
 	languageId,
 	onValueSelect,
@@ -140,9 +140,9 @@ function FieldSetContent({
 					>
 						<div className="autofit-col autofit-col-expand">
 							<FieldComponent
-								customStyle={customStyles}
 								disabled={fieldIsDisabled(item, field)}
 								field={field}
+								isCustomStyle={isCustomStylesFieldSet}
 								item={item}
 								onValueSelect={onValueSelect}
 								value={getFieldValue({
@@ -182,8 +182,8 @@ function getFieldValue({field, languageId, values}) {
 }
 
 FieldSet.propTypes = {
-	customStyles: PropTypes.bool,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
+	isCustomStylesFieldSet: PropTypes.bool,
 	item: PropTypes.object,
 	label: PropTypes.string,
 	languageId: PropTypes.string.isRequired,

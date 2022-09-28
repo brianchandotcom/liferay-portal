@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.List;
 
@@ -204,7 +205,7 @@ public class CommerceQualifierEntryServiceImpl
 			long classNameId)
 		throws PortalException {
 
-		ClassName className = classNameLocalService.getClassName(classNameId);
+		ClassName className = _classNameLocalService.getClassName(classNameId);
 
 		return _getModelResourcePermission(className.getClassName());
 	}
@@ -218,6 +219,9 @@ public class CommerceQualifierEntryServiceImpl
 
 		return commerceQualifierMetadata.getModelResourcePermission();
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommerceQualifierMetadataRegistry

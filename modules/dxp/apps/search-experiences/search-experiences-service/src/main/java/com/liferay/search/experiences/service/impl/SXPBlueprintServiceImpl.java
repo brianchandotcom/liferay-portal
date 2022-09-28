@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -132,8 +131,5 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	)
 	private volatile ModelResourcePermission<SXPBlueprint>
 		_sxpBlueprintModelResourcePermission;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

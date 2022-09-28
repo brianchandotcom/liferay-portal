@@ -441,8 +441,6 @@ definition {
 			permissionNavigationValue = "Web Content > Web Content Article");
 
 		Role.viewPermissionCP(
-			assigneeName = "Site Name",
-			assigneeType = "Sites",
 			permissionDefinitionValue = "Update Discussion",
 			permissionNavigationValue = "Web Content > Web Content Article");
 

@@ -19,11 +19,8 @@ import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
 import java.util.Set;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -32,15 +29,6 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface OpenAPIResource {
 
-	public default Response getOpenAPI(
-			Application application, HttpHeaders httpHeaders,
-			Set<Class<?>> resourceClasses, ServletConfig servletConfig,
-			String type, UriInfo uriInfo)
-		throws Exception {
-
-		return getOpenAPI(resourceClasses, type);
-	}
-
 	public Response getOpenAPI(
 			HttpServletRequest httpServletRequest,
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
@@ -48,14 +36,6 @@ public interface OpenAPIResource {
 
 	public default Response getOpenAPI(
 			OpenAPIContributor openAPIContributor,
-			OpenAPISchemaFilter openAPISchemaFilter,
-			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
-		throws Exception {
-
-		return null;
-	}
-
-	public default Response getOpenAPI(
 			OpenAPISchemaFilter openAPISchemaFilter,
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
@@ -74,7 +54,7 @@ public interface OpenAPIResource {
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
-		return getOpenAPI(resourceClasses, type, uriInfo);
+		return null;
 	}
 
 }

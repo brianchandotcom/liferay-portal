@@ -115,16 +115,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	}
 
 	@Override
-	public Response getOpenAPI(
-			OpenAPISchemaFilter openAPISchemaFilter,
-			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
-		throws Exception {
-
-		return getOpenAPI(
-			null, openAPISchemaFilter, resourceClasses, type, uriInfo);
-	}
-
-	@Override
 	public Response getOpenAPI(Set<Class<?>> resourceClasses, String type)
 		throws Exception {
 

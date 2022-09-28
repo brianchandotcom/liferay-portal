@@ -137,6 +137,88 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
+	@priority = "3"
+	test CouldAddAndRemoveFragmentInCardView {
+		property custom.properties = "feature.flag.LPS-158737=true";
+
+		task ("Given go to edit content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When switch to card view") {
+			Click(
+				key_switchTo = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("Then assert could add and remove fragment to Favorites session") {
+			MouseOver(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			MouseOver(
+				ariaLabel = "Mark Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+
+			AssertTextEquals(
+				locator1 = "Tooltip#GENERIC_TOOLTIP",
+				value1 = "Mark Favorite");
+
+			Click.clickNoMouseOver(
+				ariaLabel = "Mark Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertElementPresent(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertElementPresent(
+				index = "1",
+				key_panel = "Favorites",
+				locator1 = "Panel#PANEL_BY_INDEX");
+
+			MouseOver(
+				ariaLabel = "Unmark Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+
+			AssertTextEquals(
+				locator1 = "Tooltip#GENERIC_TOOLTIP",
+				value1 = "Unmark Favorite");
+
+			Click.clickNoMouseOver(
+				ariaLabel = "Unmark Favorite",
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+
+			AssertElementNotPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertElementPresent(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
 	@priority = "5"
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSession {

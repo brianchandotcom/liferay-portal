@@ -191,6 +191,9 @@ const ActivationStatusAnalyticsCloud = ({
 	const updateGroupId = async () => {
 		await Promise.all([
 			await client.mutate({
+				context : {
+					displaySuccess: false
+				},
 				mutation: updateAccountSubscriptionGroups,
 				variables: {
 					accountSubscriptionGroup: {

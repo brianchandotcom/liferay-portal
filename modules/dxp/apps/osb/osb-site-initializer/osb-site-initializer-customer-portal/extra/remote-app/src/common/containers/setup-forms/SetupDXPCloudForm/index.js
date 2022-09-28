@@ -119,6 +119,9 @@ const SetupDXPCloudPage = ({
 
 		if (!alreadySubmitted && dxp) {
 			const {data} = await client.mutate({
+				context: {
+					displaySuccess: false,
+				},
 				mutation: addDXPCloudEnvironment,
 				variables: {
 					DXPCloudEnvironment: {
@@ -137,6 +140,9 @@ const SetupDXPCloudPage = ({
 				await Promise.all(
 					dxp.admins.map(({email, firstName, github, lastName}) =>
 						client.mutate({
+							context: {
+								displaySuccess: false,
+							},
 							mutation: addAdminDXPCloud,
 							variables: {
 								AdminDXPCloud: {

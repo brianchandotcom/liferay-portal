@@ -172,6 +172,9 @@ const TeamMembersTable = ({project, provisioningServerAPI, sessionId}) => {
 
 		if (userToBeRemoved) {
 			await client.mutate({
+				context:{
+					displaySuccess:false,
+				},
 				mutation: deleteAccountUserAccount,
 				variables: {
 					accountKey: project.accountKey,

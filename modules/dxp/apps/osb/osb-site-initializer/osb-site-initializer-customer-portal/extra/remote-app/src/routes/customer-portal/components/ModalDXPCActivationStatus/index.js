@@ -62,6 +62,10 @@ const ModalDXPCActivationStatus = ({
 		);
 
 		await client.mutate({
+			context: {
+				displaySuccess: false,
+			},
+
 			mutation: updateAccountSubscriptionGroups,
 			variables: {
 				accountSubscriptionGroup: {
@@ -109,8 +113,12 @@ const ModalDXPCActivationStatus = ({
 
 		if (dxpCloudEnvironment) {
 			await client.mutate({
+				context:{
+					displaySuccess:false,
+				},
+
 				mutation: updateDXPCloudEnvironment,
-				variables: {
+				variables: {	
 					DXPCloudEnvironment: {
 						projectId: projectIdValue,
 					},

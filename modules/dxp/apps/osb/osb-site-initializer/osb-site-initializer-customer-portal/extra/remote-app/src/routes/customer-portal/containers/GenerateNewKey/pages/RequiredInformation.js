@@ -179,6 +179,9 @@ const RequiredInformation = ({
 			}
 
 			await client.mutate({
+				context:{
+					displaySuccess:false,
+				},
 				mutation: patchOrderItemByExternalReferenceCode,
 				variables: {
 					externalReferenceCode: licenseKey.productPurchaseKey,

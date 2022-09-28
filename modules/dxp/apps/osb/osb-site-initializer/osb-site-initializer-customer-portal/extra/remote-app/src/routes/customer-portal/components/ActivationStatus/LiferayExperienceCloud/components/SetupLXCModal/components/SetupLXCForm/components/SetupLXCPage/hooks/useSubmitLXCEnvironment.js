@@ -88,6 +88,9 @@ export default function useSubmitLXCEnvironment(
 						?.liferayExperienceCloudEnvironmentId;
 
 				await updateAccountSubscriptionGroupsInfo({
+					context: {
+						displaySuccess: false,
+					},
 					variables: {
 						accountSubscriptionGroup: {
 							accountKey: project.accountKey,
@@ -101,6 +104,9 @@ export default function useSubmitLXCEnvironment(
 					lxcActivationFields?.admins?.map(
 						({email, fullName, github}) => {
 							return createAdminLiferayExperienceCloud({
+								context: {
+									displaySuccess:false,
+								},
 								variables: {
 									AdminLiferayExperienceCloud: {
 										emailAddress: email,

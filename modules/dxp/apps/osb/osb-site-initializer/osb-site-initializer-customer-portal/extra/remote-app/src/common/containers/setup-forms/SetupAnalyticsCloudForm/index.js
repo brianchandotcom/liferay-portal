@@ -136,6 +136,9 @@ const SetupAnalyticsCloudPage = ({
 
 		if (!alreadySubmitted) {
 			const {data} = await client.mutate({
+				context: {
+					displaySuccess: false,
+				},
 				mutation: addAnalyticsCloudWorkspace,
 				variables: {
 					analyticsCloudWorkspace: {
@@ -154,6 +157,9 @@ const SetupAnalyticsCloudPage = ({
 						?.analyticsCloudWorkspaceId;
 
 				await client.mutate({
+					context: {
+						displaySuccess: false,
+					},
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {

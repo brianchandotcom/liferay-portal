@@ -16,6 +16,9 @@ export default function getUpdateProjectId(
 ) {
 	if (lxcEnvironment) {
 		updateLiferayExperienceCloudEnvironment({
+			context: {
+				displaySuccess: false,
+			},
 			variables: {
 				LiferayExperienceCloudEnvironment: {
 					projectId: projectIdValue,

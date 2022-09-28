@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Search Experiences Federation API
+Bundle-SymbolicName: com.liferay.search.experiences.federation.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.search.experiences.federation.configuration,\
+	com.liferay.search.experiences.federation.ingestion
+Liferay-Enterprise-App: dxp.only=true;product.id=22b7e30f-34d4-4a63-9696-56987ad66e4e

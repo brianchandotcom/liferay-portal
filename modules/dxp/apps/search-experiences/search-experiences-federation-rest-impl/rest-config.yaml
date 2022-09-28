@@ -1,0 +1,7 @@
+apiDir: "../search-experiences-federation-rest-api/src/main/java"
+apiPackagePath: "com.liferay.search.experiences.federation.rest"
+application:
+    baseURI: "/search-experiences-federation"
+    className: "searchExperiencesFederationRESTApplication"
+    name: "Liferay.Search.Experiences.Federation.REST"
+author: "Bryan Engler"

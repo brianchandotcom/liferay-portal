@@ -1,0 +1,40 @@
+{
+	"mappings": {
+		"_doc": {
+			"properties": {
+				"content": {
+					"store": true,
+					"type": "text"
+				},
+				"link": {
+					"store": true,
+					"type": "text"
+				},
+				"originSite": {
+					"store": true,
+					"type": "keyword"
+				},
+				"product": {
+					"store": true,
+					"type": "keyword"
+				},
+				"productVersion": {
+					"store": true,
+					"type": "keyword"
+				},
+				"tags": {
+					"store": true,
+					"type": "keyword"
+				},
+				"title": {
+					"store": true,
+					"type": "text"
+				},
+				"year": {
+					"store": true,
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+dependencies {
+	compileInclude group: "com.liferay", name: "org.jsoup", version: "1.10.2.LIFERAY-PATCHED-3"
+
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:portal-search:portal-search-api")
+	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
+	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":dxp:apps:search-experiences:search-experiences-federation-api")
+
+	testCompile project(":apps:portal-search:portal-search-test-util")
+}

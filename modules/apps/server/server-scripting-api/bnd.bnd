@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Server Scripting API
+Bundle-SymbolicName: com.liferay.server.scripting.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.server.scripting,\
+	com.liferay.server.scripting.executor

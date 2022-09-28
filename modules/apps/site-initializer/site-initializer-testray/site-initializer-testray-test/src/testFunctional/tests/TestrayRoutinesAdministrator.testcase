@@ -45,12 +45,30 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160583 - Verify if as an Administrator I should be able to add and delete a Routine with Default Environment Factors"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors {
+		task ("Given that the user add a new Routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-160583 AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
 
+		task ("And that the user add default environments factors") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+		task ("Then a routine is deleted with default environments factors") {
+			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+		}
 	}
 
 	@description = "This is a test for LPS-160582 - Verify if as an Administrator I am able to add a Routine"

@@ -207,7 +207,6 @@ const ActivationKeysInputs = ({
 									getKebabCase(event.target.value)
 								)
 							}
-							value={selectedAccountSubscriptionName}
 						>
 							{accountSubscriptions.map((accountSubscription) => (
 								<ClaySelect.Option

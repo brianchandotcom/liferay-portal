@@ -21,6 +21,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -54,6 +55,7 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
+import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionPersistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -102,7 +104,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setCompanyId(
 			serviceContext.getCompanyId());
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 
 		workflowMetricsSLADefinition.setUserId(user.getUserId());
 		workflowMetricsSLADefinition.setUserName(user.getFullName());
@@ -157,7 +160,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 				workflowMetricsSLADefinition);
 
 		addWorkflowMetricsSLADefinitionVersion(
-			userLocalService.getUser(serviceContext.getGuestOrUserId()),
+			_userLocalService.getUser(serviceContext.getGuestOrUserId()),
 			workflowMetricsSLADefinition);
 
 		long companyId = workflowMetricsSLADefinition.getCompanyId();
@@ -279,7 +282,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			getNextVersion(workflowMetricsSLADefinition.getVersion()));
 		workflowMetricsSLADefinition.setStatus(status);
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		User user = _userLocalService.getUser(
+			serviceContext.getGuestOrUserId());
 
 		workflowMetricsSLADefinition.setStatusByUserId(user.getUserId());
 		workflowMetricsSLADefinition.setStatusByUserName(user.getFullName());
@@ -325,7 +329,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion =
-				workflowMetricsSLADefinitionVersionPersistence.create(
+				_workflowMetricsSLADefinitionVersionPersistence.create(
 					workflowMetricsSLADefinitionVersionId);
 
 		workflowMetricsSLADefinitionVersion.setGroupId(
@@ -372,7 +376,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setStatusByUserName(user.getFullName());
 		workflowMetricsSLADefinition.setStatusDate(date);
 
-		return workflowMetricsSLADefinitionVersionPersistence.update(
+		return _workflowMetricsSLADefinitionVersionPersistence.update(
 			workflowMetricsSLADefinitionVersion);
 	}
 
@@ -612,6 +616,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
+
+	@Reference
+	private WorkflowMetricsSLADefinitionVersionPersistence
+		_workflowMetricsSLADefinitionVersionPersistence;
 
 }

@@ -22,11 +22,11 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {BasicInfo, Conditions} from './ObjectValidationTabs';
 import {
 	ObjectValidationErrors,
 	useObjectValidationForm,
-} from './ObjectValidationFormBase';
-import {BasicInfo, Conditions} from './ObjectValidationTabs';
+} from './useObjectValidationForm';
 
 const TABS = [
 	{

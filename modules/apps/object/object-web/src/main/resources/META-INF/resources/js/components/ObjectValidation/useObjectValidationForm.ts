@@ -18,6 +18,13 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 
+interface IUseObjectValidationForm {
+	initialValues: Partial<ObjectValidation>;
+	onSubmit: (validation: ObjectValidation) => void;
+}
+
+export type ObjectValidationErrors = FormError<ObjectValidation>;
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');
 
@@ -66,9 +73,3 @@ export function useObjectValidationForm({
 
 	return {errors, handleChange, handleSubmit, setValues, values};
 }
-interface IUseObjectValidationForm {
-	initialValues: Partial<ObjectValidation>;
-	onSubmit: (validation: ObjectValidation) => void;
-}
-
-export type ObjectValidationErrors = FormError<ObjectValidation>;

@@ -13,6 +13,11 @@
  */
 
 import {FormError} from '@liferay/object-js-components-web';
+interface IUseObjectValidationForm {
+	initialValues: Partial<ObjectValidation>;
+	onSubmit: (validation: ObjectValidation) => void;
+}
+export declare type ObjectValidationErrors = FormError<ObjectValidation>;
 export declare function useObjectValidationForm({
 	initialValues,
 	onSubmit,
@@ -23,9 +28,4 @@ export declare function useObjectValidationForm({
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;
 };
-interface IUseObjectValidationForm {
-	initialValues: Partial<ObjectValidation>;
-	onSubmit: (validation: ObjectValidation) => void;
-}
-export declare type ObjectValidationErrors = FormError<ObjectValidation>;
 export {};

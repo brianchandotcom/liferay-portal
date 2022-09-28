@@ -61,9 +61,8 @@ if (portletTitleBasedNavigation) {
 				</li>
 				<li class="nav-item">
 					<liferay-frontend:sidebar-toggler-button
-						cssClass="btn-unstyled"
+						cssClass="btn btn-monospaced btn-sm btn-unstyled"
 						icon="info-circle-open"
-						label="info"
 					/>
 				</li>
 			</ul>

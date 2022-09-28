@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>UPDATE_PICKLIST_NAME</td>
-		<td>//input[@aria-describedby]</td>
+		<td>//input[@aria-describedby] | //*[text()='Name']/..//input[@type="text"]</td>
 		<td></td>
 	</tr>
 	<tr>

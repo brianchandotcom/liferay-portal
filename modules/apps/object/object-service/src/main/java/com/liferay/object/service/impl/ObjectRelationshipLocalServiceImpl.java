@@ -318,6 +318,15 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public ObjectRelationship fetchObjectRelationshipByObjectDefinitionId(
+			long objectDefinitionId, String objectRelationshipName)
+		throws Exception {
+
+		return objectRelationshipPersistence.fetchByODI1_N_First(
+			objectDefinitionId, objectRelationshipName, null);
+	}
+
+	@Override
 	public ObjectRelationship fetchObjectRelationshipByObjectFieldId2(
 		long objectFieldId2) {
 

@@ -55,6 +55,12 @@ public class BookmarksFolderActivityInterpreterTest
 	@Override
 	protected void addActivities() throws Exception {
 		_folder = BookmarksTestUtil.addFolder(group.getGroupId(), "Folder");
+
+		_bookmarksFolderLocalService.moveFolderToTrash(
+			TestPropsValues.getUserId(), _folder.getFolderId());
+
+		_bookmarksFolderLocalService.restoreFolderFromTrash(
+			TestPropsValues.getUserId(), _folder.getFolderId());
 	}
 
 	@Override

@@ -24,7 +24,10 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -94,7 +97,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Kaleo process
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		validate(ddmTemplateId);
@@ -125,7 +128,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(kaleoProcess, serviceContext);
+		_resourceLocalService.addModelResources(kaleoProcess, serviceContext);
 
 		// Kaleo process links
 
@@ -134,7 +137,7 @@ public class KaleoProcessLocalServiceImpl
 		// Dynamic data mapping template link
 
 		_ddmTemplateLinkLocalService.addTemplateLink(
-			classNameLocalService.getClassNameId(KaleoProcess.class),
+			_classNameLocalService.getClassNameId(KaleoProcess.class),
 			kaleoProcessId, ddmTemplateId);
 
 		return kaleoProcess;
@@ -168,7 +171,7 @@ public class KaleoProcessLocalServiceImpl
 		// Dynamic data mapping template link
 
 		_ddmTemplateLinkLocalService.deleteTemplateLink(
-			classNameLocalService.getClassNameId(KaleoProcess.class),
+			_classNameLocalService.getClassNameId(KaleoProcess.class),
 			kaleoProcess.getKaleoProcessId());
 
 		// Dynamic data lists record set
@@ -341,7 +344,7 @@ public class KaleoProcessLocalServiceImpl
 		// Dynamic data mapping template link
 
 		_ddmTemplateLinkLocalService.updateTemplateLink(
-			classNameLocalService.getClassNameId(KaleoProcess.class),
+			_classNameLocalService.getClassNameId(KaleoProcess.class),
 			kaleoProcessId, ddmTemplateId);
 
 		// Dynamic data lists record set
@@ -492,6 +495,9 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference
@@ -502,6 +508,12 @@ public class KaleoProcessLocalServiceImpl
 
 	@Reference
 	private KaleoProcessLinkLocalService _kaleoProcessLinkLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

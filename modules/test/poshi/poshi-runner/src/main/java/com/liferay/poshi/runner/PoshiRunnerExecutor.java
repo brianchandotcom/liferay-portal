@@ -1201,11 +1201,15 @@ public class PoshiRunnerExecutor {
 					}
 
 					if (PropsValues.DEBUG_STACKTRACE) {
-						throw new Exception(throwable.getMessage(), exception);
+						throw exception;
 					}
 
 					if (throwable instanceof Error) {
-						throw (Error)throwable;
+						exception = new Exception(throwable.getMessage());
+
+						exception.setStackTrace(throwable.getStackTrace());
+
+						throw exception;
 					}
 
 					throw (Exception)throwable;

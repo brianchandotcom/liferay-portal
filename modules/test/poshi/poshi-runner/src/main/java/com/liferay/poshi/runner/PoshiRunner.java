@@ -199,16 +199,10 @@ public class PoshiRunner {
 
 			throw webDriverException;
 		}
-		catch (Exception exception) {
+		catch (Throwable throwable) {
 			LiferaySeleniumUtil.printJavaProcessStacktrace();
 
-			PoshiStackTraceUtil.printStackTrace(exception.getMessage());
-
-			PoshiStackTraceUtil.emptyStackTrace();
-
-			exception.printStackTrace();
-
-			throw exception;
+			throw _getRuntimeException(throwable);
 		}
 	}
 
@@ -223,10 +217,10 @@ public class PoshiRunner {
 				_runTearDown();
 			}
 		}
-		catch (Exception exception) {
-			PoshiStackTraceUtil.printStackTrace(exception.getMessage());
+		catch (Throwable throwable) {
+			RuntimeException runtimeException = _getRuntimeException(throwable);
 
-			PoshiStackTraceUtil.emptyStackTrace();
+			runtimeException.printStackTrace();
 		}
 		finally {
 			if (PropsValues.PROXY_SERVER_ENABLED) {
@@ -274,21 +268,33 @@ public class PoshiRunner {
 
 			LiferaySeleniumUtil.assertNoPoshiWarnings();
 		}
-		catch (Exception exception) {
+		catch (Throwable throwable) {
 			LiferaySeleniumUtil.printJavaProcessStacktrace();
 
-			PoshiStackTraceUtil.printStackTrace(exception.getMessage());
+			RuntimeException runtimeException = _getRuntimeException(throwable);
 
-			PoshiStackTraceUtil.emptyStackTrace();
+			runtimeException.printStackTrace();
 
-			exception.printStackTrace();
-
-			throw exception;
+			throw runtimeException;
 		}
 	}
 
 	@Rule
 	public RetryTestRule retryTestRule = new RetryTestRule();
+
+	private RuntimeException _getRuntimeException(Throwable throwable) {
+		String poshiStackTrace = PoshiStackTraceUtil.getStackTrace(
+			throwable.getMessage());
+
+		PoshiStackTraceUtil.emptyStackTrace();
+
+		RuntimeException runtimeException = new RuntimeException(
+			poshiStackTrace);
+
+		runtimeException.setStackTrace(throwable.getStackTrace());
+
+		return runtimeException;
+	}
 
 	private void _runCommand() throws Exception {
 		_poshiLogger.logNamespacedClassCommandName(

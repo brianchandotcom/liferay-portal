@@ -1,0 +1,79 @@
+definition {
+
+	macro addChannelAccountManagersEntry {
+		Variables.assertDefined(parameterList = "${channelName},${userName}");
+
+		Click(
+			key_termType = "defaultUsers",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_selectFieldLabel = "Channel",
+			locator1 = "CommerceEntry#ANY_SELECT",
+			value1 = "${channelName}");
+
+		Select(
+			key_selectFieldLabel = "User",
+			locator1 = "CommerceEntry#ANY_SELECT",
+			value1 = "${userName}");
+
+		Button.clickSave();
+
+		if (isSet(assertError) && ("${assertError}" == "true")) {
+			Alert.viewErrorMessage(errorMessage = "This user is already defined for the selected channel.");
+		}
+
+		SelectFrame.selectFrameTop();
+	}
+
+	macro deleteChannelAccountManagersEntry {
+		Variables.assertDefined(parameterList = "${channelName},${userFullName}");
+
+		Click(
+			key_firstColumnValue = "${channelName}",
+			key_secondColumnValue = "${userFullName}",
+			key_table = "defaultUsers",
+			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+	}
+
+	macro editChannelAccountManagersEntry {
+		Variables.assertDefined(parameterList = "${channelName},${userFullName}");
+
+		Click(
+			key_firstColumnValue = "${channelName}",
+			key_secondColumnValue = "${userFullName}",
+			key_table = "defaultUsers",
+			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(newChannelName)) {
+			Select(
+				key_selectFieldLabel = "Channel",
+				locator1 = "CommerceEntry#ANY_SELECT",
+				value1 = "${newChannelName}");
+		}
+
+		if (isSet(newUserName)) {
+			Select(
+				key_selectFieldLabel = "User",
+				locator1 = "CommerceEntry#ANY_SELECT",
+				value1 = "${newUserName}");
+		}
+
+		Button.clickSave();
+
+		if (isSet(assertError) && ("${assertError}" == "true")) {
+			Alert.viewErrorMessage(errorMessage = "This user is already defined for the selected channel.");
+		}
+
+		SelectFrame.selectFrameTop();
+	}
+
+}

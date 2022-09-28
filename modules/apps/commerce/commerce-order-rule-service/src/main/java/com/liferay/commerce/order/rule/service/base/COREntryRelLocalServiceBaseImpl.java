@@ -17,7 +17,6 @@ package com.liferay.commerce.order.rule.service.base;
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalServiceUtil;
-import com.liferay.commerce.order.rule.service.persistence.COREntryPersistence;
 import com.liferay.commerce.order.rule.service.persistence.COREntryRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -467,9 +466,6 @@ public abstract class COREntryRelLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected COREntryPersistence corEntryPersistence;
-
 	protected COREntryRelLocalService corEntryRelLocalService;
 
 	@Reference
@@ -478,18 +474,6 @@ public abstract class COREntryRelLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		COREntryRelLocalServiceBaseImpl.class);

@@ -194,13 +194,24 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 			<aui:button-row>
 				<aui:button href="" onClick='<%= liferayPortletResponse.getNamespace() + "showConfirmationModal(this);" %>' value="cancel" />
 
-				<aui:button type="submit" value="save" />
+				<aui:button id="submitForm" type="submit" value="save" />
 			</aui:button-row>
 		</div>
 	</aui:form>
 </clay:sheet>
 
 <aui:script>
+	var submitButton = document.querySelector('#<portlet:namespace />submitForm');
+	var form = document.querySelector(
+		"form[action='<%= editSyncedContactsURL %>']"
+	);
+
+	debugger;
+
+	submitButton.addEventListener('click', () => {
+		form.submit();
+	});
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />showConfirmationModal',

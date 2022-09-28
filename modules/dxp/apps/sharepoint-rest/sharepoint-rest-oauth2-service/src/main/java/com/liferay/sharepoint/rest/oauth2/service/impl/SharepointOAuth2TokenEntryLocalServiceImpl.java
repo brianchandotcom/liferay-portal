@@ -17,12 +17,14 @@ package com.liferay.sharepoint.rest.oauth2.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 import com.liferay.sharepoint.rest.oauth2.service.base.SharepointOAuth2TokenEntryLocalServiceBaseImpl;
 
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -61,7 +63,7 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 
 		sharepointOAuth2TokenEntry.setUserId(userId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		sharepointOAuth2TokenEntry.setUserName(user.getFullName());
 
@@ -111,5 +113,8 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 	public int getUserSharepointOAuth2TokenEntriesCount(long userId) {
 		return sharepointOAuth2TokenEntryPersistence.countByUserId(userId);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

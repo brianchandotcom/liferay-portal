@@ -72,11 +72,11 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 	public String getFilledTerm(String term, Object object, Locale locale)
 		throws PortalException {
 
-		ObjectEntry objectEntry = null;
-
-		if (object instanceof ObjectEntry) {
-			objectEntry = (ObjectEntry)object;
+		if (!(object instanceof ObjectEntry)) {
+			return term;
 		}
+
+		ObjectEntry objectEntry = (ObjectEntry)object;
 
 		if (term.equals("[%OBJECT_ENTRY_CREATOR%]")) {
 			return String.valueOf(objectEntry.getUserId());

@@ -288,6 +288,10 @@ definition {
 				value1 = "${name}");
 		}
 
+		if (isSet(parameter)) {
+			ObjectRelationships.editRelationshipsParameter(parameter = "${parameter}");
+		}
+
 		Button.clickSave();
 	}
 

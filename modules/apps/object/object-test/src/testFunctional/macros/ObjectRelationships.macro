@@ -1,0 +1,11 @@
+definition {
+
+	macro editRelationshipsParameter {
+		Click(locator1 = "ObjectRelationships#SELECT_PARAMETER_FORM");
+
+		ClickNoError.clickNoMouseOver(
+			key_parameterOption = "${parameter}",
+			locator1 = "ObjectRelationships#SELECT_PARAMETER_OPTION");
+	}
+
+}

@@ -216,6 +216,48 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry A");
 	}
 
+	@description = "LPS-155537 - Verify that it's possible to create an object with a relationship that has a parameter"
+	@priority = "5"
+	test CanCreateObjectWithRelationshipParameter {
+		property portal.acceptance = "true";
+
+		task ("Create a custom object, and a self relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Self Relationship",
+				relationshipName = "selfRelationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Create an relationship from Postal Address to custom object created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Postal Address");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.addObjectRelationshipViaUI(
+				label = "Relationship with Custom Object",
+				object = "Custom Object",
+				parameter = "Self Relationship",
+				type = "One to Many");
+		}
+
+		task ("Assert there is a relationship created") {
+			AssertElementPresent(
+				key_label = "Relationship with Custom Object",
+				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
+		}
+	}
+
 	@description = "LPS-145393 - Verify it is possible to create a Relationship One-to-Many from a Native Object to a Custom Object"
 	@priority = "5"
 	test CanCreateOneToManyForNativeObject {

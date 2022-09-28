@@ -23,11 +23,14 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
@@ -51,7 +54,7 @@ public class CommerceMLForecastAlertEntryLocalServiceImpl
 			commerceMLForecastAlertEntryPersistence.findByC_C_T(
 				companyId, commerceAccountId, timestamp);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (commerceMLForecastAlertEntry == null) {
 			long commerceMLForecastAlertEntryId =
@@ -83,7 +86,7 @@ public class CommerceMLForecastAlertEntryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			user.getUserId(), CommerceMLForecastAlertEntry.class.getName(),
 			commerceMLForecastAlertEntry.getCommerceAccountId(), false, false,
@@ -152,7 +155,7 @@ public class CommerceMLForecastAlertEntryLocalServiceImpl
 			long userId, long commerceMLForecastAlertEntryId, int status)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
 			commerceMLForecastAlertEntryPersistence.findByPrimaryKey(
@@ -166,5 +169,11 @@ public class CommerceMLForecastAlertEntryLocalServiceImpl
 		return commerceMLForecastAlertEntryPersistence.update(
 			commerceMLForecastAlertEntry);
 	}
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

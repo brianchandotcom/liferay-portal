@@ -127,7 +127,7 @@
 	</tr>
 	<tr>
 		<td>EDIT_ITEM_NAME</td>
-		<td>//input[@class='form-control language-value field form-control lfr-input-text']</td>
+		<td>//input[@class='form-control language-value field form-control lfr-input-text'] | //div[contains(@class,'modal')]//*[text()='Name']/..//input</td>
 		<td></td>
 	</tr>
 	<tr>

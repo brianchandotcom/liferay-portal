@@ -19,7 +19,6 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
-import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryFriendlyURLMapper;
 import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionEntryConfigurationAction;
@@ -212,9 +211,6 @@ public class CETDeployerImpl implements CETDeployer {
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private CETFactory _cetFactory;
 
 	@Reference
 	private NPMResolver _npmResolver;

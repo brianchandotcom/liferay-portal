@@ -18,11 +18,8 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -51,6 +48,8 @@ import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.http.HttpSession;
 
@@ -113,24 +112,25 @@ public class OfflineOpenIdConnectSessionManager {
 			return false;
 		}
 
-		String key = String.valueOf(openIdConnectSessionId);
-		String lockOwner = _generateLockOwner();
+		if (_clusterMasterExecutor.isEnabled() &&
+			!_clusterMasterExecutor.isMaster()) {
 
-		Lock lock = _lockManager.lock(
-			OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
+			// In cluster, make only master node to handle refresh token.
 
-		if (!lockOwner.equals(lock.getOwner())) {
 			return false;
 		}
 
-		AccessToken accessToken = _extendOpenIdConnectSession(
-			openIdConnectSession);
+		// In master node, make only one thread to handle refresh token.
 
-		_lockManager.unlock(
-			OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
-
-		if (accessToken == null) {
-			return true;
+		if (_lock.tryLock()) {
+			try {
+				if (_extendOpenIdConnectSession(openIdConnectSession) == null) {
+					return true;
+				}
+			}
+			finally {
+				_lock.unlock();
+			}
 		}
 
 		return false;
@@ -189,8 +189,7 @@ public class OfflineOpenIdConnectSessionManager {
 			return;
 		}
 
-		_openIdConnectMessageListener = new OpenIdConnectMessageListener(
-			_lockManager);
+		_openIdConnectMessageListener = new OpenIdConnectMessageListener(_lock);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			OpenIdConnectMessageListener.class.getName(),
@@ -261,18 +260,6 @@ public class OfflineOpenIdConnectSessionManager {
 		return null;
 	}
 
-	private String _generateLockOwner() {
-		ClusterNode clusterNode = _clusterExecutor.getLocalClusterNode();
-
-		Thread currentThread = Thread.currentThread();
-
-		if (clusterNode != null) {
-			return clusterNode.getClusterNodeId() + currentThread.getName();
-		}
-
-		return currentThread.getName();
-	}
-
 	private void _updateOpenIdConnectSession(
 		AccessToken accessToken, OpenIdConnectSession openIdConnectSession,
 		RefreshToken refreshToken) {
@@ -320,13 +307,12 @@ public class OfflineOpenIdConnectSessionManager {
 		_authorizationServerMetadataResolver;
 
 	@Reference
-	private ClusterExecutor _clusterExecutor;
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private CounterLocalService _counterLocalService;
 
-	@Reference
-	private LockManager _lockManager;
+	private final Lock _lock = new ReentrantLock();
 
 	@Reference
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
@@ -347,8 +333,8 @@ public class OfflineOpenIdConnectSessionManager {
 
 	private class OpenIdConnectMessageListener extends BaseMessageListener {
 
-		public OpenIdConnectMessageListener(LockManager lockManager) {
-			_lockManager = lockManager;
+		public OpenIdConnectMessageListener(Lock lock) {
+			_lock = lock;
 		}
 
 		@Override
@@ -364,25 +350,18 @@ public class OfflineOpenIdConnectSessionManager {
 			for (OpenIdConnectSession openIdConnectSession :
 					openIdConnectSessions) {
 
-				String key = String.valueOf(
-					openIdConnectSession.getOpenIdConnectSessionId());
-				String lockOwner = _generateLockOwner();
-
-				Lock lock = _lockManager.lock(
-					OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
-
-				if (!lockOwner.equals(lock.getOwner())) {
-					continue;
+				if (_lock.tryLock()) {
+					try {
+						_extendOpenIdConnectSession(openIdConnectSession);
+					}
+					finally {
+						_lock.unlock();
+					}
 				}
-
-				_extendOpenIdConnectSession(openIdConnectSession);
-
-				_lockManager.unlock(
-					OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
 			}
 		}
 
-		private final LockManager _lockManager;
+		private final Lock _lock;
 
 	}
 

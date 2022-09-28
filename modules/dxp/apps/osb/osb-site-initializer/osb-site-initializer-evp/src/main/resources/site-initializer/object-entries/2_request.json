@@ -1,0 +1,52 @@
+{
+	"object-entries": [
+		{
+			"emailAddress": "john.doe@liferay.com",
+			"endDate": "2022-09-30T00:00:00Z",
+			"fullName": "John Doe",
+			"grantAmount": 0,
+			"grantRequestType": "noGrant",
+			"managerEmailAddress": "manager@liferay.com",
+			"phoneNumber": "888888888",
+			"r_organization_c_evpOrganizationId": "[$EVPOrganization#EVPORG-01$]",
+			"requestBehalf": "displacedDistressed",
+			"requestDescription": "Request Description",
+			"requestPurposes": "disasterRelief",
+			"requestStatus": "pendingEVPApproval",
+			"requestType": "service",
+			"startDate": "2022-09-29T00:00:00Z",
+			"totalHoursRequested": 11
+		},
+		{
+			"emailAddress": "john.doe@liferay.com",
+			"fullName": "John Doe",
+			"grantAmount": 550,
+			"grantRequestType": "sponsorship",
+			"managerEmailAddress": "manager@liferay.com",
+			"phoneNumber": "888888888",
+			"r_organization_c_evpOrganizationId": "[$EVPOrganization#EVPORG-02$]",
+			"requestBehalf": "displacedDistressed",
+			"requestDescription": "Request Description",
+			"requestPurposes": "disasterRelief",
+			"requestStatus": "pendingEVPApproval",
+			"requestType": "grant",
+			"totalHoursRequested": 0
+		},
+		{
+			"emailAddress": "john.doe@liferay.com",
+			"fullName": "John Doe",
+			"grantAmount": 450,
+			"grantRequestType": "proposed",
+			"managerEmailAddress": "manager@liferay.com",
+			"phoneNumber": "888888888",
+			"r_organization_c_evpOrganizationId": "[$EVPOrganization#EVPORG-01$]",
+			"requestBehalf": "globalLocalPoor",
+			"requestDescription": "Grant Request Description",
+			"requestPurposes": "basicHealth",
+			"requestStatus": "approved",
+			"requestType": "grant",
+			"totalHoursRequested": 0
+		}
+	],
+	"objectDefinitionName": "EVPRequest"
+}

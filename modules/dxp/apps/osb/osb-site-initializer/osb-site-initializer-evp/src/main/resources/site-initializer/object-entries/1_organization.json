@@ -1,0 +1,37 @@
+{
+	"object-entries": [
+		{
+			"city": "New York",
+			"contactEmail": "lorem@contact.com",
+			"contactName": "Johnny Oliver",
+			"contactPhone": "000000000",
+			"country": "United States of America",
+			"externalReferenceCode": "EVPORG-01",
+			"organizationName": "Lorem Organization",
+			"organizationSiteSocialMediaLink": "www.lorem.org",
+			"smallDescription": "Small Description",
+			"state": "New York",
+			"street": "Street Streeting, 123",
+			"subsidiaryGroupId": 1,
+			"taxIdentificationNumber": "91221221",
+			"zip": "11111"
+		},
+		{
+			"city": "Recife",
+			"contactEmail": "ipsum@contact.com",
+			"contactName": "Enza Juliana",
+			"contactPhone": "12121212",
+			"country": "Brazil",
+			"externalReferenceCode": "EVPORG-02",
+			"organizationName": "Ipsum Organization",
+			"organizationSiteSocialMediaLink": "www.ipsum.org",
+			"smallDescription": "Small Description",
+			"state": "Pernambuco",
+			"street": "Rua lorem ipsum, 165",
+			"subsidiaryGroupId": 2,
+			"taxIdentificationNumber": "72.921.854/0001-11",
+			"zip": "11111"
+		}
+	],
+	"objectDefinitionName": "EVPOrganization"
+}

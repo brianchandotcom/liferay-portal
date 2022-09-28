@@ -1,6 +1,5 @@
 [#if configuration.iconLink?has_content]
-	<a href="${configuration.iconLink}" rel="noopener noreferrer" target="_blank">
-		[@clay["icon"] symbol="${configuration.iconName}"/]
-	</a>
-[#else]
-	[@clay["icon"] symbol="${configuration.iconName}"/] [/#if]
+<a href="${configuration.iconLink}" rel="noopener noreferrer">
+	[@clay["icon"] symbol="${configuration.iconName}"/]
+</a>
+[#else] [@clay["icon"] symbol="${configuration.iconName}"/] [/#if]

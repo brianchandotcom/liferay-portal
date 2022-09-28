@@ -50,7 +50,9 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 			}
 
 			matcher.appendReplacement(
-				sb, _formatJspExpressionTag(matcher.group(1)));
+				sb,
+				Matcher.quoteReplacement(
+					_formatJspExpressionTag(matcher.group(1))));
 		}
 
 		if (sb.length() > 0) {
@@ -160,6 +162,6 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _jspExpressionTagPattern = Pattern.compile(
-		"(?<=\")<%=(.+?)%>");
+		"(?<!')<%=(.+?)%>");
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.internal.result;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.Document;
@@ -26,17 +29,16 @@ import com.liferay.portal.kernel.search.result.SearchResultContributor;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -44,19 +46,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true, service = SearchResultManager.class)
 public class SearchResultManagerImpl implements SearchResultManager {
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void addSearchResultContributor(
-		SearchResultContributor searchResultContributor) {
-
-		_searchResultContributors.put(
-			searchResultContributor.getEntryClassName(),
-			searchResultContributor);
-	}
 
 	@Override
 	public SearchResult createSearchResult(Document document)
@@ -74,13 +63,6 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		}
 
 		return _createSearchResultWithEntryClass(document);
-	}
-
-	public void removeSearchResultContributor(
-		SearchResultContributor searchResultContributor) {
-
-		_searchResultContributors.remove(
-			searchResultContributor.getEntryClassName());
 	}
 
 	@Reference(unbind = "-")
@@ -122,6 +104,21 @@ public class SearchResultManagerImpl implements SearchResultManager {
 				document, locale, portletRequest, portletResponse));
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SearchResultContributor.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(searchResultContributor, emitter) -> emitter.emit(
+					searchResultContributor.getEntryClassName())));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	private SearchResult _createSearchResultWithClass(Document document)
 		throws PortalException {
 
@@ -155,7 +152,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		String entryClassName = GetterUtil.getString(
 			document.get(Field.ENTRY_CLASS_NAME));
 
-		return _searchResultContributors.get(entryClassName);
+		return _serviceTrackerMap.getService(entryClassName);
 	}
 
 	private Summary _getSummaryWithClass(
@@ -194,8 +191,8 @@ public class SearchResultManagerImpl implements SearchResultManager {
 	}
 
 	private ClassNameLocalService _classNameLocalService;
-	private final HashMap<String, SearchResultContributor>
-		_searchResultContributors = new HashMap<>();
+	private ServiceTrackerMap<String, SearchResultContributor>
+		_serviceTrackerMap;
 	private SummaryFactory _summaryFactory;
 
 }

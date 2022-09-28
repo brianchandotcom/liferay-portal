@@ -364,7 +364,7 @@ definition {
 
 		SelectFrameTop();
 
-		IFrame.selectModalFrame();
+		SelectFrame(locator1 = "Picklist#DIV_PICKLIST_MODAL");
 
 		Type(
 			locator1 = "Picklist#EDIT_ITEM_NAME",

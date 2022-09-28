@@ -20,4 +20,12 @@ definition {
 			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 
+	macro selectProjectDirectory {
+		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
+
+		Click(
+			key_project = "${project}",
+			locator1 = "TestrayDropdown#SELECT_PROJECT_DIRECTORY");
+	}
+
 }

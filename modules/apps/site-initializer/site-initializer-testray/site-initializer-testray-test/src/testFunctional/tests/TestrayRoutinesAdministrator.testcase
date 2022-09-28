@@ -200,4 +200,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164144 - Verify the user can access a project on Project Directory"
+	@priority = "3"
+	test CanGoToProjectDirectory {
+		task ("Given that the user add a new Project") {
+			Testray.createProjectTestray(
+				description = "Projects_2 Description",
+				key_name = "Projects_2 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("And the user goes to the new Project from the project directory") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.assertProjectTitleHeader(projectName = "Projects_1 Project");
+
+			TestrayDropdown.selectProjectDirectory(project = "Projects_2 Project");
+		}
+
+		task ("Then the user goes to another project") {
+			Testray.assertProjectTitleHeader(projectName = "Projects_2 Project");
+		}
+	}
+
 }

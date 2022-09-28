@@ -17,8 +17,6 @@ package com.liferay.commerce.tax.engine.fixed.service.base;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalServiceUtil;
-import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder;
-import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -499,28 +497,8 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 	protected CommerceTaxFixedRatePersistence commerceTaxFixedRatePersistence;
 
 	@Reference
-	protected CommerceTaxFixedRateAddressRelPersistence
-		commerceTaxFixedRateAddressRelPersistence;
-
-	@Reference
-	protected CommerceTaxFixedRateAddressRelFinder
-		commerceTaxFixedRateAddressRelFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTaxFixedRateLocalServiceBaseImpl.class);

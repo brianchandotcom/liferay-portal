@@ -37,6 +37,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -47,6 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("CartItem")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"skuId"})
 @XmlRootElement(name = "CartItem")
 public class CartItem implements Serializable {
 
@@ -476,6 +478,7 @@ public class CartItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected Long skuId;
 
 	@Schema(example = "true")

@@ -10,12 +10,25 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Overall Campaign"
+				"en_US": "Overall Campaign Name"
 			},
 			"name": "overallCampaign",
 			"required": false,
 			"type": "Clob",
 			"externalReferenceCode": "Campaign_Name__c"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Overall Campaign Description"
+			},
+			"name": "overallCampaign",
+			"required": false,
+			"type": "Clob",
+			"externalReferenceCode": "Campaign_Description__c"
 		},
 		{
 			"DBType": "Clob",

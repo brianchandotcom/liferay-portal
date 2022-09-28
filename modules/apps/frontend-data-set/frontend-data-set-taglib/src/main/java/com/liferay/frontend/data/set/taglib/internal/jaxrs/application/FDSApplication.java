@@ -72,10 +72,10 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class FDSApplication extends Application {
 
 	@DELETE
-	@Path("/fds/{fdsName}/custom-views/{customViewId}")
+	@Path("/fds/{fdsName}/custom-views/{fdsCustomViewId}")
 	public Response deleteFDSCustomView(
 		@PathParam("fdsName") String fdsName,
-		@PathParam("customViewId") String customViewId,
+		@PathParam("fdsCustomViewId") String fdsCustomViewId,
 		@Context HttpServletRequest httpServletRequest,
 		@Context ThemeDisplay themeDisplay) {
 
@@ -92,7 +92,7 @@ public class FDSApplication extends Application {
 				portalPreferences.getValue(
 					fdsSettingsNamespace, "customViews", "{}"));
 
-			customViewsJSONObject.remove(customViewId);
+			customViewsJSONObject.remove(fdsCustomViewId);
 
 			portalPreferences.setValue(
 				fdsSettingsNamespace, "customViews",

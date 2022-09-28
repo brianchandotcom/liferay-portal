@@ -173,11 +173,6 @@
 <!--DELETIONS-->
 
 <tr>
-	<td>DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'StagingProcessesPortlet_DELETIONS')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

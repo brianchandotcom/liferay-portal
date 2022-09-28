@@ -31,12 +31,6 @@ import java.util.Map;
 public class SoyJavaScriptRendererUtil {
 
 	public static String getJavaScript(
-		Map<String, Object> context, String id, String module) {
-
-		return getJavaScript(context, id, module, true);
-	}
-
-	public static String getJavaScript(
 		Map<String, Object> context, String id, String module,
 		boolean wrapper) {
 

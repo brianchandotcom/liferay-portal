@@ -33,7 +33,9 @@ import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -80,9 +82,18 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	public void testActivityInterpreter() throws Exception {
 		addActivities();
 
+		String originalTitle = null;
+		Set<Long> originalActivitiesIds = new HashSet<>();
+
+		for (SocialActivity activity : getActivities()) {
+			originalActivitiesIds.add(activity.getActivityId());
+			originalTitle = activity.getExtraDataValue(
+				"title", serviceContext.getLocale());
+		}
+
 		renameModels();
 
-		checkRenaming();
+		checkRenaming(originalTitle, originalActivitiesIds);
 
 		if (isSupportsTrash()) {
 			moveModelsToTrash();
@@ -154,24 +165,25 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
-	protected void checkRenaming() throws Exception {
+	protected void checkRenaming(
+			String originalTitle, Set<Long> originalActivitiesIds)
+		throws Exception {
+
 		List<SocialActivity> activities = getActivities();
 
 		Assert.assertFalse(activities.toString(), activities.isEmpty());
 
-		String previousTitle = null;
-
 		for (SocialActivity activity : activities) {
-			String title = activity.getExtraDataValue(
-				"title", serviceContext.getLocale());
+			if (!originalActivitiesIds.contains(activity.getActivityId())) {
+				String title = activity.getExtraDataValue(
+					"title", serviceContext.getLocale());
 
-			if (isSupportsRename(activity.getClassName()) &&
-				Validator.isNotNull(title)) {
+				if (isSupportsRename(activity.getClassName()) &&
+					Validator.isNotNull(title)) {
 
-				Assert.assertNotEquals(previousTitle, title);
+					Assert.assertNotEquals(originalTitle, title);
+				}
 			}
-
-			previousTitle = title;
 		}
 	}
 

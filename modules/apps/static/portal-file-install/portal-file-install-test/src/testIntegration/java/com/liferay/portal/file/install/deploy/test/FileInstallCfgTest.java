@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -30,7 +29,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Dictionary;
-import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -43,12 +41,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedService;
 
 /**
  * @author Matthew Tambara
@@ -117,25 +112,9 @@ public class FileInstallCfgTest {
 			String configurationPid, String content, Charset charset)
 		throws Exception {
 
-		CountDownLatch countDownLatch = new CountDownLatch(2);
-
-		ServiceRegistration<ManagedService> serviceRegistration =
-			_bundleContext.registerService(
-				ManagedService.class, props -> countDownLatch.countDown(),
-				MapUtil.singletonDictionary(
-					Constants.SERVICE_PID, configurationPid));
-
-		try {
-			Files.write(_configurationPath, content.getBytes(charset));
-
-			countDownLatch.await();
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
-
-		return _configurationAdmin.getConfiguration(
-			configurationPid, StringPool.QUESTION);
+		return ConfigurationTestUtil.updateConfiguration(
+			configurationPid,
+			() -> Files.write(_configurationPath, content.getBytes(charset)));
 	}
 
 	private void _deleteConfiguration() throws Exception {

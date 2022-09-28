@@ -51,7 +51,6 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -69,12 +68,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -269,62 +265,46 @@ public class PortalK8sAgentImplTest {
 
 	@Test
 	public void testListenForExtProvisionMetadata() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(2);
-
-		ServiceRegistration<ManagedService> serviceRegistration =
-			_bundleContext.registerService(
-				ManagedService.class, properties -> countDownLatch.countDown(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					Constants.SERVICE_PID, "test.pid"
-				).build());
-
-		ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
-
 		String serviceId = RandomTestUtil.randomString();
 
 		String mainDomain = serviceId.concat("-extproject.lfr.sh");
 
-		_kubernetesMockClient.configMaps(
-		).createOrReplace(
-			configMapBuilder.withNewMetadata(
-			).withName(
-				StringBundler.concat(
-					serviceId, "-", TestPropsValues.COMPANY_WEB_ID,
-					"-lxc-ext-provision-metadata")
-			).addToLabels(
-				"dxp.lxc.liferay.com/virtualInstanceId",
-				TestPropsValues.COMPANY_WEB_ID
-			).addToAnnotations(
-				"ext.lxc.liferay.com/domains",
-				serviceId.concat("-extproject.lfr.sh")
-			).addToAnnotations(
-				"ext.lxc.liferay.com/mainDomain", mainDomain
-			).addToLabels(
-				"ext.lxc.liferay.com/projectId", RandomTestUtil.randomString()
-			).addToLabels(
-				"ext.lxc.liferay.com/serviceId", serviceId
-			).addToLabels(
-				"lxc.liferay.com/metadataType", "ext-provision"
-			).endMetadata(
-			).addToData(
-				"foo.client-extension-config.json",
-				"{\"test.pid\": {\"test.key\": \"test.value\"}}"
-			).build()
-		);
+		Configuration configuration = ConfigurationTestUtil.updateConfiguration(
+			"test.pid",
+			() -> {
+				ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
 
-		try {
-			countDownLatch.await();
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+				_kubernetesMockClient.configMaps(
+				).createOrReplace(
+					configMapBuilder.withNewMetadata(
+					).withName(
+						StringBundler.concat(
+							serviceId, "-", TestPropsValues.COMPANY_WEB_ID,
+							"-lxc-ext-provision-metadata")
+					).addToLabels(
+						"dxp.lxc.liferay.com/virtualInstanceId",
+						TestPropsValues.COMPANY_WEB_ID
+					).addToAnnotations(
+						"ext.lxc.liferay.com/domains",
+						serviceId.concat("-extproject.lfr.sh")
+					).addToAnnotations(
+						"ext.lxc.liferay.com/mainDomain", mainDomain
+					).addToLabels(
+						"ext.lxc.liferay.com/projectId",
+						RandomTestUtil.randomString()
+					).addToLabels(
+						"ext.lxc.liferay.com/serviceId", serviceId
+					).addToLabels(
+						"lxc.liferay.com/metadataType", "ext-provision"
+					).endMetadata(
+					).addToData(
+						"foo.client-extension-config.json",
+						"{\"test.pid\": {\"test.key\": \"test.value\"}}"
+					).build()
+				);
+			});
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.pid=test.pid)");
-
-		Assert.assertNotNull(configurations);
-
-		Configuration configuration = configurations[0];
+		Assert.assertNotNull(configuration);
 
 		try {
 			Dictionary<String, Object> properties =

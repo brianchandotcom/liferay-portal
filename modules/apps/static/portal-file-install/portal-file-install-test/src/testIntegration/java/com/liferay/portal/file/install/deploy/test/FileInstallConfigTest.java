@@ -60,7 +60,6 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedService;
 import org.osgi.service.cm.ManagedServiceFactory;
 
 /**
@@ -351,39 +350,18 @@ public class FileInstallConfigTest {
 			boolean readOnly)
 		throws Exception {
 
-		Path configurationFilePath = Files.write(
-			_configurationPath, content.getBytes(charset));
+		return ConfigurationTestUtil.updateConfiguration(
+			configurationPid,
+			() -> {
+				Path configurationFilePath = Files.write(
+					_configurationPath, content.getBytes(charset));
 
-		File configurationFile = configurationFilePath.toFile();
+				File configurationFile = configurationFilePath.toFile();
 
-		if (readOnly) {
-			configurationFile.setReadOnly();
-		}
-
-		CountDownLatch countDownLatch = new CountDownLatch(2);
-
-		ServiceRegistration<ManagedService> serviceRegistration =
-			_bundleContext.registerService(
-				ManagedService.class, props -> countDownLatch.countDown(),
-				MapUtil.singletonDictionary(
-					Constants.SERVICE_PID, configurationPid));
-
-		try {
-			countDownLatch.await();
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			StringBundler.concat(
-				"(", Constants.SERVICE_PID, "=", configurationPid, ")"));
-
-		if (configurations == null) {
-			return null;
-		}
-
-		return configurations[0];
+				if (readOnly) {
+					configurationFile.setReadOnly();
+				}
+			});
 	}
 
 	private Configuration _createConfiguration(

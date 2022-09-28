@@ -12,30 +12,13 @@
  * details.
  */
 
-import {
-	cog,
-	community,
-	display,
-	drop,
-	filter,
-	listUl,
-	merge,
-	orderFormCog,
-	page,
-	pencil,
-	plus,
-	plusUser,
-	polls,
-	print,
-	spanner,
-	trash,
-} from './spritemap';
+import Spritemap from './spritemap';
 
 type TestrayIconsProps = {
 	className?: string;
 	fill?: string;
 	size?: number;
-	symbol?: string;
+	symbol: string;
 };
 
 const TestrayIcons: React.FC<TestrayIconsProps> = ({
@@ -44,25 +27,6 @@ const TestrayIcons: React.FC<TestrayIconsProps> = ({
 	size = 20,
 	symbol,
 }) => {
-	const icon: any = {
-		cog,
-		community,
-		display,
-		drop,
-		filter,
-		'list-ul': listUl,
-		merge,
-		'order-form-cog': orderFormCog,
-		page,
-		pencil,
-		plus,
-		'plus-user': plusUser,
-		polls,
-		print,
-		spanner,
-		trash,
-	};
-
 	return (
 		<svg
 			className={className}
@@ -71,7 +35,7 @@ const TestrayIcons: React.FC<TestrayIconsProps> = ({
 			viewBox="0 0 30 30"
 			width={size}
 		>
-			{icon[symbol]}
+			{(Spritemap as any)[symbol]}
 		</svg>
 	);
 };

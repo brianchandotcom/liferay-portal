@@ -149,13 +149,14 @@ $normal-transition: opacity 1s ease;
 
 	&:hover {
 		background-color: #303376;
+		color: #fff;
 		fill: #fff;
 		transition: transform 0.5s ease 0.4s;
-		color: #fff;
 	}
+
 	&:hover > svg path {
-		fill: #fff;
 		color: #fff;
+		fill: #fff;
 		transition: transform 0.5s ease 0.4s;
 	}
 }

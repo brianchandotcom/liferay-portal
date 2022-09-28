@@ -24,9 +24,22 @@ SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContex
 	<div class="dropdown">
 		<button aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-unstyled dropdown-toggle" id="<portlet:namespace />dropdownToggle" type="button">
 			<span class="align-items-center c-inner d-flex" tabindex="-1">
-				<span class="lfr-portal-tooltip mr-2 text-truncate" title="<%= HtmlUtil.escapeAttribute(segmentsExperienceSelectorDisplayContext.getSelectedSegmentsExperienceName()) %>">
-					<%= segmentsExperienceSelectorDisplayContext.getSelectedSegmentsExperienceName() %>
+
+				<%
+				JSONObject segmentsExperienceSelectedJSONObject = segmentsExperienceSelectorDisplayContext.getSegmentsExperienceSelectedJSONObject();
+				%>
+
+				<span class="lfr-portal-tooltip mr-2 text-truncate" title="<%= HtmlUtil.escapeAttribute(segmentsExperienceSelectedJSONObject.getString("segmentsExperienceName")) %>">
+					<%= segmentsExperienceSelectedJSONObject.getString("segmentsExperienceName") %>
 				</span>
+
+				<div class="autofit-col">
+					<span class="label label-<%= segmentsExperienceSelectedJSONObject.getBoolean("active")?"success":"secondary" %> bg-transparent m-0">
+						<span class="label-item label-item-expand">
+							<%= segmentsExperienceSelectedJSONObject.getString("statusLabel") %>
+						</span>
+					</span>
+				</div>
 
 				<clay:icon
 					cssClass="flex-shrink-0"
@@ -56,15 +69,13 @@ SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContex
 							</p>
 						</div>
 
-						<c:if test='<%= segmentsExperiencesJSONObject.getBoolean("active") %>'>
-							<div class="autofit-col">
-								<span class="label label-success m-0">
-									<span class="label-item label-item-expand">
-										<liferay-ui:message key="active" />
-									</span>
+						<div class="autofit-col">
+							<span class="label label-<%= segmentsExperiencesJSONObject.getBoolean("active")?"success":"secondary" %> bg-transparent m-0">
+								<span class="label-item label-item-expand">
+									<%= segmentsExperiencesJSONObject.getString("statusLabel") %>
 								</span>
-							</div>
-						</c:if>
+							</span>
+						</div>
 					</a>
 				</li>
 

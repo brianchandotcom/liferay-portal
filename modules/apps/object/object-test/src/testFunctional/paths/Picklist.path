@@ -92,7 +92,7 @@
 	</tr>
 	<tr>
 		<td>PICKLIST_DETAILS</td>
-		<td>//div[(@class='sheet') and contains (.,'${key_title}')]</td>
+		<td>//div[(@class='sheet') and contains (.,'${key_title}')] | //div[(@class='lfr-objects__card') and contains (.,'${key_title}')]</td>
 		<td></td>
 	</tr>
 	<tr>

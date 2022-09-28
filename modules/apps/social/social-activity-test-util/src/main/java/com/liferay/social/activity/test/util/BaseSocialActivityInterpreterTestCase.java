@@ -82,18 +82,11 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	public void testActivityInterpreter() throws Exception {
 		addActivities();
 
-		String originalTitle = null;
-		Set<Long> originalActivitiesIds = new HashSet<>();
-
-		for (SocialActivity activity : getActivities()) {
-			originalActivitiesIds.add(activity.getActivityId());
-			originalTitle = activity.getExtraDataValue(
-				"title", serviceContext.getLocale());
-		}
+		List<SocialActivity> originalActivities = getActivities();
 
 		renameModels();
 
-		checkRenaming(originalTitle, originalActivitiesIds);
+		checkRenaming(originalActivities);
 
 		if (isSupportsTrash()) {
 			moveModelsToTrash();
@@ -165,16 +158,21 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
-	protected void checkRenaming(
-			String originalTitle, Set<Long> originalActivitiesIds)
+	protected void checkRenaming(List<SocialActivity> originalActivities)
 		throws Exception {
+
+		Assert.assertFalse(
+			originalActivities.toString(), originalActivities.isEmpty());
+
+		String originalTitle = _getActivitiesFirstTitle(originalActivities);
+		Set<Long> originalIds = _getActivitiesIds(originalActivities);
 
 		List<SocialActivity> activities = getActivities();
 
 		Assert.assertFalse(activities.toString(), activities.isEmpty());
 
 		for (SocialActivity activity : activities) {
-			if (!originalActivitiesIds.contains(activity.getActivityId())) {
+			if (!originalIds.contains(activity.getActivityId())) {
 				String title = activity.getExtraDataValue(
 					"title", serviceContext.getLocale());
 
@@ -277,5 +275,26 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 	@Inject
 	protected TrashHelper trashHelper;
+
+	private String _getActivitiesFirstTitle(
+			List<SocialActivity> originalActivities)
+		throws Exception {
+
+		SocialActivity activity = originalActivities.get(0);
+
+		return activity.getExtraDataValue("title", serviceContext.getLocale());
+	}
+
+	private Set<Long> _getActivitiesIds(
+		List<SocialActivity> originalActivities) {
+
+		Set<Long> originalIds = new HashSet<>();
+
+		for (SocialActivity activity : originalActivities) {
+			originalIds.add(activity.getActivityId());
+		}
+
+		return originalIds;
+	}
 
 }

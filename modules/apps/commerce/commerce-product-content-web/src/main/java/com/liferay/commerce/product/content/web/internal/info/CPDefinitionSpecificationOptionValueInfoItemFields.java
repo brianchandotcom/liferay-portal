@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info;
 
-import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -211,7 +211,8 @@ public class CPDefinitionSpecificationOptionValueInfoItemFields {
 	private static class BuilderHolder {
 
 		private static final InfoField.NamespacedBuilder _builder =
-			InfoField.builder(CPDefinition.class.getSimpleName());
+			InfoField.builder(
+				CPDefinitionSpecificationOptionValue.class.getSimpleName());
 
 	}
 

@@ -20,7 +20,6 @@ import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil;
 import com.liferay.commerce.term.service.persistence.CTermEntryLocalizationPersistence;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryPersistence;
-import com.liferay.commerce.term.service.persistence.CommerceTermEntryRelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -854,27 +853,12 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 	protected CommerceTermEntryPersistence commerceTermEntryPersistence;
 
 	@Reference
-	protected CommerceTermEntryRelPersistence commerceTermEntryRelPersistence;
-
-	@Reference
-	protected CTermEntryLocalizationPersistence
-		cTermEntryLocalizationPersistence;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
+	protected CTermEntryLocalizationPersistence
+		cTermEntryLocalizationPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTermEntryLocalServiceBaseImpl.class);

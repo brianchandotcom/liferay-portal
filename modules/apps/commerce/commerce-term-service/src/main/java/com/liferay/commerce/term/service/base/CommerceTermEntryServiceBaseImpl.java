@@ -19,7 +19,6 @@ import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.commerce.term.service.CommerceTermEntryServiceUtil;
 import com.liferay.commerce.term.service.persistence.CTermEntryLocalizationPersistence;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryPersistence;
-import com.liferay.commerce.term.service.persistence.CommerceTermEntryRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -147,34 +146,12 @@ public abstract class CommerceTermEntryServiceBaseImpl
 	protected CommerceTermEntryPersistence commerceTermEntryPersistence;
 
 	@Reference
-	protected CommerceTermEntryRelPersistence commerceTermEntryRelPersistence;
-
-	@Reference
-	protected CTermEntryLocalizationPersistence
-		cTermEntryLocalizationPersistence;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserService userService;
+	protected CTermEntryLocalizationPersistence
+		cTermEntryLocalizationPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTermEntryServiceBaseImpl.class);

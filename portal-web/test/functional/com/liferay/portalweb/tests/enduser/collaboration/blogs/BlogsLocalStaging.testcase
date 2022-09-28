@@ -779,7 +779,11 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.editStagingConfiguration(isNotEditable = "Blogs");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
+
+		AssertElementPresent(
+			key_checkboxName = "Blogs",
+			locator1 = "Checkbox#CHECKBOX_DISABLED");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",

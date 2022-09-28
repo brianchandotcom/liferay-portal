@@ -43,14 +43,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.service.SamlSpMessageLocalService;
 import com.liferay.saml.persistence.service.SamlSpMessageLocalServiceUtil;
-import com.liferay.saml.persistence.service.persistence.SamlIdpSpConnectionPersistence;
-import com.liferay.saml.persistence.service.persistence.SamlIdpSpSessionPersistence;
-import com.liferay.saml.persistence.service.persistence.SamlIdpSsoSessionPersistence;
-import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
-import com.liferay.saml.persistence.service.persistence.SamlSpAuthRequestPersistence;
-import com.liferay.saml.persistence.service.persistence.SamlSpIdpConnectionPersistence;
 import com.liferay.saml.persistence.service.persistence.SamlSpMessagePersistence;
-import com.liferay.saml.persistence.service.persistence.SamlSpSessionPersistence;
 
 import java.io.Serializable;
 
@@ -471,47 +464,14 @@ public abstract class SamlSpMessageLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected SamlIdpSpConnectionPersistence samlIdpSpConnectionPersistence;
-
-	@Reference
-	protected SamlIdpSpSessionPersistence samlIdpSpSessionPersistence;
-
-	@Reference
-	protected SamlIdpSsoSessionPersistence samlIdpSsoSessionPersistence;
-
-	@Reference
-	protected SamlPeerBindingPersistence samlPeerBindingPersistence;
-
-	@Reference
-	protected SamlSpAuthRequestPersistence samlSpAuthRequestPersistence;
-
-	@Reference
-	protected SamlSpIdpConnectionPersistence samlSpIdpConnectionPersistence;
-
 	protected SamlSpMessageLocalService samlSpMessageLocalService;
 
 	@Reference
 	protected SamlSpMessagePersistence samlSpMessagePersistence;
 
 	@Reference
-	protected SamlSpSessionPersistence samlSpSessionPersistence;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSpMessageLocalServiceBaseImpl.class);

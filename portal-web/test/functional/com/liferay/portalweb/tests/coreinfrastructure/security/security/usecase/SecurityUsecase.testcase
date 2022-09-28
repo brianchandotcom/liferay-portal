@@ -145,7 +145,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		task ("Define user permissions view control panel menu") {
 			Role.openRolesAdmin();
 
-			Role.definePermissionsCP(
+			Role.definePermissionCmdCP(
 				permissionDefinitionKeys = "CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX",
 				permissionDefinitionValue = "View Control Panel Menu",
 				roleTitle = "User");
@@ -154,7 +154,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		task ("Define user permissions") {
 			Role.openRolesAdmin();
 
-			Role.definePermissionsCP(
+			Role.definePermissionCmdCP(
 				permissionDefinitionKeys = "CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX,CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
 				roleTitle = "User");
 		}

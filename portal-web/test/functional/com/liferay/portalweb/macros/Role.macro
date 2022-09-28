@@ -129,18 +129,6 @@ definition {
 		AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
-	macro definePermissionsCP {
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
-			permissionDefinitionKeys = "${permissionDefinitionKeys}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			removeSiteScope = "${removeSiteScope}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}",
-			roleUser = "${roleUser}",
-			siteNameScope = "${siteNameScope}");
-	}
-
 	macro editPermissionCmdCP {
 		var key_roleTitle = "${roleTitle}";
 

@@ -124,8 +124,9 @@ public class ProjectTemplatesControlMenuEntryTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			mavenExecutor, "-DclassName=FooBar",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=foo.bar",
+			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(

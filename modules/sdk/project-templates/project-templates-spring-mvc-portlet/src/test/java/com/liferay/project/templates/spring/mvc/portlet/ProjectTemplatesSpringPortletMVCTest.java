@@ -221,19 +221,18 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 			return buildTemplateWithMaven(
 				destinationDir, destinationDir, template, name, groupId,
-				mavenExecutor, "-Dpackage=com.test", "-DclassName=Sample",
-				"-Dframework=" + framework,
+				mavenExecutor, "-DclassName=Sample", "-Dframework=" + framework,
 				"-DframeworkDependencies=" + frameworkDependencies,
-				"-DviewType=" + viewType, "-DliferayVersion=" + liferayVersion,
-				"-Dproduct=" + _product);
+				"-DliferayVersion=" + liferayVersion, "-Dpackage=com.test",
+				"-Dproduct=" + _product, "-DviewType=" + viewType);
 		}
 
 		return buildTemplateWithGradle(
-			destinationDir, template, name, "--package-name", "com.test",
-			"--class-name", "Sample", "--framework", framework,
-			"--framework-dependencies", frameworkDependencies, "--view-type",
-			viewType, "--liferay-version", liferayVersion, "--product",
-			_product);
+			destinationDir, template, name, "--class-name", "Sample",
+			"--framework", framework, "--framework-dependencies",
+			frameworkDependencies, "--liferay-version", liferayVersion,
+			"--package-name", "com.test", "--product", _product, "--view-type",
+			viewType);
 	}
 
 	private static URI _gradleDistribution;

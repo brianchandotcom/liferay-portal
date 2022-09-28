@@ -159,9 +159,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, _name, "--package-name",
-			_packageName, "--dependency-injector", _dependencyInjector,
-			"--liferay-version", _liferayVersion, "--product", _product);
+			gradleWorkspaceModulesDir, template, _name, "--dependency-injector",
+			_dependencyInjector, "--liferay-version", _liferayVersion,
+			"--package-name", _packageName, "--product", _product);
 
 		if (_name.contains("sample")) {
 			testContains(
@@ -223,9 +223,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, _name, "com.test",
-			mavenExecutor, "-Dpackage=" + _packageName,
-			"-DdependencyInjector=" + _dependencyInjector,
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			mavenExecutor, "-DdependencyInjector=" + _dependencyInjector,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + _packageName,
+			"-Dproduct=" + _product);
 
 		File mavenUADModuleDir = new File(mavenProjectDir, _name + "-uad");
 

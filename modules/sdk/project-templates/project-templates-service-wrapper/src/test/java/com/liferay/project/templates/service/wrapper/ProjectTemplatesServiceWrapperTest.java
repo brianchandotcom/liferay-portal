@@ -92,9 +92,8 @@ public class ProjectTemplatesServiceWrapperTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--product", _product);
+			_liferayVersion, "--product", _product, "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -128,10 +127,10 @@ public class ProjectTemplatesServiceWrapperTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Serviceoverride",
-			"-Dpackage=serviceoverride",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=serviceoverride",
+			"-Dproduct=" + _product,
 			"-DserviceWrapperClass=" +
-				"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+				"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");

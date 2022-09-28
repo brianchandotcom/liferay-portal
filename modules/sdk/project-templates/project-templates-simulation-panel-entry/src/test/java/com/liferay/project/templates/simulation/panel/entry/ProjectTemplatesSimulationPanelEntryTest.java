@@ -125,8 +125,9 @@ public class ProjectTemplatesSimulationPanelEntryTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=Simulator", "-Dpackage=" + packageName,
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			mavenExecutor, "-DclassName=Simulator",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + packageName,
+			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(

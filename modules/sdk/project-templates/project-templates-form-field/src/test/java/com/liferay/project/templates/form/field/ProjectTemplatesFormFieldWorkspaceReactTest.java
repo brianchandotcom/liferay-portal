@@ -84,7 +84,7 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), "form-field", name,
-			"--liferay-version", _liferayVersion, "--js-framework", "react");
+			"--js-framework", "react", "--liferay-version", _liferayVersion);
 
 		if (Objects.equals("7.2.1-1", _liferayVersion)) {
 			testContains(

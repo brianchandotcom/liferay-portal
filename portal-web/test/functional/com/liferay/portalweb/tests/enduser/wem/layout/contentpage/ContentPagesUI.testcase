@@ -140,8 +140,6 @@ definition {
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = "3"
 	test CouldAddAndRemoveFragmentInCardView {
-		property custom.properties = "feature.flag.LPS-158737=true";
-
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -222,8 +220,6 @@ definition {
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
 	@priority = "5"
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSession {
-		property custom.properties = "feature.flag.LPS-158737=true";
-
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -547,8 +543,6 @@ definition {
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = "3"
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
-		property custom.properties = "feature.flag.LPS-158737=true";
-
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -641,8 +635,6 @@ definition {
 	@description = "This is a test for LPS-158746. Favorite session is hidden when no favorite fragment is chosen."
 	@priority = "4"
 	test ViewFavoriteSessionIsHiddenWhenNoFavoriteFragmentIsChosen {
-		property custom.properties = "feature.flag.LPS-158737=true";
-
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -671,7 +663,6 @@ definition {
 	@description = "This is a test for LPS-158746. Different users keep their own favorites list."
 	@priority = "4"
 	test ViewFavoritesListInDifferentUsers {
-		property custom.properties = "feature.flag.LPS-158737=true";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Given having 2 users") {

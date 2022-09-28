@@ -16,13 +16,13 @@
 
 <%@ include file="/sidebar_toggler_button/init.jsp" %>
 
-<aui:a cssClass="<%= cssClass %>" href='<%= "#" + sidenavId %>' id="<%= StringUtil.randomId() %>">
-	<c:if test="<%= Validator.isNotNull(icon) %>">
-		<aui:icon cssClass="icon-monospaced" image="<%= icon %>" markupView="lexicon" />
-	</c:if>
-
-	<span><liferay-ui:message key="<%= label %>" /></span>
-</aui:a>
+<clay:link
+	cssClass="<%= cssClass %>"
+	href='<%= "#" + sidenavId %>'
+	icon="<%= icon %>"
+	label="<%= label %>"
+	type="button"
+/>
 
 <aui:script>
 	var sidenavToggle = document.querySelector('[href="#<%= sidenavId %>"]');

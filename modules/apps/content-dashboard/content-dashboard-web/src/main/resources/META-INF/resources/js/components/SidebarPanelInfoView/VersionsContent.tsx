@@ -18,6 +18,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import VersionActions, {IAction} from './VersionActions';
 import formatDate from './utils/formatDate';
 
 const useIsFirstRender = (): boolean => {
@@ -92,19 +93,25 @@ const VersionsContent = ({
 				</div>
 			) : (
 				<>
-					{versions && (
-						<ul className="list-group sidebar-list-group">
-							{versions.map((version) => (
+					<ul className="list-group sidebar-list-group">
+						{versions.map(
+							({
+								actions,
+								changeLog,
+								createDate,
+								userName,
+								version,
+							}) => (
 								<li
-									className="list-group-item list-group-item-flex p-0"
-									key={version.version}
+									className="list-group-item list-group-item-flex"
+									key={version}
 								>
 									<ClayLayout.ContentCol expand>
 										<div className="list-group-title">
 											{Liferay.Language.get('version') +
 												' '}
 
-											{version.version}
+											{version}
 										</div>
 
 										<div className="list-group-subtitle">
@@ -112,27 +119,30 @@ const VersionsContent = ({
 												Liferay.Language.get('x-by-x'),
 												[
 													formatDate(
-														version.createDate,
+														createDate,
 														languageTag
 													),
-													version.userName,
+													userName,
 												]
 											)}
 										</div>
 
 										<div className="list-group-subtext">
-											{version.changeLog
-												? version.changeLog
+											{changeLog
+												? changeLog
 												: Liferay.Language.get(
 														'no-change-log'
 												  )}
 										</div>
 									</ClayLayout.ContentCol>
-								</li>
-							))}
-						</ul>
-					)}
 
+									{actions && !!actions.length && (
+										<VersionActions actions={actions} />
+									)}
+								</li>
+							)
+						)}
+					</ul>
 					{viewVersionsURL && (
 						<div className="d-flex justify-content-center">
 							<ClayLink
@@ -162,6 +172,7 @@ interface IProps {
 }
 
 interface IVersion {
+	actions: IAction[];
 	changeLog?: string;
 	createDate: string;
 	statusLabel: string;

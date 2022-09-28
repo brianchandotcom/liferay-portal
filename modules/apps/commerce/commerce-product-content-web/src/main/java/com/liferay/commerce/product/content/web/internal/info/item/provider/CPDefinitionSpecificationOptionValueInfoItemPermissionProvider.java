@@ -93,7 +93,7 @@ public class CPDefinitionSpecificationOptionValueInfoItemPermissionProvider
 		try {
 			CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue =
-					_definitionSpecificationOptionValueLocalService.
+					_cpDefinitionSpecificationOptionValueLocalService.
 						getCPDefinitionSpecificationOptionValue(
 							classPKInfoItemIdentifier.getClassPK());
 
@@ -114,6 +114,6 @@ public class CPDefinitionSpecificationOptionValueInfoItemPermissionProvider
 
 	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService
-		_definitionSpecificationOptionValueLocalService;
+		_cpDefinitionSpecificationOptionValueLocalService;
 
 }

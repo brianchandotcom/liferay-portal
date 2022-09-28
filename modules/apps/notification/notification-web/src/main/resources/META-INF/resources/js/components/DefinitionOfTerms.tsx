@@ -17,8 +17,8 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	API,
 	AutoComplete,
+	filterArrayByQuery,
 	onActionDropdownItemClick,
-	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -35,12 +35,9 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 	const [entityFields, setEntityFields] = useState<Item[]>([]);
 
 	const filteredObjectDefinitions = useMemo(() => {
-		return objectDefinitions?.filter(({label, name}) =>
-			stringIncludesQuery(
-				(label[defaultLanguageId] as string) ?? name,
-				query
-			)
-		);
+		if (objectDefinitions) {
+			return filterArrayByQuery(objectDefinitions, 'label', query);
+		}
 	}, [objectDefinitions, query]);
 
 	useEffect(() => {

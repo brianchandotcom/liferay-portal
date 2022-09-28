@@ -19,7 +19,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import {
 	AutoComplete,
 	SingleSelect,
-	stringIncludesQuery,
+	filterArrayByQuery,
 } from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useMemo, useState} from 'react';
 
@@ -87,9 +87,7 @@ export function ModalAddDefaultSortColumn({
 	const [query, setQuery] = useState<string>('');
 
 	const filteredObjectSortColumn = useMemo(() => {
-		return availableViewColumns.filter(({fieldLabel}) =>
-			stringIncludesQuery(fieldLabel as string, query)
-		);
+		return filterArrayByQuery(availableViewColumns, 'fieldLabel', query);
 	}, [availableViewColumns, query]);
 
 	const onSubmit = (event: FormEvent) => {

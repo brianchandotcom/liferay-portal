@@ -16,7 +16,7 @@ import {
 	API,
 	AutoComplete,
 	SingleSelect,
-	stringIncludesQuery,
+	filterArrayByQuery,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -98,21 +98,23 @@ export function AggregationFormBase({
 	>();
 
 	const filteredObjectRelationships = useMemo(() => {
-		return objectRelationships?.filter(({label}) =>
-			stringIncludesQuery(
-				label[defaultLanguageId] as string,
+		if (objectRelationships) {
+			return filterArrayByQuery(
+				objectRelationships,
+				'label',
 				relationshipsQuery
-			)
-		);
+			);
+		}
 	}, [objectRelationships, relationshipsQuery]);
 
 	const filteredObjectRelationshipFields = useMemo(() => {
-		return objectRelationshipFields?.filter(({label}) =>
-			stringIncludesQuery(
-				label[defaultLanguageId] as string,
+		if (objectRelationshipFields) {
+			return filterArrayByQuery(
+				objectRelationshipFields,
+				'label',
 				relationshipFieldsQuery
-			)
-		);
+			);
+		}
 	}, [objectRelationshipFields, relationshipFieldsQuery]);
 
 	useEffect(() => {

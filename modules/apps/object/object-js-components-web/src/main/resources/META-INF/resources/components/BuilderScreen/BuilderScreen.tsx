@@ -21,7 +21,7 @@ import React, {useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {stringIncludesQuery} from '../../utils/string';
+import {filterArrayByQuery} from '../../utils/array';
 import {Card} from '../Card';
 import {ManagementToolbarSearch} from '../ManagementToolbarSearch';
 import BuilderListItem from './BuilderListItem';
@@ -51,9 +51,7 @@ export function BuilderScreen({
 	const [query, setQuery] = useState('');
 
 	const filteredItems = useMemo(() => {
-		return objectColumns.filter(({fieldLabel}: TBuilderScreenColumn) =>
-			stringIncludesQuery(fieldLabel as string, query)
-		);
+		return filterArrayByQuery(objectColumns, 'fieldLabel', query);
 	}, [objectColumns, query]);
 
 	const tableItems = query ? filteredItems : objectColumns;

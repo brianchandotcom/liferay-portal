@@ -18,7 +18,7 @@ import {
 	AutoComplete,
 	CustomItem,
 	MultipleSelect,
-	stringIncludesQuery,
+	filterArrayByQuery,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -41,13 +41,8 @@ export function Attachments({setValues, values}: IProps) {
 	const [query, setQuery] = useState<string>('');
 
 	const filteredObjectDefinitions = useMemo(() => {
-		if (objectDefinitions?.length) {
-			return objectDefinitions.filter(({label, name}) =>
-				stringIncludesQuery(
-					(label[defaultLanguageId] as string) ?? name,
-					query
-				)
-			);
+		if (objectDefinitions) {
+			return filterArrayByQuery(objectDefinitions, 'label', query);
 		}
 	}, [objectDefinitions, query]);
 

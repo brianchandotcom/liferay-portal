@@ -22,7 +22,7 @@ import {
 	Input,
 	MultipleSelect,
 	SingleSelect,
-	stringIncludesQuery,
+	filterArrayByQuery,
 } from '@liferay/object-js-components-web';
 import React, {
 	FormEvent,
@@ -144,9 +144,7 @@ export function ModalAddFilter({
 	const [filterEndDate, setFilterEndDate] = useState('');
 
 	const filteredAvailableFields = useMemo(() => {
-		return objectFields.filter(({label}: ObjectField) =>
-			stringIncludesQuery(label[defaultLanguageId] as string, query)
-		);
+		return filterArrayByQuery(objectFields, 'label', query);
 	}, [objectFields, query]);
 
 	const setEditingFilterType = () => {

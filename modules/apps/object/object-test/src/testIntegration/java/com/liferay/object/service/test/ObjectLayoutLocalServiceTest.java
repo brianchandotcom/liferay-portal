@@ -127,8 +127,6 @@ public class ObjectLayoutLocalServiceTest {
 						"first tab of a default object layout"));
 		}
 
-		ObjectLayout objectLayout = null;
-
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
@@ -378,6 +376,8 @@ public class ObjectLayoutLocalServiceTest {
 		}
 
 		_deleteObjectFields();
+
+		ObjectLayout objectLayout = null;
 
 		try {
 			ObjectLayoutTab objectLayoutTab =

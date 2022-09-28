@@ -14,18 +14,18 @@ definition {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 	}
 
-	macro selectTheProjectFromDropdown {
-		Click(
-			key_itemvalue = "${key_value}",
-			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
-	}
-
 	macro selectProjectDirectory {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
 
 		Click(
 			key_project = "${project}",
 			locator1 = "TestrayDropdown#SELECT_PROJECT_DIRECTORY");
+	}
+
+	macro selectTheProjectFromDropdown {
+		Click(
+			key_itemvalue = "${key_value}",
+			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 
 }

@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIPTION_KEY_AVAILABLE</td>
-	<td>//div[contains(@class, 'cp-radio-card')]//*[contains(@class, 'text-success') and not (contains(@class, 'text-danger'))]</td>
+	<td>xpath=(//div[contains(@class, 'cp-radio-card')]//*[contains(@class, 'text-success') and not (contains(@class, 'text-danger'))])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

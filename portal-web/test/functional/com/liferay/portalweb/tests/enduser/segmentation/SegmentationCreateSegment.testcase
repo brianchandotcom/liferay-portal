@@ -949,6 +949,35 @@ definition {
 		}
 	}
 
+	@description = "LPS-163095 Bug: SegmentRequestContentContributor are not propertly registered"
+	@priority = "4"
+	@uitest
+	test AddSegmentBySessionIPGeocoderCountry {
+		task ("Add segment using IP Geocoder Country") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "IP Geocoder Country");
+
+			Segmentation.fillProperty(optionsValue = "Spain");
+
+			Segmentation.fillTitle(titleField = "AddSegmentBySessionIPGeocoderCountry Test");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentBySessionIPGeocoderCountry Test");
+
+			Segmentation.viewSegment(
+				criterion = "options-string",
+				value = "ES");
+		}
+	}
+
 	@description = "This is a test for LPS-130351."
 	@priority = "5"
 	@uitest

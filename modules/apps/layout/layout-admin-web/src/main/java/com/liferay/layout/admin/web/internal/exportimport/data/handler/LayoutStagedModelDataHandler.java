@@ -60,6 +60,7 @@ import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -1037,6 +1038,11 @@ public class LayoutStagedModelDataHandler
 		if (existingLayout == null) {
 			_addMasterLayoutRevision(importedLayout);
 		}
+		else if (!_layoutExportImportConfiguration.exportDraftLayout() &&
+				 Validator.isNull(draftLayoutUuid)) {
+
+			_discardDraftLayout(importedLayout);
+		}
 
 		privateLayout = portletDataContext.isPrivateLayout();
 
@@ -1224,6 +1230,27 @@ public class LayoutStagedModelDataHandler
 					layoutFriendlyURL);
 			}
 		}
+	}
+
+	private void _discardDraftLayout(Layout layout) throws Exception {
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return;
+		}
+
+		boolean published = layout.isPublished();
+
+		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setAttribute("published", published);
+
+		_layoutLocalService.updateStatus(
+			draftLayout.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private void _exportClientExtensionEntryRels(
@@ -2895,6 +2922,9 @@ public class LayoutStagedModelDataHandler
 	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
 
 	private volatile LayoutExportImportConfiguration
 		_layoutExportImportConfiguration;

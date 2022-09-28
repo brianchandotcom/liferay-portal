@@ -14,9 +14,17 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
+import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
+import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +35,44 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = DataSourceResource.class
 )
 public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
+
+	@Override
+	public void deleteDataSource() throws Exception {
+		try {
+			_analyticsCloudClient.disconnectDataSource(
+				contextCompany.getCompanyId());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		_analyticsSettingsManager.deleteCompanyConfiguration(
+			contextUser.getCompanyId());
+	}
+
+	@Override
+	public void postDataSource(DataSourceToken dataSourceToken)
+		throws Exception {
+
+		Map<String, Object> dataSourceProperties =
+			_analyticsCloudClient.connectDataSource(
+				contextUser.getCompanyId(), dataSourceToken.getToken());
+
+		dataSourceProperties.put("token", dataSourceToken.getToken());
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			contextUser.getCompanyId(), dataSourceProperties);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataSourceResourceImpl.class);
+
+	@Reference
+	private AnalyticsCloudClient _analyticsCloudClient;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
 }

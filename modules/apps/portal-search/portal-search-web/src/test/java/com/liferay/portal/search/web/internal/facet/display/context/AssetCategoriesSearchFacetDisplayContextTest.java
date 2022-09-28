@@ -15,18 +15,25 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoryPermissionChecker;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -58,12 +65,10 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
+	public void setUp() throws Exception {
+		setUpAssetVocabularyLocalService();
+		setUpConfigurationProvider();
+		setUpFacet();
 	}
 
 	@Test
@@ -356,6 +361,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 			setAssetCategoryLocalService(_assetCategoryLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.
 			setAssetCategoryPermissionChecker(_assetCategoryPermissionChecker);
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetVocabularyLocalService(_assetVocabularyLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
 			"cloud");
 		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -363,6 +370,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 			true);
 		assetCategoriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(
 			0);
+		assetCategoriesSearchFacetDisplayContextBuilder.setLocale(
+			LocaleUtil.getDefault());
 		assetCategoriesSearchFacetDisplayContextBuilder.setMaxTerms(0);
 		assetCategoriesSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
@@ -420,6 +429,60 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		).getPortletDisplay();
 
 		return themeDisplay;
+	}
+
+	protected void setUpAssetVocabularyLocalService() {
+		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
+
+		Mockito.doReturn(
+			"name"
+		).when(
+			assetVocabulary
+		).getTitle(
+			Mockito.any(Locale.class)
+		);
+
+		Mockito.doReturn(
+			assetVocabulary
+		).when(
+			_assetVocabularyLocalService
+		).fetchAssetVocabulary(
+			Mockito.anyLong()
+		);
+	}
+
+	protected void setUpConfigurationProvider() throws Exception {
+		Mockito.doReturn(
+			"assetCategoryIds"
+		).when(
+			_categoryFacetFieldConfiguration
+		).categoryFacetField();
+
+		Mockito.doReturn(
+			_categoryFacetFieldConfiguration
+		).when(
+			_configurationProvider
+		).getSystemConfiguration(
+			Mockito.any(Class.class)
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			ConfigurationProviderUtil.class, "_configurationProvider",
+			_configurationProvider);
+	}
+
+	protected void setUpFacet() {
+		Mockito.doReturn(
+			_facetCollector
+		).when(
+			_facet
+		).getFacetCollector();
+
+		Mockito.doReturn(
+			"assetCategoryIds"
+		).when(
+			_facet
+		).getFieldName();
 	}
 
 	protected void setUpOneTermCollector(long assetCategoryId, int frequency) {
@@ -526,6 +589,13 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	private final AssetCategoryPermissionChecker
 		_assetCategoryPermissionChecker = Mockito.mock(
 			AssetCategoryPermissionChecker.class);
+	private final AssetVocabularyLocalService _assetVocabularyLocalService =
+		Mockito.mock(AssetVocabularyLocalService.class);
+	private final CategoryFacetFieldConfiguration
+		_categoryFacetFieldConfiguration = Mockito.mock(
+			CategoryFacetFieldConfiguration.class);
+	private final ConfigurationProvider _configurationProvider = Mockito.mock(
+		ConfigurationProvider.class);
 	private long _excludedGroupId;
 	private final Facet _facet = Mockito.mock(Facet.class);
 	private final FacetCollector _facetCollector = Mockito.mock(

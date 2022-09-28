@@ -14,6 +14,9 @@
 
 package com.liferay.redirect.provider;
 
+import java.util.Map;
+import java.util.regex.Pattern;
+
 /**
  * @author Adolfo Pérez
  */
@@ -21,6 +24,8 @@ public interface RedirectProvider {
 
 	public Redirect getRedirect(
 		long groupId, String friendlyURL, String fullURL);
+
+	public Map<Pattern, String> getRedirectionPatternsMap(long groupId);
 
 	public interface Redirect {
 

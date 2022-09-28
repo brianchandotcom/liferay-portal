@@ -104,17 +104,11 @@ public class FileInstallCfgTest {
 			String configurationPid, String content)
 		throws Exception {
 
-		return _createConfiguration(
-			configurationPid, content, Charset.defaultCharset());
-	}
-
-	private Configuration _createConfiguration(
-			String configurationPid, String content, Charset charset)
-		throws Exception {
-
 		return ConfigurationTestUtil.updateConfiguration(
 			configurationPid,
-			() -> Files.write(_configurationPath, content.getBytes(charset)));
+			() -> Files.write(
+				_configurationPath,
+				content.getBytes(Charset.defaultCharset())));
 	}
 
 	private void _deleteConfiguration() throws Exception {

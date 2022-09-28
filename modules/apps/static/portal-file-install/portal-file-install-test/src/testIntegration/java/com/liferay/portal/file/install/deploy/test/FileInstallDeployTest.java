@@ -15,7 +15,6 @@
 package com.liferay.portal.file.install.deploy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -88,22 +87,23 @@ public class FileInstallDeployTest {
 			_CONFIGURATION_PID.concat(".config"));
 
 		try {
-			Configuration configuration = _updateConfiguration(
-				_CONFIGURATION_PID,
-				() -> {
-					String content = StringBundler.concat(
-						_TEST_KEY, StringPool.EQUAL, StringPool.QUOTE,
-						_TEST_VALUE_1, StringPool.QUOTE);
+			Configuration configuration =
+				ConfigurationTestUtil.updateConfiguration(
+					_CONFIGURATION_PID,
+					() -> {
+						String content1 = StringBundler.concat(
+							_TEST_KEY, StringPool.EQUAL, StringPool.QUOTE,
+							_TEST_VALUE_1, StringPool.QUOTE);
 
-					Files.write(path, content.getBytes());
-				});
+						Files.write(path, content1.getBytes());
+					});
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
 
 			Assert.assertEquals(_TEST_VALUE_1, properties.get(_TEST_KEY));
 
-			configuration = _updateConfiguration(
+			configuration = ConfigurationTestUtil.updateConfiguration(
 				_CONFIGURATION_PID,
 				() -> {
 					String content = StringBundler.concat(
@@ -121,7 +121,7 @@ public class FileInstallDeployTest {
 
 			Assert.assertEquals(_TEST_VALUE_2, properties.get(_TEST_KEY));
 
-			configuration = _updateConfiguration(
+			configuration = ConfigurationTestUtil.updateConfiguration(
 				_CONFIGURATION_PID, () -> Files.delete(path));
 
 			Assert.assertNull(configuration);
@@ -143,14 +143,15 @@ public class FileInstallDeployTest {
 		System.setProperty(systemTestPropertyKey, _TEST_VALUE_1);
 
 		try {
-			Configuration configuration = _updateConfiguration(
-				_CONFIGURATION_PID,
-				() -> {
-					String content = StringBundler.concat(
-						_TEST_KEY, "=\"${", systemTestPropertyKey, "}\"");
+			Configuration configuration =
+				ConfigurationTestUtil.updateConfiguration(
+					_CONFIGURATION_PID,
+					() -> {
+						String content = StringBundler.concat(
+							_TEST_KEY, "=\"${", systemTestPropertyKey, "}\"");
 
-					Files.write(path, content.getBytes());
-				});
+						Files.write(path, content.getBytes());
+					});
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
@@ -516,14 +517,6 @@ public class FileInstallDeployTest {
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);
 		}
-	}
-
-	private Configuration _updateConfiguration(
-			String configurationPid, UnsafeRunnable<Exception> runnable)
-		throws Exception {
-
-		return ConfigurationTestUtil.updateConfiguration(
-			configurationPid, runnable);
 	}
 
 	private static final String _CONFIGURATION_PID =

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -262,9 +261,6 @@ public class CTSearchEventListener implements CTEventListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTSearchEventListener.class);
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

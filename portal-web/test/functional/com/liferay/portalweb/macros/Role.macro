@@ -96,7 +96,6 @@ definition {
 			siteNameScope = "${siteNameScope}");
 
 		Role.viewPermissionCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
 			permissionDefinitionValue = "${permissionDefinitionValue}",
 			permissionNavigationValue = "${permissionNavigationValue}",
 			remove = "${remove}",
@@ -426,7 +425,6 @@ definition {
 			siteNameScope = "${siteNameScope}");
 
 		Role.viewPermissionCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
 			permissionDefinitionValue = "${permissionDefinitionValue}",
 			permissionNavigationValue = "${permissionNavigationValue}",
 			remove = "true");

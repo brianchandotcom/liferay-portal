@@ -22,7 +22,7 @@ import org.junit.Rule;
 /**
  * @author Bryan Engler
  */
-public class AssetCategoriesSearchFacetDisplayContextTest
+public class AssetVocabularyCategoriesSearchFacetDisplayContextTest
 	extends BaseCategoriesSearchFacetDisplayContextTestCase {
 
 	@ClassRule
@@ -32,7 +32,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 
 	@Override
 	protected String getFacetFieldName() {
-		return "assetCategoryIds";
+		return "assetVocabularyCategoryIds";
 	}
 
 }

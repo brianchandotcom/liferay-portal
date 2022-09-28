@@ -656,18 +656,6 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceVirtualOrderItemLocalServiceBaseImpl.class);
 

@@ -172,8 +172,8 @@ const InviteTeamMembersPage = ({
 			const newMembersData = await Promise.all(
 				filledEmails.map(async ({email, role}) => {
 					const invitedUser = await addTeamMemberInvitation({
-						context:{
-							displaySuccess:false,
+						context: {
+							displaySuccess: false,
 						},
 						variables: {
 							TeamMembersInvitation: {

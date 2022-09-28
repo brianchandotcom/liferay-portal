@@ -105,7 +105,7 @@ export default function useSubmitLXCEnvironment(
 						({email, fullName, github}) => {
 							return createAdminLiferayExperienceCloud({
 								context: {
-									displaySuccess:false,
+									displaySuccess: false,
 								},
 								variables: {
 									AdminLiferayExperienceCloud: {

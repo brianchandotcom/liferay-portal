@@ -113,12 +113,12 @@ const ModalDXPCActivationStatus = ({
 
 		if (dxpCloudEnvironment) {
 			await client.mutate({
-				context:{
-					displaySuccess:false,
+				context: {
+					displaySuccess: false,
 				},
 
 				mutation: updateDXPCloudEnvironment,
-				variables: {	
+				variables: {
 					DXPCloudEnvironment: {
 						projectId: projectIdValue,
 					},

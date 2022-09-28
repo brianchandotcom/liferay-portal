@@ -179,8 +179,8 @@ const RequiredInformation = ({
 			}
 
 			await client.mutate({
-				context:{
-					displaySuccess:false,
+				context: {
+					displaySuccess: false,
 				},
 				mutation: patchOrderItemByExternalReferenceCode,
 				variables: {

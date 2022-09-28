@@ -23,7 +23,7 @@ export default function getUpdateSubscriptionGroupsStatus(
 ) {
 	updateAccountSubscriptionGroup({
 		context: {
-					displaySuccess:false
+			displaySuccess: false,
 		},
 		variables: {
 			AccountSubscriptionGroup: {

@@ -25,14 +25,6 @@ import java.util.Set;
  */
 public class SearchEngineHelperUtil {
 
-	public static void flushQueuedSearchEngine() {
-		_searchEngineHelper.flushQueuedSearchEngine();
-	}
-
-	public static void flushQueuedSearchEngine(String searchEngineId) {
-		_searchEngineHelper.flushQueuedSearchEngine(searchEngineId);
-	}
-
 	public static String getDefaultSearchEngineId() {
 		return _searchEngineHelper.getDefaultSearchEngineId();
 	}
@@ -101,10 +93,6 @@ public class SearchEngineHelperUtil {
 
 	public static void setDefaultSearchEngineId(String defaultSearchEngineId) {
 		_searchEngineHelper.setDefaultSearchEngineId(defaultSearchEngineId);
-	}
-
-	public static void setQueueCapacity(int queueCapacity) {
-		_searchEngineHelper.setQueueCapacity(queueCapacity);
 	}
 
 	public static void setSearchEngine(

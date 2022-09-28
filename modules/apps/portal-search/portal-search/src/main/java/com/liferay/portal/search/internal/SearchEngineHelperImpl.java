@@ -25,14 +25,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.search.queue.QueuingSearchEngine;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,32 +50,6 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true, service = SearchEngineHelper.class
 )
 public class SearchEngineHelperImpl implements SearchEngineHelper {
-
-	@Override
-	public void flushQueuedSearchEngine() {
-		synchronized (_queuingSearchEngines) {
-			for (QueuingSearchEngine queuingSearchEngine :
-					_queuingSearchEngines.values()) {
-
-				queuingSearchEngine.flush();
-			}
-
-			_queuingSearchEngines.clear();
-		}
-	}
-
-	@Override
-	public void flushQueuedSearchEngine(String searchEngineId) {
-		QueuingSearchEngine queuingSearchEngine = null;
-
-		synchronized (_queuingSearchEngines) {
-			queuingSearchEngine = _queuingSearchEngines.remove(searchEngineId);
-		}
-
-		if (queuingSearchEngine != null) {
-			queuingSearchEngine.flush();
-		}
-	}
 
 	@Override
 	public Collection<Long> getCompanyIds() {
@@ -121,30 +93,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 	@Override
 	public SearchEngine getSearchEngine(String searchEngineId) {
-		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
-
-		if (searchEngine != null) {
-			return searchEngine;
-		}
-
-		synchronized (_queuingSearchEngines) {
-			searchEngine = _queuingSearchEngines.get(searchEngineId);
-
-			if (searchEngine == null) {
-				QueuingSearchEngine queuingSearchEngine =
-					new QueuingSearchEngine(_queueCapacity);
-
-				_queuingSearchEngines.put(searchEngineId, queuingSearchEngine);
-
-				searchEngine = queuingSearchEngine;
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Returning queuing search engine");
-			}
-
-			return searchEngine;
-		}
+		return _searchEngines.get(searchEngineId);
 	}
 
 	@Override
@@ -247,11 +196,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public void setQueueCapacity(int queueCapacity) {
-		_queueCapacity = queueCapacity;
-	}
-
-	@Override
 	public void setSearchEngine(
 		String searchEngineId, SearchEngine searchEngine) {
 
@@ -259,26 +203,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 		for (Long companyId : _companyIds.keySet()) {
 			searchEngine.initialize(companyId);
-		}
-
-		synchronized (_queuingSearchEngines) {
-			QueuingSearchEngine queuingSearchEngine = _queuingSearchEngines.get(
-				searchEngineId);
-
-			if (queuingSearchEngine != null) {
-				try {
-					queuingSearchEngine.invokeQueued(
-						searchEngine.getIndexWriter());
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to execute pending write events for " +
-								"engine: " + searchEngineId,
-							exception);
-					}
-				}
-			}
 		}
 	}
 
@@ -304,9 +228,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
 	private String _defaultSearchEngineId;
 	private final Set<String> _excludedEntryClassNames = new HashSet<>();
-	private int _queueCapacity = 200;
-	private final Map<String, QueuingSearchEngine> _queuingSearchEngines =
-		new HashMap<>();
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 

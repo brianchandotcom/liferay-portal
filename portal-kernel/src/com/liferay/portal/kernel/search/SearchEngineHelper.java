@@ -24,10 +24,6 @@ public interface SearchEngineHelper {
 
 	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
 
-	public void flushQueuedSearchEngine();
-
-	public void flushQueuedSearchEngine(String searchEngineId);
-
 	public Collection<Long> getCompanyIds();
 
 	public String getDefaultSearchEngineId();
@@ -61,8 +57,6 @@ public interface SearchEngineHelper {
 	public SearchEngine removeSearchEngine(String searchEngineId);
 
 	public void setDefaultSearchEngineId(String defaultSearchEngineId);
-
-	public void setQueueCapacity(int queueCapacity);
 
 	public void setSearchEngine(
 		String searchEngineId, SearchEngine searchEngine);

@@ -88,6 +88,9 @@ definition {
 		else if ("${fieldName}" == "First Name") {
 			var field = "firstName";
 		}
+		else if ("${fieldName}" == "IP Geocoder Country") {
+			var field = "customContext\/ipGeocoderCountry";
+		}
 		else if ("${fieldName}" == "Hostname") {
 			var field = "hostname";
 		}
@@ -180,6 +183,9 @@ definition {
 		}
 		else if ("${fieldName}" == "userGroupIds") {
 			var text = JSONUserGroupSetter.setUserGroupId(userGroupName = "${selectedOption}");
+		}
+		else if ("${fieldName}" == "customContext\/ipGeocoderCountry") {
+			var text = JSONCountry.getCountryAbbreviation(countryName = "${selectedOption}");
 		}
 
 		return "${text}";

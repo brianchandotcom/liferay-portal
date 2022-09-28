@@ -649,46 +649,33 @@ definition {
 	test CanViewDefaultResourcesOnSystemObjects {
 		property portal.upstream = "quarantine";
 
-		Audit.openAuditAdmin();
+		for (var loops : list "1,2,3,4,5,6") {
+			Audit.openAuditAdmin();
 
-		Audit.searchViaKeywords(
-			resourceName = "ObjectDefinition",
-			searchTerm = "ObjectDefinition",
-			userName = "");
+			WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
 
-		Audit.viewAuditDetailsByPosition(
-			additionalInformation = "User,company,true",
-			clientIp = "",
-			key_resourceAction = "ADD",
-			key_resourceName = "ObjectDefinition",
-			nameByPosition = "1",
-			resourceAction = "ADD",
-			resourceName = "ObjectDefinition",
-			userName = "");
+			Type(
+				locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
+				value1 = "ObjectDefinition");
 
-		Navigator.gotoBack();
+			Click(locator1 = "Button#SUBMIT");
 
-		Audit.viewAuditDetailsByPosition(
-			additionalInformation = "Commerce Order,company,true",
-			clientIp = "",
-			key_resourceAction = "ADD",
-			key_resourceName = "ObjectDefinition",
-			nameByPosition = "2",
-			resourceAction = "ADD",
-			resourceName = "ObjectDefinition",
-			userName = "");
+			Audit.viewAuditDetailsByPosition(
+				additionalInformation = "company,true",
+				clientIp = "",
+				key_resourceAction = "ADD",
+				key_resourceName = "ObjectDefinition",
+				nameByPosition = "${loops}",
+				resourceAction = "ADD",
+				resourceName = "ObjectDefinition",
+				userName = "");
 
-		Navigator.gotoBack();
-
-		Audit.viewAuditDetailsByPosition(
-			additionalInformation = "Account,company,true",
-			clientIp = "",
-			key_resourceAction = "ADD",
-			key_resourceName = "ObjectDefinition",
-			nameByPosition = "3",
-			resourceAction = "ADD",
-			resourceName = "ObjectDefinition",
-			userName = "");
+			if (("${sytemsObjects}" == "Account") || ("${sytemsObjects}" == "Commerce Order") || ("${sytemsObjects}" == "Commerce Product") || ("${sytemsObjects}" == "Commerce Product Group") || ("${sytemsObjects}" == "Postal Address") || ("${sytemsObjects}" == "User")) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "AuditReports#REPORTS_DETAIL_ADDITIONAL_INFORMATION",
+					value1 = "${sytemsObjects}");
+			}
+		}
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when one field is deleted"

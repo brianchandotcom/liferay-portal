@@ -14,6 +14,12 @@
 
 /// <reference types="react" />
 
+interface IProps {
+	error?: string;
+	objectDefinitionId?: number;
+	onChange: (objectFieldId: number) => void;
+	value?: number;
+}
 export default function SelectRelationship({
 	error,
 	objectDefinitionId,
@@ -21,10 +27,4 @@ export default function SelectRelationship({
 	value,
 	...otherProps
 }: IProps): JSX.Element;
-interface IProps {
-	error?: string;
-	objectDefinitionId?: number;
-	onChange?: (objectFieldId: number) => void;
-	value?: number;
-}
 export {};

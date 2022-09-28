@@ -17,6 +17,13 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
+interface IProps {
+	error?: string;
+	objectDefinitionId?: number;
+	onChange: (objectFieldId: number) => void;
+	value?: number;
+}
+
 export default function SelectRelationship({
 	error,
 	objectDefinitionId,
@@ -57,10 +64,8 @@ export default function SelectRelationship({
 		<Select
 			error={error}
 			label={Liferay.Language.get('parameter')}
-			onChange={(event) => {
-				onChange?.(
-					fields.find(({name}) => name === event.target.value)?.id!
-				);
+			onChange={({target: {value}}) => {
+				onChange(fields.find(({name}) => name === value)?.id!);
 			}}
 			options={options}
 			required
@@ -71,11 +76,4 @@ export default function SelectRelationship({
 			{...otherProps}
 		/>
 	);
-}
-
-interface IProps {
-	error?: string;
-	objectDefinitionId?: number;
-	onChange?: (objectFieldId: number) => void;
-	value?: number;
 }

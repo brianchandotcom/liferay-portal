@@ -230,10 +230,9 @@ public class ObjectLayoutLocalServiceTest {
 			ObjectLayoutBox objectLayoutBox = _addObjectLayoutBox(
 				ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
 
+			objectLayoutTab.setPriority(0);
 			objectLayoutTab.setObjectLayoutBoxes(
 				Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
-
-			objectLayoutTab.setPriority(0);
 
 			_objectLayoutLocalService.addObjectLayout(
 				TestPropsValues.getUserId(),

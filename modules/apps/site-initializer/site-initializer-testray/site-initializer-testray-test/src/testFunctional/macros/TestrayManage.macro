@@ -42,8 +42,6 @@ definition {
 			value1 = "${caseName}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro createNewOption {

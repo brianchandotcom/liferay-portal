@@ -840,15 +840,18 @@ definition {
 
 		Audit.openAuditAdmin();
 
-		Audit.searchViaKeywords(
-			resourceName = "ObjectDefinition",
-			searchTerm = "ObjectDefinition",
-			userName = "");
+		WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
 
-		for (var positionList : list "1,2,3") {
+		Type(
+			locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
+			value1 = "ObjectDefinition");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		for (var positionList : list "1,2,3,4,5,6") {
 			Audit.viewAuditEntries(
 				clientIP = "",
-				createDate = "Seconds Ago",
+				createDate = "",
 				id = "0",
 				position = "${positionList}",
 				resourceAction = "ADD",

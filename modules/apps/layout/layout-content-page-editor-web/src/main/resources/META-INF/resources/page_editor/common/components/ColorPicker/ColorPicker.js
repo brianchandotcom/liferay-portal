@@ -301,14 +301,22 @@ export function ColorPicker({
 					</ClayInput.Group>
 				)}
 
-				{value && (
-					<>
-						{tokenLabel ? (
-							canDetachTokenValues && (
-								<ClayButtonWithIcon
-									className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__color-picker__action-button"
-									displayType="secondary"
-									onClick={() => {
+				{value || Liferay.FeatureFlags['LPS-163362'] ? (
+					tokenLabel ? (
+						canDetachTokenValues && (
+							<ClayButtonWithIcon
+								className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__color-picker__action-button"
+								displayType="secondary"
+								onClick={() => {
+									if (
+										!tokenValues[value] &&
+										Liferay.FeatureFlags['LPS-163362']
+									) {
+										setCustomColors([defaultTokenLabel]);
+
+										onSetValue(defaultTokenLabel, null);
+									}
+									else {
 										setCustomColors([
 											tokenValues[value].value.replace(
 												'#',
@@ -320,68 +328,66 @@ export function ColorPicker({
 											tokenValues[value].value,
 											null
 										);
-									}}
-									small
-									symbol="chain-broken"
-									title={Liferay.Language.get('detach-token')}
-								/>
-							)
-						) : (
-							<DropdownColorPicker
-								active={activeDropdownColorPicker}
-								colors={colors}
-								fieldLabel={showLabel ? null : field.label}
-								onSetActive={setActiveDropdownColorPicker}
-								onValueChange={({label, name, value}) => {
-									onSetValue(value, label, name);
-
-									if (error.value) {
-										setError({
-											label: null,
-											value: null,
-										});
-										deleteStyleError(field.name);
 									}
 								}}
-								showSelector={false}
 								small
-								value={color}
+								symbol="chain-broken"
+								title={Liferay.Language.get('detach-token')}
 							/>
-						)}
+						)
+					) : (
+						<DropdownColorPicker
+							active={activeDropdownColorPicker}
+							colors={colors}
+							fieldLabel={showLabel ? null : field.label}
+							onSetActive={setActiveDropdownColorPicker}
+							onValueChange={({label, name, value}) => {
+								onSetValue(value, label, name);
 
-						<ClayButtonWithIcon
-							className="border-0 flex-shrink-0 ml-2 page-editor__color-picker__action-button"
-							displayType="secondary"
-							onClick={() => {
-								if (
-									value.toLowerCase() ===
-										field.defaultValue?.toLowerCase() &&
-									!error.value
-								) {
-									return;
+								if (error.value) {
+									setError({
+										label: null,
+										value: null,
+									});
+									deleteStyleError(field.name);
 								}
-
-								setError({label: null, value: null});
-
-								onSetValue(
-									field.defaultValue ?? null,
-									field.defaultValue
-										? null
-										: defaultTokenLabel
-								);
 							}}
+							showSelector={false}
 							small
-							symbol="restore"
-							title={
-								selectedViewportSize
-									? getResetLabelByViewport(
-											selectedViewportSize
-									  )
-									: Liferay.Language.get('clear-selection')
-							}
+							value={color}
 						/>
-					</>
-				)}
+					)
+				) : null}
+
+				{value ? (
+					<ClayButtonWithIcon
+						className="border-0 flex-shrink-0 ml-2 page-editor__color-picker__action-button"
+						displayType="secondary"
+						onClick={() => {
+							if (
+								value.toLowerCase() ===
+									field.defaultValue?.toLowerCase() &&
+								!error.value
+							) {
+								return;
+							}
+
+							setError({label: null, value: null});
+
+							onSetValue(
+								field.defaultValue ?? null,
+								field.defaultValue ? null : defaultTokenLabel
+							);
+						}}
+						small
+						symbol="restore"
+						title={
+							selectedViewportSize
+								? getResetLabelByViewport(selectedViewportSize)
+								: Liferay.Language.get('clear-selection')
+						}
+					/>
+				) : null}
 			</div>
 
 			{error.label ? (

@@ -43,10 +43,13 @@ export function AdvancedSelectField({
 	tokenValues,
 	value,
 }) {
+	const activeItemId = useActiveItemId();
+	const globalContext = useGlobalContext();
 	const helpTextId = useId();
 	const triggerId = useId();
 
 	const [active, setActive] = useState(false);
+	const [defaultOptionComputedValue, setDefaultComputedValue] = useState('');
 	const [error, setError] = useState(false);
 	const [isTokenValueOrInherited, setIsTokenValueOrInherited] = useState(
 		!isNullOrUndefined(tokenValues[value]) || !value
@@ -111,6 +114,26 @@ export function AdvancedSelectField({
 		);
 	}, [selectedViewportSize, tokenValues, value]);
 
+	useEffect(() => {
+		if (!field.cssProperty) {
+			return;
+		}
+
+		const element = globalContext.document.querySelector(
+			`.${getLayoutDataItemUniqueClassName(activeItemId)}`
+		);
+
+		if (!element) {
+			return;
+		}
+
+		setDefaultComputedValue(
+			globalContext.window
+				.getComputedStyle(element)
+				.getPropertyValue(field.cssProperty)
+		);
+	}, [activeItemId, field.cssProperty, globalContext, value]);
+
 	return (
 		<div
 			className={classNames('page-editor__select-field d-flex', {
@@ -119,6 +142,7 @@ export function AdvancedSelectField({
 		>
 			{isTokenValueOrInherited ? (
 				<SingleSelectWithIcon
+					defaultOptionComputedValue={defaultOptionComputedValue}
 					disabled={disabled}
 					field={field}
 					helpTextId={helpTextId}
@@ -145,86 +169,86 @@ export function AdvancedSelectField({
 				/>
 			)}
 
+			{value || Liferay.FeatureFlags['LPS-163362'] ? (
+				canDetachTokenValues ? (
+					isTokenValueOrInherited ? (
+						<ClayButtonWithIcon
+							className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__select-field__action-button"
+							displayType="secondary"
+							onClick={() => {
+								onSetValue({
+									isTokenValue: false,
+									value: tokenValues[value]
+										? tokenValues[value].value
+										: defaultOptionComputedValue,
+								});
+							}}
+							small
+							symbol="chain-broken"
+							title={Liferay.Language.get('detach-token')}
+						/>
+					) : (
+						<ClayDropDown
+							active={active}
+							alignmentPosition={Align.BottomRight}
+							className="flex-shrink-0 ml-2"
+							menuElementAttrs={{
+								containerProps: {
+									className: 'cadmin',
+								},
+							}}
+							onActiveChange={setActive}
+							trigger={
+								<ClayButtonWithIcon
+									className="border-0"
+									displayType="secondary"
+									id={triggerId}
+									small
+									symbol="theme"
+									title={Liferay.Language.get(
+										'value-from-stylebook'
+									)}
+								/>
+							}
+						>
+							<ClayDropDown.ItemList aria-labelledby={triggerId}>
+								{options.map(({label, value}) => {
+									if (!value) {
+										return;
+									}
+
+									return (
+										<ClayDropDown.Item
+											key={value}
+											onClick={() => {
+												setActive(false);
+												onSetValue({
+													isTokenValue: true,
+													value,
+												});
+											}}
+										>
+											{label}
+										</ClayDropDown.Item>
+									);
+								})}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					)
+				) : null
+			) : null}
+
 			{value ? (
-				<>
-					{canDetachTokenValues ? (
-						isTokenValueOrInherited ? (
-							<ClayButtonWithIcon
-								className="border-0 mb-0 ml-2 page-editor__select-field__action-button"
-								displayType="secondary"
-								onClick={() =>
-									onSetValue({
-										isTokenValue: false,
-										value: tokenValues[value].value,
-									})
-								}
-								small
-								symbol="chain-broken"
-								title={Liferay.Language.get('detach-token')}
-							/>
-						) : (
-							<ClayDropDown
-								active={active}
-								alignmentPosition={Align.BottomRight}
-								className="flex-shrink-0 ml-2"
-								menuElementAttrs={{
-									containerProps: {
-										className: 'cadmin',
-									},
-								}}
-								onActiveChange={setActive}
-								trigger={
-									<ClayButtonWithIcon
-										className="border-0"
-										displayType="secondary"
-										id={triggerId}
-										small
-										symbol="theme"
-										title={Liferay.Language.get(
-											'value-from-stylebook'
-										)}
-									/>
-								}
-							>
-								<ClayDropDown.ItemList
-									aria-labelledby={triggerId}
-								>
-									{options.map(({label, value}) => {
-										if (!value) {
-											return;
-										}
-
-										return (
-											<ClayDropDown.Item
-												key={value}
-												onClick={() => {
-													setActive(false);
-													onSetValue({
-														isTokenValue: true,
-														value,
-													});
-												}}
-											>
-												{label}
-											</ClayDropDown.Item>
-										);
-									})}
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						)
-					) : null}
-
-					<ClayButtonWithIcon
-						className="border-0 mb-0 ml-2 page-editor__select-field__action-button"
-						displayType="secondary"
-						onClick={() =>
-							onSetValue({isTokenValue: true, value: null})
-						}
-						small
-						symbol="restore"
-						title={getResetLabelByViewport(selectedViewportSize)}
-					/>
-				</>
+				<ClayButtonWithIcon
+					className="border-0 mb-0 ml-2 page-editor__select-field__action-button"
+					displayType="secondary"
+					onClick={() =>
+						onSetValue({isTokenValue: true, value: null})
+					}
+					small
+					symbol="restore"
+					title={getResetLabelByViewport(selectedViewportSize)}
+				/>
 			) : null}
 
 			{field.description ? (
@@ -245,6 +269,7 @@ export function AdvancedSelectField({
 }
 
 const SingleSelectWithIcon = ({
+	defaultOptionComputedValue,
 	disabled,
 	field,
 	helpTextId,
@@ -252,11 +277,7 @@ const SingleSelectWithIcon = ({
 	options,
 	value,
 }) => {
-	const activeItemId = useActiveItemId();
-	const globalContext = useGlobalContext();
 	const inputId = useId();
-
-	const [defaultOptionComputedValue, setDefaultComputedValue] = useState('');
 
 	const defaultOptionLabel = useMemo(
 		() =>
@@ -295,26 +316,6 @@ const SingleSelectWithIcon = ({
 		options,
 		value,
 	]);
-
-	useEffect(() => {
-		if (!field.cssProperty) {
-			return;
-		}
-
-		const element = globalContext.document.querySelector(
-			`.${getLayoutDataItemUniqueClassName(activeItemId)}`
-		);
-
-		if (!element) {
-			return;
-		}
-
-		setDefaultComputedValue(
-			globalContext.window
-				.getComputedStyle(element)
-				.getPropertyValue(field.cssProperty)
-		);
-	}, [activeItemId, field.cssProperty, globalContext, value]);
 
 	return (
 		<div className="btn btn-unstyled flex-grow-1 m-0 p-0 page-editor__single-select-with-icon">

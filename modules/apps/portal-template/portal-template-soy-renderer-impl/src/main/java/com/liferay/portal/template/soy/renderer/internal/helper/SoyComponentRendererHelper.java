@@ -19,6 +19,10 @@ import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.aui.VariableUtil;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -29,9 +33,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
-import com.liferay.portal.template.soy.renderer.internal.SoyJavaScriptRendererUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 
 import java.util.ArrayList;
@@ -136,9 +140,18 @@ public class SoyComponentRendererHelper {
 	}
 
 	private void _renderJavaScript(Writer writer) throws IOException {
-		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			(Map)_context, _wrapperId, _moduleName,
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		String contextString = jsonSerializer.serializeDeep(_context);
+		String wrapperString = jsonSerializer.serialize(
 			_componentDescriptor.isWrapper());
+
+		String componentJavaScript = StringUtil.replace(
+			_JAVA_SCRIPT_TPL,
+			new String[] {"$CONTEXT", "$ID", "$MODULE", "$WRAPPER"},
+			new String[] {
+				contextString, _wrapperId, _moduleName, wrapperString
+			});
 
 		if (_jsModuleLauncher.isValidModule(_componentDescriptor.getModule())) {
 			List<JSModuleDependency> jsModuleDependencies = new ArrayList<>();
@@ -240,9 +253,31 @@ public class SoyComponentRendererHelper {
 		}
 	}
 
+	private static final String _JAVA_SCRIPT_TPL;
+
 	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {
 		CharPool.PERIOD, CharPool.DASH
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SoyComponentRendererHelper.class);
+
+	static {
+		InputStream inputStream =
+			SoyComponentRendererHelper.class.getResourceAsStream(
+				"dependencies/bootstrap.js.tpl");
+
+		String js = StringPool.BLANK;
+
+		try {
+			js = StringUtil.read(inputStream);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to read template", exception);
+		}
+
+		_JAVA_SCRIPT_TPL = js;
+	}
 
 	private final ComponentDescriptor _componentDescriptor;
 	private final Map<String, Object> _context;

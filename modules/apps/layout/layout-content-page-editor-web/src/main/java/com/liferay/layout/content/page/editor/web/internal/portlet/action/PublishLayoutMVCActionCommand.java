@@ -21,6 +21,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Collections;
 
@@ -136,6 +138,9 @@ public class PublishLayoutMVCActionCommand
 				serviceContext, Collections.emptyMap());
 		}
 		else {
+			UnicodeProperties originalTypeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
+
 			_layoutCopyHelper.copyLayout(draftLayout, layout);
 
 			layout = _layoutLocalService.getLayout(layout.getPlid());
@@ -158,6 +163,31 @@ public class PublishLayoutMVCActionCommand
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			_layoutLocalService.updateLayout(draftLayout);
+
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			if (layoutSet.isLayoutSetPrototypeLinkActive()) {
+				UnicodeProperties updatedTypeSettingsUnicodeProperties =
+					layout.getTypeSettingsProperties();
+
+				if (originalTypeSettingsUnicodeProperties.containsKey(
+						Sites.LAST_MERGE_LAYOUT_MODIFIED_TIME)) {
+
+					updatedTypeSettingsUnicodeProperties.put(
+						Sites.LAST_MERGE_LAYOUT_MODIFIED_TIME,
+						originalTypeSettingsUnicodeProperties.getProperty(
+							Sites.LAST_MERGE_LAYOUT_MODIFIED_TIME));
+				}
+
+				if (originalTypeSettingsUnicodeProperties.containsKey(
+						Sites.LAST_MERGE_TIME)) {
+
+					updatedTypeSettingsUnicodeProperties.put(
+						Sites.LAST_MERGE_TIME,
+						originalTypeSettingsUnicodeProperties.getProperty(
+							Sites.LAST_MERGE_TIME));
+				}
+			}
 
 			layout.setType(draftLayout.getType());
 			layout.setLayoutPrototypeUuid(null);
@@ -202,6 +232,9 @@ public class PublishLayoutMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

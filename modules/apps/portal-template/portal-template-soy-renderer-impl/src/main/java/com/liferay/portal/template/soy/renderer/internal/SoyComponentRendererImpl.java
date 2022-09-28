@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
 import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
-import com.liferay.portal.template.soy.renderer.SoyRenderer;
 import com.liferay.portal.template.soy.renderer.internal.helper.SoyComponentRendererHelper;
 
 import java.io.IOException;
@@ -60,7 +59,7 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 		SoyComponentRendererHelper soyComponentRendererHelper =
 			new SoyComponentRendererHelper(
 				httpServletRequest, componentDescriptor, context,
-				_jsModuleLauncher, _portal, _soyRenderer);
+				_jsModuleLauncher, _portal);
 
 		soyComponentRendererHelper.renderSoyComponent(writer);
 	}
@@ -70,8 +69,5 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SoyRenderer _soyRenderer;
 
 }

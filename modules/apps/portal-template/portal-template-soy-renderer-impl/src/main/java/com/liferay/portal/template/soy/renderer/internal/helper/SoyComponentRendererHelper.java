@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
-import com.liferay.portal.template.soy.renderer.SoyRenderer;
 import com.liferay.portal.template.soy.renderer.internal.SoyJavaScriptRendererUtil;
 
 import java.io.IOException;
@@ -52,15 +51,13 @@ public class SoyComponentRendererHelper {
 	public SoyComponentRendererHelper(
 		HttpServletRequest httpServletRequest,
 		ComponentDescriptor componentDescriptor, Map<String, ?> context,
-		JSModuleLauncher jsModuleLauncher, Portal portal,
-		SoyRenderer soyRenderer) {
+		JSModuleLauncher jsModuleLauncher, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
 		_context = new HashMap<>(context);
 		_jsModuleLauncher = jsModuleLauncher;
 		_portal = portal;
-		_soyRenderer = soyRenderer;
 
 		_moduleName = _getModuleName(_componentDescriptor.getModule());
 
@@ -254,7 +251,6 @@ public class SoyComponentRendererHelper {
 	private final JSModuleLauncher _jsModuleLauncher;
 	private final String _moduleName;
 	private final Portal _portal;
-	private final SoyRenderer _soyRenderer;
 	private final String _wrapperId;
 
 }

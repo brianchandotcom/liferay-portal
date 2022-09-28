@@ -607,7 +607,9 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Check(locator1 = "StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX");
+			Check.checkNotVisible(
+				inputFieldId = "StagingProcessesPortlet_DELETIONS",
+				locator1 = "TextInput#INPUT_ID");
 
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
@@ -780,7 +782,9 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Check(locator1 = "StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX");
+			Check.checkNotVisible(
+				inputFieldId = "StagingProcessesPortlet_DELETIONS",
+				locator1 = "TextInput#INPUT_ID");
 
 			AssertClickNoError(
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",

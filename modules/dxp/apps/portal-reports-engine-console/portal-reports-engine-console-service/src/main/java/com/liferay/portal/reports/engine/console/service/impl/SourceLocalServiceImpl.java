@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -35,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,7 +58,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
 		// Source
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		validate(driverClassName, driverUrl, driverUserName, driverPassword);
@@ -81,7 +84,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addModelResources(source, serviceContext);
+		_resourceLocalService.addModelResources(source, serviceContext);
 
 		return source;
 	}
@@ -103,7 +106,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			source.getCompanyId(), Source.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, source.getSourceId());
 
@@ -195,5 +198,11 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 			currentThread.setContextClassLoader(classLoader);
 		}
 	}
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

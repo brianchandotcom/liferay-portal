@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,6 +48,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
@@ -66,7 +69,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 		// Definition
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		validate(nameMap);
@@ -93,7 +96,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addModelResources(definition, serviceContext);
+		_resourceLocalService.addModelResources(definition, serviceContext);
 
 		// Attachments
 
@@ -120,7 +123,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			definition.getCompanyId(), Definition.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, definition.getDefinitionId());
 
@@ -249,7 +252,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			String[] guestPermissions)
 		throws PortalException {
 
-		resourceLocalService.updateResources(
+		_resourceLocalService.updateResources(
 			definition.getCompanyId(), definition.getGroupId(),
 			Definition.class.getName(), definition.getDefinitionId(),
 			communityPermissions, guestPermissions);
@@ -285,5 +288,11 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			throw new DefinitionNameException.NullDefinitionFileName();
 		}
 	}
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -66,6 +67,8 @@ import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.base.EntryLocalServiceBaseImpl;
+import com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence;
+import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
 import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 
@@ -105,7 +108,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		// Entry
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		validate(emailNotifications, emailDelivery, reportName);
@@ -143,7 +146,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addModelResources(entry, serviceContext);
+		_resourceLocalService.addModelResources(entry, serviceContext);
 
 		// Scheduler
 
@@ -166,7 +169,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
 			Entry.class.getName(), entry.getEntryId(), false,
 			addCommunityPermissions, addGuestPermissions);
@@ -178,7 +181,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			String[] guestPermissions)
 		throws PortalException {
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
 			Entry.class.getName(), entry.getEntryId(), communityPermissions,
 			guestPermissions);
@@ -201,7 +204,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			entry.getCompanyId(), Entry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, entry.getEntryId());
 
@@ -233,7 +236,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	public void generateReport(long entryId) throws PortalException {
 		Entry entry = entryPersistence.findByPrimaryKey(entryId);
 
-		Definition definition = definitionPersistence.findByPrimaryKey(
+		Definition definition = _definitionPersistence.findByPrimaryKey(
 			entry.getDefinitionId());
 
 		generateReport(entryId, definition.getReportName());
@@ -245,7 +248,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		Entry entry = entryPersistence.findByPrimaryKey(entryId);
 
-		Definition definition = definitionPersistence.findByPrimaryKey(
+		Definition definition = _definitionPersistence.findByPrimaryKey(
 			entry.getDefinitionId());
 
 		String[] existingFiles = definition.getAttachmentsFiles();
@@ -281,7 +284,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				ReportDataSourceType.PORTAL);
 		}
 		else {
-			Source source = sourcePersistence.findByPrimaryKey(sourceId);
+			Source source = _sourcePersistence.findByPrimaryKey(sourceId);
 
 			reportRequestContext = new ReportRequestContext(
 				ReportDataSourceType.JDBC);
@@ -591,6 +594,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private DefinitionPersistence _definitionPersistence;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -600,7 +606,13 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	private Portal _portal;
 
 	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private SourcePersistence _sourcePersistence;
 
 	@Reference
 	private UserLocalService _userLocalService;

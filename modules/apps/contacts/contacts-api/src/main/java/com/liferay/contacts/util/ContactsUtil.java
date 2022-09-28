@@ -286,7 +286,7 @@ public class ContactsUtil {
 		for (EmailAddress emailAddress : emailAddresses) {
 			sb.append("EMAIL;TYPE=INTERNET;TYPE=");
 
-			ListType listType = emailAddress.getType();
+			ListType listType = emailAddress.getListType();
 
 			sb.append(StringUtil.toUpperCase(listType.getName()));
 

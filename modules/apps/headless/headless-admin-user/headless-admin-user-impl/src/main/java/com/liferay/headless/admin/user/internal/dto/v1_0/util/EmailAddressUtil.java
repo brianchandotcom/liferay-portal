@@ -27,7 +27,7 @@ public class EmailAddressUtil {
 				serviceBuilderEmailAddress)
 		throws Exception {
 
-		ListType listType = serviceBuilderEmailAddress.getType();
+		ListType listType = serviceBuilderEmailAddress.getListType();
 
 		return new EmailAddress() {
 			{

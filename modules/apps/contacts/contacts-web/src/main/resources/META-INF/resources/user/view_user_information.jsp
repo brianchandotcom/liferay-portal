@@ -139,7 +139,7 @@ if (emailAddresses.isEmpty()) {
 			%>
 
 				<li class="<%= emailAddress.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><liferay-ui:message key="<%= emailAddress.getType().getName() %>" /></span>
+					<span class="property-type"><liferay-ui:message key="<%= emailAddress.getListType().getName() %>" /></span>
 					<span class="property"><a href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a></span>
 				</li>
 

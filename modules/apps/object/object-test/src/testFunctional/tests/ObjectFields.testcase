@@ -1263,6 +1263,93 @@ definition {
 		}
 	}
 
+	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Expression Builder, on the Validations tab"
+	@priority = "4"
+	test CanUseERCFieldWithExpressionBuilder {
+		task ("Create Custom Object and Custom Field (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162179",
+				objectName = "CustomObject162179",
+				pluralLabelName = "Custom Objects 162179");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject162179");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162179");
+		}
+
+		task ("On Custom Object, go to Validations tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162179");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("Add a Custom Validation using an expression 'is Greater Than'") {
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customInteger > externalReferenceCode");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			Button.clickSave();
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark Custom View as default, go to View Builder and add ERC") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Integer,External Reference Code");
+
+			Button.clickSave();
+		}
+
+		task ("Assert the entry is created only when the ERC value is greater than the integer value") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162179");
+
+			ObjectPortlet.addCustomFieldEntryViaUI(
+				customField = "Custom Integer",
+				entry = "123");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "This entry is not possible.");
+
+			Navigator.gotoBack();
+
+			ObjectPortlet.addCustomFieldEntryViaUI(
+				customField = "Custom Integer",
+				entry = "2147483647");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162179");
+
+			ObjectPortlet.viewEntry(entry = "2147483647");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"
 	@priority = "4"
 	test CanValidOnlyPathsDefinedOnShowFilesOption {

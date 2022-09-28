@@ -62,6 +62,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -220,34 +221,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getEditSegmentsVariantLayoutURL() throws Exception {
-		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
-			_themeDisplay.getPlid());
-
-		if (draftLayout == null) {
-			return StringPool.BLANK;
-		}
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			draftLayout, _themeDisplay);
-
-		String layoutURL = _portal.getLayoutURL(_themeDisplay);
-
-		long segmentsExperienceId = _getSegmentsExperienceId();
-
-		if (segmentsExperienceId != -1) {
-			layoutURL = HttpComponentsUtil.setParameter(
-				layoutURL, "segmentsExperienceId", segmentsExperienceId);
-		}
-
-		layoutFullURL = HttpComponentsUtil.setParameter(
-			layoutFullURL, "p_l_back_url", layoutURL);
-
-		layoutFullURL = HttpComponentsUtil.setParameter(
-			layoutFullURL, "p_l_mode", Constants.EDIT);
-		layoutFullURL = HttpComponentsUtil.setParameter(
-			layoutFullURL, "redirect", layoutFullURL);
-
-		return layoutFullURL;
+		return _getRedirect();
 	}
 
 	private String _getEditSegmentsVariantURL() {
@@ -380,6 +354,8 @@ public class SegmentsExperimentDisplayContext {
 		).put(
 			"pathToAssets", _pathToAssets
 		).put(
+			"segmentExperimentDataURL", _getSegmentExperimentDataURL()
+		).put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale)
 		).put(
 			"segmentsExperiment", _getSegmentsExperimentJSONObject(locale)
@@ -393,9 +369,70 @@ public class SegmentsExperimentDisplayContext {
 		).build();
 	}
 
+	private String _getRedirect() throws Exception {
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+			_themeDisplay.getPlid());
+
+		if (draftLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			draftLayout, _themeDisplay);
+
+		String layoutURL = _portal.getLayoutURL(_themeDisplay);
+
+		long segmentsExperienceId = _getSegmentsExperienceId();
+
+		if (segmentsExperienceId != -1) {
+			layoutURL = HttpComponentsUtil.setParameter(
+				layoutURL, "segmentsExperienceId", segmentsExperienceId);
+		}
+
+		layoutFullURL = HttpComponentsUtil.setParameter(
+			layoutFullURL, "p_l_back_url", layoutURL);
+
+		layoutFullURL = HttpComponentsUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+		layoutFullURL = HttpComponentsUtil.setParameter(
+			layoutFullURL, "redirect", layoutFullURL);
+
+		return layoutFullURL;
+	}
+
 	private String _getRunSegmentsExperimenttURL() {
 		return _getSegmentsExperimentActionURL(
 			"/segments_experiment/run_segments_experiment");
+	}
+
+	private String _getSegmentExperimentDataURL() throws Exception {
+		String layoutURL = _portal.getLayoutURL(_themeDisplay);
+
+		long segmentsExperienceId = _getSegmentsExperienceId();
+
+		if (segmentsExperienceId != -1) {
+			layoutURL = HttpComponentsUtil.setParameter(
+				layoutURL, "segmentsExperienceId", segmentsExperienceId);
+		}
+
+		ResourceURL resourceURL = (ResourceURL)PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0, 0,
+				PortletRequest.RESOURCE_PHASE)
+		).setRedirect(
+			_getRedirect()
+		).setBackURL(
+			layoutURL
+		).setParameter(
+			"plid", _themeDisplay.getPlid()
+		).setParameter(
+			"segmentsExperienceId", _getSelectedSegmentsExperienceId()
+		).buildPortletURL();
+
+		resourceURL.setResourceID("/segments_experiment/get_data");
+
+		return resourceURL.toString();
 	}
 
 	private long _getSegmentsExperienceId() throws Exception {

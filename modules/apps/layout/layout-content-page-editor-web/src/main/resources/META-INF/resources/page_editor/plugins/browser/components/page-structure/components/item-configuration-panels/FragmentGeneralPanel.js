@@ -78,6 +78,7 @@ export function FragmentGeneralPanel({item}) {
 					return (
 						<div className="mb-1" key={index}>
 							<FieldSet
+								customStyles
 								fields={fieldSet.fields}
 								label={fieldSet.label}
 								languageId={languageId}

@@ -70,6 +70,7 @@ function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
 }
 
 export function FieldSet({
+	customStyles = false,
 	fields,
 	item = {},
 	label,
@@ -91,6 +92,7 @@ export function FieldSet({
 	return !!availableFields.length && label ? (
 		<Collapse label={label} open>
 			<FieldSetContent
+				customStyles={customStyles}
 				fields={availableFields}
 				item={item}
 				languageId={languageId}
@@ -100,6 +102,7 @@ export function FieldSet({
 		</Collapse>
 	) : (
 		<FieldSetContent
+			customStyles={customStyles}
 			fields={availableFields}
 			item={item}
 			languageId={languageId}
@@ -109,7 +112,14 @@ export function FieldSet({
 	);
 }
 
-function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
+function FieldSetContent({
+	customStyles,
+	fields,
+	item,
+	languageId,
+	onValueSelect,
+	values,
+}) {
 	return (
 		<div className="page-editor__sidebar__fieldset">
 			{fields.map((field, index) => {
@@ -130,6 +140,7 @@ function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
 					>
 						<div className="autofit-col autofit-col-expand">
 							<FieldComponent
+								customStyle={customStyles}
 								disabled={fieldIsDisabled(item, field)}
 								field={field}
 								item={item}
@@ -171,6 +182,7 @@ function getFieldValue({field, languageId, values}) {
 }
 
 FieldSet.propTypes = {
+	customStyles: PropTypes.bool,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
 	item: PropTypes.object,
 	label: PropTypes.string,

@@ -29,7 +29,7 @@ import {convertRGBtoHex} from '../../utils/convertRGBtoHex';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {ColorPaletteField} from './ColorPaletteField';
 
-export function ColorPickerField({field, onValueSelect, value}) {
+export function ColorPickerField({customStyle, field, onValueSelect, value}) {
 	const activeItemId = useActiveItemId();
 	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const [computedValue, setComputedValue] = useState(null);
@@ -81,7 +81,7 @@ export function ColorPickerField({field, onValueSelect, value}) {
 			field={field}
 			onValueSelect={onValueSelect}
 			selectedViewportSize={selectedViewportSize}
-			showLabel={false}
+			showLabel={customStyle}
 			tokenValues={tokenValues}
 			value={value}
 		/>

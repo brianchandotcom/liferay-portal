@@ -243,78 +243,78 @@ definition {
 				addressPostalCode = "Test Zip Code",
 				addressRegion = "California",
 				addressStreet1 = "Test Street");
+		}
 
-			task ("When the Sales Agent goes into the Details tab of the Commerce Account") {
-				Accounts.gotoAssigneeTab(assigneeTab = "Details");
+		task ("When the Sales Agent goes into the Details tab of the Commerce Account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+		}
+
+		task ("And edit the fields: ACCOUNT NAME, TAX ID, DESCRIPTION, SET A DEFAULT SHIPPING AND BILLING ADDRESS And clicks on the Save button") {
+			PortletEntry.inputName(name = "Commerce Account Edit");
+
+			PortletEntry.inputDescription(description = "Commerce Account Edit Description");
+
+			PortletEntry.inputText(
+				fieldLabel = "Tax ID",
+				text = "123456");
+
+			Button.clickSave();
+
+			for (var addressType : list "Billing,Shipping") {
+				var addressTypeUppercase = StringUtil.upperCase("${addressType}");
+
+				AssertClick(
+					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_${addressTypeUppercase}",
+					value1 = "Set Default Address");
+
+				SelectFrame(
+					key_title = "Set Default ${addressType} Address",
+					locator1 = "IFrame#MODAL_ANY");
+
+				Click(
+					key_addressName = "Test Name",
+					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
+
+				SelectFrameTop();
+
+				AssertClick(
+					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
+					value1 = "Save");
+
+				Alert.viewSuccessMessage();
 			}
+		}
 
-			task ("And edit the fields: ACCOUNT NAME, TAX ID, DESCRIPTION, SET A DEFAULT SHIPPING AND BILLING ADDRESS And clicks on the Save button") {
-				PortletEntry.inputName(name = "Commerce Account Edit");
+		task ("Then when the admin login again, he will see all the changes that the Sales Agent marked previously") {
+			User.logoutPG();
 
-				PortletEntry.inputDescription(description = "Commerce Account Edit Description");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
 
-				PortletEntry.inputText(
-					fieldLabel = "Tax ID",
-					text = "123456");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-				Button.clickSave();
+			Accounts.viewAccountDetails(
+				accountDescription = "Commerce Account Edit Description",
+				accountName = "Commerce Account Edit",
+				accountTaxId = "123456");
 
-				for (var addressType : list "Billing,Shipping") {
-					var addressTypeUppercase = StringUtil.upperCase("${addressType}");
+			Accounts.viewDefaultBillingAddress(
+				addressCity = "Test Address",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
 
-					AssertClick(
-						locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_${addressTypeUppercase}",
-						value1 = "Set Default Address");
-
-					SelectFrame(
-						key_title = "Set Default ${addressType} Address",
-						locator1 = "IFrame#MODAL_ANY");
-
-					Click(
-						key_addressName = "Test Name",
-						locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
-
-					SelectFrameTop();
-
-					AssertClick(
-						locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
-						value1 = "Save");
-
-					Alert.viewSuccessMessage();
-				}
-			}
-
-			task ("Then when the admin login again, he will see all the changes that the Sales Agent marked previously") {
-				User.logoutPG();
-
-				CommerceLogin.miniumLogin(
-					password = "test",
-					urlAppend = "web/minium",
-					userEmailAddress = "test@liferay.com");
-
-				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-				Accounts.viewAccountDetails(
-					accountDescription = "Commerce Account Edit Description",
-					accountName = "Commerce Account Edit",
-					accountTaxId = "123456");
-
-				Accounts.viewDefaultBillingAddress(
-					addressCity = "Test Address",
-					addressCountry = "United States",
-					addressName = "Test Name",
-					addressPostalCode = "Test Zip Code",
-					addressRegion = "California",
-					addressStreet1 = "Test Street");
-
-				Accounts.viewDefaultShippingAddress(
-					addressCity = "Test Address",
-					addressCountry = "United States",
-					addressName = "Test Name",
-					addressPostalCode = "Test Zip Code",
-					addressRegion = "California",
-					addressStreet1 = "Test Street");
-			}
+			Accounts.viewDefaultShippingAddress(
+				addressCity = "Test Address",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
 		}
 	}
 

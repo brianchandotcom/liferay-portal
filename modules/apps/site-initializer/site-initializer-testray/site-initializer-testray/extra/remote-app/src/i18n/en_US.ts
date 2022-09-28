@@ -151,6 +151,7 @@ export default {
 	'errors': 'Errors',
 	'estimated-duration': 'Estimated Duration',
 	'execution-date': 'Execution Date',
+	'expand': 'Expand',
 	'export-cases': 'Export Cases',
 	'export-csv': 'Export CSV',
 	'failed': 'Failed',

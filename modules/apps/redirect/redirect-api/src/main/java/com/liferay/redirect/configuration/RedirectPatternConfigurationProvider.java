@@ -17,6 +17,7 @@ package com.liferay.redirect.configuration;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -26,7 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RedirectPatternConfigurationProvider {
 
-	public Map<String, String> getRedirectionPatternsMap(long groupId)
+	public Map<Pattern, String> getRedirectionPatternsMap(long groupId)
 		throws ConfigurationException;
 
 	public void updateRedirectionPatterns(

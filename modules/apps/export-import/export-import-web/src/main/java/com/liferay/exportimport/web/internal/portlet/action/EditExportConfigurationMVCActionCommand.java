@@ -215,6 +215,7 @@ public class EditExportConfigurationMVCActionCommand
 	@Reference
 	protected BackgroundTaskManager backgroundTaskManager;
 
+	@Reference
 	protected ExportImportConfigurationLocalService
 		exportImportConfigurationLocalService;
 

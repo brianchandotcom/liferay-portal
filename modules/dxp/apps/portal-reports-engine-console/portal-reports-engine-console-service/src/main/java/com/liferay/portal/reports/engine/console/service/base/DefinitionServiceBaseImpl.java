@@ -30,10 +30,6 @@ import com.liferay.portal.reports.engine.console.service.DefinitionService;
 import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder;
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence;
-import com.liferay.portal.reports.engine.console.service.persistence.EntryFinder;
-import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
-import com.liferay.portal.reports.engine.console.service.persistence.SourceFinder;
-import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 
 import java.lang.reflect.Field;
 
@@ -151,39 +147,8 @@ public abstract class DefinitionServiceBaseImpl
 	protected DefinitionFinder definitionFinder;
 
 	@Reference
-	protected EntryPersistence entryPersistence;
-
-	@Reference
-	protected EntryFinder entryFinder;
-
-	@Reference
-	protected SourcePersistence sourcePersistence;
-
-	@Reference
-	protected SourceFinder sourceFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameService
-		classNameService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserService userService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefinitionServiceBaseImpl.class);

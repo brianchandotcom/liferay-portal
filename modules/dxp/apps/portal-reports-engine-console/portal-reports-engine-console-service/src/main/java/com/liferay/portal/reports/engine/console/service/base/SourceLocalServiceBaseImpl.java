@@ -49,10 +49,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceLocalService;
 import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
-import com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder;
-import com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence;
-import com.liferay.portal.reports.engine.console.service.persistence.EntryFinder;
-import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
 import com.liferay.portal.reports.engine.console.service.persistence.SourceFinder;
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 
@@ -596,18 +592,6 @@ public abstract class SourceLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected DefinitionPersistence definitionPersistence;
-
-	@Reference
-	protected DefinitionFinder definitionFinder;
-
-	@Reference
-	protected EntryPersistence entryPersistence;
-
-	@Reference
-	protected EntryFinder entryFinder;
-
 	protected SourceLocalService sourceLocalService;
 
 	@Reference
@@ -619,18 +603,6 @@ public abstract class SourceLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SourceLocalServiceBaseImpl.class);

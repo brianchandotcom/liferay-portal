@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 13.3.2
+Bundle-Version: 14.0.0
 Export-Package:\
 	com.liferay.portal.kernel.dao.db.test,\
 	com.liferay.portal.kernel.test,\
@@ -11,7 +11,6 @@ Export-Package:\
 	com.liferay.portal.kernel.test.randomizerbumpers,\
 	com.liferay.portal.kernel.test.rule,\
 	com.liferay.portal.kernel.test.util,\
-	com.liferay.portal.test.function,\
 	com.liferay.portal.test.log,\
 	com.liferay.portal.test.mail,\
 	com.liferay.portal.test.randomizerbumpers,\

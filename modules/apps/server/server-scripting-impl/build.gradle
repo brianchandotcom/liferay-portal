@@ -1,0 +1,9 @@
+dependencies {
+	compileInclude group: "org.codehaus.groovy", name: "groovy", version: "2.4.21"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly project(":apps:server:server-scripting-api")
+	compileOnly project(":core:petra:petra-string")
+}

@@ -19,7 +19,6 @@ import com.liferay.blogs.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.blogs.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseStagingGroupTypeSettingsUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -63,9 +62,6 @@ public class BlogsWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

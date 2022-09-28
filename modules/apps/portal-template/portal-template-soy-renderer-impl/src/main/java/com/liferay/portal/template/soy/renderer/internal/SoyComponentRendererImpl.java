@@ -27,7 +27,6 @@ import java.io.Writer;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,18 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = SoyComponentRenderer.class)
 public class SoyComponentRendererImpl implements SoyComponentRenderer {
-
-	@Override
-	public void renderSoyComponent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ComponentDescriptor componentDescriptor, Map<String, ?> context)
-		throws IOException, TemplateException {
-
-		renderSoyComponent(
-			httpServletRequest, httpServletResponse.getWriter(),
-			componentDescriptor, context);
-	}
 
 	@Override
 	public void renderSoyComponent(

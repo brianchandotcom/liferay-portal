@@ -22,7 +22,6 @@ import java.io.Writer;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera Avellón
@@ -30,12 +29,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Deprecated
 public interface SoyComponentRenderer {
-
-	public void renderSoyComponent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ComponentDescriptor componentDescriptor, Map<String, ?> context)
-		throws IOException, TemplateException;
 
 	public void renderSoyComponent(
 			HttpServletRequest httpServletRequest, Writer writer,

@@ -43,9 +43,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
-import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
-import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
 
 import java.io.Serializable;
 
@@ -477,12 +475,6 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected KaleoProcessPersistence kaleoProcessPersistence;
-
-	@Reference
-	protected KaleoProcessFinder kaleoProcessFinder;
-
 	protected KaleoProcessLinkLocalService kaleoProcessLinkLocalService;
 
 	@Reference
@@ -491,18 +483,6 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoProcessLinkLocalServiceBaseImpl.class);

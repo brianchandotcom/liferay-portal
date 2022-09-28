@@ -16,14 +16,13 @@ package com.liferay.redirect.internal.configuration;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.provider.RedirectProvider;
 
 import java.util.Dictionary;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -39,28 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 public class RedirectPatternConfigurationProviderImpl
 	implements RedirectPatternConfigurationProvider {
 
-	public Map<String, String> getRedirectionPatternsMap(long groupId)
-		throws ConfigurationException {
-
-		RedirectPatternConfiguration redirectPatternConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				RedirectPatternConfiguration.class, groupId);
-
-		Map<String, String> redirectionPatternMap = new LinkedHashMap<>();
-
-		for (String patternString : redirectPatternConfiguration.patterns()) {
-			String[] parts = patternString.split("\\s+", 2);
-
-			if ((parts.length != 2) || parts[0].isEmpty() ||
-				parts[1].isEmpty()) {
-
-				continue;
-			}
-
-			redirectionPatternMap.put(parts[0], parts[1]);
-		}
-
-		return redirectionPatternMap;
+	public Map<Pattern, String> getRedirectionPatternsMap(long groupId) {
+		return _redirectProvider.getRedirectionPatternsMap(groupId);
 	}
 
 	@Override
@@ -70,11 +49,22 @@ public class RedirectPatternConfigurationProviderImpl
 
 		Dictionary<String, Object> properties = null;
 
-		Configuration configuration = _getConfiguration(groupId);
+		Configuration configuration = null;
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(&(service.factoryPid=%s)(%s=%d))",
+				RedirectPatternConfiguration.class.getName() + ".scoped",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId));
+
+		if (configurations != null) {
+			configuration = configurations[0];
+		}
 
 		if (configuration == null) {
 			configuration = _configurationAdmin.createFactoryConfiguration(
-				RedirectPatternConfiguration.class.getName(),
+				RedirectPatternConfiguration.class.getName() + ".scoped",
 				StringPool.QUESTION);
 
 			properties = HashMapDictionaryBuilder.<String, Object>put(
@@ -89,21 +79,6 @@ public class RedirectPatternConfigurationProviderImpl
 		_updatePatternsProperty(properties, redirectionPatters);
 
 		configuration.update(properties);
-	}
-
-	private Configuration _getConfiguration(long scopePK) throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(service.factoryPid=%s)(%s=%d))",
-				RedirectPatternConfiguration.class.getName() + ".scoped",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				scopePK));
-
-		if (configurations == null) {
-			return null;
-		}
-
-		return configurations[0];
 	}
 
 	private void _updatePatternsProperty(
@@ -132,6 +107,6 @@ public class RedirectPatternConfigurationProviderImpl
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private RedirectProvider _redirectProvider;
 
 }

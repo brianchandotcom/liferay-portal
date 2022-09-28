@@ -24,6 +24,7 @@ import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,18 +47,6 @@ public class RedirectPatternConfigurationDisplayContext {
 		_scopePK = scopePK;
 	}
 
-	public Map<String, String> getPatterns() throws ConfigurationException {
-		if (_patternsMap != null) {
-			return _patternsMap;
-		}
-
-		_patternsMap =
-			_redirectPatternConfigurationProvider.getRedirectionPatternsMap(
-				_scopePK);
-
-		return _patternsMap;
-	}
-
 	public String getRedirectPatternConfigurationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
@@ -75,14 +64,16 @@ public class RedirectPatternConfigurationDisplayContext {
 
 		List<Map<String, Object>> patternList = new ArrayList<>();
 
-		Map<String, String> redirectionPatterns = getPatterns();
+		Map<Pattern, String> redirectionPatterns =
+			_redirectPatternConfigurationProvider.getRedirectionPatternsMap(
+				_scopePK);
 
 		redirectionPatterns.forEach(
 			(pattern, destinationURL) -> patternList.add(
 				HashMapBuilder.<String, Object>put(
 					"destinationURL", destinationURL
 				).put(
-					"pattern", pattern
+					"pattern", pattern.toString()
 				).build()));
 
 		return HashMapBuilder.<String, Object>put(
@@ -94,7 +85,6 @@ public class RedirectPatternConfigurationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private Map<String, String> _patternsMap;
 	private final RedirectPatternConfigurationProvider
 		_redirectPatternConfigurationProvider;
 	private final long _scopePK;

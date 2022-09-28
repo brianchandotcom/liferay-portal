@@ -275,6 +275,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_ITEM_ELLIPSIS</td>
+	<td>//li[contains(@class,'treeview')]//div[@role='treeitem' and contains(.,'${key_itemName}')]//button[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_ITEM_LINK</td>
 	<td>//li[contains(@class,'treeview-item')]//a[contains(@class,'link-secondary')][normalize-space(text())='${key_itemLinkName}']</td>
 	<td></td>

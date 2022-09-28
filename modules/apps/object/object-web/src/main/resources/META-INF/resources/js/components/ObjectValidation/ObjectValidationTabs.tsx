@@ -24,7 +24,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler} from 'react';
 
-import {ObjectValidationErrors} from '../ObjectValidationFormBase';
+import {ObjectValidationErrors} from './ObjectValidationFormBase';
 
 export function BasicInfo({
 	componentLabel,

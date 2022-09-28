@@ -15,7 +15,7 @@
 import 'codemirror/mode/groovy/groovy';
 import {SidebarCategory} from '@liferay/object-js-components-web';
 import {ChangeEventHandler} from 'react';
-import {ObjectValidationErrors} from '../ObjectValidationFormBase';
+import {ObjectValidationErrors} from './ObjectValidationFormBase';
 export declare function BasicInfo({
 	componentLabel,
 	disabled,

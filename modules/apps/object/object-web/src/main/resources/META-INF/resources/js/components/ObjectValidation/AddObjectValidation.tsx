@@ -160,7 +160,7 @@ function ModalAddObjectValidation({
 	);
 }
 
-export default function ModalWithProvider({
+export default function AddObjectValidation({
 	apiURL,
 	objectValidationRuleEngines,
 }: IProps) {

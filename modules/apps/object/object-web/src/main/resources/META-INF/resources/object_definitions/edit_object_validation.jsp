@@ -22,6 +22,6 @@ ObjectValidationRule objectValidationRule = (ObjectValidationRule)request.getAtt
 %>
 
 <react:component
-	module="js/components/EditObjectValidation"
+	module="js/components/ObjectValidation/EditObjectValidation"
 	props="<%= objectDefinitionsValidationsDisplayContext.getProps(objectValidationRule) %>"
 />

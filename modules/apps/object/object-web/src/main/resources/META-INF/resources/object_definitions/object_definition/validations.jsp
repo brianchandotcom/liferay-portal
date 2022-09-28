@@ -40,7 +40,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div id="<portlet:namespace />AddObjectValidation">
 	<react:component
-		module="js/components/ModalAddObjectValidation"
+		module="js/components/ObjectValidation/AddObjectValidation"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsValidationsDisplayContext.getAPIURL()

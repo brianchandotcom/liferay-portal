@@ -99,6 +99,8 @@ public class OpenAPIResourceImpl {
 
 			add(KeywordQueryContributorResourceImpl.class);
 
+			add(MLModelResourceImpl.class);
+
 			add(ModelPrefilterContributorResourceImpl.class);
 
 			add(QueryPrefilterContributorResourceImpl.class);

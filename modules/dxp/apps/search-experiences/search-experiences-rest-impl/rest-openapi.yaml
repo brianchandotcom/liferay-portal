@@ -327,6 +327,10 @@ components:
             properties:
                 className:
                     type: string
+        MLModel:
+            properties:
+                modelId:
+                    type: string
         ModelPrefilterContributor:
             properties:
                 className:
@@ -604,6 +608,40 @@ paths:
                                     $ref: "#/components/schemas/KeywordQueryContributor"
                                 type: array
             tags: ["KeywordQueryContributor"]
+    /ml-models:
+        get:
+            operationId: getMLModelsPage
+            parameters:
+                - in: query
+                  name: limit
+                  schema:
+                      type: integer
+                - in: query
+                  name: pipelineTag
+                  schema:
+                      type: string
+                - in: query
+                  name: query
+                  schema:
+                      type: string
+                - in: query
+                  name: tag
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MLModel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MLModel"
+                                type: array
+            tags: ["MLModel"]
     /model-prefilter-contributors:
         get:
             operationId: getModelPrefilterContributorsPage

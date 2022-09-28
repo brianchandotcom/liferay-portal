@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -109,6 +108,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.server.admin.web.internal.constants.ImageMagickResourceLimitConstants;
+import com.liferay.server.admin.web.internal.scripting.ServerScripting;
 
 import java.lang.reflect.InvocationHandler;
 
@@ -587,7 +587,7 @@ public class EditServerMVCActionCommand
 			SessionMessages.add(actionRequest, "script", script);
 			SessionMessages.add(actionRequest, "output", output);
 
-			_scripting.exec(null, portletObjects, language, script);
+			_serverScripting.execute(portletObjects, language, script);
 
 			unsyncPrintWriter.flush();
 
@@ -904,7 +904,7 @@ public class EditServerMVCActionCommand
 	private RoleMembershipPolicyFactory _roleMembershipPolicyFactory;
 
 	@Reference
-	private Scripting _scripting;
+	private ServerScripting _serverScripting;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

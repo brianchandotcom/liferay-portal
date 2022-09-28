@@ -2,4 +2,15 @@ Bundle-Name: Liferay Server Admin Web
 Bundle-SymbolicName: com.liferay.server.admin.web
 Bundle-Version: 5.0.46
 DynamicImport-Package: *
+Import-Package:\
+	!com.thoughtworks.xstream.*,\
+	\
+	!javax.swing.*,\
+	\
+	!org.apache.commons.cli.*,\
+	!org.apache.ivy.*,\
+	\
+	!org.fusesource.jansi.*,\
+	\
+	*
 Web-ContextPath: /server-admin-web

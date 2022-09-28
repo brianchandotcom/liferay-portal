@@ -77,7 +77,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -115,6 +115,8 @@ public class AccountEntryCacheModel
 		sb.append(logoId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", restrictMembership=");
+		sb.append(restrictMembership);
 		sb.append(", taxExemptionCode=");
 		sb.append(taxExemptionCode);
 		sb.append(", taxIdNumber=");
@@ -216,6 +218,8 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setName(name);
 		}
 
+		accountEntryImpl.setRestrictMembership(restrictMembership);
+
 		if (taxExemptionCode == null) {
 			accountEntryImpl.setTaxExemptionCode("");
 		}
@@ -271,6 +275,8 @@ public class AccountEntryCacheModel
 
 		logoId = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		restrictMembership = objectInput.readBoolean();
 		taxExemptionCode = objectInput.readUTF();
 		taxIdNumber = objectInput.readUTF();
 		type = objectInput.readUTF();
@@ -355,6 +361,8 @@ public class AccountEntryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeBoolean(restrictMembership);
+
 		if (taxExemptionCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -397,6 +405,7 @@ public class AccountEntryCacheModel
 	public String emailAddress;
 	public long logoId;
 	public String name;
+	public boolean restrictMembership;
 	public String taxExemptionCode;
 	public String taxIdNumber;
 	public String type;

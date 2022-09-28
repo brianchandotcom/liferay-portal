@@ -63,6 +63,7 @@ public class AccountEntryWrapper
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("logoId", getLogoId());
 		attributes.put("name", getName());
+		attributes.put("restrictMembership", isRestrictMembership());
 		attributes.put("taxExemptionCode", getTaxExemptionCode());
 		attributes.put("taxIdNumber", getTaxIdNumber());
 		attributes.put("type", getType());
@@ -184,6 +185,13 @@ public class AccountEntryWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean restrictMembership = (Boolean)attributes.get(
+			"restrictMembership");
+
+		if (restrictMembership != null) {
+			setRestrictMembership(restrictMembership);
 		}
 
 		String taxExemptionCode = (String)attributes.get("taxExemptionCode");
@@ -402,6 +410,16 @@ public class AccountEntryWrapper
 	}
 
 	/**
+	 * Returns the restrict membership of this account entry.
+	 *
+	 * @return the restrict membership of this account entry
+	 */
+	@Override
+	public boolean getRestrictMembership() {
+		return model.getRestrictMembership();
+	}
+
+	/**
 	 * Returns the status of this account entry.
 	 *
 	 * @return the status of this account entry
@@ -479,6 +497,16 @@ public class AccountEntryWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this account entry is restrict membership.
+	 *
+	 * @return <code>true</code> if this account entry is restrict membership; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isRestrictMembership() {
+		return model.isRestrictMembership();
 	}
 
 	@Override
@@ -644,6 +672,16 @@ public class AccountEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this account entry is restrict membership.
+	 *
+	 * @param restrictMembership the restrict membership of this account entry
+	 */
+	@Override
+	public void setRestrictMembership(boolean restrictMembership) {
+		model.setRestrictMembership(restrictMembership);
 	}
 
 	/**

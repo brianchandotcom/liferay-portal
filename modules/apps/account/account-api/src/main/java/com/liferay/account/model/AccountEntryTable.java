@@ -78,6 +78,10 @@ public class AccountEntryTable extends BaseTable<AccountEntryTable> {
 		"logoId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, Boolean> restrictMembership =
+		createColumn(
+			"restrictMembership", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> taxExemptionCode =
 		createColumn(
 			"taxExemptionCode", String.class, Types.VARCHAR,

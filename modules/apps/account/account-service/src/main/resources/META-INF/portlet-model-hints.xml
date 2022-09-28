@@ -30,6 +30,7 @@
 			<hint name="max-length">100</hint>
 			<validator name="required" />
 		</field>
+		<field name="restrictMembership" type="boolean" />
 		<field name="taxExemptionCode" type="String" />
 		<field name="taxIdNumber" type="String" />
 		<field name="type" type="String" />

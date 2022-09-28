@@ -17,6 +17,7 @@ create table AccountEntry (
 	emailAddress VARCHAR(254) null,
 	logoId LONG,
 	name VARCHAR(100) null,
+	restrictMembership BOOLEAN,
 	taxExemptionCode VARCHAR(75) null,
 	taxIdNumber VARCHAR(75) null,
 	type_ VARCHAR(75) null,

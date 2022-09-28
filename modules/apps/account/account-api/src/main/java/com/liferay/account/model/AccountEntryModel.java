@@ -351,6 +351,27 @@ public interface AccountEntryModel
 	public void setName(String name);
 
 	/**
+	 * Returns the restrict membership of this account entry.
+	 *
+	 * @return the restrict membership of this account entry
+	 */
+	public boolean getRestrictMembership();
+
+	/**
+	 * Returns <code>true</code> if this account entry is restrict membership.
+	 *
+	 * @return <code>true</code> if this account entry is restrict membership; <code>false</code> otherwise
+	 */
+	public boolean isRestrictMembership();
+
+	/**
+	 * Sets whether this account entry is restrict membership.
+	 *
+	 * @param restrictMembership the restrict membership of this account entry
+	 */
+	public void setRestrictMembership(boolean restrictMembership);
+
+	/**
 	 * Returns the tax exemption code of this account entry.
 	 *
 	 * @return the tax exemption code of this account entry

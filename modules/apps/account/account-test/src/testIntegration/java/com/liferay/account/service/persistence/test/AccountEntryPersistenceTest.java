@@ -159,6 +159,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setName(RandomTestUtil.randomString());
 
+		newAccountEntry.setRestrictMembership(RandomTestUtil.randomBoolean());
+
 		newAccountEntry.setTaxExemptionCode(RandomTestUtil.randomString());
 
 		newAccountEntry.setTaxIdNumber(RandomTestUtil.randomString());
@@ -220,6 +222,9 @@ public class AccountEntryPersistenceTest {
 			existingAccountEntry.getLogoId(), newAccountEntry.getLogoId());
 		Assert.assertEquals(
 			existingAccountEntry.getName(), newAccountEntry.getName());
+		Assert.assertEquals(
+			existingAccountEntry.isRestrictMembership(),
+			newAccountEntry.isRestrictMembership());
 		Assert.assertEquals(
 			existingAccountEntry.getTaxExemptionCode(),
 			newAccountEntry.getTaxExemptionCode());
@@ -315,8 +320,8 @@ public class AccountEntryPersistenceTest {
 			"defaultCPaymentMethodKey", true, "defaultShippingAddressId", true,
 			"parentAccountEntryId", true, "description", true, "domains", true,
 			"emailAddress", true, "logoId", true, "name", true,
-			"taxExemptionCode", true, "taxIdNumber", true, "type", true,
-			"status", true);
+			"restrictMembership", true, "taxExemptionCode", true, "taxIdNumber",
+			true, "type", true, "status", true);
 	}
 
 	@Test
@@ -633,6 +638,8 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setLogoId(RandomTestUtil.nextLong());
 
 		accountEntry.setName(RandomTestUtil.randomString());
+
+		accountEntry.setRestrictMembership(RandomTestUtil.randomBoolean());
 
 		accountEntry.setTaxExemptionCode(RandomTestUtil.randomString());
 

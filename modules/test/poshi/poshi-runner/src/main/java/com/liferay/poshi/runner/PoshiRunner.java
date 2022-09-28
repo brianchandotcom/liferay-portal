@@ -106,6 +106,8 @@ public class PoshiRunner {
 
 		PoshiContext.readFiles();
 
+		PoshiValidation.validate();
+
 		for (String testName : testNames) {
 			PoshiValidation.validate(testName);
 

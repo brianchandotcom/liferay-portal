@@ -123,8 +123,9 @@ public class ProjectTemplatesTemplateContextContributorTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=BladeTest", "-Dpackage=blade.test",
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			mavenExecutor, "-DclassName=BladeTest",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=blade.test",
+			"-Dproduct=" + _product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd",

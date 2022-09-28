@@ -96,10 +96,10 @@ public class ProjectTemplatesServiceTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--class-name", "FooAction", "--service",
-			"com.liferay.portal.kernel.events.LifecycleAction", "--product",
-			_product);
+			gradleWorkspaceModulesDir, template, name, "--class-name",
+			"FooAction", "--liferay-version", _liferayVersion, "--product",
+			_product, "--service",
+			"com.liferay.portal.kernel.events.LifecycleAction");
 
 		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
 			testContains(
@@ -122,9 +122,9 @@ public class ProjectTemplatesServiceTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=FooAction",
-			"-Dpackage=servicepreaction",
-			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=servicepreaction",
+			"-Dproduct=" + _product,
+			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction");
 
 		if (isBuildProjects()) {
 			_writeServiceClass(gradleProjectDir);

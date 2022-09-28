@@ -89,8 +89,8 @@ public class ProjectTemplatesPanelAppTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--class-name", "Foo", "--product", _product);
+			gradleWorkspaceModulesDir, template, name, "--class-name", "Foo",
+			"--liferay-version", _liferayVersion, "--product", _product);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -141,8 +141,9 @@ public class ProjectTemplatesPanelAppTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=Foo", "-Dpackage=gradle.test",
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			mavenExecutor, "-DclassName=Foo",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=gradle.test",
+			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(

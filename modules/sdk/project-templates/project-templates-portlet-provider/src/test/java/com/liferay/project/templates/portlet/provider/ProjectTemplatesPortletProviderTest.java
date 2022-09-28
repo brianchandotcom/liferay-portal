@@ -140,7 +140,7 @@ public class ProjectTemplatesPortletProviderTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=ProviderTest",
-			"-Dpackage=provider.test", "-DliferayVersion=" + _liferayVersion,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=provider.test",
 			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {

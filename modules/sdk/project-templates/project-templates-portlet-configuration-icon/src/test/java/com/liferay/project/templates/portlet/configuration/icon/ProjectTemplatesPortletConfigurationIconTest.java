@@ -125,8 +125,9 @@ public class ProjectTemplatesPortletConfigurationIconTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=Icontest", "-Dpackage=" + packageName,
-			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
+			mavenExecutor, "-DclassName=Icontest",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + packageName,
+			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(

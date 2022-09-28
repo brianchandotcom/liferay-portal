@@ -126,7 +126,7 @@ public class ProjectTemplatesPortletToolbarContributorTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Toolbartest",
-			"-Dpackage=" + packageName, "-DliferayVersion=" + _liferayVersion,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + packageName,
 			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {

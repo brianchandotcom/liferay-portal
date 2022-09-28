@@ -121,8 +121,9 @@ public class ProjectTemplatesFormFieldTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=Foobar", "-Dpackage=foobar",
-			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
+			mavenExecutor, "-DclassName=Foobar",
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar",
+			"-Dproduct=" + product);
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
@@ -221,8 +222,9 @@ public class ProjectTemplatesFormFieldTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=Foobar", "-Dpackage=foobar",
-			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
+			mavenExecutor, "-DclassName=Foobar",
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar",
+			"-Dproduct=" + product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -324,8 +326,9 @@ public class ProjectTemplatesFormFieldTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
+			mavenExecutor, "-DclassName=FooBar",
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=foo.bar",
+			"-Dproduct=" + product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");

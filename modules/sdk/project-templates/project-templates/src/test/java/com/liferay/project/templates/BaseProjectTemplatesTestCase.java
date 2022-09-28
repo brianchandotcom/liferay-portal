@@ -1344,7 +1344,7 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion,
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=" + packageName,
 			"-Dproduct=" + product);
 
 		testContains(
@@ -1401,8 +1401,8 @@ public interface BaseProjectTemplatesTestCase {
 			gradleWorkspaceDir, modulesDir);
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--package-name",
-			packageName, "--liferay-version", liferayVersion, "--product",
+			gradleWorkspaceModulesDir, template, name, "--liferay-version",
+			liferayVersion, "--package-name", packageName, "--product",
 			product);
 
 		String[] resourceFileNames;
@@ -1454,7 +1454,7 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion,
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=" + packageName,
 			"-Dproduct=" + product);
 
 		if (!liferayVersion.startsWith("7.0") && !template.contains("war")) {
@@ -1552,8 +1552,8 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + name,
-			"-Dpackage=" + name.toLowerCase(),
-			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
+			"-DliferayVersion=" + liferayVersion,
+			"-Dpackage=" + name.toLowerCase(), "-Dproduct=" + product);
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");

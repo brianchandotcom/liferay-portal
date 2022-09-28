@@ -100,8 +100,8 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		String template = "service-builder";
 
 		File serviceBuilderProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test", "--product", product,
-			"--liferay-version", _BOM_VERSION);
+			modulesDir, template, template + "test", "--liferay-version",
+			_BOM_VERSION, "--product", product);
 
 		String serviceProjectName = template + "test-service";
 
@@ -174,8 +174,8 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File projectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test", "--product", product,
-			"--liferay-version", _BOM_VERSION);
+			modulesDir, template, template + "test", "--liferay-version",
+			_BOM_VERSION, "--product", product);
 
 		testOutput(projectDir, template, workspaceDir);
 

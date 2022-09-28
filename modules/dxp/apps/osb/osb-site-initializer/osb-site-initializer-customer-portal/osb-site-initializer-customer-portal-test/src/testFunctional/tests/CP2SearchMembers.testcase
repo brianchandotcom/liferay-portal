@@ -171,6 +171,12 @@ definition {
 			AssertElementPresent(
 				locator1 = "CP2TeamMembers#SEARCH_RESULT",
 				result = "1 result for User");
+
+			var search = "User";
+
+			AssertElementPresent(
+				locator1 = "CP2TeamMembers#SEARCH_TM",
+				value1 = "${search}");
 		}
 
 		task ("When user clicks on cancel icon") {
@@ -187,6 +193,12 @@ definition {
 			AssertElementPresent(
 				locator1 = "CP2TeamMembers#SEARCH_RESULT",
 				result = "1 result for 2");
+
+			var search = "2";
+
+			AssertElementPresent(
+				locator1 = "CP2TeamMembers#SEARCH_TM",
+				value1 = "${search}");
 		}
 	}
 

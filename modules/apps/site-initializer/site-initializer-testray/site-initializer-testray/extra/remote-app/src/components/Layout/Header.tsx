@@ -24,6 +24,7 @@ import {Permission} from '../../util/permission';
 import BreadcrumbFinder from '../BreadcrumbFinder';
 import DropDown from '../DropDown';
 import DropDownWithActions from '../DropDown/DropDown';
+import TestrayIcons from '../Icons/TestrayIcon';
 
 const Divider = () => <p className="mx-2 text-paragraph-lg">/</p>;
 
@@ -46,11 +47,11 @@ const Header = () => {
 	const BreadCrumbTrigger: React.FC<BreadCrumbTriggerProps> = ({
 		displayCarret,
 	}) => (
-		<div className="align-items-end d-flex" title={heading[0]?.title}>
-			<ClayIcon
+		<div className="align-items-center d-flex" title={heading[0]?.title}>
+			<TestrayIcons
 				className="dropdown-poll-icon mr-2"
-				color="darkblue"
-				fontSize={22}
+				fill="darkblue"
+				size={35}
 				symbol={symbol || 'polls'}
 			/>
 

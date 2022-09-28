@@ -26,7 +26,7 @@ DispatchLog latestDispatchLog = (DispatchLog)GetterUtil.getObject(request.getAtt
 	<c:choose>
 		<c:when test="<%= !jobPreviouslyRun || (latestDispatchLog == null) %>">
 			<aui:alert type="warning">
-				<liferay-ui:message key="to-finish-connector-setup-sync-avalara-tax-rates" />
+				<liferay-ui:message key="sync-avalara-tax-rates-to-finish-connector-setup" />
 			</aui:alert>
 			<%@ include file="/buttons/sync_tax_rates.jspf" %>
 		</c:when>

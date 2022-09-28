@@ -686,6 +686,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS</td>
+	<td>//div[contains(@id,'${key_table}')]//div[1][@class='dnd-td' and contains(.,'${key_firstColumnValue}')]/following::div[@class='dnd-td' and contains (.,'${key_secondColumnValue}')]/following::div[@class='dropdown']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_ID</td>
 	<td>//div[@class='header-info']//div//span[contains(.,'ID')]/following-sibling::strong</td>
 	<td></td>

@@ -3798,6 +3798,7 @@ definition {
 	test FilterByStatusExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentDashboard#FilterByStatusExpiredDocument";
 
 		task ("Given an expired Document asset") {
 			task ("Set update interval") {

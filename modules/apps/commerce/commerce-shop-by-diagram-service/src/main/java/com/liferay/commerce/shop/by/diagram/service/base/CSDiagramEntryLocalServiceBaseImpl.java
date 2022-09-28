@@ -18,8 +18,6 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalServiceUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
-import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
-import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -493,26 +491,8 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 	protected CSDiagramEntryPersistence csDiagramEntryPersistence;
 
 	@Reference
-	protected CSDiagramPinPersistence csDiagramPinPersistence;
-
-	@Reference
-	protected CSDiagramSettingPersistence csDiagramSettingPersistence;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CSDiagramEntryLocalServiceBaseImpl.class);

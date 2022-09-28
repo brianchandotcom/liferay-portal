@@ -17,8 +17,6 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalServiceUtil;
-import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
-import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -599,12 +597,6 @@ public abstract class CSDiagramSettingLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected CSDiagramEntryPersistence csDiagramEntryPersistence;
-
-	@Reference
-	protected CSDiagramPinPersistence csDiagramPinPersistence;
-
 	protected CSDiagramSettingLocalService csDiagramSettingLocalService;
 
 	@Reference
@@ -613,18 +605,6 @@ public abstract class CSDiagramSettingLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CSDiagramSettingLocalServiceBaseImpl.class);

@@ -17,9 +17,7 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalServiceUtil;
-import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
-import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -484,32 +482,14 @@ public abstract class CSDiagramPinLocalServiceBaseImpl
 		}
 	}
 
-	@Reference
-	protected CSDiagramEntryPersistence csDiagramEntryPersistence;
-
 	protected CSDiagramPinLocalService csDiagramPinLocalService;
 
 	@Reference
 	protected CSDiagramPinPersistence csDiagramPinPersistence;
 
 	@Reference
-	protected CSDiagramSettingPersistence csDiagramSettingPersistence;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ClassNameLocalService
-		classNameLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CSDiagramPinLocalServiceBaseImpl.class);

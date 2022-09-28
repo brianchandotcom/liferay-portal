@@ -94,6 +94,17 @@ export default function EditObjectValidation({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		if (Object.keys(errors).length) {
+			openToast({
+				message: Liferay.Language.get(
+					'please-fill-out-all-required-fields'
+				),
+				type: 'danger',
+			});
+		}
+	}, [errors]);
+
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}

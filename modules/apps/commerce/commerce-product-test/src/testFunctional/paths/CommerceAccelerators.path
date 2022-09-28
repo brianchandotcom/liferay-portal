@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM_N</td>
+	<td>//ul[contains(@class,'accounts-list')]//button[@class='dropdown-item']/span[contains(.,'${key_accountName}')][${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SELECTOR_DROPDOWN</td>
 	<td>//div[contains(@class,'account-selector-dropdown')]/button</td>
 	<td></td>

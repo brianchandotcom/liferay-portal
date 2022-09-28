@@ -18,12 +18,14 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.persistence.exception.NoSuchSpSessionException;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseImpl;
+import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,10 +54,10 @@ public class SamlSpSessionLocalServiceImpl
 			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUserById(serviceContext.getUserId());
+		User user = _userLocalService.getUserById(serviceContext.getUserId());
 
 		SamlPeerBinding samlPeerBinding =
-			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			_samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId, null);
 
@@ -64,14 +66,14 @@ public class SamlSpSessionLocalServiceImpl
 
 			samlPeerBinding.setDeleted(true);
 
-			samlPeerBindingPersistence.update(samlPeerBinding);
+			_samlPeerBindingPersistence.update(samlPeerBinding);
 
 			samlPeerBinding = null;
 		}
 
 		if (samlPeerBinding == null) {
 			_deleteSamlPeerBindings(
-				samlPeerBindingPersistence.findByC_U_D_SNIF_SNINQ_SPEI(
+				_samlPeerBindingPersistence.findByC_U_D_SNIF_SNINQ_SPEI(
 					user.getCompanyId(), user.getUserId(), false, nameIdFormat,
 					nameIdNameQualifier, samlIdpEntityId));
 
@@ -161,11 +163,11 @@ public class SamlSpSessionLocalServiceImpl
 		List<SamlPeerBinding> samlPeerBindings = new ArrayList<>();
 
 		samlPeerBindings.addAll(
-			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			_samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
 				companyId, false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId));
 		samlPeerBindings.addAll(
-			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			_samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
 				companyId, true, nameIdFormat, nameIdNameQualifier, nameIdValue,
 				samlIdpEntityId));
 
@@ -209,10 +211,10 @@ public class SamlSpSessionLocalServiceImpl
 			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUserById(serviceContext.getUserId());
+		User user = _userLocalService.getUserById(serviceContext.getUserId());
 
 		SamlPeerBinding samlPeerBinding =
-			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			_samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId, null);
 
@@ -245,11 +247,17 @@ public class SamlSpSessionLocalServiceImpl
 		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
 			samlPeerBinding.setDeleted(true);
 
-			samlPeerBindingPersistence.update(samlPeerBinding);
+			_samlPeerBindingPersistence.update(samlPeerBinding);
 		}
 	}
 
 	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
+
+	@Reference
+	private SamlPeerBindingPersistence _samlPeerBindingPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

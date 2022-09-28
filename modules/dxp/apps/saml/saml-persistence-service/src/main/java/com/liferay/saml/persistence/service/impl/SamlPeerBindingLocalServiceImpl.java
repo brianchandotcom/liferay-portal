@@ -17,10 +17,12 @@ package com.liferay.saml.persistence.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.base.SamlPeerBindingLocalServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -40,7 +42,7 @@ public class SamlPeerBindingLocalServiceImpl
 			String samlPeerEntityId)
 		throws PortalException {
 
-		User user = userLocalService.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		SamlPeerBinding samlPeerBinding = samlPeerBindingPersistence.create(
 			counterLocalService.increment(SamlPeerBinding.class.getName()));
@@ -66,5 +68,8 @@ public class SamlPeerBindingLocalServiceImpl
 			companyId, false, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlSpEntityId, null);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

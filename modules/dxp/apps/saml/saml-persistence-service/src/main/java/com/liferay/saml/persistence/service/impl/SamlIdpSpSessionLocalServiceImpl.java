@@ -19,12 +19,14 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.saml.persistence.exception.DuplicateSamlIdpSpSessionException;
 import com.liferay.saml.persistence.exception.NoSuchIdpSpSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlIdpSpSessionLocalServiceBaseImpl;
+import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.util.Date;
 import java.util.List;
@@ -62,10 +64,10 @@ public class SamlIdpSpSessionLocalServiceImpl
 					" for ", samlSpEntityId));
 		}
 
-		User user = userLocalService.getUserById(serviceContext.getUserId());
+		User user = _userLocalService.getUserById(serviceContext.getUserId());
 
 		SamlPeerBinding samlPeerBinding =
-			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			_samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, null, nameIdValue,
 				samlSpEntityId, null);
 
@@ -153,5 +155,11 @@ public class SamlIdpSpSessionLocalServiceImpl
 
 	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
+
+	@Reference
+	private SamlPeerBindingPersistence _samlPeerBindingPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

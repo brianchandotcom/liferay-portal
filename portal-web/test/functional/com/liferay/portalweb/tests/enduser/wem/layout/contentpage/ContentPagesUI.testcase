@@ -492,6 +492,121 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158746. Different users keep their own favorites list."
+	@priority = "4"
+	test ViewFavoritesListInDifferentUsers {
+		property custom.properties = "feature.flag.LPS-158737=true";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given having 2 users") {
+			for (var number : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "user${number}@liferay.com",
+					userFirstName = "userfn${number}",
+					userLastName = "userln${number}",
+					userScreenName = "usersn${number}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${number}@liferay.com");
+
+				JSONUser.addUserToSite(
+					groupName = "Test Site Name",
+					userEmailAddress = "user${number}@liferay.com");
+
+				JSONRole.assignSiteRoleToUser(
+					groupName = "Test Site Name",
+					roleTitle = "Site Administrator",
+					userEmailAddress = "user${number}@liferay.com");
+			}
+		}
+
+		task ("When the users add their own favorites list on content page") {
+			task ("Assert user1 could add favorites list") {
+				User.logoutPG();
+
+				User.loginPG(
+					password = "test",
+					userEmailAddress = "user1@liferay.com");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				MouseOver(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertElementPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+
+			task ("Assert user2 could add favorites list") {
+				User.logoutPG();
+
+				User.loginPG(
+					password = "test",
+					userEmailAddress = "user2@liferay.com");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				AssertElementNotPresent(
+					key_panel = "Favorites",
+					locator1 = "Panel#PANEL");
+
+				MouseOver(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Card",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Card",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertElementPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Card",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+		}
+
+		task ("Then assert favorites list is kept for user session") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "user1@liferay.com");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			AssertElementNotPresent(
+				key_collectionName = "Favorites",
+				key_fragmentName = "Card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-140266. The color samples are sorted by the token definition doc order and sections."
 	@priority = "5"
 	@uitest

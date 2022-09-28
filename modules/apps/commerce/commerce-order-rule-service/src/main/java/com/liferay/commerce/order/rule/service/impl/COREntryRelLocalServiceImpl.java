@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,14 +73,14 @@ public class COREntryRelLocalServiceImpl
 		COREntryRel corEntryRel = corEntryRelPersistence.create(
 			counterLocalService.increment());
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		corEntryRel.setCompanyId(user.getCompanyId());
 		corEntryRel.setUserId(user.getUserId());
 		corEntryRel.setUserName(user.getFullName());
 
 		corEntryRel.setClassNameId(
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 		corEntryRel.setClassPK(classPK);
 		corEntryRel.setCOREntryId(corEntryId);
 
@@ -126,7 +128,7 @@ public class COREntryRelLocalServiceImpl
 		throws PortalException {
 
 		List<COREntryRel> corEntryRels = corEntryRelPersistence.findByC_C(
-			classNameLocalService.getClassNameId(className), corEntryId);
+			_classNameLocalService.getClassNameId(className), corEntryId);
 
 		for (COREntryRel corEntryRel : corEntryRels) {
 			corEntryRelLocalService.deleteCOREntryRel(corEntryRel);
@@ -138,7 +140,7 @@ public class COREntryRelLocalServiceImpl
 		String className, long classPK, long corEntryId) {
 
 		return corEntryRelPersistence.fetchByC_C_C(
-			classNameLocalService.getClassNameId(className), classPK,
+			_classNameLocalService.getClassNameId(className), classPK,
 			corEntryId);
 	}
 
@@ -316,7 +318,7 @@ public class COREntryRelLocalServiceImpl
 				corEntryId
 			).and(
 				COREntryRelTable.INSTANCE.classNameId.eq(
-					classNameLocalService.getClassNameId(className))
+					_classNameLocalService.getClassNameId(className))
 			).and(
 				() -> {
 					if (Validator.isNotNull(keywords)) {
@@ -333,6 +335,12 @@ public class COREntryRelLocalServiceImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -24,6 +24,22 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-132482."
+	@priority = "5"
+	test AssertSelectAllCheckboxDisplayPorperlyUnderDefinePermissionsTab {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoDefineRolePermissions(
+			permissionNavigationKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS",
+			portlet = "Users and Organizations",
+			roleTitle = "Guest");
+
+		AssertElementPresent.assertVisible(locator1 = "RolesPermissions#CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACTION_CHECKBOX");
+	}
+
 	@priority = "3"
 	test CanAddRoleWithSameNameDifferentKey {
 		ApplicationsMenu.gotoPortlet(
@@ -146,6 +162,70 @@ definition {
 
 			LexiconEntry.viewEntryName(rowEntry = "Role1 Name");
 		}
+	}
+
+	@priority = "4"
+	test CanRemoveSiteInScope {
+		property test.name.skip.portal.instance = "RolesAdmin#CanRemoveSiteInScope";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addRegularRole(
+			roleKey = "Remove Permission Scope",
+			roleTitle = "Remove Permission Scope");
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionsCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Remove Permission Scope",
+			siteNameScope = "${siteName}");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Document",
+			siteNameScope = "${siteName}");
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionsCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			removeSiteScope = "${siteName}",
+			roleTitle = "Remove Permission Scope");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Document",
+			siteNameScope = "All Sites and Asset Libraries");
+	}
+
+	@description = "This is a use case for LPS-116055."
+	@priority = "5"
+	test ChangeScope {
+		property test.name.skip.portal.instance = "RolesAdmin#ChangeScope";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addRegularRole(
+			roleKey = "Permission Scope",
+			roleTitle = "Permission Scope");
+
+		Role.openRolesAdmin();
+
+		Role.definePermissionsCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Permission Scope",
+			siteNameScope = "${siteName}");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Document",
+			siteNameScope = "${siteName}");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NumberFormatException");
 	}
 
 	@description = "This test automates LPS-141903 and asserts that a deactivated user is not counted in Site Roles"
@@ -1002,6 +1082,41 @@ definition {
 		AssertElementPresent(
 			locator1 = "Message#ERROR",
 			value1 = "You do not have the roles required to access this portlet.");
+	}
+
+	@description = "This is a use case for LPS-97321. All subdirectories in Define Permissions should display."
+	@priority = "4"
+	test ViewDefinePermissionsSubdirectoriesDisplay {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addRegularRole(
+			roleKey = "User Permission",
+			roleTitle = "User Permission");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(roleTitle = "User Permission");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "Control Panel",
+			subItemList = "General Permissions,Users,Sites,Configuration,Security,System,Marketplace,Accounts");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "Site and Asset Library Administration",
+			subItemList = "Site Builder,Content & Data,Categorization,Recycle Bin,People,Configuration,Publishing,Applications");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "User",
+			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "Applications Menu",
+			subItemList = "Content,Workflow,Communication");
 	}
 
 }

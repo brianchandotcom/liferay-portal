@@ -61,6 +61,44 @@
 			<finder-column name="plid" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="LayoutLocalization" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutLocalizationId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="content" type="String" />
+		<column name="languageId" type="String" />
+		<column name="plid" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="Plid" return-type="Collection">
+			<finder-column name="plid" />
+		</finder>
+		<finder name="L_P" return-type="LayoutLocalization" unique="true">
+			<finder-column name="languageId" />
+			<finder-column name="plid" />
+		</finder>
+		<finder name="G_L_P" return-type="LayoutLocalization" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="languageId" />
+			<finder-column name="plid" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>LayoutConvert</exception>
 	</exceptions>

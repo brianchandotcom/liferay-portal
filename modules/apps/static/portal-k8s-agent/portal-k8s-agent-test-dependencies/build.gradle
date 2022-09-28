@@ -4,6 +4,6 @@ dependencies {
 	compileInclude group: "io.fabric8", name: "mockwebserver", version: "0.2.2"
 }
 
-deploy {
-	enabled = false
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
 }

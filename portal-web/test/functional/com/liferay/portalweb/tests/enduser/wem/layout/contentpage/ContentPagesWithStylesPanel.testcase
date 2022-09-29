@@ -76,6 +76,12 @@ definition {
 				ariaLabel = "Margin Left",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
 				value1 = "20");
+
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Margin Left");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Then the page creator should see all items on dropdown menu are unselected") {
@@ -97,6 +103,12 @@ definition {
 				ariaLabel = "Padding Left",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
 				value1 = "20");
+
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Padding Left");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Then the page creator should see all items on dropdown menu are unselected") {

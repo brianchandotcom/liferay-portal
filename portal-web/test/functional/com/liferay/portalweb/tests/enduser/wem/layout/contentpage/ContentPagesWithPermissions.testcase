@@ -114,13 +114,15 @@ definition {
 				ariaLabel = "Padding Right",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
 				value1 = "20");
+
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Padding Right");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Then the new user could view the custom value of Spacing") {
-			Click(
-				ariaLabel = "Padding Right",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
 			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Heading",
 				index = "1",

@@ -206,8 +206,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 		"form[action='<%= editSyncedContactsURL %>']"
 	);
 
-	debugger;
-
 	submitButton.addEventListener('click', () => {
 		form.submit();
 	});

@@ -26,20 +26,25 @@ import {escapeHTML} from '../util/html_util';
 import navigate from '../util/navigate.es';
 
 const openAlertModal = ({message}) => {
-	openModal({
-		bodyHTML: escapeHTML(message),
-		buttons: [
-			{
-				autoFocus: true,
-				label: Liferay.Language.get('ok'),
-				onClick: ({processClose}) => {
-					processClose();
+	if (Liferay.CustomDialogs.enabled) {
+		openModal({
+			bodyHTML: escapeHTML(message),
+			buttons: [
+				{
+					autoFocus: true,
+					label: Liferay.Language.get('ok'),
+					onClick: ({processClose}) => {
+						processClose();
+					},
 				},
-			},
-		],
-		center: true,
-		disableHeader: true,
-	});
+			],
+			center: true,
+			disableHeader: true,
+		});
+	}
+	else {
+		alert(message);
+	}
 };
 
 const Modal = ({
@@ -312,7 +317,7 @@ const Modal = ({
 };
 
 const openConfirmModal = ({message, onConfirm, title}) => {
-	if (Liferay.FeatureFlags['LPS-148659']) {
+	if (Liferay.CustomDialogs.enabled) {
 		openModal({
 			bodyHTML: escapeHTML(message),
 			buttons: [

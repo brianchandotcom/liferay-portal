@@ -18,7 +18,6 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectDefinitionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,7 +57,7 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
-		return _objectDefinitionLocalService.addCustomObjectDefinition(
+		return objectDefinitionLocalService.addCustomObjectDefinition(
 			getUserId(), labelMap, name, panelAppOrder, panelCategoryKey,
 			pluralLabelMap, scope, storageType, objectFields);
 	}
@@ -71,7 +70,7 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
-		return _objectDefinitionLocalService.addObjectDefinition(
+		return objectDefinitionLocalService.addObjectDefinition(
 			externalReferenceCode, getUserId());
 	}
 
@@ -82,7 +81,7 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.DELETE);
 
-		return _objectDefinitionLocalService.deleteObjectDefinition(
+		return objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinitionId);
 	}
 
@@ -92,7 +91,7 @@ public class ObjectDefinitionServiceImpl
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
+			objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					companyId, externalReferenceCode);
 
@@ -111,13 +110,13 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.VIEW);
 
-		return _objectDefinitionLocalService.getObjectDefinition(
+		return objectDefinitionLocalService.getObjectDefinition(
 			objectDefinitionId);
 	}
 
 	@Override
 	public List<ObjectDefinition> getObjectDefinitions(int start, int end) {
-		return _objectDefinitionLocalService.getObjectDefinitions(start, end);
+		return objectDefinitionLocalService.getObjectDefinitions(start, end);
 	}
 
 	@Override
@@ -130,14 +129,14 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public int getObjectDefinitionsCount() throws PortalException {
-		return _objectDefinitionLocalService.getObjectDefinitionsCount();
+		return objectDefinitionLocalService.getObjectDefinitionsCount();
 	}
 
 	@Override
 	public int getObjectDefinitionsCount(long companyId)
 		throws PortalException {
 
-		return _objectDefinitionLocalService.getObjectDefinitionsCount(
+		return objectDefinitionLocalService.getObjectDefinitionsCount(
 			companyId);
 	}
 
@@ -150,7 +149,7 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
 
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+		return objectDefinitionLocalService.publishCustomObjectDefinition(
 			getUserId(), objectDefinitionId);
 	}
 
@@ -168,7 +167,7 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+		return objectDefinitionLocalService.updateCustomObjectDefinition(
 			externalReferenceCode, objectDefinitionId,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			titleObjectFieldId, accountEntryRestricted, active,
@@ -185,7 +184,7 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		return _objectDefinitionLocalService.updateExternalReferenceCode(
+		return objectDefinitionLocalService.updateExternalReferenceCode(
 			objectDefinitionId, externalReferenceCode);
 	}
 
@@ -197,12 +196,9 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		return _objectDefinitionLocalService.updateTitleObjectFieldId(
+		return objectDefinitionLocalService.updateTitleObjectFieldId(
 			objectDefinitionId, titleObjectFieldId);
 	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

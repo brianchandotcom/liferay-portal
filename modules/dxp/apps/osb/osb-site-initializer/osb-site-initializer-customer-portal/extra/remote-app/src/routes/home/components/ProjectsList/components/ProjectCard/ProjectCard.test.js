@@ -37,16 +37,16 @@ describe('Project Card', () => {
 	it('displays projects as cards if has less than 05 projects', () => {
 		const {container} = render(<ProjectCard compressed={false} />);
 
-		expect(container.getElementsByClassName('cp-project-card').length).toBe(
-			1
-		);
+		expect(
+			container.getElementsByClassName('cp-project-card-lg').length
+		).toBe(1);
 	});
 
 	it('displays projects as a list if has more than 05 projects', () => {
 		const {container} = render(<ProjectCard compressed />);
 
-		expect(
-			container.getElementsByClassName('cp-project-card-sm').length
-		).toBe(1);
+		expect(container.getElementsByClassName('card-horizontal').length).toBe(
+			1
+		);
 	});
 });

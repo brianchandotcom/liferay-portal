@@ -581,18 +581,12 @@ public class DXPCloudClientTestrayImporter {
 
 	private static List<Element> _getTestCaseResultElements() {
 		try {
-			String content = JenkinsResultsParserUtil.read(
-				new File(
-					_projectDir,
-					"test-results" +
-						"/TEST-com.liferay.poshi.runner.PoshiRunner.xml"));
+			File xmlFile = new File(
+				_projectDir,
+				"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
 
-			int x = content.indexOf("<system-out>");
-			int y = content.indexOf("</system-err>") + 13;
-
-			content = content.substring(0, x) + content.substring(y);
-
-			Document document = Dom4JUtil.parse(content);
+			Document document = Dom4JUtil.parse(
+				JenkinsResultsParserUtil.read(xmlFile));
 
 			Element rootElement = document.getRootElement();
 

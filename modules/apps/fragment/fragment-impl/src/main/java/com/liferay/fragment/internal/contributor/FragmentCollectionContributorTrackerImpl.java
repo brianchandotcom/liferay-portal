@@ -120,6 +120,10 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public FragmentEntry getFragmentEntry(String fragmentEntryKey) {
+		if (fragmentEntryKey == null) {
+			return null;
+		}
+
 		return _fragmentEntries.get(fragmentEntryKey);
 	}
 

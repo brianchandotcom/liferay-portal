@@ -18,6 +18,8 @@ import com.liferay.layout.crawler.LayoutCrawler;
 import com.liferay.layout.internal.configuration.LayoutCrawlerClientConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -32,6 +34,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import com.sun.istack.internal.Nullable;
 
 import java.net.InetAddress;
 
@@ -55,10 +60,17 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 	public String getLayoutContent(Layout layout, Locale locale)
 		throws Exception {
 
-		InetAddress inetAddress = _portal.getPortalServerInetAddress(
-			_isHttpsEnabled());
+		LayoutCrawlerClientConfiguration layoutCrawlerClientConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				LayoutCrawlerClientConfiguration.class, layout.getGroupId());
 
-		if (inetAddress == null) {
+		String hostName = _getHostName(layoutCrawlerClientConfiguration);
+
+		if (Validator.isNull(hostName)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Failed to retrieve hostName");
+			}
+
 			return StringPool.BLANK;
 		}
 
@@ -73,22 +85,13 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		Cookie cookie = new Cookie(
 			CookieKeys.GUEST_LANGUAGE_ID, LocaleUtil.toLanguageId(locale));
 
-		LayoutCrawlerClientConfiguration layoutCrawlerClientConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				LayoutCrawlerClientConfiguration.class, layout.getGroupId());
-
-		if (layoutCrawlerClientConfiguration.enabled()) {
-			cookie.setDomain(layoutCrawlerClientConfiguration.hostName());
-		}
-		else {
-			cookie.setDomain(inetAddress.getHostName());
-		}
+		cookie.setDomain(hostName);
 
 		options.setCookies(new Cookie[] {cookie});
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(
 			company, layout, layoutCrawlerClientConfiguration, locale,
-			inetAddress);
+			hostName);
 
 		options.setLocation(
 			HttpComponentsUtil.addParameter(
@@ -106,6 +109,27 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		return StringPool.BLANK;
 	}
 
+	@Nullable
+	private String _getHostName(
+		LayoutCrawlerClientConfiguration layoutCrawlerClientConfiguration) {
+
+		String hostName = null;
+
+		if (layoutCrawlerClientConfiguration.enabled()) {
+			hostName = layoutCrawlerClientConfiguration.hostName();
+		}
+		else {
+			InetAddress inetAddress = _portal.getPortalServerInetAddress(
+				_isHttpsEnabled());
+
+			if (inetAddress != null) {
+				hostName = inetAddress.getHostName();
+			}
+		}
+
+		return hostName;
+	}
+
 	private String _getI18nPath(Locale locale) {
 		Locale defaultLocale = _language.getLocale(locale.getLanguage());
 
@@ -119,7 +143,7 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 	private ThemeDisplay _getThemeDisplay(
 			Company company, Layout layout,
 			LayoutCrawlerClientConfiguration layoutCrawlerClientConfiguration,
-			Locale locale, InetAddress inetAddress)
+			Locale locale, String hostName)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -140,7 +164,7 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 			themeDisplay.setServerPort(layoutCrawlerClientConfiguration.port());
 		}
 		else {
-			themeDisplay.setServerName(inetAddress.getHostName());
+			themeDisplay.setServerName(hostName);
 			themeDisplay.setServerPort(
 				_portal.getPortalServerPort(_isHttpsEnabled()));
 		}
@@ -164,6 +188,9 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 	}
 
 	private static final String _USER_AGENT = "Liferay Page Crawler";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutCrawlerImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

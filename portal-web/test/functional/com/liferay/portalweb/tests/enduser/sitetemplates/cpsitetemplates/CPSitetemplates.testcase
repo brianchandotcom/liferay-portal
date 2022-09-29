@@ -1107,6 +1107,8 @@ definition {
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
 			PageEditor.publish();
+
+			Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
 		}
 
 		task ("Then: The portlet won't appear on the new site") {

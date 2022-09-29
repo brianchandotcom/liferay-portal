@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
 import com.liferay.saml.opensaml.integration.field.expression.resolver.UserFieldExpressionResolver;
@@ -410,9 +409,6 @@ public class DefaultUserResolver implements UserResolver {
 	@Reference
 	private UserFieldExpressionResolverRegistry
 		_userFieldExpressionResolverRegistry;
-
-	@Reference
-	private UserImporter _userImporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

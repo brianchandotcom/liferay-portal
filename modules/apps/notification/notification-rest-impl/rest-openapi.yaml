@@ -27,8 +27,6 @@ components:
                     format: double
                     minimum: 0
                     type: number
-                sent:
-                    type: boolean
                 sentDate:
                     format: date
                     readOnly: true

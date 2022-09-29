@@ -29,7 +29,6 @@
 		<column name="from" type="String" />
 		<column name="fromName" type="String" />
 		<column name="priority" type="double" />
-		<column name="sent" type="boolean" />
 		<column name="sentDate" type="Date" />
 		<column name="subject" type="String" />
 		<column name="to" type="String" />
@@ -40,9 +39,6 @@
 
 		<finder name="NotificationTemplateId" return-type="Collection">
 			<finder-column name="notificationTemplateId" />
-		</finder>
-		<finder name="Sent" return-type="Collection">
-			<finder-column name="sent" />
 		</finder>
 		<finder name="LtSentDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="sentDate" />

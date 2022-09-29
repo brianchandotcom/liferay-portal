@@ -17,7 +17,6 @@ package com.liferay.saml.opensaml.integration.internal.decryption;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.runtime.SamlException;
-import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.util.Collections;
 
@@ -95,9 +94,6 @@ public class DecrypterRegistrator {
 
 	@Reference
 	private ParserPool _parserPool;
-
-	@Reference
-	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	private class CustomParserPoolDecrypter extends Decrypter {
 

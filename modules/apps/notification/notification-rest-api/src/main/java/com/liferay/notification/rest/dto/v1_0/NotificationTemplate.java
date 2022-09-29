@@ -14,9 +14,11 @@
 
 package com.liferay.notification.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -455,6 +457,44 @@ public class NotificationTemplate implements Serializable {
 
 	@Schema
 	@Valid
+	public RecipientType getRecipientType() {
+		return recipientType;
+	}
+
+	@JsonIgnore
+	public String getRecipientTypeAsString() {
+		if (recipientType == null) {
+			return null;
+		}
+
+		return recipientType.toString();
+	}
+
+	public void setRecipientType(RecipientType recipientType) {
+		this.recipientType = recipientType;
+	}
+
+	@JsonIgnore
+	public void setRecipientType(
+		UnsafeSupplier<RecipientType, Exception> recipientTypeUnsafeSupplier) {
+
+		try {
+			recipientType = recipientTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected RecipientType recipientType;
+
+	@Schema
+	@Valid
 	public Map<String, String> getSubject() {
 		return subject;
 	}
@@ -510,6 +550,42 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> to;
+
+	@Schema
+	@Valid
+	public Type getType() {
+		return type;
+	}
+
+	@JsonIgnore
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Type type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -720,6 +796,20 @@ public class NotificationTemplate implements Serializable {
 			sb.append(objectDefinitionId);
 		}
 
+		if (recipientType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"recipientType\": ");
+
+			sb.append("\"");
+
+			sb.append(recipientType);
+
+			sb.append("\"");
+		}
+
 		if (subject != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -740,6 +830,20 @@ public class NotificationTemplate implements Serializable {
 			sb.append(_toJSON(to));
 		}
 
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -751,6 +855,82 @@ public class NotificationTemplate implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("RecipientType")
+	public static enum RecipientType {
+
+		ROLE("role"), TERM("term"), USER("user");
+
+		@JsonCreator
+		public static RecipientType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (RecipientType recipientType : values()) {
+				if (Objects.equals(recipientType.getValue(), value)) {
+					return recipientType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private RecipientType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		EMAIL("email"), USER_NOTIFICATION("userNotification");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

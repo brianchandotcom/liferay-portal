@@ -250,6 +250,20 @@ public class NotificationTemplateSerDes {
 			sb.append(notificationTemplate.getObjectDefinitionId());
 		}
 
+		if (notificationTemplate.getRecipientType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"recipientType\": ");
+
+			sb.append("\"");
+
+			sb.append(notificationTemplate.getRecipientType());
+
+			sb.append("\"");
+		}
+
 		if (notificationTemplate.getSubject() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -268,6 +282,20 @@ public class NotificationTemplateSerDes {
 			sb.append("\"to\": ");
 
 			sb.append(_toJSON(notificationTemplate.getTo()));
+		}
+
+		if (notificationTemplate.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(notificationTemplate.getType());
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -409,6 +437,15 @@ public class NotificationTemplateSerDes {
 				String.valueOf(notificationTemplate.getObjectDefinitionId()));
 		}
 
+		if (notificationTemplate.getRecipientType() == null) {
+			map.put("recipientType", null);
+		}
+		else {
+			map.put(
+				"recipientType",
+				String.valueOf(notificationTemplate.getRecipientType()));
+		}
+
 		if (notificationTemplate.getSubject() == null) {
 			map.put("subject", null);
 		}
@@ -422,6 +459,13 @@ public class NotificationTemplateSerDes {
 		}
 		else {
 			map.put("to", String.valueOf(notificationTemplate.getTo()));
+		}
+
+		if (notificationTemplate.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(notificationTemplate.getType()));
 		}
 
 		return map;
@@ -533,6 +577,13 @@ public class NotificationTemplateSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "recipientType")) {
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setRecipientType(
+						NotificationTemplate.RecipientType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "subject")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setSubject(
@@ -544,6 +595,13 @@ public class NotificationTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setTo(
 						(Map)NotificationTemplateSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setType(
+						NotificationTemplate.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

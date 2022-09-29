@@ -1053,6 +1053,14 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("recipientType", additionalAssertFieldName)) {
+				if (notificationTemplate.getRecipientType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subject", additionalAssertFieldName)) {
 				if (notificationTemplate.getSubject() == null) {
 					valid = false;
@@ -1063,6 +1071,14 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 			if (Objects.equals("to", additionalAssertFieldName)) {
 				if (notificationTemplate.getTo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (notificationTemplate.getType() == null) {
 					valid = false;
 				}
 
@@ -1322,6 +1338,17 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("recipientType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getRecipientType(),
+						notificationTemplate2.getRecipientType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subject", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)notificationTemplate1.getSubject(),
@@ -1337,6 +1364,17 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				if (!equals(
 						(Map)notificationTemplate1.getTo(),
 						(Map)notificationTemplate2.getTo())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getType(),
+						notificationTemplate2.getType())) {
 
 					return false;
 				}
@@ -1585,12 +1623,22 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("recipientType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("subject")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("to")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

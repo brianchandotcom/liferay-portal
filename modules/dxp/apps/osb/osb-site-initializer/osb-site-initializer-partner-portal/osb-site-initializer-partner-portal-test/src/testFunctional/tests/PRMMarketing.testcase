@@ -1,0 +1,83 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	var siteName = "Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Partner Portal Site") {
+			PRMUtils.addPRMSite();
+		}
+
+		task ("Go to Marketing page on Partner Portal") {
+			PRMUtils.gotoPRM();
+
+			PRMNavigator.goToNavItem(navItem = "Marketing");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${siteName}");
+		}
+	}
+
+	@description = "This is a test for LPS-164164. Verify if a banner is displayed when user access Marketing page and will appear again after dismissed"
+	@priority = "5"
+	test BannerIsDisplayed {
+		task ("Given that the welcome banner is displayed on marketing page") {
+			AssertVisible(locator1 = "PRMPages#WELCOME_BANNER");
+		}
+
+		task ("When the user clicks on 'Dismiss' button") {
+			PRMPages.dismissBanner();
+		}
+
+		task ("Then the banner should desappear") {
+			AssertNotVisible(locator1 = "PRMPages#WELCOME_BANNER");
+		}
+
+		task ("And when the user goes to another pages and back to Marketing") {
+			PRMNavigator.goToNavItem(navItem = "Home");
+
+			PRMNavigator.goToNavItem(navItem = "Marketing");
+		}
+
+		task ("Then the banner should be displayed again") {
+			AssertVisible(locator1 = "PRMPages#WELCOME_BANNER");
+		}
+
+		task ("And when the user clicks on 'Dismiss' button") {
+			PRMPages.dismissBanner();
+		}
+
+		task ("Then the banner should desappear") {
+			AssertNotVisible(locator1 = "PRMPages#WELCOME_BANNER");
+		}
+
+		task ("And when the user refreshes the page") {
+			Refresh();
+		}
+
+		task ("Then the banner should be displayed again") {
+			AssertVisible(locator1 = "PRMPages#WELCOME_BANNER");
+		}
+	}
+
+
+}

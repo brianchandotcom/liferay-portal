@@ -323,6 +323,30 @@
 			"name": "detailsLeadFollowUp",
 			"required": false,
 			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request External Reference Code SF"
+			},
+			"name": "mdfRequestExternalReferenceCodeSF",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Code SF"
+			},
+			"name": "externalReferenceCodeSF",
+			"required": false,
+			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

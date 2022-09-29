@@ -144,6 +144,7 @@ import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLScalarType;
 import graphql.schema.GraphQLSchema;
+import graphql.schema.GraphQLSchemaElement;
 import graphql.schema.GraphQLType;
 import graphql.schema.GraphQLTypeReference;
 import graphql.schema.PropertyDataFetcher;
@@ -425,21 +426,28 @@ public class GraphQLServletExtender {
 			}
 
 			private boolean _equals(
-				GraphQLType graphQLType1, GraphQLType graphQLType2) {
+				GraphQLSchemaElement graphQLSchemaElement1,
+				GraphQLSchemaElement graphQLSchemaElement2) {
 
-				List<GraphQLType> childrenGraphQLType1 =
-					graphQLType1.getChildren();
-				List<GraphQLType> childrenGraphQLType2 =
-					graphQLType2.getChildren();
+				List<GraphQLSchemaElement> childrenGraphQLSchemaElement1 =
+					graphQLSchemaElement1.getChildren();
+				List<GraphQLSchemaElement> childrenGraphQLSchemaElement2 =
+					graphQLSchemaElement2.getChildren();
 
-				for (GraphQLType childGraphQLType1 : childrenGraphQLType1) {
+				for (GraphQLSchemaElement childGraphQLSchemaElement1 :
+						childrenGraphQLSchemaElement1) {
+
 					boolean found = false;
 
-					for (GraphQLType childGraphQLType2 : childrenGraphQLType2) {
+					for (GraphQLSchemaElement childGraphQLSchemaElement2 :
+							childrenGraphQLSchemaElement2) {
+
 						if (StringUtil.equals(
-								childGraphQLType1.getName(),
-								childGraphQLType2.getName()) &&
-							_equals(childGraphQLType1, childGraphQLType2)) {
+								childGraphQLSchemaElement1.getName(),
+								childGraphQLSchemaElement2.getName()) &&
+							_equals(
+								childGraphQLSchemaElement1,
+								childGraphQLSchemaElement2)) {
 
 							found = true;
 
@@ -452,8 +460,8 @@ public class GraphQLServletExtender {
 					}
 				}
 
-				if (childrenGraphQLType1.size() ==
-						childrenGraphQLType2.size()) {
+				if (childrenGraphQLSchemaElement1.size() ==
+						childrenGraphQLSchemaElement2.size()) {
 
 					return true;
 				}

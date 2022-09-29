@@ -73,8 +73,6 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -401,8 +399,6 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -470,7 +466,7 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -573,14 +569,14 @@ definition {
 		task ("Add 2 segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User1",
 				text = "usersn1");
 
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User2",
 				text = "usersn2");
@@ -663,14 +659,14 @@ definition {
 		task ("Add 2 segments") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User1",
 				text = "userfn1");
 
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
-				groupName = "Global",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment With User2",
 				text = "userfn2");
@@ -699,8 +695,6 @@ definition {
 		}
 
 		task ("Delete one of the segments") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			Segmentation.deleteSegment(entry = "Segment With User1");
 		}
 
@@ -1743,13 +1737,9 @@ definition {
 				groupName = "Test Site Name",
 				roleTitle = "Site Role Name",
 				userEmailAddress = "userea@liferay.com");
-
-			SearchAdministration.executeReindex();
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Site and Organization Role");
@@ -1937,13 +1927,9 @@ definition {
 			JSONUser.addUserToUserGroup(
 				userEmailAddress = "userea@liferay.com",
 				userGroupName = "UG UserGroup Name");
-
-			SearchAdministration.executeReindex();
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "User Group");
@@ -2113,8 +2099,6 @@ definition {
 	@priority = "3"
 	test CanCreateSegmentNameWithScriptTags {
 		task ("Add segment with script tag name") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "First Name");
@@ -2207,14 +2191,14 @@ definition {
 		task ("Create first segmentation") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "First Name",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "First Segment",
 				text = "Test");
 		}
 
 		task ("Edit first segmentation") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			Segmentation.editSegment(entry = "First Segment");
 
@@ -2232,7 +2216,7 @@ definition {
 		}
 
 		task ("Create second segmentation") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -2288,7 +2272,7 @@ definition {
 		task ("Create a segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "contains",
 				segmentName = "Original Segment",
 				text = "Test");
@@ -2341,8 +2325,6 @@ definition {
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Last Name");
@@ -2367,7 +2349,7 @@ definition {
 		task ("Create new segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "contains",
 				segmentName = "Original Segment",
 				text = "Test");
@@ -2412,15 +2394,13 @@ definition {
 		task ("Create a first segment with any criteria") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Email Address",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "contains",
 				segmentName = "First Segment",
 				text = "test");
 		}
 
 		task ("Create a second segment usign two criterias, one being the first segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.fillTitle(titleField = "Second Segment");
@@ -2565,7 +2545,7 @@ definition {
 		}
 
 		task ("Create Segment with Vocabulary") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -2637,7 +2617,7 @@ definition {
 		}
 
 		task ("Create Segment with Vocabulary") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -2660,7 +2640,7 @@ definition {
 		}
 
 		task ("Assert if segment kept category") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Refresh();
 
 			Segmentation.editSegment(entry = "KeepInfomationOfDeleteVocabularyInSegment Test");
 
@@ -2768,7 +2748,7 @@ definition {
 		}
 
 		task ("Add segment with conditions") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -2969,7 +2949,7 @@ definition {
 		task ("Create a segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "contains",
 				segmentName = "Segment With Multiple Conditions",
 				text = "Test");
@@ -3068,7 +3048,7 @@ definition {
 		task ("Create a segment using the property") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Regular Role",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Validade Role Segment",
 				text = "${roleId}");
@@ -3099,7 +3079,7 @@ definition {
 		task ("Create a segment using the property") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Site",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Validade Site Segment",
 				text = "${siteId}");
@@ -3130,8 +3110,6 @@ definition {
 		}
 
 		task ("Create segment using the property") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Team");
@@ -3166,7 +3144,7 @@ definition {
 		task ("Create a segment using the property") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "User",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Validade User Segment",
 				text = "${userId}");
@@ -3197,7 +3175,7 @@ definition {
 		task ("Create a segment using the property") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "User Group",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Validade User Group Segment",
 				text = "${userGroupId}");

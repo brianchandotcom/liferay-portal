@@ -168,8 +168,6 @@ definition {
 	test CanRemoveSiteInScope {
 		property test.name.skip.portal.instance = "RolesAdmin#CanRemoveSiteInScope";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONRole.addRegularRole(
 			roleKey = "Remove Permission Scope",
 			roleTitle = "Remove Permission Scope");
@@ -180,7 +178,7 @@ definition {
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Remove Permission Scope",
-			siteNameScope = "${siteName}");
+			siteNameScope = "Liferay");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
@@ -192,7 +190,7 @@ definition {
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
-			removeSiteScope = "${siteName}",
+			removeSiteScope = "Liferay",
 			roleTitle = "Remove Permission Scope");
 
 		Role.viewPermissionCP(

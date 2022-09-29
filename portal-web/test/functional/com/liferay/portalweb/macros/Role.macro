@@ -336,8 +336,6 @@ definition {
 					locator1 = "RolesPermissions#${permissionDefinitionKeyChange}",
 					value1 = "Change");
 
-				var key_card = "${siteNameScope}";
-
 				SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
 
 				AssertClick(
@@ -355,7 +353,9 @@ definition {
 						value1 = "My Sites");
 				}
 
-				Click(locator1 = "Card#CARD_TITLE");
+				Click(
+					key_card = "${siteNameScope}",
+					locator1 = "Card#CARD_TITLE");
 
 				var key_siteNameScope = "${siteNameScope}";
 				var permissionDefinitionKeySiteScope = StringUtil.replace("${permissionDefinitionKey}", "CHECKBOX", "SITE_SCOPE");

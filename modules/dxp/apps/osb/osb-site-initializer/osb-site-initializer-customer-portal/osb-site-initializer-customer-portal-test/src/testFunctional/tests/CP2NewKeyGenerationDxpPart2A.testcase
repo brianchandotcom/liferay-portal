@@ -60,6 +60,10 @@ definition {
 
 		task ("I fulfill first phase form for Generate New License") {
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Version",
 				option = "7.4");
 
@@ -291,6 +295,64 @@ definition {
 
 		task ("Then the '- Remove Activation Key' button should not preset") {
 			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157450 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
+	@priority = "4"
+	test IfYouClickOnThePreviousButtonTheUserGoesBackToThePreviousStep {
+		task ("Given I click at 'Provious' button") {
+			CustomerPortal.clickAtButton(text = "Previous");
+		}
+
+		task ("Then I should be able to view the previous forms fields values") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Key Type",
+				option = "Production");
+		}
+
+		task ("When I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.0");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Non-Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And I click at 'Provious' button") {
+			CustomerPortal.clickAtButton(text = "Previous");
+		}
+
+		task ("Then I should be able to view the previous forms fields values") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Version",
+				option = "7.0");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Key Type",
+				option = "Non-Production");
 		}
 	}
 }

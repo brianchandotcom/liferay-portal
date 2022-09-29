@@ -110,21 +110,18 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 	private String _getHostName(
 		LayoutCrawlerClientConfiguration layoutCrawlerClientConfiguration) {
 
-		String hostName = null;
-
 		if (layoutCrawlerClientConfiguration.enabled()) {
-			hostName = layoutCrawlerClientConfiguration.hostName();
-		}
-		else {
-			InetAddress inetAddress = _portal.getPortalServerInetAddress(
-				_isHttpsEnabled());
-
-			if (inetAddress != null) {
-				hostName = inetAddress.getHostName();
-			}
+			return layoutCrawlerClientConfiguration.hostName();
 		}
 
-		return hostName;
+		InetAddress inetAddress = _portal.getPortalServerInetAddress(
+			_isHttpsEnabled());
+
+		if (inetAddress != null) {
+			return inetAddress.getHostName();
+		}
+
+		return null;
 	}
 
 	private String _getI18nPath(Locale locale) {

@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIPTION_DROPDOWN_ITEM</td>
-	<td>//*[@class='dropdown-item' and text()='${key_text}']</td>
+	<td>//*[contains(@class,'show')]//*[contains(@class,'dropdown-item') and text()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

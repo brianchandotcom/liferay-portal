@@ -453,28 +453,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
-			JSONOrganization.addOrganization(organizationName = "organization Name");
+			JSONOrganization.addOrganization(
+				organizationCountry = "China",
+				organizationName = "organization Name");
 		}
 
 		task ("Assign user to organization created") {
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "organization Name",
 				userEmailAddress = "userea1@liferay.com");
-		}
-
-		task ("Set a countryu for the organization created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.editOrganizationCP(orgName = "organization Name");
-
-			Select(
-				locator1 = "Select#COUNTRY",
-				value1 = "China");
-
-			PortletEntry.save();
 		}
 
 		task ("Create a segment with a country criteria") {
@@ -1033,32 +1020,16 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Organization via JSONWS") {
-			JSONOrganization.addOrganization(organizationName = "organization Name");
+			JSONOrganization.addOrganization(
+				organizationCountry = "United States",
+				organizationName = "organization Name",
+				organizationRegion = "Utah");
 		}
 
 		task ("Assign user to organization created") {
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "organization Name",
 				userEmailAddress = "userea1@liferay.com");
-		}
-
-		task ("Add country and region for organization created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.editOrganizationCP(orgName = "organization Name");
-
-			Select(
-				locator1 = "Select#COUNTRY",
-				value1 = "United States");
-
-			Select(
-				locator1 = "Select#REGION",
-				value1 = "Utah");
-
-			PortletEntry.save();
 		}
 
 		task ("Add an organization Segment") {

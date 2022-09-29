@@ -61,26 +61,13 @@ definition {
 		}
 
 		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
+			JSONOrganization.addOrganization(
+				organizationCountry = "Spain",
+				organizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name",
 				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Select country for the organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.editOrganizationCP(orgName = "Organization Name");
-
-			Select(
-				locator1 = "Select#COUNTRY",
-				value1 = "Spain");
-
-			PortletEntry.save();
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
@@ -401,30 +388,14 @@ definition {
 		}
 
 		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
+			JSONOrganization.addOrganization(
+				organizationCountry = "Spain",
+				organizationName = "Organization Name",
+				organizationRegion = "Madrid");
 
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name",
 				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Select region for the organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.editOrganizationCP(orgName = "Organization Name");
-
-			Select(
-				locator1 = "Select#COUNTRY",
-				value1 = "Spain");
-
-			Select(
-				locator1 = "Select#REGION",
-				value1 = "Madrid");
-
-			PortletEntry.save();
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {

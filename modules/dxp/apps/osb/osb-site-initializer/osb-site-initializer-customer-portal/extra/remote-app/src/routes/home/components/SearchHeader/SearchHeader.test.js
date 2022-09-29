@@ -18,13 +18,13 @@ describe('Home: SearchHeader', () => {
 		render(<SearchHeader count={1} onSearchSubmit={functionMock} />);
 
 		const projectsNumber = screen.queryByRole('heading');
-		expect(projectsNumber).toHaveTextContent('1 project');
+		expect(projectsNumber).toHaveTextContent(/1 project/i);
 	});
 
 	it('displays the number of projects when there is more than one result found', () => {
 		render(<SearchHeader count={10} onSearchSubmit={functionMock} />);
 
 		const projectsNumber = screen.getByRole('heading');
-		expect(projectsNumber).toHaveTextContent('10 projects');
+		expect(projectsNumber).toHaveTextContent(/10 projects/i);
 	});
 });

@@ -48,7 +48,7 @@ export function CreateAnAccount() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [objValidate, setObjValidate] = useState(INITIAL_VALIDATION);
-	const [passwordLabel, setPasswordLabel] = useState('Create a Password');
+	const [passwordLabel, setPasswordLabel] = useState('Password');
 	const [captcha, setCaptcha] = useState('');
 	const [hasError, setHasError] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -164,7 +164,7 @@ export function CreateAnAccount() {
 						className="w-100"
 						id="password"
 						onBlur={() => {
-							if (!password) {
+							if (createAnAccount && !password) {
 								setPasswordLabel('Create a Password');
 							}
 						}}
@@ -251,6 +251,7 @@ export function CreateAnAccount() {
 						displayType="secondary"
 						onClick={() => {
 							setCreateAnAccount(true);
+							setPasswordLabel('Create a Password');
 						}}
 					>
 						CREATE NEW ACCOUNT

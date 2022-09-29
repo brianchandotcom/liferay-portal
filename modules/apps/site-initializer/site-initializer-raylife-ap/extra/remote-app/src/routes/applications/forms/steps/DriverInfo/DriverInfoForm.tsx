@@ -609,7 +609,7 @@ const DriverInfoForm = ({
 						</ClaySelect>
 
 						<label htmlFor="occupation">
-							Ocuppation&nbsp;
+							Occupation&nbsp;
 							<span className="text-danger-darken-1">*</span>
 						</label>
 

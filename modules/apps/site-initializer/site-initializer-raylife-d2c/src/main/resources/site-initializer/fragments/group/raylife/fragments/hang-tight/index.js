@@ -31,6 +31,10 @@ const fetchHeadless = async (url, options) => {
 };
 
 const fetchHeadlessWithToken = async (url) => {
+	if (Liferay.ThemeDisplay.getUserName()) {
+		return fetchHeadless(url);
+	}
+
 	const token = sessionStorage.getItem('raylife-guest-permission-token');
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch

@@ -63,8 +63,6 @@ import graphql.TypeResolutionEnvironment;
 
 import graphql.annotations.annotationTypes.GraphQLTypeResolver;
 import graphql.annotations.annotationTypes.GraphQLUnion;
-import graphql.annotations.directives.DirectiveWirer;
-import graphql.annotations.directives.DirectiveWiringMapRetriever;
 import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.annotations.processor.exceptions.CannotCastMemberException;
 import graphql.annotations.processor.exceptions.GraphQLAnnotationsException;
@@ -130,7 +128,6 @@ import graphql.schema.DataFetchingEnvironmentImpl;
 import graphql.schema.FieldCoordinates;
 import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLCodeRegistry;
-import graphql.schema.GraphQLDirectiveContainer;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.GraphQLInputObjectField;
@@ -411,17 +408,6 @@ public class GraphQLServletExtender {
 							GraphQLTypeUtil.simplePrint(graphQLType));
 					}
 				}
-
-				DirectiveWirer directiveWirer = new DirectiveWirer();
-
-				DirectiveWiringMapRetriever directiveWiringMapRetriever =
-					new DirectiveWiringMapRetriever();
-
-				graphQLType = directiveWirer.wire(
-					(GraphQLDirectiveContainer)graphQLType,
-					directiveWiringMapRetriever.getDirectiveWiringMap(
-						clazz, processingElementsContainer),
-					processingElementsContainer.getCodeRegistryBuilder(), null);
 
 				graphQLTypes.put(
 					GraphQLTypeUtil.simplePrint(graphQLType), graphQLType);
@@ -2029,8 +2015,6 @@ public class GraphQLServletExtender {
 				Parameter parameter, GraphQLInputType graphQLInputType)
 			throws GraphQLAnnotationsException {
 
-			DirectiveWirer directiveWirer = new DirectiveWirer();
-
 			GraphQLArgument.Builder graphQLArgumentBuilder =
 				GraphQLArgument.newArgument();
 
@@ -2052,15 +2036,7 @@ public class GraphQLServletExtender {
 
 			graphQLArgumentBuilder.withDirectives(directivesBuilder.build());
 
-			DirectiveWiringMapRetriever directiveWiringMapRetriever =
-				new DirectiveWiringMapRetriever();
-
-			return (GraphQLArgument)directiveWirer.wire(
-				graphQLArgumentBuilder.build(),
-				directiveWiringMapRetriever.getDirectiveWiringMap(
-					parameter, _processingElementsContainer),
-				_processingElementsContainer.getCodeRegistryBuilder(),
-				GraphQLTypeUtil.simplePrint(graphQLInputType));
+			return graphQLArgumentBuilder.build();
 		}
 
 		private final Method _method;

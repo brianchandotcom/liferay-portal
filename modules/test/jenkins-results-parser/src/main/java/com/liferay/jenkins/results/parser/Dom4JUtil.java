@@ -37,6 +37,7 @@ import org.dom4j.Text;
 import org.dom4j.XPath;
 import org.dom4j.io.DOMReader;
 import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 
@@ -282,24 +283,31 @@ public class Dom4JUtil {
 	}
 
 	public static Document parse(String xml) throws DocumentException {
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
 		try {
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
+			SAXReader saxReader = new SAXReader();
 
-			org.w3c.dom.Document orgW3CDomDocument = documentBuilder.parse(
-				new InputSource(new StringReader(xml)));
-
-			DOMReader domReader = new DOMReader();
-
-			return domReader.read(orgW3CDomDocument);
+			return saxReader.read(new StringReader(xml));
 		}
-		catch (IOException | ParserConfigurationException | SAXException
-					exception) {
+		catch (Exception exception1) {
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
 
-			throw new RuntimeException(exception);
+			try {
+				DocumentBuilder documentBuilder =
+					documentBuilderFactory.newDocumentBuilder();
+
+				org.w3c.dom.Document orgW3CDomDocument = documentBuilder.parse(
+					new InputSource(new StringReader(xml)));
+
+				DOMReader domReader = new DOMReader();
+
+				return domReader.read(orgW3CDomDocument);
+			}
+			catch (IOException | ParserConfigurationException | SAXException
+						exception2) {
+
+				throw new RuntimeException(exception2);
+			}
 		}
 	}
 

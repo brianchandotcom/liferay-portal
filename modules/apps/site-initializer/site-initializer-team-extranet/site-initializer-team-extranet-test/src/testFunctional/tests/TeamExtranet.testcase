@@ -410,6 +410,8 @@ definition {
 		}
 
 		task ("Edit the Dynamic Collection") {
+			Close.closeWindow();
+
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "${testSiteURL}");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
@@ -420,8 +422,6 @@ definition {
 		}
 
 		task ("Edit the Collection Page") {
-			Close.closeWindow();
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Collection Page Name",
 				siteName = "${testSiteName}");

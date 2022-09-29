@@ -33,12 +33,12 @@ definition {
 
 		if ("${pageVersioningEnabled}" == "true") {
 			if (IsElementPresent(key_fieldLabel = "Enabled", locator1 = "Checkbox#CHECKBOX_LABEL")) {
-				Click(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
+				Click.clickAtNotVisible(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
 			}
 			else {
-				Click(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
+				Click.clickAtNotVisible(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
 
-				Click(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
+				Click.clickAtNotVisible(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
 			}
 		}
 
@@ -838,7 +838,7 @@ definition {
 
 		if (isSet(checkContentNameList)) {
 			for (var contentName : list "${checkContentNameList}") {
-				Check(
+				Check.checkNotVisible(
 					key_contentName = "${contentName}",
 					locator1 = "Staging#STAGING_CONTENT_CHECKBOX");
 			}

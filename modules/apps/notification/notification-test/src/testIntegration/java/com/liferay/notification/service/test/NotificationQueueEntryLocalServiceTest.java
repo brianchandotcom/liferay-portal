@@ -66,8 +66,10 @@ public class NotificationQueueEntryLocalServiceTest {
 		NotificationQueueEntry notificationQueueEntry =
 			_addNotificationQueueEntry();
 
-		notificationQueueEntry = _notificationQueueEntryLocalService.updateSent(
-			notificationQueueEntry.getNotificationQueueEntryId(), true);
+		notificationQueueEntry =
+			_notificationQueueEntryLocalService.updateStatus(
+				notificationQueueEntry.getNotificationQueueEntryId(),
+				NotificationQueueEntryConstants.STATUS_SENT);
 
 		Assert.assertEquals(
 			NotificationQueueEntryConstants.STATUS_SENT,

@@ -165,8 +165,9 @@ public class NotificationQueueEntryLocalServiceImpl
 			long notificationQueueEntryId)
 		throws PortalException {
 
-		return notificationQueueEntryLocalService.updateSent(
-			notificationQueueEntryId, false);
+		return notificationQueueEntryLocalService.updateStatus(
+			notificationQueueEntryId,
+			NotificationQueueEntryConstants.STATUS_UNSENT);
 	}
 
 	@Override
@@ -197,8 +198,9 @@ public class NotificationQueueEntryLocalServiceImpl
 
 				_mailService.sendEmail(mailMessage);
 
-				notificationQueueEntryLocalService.updateSent(
-					notificationQueueEntry.getNotificationQueueEntryId(), true);
+				notificationQueueEntryLocalService.updateStatus(
+					notificationQueueEntry.getNotificationQueueEntryId(),
+					NotificationQueueEntryConstants.STATUS_SENT);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -216,26 +218,22 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public NotificationQueueEntry updateSent(
-			long notificationQueueEntryId, boolean sent)
+	public NotificationQueueEntry updateStatus(
+			long notificationQueueEntryId, int status)
 		throws PortalException {
 
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntryPersistence.findByPrimaryKey(
 				notificationQueueEntryId);
 
-		notificationQueueEntry.setSent(sent);
-
-		if (sent) {
+		if (status == NotificationQueueEntryConstants.STATUS_SENT) {
 			notificationQueueEntry.setSentDate(new Date());
-			notificationQueueEntry.setStatus(
-				NotificationQueueEntryConstants.STATUS_SENT);
 		}
 		else {
 			notificationQueueEntry.setSentDate(null);
-			notificationQueueEntry.setStatus(
-				NotificationQueueEntryConstants.STATUS_UNSENT);
 		}
+
+		notificationQueueEntry.setStatus(status);
 
 		return notificationQueueEntryPersistence.update(notificationQueueEntry);
 	}

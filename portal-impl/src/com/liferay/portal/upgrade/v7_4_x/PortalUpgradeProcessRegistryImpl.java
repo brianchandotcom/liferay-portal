@@ -218,6 +218,11 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(20, 0, 0),
 			UpgradeProcessFactory.alterColumnName(
 				"EmailAddress", "typeId", "listTypeId LONG"));
+
+		upgradeVersionTreeMap.put(
+			new Version(21, 0, 0),
+			UpgradeProcessFactory.alterColumnName(
+				"Website", "typeId", "listTypeId LONG"));
 	}
 
 }

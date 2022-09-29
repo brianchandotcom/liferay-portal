@@ -341,6 +341,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_INFO</td>
+	<td>//*[contains(@class, 'alert-info')]//*[text()='${key_alertText}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUPPORT_SEAT</td>
 	<td>//p[contains(text(), 'Support Seat')]//..//*[*[name()='svg'][contains(@class,'lexicon-icon-info-circle')]]</td>
 	<td></td>

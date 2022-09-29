@@ -40,7 +40,7 @@ definition {
 		task ("Go to Enablement Tab") {
 			PRMNavigator.goToNavItem(navItem = "Enablement");
 		}
-		
+
 		task ("Verify if the current active breadcrumb is 'Enablement'") {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Enablement");
 		}

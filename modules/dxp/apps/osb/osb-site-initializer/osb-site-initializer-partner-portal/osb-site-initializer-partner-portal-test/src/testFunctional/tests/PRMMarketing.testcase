@@ -29,6 +29,7 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -95,7 +96,6 @@ definition {
 
 			ImportExport.assertDownloadedFileName(downloadedFile = "${fileName}");
 		}
-
 	}
 
 	@description = "This is a test for LPS-164165. Verify if a 'Watch a Video Tour' button is displayed on banner and a Video will be opened in a popup when click on this button"

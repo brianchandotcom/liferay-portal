@@ -1,11 +1,5 @@
 definition {
 
-	macro assertPageTitle {
-		AssertElementPresent(
-			key_title = "${pageTitle}",
-			locator1 = "Header#H1_TITLE");
-	}
-
 	macro addPRMSite {
 		Site.openSitesAdmin();
 
@@ -14,15 +8,14 @@ definition {
 			siteTemplateName = "Liferay OSB Site Initializer Partner Portal");
 	}
 
-	macro gotoPRM {
-		Navigator.openSiteURL(siteName = "Partner Portal");
-
-		Refresh();
+	macro assertPageTitle {
+		AssertElementPresent(
+			key_title = "${pageTitle}",
+			locator1 = "Header#H1_TITLE");
 	}
 
 	macro downloadFileViaCurl {
 		var currentURL = selenium.getCurrentUrl();
-
 		var testDependenciesDir = PropsUtil.get("output.dir.name");
 
 		var curl = '''${currentURL} --create-dirs -o ${testDependenciesDir}/${fileName}''';
@@ -30,6 +23,12 @@ definition {
 		echo("curl = ${curl}");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.get("${curl}");
+	}
+
+	macro gotoPRM {
+		Navigator.openSiteURL(siteName = "Partner Portal");
+
+		Refresh();
 	}
 
 }

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Template Soy Renderer API
-Bundle-SymbolicName: com.liferay.portal.template.soy.renderer.api
-Bundle-Version: 3.0.5
-Export-Package: com.liferay.portal.template.soy.renderer

@@ -1,0 +1,38 @@
+{
+	"label": {
+		"en_US": "Activity"
+	},
+	"name": "Activity",
+	"objectFields": [
+		{
+			"DBType": "Clob",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "Clob",
+			"externalReferenceCode": "Activity_Name__c"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request External Reference Code SF"
+			},
+			"name": "mdfRequestExternalReferenceCodeSF",
+			"required": false,
+			"type": "Clob",
+			"externalReferenceCode": "MDF_Request__c"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Activities"
+	},
+	"scope": "company"
+}

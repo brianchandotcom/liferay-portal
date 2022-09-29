@@ -89,7 +89,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 					data.put("resource-href", editPermissionsResourceURL.toString());
 					%>
 
-					<div class="<%= portletResource.equals(usersAdminPortlet.getPortletId())? "selected" : "" %>">
+					<div class="nav-item permission-navigation-item-container <%= portletResource.equals(usersAdminPortlet.getPortletId())? "selected" : "" %>">
 						<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 							<%= PortalUtil.getPortletLongTitle(usersAdminPortlet, application, locale) %>
 						</aui:a>

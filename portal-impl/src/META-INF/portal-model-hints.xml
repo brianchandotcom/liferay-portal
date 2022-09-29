@@ -1696,7 +1696,7 @@
 			<hint name="display-width">210</hint>
 			<validator name="url" />
 		</field>
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="primary" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

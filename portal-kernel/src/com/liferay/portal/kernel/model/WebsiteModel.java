@@ -258,18 +258,18 @@ public interface WebsiteModel
 	public void setUrl(String url);
 
 	/**
-	 * Returns the type ID of this website.
+	 * Returns the list type ID of this website.
 	 *
-	 * @return the type ID of this website
+	 * @return the list type ID of this website
 	 */
-	public long getTypeId();
+	public long getListTypeId();
 
 	/**
-	 * Sets the type ID of this website.
+	 * Sets the list type ID of this website.
 	 *
-	 * @param typeId the type ID of this website
+	 * @param listTypeId the list type ID of this website
 	 */
-	public void setTypeId(long typeId);
+	public void setListTypeId(long listTypeId);
 
 	/**
 	 * Returns the primary of this website.

@@ -977,14 +977,14 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/panel@3.73.0":
-  version "3.73.0"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.73.0.tgz#1c116479f02780aa992d057705b185600404a01d"
-  integrity sha512-5mnStbg2qrVHg0xdk/hK6AS6h/1LFB6KRmizB8SBf239OPzTISWd2JklCGIo/4dgUT7UrXvF1cKP9pmgNupYKw==
+"@clayui/panel@3.75.2":
+  version "3.75.2"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.75.2.tgz#b71b863393e5b0e9a8e9210fb6607ee0fcfdb0d6"
+  integrity sha512-Ft2qK9wRLhPC+GAErsShX6iS1XFDrIIaolsaa1VJRSW/D6Fjbt6gn2RatCJNe2P8uv/ArDm3mc8MFATn+QRCdA==
   dependencies:
     "@clayui/button" "^3.73.0"
     "@clayui/icon" "^3.56.0"
-    "@clayui/shared" "^3.73.0"
+    "@clayui/shared" "^3.75.2"
     classnames "^2.2.6"
     react-transition-group "^4.4.1"
 
@@ -995,10 +995,10 @@
   dependencies:
     "@clayui/icon" "^3.56.0"
 
-"@clayui/shared@^3.73.0":
-  version "3.73.0"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.73.0.tgz#3f5ad63b1c814149117788cc1dc1ddff13550cea"
-  integrity sha512-hjKkE3L6+OtcMtX3q3puIa6e6VdXygK+1MbR7E3Sg2kqPESGTHpSco7hl7oWchooRADrm6Y0Re71mX5iEJ/d8w==
+"@clayui/shared@^3.75.2":
+  version "3.75.2"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.75.2.tgz#1ef48e19988161d835e201f7ea6cfdc0533629d3"
+  integrity sha512-mFYejTCpJfvmxzcX18Pc66wr6tBeItSh9ZQfrGiSPN0vkZ4ThuuXvS/q+Rpqj4M2ZSBC5bxQEB9PQ/ZSwVvocA==
   dependencies:
     "@clayui/button" "^3.73.0"
     "@clayui/link" "^3.56.0"

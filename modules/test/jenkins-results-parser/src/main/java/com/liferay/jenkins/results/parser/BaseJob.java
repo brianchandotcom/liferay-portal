@@ -26,8 +26,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -873,93 +871,6 @@ public abstract class BaseJob implements Job {
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
 	protected JSONObject jsonObject;
 
-	private String _fixBatchName(String batchName) {
-		batchName = batchName.replace("_stable", "");
-		batchName = batchName.replace("-smoke", "");
-
-		return batchName;
-	}
-
-	private JSONObject _getAverageDurationJSONObject() {
-		if (_averageDurationJSONObject != null) {
-			return _averageDurationJSONObject;
-		}
-
-		if (!(this instanceof PortalTestClassJob)) {
-			_averageDurationJSONObject = new JSONObject();
-
-			return _averageDurationJSONObject;
-		}
-
-		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)this;
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
-		if (portalGitWorkingDirectory == null) {
-			_averageDurationJSONObject = new JSONObject();
-
-			return _averageDurationJSONObject;
-		}
-
-		String testSuiteName = null;
-
-		if (this instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
-
-			testSuiteName = testSuiteJob.getTestSuiteName();
-		}
-
-		String ciAverageDurationsJSONURLString = null;
-
-		try {
-			ciAverageDurationsJSONURLString =
-				JenkinsResultsParserUtil.getProperty(
-					JenkinsResultsParserUtil.getBuildProperties(),
-					"ci.average.durations.json.url", getJobName(),
-					testSuiteName,
-					portalGitWorkingDirectory.getUpstreamBranchName());
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-
-		if (!JenkinsResultsParserUtil.isURL(ciAverageDurationsJSONURLString)) {
-			_averageDurationJSONObject = new JSONObject();
-
-			return _averageDurationJSONObject;
-		}
-
-		File tempGzipFile = new File(
-			System.getenv("WORKSPACE"),
-			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
-
-		try {
-			JenkinsResultsParserUtil.toFile(
-				new URL(ciAverageDurationsJSONURLString), tempGzipFile);
-
-			String content = JenkinsResultsParserUtil.read(tempGzipFile);
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(content)) {
-				_averageDurationJSONObject = new JSONObject(content);
-			}
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-		finally {
-			if (tempGzipFile.exists()) {
-				JenkinsResultsParserUtil.delete(tempGzipFile);
-			}
-		}
-
-		if (_averageDurationJSONObject == null) {
-			_averageDurationJSONObject = new JSONObject();
-		}
-
-		return _averageDurationJSONObject;
-	}
-
 	private int _getDistNodeAxisCount() {
 		try {
 			String distNodeAxisCount =
@@ -1069,7 +980,6 @@ public abstract class BaseJob implements Job {
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
-	private JSONObject _averageDurationJSONObject;
 	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;
 	private String _companyDefaultLocale;

@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var testAccount = "Test Account DXP";
 	var testProduct = "DXP";
 
 	setUp {
@@ -42,26 +42,30 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-148069 | Test Summary: Assert the name of the downloaded file follows the standard"
+	@description = "Automation ID: LPS-148069 | Test Summary: Assert the name of the downloaded file follows the standard"
 	@priority = "3"
-    test AssertAggregateActivationKeyXmlFileIsDownloaded {
+	test AssertAggregateActivationKeyXmlFileIsDownloaded {
 
-        // TODO LPS-148069 AssertAggregateActivationKeyXmlFileIsDownloaded pending implementation
+		// TODO LPS-148069 AssertAggregateActivationKeyXmlFileIsDownloaded pending implementation
 
-    }
+	}
 
-    @description = "Automation ID: LPS-148070 | Test Summary: Verify success message Activation Key was downloaded successfully"
+	@description = "Automation ID: LPS-148070 | Test Summary: Verify success message Activation Key was downloaded successfully"
 	@priority = "4"
-    test CanViewConfirmSuccessfulMessage {
+	test CanViewConfirmSuccessfulMessage {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-        task ("Given I go to the test account") {
+		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "${testAccount}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -73,7 +77,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-        task ("I selected two keys in the table") {
+		task ("I selected two keys in the table") {
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
 				date = "Mar 30, 2023",
 				position = "1");
@@ -84,7 +88,7 @@ definition {
 		}
 
 		task ("When I click at the 'Aggregate key single file' option") {
-            CustomerPortal.clickAtButton(text = "download");
+			CustomerPortal.clickAtButton(text = "download");
 
 			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Aggregate key single file");
 		}
@@ -93,31 +97,51 @@ definition {
 			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
 		}
 
-		// task ("And I get the expected downloaded file name") {
-		// 	var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-		// 		fileType = "xml",
-		// 		licenseName = "${testAccount}",
-		// 		licenseType = "activation-key-multiple-products",
-		// 		version = "7.4");
-		// }
+		task ("And I get the expected downloaded file name") {
+			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				fileType = "xml",
+				licenseName = "${testAccount}",
+				licenseType = "activation-key-multiple-products",
+				version = "7.4");
+		}
 
-		// task ("And I assert that the Activation Key was downloaded") {
-		// 	CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
-		// }
-    }
+		task ("And I assert that the Activation Key was downloaded") {
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
+		}
+	}
 
-    @description = "Automation ID: LPS-148071 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, an alert is displayed to download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size"
+	@description = "Automation ID: LPS-148072 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
+	@priority = "3"
+	test TheOptionInTheDropDownMenuIsDisabled {
+
+		// TODO LPS-148072 TheOptionInTheDropDownMenuIsDisabled pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-148073 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
+	@priority = "3"
+	test YouCanSeeATooltip {
+
+		// TODO LPS-148073 YouCanSeeATooltip pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-148071 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, an alert is displayed to download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size"
 	@priority = "4"
-    test YouCanSeeTheDisplayOfAnAlert {
-        task ("Given a user signs in on OKTA to update the Customer Portal") {
+	test YouCanSeeTheDisplayOfAnAlert {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-        task ("Given I go to the test account") {
+		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "${testAccount}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -129,7 +153,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-        task ("I selected two keys in the table") {
+		task ("I selected two keys in the table") {
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
 				date = "Nov 15, 2028",
 				position = "1");
@@ -142,22 +166,6 @@ definition {
 		task ("Then I assert that the alert with the message 'To download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size' is visible") {
 			CustomerPortal.viewAlertInfo(alertText = "To download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size");
 		}
-    }
-
-    @description = "Automation ID: LPS-148072 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
-	@priority = "3"
-    test TheOptionInTheDropDownMenuIsDisabled {
-        
-        // TODO LPS-148072 TheOptionInTheDropDownMenuIsDisabled pending implementation
-
-    }
-
-    @description = "Automation ID: LPS-148073 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
-	@priority = "3"
-    test YouCanSeeATooltip {
-        
-        // TODO LPS-148073 YouCanSeeATooltip pending implementation
-
-    }
+	}
 
 }

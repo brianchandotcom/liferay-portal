@@ -31,7 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "verify.process.name=com.liferay.portal.security.service.access.policy.service",
+	property = {
+		"initial.deployment=true",
+		"verify.process.name=com.liferay.portal.security.service.access.policy.service"
+	},
 	service = {SAPServiceVerifyProcess.class, VerifyProcess.class}
 )
 @Deprecated

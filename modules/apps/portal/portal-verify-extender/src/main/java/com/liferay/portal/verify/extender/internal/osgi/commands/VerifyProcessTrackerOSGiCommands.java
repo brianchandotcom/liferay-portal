@@ -33,7 +33,6 @@ import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
-import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
@@ -227,9 +226,6 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Reference
 	protected CounterLocalService counterLocalService;
-
-	@Reference
-	protected IndexStatusManager indexStatusManager;
 
 	@Reference
 	protected OutputStreamContainerFactoryTracker

@@ -14,7 +14,6 @@
 
 type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
-
 interface ObjectDefinition {
 	active: boolean;
 	dateCreated: string;

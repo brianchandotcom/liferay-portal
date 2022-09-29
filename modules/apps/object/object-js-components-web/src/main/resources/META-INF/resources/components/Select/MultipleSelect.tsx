@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayMultiSelect from '@clayui/multi-select';
 import React, {useEffect, useState} from 'react';
 
 import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
@@ -27,11 +28,23 @@ interface IProps<T extends CustomItem<number | string> = CustomItem>
 	setSelectAllChecked?: Function;
 }
 
+type LabelValueObject = {
+	label?: string;
+	value?: string;
+};
+
+interface MultiSelectItem extends LabelValueObject {
+	checked?: boolean;
+}
+
 export function MultipleSelect<
 	T extends CustomItem<number | string> = CustomItem
 >({options, selectAllOption, setOptions, ...restProps}: IProps<T>) {
 	const [selectAllChecked, setSelectAllChecked] = useState<boolean>(false);
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
+	const [multiSelectItems, setMultiSelectItems] = useState<
+		LabelValueObject[]
+	>([]);
 
 	useEffect(() => {
 		if (selectAllOption) {
@@ -51,20 +64,61 @@ export function MultipleSelect<
 		}
 	}, [options, selectAllOption]);
 
+	useEffect(() => {
+		const multiSelectOptions = options.filter(({checked, label}) => {
+			if (checked) {
+				return {
+					label,
+				};
+			}
+		});
+
+		if (multiSelectOptions) {
+			setMultiSelectItems(multiSelectOptions as LabelValueObject[]);
+		}
+	}, [options]);
+
 	return (
 		<BaseSelect
 			{...restProps}
 			dropdownActive={dropdownActive}
 			setDropdownActive={setDropdownActive}
-			value={options
-				.reduce<string[]>((acc, value) => {
-					if (value.checked) {
-						acc.push(value.label);
-					}
+			trigger={
+				<ClayMultiSelect
+					items={multiSelectItems as MultiSelectItem[]}
+					onClick={() => setDropdownActive((active) => !active)}
+					onInput={() => {}}
+					onItemsChange={(items: MultiSelectItem[]) => {
+						if (!items.length && setSelectAllChecked) {
+							setSelectAllChecked(false);
+						}
+						const newDropDownOptions = options?.map((option) => {
+							const ckeckedItem = items.find(
+								(item) => item.label === option.label
+							);
 
-					return acc;
-				}, [])
-				.join(', ')}
+							if (ckeckedItem) {
+								return {
+									...option,
+									checked: true,
+								};
+							}
+							else {
+								return {
+									...option,
+									checked: false,
+								};
+							}
+						});
+
+						if (newDropDownOptions) {
+							setOptions(newDropDownOptions);
+						}
+					}}
+					onKeyDown={(event) => event.preventDefault()}
+					{...restProps}
+				/>
+			}
 		>
 			<>
 				{selectAllOption && (

@@ -14,7 +14,7 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-import React, {ReactNode, useRef} from 'react';
+import React, {ReactNode, cloneElement, useRef} from 'react';
 
 import {FieldBase} from '../FieldBase';
 
@@ -36,13 +36,14 @@ export interface SelectProps {
 	label?: string;
 	placeholder?: string;
 	required?: boolean;
-	value?: string | number | string[];
+	value?: string;
 }
 
 interface IProps extends SelectProps {
 	children: ReactNode;
 	dropdownActive: boolean;
 	setDropdownActive: React.Dispatch<React.SetStateAction<boolean>>;
+	trigger?: JSX.Element;
 }
 
 export function BaseSelect({
@@ -57,6 +58,7 @@ export function BaseSelect({
 	placeholder = Liferay.Language.get('choose-an-option'),
 	required,
 	setDropdownActive,
+	trigger,
 	value,
 	...restProps
 }: IProps) {
@@ -73,19 +75,28 @@ export function BaseSelect({
 			required={required}
 		>
 			<ClayAutocomplete>
-				<ClayAutocomplete.Input
-					defaultValue={value}
-					disabled={disabled}
-					onClick={() => setDropdownActive((active) => !active)}
-					placeholder={placeholder}
-					ref={inputRef}
-					value={value}
-					{...restProps}
-				/>
+				{trigger ? (
+					cloneElement(trigger, {
+						disabled,
+						placeholder,
+						ref: inputRef,
+						value,
+						...restProps,
+					})
+				) : (
+					<ClayAutocomplete.Input
+						defaultValue={value}
+						disabled={disabled}
+						onClick={() => setDropdownActive((active) => !active)}
+						placeholder={placeholder}
+						ref={inputRef}
+						{...restProps}
+					/>
+				)}
 
 				<ClayAutocomplete.DropDown
 					active={dropdownActive}
-					alignElementRef={inputRef}
+					alignElementRef={trigger ? undefined : inputRef}
 					alignmentByViewport
 					closeOnClickOutside
 					onSetActive={setDropdownActive}

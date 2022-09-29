@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
-import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.EntityInteractionException;
@@ -142,9 +141,6 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
-
-	@Reference
-	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 	@Reference
 	private WebSsoProfile _webSsoProfile;

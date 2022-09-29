@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet.action;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -44,7 +47,6 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -52,11 +54,11 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletSession;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Wade Cao
@@ -118,21 +120,24 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addIndexReindexer(IndexReindexer indexReindexer) {
-		Class<?> clazz = indexReindexer.getClass();
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_indexReindexersServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, IndexReindexer.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(indexReindexer, emitter) -> {
+						Class<? extends IndexReindexer> clazz =
+							indexReindexer.getClass();
 
-		_indexReindexers.put(clazz.getName(), indexReindexer);
+						emitter.emit(clazz.getName());
+					}));
 	}
 
-	protected void removeIndexReindexer(IndexReindexer indexReindexer) {
-		Class<?> clazz = indexReindexer.getClass();
-
-		_indexReindexers.remove(clazz.getName());
+	@Deactivate
+	protected void deactivate() {
+		_indexReindexersServiceTrackerMap.close();
 	}
 
 	private void _reindex(final ActionRequest actionRequest) throws Exception {
@@ -228,7 +233,8 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
-		IndexReindexer indexReindexer = _indexReindexers.get(className);
+		IndexReindexer indexReindexer =
+			_indexReindexersServiceTrackerMap.getService(className);
 
 		indexReindexer.reindex(
 			ParamUtil.getLongValues(actionRequest, "companyIds"));
@@ -237,7 +243,9 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 	private void _reindexIndexReindexers(ActionRequest actionRequest)
 		throws Exception {
 
-		for (IndexReindexer indexReindexer : _indexReindexers.values()) {
+		for (IndexReindexer indexReindexer :
+				_indexReindexersServiceTrackerMap.values()) {
+
 			indexReindexer.reindex(
 				ParamUtil.getLongValues(actionRequest, "companyIds"));
 		}
@@ -246,8 +254,8 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
 
-	private final Map<String, IndexReindexer> _indexReindexers =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, IndexReindexer>
+		_indexReindexersServiceTrackerMap;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

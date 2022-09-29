@@ -101,90 +101,6 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 	protected abstract void addActivities() throws Exception;
 
-	private void _checkInterpret() throws Exception {
-		List<SocialActivity> activities = getActivities();
-
-		Assert.assertFalse(activities.toString(), activities.isEmpty());
-
-		SocialActivityInterpreter activityInterpreter =
-			getActivityInterpreter();
-
-		for (SocialActivity activity : activities) {
-			if (hasClassName(activityInterpreter, activity.getClassName()) &&
-				hasActivityType(activity.getType())) {
-
-				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreter.interpret(activity, serviceContext);
-
-				Assert.assertNotNull(activityFeedEntry);
-
-				String title = activityFeedEntry.getTitle();
-
-				Assert.assertFalse(
-					"Title contains parameters: " + title,
-					title.matches("\\{\\d\\}"));
-			}
-		}
-	}
-
-	private void _checkLinks() throws Exception {
-		List<SocialActivity> activities = getActivities();
-
-		Assert.assertFalse(activities.toString(), activities.isEmpty());
-
-		SocialActivityInterpreter activityInterpreter =
-			getActivityInterpreter();
-
-		for (SocialActivity activity : activities) {
-			if (hasClassName(activityInterpreter, activity.getClassName()) &&
-				hasActivityType(activity.getType())) {
-
-				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreter.interpret(activity, serviceContext);
-
-				PortletURL portletURL = trashHelper.getViewContentURL(
-					serviceContext.getRequest(), activity.getClassName(),
-					activity.getClassPK());
-
-				if (Validator.isNull(activityFeedEntry.getLink()) &&
-					(portletURL == null)) {
-
-					continue;
-				}
-
-				Assert.assertEquals(
-					portletURL.toString(), activityFeedEntry.getLink());
-			}
-		}
-	}
-
-	private void _checkRenaming(List<SocialActivity> originalActivities)
-		throws Exception {
-
-		Assert.assertFalse(
-			originalActivities.toString(), originalActivities.isEmpty());
-
-		String originalTitle = _getActivitiesFirstTitle(originalActivities);
-		Set<Long> originalIds = _getActivitiesIds(originalActivities);
-
-		List<SocialActivity> activities = getActivities();
-
-		Assert.assertFalse(activities.toString(), activities.isEmpty());
-
-		for (SocialActivity activity : activities) {
-			if (!originalIds.contains(activity.getActivityId())) {
-				String title = activity.getExtraDataValue(
-					"title", serviceContext.getLocale());
-
-				if (isSupportsRename(activity.getClassName()) &&
-					Validator.isNotNull(title)) {
-
-					Assert.assertNotEquals(originalTitle, title);
-				}
-			}
-		}
-	}
-
 	protected List<SocialActivity> getActivities() throws Exception {
 		return new ArrayList<>(
 			SocialActivityLocalServiceUtil.getGroupActivities(
@@ -275,6 +191,90 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 	@Inject
 	protected TrashHelper trashHelper;
+
+	private void _checkInterpret() throws Exception {
+		List<SocialActivity> activities = getActivities();
+
+		Assert.assertFalse(activities.toString(), activities.isEmpty());
+
+		SocialActivityInterpreter activityInterpreter =
+			getActivityInterpreter();
+
+		for (SocialActivity activity : activities) {
+			if (hasClassName(activityInterpreter, activity.getClassName()) &&
+				hasActivityType(activity.getType())) {
+
+				SocialActivityFeedEntry activityFeedEntry =
+					activityInterpreter.interpret(activity, serviceContext);
+
+				Assert.assertNotNull(activityFeedEntry);
+
+				String title = activityFeedEntry.getTitle();
+
+				Assert.assertFalse(
+					"Title contains parameters: " + title,
+					title.matches("\\{\\d\\}"));
+			}
+		}
+	}
+
+	private void _checkLinks() throws Exception {
+		List<SocialActivity> activities = getActivities();
+
+		Assert.assertFalse(activities.toString(), activities.isEmpty());
+
+		SocialActivityInterpreter activityInterpreter =
+			getActivityInterpreter();
+
+		for (SocialActivity activity : activities) {
+			if (hasClassName(activityInterpreter, activity.getClassName()) &&
+				hasActivityType(activity.getType())) {
+
+				SocialActivityFeedEntry activityFeedEntry =
+					activityInterpreter.interpret(activity, serviceContext);
+
+				PortletURL portletURL = trashHelper.getViewContentURL(
+					serviceContext.getRequest(), activity.getClassName(),
+					activity.getClassPK());
+
+				if (Validator.isNull(activityFeedEntry.getLink()) &&
+					(portletURL == null)) {
+
+					continue;
+				}
+
+				Assert.assertEquals(
+					portletURL.toString(), activityFeedEntry.getLink());
+			}
+		}
+	}
+
+	private void _checkRenaming(List<SocialActivity> originalActivities)
+		throws Exception {
+
+		Assert.assertFalse(
+			originalActivities.toString(), originalActivities.isEmpty());
+
+		String originalTitle = _getActivitiesFirstTitle(originalActivities);
+		Set<Long> originalIds = _getActivitiesIds(originalActivities);
+
+		List<SocialActivity> activities = getActivities();
+
+		Assert.assertFalse(activities.toString(), activities.isEmpty());
+
+		for (SocialActivity activity : activities) {
+			if (!originalIds.contains(activity.getActivityId())) {
+				String title = activity.getExtraDataValue(
+					"title", serviceContext.getLocale());
+
+				if (isSupportsRename(activity.getClassName()) &&
+					Validator.isNotNull(title)) {
+
+					Assert.assertNotEquals(originalTitle, title);
+				}
+			}
+		}
+	}
 
 	private String _getActivitiesFirstTitle(
 			List<SocialActivity> originalActivities)

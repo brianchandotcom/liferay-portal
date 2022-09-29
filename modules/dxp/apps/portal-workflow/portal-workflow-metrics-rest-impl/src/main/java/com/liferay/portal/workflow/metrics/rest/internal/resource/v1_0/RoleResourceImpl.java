@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -160,9 +159,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

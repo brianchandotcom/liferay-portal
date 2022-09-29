@@ -61,10 +61,6 @@ export function AppLayout({
 	}, [setSidebarPanelId]);
 
 	useEffect(() => {
-		setSidebarPanelId(null);
-	}, [setSidebarPanelId, sidebarPanels]);
-
-	useEffect(() => {
 		if (SidebarPanel) {
 			closeProductMenu();
 		}

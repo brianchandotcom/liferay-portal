@@ -15,6 +15,9 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
+import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
+import {useSelectedMenuItemId} from './SelectedMenuItemIdContext';
+
 const SidebarPanelIdContext = React.createContext(null);
 const SetSidebarPanelIdContext = React.createContext(() => {});
 
@@ -29,7 +32,13 @@ export function SidebarPanelIdProvider({
 	children,
 	initialSidebarPanelId = null,
 }) {
-	const [sidebarPanelId, setSidebarPanelId] = useState(initialSidebarPanelId);
+	const selectedMenuItemId = useSelectedMenuItemId();
+
+	const [sidebarPanelId, setSidebarPanelId] = useState(
+		selectedMenuItemId
+			? SIDEBAR_PANEL_IDS.menuItemSettings
+			: initialSidebarPanelId
+	);
 
 	return (
 		<SetSidebarPanelIdContext.Provider value={setSidebarPanelId}>

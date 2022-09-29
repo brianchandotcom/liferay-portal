@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service = NotificationSenderFactory.class)
 public class NotificationSenderFactory {
 
-	public static NotificationSender getNotificationSender(
-			String notificationType)
+	public NotificationSender getNotificationSender(String notificationType)
 		throws PortalException {
 
 		NotificationSender notificationSender = _notificationSenders.get(
@@ -96,7 +95,7 @@ public class NotificationSenderFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationSenderFactory.class);
 
-	private static Map<String, NotificationSender> _notificationSenders =
+	private final Map<String, NotificationSender> _notificationSenders =
 		new ConcurrentHashMap<>();
 
 }

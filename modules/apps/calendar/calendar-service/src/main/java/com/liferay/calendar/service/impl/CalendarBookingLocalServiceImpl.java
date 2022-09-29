@@ -2609,7 +2609,7 @@ public class CalendarBookingLocalServiceImpl
 		throws Exception {
 
 		NotificationSender notificationSender =
-			NotificationSenderFactory.getNotificationSender(
+			_notificationSenderFactory.getNotificationSender(
 				notificationType.toString());
 
 		if (notificationTemplateType == NotificationTemplateType.DECLINE) {
@@ -2699,7 +2699,7 @@ public class CalendarBookingLocalServiceImpl
 			User user = notificationRecipient.getUser();
 
 			NotificationSender notificationSender =
-				NotificationSenderFactory.getNotificationSender(
+				_notificationSenderFactory.getNotificationSender(
 					notificationType.toString());
 
 			NotificationTemplateContext notificationTemplateContext =
@@ -2740,6 +2740,9 @@ public class CalendarBookingLocalServiceImpl
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private NotificationSenderFactory _notificationSenderFactory;
 
 	@Reference
 	private PortalUUID _portalUUID;

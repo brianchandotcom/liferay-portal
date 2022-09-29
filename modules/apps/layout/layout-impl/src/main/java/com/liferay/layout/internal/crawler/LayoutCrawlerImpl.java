@@ -66,7 +66,7 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 
 		if (Validator.isNull(hostName)) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Failed to retrieve hostName");
+				_log.warn("Unable to retrieve host name");
 			}
 
 			return StringPool.BLANK;

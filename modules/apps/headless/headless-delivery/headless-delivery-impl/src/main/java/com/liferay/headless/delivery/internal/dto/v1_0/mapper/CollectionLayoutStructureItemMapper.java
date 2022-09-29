@@ -295,12 +295,15 @@ public class CollectionLayoutStructureItemMapper
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
-		String align = collectionStyledLayoutStructureItem.getAlign();
-		String flexWrap = collectionStyledLayoutStructureItem.getFlexWrap();
-		String justify = collectionStyledLayoutStructureItem.getJustify();
+		String formLayoutAlign = collectionStyledLayoutStructureItem.getAlign();
+		String formLayoutFlexWrap =
+			collectionStyledLayoutStructureItem.getFlexWrap();
+		String formLayoutJustify =
+			collectionStyledLayoutStructureItem.getJustify();
 
-		if (Validator.isNull(align) && Validator.isNull(flexWrap) &&
-			Validator.isNull(justify)) {
+		if (Validator.isNull(formLayoutAlign) &&
+			Validator.isNull(formLayoutFlexWrap) &&
+			Validator.isNull(formLayoutJustify)) {
 
 			return null;
 		}
@@ -309,30 +312,33 @@ public class CollectionLayoutStructureItemMapper
 			{
 				setAlign(
 					() -> {
-						if (Validator.isNull(align)) {
+						if (Validator.isNull(formLayoutAlign)) {
 							return null;
 						}
 
 						return Align.create(
-							AlignConverter.convertToExternalValue(align));
+							AlignConverter.convertToExternalValue(
+								formLayoutAlign));
 					});
 				setFlexWrap(
 					() -> {
-						if (Validator.isNull(flexWrap)) {
+						if (Validator.isNull(formLayoutFlexWrap)) {
 							return null;
 						}
 
 						return FlexWrap.create(
-							FlexWrapConverter.convertToExternalValue(flexWrap));
+							FlexWrapConverter.convertToExternalValue(
+								formLayoutFlexWrap));
 					});
 				setJustify(
 					() -> {
-						if (Validator.isNull(justify)) {
+						if (Validator.isNull(formLayoutJustify)) {
 							return null;
 						}
 
 						return Justify.create(
-							JustifyConverter.convertToExternalValue(justify));
+							JustifyConverter.convertToExternalValue(
+								formLayoutJustify));
 					});
 			}
 		};

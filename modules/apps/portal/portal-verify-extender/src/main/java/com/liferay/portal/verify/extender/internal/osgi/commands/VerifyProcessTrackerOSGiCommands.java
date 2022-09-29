@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +47,10 @@ import java.util.Set;
 
 import org.apache.felix.service.command.Descriptor;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -205,6 +210,8 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_bundleContext = bundleContext;
 
+		boolean upgrading = StartupHelperUtil.isUpgrading();
+
 		_verifyProcesses = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, VerifyProcess.class, "verify.process.name",
 			new ServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
@@ -216,7 +223,9 @@ public class VerifyProcessTrackerOSGiCommands {
 					VerifyProcess verifyProcess = _bundleContext.getService(
 						serviceReference);
 
-					if (StartupHelperUtil.isUpgrading()) {
+					if (upgrading ||
+						_isInitialDeployment(serviceReference, verifyProcess)) {
+
 						_execute(
 							Collections.singletonList(verifyProcess),
 							String.valueOf(
@@ -359,6 +368,36 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 
 		return verifyProcesses;
+	}
+
+	private boolean _isInitialDeployment(
+		ServiceReference<VerifyProcess> serviceReference,
+		VerifyProcess verifyProcess) {
+
+		if (!GetterUtil.getBoolean(
+				serviceReference.getProperty("initial.deployment"))) {
+
+			return false;
+		}
+
+		Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
+
+		try {
+			Collection<ServiceReference<Release>> releases =
+				_bundleContext.getServiceReferences(
+					Release.class,
+					"(&(release.bundle.symbolic.name=" +
+						bundle.getSymbolicName() + ")(release.initial=true))");
+
+			if (!releases.isEmpty()) {
+				return true;
+			}
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new RuntimeException(invalidSyntaxException);
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

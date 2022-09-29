@@ -1,0 +1,90 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccounts = "Avangrid Portals";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-150692 | Test Summary: Verify if the management bar displays the amount of keys selected by the user"
+    @priority = "3"
+    test CanViewQuantityOfSelectedKeys {
+
+        // TODO LPS-150692 CanViewQuantityOfSelectedKeys pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150693 | Test Summary: Verify if the management bar displays a Download button after the user selects one or more activation keys"
+    @priority = "3"
+    test CanSeeDownloadButton {
+
+        // TODO LPS-150693 CanSeeDownloadButton pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150694 | Test Summary: Verify if when the user selects two or more keys, the Download button a drop-down menu appears with the following option Aggregate Key (single file)"
+    @priority = "3"
+    test CanSeeDropdownMenu {
+
+        // TODO LPS-150693 CanSeeDropdownMenu pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
+    @priority = "4"
+    test CanViewTheDownloadSuccessfulMessage {
+        // TODO LPS-150695 CanViewTheDownloadSuccessfulMessage pending implementation
+    }
+
+    @description = "Automation ID: LPS-150697 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
+    @priority = "4"
+    test AggregateKeyInDropdownMenuIsDeactivated {
+
+        // TODO LPS-150697 AggregateKeyInDropdownMenuIsDeactivated pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150698 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
+    @priority = "3"
+    test YouCanSeeTheTooltipByHoveringOverTheDisabledKey {
+
+        // TODO LPS-150698 YouCanSeeTheTooltipByHoveringOverTheDisabledKey pending implementation
+
+    }
+}

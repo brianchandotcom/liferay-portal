@@ -880,34 +880,6 @@ public abstract class BaseJob implements Job {
 		return batchName;
 	}
 
-	private Long _getAverageBatchDuration(
-		String batchName, String durationKey) {
-
-		JSONObject averageDurationsJSONObject = _getAverageDurationJSONObject();
-
-		JSONArray batchesJSONArray = averageDurationsJSONObject.optJSONArray(
-			"batches");
-
-		if ((batchesJSONArray == null) || batchesJSONArray.isEmpty()) {
-			return null;
-		}
-
-		for (int i = 0; i < batchesJSONArray.length(); i++) {
-			JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
-
-			if (!Objects.equals(
-					_fixBatchName(batchName),
-					_fixBatchName(batchJSONObject.optString("batchName")))) {
-
-				continue;
-			}
-
-			return batchJSONObject.getLong(durationKey);
-		}
-
-		return null;
-	}
-
 	private JSONObject _getAverageDurationJSONObject() {
 		if (_averageDurationJSONObject != null) {
 			return _averageDurationJSONObject;
@@ -986,47 +958,6 @@ public abstract class BaseJob implements Job {
 		}
 
 		return _averageDurationJSONObject;
-	}
-
-	private Long _getAverageTestDuration(
-		String batchName, String testName, String durationKey) {
-
-		JSONObject averageDurationsJSONObject = _getAverageDurationJSONObject();
-
-		JSONArray batchesJSONArray = averageDurationsJSONObject.optJSONArray(
-			"batches");
-
-		if ((batchesJSONArray == null) || batchesJSONArray.isEmpty()) {
-			return null;
-		}
-
-		for (int i = 0; i < batchesJSONArray.length(); i++) {
-			JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
-
-			if (!Objects.equals(
-					_fixBatchName(batchName),
-					_fixBatchName(batchJSONObject.optString("batchName")))) {
-
-				continue;
-			}
-
-			JSONArray testsJSONArray = batchJSONObject.getJSONArray("tests");
-
-			for (int j = 0; j < testsJSONArray.length(); j++) {
-				JSONObject testJSONObject = testsJSONArray.getJSONObject(j);
-
-				if (!Objects.equals(
-						testName, testJSONObject.getString("testName")) ||
-					!testJSONObject.has(durationKey)) {
-
-					continue;
-				}
-
-				return testJSONObject.getLong(durationKey);
-			}
-		}
-
-		return null;
 	}
 
 	private int _getDistNodeAxisCount() {

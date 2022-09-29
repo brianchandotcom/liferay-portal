@@ -49,6 +49,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import org.json.JSONArray;
@@ -2561,6 +2563,23 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected void archiveFileElements(
+		String urlSuffix, List<Element> elements) {
+
+		Element rootElement = Dom4JUtil.getNewElement("root");
+
+		for (Element element : elements) {
+			rootElement.add(element);
+		}
+
+		try {
+			_archive(Dom4JUtil.format(rootElement), true, urlSuffix);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	protected boolean archiveFileExists(String urlSuffix) {
 		File archiveFile = getArchiveFile(urlSuffix);
 
@@ -2665,6 +2684,33 @@ public abstract class BaseBuild implements Build {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+	}
+
+	protected List<Element> getArchiveFileElements(String urlSuffix) {
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new ArrayList<>();
+		}
+
+		try {
+			Document document = Dom4JUtil.parse(archiveFileContent);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> elements = new ArrayList<>();
+
+			for (Element element : rootElement.elements()) {
+				element.detach();
+
+				elements.add(element);
+			}
+
+			return elements;
+		}
+		catch (DocumentException documentException) {
+			throw new RuntimeException(documentException);
 		}
 	}
 
@@ -2978,6 +3024,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected List<Element> getJenkinsReportStopWatchRecordElements() {
+		String urlSuffix = "stopWatchRecordElements";
+
+		if (archiveFileExists(urlSuffix)) {
+			return getArchiveFileElements(urlSuffix);
+		}
+
 		List<Element> jenkinsReportStopWatchRecordTableRowElements =
 			new ArrayList<>();
 
@@ -3022,6 +3074,9 @@ public abstract class BaseBuild implements Build {
 			jenkinsReportStopWatchRecordTableRowElements.addAll(
 				_getStopWatchRecordTableRowElements(stopWatchRecord));
 		}
+
+		archiveFileElements(
+			urlSuffix, jenkinsReportStopWatchRecordTableRowElements);
 
 		return jenkinsReportStopWatchRecordTableRowElements;
 	}

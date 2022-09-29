@@ -379,6 +379,12 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected List<Element> getJenkinsReportBuildDurationsElements() {
+		String urlSuffix = "buildDurationsElements";
+
+		if (archiveFileExists(urlSuffix)) {
+			return getArchiveFileElements(urlSuffix);
+		}
+
 		List<Element> jenkinsReportTableRowElements = new ArrayList<>();
 
 		Element buildDurationsHeaderElement = Dom4JUtil.getNewElement("tr");
@@ -497,6 +503,8 @@ public class DownstreamBuild extends BaseBuild {
 		jenkinsReportTableRowElements.add(durationValuesElement);
 
 		if (!overheadIncluded) {
+			archiveFileElements(urlSuffix, jenkinsReportTableRowElements);
+
 			return jenkinsReportTableRowElements;
 		}
 
@@ -557,6 +565,8 @@ public class DownstreamBuild extends BaseBuild {
 
 		jenkinsReportTableRowElements.add(testDurationsValuesElement);
 
+		archiveFileElements(urlSuffix, jenkinsReportTableRowElements);
+
 		return jenkinsReportTableRowElements;
 	}
 
@@ -570,6 +580,12 @@ public class DownstreamBuild extends BaseBuild {
 			!batchName.startsWith("unit")) {
 
 			return new ArrayList<>();
+		}
+
+		String urlSuffix = "testDurationsElements";
+
+		if (archiveFileExists(urlSuffix)) {
+			return getArchiveFileElements(urlSuffix);
 		}
 
 		List<Element> jenkinsReportTableRowElements = new ArrayList<>();
@@ -723,6 +739,8 @@ public class DownstreamBuild extends BaseBuild {
 		testDurationsHeaderElement.addAttribute(
 			"child-stopwatch-rows",
 			JenkinsResultsParserUtil.join(",", childStopWatchRows));
+
+		archiveFileElements(urlSuffix, jenkinsReportTableRowElements);
 
 		return jenkinsReportTableRowElements;
 	}

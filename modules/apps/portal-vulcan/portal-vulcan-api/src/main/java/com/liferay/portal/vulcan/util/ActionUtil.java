@@ -352,7 +352,7 @@ public class ActionUtil {
 		}
 
 		if ((siteId != null) &&
-				Objects.equals(firstParameterName, "assetLibraryId")) {
+			Objects.equals(firstParameterName, "assetLibraryId")) {
 
 			DepotEntry depotEntry = DepotEntryServiceUtil.getGroupDepotEntry(
 				siteId);

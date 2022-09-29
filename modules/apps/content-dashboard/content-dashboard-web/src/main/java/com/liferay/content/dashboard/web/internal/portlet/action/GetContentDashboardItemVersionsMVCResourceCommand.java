@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -67,44 +67,9 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Locale locale = _portal.getLocale(resourceRequest);
-
 		try {
-			String className = ParamUtil.getString(
-				resourceRequest, "className");
-
-			ContentDashboardItemFactory<?> contentDashboardItemFactory =
-				_contentDashboardItemFactoryTracker.
-					getContentDashboardItemFactory(className);
-
-			if (contentDashboardItemFactory == null) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONFactoryUtil.createJSONArray());
-
-				return;
-			}
-
-			long classPK = GetterUtil.getLong(
-				ParamUtil.getLong(resourceRequest, "classPK"));
-
-			ContentDashboardItem<?> contentDashboardItem =
-				contentDashboardItemFactory.create(classPK);
-
-			if ((contentDashboardItem == null) ||
-				!(contentDashboardItem instanceof
-					VersionableContentDashboardItem)) {
-
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONFactoryUtil.createJSONArray());
-
-				return;
-			}
-
 			JSONObject jsonObject = _getContentDashboardItemVersionsJSONObject(
-				resourceRequest,
-				(VersionableContentDashboardItem<?>)contentDashboardItem);
+				resourceRequest);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
@@ -119,7 +84,8 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 				JSONUtil.put(
 					"error",
 					ResourceBundleUtil.getString(
-						ResourceBundleUtil.getBundle(locale, getClass()),
+						ResourceBundleUtil.getBundle(
+							_portal.getLocale(resourceRequest), getClass()),
 						"an-unexpected-error-occurred")));
 		}
 	}
@@ -155,8 +121,34 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 	}
 
 	private JSONObject _getContentDashboardItemVersionsJSONObject(
-		ResourceRequest resourceRequest,
-		VersionableContentDashboardItem<?> versionableContentDashboardItem) {
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		String className = ParamUtil.getString(resourceRequest, "className");
+
+		ContentDashboardItemFactory<?> contentDashboardItemFactory =
+			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+				className);
+
+		if (contentDashboardItemFactory == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		long classPK = GetterUtil.getLong(
+			ParamUtil.getLong(resourceRequest, "classPK"));
+
+		ContentDashboardItem<?> contentDashboardItem =
+			contentDashboardItemFactory.create(classPK);
+
+		if ((contentDashboardItem == null) ||
+			!(contentDashboardItem instanceof
+				VersionableContentDashboardItem)) {
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		VersionableContentDashboardItem versionableContentDashboardItem =
+			(VersionableContentDashboardItem)contentDashboardItem;
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);

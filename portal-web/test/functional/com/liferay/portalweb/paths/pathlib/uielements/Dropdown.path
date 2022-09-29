@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_SUBHEADER</td>
+	<td>//div[contains(@class,'dropdown-menu')]//li[contains(@class,'dropdown-subheader')][normalize-space() = '${subHeader}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_TOGGLE_BUTTON</td>
 	<td>//div[contains(@class,'btn-group')]//a[contains(.,'${key_toggleButtonName}')]</td>
 	<td></td>

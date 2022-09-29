@@ -62,8 +62,10 @@ public class SelectDisplayPageMasterLayoutDisplayContext {
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceTracker.getInfoItemClassDetails(
-					DisplayPageInfoItemCapability.KEY)) {
+				_infoItemServiceTracker.getFilteredInfoItemClassDetails(
+					_themeDisplay.getScopeGroupId(),
+					DisplayPageInfoItemCapability.KEY,
+					_themeDisplay.getPermissionChecker())) {
 
 			mappingTypesJSONArray.put(
 				JSONUtil.put(

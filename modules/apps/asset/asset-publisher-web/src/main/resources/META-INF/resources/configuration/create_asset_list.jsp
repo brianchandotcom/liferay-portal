@@ -45,8 +45,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		});
 	}
 
-	var delegate = delegateModule.default;
-
 	var createAssetListLinkClickHandler = delegate(
 		document.body,
 		'click',

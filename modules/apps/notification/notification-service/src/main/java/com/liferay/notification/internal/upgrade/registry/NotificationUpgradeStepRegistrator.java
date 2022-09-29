@@ -39,6 +39,11 @@ public class NotificationUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.2.0", new NotificationQueueEntryUpgradeProcess());
+
+		registry.register(
+			"1.2.0", "2.0.0",
+			UpgradeProcessFactory.dropColumns(
+				"NotificationQueueEntry", "sent"));
 	}
 
 }

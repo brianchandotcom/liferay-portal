@@ -38,14 +38,14 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 	public MessageBoardMessageEntityModel(List<EntityField> entityFields) {
 		_entityFieldsMap = EntityFieldsMapFactory.create(
 			new BooleanEntityField(
-				"hasValidAnswer", locale -> "hasValidAnswer"),
+				"answed", locale -> "answed"),
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
 			new CollectionEntityField(
 				new StringEntityField(
-					"keywords", locale -> "assetTagNames.raw")),
+					"tagNames", locale -> "assetTagNames.raw")),
 			new ComplexEntityField(
 				"creator",
 				Collections.singletonList(
@@ -69,8 +69,8 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new IntegerEntityField(
 				"messageBoardThreadId", locale -> Field.ROOT_ENTRY_CLASS_PK),
 			new IntegerEntityField(
-				"numberOfMessageBoardMessages",
-				locale -> "numberOfMessageBoardMessages"),
+				"childMessagesCount",
+				locale -> "childMessagesCount"),
 			new IntegerEntityField(
 				"parentMessageBoardMessageId", locale -> "parentMessageId"),
 			new IntegerEntityField(

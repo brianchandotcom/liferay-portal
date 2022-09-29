@@ -328,7 +328,7 @@ public class ContentPageEditorDisplayContext {
 				"formTypes",
 				MappingTypesUtil.getMappingTypesJSONArray(
 					infoItemServiceTracker, EditPageInfoItemCapability.KEY,
-					themeDisplay.getScopeGroupId(), themeDisplay.getLocale())
+					themeDisplay)
 			).put(
 				"fragmentCompositionDescriptionMaxLength",
 				() -> ModelHintsUtil.getMaxLength(

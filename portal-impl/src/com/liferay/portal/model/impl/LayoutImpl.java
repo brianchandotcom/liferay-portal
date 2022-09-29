@@ -681,6 +681,23 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return htmlTitle;
 	}
 
+	@Override
+	public String getIcon() {
+		if (isTypeCollection()) {
+			return "list";
+		}
+
+		if (isTypePortlet()) {
+			return "page-template";
+		}
+
+		if (isTypeURL() || isTypeLinkToLayout()) {
+			return "link";
+		}
+
+		return "page";
+	}
+
 	/**
 	 * Returns <code>true</code> if the current layout has a configured icon.
 	 *
@@ -1253,6 +1270,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 				_getLayoutTypeControllerType(),
 				LayoutConstants.TYPE_ASSET_DISPLAY)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeCollection() {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_COLLECTION)) {
 			return true;
 		}
 

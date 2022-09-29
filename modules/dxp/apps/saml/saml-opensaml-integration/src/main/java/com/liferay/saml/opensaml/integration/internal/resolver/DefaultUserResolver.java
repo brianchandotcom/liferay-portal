@@ -35,7 +35,6 @@ import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldE
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
 import com.liferay.saml.opensaml.integration.field.expression.resolver.UserFieldExpressionResolver;
 import com.liferay.saml.opensaml.integration.field.expression.resolver.registry.UserFieldExpressionResolverRegistry;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.processor.UserProcessor;
 import com.liferay.saml.opensaml.integration.processor.factory.UserProcessorFactory;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
@@ -394,9 +393,6 @@ public class DefaultUserResolver implements UserResolver {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private MetadataManager _metadataManager;
 
 	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;

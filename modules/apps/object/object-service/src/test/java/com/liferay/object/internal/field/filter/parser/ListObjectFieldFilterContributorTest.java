@@ -30,7 +30,7 @@ import org.mockito.Mockito;
 /**
  * @author Feliphe Marinho
  */
-public class ListObjectFieldFilterParserTest {
+public class ListObjectFieldFilterContributorTest {
 
 	@ClassRule
 	@Rule
@@ -101,7 +101,7 @@ public class ListObjectFieldFilterParserTest {
 		_listObjectFieldFilterParser.validate(0L, objectViewFilterColumn);
 	}
 
-	private final ListObjectFieldFilterParser _listObjectFieldFilterParser =
-		new ListObjectFieldFilterParser();
+	private final ListObjectFieldFilterContributor
+		_listObjectFieldFilterParser = new ListObjectFieldFilterContributor();
 
 }

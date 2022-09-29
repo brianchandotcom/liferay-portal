@@ -46,11 +46,12 @@ public class WebsiteLocalServiceUtil {
 	 */
 	public static Website addWebsite(
 			long userId, String className, long classPK, String url,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			long listTypeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addWebsite(
-			userId, className, classPK, url, typeId, primary, serviceContext);
+			userId, className, classPK, url, listTypeId, primary,
+			serviceContext);
 	}
 
 	/**
@@ -334,10 +335,10 @@ public class WebsiteLocalServiceUtil {
 	}
 
 	public static Website updateWebsite(
-			long websiteId, String url, long typeId, boolean primary)
+			long websiteId, String url, long listTypeId, boolean primary)
 		throws PortalException {
 
-		return getService().updateWebsite(websiteId, url, typeId, primary);
+		return getService().updateWebsite(websiteId, url, listTypeId, primary);
 	}
 
 	/**

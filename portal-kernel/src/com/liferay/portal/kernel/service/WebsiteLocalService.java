@@ -65,7 +65,7 @@ public interface WebsiteLocalService
 	 */
 	public Website addWebsite(
 			long userId, String className, long classPK, String url,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			long listTypeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -298,7 +298,7 @@ public interface WebsiteLocalService
 	public int getWebsitesCount();
 
 	public Website updateWebsite(
-			long websiteId, String url, long typeId, boolean primary)
+			long websiteId, String url, long listTypeId, boolean primary)
 		throws PortalException;
 
 	/**

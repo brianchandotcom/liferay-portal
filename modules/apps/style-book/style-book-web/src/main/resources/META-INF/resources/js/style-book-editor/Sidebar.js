@@ -71,13 +71,23 @@ function ThemeInformation() {
 	return (
 		<div className="pb-3">
 			<p className="small text-secondary">
-				{config.showPrivateLayouts
-					? Liferay.Language.get(
+				{IsValidFrontendTokenDefinition() ? (
+					config.isPrivateLayoutsEnabled ? (
+						Liferay.Language.get(
 							'this-token-definition-belongs-to-the-theme-set-for-public-pages'
-					  )
-					: Liferay.Language.get(
+						)
+					) : (
+						Liferay.Language.get(
 							'this-token-definition-belongs-to-the-theme-set-for-pages'
-					  )}
+						)
+					)
+				) : (
+					<ClayAlert className="m-0" displayType="warning">
+						{Liferay.Language.get(
+							'the-current-theme-does-not-support-editing-style-book-values'
+						)}
+					</ClayAlert>
+				)}
 			</p>
 
 			<p className="mb-0 small">
@@ -88,6 +98,15 @@ function ThemeInformation() {
 				{config.themeName}
 			</p>
 		</div>
+	);
+}
+
+function IsValidFrontendTokenDefinition() {
+	const frontendTokensValues = useFrontendTokensValues();
+	const frontendThemeValues = config.frontendTokens;
+
+	return Object.keys(frontendTokensValues).every(
+		(tokenValue) => frontendThemeValues[tokenValue]
 	);
 }
 

@@ -109,6 +109,8 @@ import graphql.language.ObjectValue;
 import graphql.language.StringValue;
 import graphql.language.Value;
 
+import graphql.scalars.ExtendedScalars;
+
 import graphql.schema.Coercing;
 import graphql.schema.CoercingParseLiteralException;
 import graphql.schema.CoercingParseValueException;
@@ -751,14 +753,14 @@ public class GraphQLServletExtender {
 		return _addField(
 			graphQLOutputType, "graphQLNode",
 			_addGraphQLArgument(Scalars.GraphQLString, "dataType"),
-			_addGraphQLArgument(Scalars.GraphQLLong, "id"));
+			_addGraphQLArgument(ExtendedScalars.GraphQLLong, "id"));
 	}
 
 	private GraphQLInterfaceType _createNodeGraphQLInterfaceType() {
 		GraphQLInterfaceType.Builder interfaceBuilder =
 			GraphQLInterfaceType.newInterface();
 
-		interfaceBuilder.field(_addField(Scalars.GraphQLLong, "id"));
+		interfaceBuilder.field(_addField(ExtendedScalars.GraphQLLong, "id"));
 		interfaceBuilder.name("GraphQLNode");
 
 		return interfaceBuilder.build();
@@ -960,7 +962,9 @@ public class GraphQLServletExtender {
 			new GraphQLObjectType.Builder();
 
 		graphQLObjectTypeBuilder.field(
-			_addField(Scalars.GraphQLLong, graphQLDTOContributor.getIdName()));
+			_addField(
+				ExtendedScalars.GraphQLLong,
+				graphQLDTOContributor.getIdName()));
 		graphQLObjectTypeBuilder.name(graphQLDTOContributor.getTypeName());
 
 		for (GraphQLDTOProperty graphQLDTOProperty :
@@ -1015,12 +1019,13 @@ public class GraphQLServletExtender {
 		graphQLObjectTypeBuilder.field(
 			_addField(GraphQLList.list(objectGraphQLType), "items"));
 		graphQLObjectTypeBuilder.field(
-			_addField(Scalars.GraphQLLong, "lastPage"));
-		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "page"));
+			_addField(ExtendedScalars.GraphQLLong, "lastPage"));
 		graphQLObjectTypeBuilder.field(
-			_addField(Scalars.GraphQLLong, "pageSize"));
+			_addField(ExtendedScalars.GraphQLLong, "page"));
 		graphQLObjectTypeBuilder.field(
-			_addField(Scalars.GraphQLLong, "totalCount"));
+			_addField(ExtendedScalars.GraphQLLong, "pageSize"));
+		graphQLObjectTypeBuilder.field(
+			_addField(ExtendedScalars.GraphQLLong, "totalCount"));
 		graphQLObjectTypeBuilder.name(name + "Page");
 
 		return graphQLObjectTypeBuilder.build();
@@ -1092,7 +1097,7 @@ public class GraphQLServletExtender {
 			).field(
 				_addField(Scalars.GraphQLString, "familyName")
 			).field(
-				_addField(Scalars.GraphQLLong, "id")
+				_addField(ExtendedScalars.GraphQLLong, "id")
 			).field(
 				_addField(Scalars.GraphQLString, "image")
 			).field(
@@ -1108,7 +1113,7 @@ public class GraphQLServletExtender {
 			graphQLObjectTypeBuilder.name(
 				"FileEntry"
 			).field(
-				_addField(Scalars.GraphQLLong, "id")
+				_addField(ExtendedScalars.GraphQLLong, "id")
 			).field(
 				_addField(Scalars.GraphQLString, "name")
 			).build());
@@ -1203,7 +1208,7 @@ public class GraphQLServletExtender {
 		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
 				Scalars.GraphQLBoolean, deleteName,
-				_addGraphQLArgument(Scalars.GraphQLLong, idName)));
+				_addGraphQLArgument(ExtendedScalars.GraphQLLong, idName)));
 
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
@@ -1221,7 +1226,7 @@ public class GraphQLServletExtender {
 		queryGraphQLObjectTypeBuilder.field(
 			_addField(
 				graphQLObjectType, getName,
-				_addGraphQLArgument(Scalars.GraphQLLong, idName)));
+				_addGraphQLArgument(ExtendedScalars.GraphQLLong, idName)));
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(namespace, getName),
@@ -1274,7 +1279,7 @@ public class GraphQLServletExtender {
 			_addField(
 				graphQLObjectType, updateName,
 				_addGraphQLArgument(graphQLInputType, resourceName),
-				_addGraphQLArgument(Scalars.GraphQLLong, idName)));
+				_addGraphQLArgument(ExtendedScalars.GraphQLLong, idName)));
 
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
@@ -1387,7 +1392,7 @@ public class GraphQLServletExtender {
 
 					if ((graphQLFieldDefinition == null) ||
 						(graphQLFieldDefinition.getType() !=
-							Scalars.GraphQLLong)) {
+							ExtendedScalars.GraphQLLong)) {
 
 						continue;
 					}
@@ -1578,7 +1583,7 @@ public class GraphQLServletExtender {
 			return Scalars.GraphQLInt;
 		}
 		else if (Long.class.equals(clazz)) {
-			return Scalars.GraphQLLong;
+			return ExtendedScalars.GraphQLLong;
 		}
 		else if (Map.class.equals(clazz)) {
 			return _mapGraphQLScalarType;

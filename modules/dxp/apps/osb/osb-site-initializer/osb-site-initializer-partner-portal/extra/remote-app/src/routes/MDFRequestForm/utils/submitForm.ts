@@ -15,8 +15,8 @@ import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../../common/enums/requestStatus';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
-import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import createMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
+import createMDFRequestActivitiesProxyApi from './createMDFRequestActivitiesProxyApi';
 import createMDFRequestProxyApi from './createMDFRequestProxyApi';
 
 export default async function submitForm(
@@ -34,16 +34,20 @@ export default async function submitForm(
 	const dtoMDFRequest = await createMDFRequestProxyApi(values);
 
 	if (values.activities.length && dtoMDFRequest?.id) {
-		const dtoMDFRequestActivities = await createMDFRequestActivities(
-			dtoMDFRequest.id,
-			values.activities
+		const dtoMDFRequestActivities = await Promise.all(
+			values.activities.map((activity) =>
+				createMDFRequestActivitiesProxyApi(
+					activity,
+					dtoMDFRequest.id,
+					dtoMDFRequest.externalReferenceCodeSF
+				)
+			)
 		);
 
 		if (dtoMDFRequestActivities?.length) {
 			await Promise.all(
 				values.activities.map(async (activity, index) => {
 					const dtoActivity = dtoMDFRequestActivities[index];
-
 					if (activity.budgets?.length && dtoActivity?.id) {
 						return await createMDFRequestActivityBudgets(
 							dtoActivity.id,

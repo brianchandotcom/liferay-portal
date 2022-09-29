@@ -122,6 +122,27 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 
 	protected String articleBody;
 
+	public String getCompanyMxName() {
+		return companyMxName;
+	}
+
+	public void setCompanyMxName(String companyMxName) {
+		this.companyMxName = companyMxName;
+	}
+
+	public void setCompanyMxName(
+		UnsafeSupplier<String, Exception> companyMxNameUnsafeSupplier) {
+
+		try {
+			companyMxName = companyMxNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String companyMxName;
+
 	public Creator getCreator() {
 		return creator;
 	}

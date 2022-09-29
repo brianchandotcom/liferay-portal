@@ -108,6 +108,20 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardMessage.getCompanyMxName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"companyMxName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(messageBoardMessage.getCompanyMxName()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardMessage.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -465,6 +479,15 @@ public class MessageBoardMessageSerDes {
 				String.valueOf(messageBoardMessage.getArticleBody()));
 		}
 
+		if (messageBoardMessage.getCompanyMxName() == null) {
+			map.put("companyMxName", null);
+		}
+		else {
+			map.put(
+				"companyMxName",
+				String.valueOf(messageBoardMessage.getCompanyMxName()));
+		}
+
 		if (messageBoardMessage.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -703,6 +726,12 @@ public class MessageBoardMessageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "articleBody")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setArticleBody(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "companyMxName")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setCompanyMxName(
 						(String)jsonParserFieldValue);
 				}
 			}

@@ -132,9 +132,11 @@ public class NotificationTemplateResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getFromName()),
 				notificationTemplate.getName(),
+				notificationTemplate.getRecipientTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getSubject()),
 				LocalizedMapUtil.getLocalizedMap(notificationTemplate.getTo()),
+				notificationTemplate.getTypeAsString(),
 				ListUtil.fromArray(
 					notificationTemplate.getAttachmentObjectFieldIds())));
 	}
@@ -159,9 +161,11 @@ public class NotificationTemplateResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getFromName()),
 				notificationTemplate.getName(),
+				notificationTemplate.getRecipientTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(
 					notificationTemplate.getSubject()),
 				LocalizedMapUtil.getLocalizedMap(notificationTemplate.getTo()),
+				notificationTemplate.getTypeAsString(),
 				ListUtil.fromArray(
 					notificationTemplate.getAttachmentObjectFieldIds())));
 	}

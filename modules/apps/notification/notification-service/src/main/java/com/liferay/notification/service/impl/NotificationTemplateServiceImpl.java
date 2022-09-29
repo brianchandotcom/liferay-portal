@@ -51,7 +51,8 @@ public class NotificationTemplateServiceImpl
 			long userId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			String recipientType, Map<Locale, String> subjectMap,
+			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
@@ -61,7 +62,8 @@ public class NotificationTemplateServiceImpl
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
 			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
+			fromNameMap, name, recipientType, subjectMap, toMap, type,
+			attachmentObjectFieldIds);
 	}
 
 	@Override
@@ -107,7 +109,8 @@ public class NotificationTemplateServiceImpl
 			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			String recipientType, Map<Locale, String> subjectMap,
+			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
@@ -116,8 +119,8 @@ public class NotificationTemplateServiceImpl
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
 			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
-			description, from, fromNameMap, name, subjectMap, toMap,
-			attachmentObjectFieldIds);
+			description, from, fromNameMap, name, recipientType, subjectMap,
+			toMap, type, attachmentObjectFieldIds);
 	}
 
 	@Reference

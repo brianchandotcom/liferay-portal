@@ -92,7 +92,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 						<clay:col
 							md="8"
 						>
-							<%= dispatchLogDisplayContext.getExecutionTimeMills() + " ms" %>
+							<%= dispatchLogDisplayContext.getExecutionTimeMills() %> ms
 						</clay:col>
 					</clay:row>
 

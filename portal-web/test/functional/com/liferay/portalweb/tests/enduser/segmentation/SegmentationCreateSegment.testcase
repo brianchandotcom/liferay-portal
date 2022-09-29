@@ -7,15 +7,21 @@ definition {
 	property testray.main.component.name = "Segmentation";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		Navigator.openURL();
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Segments");
+		task ("Open Segmentation Admin") {
+			Navigator.openURL();
+
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
 	}
 
 	tearDown {
@@ -25,20 +31,16 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Category.openCategoriesAdmin(siteURLKey = "guest");
-
-			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-				Segmentation.tearDown();
-			}
-
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONOrganization.deleteOrganizationByName(
-				organizationName = "Organization Name",
-				parentOrganizationName = "Parent Organization Name");
-
-			JSONOrganization.deleteOrganizationByName(organizationName = "Parent Organization Name");
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
+
+		JSONUser.tearDownNonAdminUsers();
+
+		JSONOrganization.deleteOrganizationByName(
+			organizationName = "Organization Name",
+			parentOrganizationName = "Parent Organization Name");
+
+		JSONOrganization.deleteOrganizationByName(organizationName = "Parent Organization Name");
 	}
 
 	@description = "This is a test for LPS-130281."

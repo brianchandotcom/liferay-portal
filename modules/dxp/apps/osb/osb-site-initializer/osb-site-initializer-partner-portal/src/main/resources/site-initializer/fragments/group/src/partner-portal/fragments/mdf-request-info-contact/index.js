@@ -26,15 +26,16 @@ const getContactInfo = async () => {
 	);
 	if (response.ok) {
 		const data = await response.json();
-		const firstName = data.r_userToMDFRequests_user.givenName;
-		const infoEmail = data.r_userToMDFRequests_user.emailAddress;
+		const firstName = data?.r_userToMDFRequests_user?.givenName;
+		const infoEmail = data?.r_userToMDFRequests_user?.emailAddress;
 
-		fragmentElement.querySelector('#firstName').innerHTML = htmlUtil.escape(
-			firstName
-		);
-		fragmentElement.querySelector('#infoEmail').innerHTML = htmlUtil.escape(
-			infoEmail
-		);
+		fragmentElement.querySelector(
+			'#firstName'
+		).innerHTML = `${Liferay.Util.escape(firstName)}`;
+
+		fragmentElement.querySelector(
+			'#infoEmail'
+		).innerHTML = `${Liferay.Util.escape(infoEmail)}`;
 
 		return;
 	}

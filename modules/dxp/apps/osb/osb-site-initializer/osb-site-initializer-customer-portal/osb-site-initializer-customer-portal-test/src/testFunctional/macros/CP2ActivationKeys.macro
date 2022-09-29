@@ -363,6 +363,14 @@ definition {
 			value1 = "${option}");
 	}
 
+	macro assertSelectedFieldText {
+		var key_label = "${field}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
+			value1 = "${option}");
+	}
+
 	macro fulfillGenerateActivationKeyTextField {
 		var key_index = "1";
 

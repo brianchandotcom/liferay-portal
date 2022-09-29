@@ -118,7 +118,7 @@ public class RandomTestUtil {
 
 	public static Map<Locale, String> randomLocaleStringMap(Locale locale) {
 		return HashMapBuilder.put(
-			LocaleUtil.getDefault(), randomString()
+			locale, randomString()
 		).build();
 	}
 

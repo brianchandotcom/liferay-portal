@@ -147,6 +147,7 @@ import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLSchemaElement;
 import graphql.schema.GraphQLType;
 import graphql.schema.GraphQLTypeReference;
+import graphql.schema.GraphQLTypeUtil;
 import graphql.schema.PropertyDataFetcher;
 import graphql.schema.TypeResolver;
 
@@ -380,9 +381,12 @@ public class GraphQLServletExtender {
 					}
 				}
 
-				if (!StringUtil.equals(graphQLType.getName(), typeName)) {
+				if (!StringUtil.equals(
+						GraphQLTypeUtil.simplePrint(graphQLType), typeName)) {
+
 					if (!_equals(
-							graphQLTypes.get(graphQLType.getName()),
+							graphQLTypes.get(
+								GraphQLTypeUtil.simplePrint(graphQLType)),
 							graphQLType)) {
 
 						try {
@@ -403,7 +407,8 @@ public class GraphQLServletExtender {
 						}
 					}
 					else {
-						graphQLType = graphQLTypes.get(graphQLType.getName());
+						graphQLType = graphQLTypes.get(
+							GraphQLTypeUtil.simplePrint(graphQLType));
 					}
 				}
 
@@ -418,7 +423,8 @@ public class GraphQLServletExtender {
 						clazz, processingElementsContainer),
 					processingElementsContainer.getCodeRegistryBuilder(), null);
 
-				graphQLTypes.put(graphQLType.getName(), graphQLType);
+				graphQLTypes.put(
+					GraphQLTypeUtil.simplePrint(graphQLType), graphQLType);
 
 				processingStack.pop();
 
@@ -443,8 +449,10 @@ public class GraphQLServletExtender {
 							childrenGraphQLSchemaElement2) {
 
 						if (StringUtil.equals(
-								childGraphQLSchemaElement1.getName(),
-								childGraphQLSchemaElement2.getName()) &&
+								GraphQLTypeUtil.simplePrint(
+									childGraphQLSchemaElement1),
+								GraphQLTypeUtil.simplePrint(
+									childGraphQLSchemaElement2)) &&
 							_equals(
 								childGraphQLSchemaElement1,
 								childGraphQLSchemaElement2)) {
@@ -1506,7 +1514,7 @@ public class GraphQLServletExtender {
 			GraphQLOutputType graphQLOutputType =
 				graphQLFieldDefinition.getType();
 
-			String typeName = graphQLOutputType.getName();
+			String typeName = GraphQLTypeUtil.simplePrint(graphQLOutputType);
 
 			if ((typeName != null) && typeName.equals("Object") &&
 				StringUtil.endsWith(graphQLFieldDefinition.getName(), "Id")) {
@@ -2052,7 +2060,7 @@ public class GraphQLServletExtender {
 				directiveWiringMapRetriever.getDirectiveWiringMap(
 					parameter, _processingElementsContainer),
 				_processingElementsContainer.getCodeRegistryBuilder(),
-				graphQLInputType.getName());
+				GraphQLTypeUtil.simplePrint(graphQLInputType));
 		}
 
 		private final Method _method;

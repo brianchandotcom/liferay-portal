@@ -19,6 +19,7 @@ import com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.exception.CapabilityVerificationException;
+import com.liferay.info.exception.InfoPermissionException;
 import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
@@ -53,7 +54,10 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
@@ -129,6 +133,45 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 		}
 
 		return Collections.emptyList();
+	}
+
+	@Override
+	public List<InfoItemClassDetails> getFilteredInfoItemClassDetails(
+			long groupId, String itemCapabilityKey,
+			PermissionChecker permissionChecker)
+		throws CapabilityVerificationException {
+
+		List<InfoItemClassDetails> infoItemClassDetails = new ArrayList<>();
+
+		for (InfoItemClassDetails infoItemClassDetail :
+				getInfoItemClassDetails(itemCapabilityKey)) {
+
+			InfoPermissionProvider infoPermissionProvider =
+				getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					infoItemClassDetail.getClassName());
+
+			if (infoPermissionProvider == null) {
+				infoItemClassDetails.add(infoItemClassDetail);
+
+				continue;
+			}
+
+			try {
+				if (infoPermissionProvider.hasViewPermission(
+						permissionChecker)) {
+
+					infoItemClassDetails.add(infoItemClassDetail);
+				}
+			}
+			catch (InfoPermissionException infoPermissionException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(infoPermissionException);
+				}
+			}
+		}
+
+		return infoItemClassDetails;
 	}
 
 	@Override
@@ -379,6 +422,9 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 					}),
 				new PropertyServiceReferenceComparator<>("service.ranking")));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InfoItemServiceTrackerImpl.class);
 
 	private static final Set<Class<?>> _validInfoClasses = new HashSet<>(
 		Arrays.asList(

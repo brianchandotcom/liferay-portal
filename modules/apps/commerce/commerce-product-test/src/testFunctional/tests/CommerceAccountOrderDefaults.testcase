@@ -266,6 +266,90 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9885. Assert that can not assign default addresses to the same Channel."
+	@priority = "3"
+	test CanNotAssignDefaultAddressesToTheSameChannel {
+		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Accounts.addAddress(
+				addressCity = "Chicago",
+				addressCountry = "United States",
+				addressName = "Test Billing Address",
+				addressPostalCode = "60606",
+				addressRegion = "Illinois",
+				addressStreet1 = "205 W. Wacker Dr",
+				addressStreet2 = "Suite 720",
+				addressType = "Billing",
+				phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+			Accounts.addAddress(
+				addressCity = "Shibuya-ku",
+				addressCountry = "Japan",
+				addressName = "Test Shipping Address",
+				addressPostalCode = "150-0021",
+				addressRegion = "Tokyo",
+				addressStreet1 = "1F Faveur Ebisu,",
+				addressStreet2 = "1-26-7 Ebisu Nishi",
+				addressType = "Shipping",
+				phoneNumber = "+81 3-5456-5796");
+
+			Accounts.addAddress(
+				addressCity = "Diamond Bar",
+				addressCountry = "United States",
+				addressName = "Test Billing and Shipping Address",
+				addressPostalCode = "91765",
+				addressRegion = "California",
+				addressStreet1 = "1400 Montefino Ave",
+				addressType = "Billing and Shipping",
+				phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+		}
+
+		task ("And two more channels("Test Channel 1" and "Test Channel 2")") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("Given there is a default billing address set for Minium Portal Channel") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.addDefaultCommerceAddressEntry(
+				addressEntry = "Test Billing Address",
+				addressType = "Billing",
+				channelEntry = "Minium Portal");
+		}
+
+		task ("And there is a default billing address set for All Other Channels") {
+			Accounts.addDefaultCommerceAddressEntry(
+				addressEntry = "Test Billing and Shipping Address",
+				addressType = "Billing",
+				channelEntry = "All Other Channels");
+		}
+
+		task ("When the admin clicks + button to set another default, and tries to set a default for All Other Channels again") {
+			Accounts.addDefaultCommerceAddressEntry(
+				addressEntry = "Test Billing Address",
+				addressType = "Billing",
+				channelEntry = "All Other Channels");
+		}
+
+		task ("Then an error message appears on the modal") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "There is already an address defined for the selected channel.");
+		}
+	}
+
 	@description = "COMMERCE-9734. As admin, I want to set a default billing and default shipping address for one account and channel, then buyer cannot use the default addresses in a different channel to make an order"
 	@priority = "3"
 	test CanNotUseDefaultAddressesInADifferentChannel {

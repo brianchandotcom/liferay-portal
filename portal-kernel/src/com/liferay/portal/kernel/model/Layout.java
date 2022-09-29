@@ -286,6 +286,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public String getThemeSetting(
 		String key, String device, boolean inheritLookAndFeel);
 
+	public String getIcon();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsProperties();
 
@@ -424,6 +426,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean isSupportsEmbeddedPortlets();
 
 	public boolean isTypeAssetDisplay();
+
+	public boolean isTypeCollection();
 
 	public boolean isTypeContent();
 

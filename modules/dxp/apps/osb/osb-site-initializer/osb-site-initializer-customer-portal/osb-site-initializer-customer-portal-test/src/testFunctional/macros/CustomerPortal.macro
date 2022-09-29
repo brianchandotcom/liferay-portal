@@ -698,6 +698,12 @@ definition {
 		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
 	}
 
+	macro viewAlertInfo {
+		var key_alertText = "${alertText}";
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#ALERT_INFO");
+	}
+
 	macro viewAllProjectsTitlePage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
 	}

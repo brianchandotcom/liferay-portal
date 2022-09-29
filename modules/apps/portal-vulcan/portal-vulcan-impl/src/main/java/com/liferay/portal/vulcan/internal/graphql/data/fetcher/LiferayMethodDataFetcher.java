@@ -16,16 +16,14 @@ package com.liferay.portal.vulcan.internal.graphql.data.fetcher;
 
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
 
+import graphql.kickstart.servlet.context.GraphQLServletContext;
+
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
 
-import graphql.servlet.GraphQLContext;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,23 +68,19 @@ public class LiferayMethodDataFetcher implements DataFetcher<Object> {
 	private HttpServletRequest _getHttpServletRequest(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		GraphQLContext graphQLContext = dataFetchingEnvironment.getContext();
+		GraphQLServletContext graphQLServletContext =
+			dataFetchingEnvironment.getContext();
 
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			graphQLContext.getHttpServletRequest();
-
-		return httpServletRequestOptional.orElse(null);
+		return graphQLServletContext.getHttpServletRequest();
 	}
 
 	private HttpServletResponse _getHttpServletResponse(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		GraphQLContext graphQLContext = dataFetchingEnvironment.getContext();
+		GraphQLServletContext graphQLServletContext =
+			dataFetchingEnvironment.getContext();
 
-		Optional<HttpServletResponse> httpServletResponseOptional =
-			graphQLContext.getHttpServletResponse();
-
-		return httpServletResponseOptional.orElse(null);
+		return graphQLServletContext.getHttpServletResponse();
 	}
 
 	private final LiferayMethodDataFetchingProcessor

@@ -18,15 +18,14 @@ import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.GraphQLDTOContributorDataFetchingProcessor;
 
+import graphql.kickstart.servlet.context.GraphQLServletContext;
+
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
-
-import graphql.servlet.GraphQLContext;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -132,12 +131,10 @@ public class GraphQLDTOContributorDataFetcher implements DataFetcher<Object> {
 	private HttpServletRequest _getHttpServletRequest(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		GraphQLContext graphQLContext = dataFetchingEnvironment.getContext();
+		GraphQLServletContext graphQLServletContext =
+			dataFetchingEnvironment.getContext();
 
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			graphQLContext.getHttpServletRequest();
-
-		return httpServletRequestOptional.orElse(null);
+		return graphQLServletContext.getHttpServletRequest();
 	}
 
 	private final GraphQLDTOContributor _graphQLDTOContributor;

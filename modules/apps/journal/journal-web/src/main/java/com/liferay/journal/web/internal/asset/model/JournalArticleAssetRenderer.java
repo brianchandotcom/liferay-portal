@@ -380,7 +380,7 @@ public class JournalArticleAssetRenderer
 			if (Validator.isNotNull(friendlyURL)) {
 				if (!_article.isApproved()) {
 					friendlyURL = HttpComponentsUtil.addParameter(
-						friendlyURL, "version", _article.getId());
+						friendlyURL, "version", _article.getVersion());
 				}
 
 				return friendlyURL;
@@ -410,7 +410,7 @@ public class JournalArticleAssetRenderer
 
 		if (!_article.isApproved()) {
 			friendlyURL = HttpComponentsUtil.addParameter(
-				friendlyURL, "version", _article.getId());
+				friendlyURL, "version", _article.getVersion());
 		}
 
 		return PortalUtil.addPreservedParameters(themeDisplay, friendlyURL);

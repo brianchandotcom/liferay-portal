@@ -94,6 +94,9 @@ components:
                 objectDefinitionId:
                     format: int64
                     type: integer
+                recipientType:
+                    enum: [role, term, user]
+                    type: string
                 subject:
                     additionalProperties:
                         type: string
@@ -102,6 +105,9 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                type:
+                    enum: [email, userNotification]
+                    type: string
             type: object
 info:
     description:

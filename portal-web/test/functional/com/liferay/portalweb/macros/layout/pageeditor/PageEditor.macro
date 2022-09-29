@@ -4047,6 +4047,20 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_DISABLED");
 	}
 
+	macro reorderSets {
+		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_REORDER_SETS_BUTTON");
+
+		Modal.gotoNavTab(navTab = "${navTab}");
+
+		Click.waitForMenuToggleJSClick(
+			key_card = "${setName}",
+			locator1 = "Card#CARD_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "${action}");
+
+		Button.click(button = "Save");
+	}
+
 	macro replyToComment {
 		AssertClick(
 			locator1 = "Button#REPLY",

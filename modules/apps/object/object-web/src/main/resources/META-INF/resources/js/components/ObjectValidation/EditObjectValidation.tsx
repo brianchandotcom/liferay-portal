@@ -29,6 +29,16 @@ import {
 	useObjectValidationForm,
 } from './useObjectValidationForm';
 
+interface EditObjectValidationProps {
+	objectValidationRule: ObjectValidation;
+	objectValidationRuleElements: SidebarCategory[];
+	readOnly: boolean;
+}
+
+interface ErrorDetails extends Error {
+	detail?: string;
+}
+
 const TABS = [
 	{
 		Component: BasicInfo,
@@ -44,7 +54,7 @@ export default function EditObjectValidation({
 	objectValidationRule: initialValues,
 	objectValidationRuleElements,
 	readOnly,
-}: IProps) {
+}: EditObjectValidationProps) {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [errorMessage, setErrorMessage] = useState<ObjectValidationErrors>(
 		{}
@@ -154,14 +164,4 @@ export default function EditObjectValidation({
 			</ClayTabs.Content>
 		</SidePanelForm>
 	);
-}
-
-interface IProps {
-	objectValidationRule: ObjectValidation;
-	objectValidationRuleElements: SidebarCategory[];
-	readOnly: boolean;
-}
-
-interface ErrorDetails extends Error {
-	detail?: string;
 }

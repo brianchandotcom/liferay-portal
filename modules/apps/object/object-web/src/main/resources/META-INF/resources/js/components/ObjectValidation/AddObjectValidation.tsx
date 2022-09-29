@@ -20,6 +20,25 @@ import {Observer} from '@clayui/modal/lib/types';
 import {API, Input, SingleSelect} from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
+interface ModalAddObjectValidationProps extends AddObjectValidationProps {
+	observer: Observer;
+	onClose: () => void;
+}
+
+interface AddObjectValidationProps {
+	apiURL: string;
+	objectValidationRuleEngines: ObjectValidationType[];
+}
+
+interface ObjectValidationLabel {
+	[key: string]: string;
+}
+
+interface ObjectValidationErrors {
+	labelError: string;
+	typeError: string;
+}
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const requiredLabel = Liferay.Language.get('required');
 
@@ -28,16 +47,16 @@ function ModalAddObjectValidation({
 	objectValidationRuleEngines,
 	observer,
 	onClose,
-}: IModal) {
+}: ModalAddObjectValidationProps) {
 	const [typeSelection, setTypeSelection] = useState<ObjectValidationType>({
 		label: '',
 		name: '',
 	});
-	const [labelInput, setLabelInput] = useState<IObjectValidationLabel>({
+	const [labelInput, setLabelInput] = useState<ObjectValidationLabel>({
 		[defaultLanguageId]: '',
 	});
 	const [error, setError] = useState<string>('');
-	const [fieldErrors, setFieldErrors] = useState<IObjectValidationErrors>({
+	const [fieldErrors, setFieldErrors] = useState<ObjectValidationErrors>({
 		labelError: '',
 		typeError: '',
 	});
@@ -92,7 +111,7 @@ function ModalAddObjectValidation({
 		});
 	};
 
-	const handleLabelChange = (label: IObjectValidationLabel) => {
+	const handleLabelChange = (label: ObjectValidationLabel) => {
 		setLabelInput(label);
 	};
 
@@ -163,7 +182,7 @@ function ModalAddObjectValidation({
 export default function AddObjectValidation({
 	apiURL,
 	objectValidationRuleEngines,
-}: IProps) {
+}: AddObjectValidationProps) {
 	const [isVisible, setVisibility] = useState<boolean>(false);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
 
@@ -187,23 +206,4 @@ export default function AddObjectValidation({
 			)}
 		</ClayModalProvider>
 	);
-}
-
-interface IModal extends IProps {
-	observer: Observer;
-	onClose: () => void;
-}
-
-interface IProps {
-	apiURL: string;
-	objectValidationRuleEngines: ObjectValidationType[];
-}
-
-interface IObjectValidationLabel {
-	[key: string]: string;
-}
-
-interface IObjectValidationErrors {
-	labelError: string;
-	typeError: string;
 }

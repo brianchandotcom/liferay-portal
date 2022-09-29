@@ -15,14 +15,14 @@
 /// <reference types="react" />
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
-export default function EditObjectValidation({
-	objectValidationRule: initialValues,
-	objectValidationRuleElements,
-	readOnly,
-}: IProps): JSX.Element;
-interface IProps {
+interface EditObjectValidationProps {
 	objectValidationRule: ObjectValidation;
 	objectValidationRuleElements: SidebarCategory[];
 	readOnly: boolean;
 }
+export default function EditObjectValidation({
+	objectValidationRule: initialValues,
+	objectValidationRuleElements,
+	readOnly,
+}: EditObjectValidationProps): JSX.Element;
 export {};

@@ -14,12 +14,12 @@
 
 /// <reference types="react" />
 
-export default function AddObjectValidation({
-	apiURL,
-	objectValidationRuleEngines,
-}: IProps): JSX.Element;
-interface IProps {
+interface AddObjectValidationProps {
 	apiURL: string;
 	objectValidationRuleEngines: ObjectValidationType[];
 }
+export default function AddObjectValidation({
+	apiURL,
+	objectValidationRuleEngines,
+}: AddObjectValidationProps): JSX.Element;
 export {};

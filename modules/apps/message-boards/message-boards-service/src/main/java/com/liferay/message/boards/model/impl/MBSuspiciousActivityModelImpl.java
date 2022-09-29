@@ -104,7 +104,7 @@ public class MBSuspiciousActivityModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBSuspiciousActivity (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,suspiciousActivityId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,messageId LONG,threadId LONG,reason VARCHAR(75) null,validated BOOLEAN,primary key (suspiciousActivityId, ctCollectionId))";
+		"create table MBSuspiciousActivity (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,suspiciousActivityId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,messageId LONG,threadId LONG,reason VARCHAR(255) null,validated BOOLEAN,primary key (suspiciousActivityId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table MBSuspiciousActivity";

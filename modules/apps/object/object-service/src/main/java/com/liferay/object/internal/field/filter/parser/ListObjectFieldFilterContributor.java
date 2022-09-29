@@ -29,7 +29,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -104,9 +102,8 @@ public class ListObjectFieldFilterContributor
 						objectField.getBusinessType(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-					return _toIdsList(
-						objectDefinitionId, jsonArray,
-						objectViewFilterColumn.getObjectFieldName());
+					return _toItemsValues(
+						objectDefinitionId, jsonArray, objectField);
 				}
 
 				List<Map<String, String>> itemsValues = new ArrayList<>();
@@ -205,9 +202,10 @@ public class ListObjectFieldFilterContributor
 					objectViewFilterColumn.getFilterType());
 		}
 
-		if (Objects.equals(
-				objectViewFilterColumn.getObjectFieldName(), "status")) {
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinitionId, objectViewFilterColumn.getObjectFieldName());
 
+		if (Objects.equals(objectField.getName(), Field.STATUS)) {
 			try {
 				_toIntegerList(jsonArray);
 			}
@@ -218,31 +216,20 @@ public class ListObjectFieldFilterContributor
 					exception);
 			}
 		}
-		else {
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinitionId,
-				objectViewFilterColumn.getObjectFieldName());
+		else if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-				_validate(
-					objectDefinitionId, jsonArray,
-					objectViewFilterColumn.getObjectFieldName());
-			}
+			_validate(objectDefinitionId, jsonArray, objectField);
 		}
 	}
 
-	private List<Map<String, Object>> _toIdsList(
+	private List<Map<String, Object>> _toItemsValues(
 			long objectDefinitionId, JSONArray jsonArray,
-			String objectFieldName)
+			ObjectField objectField)
 		throws PortalException {
 
-		List<Map<String, Object>> map = new ArrayList<>();
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinitionId, objectFieldName);
+		List<Map<String, Object>> itemsValues = new ArrayList<>();
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
@@ -255,7 +242,7 @@ public class ListObjectFieldFilterContributor
 
 		if (objectDefinition1.isSystem()) {
 			for (int i = 0; i < jsonArray.length(); i++) {
-				map.add(
+				itemsValues.add(
 					HashMapBuilder.<String, Object>put(
 						"label",
 						_objectEntryLocalService.getTitleValue(
@@ -266,7 +253,7 @@ public class ListObjectFieldFilterContributor
 					).build());
 			}
 
-			return map;
+			return itemsValues;
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -275,7 +262,7 @@ public class ListObjectFieldFilterContributor
 					(String)jsonArray.get(i),
 					objectDefinition1.getObjectDefinitionId());
 
-			map.add(
+			itemsValues.add(
 				HashMapBuilder.<String, Object>put(
 					"label", objectEntry.getTitleValue()
 				).put(
@@ -283,7 +270,7 @@ public class ListObjectFieldFilterContributor
 				).build());
 		}
 
-		return map;
+		return itemsValues;
 	}
 
 	private List<Integer> _toIntegerList(JSONArray jsonArray) {
@@ -298,30 +285,25 @@ public class ListObjectFieldFilterContributor
 
 	private void _validate(
 			long objectDefinitionId, JSONArray jsonArray,
-			String objectFieldName)
+			ObjectField objectField)
 		throws PortalException {
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinitionId, objectFieldName);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
 					objectField.getObjectFieldId());
 
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId1);
+				objectRelationship.getObjectDefinitionId1());
 
 		if (objectDefinition1.isSystem()) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				PersistedModelLocalService persistedModelLocalService =
-					_persistedModelLocalServiceRegistry.
-						getPersistedModelLocalService(
-							objectDefinition1.getClassName());
+			PersistedModelLocalService persistedModelLocalService =
+				_persistedModelLocalServiceRegistry.
+					getPersistedModelLocalService(
+						objectDefinition1.getClassName());
 
+			for (int i = 0; i < jsonArray.length(); i++) {
 				try {
 					persistedModelLocalService.getPersistedModel(
 						GetterUtil.getLong(jsonArray.get(i)));
@@ -333,19 +315,15 @@ public class ListObjectFieldFilterContributor
 			}
 		}
 		else {
-			ObjectEntry objectEntry = null;
-
 			for (int i = 0; i < jsonArray.length(); i++) {
-				objectEntry = _objectEntryLocalService.getObjectEntryByERC_ODI(
-					(String)jsonArray.get(i), objectDefinitionId1);
-
-				if (Objects.isNull(objectEntry)) {
+				try {
+					_objectEntryLocalService.getObjectEntryByERC_ODI(
+						(String)jsonArray.get(i),
+						objectRelationship.getObjectDefinitionId1());
+				}
+				catch (PortalException portalException) {
 					throw new ObjectViewFilterColumnException(
-						StringBundler.concat(
-							"ExternalReferenceCode: ", jsonArray.get(i),
-							" does not belong for an entry of ",
-							"ObjectDefinition1: ",
-							objectDefinition1.getName()));
+						portalException.getMessage());
 				}
 			}
 		}

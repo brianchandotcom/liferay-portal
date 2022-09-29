@@ -14,17 +14,10 @@
 
 package com.liferay.search.experiences.internal.validator;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.exception.SXPBlueprintConfigurationJSONException;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
-import com.liferay.search.experiences.internal.validator.util.JSONSchemaValidatorUtil;
-import com.liferay.search.experiences.problem.Problem;
-import com.liferay.search.experiences.problem.Severity;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,40 +32,11 @@ import org.osgi.service.component.annotations.Component;
 public class SXPBlueprintValidatorImpl implements SXPBlueprintValidator {
 
 	@Override
-	public void validate(String configurationJSON)
-		throws SXPBlueprintConfigurationJSONException {
-
-		if (Validator.isNull(configurationJSON)) {
-			return;
-		}
-
-		// TODO What should the standard be for JSON schema files?
-
-		List<Problem> problems = JSONSchemaValidatorUtil.validate(
-			SXPBlueprintValidatorImpl.class, configurationJSON,
-			"dependencies/sxpblueprint.schema.json");
-
-		if (ListUtil.isNotEmpty(problems)) {
-			throw new SXPBlueprintConfigurationJSONException(problems);
-		}
-	}
-
-	@Override
-	public void validate(String configurationJSON, Map<Locale, String> titleMap)
-		throws SXPBlueprintConfigurationJSONException,
-			   SXPBlueprintTitleException {
-
-		validate(configurationJSON);
+	public void validate(Map<Locale, String> titleMap)
+		throws SXPBlueprintTitleException {
 
 		if (MapUtil.isEmpty(titleMap)) {
-			throw new SXPBlueprintTitleException(
-				ListUtil.fromArray(
-					new Problem.Builder(
-					).message(
-						"Title is empty"
-					).severity(
-						Severity.ERROR
-					).build()));
+			throw new SXPBlueprintTitleException("Title is empty");
 		}
 	}
 

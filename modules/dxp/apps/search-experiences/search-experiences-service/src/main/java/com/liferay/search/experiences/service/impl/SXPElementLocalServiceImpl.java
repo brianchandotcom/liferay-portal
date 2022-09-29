@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
-import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.base.SXPElementLocalServiceBaseImpl;
@@ -66,7 +65,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		_validateExternalReferenceCode(
 			user.getCompanyId(), externalReferenceCode);
 
-		_validate(elementDefinitionJSON, titleMap, type, serviceContext);
+		_validate(titleMap, type, serviceContext);
 
 		SXPElement sxpElement = createSXPElement(
 			counterLocalService.increment(SXPElement.class.getName()));
@@ -163,9 +162,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
 		SXPElement sxpElement = getSXPElement(sxpElementId);
 
-		_validate(
-			elementDefinitionJSON, titleMap, sxpElement.getType(),
-			serviceContext);
+		_validate(titleMap, sxpElement.getType(), serviceContext);
 
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
@@ -181,18 +178,16 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	}
 
 	private void _validate(
-			String elementDefinitionJSON, Map<Locale, String> titleMap,
-			int type, ServiceContext serviceContext)
-		throws SXPElementElementDefinitionJSONException,
-			   SXPElementTitleException {
+			Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
+		throws SXPElementTitleException {
 
 		if (!GetterUtil.getBoolean(
 				serviceContext.getAttribute(
 					SXPElementLocalServiceImpl.class.getName() + "#_validate"),
 				true)) {
 
-			_sxpElementValidator.validate(
-				elementDefinitionJSON, titleMap, type);
+			_sxpElementValidator.validate(titleMap, type);
 		}
 	}
 

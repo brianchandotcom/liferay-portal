@@ -125,8 +125,10 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setFrom(from);
 		notificationTemplate.setFromNameMap(fromNameMap);
 		notificationTemplate.setName(name);
+		notificationTemplate.setRecipientType(recipientType);
 		notificationTemplate.setSubjectMap(subjectMap);
 		notificationTemplate.setToMap(toMap);
+		notificationTemplate.setType(type);
 
 		notificationTemplate = notificationTemplatePersistence.update(
 			notificationTemplate);
@@ -379,6 +381,7 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setFrom(from);
 		notificationTemplate.setFromNameMap(fromNameMap);
 		notificationTemplate.setName(name);
+		notificationTemplate.setRecipientType(recipientType);
 		notificationTemplate.setSubjectMap(subjectMap);
 		notificationTemplate.setToMap(toMap);
 

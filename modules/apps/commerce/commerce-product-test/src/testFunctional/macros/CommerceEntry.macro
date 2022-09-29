@@ -409,6 +409,18 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 	}
 
+	macro addNewWarehousesEntry {
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${warehouseName}");
+
+		Button.click(button = "Submit");
+	}
+
 	macro addNewWeightUnit {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",

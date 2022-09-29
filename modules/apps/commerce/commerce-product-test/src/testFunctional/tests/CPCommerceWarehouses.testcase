@@ -1269,7 +1269,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		CommerceEntry.addNewAccountGroupsEntry(entryName = "test new warehouse");
+		CommerceEntry.addNewWarehousesEntry(warehouseName = "test new warehouse");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Active",

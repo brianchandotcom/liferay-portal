@@ -50,14 +50,15 @@ public class NotificationTemplateLocalServiceUtil {
 			Map<java.util.Locale, String> bodyMap, String cc,
 			String description, String from,
 			Map<java.util.Locale, String> fromNameMap, String name,
-			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> toMap,
+			String recipientType, Map<java.util.Locale, String> subjectMap,
+			Map<java.util.Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		return getService().addNotificationTemplate(
 			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
+			fromNameMap, name, recipientType, subjectMap, toMap, type,
+			attachmentObjectFieldIds);
 	}
 
 	/**
@@ -360,15 +361,15 @@ public class NotificationTemplateLocalServiceUtil {
 			Map<java.util.Locale, String> bodyMap, String cc,
 			String description, String from,
 			Map<java.util.Locale, String> fromNameMap, String name,
-			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> toMap,
+			String recipientType, Map<java.util.Locale, String> subjectMap,
+			Map<java.util.Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		return getService().updateNotificationTemplate(
 			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
-			description, from, fromNameMap, name, subjectMap, toMap,
-			attachmentObjectFieldIds);
+			description, from, fromNameMap, name, recipientType, subjectMap,
+			toMap, type, attachmentObjectFieldIds);
 	}
 
 	/**

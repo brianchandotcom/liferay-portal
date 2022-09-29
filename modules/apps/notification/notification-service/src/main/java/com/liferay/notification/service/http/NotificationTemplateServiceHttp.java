@@ -57,8 +57,9 @@ public class NotificationTemplateServiceHttp {
 				java.util.Map<java.util.Locale, String> bodyMap, String cc,
 				String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap,
+				String name, String recipientType,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> toMap, String type,
 				java.util.List<Long> attachmentObjectFieldIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -70,8 +71,8 @@ public class NotificationTemplateServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, objectDefinitionId, bcc, bodyMap, cc,
-				description, from, fromNameMap, name, subjectMap, toMap,
-				attachmentObjectFieldIds);
+				description, from, fromNameMap, name, recipientType, subjectMap,
+				toMap, type, attachmentObjectFieldIds);
 
 			Object returnObj = null;
 
@@ -240,8 +241,9 @@ public class NotificationTemplateServiceHttp {
 				java.util.Map<java.util.Locale, String> bodyMap, String cc,
 				String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap,
+				String name, String recipientType,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> toMap, String type,
 				java.util.List<Long> attachmentObjectFieldIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -253,8 +255,9 @@ public class NotificationTemplateServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId, objectDefinitionId, bcc,
-				bodyMap, cc, description, from, fromNameMap, name, subjectMap,
-				toMap, attachmentObjectFieldIds);
+				bodyMap, cc, description, from, fromNameMap, name,
+				recipientType, subjectMap, toMap, type,
+				attachmentObjectFieldIds);
 
 			Object returnObj = null;
 
@@ -292,8 +295,8 @@ public class NotificationTemplateServiceHttp {
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			String.class, String.class, String.class, java.util.Map.class,
-			String.class, java.util.Map.class, java.util.Map.class,
-			java.util.List.class
+			String.class, String.class, java.util.Map.class,
+			java.util.Map.class, String.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteNotificationTemplateParameterTypes1 =
 		new Class[] {long.class};
@@ -305,8 +308,8 @@ public class NotificationTemplateServiceHttp {
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			String.class, String.class, String.class, java.util.Map.class,
-			String.class, java.util.Map.class, java.util.Map.class,
-			java.util.List.class
+			String.class, String.class, java.util.Map.class,
+			java.util.Map.class, String.class, java.util.List.class
 		};
 
 }

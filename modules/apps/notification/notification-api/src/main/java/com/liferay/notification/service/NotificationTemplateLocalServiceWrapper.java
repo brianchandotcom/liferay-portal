@@ -44,14 +44,16 @@ public class NotificationTemplateLocalServiceWrapper
 				java.util.Map<java.util.Locale, String> bodyMap, String cc,
 				String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap,
+				String name, String recipientType,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> toMap, String type,
 				java.util.List<Long> attachmentObjectFieldIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
 			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
+			fromNameMap, name, recipientType, subjectMap, toMap, type,
+			attachmentObjectFieldIds);
 	}
 
 	/**
@@ -410,15 +412,16 @@ public class NotificationTemplateLocalServiceWrapper
 				String bcc, java.util.Map<java.util.Locale, String> bodyMap,
 				String cc, String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap,
+				String name, String recipientType,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> toMap, String type,
 				java.util.List<Long> attachmentObjectFieldIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
 			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
-			description, from, fromNameMap, name, subjectMap, toMap,
-			attachmentObjectFieldIds);
+			description, from, fromNameMap, name, recipientType, subjectMap,
+			toMap, type, attachmentObjectFieldIds);
 	}
 
 	/**

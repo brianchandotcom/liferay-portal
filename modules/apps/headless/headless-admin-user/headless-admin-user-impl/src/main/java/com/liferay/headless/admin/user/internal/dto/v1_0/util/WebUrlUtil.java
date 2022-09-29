@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.Website;
 public class WebUrlUtil {
 
 	public static WebUrl toWebUrl(Website website) throws Exception {
-		ListType listType = website.getType();
+		ListType listType = website.getListType();
 
 		return new WebUrl() {
 			{

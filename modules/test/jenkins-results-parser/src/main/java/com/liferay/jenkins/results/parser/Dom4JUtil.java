@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -31,10 +35,13 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.Text;
 import org.dom4j.XPath;
+import org.dom4j.io.DOMReader;
 import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * @author Peter Yoo
@@ -275,9 +282,25 @@ public class Dom4JUtil {
 	}
 
 	public static Document parse(String xml) throws DocumentException {
-		SAXReader saxReader = new SAXReader();
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
 
-		return saxReader.read(new StringReader(xml));
+		try {
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			org.w3c.dom.Document orgW3CDomDocument = documentBuilder.parse(
+				new InputSource(new StringReader(xml)));
+
+			DOMReader domReader = new DOMReader();
+
+			return domReader.read(orgW3CDomDocument);
+		}
+		catch (IOException | ParserConfigurationException | SAXException
+					exception) {
+
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public static void replace(

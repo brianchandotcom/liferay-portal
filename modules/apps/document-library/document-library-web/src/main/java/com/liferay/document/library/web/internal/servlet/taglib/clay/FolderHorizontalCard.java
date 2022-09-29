@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.List;
 
+import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -34,11 +36,12 @@ public class FolderHorizontalCard implements HorizontalCard {
 	public FolderHorizontalCard(
 		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper,
 		DLTrashHelper dlTrashHelper, Folder folder,
-		HttpServletRequest httpServletRequest, RowChecker rowChecker,
-		String viewFolderURL) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
+		RowChecker rowChecker, String viewFolderURL) {
 
 		_dlPortletInstanceSettingsHelper = dlPortletInstanceSettingsHelper;
 		_folder = folder;
+		_renderResponse = renderResponse;
 		_rowChecker = rowChecker;
 		_viewFolderURL = viewFolderURL;
 
@@ -77,7 +80,7 @@ public class FolderHorizontalCard implements HorizontalCard {
 			return null;
 		}
 
-		return _rowChecker.getRowIds();
+		return _renderResponse.getNamespace() + "rowIdsFolder";
 	}
 
 	@Override
@@ -125,6 +128,7 @@ public class FolderHorizontalCard implements HorizontalCard {
 		_dlPortletInstanceSettingsHelper;
 	private final Folder _folder;
 	private final FolderActionDisplayContext _folderActionDisplayContext;
+	private final RenderResponse _renderResponse;
 	private final RowChecker _rowChecker;
 	private final String _viewFolderURL;
 

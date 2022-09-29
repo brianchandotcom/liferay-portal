@@ -348,7 +348,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 								colspan="<%= 2 %>"
 							>
 								<clay:horizontal-card
-									horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, searchContainer.getRowChecker(), viewFolderURL) %>"
+									horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, renderResponse, searchContainer.getRowChecker(), viewFolderURL) %>"
 									propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>

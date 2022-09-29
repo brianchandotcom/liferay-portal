@@ -141,7 +141,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				<liferay-ui:search-container-column-text>
 					<clay:horizontal-card
-						horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, null, viewFolderURL) %>"
+						horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, renderResponse, null, viewFolderURL) %>"
 						propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>

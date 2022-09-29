@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -34,6 +37,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -269,11 +273,34 @@ public class NavItemUtil {
 		}
 
 		return NavItem.fromLayouts(
-			httpServletRequest,
+			httpServletRequest, _getLayouts(privateLayout, themeDisplay),
+			themeDisplay);
+	}
+
+	private static List<Layout> _getLayouts(
+			boolean privateLayout, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		List<Layout> layouts = ListUtil.copy(
 			_layoutLocalService.getLayouts(
 				themeDisplay.getScopeGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID),
-			themeDisplay);
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
+
+		Iterator<Layout> iterator = layouts.iterator();
+
+		while (iterator.hasNext()) {
+			Layout layout = iterator.next();
+
+			if (layout.isHidden() ||
+				!LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.VIEW)) {
+
+				iterator.remove();
+			}
+		}
+
+		return layouts;
 	}
 
 	private static List<SiteNavigationMenuItem> _getSiteNavigationMenuItems(

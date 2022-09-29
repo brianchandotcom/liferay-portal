@@ -1,15 +1,11 @@
 @component-name = "OSB Site Initializer Partner Portal"
 definition {
 
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property osgi.modules.includes = "osb-site-initializer-partner-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Partner Portal";
-
-	var testSiteName = "Partner Portal";
-	var testSiteURL = "partner-portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -19,17 +15,11 @@ definition {
 		}
 
 		task ("Create a new Partner Portal Site") {
-			Site.openSitesAdmin();
-
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "Liferay OSB Site Initializer Partner Portal");
+			PRMUtils.addPRMSite();
 		}
 
 		task ("Go to Partner Portal") {
-			ApplicationsMenu.gotoSite(site = "Partner Portal");
-
-			Refresh();
+			PRMUtils.gotoPRM();
 		}
 	}
 
@@ -50,11 +40,7 @@ definition {
 		task ("Go to Enablement Tab") {
 			PRMNavigator.goToNavItem(navItem = "Enablement");
 		}
-
-		task ("Verify if page title is 'Enablement'") {
-			PRMUtils.assertPageTitle(pageTitle = "Enablement");
-		}
-
+		
 		task ("Verify if the current active breadcrumb is 'Enablement'") {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Enablement");
 		}

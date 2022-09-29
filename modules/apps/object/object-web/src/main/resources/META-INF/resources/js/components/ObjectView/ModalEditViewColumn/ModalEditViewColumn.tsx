@@ -78,7 +78,7 @@ export function ModalEditViewColumn({
 						disabled
 						label={Liferay.Language.get('field-label')}
 						name={editingObjectFieldName}
-						value={editingColumn.label[defaultLanguageId]}
+						value={editingColumn.fieldLabel}
 					/>
 
 					<InputLocalized

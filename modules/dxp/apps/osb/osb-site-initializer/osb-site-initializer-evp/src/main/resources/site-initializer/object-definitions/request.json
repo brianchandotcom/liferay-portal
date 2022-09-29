@@ -246,6 +246,19 @@
 			"required": false,
 			"state": true,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Liferay Branch"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Liferay Branch$]",
+			"name": "liferayBranch",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"objectLayouts": [

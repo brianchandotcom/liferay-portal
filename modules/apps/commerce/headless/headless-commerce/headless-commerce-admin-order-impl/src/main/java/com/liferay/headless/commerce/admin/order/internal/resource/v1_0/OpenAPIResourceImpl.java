@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
+import java.lang.reflect.Method;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -64,20 +66,21 @@ public class OpenAPIResourceImpl {
 		Class<? extends OpenAPIResource> clazz = _openAPIResource.getClass();
 
 		try {
-			clazz.getMethod(
+			Method method = clazz.getMethod(
 				"getOpenAPI", HttpServletRequest.class, Set.class, String.class,
 				UriInfo.class);
 
-			return _openAPIResource.getOpenAPI(
-				_httpServletRequest, _resourceClasses, type, _uriInfo);
+			return (Response)method.invoke(
+				_openAPIResource, _httpServletRequest, _resourceClasses, type,
+				_uriInfo);
 		}
 		catch (NoSuchMethodException noSuchMethodException1) {
 			try {
-				clazz.getMethod(
+				Method method = clazz.getMethod(
 					"getOpenAPI", Set.class, String.class, UriInfo.class);
 
-				return _openAPIResource.getOpenAPI(
-					_resourceClasses, type, _uriInfo);
+				return (Response)method.invoke(
+					_openAPIResource, _resourceClasses, type, _uriInfo);
 			}
 			catch (NoSuchMethodException noSuchMethodException2) {
 				return _openAPIResource.getOpenAPI(_resourceClasses, type);

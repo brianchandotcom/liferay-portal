@@ -13,60 +13,15 @@
  */
 
 import 'codemirror/mode/groovy/groovy';
-import {ClayToggle} from '@clayui/form';
 import {
 	Card,
 	CodeEditor,
-	Input,
 	InputLocalized,
-	Select,
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler} from 'react';
 
 import {ObjectValidationErrors} from './useObjectValidationForm';
-
-export function BasicInfo({
-	componentLabel,
-	disabled,
-	errors,
-	setValues,
-	values,
-}: IBasicInfo) {
-	return (
-		<>
-			<Card title={componentLabel}>
-				<InputLocalized
-					disabled={disabled}
-					error={errors.name}
-					label={Liferay.Language.get('label')}
-					onChange={(name) => setValues({name})}
-					placeholder={Liferay.Language.get('add-a-label')}
-					required
-					translations={values.name!}
-				/>
-
-				<Input
-					disabled
-					label={Liferay.Language.get('type')}
-					value={values.engineLabel}
-				/>
-
-				<ClayToggle
-					disabled={disabled}
-					label={Liferay.Language.get('active-validation')}
-					onToggle={(active) => setValues({active})}
-					toggled={values.active}
-				/>
-			</Card>
-
-			<TriggerEventContainer
-				disabled={disabled}
-				eventTypes={[{label: Liferay.Language.get('on-submission')}]}
-			/>
-		</>
-	);
-}
 
 export function Conditions({
 	disabled,
@@ -132,34 +87,12 @@ export function Conditions({
 	);
 }
 
-function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
-	return (
-		<Card title={Liferay.Language.get('trigger-event')}>
-			<Select
-				defaultValue={Liferay.Language.get('on-submission')}
-				disabled={disabled}
-				label={Liferay.Language.get('event')}
-				options={eventTypes}
-			/>
-		</Card>
-	);
-}
-
-interface ITriggerEventProps {
-	disabled: boolean;
-	eventTypes: {label: string}[];
-}
-
 interface ITabs {
 	disabled: boolean;
 	errors: ObjectValidationErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;
-}
-
-interface IBasicInfo extends ITabs {
-	componentLabel: string;
 }
 
 interface IConditions extends ITabs {

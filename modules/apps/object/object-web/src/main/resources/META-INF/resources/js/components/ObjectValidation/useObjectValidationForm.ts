@@ -17,6 +17,7 @@ import {
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
+import {ChangeEventHandler} from 'react';
 
 interface IUseObjectValidationForm {
 	initialValues: Partial<ObjectValidation>;
@@ -24,6 +25,14 @@ interface IUseObjectValidationForm {
 }
 
 export type ObjectValidationErrors = FormError<ObjectValidation>;
+
+export interface TabProps {
+	disabled: boolean;
+	errors: ObjectValidationErrors;
+	handleChange: ChangeEventHandler<HTMLInputElement>;
+	setValues: (values: Partial<ObjectValidation>) => void;
+	values: Partial<ObjectValidation>;
+}
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');

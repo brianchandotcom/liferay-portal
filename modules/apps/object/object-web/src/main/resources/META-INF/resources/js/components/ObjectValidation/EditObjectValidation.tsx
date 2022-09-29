@@ -22,7 +22,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {BasicInfo, Conditions} from './ObjectValidationTabs';
+import {BasicInfo} from './BasicInfo';
+import {Conditions} from './ObjectValidationTabs';
 import {
 	ObjectValidationErrors,
 	useObjectValidationForm,

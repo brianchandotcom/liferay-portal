@@ -12,18 +12,26 @@
  * details.
  */
 
+import {ChangeEventHandler} from 'react';
 import {FormError} from '@liferay/object-js-components-web';
 interface IUseObjectValidationForm {
 	initialValues: Partial<ObjectValidation>;
 	onSubmit: (validation: ObjectValidation) => void;
 }
 export declare type ObjectValidationErrors = FormError<ObjectValidation>;
+export interface TabProps {
+	disabled: boolean;
+	errors: ObjectValidationErrors;
+	handleChange: ChangeEventHandler<HTMLInputElement>;
+	setValues: (values: Partial<ObjectValidation>) => void;
+	values: Partial<ObjectValidation>;
+}
 export declare function useObjectValidationForm({
 	initialValues,
 	onSubmit,
 }: IUseObjectValidationForm): {
 	errors: FormError<ObjectValidation>;
-	handleChange: import('react').ChangeEventHandler<HTMLInputElement>;
+	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: import('react').FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;

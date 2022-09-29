@@ -558,12 +558,6 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateState(required, state);
 
-		if (objectDefinition.isSystem() &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135404"))) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		newObjectField.setExternalReferenceCode(externalReferenceCode);
 		newObjectField.setDefaultValue(defaultValue);
 		newObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());

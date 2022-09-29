@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -50,7 +48,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -71,11 +68,6 @@ public class ObjectEntryExtensionProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-135404", "true"
-			).build());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), User.class.getName());
@@ -98,14 +90,6 @@ public class ObjectEntryExtensionProviderTest {
 			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, "precisionDecimal", true);
 
 		_user = UserTestUtil.addUser();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-135404", "false"
-			).build());
 	}
 
 	@Test

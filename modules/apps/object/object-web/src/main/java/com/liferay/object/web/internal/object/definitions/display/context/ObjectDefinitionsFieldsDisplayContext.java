@@ -72,10 +72,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		if ((!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135404")) &&
-			 objectDefinition.isSystem()) ||
-			!hasUpdateObjectDefinitionPermission()) {
-
+		if (!hasUpdateObjectDefinitionPermission()) {
 			return creationMenu;
 		}
 

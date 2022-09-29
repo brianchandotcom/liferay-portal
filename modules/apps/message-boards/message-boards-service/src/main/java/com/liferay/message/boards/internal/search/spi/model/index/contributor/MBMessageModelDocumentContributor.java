@@ -108,7 +108,7 @@ public class MBMessageModelDocumentContributor
 				mbMessage.getThreadId());
 
 			document.addKeyword(
-				"hasValidAnswer",
+				"answed",
 				Stream.of(
 					_mbMessageLocalService.getChildMessages(
 						mbMessage.getMessageId(),
@@ -120,14 +120,14 @@ public class MBMessageModelDocumentContributor
 				));
 
 			document.addKeyword(
-				"keywords",
+				"tagNames",
 				ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR));
 
 			document.addKeyword(
-				"numberOfMessageBoardMessages",
+				"childMessagesCount",
 				_mbMessageLocalService.getChildMessagesCount(
 					mbMessage.getMessageId(),
 					WorkflowConstants.STATUS_APPROVED));

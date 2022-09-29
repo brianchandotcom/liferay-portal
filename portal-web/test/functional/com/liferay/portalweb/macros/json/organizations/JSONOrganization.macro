@@ -8,7 +8,9 @@ definition {
 		}
 
 		JSONOrganizationAPI._addOrganization(
+			organizationCountry = "${organizationCountry}",
 			organizationName = "${organizationName}",
+			organizationRegion = "${organizationRegion}",
 			organizationSite = "${organizationSite}",
 			organizationType = "${organizationType}",
 			parentOrganizationId = "${parentOrganizationId}");

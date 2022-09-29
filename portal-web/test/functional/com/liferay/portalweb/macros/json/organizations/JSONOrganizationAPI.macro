@@ -23,6 +23,22 @@ definition {
 			var organizationType = "organization";
 		}
 
+		if (isSet(organizationCountry)) {
+			var countryId = JSONCountry.getCountryId(countryName = "${organizationCountry}");
+		}
+		else {
+			var countryId = "0";
+		}
+
+		if (isSet(organizationRegion)) {
+			var regionId = JSONCountry.getRegionId(
+				countryName = "${organizationCountry}",
+				regionName = "${organizationRegion}");
+		}
+		else {
+			var regionId = "0";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -31,8 +47,8 @@ definition {
 				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
 				-d type=${organizationType} \
-				-d regionId=0 \
-				-d countryId=0 \
+				-d regionId=${regionId} \
+				-d countryId=${countryId} \
 				-d statusId=12017 \
 				-d comments= \
 				-d site=${organizationSite}

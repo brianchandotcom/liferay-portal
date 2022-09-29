@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -91,8 +90,5 @@ public class CommerceCatalogChannelsFDSDataProvider
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
-
-	@Reference
-	private CommerceChannelService _commerceChannelService;
 
 }

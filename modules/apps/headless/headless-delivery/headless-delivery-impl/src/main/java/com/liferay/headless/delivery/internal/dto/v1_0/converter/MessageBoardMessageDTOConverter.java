@@ -158,7 +158,6 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
-
 	private String _getCompanyMxName(long companyId, User user)
 		throws Exception {
 
@@ -179,7 +178,6 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

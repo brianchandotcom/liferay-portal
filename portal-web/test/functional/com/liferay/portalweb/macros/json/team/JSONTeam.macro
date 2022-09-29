@@ -24,4 +24,42 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	macro addUserToTeam {
+		Variables.assertDefined(parameterList = "${teamName},${userEmailAddress}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+		var teamId = JSONTeam.getTeamId(
+			siteName = "${siteName}",
+			teamName = "${teamName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-team-users \
+			-u test@liferay.com:test \
+			-d teamId=${teamId} \
+			-d userIds=[${userId}]
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+	macro getTeamId {
+		Variables.assertDefined(parameterList = "${teamName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var key_teamName = StringUtil.replace("${teamName}", " ", "%20");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${siteName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/team/get-team \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d name=${key_teamName}
+		''';
+
+		var teamId = JSONCurlUtil.post("${curl}", "$.teamId");
+
+		return "${teamId}";
+	}
+
 }

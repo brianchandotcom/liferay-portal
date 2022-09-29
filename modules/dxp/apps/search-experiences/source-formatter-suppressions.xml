@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="JSONNamingCheck" files="search-experiences-api/src/main/java/com/liferay/search/experiences/problem/Problem\.java" />
-	</checkstyle>
-</suppressions>

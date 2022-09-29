@@ -79,50 +79,9 @@ public class ListObjectFieldFilterContributor
 				objectViewFilterColumn.getFilterType())
 		).put(
 			"itemsValues",
-			() -> {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					objectViewFilterColumn.getJSON());
-
-				JSONArray jsonArray = jsonObject.getJSONArray(
-					objectViewFilterColumn.getFilterType());
-
-				if (Objects.equals(
-						objectViewFilterColumn.getObjectFieldName(),
-						Field.STATUS)) {
-
-					return _toIntegerList(jsonArray);
-				}
-
-				ObjectField objectField =
-					_objectFieldLocalService.fetchObjectField(
-						objectDefinitionId,
-						objectViewFilterColumn.getObjectFieldName());
-
-				if (Objects.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-					return _toItemsValues(
-						objectDefinitionId, jsonArray, objectField);
-				}
-
-				List<Map<String, String>> itemsValues = new ArrayList<>();
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					ListTypeEntry listTypeEntry =
-						_listTypeEntryLocalService.fetchListTypeEntry(
-							listTypeDefinitionId, jsonArray.getString(i));
-
-					itemsValues.add(
-						HashMapBuilder.put(
-							"label", listTypeEntry.getName(locale)
-						).put(
-							"value", jsonArray.getString(i)
-						).build());
-				}
-
-				return itemsValues;
-			}
+			_toItemsValues(
+				objectDefinitionId, listTypeDefinitionId, locale,
+				objectViewFilterColumn)
 		).build();
 	}
 
@@ -217,17 +176,64 @@ public class ListObjectFieldFilterContributor
 			}
 		}
 		else if (Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-			_validate(objectDefinitionId, jsonArray, objectField);
+			_validate(jsonArray, objectField);
 		}
 	}
 
-	private List<Map<String, Object>> _toItemsValues(
-			long objectDefinitionId, JSONArray jsonArray,
-			ObjectField objectField)
+	private List<Integer> _toIntegerList(JSONArray jsonArray) {
+		List<Integer> statuses = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			statuses.add((Integer)jsonArray.get(i));
+		}
+
+		return statuses;
+	}
+
+	private Object _toItemsValues(
+			long objectDefinitionId, long listTypeDefinitionId, Locale locale,
+			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			objectViewFilterColumn.getJSON());
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			objectViewFilterColumn.getFilterType());
+
+		if (Objects.equals(
+				objectViewFilterColumn.getObjectFieldName(), Field.STATUS)) {
+
+			return _toIntegerList(jsonArray);
+		}
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinitionId, objectViewFilterColumn.getObjectFieldName());
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			List<Map<String, String>> itemsValues = new ArrayList<>();
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						listTypeDefinitionId, jsonArray.getString(i));
+
+				itemsValues.add(
+					HashMapBuilder.put(
+						"label", listTypeEntry.getName(locale)
+					).put(
+						"value", jsonArray.getString(i)
+					).build());
+			}
+
+			return itemsValues;
+		}
 
 		List<Map<String, Object>> itemsValues = new ArrayList<>();
 
@@ -273,19 +279,7 @@ public class ListObjectFieldFilterContributor
 		return itemsValues;
 	}
 
-	private List<Integer> _toIntegerList(JSONArray jsonArray) {
-		List<Integer> statuses = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			statuses.add((Integer)jsonArray.get(i));
-		}
-
-		return statuses;
-	}
-
-	private void _validate(
-			long objectDefinitionId, JSONArray jsonArray,
-			ObjectField objectField)
+	private void _validate(JSONArray jsonArray, ObjectField objectField)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =

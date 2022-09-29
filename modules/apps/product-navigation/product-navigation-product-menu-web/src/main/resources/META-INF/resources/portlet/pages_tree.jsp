@@ -56,11 +56,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 				>
 					<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" target="{target}" title="{title}">
 						<span class="c-inner" tabindex="-1">
-							<span class="mr-1 list-icon {type}-layout">
-								<aui:icon image="list" markupView="lexicon" />
-							</span>
 							<span class="mr-1 page-icon {type}-layout">
-								<aui:icon image="page" markupView="lexicon" />
+								<aui:icon image="{icon}" markupView="lexicon" />
 							</span>
 							{label}
 						</span>

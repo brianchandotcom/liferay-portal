@@ -239,4 +239,58 @@ definition {
 			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
 		}
 	}
+
+	@description = "Automation Ticket: LPS-157449 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
+	@priority = "4"
+	test CanViewTheRemoveActivationKeyButton {
+		task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Environment Name",
+				content = "Environment Test Name");
+		}
+
+		task ("And the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("And I click at '+ Add Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields two times") {
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "3");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+	}
 }

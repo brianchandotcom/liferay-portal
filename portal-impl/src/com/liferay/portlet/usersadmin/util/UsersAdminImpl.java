@@ -1116,8 +1116,8 @@ public class UsersAdminImpl implements UsersAdmin {
 				continue;
 			}
 
-			long typeId = ParamUtil.getLong(
-				actionRequest, "websiteTypeId" + websitesIndex);
+			long listTypeId = ParamUtil.getLong(
+				actionRequest, "websiteListTypeId" + websitesIndex);
 
 			boolean primary = false;
 
@@ -1131,7 +1131,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			Website website = WebsiteLocalServiceUtil.createWebsite(websiteId);
 
 			website.setUrl(url);
-			website.setTypeId(typeId);
+			website.setListTypeId(listTypeId);
 			website.setPrimary(primary);
 
 			websites.add(website);
@@ -1419,19 +1419,19 @@ public class UsersAdminImpl implements UsersAdmin {
 			long websiteId = website.getWebsiteId();
 
 			String url = website.getUrl();
-			long typeId = website.getTypeId();
+			long listTypeId = website.getListTypeId();
 			boolean primary = website.isPrimary();
 
 			if (websiteId <= 0) {
 				website = WebsiteServiceUtil.addWebsite(
-					className, classPK, url, typeId, primary,
+					className, classPK, url, listTypeId, primary,
 					new ServiceContext());
 
 				websiteId = website.getWebsiteId();
 			}
 			else {
 				WebsiteServiceUtil.updateWebsite(
-					websiteId, url, typeId, primary);
+					websiteId, url, listTypeId, primary);
 			}
 
 			websiteIds.add(websiteId);

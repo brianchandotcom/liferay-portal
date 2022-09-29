@@ -14,7 +14,9 @@ import MDFRequestActivity from '../../../interfaces/mdfRequestActivity';
 
 export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
-	mdfRequestId?: number
+	mdfRequestId?: number,
+	mdfRequestExternalReferenceCodeSF?: string,
+	externalReferenceCodeSF?: string
 ): MDFRequestActivityDTO {
 	return {
 		activityPromotion: mdfRequestActivity.activityPromotion,
@@ -23,6 +25,7 @@ export default function getDTOFromMDFRequestActivity(
 		description: mdfRequestActivity.description,
 		detailsLeadFollowUp: mdfRequestActivity.detailsLeadFollowUp,
 		endDate: mdfRequestActivity.endDate,
+		externalReferenceCodeSF,
 		gatedLandingPage: mdfRequestActivity.gatedLandingPage,
 		goalOfContent: mdfRequestActivity.goalOfContent,
 		hiringOutsideWriterOrAgency:
@@ -39,6 +42,7 @@ export default function getDTOFromMDFRequestActivity(
 		location: mdfRequestActivity.location,
 		marketingActivity: mdfRequestActivity.marketingActivity,
 		mdfRequestAmount: mdfRequestActivity.mdfRequestAmount,
+		mdfRequestExternalReferenceCodeSF,
 		name: mdfRequestActivity.name,
 		overallMessageContentCTA: mdfRequestActivity.overallMessageContentCTA,
 		primaryThemeOrMessage: mdfRequestActivity.primaryThemeOrMessage,

@@ -12,4 +12,6 @@
 export enum apiOption {
 	MDF_REQUEST_DXP = 'mdfrequests',
 	MDF_REQUEST_SALESFORCE = 'mdfrequestsfs',
+	ACTIVITY_DXP = 'activities',
+	ACTIVITY_SALESFORCE = 'activitysfs',
 }

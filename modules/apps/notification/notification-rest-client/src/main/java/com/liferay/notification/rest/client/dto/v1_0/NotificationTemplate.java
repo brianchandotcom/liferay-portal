@@ -324,6 +324,35 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Long objectDefinitionId;
 
+	public RecipientType getRecipientType() {
+		return recipientType;
+	}
+
+	public String getRecipientTypeAsString() {
+		if (recipientType == null) {
+			return null;
+		}
+
+		return recipientType.toString();
+	}
+
+	public void setRecipientType(RecipientType recipientType) {
+		this.recipientType = recipientType;
+	}
+
+	public void setRecipientType(
+		UnsafeSupplier<RecipientType, Exception> recipientTypeUnsafeSupplier) {
+
+		try {
+			recipientType = recipientTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected RecipientType recipientType;
+
 	public Map<String, String> getSubject() {
 		return subject;
 	}
@@ -366,6 +395,33 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, String> to;
 
+	public Type getType() {
+		return type;
+	}
+
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Type type;
+
 	@Override
 	public NotificationTemplate clone() throws CloneNotSupportedException {
 		return (NotificationTemplate)super.clone();
@@ -396,6 +452,72 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	public String toString() {
 		return NotificationTemplateSerDes.toJSON(this);
+	}
+
+	public static enum RecipientType {
+
+		ROLE("role"), TERM("term"), USER("user");
+
+		public static RecipientType create(String value) {
+			for (RecipientType recipientType : values()) {
+				if (Objects.equals(recipientType.getValue(), value) ||
+					Objects.equals(recipientType.name(), value)) {
+
+					return recipientType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private RecipientType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Type {
+
+		EMAIL("email"), USER_NOTIFICATION("userNotification");
+
+		public static Type create(String value) {
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value) ||
+					Objects.equals(type.name(), value)) {
+
+					return type;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

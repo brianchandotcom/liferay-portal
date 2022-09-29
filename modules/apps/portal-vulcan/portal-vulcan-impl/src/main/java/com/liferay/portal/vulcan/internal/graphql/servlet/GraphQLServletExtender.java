@@ -183,6 +183,7 @@ import java.util.stream.Stream;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -609,6 +610,19 @@ public class GraphQLServletExtender {
 
 							return null;
 						}
+
+						HttpServletRequest httpServletRequest =
+							(HttpServletRequest)arguments[0];
+
+						arguments[0] = new HttpServletRequestWrapper(
+							httpServletRequest) {
+
+							@Override
+							public boolean isAsyncSupported() {
+								return false;
+							}
+
+						};
 
 						Servlet servlet = _createServlet(
 							_portal.getCompanyId(

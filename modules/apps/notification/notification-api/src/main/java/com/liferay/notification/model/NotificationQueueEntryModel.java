@@ -334,27 +334,6 @@ public interface NotificationQueueEntryModel
 	public void setPriority(double priority);
 
 	/**
-	 * Returns the sent of this notification queue entry.
-	 *
-	 * @return the sent of this notification queue entry
-	 */
-	public boolean getSent();
-
-	/**
-	 * Returns <code>true</code> if this notification queue entry is sent.
-	 *
-	 * @return <code>true</code> if this notification queue entry is sent; <code>false</code> otherwise
-	 */
-	public boolean isSent();
-
-	/**
-	 * Sets whether this notification queue entry is sent.
-	 *
-	 * @param sent the sent of this notification queue entry
-	 */
-	public void setSent(boolean sent);
-
-	/**
 	 * Returns the sent date of this notification queue entry.
 	 *
 	 * @return the sent date of this notification queue entry

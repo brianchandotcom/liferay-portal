@@ -158,8 +158,6 @@ public class NotificationQueueEntryPersistenceTest {
 
 		newNotificationQueueEntry.setPriority(RandomTestUtil.nextDouble());
 
-		newNotificationQueueEntry.setSent(RandomTestUtil.randomBoolean());
-
 		newNotificationQueueEntry.setSentDate(RandomTestUtil.nextDate());
 
 		newNotificationQueueEntry.setSubject(RandomTestUtil.randomString());
@@ -229,9 +227,6 @@ public class NotificationQueueEntryPersistenceTest {
 			existingNotificationQueueEntry.getPriority(),
 			newNotificationQueueEntry.getPriority());
 		Assert.assertEquals(
-			existingNotificationQueueEntry.isSent(),
-			newNotificationQueueEntry.isSent());
-		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingNotificationQueueEntry.getSentDate()),
 			Time.getShortTimestamp(newNotificationQueueEntry.getSentDate()));
@@ -254,13 +249,6 @@ public class NotificationQueueEntryPersistenceTest {
 		_persistence.countByNotificationTemplateId(RandomTestUtil.nextLong());
 
 		_persistence.countByNotificationTemplateId(0L);
-	}
-
-	@Test
-	public void testCountBySent() throws Exception {
-		_persistence.countBySent(RandomTestUtil.randomBoolean());
-
-		_persistence.countBySent(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -310,8 +298,8 @@ public class NotificationQueueEntryPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"notificationTemplateId", true, "bcc", true, "cc", true,
 			"classNameId", true, "classPK", true, "from", true, "fromName",
-			true, "priority", true, "sent", true, "sentDate", true, "subject",
-			true, "to", true, "toName", true, "status", true);
+			true, "priority", true, "sentDate", true, "subject", true, "to",
+			true, "toName", true, "status", true);
 	}
 
 	@Test
@@ -587,8 +575,6 @@ public class NotificationQueueEntryPersistenceTest {
 		notificationQueueEntry.setFromName(RandomTestUtil.randomString());
 
 		notificationQueueEntry.setPriority(RandomTestUtil.nextDouble());
-
-		notificationQueueEntry.setSent(RandomTestUtil.randomBoolean());
 
 		notificationQueueEntry.setSentDate(RandomTestUtil.nextDate());
 

@@ -78,7 +78,7 @@ public class NotificationQueueEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,8 +112,6 @@ public class NotificationQueueEntryCacheModel
 		sb.append(fromName);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", sent=");
-		sb.append(sent);
 		sb.append(", sentDate=");
 		sb.append(sentDate);
 		sb.append(", subject=");
@@ -203,7 +201,6 @@ public class NotificationQueueEntryCacheModel
 		}
 
 		notificationQueueEntryImpl.setPriority(priority);
-		notificationQueueEntryImpl.setSent(sent);
 
 		if (sentDate == Long.MIN_VALUE) {
 			notificationQueueEntryImpl.setSentDate(null);
@@ -267,8 +264,6 @@ public class NotificationQueueEntryCacheModel
 		fromName = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
-
-		sent = objectInput.readBoolean();
 		sentDate = objectInput.readLong();
 		subject = objectInput.readUTF();
 		to = objectInput.readUTF();
@@ -339,8 +334,6 @@ public class NotificationQueueEntryCacheModel
 		}
 
 		objectOutput.writeDouble(priority);
-
-		objectOutput.writeBoolean(sent);
 		objectOutput.writeLong(sentDate);
 
 		if (subject == null) {
@@ -383,7 +376,6 @@ public class NotificationQueueEntryCacheModel
 	public String from;
 	public String fromName;
 	public double priority;
-	public boolean sent;
 	public long sentDate;
 	public String subject;
 	public String to;

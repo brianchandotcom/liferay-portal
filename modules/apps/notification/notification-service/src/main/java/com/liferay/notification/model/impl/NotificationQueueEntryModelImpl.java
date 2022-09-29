@@ -82,10 +82,9 @@ public class NotificationQueueEntryModelImpl
 		{"body", Types.CLOB}, {"cc", Types.VARCHAR},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"from_", Types.VARCHAR}, {"fromName", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"sent", Types.BOOLEAN},
-		{"sentDate", Types.TIMESTAMP}, {"subject", Types.VARCHAR},
-		{"to_", Types.VARCHAR}, {"toName", Types.VARCHAR},
-		{"status", Types.INTEGER}
+		{"priority", Types.DOUBLE}, {"sentDate", Types.TIMESTAMP},
+		{"subject", Types.VARCHAR}, {"to_", Types.VARCHAR},
+		{"toName", Types.VARCHAR}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,7 +107,6 @@ public class NotificationQueueEntryModelImpl
 		TABLE_COLUMNS_MAP.put("from_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fromName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("sent", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sentDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("to_", Types.VARCHAR);
@@ -117,7 +115,7 @@ public class NotificationQueueEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,status INTEGER)";
+		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationQueueEntry";
@@ -144,26 +142,20 @@ public class NotificationQueueEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SENT_COLUMN_BITMASK = 2L;
+	public static final long SENTDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SENTDATE_COLUMN_BITMASK = 4L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NOTIFICATIONQUEUEENTRYID_COLUMN_BITMASK = 16L;
+	public static final long NOTIFICATIONQUEUEENTRYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -374,11 +366,6 @@ public class NotificationQueueEntryModelImpl
 			"priority",
 			(BiConsumer<NotificationQueueEntry, Double>)
 				NotificationQueueEntry::setPriority);
-		attributeGetterFunctions.put("sent", NotificationQueueEntry::getSent);
-		attributeSetterBiConsumers.put(
-			"sent",
-			(BiConsumer<NotificationQueueEntry, Boolean>)
-				NotificationQueueEntry::setSent);
 		attributeGetterFunctions.put(
 			"sentDate", NotificationQueueEntry::getSentDate);
 		attributeSetterBiConsumers.put(
@@ -739,37 +726,6 @@ public class NotificationQueueEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getSent() {
-		return _sent;
-	}
-
-	@JSON
-	@Override
-	public boolean isSent() {
-		return _sent;
-	}
-
-	@Override
-	public void setSent(boolean sent) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_sent = sent;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalSent() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("sent"));
-	}
-
-	@JSON
-	@Override
 	public Date getSentDate() {
 		return _sentDate;
 	}
@@ -953,7 +909,6 @@ public class NotificationQueueEntryModelImpl
 		notificationQueueEntryImpl.setFrom(getFrom());
 		notificationQueueEntryImpl.setFromName(getFromName());
 		notificationQueueEntryImpl.setPriority(getPriority());
-		notificationQueueEntryImpl.setSent(isSent());
 		notificationQueueEntryImpl.setSentDate(getSentDate());
 		notificationQueueEntryImpl.setSubject(getSubject());
 		notificationQueueEntryImpl.setTo(getTo());
@@ -1002,8 +957,6 @@ public class NotificationQueueEntryModelImpl
 			this.<String>getColumnOriginalValue("fromName"));
 		notificationQueueEntryImpl.setPriority(
 			this.<Double>getColumnOriginalValue("priority"));
-		notificationQueueEntryImpl.setSent(
-			this.<Boolean>getColumnOriginalValue("sent"));
 		notificationQueueEntryImpl.setSentDate(
 			this.<Date>getColumnOriginalValue("sentDate"));
 		notificationQueueEntryImpl.setSubject(
@@ -1178,8 +1131,6 @@ public class NotificationQueueEntryModelImpl
 
 		notificationQueueEntryCacheModel.priority = getPriority();
 
-		notificationQueueEntryCacheModel.sent = isSent();
-
 		Date sentDate = getSentDate();
 
 		if (sentDate != null) {
@@ -1326,7 +1277,6 @@ public class NotificationQueueEntryModelImpl
 	private String _from;
 	private String _fromName;
 	private double _priority;
-	private boolean _sent;
 	private Date _sentDate;
 	private String _subject;
 	private String _to;
@@ -1380,7 +1330,6 @@ public class NotificationQueueEntryModelImpl
 		_columnOriginalValues.put("from_", _from);
 		_columnOriginalValues.put("fromName", _fromName);
 		_columnOriginalValues.put("priority", _priority);
-		_columnOriginalValues.put("sent", _sent);
 		_columnOriginalValues.put("sentDate", _sentDate);
 		_columnOriginalValues.put("subject", _subject);
 		_columnOriginalValues.put("to_", _to);
@@ -1442,17 +1391,15 @@ public class NotificationQueueEntryModelImpl
 
 		columnBitmasks.put("priority", 32768L);
 
-		columnBitmasks.put("sent", 65536L);
+		columnBitmasks.put("sentDate", 65536L);
 
-		columnBitmasks.put("sentDate", 131072L);
+		columnBitmasks.put("subject", 131072L);
 
-		columnBitmasks.put("subject", 262144L);
+		columnBitmasks.put("to_", 262144L);
 
-		columnBitmasks.put("to_", 524288L);
+		columnBitmasks.put("toName", 524288L);
 
-		columnBitmasks.put("toName", 1048576L);
-
-		columnBitmasks.put("status", 2097152L);
+		columnBitmasks.put("status", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

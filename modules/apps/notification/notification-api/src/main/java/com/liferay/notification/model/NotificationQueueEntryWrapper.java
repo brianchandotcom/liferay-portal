@@ -61,7 +61,6 @@ public class NotificationQueueEntryWrapper
 		attributes.put("from", getFrom());
 		attributes.put("fromName", getFromName());
 		attributes.put("priority", getPriority());
-		attributes.put("sent", isSent());
 		attributes.put("sentDate", getSentDate());
 		attributes.put("subject", getSubject());
 		attributes.put("to", getTo());
@@ -169,12 +168,6 @@ public class NotificationQueueEntryWrapper
 
 		if (priority != null) {
 			setPriority(priority);
-		}
-
-		Boolean sent = (Boolean)attributes.get("sent");
-
-		if (sent != null) {
-			setSent(sent);
 		}
 
 		Date sentDate = (Date)attributes.get("sentDate");
@@ -374,16 +367,6 @@ public class NotificationQueueEntryWrapper
 	}
 
 	/**
-	 * Returns the sent of this notification queue entry.
-	 *
-	 * @return the sent of this notification queue entry
-	 */
-	@Override
-	public boolean getSent() {
-		return model.getSent();
-	}
-
-	/**
 	 * Returns the sent date of this notification queue entry.
 	 *
 	 * @return the sent date of this notification queue entry
@@ -461,16 +444,6 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
-	}
-
-	/**
-	 * Returns <code>true</code> if this notification queue entry is sent.
-	 *
-	 * @return <code>true</code> if this notification queue entry is sent; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isSent() {
-		return model.isSent();
 	}
 
 	@Override
@@ -631,16 +604,6 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public void setPriority(double priority) {
 		model.setPriority(priority);
-	}
-
-	/**
-	 * Sets whether this notification queue entry is sent.
-	 *
-	 * @param sent the sent of this notification queue entry
-	 */
-	@Override
-	public void setSent(boolean sent) {
-		model.setSent(sent);
 	}
 
 	/**

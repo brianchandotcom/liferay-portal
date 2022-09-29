@@ -79,8 +79,6 @@ public class NotificationQueueEntryTable
 	public final Column<NotificationQueueEntryTable, Double> priority =
 		createColumn(
 			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, Boolean> sent =
-		createColumn("sent", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Date> sentDate =
 		createColumn(
 			"sentDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);

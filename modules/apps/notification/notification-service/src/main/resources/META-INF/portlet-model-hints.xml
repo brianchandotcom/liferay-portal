@@ -20,7 +20,6 @@
 		<field name="from" type="String" />
 		<field name="fromName" type="String" />
 		<field name="priority" type="double" />
-		<field name="sent" type="boolean" />
 		<field name="sentDate" type="Date" />
 		<field name="subject" type="String" />
 		<field name="to" type="String" />

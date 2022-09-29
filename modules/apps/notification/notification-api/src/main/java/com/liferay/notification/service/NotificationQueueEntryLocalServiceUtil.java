@@ -341,11 +341,11 @@ public class NotificationQueueEntryLocalServiceUtil {
 			notificationQueueEntry);
 	}
 
-	public static NotificationQueueEntry updateSent(
-			long notificationQueueEntryId, boolean sent)
+	public static NotificationQueueEntry updateStatus(
+			long notificationQueueEntryId, int status)
 		throws PortalException {
 
-		return getService().updateSent(notificationQueueEntryId, sent);
+		return getService().updateStatus(notificationQueueEntryId, status);
 	}
 
 	public static NotificationQueueEntryLocalService getService() {

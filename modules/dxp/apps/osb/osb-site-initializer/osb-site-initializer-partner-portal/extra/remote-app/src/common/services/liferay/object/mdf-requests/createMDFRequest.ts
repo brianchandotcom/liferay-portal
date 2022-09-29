@@ -10,17 +10,19 @@
  */
 
 import {Liferay} from '../..';
-import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
+import MDFRequest from '../../../../interfaces/mdfRequest';
+import {getDTOFromMDFRequest} from '../../../../utils/dto/mdf-request/getDTOFromMDFRequest';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFRequest(
-	mdfRequestDTO: MDFRequestDTO,
-	mdfRequestApiOption: string
+	ApiOption: string,
+	mdfRequest: MDFRequest,
+	externalReferenceCodeSF?: string
 ) {
 	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/${mdfRequestApiOption}`,
+		`/o/${LiferayAPIs.OBJECT}/${ApiOption}`,
 		Liferay.authToken,
-		mdfRequestDTO
+		getDTOFromMDFRequest(mdfRequest, externalReferenceCodeSF)
 	);
 }

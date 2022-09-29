@@ -16,21 +16,21 @@ import getSummaryActivities from '../../getSummaryActivities';
 
 export function getDTOFromMDFRequest(
 	mdfRequest: MDFRequest,
-	externalReferenceCode?: string
+	externalReferenceCodeSF?: string
 ): MDFRequestDTO {
 	return {
 		...getSummaryActivities(mdfRequest.activities),
 		additionalOption: mdfRequest.additionalOption,
 		country: mdfRequest.country,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
-		externalReferenceCodeSF: externalReferenceCode,
+		externalReferenceCodeSF,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			'; '
 		),
 		liferaysUserID: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
-		r_userToMDFRequests_userId: +Liferay.ThemeDisplay.getUserId(),
+		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),
 		requestStatus: mdfRequest.requestStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles.join('; '),
 		targetMarkets: mdfRequest.targetMarkets.join('; '),

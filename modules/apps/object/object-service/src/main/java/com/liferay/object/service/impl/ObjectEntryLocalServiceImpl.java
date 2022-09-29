@@ -737,14 +737,14 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public String getTitleValue(long entryId, long objectDefinitionId)
+	public String getTitleValue(long objectDefinitionId, long primaryKey)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		if (!objectDefinition.isSystem()) {
-			ObjectEntry objectEntry = getObjectEntry(entryId);
+			ObjectEntry objectEntry = getObjectEntry(primaryKey);
 
 			return objectEntry.getTitleValue();
 		}
@@ -764,7 +764,7 @@ public class ObjectEntryLocalServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			String.valueOf(
-				persistedModelLocalService.getPersistedModel(entryId)));
+				persistedModelLocalService.getPersistedModel(primaryKey)));
 
 		return jsonObject.getString(titleObjectField.getDBColumnName());
 	}

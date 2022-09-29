@@ -702,6 +702,12 @@ definition {
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
+		macro assertButtonNotPresent {
+		var key_text = "${text}";
+
+		AssertElementNotPresent(locator1 = "CustomerPortalSite#ANY_BUTTON");
+	}
+
 	macro viewCardValue {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#PROJECT_LOGO",

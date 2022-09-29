@@ -23,7 +23,7 @@ const BasePage: React.FC<IBasePageProps> & {
 	Footer: typeof BasePageFooter;
 } = ({children, description, title}) => {
 	return (
-		<div className="sheet sheet-lg">
+		<div className="mb-5 sheet sheet-lg">
 			<div>
 				<h2 className="sheet-title">{title}</h2>
 

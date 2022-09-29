@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.query.Queries;
@@ -117,9 +116,6 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 	@Reference(target = "(workflow.metrics.index.entity.name=node)")
 	private WorkflowMetricsIndexNameBuilder
 		_nodeWorkflowMetricsIndexNameBuilder;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
 	private WorkflowMetricsIndexNameBuilder

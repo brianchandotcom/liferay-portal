@@ -295,13 +295,20 @@ public class CollectionLayoutStructureItemMapper
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
+		String align = collectionStyledLayoutStructureItem.getAlign();
+		String flexWrap = collectionStyledLayoutStructureItem.getFlexWrap();
+		String justify = collectionStyledLayoutStructureItem.getJustify();
+
+		if (Validator.isNull(align) && Validator.isNull(flexWrap) &&
+			Validator.isNull(justify)) {
+
+			return null;
+		}
+
 		return new Layout() {
 			{
 				setAlign(
 					() -> {
-						String align =
-							collectionStyledLayoutStructureItem.getAlign();
-
 						if (Validator.isNull(align)) {
 							return null;
 						}
@@ -311,9 +318,6 @@ public class CollectionLayoutStructureItemMapper
 					});
 				setFlexWrap(
 					() -> {
-						String flexWrap =
-							collectionStyledLayoutStructureItem.getFlexWrap();
-
 						if (Validator.isNull(flexWrap)) {
 							return null;
 						}
@@ -323,9 +327,6 @@ public class CollectionLayoutStructureItemMapper
 					});
 				setJustify(
 					() -> {
-						String justify =
-							collectionStyledLayoutStructureItem.getJustify();
-
 						if (Validator.isNull(justify)) {
 							return null;
 						}

@@ -29,7 +29,10 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -78,6 +81,8 @@ public class MessageBoardMessageDTOConverter
 						MBMessage.class.getName(), mbMessage.getMessageId()));
 				anonymous = mbMessage.isAnonymous();
 				articleBody = mbMessage.getBody();
+				companyMxName = _getCompanyMxName(
+					mbMessage.getCompanyId(), user);
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
@@ -153,6 +158,19 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
+
+	private String _getCompanyMxName(long companyId, User user)
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (company.hasCompanyMx(user.getEmailAddress())) {
+			return user.getCompanyMx();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -161,6 +179,10 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

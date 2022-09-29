@@ -289,7 +289,7 @@ if (websites.isEmpty()) {
 			%>
 
 				<li class="<%= website.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><liferay-ui:message key="<%= website.getType().getName() %>" /></span>
+					<span class="property-type"><liferay-ui:message key="<%= website.getListType().getName() %>" /></span>
 
 					<span class="property"><a href="<%= website.getUrl() %>"><%= website.getUrl() %></a></span>
 				</li>

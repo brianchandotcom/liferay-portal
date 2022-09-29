@@ -107,7 +107,7 @@ definition {
 	@priority = "5"
 	test ViewNoUnrelatedPreviewsArchive7413 {
 		property data.archive.type = "data-archive-publications-with-unrelated-previews-generated";
-		property database.types = "mariadb,mysql,sybase";
+		property database.types = "mysql,sybase";
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 

@@ -12,7 +12,8 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const Step: () => JSX.Element;
+import React from 'react';
+import {TGenericComponent} from './WizardPage';
+interface IStepProps extends TGenericComponent {}
+declare const Step: React.FC<IStepProps>;
 export default Step;

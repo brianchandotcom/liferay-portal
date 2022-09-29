@@ -208,8 +208,6 @@ public class JournalArticleExportImportContentProcessor
 		if (GetterUtil.getBoolean(entityElement.attributeValue("cached"))) {
 			portletDataContext.removePrimaryKey(
 				ExportImportPathUtil.getModelPath(stagedModel));
-
-			return content;
 		}
 
 		content = _replaceImportJournalArticleReferences(

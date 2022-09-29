@@ -40,7 +40,7 @@ public class MappingTypesUtil {
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoItemClassDetails infoItemClassDetails :
-				infoItemServiceTracker.getFilteredInfoItemClassDetails(
+				infoItemServiceTracker.getInfoItemClassDetails(
 					themeDisplay.getScopeGroupId(), itemCapabilityKey,
 					themeDisplay.getPermissionChecker())) {
 

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -30,6 +32,13 @@ public class GitRepositoryFactory {
 
 		return new DefaultLocalGitRepository(
 			repositoryName, upstreamBranchName);
+	}
+
+	public static LocalGitRepository getLocalGitRepository(
+		String repositoryName, String upstreamBranchName, File repositoryDir) {
+
+		return new DefaultLocalGitRepository(
+			repositoryName, upstreamBranchName, repositoryDir);
 	}
 
 	public static RemoteGitRepository getRemoteGitRepository(

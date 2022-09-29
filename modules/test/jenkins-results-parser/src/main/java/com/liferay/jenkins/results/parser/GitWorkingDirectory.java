@@ -1355,7 +1355,8 @@ public class GitWorkingDirectory {
 
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
-				getGitRepositoryName(), upstreamBranchName);
+				getGitRepositoryName(), upstreamBranchName,
+				getWorkingDirectory());
 
 		if (branchName != null) {
 			try {

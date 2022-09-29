@@ -171,6 +171,29 @@ public abstract class BaseLocalGitRepository
 		validateKeys(_KEYS_REQUIRED);
 	}
 
+	protected BaseLocalGitRepository(
+		String name, String upstreamBranchName, File repositoryDir) {
+
+		super(name);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+			throw new IllegalArgumentException("Upstream branch name is null");
+		}
+
+		_setUpstreamBranchName(upstreamBranchName);
+
+		if (!repositoryDir.exists()) {
+			throw new IllegalArgumentException(
+				"Unable to find " + repositoryDir);
+		}
+
+		put("directory_name", repositoryDir.getName());
+
+		_setDirectory(repositoryDir);
+
+		validateKeys(_KEYS_REQUIRED);
+	}
+
 	private void _setDirectory(File directory) {
 		put("directory", JenkinsResultsParserUtil.getCanonicalPath(directory));
 	}

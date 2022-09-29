@@ -127,8 +127,8 @@ public class VerifyProcessTrackerOSGiCommands {
 		String verifyProcessName, String outputStreamContainerFactoryName) {
 
 		_execute(
-			_verifyProcesses, verifyProcessName,
-			outputStreamContainerFactoryName, true);
+			_getVerifyProcesses(_verifyProcesses, verifyProcessName),
+			verifyProcessName, outputStreamContainerFactoryName, true);
 	}
 
 	@Descriptor("Execute all verify processes")
@@ -152,8 +152,9 @@ public class VerifyProcessTrackerOSGiCommands {
 			() -> {
 				for (String verifyProcessName : _verifyProcesses.keySet()) {
 					_executeVerifyProcesses(
-						_verifyProcesses, verifyProcessName, outputStream,
-						true);
+						_getVerifyProcesses(
+							_verifyProcesses, verifyProcessName),
+						verifyProcessName, outputStream, true);
 				}
 			},
 			outputStreamContainer.getDescription(), outputStream);
@@ -226,9 +227,8 @@ public class VerifyProcessTrackerOSGiCommands {
 	}
 
 	private void _execute(
-		ServiceTrackerMap<String, List<VerifyProcess>> verifyProcessTrackerMap,
-		String verifyProcessName, String outputStreamContainerFactoryName,
-		boolean force) {
+		List<VerifyProcess> verifyProcesses, String verifyProcessName,
+		String outputStreamContainerFactoryName, boolean force) {
 
 		String outputStreamName = "verify-" + verifyProcessName;
 
@@ -244,8 +244,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_outputStreamContainerFactoryTracker.runWithSwappedLog(
 			() -> _executeVerifyProcesses(
-				verifyProcessTrackerMap, verifyProcessName, outputStream,
-				force),
+				verifyProcesses, verifyProcessName, outputStream, force),
 			outputStreamName, outputStream);
 
 		try {
@@ -257,13 +256,10 @@ public class VerifyProcessTrackerOSGiCommands {
 	}
 
 	private void _executeVerifyProcesses(
-		ServiceTrackerMap<String, List<VerifyProcess>> verifyProcessTrackerMap,
-		String verifyProcessName, OutputStream outputStream, boolean force) {
+		List<VerifyProcess> verifyProcesses, String verifyProcessName,
+		OutputStream outputStream, boolean force) {
 
 		PrintWriter printWriter = new PrintWriter(outputStream, true);
-
-		List<VerifyProcess> verifyProcesses = _getVerifyProcesses(
-			verifyProcessTrackerMap, verifyProcessName);
 
 		NotificationThreadLocal.setEnabled(false);
 		StagingAdvicesThreadLocal.setEnabled(false);
@@ -371,8 +367,11 @@ public class VerifyProcessTrackerOSGiCommands {
 			String key, VerifyProcess serviceVerifyProcess,
 			List<VerifyProcess> contentVerifyProcesses) {
 
+			List<VerifyProcess> verifyProcesses = _getVerifyProcesses(
+				verifyProcessTrackerMap, key);
+
 			_execute(
-				verifyProcessTrackerMap, key,
+				verifyProcesses, key,
 				OutputStreamContainerConstants.FACTORY_NAME_DUMMY, false);
 		}
 

@@ -174,12 +174,8 @@ public class JournalArticleInfoItemObjectProvider
 				WorkflowConstants.STATUS_ANY);
 		}
 		else {
-			JournalArticleResource articleResource =
-				_journalArticleResourceLocalService.getArticleResource(classPK);
-
 			return _journalArticleLocalService.getArticle(
-				articleResource.getGroupId(), articleResource.getArticleId(),
-				GetterUtil.getDouble(version));
+				GetterUtil.getLong(version));
 		}
 	}
 

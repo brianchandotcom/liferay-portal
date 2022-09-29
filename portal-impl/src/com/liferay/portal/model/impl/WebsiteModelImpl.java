@@ -80,7 +80,7 @@ public class WebsiteModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"url", Types.VARCHAR}, {"typeId", Types.BIGINT},
+		{"url", Types.VARCHAR}, {"listTypeId", Types.BIGINT},
 		{"primary_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -99,13 +99,13 @@ public class WebsiteModelImpl
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("listTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Website (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+		"create table Website (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,listTypeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Website";
 
@@ -315,9 +315,9 @@ public class WebsiteModelImpl
 		attributeGetterFunctions.put("url", Website::getUrl);
 		attributeSetterBiConsumers.put(
 			"url", (BiConsumer<Website, String>)Website::setUrl);
-		attributeGetterFunctions.put("typeId", Website::getTypeId);
+		attributeGetterFunctions.put("listTypeId", Website::getListTypeId);
 		attributeSetterBiConsumers.put(
-			"typeId", (BiConsumer<Website, Long>)Website::setTypeId);
+			"listTypeId", (BiConsumer<Website, Long>)Website::setListTypeId);
 		attributeGetterFunctions.put("primary", Website::getPrimary);
 		attributeSetterBiConsumers.put(
 			"primary", (BiConsumer<Website, Boolean>)Website::setPrimary);
@@ -604,17 +604,17 @@ public class WebsiteModelImpl
 
 	@JSON
 	@Override
-	public long getTypeId() {
-		return _typeId;
+	public long getListTypeId() {
+		return _listTypeId;
 	}
 
 	@Override
-	public void setTypeId(long typeId) {
+	public void setListTypeId(long listTypeId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_typeId = typeId;
+		_listTypeId = listTypeId;
 	}
 
 	@JSON
@@ -737,7 +737,7 @@ public class WebsiteModelImpl
 		websiteImpl.setClassNameId(getClassNameId());
 		websiteImpl.setClassPK(getClassPK());
 		websiteImpl.setUrl(getUrl());
-		websiteImpl.setTypeId(getTypeId());
+		websiteImpl.setListTypeId(getListTypeId());
 		websiteImpl.setPrimary(isPrimary());
 		websiteImpl.setLastPublishDate(getLastPublishDate());
 
@@ -768,7 +768,8 @@ public class WebsiteModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		websiteImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
 		websiteImpl.setUrl(this.<String>getColumnOriginalValue("url"));
-		websiteImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		websiteImpl.setListTypeId(
+			this.<Long>getColumnOriginalValue("listTypeId"));
 		websiteImpl.setPrimary(
 			this.<Boolean>getColumnOriginalValue("primary_"));
 		websiteImpl.setLastPublishDate(
@@ -902,7 +903,7 @@ public class WebsiteModelImpl
 			websiteCacheModel.url = null;
 		}
 
-		websiteCacheModel.typeId = getTypeId();
+		websiteCacheModel.listTypeId = getListTypeId();
 
 		websiteCacheModel.primary = isPrimary();
 
@@ -1019,7 +1020,7 @@ public class WebsiteModelImpl
 	private long _classNameId;
 	private long _classPK;
 	private String _url;
-	private long _typeId;
+	private long _listTypeId;
 	private boolean _primary;
 	private Date _lastPublishDate;
 
@@ -1063,7 +1064,7 @@ public class WebsiteModelImpl
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("url", _url);
-		_columnOriginalValues.put("typeId", _typeId);
+		_columnOriginalValues.put("listTypeId", _listTypeId);
 		_columnOriginalValues.put("primary_", _primary);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
@@ -1112,7 +1113,7 @@ public class WebsiteModelImpl
 
 		columnBitmasks.put("url", 1024L);
 
-		columnBitmasks.put("typeId", 2048L);
+		columnBitmasks.put("listTypeId", 2048L);
 
 		columnBitmasks.put("primary_", 4096L);
 

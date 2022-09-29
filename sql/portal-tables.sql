@@ -1637,7 +1637,7 @@ create table Website (
 	classNameId LONG,
 	classPK LONG,
 	url STRING null,
-	typeId LONG,
+	listTypeId LONG,
 	primary_ BOOLEAN,
 	lastPublishDate DATE null
 );

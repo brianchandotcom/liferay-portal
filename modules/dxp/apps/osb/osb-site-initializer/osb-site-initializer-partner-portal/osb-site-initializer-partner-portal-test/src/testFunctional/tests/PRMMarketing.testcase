@@ -79,5 +79,24 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164166. Verify if a 'Get Tour Partner Marketing Guide' button is displayed on banner and a file will be downloaded when click on this button"
+	@priority = "4"
+	test CanDownloadBannerGuide {
+		var fileName = "partner-marketing-program-guide.pdf";
+
+		task ("Given that the user clicks on 'Get Your Partner Marketing Guide' button on Welcome Banner") {
+			PRMPages.clickBannerButton(buttonText = "Get Your Partner Marketing Guide");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the guide will be downloaded") {
+			PRMUtils.downloadFileViaCurl(fileName = "${fileName}");
+
+			ImportExport.assertDownloadedFileName(downloadedFile = "${fileName}");
+		}
+
+	}
+
 
 }

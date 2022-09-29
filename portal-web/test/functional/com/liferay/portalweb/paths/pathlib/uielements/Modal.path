@@ -80,6 +80,16 @@
 	<td>//div[contains(@class, 'modal-footer')]//button[contains(@class,'btn-primary')][contains(text(),'Select')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACTIVE_TAB_LINK</td>
+	<td>//div[contains(@class, 'modal-body')]//*[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='${key_tab}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_LINK</td>
+	<td>//div[contains(@class, 'modal-body')]//*[contains(@class,'nav-link') and normalize-space()='${key_tab}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

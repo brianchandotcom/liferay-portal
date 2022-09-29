@@ -15,11 +15,8 @@
 package com.liferay.portal.verify.extender.internal.osgi.commands;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,10 +46,12 @@ import java.util.Set;
 import org.apache.felix.service.command.Descriptor;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Miguel Pastor
@@ -205,20 +205,45 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_bundleContext = bundleContext;
 
-		ServiceTrackerMapListener<String, VerifyProcess, List<VerifyProcess>>
-			verifyServiceTrackerMapListener = null;
-
-		if (StartupHelperUtil.isUpgrading()) {
-			verifyServiceTrackerMapListener =
-				new VerifyServiceTrackerMapListener();
-		}
-
 		_verifyProcesses = ServiceTrackerMapFactory.openMultiValueMap(
-			_bundleContext, VerifyProcess.class, null,
-			new PropertyServiceReferenceMapper<String, VerifyProcess>(
-				"verify.process.name"),
-			new PropertyServiceReferenceComparator("service.ranking"),
-			verifyServiceTrackerMapListener);
+			_bundleContext, VerifyProcess.class, "verify.process.name",
+			new ServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
+
+				@Override
+				public VerifyProcess addingService(
+					ServiceReference<VerifyProcess> serviceReference) {
+
+					VerifyProcess verifyProcess = _bundleContext.getService(
+						serviceReference);
+
+					if (StartupHelperUtil.isUpgrading()) {
+						_execute(
+							Collections.singletonList(verifyProcess),
+							String.valueOf(
+								serviceReference.getProperty(
+									"verify.process.name")),
+							OutputStreamContainerConstants.FACTORY_NAME_DUMMY,
+							false);
+					}
+
+					return verifyProcess;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<VerifyProcess> serviceReference,
+					VerifyProcess verifyProcess) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<VerifyProcess> serviceReference,
+					VerifyProcess verifyProcess) {
+
+					_bundleContext.ungetService(serviceReference);
+				}
+
+			});
 	}
 
 	@Deactivate
@@ -355,33 +380,5 @@ public class VerifyProcessTrackerOSGiCommands {
 	private ReleaseLocalService _releaseLocalService;
 
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
-
-	private class VerifyServiceTrackerMapListener
-		implements ServiceTrackerMapListener
-			<String, VerifyProcess, List<VerifyProcess>> {
-
-		@Override
-		public void keyEmitted(
-			ServiceTrackerMap<String, List<VerifyProcess>>
-				verifyProcessTrackerMap,
-			String key, VerifyProcess serviceVerifyProcess,
-			List<VerifyProcess> contentVerifyProcesses) {
-
-			List<VerifyProcess> verifyProcesses = _getVerifyProcesses(
-				verifyProcessTrackerMap, key);
-
-			_execute(
-				verifyProcesses, key,
-				OutputStreamContainerConstants.FACTORY_NAME_DUMMY, false);
-		}
-
-		@Override
-		public void keyRemoved(
-			ServiceTrackerMap<String, List<VerifyProcess>> serviceTrackerMap,
-			String key, VerifyProcess serviceVerifyProcess,
-			List<VerifyProcess> contentVerifyProcess) {
-		}
-
-	}
 
 }

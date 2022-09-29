@@ -108,6 +108,46 @@ definition {
 			value1 = "No roles were found.");
 	}
 
+	@description = "This test asserts that user can search role with different title and key."
+	@priority = "3"
+	test CanSearchRoleWithDifferentTitleAndKey {
+		task ("Given a new role with different title and key is created") {
+			Role.openRolesAdmin();
+
+			Role.add(
+				roleKey = "Role2 Key",
+				roleTitle = "Role1 Name");
+		}
+
+		task ("When searching for role title") {
+			Role.openRolesAdmin();
+
+			Search.searchCP(searchTerm = "Role1 Name");
+		}
+
+		task ("Then only one result is displayed and the result is the newly created role") {
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "1 Result for &quot;Role1 Name&quot;");
+
+			LexiconEntry.viewEntryName(rowEntry = "Role1 Name");
+		}
+
+		task ("When clearing search results and searching for role key") {
+			Search.clearSearchResult();
+
+			Search.searchCP(searchTerm = "Role2 Key");
+		}
+
+		task ("Then only one result is displayed and the result is the newly created role") {
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "1 Result for &quot;Role2 Key&quot;");
+
+			LexiconEntry.viewEntryName(rowEntry = "Role1 Name");
+		}
+	}
+
 	@description = "This test automates LPS-141903 and asserts that a deactivated user is not counted in Site Roles"
 	@priority = "3"
 	test DeactivatedUserIsNotCountedInSiteRoles {

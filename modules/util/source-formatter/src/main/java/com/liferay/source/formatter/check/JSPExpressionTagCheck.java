@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.JSPSourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,10 @@ public class JSPExpressionTagCheck extends BaseFileCheck {
 		Matcher matcher = _jspExpressionTagPattern.matcher(content);
 
 		while (matcher.find()) {
+			if (JSPSourceUtil.isJSSource(content, matcher.start())) {
+				continue;
+			}
+
 			String jspExpressionTag = matcher.group();
 
 			if ((jspExpressionTag.contains(StringPool.COLON) &&

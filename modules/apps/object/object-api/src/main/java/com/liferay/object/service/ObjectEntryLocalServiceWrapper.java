@@ -580,11 +580,11 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
-	public String getTitleValue(long entryId, long objectDefinitionId)
+	public String getTitleValue(long objectDefinitionId, long primaryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getTitleValue(
-			entryId, objectDefinitionId);
+			objectDefinitionId, primaryKey);
 	}
 
 	@Override

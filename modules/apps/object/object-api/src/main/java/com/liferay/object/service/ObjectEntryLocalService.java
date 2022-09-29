@@ -413,7 +413,7 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getTitleValue(long entryId, long objectDefinitionId)
+	public String getTitleValue(long objectDefinitionId, long primaryKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -109,9 +109,39 @@ definition {
     @description = "Automation ID: LPS-148071 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, an alert is displayed to download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size"
 	@priority = "4"
     test YouCanSeeTheDisplayOfAnAlert {
-        
-		// TODO LPS-148071 YouCanSeeTheDisplayOfAnAlert pending implementation
+        task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+        task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+        task ("I selected two keys in the table") {
+			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
+				date = "Nov 15, 2028",
+				position = "1");
+
+			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
+				date = "Mar 30, 2023",
+				position = "2");
+		}
+
+		task ("Then I assert that the alert with the message 'To download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size' is visible") {
+			CustomerPortal.viewAlertInfo(alertText = "To download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size");
+		}
     }
 
     @description = "Automation ID: LPS-148072 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"

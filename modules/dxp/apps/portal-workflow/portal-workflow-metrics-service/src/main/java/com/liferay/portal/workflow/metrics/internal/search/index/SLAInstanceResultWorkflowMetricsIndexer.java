@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -212,9 +211,6 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference(
 		target = "(workflow.metrics.index.entity.name=sla-instance-result)"

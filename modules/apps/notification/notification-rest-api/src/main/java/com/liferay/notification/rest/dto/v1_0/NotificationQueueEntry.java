@@ -282,32 +282,6 @@ public class NotificationQueueEntry implements Serializable {
 	protected Double priority;
 
 	@Schema
-	public Boolean getSent() {
-		return sent;
-	}
-
-	public void setSent(Boolean sent) {
-		this.sent = sent;
-	}
-
-	@JsonIgnore
-	public void setSent(UnsafeSupplier<Boolean, Exception> sentUnsafeSupplier) {
-		try {
-			sent = sentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean sent;
-
-	@Schema
 	public Date getSentDate() {
 		return sentDate;
 	}
@@ -602,16 +576,6 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append("\"priority\": ");
 
 			sb.append(priority);
-		}
-
-		if (sent != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sent\": ");
-
-			sb.append(sent);
 		}
 
 		if (sentDate != null) {

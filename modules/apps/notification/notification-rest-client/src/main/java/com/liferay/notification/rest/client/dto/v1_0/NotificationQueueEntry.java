@@ -195,25 +195,6 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 
 	protected Double priority;
 
-	public Boolean getSent() {
-		return sent;
-	}
-
-	public void setSent(Boolean sent) {
-		this.sent = sent;
-	}
-
-	public void setSent(UnsafeSupplier<Boolean, Exception> sentUnsafeSupplier) {
-		try {
-			sent = sentUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean sent;
-
 	public Date getSentDate() {
 		return sentDate;
 	}

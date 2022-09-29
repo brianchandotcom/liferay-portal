@@ -963,14 +963,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("sent", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getSent() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("sentDate", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getSentDate() == null) {
 					valid = false;
@@ -1202,17 +1194,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("sent", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getSent(),
-						notificationQueueEntry2.getSent())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("sentDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getSentDate(),
@@ -1433,11 +1414,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("sent")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("sentDate")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1564,7 +1540,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
-				sent = RandomTestUtil.randomBoolean();
 				sentDate = RandomTestUtil.nextDate();
 				status = RandomTestUtil.randomInt();
 				subject = StringUtil.toLowerCase(RandomTestUtil.randomString());

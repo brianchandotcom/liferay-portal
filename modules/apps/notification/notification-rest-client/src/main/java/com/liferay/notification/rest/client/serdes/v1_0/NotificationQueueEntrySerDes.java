@@ -161,16 +161,6 @@ public class NotificationQueueEntrySerDes {
 			sb.append(notificationQueueEntry.getPriority());
 		}
 
-		if (notificationQueueEntry.getSent() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sent\": ");
-
-			sb.append(notificationQueueEntry.getSent());
-		}
-
 		if (notificationQueueEntry.getSentDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -338,13 +328,6 @@ public class NotificationQueueEntrySerDes {
 				String.valueOf(notificationQueueEntry.getPriority()));
 		}
 
-		if (notificationQueueEntry.getSent() == null) {
-			map.put("sent", null);
-		}
-		else {
-			map.put("sent", String.valueOf(notificationQueueEntry.getSent()));
-		}
-
 		if (notificationQueueEntry.getSentDate() == null) {
 			map.put("sentDate", null);
 		}
@@ -461,12 +444,6 @@ public class NotificationQueueEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					notificationQueueEntry.setPriority(
 						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sent")) {
-				if (jsonParserFieldValue != null) {
-					notificationQueueEntry.setSent(
-						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sentDate")) {

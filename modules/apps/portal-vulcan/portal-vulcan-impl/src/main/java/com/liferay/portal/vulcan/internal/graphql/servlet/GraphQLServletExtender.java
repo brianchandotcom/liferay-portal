@@ -138,6 +138,7 @@ import graphql.schema.GraphQLInputObjectType;
 import graphql.schema.GraphQLInputType;
 import graphql.schema.GraphQLInterfaceType;
 import graphql.schema.GraphQLList;
+import graphql.schema.GraphQLNamedType;
 import graphql.schema.GraphQLNonNull;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
@@ -1882,7 +1883,8 @@ public class GraphQLServletExtender {
 			GraphQLCodeRegistry graphQLCodeRegistry =
 				graphQLSchema.getCodeRegistry();
 
-			Map<String, GraphQLType> graphQLTypes = graphQLSchema.getTypeMap();
+			Map<String, GraphQLNamedType> graphQLNamedTypes =
+				graphQLSchema.getTypeMap();
 
 			Object source = dataFetchingEnvironment.getSource();
 
@@ -1897,7 +1899,7 @@ public class GraphQLServletExtender {
 				dataFetchingEnvironment.getFieldDefinition();
 
 			DataFetcher<?> dataFetcher = graphQLCodeRegistry.getDataFetcher(
-				(GraphQLFieldsContainer)graphQLTypes.get("query"),
+				(GraphQLFieldsContainer)graphQLNamedTypes.get("query"),
 				_addField(graphQLFieldDefinition.getType(), fieldName));
 
 			DataFetchingEnvironmentImpl.Builder dataFetchingEnvironmentBuilder =
@@ -1933,12 +1935,13 @@ public class GraphQLServletExtender {
 
 			GraphQLSchema graphQLSchema = typeResolutionEnvironment.getSchema();
 
-			Map<String, GraphQLType> graphQLTypes = graphQLSchema.getTypeMap();
+			Map<String, GraphQLNamedType> graphQLNamedTypes =
+				graphQLSchema.getTypeMap();
 
-			GraphQLType graphQLType = graphQLTypes.get(
+			GraphQLNamedType graphQLNamedType = graphQLNamedTypes.get(
 				_getClassName(typeResolutionEnvironment.getObject()));
 
-			return (GraphQLObjectType)graphQLType;
+			return (GraphQLObjectType)graphQLNamedType;
 		}
 
 		private String _getClassName(Object object) {
@@ -2253,12 +2256,13 @@ public class GraphQLServletExtender {
 			DataFetchingEnvironment dataFetchingEnvironment,
 			GraphQLSchema graphQLSchema) {
 
-			Map<String, GraphQLType> graphQLTypes = graphQLSchema.getTypeMap();
+			Map<String, GraphQLNamedType> graphQLNamedTypes =
+				graphQLSchema.getTypeMap();
 
-			GraphQLType graphQLType = graphQLTypes.get(
+			GraphQLNamedType graphQLNamedType = graphQLNamedTypes.get(
 				dataFetchingEnvironment.getArgument("dataType"));
 
-			return StringUtil.lowerCaseFirstLetter(graphQLType.getName());
+			return StringUtil.lowerCaseFirstLetter(graphQLNamedType.getName());
 		}
 
 	}

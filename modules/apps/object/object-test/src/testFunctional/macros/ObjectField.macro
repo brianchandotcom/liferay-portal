@@ -3,7 +3,13 @@ definition {
 	macro addAnyFolder {
 		IFrame.selectModalFrame();
 
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Folder");
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(
+			key_kebabOption = "Folder",
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 
 		Type(
 			locator1 = "ObjectPortlet#INPUT_NAME",

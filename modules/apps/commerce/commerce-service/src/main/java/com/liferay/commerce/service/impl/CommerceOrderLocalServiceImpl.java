@@ -1438,35 +1438,42 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodLocalService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+		if (commerceShippingMethodId > 0) {
+			CommerceShippingMethod commerceShippingMethod =
+				_commerceShippingMethodLocalService.getCommerceShippingMethod(
+					commerceShippingMethodId);
 
-		commerceOrder.setCommerceShippingMethodId(
-			commerceShippingMethod.getCommerceShippingMethodId());
+			commerceOrder.setCommerceShippingMethodId(
+				commerceShippingMethod.getCommerceShippingMethodId());
 
-		commerceOrder.setShippingOptionName(commerceShippingOptionName);
+			commerceOrder.setShippingOptionName(commerceShippingOptionName);
 
-		CommerceShippingEngine commerceShippingEngine =
-			_commerceShippingEngineRegistry.getCommerceShippingEngine(
-				commerceShippingMethod.getEngineKey());
+			CommerceShippingEngine commerceShippingEngine =
+				_commerceShippingEngineRegistry.getCommerceShippingEngine(
+					commerceShippingMethod.getEngineKey());
 
-		List<CommerceShippingOption> commerceShippingOptions =
-			commerceShippingEngine.getCommerceShippingOptions(
-				commerceContext, commerceOrder, locale);
+			List<CommerceShippingOption> commerceShippingOptions =
+				commerceShippingEngine.getCommerceShippingOptions(
+					commerceContext, commerceOrder, locale);
 
-		for (CommerceShippingOption commerceShippingOption :
-				commerceShippingOptions) {
+			for (CommerceShippingOption commerceShippingOption :
+					commerceShippingOptions) {
 
-			if (Validator.isNotNull(commerceShippingOptionName) &&
-				commerceShippingOptionName.equals(
-					commerceShippingOption.getKey())) {
+				if (Validator.isNotNull(commerceShippingOptionName) &&
+					commerceShippingOptionName.equals(
+						commerceShippingOption.getKey())) {
 
-				commerceOrder.setShippingAmount(
-					commerceShippingOption.getAmount());
+					commerceOrder.setShippingAmount(
+						commerceShippingOption.getAmount());
 
-				break;
+					break;
+				}
 			}
+		}
+		else {
+			commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+			commerceOrder.setShippingAmount(BigDecimal.ZERO);
+			commerceOrder.setShippingOptionName(commerceShippingOptionName);
 		}
 
 		return commerceOrderPersistence.update(commerceOrder);

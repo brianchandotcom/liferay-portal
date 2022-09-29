@@ -14,7 +14,7 @@ definition {
 			locator1 = "Icon#ANY");
 
 		AssertVisible(
-			key_content = "${header}",
+			key_header = "${header}",
 			locator1 = "Tooltip#POPOVER_HEADER");
 
 		AssertVisible(

@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>POPOVER_HEADER</td>
-	<td>//div[contains(@class,'popover-header')][normalize-space(text())='${key_content}']</td>
+	<td>//div[contains(@class,'popover-header')][normalize-space(text())='${key_header}']</td>
 	<td></td>
 </tr>
 </tbody>

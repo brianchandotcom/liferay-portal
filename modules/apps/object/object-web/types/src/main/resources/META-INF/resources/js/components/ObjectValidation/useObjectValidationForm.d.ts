@@ -12,8 +12,8 @@
  * details.
  */
 
-import {ChangeEventHandler} from 'react';
 import {FormError} from '@liferay/object-js-components-web';
+import {ChangeEventHandler} from 'react';
 interface IUseObjectValidationForm {
 	initialValues: Partial<ObjectValidation>;
 	onSubmit: (validation: ObjectValidation) => void;

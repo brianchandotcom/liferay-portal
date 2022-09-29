@@ -19,9 +19,13 @@ import {
 	InputLocalized,
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
-import React, {ChangeEventHandler} from 'react';
+import React from 'react';
 
-import {ObjectValidationErrors} from './useObjectValidationForm';
+import {TabProps} from './useObjectValidationForm';
+
+interface ConditionsProps extends TabProps {
+	objectValidationRuleElements: SidebarCategory[];
+}
 
 export function Conditions({
 	disabled,
@@ -29,7 +33,7 @@ export function Conditions({
 	objectValidationRuleElements,
 	setValues,
 	values,
-}: IConditions) {
+}: ConditionsProps) {
 	const engine = values.engine;
 	const ddmTooltip = {
 		content: Liferay.Language.get(
@@ -85,16 +89,4 @@ export function Conditions({
 			</Card>
 		</>
 	);
-}
-
-interface ITabs {
-	disabled: boolean;
-	errors: ObjectValidationErrors;
-	handleChange: ChangeEventHandler<HTMLInputElement>;
-	setValues: (values: Partial<ObjectValidation>) => void;
-	values: Partial<ObjectValidation>;
-}
-
-interface IConditions extends ITabs {
-	objectValidationRuleElements: SidebarCategory[];
 }

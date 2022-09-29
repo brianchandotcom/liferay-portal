@@ -12,25 +12,19 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import 'codemirror/mode/groovy/groovy';
 import {SidebarCategory} from '@liferay/object-js-components-web';
-import {ChangeEventHandler} from 'react';
-import {ObjectValidationErrors} from './useObjectValidationForm';
+import {TabProps} from './useObjectValidationForm';
+interface ConditionsProps extends TabProps {
+	objectValidationRuleElements: SidebarCategory[];
+}
 export declare function Conditions({
 	disabled,
 	errors,
 	objectValidationRuleElements,
 	setValues,
 	values,
-}: IConditions): JSX.Element;
-interface ITabs {
-	disabled: boolean;
-	errors: ObjectValidationErrors;
-	handleChange: ChangeEventHandler<HTMLInputElement>;
-	setValues: (values: Partial<ObjectValidation>) => void;
-	values: Partial<ObjectValidation>;
-}
-interface IConditions extends ITabs {
-	objectValidationRuleElements: SidebarCategory[];
-}
+}: ConditionsProps): JSX.Element;
 export {};

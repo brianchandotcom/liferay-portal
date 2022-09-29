@@ -23,7 +23,7 @@ import {
 import React, {useEffect, useState} from 'react';
 
 import {BasicInfo} from './BasicInfo';
-import {Conditions} from './ObjectValidationTabs';
+import {Conditions} from './Conditions';
 import {
 	ObjectValidationErrors,
 	useObjectValidationForm,

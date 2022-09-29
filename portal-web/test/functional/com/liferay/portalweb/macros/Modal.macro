@@ -1,5 +1,15 @@
 definition {
 
+	macro gotoNavTab {
+		var key_tab = "${navTab}";
+
+		if (IsElementNotPresent(locator1 = "Modal#ACTIVE_TAB_LINK")) {
+			Click(locator1 = "Modal#TAB_LINK");
+		}
+
+		AssertElementPresent(locator1 = "Modal#ACTIVE_TAB_LINK");
+	}
+
 	macro publish {
 		AssertTextEquals(
 			locator1 = "Modal#BODY_MESSAGE",

@@ -61,8 +61,10 @@ public class NotificationTemplateWrapper
 		attributes.put("from", getFrom());
 		attributes.put("fromName", getFromName());
 		attributes.put("name", getName());
+		attributes.put("recipientType", getRecipientType());
 		attributes.put("subject", getSubject());
 		attributes.put("to", getTo());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -166,6 +168,12 @@ public class NotificationTemplateWrapper
 			setName(name);
 		}
 
+		String recipientType = (String)attributes.get("recipientType");
+
+		if (recipientType != null) {
+			setRecipientType(recipientType);
+		}
+
 		String subject = (String)attributes.get("subject");
 
 		if (subject != null) {
@@ -176,6 +184,12 @@ public class NotificationTemplateWrapper
 
 		if (to != null) {
 			setTo(to);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -533,6 +547,16 @@ public class NotificationTemplateWrapper
 	}
 
 	/**
+	 * Returns the recipient type of this notification template.
+	 *
+	 * @return the recipient type of this notification template
+	 */
+	@Override
+	public String getRecipientType() {
+		return model.getRecipientType();
+	}
+
+	/**
 	 * Returns the subject of this notification template.
 	 *
 	 * @return the subject of this notification template
@@ -682,6 +706,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public Map<java.util.Locale, String> getToMap() {
 		return model.getToMap();
+	}
+
+	/**
+	 * Returns the type of this notification template.
+	 *
+	 * @return the type of this notification template
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -1046,6 +1080,16 @@ public class NotificationTemplateWrapper
 	}
 
 	/**
+	 * Sets the recipient type of this notification template.
+	 *
+	 * @param recipientType the recipient type of this notification template
+	 */
+	@Override
+	public void setRecipientType(String recipientType) {
+		model.setRecipientType(recipientType);
+	}
+
+	/**
 	 * Sets the subject of this notification template.
 	 *
 	 * @param subject the subject of this notification template
@@ -1171,6 +1215,16 @@ public class NotificationTemplateWrapper
 		Map<java.util.Locale, String> toMap, java.util.Locale defaultLocale) {
 
 		model.setToMap(toMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the type of this notification template.
+	 *
+	 * @param type the type of this notification template
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

@@ -156,9 +156,13 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setName(RandomTestUtil.randomString());
 
+		newNotificationTemplate.setRecipientType(RandomTestUtil.randomString());
+
 		newNotificationTemplate.setSubject(RandomTestUtil.randomString());
 
 		newNotificationTemplate.setTo(RandomTestUtil.randomString());
+
+		newNotificationTemplate.setType(RandomTestUtil.randomString());
 
 		_notificationTemplates.add(
 			_persistence.update(newNotificationTemplate));
@@ -218,11 +222,17 @@ public class NotificationTemplatePersistenceTest {
 			existingNotificationTemplate.getName(),
 			newNotificationTemplate.getName());
 		Assert.assertEquals(
+			existingNotificationTemplate.getRecipientType(),
+			newNotificationTemplate.getRecipientType());
+		Assert.assertEquals(
 			existingNotificationTemplate.getSubject(),
 			newNotificationTemplate.getSubject());
 		Assert.assertEquals(
 			existingNotificationTemplate.getTo(),
 			newNotificationTemplate.getTo());
+		Assert.assertEquals(
+			existingNotificationTemplate.getType(),
+			newNotificationTemplate.getType());
 	}
 
 	@Test
@@ -275,8 +285,8 @@ public class NotificationTemplatePersistenceTest {
 			"notificationTemplateId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId", true, "bcc", true, "cc", true, "description",
-			true, "from", true, "fromName", true, "name", true, "subject", true,
-			"to", true);
+			true, "from", true, "fromName", true, "name", true, "recipientType",
+			true, "subject", true, "to", true, "type", true);
 	}
 
 	@Test
@@ -548,9 +558,13 @@ public class NotificationTemplatePersistenceTest {
 
 		notificationTemplate.setName(RandomTestUtil.randomString());
 
+		notificationTemplate.setRecipientType(RandomTestUtil.randomString());
+
 		notificationTemplate.setSubject(RandomTestUtil.randomString());
 
 		notificationTemplate.setTo(RandomTestUtil.randomString());
+
+		notificationTemplate.setType(RandomTestUtil.randomString());
 
 		_notificationTemplates.add(_persistence.update(notificationTemplate));
 

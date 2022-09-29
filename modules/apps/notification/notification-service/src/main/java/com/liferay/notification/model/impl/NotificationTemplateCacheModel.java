@@ -78,7 +78,7 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,10 +112,14 @@ public class NotificationTemplateCacheModel
 		sb.append(fromName);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", recipientType=");
+		sb.append(recipientType);
 		sb.append(", subject=");
 		sb.append(subject);
 		sb.append(", to=");
 		sb.append(to);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -212,6 +216,13 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setName(name);
 		}
 
+		if (recipientType == null) {
+			notificationTemplateImpl.setRecipientType("");
+		}
+		else {
+			notificationTemplateImpl.setRecipientType(recipientType);
+		}
+
 		if (subject == null) {
 			notificationTemplateImpl.setSubject("");
 		}
@@ -224,6 +235,13 @@ public class NotificationTemplateCacheModel
 		}
 		else {
 			notificationTemplateImpl.setTo(to);
+		}
+
+		if (type == null) {
+			notificationTemplateImpl.setType("");
+		}
+		else {
+			notificationTemplateImpl.setType(type);
 		}
 
 		notificationTemplateImpl.resetOriginalValues();
@@ -255,8 +273,10 @@ public class NotificationTemplateCacheModel
 		from = objectInput.readUTF();
 		fromName = objectInput.readUTF();
 		name = objectInput.readUTF();
+		recipientType = objectInput.readUTF();
 		subject = objectInput.readUTF();
 		to = objectInput.readUTF();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -337,6 +357,13 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (recipientType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(recipientType);
+		}
+
 		if (subject == null) {
 			objectOutput.writeUTF("");
 		}
@@ -349,6 +376,13 @@ public class NotificationTemplateCacheModel
 		}
 		else {
 			objectOutput.writeUTF(to);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
 		}
 	}
 
@@ -368,7 +402,9 @@ public class NotificationTemplateCacheModel
 	public String from;
 	public String fromName;
 	public String name;
+	public String recipientType;
 	public String subject;
 	public String to;
+	public String type;
 
 }

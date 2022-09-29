@@ -78,11 +78,16 @@ public class NotificationTemplateTable
 			"fromName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> recipientType =
+		createColumn(
+			"recipientType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> subject =
 		createColumn(
 			"subject", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> to = createColumn(
 		"to_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private NotificationTemplateTable() {
 		super("NotificationTemplate", NotificationTemplateTable::new);

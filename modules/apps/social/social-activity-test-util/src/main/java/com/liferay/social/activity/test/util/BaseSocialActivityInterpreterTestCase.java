@@ -86,22 +86,22 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 		renameModels();
 
-		checkRenaming(originalActivities);
+		_checkRenaming(originalActivities);
 
 		if (isSupportsTrash()) {
 			moveModelsToTrash();
 
-			checkLinks();
+			_checkLinks();
 
 			restoreModelsFromTrash();
 		}
 
-		checkInterpret();
+		_checkInterpret();
 	}
 
 	protected abstract void addActivities() throws Exception;
 
-	protected void checkInterpret() throws Exception {
+	private void _checkInterpret() throws Exception {
 		List<SocialActivity> activities = getActivities();
 
 		Assert.assertFalse(activities.toString(), activities.isEmpty());
@@ -127,7 +127,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
-	protected void checkLinks() throws Exception {
+	private void _checkLinks() throws Exception {
 		List<SocialActivity> activities = getActivities();
 
 		Assert.assertFalse(activities.toString(), activities.isEmpty());
@@ -158,7 +158,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
-	protected void checkRenaming(List<SocialActivity> originalActivities)
+	private void _checkRenaming(List<SocialActivity> originalActivities)
 		throws Exception {
 
 		Assert.assertFalse(

@@ -276,7 +276,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	@Override
 	public String getViewInContextMessage() {
-		return "view-in-context";
+		return "view-on-new-page";
 	}
 
 	@Override

@@ -582,6 +582,21 @@ public interface NotificationTemplateModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
+	 * Returns the recipient type of this notification template.
+	 *
+	 * @return the recipient type of this notification template
+	 */
+	@AutoEscape
+	public String getRecipientType();
+
+	/**
+	 * Sets the recipient type of this notification template.
+	 *
+	 * @param recipientType the recipient type of this notification template
+	 */
+	public void setRecipientType(String recipientType);
+
+	/**
 	 * Returns the subject of this notification template.
 	 *
 	 * @return the subject of this notification template
@@ -779,6 +794,21 @@ public interface NotificationTemplateModel
 	 * @param defaultLocale the default locale
 	 */
 	public void setToMap(Map<Locale, String> toMap, Locale defaultLocale);
+
+	/**
+	 * Returns the type of this notification template.
+	 *
+	 * @return the type of this notification template
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this notification template.
+	 *
+	 * @param type the type of this notification template
+	 */
+	public void setType(String type);
 
 	@Override
 	public String[] getAvailableLanguageIds();

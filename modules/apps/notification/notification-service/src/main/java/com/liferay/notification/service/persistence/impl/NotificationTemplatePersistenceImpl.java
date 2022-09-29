@@ -2114,6 +2114,7 @@ public class NotificationTemplatePersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("from", "from_");
 		dbColumnNames.put("to", "to_");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -2837,7 +2838,7 @@ public class NotificationTemplatePersistenceImpl
 		NotificationTemplatePersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "from", "to"});
+		new String[] {"uuid", "from", "to", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

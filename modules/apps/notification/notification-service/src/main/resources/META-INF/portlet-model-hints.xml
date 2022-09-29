@@ -52,8 +52,10 @@
 		<field name="from" type="String" />
 		<field localized="true" name="fromName" type="String" />
 		<field localized="true" name="name" type="String" />
+		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />
 		<field localized="true" name="to" type="String" />
+		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplateAttachment">
 		<field name="mvccVersion" type="long" />

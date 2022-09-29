@@ -89,7 +89,8 @@ public class NotificationTemplateModelImpl
 		{"body", Types.CLOB}, {"cc", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"from_", Types.VARCHAR},
 		{"fromName", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"subject", Types.VARCHAR}, {"to_", Types.VARCHAR}
+		{"recipientType", Types.VARCHAR}, {"subject", Types.VARCHAR},
+		{"to_", Types.VARCHAR}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -112,12 +113,14 @@ public class NotificationTemplateModelImpl
 		TABLE_COLUMNS_MAP.put("from_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fromName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("recipientType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("to_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,description VARCHAR(75) null,from_ VARCHAR(75) null,fromName STRING null,name STRING null,subject STRING null,to_ STRING null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,description VARCHAR(75) null,from_ VARCHAR(75) null,fromName STRING null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,to_ STRING null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
@@ -358,6 +361,12 @@ public class NotificationTemplateModelImpl
 			(BiConsumer<NotificationTemplate, String>)
 				NotificationTemplate::setName);
 		attributeGetterFunctions.put(
+			"recipientType", NotificationTemplate::getRecipientType);
+		attributeSetterBiConsumers.put(
+			"recipientType",
+			(BiConsumer<NotificationTemplate, String>)
+				NotificationTemplate::setRecipientType);
+		attributeGetterFunctions.put(
 			"subject", NotificationTemplate::getSubject);
 		attributeSetterBiConsumers.put(
 			"subject",
@@ -368,6 +377,11 @@ public class NotificationTemplateModelImpl
 			"to",
 			(BiConsumer<NotificationTemplate, String>)
 				NotificationTemplate::setTo);
+		attributeGetterFunctions.put("type", NotificationTemplate::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<NotificationTemplate, String>)
+				NotificationTemplate::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -969,6 +983,26 @@ public class NotificationTemplateModelImpl
 
 	@JSON
 	@Override
+	public String getRecipientType() {
+		if (_recipientType == null) {
+			return "";
+		}
+		else {
+			return _recipientType;
+		}
+	}
+
+	@Override
+	public void setRecipientType(String recipientType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_recipientType = recipientType;
+	}
+
+	@JSON
+	@Override
 	public String getSubject() {
 		if (_subject == null) {
 			return "";
@@ -1182,6 +1216,26 @@ public class NotificationTemplateModelImpl
 		setTo(
 			LocalizationUtil.updateLocalization(
 				toMap, getTo(), "To", LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
 	}
 
 	@Override
@@ -1412,8 +1466,10 @@ public class NotificationTemplateModelImpl
 		notificationTemplateImpl.setFrom(getFrom());
 		notificationTemplateImpl.setFromName(getFromName());
 		notificationTemplateImpl.setName(getName());
+		notificationTemplateImpl.setRecipientType(getRecipientType());
 		notificationTemplateImpl.setSubject(getSubject());
 		notificationTemplateImpl.setTo(getTo());
+		notificationTemplateImpl.setType(getType());
 
 		notificationTemplateImpl.resetOriginalValues();
 
@@ -1457,10 +1513,14 @@ public class NotificationTemplateModelImpl
 			this.<String>getColumnOriginalValue("fromName"));
 		notificationTemplateImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		notificationTemplateImpl.setRecipientType(
+			this.<String>getColumnOriginalValue("recipientType"));
 		notificationTemplateImpl.setSubject(
 			this.<String>getColumnOriginalValue("subject"));
 		notificationTemplateImpl.setTo(
 			this.<String>getColumnOriginalValue("to_"));
+		notificationTemplateImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
 
 		return notificationTemplateImpl;
 	}
@@ -1643,6 +1703,14 @@ public class NotificationTemplateModelImpl
 			notificationTemplateCacheModel.name = null;
 		}
 
+		notificationTemplateCacheModel.recipientType = getRecipientType();
+
+		String recipientType = notificationTemplateCacheModel.recipientType;
+
+		if ((recipientType != null) && (recipientType.length() == 0)) {
+			notificationTemplateCacheModel.recipientType = null;
+		}
+
 		notificationTemplateCacheModel.subject = getSubject();
 
 		String subject = notificationTemplateCacheModel.subject;
@@ -1657,6 +1725,14 @@ public class NotificationTemplateModelImpl
 
 		if ((to != null) && (to.length() == 0)) {
 			notificationTemplateCacheModel.to = null;
+		}
+
+		notificationTemplateCacheModel.type = getType();
+
+		String type = notificationTemplateCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			notificationTemplateCacheModel.type = null;
 		}
 
 		return notificationTemplateCacheModel;
@@ -1773,10 +1849,12 @@ public class NotificationTemplateModelImpl
 	private String _fromNameCurrentLanguageId;
 	private String _name;
 	private String _nameCurrentLanguageId;
+	private String _recipientType;
 	private String _subject;
 	private String _subjectCurrentLanguageId;
 	private String _to;
 	private String _toCurrentLanguageId;
+	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1824,8 +1902,10 @@ public class NotificationTemplateModelImpl
 		_columnOriginalValues.put("from_", _from);
 		_columnOriginalValues.put("fromName", _fromName);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("recipientType", _recipientType);
 		_columnOriginalValues.put("subject", _subject);
 		_columnOriginalValues.put("to_", _to);
+		_columnOriginalValues.put("type_", _type);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1836,6 +1916,7 @@ public class NotificationTemplateModelImpl
 		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("from_", "from");
 		attributeNames.put("to_", "to");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1883,9 +1964,13 @@ public class NotificationTemplateModelImpl
 
 		columnBitmasks.put("name", 32768L);
 
-		columnBitmasks.put("subject", 65536L);
+		columnBitmasks.put("recipientType", 65536L);
 
-		columnBitmasks.put("to_", 131072L);
+		columnBitmasks.put("subject", 131072L);
+
+		columnBitmasks.put("to_", 262144L);
+
+		columnBitmasks.put("type_", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

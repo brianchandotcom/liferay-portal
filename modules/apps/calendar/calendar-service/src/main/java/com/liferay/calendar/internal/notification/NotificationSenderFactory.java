@@ -48,12 +48,6 @@ public class NotificationSenderFactory {
 		return notificationSender;
 	}
 
-	public void setNotificationSenders(
-		Map<String, NotificationSender> notificationSenders) {
-
-		_notificationSenders = notificationSenders;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,

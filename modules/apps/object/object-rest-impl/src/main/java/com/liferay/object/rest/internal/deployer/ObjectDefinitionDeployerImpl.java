@@ -24,12 +24,17 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValues
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
+import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.log.Log;
@@ -53,7 +58,9 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.PrototypeServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -137,8 +144,40 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"(osgi.jaxrs.name=Liferay.Vulcan)"
 						).put(
 							"osgi.jaxrs.name", objectDefinition.getName()
-						).build()),
-					_objectEntryResourceComponentFactory.newInstance(
+						).build())));
+
+			_serviceRegistrationsMap.put(
+				objectDefinition.getRESTContextPath(),
+				Arrays.asList(
+					_bundleContext.registerService(
+						ObjectEntryResource.class,
+						new PrototypeServiceFactory<ObjectEntryResource>() {
+
+							@Override
+							public ObjectEntryResource getService(
+								Bundle bundle,
+								ServiceRegistration<ObjectEntryResource>
+									serviceRegistration) {
+
+								return new ObjectEntryResourceImpl(
+									_filterPredicateFactory,
+									_objectDefinitionLocalService,
+									_objectEntryLocalService,
+									_objectEntryManagerTracker,
+									_objectFieldLocalService,
+									_objectRelationshipService,
+									_objectScopeProviderRegistry);
+							}
+
+							@Override
+							public void ungetService(
+								Bundle bundle,
+								ServiceRegistration<ObjectEntryResource>
+									serviceRegistration,
+								ObjectEntryResource objectEntryResource) {
+							}
+
+						},
 						HashMapDictionaryBuilder.<String, Object>put(
 							"api.version", "v1.0"
 						).put(
@@ -164,11 +203,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								")"
 						).put(
 							"osgi.jaxrs.resource", "true"
-						).build())));
-
-			_serviceRegistrationsMap.put(
-				objectDefinition.getRESTContextPath(),
-				Arrays.asList(
+						).build()),
 					_bundleContext.registerService(
 						ContextProvider.class,
 						new ObjectDefinitionContextProvider(this, _portal),
@@ -385,6 +420,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;
 
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private final Map<String, Map<Long, ObjectDefinition>>
 		_objectDefinitionsMap = new HashMap<>();
 
@@ -394,18 +432,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ComponentFactory _objectEntryApplicationComponentFactory;
 
 	@Reference
-	private ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@Reference(
-		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResource)"
-	)
-	private ComponentFactory _objectEntryResourceComponentFactory;
+	@Reference
+	private ObjectEntryManagerTracker _objectEntryManagerTracker;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private ObjectRelationshipService _objectRelationshipService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

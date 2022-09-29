@@ -21,7 +21,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
-import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -51,18 +50,28 @@ import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Javier Gamarra
  */
-@Component(
-	factory = "com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResource",
-	properties = "OSGI-INF/liferay/rest/v1_0/object-entry.properties",
-	service = ObjectEntryResource.class
-)
 public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
+
+	public ObjectEntryResourceImpl(
+		FilterPredicateFactory filterPredicateFactory,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManagerTracker objectEntryManagerTracker,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipService objectRelationshipService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
+
+		_filterPredicateFactory = filterPredicateFactory;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManagerTracker = objectEntryManagerTracker;
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipService = objectRelationshipService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+	}
 
 	@Override
 	public void create(
@@ -489,28 +498,16 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throw new NotFoundException("Missing parameter \"objectDefinitionId\"");
 	}
 
-	@Reference
-	private FilterPredicateFactory _filterPredicateFactory;
+	private final FilterPredicateFactory _filterPredicateFactory;
 
 	@Context
 	private ObjectDefinition _objectDefinition;
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectEntryManagerTracker _objectEntryManagerTracker;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectRelationshipService _objectRelationshipService;
-
-	@Reference
-	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipService _objectRelationshipService;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

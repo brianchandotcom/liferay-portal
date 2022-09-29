@@ -237,6 +237,12 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
+	macro putMouseOverButton {
+		var key_text = "${text}";
+
+		MouseOver(locator1 = "CustomerPortalSite#ANY_BUTTON");
+	}
+
 	macro assertButtonIsDisabled {
 		var key_text = "${text}";
 

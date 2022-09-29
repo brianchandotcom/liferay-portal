@@ -1,6 +1,8 @@
 @import 'atlas-variables';
 
 $controlMenuHeight: 56px;
+$productMenuWidth: 320px;
+$productMenuTransitionDuration: 0.5s;
 $toolbarDesktopHeight: 4rem;
 $toolbarHeight: 6.875rem;
 $toolbarZIndex: 971;
@@ -80,6 +82,8 @@ $toolbarZIndex: 971;
 			box-shadow: none;
 			overflow-y: scroll;
 
+			margin-top: 2.5rem;
+
 			.sidebar-body {
 				.collapse-icon {
 					border-bottom: 1px solid $light;
@@ -102,6 +106,10 @@ $toolbarZIndex: 971;
 					}
 				}
 			}
+
+			@include media-breakpoint-up(lg) {
+				margin-top: 0;
+			}
 		}
 
 		.contextual-sidebar-content .lfr-form-content {
@@ -113,13 +121,65 @@ $toolbarZIndex: 971;
 		}
 
 		.tbar-knowledge-base-edit-article {
+			height: auto;
+			left: 0;
 			min-height: 3.5rem;
 			position: fixed;
+			transition: left ease $productMenuTransitionDuration,
+				width ease $productMenuTransitionDuration;
 			width: 100%;
 			z-index: $toolbarZIndex;
 
-			@include media-breakpoint-up(lg) {
-				min-height: $toolbarDesktopHeight;
+			body.open & {
+				left: $productMenuWidth;
+				width: calc(100% - #{$productMenuWidth});
+
+				@media (max-width: 768px) {
+					left: 0;
+					width: 100%;
+				}
+			}
+
+			> .container-fluid {
+				padding: 0;
+
+				.tbar-nav {
+					flex-wrap: wrap;
+
+					> .tbar-item {
+						padding: 0.5em;
+					}
+
+					> .tbar-item:first-child {
+						border-top: solid thin #e7e7ed;
+						order: 1;
+						width: 100%;
+					}
+
+					> .tbar-item:last-child {
+						flex-grow: 1;
+						padding-right: 1em;
+
+						> .tbar-section {
+							display: flex;
+							justify-content: flex-end;
+						}
+					}
+
+					@include media-breakpoint-up(lg) {
+						flex-wrap: nowrap;
+
+						.tbar-item:first-child {
+							border-top: none;
+							order: 0;
+							width: auto;
+						}
+
+						> .tbar-item:last-child {
+							flex-grow: 0;
+						}
+					}
+				}
 			}
 
 			@include media-breakpoint-up(lg) {

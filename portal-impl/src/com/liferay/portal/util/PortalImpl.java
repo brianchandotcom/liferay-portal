@@ -6144,7 +6144,7 @@ public class PortalImpl implements Portal {
 		String fullURL, String groupFriendlyURL, String layoutFriendlyURL) {
 
 		if (fullURL.endsWith(groupFriendlyURL) &&
-			!fullURL.endsWith(groupFriendlyURL.concat(layoutFriendlyURL))) {
+			!fullURL.endsWith(layoutFriendlyURL)) {
 
 			return true;
 		}

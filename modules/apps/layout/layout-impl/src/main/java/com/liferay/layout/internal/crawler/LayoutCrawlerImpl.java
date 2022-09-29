@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.sun.istack.internal.Nullable;
-
 import java.net.InetAddress;
 
 import java.util.Locale;
@@ -109,7 +107,6 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		return StringPool.BLANK;
 	}
 
-	@Nullable
 	private String _getHostName(
 		LayoutCrawlerClientConfiguration layoutCrawlerClientConfiguration) {
 

@@ -3002,7 +3002,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="url" type="String" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="primary" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 

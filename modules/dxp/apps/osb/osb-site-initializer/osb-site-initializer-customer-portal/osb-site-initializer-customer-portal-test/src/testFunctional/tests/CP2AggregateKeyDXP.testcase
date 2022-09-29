@@ -1,0 +1,85 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var testProduct = "DXP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "Automation ID: LPS-148069 | Test Summary: Assert the name of the downloaded file follows the standard"
+	@priority = "3"
+    test AssertAggregateActivationKeyXmlFileIsDownloaded {
+
+        // TODO LPS-148069 AssertAggregateActivationKeyXmlFileIsDownloaded pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-148070 | Test Summary: Verify success message Activation Key was downloaded successfully"
+	@priority = "4"
+    test CanViewConfirmSuccessfulMessage {
+        
+		// TODO LPS-148070 CanViewConfirmSuccessfulMessage pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-148071 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, an alert is displayed to download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size"
+	@priority = "4"
+    test YouCanSeeTheDisplayOfAnAlert {
+        
+		// TODO LPS-148071 YouCanSeeTheDisplayOfAnAlert pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-148072 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
+	@priority = "3"
+    test TheOptionInTheDropDownMenuIsDisabled {
+        
+        // TODO LPS-148072 TheOptionInTheDropDownMenuIsDisabled pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-148073 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
+	@priority = "3"
+    test YouCanSeeATooltip {
+        
+        // TODO LPS-148073 YouCanSeeATooltip pending implementation
+
+    }
+
+}

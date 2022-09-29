@@ -185,7 +185,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		}
 
 		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceTracker.getFilteredInfoItemClassDetails(
+				_infoItemServiceTracker.getInfoItemClassDetails(
 					_themeDisplay.getScopeGroupId(),
 					TemplateInfoItemCapability.KEY,
 					_themeDisplay.getPermissionChecker())) {

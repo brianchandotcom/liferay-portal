@@ -136,45 +136,6 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 	}
 
 	@Override
-	public List<InfoItemClassDetails> getFilteredInfoItemClassDetails(
-			long groupId, String itemCapabilityKey,
-			PermissionChecker permissionChecker)
-		throws CapabilityVerificationException {
-
-		List<InfoItemClassDetails> infoItemClassDetails = new ArrayList<>();
-
-		for (InfoItemClassDetails infoItemClassDetail :
-				getInfoItemClassDetails(itemCapabilityKey)) {
-
-			InfoPermissionProvider infoPermissionProvider =
-				getFirstInfoItemService(
-					InfoPermissionProvider.class,
-					infoItemClassDetail.getClassName());
-
-			if (infoPermissionProvider == null) {
-				infoItemClassDetails.add(infoItemClassDetail);
-
-				continue;
-			}
-
-			try {
-				if (infoPermissionProvider.hasViewPermission(
-						permissionChecker)) {
-
-					infoItemClassDetails.add(infoItemClassDetail);
-				}
-			}
-			catch (InfoPermissionException infoPermissionException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(infoPermissionException);
-				}
-			}
-		}
-
-		return infoItemClassDetails;
-	}
-
-	@Override
 	public <P> P getFirstInfoItemService(
 		Class<P> serviceClass, String itemClassName,
 		InfoItemServiceFilter infoItemServiceFilter) {
@@ -262,6 +223,45 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 		}
 
 		return infoItemClassDetailsList;
+	}
+
+	@Override
+	public List<InfoItemClassDetails> getInfoItemClassDetails(
+			long groupId, String itemCapabilityKey,
+			PermissionChecker permissionChecker)
+		throws CapabilityVerificationException {
+
+		List<InfoItemClassDetails> infoItemClassDetails = new ArrayList<>();
+
+		for (InfoItemClassDetails infoItemClassDetail :
+				getInfoItemClassDetails(itemCapabilityKey)) {
+
+			InfoPermissionProvider infoPermissionProvider =
+				getFirstInfoItemService(
+					InfoPermissionProvider.class,
+					infoItemClassDetail.getClassName());
+
+			if (infoPermissionProvider == null) {
+				infoItemClassDetails.add(infoItemClassDetail);
+
+				continue;
+			}
+
+			try {
+				if (infoPermissionProvider.hasViewPermission(
+						permissionChecker)) {
+
+					infoItemClassDetails.add(infoItemClassDetail);
+				}
+			}
+			catch (InfoPermissionException infoPermissionException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(infoPermissionException);
+				}
+			}
+		}
+
+		return infoItemClassDetails;
 	}
 
 	@Override

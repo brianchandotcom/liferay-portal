@@ -42,11 +42,6 @@ public interface InfoItemServiceTracker {
 		Class<P> serviceClass, String itemClassName,
 		InfoItemServiceFilter infoItemServiceFilter);
 
-	public List<InfoItemClassDetails> getFilteredInfoItemClassDetails(
-			long groupId, String itemCapabilityKey,
-			PermissionChecker permissionChecker)
-		throws CapabilityVerificationException;
-
 	public default <P> P getFirstInfoItemService(
 		Class<P> serviceClass, String itemClassName) {
 
@@ -68,6 +63,11 @@ public interface InfoItemServiceTracker {
 
 	public List<InfoItemClassDetails> getInfoItemClassDetails(
 			InfoItemCapability itemCapability)
+		throws CapabilityVerificationException;
+
+	public List<InfoItemClassDetails> getInfoItemClassDetails(
+			long groupId, String itemCapabilityKey,
+			PermissionChecker permissionChecker)
 		throws CapabilityVerificationException;
 
 	public List<InfoItemClassDetails> getInfoItemClassDetails(

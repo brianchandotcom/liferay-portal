@@ -12,10 +12,13 @@
  * details.
  */
 
+import {useSessionState} from '@liferay/layout-content-page-editor-web';
 import classNames from 'classnames';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 
+import {useConstants} from '../contexts/ConstantsContext';
 import {
 	useSetSidebarPanelId,
 	useSidebarPanelId,
@@ -30,6 +33,16 @@ export function AppLayout({
 }) {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const sidebarPanelId = useSidebarPanelId();
+
+	const {portletNamespace} = useConstants();
+
+	const [scrollPosition, setScrollPosition] = useSessionState(
+		`${portletNamespace}_scrollPosition`,
+		0
+	);
+
+	const contentElementRef = useRef(null);
+	const scrollPositionRef = useRef(scrollPosition);
 
 	const SidebarPanel = useMemo(
 		() =>
@@ -57,6 +70,30 @@ export function AppLayout({
 		}
 	}, [SidebarPanel]);
 
+	useEffect(() => {
+		const contentElement = contentElementRef.current;
+
+		if (!contentElement) {
+			return;
+		}
+
+		if (scrollPositionRef.current) {
+			contentElement.scrollTop = scrollPositionRef.current;
+		}
+
+		const handleScroll = debounce(() => {
+			setScrollPosition(contentElement.scrollTop);
+		}, 300);
+
+		contentElement.addEventListener('scroll', handleScroll, {
+			passive: true,
+		});
+
+		return () => {
+			contentElement.removeEventListener('scroll', handleScroll);
+		};
+	}, [setScrollPosition]);
+
 	return (
 		<>
 			<div className="bg-white component-tbar tbar">
@@ -74,6 +111,7 @@ export function AppLayout({
 						'site_navigation_menu_editor_AppLayout-content--with-sidebar': !!SidebarPanel,
 					}
 				)}
+				ref={contentElementRef}
 			>
 				{contentChildren}
 

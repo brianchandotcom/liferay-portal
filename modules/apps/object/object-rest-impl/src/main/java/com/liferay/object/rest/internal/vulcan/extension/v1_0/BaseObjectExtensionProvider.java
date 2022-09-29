@@ -19,8 +19,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOMapper;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 
@@ -63,18 +61,8 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 			return null;
 		}
 
-		try {
-			return objectDefinitionLocalService.
-				fetchObjectDefinitionByClassName(
-					companyId, internalDTOClassName);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return null;
-		}
+		return objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+			companyId, internalDTOClassName);
 	}
 
 	protected long getPrimaryKey(Object entity) throws PortalException {
@@ -92,8 +80,5 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 
 	@Reference
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseObjectExtensionProvider.class);
 
 }

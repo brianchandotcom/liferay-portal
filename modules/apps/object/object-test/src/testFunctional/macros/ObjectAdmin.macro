@@ -529,7 +529,6 @@ definition {
 
 	macro assertObjectActions {
 		AssertElementPresent(
-			key_actionActive = "${actionActive}",
 			key_actionName = "${actionName}",
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 
@@ -542,7 +541,6 @@ definition {
 
 	macro assertObjectActionsNotPresent {
 		AssertElementNotPresent(
-			key_actionActive = "${actionActive}",
 			key_actionName = "${actionName}",
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}

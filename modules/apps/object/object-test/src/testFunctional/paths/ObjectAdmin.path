@@ -457,7 +457,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ACTIONS_LABEL</td>
-		<td>//div[contains(@class, 'dnd-td') and contains(., '${key_actionActive}')]</td>
+		<td>//div[contains(@class, 'dnd-td') and contains(., '${key_actionName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

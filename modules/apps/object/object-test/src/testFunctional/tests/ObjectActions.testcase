@@ -207,9 +207,7 @@ definition {
 
 		ObjectAdmin.deleteActionViaUI(actionName = "Action Name");
 
-		ObjectAdmin.assertObjectActionsNotPresent(
-			actionActive = "Yes",
-			actionName = "Action Name");
+		ObjectAdmin.assertObjectActionsNotPresent(actionName = "Action Name");
 	}
 
 	@description = "LPS-145665 - Verify that you can edit the Action name"

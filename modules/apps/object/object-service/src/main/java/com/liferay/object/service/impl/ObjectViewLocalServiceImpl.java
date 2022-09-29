@@ -20,8 +20,8 @@ import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnObjectFieldNameException;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterParser;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterParserTracker;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
@@ -491,8 +491,8 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 						"\" needs to have the filter type and JSON specified"));
 			}
 
-			ObjectFieldFilterParser objectFieldFilterParser =
-				_objectFieldFilterParserTracker.getObjectFieldFilterParser(
+			ObjectFieldFilterContributor objectFieldFilterParser =
+				_objectFieldFilterParserTracker.getObjectFieldFilterContributor(
 					objectViewFilterColumn.getFilterType());
 
 			objectFieldFilterParser.validate(
@@ -554,7 +554,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 	@Reference
-	private ObjectFieldFilterParserTracker _objectFieldFilterParserTracker;
+	private ObjectFieldFilterContributorTracker _objectFieldFilterParserTracker;
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;

@@ -14,6 +14,7 @@
 
 package com.liferay.object.field.filter.parser;
 
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -23,10 +24,15 @@ import java.util.Map;
 /**
  * @author Feliphe Marinho
  */
-public interface ObjectFieldFilterParser {
+public interface ObjectFieldFilterContributor {
 
 	public Map<String, Object> parse(
 			long listTypeDefinitionId, long objectDefinitionId, Locale locale,
+			ObjectViewFilterColumn objectViewFilterColumn)
+		throws PortalException;
+
+	public String toValueSummary(
+			Locale locale, ObjectField objectField,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException;
 

@@ -212,6 +212,13 @@ public class WebsiteWrapper
 		return model.getLastPublishDate();
 	}
 
+	@Override
+	public ListType getListType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getListType();
+	}
+
 	/**
 	 * Returns the list type ID of this website.
 	 *
@@ -260,13 +267,6 @@ public class WebsiteWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	@Override
-	public ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getType();
 	}
 
 	/**

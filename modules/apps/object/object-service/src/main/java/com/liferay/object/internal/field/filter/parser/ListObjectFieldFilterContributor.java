@@ -90,7 +90,7 @@ public class ListObjectFieldFilterContributor
 
 				if (Objects.equals(
 						objectViewFilterColumn.getObjectFieldName(),
-						"status")) {
+						Field.STATUS)) {
 
 					return _toIntegerList(jsonArray);
 				}
@@ -104,25 +104,19 @@ public class ListObjectFieldFilterContributor
 						objectField.getBusinessType(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-					if (GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LPS-152650"))) {
-
-						return _toIdsList(
-							objectDefinitionId, jsonArray,
-							objectViewFilterColumn.getObjectFieldName());
-					}
-
-					throw new UnsupportedOperationException();
+					return _toIdsList(
+						objectDefinitionId, jsonArray,
+						objectViewFilterColumn.getObjectFieldName());
 				}
 
-				List<Map<String, String>> map = new ArrayList<>();
+				List<Map<String, String>> itemsValues = new ArrayList<>();
 
 				for (int i = 0; i < jsonArray.length(); i++) {
 					ListTypeEntry listTypeEntry =
 						_listTypeEntryLocalService.fetchListTypeEntry(
 							listTypeDefinitionId, jsonArray.getString(i));
 
-					map.add(
+					itemsValues.add(
 						HashMapBuilder.put(
 							"label", listTypeEntry.getName(locale)
 						).put(
@@ -130,7 +124,7 @@ public class ListObjectFieldFilterContributor
 						).build());
 				}
 
-				return map;
+				return itemsValues;
 			}
 		).build();
 	}

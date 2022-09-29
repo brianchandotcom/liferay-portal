@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
@@ -215,20 +214,17 @@ public class NotificationTemplateLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		String bcc = notificationTemplate.getBcc();
+		String bcc = _formatContent(
+			notificationTemplate.getBcc(), user.getLocale(), null,
+			notificationType, object);
 
 		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
 			user.getGroupId());
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159052"))) {
+		if (Validator.isNull(bcc)) {
 			bcc = _formatContent(
-				bcc, user.getLocale(), null, notificationType, object);
-
-			if (Validator.isNull(bcc)) {
-				bcc = _formatContent(
-					notificationTemplate.getBcc(), siteDefaultLocale, null,
-					notificationType, object);
-			}
+				notificationTemplate.getBcc(), siteDefaultLocale, null,
+				notificationType, object);
 		}
 
 		String body = _formatContent(
@@ -241,44 +237,34 @@ public class NotificationTemplateLocalServiceImpl
 				siteDefaultLocale, null, notificationType, object);
 		}
 
-		String cc = notificationTemplate.getCc();
-		String from = notificationTemplate.getFrom();
+		String cc = _formatContent(
+			notificationTemplate.getCc(), user.getLocale(), null,
+			notificationType, object);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159052"))) {
+		if (Validator.isNull(cc)) {
 			cc = _formatContent(
-				cc, user.getLocale(), null, notificationType, object);
+				notificationTemplate.getCc(), siteDefaultLocale, null,
+				notificationType, object);
+		}
 
-			if (Validator.isNull(cc)) {
-				cc = _formatContent(
-					notificationTemplate.getCc(), siteDefaultLocale, null,
-					notificationType, object);
-			}
+		String from = _formatContent(
+			notificationTemplate.getFrom(), user.getLocale(), null,
+			notificationType, object);
 
+		if (Validator.isNull(from)) {
 			from = _formatContent(
-				from, user.getLocale(), null, notificationType, object);
-
-			if (Validator.isNull(from)) {
-				from = _formatContent(
-					notificationTemplate.getFrom(), siteDefaultLocale, null,
-					notificationType, object);
-			}
+				notificationTemplate.getFrom(), siteDefaultLocale, null,
+				notificationType, object);
 		}
 
-		String fromName = notificationTemplate.getFromName(user.getLocale());
+		String fromName = _formatContent(
+			notificationTemplate.getFromName(user.getLocale()),
+			user.getLocale(), null, notificationType, object);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159052"))) {
+		if (Validator.isNull(fromName)) {
 			fromName = _formatContent(
-				fromName, user.getLocale(), null, notificationType, object);
-
-			if (Validator.isNull(fromName)) {
-				fromName = _formatContent(
-					notificationTemplate.getFromName(siteDefaultLocale),
-					siteDefaultLocale, null, notificationType, object);
-			}
-		}
-		else if (Validator.isNull(fromName)) {
-			fromName = notificationTemplate.getFromName(
-				_portal.getSiteDefaultLocale(user.getGroupId()));
+				notificationTemplate.getFromName(siteDefaultLocale),
+				siteDefaultLocale, null, notificationType, object);
 		}
 
 		String subject = _formatContent(

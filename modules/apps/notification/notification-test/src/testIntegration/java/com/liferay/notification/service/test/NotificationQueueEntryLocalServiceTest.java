@@ -24,10 +24,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
@@ -65,11 +63,6 @@ public class NotificationQueueEntryLocalServiceTest {
 
 	@Test
 	public void testResendNotificationQueueEntry() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-159052", "true"
-			).build());
-
 		NotificationQueueEntry notificationQueueEntry =
 			_addNotificationQueueEntry();
 
@@ -87,11 +80,6 @@ public class NotificationQueueEntryLocalServiceTest {
 		Assert.assertEquals(
 			NotificationQueueEntryConstants.STATUS_UNSENT,
 			notificationQueueEntry.getStatus());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-159052", "false"
-			).build());
 	}
 
 	private NotificationQueueEntry _addNotificationQueueEntry()

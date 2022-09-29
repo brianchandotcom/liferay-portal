@@ -34,10 +34,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -194,11 +192,6 @@ public class NotificationTemplateLocalServiceTest {
 
 	@Test
 	public void testSendNotificationTemplate() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-159052", "true"
-			).build());
-
 		String emailTerm = "[%emailTerm%]";
 		String term = "[%term%]";
 
@@ -241,11 +234,6 @@ public class NotificationTemplateLocalServiceTest {
 			notificationQueueEntry.getStatus());
 		Assert.assertEquals(termValue, notificationQueueEntry.getSubject());
 		Assert.assertEquals(emailTermValue, notificationQueueEntry.getTo());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-159052", "false"
-			).build());
 	}
 
 	@Test

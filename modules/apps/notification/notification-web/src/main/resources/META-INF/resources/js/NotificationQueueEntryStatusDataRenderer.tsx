@@ -38,10 +38,7 @@ export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
 		}
 	};
 
-	const statusInfo =
-		typeof value === 'number' && Liferay.FeatureFlags['LPS-159052']
-			? getStatusInfo(value)
-			: null;
+	const statusInfo = typeof value === 'number' ? getStatusInfo(value) : null;
 
 	return statusInfo ? (
 		<strong className={`label ${statusInfo.className}`}>

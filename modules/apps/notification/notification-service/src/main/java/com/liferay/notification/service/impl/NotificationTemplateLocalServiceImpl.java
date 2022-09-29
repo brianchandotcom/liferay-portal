@@ -103,7 +103,8 @@ public class NotificationTemplateLocalServiceImpl
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
-		_validate(objectDefinitionId, from, name, attachmentObjectFieldIds);
+		_validate(
+			objectDefinitionId, from, name, type, attachmentObjectFieldIds);
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplatePersistence.create(
@@ -349,7 +350,8 @@ public class NotificationTemplateLocalServiceImpl
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
-		_validate(objectDefinitionId, from, name, attachmentObjectFieldIds);
+		_validate(
+			objectDefinitionId, from, name, type, attachmentObjectFieldIds);
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplatePersistence.findByPrimaryKey(
@@ -557,16 +559,12 @@ public class NotificationTemplateLocalServiceImpl
 	}
 
 	private void _validate(
-			long objectDefinitionId, String from, String name,
+			long objectDefinitionId, String from, String name, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
 			throw new NotificationTemplateNameException("Name is null");
-		}
-
-		if (Validator.isNull(from)) {
-			throw new NotificationTemplateFromException("From is null");
 		}
 
 		if (objectDefinitionId > 0) {
@@ -592,6 +590,14 @@ public class NotificationTemplateLocalServiceImpl
 
 				throw new NotificationTemplateAttachmentObjectFieldIdException();
 			}
+		}
+
+		if (Objects.equals("userNotification", type)) {
+			return;
+		}
+
+		if (Validator.isNull(from)) {
+			throw new NotificationTemplateFromException("From is null");
 		}
 	}
 

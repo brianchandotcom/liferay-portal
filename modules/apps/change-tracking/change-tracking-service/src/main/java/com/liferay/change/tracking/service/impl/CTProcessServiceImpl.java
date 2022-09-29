@@ -30,7 +30,6 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -183,9 +182,6 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
 	@Reference
 	private CustomSQL _customSQL;
-
-	@Reference
-	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference
 	private PortletPermission _portletPermission;

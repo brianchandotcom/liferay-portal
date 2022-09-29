@@ -25,6 +25,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the abbreviation of a country"
 	macro _getCountryAbbreviation {
 		Variables.assertDefined(parameterList = "${countryName}");
 
@@ -36,9 +37,48 @@ definition {
 			-d name=${countryName} \
 		''';
 
+		echo("${curl}");
+
 		var countryAbbreviation = JSONCurlUtil.post("${curl}", "$.a2");
 
 		return "${countryAbbreviation}";
+	}
+
+	@summary = "Get the all informations of a country"
+	macro _getCountryByName {
+		Variables.assertDefined(parameterList = "${countryName}");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		var curl = '''
+			${portalURL}/api/jsonws/country/get-country-by-name \
+			-u test@liferay.com:test \
+			-d name=${countryName} \
+		''';
+
+		var country = JSONCurlUtil.post("${curl}");
+
+		return "${country}";
+	}
+
+	@summary = "Get the all regions of a country"
+	macro _getCountryRegions {
+		Variables.assertDefined(parameterList = "${countryAbbreviation}");
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = PropsUtil.get("portal.url");
+
+		var curl = '''
+			${portalURL}/api/jsonws/region/get-regions \
+			-u test@liferay.com:test \
+			-d companyId=${companyId} \
+			-d a2=${countryAbbreviation} \
+			-d active=true
+		''';
+
+		var countryRegions = JSONCurlUtil.post("${curl}");
+
+		return "${countryRegions}";
 	}
 
 }

@@ -29,7 +29,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Histogram;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric;
-import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
@@ -304,9 +303,6 @@ public class HistogramMetricResourceImpl
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private ResourceHelper _resourceHelper;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

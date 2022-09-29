@@ -33,12 +33,8 @@ definition {
 		}
 
 		task ("Then I can see details of updateBatch, createBatch and deleteBatch inside of action block in response") {
-			var assetLibraryGroupId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Test Depot Name",
-				site = "false");
-
 			TaxonomyVocabularyAPI.assertProperBatchInActionBlock(
-				assetLibraryGroupId = "${assetLibraryGroupId}",
+				assetLibraryId = "${assetLibraryId}",
 				batchActions = "createBatch,updateBatch,deleteBatch",
 				responseToParse = "${response}");
 		}

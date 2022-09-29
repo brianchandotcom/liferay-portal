@@ -95,8 +95,8 @@ definition {
 			else {
 				var method = "POST";
 
-				if (isSet(assetLibraryGroupId)) {
-					var href = "${portalURL}/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryGroupId}/taxonomy-vocabularies/batch";
+				if (isSet(assetLibraryId)) {
+					var href = "${portalURL}/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryId}/taxonomy-vocabularies/batch";
 				}
 				else {
 					var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(

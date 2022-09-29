@@ -94,7 +94,7 @@
 					</div>
 
 					<div class="form-group-item">
-						<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.WEBSITE %>" listTypeFieldName="typeId" name='<%= "websiteTypeId" + websitesIndex %>' />
+						<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.WEBSITE %>" listTypeFieldName="listTypeId" name='<%= "websiteTypeId" + websitesIndex %>' />
 					</div>
 
 					<div class="form-group-item form-group-item-label-spacer">

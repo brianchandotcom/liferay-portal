@@ -1827,20 +1827,18 @@ definition {
 		}
 
 		task ("Add team and assign to the user") {
-			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
-
-			Team.addCP(
+			JSONTeam.addTeam(
+				siteName = "Test Site Name",
 				teamDescription = "Site Team Description",
 				teamName = "Site Team Name");
 
-			Team.assignMembersCP(
+			JSONTeam.addUserToTeam(
+				siteName = "Test Site Name",
 				teamName = "Site Team Name",
-				userScreenName = "usersn");
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Add segment and check the user Belongs To the segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Team");
@@ -3101,12 +3099,11 @@ definition {
 	test ValidateTeamFieldInputInViewMode {
 		property portal.acceptance = "true";
 
-		task ("Add team") {
-			Site.openSiteTeamsAdmin(siteURLKey = "guest");
-
-			Team.addCP(
+		task ("Add team using JSONWS") {
+			JSONTeam.addTeam(
+				siteName = "Site Team Name",
 				teamDescription = "Site Team Description",
-				teamName = "Site Team Name");
+				teamName = "Test Site Name");
 		}
 
 		task ("Create segment using the property") {

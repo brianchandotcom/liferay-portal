@@ -99,7 +99,8 @@ public class NotificationTemplateLocalServiceImpl
 			long userId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			String recipientType, Map<Locale, String> subjectMap,
+			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
@@ -357,7 +358,8 @@ public class NotificationTemplateLocalServiceImpl
 			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			String recipientType, Map<Locale, String> subjectMap,
+			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 

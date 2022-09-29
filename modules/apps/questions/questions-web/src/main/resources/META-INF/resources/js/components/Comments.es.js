@@ -97,6 +97,7 @@ export default withRouter(
 					<Comment
 						comment={comment}
 						commentChange={_commentChange}
+						companyMxName={comment.companyMxName}
 						editable={editable}
 						key={comment.id}
 					/>

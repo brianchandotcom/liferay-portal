@@ -521,7 +521,10 @@ export default withRouter(
 								</div>
 
 								<div className="c-mt-4 position-relative questions-creator text-center text-md-right">
-									<CreatorRow question={question} />
+									<CreatorRow
+										answers={answers}
+										question={question}
+									/>
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
@@ -546,6 +549,7 @@ export default withRouter(
 											<Answer
 												answer={answer}
 												answerChange={answerChange}
+												answers={answers}
 												canMarkAsAnswer={
 													!question.locked &&
 													!!question.actions.replace

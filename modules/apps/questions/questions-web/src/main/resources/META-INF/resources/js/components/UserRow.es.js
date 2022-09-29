@@ -19,7 +19,7 @@ import Link from '../components/Link.es';
 import UserIcon from './UserIcon.es';
 import UserPopover from './UserPopover.es';
 
-export default withRouter(({creator = {}, statistics}) => (
+export default withRouter(({creator = {}, statistics, companyMxName}) => (
 	<Link
 		className="align-items-center border-0 btn btn-block btn-secondary d-flex position-relative questions-user text-left text-md-right"
 		to={`/questions/all/creator/${creator.id}`}
@@ -36,6 +36,12 @@ export default withRouter(({creator = {}, statistics}) => (
 			</p>
 
 			<p className="c-mb-0 font-weight-bold text-dark">{creator.name}</p>
+
+			{companyMxName && (
+				<p className="text-capitalize">
+					{companyMxName?.split('.', 1)}
+				</p>
+			)}
 		</div>
 
 		<UserPopover creator={creator} statistics={statistics} />

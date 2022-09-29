@@ -98,5 +98,19 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-164165. Verify if a 'Watch a Video Tour' button is displayed on banner and a Video will be opened in a popup when click on this button"
+	@priority = "4"
+	test CanWatchBannerVideo {
+		task ("Given that the user clicks on 'Watch a Video Tour' button on Welcome Banner") {
+			PRMPages.clickBannerButton(buttonText = "Watch a Video Tour");
+		}
+
+		task ("Then a modal will be opened and the user can watch the video") {
+			YoutubePortlet.playEmbeddedVideo(
+				progressBarInitialization = "0 Minutes 0 Seconds of 0 Minutes 0 Seconds",
+				videoDuration = "2 Minutes 44 Seconds",
+				videoPlayNode = "0 Minutes 2 Seconds of 2 Minutes 44 Seconds");
+		}
+	}
 
 }

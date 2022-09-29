@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 		).put(
 			"notificationTemplateId", notificationTemplateId
 		).put(
-			"notificationTemplateType", viewNotificationTemplatesDisplayContext.getNotificationTemplateType()
+			"type", viewNotificationTemplatesDisplayContext.getype()
 		).build()
 	%>'
 />

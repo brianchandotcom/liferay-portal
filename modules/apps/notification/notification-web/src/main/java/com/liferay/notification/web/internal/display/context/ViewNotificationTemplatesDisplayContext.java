@@ -150,17 +150,16 @@ public class ViewNotificationTemplatesDisplayContext {
 			NotificationWebKeys.NOTIFICATION_TEMPLATES);
 	}
 
-	public String getNotificationTemplateType() {
+	public String getype() {
 		HttpServletRequest httpServletRequest =
 			_notificationRequestHelper.getRequest();
 
 		return GetterUtil.getString(
-			httpServletRequest.getAttribute(
-				NotificationWebKeys.NOTIFICATION_TEMPLATE_TYPE));
+			httpServletRequest.getAttribute(NotificationWebKeys.TYPE));
 	}
 
 	private void _addDropdownItem(
-		CreationMenu creationMenu, String labelKey, String templateType) {
+		CreationMenu creationMenu, String labelKey, String type) {
 
 		creationMenu.addDropdownItem(
 			dropdownItem -> {
@@ -168,7 +167,7 @@ public class ViewNotificationTemplatesDisplayContext {
 					_getPortletURL(), "mvcRenderCommandName",
 					"/notification_templates/edit_notification_template",
 					"backURL", _notificationRequestHelper.getCurrentURL(),
-					"templateType", templateType);
+					"type", type);
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_notificationRequestHelper.getRequest(), labelKey));

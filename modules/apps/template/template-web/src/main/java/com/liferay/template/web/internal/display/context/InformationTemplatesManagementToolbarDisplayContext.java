@@ -185,8 +185,10 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		}
 
 		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceTracker.getInfoItemClassDetails(
-					TemplateInfoItemCapability.KEY)) {
+				_infoItemServiceTracker.getFilteredInfoItemClassDetails(
+					_themeDisplay.getScopeGroupId(),
+					TemplateInfoItemCapability.KEY,
+					_themeDisplay.getPermissionChecker())) {
 
 			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(

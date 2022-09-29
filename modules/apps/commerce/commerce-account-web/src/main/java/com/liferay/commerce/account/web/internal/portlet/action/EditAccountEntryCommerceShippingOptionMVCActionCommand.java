@@ -98,13 +98,13 @@ public class EditAccountEntryCommerceShippingOptionMVCActionCommand
 			_commerceShippingFixedOptionService.
 				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
 
-		if ((commerceShippingFixedOption == null) &&
-			(commerceShippingOptionAccountEntryRel != null)) {
-
-			_commerceShippingOptionAccountEntryRelService.
-				deleteCommerceShippingOptionAccountEntryRel(
-					commerceShippingOptionAccountEntryRel.
-						getCommerceShippingOptionAccountEntryRelId());
+		if (commerceShippingFixedOption == null) {
+			if (commerceShippingOptionAccountEntryRel != null) {
+				_commerceShippingOptionAccountEntryRelService.
+					deleteCommerceShippingOptionAccountEntryRel(
+						commerceShippingOptionAccountEntryRel.
+							getCommerceShippingOptionAccountEntryRelId());
+			}
 
 			return null;
 		}

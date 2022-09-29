@@ -28,9 +28,13 @@ import java.util.Optional;
 public class AddressUtil {
 
 	public static Optional<String> getCountryNameOptional(Address address) {
+		if (address == null) {
+			return Optional.empty();
+		}
+
 		Country country = address.getCountry();
 
-		if (country.isNew()) {
+		if ((country == null) || country.isNew()) {
 			return Optional.empty();
 		}
 
@@ -39,9 +43,13 @@ public class AddressUtil {
 	}
 
 	public static Optional<String> getRegionNameOptional(Address address) {
+		if (address == null) {
+			return Optional.empty();
+		}
+
 		Region region = address.getRegion();
 
-		if (region.isNew()) {
+		if ((region == null) || region.isNew()) {
 			return Optional.empty();
 		}
 

@@ -102,7 +102,7 @@ const AccountSubscriptionCard = ({
 							<StatusTag
 								currentStatus={
 									SLA_STATUS_TYPES[
-										accountSubscription.subscriptionStatus.toLowerCase()
+										accountSubscription?.subscriptionStatus?.toLowerCase()
 									]
 								}
 							/>

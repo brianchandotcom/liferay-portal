@@ -521,7 +521,7 @@ definition {
 		var key_permissionDefinitionValue = "${permissionDefinitionValue}";
 		var key_permissionNavigationValue = "${permissionNavigationValue}";
 
-		while (IsElementNotPresent(locator1 = "Roles#PERMISSION_TABLE_PERMISSIONS")) {
+		while (IsElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS")) {
 			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 

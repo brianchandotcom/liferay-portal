@@ -83,6 +83,11 @@ export function LengthField({
 			</label>
 
 			<LengthInput
+				defaultUnit={
+					Liferay.FeatureFlags['LPS-163362']
+						? field.typeOptions?.defaultUnit
+						: null
+				}
 				field={field}
 				id={inputId}
 				initialValue={initialValue}
@@ -104,6 +109,7 @@ LengthField.propTypes = {
 };
 
 const LengthInput = ({
+	defaultUnit,
 	field,
 	id,
 	initialValue,
@@ -230,7 +236,9 @@ const LengthInput = ({
 					onKeyUp={handleKeyUp}
 					ref={inputRef}
 					sizing="sm"
-					type={nextUnit === CUSTOM ? 'text' : 'number'}
+					type={
+						!defaultUnit && nextUnit === CUSTOM ? 'text' : 'number'
+					}
 					value={nextValue}
 				/>
 
@@ -272,16 +280,18 @@ const LengthInput = ({
 								nextUnit
 							)}
 							className="p-1 page-editor__length-field__button"
+							disabled={defaultUnit}
 							displayType="secondary"
 							id={triggerId}
 							small
 							title={Liferay.Language.get('select-units')}
 						>
-							{nextUnit === CUSTOM ? (
-								<ClayIcon symbol="code" />
-							) : (
-								nextUnit.toUpperCase()
-							)}
+							{defaultUnit ||
+								(nextUnit === CUSTOM ? (
+									<ClayIcon symbol="code" />
+								) : (
+									nextUnit.toUpperCase()
+								))}
 						</ClayButton>
 					}
 				>

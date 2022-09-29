@@ -123,8 +123,15 @@ function FieldSetContent({
 	return (
 		<div className="page-editor__sidebar__fieldset">
 			{fields.map((field, index) => {
-				const FieldComponent =
+				let FieldComponent =
 					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
+
+				if (
+					!Liferay.FeatureFlags['LPS-163362'] &&
+					field.name === 'opacity'
+				) {
+					FieldComponent = FRAGMENT_CONFIGURATION_FIELDS.text;
+				}
 
 				return (
 					<div

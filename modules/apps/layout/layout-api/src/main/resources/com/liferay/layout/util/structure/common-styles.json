@@ -877,8 +877,9 @@
 				"label": "opacity",
 				"name": "opacity",
 				"responsive": false,
-				"type": "text",
+				"type": "length",
 				"typeOptions": {
+					"defaultUnit": "%",
 					"validation": {
 						"type": "number"
 					}

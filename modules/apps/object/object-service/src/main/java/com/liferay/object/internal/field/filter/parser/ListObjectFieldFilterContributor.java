@@ -19,7 +19,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterParser;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -30,16 +30,22 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +64,10 @@ import org.osgi.service.component.annotations.Reference;
 		"object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES,
 		"object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES
 	},
-	service = ObjectFieldFilterParser.class
+	service = ObjectFieldFilterContributor.class
 )
-public class ListObjectFieldFilterParser implements ObjectFieldFilterParser {
+public class ListObjectFieldFilterContributor
+	implements ObjectFieldFilterContributor {
 
 	@Override
 	public Map<String, Object> parse(
@@ -126,6 +133,64 @@ public class ListObjectFieldFilterParser implements ObjectFieldFilterParser {
 				return map;
 			}
 		).build();
+	}
+
+	@Override
+	public String toValueSummary(
+			Locale locale, ObjectField objectField,
+			ObjectViewFilterColumn objectViewFilterColumn)
+		throws PortalException {
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			Map<String, Object> preloadedData = parse(
+				objectField.getListTypeDefinitionId(),
+				objectField.getObjectDefinitionId(), locale,
+				objectViewFilterColumn);
+
+			return StringUtil.merge(
+				ListUtil.toList(
+					(List<Map<String, String>>)preloadedData.get("itemsValues"),
+					itemValue -> itemValue.get("label")),
+				StringPool.COMMA_AND_SPACE);
+		}
+
+		Map<String, Object> preloadedData = parse(
+			0L, objectField.getObjectDefinitionId(), locale,
+			objectViewFilterColumn);
+
+		if (Objects.equals(
+				objectViewFilterColumn.getObjectFieldName(), Field.STATUS)) {
+
+			return StringUtil.merge(
+				ListUtil.toList(
+					(List<Integer>)preloadedData.get("itemsValues"),
+					itemValue -> _language.get(
+						locale, WorkflowConstants.getStatusLabel(itemValue))),
+				StringPool.COMMA_AND_SPACE);
+		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+		return StringUtil.merge(
+			ListUtil.toList(
+				(List<Map<String, Object>>)preloadedData.get("itemsValues"),
+				itemValue -> {
+					try {
+						return _objectEntryLocalService.getTitleValue(
+							GetterUtil.getLong(itemValue.get("value")),
+							objectRelationship.getObjectDefinitionId1());
+					}
+					catch (PortalException portalException) {
+						throw new RuntimeException(portalException);
+					}
+				}),
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	@Override
@@ -291,6 +356,9 @@ public class ListObjectFieldFilterParser implements ObjectFieldFilterParser {
 			}
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

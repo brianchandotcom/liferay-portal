@@ -17,8 +17,9 @@ package com.liferay.object.field.filter.parser;
 /**
  * @author Feliphe Marinho
  */
-public interface ObjectFieldFilterParserTracker {
+public interface ObjectFieldFilterContributorTracker {
 
-	public ObjectFieldFilterParser getObjectFieldFilterParser(String key);
+	public ObjectFieldFilterContributor getObjectFieldFilterContributor(
+		String key);
 
 }

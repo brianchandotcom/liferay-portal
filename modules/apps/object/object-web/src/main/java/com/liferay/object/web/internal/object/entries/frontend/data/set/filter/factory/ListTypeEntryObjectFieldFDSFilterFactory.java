@@ -19,7 +19,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterParser;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -154,7 +154,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 	@Reference(
 		target = "(object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES + ")"
 	)
-	private ObjectFieldFilterParser _objectFieldFilterParser;
+	private ObjectFieldFilterContributor _objectFieldFilterParser;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

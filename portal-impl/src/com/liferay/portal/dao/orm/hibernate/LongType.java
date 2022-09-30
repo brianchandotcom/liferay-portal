@@ -101,7 +101,7 @@ public class LongType implements Serializable, UserType {
 							sharedSessionContractImplementor)));
 			}
 			catch (SQLException sqlException2) {
-				throw sqlException1;
+				throw sqlException2;
 			}
 		}
 

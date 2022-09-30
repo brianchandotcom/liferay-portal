@@ -364,6 +364,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				serviceAttributeValue, StringPool.COMMA);
 
 			if (serviceAttributeValues.contains("Portlet.class")) {
+				newProperties = StringUtil.trimTrailing(newProperties);
+
 				if (!newProperties.endsWith(StringPool.COMMA)) {
 					newProperties += StringPool.COMMA;
 				}

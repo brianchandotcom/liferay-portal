@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_ATTACHMENTS_BUTTON</td>
-	<td>//li[contains(@class,'list-group-item')]//h5[text()='${key_entryName}']/../..//a[contains(@class,'btn') and contains(.,'${key_button}')]</td>
+	<td>//li[contains(@class,'list-group-item')]//h5[text()='${key_entryName}']/ancestor::li//a[contains(text(),'${key_button}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -98,7 +98,6 @@ definition {
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "${permissionDefinitionValue}",
 			permissionNavigationValue = "${permissionNavigationValue}",
-			remove = "${remove}",
 			siteNameScope = "${siteNameScope}");
 	}
 
@@ -414,8 +413,7 @@ definition {
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "${permissionDefinitionValue}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			remove = "true");
+			permissionNavigationValue = "${permissionNavigationValue}");
 	}
 
 	macro removePermissionPG {

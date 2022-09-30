@@ -149,11 +149,19 @@ definition {
 		task ("Search for Template by name") {
 			Refresh();
 
-			ObjectNotifications.searchNotificationTemplate(entryName = "Liferay");
+			Type(
+				locator1 = "ObjectPortlet#SEARCH_FIELD",
+				value1 = "Liferay");
+
+			KeyPress(
+				locator1 = "ObjectPortlet#SEARCH_FIELD",
+				value1 = "\RETURN");
 		}
 
 		task ("Assert that Notification Template is present") {
-			ObjectNotifications.viewNotificationTemplate(notificationTemplateName = "Notification Liferay");
+			AssertElementPresent(
+				key_name = "Notification Liferay",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
 

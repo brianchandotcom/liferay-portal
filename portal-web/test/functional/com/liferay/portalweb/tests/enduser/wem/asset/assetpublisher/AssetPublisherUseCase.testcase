@@ -464,7 +464,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureAssetLinkBehaviorPG(
-				assetLinkBehavior = "View in Context",
+				assetLinkBehavior = "View on New Page",
 				disableConfiguration = "Show Add Content Button");
 		}
 
@@ -1972,7 +1972,7 @@ definition {
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 
-		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View in Context");
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View on New Page");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

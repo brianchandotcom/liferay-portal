@@ -79,7 +79,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View in Context");
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View on New Page");
 		}
 
 		task ("View web content should be rendered in the default display page") {

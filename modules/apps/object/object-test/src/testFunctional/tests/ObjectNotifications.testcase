@@ -41,7 +41,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert that Notification Template is present") {
+		task ("Assert the Notification Template is present") {
 			Refresh();
 
 			AssertElementPresent(
@@ -74,7 +74,7 @@ definition {
 			ObjectNotifications.deleteNotificationTemplate(templateName = "Notification Template");
 		}
 
-		task ("Assert that Notification Template is not present") {
+		task ("Assert the Notification Template is not present") {
 			Refresh();
 
 			AssertElementNotPresent(
@@ -111,7 +111,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert that the Notification Template edited is present") {
+		task ("Assert the edited Notification Template is present") {
 			Refresh();
 
 			AssertElementPresent(
@@ -175,13 +175,13 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Go to created Object and add a Entry") {
+		task ("Go to the created Object and add an Entry") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject161920");
 
 			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry");
 		}
 
-		task ("Go to Notifications Queue and assert that notification is present") {
+		task ("Go to the Notifications Queue and assert the notification is present") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",
 				panel = "Control Panel",

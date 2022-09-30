@@ -65,6 +65,9 @@
 						<span class="asset-type">
 							<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
 						</span>
+						<span class="author">
+							<liferay-ui:message key="<%= workflowTask.getUserName() %>" />
+						</span>
 						<span class="task-name" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
 							<liferay-ui:message key="<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>" />
 						</span>
@@ -114,6 +117,12 @@
 					href="<%= rowURL %>"
 					name="asset-type"
 					value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="author"
+					value="<%= workflowTask.getUserName() %>"
 				/>
 
 				<liferay-ui:search-container-column-text

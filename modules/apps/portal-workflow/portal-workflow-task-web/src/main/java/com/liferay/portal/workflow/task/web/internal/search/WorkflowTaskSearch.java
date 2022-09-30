@@ -38,6 +38,7 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 		{
 			add("asset-title");
 			add("asset-type");
+			add("author");
 			add("task");
 			add("last-activity-date");
 			add("due-date");

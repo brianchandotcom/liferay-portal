@@ -162,6 +162,14 @@ definition {
 			AssertElementPresent(
 				key_name = "Notification Liferay",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			AssertElementNotPresent(
+				key_name = "Notification Site",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			AssertElementNotPresent(
+				key_name = "Notification Test",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
 

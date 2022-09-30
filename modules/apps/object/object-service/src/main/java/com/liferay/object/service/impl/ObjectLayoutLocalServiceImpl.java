@@ -576,13 +576,6 @@ public class ObjectLayoutLocalServiceImpl
 
 				if (StringUtil.equals(
 						objectLayoutBox.getType(),
-						ObjectLayoutBoxConstants.TYPE_REGULAR)) {
-
-					continue;
-				}
-
-				if (StringUtil.equals(
-						objectLayoutBox.getType(),
 						ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
 
 					if (GetterUtil.getBoolean(

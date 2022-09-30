@@ -18,6 +18,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewFilterColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -142,15 +143,11 @@ public class ObjectViewDTOConverter
 				ObjectFieldFilterContributor objectFieldFilterContributor =
 					_objectFieldFilterContributorTracker.
 						getObjectFieldFilterContributor(
-							serviceBuilderObjectViewFilterColumn.
-								getFilterType());
+							new ObjectFieldFilterContext(
+								locale, objectDefinitionId,
+								serviceBuilderObjectViewFilterColumn));
 
-				return objectFieldFilterContributor.toValueSummary(
-					locale,
-					_objectFieldLocalService.fetchObjectField(
-						objectDefinitionId,
-						objectViewFilterColumn.getObjectFieldName()),
-					serviceBuilderObjectViewFilterColumn);
+				return objectFieldFilterContributor.toValueSummary();
 			});
 
 		return objectViewFilterColumn;

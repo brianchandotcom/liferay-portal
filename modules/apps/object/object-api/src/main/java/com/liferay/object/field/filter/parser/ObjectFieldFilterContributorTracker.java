@@ -14,12 +14,15 @@
 
 package com.liferay.object.field.filter.parser;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Feliphe Marinho
  */
 public interface ObjectFieldFilterContributorTracker {
 
 	public ObjectFieldFilterContributor getObjectFieldFilterContributor(
-		String key);
+			ObjectFieldFilterContext objectFieldFilterContext)
+		throws PortalException;
 
 }

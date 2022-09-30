@@ -20,6 +20,7 @@ import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnObjectFieldNameException;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
 import com.liferay.object.model.ObjectDefinition;
@@ -494,10 +495,11 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			ObjectFieldFilterContributor objectFieldFilterContributor =
 				_objectFieldFilterContributorTracker.
 					getObjectFieldFilterContributor(
-						objectViewFilterColumn.getFilterType());
+						new ObjectFieldFilterContext(
+							null, objectField.getObjectDefinitionId(),
+							objectViewFilterColumn));
 
-			objectFieldFilterContributor.validate(
-				objectField.getObjectDefinitionId(), objectViewFilterColumn);
+			objectFieldFilterContributor.validate();
 		}
 	}
 

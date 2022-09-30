@@ -19,8 +19,10 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
@@ -151,15 +153,15 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		int maxRetries = 5;
-		int retries = 0;
+		List<String> distNodesList = new ArrayList<>(
+			Arrays.asList(distNodes.split(",")));
 
-		while (retries < maxRetries) {
+		while (!distNodesList.isEmpty()) {
 			try {
-				retries++;
-
 				String distNode = JenkinsResultsParserUtil.getRandomString(
-					Arrays.asList(distNodes.split(",")));
+					distNodesList);
+
+				distNodesList.remove(distNode);
 
 				String[] commands = new String[2];
 
@@ -231,7 +233,7 @@ public class BuildDatabaseUtil {
 			catch (IOException | RuntimeException | TimeoutException
 						exception) {
 
-				if (retries == maxRetries) {
+				if (distNodesList.isEmpty()) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",

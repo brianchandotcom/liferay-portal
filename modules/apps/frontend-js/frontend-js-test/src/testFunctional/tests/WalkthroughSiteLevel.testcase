@@ -11,6 +11,10 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ApplicationsMenu.gotoSite(site = "Site Name");
 	}
 
 	tearDown {
@@ -57,6 +61,90 @@ definition {
 			AssertElementNotPresent(
 				key_title = "",
 				locator1 = "Walkthrough#HOTSPOT");
+		}
+	}
+
+	@description = "LPS-159826. Checked that each step corresponds to the expected Step Id."
+	@priority = "5"
+	test StepCanCorrespondToCorrectStepId {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given walkthrough enabled site-level") {
+			Walkthrough.setupWalkthroughPage(
+				filename = "walkthrough_configuration_multiple_page.json",
+				siteName = "Site Name");
+		}
+
+		task ("When on step 1") {
+			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-1");
+		}
+
+		task ("Then correspond to the correct step ID on correct page"){
+			Walkthrough.assertHighlightedSpecificObject(key_stepId = "step-1");
+
+		}
+
+		task ("When on step 2 correspond to the correct step ID on correct page") {
+			Walkthrough.goToNextStep(key_step = "2");
+
+			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-2");
+
+			Walkthrough.assertHighlightedSpecificObject(key_stepId = "step-2");
+		}
+	}
+
+	@description = "LPS-159844. When a walkthrough step is defined and a step is below the fold, user can see popover is."
+	@priority = "3"
+	test CanRenderWhenStepIsBelowFold {
+		property portal.acceptance = "true";
+
+		task ("Given walkthrough enabled site-level") {
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration_multiple_page.json");
+		}
+
+		task ("Given a page width larger than the preview window."){
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1",
+				widgetName = "JS Walkthrough Sample");
+				
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 2");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 2",
+				widgetName = "Documents and Media");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 2",
+				widgetName = "JS Walkthrough Sample");
+		}
+
+		task ("When enable popover mode") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+
+			Walkthrough.enablePopoverMode();
+		}
+
+		task ("And When navigate to step that is below the fold") {
+			Walkthrough.goToNextStep(key_step = "2");
+		}
+
+		task ("Then popover element is visible when rendered") {
+			AssertElementPresent(
+				key_title = "Step 2 of 2: Enter Your Name",
+				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 	}
 

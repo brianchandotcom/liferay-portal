@@ -143,8 +143,8 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"6.4.0", "6.4.1",
-			new com.liferay.message.boards.internal.upgrade.v6_4_1.
-				MBSuspiciousActivityUpgradeProcess());
+			UpgradeProcessFactory.alterColumnType(
+				"MBSuspiciousActivity", "reason", "VARCHAR(255) null"));
 	}
 
 	@Reference

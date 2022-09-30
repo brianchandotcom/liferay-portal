@@ -84,20 +84,6 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"externalReferenceCode": "Additional_Option__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Additional Option"
-			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
-			"name": "additionalOption",
-			"required": false,
-			"type": "String"
-		},
-		{
 			"DBType": "Clob",
 			"businessType": "LongText",
 			"externalReferenceCode": "Target_Audience_Role__c",

@@ -10,18 +10,18 @@
  */
 
 import MDFRequest from '../../../common/interfaces/mdfRequest';
-import {apiOption} from '../../../common/services/liferay/common/enums/apiOption';
+import {resourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
 
-export default async function createMDFRequestProxyApi(mdfRequest: MDFRequest) {
+export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 	const dtoMDFRequestSFResponse = await createMDFRequest(
-		apiOption.MDF_REQUEST_SALESFORCE,
+		resourceName.MDF_REQUEST_SALESFORCE,
 		mdfRequest
 	);
 
 	if (dtoMDFRequestSFResponse.externalReferenceCode) {
 		const dtoMDFRequestResponse = await createMDFRequest(
-			apiOption.MDF_REQUEST_DXP,
+			resourceName.MDF_REQUEST_DXP,
 			mdfRequest,
 			dtoMDFRequestSFResponse.externalReferenceCode
 		);

@@ -15,12 +15,12 @@ import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../../common/enums/requestStatus';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
-import {apiOption} from '../../../common/services/liferay/common/enums/apiOption';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import createMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
+import {resourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
-import createMDFRequestActivitiesProxyApi from './createMDFRequestActivitiesProxyApi';
-import createMDFRequestProxyApi from './createMDFRequestProxyApi';
+import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
+import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
 
 export default async function submitForm(
 	values: MDFRequest,
@@ -35,20 +35,20 @@ export default async function submitForm(
 	}
 
 	const dtoMDFRequest = Liferay.FeatureFlags['LPS-164528']
-		? await createMDFRequestProxyApi(values)
-		: await createMDFRequest(apiOption.MDF_REQUEST_DXP, values);
+		? await createMDFRequestProxyAPI(values)
+		: await createMDFRequest(resourceName.MDF_REQUEST_DXP, values);
 
 	if (values.activities.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values.activities.map((activity) =>
 				Liferay.FeatureFlags['LPS-164528']
-					? createMDFRequestActivitiesProxyApi(
+					? createMDFRequestActivitiesProxyAPI(
 							activity,
 							dtoMDFRequest.id,
 							dtoMDFRequest.externalReferenceCodeSF
 					  )
 					: createMDFRequestActivities(
-							apiOption.ACTIVITY_DXP,
+							resourceName.ACTIVITY_DXP,
 							activity,
 							dtoMDFRequest.id,
 							dtoMDFRequest.externalReferenceCodeSF

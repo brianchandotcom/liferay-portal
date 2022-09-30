@@ -10,16 +10,16 @@
  */
 
 import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
-import {apiOption} from '../../../common/services/liferay/common/enums/apiOption';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
+import {resourceName} from '../../../common/services/liferay/object/enum/resourceName';
 
-export default async function createMDFRequestActivitiesProxyApi(
+export default async function createMDFRequestActivitiesProxyAPI(
 	mdfRequestActivity: MDFRequestActivity,
 	mdfRequestId?: number,
 	mdFRequestExternalReferenceCodeSF?: string
 ) {
 	const dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
-		apiOption.ACTIVITY_SALESFORCE,
+		resourceName.ACTIVITY_SALESFORCE,
 		mdfRequestActivity,
 		mdfRequestId,
 		mdFRequestExternalReferenceCodeSF
@@ -27,7 +27,7 @@ export default async function createMDFRequestActivitiesProxyApi(
 
 	if (dtoMDFRequestActivitySFResponse.externalReferenceCode) {
 		const dtoMDFRequestResponse = await createMDFRequestActivities(
-			apiOption.ACTIVITY_DXP,
+			resourceName.ACTIVITY_DXP,
 			mdfRequestActivity,
 			mdfRequestId,
 			mdFRequestExternalReferenceCodeSF,

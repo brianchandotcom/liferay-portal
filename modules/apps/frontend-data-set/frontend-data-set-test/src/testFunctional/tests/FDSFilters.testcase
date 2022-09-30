@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "upgrade.database.auto.run=false";
 	property osgi.modules.includes = "frontend-data-set-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";
@@ -49,8 +48,6 @@ definition {
 	@description = "LPS-155309. Assert all filters can be removed."
 	@priority = "4"
 	test AllFiltersCanBeRemoved {
-		property custom.properties = "upgrade.database.auto.run=false";
-
 		task ("When there is a filter already established") {
 			AssertElementPresent(
 				key_filter = "Color: Blue, Green, Yellow",

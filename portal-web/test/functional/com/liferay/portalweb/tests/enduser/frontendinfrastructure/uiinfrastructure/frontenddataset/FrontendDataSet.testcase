@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "upgrade.database.auto.run=false";
 	property osgi.modules.includes = "frontend-data-set-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";
@@ -51,8 +50,6 @@ definition {
 	@description = "LPS-147914: Verify alert message is present when action button is clicked"
 	@priority = "4"
 	test ActionsCanBeCustomized {
-		property custom.properties = "upgrade.database.auto.run=false";
-
 		task ("When Click on 1st action button in FDS sample") {
 			MouseOver(
 				key_itemName = "Sample1",

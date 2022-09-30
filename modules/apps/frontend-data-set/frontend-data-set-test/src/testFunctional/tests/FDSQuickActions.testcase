@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "upgrade.database.auto.run=false";
 	property osgi.modules.includes = "frontend-data-set-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";
@@ -57,8 +56,6 @@ definition {
 	@description = "LPS-155465. Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu."
 	@priority = "5"
 	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
-		property custom.properties = "upgrade.database.auto.run=false";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When click on Pencil Icon") {

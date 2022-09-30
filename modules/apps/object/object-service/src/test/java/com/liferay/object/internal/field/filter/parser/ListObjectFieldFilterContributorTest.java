@@ -55,8 +55,7 @@ public class ListObjectFieldFilterContributorTest {
 		);
 
 		try {
-			_listObjectFieldFilterContributor.validate(
-				0L, objectViewFilterColumn);
+			_listObjectFieldFilterContributor.validate();
 
 			Assert.fail();
 		}
@@ -81,8 +80,7 @@ public class ListObjectFieldFilterContributorTest {
 		);
 
 		try {
-			_listObjectFieldFilterContributor.validate(
-				0L, objectViewFilterColumn);
+			_listObjectFieldFilterContributor.validate();
 
 			Assert.fail();
 		}
@@ -100,7 +98,7 @@ public class ListObjectFieldFilterContributorTest {
 			"{\"excludes\": [0, 1]}"
 		);
 
-		_listObjectFieldFilterContributor.validate(0L, objectViewFilterColumn);
+		_listObjectFieldFilterContributor.validate();
 	}
 
 	private final ListObjectFieldFilterContributor

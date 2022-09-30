@@ -721,10 +721,7 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsRoles {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Roles Regrole Name");
 

@@ -383,10 +383,7 @@ definition {
 	}
 
 	macro removeAssignee {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role._goToRoleAssigneeType(
 			assigneeType = "${assigneeType}",
@@ -437,10 +434,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Search.searchCP(searchTerm = "Name");
 

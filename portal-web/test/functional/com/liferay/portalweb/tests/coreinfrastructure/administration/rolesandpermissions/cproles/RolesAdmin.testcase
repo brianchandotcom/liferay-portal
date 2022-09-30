@@ -42,17 +42,11 @@ definition {
 
 	@priority = "3"
 	test CanAddRoleWithSameNameDifferentKey {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Role Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		LexiconEntry.gotoAdd();
 
@@ -68,10 +62,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Search.searchCP(searchTerm = "Name-2");
 
@@ -84,17 +75,11 @@ definition {
 
 	@priority = "4"
 	test CannotAddRoleIfSimilarKeyExists {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Role Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		LexiconEntry.gotoAdd();
 
@@ -112,10 +97,7 @@ definition {
 
 		Alert.viewDuplicateErrorMessage();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Search.searchCP(searchTerm = "Name2");
 
@@ -308,20 +290,14 @@ definition {
 			roleKey = "Roles Regrole Name",
 			roleTitle = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "RoleSegment Test",
 			assigneeType = "Segments",
 			roleTitle = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewAssignee(
 			assigneeName = "RoleSegment Test",
@@ -335,10 +311,7 @@ definition {
 			roleKey = "Roles Regrole Name",
 			roleTitle = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Roles Regrole Name");
 
@@ -362,20 +335,14 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "New RoleSegment Test",
 			assigneeType = "Segments",
 			roleTitle = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewAssignee(
 			assigneeName = "New RoleSegment Test",
@@ -426,10 +393,7 @@ definition {
 			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
 			roleTitle = "Remove Org Assignee");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "Organization Name",
@@ -452,10 +416,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "test test");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removeAssignee(
 			assigneeName = "Organization Name",
@@ -480,37 +441,25 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
 		Role.add(roleTitle = "Roles Orgrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewCP(
 			roleTitle = "Roles Orgrole Name",
 			roleType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
 		LexiconEntry.delete(rowEntry = "Roles Orgrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Organization");
 
@@ -524,43 +473,28 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewCP(
 			roleTitle = "Roles Regrole Name",
 			roleType = "Regular");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		LexiconEntry.delete(rowEntry = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
 
 	@priority = "4"
 	test RolesCanBeOrderedByTitle {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Pagination.changePagination(itemsPerPage = "4");
 
@@ -591,10 +525,7 @@ definition {
 
 	@priority = "3"
 	test RolesCanBeViewedInTableView {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -642,20 +573,14 @@ definition {
 			roleKey = "Remove Regrole Assignee",
 			roleTitle = "Remove Regrole Assignee");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "Role Assignee Test",
 			assigneeType = "Segments",
 			roleTitle = "Remove Regrole Assignee");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removeAssignee(
 			assigneeName = "Role Assignee Test",
@@ -706,10 +631,7 @@ definition {
 			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
 			roleTitle = "Remove Site Assignee");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "Site Name",
@@ -732,10 +654,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "test test");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removeAssignee(
 			assigneeName = "Site Name",
@@ -759,37 +678,25 @@ definition {
 	test SiteRoleCanBeDeleted {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
 		Role.add(roleTitle = "Roles Siterole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewCP(
 			roleTitle = "Roles Siterole Name",
 			roleType = "Site");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
 		LexiconEntry.delete(rowEntry = "Roles Siterole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
@@ -799,26 +706,17 @@ definition {
 	@description = "This is a use case for LPS-105001 and LPS-104999."
 	@priority = "3"
 	test UserCanAddARoleWithoutATitle {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewCP(
 			roleKey = "Administrator",
 			toolTip = "A title is a localizable human-readable name for a role. If not provided, the key will be displayed by default.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleKey = "Role Key Value");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewCP(roleKey = "Role Key Value");
 	}
@@ -838,19 +736,13 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewAssignee(
 			assigneeName = "userfn userln",
@@ -893,10 +785,7 @@ definition {
 			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
 			roleTitle = "Remove User Assignee");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "userfn userln",
@@ -919,10 +808,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "test test");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removeAssignee(
 			assigneeName = "userfn userln",
@@ -1033,10 +919,7 @@ definition {
 			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
 			roleTitle = "Remove User Group Assignee");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssignee(
 			assigneeName = "UG UserGroup Name",
@@ -1059,10 +942,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "test test");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removeAssignee(
 			assigneeName = "UG UserGroup Name",
@@ -1091,10 +971,7 @@ definition {
 			roleKey = "User Permission",
 			roleTitle = "User Permission");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.viewCP(roleTitle = "User Permission");
 

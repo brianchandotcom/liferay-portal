@@ -207,7 +207,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 
 		Map<String, Object> variables = null;
 
-		if (PropsValues.OBJECT_DEFINITION_SCRIPT_SYNTAX_VERSION == 2) {
+		if (PropsValues.OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION == 2) {
 			variables = ObjectScriptVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataTracker);

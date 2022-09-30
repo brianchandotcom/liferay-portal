@@ -573,7 +573,9 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		}
 		catch (ClassNotFoundException classNotFoundException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to load portlet class " + portletClassName);
+				_log.debug(
+					"Unable to load portlet class " + portletClassName,
+					classNotFoundException);
 			}
 		}
 		catch (NoSuchMethodException noSuchMethodException) {

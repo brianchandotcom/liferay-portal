@@ -574,6 +574,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on display page template."
+	@priority = "4"
+	test ViewBreadcrumbOnDisplayPageTemplate {
+		task ("Given the display page template creator has a DPT with an Asset Publisher inside Container fragment") {
+			task ("Add a Container fragment to display page template") {
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Add an Asset Publisher inside Container") {
+				PageEditor.addElementToContainer(
+					navTab = "Widgets",
+					portletName = "Asset Publisher");
+			}
+
+			task ("Close the sidebar") {
+				Click(
+					key_text = "times",
+					locator1 = "Icon#ANY");
+			}
+		}
+
+		task ("When the display page template creator selects the Asset Publisher") {
+			PageEditor.clickConfigurableField(fragmentName = "Asset Publisher");
+		}
+
+		task ("Then the display page template creator should see the Breadcrumb and Assset Publisher as active") {
+			Breadcrumb.viewBreadcrumbPath(breadcrumbNameList = "Container,Asset Publisher");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Asset Publisher");
+		}
+
+		task ("When the display page template creator selects the Container on Breadcrumb") {
+			Click(
+				key_breadcrumbName = "Container",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+		}
+
+		task ("Then the display page template creator should see the sidebar still closed and the General panel") {
+			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
+
+			AssertVisible(
+				key_panel = "Container Options",
+				locator1 = "Panel#PANEL");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Container");
+		}
+	}
+
 	@description = "This is a test for LPS-133350. View master page after renaming display page template within custom master page."
 	@priority = "4"
 	test ViewMasterPageAfterRenamingDisplayPageTemplateWithinCustomMasterPage {

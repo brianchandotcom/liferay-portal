@@ -1273,6 +1273,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		Attribute userGroupAttribute = userAttributes.get(userMappingsGroup);
 
+		String userGroupAttributeString = StringUtil.lowerCase(
+			userGroupAttribute.toString());
+
 		Properties groupMappings = ldapImportContext.getGroupMappings();
 
 		Set<Long> ldapServerGroupIds = new LinkedHashSet<>();
@@ -1307,9 +1310,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 				ldapServerGroupIds.add(userGroup.getUserGroupId());
 
+				String fullUserDN = StringUtil.lowerCase(
+					searchResult.getNameInNamespace());
+
 				if ((userGroupAttribute != null) &&
-					userGroupAttribute.contains(
-						searchResult.getNameInNamespace())) {
+					userGroupAttributeString.contains(fullUserDN)) {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(

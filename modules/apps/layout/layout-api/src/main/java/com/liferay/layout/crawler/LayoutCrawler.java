@@ -20,7 +20,9 @@ import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface LayoutCrawler {
 
 	public String getLayoutContent(Layout layout, Locale locale)

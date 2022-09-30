@@ -20,7 +20,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author dnebinger
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 @ExtendedObjectClassDefinition(
 	category = "pages", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )

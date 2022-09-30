@@ -76,16 +76,10 @@ definition {
 
 			Refresh();
 
-			AssertElementPresent(
-				key_tableEntryName = "PG2",
-				locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
-
 			Button.clickPublish();
 		}
 
 		task ("Create an object entry related to Commerce Product Group") {
-			Navigator.openURL();
-
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject288");
 
 			LexiconEntry.gotoAdd();
@@ -145,17 +139,11 @@ definition {
 		}
 
 		task ("Create an object entry related to Commerce Product") {
-			Navigator.openURL();
-
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject289");
 
 			LexiconEntry.gotoAdd();
 
 			Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
-
-			AssertElementPresent(
-				key_picklistOption = "Simple T-Shirt",
-				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Simple T-Shirt");
 

@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-161884 - Verify that it's possible to create an object with a categorization section in the layout"
 	@priority = "3"
 	test CanCreateObjectWithCategorizationSection {
+		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanCreateObjectWithCategorizationSection";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 200",
 			objectName = "CustomObject200",

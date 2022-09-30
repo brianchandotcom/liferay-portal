@@ -1,12 +1,14 @@
 {
+	"externalReferenceCode": "MDFRequestActivity__c",
 	"label": {
-		"en_US": "Activity"
+		"en_US": "Activity SF"
 	},
-	"name": "Activity",
+	"name": "ActivitySF",
 	"objectFields": [
 		{
 			"DBType": "Clob",
 			"businessType": "Text",
+			"externalReferenceCode": "Activity_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -14,12 +16,12 @@
 			},
 			"name": "name",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Activity_Name__c"
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
 			"businessType": "Text",
+			"externalReferenceCode": "MDF_Request__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -27,12 +29,77 @@
 			},
 			"name": "mdfRequestExternalReferenceCodeSF",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "MDF_Request__c"
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Total_Cost__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Cost of Expense"
+			},
+			"name": "totalCostOfExpense",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Description__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Requested_Amount__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Requested Amount"
+			},
+			"name": "mdfRequestAmount",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "Start_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "End_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "End Date"
+			},
+			"name": "endDate",
+			"required": false,
+			"type": "Date"
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Activities"
+		"en_US": "Activities SF"
 	},
-	"scope": "company"
+	"scope": "company",
+	"storageType": "salesforce"
 }

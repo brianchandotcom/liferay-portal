@@ -1,4 +1,5 @@
 {
+	"externalReferenceCode": "MDF_Request__c",
 	"label": {
 		"en_US": "MDF Request SF"
 	},
@@ -7,32 +8,33 @@
 		{
 			"DBType": "Clob",
 			"businessType": "Text",
+			"externalReferenceCode": "Campaign_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Overall Campaign Name"
 			},
-			"name": "overallCampaign",
+			"name": "overallCampaignName",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Campaign_Name__c"
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
 			"businessType": "Text",
+			"externalReferenceCode": "Campaign_Description__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Overall Campaign Description"
 			},
-			"name": "overallCampaign",
+			"name": "overallCampaignDescription",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Campaign_Description__c"
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
 			"businessType": "Text",
+			"externalReferenceCode": "Email_Address__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -40,12 +42,25 @@
 			},
 			"name": "emailAddress",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Email_Address__c"
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "Text",
+			"externalReferenceCode": "Company_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Company Name"
+			},
+			"name": "companyName",
+			"required": false,
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "Liferay_Business_Sales_Goals__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -53,12 +68,12 @@
 			},
 			"name": "liferayBusinessSalesGoals",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Liferay_Business_Sales_Goals__c"
+			"type": "Clob"
 		},
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "Target_Market_s__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -66,12 +81,12 @@
 			},
 			"name": "targetMarkets",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Target_Market_s__c"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"externalReferenceCode": "Additional_Option__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -80,12 +95,12 @@
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
 			"name": "additionalOption",
 			"required": false,
-			"type": "String",
-			"externalReferenceCode": "Additional_Option__c"
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
+			"externalReferenceCode": "Target_Audience_Role__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -93,12 +108,12 @@
 			},
 			"name": "targetAudienceRoles",
 			"required": false,
-			"type": "Clob",
-			"externalReferenceCode": "Target_Audience_Role__c"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "Total_Cost__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -106,12 +121,12 @@
 			},
 			"name": "totalCostOfExpense",
 			"required": false,
-			"type": "BigDecimal",
-			"externalReferenceCode": "Total_Cost__c"
+			"type": "BigDecimal"
 		},
 		{
 			"DBType": "String",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "Total_MDF_Requested_Amount__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -119,12 +134,12 @@
 			},
 			"name": "totalMDFRequestAmount",
 			"required": false,
-			"type": "BigDecimal",
-			"externalReferenceCode": "Total_MDF_Requested_Amount__c"
+			"type": "BigDecimal"
 		},
 		{
 			"DBType": "Integer",
 			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "User_ID__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -132,13 +147,12 @@
 			},
 			"name": "liferaysUserID",
 			"required": false,
-			"type": "Integer",
-			"externalReferenceCode": "User_ID__c"
+			"type": "Integer"
 		}
 	],
 	"pluralLabel": {
 		"en_US": "MDF Requests SF"
 	},
-	"storageType": "salesforce",
-	"scope": "company"
+	"scope": "company",
+	"storageType": "salesforce"
 }

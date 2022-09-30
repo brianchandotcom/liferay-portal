@@ -13,6 +13,7 @@
  */
 
 import {Parameters, parametersFormater} from '.';
+import {getCurrentDate} from '../utils/dateFormatter';
 import {axios} from './liferay/api';
 import {Liferay} from './liferay/liferay';
 
@@ -30,6 +31,44 @@ export function getPolicies(parameters: Parameters = {}) {
 	}
 
 	return axios.get(`${DeliveryAPI}/`);
+}
+
+export function getPoliciesExpired(parameters: Parameters = {}) {
+	const parametersList = Object.keys(parameters);
+
+	if (parametersList.length) {
+		return axios.get(
+			`${DeliveryAPI}/${parametersFormater(
+				parametersList,
+				parameters
+			)}&filter=endDate lt ${getCurrentDate}`
+		);
+	}
+
+	return axios.get(`${DeliveryAPI}/`);
+}
+
+export function getNotExpiredPolicies(parameters: Parameters = {}) {
+	const parametersList = Object.keys(parameters);
+
+	if (parametersList.length) {
+		return axios.get(
+			`${DeliveryAPI}/${parametersFormater(
+				parametersList,
+				parameters
+			)}&filter=endDate ge ${getCurrentDate}`
+		);
+	}
+
+	return axios.get(`${DeliveryAPI}/`);
+}
+
+export function deletePolicyByExternalReferenceCode(
+	externalReferenceCode: string
+) {
+	return axios.delete(
+		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
+	);
 }
 
 export function getPoliciesForSalesGoal(

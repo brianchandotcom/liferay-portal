@@ -24,6 +24,7 @@ export const currentDateString = currentDate.split('-');
 export const currentDay = new Date().getDate();
 export const currentMonth = new Date().getMonth();
 export const currentYear = new Date().getFullYear();
+export const getCurrentDate = new Date().toISOString().slice(0, 10);
 
 export const sixMonthsAgo = currentMonth - 5;
 export const threeMonthsAgo = currentMonth - 2;

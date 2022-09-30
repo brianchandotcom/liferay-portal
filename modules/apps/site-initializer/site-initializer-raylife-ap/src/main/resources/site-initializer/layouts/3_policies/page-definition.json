@@ -100,6 +100,7 @@
 												"definition": {
 													"fragmentStyle": {
 														"maxWidth": "1500px",
+														"textAlign": "",
 														"width": "100%"
 													},
 													"gutters": true,
@@ -396,6 +397,7 @@
 												"definition": {
 													"fragmentStyle": {
 														"borderWidth": "0",
+														"marginTop": "4",
 														"maxWidth": "1500px",
 														"textAlign": "",
 														"width": "100%"
@@ -406,7 +408,7 @@
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,
-														"marginTop": 0,
+														"marginTop": 2,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -432,22 +434,14 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragment": {
-																				"key": "fake-content"
-																			},
-																			"fragmentConfig": {
-																				"fakeContentId": "fake content",
-																				"height": "900px"
-																			},
-																			"fragmentFields": [
-																			],
-																			"fragmentStyle": {
-																				"marginTop": "4",
-																				"textAlign": ""
-																			},
-																			"indexed": true
+																			"widgetInstance": {
+																				"widgetConfig": {
+																					"properties": "route=policies-table"
+																				},
+																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																			}
 																		},
-																		"type": "Fragment"
+																		"type": "Widget"
 																	}
 																],
 																"type": "FragmentDropZone"

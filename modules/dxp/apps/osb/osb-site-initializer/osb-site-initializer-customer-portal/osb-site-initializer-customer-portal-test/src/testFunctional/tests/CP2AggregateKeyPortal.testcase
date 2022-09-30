@@ -42,38 +42,46 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-150692 | Test Summary: Verify if the management bar displays the amount of keys selected by the user"
-    @priority = "3"
-    test CanViewQuantityOfSelectedKeys {
+	@description = "Automation ID: LPS-150697 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
+	@priority = "4"
+	test AggregateKeyInDropdownMenuIsDeactivated {
 
-        // TODO LPS-150692 CanViewQuantityOfSelectedKeys pending implementation
+		// TODO LPS-150697 AggregateKeyInDropdownMenuIsDeactivated pending implementation
 
-    }
+	}
 
-    @description = "Automation ID: LPS-150693 | Test Summary: Verify if the management bar displays a Download button after the user selects one or more activation keys"
-    @priority = "3"
-    test CanSeeDownloadButton {
+	@description = "Automation ID: LPS-150693 | Test Summary: Verify if the management bar displays a Download button after the user selects one or more activation keys"
+	@priority = "3"
+	test CanSeeDownloadButton {
 
-        // TODO LPS-150693 CanSeeDownloadButton pending implementation
+		// TODO LPS-150693 CanSeeDownloadButton pending implementation
 
-    }
+	}
 
-    @description = "Automation ID: LPS-150694 | Test Summary: Verify if when the user selects two or more keys, the Download button a drop-down menu appears with the following option Aggregate Key (single file)"
-    @priority = "3"
-    test CanSeeDropdownMenu {
+	@description = "Automation ID: LPS-150694 | Test Summary: Verify if when the user selects two or more keys, the Download button a drop-down menu appears with the following option Aggregate Key (single file)"
+	@priority = "3"
+	test CanSeeDropdownMenu {
 
-        // TODO LPS-150693 CanSeeDropdownMenu pending implementation
+		// TODO LPS-150693 CanSeeDropdownMenu pending implementation
 
-    }
+	}
 
-    @description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
-    @priority = "4"
-    test CanViewTheDownloadSuccessfulMessage {
+	@description = "Automation ID: LPS-150692 | Test Summary: Verify if the management bar displays the amount of keys selected by the user"
+	@priority = "3"
+	test CanViewQuantityOfSelectedKeys {
+
+		// TODO LPS-150692 CanViewQuantityOfSelectedKeys pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
+	@priority = "4"
+	test CanViewTheDownloadSuccessfulMessage {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
-        task ("Given a user signs in on OKTA to update the Customer Portal") {
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
@@ -81,7 +89,7 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 		}
 
-        task ("Given I go to the test account") {
+		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "${testAccount}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -93,7 +101,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-        task ("I selected two keys in the table") {
+		task ("I selected two keys in the table") {
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
 				date = "Mar 30, 2023",
 				position = "1");
@@ -104,7 +112,7 @@ definition {
 		}
 
 		task ("When I click at the 'Aggregate key single file' option") {
-            CustomerPortal.clickAtButton(text = "download");
+			CustomerPortal.clickAtButton(text = "download");
 
 			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Aggregate key single file");
 		}
@@ -113,32 +121,25 @@ definition {
 			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
 		}
 
-		// task ("And I get the expected downloaded file name") {
-		// 	var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-		// 		fileType = "xml",
-		// 		licenseName = "${testAccount}",
-		// 		licenseType = "activation-key-multiple-products",
-		// 		version = "7.4");
-		// }
+		//task ("And I get the expected downloaded file name") {
+		//	var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+		//		fileType = "xml",
+		//		licenseName = "${testAccount}",
+		//		licenseType = "activation-key-multiple-products",
+		//		version = "7.4");
+		//}
+		//task ("And I assert that the Activation Key was downloaded") {
+		//	CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
+		//}
 
-		// task ("And I assert that the Activation Key was downloaded") {
-		// 	CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
-		// }
-    }
+	}
 
-    @description = "Automation ID: LPS-150697 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
-    @priority = "4"
-    test AggregateKeyInDropdownMenuIsDeactivated {
+	@description = "Automation ID: LPS-150698 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
+	@priority = "3"
+	test YouCanSeeTheTooltipByHoveringOverTheDisabledKey {
 
-        // TODO LPS-150697 AggregateKeyInDropdownMenuIsDeactivated pending implementation
+		// TODO LPS-150698 YouCanSeeTheTooltipByHoveringOverTheDisabledKey pending implementation
 
-    }
+	}
 
-    @description = "Automation ID: LPS-150698 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
-    @priority = "3"
-    test YouCanSeeTheTooltipByHoveringOverTheDisabledKey {
-
-        // TODO LPS-150698 YouCanSeeTheTooltipByHoveringOverTheDisabledKey pending implementation
-
-    }
 }

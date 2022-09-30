@@ -8,14 +8,16 @@
 		},
 		"permissions": {
 		},
+		"publish": {
+		},
 		"update": {
 		}
 	},
-	"active": true,
+	"active": false,
 	"label": {
-		"en_US": "EVP Organization"
+		"en_US": "EVP Request Organization"
 	},
-	"name": "EVPOrganization",
+	"name": "EVPRequestOrganization",
 	"objectActions": [
 	],
 	"objectFields": [
@@ -391,12 +393,12 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVP Organizations"
+		"en_US": "EVP Request Organizations"
 	},
 	"portlet": false,
 	"scope": "company",
 	"status": {
-		"code": 0,
+		"code": 2,
 		"label": "approved",
 		"label_i18n": "Approved"
 	},

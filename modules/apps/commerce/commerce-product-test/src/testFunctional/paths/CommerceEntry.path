@@ -421,6 +421,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKU_ERC_FIELD</td>
+	<td>//div/input[contains(@id,'externalReferenceCode')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKU_GLOBAL_TRADE_ITEM_NUMBER_FIELD</td>
 	<td>//div/input[contains(@id,'gtin')]</td>
 	<td></td>

@@ -116,6 +116,144 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
 	}
 
+	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
+	@priority = "3"
+	test CanEditSKUERC {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And admin is on the SKUs tab of the Products") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		}
+
+		task ("And clicks a product SKU") {
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("When edits and publishes a new ERC value for the SKU") {
+			CommerceSKUs.editSkuERC(
+				publish = "true",
+				skuERC = "Test ERC");
+		}
+
+		task ("Then verifies that the SKU ERC is updated successfully") {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_ERC_FIELD",
+				value1 = "Test ERC");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
+	@priority = "3"
+	test CanEditSKUERCOfANewProduct {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And admin creates a new Simple Product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
+
+		task ("And admin goes to the SKUs tab of the new product and clicks default SKU") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(
+				key_value = "default",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("When edits and publishes a new ERC value for the SKU") {
+			CommerceSKUs.editSkuERC(
+				publish = "true",
+				skuERC = "New ERC");
+		}
+
+		task ("Then verifies that the SKU ERC is updated successfully") {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_ERC_FIELD",
+				value1 = "New ERC");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
+	@priority = "3"
+	test CanNotUseTheSameSKUERCForDifferentSKU {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And admin edits and publishes SKU ERC of a product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(
+				key_value = "MIN93015",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+
+			CommerceSKUs.editSkuERC(
+				closeFrame = "true",
+				publish = "true",
+				skuERC = "Test ERC");
+		}
+
+		task ("When enters the same ERC value to another product and clicks Publish") {
+			Click(locator1 = "CommerceNavigation#BACK");
+
+			CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(
+				key_value = "MIN55861",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+
+			CommerceSKUs.editSkuERC(
+				publish = "true",
+				skuERC = "Test ERC");
+		}
+
+		task ("Then verifies that the same ERC cannot be given twice and an error message appears") {
+			AssertElementNotPresent(locator1 = "Message#SUCCESS");
+
+			Alert.viewErrorMessage(errorMessage = "Error:There is already one SKU with the external reference code.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6022. EditASKU"
 	@priority = "3"
 	test EditASKU {

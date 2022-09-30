@@ -48,6 +48,24 @@ definition {
 		Refresh();
 	}
 
+	macro editSkuERC {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#SKU_ERC_FIELD",
+			value1 = "${skuERC}");
+
+		if (isSet(publish)) {
+			Button.clickPublish();
+		}
+
+		if (isSet(closeFrame)) {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+		}
+	}
+
 	macro editSkuPricing {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

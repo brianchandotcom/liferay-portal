@@ -211,8 +211,8 @@ definition {
 			var site = "true";
 		}
 
-		if (!(isSet(description))) {
-			var description = "";
+		if (!(isSet(kbFolderDescription))) {
+			var kbFolderDescription = "";
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
@@ -233,9 +233,9 @@ definition {
 
 		echo("## Adding a 'KBFolder' with the following info using JSONWS:");
 
-		echo("## * Name: ${folderName}");
+		echo("## * Name: ${kbFolderName}");
 
-		echo("## * Description: ${description}");
+		echo("## * Description: ${kbFolderDescription}");
 
 		var messageId = JSONCurlUtil.post("${curl}");
 	}

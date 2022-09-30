@@ -140,7 +140,7 @@ public class ObjectViewDTOConverter
 		objectViewFilterColumn.setValueSummary(
 			() -> {
 				ObjectFieldFilterContributor objectFieldFilterContributor =
-					_objectFieldFilterParserTracker.
+					_objectFieldFilterContributorTracker.
 						getObjectFieldFilterContributor(
 							serviceBuilderObjectViewFilterColumn.
 								getFilterType());
@@ -175,7 +175,8 @@ public class ObjectViewDTOConverter
 	}
 
 	@Reference
-	private ObjectFieldFilterContributorTracker _objectFieldFilterParserTracker;
+	private ObjectFieldFilterContributorTracker
+		_objectFieldFilterContributorTracker;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

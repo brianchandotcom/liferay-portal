@@ -33,6 +33,7 @@ import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.L
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectEntryStatusSelectionFDSFilter;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.OneToManyAutocompleteFDSFilter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,10 +67,10 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 		Map<String, Object> preloadedData = null;
 
 		if (Objects.equals(
-				objectViewFilterColumn.getObjectFieldName(), "status")) {
+				objectViewFilterColumn.getObjectFieldName(), Field.STATUS)) {
 
 			if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
-				preloadedData = _objectFieldFilterParser.parse(
+				preloadedData = _objectFieldFilterContributor.parse(
 					0L, objectDefinitionId, locale, objectViewFilterColumn);
 			}
 
@@ -81,7 +82,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 
 		if (Validator.isNotNull(objectField.getListTypeDefinitionId())) {
 			if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
-				preloadedData = _objectFieldFilterParser.parse(
+				preloadedData = _objectFieldFilterContributor.parse(
 					objectField.getListTypeDefinitionId(), objectDefinitionId,
 					locale, objectViewFilterColumn);
 			}
@@ -117,7 +118,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 			}
 
 			if (Validator.isNotNull(objectViewFilterColumn.getFilterType())) {
-				preloadedData = _objectFieldFilterParser.parse(
+				preloadedData = _objectFieldFilterContributor.parse(
 					0L, objectDefinitionId, locale, objectViewFilterColumn);
 			}
 
@@ -154,7 +155,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 	@Reference(
 		target = "(object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES + ")"
 	)
-	private ObjectFieldFilterContributor _objectFieldFilterParser;
+	private ObjectFieldFilterContributor _objectFieldFilterContributor;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

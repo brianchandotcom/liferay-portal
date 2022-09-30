@@ -72,10 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
-	immediate = true,
-	property = {
+@Component(configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration", immediate = true, property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-questions",
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
@@ -94,103 +91,110 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user",
 		"javax.portlet.version=3.0"
-	},
-	service = Portlet.class
-)
+}, service = Portlet.class)
 public class QuestionsPortlet extends MVCPortlet {
 
 	@Override
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+			throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			QuestionsConfiguration.class.getName(), _questionsConfiguration);
+				QuestionsConfiguration.class.getName(), _questionsConfiguration);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
+				renderRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		ItemSelectorCriterion itemSelectorCriterion =
-			new ImageItemSelectorCriterion();
+		ItemSelectorCriterion itemSelectorCriterion = new ImageItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType(),
-			new URLItemSelectorReturnType());
+				new FileEntryItemSelectorReturnType(),
+				new URLItemSelectorReturnType());
 
 		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			"EDITOR_NAME_selectItem", itemSelectorCriterion);
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				"EDITOR_NAME_selectItem", itemSelectorCriterion);
 
 		renderRequest.setAttribute(
-			QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
+				QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
 
 		String lowestRank = Stream.of(
-			_portal.getPortalProperties()
-		).map(
-			properties -> properties.getProperty("message.boards.user.ranks")
-		).map(
-			s -> s.split(",")
-		).flatMap(
-			Arrays::stream
-		).min(
-			Comparator.comparing(rank -> rank.split("=")[1])
-		).map(
-			rank -> rank.split("=")[0]
-		).orElse(
-			"Youngling"
-		);
+				_portal.getPortalProperties()).map(
+						properties -> properties.getProperty("message.boards.user.ranks"))
+				.map(
+						s -> s.split(","))
+				.flatMap(
+						Arrays::stream)
+				.min(
+						Comparator.comparing(rank -> rank.split("=")[1]))
+				.map(
+						rank -> rank.split("=")[0])
+				.orElse(
+						"Youngling");
 
 		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
 
 		renderRequest.setAttribute(
-			QuestionsWebKeys.FLAGS_PROPERTIES,
-			HashMapBuilder.<String, Object>put(
-				"context",
+				QuestionsWebKeys.FLAGS_PROPERTIES,
 				HashMapBuilder.<String, Object>put(
-					"namespace", _portal.getPortletNamespace(PortletKeys.FLAGS)
-				).build()
-			).put(
-				"props",
-				() -> HashMapBuilder.<String, Object>put(
-					"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
-				).put(
-					"companyName",
-					() -> {
-						Company company = themeDisplay.getCompany();
+						"context",
+						HashMapBuilder.<String, Object>put(
+								"namespace", _portal.getPortletNamespace(PortletKeys.FLAGS)).build())
+						.put(
+								"props",
+								() -> HashMapBuilder.<String, Object>put(
+										"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)).put(
+												"companyName",
+												() -> {
+													Company company = themeDisplay.getCompany();
 
-						return company.getName();
-					}
-				).put(
-					"isFlagEnabled",
-					FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
-					GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-159928"))
-				).put(
-					"pathTermsOfUse",
-					_portal.getPathMain() + "/portal/terms_of_use"
-				).put(
-					"reasons",
-					FlagsTagUtil.getReasons(
-						themeDisplay.getCompanyId(), httpServletRequest)
-				).put(
-					"uri", FlagsTagUtil.getURI(httpServletRequest)
-				).put(
-					"viewMode",
-					Objects.equals(
-						Constants.VIEW,
-						ParamUtil.getString(
-							themeDisplay.getRequest(), "p_l_mode",
-							Constants.VIEW))
-				).build()
-			).build());
+													return company.getName();
+												})
+										.put(
+												"isFlagEnabled",
+												FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
+														GetterUtil.getBoolean(
+																PropsUtil.get("feature.flag.LPS-159928")))
+										.put(
+												"pathTermsOfUse",
+												_portal.getPathMain() + "/portal/terms_of_use")
+										.put(
+												"reasons",
+												FlagsTagUtil.getReasons(
+														themeDisplay.getCompanyId(), httpServletRequest))
+										.put(
+												"uri", FlagsTagUtil.getURI(httpServletRequest))
+										.put(
+												"viewMode",
+												Objects.equals(
+														Constants.VIEW,
+														ParamUtil.getString(
+																themeDisplay.getRequest(), "p_l_mode",
+																Constants.VIEW)))
+										.build())
+						.build());
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TAG_SELECTOR_URL,
 			_getTagSelectorURL(renderRequest, renderResponse));
 		renderRequest.setAttribute(
-			QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
+				QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
+
+		try {
+
+			MBModerationGroupConfiguration mbModerationGroupConfiguration = _configurationProvider
+					.getGroupConfiguration(
+							MBModerationGroupConfiguration.class,
+							themeDisplay.getScopeGroupId());
+
+		} catch (Exception exception) {
+		}
+
+		renderRequest.setAttribute(
+				QuestionsWebKeys.CONTRIBUTED_MESSAGES,
+				_contributedMessages(themeDisplay.getScopeGroupId()));
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -199,33 +203,47 @@ public class QuestionsPortlet extends MVCPortlet {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_questionsConfiguration = ConfigurableUtil.createConfigurable(
-			QuestionsConfiguration.class, properties);
+				QuestionsConfiguration.class, properties);
+	}
+
+	private int _contributedMessages(long groupId) {
+
+		try {
+
+			MBModerationGroupConfiguration mbModerationGroupConfiguration = _configurationProvider
+					.getGroupConfiguration(
+							MBModerationGroupConfiguration.class, groupId);
+			return mbModerationGroupConfiguration.minimumContributedMessages();
+
+		} catch (Exception exception) {
+			return -1;
+		}
+
 	}
 
 	private String _getTagSelectorURL(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				renderRequest, AssetTag.class.getName(),
-				PortletProvider.Action.BROWSE);
+					renderRequest, AssetTag.class.getName(),
+					PortletProvider.Action.BROWSE);
 
 			PortletURLWrapper portletURLWrapper = new PortletURLWrapper(
-				portletURL);
+					portletURL);
 
 			if (portletURL == null) {
 				return null;
 			}
 
 			portletURLWrapper.setParameter(
-				"eventName", renderResponse.getNamespace() + "selectTag");
+					"eventName", renderResponse.getNamespace() + "selectTag");
 			portletURLWrapper.setParameter(
-				"selectedTagNames", "{selectedTagNames}");
+					"selectedTagNames", "{selectedTagNames}");
 			portletURLWrapper.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURLWrapper.toString();
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
@@ -235,33 +253,28 @@ public class QuestionsPortlet extends MVCPortlet {
 	}
 
 	private boolean _isTrustedUser(RenderRequest renderRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
-			MBModerationGroupConfiguration mbModerationGroupConfiguration =
-				_configurationProvider.getGroupConfiguration(
-					MBModerationGroupConfiguration.class,
-					themeDisplay.getScopeGroupId());
+			MBModerationGroupConfiguration mbModerationGroupConfiguration = _configurationProvider
+					.getGroupConfiguration(
+							MBModerationGroupConfiguration.class,
+							themeDisplay.getScopeGroupId());
 
-			if (!mbModerationGroupConfiguration.
-					enableMessageBoardsModeration()) {
+			if (!mbModerationGroupConfiguration.enableMessageBoardsModeration()) {
 
 				return true;
 			}
 
-			long messageCountByUserId =
-				_mbStatsUserLocalService.getMessageCountByUserId(
+			long messageCountByUserId = _mbStatsUserLocalService.getMessageCountByUserId(
 					themeDisplay.getUserId());
 
-			if (messageCountByUserId <
-					mbModerationGroupConfiguration.
-						minimumContributedMessages()) {
+			if (messageCountByUserId < mbModerationGroupConfiguration.minimumContributedMessages()) {
 
 				return false;
 			}
-		}
-		catch (ConfigurationException configurationException) {
+		} catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(configurationException);
 			}
@@ -271,7 +284,7 @@ public class QuestionsPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		QuestionsPortlet.class);
+			QuestionsPortlet.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

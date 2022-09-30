@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.model.Layout;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -26,6 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutContentProvider {
 
-	public String getLayoutContent(Layout layout, Locale locale);
+	public String getLayoutContent(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Layout layout, Locale locale);
 
 }

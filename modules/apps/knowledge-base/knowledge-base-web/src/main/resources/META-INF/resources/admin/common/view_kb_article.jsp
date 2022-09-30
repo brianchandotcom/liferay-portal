@@ -93,8 +93,8 @@ if (portletTitleBasedNavigation) {
 			<liferay-util:include page="/admin/common/kb_article_tools.jsp" servletContext="<%= application %>" />
 		</div>
 
-		<div <%= portletTitleBasedNavigation ? "class=\"panel\"" : StringPool.BLANK %>>
-			<div class="kb-entity-body <%= portletTitleBasedNavigation ? "panel-body" : StringPool.BLANK %>">
+		<div <%= portletTitleBasedNavigation ? "class=\"sheet\"" : StringPool.BLANK %>>
+			<div class="kb-entity-body">
 				<c:if test="<%= portletTitleBasedNavigation %>">
 					<h1>
 						<%= HtmlUtil.escape(kbArticle.getTitle()) %>

@@ -23,7 +23,9 @@ public enum DispatchTaskClusterMode {
 
 	ALL_NODES("all-nodes", 1, StorageType.MEMORY),
 	NOT_APPLICABLE("not-applicable", 0, StorageType.PERSISTED),
-	SINGLE_NODE("single-node", 2, StorageType.PERSISTED);
+	SINGLE_NODE_MEMORY_CLUSTERED(
+		"single-node-memory-clustered", 3, StorageType.MEMORY_CLUSTERED),
+	SINGLE_NODE_PERSISTED("single-node-persisted", 2, StorageType.PERSISTED);
 
 	public static DispatchTaskClusterMode valueOf(int mode) {
 		for (DispatchTaskClusterMode dispatchTaskClusterMode : values()) {

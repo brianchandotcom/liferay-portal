@@ -34,14 +34,14 @@ export default async function submitForm(
 		values.requestStatus = currentRequestStatus;
 	}
 
-	const dtoMDFRequest = Liferay.FeatureFlags['LPS-135430']
+	const dtoMDFRequest = Liferay.FeatureFlags['LPS-164528']
 		? await createMDFRequestProxyApi(values)
 		: await createMDFRequest(apiOption.MDF_REQUEST_DXP, values);
 
 	if (values.activities.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values.activities.map((activity) =>
-				Liferay.FeatureFlags['LPS-135430']
+				Liferay.FeatureFlags['LPS-164528']
 					? createMDFRequestActivitiesProxyApi(
 							activity,
 							dtoMDFRequest.id,

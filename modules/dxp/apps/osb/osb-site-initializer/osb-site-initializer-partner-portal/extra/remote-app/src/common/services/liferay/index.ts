@@ -26,8 +26,9 @@ interface IUtil {
 	navigate: (path: string) => void;
 	openToast: (options?: any) => void;
 }
+
 interface ILiferay {
-	FeatureFlags: Object;
+	FeatureFlags: {[index: string]: boolean};
 	ThemeDisplay: IThemeDisplay;
 	Util: IUtil;
 	authToken: string;

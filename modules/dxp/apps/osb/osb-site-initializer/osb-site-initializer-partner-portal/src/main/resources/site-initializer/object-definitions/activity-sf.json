@@ -6,7 +6,7 @@
 	"name": "ActivitySF",
 	"objectFields": [
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "Activity_Name__c",
 			"indexed": true,
@@ -16,10 +16,10 @@
 			},
 			"name": "name",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "MDF_Request__c",
 			"indexed": true,
@@ -29,7 +29,7 @@
 			},
 			"name": "mdfRequestExternalReferenceCodeSF",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
 			"DBType": "String",

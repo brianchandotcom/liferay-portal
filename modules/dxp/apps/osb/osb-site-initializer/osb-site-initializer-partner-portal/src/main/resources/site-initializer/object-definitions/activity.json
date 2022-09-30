@@ -325,7 +325,7 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -334,10 +334,10 @@
 			},
 			"name": "mdfRequestExternalReferenceCodeSF",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -346,7 +346,7 @@
 			},
 			"name": "externalReferenceCodeSF",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

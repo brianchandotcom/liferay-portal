@@ -34,6 +34,11 @@ public class MBThreadViewCountEntryModelListener
 	implements ViewCountEntryModelListener {
 
 	@Override
+	public String getModelClassName() {
+		return MBThread.class.getName();
+	}
+
+	@Override
 	public void onAfterIncrement(ViewCountEntry viewCountEntry) {
 		MBThread mbThread = _mbThreadLocalService.fetchMBThread(
 			viewCountEntry.getClassPK());
@@ -50,11 +55,6 @@ public class MBThreadViewCountEntryModelListener
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBThread.class.getName();
 	}
 
 	@Reference

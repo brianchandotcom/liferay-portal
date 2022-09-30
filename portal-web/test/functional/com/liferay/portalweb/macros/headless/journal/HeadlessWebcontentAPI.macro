@@ -121,22 +121,17 @@ definition {
 		if (isSet(structuredContentFolderId)) {
 			var api = "structured-content-folders/${structuredContentFolderId}";
 		}
+		else if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/";
+		}
 		else {
-			if (isSet(assetLibraryId)) {
-				var api = "asset-libraries/${assetLibraryId}/";
+			if (!(isSet(siteId))) {
+				var siteId = JSONGroupAPI._getGroupIdByName(
+					groupName = "Guest",
+					site = "true");
 			}
-			else {
-				if (isSet(siteId)) {
-					var siteId = "${siteId}";
-				}
-				else {
-					var siteId = JSONGroupAPI._getGroupIdByName(
-						groupName = "Guest",
-						site = "true");
-				}
 
-				var api = "sites/${siteId}";
-			}
+			var api = "sites/${siteId}";
 		}
 
 		var curl = '''

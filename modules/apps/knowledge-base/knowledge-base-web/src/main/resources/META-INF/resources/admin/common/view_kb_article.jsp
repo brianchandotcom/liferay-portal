@@ -96,9 +96,9 @@ if (portletTitleBasedNavigation) {
 		<div <%= portletTitleBasedNavigation ? "class=\"sheet\"" : StringPool.BLANK %>>
 			<div class="kb-entity-body">
 				<c:if test="<%= portletTitleBasedNavigation %>">
-					<h1>
+					<div class="kb-article-title">
 						<%= HtmlUtil.escape(kbArticle.getTitle()) %>
-					</h1>
+					</div>
 				</c:if>
 
 				<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">

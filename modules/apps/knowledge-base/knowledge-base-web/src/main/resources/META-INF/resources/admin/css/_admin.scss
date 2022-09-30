@@ -3,6 +3,13 @@
 $controlMenuHeight: 56px;
 
 .knowledge-base-portlet-admin {
+	.kb-article {
+		.kb-article-title {
+			font-size: 2.5rem;
+			font-weight: $font-weight-bold;
+			margin-bottom: 1.5rem;
+		}
+	}
 	.knowledge-base-vertical-bar {
 		position: relative;
 		z-index: 1;

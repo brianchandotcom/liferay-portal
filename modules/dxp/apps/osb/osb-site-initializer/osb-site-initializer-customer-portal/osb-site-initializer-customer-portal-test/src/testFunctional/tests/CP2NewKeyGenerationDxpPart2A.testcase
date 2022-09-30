@@ -355,4 +355,33 @@ definition {
 				option = "Non-Production");
 		}
 	}
+
+	@description = "Automation Ticket: LPS-157452 | Test Summary: Verify if the success message after the user generates a key"
+	@priority = "4"
+	test CanViewTheSuccessMessage {
+		task ("Given I fulfill All fields for the product") {
+			var numberOfActivationKeys = "3";
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Environment Name",
+				content = "Environment Test Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Description",
+				content = "Environment Test Description");
+
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "${numberOfActivationKeys}");
+
+		}
+
+		task ("And click at Generate Keys button") {
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = "${generateButtom}");
+		}
+
+		task ("Then I should be able to view the success message with the text 'Activation Key was generated successfully'") {
+			CustomerPortal.viewAlert(alertText = "Activation Key was generated successfully");
+		}
+	}
 }

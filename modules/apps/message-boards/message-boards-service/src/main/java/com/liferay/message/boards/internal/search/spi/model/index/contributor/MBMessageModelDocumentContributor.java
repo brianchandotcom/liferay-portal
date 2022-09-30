@@ -222,7 +222,7 @@ public class MBMessageModelDocumentContributor
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-	
+
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 

@@ -120,7 +120,7 @@ definition {
 
 	@description = "This test filters to only see Overrides."
 	@priority = "4"
-	test CanFilterOverrides {
+	test CanFilterOverridesByAnyLanguage {
 		task ("Given that assert no existing keys filter by Any Language") {
 			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
 
@@ -164,7 +164,7 @@ definition {
 
 	@description = "The testcase asserts the override filtered by 'Selected Language'."
 	@priority = "4"
-	test CanFilterOverridesbySelectedLanguage {
+	test CanFilterOverridesBySelectedLanguage {
 		task ("Given three new keys with en-US and es-ES language translations") {
 			LanguageOverride.addLanguageKey(
 				languageKey = "text-contains-error1",

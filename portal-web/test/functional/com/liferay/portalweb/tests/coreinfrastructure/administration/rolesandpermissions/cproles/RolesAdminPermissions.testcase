@@ -180,10 +180,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 
@@ -198,10 +195,7 @@ definition {
 			roleTitle = "Regrole Name");
 
 		for (var roleType : list "Regular,Site,Organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoRoleType(roleType = "${roleType}");
 
@@ -219,10 +213,7 @@ definition {
 			roleTitle = "Regrole Name");
 
 		for (var roleType : list "Regular,Site,Organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoRoleType(roleType = "${roleType}");
 

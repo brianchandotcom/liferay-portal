@@ -64,10 +64,7 @@ definition {
 	}
 
 	macro definePermissionCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "${permissionDefinitionKey}",
@@ -104,10 +101,7 @@ definition {
 	}
 
 	macro removePermissionCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removePermissionCP(
 			permissionDefinitionKey = "${permissionDefinitionKey}",

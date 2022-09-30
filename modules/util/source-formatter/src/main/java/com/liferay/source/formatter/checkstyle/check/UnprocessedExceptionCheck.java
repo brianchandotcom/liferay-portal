@@ -35,7 +35,12 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (absolutePath.contains("/test/") ||
+		if (absolutePath.contains("/modules/core/") ||
+			absolutePath.contains("/modules/etl/") ||
+			absolutePath.contains("/modules/sdk/") ||
+			absolutePath.contains("/modules/util/") ||
+			absolutePath.contains("/portal-kernel/") ||
+			absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/")) {
 
 			return;

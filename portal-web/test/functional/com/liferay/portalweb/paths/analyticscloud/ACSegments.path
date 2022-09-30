@@ -333,7 +333,7 @@
 </tr>
 <tr>
 	<td>SEGMENT_AUTOCOMPLETE_DROPDOWN</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/button</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/button[text()='${key_autocompleteText}'] | //ul[contains(@class,'dropdown-menu')]/li/button</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,10 +17,10 @@ package com.liferay.object.web.internal.object.entries.frontend.data.set.filter.
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
+import com.liferay.object.field.frontend.data.set.filter.ObjectFieldDateRangeFDSFilter;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.ObjectFieldDateRangeFDSFilter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;

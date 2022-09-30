@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.object.field.builder,\
 	com.liferay.object.field.business.type,\
 	com.liferay.object.field.filter.parser,\
+	com.liferay.object.field.frontend.data.set.filter,\
 	com.liferay.object.field.render,\
 	com.liferay.object.model,\
 	com.liferay.object.notification.term.util,\

@@ -31,7 +31,7 @@ CommerceAvalaraConnectorChannelConfiguration commerceAvalaraConnectorChannelConf
 
 		<c:choose>
 			<c:when test="<%= avalaraCompanies.isEmpty() %>">
-				<aui:option label="<%= CommerceAvalaraConstants.DEFAULT %>" selected="<%= true %>" value="<%= CommerceAvalaraConstants.DEFAULT %>" />
+				<aui:option label="DEFAULT" selected="<%= true %>" value="DEFAULT" />
 			</c:when>
 			<c:otherwise>
 
@@ -39,7 +39,7 @@ CommerceAvalaraConnectorChannelConfiguration commerceAvalaraConnectorChannelConf
 				for (Map.Entry<String, String> companyModel : avalaraCompanies.entrySet()) {
 				%>
 
-					<aui:option label="<%= companyModel.getKey() %>" selected="<%= companyCode.isEmpty() ? companyModel.getValue().equals(CommerceAvalaraConstants.DEFAULT) : companyModel.getValue().equals(companyCode) %>" value="<%= companyModel.getValue() %>" />
+					<aui:option label="<%= companyModel.getKey() %>" selected='<%= companyCode.isEmpty() ? companyModel.getValue().equals("DEFAULT") : companyModel.getValue().equals(companyCode) %>' value="<%= companyModel.getValue() %>" />
 
 				<%
 				}

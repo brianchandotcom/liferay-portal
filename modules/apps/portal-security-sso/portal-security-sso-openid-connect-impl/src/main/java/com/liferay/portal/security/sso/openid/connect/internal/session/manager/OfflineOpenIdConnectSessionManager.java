@@ -265,6 +265,10 @@ public class OfflineOpenIdConnectSessionManager {
 			return oidcTokens.getAccessToken();
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			_openIdConnectSessionLocalService.deleteOpenIdConnectSession(
 				openIdConnectSession);
 		}

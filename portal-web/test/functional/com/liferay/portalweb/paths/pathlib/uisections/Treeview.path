@@ -42,12 +42,12 @@
 </tr>
 <tr>
 	<td>NODE_ITEM</td>
-	<td>//div[contains(@class,'card-horizontal')]//div[contains(@class,'card-body')][contains(.,'${key_nodeName}')] | //li[contains(@class,'treeview-item')]//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']</td>
+	<td>//div[contains(@class,'card-horizontal')]//div[contains(@class,'card-body')][contains(.,'${key_nodeName}')] | //li[contains(@class,'treeview-item')]//*[contains(@class,'component-text') or contains(@class,'flex-grow')][normalize-space(text())='${key_nodeName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NODE_ITEM_2</td>
-	<td>//li[contains(@class,'treeview-item')]//div[contains(@class,'component-text')][contains(text(),'${key_nodeName}')]</td>
+	<td>//li[contains(@class,'treeview-item')]//*[contains(@class,'component-text') or contains(@class,'flex-grow')][contains(text(),'${key_nodeName}')]</td>
 	<td></td>
 </tr>
 <tr>

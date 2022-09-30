@@ -570,6 +570,7 @@
 
 .simple-menu {
 	position: absolute;
+	z-index: 100 !important;
 
 	.simple-menu-content {
 		background: none repeat scroll 0 0 #fff;

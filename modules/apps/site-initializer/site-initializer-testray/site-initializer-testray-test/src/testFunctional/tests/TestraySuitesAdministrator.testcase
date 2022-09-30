@@ -23,8 +23,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				key_name = "Projects_1 Project",
-				description = "Projects_1 Project Description");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
 				numberItems = "20",

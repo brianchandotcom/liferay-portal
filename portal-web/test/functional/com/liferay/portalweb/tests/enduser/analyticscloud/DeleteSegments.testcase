@@ -380,10 +380,7 @@ definition {
 		}
 
 		task ("Add a user custom field") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Hobby",
@@ -479,10 +476,7 @@ definition {
 		}
 
 		task ("Delete the user custom field") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.deleteCP(
 				customFieldName = "Hobby",

@@ -150,10 +150,7 @@ definition {
 		// AC Bug ticket: LRAC-9329
 
 		task ("Add a user custom field and sync the data") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Age",

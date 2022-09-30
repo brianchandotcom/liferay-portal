@@ -26,6 +26,7 @@ import {
 	mockedCompressDocumentProps,
 	mockedContentWithPreview,
 	mockedContentWithPreviewWithoutLink,
+	mockedContentWithVersions,
 	mockedCustomDocumentProps,
 	mockedFileDocumentProps,
 	mockedImageDocumentProps,
@@ -601,5 +602,32 @@ describe('SidebarPanelInfoView', () => {
 		);
 
 		expect(getByTitle('Subscribe')).toBeDisabled();
+	});
+
+	it('renders Details and Versions tabs when getItemVersionsURL prop is received', () => {
+		const {getAllByRole} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedContentWithVersions,
+			})
+		);
+
+		const tabs = getAllByRole('tab');
+
+		expect(tabs[0].innerHTML).toContain('details');
+		expect(tabs[1].innerHTML).toContain('versions');
+	});
+
+	it('renders Details tab active by default', () => {
+		const {getAllByRole} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedContentWithVersions,
+			})
+		);
+
+		const tabs = getAllByRole('tab');
+
+		expect(tabs[0].classList).toContain('active');
 	});
 });

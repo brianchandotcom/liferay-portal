@@ -22,6 +22,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.model.ClassName;
@@ -146,7 +147,7 @@ public class ViewCountEntryLocalServiceImpl
 					new ViewCountEntryPK(companyId, classNameId, classPK)));
 		}
 		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+			throw new SystemException(portalException);
 		}
 	}
 

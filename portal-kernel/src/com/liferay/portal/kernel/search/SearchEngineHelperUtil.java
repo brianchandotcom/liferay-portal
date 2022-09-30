@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -62,13 +65,13 @@ public class SearchEngineHelperUtil {
 	}
 
 	public static String getSearchReaderDestinationName(String searchEngineId) {
-		return _searchEngineHelper.getSearchReaderDestinationName(
-			searchEngineId);
+		return StringBundler.concat(
+			DestinationNames.SEARCH_READER, StringPool.SLASH, searchEngineId);
 	}
 
 	public static String getSearchWriterDestinationName(String searchEngineId) {
-		return _searchEngineHelper.getSearchWriterDestinationName(
-			searchEngineId);
+		return StringBundler.concat(
+			DestinationNames.SEARCH_WRITER, StringPool.SLASH, searchEngineId);
 	}
 
 	public static void initialize(long companyId) {

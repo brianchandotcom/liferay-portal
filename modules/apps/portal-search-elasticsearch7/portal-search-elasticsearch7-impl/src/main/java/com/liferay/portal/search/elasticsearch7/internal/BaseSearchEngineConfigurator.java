@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineProxyWrapper;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
@@ -333,10 +334,9 @@ public abstract class BaseSearchEngineConfigurator
 	private Destination _getSearchReaderDestination(
 		MessageBus messageBus, String searchEngineId, boolean createIfAbsent) {
 
-		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
-
 		String searchReaderDestinationName =
-			searchEngineHelper.getSearchReaderDestinationName(searchEngineId);
+			SearchEngineHelperUtil.getSearchReaderDestinationName(
+				searchEngineId);
 
 		Destination searchReaderDestination = messageBus.getDestination(
 			searchReaderDestinationName);
@@ -356,10 +356,9 @@ public abstract class BaseSearchEngineConfigurator
 	private Destination _getSearchWriterDestination(
 		MessageBus messageBus, String searchEngineId, boolean createIfAbsent) {
 
-		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
-
 		String searchWriterDestinationName =
-			searchEngineHelper.getSearchWriterDestinationName(searchEngineId);
+			SearchEngineHelperUtil.getSearchWriterDestinationName(
+				searchEngineId);
 
 		Destination searchWriterDestination = messageBus.getDestination(
 			searchWriterDestinationName);

@@ -15,11 +15,9 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -128,18 +126,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	@Override
 	public SearchEngine getSearchEngineSilent(String searchEngineId) {
 		return _searchEngines.get(searchEngineId);
-	}
-
-	@Override
-	public String getSearchReaderDestinationName(String searchEngineId) {
-		return StringBundler.concat(
-			DestinationNames.SEARCH_READER, StringPool.SLASH, searchEngineId);
-	}
-
-	@Override
-	public String getSearchWriterDestinationName(String searchEngineId) {
-		return StringBundler.concat(
-			DestinationNames.SEARCH_WRITER, StringPool.SLASH, searchEngineId);
 	}
 
 	@Override

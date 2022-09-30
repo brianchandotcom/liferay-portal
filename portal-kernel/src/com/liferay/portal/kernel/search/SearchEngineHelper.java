@@ -42,10 +42,6 @@ public interface SearchEngineHelper {
 
 	public SearchEngine getSearchEngineSilent(String searchEngineId);
 
-	public String getSearchReaderDestinationName(String searchEngineId);
-
-	public String getSearchWriterDestinationName(String searchEngineId);
-
 	public void initialize(long companyId);
 
 	public void removeCompany(long companyId);

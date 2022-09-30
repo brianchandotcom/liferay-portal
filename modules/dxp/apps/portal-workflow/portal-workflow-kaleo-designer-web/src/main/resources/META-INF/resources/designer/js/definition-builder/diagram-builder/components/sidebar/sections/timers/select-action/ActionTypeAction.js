@@ -14,6 +14,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
+import {DEFAULT_LANGUAGE} from '../../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import BaseActionsInfo from '../../shared-components/BaseActionsInfo';
 
@@ -39,7 +40,8 @@ const ActionTypeAction = ({
 		actionData.actionType === 'timerActions' ? actionData : null;
 	const [script, setScript] = useState(validActionData?.script || '');
 	const [scriptLanguage, setScriptLanguage] = useState(
-		validActionData?.scriptLanguage?.[actionSectionsIndex] || 'groovy'
+		validActionData?.scriptLanguage?.[actionSectionsIndex] ||
+			DEFAULT_LANGUAGE
 	);
 	const [description, setDescription] = useState(
 		validActionData?.description || ''

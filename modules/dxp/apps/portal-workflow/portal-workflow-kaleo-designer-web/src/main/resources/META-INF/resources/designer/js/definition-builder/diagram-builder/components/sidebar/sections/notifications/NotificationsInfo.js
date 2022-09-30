@@ -15,6 +15,7 @@ import {MultipleSelect} from '@liferay/object-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DEFAULT_LANGUAGE} from '../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
@@ -169,7 +170,7 @@ const NotificationsInfo = ({
 
 	const [scriptLanguage, setScriptLanguage] = useState(
 		selectedItem.data.notifications?.recipients[notificationIndex]
-			?.scriptLanguage || 'groovy'
+			?.scriptLanguage || DEFAULT_LANGUAGE
 	);
 
 	const deleteSection = () => {

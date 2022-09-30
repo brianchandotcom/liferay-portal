@@ -13,6 +13,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
+import {DEFAULT_LANGUAGE} from '../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
 import BaseActionsInfo from '../shared-components/BaseActionsInfo';
@@ -58,7 +59,7 @@ const ActionsInfo = ({
 	]);
 
 	const [scriptLanguage, setScriptLanguage] = useState(
-		actions?.scriptLanguage?.[index] || 'groovy'
+		actions?.scriptLanguage?.[index] || DEFAULT_LANGUAGE
 	);
 
 	if (

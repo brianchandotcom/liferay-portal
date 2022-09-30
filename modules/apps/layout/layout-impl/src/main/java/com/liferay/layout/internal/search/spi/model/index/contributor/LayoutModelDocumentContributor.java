@@ -14,7 +14,8 @@
 
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
-import com.liferay.layout.content.LayoutContentProvider;
+import com.liferay.layout.model.LayoutLocalization;
+import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
@@ -23,8 +24,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,13 +67,15 @@ public class LayoutModelDocumentContributor
 				layout.getName(locale));
 		}
 
-		Set<Locale> locales = _language.getAvailableLocales(
-			layout.getGroupId());
+		List<LayoutLocalization> layoutLocalizations =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				layout.getPlid());
 
-		for (Locale locale : locales) {
+		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
 			document.addText(
-				Field.getLocalizedName(locale, Field.CONTENT),
-				_layoutContentProvider.getLayoutContent(layout, locale));
+				Field.getLocalizedName(
+					layoutLocalization.getLanguageId(), Field.CONTENT),
+				layoutLocalization.getContent());
 		}
 	}
 
@@ -88,6 +91,6 @@ public class LayoutModelDocumentContributor
 	private Language _language;
 
 	@Reference
-	private LayoutContentProvider _layoutContentProvider;
+	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 }

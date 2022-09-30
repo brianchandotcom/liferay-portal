@@ -535,12 +535,6 @@ definition {
 				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_SCOPE",
 				value1 = "${siteNameScope}");
 		}
-
-		if ("${remove}" == "true") {
-			AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
-
-			AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_REMOVE");
-		}
 	}
 
 	macro viewPermissionPG {

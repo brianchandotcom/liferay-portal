@@ -3018,4 +3018,25 @@ definition {
 			value1 = "Welcome ${userfn} ${userln}!");
 	}
 
+	macro editCustomFieldInformation {
+		User.gotoEditCP(userScreenName = "${userScreenName}");
+
+		if (("${customFieldType}" == "Checkbox") || ("${customFieldType}" == "Radio")) {
+			Click(
+				key_customFieldName = "${customFieldName}",
+				key_customFieldValue = "${customFieldValue}",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_CUSTOM_FIELD_INPUT",
+				value1 = "${userFirstNameEdit}");
+		}
+
+		if ("${customFieldType}" == "Dropdown") {
+			Select(
+				key_customFieldName = "${customFieldName}",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_CUSTOM_FIELD_SELECT",
+				value1 = "${customFieldValue}");
+		}
+
+		PortletEntry.save();
+	}
+
 }

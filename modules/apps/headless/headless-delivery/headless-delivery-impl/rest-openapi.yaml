@@ -2619,7 +2619,7 @@ components:
                     type: string
                 companyMxName:
                     description:
-                        The domain of the user.
+                        User's company's mail domain.
                     type: string
                 creator:
                     allOf:

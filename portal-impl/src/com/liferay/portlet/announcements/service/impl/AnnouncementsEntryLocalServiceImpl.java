@@ -574,7 +574,8 @@ public class AnnouncementsEntryLocalServiceImpl
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
+					PropsValues.ANNOUNCEMENTS_EMAIL_BODY,
+				ioException);
 		}
 
 		String fromAddress = PrefsPropsUtil.getStringFromNames(
@@ -594,7 +595,8 @@ public class AnnouncementsEntryLocalServiceImpl
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
+					PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT,
+				ioException);
 		}
 
 		Company company = _companyLocalService.getCompany(entry.getCompanyId());

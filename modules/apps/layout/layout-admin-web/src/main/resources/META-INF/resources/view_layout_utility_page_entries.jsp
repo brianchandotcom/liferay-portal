@@ -42,6 +42,7 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

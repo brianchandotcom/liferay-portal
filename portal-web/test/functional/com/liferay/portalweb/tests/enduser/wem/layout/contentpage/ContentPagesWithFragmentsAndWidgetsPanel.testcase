@@ -37,6 +37,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158744. The new fragment set will be appended to the bottom of fragment sets list with customized order in Fragments and Widgets panel."
+	@priority = "4"
+	test AppendNewFragmentSetToTheBottomOfCustomizedOrder {
+		property custom.properties = "feature.flag.LPS-158737=true";
+
+		task ("Given a page creator customized the order of fragment sets") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.reorderSets(
+				action = "Move Down",
+				navTab = "Fragments",
+				setName = "Basic Components");
+		}
+
+		task ("When the page creator adds a new fragment set with a fragment") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			JSONFragment.addSection(
+				collectionName = "Fragment Set Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
+		task ("Then the page creator sees the new fragment set appended to the bottom of the customized order") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				index = "3",
+				key_panel = "Basic Components",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+
+			AssertVisible(
+				index = "last()",
+				key_panel = "Fragment Set Name",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+	}
+
 	@description = "This is a test for LPS-130964 and LPS-76741. Change display style in Fragments and Widgets panel."
 	@priority = "4"
 	test ChangeDisplayStyle {

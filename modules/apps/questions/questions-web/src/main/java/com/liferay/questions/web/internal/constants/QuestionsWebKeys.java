@@ -19,13 +19,14 @@ package com.liferay.questions.web.internal.constants;
  */
 public class QuestionsWebKeys {
 
-	public static final String MINIMUM_CONTRIBUTED_MESSAGES = "MINIMUM_CONTRIBUTED_MESSAGES";
-
 	public static final String DEFAULT_RANK = "DEFAULT_RANK";
 
 	public static final String FLAGS_PROPERTIES = "FLAGS_PROPERTIES";
 
 	public static final String IMAGE_BROWSE_URL = "IMAGE_BROWSE_URL";
+
+	public static final String MINIMUM_CONTRIBUTED_MESSAGES =
+		"MINIMUM_CONTRIBUTED_MESSAGES";
 
 	public static final String ROOT_TOPIC = "ROOT_TOPIC";
 

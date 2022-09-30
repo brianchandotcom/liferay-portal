@@ -100,9 +100,11 @@ const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 											}
 
 											if (
-												item.clickable &&
-												rowContent['name'] ===
-													'Incomplete' &&
+												((item.clickable &&
+													rowContent['name'] ===
+														'Incomplete') ||
+													rowContent['name'] ===
+														'Bound') &&
 												(item.key ===
 													'externalReferenceCode' ||
 													item.key ===

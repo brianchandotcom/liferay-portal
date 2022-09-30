@@ -14,32 +14,48 @@
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 
-const MultiSteps = ({steps}: any) => {
+type MultiStepsProps = {
+	classes?: string;
+	steps: StepTypes[];
+};
+
+type StepTypes = {
+	active: boolean;
+	complete: boolean;
+	show: boolean;
+	title: string;
+};
+
+const MultiSteps: React.FC<MultiStepsProps> = ({classes, steps}) => {
 	return (
-		<ClayMultiStepNav className="container mx-10">
-			{steps?.map((step: any, index: number) => (
-				<ClayMultiStepNav.Item
-					active={step.active}
-					complete={step.complete}
-					expand={index + 1 !== steps.length}
-					key={index}
-				>
-					<ClayMultiStepNav.Title>
-						{step.title}
-					</ClayMultiStepNav.Title>
+		<ClayMultiStepNav className={`container mx-10 ${classes}`}>
+			{steps?.map((step: StepTypes, index: number) => {
+				if (step.show) {
+					return (
+						<ClayMultiStepNav.Item
+							active={step.active}
+							complete={step.complete}
+							expand={index + 1 !== steps.length}
+							key={index}
+						>
+							<ClayMultiStepNav.Title>
+								{step.title}
+							</ClayMultiStepNav.Title>
 
-					{index + 1 !== steps.length ? (
-						<ClayMultiStepNav.Divider />
-					) : (
-						''
-					)}
+							{index + 1 !== steps.length ? (
+								<ClayMultiStepNav.Divider />
+							) : (
+								''
+							)}
 
-					<ClayMultiStepNav.Indicator
-						complete={step.complete}
-						label={1 + index}
-					/>
-				</ClayMultiStepNav.Item>
-			))}
+							<ClayMultiStepNav.Indicator
+								complete={step.complete}
+								label={index + 1}
+							/>
+						</ClayMultiStepNav.Item>
+					);
+				}
+			})}
 		</ClayMultiStepNav>
 	);
 };

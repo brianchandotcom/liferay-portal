@@ -12,13 +12,16 @@
  * details.
  */
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import MultiSteps from '../../../../common/components/multi-steps';
 import {getApplicationByExternalReferenceCode} from '../../../../common/services';
 import {setFirstLetterUpperCase} from '../../../../common/utils';
 import {CONSTANTS} from '../../../../common/utils/constants';
+import {redirectTo} from '../../../../common/utils/liferay';
 import ActionDetail from './components/action-detail';
+import BoundContent from './components/status-content/bound-content';
+import IncompleteContent from './components/status-content/incomplete-content';
 import Summary from './components/summary';
 
 enum STEP {
@@ -30,6 +33,10 @@ enum STEP {
 	BOUND = 5,
 }
 
+const classes = {
+	bound: 'bound-step-details',
+};
+
 const ApplicationDetails = () => {
 	const [currentStep, setCurrentStep] = useState<Number>(1);
 	const [app, setApp] = useState<any>(null);
@@ -38,11 +45,13 @@ const ApplicationDetails = () => {
 		{
 			active: currentStep === STEP.OPEN,
 			complete: currentStep > STEP.OPEN,
+			show: currentStep === STEP.BOUND || currentStep === STEP.INCOMPLETE,
 			title: setFirstLetterUpperCase(CONSTANTS.APPLICATION_STATUS.OPEN),
 		},
 		{
 			active: currentStep === STEP.INCOMPLETE,
 			complete: currentStep > STEP.INCOMPLETE,
+			show: false || currentStep === STEP.INCOMPLETE,
 			title: setFirstLetterUpperCase(
 				CONSTANTS.APPLICATION_STATUS.INCOMPLETE
 			),
@@ -50,11 +59,13 @@ const ApplicationDetails = () => {
 		{
 			active: currentStep === STEP.QUOTED,
 			complete: currentStep > STEP.QUOTED,
+			show: currentStep === STEP.BOUND || currentStep === STEP.INCOMPLETE,
 			title: setFirstLetterUpperCase(CONSTANTS.APPLICATION_STATUS.QUOTED),
 		},
 		{
 			active: currentStep === STEP.UNDERWRITING,
 			complete: currentStep > STEP.UNDERWRITING,
+			show: false || currentStep === STEP.INCOMPLETE,
 			title: setFirstLetterUpperCase(
 				CONSTANTS.APPLICATION_STATUS.UNDERWRITING
 			),
@@ -62,6 +73,7 @@ const ApplicationDetails = () => {
 		{
 			active: currentStep === STEP.REVIEWED,
 			complete: currentStep > STEP.REVIEWED,
+			show: false || currentStep === STEP.INCOMPLETE,
 			title: setFirstLetterUpperCase(
 				CONSTANTS.APPLICATION_STATUS.REVIEWED
 			),
@@ -69,6 +81,7 @@ const ApplicationDetails = () => {
 		{
 			active: currentStep === STEP.BOUND,
 			complete: currentStep > STEP.BOUND,
+			show: currentStep === STEP.BOUND || currentStep === STEP.INCOMPLETE,
 			title: setFirstLetterUpperCase(CONSTANTS.APPLICATION_STATUS.BOUND),
 		},
 	];
@@ -103,6 +116,7 @@ const ApplicationDetails = () => {
 		const application = await getApplicationByExternalReferenceCode(
 			externalReferenceCode
 		);
+
 		const applicationStatus = application?.data?.applicationStatus?.key;
 
 		selectCurrentStep(applicationStatus);
@@ -119,11 +133,22 @@ const ApplicationDetails = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const handleClick = useCallback(() => {
+		redirectTo(
+			`app-edit?externalReferenceCode=${app.data?.externalReferenceCode}`
+		);
+	}, [app]);
+
 	return (
 		app && (
 			<div className="application-details-container">
 				<div className="align-items-center bg-neutral-0 d-flex justify-content-center multi-steps-content">
-					<MultiSteps steps={steps} />
+					<MultiSteps
+						classes={
+							currentStep === STEP.BOUND ? classes.bound : ''
+						}
+						steps={steps.filter((step) => step.show)}
+					/>
 				</div>
 
 				<div className="application-detail-content py-4 row">
@@ -132,7 +157,13 @@ const ApplicationDetails = () => {
 					</div>
 
 					<div className="applciation-action-detail-content col-12 col-lg-12 col-md-12 col-sm-12 col-xl-9">
-						<ActionDetail application={app} />
+						<ActionDetail>
+							{currentStep === STEP.INCOMPLETE && (
+								<IncompleteContent onClick={handleClick} />
+							)}
+
+							{currentStep === STEP.BOUND && <BoundContent />}
+						</ActionDetail>
 					</div>
 				</div>
 			</div>

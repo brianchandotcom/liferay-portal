@@ -12,18 +12,21 @@
  * details.
  */
 
-import {ReactNode} from 'react';
+const BoundContent = () => (
+	<div className="d-flex flex-column">
+		<div className="action-detail-title pt-3 px-5">
+			<h5 className="m-0">No Action Required</h5>
+		</div>
 
-import './index.scss';
+		<hr />
 
-type ActionDetailProps = {
-	children: ReactNode;
-};
-
-const ActionDetail = ({children}: ActionDetailProps) => (
-	<div className="action-detail-container bg-neutral-0 d-flex flex-column justify-content-between rounded">
-		{children}
+		<div className="action-detail-content px-5">
+			<p>
+				There is currently no action required of you. You will be
+				notified when your attention is needed.
+			</p>
+		</div>
 	</div>
 );
 
-export default ActionDetail;
+export default BoundContent;

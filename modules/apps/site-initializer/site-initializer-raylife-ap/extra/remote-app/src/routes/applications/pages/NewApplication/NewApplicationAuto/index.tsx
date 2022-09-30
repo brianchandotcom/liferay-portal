@@ -49,26 +49,31 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		{
 			active: state.currentStep === 0,
 			complete: state.currentStep > 0,
+			show: true,
 			title: state.steps.contactInfo.name,
 		},
 		{
 			active: state.currentStep === 1,
 			complete: state.currentStep > 1,
+			show: true,
 			title: state.steps.vehicleInfo.name,
 		},
 		{
 			active: state.currentStep === 2,
 			complete: state.currentStep > 2,
+			show: true,
 			title: state.steps.driverInfo.name,
 		},
 		{
 			active: state.currentStep === 3,
 			complete: state.currentStep > 3,
+			show: true,
 			title: state.steps.coverage.name,
 		},
 		{
 			active: state.currentStep === 4,
 			complete: state.currentStep > 4,
+			show: true,
 			title: state.steps.review.name,
 		},
 	];

@@ -529,10 +529,6 @@ definition {
 			locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS",
 			value1 = "${permissionNavigationValue}");
 
-		AssertTextEquals(
-			locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_REMOVE",
-			value1 = "Remove");
-
 		if (isSet(siteNameScope)) {
 			AssertTextEquals(
 				key_siteNameScope = "${siteNameScope}",

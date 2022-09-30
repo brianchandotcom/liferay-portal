@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -78,17 +77,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		}
 
 		return assetEntryClassNames.toArray(new String[0]);
-	}
-
-	@Override
-	public Collection<Long> getIndexedCompanyIds() {
-		Collection<Long> companyIds = new ArrayList<>();
-
-		for (SearchEngine searchEngine : _searchEngines.values()) {
-			companyIds.addAll(searchEngine.getIndexedCompanyIds());
-		}
-
-		return companyIds;
 	}
 
 	@Override

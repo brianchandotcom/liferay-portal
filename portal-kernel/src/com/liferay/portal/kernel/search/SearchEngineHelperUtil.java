@@ -33,10 +33,6 @@ public class SearchEngineHelperUtil {
 		return _searchEngineHelper.getEntryClassNames();
 	}
 
-	public static Collection<Long> getIndexedCompanyIds() {
-		return _searchEngineHelper.getIndexedCompanyIds();
-	}
-
 	public static SearchEngine getSearchEngine(String searchEngineId) {
 		return _searchEngineHelper.getSearchEngine(searchEngineId);
 	}

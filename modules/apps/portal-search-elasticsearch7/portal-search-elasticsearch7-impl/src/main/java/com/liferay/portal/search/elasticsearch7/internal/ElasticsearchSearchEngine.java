@@ -118,33 +118,6 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	@Override
-	public Collection<Long> getIndexedCompanyIds() {
-		Collection<Long> companyIds = new ArrayList<>();
-
-		String firstIndexName = _indexNameBuilder.getIndexName(0);
-
-		String prefix = firstIndexName.substring(
-			0, firstIndexName.length() - 1);
-
-		GetIndexIndexResponse getIndexIndexResponse =
-			_searchEngineAdapter.execute(
-				new GetIndexIndexRequest(prefix + StringPool.STAR));
-
-		for (String indexName : getIndexIndexResponse.getIndexNames()) {
-			long companyId = GetterUtil.getLong(
-				StringUtil.removeSubstring(indexName, prefix));
-
-			if (companyId == 0) {
-				continue;
-			}
-
-			companyIds.add(companyId);
-		}
-
-		return companyIds;
-	}
-
-	@Override
 	public void initialize(long companyId) {
 		super.initialize(companyId);
 
@@ -268,7 +241,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		setVendor(MapUtil.getString(properties, "search.engine.impl"));
 
 		if (StartupHelperUtil.isDBNew()) {
-			for (long companyId : getIndexedCompanyIds()) {
+			for (long companyId : _getIndexedCompanyIds()) {
 				removeCompany(companyId);
 			}
 		}
@@ -373,6 +346,32 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				}
 			}
 		}
+	}
+
+	private Collection<Long> _getIndexedCompanyIds() {
+		Collection<Long> companyIds = new ArrayList<>();
+
+		String firstIndexName = _indexNameBuilder.getIndexName(0);
+
+		String prefix = firstIndexName.substring(
+			0, firstIndexName.length() - 1);
+
+		GetIndexIndexResponse getIndexIndexResponse =
+			_searchEngineAdapter.execute(
+				new GetIndexIndexRequest(prefix + StringPool.STAR));
+
+		for (String indexName : getIndexIndexResponse.getIndexNames()) {
+			long companyId = GetterUtil.getLong(
+				StringUtil.removeSubstring(indexName, prefix));
+
+			if (companyId == 0) {
+				continue;
+			}
+
+			companyIds.add(companyId);
+		}
+
+		return companyIds;
 	}
 
 	private boolean _hasBackupRepository() {

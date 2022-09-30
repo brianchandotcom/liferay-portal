@@ -30,8 +30,6 @@ public interface SearchEngineHelper {
 
 	public String[] getEntryClassNames();
 
-	public Collection<Long> getIndexedCompanyIds();
-
 	public SearchEngine getSearchEngine(String searchEngineId);
 
 	public String getSearchEngineId(Collection<Document> documents);

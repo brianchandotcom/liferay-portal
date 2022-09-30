@@ -235,9 +235,13 @@ definition {
 	}
 
 	macro exportAllKeyDetails {
-		CustomerPortal.clickAtButton(text = "Actions");
+		Click(
+			key_text = "Actions",
+			locator1 = "Button#ANY");
 
-		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Export All Key Details (csv)");
+		Click(
+			key_action = "Export All Key Details (csv)",
+			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 
 		Alert.viewSuccessMessage();
 
@@ -475,6 +479,12 @@ definition {
 			value1 = "${option}");
 	}
 
+	macro selectClusterNodes {
+		Select(
+			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
+			value1 = "${key_option}");
+	}
+
 	macro selectKeyCheckboxByEnvironmentName {
 		var key_environmentName = "${environmentName}";
 
@@ -486,11 +496,6 @@ definition {
 		var key_date = "${date}";
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
-	}
-	macro selectClusterNodes {
-		Select(
-			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
-			value1 = "${key_option}");
 	}
 
 	macro selectPaginationQuantity {
@@ -511,6 +516,28 @@ definition {
 		Click(
 			key_position = "${position}",
 			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
+	}
+
+	macro typeEnvironmentDetailsFields {
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "name",
+			value = "Liferay Test");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "description",
+			value = "Liferay Dev Environmet");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "host",
+			value = "Host Name");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "ipAddresses",
+			value = "1.1.1.1");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "macAddresses",
+			value = "20-20-20-20-20-20");
 	}
 
 	macro viewActivationKeyDetails {

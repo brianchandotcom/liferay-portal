@@ -1239,6 +1239,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on page editor."
+	@priority = "4"
+	test ViewBreadcrumbOnContentPage {
+		task ("Given the page creator has a content page with custom fragment structure") {
+			task ("Add a Grid fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Grid");
+			}
+
+			task ("Add a Container fragment inside first module of Grid") {
+				PageEditor.addElementToColumn(
+					collectionName = "Layout Elements",
+					columnNumber = "1",
+					fragmentName = "Container",
+					navTab = "Fragments");
+			}
+
+			task ("Add a Heading frgament inside Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("When the page creator selects the element-text of Heading fragment") {
+			PageEditor.gotoEditableFieldEdit(
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Then the page creator should see the Breadcrumb and element-text as active") {
+			Breadcrumb.viewBreadcrumbPath(breadcrumbNameList = "Grid,Container,Heading,element-text");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "element-text");
+		}
+
+		task ("When the page creator closes the sidebar and selects the Heading on Breadcrumb") {
+			Click(
+				key_text = "times",
+				locator1 = "Icon#ANY");
+
+			Click(
+				key_breadcrumbName = "Heading",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+		}
+
+		task ("Then the page creator should see the sidebar still closed and the General panel") {
+			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
+
+			AssertVisible(
+				key_panel = "Heading Options",
+				locator1 = "Panel#PANEL");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Heading");
+		}
+
+		task ("When the page creator selects the Grid on Breadcrumb") {
+			Click(
+				key_breadcrumbName = "Grid",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+		}
+
+		task ("Then the page creator should see the sidebar still closed and the General panel") {
+			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
+
+			AssertVisible(
+				key_panel = "Grid Options",
+				locator1 = "Panel#PANEL");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Grid");
+		}
+	}
+
 	@description = "This is a test for LPS-129536. View the configuration settings of widget after execute Clean Up Orphaned Theme Portlet Preferences."
 	@priority = "4"
 	test ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences {

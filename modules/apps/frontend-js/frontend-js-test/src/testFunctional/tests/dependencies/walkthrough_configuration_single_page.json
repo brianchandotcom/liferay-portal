@@ -2,7 +2,7 @@
 	"closeOnClickOutside": true,
 	"closeable": true,
 	"pages": {
-		"/walkthrough-page": [
+		"/walkthrough-page-1": [
 			"step-1",
 			"step-2",
 			"step-3"

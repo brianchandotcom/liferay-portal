@@ -1,0 +1,8 @@
+/*Source Serif Pro*/
+@font-face {
+	font-display: swap;
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/SourceSansPro-Regular.ttf$]);
+}

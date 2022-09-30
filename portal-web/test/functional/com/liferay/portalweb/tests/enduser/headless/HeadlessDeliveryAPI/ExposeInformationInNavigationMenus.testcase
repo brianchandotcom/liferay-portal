@@ -179,7 +179,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
-			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
 				assetLibraryId = "${assetLibraryId}",
 				data = "<p>My content</p>",
 				ddmStructureId = "${ddmStructureId}",
@@ -252,7 +252,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
-			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
 				assetLibraryId = "${assetLibraryId}",
 				data = "<p>My content</p>",
 				ddmStructureId = "${ddmStructureId}",

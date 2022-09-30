@@ -49,7 +49,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
-			HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+			HeadlessWebcontentAPI.createStructuredContent(
 				assetLibraryId = "${assetLibraryId}",
 				data = "<p>My content</p>",
 				ddmStructureId = "${ddmStructureId}",

@@ -106,21 +106,41 @@ definition {
 	}
 
 	macro _createStructuredContent {
-		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority}");
+		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(siteId)) {
-			var siteId = "${siteId}";
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = "";
+		}
+
+		if (isSet(structuredContentFolderId)) {
+			var api = "structured-content-folders/${structuredContentFolderId}";
 		}
 		else {
-			var siteId = JSONGroupAPI._getGroupIdByName(
-				groupName = "Guest",
-				site = "true");
+			if (isSet(assetLibraryId)) {
+				var api = "asset-libraries/${assetLibraryId}/";
+			}
+			else {
+				if (isSet(siteId)) {
+					var siteId = "${siteId}";
+				}
+				else {
+					var siteId = JSONGroupAPI._getGroupIdByName(
+						groupName = "Guest",
+						site = "true");
+				}
+
+				var api = "sites/${siteId}";
+			}
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/structured-contents/ \
+			${portalURL}/o/headless-delivery/v1.0/${api}/structured-contents/ \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
 			-d {
@@ -136,7 +156,8 @@ definition {
 				}],
 				"contentStructureId": "${ddmStructureId}",
 				"title": "${title}",
-				"priority": "${priority}"
+				"priority": "${priority}",
+				"externalReferenceCode": "${externalReferenceCode}"
 			}
 		''';
 
@@ -171,38 +192,6 @@ definition {
 				"contentStructureId": "${ddmStructureId}",
 				"priority": "${priority}",
 				"title": "${title}"
-			}
-		''';
-
-		var curl = JSONCurlUtil.post("${curl}");
-
-		return "${curl}";
-	}
-
-	macro _createStructuredContentInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${data},${label},${name},${ddmStructureId},${title},${priority},${externalReferenceCode}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents/ \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json \
-			-d {
-				"contentFields": [{
-					"contentFieldValue": {
-						"data": "${data}"
-					},
-					"dataType": "string",
-					"label": "${label}",
-					"name": "${name}",
-					"nestedContentFields": [],
-					"repeatable": false
-				}],
-				"contentStructureId": "${ddmStructureId}",
-				"title": "${title}",
-				"priority": "${priority}",
-				"externalReferenceCode": "${externalReferenceCode}"
 			}
 		''';
 
@@ -394,8 +383,12 @@ definition {
 			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
 		}
 
+		if (!(isSet(headlessComponent))) {
+			var headlessComponent = "headless-admin-content";
+		}
+
 		var curl = '''
-			${portalURL}/o/headless-admin-content/v1.0/${api} \
+			${portalURL}/o/${headlessComponent}/v1.0/${api} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
 		''';
@@ -457,14 +450,19 @@ definition {
 			var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
 		}
 		else {
-			Variables.assertDefined(parameterList = "${versionvalue},${structuredContentId}");
+			Variables.assertDefined(parameterList = "${structuredContentId}");
 		}
 
-		if (isSet(parameter)) {
-			var api = "${structuredContentId}/by-version/${versionvalue}?${parameter}=${parameterValue}";
+		if (isSet(versionvalue)) {
+			if (isSet(parameter)) {
+				var api = "${structuredContentId}/by-version/${versionvalue}?${parameter}=${parameterValue}";
+			}
+			else {
+				var api = "${structuredContentId}/by-version/${versionvalue}";
+			}
 		}
 		else {
-			var api = "${structuredContentId}/by-version/${versionvalue}";
+			var api = "${structuredContentId}/versions";
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -536,17 +534,16 @@ definition {
 	}
 
 	macro createStructuredContent {
-		if (!(isSet(priority))) {
-			var priority = "";
-		}
-
 		var response = HeadlessWebcontentAPI._createStructuredContent(
+			assetLibraryId = "${assetLibraryId}",
 			data = "${data}",
 			ddmStructureId = "${ddmStructureId}",
+			externalReferenceCode = "${externalReferenceCode}",
 			label = "${label}",
 			name = "${name}",
 			priority = "${priority}",
 			siteId = "${siteId}",
+			structuredContentFolderId = "${structuredContentFolderId}",
 			title = "${title}");
 
 		return "${response}";
@@ -560,28 +557,6 @@ definition {
 		var response = HeadlessWebcontentAPI._createStructuredContentDraft(
 			data = "${data}",
 			ddmStructureId = "${ddmStructureId}",
-			label = "${label}",
-			name = "${name}",
-			priority = "${priority}",
-			title = "${title}");
-
-		return "${response}";
-	}
-
-	macro createStructuredContentInAssetLibrary {
-		if (!(isSet(externalReferenceCode))) {
-			var externalReferenceCode = "";
-		}
-
-		if (!(isSet(priority))) {
-			var priority = "";
-		}
-
-		var response = HeadlessWebcontentAPI._createStructuredContentInAssetLibrary(
-			assetLibraryId = "${assetLibraryId}",
-			data = "${data}",
-			ddmStructureId = "${ddmStructureId}",
-			externalReferenceCode = "${externalReferenceCode}",
 			label = "${label}",
 			name = "${name}",
 			priority = "${priority}",
@@ -703,8 +678,10 @@ definition {
 	macro getStructuredContentsWithDifferentParameters {
 		var curl = HeadlessWebcontentAPI._getStructuredContentsWithDifferentParameters(
 			groupName = "${groupName}",
+			headlessComponent = "${headlessComponent}",
 			parameter = "${parameter}",
-			parameterValue = "${parameterValue}");
+			parameterValue = "${parameterValue}",
+			structuredContentId = "${structuredContentId}");
 
 		var response = JSONCurlUtil.get("${curl}");
 
@@ -771,7 +748,7 @@ definition {
 
 	macro versionStructureContent {
 		if (!(isSet(responseToParse))) {
-			Variables.assertDefined(parameterList = "${structuredContentId},${versionvalue}");
+			Variables.assertDefined(parameterList = "${structuredContentId}");
 
 			var response = HeadlessWebcontentAPI._versionStructureContent(
 				parameter = "${parameter}",

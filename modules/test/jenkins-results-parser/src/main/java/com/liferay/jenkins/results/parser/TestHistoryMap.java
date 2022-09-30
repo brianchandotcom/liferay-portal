@@ -125,7 +125,7 @@ public class TestHistoryMap {
 		_minimumTestDuration = minimumTestDuration;
 	}
 
-	public void writeAverageDurationJSONObjectFile(String filePath)
+	public void writeCIHistoryJSONObjectFile(String filePath)
 		throws IOException {
 
 		JSONArray batchesJSONArray = new JSONArray();
@@ -174,9 +174,9 @@ public class TestHistoryMap {
 			batchesJSONArray.put(batchJSONObject);
 		}
 
-		JSONObject averageDurationJSONObject = new JSONObject();
+		JSONObject ciHistoryJSONObject = new JSONObject();
 
-		averageDurationJSONObject.put("batches", batchesJSONArray);
+		ciHistoryJSONObject.put("batches", batchesJSONArray);
 
 		File file = new File(filePath);
 
@@ -186,7 +186,7 @@ public class TestHistoryMap {
 
 		try {
 			JenkinsResultsParserUtil.write(
-				tempFile, averageDurationJSONObject.toString());
+				tempFile, ciHistoryJSONObject.toString());
 
 			JenkinsResultsParserUtil.gzip(tempFile, file);
 		}

@@ -46,8 +46,6 @@ if (ratingsType == null) {
 %>
 
 <c:if test="<%= ratingsType.equals(RatingsType.THUMBS) && themeDisplay.isSignedIn() %>">
-	<h5><liferay-ui:message key="do-you-have-any-suggestions" /></h5>
-
 	<a name="kbSuggestions"></a>
 
 	<div id="<portlet:namespace />suggestionContainer">
@@ -60,7 +58,7 @@ if (ratingsType == null) {
 			<portlet:param name="redirect" value="<%= viewKBArticleURL.toString() %>" />
 		</liferay-portlet:actionURL>
 
-		<aui:form action="<%= updateKBCommentURL %>" method="post" name="suggestionFm">
+		<aui:form action="<%= updateKBCommentURL %>" cssClass="mb-5" method="post" name="suggestionFm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="classNameId" type="hidden" value="<%= PortalUtil.getClassNameId(KBArticle.class) %>" />
 			<aui:input name="classPK" type="hidden" value="<%= kbArticle.getResourcePrimKey() %>" />
@@ -69,13 +67,11 @@ if (ratingsType == null) {
 
 			<aui:model-context model="<%= KBComment.class %>" />
 
-			<aui:fieldset>
-				<aui:input label="" name="content" />
+			<aui:input label="do-you-have-any-suggestions" name="content" />
 
-				<aui:button-row cssClass="kb-submit-buttons">
-					<aui:button type="submit" value="submit" />
-				</aui:button-row>
-			</aui:fieldset>
+			<aui:button-row cssClass="kb-submit-buttons">
+				<aui:button type="submit" value="submit" />
+			</aui:button-row>
 		</aui:form>
 	</div>
 

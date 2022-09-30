@@ -21,7 +21,7 @@ import com.liferay.view.count.model.ViewCountEntry;
  */
 public interface ViewCountEntryModelListener {
 
-	public void afterIncrement(ViewCountEntry viewCountEntry);
+	public void onAfterIncrement(ViewCountEntry viewCountEntry);
 
 	public String getModelClassName();
 

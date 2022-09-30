@@ -192,7 +192,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
-	@Schema(description = "The domain of the user.")
+	@Schema(description = "User's company's mail domain.")
 	public String getCompanyMxName() {
 		return companyMxName;
 	}
@@ -216,7 +216,7 @@ public class MessageBoardMessage implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The domain of the user.")
+	@GraphQLField(description = "User's company's mail domain.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String companyMxName;
 

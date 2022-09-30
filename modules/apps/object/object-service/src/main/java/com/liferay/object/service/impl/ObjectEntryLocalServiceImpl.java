@@ -1316,6 +1316,10 @@ public class ObjectEntryLocalServiceImpl
 			Column<?, ?> column = table.getColumn(
 				objectField.getDBColumnName());
 
+			if (column == null) {
+				continue;
+			}
+
 			Predicate likePredicate = column.like("%" + search + "%");
 
 			if (searchPredicate == null) {

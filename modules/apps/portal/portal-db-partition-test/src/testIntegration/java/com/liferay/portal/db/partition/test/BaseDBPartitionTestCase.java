@@ -118,11 +118,15 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void deletePartitionRequiredData() throws Exception {
 		try (Statement statement = connection.createStatement()) {
 			for (long companyId : COMPANY_IDS) {
-				statement.execute(
-					"delete from Company where companyId = " + companyId);
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-				statement.execute(
-					"delete from User_ where companyId = " + companyId);
+					statement.execute(
+						"delete from Company where companyId = " + companyId);
+
+					statement.execute(
+						"delete from User_ where companyId = " + companyId);
+				}
 			}
 		}
 	}

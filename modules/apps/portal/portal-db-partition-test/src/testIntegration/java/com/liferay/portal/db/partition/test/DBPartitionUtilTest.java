@@ -122,6 +122,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 						".CompanyInfo");
 			}
 		}
+		finally {
+			removeDBPartitions(false);
+		}
 	}
 
 	@Test
@@ -145,6 +148,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				message.contains(
 					"Obtained character set encoding from session with " +
 						"value:"));
+		}
+		finally {
+			removeDBPartitions(false);
 		}
 	}
 
@@ -185,6 +191,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			deletePartitionRequiredData();
+			removeDBPartitions(false);
 		}
 	}
 
@@ -192,35 +199,41 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testMigrateDBPartition() throws Exception {
 		addDBPartitions();
 
-		HashMap<Long, List<String>> viewNames = new HashMap<>();
-		HashMap<Long, Integer> tablesCount = new HashMap<>();
+		try {
+			HashMap<Long, List<String>> viewNames = new HashMap<>();
+			HashMap<Long, Integer> tablesCount = new HashMap<>();
 
-		for (long companyId : COMPANY_IDS) {
-			List<String> views = _getObjectNames("VIEW", companyId);
+			for (long companyId : COMPANY_IDS) {
+				List<String> views = _getObjectNames("VIEW", companyId);
 
-			viewNames.put(companyId, views);
+				viewNames.put(companyId, views);
 
-			Assert.assertNotEquals(0, views.size());
+				Assert.assertNotEquals(0, views.size());
 
-			tablesCount.put(companyId, _getTablesCount(companyId));
-		}
-
-		removeDBPartitions(true);
-
-		for (long companyId : COMPANY_IDS) {
-			List<String> views = viewNames.get(companyId);
-
-			Assert.assertEquals(
-				tablesCount.get(companyId) + views.size(),
-				_getTablesCount(companyId));
-
-			Assert.assertEquals(0, _getViewsCount(companyId));
-
-			for (String viewName : viewNames.get(companyId)) {
-				Assert.assertEquals(
-					viewName + " count", _getCount(viewName, true, companyId),
-					_getCount(viewName, false, companyId));
+				tablesCount.put(companyId, _getTablesCount(companyId));
 			}
+
+			removeDBPartitions(true);
+
+			for (long companyId : COMPANY_IDS) {
+				List<String> views = viewNames.get(companyId);
+
+				Assert.assertEquals(
+					tablesCount.get(companyId) + views.size(),
+					_getTablesCount(companyId));
+
+				Assert.assertEquals(0, _getViewsCount(companyId));
+
+				for (String viewName : viewNames.get(companyId)) {
+					Assert.assertEquals(
+						viewName + " count",
+						_getCount(viewName, true, companyId),
+						_getCount(viewName, false, companyId));
+				}
+			}
+		}
+		finally {
+			removeDBPartitions(false);
 		}
 	}
 
@@ -228,32 +241,38 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testMigrateDBPartitionRollback() throws Exception {
 		addDBPartitions();
 
-		for (long companyId : COMPANY_IDS) {
-			int tablesCount = _getTablesCount(companyId);
-			int viewsCount = _getViewsCount(companyId);
-
-			try {
-				String fullTestTableName =
-					getSchemaName(companyId) + "." + TEST_CONTROL_TABLE_NAME;
-
-				createAndPopulateControlTable(TEST_CONTROL_TABLE_NAME);
-				createAndPopulateControlTable(fullTestTableName);
+		try {
+			for (long companyId : COMPANY_IDS) {
+				int tablesCount = _getTablesCount(companyId);
+				int viewsCount = _getViewsCount(companyId);
 
 				try {
-					removeDBPartitions(true);
+					String fullTestTableName =
+						getSchemaName(companyId) + "." +
+							TEST_CONTROL_TABLE_NAME;
 
-					Assert.fail("Should throw an exception");
+					createAndPopulateControlTable(TEST_CONTROL_TABLE_NAME);
+					createAndPopulateControlTable(fullTestTableName);
+
+					try {
+						removeDBPartitions(true);
+
+						Assert.fail("Should throw an exception");
+					}
+					catch (Exception exception) {
+						Assert.assertEquals(
+							tablesCount, _getTablesCount(companyId));
+						Assert.assertEquals(
+							viewsCount, _getViewsCount(companyId) - 1);
+					}
 				}
-				catch (Exception exception) {
-					Assert.assertEquals(
-						tablesCount, _getTablesCount(companyId));
-					Assert.assertEquals(
-						viewsCount, _getViewsCount(companyId) - 1);
+				finally {
+					dropTable(TEST_CONTROL_TABLE_NAME);
 				}
 			}
-			finally {
-				dropTable(TEST_CONTROL_TABLE_NAME);
-			}
+		}
+		finally {
+			removeDBPartitions(false);
 		}
 	}
 

@@ -311,28 +311,14 @@ definition {
 	@description = "LPS-146754 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (Many-to-Many)"
 	@priority = "4"
 	test CanDeleteManyToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
-		task ("Add 2 users entries to relate to custom object entries") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "userfn_1",
-				userLastName = "userln_1",
-				userScreenName = "usersn1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-
-			JSONUser.addUser(
-				userEmailAddress = "user2@liferay.com",
-				userFirstName = "userfn_2",
-				userLastName = "userln_2",
-				userScreenName = "usersn2");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user2@liferay.com");
+		task ("Add two users to relate to Custom Object entries") {
+			for (var userNum : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
 		}
 
 		task ("Add a custom object, a field, and create a many-to-many relationship with the User object") {
@@ -413,35 +399,37 @@ definition {
 		task ("Relates custom object entries to user object entries") {
 			Navigator.openURL();
 
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
-
 			for (var entryName : list "A,B") {
+				ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 				ObjectPortlet.viewEntryDetails(entry = "Entry ${entryName}");
 
 				ObjectAdmin.gotoRelationshipsTab();
 
-				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_1");
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn1");
 
-				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_2");
+				Refresh();
 
-				Navigator.gotoBack();
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn2");
 			}
 		}
 
 		task ("Delete relationship between a custom object entry to native object entry") {
 			for (var entryName : list "A,B") {
+				ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
 				ObjectPortlet.viewEntryDetails(entry = "Entry ${entryName}");
 
-				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_1");
+				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn1");
 
-				ObjectPortlet.assertEntryNotPresent(entry = "userfn_1");
-
-				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_2");
-
-				ObjectPortlet.assertEntryNotPresent(entry = "userfn_2");
-
-				Navigator.gotoBack();
+				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn2");
 			}
+		}
+
+		task ("Assert that relationships has been deleted") {
+			ObjectPortlet.assertEntryNotPresent(entry = "userfn1");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "userfn2");
 		}
 	}
 

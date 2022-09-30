@@ -244,6 +244,14 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
 	}
 
+	macro environmentDetails {
+		var key_environmentDetails = "${environmentDetails}";
+
+		Type(
+			locator1 =  "CP2ActivationKeys#ENVIRONMENT_DETAILS",
+			value1 = "${value}");
+	}
+
 	macro filterKeyTable {
 		var key_filterOption = "${filterOption}";
 

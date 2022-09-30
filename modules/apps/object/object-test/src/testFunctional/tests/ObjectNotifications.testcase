@@ -111,11 +111,15 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert the edited Notification Template is present") {
+		task ("Assert only the edited Notification Template is present") {
 			Refresh();
 
 			AssertElementPresent(
 				key_name = "Notification Template Edited",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			AssertElementNotPresent(
+				key_name = "Notification Template",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}

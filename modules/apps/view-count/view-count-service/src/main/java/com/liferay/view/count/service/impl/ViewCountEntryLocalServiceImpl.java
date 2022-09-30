@@ -142,7 +142,7 @@ public class ViewCountEntryLocalServiceImpl
 				return;
 			}
 
-			viewCountIncrementListener.afterIncrement(
+			viewCountIncrementListener.onAfterIncrement(
 				fetchViewCountEntry(
 					new ViewCountEntryPK(companyId, classNameId, classPK)));
 		}

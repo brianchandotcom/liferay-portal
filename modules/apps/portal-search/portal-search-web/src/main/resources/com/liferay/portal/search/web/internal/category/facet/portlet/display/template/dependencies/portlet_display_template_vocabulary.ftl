@@ -9,56 +9,75 @@
 	termDisplayContexts = ""
 >
 	<li class="treeview-item" role="none">
-		<div
-			aria-controls="${namespace}treeItem${id}"
-			aria-expanded="true"
-			class="treeview-link ${cssClassTreeItem}"
-			data-target="#${namespace}treeItem${id}"
-			data-toggle="collapse"
-			onClick="${namespace}toggleTreeItem('${namespace}treeItem${id}');"
-			role="treeitem"
-			tabindex="0"
-		>
-			<span class="c-inner" tabindex="-2">
-				<span class="autofit-row">
-					<#if termDisplayContexts?has_content>
-						<span class="autofit-col">
-							<button
-								aria-controls="${namespace}treeItem${id}"
-								aria-expanded="true"
-								class="btn btn-monospaced component-expander"
-								data-target="#${namespace}treeItem${id}"
-								data-toggle="collapse"
-								tabindex="-1"
-								type="button"
-							>
-								<span class="c-inner" tabindex="-2">
-									<@clay["icon"] symbol="angle-down" />
+		<#if name?has_content>
+			<div
+				aria-controls="${namespace}treeItem${id}"
+				aria-expanded="true"
+				class="treeview-link ${cssClassTreeItem}"
+				data-target="#${namespace}treeItem${id}"
+				data-toggle="collapse"
+				onClick="${namespace}toggleTreeItem('${namespace}treeItem${id}');"
+				role="treeitem"
+				tabindex="0"
+			>
+				<span class="c-inner" tabindex="-2">
+					<span class="autofit-row">
+						<#if termDisplayContexts?has_content>
+							<span class="autofit-col">
+								<button
+									aria-controls="${namespace}treeItem${id}"
+									aria-expanded="true"
+									class="btn btn-monospaced component-expander"
+									data-target="#${namespace}treeItem${id}"
+									data-toggle="collapse"
+									tabindex="-1"
+									type="button"
+								>
+									<span class="c-inner" tabindex="-2">
+										<@clay["icon"] symbol="angle-down" />
 
-									<@clay["icon"]
-										cssClass="component-expanded-d-none"
-										symbol="angle-right"
-									/>
-								</span>
-							</button>
-						</span>
-					</#if>
+										<@clay["icon"]
+											cssClass="component-expanded-d-none"
+											symbol="angle-right"
+										/>
+									</span>
+								</button>
+							</span>
+						</#if>
 
-					<#if isSelectable>
-						<span class="autofit-col autofit-col-expand">
-							<div class="custom-checkbox custom-control">
-								<label>
-									<input
-										${isSelected?then("checked", "")}
-										class="custom-control-input facet-term"
-										data-term-id=${id}
-										disabled
-										onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-										type="checkbox"
-									/>
+						<#if isSelectable>
+							<span class="autofit-col autofit-col-expand">
+								<div class="custom-checkbox custom-control">
+									<label>
+										<input
+											${isSelected?then("checked", "")}
+											class="custom-control-input facet-term"
+											data-term-id=${id}
+											disabled
+											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+											type="checkbox"
+										/>
 
-									<span class="custom-control-label">
-										<span class="custom-control-label-text">
+										<span class="custom-control-label">
+											<span class="custom-control-label-text">
+												${name}
+
+												<#if isFrequencyVisible>
+													(${frequency})
+												</#if>
+											</span>
+										</span>
+									</label>
+								</div>
+							</span>
+						<#else>
+							<span class="autofit-col autofit-col-expand">
+								<span class="component-text">
+									<span
+										class="text-truncate-inline"
+										title="${name}"
+									>
+										<span class="text-truncate">
 											${name}
 
 											<#if isFrequencyVisible>
@@ -66,30 +85,13 @@
 											</#if>
 										</span>
 									</span>
-								</label>
-							</div>
-						</span>
-					<#else>
-						<span class="autofit-col autofit-col-expand">
-							<span class="component-text">
-								<span
-									class="text-truncate-inline"
-									title="${name}"
-								>
-									<span class="text-truncate">
-										${name}
-
-										<#if isFrequencyVisible>
-											(${frequency})
-										</#if>
-									</span>
 								</span>
 							</span>
-						</span>
-					</#if>
+						</#if>
+					</span>
 				</span>
-			</span>
-		</div>
+			</div>
+		</#if>
 
 		<#if termDisplayContexts?has_content>
 			<div class="collapse show" id="${namespace}treeItem${id}">
@@ -117,22 +119,24 @@
 	markupView="lexicon"
 	persistState=true
 >
+	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames() />
+
 	<@liferay_ui.panel
 		collapsible=true
 		cssClass="search-facet search-facet-display-vocabulary"
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="category"
+		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}"
 	>
-		<#if assetCategoriesSearchFacetDisplayContext.getVocabularyNames()?has_content>
+		<#if vocabularyNames?has_content>
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
-				<#list assetCategoriesSearchFacetDisplayContext.getVocabularyNames() as vocabularyName>
+				<#list vocabularyNames as vocabularyName>
 					<@treeview_item
 						cssClassTreeItem="tree-item-vocabulary"
 						id=vocabularyName + vocabularyName?index
 						isFrequencyVisible=false
-						name=htmlUtil.escape(vocabularyName)
+						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
 						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts(vocabularyName)
 					/>
 				</#list>

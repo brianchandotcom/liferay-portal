@@ -252,6 +252,28 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro typeEnvironmentDetailsFields {
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "name",
+			value = "Liferay Test");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "description",
+			value = "Liferay Dev Environmet");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "host",
+			value = "Host Name");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "ipAddresses",
+			value = "1.1.1.1");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "macAddresses",
+			value = "20-20-20-20-20-20");
+	}
+
 	macro filterKeyTable {
 		var key_filterOption = "${filterOption}";
 

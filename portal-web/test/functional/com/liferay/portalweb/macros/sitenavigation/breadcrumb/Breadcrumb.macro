@@ -69,6 +69,19 @@ definition {
 		AssertElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_ADT");
 	}
 
+	macro viewBreadcrumbPath {
+		var index = "1";
+
+		for (var breadcrumbName : list "${breadcrumbNameList}") {
+			AssertElementPresent(
+				key_breadcrumbName = "${breadcrumbName}",
+				key_index = "${index}",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_BY_INDEX");
+
+			var index = ${index} + 1;
+		}
+	}
+
 	macro viewConfigurationCheckboxes {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

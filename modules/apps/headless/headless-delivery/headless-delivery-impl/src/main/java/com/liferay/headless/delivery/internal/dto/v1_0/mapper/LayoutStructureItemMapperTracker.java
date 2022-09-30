@@ -14,13 +14,14 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Jürgen Kappler
@@ -31,28 +32,27 @@ public class LayoutStructureItemMapperTracker {
 	public LayoutStructureItemMapper getLayoutStructureItemMapper(
 		String className) {
 
-		return _layoutStructureItemMappers.get(className);
+		return _layoutStructureItemMapperServiceTrackerMap.getService(
+			className);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setLayoutStructureItemMapper(
-		LayoutStructureItemMapper layoutStructureItemMapper) {
-
-		_layoutStructureItemMappers.put(
-			layoutStructureItemMapper.getClassName(),
-			layoutStructureItemMapper);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_layoutStructureItemMapperServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, LayoutStructureItemMapper.class, null,
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(layoutStructureItemMapper, emitter) -> emitter.emit(
+						layoutStructureItemMapper.getClassName())));
 	}
 
-	protected void unsetLayoutStructureItemMapper(
-		LayoutStructureItemMapper layoutStructureItemMapper) {
-
-		_layoutStructureItemMappers.remove(layoutStructureItemMapper);
+	@Deactivate
+	protected void deactivate() {
+		_layoutStructureItemMapperServiceTrackerMap.close();
 	}
 
-	private final Map<String, LayoutStructureItemMapper>
-		_layoutStructureItemMappers = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, LayoutStructureItemMapper>
+		_layoutStructureItemMapperServiceTrackerMap;
 
 }

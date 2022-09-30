@@ -69,7 +69,61 @@ definition {
     @description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
     @priority = "4"
     test CanViewTheDownloadSuccessfulMessage {
-        // TODO LPS-150695 CanViewTheDownloadSuccessfulMessage pending implementation
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Avangrid Portals account
+
+        task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+        task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+        task ("I selected two keys in the table") {
+			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
+				date = "Mar 30, 2023",
+				position = "1");
+
+			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
+				date = "Mar 30, 2023",
+				position = "3");
+		}
+
+		task ("When I click at the 'Aggregate key single file' option") {
+            CustomerPortal.clickAtButton(text = "download");
+
+			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Aggregate key single file");
+		}
+
+		task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
+			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
+		}
+
+		// task ("And I get the expected downloaded file name") {
+		// 	var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+		// 		fileType = "xml",
+		// 		licenseName = "${testAccount}",
+		// 		licenseType = "activation-key-multiple-products",
+		// 		version = "7.4");
+		// }
+
+		// task ("And I assert that the Activation Key was downloaded") {
+		// 	CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
+		// }
     }
 
     @description = "Automation ID: LPS-150697 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"

@@ -864,6 +864,11 @@ definition {
 
 			MenuItem.click(menuItem = "Import");
 		}
+		else if (isSet(navigationPane)) {
+			KBFolder.gotoMenuItemViaNavigationPane(
+				kbFolderName = "${kbFolderName}",
+				menuItem = "Import");
+		}
 		else {
 			LexiconEntry.gotoAddDropdownMenuItem(menuItem = "Import");
 		}

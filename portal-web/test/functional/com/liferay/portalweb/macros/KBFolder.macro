@@ -37,9 +37,16 @@ definition {
 	}
 
 	macro deleteCP {
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Delete",
-			rowEntry = "${kbFolderName}");
+		if (isSet(navigationPane)) {
+			KBFolder.gotoMenuItemViaNavigationPane(
+				kbFolderName = "${kbFolderName}",
+				menuItem = "Delete");
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "${kbFolderName}");
+		}
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -47,9 +54,16 @@ definition {
 	}
 
 	macro editCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${kbFolderName}");
+		if (isSet(navigationPane)) {
+			KBFolder.gotoMenuItemViaNavigationPane(
+				kbFolderName = "${kbFolderName}",
+				menuItem = "Edit");
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${kbFolderName}");
+		}
 
 		PortletEntry.inputName(name = "${kbFolderEditedName}");
 
@@ -69,6 +83,35 @@ definition {
 			key_breadcrumbName = "${kbFolderName}",
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 			value1 = "${kbFolderName}");
+	}
+
+	macro gotoMenuItemViaNavigationPane {
+		MouseOver(
+			key_itemName = "${kbFolderName}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+
+		Click.waitForMenuToggleJSClick(
+			key_itemName = "${kbFolderName}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if ("${menuItem}" == "Delete") {
+			MenuItem.clickNoError(menuItem = "${menuItem}");
+		}
+		else {
+			MenuItem.click(menuItem = "${menuItem}");
+		}
+	}
+
+	macro goToMoveCPViaNavigationPane {
+		KBFolder.gotoMenuItemViaNavigationPane(
+			kbFolderName = "${kbFolderName}",
+			menuItem = "Move");
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 	}
 
 	macro gotoViaKBDisplayPG {

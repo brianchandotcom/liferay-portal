@@ -14,22 +14,16 @@
 
 package com.liferay.portal.search.internal;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -71,37 +65,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	@Override
 	public SearchEngine getSearchEngine(String searchEngineId) {
 		return _searchEngines.get(searchEngineId);
-	}
-
-	@Override
-	public String getSearchEngineId(Collection<Document> documents) {
-		if (!documents.isEmpty()) {
-			Iterator<Document> iterator = documents.iterator();
-
-			Document document = iterator.next();
-
-			return getSearchEngineId(document);
-		}
-
-		return SYSTEM_ENGINE_ID;
-	}
-
-	@Override
-	public String getSearchEngineId(Document document) {
-		String entryClassName = document.get("entryClassName");
-
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
-
-		String searchEngineId = indexer.getSearchEngineId();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Search engine ID ", searchEngineId, " is associated with ",
-					ClassUtil.getClassName(indexer)));
-		}
-
-		return searchEngineId;
 	}
 
 	@Override
@@ -181,9 +144,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 			_excludedEntryClassNames,
 			searchEngineHelperConfiguration.excludedEntryClassNames());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SearchEngineHelperImpl.class);
 
 	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
 	private final Set<String> _excludedEntryClassNames = new HashSet<>();

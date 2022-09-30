@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -38,14 +37,6 @@ public class SearchEngineHelperUtil {
 
 	public static SearchEngineHelper getSearchEngineHelper() {
 		return _searchEngineHelper;
-	}
-
-	public static String getSearchEngineId(Collection<Document> documents) {
-		return _searchEngineHelper.getSearchEngineId(documents);
-	}
-
-	public static String getSearchEngineId(Document document) {
-		return _searchEngineHelper.getSearchEngineId(document);
 	}
 
 	public static Set<String> getSearchEngineIds() {

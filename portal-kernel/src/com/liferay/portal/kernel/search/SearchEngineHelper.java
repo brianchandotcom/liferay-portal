@@ -30,10 +30,6 @@ public interface SearchEngineHelper {
 
 	public SearchEngine getSearchEngine(String searchEngineId);
 
-	public String getSearchEngineId(Collection<Document> documents);
-
-	public String getSearchEngineId(Document document);
-
 	public Set<String> getSearchEngineIds();
 
 	public Collection<SearchEngine> getSearchEngines();

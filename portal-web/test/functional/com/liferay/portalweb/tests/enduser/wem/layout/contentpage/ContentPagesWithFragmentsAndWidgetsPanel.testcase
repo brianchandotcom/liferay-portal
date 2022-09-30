@@ -249,6 +249,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158744. When move a fragment set to the place of a hidden fragment set, it should be placed bottom of the hidden fragment set in Fragments and Widgets panel."
+	@priority = "4"
+	test MoveFragmentSetToThePlaceOfHiddenOne {
+		property custom.properties = "feature.flag.LPS-158737=true";
+
+		task ("Given a page creator has a content page based on a custom master with disallowed fragment set") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Click(locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS");
+
+			MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Basic Components");
+
+			MastersPageTemplates.publishMaster();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+		}
+
+		task ("When the page creator moves a fragment set to the place of the hidden one in content page") {
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Fragments",
+				setName = "Cookie Banner");
+
+			AssertVisible(
+				index = "2",
+				key_panel = "Cookie Banner",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+
+		task ("Then the page creator sees the fragment set is placed bottom of the hidden fragment set in master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			AssertVisible(
+				index = "2",
+				key_panel = "Basic Components",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+
+			AssertVisible(
+				index = "3",
+				key_panel = "Cookie Banner",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+	}
+
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
 	@priority = "4"
 	test PersistInteractionStatesForRelease {

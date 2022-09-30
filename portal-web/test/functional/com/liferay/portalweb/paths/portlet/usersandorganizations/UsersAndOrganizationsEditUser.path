@@ -112,6 +112,10 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_CUSTOM_FIELD_INPUT</td>
+	<td>//input[contains(@name,'${key_customFieldName}') and @value='${key_customFieldValue}']</td>
+	<td></td>
+</tr>
 	<td></td>
 	<td></td>
 	<td></td>

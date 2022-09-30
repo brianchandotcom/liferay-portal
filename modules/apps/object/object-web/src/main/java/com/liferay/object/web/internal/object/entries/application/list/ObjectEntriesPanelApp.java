@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.object.entries.application.list;
 
 import com.liferay.application.list.BasePanelApp;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -82,11 +84,18 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 
 	@Override
 	protected Group getGroup(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (StringUtil.equals(
+				_objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
-		return themeDisplay.getControlPanelGroup();
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return themeDisplay.getControlPanelGroup();
+		}
+
+		return super.getGroup(httpServletRequest);
 	}
 
 	private final ObjectDefinition _objectDefinition;

@@ -160,7 +160,7 @@ public class DispatchTriggerDisplayContextTest {
 			dispatchTrigger.getDispatchTriggerId());
 
 		Assert.assertEquals(
-			DispatchTaskClusterMode.SINGLE_NODE,
+			DispatchTaskClusterMode.SINGLE_NODE_PERSISTED,
 			DispatchTaskClusterMode.valueOf(
 				dispatchTrigger.getDispatchTaskClusterMode()));
 

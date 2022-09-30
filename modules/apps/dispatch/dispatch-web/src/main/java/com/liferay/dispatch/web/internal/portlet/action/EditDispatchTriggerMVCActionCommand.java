@@ -152,7 +152,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		if (_dispatchTaskExecutorRegistry.isClusterModeSingle(
 				dispatchTrigger.getDispatchTaskExecutorType())) {
 
-			return DispatchTaskClusterMode.SINGLE_NODE;
+			return DispatchTaskClusterMode.SINGLE_NODE_PERSISTED;
 		}
 
 		return dispatchTaskClusterMode;

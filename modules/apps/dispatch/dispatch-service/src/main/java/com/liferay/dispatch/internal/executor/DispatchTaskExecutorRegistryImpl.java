@@ -142,7 +142,8 @@ public class DispatchTaskExecutorRegistryImpl
 			DispatchTaskClusterMode.ALL_NODES.getLabel());
 
 		if (Objects.equals(
-				label, DispatchTaskClusterMode.SINGLE_NODE.getLabel())) {
+				label,
+				DispatchTaskClusterMode.SINGLE_NODE_PERSISTED.getLabel())) {
 
 			_clusterModeSingleNodeDispatchTaskExecutors.add(
 				dispatchTaskExecutorType);

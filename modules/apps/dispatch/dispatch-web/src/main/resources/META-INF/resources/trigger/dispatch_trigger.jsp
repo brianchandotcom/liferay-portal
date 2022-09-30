@@ -101,7 +101,7 @@ if (dispatchTrigger != null) {
 							DispatchTaskClusterMode dispatchTaskClusterMode = DispatchTaskClusterMode.NOT_APPLICABLE;
 
 							if (dispatchTriggerDisplayContext.isClusterModeSingle(dispatchTrigger.getDispatchTaskExecutorType())) {
-								dispatchTaskClusterMode = DispatchTaskClusterMode.SINGLE_NODE;
+								dispatchTaskClusterMode = DispatchTaskClusterMode.SINGLE_NODE_PERSISTED;
 							}
 							%>
 

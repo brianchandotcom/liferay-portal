@@ -207,6 +207,11 @@
 <!--ACTIVATION_KEY_DETAILS_MODAL -->
 
 <tr>
+	<td>ENVIRONMENT_DETAILS</td>
+	<td>//div[contains(@class, 'cp-input-generate-label')]//*[contains(@name, '${key_environmentDetails}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEY_DETAILS_MODAL</td>
 	<td>//div[contains(@class, 'modal-content') and contains(.,'Activation Key Details') and contains (.,'${key_environmentName}')]</td>
 	<td></td>

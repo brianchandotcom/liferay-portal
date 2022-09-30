@@ -141,11 +141,23 @@ public class NotPoshiElement extends PoshiElement {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\"");
-		sb.append(equalsPoshiElement.attributeValue("arg1"));
-		sb.append("\" != \"");
-		sb.append(equalsPoshiElement.attributeValue("arg2"));
-		sb.append("\"");
+		String arg1 = equalsPoshiElement.attributeValue("arg1");
+
+		if (isQuotedContent(arg1)) {
+			arg1 = "\"" + arg1 + "\"";
+		}
+
+		sb.append(arg1);
+
+		sb.append(" != ");
+
+		String arg2 = equalsPoshiElement.attributeValue("arg2");
+
+		if (isQuotedContent(arg2)) {
+			arg2 = "\"" + arg2 + "\"";
+		}
+
+		sb.append(arg2);
 
 		return sb.toString();
 	}
@@ -153,6 +165,7 @@ public class NotPoshiElement extends PoshiElement {
 	private static final String _ELEMENT_NAME = "not";
 
 	private static final Pattern _conditionPattern = Pattern.compile(
-		"^(![\\s\\S]*|\"[\\s\\S]*\"[\\s]*!=[\\s]*\"[\\s\\S]*\")$");
+		"^(![\\s\\S]*|(?:\\d+|(?:\\$\\{|\\\")[\\s\\S]*" +
+			"(?:\\}|\"))[\\s]*!=[\\s]*[\\s\\S]*(?:\\d+|(?:\\}|\")))$");
 
 }

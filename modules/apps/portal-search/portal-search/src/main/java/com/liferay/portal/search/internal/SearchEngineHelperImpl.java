@@ -96,13 +96,8 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public void removeCompany(long companyId) {
-		removeCompany(companyId, false);
-	}
-
-	@Override
-	public synchronized void removeCompany(long companyId, boolean force) {
-		if (!force && !_companyIds.containsKey(companyId)) {
+	public synchronized void removeCompany(long companyId) {
+		if (!_companyIds.containsKey(companyId)) {
 			return;
 		}
 

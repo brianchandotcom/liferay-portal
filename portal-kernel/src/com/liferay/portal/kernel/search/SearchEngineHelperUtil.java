@@ -69,10 +69,6 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.removeCompany(companyId);
 	}
 
-	public static void removeCompany(long companyId, boolean force) {
-		_searchEngineHelper.removeCompany(companyId, force);
-	}
-
 	public static SearchEngine removeSearchEngine(String searchEngineId) {
 		return _searchEngineHelper.removeSearchEngine(searchEngineId);
 	}

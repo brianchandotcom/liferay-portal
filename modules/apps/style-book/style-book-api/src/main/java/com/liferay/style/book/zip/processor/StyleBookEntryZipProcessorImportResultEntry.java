@@ -14,24 +14,28 @@
 
 package com.liferay.style.book.zip.processor;
 
+import com.liferay.style.book.model.StyleBookEntry;
+
 /**
  * @author Jürgen Kappler
  */
 public class StyleBookEntryZipProcessorImportResultEntry {
 
 	public StyleBookEntryZipProcessorImportResultEntry(
-		String name, Status status) {
-
-		_name = name;
-		_status = status;
-	}
-
-	public StyleBookEntryZipProcessorImportResultEntry(
 		String name, Status status, String errorMessage) {
 
 		_name = name;
-		_status = status;
 		_errorMessage = errorMessage;
+
+		_status = Status.INVALID;
+	}
+
+	public StyleBookEntryZipProcessorImportResultEntry(
+		String name, Status status, StyleBookEntry styleBookEntry) {
+
+		_name = name;
+		_status = status;
+		_styleBookEntry = styleBookEntry;
 	}
 
 	public String getErrorMessage() {
@@ -44,6 +48,10 @@ public class StyleBookEntryZipProcessorImportResultEntry {
 
 	public Status getStatus() {
 		return _status;
+	}
+
+	public StyleBookEntry getStyleBookEntry() {
+		return _styleBookEntry;
 	}
 
 	public enum Status {
@@ -66,5 +74,6 @@ public class StyleBookEntryZipProcessorImportResultEntry {
 	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
+	private StyleBookEntry _styleBookEntry;
 
 }

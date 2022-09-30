@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>KEY_COMPONENT_OPTION</td>
-	<td>//*[label[contains(.,'${key_label}')]]//*[@class='position-relative']/*[contains(@class, 'form-control')]</td>
+	<td>//*[@for='basicInput' and text()='${key_label}']/following-sibling::*//*[contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

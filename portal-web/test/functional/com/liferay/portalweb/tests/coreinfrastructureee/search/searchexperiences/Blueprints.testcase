@@ -2720,6 +2720,50 @@ definition {
 			value1 = "Test Blueprint");
 	}
 
+	@description = "This is a use case for LPS-162659."
+	test ViewBlueprintLocalizationWithinBlueprintsOptionsWidget {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(
+			description = "Description in English",
+			title = "Title in English");
+
+		Click(
+			ariaLabel = "Edit Title",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
+
+		Blueprints.setTitleAndDescriptionLocalization(
+			currentLocale = "en-US",
+			description = "Descripción en Español",
+			locale = "es-ES",
+			title = "Título en Español");
+
+		Button.clickDone();
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+
+		Search.openSearchPage(locale = "es-ES");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Opciones de planos",
+			portletOption = "Configuración");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		WaitForElementPresent.waitForLastScript();
+
+		Button.click(button = "Seleccionar");
+
+		AssertTextEquals(
+			blueprintTitle = "Título en Español",
+			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_TITLE",
+			value1 = "Descripción en Español");
+	}
+
 	test ViewBlueprintsAdminBulkDeletion {
 		Blueprints.openBlueprintsAdmin();
 

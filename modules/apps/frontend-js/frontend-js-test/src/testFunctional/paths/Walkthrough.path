@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STEP_ID</td>
+	<td>//div[not(contains(@class,'hide'))]//div[contains(@id,'${key_stepId}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POPOVER</td>
 	<td>//*[contains(@class,'popover') and contains(@class,'show')]</td>
 	<td></td>

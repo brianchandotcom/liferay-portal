@@ -45,6 +45,33 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Parent Title 2");
 	}
 
+	@description = "This test ensures that users can import content to a KB folder rom the navigation pane."
+	@priority = "5"
+	test CanImportArticleViaNavigationPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.importCP(
+			kbFolderName = "KB Folder",
+			kbZipFile = "KBArticlesWithMetadata.zip",
+			navigationPane = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Parent Title 1");
+
+		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Parent Title 2");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DeleteImportedArticles {
@@ -100,7 +127,9 @@ definition {
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
-			kbZipFile = "KBArticlesWithMetadata.zip");
+			kbFolderName = "Home",
+			kbZipFile = "KBArticlesWithMetadata.zip",
+			navigationPane = "true");
 
 		Navigator.openSitePage(
 			pageName = "Knowledge Base Display Page",

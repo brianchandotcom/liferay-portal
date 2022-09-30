@@ -75,6 +75,27 @@ definition {
 		KBFolder.deleteCP(kbFolderName = "KB Folder 1");
 	}
 
+	@description = "This test ensures that users can delete a KB folder from the navigation pane."
+	@priority = "5"
+	test CanDeleteFolderViaNavigationPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBFolder.deleteCP(
+			kbFolderName = "KB Folder",
+			menuItem = "Delete",
+			navigationPane = "true");
+
+		KBArticle.viewDefaultCP(featureFlag = "true");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanEditFolder {
@@ -93,6 +114,133 @@ definition {
 			kbFolderName = "KB Folder 1");
 
 		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1 Edited");
+	}
+
+	@description = "This test ensures that users can manage permissions for a KB folder from the navigation pane."
+	@priority = "5"
+	test CanEditFolderPermissionsViaNavigationPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.selectPGViaKBArticle(
+			kbArticleTitle = "KB Folder",
+			pageName = "Knowledge Base Article Page");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBFolder.gotoMenuItemViaNavigationPane(
+			kbFolderName = "KB Folder",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+	}
+
+	@description = "This test ensures that users can edit a KB folder from the navigation pane."
+	@priority = "5"
+	test CanEditFolderViaNavigationPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBFolder.editCP(
+			kbFolderDescription = "KB Folder Description Edited",
+			kbFolderEditedName = "KB Folder Edited",
+			kbFolderName = "KB Folder",
+			navigationPane = "true");
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder Edited");
+	}
+
+	@description = "This test ensures that users can manage permissions for the KB home folder from the navigation pane."
+	@priority = "5"
+	test CanEditHomeFolderPermissionsViaNavigationPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBFolder.gotoMenuItemViaNavigationPane(
+			kbFolderName = "Home",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsKeyList = "INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Site Member");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Home Folder Permissions");
+
+		IFrame.selectPermissionsFrame();
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "site member");
+	}
+
+	@description = "This test ensures that users can move a KB folder from the navigation pane."
+	@priority = "5"
+	test CanMoveFolderViaNavigationPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder 1");
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder 2");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBFolder.goToMoveCPViaNavigationPane(kbFolderName = "KB Folder 1");
+
+		KBFolder.selectParentCP(kbFolderName = "KB Folder 2");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
 	}
 
 	@priority = "3"

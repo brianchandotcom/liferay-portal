@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.entries.frontend.data.set.filter;
+package com.liferay.object.field.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;

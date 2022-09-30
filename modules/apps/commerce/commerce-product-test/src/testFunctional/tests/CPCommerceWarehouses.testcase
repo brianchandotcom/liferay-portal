@@ -28,10 +28,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "TestWH");
+		CommerceEntry.addNewWarehousesEntry(warehouseName = "TestWH");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Active",
@@ -715,10 +712,7 @@ definition {
 
 		Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
 
-		Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldName}");
+		CommerceEntry.addNewWarehousesEntry(warehouseName = "Test Warehouse");
 
 		Type(
 			key_fieldLabel = "Description",
@@ -1116,10 +1110,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "TestWH");
+		CommerceEntry.addNewWarehousesEntry(warehouseName = "TestWH");
 
 		Button.clickSave();
 

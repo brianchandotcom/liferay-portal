@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.avalara.connector.web.internal.display.context;
 
-import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
@@ -64,8 +63,7 @@ public class CommerceAvalaraDisplayContext {
 	}
 
 	public int getType() {
-		return ParamUtil.getInteger(
-			_renderRequest, "type", CommerceAvalaraConstants.TYPE_CREDENTIALS);
+		return ParamUtil.getInteger(_renderRequest, "type");
 	}
 
 	private final Language _language;

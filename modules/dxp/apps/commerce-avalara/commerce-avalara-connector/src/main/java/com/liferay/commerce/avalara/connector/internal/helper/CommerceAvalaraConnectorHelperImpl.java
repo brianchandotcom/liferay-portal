@@ -131,14 +131,8 @@ public class CommerceAvalaraConnectorHelperImpl
 			_upsertByAddressEntry(
 				commerceTaxMethod.getUserId(), groupId, cpTaxCategoryId,
 				commerceTaxMethod.getCommerceTaxMethodId(), country,
-				taxRatesByZipCodeLine
-					[CommerceAvalaraConstants.CSV_REGION_POSITION],
-				taxRatesByZipCodeLine
-					[CommerceAvalaraConstants.CSV_ZIP_CODE_POSITION],
-				Double.valueOf(
-					taxRatesByZipCodeLine
-						[CommerceAvalaraConstants.
-							CSV_TOTAL_SALES_TAX_POSITION]));
+				taxRatesByZipCodeLine[1], taxRatesByZipCodeLine[0],
+				Double.valueOf(taxRatesByZipCodeLine[10]));
 		}
 	}
 

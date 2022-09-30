@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorChannelConfiguration" %><%@
-page import="com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants" %><%@
 page import="com.liferay.commerce.avalara.tax.engine.fixed.web.internal.display.context.CommerceAvalaraTaxRateRelsDisplayContext" %><%@
 page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.dispatch.executor.DispatchTaskStatus" %><%@

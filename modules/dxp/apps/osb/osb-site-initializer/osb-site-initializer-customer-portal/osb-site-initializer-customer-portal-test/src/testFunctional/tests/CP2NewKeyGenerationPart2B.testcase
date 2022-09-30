@@ -96,8 +96,49 @@ definition {
     @description = "Automation ID: LPS-150804 | Test Summary: Verify if the Cluster Nodes field is required"
 	@priority = "4"
 	test VerifyClusterNodesField {
+        property portal.upstream = "quarantine";
 
-        // TODO LPS-150804 CP2NewKeyGenerationPart2B archive pending implementation
+		// Needs refactor since it depends on example FIFA account
+        
+        task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+        task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the user can go through the first flow") {
+			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+
+            CP2ActivationKeys.selectSubscription(position = "1");
+
+            Button.click(button = "Next");
+		}
+
+        task ("After filling in the Cluster Nodes field the button is then enabled") {
+            CP2ActivationKeys.environmentDetails(
+                environmentDetails = "name",
+                value = "Liferay Test");
+
+            AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_BUTTON_DISABLED");
+
+            CP2ActivationKeys.selectClusterNodes(key_option = "2");
+
+            AssertElementPresent(
+                locator1 = "CP2ActivationKeys#GENERATE_KEY_BUTTON_ENABLED",
+                key_number = "2");
+        }
         
     }
 

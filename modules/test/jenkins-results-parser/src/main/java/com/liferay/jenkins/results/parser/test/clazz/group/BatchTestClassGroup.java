@@ -60,59 +60,88 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public long getAverageDuration() {
+		if (_averageDuration != null) {
+			return _averageDuration;
+		}
+
 		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
 			batchName, getJob());
 
-		if (batchHistory == null) {
-			return 0L;
+		if (batchHistory != null) {
+			_averageDuration = batchHistory.getAverageDuration();
+		}
+		else {
+			_averageDuration = 0L;
 		}
 
-		return batchHistory.getAverageDuration();
+		return _averageDuration;
 	}
 
 	public long getAverageOverheadDuration() {
+		if (_averageOverheadDuration != null) {
+			return _averageOverheadDuration;
+		}
+
 		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
 			batchName, getJob());
 
-		if (batchHistory == null) {
-			return 0L;
+		if (batchHistory != null) {
+			_averageOverheadDuration =
+				batchHistory.getAverageOverheadDuration();
+		}
+		else {
+			_averageOverheadDuration = 0L;
 		}
 
-		return batchHistory.getAverageOverheadDuration();
+		return _averageOverheadDuration;
 	}
 
 	public long getAverageTestDuration(String testName) {
+		if (_averageTestDurations.containsKey(testName)) {
+			return _averageTestDurations.get(testName);
+		}
+
+		long averageTestDuration = _getDefaultTestDuration();
+
 		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
 			batchName, getJob());
 
-		if (batchHistory == null) {
-			return _getDefaultTestDuration();
+		if (batchHistory != null) {
+			TestHistory testHistory = batchHistory.getTestHistory(testName);
+
+			if (testHistory != null) {
+				averageTestDuration = testHistory.getAverageDuration();
+			}
 		}
 
-		TestHistory testHistory = batchHistory.getTestHistory(testName);
+		_averageTestDurations.put(testName, averageTestDuration);
 
-		if (testHistory == null) {
-			return _getDefaultTestDuration();
-		}
-
-		return testHistory.getAverageDuration();
+		return averageTestDuration;
 	}
 
 	public long getAverageTestOverheadDuration(String testName) {
+		if (_averageTestOverheadDurations.containsKey(testName)) {
+			return _averageTestOverheadDurations.get(testName);
+		}
+
+		long averageTestOverheadDuration = _getDefaultTestDuration();
+
 		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
 			batchName, getJob());
 
-		if (batchHistory == null) {
-			return _getDefaultTestDuration();
+		if (batchHistory != null) {
+			TestHistory testHistory = batchHistory.getTestHistory(testName);
+
+			if (testHistory != null) {
+				averageTestOverheadDuration =
+					testHistory.getAverageOverheadDuration();
+			}
 		}
 
-		TestHistory testHistory = batchHistory.getTestHistory(testName);
+		_averageTestOverheadDurations.put(
+			testName, averageTestOverheadDuration);
 
-		if (testHistory == null) {
-			return _getDefaultTestDuration();
-		}
-
-		return testHistory.getAverageOverheadDuration();
+		return averageTestOverheadDuration;
 	}
 
 	public int getAxisCount() {
@@ -1120,6 +1149,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"(?<jobBaseName>.*)(?<jobVariant>\\([^\\)]+\\))");
 
+	private Long _averageDuration;
+	private Long _averageOverheadDuration;
+	private final Map<String, Long> _averageTestDurations = new HashMap<>();
+	private final Map<String, Long> _averageTestOverheadDurations =
+		new HashMap<>();
 	private final List<JobProperty> _jobProperties = new ArrayList<>();
 	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
 		new ArrayList<>();

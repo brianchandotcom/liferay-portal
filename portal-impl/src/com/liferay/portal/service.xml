@@ -209,8 +209,8 @@
 		<column name="firstName" type="String" />
 		<column name="middleName" type="String" />
 		<column name="lastName" type="String" />
-		<column name="prefixId" type="long" />
-		<column name="suffixId" type="long" />
+		<column name="prefixListTypeId" type="long" />
+		<column name="suffixListTypeId" type="long" />
 		<column name="male" type="boolean" />
 		<column name="birthday" type="Date" />
 		<column name="smsSn" type="String" />

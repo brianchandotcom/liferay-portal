@@ -28,6 +28,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -191,14 +192,16 @@ public class OneToManyObjectFieldFilterStrategy
 		}
 		else {
 			for (int i = 0; i < jsonArray.length(); i++) {
-				try {
-					_objectEntryLocalService.getObjectEntryByERC_ODI(
-						(String)jsonArray.get(i),
-						_objectDefinition1.getObjectDefinitionId());
-				}
-				catch (PortalException portalException) {
+				if (Validator.isNull(
+						_objectEntryLocalService.getObjectEntryByERC_ODI(
+							(String)jsonArray.get(i),
+							_objectDefinition1.getObjectDefinitionId()))) {
+
 					throw new ObjectViewFilterColumnException(
-						portalException.getMessage());
+						StringBundler.concat(
+							"No ", _objectDefinition1.getShortName(),
+							" exists with the External Reference Code ",
+							(String)jsonArray.get(i)));
 				}
 			}
 		}

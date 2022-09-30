@@ -221,7 +221,7 @@ public class ObjectViewLocalServiceTest {
 				"feature.flag.LPS-152650", "true"
 			).build());
 
-		_objectViewFilterColumnRelationship();
+		_objectViewRelationshipFilterColumn();
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
@@ -623,7 +623,7 @@ public class ObjectViewLocalServiceTest {
 		}
 	}
 
-	private void _objectViewFilterColumnRelationship() throws Exception {
+	private void _objectViewRelationshipFilterColumn() throws Exception {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				_objectDefinitionLocalService,
@@ -660,56 +660,8 @@ public class ObjectViewLocalServiceTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"ExternalReferenceCode: ", randomERC,
-					" does not belong for an entry of ObjectDefinition1: ",
-					objectDefinition1.getName()),
-				objectViewFilterColumnException.getMessage());
-		}
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, "name")));
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition2.getObjectDefinitionId());
-
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"golf", "Golf"
-			).put(
-				"name", "Echo"
-			).build());
-
-		try {
-			_objectViewLocalService.addObjectView(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Arrays.asList(_createObjectViewColumn("Hotel", "hotel")),
-				Arrays.asList(
-					_createObjectViewFilterColumn(
-						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
-						StringBundler.concat(
-							"{\"includes\": [\"",
-							objectEntry2.getExternalReferenceCode(), "\"]}"),
-						objectField.getName())),
-				Collections.emptyList());
-		}
-		catch (ObjectViewFilterColumnException
-					objectViewFilterColumnException) {
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"ExternalReferenceCode: ",
-					objectEntry2.getExternalReferenceCode(),
-					" does not belong for an entry of ObjectDefinition1: ",
-					objectDefinition1.getName()),
+					"No ", objectDefinition1.getShortName(),
+					" exists with the External Reference Code ", randomERC),
 				objectViewFilterColumnException.getMessage());
 		}
 
@@ -740,8 +692,6 @@ public class ObjectViewLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship.getObjectRelationshipId());
 
-		long[] userIds = _addUsers(3);
-
 		ObjectDefinition systemObjectDefinition = null;
 
 		for (ObjectDefinition objectDefinition :
@@ -763,11 +713,37 @@ public class ObjectViewLocalServiceTest {
 		objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
+		long randomId = RandomTestUtil.randomLong();
+
+		try {
+			_objectViewLocalService.addObjectView(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Arrays.asList(_createObjectViewColumn("India", "india")),
+				Arrays.asList(
+					_createObjectViewFilterColumn(
+						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
+						StringBundler.concat(
+							"{\"includes\": [\"", randomId, "\"]}"),
+						objectField.getName())),
+				Collections.emptyList());
+		}
+		catch (ObjectViewFilterColumnException
+					objectViewFilterColumnException) {
+
+			Assert.assertEquals(
+				"No User exists with the primary key " + randomId,
+				objectViewFilterColumnException.getMessage());
+		}
+
+		long[] userIds = _addUsers(3);
+
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Arrays.asList(_createObjectViewColumn("India", "india")),
+			Arrays.asList(_createObjectViewColumn("York", "york")),
 			Arrays.asList(
 				_createObjectViewFilterColumn(
 					ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
@@ -778,6 +754,8 @@ public class ObjectViewLocalServiceTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship.getObjectRelationshipId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 	}
 
 	@Inject

@@ -279,7 +279,7 @@ definition {
 
 		Button.click(button = "Publish");
 
-		Alert.viewRequiredField();
+		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
 	macro addCPWithTextFieldCustomField {

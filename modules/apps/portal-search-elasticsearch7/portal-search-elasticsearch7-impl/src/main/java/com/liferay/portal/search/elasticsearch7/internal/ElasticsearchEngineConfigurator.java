@@ -58,11 +58,6 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	@Override
-	protected String getDefaultSearchEngineId() {
-		return SearchEngineHelper.SYSTEM_ENGINE_ID;
-	}
-
-	@Override
 	protected DestinationFactory getDestinationFactory() {
 		return _destinationFactory;
 	}

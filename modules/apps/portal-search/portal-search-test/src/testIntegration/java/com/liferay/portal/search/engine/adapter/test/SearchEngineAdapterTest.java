@@ -214,7 +214,7 @@ public class SearchEngineAdapterTest {
 
 	protected boolean isSearchEngine(String engine) {
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			_searchEngineHelper.getDefaultSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		String vendor = searchEngine.getVendor();
 

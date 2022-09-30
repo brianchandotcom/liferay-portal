@@ -185,7 +185,7 @@ public class SearchContext implements Serializable {
 
 	public String getSearchEngineId() {
 		if (Validator.isNull(_searchEngineId)) {
-			return SearchEngineHelperUtil.getDefaultSearchEngineId();
+			return SearchEngineHelper.SYSTEM_ENGINE_ID;
 		}
 
 		return _searchEngineId;

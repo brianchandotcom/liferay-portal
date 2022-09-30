@@ -54,15 +54,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public String getDefaultSearchEngineId() {
-		if (_defaultSearchEngineId == null) {
-			return SYSTEM_ENGINE_ID;
-		}
-
-		return _defaultSearchEngineId;
-	}
-
-	@Override
 	public String[] getEntryClassNames() {
 		Set<String> assetEntryClassNames = new HashSet<>();
 
@@ -92,7 +83,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 			return getSearchEngineId(document);
 		}
 
-		return getDefaultSearchEngineId();
+		return SYSTEM_ENGINE_ID;
 	}
 
 	@Override
@@ -165,11 +156,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public void setDefaultSearchEngineId(String defaultSearchEngineId) {
-		_defaultSearchEngineId = defaultSearchEngineId;
-	}
-
-	@Override
 	public void setSearchEngine(
 		String searchEngineId, SearchEngine searchEngine) {
 
@@ -200,7 +186,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		SearchEngineHelperImpl.class);
 
 	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
-	private String _defaultSearchEngineId;
 	private final Set<String> _excludedEntryClassNames = new HashSet<>();
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();

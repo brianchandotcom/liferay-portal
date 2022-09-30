@@ -28,10 +28,6 @@ import java.util.Set;
  */
 public class SearchEngineHelperUtil {
 
-	public static String getDefaultSearchEngineId() {
-		return _searchEngineHelper.getDefaultSearchEngineId();
-	}
-
 	public static String[] getEntryClassNames() {
 		return _searchEngineHelper.getEntryClassNames();
 	}
@@ -88,10 +84,6 @@ public class SearchEngineHelperUtil {
 
 	public static SearchEngine removeSearchEngine(String searchEngineId) {
 		return _searchEngineHelper.removeSearchEngine(searchEngineId);
-	}
-
-	public static void setDefaultSearchEngineId(String defaultSearchEngineId) {
-		_searchEngineHelper.setDefaultSearchEngineId(defaultSearchEngineId);
 	}
 
 	public static void setSearchEngine(

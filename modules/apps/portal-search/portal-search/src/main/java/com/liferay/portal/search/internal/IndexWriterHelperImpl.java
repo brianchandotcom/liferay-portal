@@ -259,11 +259,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			String keywordType, Locale locale)
 		throws SearchException {
 
-		String searchEngineId = _searchEngineHelper.getDefaultSearchEngineId();
-
 		indexKeyword(
-			searchEngineId, companyId, querySuggestion, weight, keywordType,
-			locale);
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, querySuggestion,
+			weight, keywordType, locale);
 	}
 
 	@Override
@@ -320,9 +318,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexQuerySuggestionDictionary(long companyId, Locale locale)
 		throws SearchException {
 
-		String searchEngineId = _searchEngineHelper.getDefaultSearchEngineId();
-
-		indexQuerySuggestionDictionary(searchEngineId, companyId, locale);
+		indexQuerySuggestionDictionary(
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, locale);
 	}
 
 	@Override
@@ -348,9 +345,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexSpellCheckerDictionaries(long companyId)
 		throws SearchException {
 
-		String searchEngineId = _searchEngineHelper.getDefaultSearchEngineId();
-
-		indexSpellCheckerDictionaries(searchEngineId, companyId);
+		indexSpellCheckerDictionaries(
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId);
 	}
 
 	@Override
@@ -375,9 +371,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexSpellCheckerDictionary(long companyId, Locale locale)
 		throws SearchException {
 
-		String searchEngineId = _searchEngineHelper.getDefaultSearchEngineId();
-
-		indexSpellCheckerDictionary(searchEngineId, companyId, locale);
+		indexSpellCheckerDictionary(
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, locale);
 	}
 
 	@Override

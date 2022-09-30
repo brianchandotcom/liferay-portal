@@ -276,7 +276,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		if (_searchEngineId == null) {
-			_searchEngineId = SearchEngineHelperUtil.getDefaultSearchEngineId();
+			_searchEngineId = SearchEngineHelper.SYSTEM_ENGINE_ID;
 		}
 
 		if (_log.isDebugEnabled()) {

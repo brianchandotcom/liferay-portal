@@ -26,8 +26,6 @@ public interface SearchEngineHelper {
 
 	public Collection<Long> getCompanyIds();
 
-	public String getDefaultSearchEngineId();
-
 	public String[] getEntryClassNames();
 
 	public SearchEngine getSearchEngine(String searchEngineId);
@@ -49,8 +47,6 @@ public interface SearchEngineHelper {
 	public void removeCompany(long companyId, boolean checkInitialized);
 
 	public SearchEngine removeSearchEngine(String searchEngineId);
-
-	public void setDefaultSearchEngineId(String defaultSearchEngineId);
 
 	public void setSearchEngine(
 		String searchEngineId, SearchEngine searchEngine);

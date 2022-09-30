@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -270,7 +271,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 		protected boolean isSearchSpecificFieldsImplementedForSearchEngine() {
 			SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine(
-				SearchEngineHelperUtil.getDefaultSearchEngineId());
+				SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 			String vendor = searchEngine.getVendor();
 

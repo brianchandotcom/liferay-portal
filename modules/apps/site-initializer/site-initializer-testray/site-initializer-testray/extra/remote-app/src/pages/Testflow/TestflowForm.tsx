@@ -27,6 +27,7 @@ import useFormActions from '../../hooks/useFormActions';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import yupSchema, {yupResolver} from '../../schema/yup';
+import {Liferay} from '../../services/liferay';
 import {
 	TestrayBuild,
 	TestrayCaseType,
@@ -99,20 +100,22 @@ const TestflowForm = () => {
 		if (!form.caseTypes?.length) {
 			hasError = true;
 
-			onError({
+			Liferay.Util.openToast({
 				message: i18n.translate(
 					'mark-at-least-one-case-type-for-processing'
 				),
+				type: 'danger',
 			});
 		}
 
 		if (!form.users?.length) {
 			hasError = true;
 
-			onError({
+			Liferay.Util.openToast({
 				message: i18n.translate(
 					'mark-at-last-one-user-or-user-group-for-assignment'
 				),
+				type: 'danger',
 			});
 		}
 

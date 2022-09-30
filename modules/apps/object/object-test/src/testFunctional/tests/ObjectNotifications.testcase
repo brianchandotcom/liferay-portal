@@ -146,7 +146,7 @@ definition {
 			}
 		}
 
-		task ("Search for Template by name") {
+		task ("Search for Liferay") {
 			Refresh();
 
 			Type(
@@ -158,7 +158,7 @@ definition {
 				value1 = "\RETURN");
 		}
 
-		task ("Assert that Notification Template is present") {
+		task ("Assert only Notification Liferay is present") {
 			AssertElementPresent(
 				key_name = "Notification Liferay",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");

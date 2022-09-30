@@ -94,22 +94,4 @@ definition {
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 	}
 
-	macro viewNotificationTemplate {
-		AssertElementPresent(
-			key_name = "${notificationTemplateName}",
-			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-	}
-
-	macro viewNotificationTemplateNotPresent {
-		AssertElementNotPresent(
-			key_name = "${notificationTemplateName}",
-			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-	}
-
-	macro viewQueueNotificationBySubject {
-		AssertElementPresent(
-			key_validationInfo = "${entryName}",
-			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
-	}
-
 }

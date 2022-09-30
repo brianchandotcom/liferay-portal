@@ -44,7 +44,9 @@ definition {
 		task ("Assert that Notification Template is present") {
 			Refresh();
 
-			ObjectNotifications.viewNotificationTemplate(notificationTemplateName = "Notification Template");
+			AssertElementPresent(
+				key_name = "Notification Template",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
 
@@ -81,7 +83,9 @@ definition {
 		task ("Assert that Notification Template is not present") {
 			Refresh();
 
-			ObjectNotifications.viewNotificationTemplateNotPresent(notificationTemplateName = "Notification Template");
+			AssertElementNotPresent(
+				key_name = "Notification Template",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
 
@@ -116,7 +120,9 @@ definition {
 		task ("Assert that the Notification Template edited is present") {
 			Refresh();
 
-			ObjectNotifications.viewNotificationTemplate(notificationTemplateName = "Notification Template Edited");
+			AssertElementPresent(
+				key_name = "Notification Template Edited",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
 
@@ -187,7 +193,9 @@ definition {
 				panel = "Control Panel",
 				portlet = "Queue");
 
-			ObjectNotifications.viewQueueNotificationBySubject(entryName = "Subject");
+			AssertElementPresent(
+				key_validationInfo = "Subject",
+				locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
 		}
 	}
 

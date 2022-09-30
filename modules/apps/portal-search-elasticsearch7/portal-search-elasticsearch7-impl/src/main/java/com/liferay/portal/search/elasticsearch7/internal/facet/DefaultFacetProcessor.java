@@ -56,14 +56,7 @@ public class DefaultFacetProcessor
 			termsAggregationBuilder.minDocCount(minDocCount);
 		}
 
-		String order = facetConfiguration.getOrder();
-
-		if (order.equals("count:asc")) {
-			termsAggregationBuilder.order(BucketOrder.count(true));
-		}
-		else if (order.equals("count:desc")) {
-			termsAggregationBuilder.order(BucketOrder.count(false));
-		}
+		termsAggregationBuilder.order(BucketOrder.count(false));
 
 		int size = dataJSONObject.getInt("maxTerms");
 

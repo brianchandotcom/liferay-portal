@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -1102,7 +1103,21 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
 
-		objectEntry = objectEntryPersistence.update(objectEntry);
+		if (GetterUtil.getBoolean(
+				serviceContext.getAttribute("skipModelListener"))) {
+
+			while (objectEntry instanceof ModelWrapper) {
+				ModelWrapper<ObjectEntry> modelWrapper =
+					(ModelWrapper<ObjectEntry>)objectEntry;
+
+				objectEntry = modelWrapper.getWrappedModel();
+			}
+
+			objectEntry = objectEntryPersistence.updateImpl(objectEntry);
+		}
+		else {
+			objectEntry = objectEntryPersistence.update(objectEntry);
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(
@@ -2487,6 +2502,12 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		serviceContext.setAttribute(
+			"workflowContext",
+			HashMapBuilder.put(
+				"skipModelListener", true
+			).build());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,

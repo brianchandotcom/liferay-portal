@@ -103,6 +103,9 @@ public class ObjectEntryWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
+		serviceContext.setAttribute(
+			"skipModelListener", workflowContext.get("skipModelListener"));
+
 		return _objectEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext);
 	}

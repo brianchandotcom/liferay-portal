@@ -215,7 +215,7 @@ public class QuestionsPortlet extends MVCPortlet {
 			return mbModerationGroupConfiguration.minimumContributedMessages();
 		}
 		catch (Exception exception) {
-			return -1;
+			return 0;
 		}
 	}
 

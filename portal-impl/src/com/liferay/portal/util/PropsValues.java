@@ -1526,9 +1526,10 @@ public class PropsValues {
 	public static final int NOTIFICATIONS_MAX_EVENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.NOTIFICATIONS_MAX_EVENTS));
 
-	public static final int OBJECT_DEFINITION_SCRIPT_SYNTAX_VERSION =
+	public static final int OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION =
 		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.OBJECT_DEFINITION_SCRIPT_SYNTAX_VERSION));
+			PropsUtil.get(
+				PropsKeys.OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION));
 
 	public static final int OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH =
 		GetterUtil.getInteger(

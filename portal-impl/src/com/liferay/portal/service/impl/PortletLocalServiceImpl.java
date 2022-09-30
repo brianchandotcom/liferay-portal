@@ -1286,7 +1286,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				xml = StringUtil.read(clazz.getClassLoader(), filePath);
 			}
 			catch (IOException ioException) {
-				_log.error("Unable to read the content for " + filePath);
+				_log.error(
+					"Unable to read the content for " + filePath, ioException);
 			}
 		}
 

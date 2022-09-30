@@ -110,9 +110,6 @@ public class FolderFacetPortlet extends MVCPortlet {
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
 			new FolderSearcher(), portal.getHttpServletRequest(renderRequest));
 
-		FolderFacetConfiguration folderFacetConfiguration =
-			new FolderFacetConfigurationImpl(facet.getFacetConfiguration());
-
 		FolderFacetPortletPreferences folderFacetPortletPreferences =
 			new FolderFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
@@ -128,11 +125,11 @@ public class FolderFacetPortlet extends MVCPortlet {
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			folderFacetPortletPreferences.isFrequenciesVisible());
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			folderFacetConfiguration.getFrequencyThreshold());
+			folderFacetPortletPreferences.getFrequencyThreshold());
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(
-			folderFacetConfiguration.getMaxTerms());
+			folderFacetPortletPreferences.getMaxTerms());
 		folderSearchFacetDisplayContextBuilder.setOrder(
-			folderFacetConfiguration.getOrder());
+			folderFacetPortletPreferences.getOrder());
 		folderSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

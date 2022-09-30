@@ -43,7 +43,7 @@ definition {
 		JSONOrganization.deleteOrganizationByName(organizationName = "Parent Organization Name");
 	}
 
-	@description = "This is a test for LPS-130281."
+	@description = "Test Automation for LPS-130281: Validate if it's posible to create a segment based on Organization > Country criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationCountry {
@@ -99,7 +99,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130275."
+	@description = "Test Automation for LPS-130275: Validate if it's posible to create a segment based on Organization > Date modified criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationDateModified {
@@ -151,7 +151,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130276."
+	@description = "Test Automation for LPS-130276: Validate if it's posible to create a segment based on Organization > Hierarchy path criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationHierarchyPath {
@@ -203,7 +203,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130277."
+	@description = "Test Automation for LPS-130277: Validate if it's posible to create a segment based on Organization > Name criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationName {
@@ -255,7 +255,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130278."
+	@description = "Test Automation for LPS-130278: Validate if it's posible to create a segment based on Organization > Organization criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationOrganization {
@@ -309,7 +309,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130279."
+	@description = "Test Automation for LPS-130279: Validate if it's posible to create a segment based on Organization > Parent Organization criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationParentOrganization {
@@ -368,7 +368,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130282."
+	@description = "Test Automation for LPS-130282: Validate if it's posible to create a segment based on Organization > Region criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationRegion {
@@ -425,7 +425,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130283."
+	@description = "Test Automation for LPS-130283: Validate if it's posible to create a segment based on Organization > Tag criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationTag {
@@ -494,7 +494,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130280."
+	@description = "Test Automation for LPS-130280: Validate if it's posible to create a segment based on Organization > Type criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOrganizationType {
@@ -546,7 +546,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130345."
+	@description = "Test Automation for LPS-130345: Segment member preview count shows the correct number of users when segments are combined"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOtherSegments {
@@ -609,7 +609,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130346."
+	@description = "Test Automation for LPS-130346: Segments based on segments are not available to create new segments"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOtherSegmentsUnableToAddNewSegments {
@@ -636,7 +636,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130347."
+	@description = "Test Automation for LPS-130347: Segments editor displays a warning if an entity name is not found"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOtherSegmentsWarning {
@@ -705,7 +705,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130313."
+	@description = "Test Automation for LPS-130313: Validate if it's posible to create a segment based on Session > Browser criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionBrowser {
@@ -734,7 +734,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130314."
+	@description = "Test Automation for LPS-130314: Validate if it's posible to create a segment based on Session > Cookies criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionCookies {
@@ -767,7 +767,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130315."
+	@description = "Test Automation for LPS-130315: Validate if it's posible to create a segment based on Session > Device brand criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionDeviceBrand {
@@ -796,7 +796,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130316."
+	@description = "Test Automation for LPS-130316: Validate if it's posible to create a segment based on Session > Device model criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionDeviceModel {
@@ -825,7 +825,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130317."
+	@description = "Test Automation for LPS-130317: Validate if it's posible to create a segment based on Session > Device screen resolution height criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionDeviceScreenResolutionHeight {
@@ -856,7 +856,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130318."
+	@description = "Test Automation for LPS-130318: Validate if it's posible to create a segment based on Session > Device screen resolution width criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionDeviceScreenResolutionWidth {
@@ -887,7 +887,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130319."
+	@description = "Test Automation for LPS-130319: Validate if it's posible to create a segment based on Session > Hostname criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionHostname {
@@ -945,7 +945,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130351."
+	@description = "Test Automation for LPS-130351: Validate if it's posible to create a segment based on Session > Languagecriteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionLanguage {
@@ -979,7 +979,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130320."
+	@description = "Test Automation for LPS-130320: Validate if it's posible to create a segment based on Session > Last sign in date criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionLastSignInDate {
@@ -1010,7 +1010,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130321."
+	@description = "Test Automation for LPS-130321: Validate if it's posible to create a segment based on Session > Local date criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionLocalDate {
@@ -1041,7 +1041,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130322."
+	@description = "Test Automation for LPS-130322: Validate if it's posible to create a segment based on Session > Referrer URL criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionReferrerURL {
@@ -1070,7 +1070,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130323."
+	@description = "Test Automation for LPS-130323: Validate if it's posible to create a segment based on Session > Request Parameters criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionRequestParameters {
@@ -1103,7 +1103,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130324."
+	@description = "Test Automation for LPS-130324: Validate if it's posible to create a segment based on Session > Signed In criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionSignedIn {
@@ -1137,7 +1137,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130325."
+	@description = "Test Automation for LPS-130325: Validate if it's posible to create a segment based on Session > URL criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionURL {
@@ -1166,7 +1166,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130326."
+	@description = "Test Automation for LPS-130326: Validate if it's posible to create a segment based on Session > User Agent criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentBySessionUserAgent {
@@ -1199,7 +1199,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130284."
+	@description = "Test Automation for LPS-130284: Validate if it's posible to create a segment based on User > Date modified criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserDateModified {
@@ -1241,7 +1241,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130285."
+	@description = "Test Automation for LPS-130285: Validate if it's posible to create a segment based on User > Date of birth criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserDateOfBirth {
@@ -1285,7 +1285,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130291."
+	@description = "Test Automation for LPS-130291: Validate if it's posible to create a segment based on User > Email Adress criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserEmailAddress {
@@ -1398,7 +1398,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130286."
+	@description = "Test Automation for LPS-130286: Validate if it's posible to create a segment based on User > First Name criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserFirstName {
@@ -1440,7 +1440,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130287."
+	@description = "Test Automation for LPS-130287: Validate if it's posible to create a segment based on User > Job Title criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserJobTitle {
@@ -1483,7 +1483,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130288."
+	@description = "Test Automation for LPS-130288: Validate if it's posible to create a segment based on User > Last Name criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserLastName {
@@ -1525,7 +1525,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130292."
+	@description = "Test Automation for LPS-130292: Validate if it's posible to create a segment based on User > Name criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserName {
@@ -1567,7 +1567,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130289."
+	@description = "Test Automation for LPS-130289: Validate if it's posible to create a segment based on User > Role criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserRole {
@@ -1616,7 +1616,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130290."
+	@description = "Test Automation for LPS-130290: Validate if it's posible to create a segment based on User > Screen Name criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserScreenName {
@@ -1658,7 +1658,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132107."
+	@description = "Test Automation for LPS-132107: Validate if it's posible to create a segment based on User > Site criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserSite {
@@ -1705,7 +1705,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132108."
+	@description = "Test Automation for LPS-132108: Validate if it's posible to create a segment based on User > Site and Organization Role criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserSiteOrganizationRole {
@@ -1764,7 +1764,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132109."
+	@description = "Test Automation for LPS-132109: Validate if it's posible to create a segment based on User > Tag criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserTag {
@@ -1804,7 +1804,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132110."
+	@description = "Test Automation for LPS-132110: Validate if it's posible to create a segment based on User > Team criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserTeam {
@@ -1863,7 +1863,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132111."
+	@description = "Test Automation for LPS-132111: Validate if it's posible to create a segment based on User > User criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserUser {
@@ -1902,7 +1902,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-132112."
+	@description = "Test Automation for LPS-132112: Validate if it's posible to create a segment based on User > User Group criteria"
 	@priority = "5"
 	@uitest
 	test AddSegmentByUserUserGroup {
@@ -2303,7 +2303,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-134561."
+	@description = "LPS-134561 Bug: Apostrophe in segment property value breaks filter"
 	@priority = "4"
 	@uitest
 	test CheckSegmentationWithApostropheValueFilter {
@@ -2684,7 +2684,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the members are assigned correctly depending on the criteria selected"
+	@description = "LPS-87031: Validate if the members are assigned correctly depending on the criteria selected"
 	@priority = "5"
 	@uitest
 	test SegmentationCheckMembers {
@@ -2778,7 +2778,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-131815"
+	@description = "This is a use case for LPS-131815: Validate if the segment created with special characters, segment the users"
 	@priority = "5"
 	@uitest
 	test SegmentationCheckSpecialCharacters {
@@ -3189,7 +3189,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-103516."
+	@description = "This is a use case for LPS-103516 Bug: Session fields are not displayed in segments editor"
 	@priority = "3"
 	@uitest
 	test ViewSegmentFieldsType {

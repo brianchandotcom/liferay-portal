@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Eudaldo Alonso
@@ -163,7 +164,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 	}
 
 	private boolean _isUseLayoutCrawler(Layout layout) {
-		if (layout.isPrivateLayout()) {
+		if ((_layoutCrawler == null) || layout.isPrivateLayout()) {
 			return false;
 		}
 
@@ -200,7 +201,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 	@Reference
 	private Html _html;
 
-	@Reference
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
 	private LayoutCrawler _layoutCrawler;
 
 	@Reference

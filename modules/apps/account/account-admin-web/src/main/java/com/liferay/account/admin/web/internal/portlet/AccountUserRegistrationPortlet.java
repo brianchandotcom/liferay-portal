@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/account_user_registration/create_account_user.jsp",
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_REGISTRATION,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user"
+		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

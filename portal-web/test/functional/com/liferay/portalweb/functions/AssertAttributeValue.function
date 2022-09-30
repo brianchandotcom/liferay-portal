@@ -25,4 +25,16 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function assertAttributeNotPresent {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.assertAttributeNotPresent("${attribute1}", "${locator1}", "${value1}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

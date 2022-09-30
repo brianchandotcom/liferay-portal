@@ -442,6 +442,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTOCOMPLETE_SELECT_INPUT</td>
+	<td>//div[text()='${key_criteriaName}']/..//div[contains(@class,'input-root')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_MEMBERSHIP_LEGEND</td>
 	<td>//span[contains(@class,'recharts-legend-item-text')]//span[text()='${key_memberType}']//b</td>
 	<td></td>

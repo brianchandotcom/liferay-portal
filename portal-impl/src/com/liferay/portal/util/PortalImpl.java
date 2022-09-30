@@ -8323,6 +8323,15 @@ public class PortalImpl implements Portal {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
 				alternateURL = canonicalURLPrefix + alternateURLSuffix;
 
+				if (siteDefaultLocale.equals(locale)) {
+					String i18nPath = _buildI18NPath(
+						siteDefaultLocale, layout.getGroup());
+
+					alternateURL =
+						canonicalURLPrefix + i18nPath +
+							alternateURLSuffix;
+				}
+
 				alternateURLs.put(locale, alternateURL);
 			}
 			else if (siteDefaultLocale.equals(locale)) {

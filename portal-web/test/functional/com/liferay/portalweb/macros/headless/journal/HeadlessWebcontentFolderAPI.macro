@@ -340,6 +340,14 @@ definition {
 			userPassword = "${userPassword}",
 			viewableBy = "${viewableBy}");
 
+		if (isSet(setUpGlobalFolderId)) {
+			var folderId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+			static var staticStructuredContentFolderId = "${folderId}";
+
+			return "${staticStructuredContentFolderId}";
+		}
+
 		return "${response}";
 	}
 

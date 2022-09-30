@@ -50,7 +50,6 @@ definition {
 	@priority = "4"
 	test AllFiltersCanBeRemoved {
 		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FDSFilters#AllFiltersCanBeRemoved";
 
 		task ("When there is a filter already established") {
 			AssertElementPresent(
@@ -78,9 +77,6 @@ definition {
 	@description = "LPS-155305. Assert results can be correctly filtered when selecting available filters."
 	@priority = "5"
 	test AvailableFiltersCanBeApplied {
-		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FDSFilters#AvailableFiltersCanBeApplied";
-
 		task ("When click on the filter button") {
 			FDSFilters.openFilters();
 		}
@@ -107,9 +103,6 @@ definition {
 	@description = "LPS-155313. Assert results can be correctly filtered when exclude is enabled."
 	@priority = "5"
 	test ExcludeCanBeEnabled {
-		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FDSFilters#ExcludeCanBeEnabled";
-
 		task ("When click on the filter button") {
 			FDSFilters.openFilters();
 		}
@@ -138,9 +131,6 @@ definition {
 	@description = "LPS-155306. Assert results can be correctly filtered by editing the filter summary boxes."
 	@priority = "5"
 	test FilterCanBeEdited {
-		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FDSFilters#FilterCanBeEdited";
-
 		task ("When there is a filter already established") {
 			AssertElementPresent(
 				key_filter = "Color: Blue, Green, Yellow",
@@ -189,8 +179,6 @@ definition {
 	@description = "LPS-155310. Assert results can be correctly filtered when searching for a filter."
 	@priority = "5"
 	test FilterCanBeSearched {
-		property test.name.skip.portal.instance = "FDSFilters#FilterCanBeSearched";
-
 		task ("When click on the filter button") {
 			FDSFilters.openFilters();
 		}
@@ -221,8 +209,6 @@ definition {
 	@description = "LPS-155311. Assert the filter cannot be filtered by searching."
 	@priority = "3"
 	test FilterNotFound {
-		property test.name.skip.portal.instance = "FDSFilters#FilterNotFound";
-
 		task ("When clicking on the filter button") {
 			FDSFilters.openFilters();
 		}
@@ -245,8 +231,6 @@ definition {
 	@description = "LPS-155303. Assert management bar will render."
 	@priority = "3"
 	test ManagementBarWillRender {
-		property test.name.skip.portal.instance = "FDSFilters#ManagementBarWillRender";
-
 		task ("Then the Management Bar will be displayed correctly") {
 			AssertElementPresent(locator1 = "FrontendDataSet#MANAGEMENT_BAR");
 
@@ -257,8 +241,6 @@ definition {
 	@description = "LPS-155308. Assert one filter can be removed."
 	@priority = "4"
 	test OneFilterCanBeRemoved {
-		property test.name.skip.portal.instance = "FDSFilters#OneFilterCanBeRemoved";
-
 		task ("When there are several filters already established") {
 			FDSFilters.openFilters();
 
@@ -303,8 +285,6 @@ definition {
 	@description = "LPS-155312. Assert results can be correctly filtered when using the status filter."
 	@priority = "5"
 	test StatusFilterCanBeAdded {
-		property test.name.skip.portal.instance = "FDSFilters#StatusFilterCanBeAdded";
-
 		task ("When click on the filter button") {
 			FDSFilters.openFilters();
 		}
@@ -331,8 +311,6 @@ definition {
 	@description = "LPS-155304. Assert filter is preloaded when entering on a FDS page for first time."
 	@priority = "5"
 	test WillRenderAsInitialState {
-		property test.name.skip.portal.instance = "FDSFilters#WillRenderAsInitialState";
-
 		task ("And When viewing FDS Sample portlet dataset") {
 			Click(
 				key_sampleTab = "Customized",

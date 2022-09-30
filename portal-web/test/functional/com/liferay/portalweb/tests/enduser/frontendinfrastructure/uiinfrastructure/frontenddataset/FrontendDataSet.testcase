@@ -52,7 +52,6 @@ definition {
 	@priority = "4"
 	test ActionsCanBeCustomized {
 		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FrontendDataSet#ActionsCanBeCustomized";
 
 		task ("When Click on 1st action button in FDS sample") {
 			MouseOver(

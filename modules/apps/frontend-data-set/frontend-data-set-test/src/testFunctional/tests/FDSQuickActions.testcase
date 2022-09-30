@@ -58,7 +58,6 @@ definition {
 	@priority = "5"
 	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
 		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FDSQuickActions#BehaviorIsEqualToEllipsisDropdownEquivalentAction";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -90,8 +89,6 @@ definition {
 	@description = "LPS-155457. Assert that hover over mouse off of the table body quick action menu is not visible."
 	@priority = "5"
 	test CanDisappearWhenNotHovered {
-		property test.name.skip.portal.instance = "FDSQuickActions#CanDisappearWhenNotHovered";
-
 		task ("When hover mouse off of the table body") {
 			MouseOver(locator1 = "FrontendDataSet#TABLE_BODY");
 		}
@@ -104,9 +101,6 @@ definition {
 	@description = "LPS-155455: When hovering over the first line item and the quick action menu is displayed on the 1st line"
 	@priority = "5"
 	test CanDisplayOnHover {
-		property custom.properties = "upgrade.database.auto.run=false";
-		property test.name.skip.portal.instance = "FDSQuickActions#CanDisplayOnHover";
-
 		task ("Then the quick action menu is displayed on the 1st line") {
 			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
 		}
@@ -116,8 +110,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanDisplayOnMultipleActiveRows {
-		property test.name.skip.portal.instance = "FDSQuickActions#CanDisplayOnMultipleActiveRows";
-
 		task ("When click on ellipsis button 2nd row item") {
 			Click(
 				key_title = "Sample2",
@@ -148,8 +140,6 @@ definition {
 	@description = "LPS-155458. Assert can be displayed on one an active row."
 	@priority = "4"
 	test CanDisplayOnOneActiveRow {
-		property test.name.skip.portal.instance = "FDSQuickActions#CanDisplayOnOneActiveRow";
-
 		task ("When hover over 3rd row item") {
 			MouseOver(
 				key_itemName = "Sample3",
@@ -168,8 +158,6 @@ definition {
 	@description = "LPS-155463. Assert that Quick actions icons list should be limited to three actions."
 	@priority = "4"
 	test CanDisplayUpToThreeIcons {
-		property test.name.skip.portal.instance = "FDSQuickActions#CanDisplayUpToThreeIcons";
-
 		task ("Then quick action menu only has 3 actions icons available") {
 			AssertElementPresent(
 				key_index = "1",
@@ -196,8 +184,6 @@ definition {
 	@description = "LPS-155466. Assert that test-pencil is appended to browser URL after clicking."
 	@priority = "5"
 	test CanExecuteAnAction {
-		property test.name.skip.portal.instance = "FDSQuickActions#CanExecuteAnAction";
-
 		task ("When click on Pencil Icon ") {
 			ClickNoError(
 				key_title = "Sample1",
@@ -212,8 +198,6 @@ definition {
 	@description = "LPS-155467. Assert the quick action is not visible when the row checkbox is checked."
 	@priority = "3"
 	test IsNotVisibleOnCheckedRow {
-		property test.name.skip.portal.instance = "FDSQuickActions#IsNotVisibleOnCheckedRow";
-
 		task ("When mark a row checkbox as checked") {
 			Check.checkToggleSwitch(
 				key_title = "Sample1",

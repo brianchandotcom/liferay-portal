@@ -491,11 +491,12 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 						"\" needs to have the filter type and JSON specified"));
 			}
 
-			ObjectFieldFilterContributor objectFieldFilterParser =
-				_objectFieldFilterParserTracker.getObjectFieldFilterContributor(
-					objectViewFilterColumn.getFilterType());
+			ObjectFieldFilterContributor objectFieldFilterContributor =
+				_objectFieldFilterContributorTracker.
+					getObjectFieldFilterContributor(
+						objectViewFilterColumn.getFilterType());
 
-			objectFieldFilterParser.validate(
+			objectFieldFilterContributor.validate(
 				objectField.getObjectDefinitionId(), objectViewFilterColumn);
 		}
 	}
@@ -554,7 +555,8 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 	@Reference
-	private ObjectFieldFilterContributorTracker _objectFieldFilterParserTracker;
+	private ObjectFieldFilterContributorTracker
+		_objectFieldFilterContributorTracker;
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;

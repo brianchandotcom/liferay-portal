@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(
 	immediate = true, service = ObjectFieldFilterContributorTracker.class
 )
-public class ObjectFieldFilterParserTrackerImpl
+public class ObjectFieldFilterContributorTrackerImpl
 	implements ObjectFieldFilterContributorTracker {
 
 	@Override

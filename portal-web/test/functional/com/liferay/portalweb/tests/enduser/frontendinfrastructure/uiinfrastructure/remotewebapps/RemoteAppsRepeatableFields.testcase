@@ -1,0 +1,71 @@
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Remote Apps";
+	property testray.main.component.name = "Remote Apps";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			RemoteApps.tearDown();
+
+			Navigator.gotoPage(pageName = "Home");
+
+			while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
+				var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
+
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "${layoutName}");
+
+				Navigator.gotoPage(pageName = "Home");
+
+				PortalInstances.tearDownCP();
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-164433. The JSON URL can be can be repeatably clicked."
+	@priority = "3"
+	test JSURLCanBeRepeated {
+		property portal.acceptance = "true";
+
+		task ("Given Remote Application > Custom Elements create page") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When click repeatable button for JS URL") {
+			RemoteAppsEntry.addURLRow();
+		}
+
+		task ("Then new JS URL field is added") {
+			AssertElementPresent(locator1 = "RemoteAppsEntry#REMOTE_URL_FIELD");
+		}
+
+		task ("And Then repeatable button + and - are present for both JS URL fields") {
+			AssertElementPresent(
+				key_fieldLabelName = "URL",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+
+			AssertElementPresent(
+				key_fieldLabelName = "URL",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#REMOTE_URL_MINUS");
+		}
+	}
+
+}

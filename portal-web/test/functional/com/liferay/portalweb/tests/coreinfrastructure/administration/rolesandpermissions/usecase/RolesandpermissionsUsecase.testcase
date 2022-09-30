@@ -1552,6 +1552,13 @@ definition {
 			permissionDefinitionValue = "Add Repository",
 			roleTitle = "Site Member",
 			roleType = "Site");
+
+		var key_permissionDefinitionValue = "Add Repository";
+		var key_permissionNavigationValue = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX";
+
+		AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+
+		AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_REMOVE");
 	}
 
 	@priority = "4"

@@ -15,19 +15,18 @@
 package com.liferay.dynamic.data.mapping.data.provider.web.internal.display;
 
 import com.liferay.dynamic.data.mapping.data.provider.display.DDMDataProviderDisplay;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Lino Alves
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DDMDataProviderDisplayTracker {
 
 	public DDMDataProviderDisplay getDDMDataProviderDisplay(String portletId) {
-		return _ddmDataProviderDisplay.get(portletId);
+		return _serviceTrackerMap.getService(portletId);
 	}
 
 	public List<DDMDataProviderDisplay> getDDMDataProviderDisplays() {
@@ -47,40 +46,32 @@ public class DDMDataProviderDisplayTracker {
 		return _getPortletIds();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDDMDataProviderDisplay(
-		DDMDataProviderDisplay ddmDataProviderDisplay) {
-
-		_ddmDataProviderDisplay.put(
-			ddmDataProviderDisplay.getPortletId(), ddmDataProviderDisplay);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMDataProviderDisplay.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(ddmDataProviderDisplay, emitter) -> emitter.emit(
+					ddmDataProviderDisplay.getPortletId())));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmDataProviderDisplay.clear();
-	}
-
-	protected void removeDDMDataProviderDisplay(
-		DDMDataProviderDisplay ddmDataProviderDisplay) {
-
-		_ddmDataProviderDisplay.remove(ddmDataProviderDisplay.getPortletId());
+		_serviceTrackerMap.close();
 	}
 
 	private List<DDMDataProviderDisplay> _getDDMDataProviderDisplays() {
-		return ListUtil.fromMapValues(_ddmDataProviderDisplay);
+		return ListUtil.fromCollection(_serviceTrackerMap.values());
 	}
 
 	private String[] _getPortletIds() {
-		Set<String> portletIds = _ddmDataProviderDisplay.keySet();
+		Set<String> portletIds = _serviceTrackerMap.keySet();
 
 		return portletIds.toArray(new String[0]);
 	}
 
-	private final Map<String, DDMDataProviderDisplay> _ddmDataProviderDisplay =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, DDMDataProviderDisplay>
+		_serviceTrackerMap;
 
 }

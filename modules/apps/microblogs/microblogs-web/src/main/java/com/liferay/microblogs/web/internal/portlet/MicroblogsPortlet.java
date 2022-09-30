@@ -58,7 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.portlet-info.short-title=Microblogs",
 		"javax.portlet.portlet-info.title=Microblogs",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

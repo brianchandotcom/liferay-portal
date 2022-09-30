@@ -610,6 +610,18 @@ definition {
 			value1 = "${pageNumber}");
 	}
 
+	macro selectAutocompleteOption {
+		Click(
+			key_criteriaName = "${criteriaName}",
+			locator1 = "ACSegments#AUTOCOMPLETE_SELECT_INPUT");
+
+		WaitForElementPresent(locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN");
+
+		Click(
+			key_autocompleteText = "${autocompleteText}",
+			locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN");
+	}
+
 	macro viewAutocompleteSuggestions {
 		Click(
 			index = "1",

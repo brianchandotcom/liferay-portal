@@ -34,8 +34,6 @@ public interface SearchEngineHelper {
 
 	public Collection<SearchEngine> getSearchEngines();
 
-	public SearchEngine getSearchEngineSilent(String searchEngineId);
-
 	public void initialize(long companyId);
 
 	public void removeCompany(long companyId);

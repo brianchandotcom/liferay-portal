@@ -43,10 +43,6 @@ public class SearchEngineHelperUtil {
 		return _searchEngineHelper.getSearchEngineIds();
 	}
 
-	public static SearchEngine getSearchEngineSilent(String searchEngineId) {
-		return _searchEngineHelper.getSearchEngineSilent(searchEngineId);
-	}
-
 	public static SearchPermissionChecker getSearchPermissionChecker() {
 		return _searchPermissionChecker;
 	}

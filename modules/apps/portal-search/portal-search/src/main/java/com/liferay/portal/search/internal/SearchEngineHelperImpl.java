@@ -78,11 +78,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public SearchEngine getSearchEngineSilent(String searchEngineId) {
-		return _searchEngines.get(searchEngineId);
-	}
-
-	@Override
 	public synchronized void initialize(long companyId) {
 		if (_companyIds.containsKey(companyId)) {
 			return;

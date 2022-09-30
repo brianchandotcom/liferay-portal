@@ -376,8 +376,8 @@ public abstract class BaseSearchEngineConfigurator
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
-		SearchEngine originalSearchEngine =
-			searchEngineHelper.getSearchEngineSilent(searchEngineId);
+		SearchEngine originalSearchEngine = searchEngineHelper.getSearchEngine(
+			searchEngineId);
 
 		if (originalSearchEngine != null) {
 			searchEngineRegistration.setOverride(true);

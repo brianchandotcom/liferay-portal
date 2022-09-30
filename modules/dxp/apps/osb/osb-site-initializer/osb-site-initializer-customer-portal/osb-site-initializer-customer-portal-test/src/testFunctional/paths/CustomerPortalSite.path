@@ -322,7 +322,7 @@
 </tr>
 <tr>
 	<td>WELCOME_PAGE_USER_NAME</td>
-	<td>//*[contains(@id,'customer-portal-user-name') and text()='${key_userFirstName}!']</td>
+	<td>//*[contains(@class,'customer-portal-welcome-banner')]//*[text()='${key_userFirstName}!']</td>
 	<td></td>
 </tr>
 <tr>

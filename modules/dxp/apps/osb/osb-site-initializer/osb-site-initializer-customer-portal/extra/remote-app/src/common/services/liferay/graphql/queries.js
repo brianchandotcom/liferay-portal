@@ -482,6 +482,7 @@ export const getAccountUserAccountsByExternalReferenceCode = gql`
 			filter: $filter
 		) {
 			items {
+				dateCreated
 				id
 				emailAddress
 				lastLoginDate

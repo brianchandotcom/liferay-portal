@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_PROJECT_DIRECTORY</td>
-	<td>//div[contains(@class, 'align-items-end')]</td>
+	<td>//div[contains(@class, 'align-items-center')]//div[contains(@class, 'align-items-center')]</td>
 	<td></td>
 </tr>
 <tr>

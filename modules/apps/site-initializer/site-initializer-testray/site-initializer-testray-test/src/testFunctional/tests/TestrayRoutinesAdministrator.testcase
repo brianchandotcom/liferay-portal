@@ -66,8 +66,10 @@ definition {
 				listOption1 = "Chrome x");
 		}
 
-		task ("Then a routine is deleted with default environments factors") {
+		task ("Then the routine is deleted with predefined environment factors, they should not appear in the list") {
 			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+
+			Testray.assertItemNotPresent(itemName = "Routines_1 Routine");
 		}
 	}
 

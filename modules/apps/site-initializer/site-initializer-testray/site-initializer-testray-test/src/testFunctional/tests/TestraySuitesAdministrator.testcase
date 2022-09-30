@@ -22,7 +22,9 @@ definition {
 		task ("Go to Testray, Create Project and change pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-			Testray.createProjectTestray(key_name = "Projects_1 Project");
+			Testray.createProjectTestray(
+				key_name = "Projects_1 Project",
+				description = "Projects_1 Project Description");
 
 			Testray.changePagination(
 				numberItems = "20",
@@ -114,6 +116,16 @@ definition {
 	@description = "This is a test for LPS-160574 - Verify if as an Administrator I am able to design Suites"
 	@priority = "4"
 	test AdminCanDesignSuite {
+		task ("Given that the user goes to add a new component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Components_1 Project");
+
+			TestrayManage.closeModalInOptions();
+		}
+
 		task ("Given that the user goes to add a new case") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -122,7 +134,7 @@ definition {
 			TestrayCases.typeCasesField(
 				caseName = "ATF_Suites Case",
 				caseTypeId = "Automated Functional Test",
-				componentId = "Smoke",
+				componentId = "Components_1 Project",
 				description = "ATF_Suites Case Description",
 				duration = "10",
 				priority = "5",

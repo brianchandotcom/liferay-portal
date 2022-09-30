@@ -231,7 +231,7 @@ definition {
 		task ("Delete project and assert which Error Message appears") {
 			Testray.deleteProject(nameProject = "Projects_1 Project");
 
-			Alert.viewErrorMessage(errorMessage = "The Project cannot be deleted because it has associated builds");
+			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
 		}
 	}
 

@@ -222,10 +222,14 @@ public class BuildDatabaseUtil {
 					true, new File("."), 10 * 60 * 1000, commands);
 
 				if (process.exitValue() != 0) {
+					String errorText = JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream());
+
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to download ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE));
+							BuildDatabase.FILE_NAME_BUILD_DATABASE, "\n\n",
+							errorText));
 				}
 
 				break;

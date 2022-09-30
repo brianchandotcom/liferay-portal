@@ -46,6 +46,7 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 		removeServiceData(
 			"Shopping", new String[] {"com.liferay.shopping.service"},
 			new String[] {
+				"com.liferay.portlet.shopping",
 				"com.liferay.portlet.shopping.model.ShoppingCart",
 				"com.liferay.portlet.shopping.model.ShoppingCategory",
 				"com.liferay.portlet.shopping.model.ShoppingCoupon",

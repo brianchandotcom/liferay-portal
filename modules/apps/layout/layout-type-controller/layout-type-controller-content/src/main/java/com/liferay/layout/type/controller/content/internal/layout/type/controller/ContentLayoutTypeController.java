@@ -14,15 +14,19 @@
 
 package com.liferay.layout.type.controller.content.internal.layout.type.controller;
 
+import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -38,10 +42,13 @@ import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -132,6 +139,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			if (!hasUpdatePermissions) {
 				throw new NoSuchLayoutException();
 			}
+		}
+		else if (layoutMode.equals(Constants.VIEW)) {
+			_updateLayoutContent(
+				httpServletRequest, httpServletResponse, layout,
+				themeDisplay.getLocale());
 		}
 
 		String page = getViewPage();
@@ -335,6 +347,29 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		return false;
 	}
 
+	private void _updateLayoutContent(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Layout layout, Locale locale) {
+
+		LayoutLocalization layoutLocalization =
+			_layoutLocalizationLocalService.fetchLayoutLocalization(
+				layout.getGroupId(), LocaleUtil.toLanguageId(locale),
+				layout.getPlid());
+
+		if (layoutLocalization != null) {
+			return;
+		}
+
+		for (Locale curLocale :
+				_language.getAvailableLocales(layout.getGroupId())) {
+
+			_layoutLocalizationLocalService.updateLayoutLocalization(
+				_layoutContentProvider.getLayoutContent(
+					httpServletRequest, httpServletResponse, layout, curLocale),
+				LocaleUtil.toLanguageId(curLocale), layout.getPlid());
+		}
+	}
+
 	private static final String _EDIT_LAYOUT_PAGE =
 		"/layout/edit_layout/content.jsp";
 
@@ -346,6 +381,15 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentLayoutTypeController.class);
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private LayoutContentProvider _layoutContentProvider;
+
+	@Reference
+	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

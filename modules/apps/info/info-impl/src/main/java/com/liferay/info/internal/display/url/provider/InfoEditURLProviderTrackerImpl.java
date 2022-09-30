@@ -16,14 +16,13 @@ package com.liferay.info.internal.display.url.provider;
 
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Jürgen Kappler
@@ -34,32 +33,23 @@ public class InfoEditURLProviderTrackerImpl
 
 	@Override
 	public <T> InfoEditURLProvider<T> getInfoEditURLProvider(String className) {
-		return (InfoEditURLProvider<T>)_infoEditURLProviders.get(className);
+		return (InfoEditURLProvider<T>)_serviceTrackerMap.getService(className);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setInfoEditURLProviders(
-		InfoEditURLProvider<?> infoEditURLProvider,
-		Map<String, Object> properties) {
-
-		String className = (String)properties.get("model.class.name");
-
-		_infoEditURLProviders.put(className, infoEditURLProvider);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<InfoEditURLProvider<?>>)(Class<?>)InfoEditURLProvider.class,
+			"model.class.name");
 	}
 
-	protected void unsetInfoEditURLProviders(
-		InfoEditURLProvider<?> infoEditURLProvider,
-		Map<String, Object> properties) {
-
-		String className = (String)properties.get("model.class.name");
-
-		_infoEditURLProviders.remove(className);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, InfoEditURLProvider<?>> _infoEditURLProviders =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, InfoEditURLProvider<?>>
+		_serviceTrackerMap;
 
 }

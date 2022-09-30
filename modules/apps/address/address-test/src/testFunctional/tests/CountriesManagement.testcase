@@ -754,6 +754,32 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that the country key will be used if country name is not provided when adding."
+	@priority = "4"
+	test KeyValueIsUsedWhenCountryNameIsBlank {
+		task ("Given that a user is in the Countries Management portlet") {
+			CountriesManagement.openCountriesManagementPortlet();
+		}
+
+		task ("When a user adds a new country with no name") {
+			CountriesManagement.addCountry(
+				countryKey = "Country Key",
+				countryNumber = "01",
+				threeLetterISOCode = "AAA",
+				twoLetterISOCode = "AA");
+		}
+
+		task ("Then the country key is used as country name") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			Search.searchCP(searchTerm = "Country Key");
+
+			CountriesManagement.viewCountryInTable(
+				countryName = "Country Key",
+				twoLetterISOCode = "AA");
+		}
+	}
+
 	@description = "This test changes pagination and assert countries display properly."
 	@priority = "3"
 	test PaginationWorksInCountries {

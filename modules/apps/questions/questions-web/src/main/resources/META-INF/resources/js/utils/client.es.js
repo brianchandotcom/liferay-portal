@@ -788,12 +788,14 @@ export const getUserActivityQuery = `
 				id
 				keywords
 				messageBoardThread {
+					id
 					messageBoardSection {
 						id
 						title
 					}
 				}
 				numberOfMessageBoardMessages
+				parentMessageBoardMessageId
 			}
 			page
 			pageSize

@@ -50,7 +50,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/cookies_banner/view.jsp",
 		"javax.portlet.name=" + CookiesBannerPortletKeys.COOKIES_BANNER,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

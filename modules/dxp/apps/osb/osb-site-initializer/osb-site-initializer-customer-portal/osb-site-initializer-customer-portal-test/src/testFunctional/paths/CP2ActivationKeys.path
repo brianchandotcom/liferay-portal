@@ -159,6 +159,10 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERATE_KEY_BUTTON_DISABLED</td>
+	<td>//button[contains(@class, 'btn btn-primary') and @disabled]</td>
+	<td></td>
+</tr>
 	<td>KEY_COMPONENT_OPTION</td>
 	<td>//*[@for='basicInput' and text()='${key_label}']/following-sibling::*//*[contains(@class, 'form-control')]</td>
 	<td></td>

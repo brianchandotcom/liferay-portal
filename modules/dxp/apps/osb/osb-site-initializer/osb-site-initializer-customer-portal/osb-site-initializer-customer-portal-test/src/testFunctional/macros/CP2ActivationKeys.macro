@@ -487,6 +487,11 @@ definition {
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
 	}
+	macro selectClusterNodes {
+		Select(
+			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
+			value1 = "${key_option}");
+	}
 
 	macro selectPaginationQuantity {
 		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {

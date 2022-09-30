@@ -24,6 +24,19 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro assertHighlightedSpecificObject {
+		AssertAttributeValue.assertAttributeNotPresent(
+			attribute1 = "fill-opacity",
+			key_stepId = "${key_stepId}",
+			locator1 = "Walkthrough#STEP_ID",
+			value1 = "0.8");
+
+		AssertAttributeValue(
+			attribute1 = "fill",
+			locator1 = "Walkthrough#POPOVER_OVERLAY",
+			value1 = "#393a4a");
+	}
+
 	macro enablePopoverMode {
 		if (IsElementNotPresent(locator1 = "Walkthrough#POPOVER")) {
 			if (IsElementPresent(key_portletName = "JS Walkthrough Sample", locator1 = "Portlet#TITLE")) {
@@ -78,26 +91,33 @@ definition {
 
 	macro setupWalkthroughPage {
 		task ("Given there is a site-level JSON defined for current site") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
-
 			Walkthrough.addWalkthrough(fileName = "${filename}");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Walkthrough Page");
+				groupName = "${siteName}",
+				layoutName = "Walkthrough Page 1");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Walkthrough Page",
+				groupName = "${siteName}",
+				layoutName = "Walkthrough Page 1",
 				widgetName = "JS Walkthrough Sample");
+			
+			if ("${filename}" == "walkthrough_configuration_multiple_page.json") {
+				JSONLayout.addPublicLayout(
+					groupName = "${siteName}",
+					layoutName = "Walkthrough Page 2");
+
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "${siteName}",
+					layoutName = "Walkthrough Page 2",
+					widgetName = "JS Walkthrough Sample");
+			}
 		}
 
 		task ("When instantiate the walkthrough") {
 			Navigator.openSitePage(
-				pageName = "Walkthrough Page",
-				siteName = "Site Name");
+				pageName = "Walkthrough Page 1",
+				siteName = "${siteName}");
 
 			Walkthrough.enablePopoverMode();
 		}

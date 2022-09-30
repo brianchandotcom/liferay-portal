@@ -643,8 +643,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			}
 
 			jsonObject.put(
-				"icon", layout.getIcon()
-			).put(
 				"name", layoutName
 			).put(
 				"parentable",

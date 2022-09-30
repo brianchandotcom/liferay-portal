@@ -275,7 +275,7 @@ public class SelectLayoutTag extends IncludeTag {
 			jsonObject.put(
 				"groupId", layout.getGroupId()
 			).put(
-				"icon", layout.getIcon()
+				"icon", "page"
 			).put(
 				"id", layout.getUuid()
 			).put(

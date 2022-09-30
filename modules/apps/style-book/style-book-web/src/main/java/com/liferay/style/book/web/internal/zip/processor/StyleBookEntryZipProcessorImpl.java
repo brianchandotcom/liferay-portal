@@ -143,7 +143,7 @@ public class StyleBookEntryZipProcessorImpl
 				new StyleBookEntryZipProcessorImportResultEntry(
 					name,
 					StyleBookEntryZipProcessorImportResultEntry.Status.IMPORTED,
-					StringPool.BLANK));
+					styleBookEntry));
 
 			return styleBookEntry;
 		}

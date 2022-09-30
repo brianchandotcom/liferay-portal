@@ -44,7 +44,9 @@ definition {
 	}
 
 	macro editNotificationTemplate {
-		ObjectNotifications.goToNotificationTemplate(notificationTemplateName = "${notificationTemplateName}");
+		Click(
+			key_name = "${notificationTemplateName}",
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
 		if (isSet(name)) {
 			Type(
@@ -86,12 +88,6 @@ definition {
 				locator1 = "CKEditor#BODY_FIELD_IFRAME",
 				value1 = "${emailBody}");
 		}
-	}
-
-	macro goToNotificationTemplate {
-		Click(
-			key_name = "${notificationTemplateName}",
-			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 	}
 
 }

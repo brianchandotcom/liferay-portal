@@ -70,12 +70,6 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert that Notification Template is present") {
-			Refresh();
-
-			ObjectNotifications.viewNotificationTemplate(notificationTemplateName = "Notification Template");
-		}
-
 		task ("Delete the Notification Template") {
 			ObjectNotifications.deleteNotificationTemplate(templateName = "Notification Template");
 		}

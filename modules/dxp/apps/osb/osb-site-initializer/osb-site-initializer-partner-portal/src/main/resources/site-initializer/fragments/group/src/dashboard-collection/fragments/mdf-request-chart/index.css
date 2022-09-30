@@ -1,0 +1,83 @@
+.label-chart {
+	font-weight: 500;
+}
+
+.mdf-chart-card-height {
+	height: 479px;
+	box-sizing: border-box;
+}
+
+.label-chart.pending {
+	background-color: #ffd764;
+	border-color: #ffd764;
+	color: #2e414e;
+}
+
+.label-chart.approved {
+	background-color: #37d27e;
+	border-color: #37d27e;
+	color: #fff;
+}
+
+.mdf-progress-bar {
+	border-radius: 4px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	height: 24px;
+	margin: 10px, 0;
+	white-space: nowrap;
+}
+
+.mdf-progress-bar .progress-bar-item.pending {
+	background-color: #ffae1b;
+	border-radius: 4px;
+}
+
+.mdf-progress-bar .progress-bar-item.approved {
+	border-radius: 4px;
+	background-color: #47c464;
+}
+
+.mdf-progress-bar .legend-item-label {
+	color: #6c6c75;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 16px;
+}
+
+.mdf-progress-bar .legend-bar-item {
+	border-radius: 2px;
+	height: 16px;
+	margin-right: 11px;
+	width: 16px;
+}
+
+.mdf-progress-bar .legend-bar-item.pending {
+	background-color: #ffae1b;
+}
+.mdf-progress-bar .legend-bar-item.requested {
+	background-color: #ffae1b;
+	margin-left: 32px;
+}
+
+.mdf-progress-bar .legend-bar-item.approved {
+	background-color: #47c464;
+}
+
+/*# sourceMappingURL=index.css.map */
+.mdf-progress-bar .approvedItem {
+	margin-right: 2px;
+}
+
+.mdf-progress-bar .pendingItem {
+	margin-left: 50px;
+}
+
+.progress-bar-border {
+	background-color: #e7efff;
+	border-radius: 4px;
+	box-sizing: border-box;
+	max-height: 32px;
+	padding: 4px;
+}

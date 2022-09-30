@@ -71,6 +71,11 @@ public class DefaultWorkflowTask
 	}
 
 	@Override
+	public String getUserName() {
+		return _userName;
+	}
+
+	@Override
 	public long getWorkflowDefinitionId() {
 		return _workflowDefinitionId;
 	}
@@ -164,6 +169,10 @@ public class DefaultWorkflowTask
 		_optionalAttributes = optionalAttributes;
 	}
 
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
 	public void setWorkflowDefinitionId(long workflowDefinitionId) {
 		_workflowDefinitionId = workflowDefinitionId;
 	}
@@ -208,6 +217,7 @@ public class DefaultWorkflowTask
 	private String _description;
 	private Date _dueDate;
 	private Map<String, Serializable> _optionalAttributes;
+	private String _userName;
 	private long _workflowDefinitionId;
 	private String _workflowDefinitionName;
 	private int _workflowDefinitionVersion;

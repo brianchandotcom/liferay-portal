@@ -46,6 +46,8 @@ public interface WorkflowTask extends WorkflowModel, WorkflowNode {
 		return Type.TASK;
 	}
 
+	public String getUserName();
+
 	public long getWorkflowDefinitionId();
 
 	public String getWorkflowDefinitionName();

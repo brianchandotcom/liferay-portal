@@ -382,6 +382,8 @@ public class KaleoWorkflowModelConverterImpl
 					kaleoTaskInstanceToken.getWorkflowContext()));
 		}
 
+		defaultWorkflowTask.setUserName(kaleoTaskInstanceToken.getUserName());
+
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
 				kaleoTaskInstanceToken.getKaleoDefinitionVersionId());

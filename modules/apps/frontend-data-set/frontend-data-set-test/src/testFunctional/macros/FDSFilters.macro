@@ -68,6 +68,12 @@ definition {
 		}
 	}
 
+	macro removeAllFilters {
+		while (IsElementPresent(key_filter = "", locator1 = "FrontendDataSet#REMOVE_FILTER")) {
+			FDSFilters.removeFilter(key_filter = "");
+		}
+	}
+
 	macro removeFilter {
 		Click(
 			locator1 = "FrontendDataSet#REMOVE_FILTER",

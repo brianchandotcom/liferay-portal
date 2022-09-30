@@ -282,6 +282,10 @@ definition {
 	@description = "LPS-155312. Assert results can be correctly filtered when using the status filter."
 	@priority = "5"
 	test StatusFilterCanBeAdded {
+		task ("Given no filters applied") {
+			FDSFilters.removeAllFilters();
+		}
+
 		task ("When click on the filter button") {
 			FDSFilters.openFilters();
 		}
@@ -289,14 +293,12 @@ definition {
 		task ("And When adding an option from the status list filter") {
 			FDSFilters.enableStatusFilters(key_status = "Pending");
 
-			FDSFilters.disableStatusFilters(key_status = "Approved");
-
 			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
 
 		task ("Then the filter will be added to the Filters Summary") {
 			AssertElementPresent(
-				key_filter = "Status: Draft, Pending",
+				key_filter = "Status: Pending",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 

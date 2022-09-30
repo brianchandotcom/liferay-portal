@@ -14,11 +14,9 @@
 
 package com.liferay.object.field.filter.parser;
 
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectViewFilterColumn;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -26,19 +24,16 @@ import java.util.Map;
  */
 public interface ObjectFieldFilterContributor {
 
-	public Map<String, Object> parse(
-			long listTypeDefinitionId, long objectDefinitionId, Locale locale,
-			ObjectViewFilterColumn objectViewFilterColumn)
+	public FDSFilter getFDSFilter() throws PortalException;
+
+	public Map<String, Object> parse() throws PortalException;
+
+	public void setObjectFieldFilterStrategy(
+			ObjectFieldFilterContext objectFieldFilterContext)
 		throws PortalException;
 
-	public String toValueSummary(
-			Locale locale, ObjectField objectField,
-			ObjectViewFilterColumn objectViewFilterColumn)
-		throws PortalException;
+	public String toValueSummary() throws PortalException;
 
-	public void validate(
-			long objectDefinitionId,
-			ObjectViewFilterColumn objectViewFilterColumn)
-		throws PortalException;
+	public void validate() throws PortalException;
 
 }

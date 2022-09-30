@@ -14,10 +14,13 @@
 
 package com.liferay.object.internal.field.filter.parser;
 
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
+import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -33,9 +36,20 @@ public class ObjectFieldFilterContributorTrackerImpl
 
 	@Override
 	public ObjectFieldFilterContributor getObjectFieldFilterContributor(
-		String key) {
+			ObjectFieldFilterContext objectFieldFilterContext)
+		throws PortalException {
 
-		return _serviceTrackerMap.getService(key);
+		ObjectViewFilterColumn objectViewFilterColumn =
+			objectFieldFilterContext.getObjectViewFilterColumn();
+
+		ObjectFieldFilterContributor objectFieldFilterContributor =
+			_serviceTrackerMap.getService(
+				objectViewFilterColumn.getFilterType());
+
+		objectFieldFilterContributor.setObjectFieldFilterStrategy(
+			objectFieldFilterContext);
+
+		return objectFieldFilterContributor;
 	}
 
 	@Activate

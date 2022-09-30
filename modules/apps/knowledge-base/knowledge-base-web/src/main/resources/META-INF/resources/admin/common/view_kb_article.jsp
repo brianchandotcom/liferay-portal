@@ -168,13 +168,15 @@ if (portletTitleBasedNavigation) {
 				<c:choose>
 					<c:when test="<%= portletTitleBasedNavigation %>">
 						<liferay-ui:panel-container
-							extended="<%= false %>"
+							cssClass="mt-5 panel-group-flush panel-group-sm"
+							extended="<%= true %>"
 							markupView="lexicon"
 							persistState="<%= true %>"
 						>
 							<liferay-ui:panel
 								collapsible="<%= true %>"
-								extended="<%= false %>"
+								cssClass="panel-unstyled"
+								extended="<%= true %>"
 								markupView="lexicon"
 								persistState="<%= true %>"
 								title="suggestions"

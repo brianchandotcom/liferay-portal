@@ -88,7 +88,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			false);
 
 		if (extendedClassNames.contains("MVCPortlet")) {
-			annotation = _formatMVCPortletProperties(annotation);
+			annotation = _formatMVCPortletProperties(absolutePath, annotation);
 		}
 
 		return annotation;
@@ -303,7 +303,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
-	private String _formatMVCPortletProperties(String annotation) {
+	private String _formatMVCPortletProperties(
+		String absolutePath, String annotation) {
+
 		int x = annotation.indexOf("property = {");
 
 		if (x == -1) {
@@ -343,7 +345,10 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			newProperties += "\"javax.portlet.portlet-mode=text/html;config\"";
 		}
 
-		if (!newProperties.contains("\"javax.portlet.version=3.0\"")) {
+		if (!absolutePath.contains("/modules/apps/archived/") &&
+			!absolutePath.contains("/modules/sdk/") &&
+			!newProperties.contains("\"javax.portlet.version=3.0\"")) {
+
 			String serviceAttributeValue = _getAttributeValue(
 				annotation, "service");
 

@@ -144,6 +144,11 @@
 <!--GENERATE_NEW_KEY-->
 
 <tr>
+	<td>CLUSTER_NODES</td>
+	<td>//select[contains(@name, 'maxClusterNodes')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLED_PRODUCT</td>
 	<td>//*[contains(.,'Product')]//*[contains(@class, 'cp-select-card')]</td>
 	<td></td>

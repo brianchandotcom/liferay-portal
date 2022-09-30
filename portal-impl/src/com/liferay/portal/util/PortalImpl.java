@@ -8320,9 +8320,12 @@ public class PortalImpl implements Portal {
 				alternateURL = canonicalURLPrefix.concat(alternateURLSuffix);
 			}
 
-			if (siteDefaultLocale.equals(locale) &&
-				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE != 2)) {
+			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
+				alternateURL = canonicalURLPrefix + alternateURLSuffix;
 
+				alternateURLs.put(locale, alternateURL);
+			}
+			else if (siteDefaultLocale.equals(locale)) {
 				alternateURLs.put(locale, alternateURL);
 			}
 			else {

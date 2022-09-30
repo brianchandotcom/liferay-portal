@@ -140,6 +140,16 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				", ", attributeName, " = ", attributeValue, ")"));
 	}
 
+	private String _addNewProperties(String newProperties, String properties) {
+		newProperties = StringUtil.trimTrailing(newProperties);
+
+		if (!newProperties.endsWith(StringPool.COMMA)) {
+			newProperties += StringPool.COMMA;
+		}
+
+		return newProperties + properties;
+	}
+
 	private String _formatAnnotationParameterProperties(String annotation) {
 		Matcher matcher = _annotationParameterPropertyPattern.matcher(
 			annotation);
@@ -336,13 +346,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				"\"javax.portlet.init-param.config-template=") &&
 			!newProperties.contains("javax.portlet.portlet-mode=")) {
 
-			newProperties = StringUtil.trimTrailing(newProperties);
-
-			if (!newProperties.endsWith(StringPool.COMMA)) {
-				newProperties += StringPool.COMMA;
-			}
-
-			newProperties += "\"javax.portlet.portlet-mode=text/html;config\"";
+			newProperties = _addNewProperties(
+				newProperties,
+				"\"javax.portlet.portlet-mode=text/html;config\"");
 		}
 
 		if (isAttributeValue(_CHECK_PORTLET_VERSION_KEY, absolutePath) &&
@@ -364,13 +370,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				serviceAttributeValue, StringPool.COMMA);
 
 			if (serviceAttributeValues.contains("Portlet.class")) {
-				newProperties = StringUtil.trimTrailing(newProperties);
-
-				if (!newProperties.endsWith(StringPool.COMMA)) {
-					newProperties += StringPool.COMMA;
-				}
-
-				newProperties += "\"javax.portlet.version=3.0\"";
+				newProperties = _addNewProperties(
+					newProperties, "\"javax.portlet.version=3.0\"");
 			}
 		}
 

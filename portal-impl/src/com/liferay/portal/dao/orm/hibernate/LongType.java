@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
@@ -84,6 +86,9 @@ public class LongType implements Serializable, UserType {
 				resultSet, names[0], sharedSessionContractImplementor);
 		}
 		catch (SQLException sqlException1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqlException1);
+			}
 
 			// Some JDBC drivers do not know how to convert a VARCHAR column
 			// with a blank entry into a BIGINT
@@ -134,5 +139,7 @@ public class LongType implements Serializable, UserType {
 	public int[] sqlTypes() {
 		return new int[] {StandardBasicTypes.LONG.sqlType()};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(LongType.class);
 
 }

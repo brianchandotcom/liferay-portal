@@ -808,7 +808,7 @@ definition {
 			if (isSet(notificationTypeOption)) {
 				Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN");
 
-				Check.checkNotVisible(
+				Check.checkNotVisibleNoErrors(
 					key_checkboxValue = "${notificationTypeOption}",
 					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS");
 			}
@@ -910,7 +910,7 @@ definition {
 						key_sectionOption = "${sectionOption}",
 						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION");
 
-					Check.checkNotVisible(
+					Check.checkNotVisibleNoErrors(
 						key_checkboxValue = "${notificationTypeOption}",
 						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION");
 				}

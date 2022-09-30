@@ -388,7 +388,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_TYPE_DROPDOWN</td>
-	<td>//label[contains(., 'Notification Types')]</td>
+	<td>//input[contains(@placeholder,'Choose an Option')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -408,7 +408,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_TYPE_OPTIONS</td>
-	<td>//input[@type='checkbox' and @value ='${key_checkboxValue}']</td>
+	<td>//span[contains(@class,'custom-control-label-text')and contains(text(),'${key_checkboxValue}')]//..//..//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -519,6 +519,11 @@
 <tr>
 	<td>ACTIONS_NAME_ON_TIMERS_FIELD</td>
 	<td>//div[@class='sidebar']//span[contains(text(),'Action')]/../..//input[contains(@value,'${key_actionName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_WORKFLOW_TITLE</td>
+	<td>//div[@class='user-notifications']//div[contains(@class,'autofit-col-expand')]</td>
 	<td></td>
 </tr>
 </tbody>

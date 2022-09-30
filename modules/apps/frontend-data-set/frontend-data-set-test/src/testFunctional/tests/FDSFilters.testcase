@@ -79,9 +79,6 @@ definition {
 	@priority = "5"
 	test AvailableFiltersCanBeApplied {
 		property custom.properties = "upgrade.database.auto.run=false";
-		property portal.acceptance = "false";
-		property portal.release = "false";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FDSFilters#AvailableFiltersCanBeApplied";
 
 		task ("When click on the filter button") {
@@ -111,9 +108,6 @@ definition {
 	@priority = "5"
 	test ExcludeCanBeEnabled {
 		property custom.properties = "upgrade.database.auto.run=false";
-		property portal.acceptance = "false";
-		property portal.release = "false";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FDSFilters#ExcludeCanBeEnabled";
 
 		task ("When click on the filter button") {
@@ -309,9 +303,6 @@ definition {
 	@description = "LPS-155312. Assert results can be correctly filtered when using the status filter."
 	@priority = "5"
 	test StatusFilterCanBeAdded {
-		property portal.acceptance = "false";
-		property portal.release = "false";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FDSFilters#StatusFilterCanBeAdded";
 
 		task ("When click on the filter button") {

@@ -163,6 +163,12 @@
 	<td>//button[contains(@class, 'btn btn-primary') and @disabled]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>GENERATE_KEY_BUTTON_ENABLED</td>
+	<td>//button[contains(@class, 'btn btn-primary') and contains(., 'Generate Cluster (${key_number} Keys)')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEY_COMPONENT_OPTION</td>
 	<td>//*[@for='basicInput' and text()='${key_label}']/following-sibling::*//*[contains(@class, 'form-control')]</td>
 	<td></td>

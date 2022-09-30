@@ -57,7 +57,8 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 						_log.warn(
 							StringBundler.concat(
 								"Deleting duplicate virtual host ",
-								virtualHostId, " with hostname ", hostname));
+								virtualHostId, " with hostname ", hostname),
+							exception);
 					}
 
 					runSQL(

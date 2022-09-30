@@ -67,8 +67,7 @@ public class CommerceAvalaraDispatchTriggerHelperImpl
 				UnicodePropertiesBuilder.create(
 					true
 				).setProperty(
-					CommerceAvalaraConstants.GROUP_ID,
-					String.valueOf(commerceTaxMethod.getGroupId())
+					"groupId", String.valueOf(commerceTaxMethod.getGroupId())
 				).build(),
 				triggerName, Boolean.FALSE);
 
@@ -207,7 +206,7 @@ public class CommerceAvalaraDispatchTriggerHelperImpl
 
 		StringBundler triggerNameSB = new StringBundler(3);
 
-		triggerNameSB.append(CommerceAvalaraConstants.AVALARA);
+		triggerNameSB.append(CommerceAvalaraConstants.KEY);
 		triggerNameSB.append(StringPool.DASH);
 		triggerNameSB.append(commerceChannel.getCommerceChannelId());
 

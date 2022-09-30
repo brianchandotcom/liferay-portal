@@ -66,6 +66,20 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 
 		<liferay-ui:error exception="<%= StyleBookEntryFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />
 
+		<c:if test='<%= SessionMessages.contains(renderRequest, "styleBookFrontendTokensValuesNotValidated") %>'>
+			<aui:script>
+				Liferay.Util.openToast({
+					message:
+						'<liferay-ui:message key="this-style-book-is-based-on-a-different-theme-to-the-one-set-for-pages" />',
+					title: Liferay.Language.get('warning'),
+					toastProps: {
+						autoClose: 5000,
+					},
+					type: 'warning',
+				});
+			</aui:script>
+		</c:if>
+
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<aui:input label="select-file" name="file" type="file">

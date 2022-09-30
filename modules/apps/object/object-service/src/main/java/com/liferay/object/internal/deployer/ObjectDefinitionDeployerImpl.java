@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.Document;
@@ -342,9 +343,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private String _getResourceActions(ObjectDefinition objectDefinition) {
 		if (objectDefinition.isEnableComments()) {
-			return "<action-key>ADD_DISCUSSION</action-key>" +
-				"<action-key>DELETE_DISCUSSION</action-key>" +
-					"<action-key>UPDATE_DISCUSSION</action-key>";
+			return StringBundler.concat(
+				"<action-key>ADD_DISCUSSION</action-key>",
+				"<action-key>DELETE_DISCUSSION</action-key>",
+				"<action-key>UPDATE_DISCUSSION</action-key>");
 		}
 
 		return StringPool.BLANK;

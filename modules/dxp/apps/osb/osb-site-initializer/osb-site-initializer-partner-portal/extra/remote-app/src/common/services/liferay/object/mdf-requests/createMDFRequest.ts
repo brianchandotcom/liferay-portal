@@ -16,12 +16,12 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFRequest(
-	ApiOption: string,
+	APIOption: string,
 	mdfRequest: MDFRequest,
 	externalReferenceCodeSF?: string
 ) {
 	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/${ApiOption}`,
+		`/o/${LiferayAPIs.OBJECT}/${APIOption}`,
 		Liferay.authToken,
 		getDTOFromMDFRequest(mdfRequest, externalReferenceCodeSF)
 	);

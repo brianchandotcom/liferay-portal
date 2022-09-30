@@ -110,7 +110,7 @@ public class MBMessageModelDocumentContributor
 				mbMessage.getThreadId());
 
 			document.addKeyword(
-				"answed",
+				"answered",
 				Stream.of(
 					_mbMessageLocalService.getChildMessages(
 						mbMessage.getMessageId(),

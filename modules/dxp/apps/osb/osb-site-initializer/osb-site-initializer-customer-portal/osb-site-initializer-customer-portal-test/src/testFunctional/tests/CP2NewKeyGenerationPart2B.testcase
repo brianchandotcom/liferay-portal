@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount = "";
+	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
 	var testProduct = "DXP";
 
 	setUp {
@@ -46,9 +46,51 @@ definition {
 	@description = "Automation ID: LPS-150803 | Test Summary: Verify if the Environment Name field is required"
 	@priority = "4"
 	test VerifyEnvironmentNameField {
+        property portal.upstream = "quarantine";
 
-        // TODO LPS-150803 CP2NewKeyGenerationPart2B archive pending implementation
+		// Needs refactor since it depends on example FIFA account
 
+        task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+        task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the user can go through the first flow") {
+			CP2ActivationKeys.selectKeyType(key_option = "Production");
+
+            CP2ActivationKeys.selectSubscription(position = "1");
+
+            Button.click(button = "Next");
+		}
+
+        task ("When the Environment Name field is not filled the message 'This field is required.' is displayed") {
+            CP2ActivationKeys.environmentDetails(
+                environmentDetails = "name",
+                value = "Liferay Test");
+
+            CP2ActivationKeys.environmentDetails(
+                environmentDetails = "name",
+                value = "");
+
+            KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
+	
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
+        }
     }
 
     @description = "Automation ID: LPS-150804 | Test Summary: Verify if the Cluster Nodes field is required"

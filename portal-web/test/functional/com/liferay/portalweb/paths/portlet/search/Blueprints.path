@@ -271,6 +271,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_OPTION_WIDGET_TITLE</td>
+	<td>//tr[contains(.,'${blueprintTitle}')]/..//following-sibling::td</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_PREVIEW_BUTTON_PORTUGUESE</td>
 	<td>//button[contains(.,'Pré-visualizar')]</td>
 	<td></td>

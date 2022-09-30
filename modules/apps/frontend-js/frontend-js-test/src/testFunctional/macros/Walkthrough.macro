@@ -101,7 +101,7 @@ definition {
 				groupName = "${siteName}",
 				layoutName = "Walkthrough Page 1",
 				widgetName = "JS Walkthrough Sample");
-			
+
 			if ("${filename}" == "walkthrough_configuration_multiple_page.json") {
 				JSONLayout.addPublicLayout(
 					groupName = "${siteName}",

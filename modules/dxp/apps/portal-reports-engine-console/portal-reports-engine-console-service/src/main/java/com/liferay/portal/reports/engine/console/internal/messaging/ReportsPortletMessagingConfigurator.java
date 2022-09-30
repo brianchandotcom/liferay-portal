@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.reports.engine.console.configuration.ReportsPortletMessagingConfiguration",
-	service = ReportsPortletMessagingConfigurator.class
+	service = {}
 )
 public class ReportsPortletMessagingConfigurator {
 

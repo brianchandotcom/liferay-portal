@@ -8223,11 +8223,11 @@ public class PortalImpl implements Portal {
 		String siteDefaultLocaleI18nPath = _buildI18NPath(
 			siteDefaultLocale, layout.getGroup());
 
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			if (canonicalURLSuffix.startsWith(siteDefaultLocaleI18nPath)) {
-				canonicalURLSuffix = canonicalURLSuffix.substring(
-					siteDefaultLocaleI18nPath.length());
-			}
+		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) &&
+			canonicalURLSuffix.startsWith(siteDefaultLocaleI18nPath)) {
+
+			canonicalURLSuffix = canonicalURLSuffix.substring(
+				siteDefaultLocaleI18nPath.length());
 		}
 
 		String groupFriendlyURL = StringPool.BLANK;

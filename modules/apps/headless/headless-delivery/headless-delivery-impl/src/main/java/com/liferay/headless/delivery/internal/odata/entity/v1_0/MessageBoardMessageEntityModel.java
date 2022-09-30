@@ -40,11 +40,11 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new BooleanEntityField("answered", locale -> "answered"),
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
-				new IntegerEntityField(
-					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
-			new CollectionEntityField(
 				new StringEntityField(
 					"tagNames", locale -> "assetTagNames.raw")),
+			new CollectionEntityField(
+				new IntegerEntityField(
+					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
 			new ComplexEntityField(
 				"creator",
 				Collections.singletonList(
@@ -62,13 +62,13 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 				"showAsAnswer", EntityField.Type.BOOLEAN,
 				locale -> Field.getSortableFieldName("answer_String"),
 				locale -> "answer", String::valueOf),
+			new IntegerEntityField(
+				"childMessagesCount", locale -> "childMessagesCount"),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField(
 				"messageBoardSectionId", locale -> Field.CATEGORY_ID),
 			new IntegerEntityField(
 				"messageBoardThreadId", locale -> Field.ROOT_ENTRY_CLASS_PK),
-			new IntegerEntityField(
-				"childMessagesCount", locale -> "childMessagesCount"),
 			new IntegerEntityField(
 				"parentMessageBoardMessageId", locale -> "parentMessageId"),
 			new IntegerEntityField(

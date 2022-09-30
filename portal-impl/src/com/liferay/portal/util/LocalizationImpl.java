@@ -470,7 +470,8 @@ public class LocalizationImpl implements Localization {
 		}
 		catch (IOException ioException) {
 			_log.error(
-				"Unable to read the content for " + defaultPropertyValue);
+				"Unable to read the content for " + defaultPropertyValue,
+				ioException);
 		}
 
 		return map;

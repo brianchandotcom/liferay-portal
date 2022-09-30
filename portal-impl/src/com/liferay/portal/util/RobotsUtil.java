@@ -46,7 +46,8 @@ public class RobotsUtil {
 			catch (IOException ioException) {
 				_log.error(
 					"Unable to read the content for " +
-						PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+						PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP,
+					ioException);
 			}
 		}
 
@@ -74,7 +75,8 @@ public class RobotsUtil {
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					PropsValues.ROBOTS_TXT_WITH_SITEMAP);
+					PropsValues.ROBOTS_TXT_WITH_SITEMAP,
+				ioException);
 		}
 
 		return _replaceWildcards(

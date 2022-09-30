@@ -345,7 +345,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			newProperties += "\"javax.portlet.portlet-mode=text/html;config\"";
 		}
 
-		if (!absolutePath.contains("/modules/apps/archived/") &&
+		if (isAttributeValue(_CHECK_PORTLET_VERSION_KEY, absolutePath) &&
+			!absolutePath.contains("/modules/apps/archived/") &&
 			!absolutePath.contains("/modules/sdk/") &&
 			!newProperties.contains("\"javax.portlet.version=3.0\"")) {
 
@@ -513,6 +514,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _CHECK_MISMATCHED_SERVICE_ATTRIBUTE_KEY =
 		"checkMismatchedServiceAttribute";
+
+	private static final String _CHECK_PORTLET_VERSION_KEY =
+		"checkPortletVersion";
 
 	private static final String _CHECK_SELF_REGISTRATION_KEY =
 		"checkSelfRegistration";

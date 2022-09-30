@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.util.PortalPreferencesUtil;
@@ -76,7 +77,8 @@ public class FragmentCollectionManager {
 			new ArrayList<>();
 
 		boolean hideInputFragments = ObjectUtil.hideInputFragments(
-			themeDisplay.getCompanyId());
+			themeDisplay.getCompanyId(), _infoItemServiceTracker,
+			themeDisplay.getPermissionChecker());
 
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
@@ -520,7 +522,9 @@ public class FragmentCollectionManager {
 				themeDisplay));
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
-			ObjectUtil.getLayoutElementMapsListMap(themeDisplay.getCompanyId());
+			ObjectUtil.getLayoutElementMapsListMap(
+				themeDisplay.getCompanyId(), _infoItemServiceTracker,
+				themeDisplay.getPermissionChecker());
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				layoutElementMapsListMap.entrySet()) {
@@ -639,6 +643,9 @@ public class FragmentCollectionManager {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Language _language;

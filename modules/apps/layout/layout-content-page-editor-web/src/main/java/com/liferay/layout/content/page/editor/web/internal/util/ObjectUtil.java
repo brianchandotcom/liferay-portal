@@ -14,19 +14,18 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
+import com.liferay.info.exception.InfoPermissionException;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -40,19 +39,26 @@ import java.util.Map;
 public class ObjectUtil {
 
 	public static Map<String, List<Map<String, Object>>>
-		getLayoutElementMapsListMap(long companyId) {
+		getLayoutElementMapsListMap(
+			long companyId, InfoItemServiceTracker infoItemServiceTracker,
+			PermissionChecker permissionChecker) {
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
 
-		if (hideInputFragments(companyId)) {
+		if (hideInputFragments(
+				companyId, infoItemServiceTracker, permissionChecker)) {
+
 			layoutElementMapsListMap.remove("INPUTS");
 		}
 
 		return layoutElementMapsListMap;
 	}
 
-	public static Boolean hideInputFragments(long companyId) {
+	public static Boolean hideInputFragments(
+		long companyId, InfoItemServiceTracker infoItemServiceTracker,
+		PermissionChecker permissionChecker) {
+
 		if (_isLayoutTypeAssetDisplay()) {
 			return true;
 		}
@@ -66,7 +72,10 @@ public class ObjectUtil {
 		}
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			if (_hasPermissions(objectDefinition)) {
+			if (_hasPermissions(
+					objectDefinition, infoItemServiceTracker,
+					permissionChecker)) {
+
 				return false;
 			}
 		}
@@ -74,22 +83,27 @@ public class ObjectUtil {
 		return true;
 	}
 
-	private static boolean _hasPermissions(ObjectDefinition objectDefinition) {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			objectDefinition.getCompanyId(), objectDefinition.getPortletId());
+	private static boolean _hasPermissions(
+		ObjectDefinition objectDefinition,
+		InfoItemServiceTracker infoItemServiceTracker,
+		PermissionChecker permissionChecker) {
 
-		if (!portlet.isActive()) {
-			return false;
+		InfoPermissionProvider infoPermissionProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoPermissionProvider.class, objectDefinition.getClassName());
+
+		if (infoPermissionProvider == null) {
+			return true;
 		}
 
 		try {
-			return PortletPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				portlet.getRootPortletId(), ActionKeys.VIEW);
+			if (infoPermissionProvider.hasViewPermission(permissionChecker)) {
+				return true;
+			}
 		}
-		catch (Exception exception) {
+		catch (InfoPermissionException infoPermissionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(infoPermissionException);
 			}
 		}
 

@@ -591,8 +591,8 @@
 		<field name="firstName" type="String" />
 		<field name="middleName" type="String" />
 		<field name="lastName" type="String" />
-		<field name="prefixId" type="long" />
-		<field name="suffixId" type="long" />
+		<field name="prefixListTypeId" type="long" />
+		<field name="suffixListTypeId" type="long" />
 		<field name="male" type="boolean" />
 		<field name="birthday" type="Date">
 			<hint name="year-range-delta">70</hint>

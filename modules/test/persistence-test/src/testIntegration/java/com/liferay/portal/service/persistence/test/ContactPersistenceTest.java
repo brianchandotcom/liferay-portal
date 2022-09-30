@@ -147,9 +147,9 @@ public class ContactPersistenceTest {
 
 		newContact.setLastName(RandomTestUtil.randomString());
 
-		newContact.setPrefixId(RandomTestUtil.nextLong());
+		newContact.setPrefixListTypeId(RandomTestUtil.nextLong());
 
-		newContact.setSuffixId(RandomTestUtil.nextLong());
+		newContact.setSuffixListTypeId(RandomTestUtil.nextLong());
 
 		newContact.setMale(RandomTestUtil.randomBoolean());
 
@@ -212,9 +212,11 @@ public class ContactPersistenceTest {
 		Assert.assertEquals(
 			existingContact.getLastName(), newContact.getLastName());
 		Assert.assertEquals(
-			existingContact.getPrefixId(), newContact.getPrefixId());
+			existingContact.getPrefixListTypeId(),
+			newContact.getPrefixListTypeId());
 		Assert.assertEquals(
-			existingContact.getSuffixId(), newContact.getSuffixId());
+			existingContact.getSuffixListTypeId(),
+			newContact.getSuffixListTypeId());
 		Assert.assertEquals(existingContact.isMale(), newContact.isMale());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingContact.getBirthday()),
@@ -287,11 +289,11 @@ public class ContactPersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"parentContactId", true, "emailAddress", true, "firstName", true,
-			"middleName", true, "lastName", true, "prefixId", true, "suffixId",
-			true, "male", true, "birthday", true, "smsSn", true, "facebookSn",
-			true, "jabberSn", true, "skypeSn", true, "twitterSn", true,
-			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
-			"jobClass", true, "hoursOfOperation", true);
+			"middleName", true, "lastName", true, "prefixListTypeId", true,
+			"suffixListTypeId", true, "male", true, "birthday", true, "smsSn",
+			true, "facebookSn", true, "jabberSn", true, "skypeSn", true,
+			"twitterSn", true, "employeeStatusId", true, "employeeNumber", true,
+			"jobTitle", true, "jobClass", true, "hoursOfOperation", true);
 	}
 
 	@Test
@@ -528,9 +530,9 @@ public class ContactPersistenceTest {
 
 		contact.setLastName(RandomTestUtil.randomString());
 
-		contact.setPrefixId(RandomTestUtil.nextLong());
+		contact.setPrefixListTypeId(RandomTestUtil.nextLong());
 
-		contact.setSuffixId(RandomTestUtil.nextLong());
+		contact.setSuffixListTypeId(RandomTestUtil.nextLong());
 
 		contact.setMale(RandomTestUtil.randomBoolean());
 

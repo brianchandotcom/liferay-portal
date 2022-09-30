@@ -80,7 +80,7 @@ public class ContactModelImpl
 		{"classPK", Types.BIGINT}, {"parentContactId", Types.BIGINT},
 		{"emailAddress", Types.VARCHAR}, {"firstName", Types.VARCHAR},
 		{"middleName", Types.VARCHAR}, {"lastName", Types.VARCHAR},
-		{"prefixId", Types.BIGINT}, {"suffixId", Types.BIGINT},
+		{"prefixListTypeId", Types.BIGINT}, {"suffixListTypeId", Types.BIGINT},
 		{"male", Types.BOOLEAN}, {"birthday", Types.TIMESTAMP},
 		{"smsSn", Types.VARCHAR}, {"facebookSn", Types.VARCHAR},
 		{"jabberSn", Types.VARCHAR}, {"skypeSn", Types.VARCHAR},
@@ -107,8 +107,8 @@ public class ContactModelImpl
 		TABLE_COLUMNS_MAP.put("firstName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("middleName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("prefixId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("suffixId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("prefixListTypeId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("suffixListTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("male", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("birthday", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("smsSn", Types.VARCHAR);
@@ -124,7 +124,7 @@ public class ContactModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Contact_ (mvccVersion LONG default 0 not null,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,parentContactId LONG,emailAddress VARCHAR(254) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+		"create table Contact_ (mvccVersion LONG default 0 not null,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,parentContactId LONG,emailAddress VARCHAR(254) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixListTypeId LONG,suffixListTypeId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 
@@ -328,12 +328,16 @@ public class ContactModelImpl
 		attributeGetterFunctions.put("lastName", Contact::getLastName);
 		attributeSetterBiConsumers.put(
 			"lastName", (BiConsumer<Contact, String>)Contact::setLastName);
-		attributeGetterFunctions.put("prefixId", Contact::getPrefixId);
+		attributeGetterFunctions.put(
+			"prefixListTypeId", Contact::getPrefixListTypeId);
 		attributeSetterBiConsumers.put(
-			"prefixId", (BiConsumer<Contact, Long>)Contact::setPrefixId);
-		attributeGetterFunctions.put("suffixId", Contact::getSuffixId);
+			"prefixListTypeId",
+			(BiConsumer<Contact, Long>)Contact::setPrefixListTypeId);
+		attributeGetterFunctions.put(
+			"suffixListTypeId", Contact::getSuffixListTypeId);
 		attributeSetterBiConsumers.put(
-			"suffixId", (BiConsumer<Contact, Long>)Contact::setSuffixId);
+			"suffixListTypeId",
+			(BiConsumer<Contact, Long>)Contact::setSuffixListTypeId);
 		attributeGetterFunctions.put("male", Contact::getMale);
 		attributeSetterBiConsumers.put(
 			"male", (BiConsumer<Contact, Boolean>)Contact::setMale);
@@ -691,32 +695,32 @@ public class ContactModelImpl
 
 	@JSON
 	@Override
-	public long getPrefixId() {
-		return _prefixId;
+	public long getPrefixListTypeId() {
+		return _prefixListTypeId;
 	}
 
 	@Override
-	public void setPrefixId(long prefixId) {
+	public void setPrefixListTypeId(long prefixListTypeId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_prefixId = prefixId;
+		_prefixListTypeId = prefixListTypeId;
 	}
 
 	@JSON
 	@Override
-	public long getSuffixId() {
-		return _suffixId;
+	public long getSuffixListTypeId() {
+		return _suffixListTypeId;
 	}
 
 	@Override
-	public void setSuffixId(long suffixId) {
+	public void setSuffixListTypeId(long suffixListTypeId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_suffixId = suffixId;
+		_suffixListTypeId = suffixListTypeId;
 	}
 
 	@JSON
@@ -1025,8 +1029,8 @@ public class ContactModelImpl
 		contactImpl.setFirstName(getFirstName());
 		contactImpl.setMiddleName(getMiddleName());
 		contactImpl.setLastName(getLastName());
-		contactImpl.setPrefixId(getPrefixId());
-		contactImpl.setSuffixId(getSuffixId());
+		contactImpl.setPrefixListTypeId(getPrefixListTypeId());
+		contactImpl.setSuffixListTypeId(getSuffixListTypeId());
 		contactImpl.setMale(isMale());
 		contactImpl.setBirthday(getBirthday());
 		contactImpl.setSmsSn(getSmsSn());
@@ -1075,8 +1079,10 @@ public class ContactModelImpl
 			this.<String>getColumnOriginalValue("middleName"));
 		contactImpl.setLastName(
 			this.<String>getColumnOriginalValue("lastName"));
-		contactImpl.setPrefixId(this.<Long>getColumnOriginalValue("prefixId"));
-		contactImpl.setSuffixId(this.<Long>getColumnOriginalValue("suffixId"));
+		contactImpl.setPrefixListTypeId(
+			this.<Long>getColumnOriginalValue("prefixListTypeId"));
+		contactImpl.setSuffixListTypeId(
+			this.<Long>getColumnOriginalValue("suffixListTypeId"));
 		contactImpl.setMale(this.<Boolean>getColumnOriginalValue("male"));
 		contactImpl.setBirthday(this.<Date>getColumnOriginalValue("birthday"));
 		contactImpl.setSmsSn(this.<String>getColumnOriginalValue("smsSn"));
@@ -1252,9 +1258,9 @@ public class ContactModelImpl
 			contactCacheModel.lastName = null;
 		}
 
-		contactCacheModel.prefixId = getPrefixId();
+		contactCacheModel.prefixListTypeId = getPrefixListTypeId();
 
-		contactCacheModel.suffixId = getSuffixId();
+		contactCacheModel.suffixListTypeId = getSuffixListTypeId();
 
 		contactCacheModel.male = isMale();
 
@@ -1423,8 +1429,8 @@ public class ContactModelImpl
 	private String _firstName;
 	private String _middleName;
 	private String _lastName;
-	private long _prefixId;
-	private long _suffixId;
+	private long _prefixListTypeId;
+	private long _suffixListTypeId;
 	private boolean _male;
 	private Date _birthday;
 	private String _smsSn;
@@ -1479,8 +1485,8 @@ public class ContactModelImpl
 		_columnOriginalValues.put("firstName", _firstName);
 		_columnOriginalValues.put("middleName", _middleName);
 		_columnOriginalValues.put("lastName", _lastName);
-		_columnOriginalValues.put("prefixId", _prefixId);
-		_columnOriginalValues.put("suffixId", _suffixId);
+		_columnOriginalValues.put("prefixListTypeId", _prefixListTypeId);
+		_columnOriginalValues.put("suffixListTypeId", _suffixListTypeId);
 		_columnOriginalValues.put("male", _male);
 		_columnOriginalValues.put("birthday", _birthday);
 		_columnOriginalValues.put("smsSn", _smsSn);
@@ -1534,9 +1540,9 @@ public class ContactModelImpl
 
 		columnBitmasks.put("lastName", 8192L);
 
-		columnBitmasks.put("prefixId", 16384L);
+		columnBitmasks.put("prefixListTypeId", 16384L);
 
-		columnBitmasks.put("suffixId", 32768L);
+		columnBitmasks.put("suffixListTypeId", 32768L);
 
 		columnBitmasks.put("male", 65536L);
 

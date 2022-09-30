@@ -193,8 +193,8 @@ public class QuestionsPortlet extends MVCPortlet {
 			QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
 
 		renderRequest.setAttribute(
-			QuestionsWebKeys.CONTRIBUTED_MESSAGES,
-			_contributedMessages(themeDisplay.getScopeGroupId()));
+			QuestionsWebKeys.MINIMUM_CONTRIBUTED_MESSAGES,
+			_getMinimumContributedMessages(themeDisplay.getScopeGroupId()));
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -206,7 +206,7 @@ public class QuestionsPortlet extends MVCPortlet {
 			QuestionsConfiguration.class, properties);
 	}
 
-	private int _contributedMessages(long groupId) {
+	private int _getMinimumContributedMessages(long groupId) {
 		try {
 			MBModerationGroupConfiguration mbModerationGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(

@@ -273,12 +273,8 @@ export default withRouter(
 			if (
 				step === 0 &&
 				!!userAnswers.length &&
-				userInfo.postsNumber < context.contributedMessages
-			) {
-				setIsModerate(true);
-
-				return setStep(1);
-			}
+				userInfo.postsNumber < context.minimumContributedMessages
+			) {setIsModerate(true);}
 
 			return setStep(1);
 		};

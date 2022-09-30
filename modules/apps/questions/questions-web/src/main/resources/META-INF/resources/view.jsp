@@ -28,8 +28,6 @@
 		module="js/index.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"contributedMessages", renderRequest.getAttribute(QuestionsWebKeys.CONTRIBUTED_MESSAGES)
-			).put(
 				"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
 			).put(
 				"flagsProperties", renderRequest.getAttribute(QuestionsWebKeys.FLAGS_PROPERTIES)
@@ -43,6 +41,8 @@
 				"includeContextPath", renderRequest.getAttribute("javax.servlet.include.context_path")
 			).put(
 				"isOmniAdmin", permissionChecker.isOmniadmin()
+			).put(
+				"minimumContributedMessages", renderRequest.getAttribute(QuestionsWebKeys.MINIMUM_CONTRIBUTED_MESSAGES)
 			).put(
 				"npmResolvedPackageName", npmResolvedPackageName
 			).put(

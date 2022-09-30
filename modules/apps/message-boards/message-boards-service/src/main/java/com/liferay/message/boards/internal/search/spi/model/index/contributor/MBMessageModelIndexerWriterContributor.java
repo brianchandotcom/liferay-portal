@@ -149,7 +149,7 @@ public class MBMessageModelIndexerWriterContributor
 					mbThread.getRootMessageId()));
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			throw new SystemException(exception);
 		}
 	}
 

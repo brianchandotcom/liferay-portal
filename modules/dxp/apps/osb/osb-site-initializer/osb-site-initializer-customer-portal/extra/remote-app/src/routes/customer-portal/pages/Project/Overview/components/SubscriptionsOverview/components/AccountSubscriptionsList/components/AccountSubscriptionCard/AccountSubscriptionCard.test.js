@@ -12,28 +12,7 @@
 import {render, screen} from '@testing-library/react';
 import AccountSubscriptionCard from '.';
 
-describe('AccountSubscriptionCard', () => {
-	// it('Opens Modal Subscriptions Terms', async () => {
-	// 	const functionMock = jest.fn();
-	// 	const user = userEvent.setup();
-
-	// 	const {queryByText} = render(
-	// 		<AccountSubscriptionCard
-	// 			onClick={functionMock}
-	// 			title="Title Test"
-	// 		/>
-	// 	);
-
-	// 	await user.click(screen.getByTestId('subscriptionCard'));
-	// 	expect(baseElement).toMatchSnapshot();
-
-	// 	await waitFor(() =>
-	// 		expect(queryByText('Title Test')).toBeInTheDocument()
-	// 	);
-
-	// 	screen.debug();
-	// });
-
+describe('Account Subscription Card', () => {
 	it('Contains the Subscription Image', () => {
 		render(
 			<AccountSubscriptionCard logoPath="http://www.test.com/test_icon" />

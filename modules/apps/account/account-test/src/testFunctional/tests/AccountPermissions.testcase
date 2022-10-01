@@ -209,9 +209,9 @@ definition {
 		}
 
 		task ("Then the account user is successfully added") {
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			Accounts.goToEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
 
 			Accounts.viewAssignee(assigneeName = "userfn1");
 		}
@@ -332,9 +332,9 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			Accounts.goToEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",

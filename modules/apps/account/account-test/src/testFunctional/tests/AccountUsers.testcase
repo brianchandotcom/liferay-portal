@@ -209,9 +209,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Account with User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Manage Users",
+			rowEntry = "Account with User");
 
 		Accounts.viewAssignee(assigneeName = "edituserfn@liferay.com");
 
@@ -416,9 +416,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Filter Account User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Manage Users",
+			rowEntry = "Filter Account User");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
 

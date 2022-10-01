@@ -571,9 +571,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Assign Account User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Assign Account User");
 
 		Accounts.viewAssignee(assigneeName = "userfn");
 	}
@@ -894,9 +894,9 @@ definition {
 		task ("Then the regular user is displayed and can be assigned to the account") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
 
 			Accounts.viewAssignee(assigneeName = "userfn");
 		}
@@ -945,9 +945,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Account with Exist User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Manage Users",
+			rowEntry = "Account with Exist User");
 
 		Accounts.viewAssignee(assigneeName = "userfn");
 	}
@@ -973,9 +973,9 @@ definition {
 		task ("Remove all users from Account so they can later be assigned") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Business Account");
 
 			PortletEntry.selectAll();
 
@@ -1398,9 +1398,9 @@ definition {
 		task ("Open and click into the Assign Users Modal") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Business Account");
 
 			LexiconEntry.gotoAdd();
 
@@ -2267,9 +2267,9 @@ definition {
 		task ("Open and click into the Assign Users Modal") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Business Account");
 
 			LexiconEntry.gotoAdd();
 
@@ -2503,9 +2503,9 @@ definition {
 		task ("Then the user should not be added or listed in that account") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "AM Account");
 
 			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
 		}
@@ -2559,9 +2559,9 @@ definition {
 		task ("Then the user should not be added or listed in that account") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "AM Account");
 
 			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
 		}
@@ -2750,9 +2750,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Remove Account User");
 
 		Accounts.removeUserAsAssignee(assigneeName = "userfn");
 
@@ -2824,9 +2824,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Business Account");
 
 		for (var accountUser : list "1,3,4") {
 			LexiconEntry.selectEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
@@ -2842,9 +2842,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Business Account");
 
 		for (var accountUser : list "1,3,4") {
 			LexiconEntry.viewNoEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
@@ -3798,9 +3798,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "AM Account");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
@@ -4103,9 +4103,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Account no Domain");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Account no Domain");
 
 		for (var assigneeName : list "userfn1,userfn2") {
 			Accounts.viewAssignee(assigneeName = "${assigneeName}");
@@ -4113,9 +4113,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Account with Domain");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Account with Domain");
 
 		LexiconEntry.gotoAdd();
 
@@ -4143,9 +4143,9 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Account with Domain");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage Users",
+			rowEntry = "Account with Domain");
 
 		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
 

@@ -51,13 +51,42 @@
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("icon") %>'>
 			<liferay-ui:search-container-column-text>
-				<liferay-frontend:icon-vertical-card
-					icon="users"
-					resultRow="<%= row %>"
-					rowChecker="<%= memberSearchContainer.getRowChecker() %>"
-					subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
-					title="<%= name %>"
-				/>
+				<div class="card-type-asset form-check form-check-card form-check-top-left">
+					<div class="card">
+						<div class="aspect-ratio card-item-first">
+							<div class="custom-checkbox custom-control">
+								<label>
+
+									<%
+									RowChecker rowChecker = memberSearchContainer.getRowChecker();
+
+									rowChecker.setCssClass("custom-control-input");
+									%>
+
+									<%= rowChecker.getRowCheckBox(request, row) %>
+
+									<span class="custom-control-label"></span>
+
+									<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="users" markupView="lexicon" />
+								</label>
+							</div>
+						</div>
+
+						<div class="card-body">
+							<div class="card-row">
+								<div class="autofit-col autofit-col-expand">
+									<aui:a cssClass="card-title text-truncate" href="" onClick="" title="<%= HtmlUtil.escapeAttribute(organization.getName()) %>">
+										<%= name %>
+									</aui:a>
+
+									<div class="card-detail">
+										<%= HtmlUtil.escape(LanguageUtil.get(request, organization.getType())) %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</liferay-ui:search-container-column-text>
 		</c:when>
 		<c:when test='<%= displayStyle.equals("descriptive") %>'>

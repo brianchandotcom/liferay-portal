@@ -35,6 +35,7 @@ page import="com.liferay.password.policies.admin.web.internal.display.context.Vi
 page import="com.liferay.password.policies.admin.web.internal.frontend.taglib.clay.servlet.taglib.UserVerticalCard" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicatePasswordPolicyException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException" %><%@

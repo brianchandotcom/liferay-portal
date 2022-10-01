@@ -89,7 +89,7 @@ Map<String, Object> data = new HashMap<String, Object>();
 <aui:script use="liferay-input-move-boxes">
 	new Liferay.InputMoveBoxes(
 		{
-			contentBox: '#<%= randomNamespace + "input-move-boxes" %>',
+			contentBox: '#<%= randomNamespace %>input-move-boxes',
 
 			<c:if test="<%= leftBoxMaxItems != null %>">
 				leftBoxMaxItems: <%= leftBoxMaxItems %>,

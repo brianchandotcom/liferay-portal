@@ -244,12 +244,12 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			A.all(
 				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
 					selectedClientProfile.val() +
-					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE.name() %>]'
+					' input:checked[name=<%= liferayPortletResponse.getNamespace() %>grant-<%= GrantType.AUTHORIZATION_CODE.name() %>]'
 			).size() > 0 ||
 			A.all(
 				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
 					selectedClientProfile.val() +
-					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE_PKCE.name() %>]'
+					' input:checked[name=<%= liferayPortletResponse.getNamespace() %>grant-<%= GrantType.AUTHORIZATION_CODE_PKCE.name() %>]'
 			).size() > 0
 		);
 	};
@@ -287,7 +287,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			A.all(
 				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
 					selectedClientProfile.val() +
-					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.CLIENT_CREDENTIALS.name() %>]'
+					' input:checked[name=<%= liferayPortletResponse.getNamespace() %>grant-<%= GrantType.CLIENT_CREDENTIALS.name() %>]'
 			).size() > 0
 		);
 	};

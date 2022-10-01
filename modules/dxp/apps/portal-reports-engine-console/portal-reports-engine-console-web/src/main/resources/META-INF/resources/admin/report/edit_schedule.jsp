@@ -152,16 +152,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 											var A = AUI();
 
 											var type = A.one(
-												'#<%= liferayPortletResponse.getNamespace() + "useVariable" + HtmlUtil.escapeJS(key) %>'
+												'#<%= liferayPortletResponse.getNamespace() %>useVariable<%= HtmlUtil.escapeJS(key) %>'
 											).get('value');
 											var day = A.one(
-												'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) + "Day" %>'
+												'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Day'
 											);
 											var month = A.one(
-												'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) + "Month" %>'
+												'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Month'
 											);
 											var year = A.one(
-												'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) + "Year" %>'
+												'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Year'
 											);
 
 											if (type == 'startDate' || type == 'endDate') {

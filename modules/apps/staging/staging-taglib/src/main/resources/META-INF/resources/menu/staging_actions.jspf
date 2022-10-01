@@ -24,7 +24,7 @@
 
 		<aui:script position="inline" sandbox="<%= true %>">
 			var publishGlobalLink = document.getElementById(
-				'<portlet:namespace /><%= groupId + "publishGlobalLink" %>'
+				'<portlet:namespace /><%= groupId %>publishGlobalLink'
 			);
 
 			if (publishGlobalLink) {

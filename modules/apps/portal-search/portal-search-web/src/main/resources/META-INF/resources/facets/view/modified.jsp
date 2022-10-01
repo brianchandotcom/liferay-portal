@@ -396,6 +396,6 @@ int index = 0;
 	A.one('.<%= randomNamespace %>custom-range-toggle').on('click', (event) => {
 		event.halt();
 
-		A.one('#<%= randomNamespace + "customRange" %>').toggle();
+		A.one('#<%= randomNamespace %>customRange').toggle();
 	});
 </aui:script>

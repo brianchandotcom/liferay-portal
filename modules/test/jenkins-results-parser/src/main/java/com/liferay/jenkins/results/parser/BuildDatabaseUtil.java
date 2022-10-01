@@ -210,12 +210,19 @@ public class BuildDatabaseUtil {
 				}
 				else {
 					commands[1] = JenkinsResultsParserUtil.combine(
-						"timeout 1200 rsync -Iq \"", distNode, ":",
+						"if ! ", "timeout 1200 rsync -Iq \"", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
 						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(
 							JenkinsResultsParserUtil.getCanonicalPath(
-								buildDatabaseFile)));
+								buildDatabaseFile)),
+						"; then ", "timeout 1200 rsync -Iq ", distNode, ":",
+						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						JenkinsResultsParserUtil.escapeForBash(
+							JenkinsResultsParserUtil.getCanonicalPath(
+								buildDatabaseFile)),
+						"; fi");
 				}
 
 				Process process = JenkinsResultsParserUtil.executeBashCommands(

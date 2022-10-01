@@ -170,7 +170,8 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0"
+								"borderWidth": "0",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -193,16 +194,36 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"maxWidth": "680px"
+										"width": "680px"
 									},
-									"widgetInstance": {
-										"widgetConfig": {
-											"properties": "route=mdf-request-form"
-										},
-										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
 									}
 								},
-								"type": "Widget"
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route=mdf-request-form"
+												},
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
 							}
 						],
 						"type": "Section"

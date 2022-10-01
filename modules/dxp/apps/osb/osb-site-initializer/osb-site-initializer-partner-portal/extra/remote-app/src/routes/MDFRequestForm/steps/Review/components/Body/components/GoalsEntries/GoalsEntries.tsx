@@ -35,8 +35,8 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 		<Table
 			items={[
 				{
-					title: 'Provide a short name of the overall campaign',
-					value: mdfRequest.overallCampaignName,
+					title: 'Provide the name of the campaign',
+					value: mdfRequest.campaignName,
 				},
 				{
 					title:

@@ -18,12 +18,12 @@ export function getDTOFromMDFRequest(mdfRequest: MDFRequest): MDFRequestDTO {
 	return {
 		...getSummaryActivities(mdfRequest.activities),
 		additionalOption: mdfRequest.additionalOption,
+		campaignName: mdfRequest.campaignName,
 		country: mdfRequest.country,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			', '
 		),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
-		overallCampaignName: mdfRequest.overallCampaignName,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		r_userToMDFRequests_userId: +Liferay.ThemeDisplay.getUserId(),
 		requestStatus: mdfRequest.requestStatus,

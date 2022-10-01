@@ -23,9 +23,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Overall Campaign Name"
+				"en_US": "Campaign Name"
 			},
-			"name": "overallCampaignName",
+			"name": "campaignName",
 			"required": false,
 			"type": "Clob"
 		},

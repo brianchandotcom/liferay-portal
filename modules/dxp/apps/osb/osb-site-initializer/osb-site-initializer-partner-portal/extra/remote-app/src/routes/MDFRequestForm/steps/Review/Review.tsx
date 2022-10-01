@@ -32,7 +32,7 @@ const Review = ({
 	onCancel,
 	onPrevious,
 	onSaveAsDraft,
-}: PRMFormikPageProps & MDFRequestStepProps<MDFRequest>) => {
+}: PRMFormikPageProps & MDFRequestStepProps) => {
 	const {isSubmitting, values, ...formikHelpers} = useFormikContext<
 		MDFRequest
 	>();
@@ -61,9 +61,9 @@ const Review = ({
 					(activity: MDFRequestActivity, index: number) => (
 						<ActivityPanel
 							activity={activity}
+							campaignName={values.campaignName}
 							detail
 							key={index}
-							overallCampaignName={values.overallCampaignName}
 						>
 							<ActivityReviewEntry
 								mdfRequestActivity={activity}

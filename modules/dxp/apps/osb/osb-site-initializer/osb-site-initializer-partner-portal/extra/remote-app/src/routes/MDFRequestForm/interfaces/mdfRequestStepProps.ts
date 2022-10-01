@@ -11,21 +11,18 @@
 
 import {FormikHelpers} from 'formik';
 
+import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {StepType} from '../enums/stepType';
 
-export default interface MDFRequestStepProps<T> {
+export default interface MDFRequestStepProps {
 	onCancel: () => void;
 	onContinue?: (
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>,
+		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
 		nextStep: StepType
 	) => void;
 	onPrevious?: (previousStep: StepType) => void;
 	onSaveAsDraft?: (
-		values: T,
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
-	) => void;
-	onSubmit?: (
-		values: T,
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+		values: MDFRequest,
+		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>
 	) => void;
 }

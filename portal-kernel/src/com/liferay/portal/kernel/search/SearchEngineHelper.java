@@ -24,8 +24,6 @@ public interface SearchEngineHelper {
 
 	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
 
-	public Collection<Long> getCompanyIds();
-
 	public String[] getEntryClassNames();
 
 	public SearchEngine getSearchEngine(String searchEngineId);

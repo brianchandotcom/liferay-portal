@@ -14,10 +14,12 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.IndexAdminHelper;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Collection;
 
@@ -59,8 +61,8 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 			_searchEngineHelper.getSearchEngines();
 
 		for (SearchEngine searchEngine : searchEngines) {
-			for (long companyId : _searchEngineHelper.getCompanyIds()) {
-				searchEngine.backup(companyId, backupName);
+			for (Company company : _companyLocalService.getCompanies()) {
+				searchEngine.backup(company.getCompanyId(), backupName);
 			}
 		}
 	}
@@ -85,8 +87,8 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 			_searchEngineHelper.getSearchEngines();
 
 		for (SearchEngine searchEngine : searchEngines) {
-			for (long companyId : _searchEngineHelper.getCompanyIds()) {
-				searchEngine.removeBackup(companyId, backupName);
+			for (Company company : _companyLocalService.getCompanies()) {
+				searchEngine.removeBackup(company.getCompanyId(), backupName);
 			}
 		}
 	}
@@ -109,11 +111,14 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 			_searchEngineHelper.getSearchEngines();
 
 		for (SearchEngine searchEngine : searchEngines) {
-			for (long companyId : _searchEngineHelper.getCompanyIds()) {
-				searchEngine.restore(companyId, backupName);
+			for (Company company : _companyLocalService.getCompanies()) {
+				searchEngine.restore(company.getCompanyId(), backupName);
 			}
 		}
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;

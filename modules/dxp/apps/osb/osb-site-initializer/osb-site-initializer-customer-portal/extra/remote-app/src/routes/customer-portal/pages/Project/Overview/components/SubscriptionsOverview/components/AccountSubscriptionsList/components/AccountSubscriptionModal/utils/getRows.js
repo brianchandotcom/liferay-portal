@@ -19,23 +19,23 @@ import getDateCustomFormat from '../../../../../../../../../../../../common/util
 export default function getRows(orderItems) {
 	return orderItems?.map(({options, quantity, reducedCustomFields}) => {
 		const datesDisplay = `${getDateCustomFormat(
-			options.startDate,
+			options?.startDate,
 			FORMAT_DATE_TYPES.day2DMonth2DYearN
 		)} - ${getDateCustomFormat(
-			options.endDate,
+			options?.endDate,
 			FORMAT_DATE_TYPES.day2DMonth2DYearN
 		)}`;
 
 		return {
-			'instance-size': options.instanceSize,
-			'provisioned': reducedCustomFields.provisionedCount,
+			'instance-size': options?.instanceSize,
+			'provisioned': reducedCustomFields?.provisionedCount,
 			quantity,
 			'start-end-date': datesDisplay,
-			'subscription-term-status': reducedCustomFields.status && (
+			'subscription-term-status': reducedCustomFields?.status && (
 				<StatusTag
 					currentStatus={
 						SLA_STATUS_TYPES[
-							reducedCustomFields.status.toLowerCase()
+							reducedCustomFields?.status.toLowerCase()
 						]
 					}
 				/>

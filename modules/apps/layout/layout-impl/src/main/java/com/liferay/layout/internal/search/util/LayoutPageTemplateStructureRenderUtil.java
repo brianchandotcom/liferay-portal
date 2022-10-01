@@ -19,6 +19,8 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -26,6 +28,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,9 +56,20 @@ public class LayoutPageTemplateStructureRenderUtil {
 			return StringPool.BLANK;
 		}
 
-		return _renderLayoutData(
-			data, fragmentRendererController, httpServletRequest,
-			httpServletResponse, mode, locale);
+		StringBundler sb = new StringBundler();
+
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		_renderLayoutStructure(
+			sb, layoutStructureItem.getChildrenItemIds(),
+			fragmentRendererController, httpServletRequest, httpServletResponse,
+			layoutStructure, locale, mode);
+
+		return sb.toString();
 	}
 
 	private static String _renderFragmentEntryLink(
@@ -82,42 +96,67 @@ public class LayoutPageTemplateStructureRenderUtil {
 			fragmentRendererContext, httpServletRequest, httpServletResponse);
 	}
 
-	private static String _renderLayoutData(
-		String data, FragmentRendererController fragmentRendererController,
+	private static void _renderLayoutStructure(
+		StringBundler sb, List<String> childrenItemIds,
+		FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String mode, Locale locale) {
+		HttpServletResponse httpServletResponse,
+		LayoutStructure layoutStructure, Locale locale, String mode) {
 
-		StringBundler sb = new StringBundler();
+		for (String childrenItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
 
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
+			if (layoutStructureItem instanceof
+					ContainerStyledLayoutStructureItem) {
 
-		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
+				ContainerStyledLayoutStructureItem
+					containerStyledLayoutStructureItem =
+						(ContainerStyledLayoutStructureItem)layoutStructureItem;
 
-			if (!(layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem)) {
+				if (!containerStyledLayoutStructureItem.isIndexed()) {
+					continue;
+				}
+			}
+			else if (layoutStructureItem instanceof
+						FormStyledLayoutStructureItem) {
+
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+					(FormStyledLayoutStructureItem)layoutStructureItem;
+
+				if (!formStyledLayoutStructureItem.isIndexed()) {
+					continue;
+				}
+			}
+			else if (layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem) {
+
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+				long fragmentEntryLinkId =
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId();
+
+				if (fragmentStyledLayoutStructureItem.isIndexed() &&
+					(fragmentEntryLinkId > 0)) {
+
+					sb.append(
+						_renderFragmentEntryLink(
+							fragmentStyledLayoutStructureItem.
+								getFragmentEntryLinkId(),
+							fragmentRendererController, httpServletRequest,
+							httpServletResponse, mode, locale));
+				}
 
 				continue;
 			}
 
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <=
-					0) {
-
-				continue;
-			}
-
-			sb.append(
-				_renderFragmentEntryLink(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
-					fragmentRendererController, httpServletRequest,
-					httpServletResponse, mode, locale));
+			_renderLayoutStructure(
+				sb, layoutStructureItem.getChildrenItemIds(),
+				fragmentRendererController, httpServletRequest,
+				httpServletResponse, layoutStructure, locale, mode);
 		}
-
-		return sb.toString();
 	}
 
 }

@@ -43,10 +43,6 @@ public class SearchEngineHelperUtil {
 		return _searchEngineHelper.getSearchEngineIds();
 	}
 
-	public static SearchPermissionChecker getSearchPermissionChecker() {
-		return _searchPermissionChecker;
-	}
-
 	public static String getSearchReaderDestinationName(String searchEngineId) {
 		return StringBundler.concat(
 			DestinationNames.SEARCH_READER, StringPool.SLASH, searchEngineId);
@@ -81,9 +77,5 @@ public class SearchEngineHelperUtil {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			SearchEngineHelper.class, SearchEngineHelperUtil.class,
 			"_searchEngineHelper", false);
-	private static volatile SearchPermissionChecker _searchPermissionChecker =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			SearchPermissionChecker.class, SearchEngineHelperUtil.class,
-			"_searchPermissionChecker", false);
 
 }

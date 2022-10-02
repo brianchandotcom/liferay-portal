@@ -16,7 +16,7 @@ interface IProps {
 	rightContent: string;
 }
 
-const BudgetResumeCard = ({
+const ResumeCard = ({
 	className,
 	leftContent,
 	rightContent,
@@ -37,4 +37,4 @@ const BudgetResumeCard = ({
 	</div>
 );
 
-export default BudgetResumeCard;
+export default ResumeCard;

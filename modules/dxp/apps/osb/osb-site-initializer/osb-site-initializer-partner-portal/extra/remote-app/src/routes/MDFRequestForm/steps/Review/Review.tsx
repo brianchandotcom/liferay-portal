@@ -14,13 +14,13 @@ import {useFormikContext} from 'formik';
 import {useMemo} from 'react';
 
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
+import ResumeCard from '../../../../common/components/ResumeCard';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import getTotalBudget from '../../../../common/utils/getTotalBudget';
 import getTotalMDFRequest from '../../../../common/utils/getTotalMDFRequest';
 import ActivityPanel from '../../components/ActivityPanel';
-import BudgetResumeCard from '../../components/BudgetResumeCard';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Body from './components/Body';
@@ -76,20 +76,20 @@ const Review = ({
 			<Body>
 				<div>
 					<div className="my-3">
-						<BudgetResumeCard
+						<ResumeCard
 							leftContent="Total Budget"
 							rightContent={getIntlNumberFormat().format(
 								totalBudget
 							)}
 						/>
 
-						<BudgetResumeCard
+						<ResumeCard
 							className="mt-3"
 							leftContent="Claim Percent"
 							rightContent={`${0.5 * 100}%`}
 						/>
 
-						<BudgetResumeCard
+						<ResumeCard
 							className="mt-3"
 							leftContent="Total MDF Requested Amount"
 							rightContent={getIntlNumberFormat().format(

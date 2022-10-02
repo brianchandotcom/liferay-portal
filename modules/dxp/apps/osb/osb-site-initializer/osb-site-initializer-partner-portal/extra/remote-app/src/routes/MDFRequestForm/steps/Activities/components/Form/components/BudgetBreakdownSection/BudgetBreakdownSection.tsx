@@ -16,9 +16,9 @@ import React, {useCallback} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import ResumeCard from '../../../../../../../../common/components/ResumeCard';
 import MDFRequestBudget from '../../../../../../../../common/interfaces/mdfRequestBudget';
 import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
-import BudgetResumeCard from '../../../../../../components/BudgetResumeCard';
 import getPicklistOptions from '../../../../../../utils/getPicklistOptions';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
 import getNewBudget from './utils/getNewBudget';
@@ -130,12 +130,12 @@ const BudgetBreakdownSection = ({
 			</div>
 
 			<div className="my-3">
-				<BudgetResumeCard
+				<ResumeCard
 					leftContent="Total cost"
 					rightContent={getIntlNumberFormat().format(budgetsAmount)}
 				/>
 
-				<BudgetResumeCard
+				<ResumeCard
 					className="mt-3"
 					leftContent="Claim Percent"
 					rightContent={`${0.5 * 100}%`}

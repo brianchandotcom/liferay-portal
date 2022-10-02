@@ -36,24 +36,20 @@ public abstract class BaseAssetsInfoCollectionProvider {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true);
+		assetEntryQuery.setClassNameIds(
+			ArrayUtil.filter(
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					companyId, true),
+				availableClassNameId -> {
+					Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+						portal.getClassName(availableClassNameId));
 
-		availableClassNameIds = ArrayUtil.filter(
-			availableClassNameIds,
-			availableClassNameId -> {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					portal.getClassName(availableClassNameId));
+					if (indexer == null) {
+						return false;
+					}
 
-				if (indexer == null) {
-					return false;
-				}
-
-				return true;
-			});
-
-		assetEntryQuery.setClassNameIds(availableClassNameIds);
-
+					return true;
+				}));
 		assetEntryQuery.setEnablePermissions(true);
 		assetEntryQuery.setGroupIds(new long[] {groupId});
 

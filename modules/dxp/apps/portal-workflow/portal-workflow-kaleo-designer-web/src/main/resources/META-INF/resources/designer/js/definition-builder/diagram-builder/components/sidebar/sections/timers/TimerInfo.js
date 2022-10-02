@@ -28,16 +28,16 @@ const TimerInfo = ({
 	useEffect(() => {
 		if (timerDescription !== undefined || timerName !== undefined) {
 			setTimerSections((previousSections) => {
-				const updatedSectios = [...previousSections];
+				const updatedSections = [...previousSections];
 				const section = previousSections.find(
 					({identifier}) => identifier === timerIdentifier
 				);
 
 				section.description = timerDescription;
 				section.name = timerName;
-				updatedSectios.splice(timersIndex, 1, section);
+				updatedSections.splice(timersIndex, 1, section);
 
-				return updatedSectios;
+				return updatedSections;
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

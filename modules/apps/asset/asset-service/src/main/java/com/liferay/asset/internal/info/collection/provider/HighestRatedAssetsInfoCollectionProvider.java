@@ -43,7 +43,7 @@ public class HighestRatedAssetsInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			"ratings", "DESC", collectionQuery.getPagination());
+			"ratings", collectionQuery.getPagination());
 
 		try {
 			return InfoPage.of(

@@ -53,7 +53,7 @@ public class RecentContentInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			Field.MODIFIED_DATE, "DESC", collectionQuery.getPagination());
+			Field.MODIFIED_DATE, collectionQuery.getPagination());
 
 		try {
 			SearchContext searchContext = _getSearchContext();

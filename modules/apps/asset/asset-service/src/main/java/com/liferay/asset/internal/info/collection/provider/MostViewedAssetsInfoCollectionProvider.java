@@ -43,7 +43,7 @@ public class MostViewedAssetsInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			"viewCount", "DESC", collectionQuery.getPagination());
+			"viewCount", collectionQuery.getPagination());
 
 		try {
 			return InfoPage.of(

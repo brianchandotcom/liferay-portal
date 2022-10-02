@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseAssetsInfoCollectionProvider {
 
 	protected AssetEntryQuery getAssetEntryQuery(
-		String orderByCol, String orderByType, Pagination pagination) {
+		String orderByCol, Pagination pagination) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -69,7 +69,7 @@ public abstract class BaseAssetsInfoCollectionProvider {
 		}
 
 		assetEntryQuery.setOrderByCol1(orderByCol);
-		assetEntryQuery.setOrderByType1(orderByType);
+		assetEntryQuery.setOrderByType1("DESC");
 		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
 		assetEntryQuery.setOrderByType2("DESC");
 

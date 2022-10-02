@@ -52,8 +52,13 @@ public class RecentContentInfoCollectionProvider
 	public InfoPage<AssetEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			Field.MODIFIED_DATE, collectionQuery.getPagination());
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			collectionQuery.getPagination(),
+			new com.liferay.info.sort.Sort(Field.MODIFIED_DATE, true));
 
 		try {
 			SearchContext searchContext = _getSearchContext();

@@ -14,23 +14,16 @@
 
 package com.liferay.asset.internal.info.collection.provider;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -45,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = RelatedInfoItemCollectionProvider.class)
 public class RelatedAssetsRelatedInfoItemCollectionProvider
+	extends BaseAssetsInfoCollectionProvider
 	implements RelatedInfoItemCollectionProvider<AssetEntry, AssetEntry> {
 
 	@Override
@@ -66,7 +60,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
 
 		try {
-			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(),
 				collectionQuery.getPagination(), sortOptional.orElse(null));
 
@@ -88,58 +82,9 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 		return _language.get(locale, "related-assets");
 	}
 
-	private AssetEntryQuery _getAssetEntryQuery(
-			long companyId, long groupId, Pagination pagination, Sort sort)
-		throws PortalException {
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		assetEntryQuery.setClassNameIds(
-			ArrayUtil.filter(
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					companyId, true),
-				availableClassNameId -> {
-					Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-						_portal.getClassName(availableClassNameId));
-
-					if (indexer == null) {
-						return false;
-					}
-
-					return true;
-				}));
-		assetEntryQuery.setEnablePermissions(true);
-
-		if (pagination != null) {
-			assetEntryQuery.setEnd(pagination.getEnd());
-		}
-
-		assetEntryQuery.setGroupIds(new long[] {groupId});
-		assetEntryQuery.setOrderByCol1(
-			(sort != null) ? sort.getFieldName() : Field.MODIFIED_DATE);
-		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
-		assetEntryQuery.setOrderByType1(
-			(sort != null) ? _getOrderByType(sort) : "DESC");
-		assetEntryQuery.setOrderByType2("DESC");
-
-		if (pagination != null) {
-			assetEntryQuery.setStart(pagination.getStart());
-		}
-
-		return assetEntryQuery;
-	}
-
-	private String _getOrderByType(Sort sort) {
-		if (sort.isReverse()) {
-			return "DESC";
-		}
-
-		return "ASC";
-	}
-
 	private int _getTotalCount(AssetEntry assetEntry, Sort sort) {
 		try {
-			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(), null, sort);
 
 			assetEntryQuery.setLinkedAssetEntryIds(
@@ -157,8 +102,5 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

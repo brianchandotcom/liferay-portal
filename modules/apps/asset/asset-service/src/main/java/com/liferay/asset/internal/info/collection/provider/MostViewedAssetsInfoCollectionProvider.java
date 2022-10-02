@@ -20,9 +20,12 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -42,8 +45,12 @@ public class MostViewedAssetsInfoCollectionProvider
 	public InfoPage<AssetEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			"viewCount", collectionQuery.getPagination());
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			collectionQuery.getPagination(), new Sort("viewCount", true));
 
 		try {
 			return InfoPage.of(

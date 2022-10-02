@@ -17,11 +17,10 @@ package com.liferay.asset.internal.info.collection.provider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -33,16 +32,12 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseAssetsInfoCollectionProvider {
 
 	protected AssetEntryQuery getAssetEntryQuery(
-		String orderByCol, Pagination pagination) {
+		long companyId, long groupId, Pagination pagination, Sort sort) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				serviceContext.getCompanyId(), true);
+			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true);
 
 		availableClassNameIds = ArrayUtil.filter(
 			availableClassNameIds,
@@ -60,17 +55,18 @@ public abstract class BaseAssetsInfoCollectionProvider {
 		assetEntryQuery.setClassNameIds(availableClassNameIds);
 
 		assetEntryQuery.setEnablePermissions(true);
-		assetEntryQuery.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
+		assetEntryQuery.setGroupIds(new long[] {groupId});
 
 		if (pagination != null) {
 			assetEntryQuery.setStart(pagination.getStart());
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
-		assetEntryQuery.setOrderByCol1(orderByCol);
-		assetEntryQuery.setOrderByType1("DESC");
+		assetEntryQuery.setOrderByCol1(
+			(sort != null) ? sort.getFieldName() : Field.MODIFIED_DATE);
 		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
+		assetEntryQuery.setOrderByType1(
+			(sort != null) ? _getOrderByType(sort) : "DESC");
 		assetEntryQuery.setOrderByType2("DESC");
 
 		return assetEntryQuery;
@@ -78,5 +74,13 @@ public abstract class BaseAssetsInfoCollectionProvider {
 
 	@Reference
 	protected Portal portal;
+
+	private String _getOrderByType(Sort sort) {
+		if (sort.isReverse()) {
+			return "DESC";
+		}
+
+		return "ASC";
+	}
 
 }

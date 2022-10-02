@@ -22,6 +22,7 @@ import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFi
 import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
+import com.liferay.notification.exception.NotificationTemplateTypeException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateAttachment;
@@ -593,6 +594,16 @@ public class NotificationTemplateLocalServiceImpl
 
 				throw new NotificationTemplateAttachmentObjectFieldIdException();
 			}
+		}
+
+		if (type == null) {
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162133"))) {
+
+				throw new NotificationTemplateTypeException();
+			}
+
+			type = "email";
 		}
 
 		if (Objects.equals("userNotification", type)) {

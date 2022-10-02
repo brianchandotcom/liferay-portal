@@ -62,12 +62,12 @@ public class RecentContentInfoCollectionProvider
 				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
-			Long count = _assetHelper.searchCount(
+			long count = _assetHelper.searchCount(
 				searchContext, assetEntryQuery);
 
 			return InfoPage.of(
 				_assetHelper.getAssetEntries(hits),
-				collectionQuery.getPagination(), count.intValue());
+				collectionQuery.getPagination(), (int)count);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,135 +10,60 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import {useFormikContext} from 'formik';
-import {useEffect} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 
-import PRMForm from '../../common/components/PRMForm';
 import PRMFormik from '../../common/components/PRMFormik';
-import PRMFormikPageProps from '../../common/components/PRMFormik/interfaces/prmFormikPageProps';
+import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFClaim from '../../common/interfaces/mdfClaim';
-import mdfClaimProps from '../../common/interfaces/mdfClaimProps';
-import useGetMDFRequest from '../../common/services/liferay/object/mdf-requests/useGetMDFRequest';
-import useGetMDFRequestToActivities from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestToActivities';
-import getIntlNumberFormat from '../../common/utils/getIntlNumberFormat';
-import isObjectEmpty from '../MDFRequestForm/utils/isObjectEmpty';
-import ClaimPanel from './components/ClaimPanel';
-import ClaimTotalResumeCard from './components/ClaimTotalResumeCard';
-import getTotalBudgetByClaim from './utils/getTotalBudgetByClaim';
+import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
+import MDFClaimPage from './components/MDFClaimPage';
 
-const MDFClaimForm = ({
-	onSaveAsDraft,
-}: PRMFormikPageProps & mdfClaimProps<MDFClaim>) => {
-	const {
-		errors,
-		isSubmitting,
-		isValid,
-		setFieldValue,
-		values,
-		...formikHelpers
-	} = useFormikContext<MDFClaim>();
+const getInitialFormValues = (
+	totalrequestedAmount?: number,
+	activitiesDTO?: MDFRequestActivityDTO[]
+): MDFClaim => {
+	return {
+		activities: activitiesDTO?.map((activity) => ({
+			budgets: activity.activityToBudgets?.map((budget) => ({
+				claimAmount: budget.cost,
+				expenseName: budget.expense.name,
+				invoices: [],
+			})),
+			documents: [],
+			finished: false,
+			id: activity.id,
+			metrics: '',
+			name: activity.name,
+			totalCost: activity.totalCostOfExpense,
+		})),
+		totalClaimAmount: totalrequestedAmount,
+	};
+};
 
-	const MDF_ID = 45314;
+const MDFClaimForm = () => {
+	const {data: mdfRequest, isValidating} = useGetMDFRequestById(46006);
 
-	const mdfRequest = useGetMDFRequest(MDF_ID)?.data;
-
-	const activities = useGetMDFRequestToActivities(MDF_ID)?.data;
-
-	const partnerLevel = 0.5;
-
-	useEffect(() => {
-		if (values.mdfClaimActivities) {
-			setFieldValue(
-				'totalClaimAmount',
-				getTotalBudgetByClaim(values.mdfClaimActivities) * partnerLevel
-			);
-		}
-	}, [values.mdfClaimActivities, setFieldValue]);
+	if (!mdfRequest || isValidating) {
+		return <ClayLoadingIndicator />;
+	}
 
 	return (
-		<PRMForm className="mb-4" name="NEW" title="Reimbursement Claim">
-			<PRMForm.Section
-				subtitle="Check each expense you would like claim and please provide proof of performance for each of the selected expenses."
-				title={mdfRequest?.overallCampaign}
-			>
-				<h5 className="my-4">Upload Proof of Performance Documents </h5>
-
-				{activities &&
-					activities.items.map((activity, index) => (
-						<ClaimPanel
-							activity={activity}
-							currentActivityIndex={index}
-							key={`${activity.id}-${index}`}
-							mdfClaim={values}
-							mdfRequest={mdfRequest}
-							setFieldValue={setFieldValue}
-						/>
-					))}
-			</PRMForm.Section>
-
-			<PRMForm.Section
-				subtitle="Total Claim is the reimbursement of your expenses, and is up to the Total MDF Requested. In case need to claim more than the MDF Requested you need to apply for a  New MDF Request."
-				title="Total Claim"
-			>
-				<div className="my-3">
-					<ClaimTotalResumeCard
-						leftContent="Total MDF Requested Amount"
-						rightContent={getIntlNumberFormat().format(
-							mdfRequest?.totalMDFRequestAmount || 0
-						)}
-					/>
-				</div>
-
-				<PRMFormik.Field
-					component={PRMForm.InputCurrency}
-					label="Total Claim Amount"
-					name="totalClaimAmount"
-					onAccept={(value: number) =>
-						setFieldValue('totalClaimAmount', value)
-					}
-					required
-				/>
-
-				<PRMFormik.Field
-					component={PRMForm.InputFile}
-					label="Reimbursement Invoice"
-					mdfRequestId={mdfRequest?.id}
-					name="mdfClaimDocuments.claims[0.reimbursementInvoice]"
-					required
-					setFieldValue={setFieldValue}
-					typeDocument="reimbursementInvoice"
-				/>
-			</PRMForm.Section>
-
-			<PRMForm.Footer>
-				<div className="d-flex mr-auto">
-					<ClayButton
-						className="pl-0"
-						disabled={isSubmitting}
-						displayType={null}
-						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
-					>
-						Save as Draft
-					</ClayButton>
-				</div>
-
-				<div>
-					<ClayButton className="mr-4" displayType="secondary">
-						Cancel
-					</ClayButton>
-
-					<ClayButton
-						disabled={
-							(!isValid && !isObjectEmpty(errors)) || isSubmitting
-						}
-						type="submit"
-					>
-						Submit
-					</ClayButton>
-				</div>
-			</PRMForm.Footer>
-		</PRMForm>
+		<PRMFormik
+			initialValues={getInitialFormValues(
+				mdfRequest.totalMDFRequestAmount,
+				mdfRequest.mdfRequestToActivities
+			)}
+			onSubmit={(values, formikHelpers) =>
+				// eslint-disable-next-line no-console
+				console.log(values, formikHelpers)
+			}
+		>
+			<MDFClaimPage
+				mdfRequest={mdfRequest}
+				onCancel={() => console.log('canceled')}
+				onSaveAsDraft={(values, formik) => console.log(values, formik)}
+			/>
+		</PRMFormik>
 	);
 };
 

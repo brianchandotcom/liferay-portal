@@ -9,4 +9,10 @@
  * distribution rights of the Software.
  */
 
-export {default} from './ClaimTotalResumeCard';
+import LiferayObject from './liferayObject';
+import LiferayPicklist from './liferayPicklist';
+
+export default interface MDFClaimDocument extends Partial<LiferayObject> {
+	type: LiferayPicklist;
+	url: string;
+}

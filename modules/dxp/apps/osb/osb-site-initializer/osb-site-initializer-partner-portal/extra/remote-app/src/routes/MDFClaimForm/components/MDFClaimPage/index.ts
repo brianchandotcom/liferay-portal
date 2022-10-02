@@ -9,16 +9,4 @@
  * distribution rights of the Software.
  */
 
-import useSWR from 'swr';
-
-import {Liferay} from '../..';
-import MDFRequest from '../../../../interfaces/mdfRequest';
-import {LiferayAPIs} from '../../common/enums/apis';
-import liferayFetcher from '../../common/utils/fetcher';
-
-export default function useGetMDFRequest(id: number) {
-	return useSWR(
-		[`/o/${LiferayAPIs.OBJECT}/mdfrequests/${id}`, Liferay.authToken],
-		(url, token) => liferayFetcher<MDFRequest>(url, token)
-	);
-}
+export {default} from './MDFClaimPage';

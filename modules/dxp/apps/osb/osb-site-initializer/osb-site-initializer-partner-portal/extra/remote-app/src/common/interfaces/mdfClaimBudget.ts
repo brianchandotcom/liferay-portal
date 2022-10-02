@@ -10,9 +10,10 @@
  */
 
 import LiferayObject from './liferayObject';
-import LiferayPicklist from './liferayPicklist';
+import MDFClaimDocument from './mdfClaimDocument';
 
 export default interface MDFClaimBudget extends Partial<LiferayObject> {
-	cost?: number;
-	expense?: LiferayPicklist;
+	claimAmount: number;
+	expenseName?: string;
+	invoices: MDFClaimDocument[];
 }

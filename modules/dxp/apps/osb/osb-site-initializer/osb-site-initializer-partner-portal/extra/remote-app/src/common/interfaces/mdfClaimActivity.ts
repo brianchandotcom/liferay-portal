@@ -11,9 +11,13 @@
 
 import LiferayObject from './liferayObject';
 import MDFClaimBudget from './mdfClaimBudget';
+import MDFClaimDocument from './mdfClaimDocument';
 
 export default interface MDFClaimActivity extends Partial<LiferayObject> {
-	checkedPanel: boolean;
-	mdfClaimBudgets: MDFClaimBudget[];
+	budgets?: MDFClaimBudget[];
+	documents: MDFClaimDocument[];
+	finished: boolean;
 	metrics: string;
+	name: string;
+	totalCost: number;
 }

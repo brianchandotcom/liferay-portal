@@ -16,6 +16,7 @@ import {SWRConfig} from 'swr';
 import {AppRouteType} from './common/enums/appRouteType';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import handleError from './common/utils/handleError';
+import MDFClaimForm from './routes/MDFClaimForm';
 import MDFRequestForm from './routes/MDFRequestForm';
 import MDFRequestList from './routes/MDFRequestList';
 
@@ -30,6 +31,7 @@ type AppRouteComponent = {
 const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_REQUEST_FORM]: <MDFRequestForm />,
 	[AppRouteType.MDF_REQUEST_LIST]: <MDFRequestList />,
+	[AppRouteType.MDF_CLAIM_FORM]: <MDFClaimForm />,
 };
 
 const PartnerPortalApp = ({route}: IProps) => {

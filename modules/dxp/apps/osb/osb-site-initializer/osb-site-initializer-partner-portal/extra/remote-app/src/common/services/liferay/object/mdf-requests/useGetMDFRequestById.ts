@@ -12,18 +12,18 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
+import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
 import {LiferayAPIs} from '../../common/enums/apis';
-import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetMDFRequestToActivities(id: number) {
+export default function useGetMDFRequestById(id: number | undefined) {
 	return useSWR(
-		[
-			`/o/${LiferayAPIs.OBJECT}/mdfrequests/${id}/mdfRequestToActivities`,
-			Liferay.authToken,
-		],
-		(url, token) =>
-			liferayFetcher<LiferayItems<MDFRequestActivity[]>>(url, token)
+		id
+			? [
+					`/o/${LiferayAPIs.OBJECT}/mdfrequests/${id}?nestedFields=mdfRequestToActivities,activityToBudgets&nestedFieldsDepth=2`,
+					Liferay.authToken,
+			  ]
+			: null,
+		(url, token) => liferayFetcher<MDFRequestDTO>(url, token)
 	);
 }

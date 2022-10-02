@@ -11,13 +11,12 @@
 
 import {FormikHelpers} from 'formik';
 
-export default interface mdfClaimProps<T> {
-	onSaveAsDraft?: (
-		values: T,
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
-	) => void;
-	onSubmit?: (
-		values: T,
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+import MDFClaim from './mdfClaim';
+
+export default interface MDFClaimProps {
+	onCancel: () => void;
+	onSaveAsDraft: (
+		values: MDFClaim,
+		formikHelpers: Omit<FormikHelpers<MDFClaim>, 'setFieldValue'>
 	) => void;
 }

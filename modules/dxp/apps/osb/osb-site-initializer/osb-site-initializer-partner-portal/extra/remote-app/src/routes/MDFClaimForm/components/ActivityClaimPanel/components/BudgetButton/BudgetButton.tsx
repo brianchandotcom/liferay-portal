@@ -11,37 +11,20 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
 
-import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
-import MDFRequestBudget from '../../../../../../common/interfaces/mdfRequestBudget';
+import MDFClaimBudget from '../../../../../../common/interfaces/mdfClaimBudget';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
 
 interface IProps {
-	budget: MDFRequestBudget;
-	cost?: number;
-	mdfClaim: MDFClaim;
+	budget: MDFClaimBudget;
+	onClick: () => void;
 }
 
 const BudgetButton = ({
 	budget,
-	cost,
-	mdfClaim,
 	onClick,
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => {
-	const [checkInvoice, setCheckInvoice] = useState<boolean>(false);
-
-	useEffect(() => {
-		if (mdfClaim.mdfClaimDocuments.budgets.length) {
-			const resultDocument = mdfClaim.mdfClaimDocuments.budgets.find(
-				(element) => element.thirdPartyInvoices.budgetId === budget.id
-			);
-
-			if (resultDocument) {
-				setCheckInvoice(true);
-			}
-		}
-	}, [mdfClaim.mdfClaimDocuments.budgets, budget.id]);
+	const hasInvoices = budget.invoices.length;
 
 	return (
 		<div
@@ -54,13 +37,13 @@ const BudgetButton = ({
 				<div className="align-items-center d-flex justify-content-between">
 					<div>
 						<div className="font-weight-bold text-neutral-10 text-paragraph">
-							{budget?.expense?.name}
+							{budget.expenseName}
 						</div>
 
 						<div
 							className={classNames({
-								'text-neutral-7': !checkInvoice,
-								'text-success': checkInvoice,
+								'text-neutral-7': !hasInvoices,
+								'text-success': hasInvoices,
 							})}
 						>
 							<ClayIcon
@@ -68,13 +51,13 @@ const BudgetButton = ({
 								symbol="check-circle-full"
 							/>
 
-							{checkInvoice ? 'Invoice Added' : 'Pending Invoice'}
+							{hasInvoices ? 'Invoice Added' : 'Pending Invoice'}
 						</div>
 					</div>
 
 					<div>
 						<div className="font-weight-bold text-neutral-10 text-paragraph">
-							{getIntlNumberFormat().format(cost ?? 0)}
+							{getIntlNumberFormat().format(budget.claimAmount)}
 						</div>
 					</div>
 				</div>

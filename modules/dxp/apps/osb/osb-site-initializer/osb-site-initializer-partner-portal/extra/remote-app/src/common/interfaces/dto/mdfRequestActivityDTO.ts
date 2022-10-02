@@ -10,6 +10,7 @@
  */
 
 import MDFRequestActivity from '../mdfRequestActivity';
+import MDFRequestBudgetDTO from './mdfRequestBudgetDTO';
 
 export default interface MDFRequestActivityDTO
 	extends Omit<
@@ -20,6 +21,7 @@ export default interface MDFRequestActivityDTO
 		| 'tactic'
 		| 'typeActivity'
 	> {
+	activityToBudgets?: MDFRequestBudgetDTO[];
 	leadFollowUpStrategies?: string;
 	r_mdfRequestToActivities_c_mdfRequestId?: number;
 	r_tacticToActivities_c_tacticId?: number;

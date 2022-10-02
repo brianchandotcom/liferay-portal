@@ -12,7 +12,7 @@
 interface IProps {
 	children?: React.ReactNode;
 	subtitle?: string;
-	title?: string;
+	title: string;
 }
 
 const Section = ({children, subtitle, title}: IProps) => (

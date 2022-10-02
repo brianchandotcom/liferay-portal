@@ -70,7 +70,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 			return InfoPage.of(
 				_assetEntryService.getEntries(assetEntryQuery),
 				collectionQuery.getPagination(),
-				() -> _getTotalCount(assetEntry, sortOptional.orElse(null)));
+				_assetEntryService.getEntriesCount(assetEntryQuery));
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
@@ -80,21 +80,6 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "related-assets");
-	}
-
-	private int _getTotalCount(AssetEntry assetEntry, Sort sort) {
-		try {
-			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-				assetEntry.getCompanyId(), assetEntry.getGroupId(), null, sort);
-
-			assetEntryQuery.setLinkedAssetEntryIds(
-				new long[] {assetEntry.getEntryId()});
-
-			return _assetEntryService.getEntriesCount(assetEntryQuery);
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
 	}
 
 	@Reference

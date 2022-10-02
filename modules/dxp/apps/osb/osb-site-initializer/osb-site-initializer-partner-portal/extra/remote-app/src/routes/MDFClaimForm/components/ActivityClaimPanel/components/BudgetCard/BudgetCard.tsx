@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
@@ -20,23 +21,21 @@ interface IProps {
 	onClick: () => void;
 }
 
-const BudgetButton = ({
+const BudgetCard = ({
 	budget,
 	onClick,
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => {
 	const hasInvoices = budget.invoices.length;
 
 	return (
-		<div
-			className={classNames(
-				'bg-neutral-0 rounded shadow-lg d-flex justify-content-between p-3 align-items-center mb-2'
-			)}
+		<ClayCard
+			className="border border-neutral-10 card-horizontal card-interactive shadow-none"
 			onClick={onClick}
 		>
-			<div className="w-100">
-				<div className="align-items-center d-flex justify-content-between">
-					<div>
-						<div className="font-weight-bold text-neutral-10 text-paragraph">
+			<ClayCard.Body className="m-1 p-2">
+				<ClayCard.Row className="justify-content-between">
+					<div className="d-flex flex-row">
+						<div className="font-weight-bold mr-3 text-neutral-10 text-paragraph">
 							{budget.expenseName}
 						</div>
 
@@ -47,23 +46,25 @@ const BudgetButton = ({
 							})}
 						>
 							<ClayIcon
-								className="mr-2"
-								symbol="check-circle-full"
+								className="mr-1"
+								symbol={
+									hasInvoices
+										? 'check-circle-full'
+										: 'staging'
+								}
 							/>
 
 							{hasInvoices ? 'Invoice Added' : 'Pending Invoice'}
 						</div>
 					</div>
 
-					<div>
-						<div className="font-weight-bold text-neutral-10 text-paragraph">
-							{getIntlNumberFormat().format(budget.claimAmount)}
-						</div>
+					<div className="font-weight-bold text-neutral-10 text-paragraph">
+						{getIntlNumberFormat().format(budget.claimAmount)}
 					</div>
-				</div>
-			</div>
-		</div>
+				</ClayCard.Row>
+			</ClayCard.Body>
+		</ClayCard>
 	);
 };
 
-export default BudgetButton;
+export default BudgetCard;

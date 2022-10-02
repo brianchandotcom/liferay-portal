@@ -469,71 +469,69 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 									data.put("type", repositoryEntryBrowserDisplayContext.getType(latestFileVersion));
 									data.put("url", DLURLHelperUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
 									data.put("value", ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay));
+
+									String cssClass = "item-preview form-check form-check-card";
+
+									if (repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion)) {
+										cssClass += " item-preview-editable";
+									}
+
+									if (Validator.isNull(thumbnailSrc)) {
+										cssClass += " file-card";
+									}
+									else {
+										cssClass += " image-card";
+									}
 									%>
 
 									<liferay-ui:search-container-column-text>
-										<c:choose>
-											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
-												<liferay-frontend:icon-vertical-card
-													actionJsp='<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
-													actionJspServletContext="<%= application %>"
-													cardCssClass="card-interactive"
-													cssClass='<%= (repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) ? "item-preview-editable" : StringPool.BLANK) + " item-preview file-card form-check form-check-card" %>'
-													data="<%= data %>"
-													icon="documents-and-media"
-													title="<%= title %>"
-												>
-													<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
-														<liferay-frontend:vertical-card-footer>
-															<span class="text-secondary">
-																<clay:icon
-																	symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
-																/>
+										<div class="card-type-asset <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
+											<div class="card card-interactive">
+												<div class="aspect-ratio card-item-first">
+													<c:choose>
+														<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
+															<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="documents-and-media" markupView="lexicon" />
+														</c:when>
+														<c:otherwise>
+															<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />
+														</c:otherwise>
+													</c:choose>
 
-																<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
-															</span>
-														</liferay-frontend:vertical-card-footer>
-													</c:if>
+													<liferay-document-library:mime-type-sticker
+														cssClass="sticker-bottom-left sticker-secondary"
+														fileVersion="<%= latestFileVersion %>"
+													/>
+												</div>
 
-													<liferay-frontend:vertical-card-sticker-bottom>
-														<liferay-document-library:mime-type-sticker
-															cssClass="sticker-bottom-left sticker-secondary"
-															fileVersion="<%= latestFileVersion %>"
-														/>
-													</liferay-frontend:vertical-card-sticker-bottom>
-												</liferay-frontend:icon-vertical-card>
-											</c:when>
-											<c:otherwise>
-												<liferay-frontend:vertical-card
-													actionJsp='<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
-													actionJspServletContext="<%= application %>"
-													cardCssClass="card-interactive"
-													cssClass='<%= (repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) ? "item-preview-editable" : StringPool.BLANK) + " item-preview form-check form-check-card image-card" %>'
-													data="<%= data %>"
-													imageUrl="<%= thumbnailSrc %>"
-													title="<%= title %>"
-												>
-													<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
-														<liferay-frontend:vertical-card-footer>
-															<span class="text-secondary">
-																<clay:icon
-																	symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
-																/>
+												<div class="card-body">
+													<div class="card-row">
+														<div class="autofit-col autofit-col-expand">
+															<aui:a cssClass="card-title text-truncate" href="" onClick="" title="<%= HtmlUtil.escapeAttribute(title) %>">
+																<%= HtmlUtil.escape(title) %>
+															</aui:a>
 
-																<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
-															</span>
-														</liferay-frontend:vertical-card-footer>
-													</c:if>
+															<div class="card-detail">
+																<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
+																	<span class="text-secondary">
+																		<clay:icon
+																			symbol="<%= repositoryEntryBrowserDisplayContext.getGroupCssIcon(fileEntry.getGroupId()) %>"
+																		/>
 
-													<liferay-frontend:vertical-card-sticker-bottom>
-														<liferay-document-library:mime-type-sticker
-															cssClass="sticker-bottom-left sticker-secondary"
-															fileVersion="<%= latestFileVersion %>"
-														/>
-													</liferay-frontend:vertical-card-sticker-bottom>
-												</liferay-frontend:vertical-card>
-											</c:otherwise>
-										</c:choose>
+																		<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
+																	</span>
+																</c:if>
+															</div>
+														</div>
+
+														<c:if test="<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) %>">
+															<div class="autofit-col">
+																<liferay-util:include page="/repository_entry_browser/action_button_preview.jsp" servletContext="<%= application %>" />
+															</div>
+														</c:if>
+													</div>
+												</div>
+											</div>
+										</div>
 									</liferay-ui:search-container-column-text>
 								</c:if>
 							</c:when>

@@ -34,6 +34,8 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		content = _combineJavaSourceBlocks(fileName, content);
 
+		content = _formatJspExpressionTag(content);
+
 		content = _formatLineBreak(fileName, content);
 
 		content = _fixEmptyJavaSourceTag(content);
@@ -204,6 +206,20 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		return content;
 	}
 
+	private String _formatJspExpressionTag(String content) {
+		Matcher matcher = _jspExpressionTagPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(), "<portlet:namespace />",
+					matcher.start());
+			}
+		}
+
+		return content;
+	}
+
 	private String _formatLineBreak(String fileName, String content) {
 		Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
 
@@ -262,6 +278,8 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		"(<%=)(\n\t*)(((?!%>).)*)(\n\t*)(%>)");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
+	private static final Pattern _jspExpressionTagPattern = Pattern.compile(
+		"<%= liferayPortletResponse\\.getNamespace\\(\\) %>");
 	private static final Pattern _portletNamespacePattern = Pattern.compile(
 		"=([\"'])<portlet:namespace />(\\w+\\(.*?)\\1");
 

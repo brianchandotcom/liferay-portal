@@ -1230,6 +1230,14 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
+		if (isSet(assertInactive)) {
+			AssertTextNotEquals(
+				key_fieldLabel = "Term",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "${assertInactive}");
+		}
+
 		Select(
 			key_fieldLabel = "Term",
 			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",

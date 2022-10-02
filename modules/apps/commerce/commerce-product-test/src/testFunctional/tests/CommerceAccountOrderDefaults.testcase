@@ -606,6 +606,206 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9725. A default delivery term that has been disabled should not be displayed at checkout."
+	@priority = "4"
+	test CannotUseDisabledDefaultDeliveryTerm {
+		task ("Given three delivery term entries with different priorities") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "3",
+				termsType = "Delivery");
+		}
+
+		task ("and two delivery terms are linked to a payment method") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+
+			SelectFrame.selectFrameTop();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 2",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("and the delivery term is set as the default for the Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultCommerceTermsEntry(
+				channelEntry = "Minium Portal",
+				termEntry = "Delivery Term 2",
+				termType = "Delivery");
+		}
+
+		task ("and the default delivery term is deactivated") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommercePaymentTerms.gotoEntryMenuItem(
+				menuItem = "Edit",
+				termsAndConditionName = "Delivery Term 2");
+
+			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+		}
+
+		task ("When a buyer checks out an order and view order details") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then the default Delivery Term should be displayed at Checkout.") {
+			CommerceCheckout.initializersCheckout(
+				deliveryTerm = "Delivery Term 1",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			Button.click(button = "Go to Order Details");
+
+			CommerceOrders.viewOrdersEntry(
+				deliveryTerm = "Delivery Term 1",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
+	}
+
+	@description = "COMMERCE-9726. A default payment term that has been disabled should not be displayed at checkout."
+	@priority = "4"
+	test CannotUseDisabledDefaultPaymentTerms {
+		task ("Given three payment term entries with different priorities") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "3",
+				termsType = "Payment");
+		}
+
+		task ("and two payment terms are linked to a payment method") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+			CommerceEntry.setEntryEligibility(
+				paymentMethod = "Money Order",
+				paymentTermsEligibility = "Payment Term 1");
+
+			SelectFrame.selectFrameTop();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.setEntryEligibility(
+				paymentMethod = "Money Order",
+				paymentTermsEligibility = "Payment Term 2");
+		}
+
+		task ("and a payment term is set to the Account Order Default") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultCommerceTermsEntry(
+				channelEntry = "Minium Portal",
+				termEntry = "Payment Term 2",
+				termType = "Payment");
+		}
+
+		task ("and the default payment term is deactivated") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommercePaymentTerms.gotoEntryMenuItem(
+				menuItem = "Edit",
+				termsAndConditionName = "Payment Term 2");
+
+			CommercePaymentTerms.editTermsAndCondition(deactivate = "true");
+		}
+
+		task ("When a buyer checks out an order and view order details") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then the default Payment Term should be displayed at Checkout.") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentTerm = "Payment Term 1",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			Button.click(button = "Go to Order Details");
+
+			CommerceOrders.viewOrdersEntry(
+				paymentTerm = "Payment Term 1",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
+	}
+
 	@description = "COMMERCE-9876. As a Sales Manager, I want to remove default billing and shipping addresses from the account"
 	@priority = "3"
 	test CanRemoveDefaultAddresses {

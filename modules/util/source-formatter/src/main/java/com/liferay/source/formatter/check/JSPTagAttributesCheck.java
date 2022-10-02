@@ -242,19 +242,9 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 	}
 
 	private String _formatPortletNamespaceValue(String attributeValue) {
-		if (attributeValue.matches(
-				"<%= liferayPortletResponse\\.getNamespace\\(\\) \\+ " +
-					"\"\\w+\" %>")) {
-
-			return StringUtil.replace(
-				attributeValue,
-				new String[] {
-					"<%= liferayPortletResponse.getNamespace() + \"", "\" %>"
-				},
-				new String[] {"<portlet:namespace />", ""});
-		}
-
-		return attributeValue;
+		return attributeValue.replaceFirst(
+			"<%= liferayPortletResponse\\.getNamespace\\(\\) %>(\\w+)",
+			"<portlet:namespace />$1");
 	}
 
 	private String _formatSingleLineTagAttributes(

@@ -71,8 +71,8 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commercePriceEntry, request
 		</div>
 
 		<div class="col-4">
-			<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<%= liferayPortletResponse.getNamespace() %>discountLevels">
-				<label class="control-label" for="<%= liferayPortletResponse.getNamespace() %>discountLevel1"><liferay-ui:message key="discount-levels" /></label>
+			<div class="<%= discountDiscovery ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />discountLevels">
+				<label class="control-label" for="<portlet:namespace />discountLevel1"><liferay-ui:message key="discount-levels" /></label>
 
 				<div class="d-flex">
 					<aui:input disabled="<%= discountDiscovery %>" ignoreRequestValue="<%= true %>" inlineField="<%= true %>" label="l1" name="discountLevel1" type="text" value="<%= commercePriceEntry.getDiscountLevel1() %>" wrapperCssClass="discount-label-wrapper">

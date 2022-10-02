@@ -18,6 +18,10 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.Arrays;
 
@@ -46,6 +50,17 @@ public class IndexableActionableDynamicQueryTest {
 		indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setIndexWriterHelper(indexWriterHelper);
+
+		IndexerRegistry indexerRegistry = Mockito.mock(IndexerRegistry.class);
+
+		Mockito.when(
+			indexerRegistry.getIndexer((String)null)
+		).thenReturn(
+			Mockito.mock(Indexer.class)
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			IndexerRegistryUtil.class, "_indexerRegistry", indexerRegistry);
 	}
 
 	@After

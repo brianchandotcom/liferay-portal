@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_DELIVERY_TERMS</td>
-	<td>//h5[contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')]</td>
+	<td>//h5[contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')] | //div[contains(@class,'title') and contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -89,6 +89,10 @@ definition {
 	}
 
 	macro editTermsAndCondition {
+		if (isSet(deactivate)) {
+			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+		}
+
 		if (isSet(termsAndConditionName)) {
 			Type(
 				locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",

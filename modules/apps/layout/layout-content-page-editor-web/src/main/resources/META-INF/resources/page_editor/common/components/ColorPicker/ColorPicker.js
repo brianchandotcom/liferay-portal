@@ -80,7 +80,9 @@ export function ColorPicker({
 	const [activeColorPicker, setActiveColorPicker] = useState(false);
 	const [clearedValue, setClearedValue] = useState(false);
 	const [color, setColor] = usePropsFirst(
-		tokenValues[value]?.value || value,
+		tokenValues[value]?.value ||
+			value ||
+			(Liferay.FeatureFlags['LPS-163362'] && defaultTokenValue),
 		{forceProp: clearedValue}
 	);
 	const colorButtonRef = useRef(null);
@@ -91,7 +93,11 @@ export function ColorPicker({
 	});
 	const inputRef = useRef(null);
 	const [tokenLabel, setTokenLabel] = usePropsFirst(
-		value ? tokenValues[value]?.label : defaultTokenLabel,
+		value
+			? tokenValues[value]?.label
+			: Liferay.FeatureFlags['LPS-163362']
+			? field.inherited && defaultTokenLabel
+			: defaultTokenLabel,
 		{forceProp: clearedValue}
 	);
 
@@ -292,7 +298,7 @@ export function ColorPicker({
 								sizing="sm"
 								value={
 									error.value ||
-									(color.startsWith('#')
+									(color?.startsWith('#')
 										? color.toUpperCase()
 										: color)
 								}
@@ -312,9 +318,9 @@ export function ColorPicker({
 										!tokenValues[value] &&
 										Liferay.FeatureFlags['LPS-163362']
 									) {
-										setCustomColors([defaultTokenLabel]);
+										setCustomColors([defaultTokenValue]);
 
-										onSetValue(defaultTokenLabel, null);
+										onSetValue(defaultTokenValue, null);
 									}
 									else {
 										setCustomColors([
@@ -380,7 +386,11 @@ export function ColorPicker({
 
 							onSetValue(
 								field.defaultValue ?? null,
-								field.defaultValue ? null : defaultTokenLabel
+								field.defaultValue
+									? null
+									: Liferay.FeatureFlags['LPS-163362']
+									? defaultTokenValue
+									: defaultTokenLabel
 							);
 						}}
 						small

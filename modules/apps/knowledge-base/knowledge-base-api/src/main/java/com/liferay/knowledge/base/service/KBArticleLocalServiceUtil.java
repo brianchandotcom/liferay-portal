@@ -75,13 +75,15 @@ public class KBArticleLocalServiceUtil {
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			String title, String urlTitle, String content, String description,
 			String sourceURL, String[] sections, String[] selectedFileNames,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addKBArticle(
 			externalReferenceCode, userId, parentResourceClassNameId,
 			parentResourcePrimKey, title, urlTitle, content, description,
-			sourceURL, sections, selectedFileNames, serviceContext);
+			sourceURL, sections, selectedFileNames, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	public static void addKBArticleResources(
@@ -749,12 +751,14 @@ public class KBArticleLocalServiceUtil {
 			long userId, long resourcePrimKey, String title, String content,
 			String description, String sourceURL, String[] sections,
 			String[] selectedFileNames, long[] removeFileEntryIds,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateKBArticle(
 			userId, resourcePrimKey, title, content, description, sourceURL,
-			sections, selectedFileNames, removeFileEntryIds, serviceContext);
+			sections, selectedFileNames, removeFileEntryIds, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	public static void updateKBArticleAsset(

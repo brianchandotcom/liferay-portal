@@ -1358,36 +1358,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editCategorizationCP {
-		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
-
-		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#CATEGORIZATION_LABEL");
-
-		AssertElementPresent(
-			key_vocabularyName = "${vocabularyName}",
-			locator1 = "UsersAndOrganizationsEditUser#VOCABULARY_LABEL");
-
-		AssertElementPresent.assertVisible(
-			key_vocabularyName = "${vocabularyName}",
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
-			value1 = "Select");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		AssertClick(
-			key_vocabularyName = "${vocabularyName}",
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
-			value1 = "Select");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Select ${vocabularyName}");
-
-		AssetCategorization.selectCategories(categoryNameList = "${categoryName}");
-
-		PortletEntry.save();
-	}
-
 	macro editDetailsViaProfile {
 		Click.javaScriptClick(locator1 = "Icon#EDIT_PENCIL");
 

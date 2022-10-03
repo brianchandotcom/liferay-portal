@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -133,6 +134,9 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Assert.assertEquals(
 			segmentsExperience2.getSegmentsExperienceId(),
 			segmentsExperiencesJSONObject0.getLong("segmentsExperienceId"));
+		Assert.assertEquals(
+			_language.get(_getMockHttpServletRequest(), "active"),
+			segmentsExperiencesJSONObject0.getString("statusLabel"));
 
 		segmentsExperiencesJSONObject1 =
 			segmentsExperiencesJSONArray.getJSONObject(1);
@@ -141,6 +145,9 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Assert.assertEquals(
 			segmentsExperience1.getSegmentsExperienceId(),
 			segmentsExperiencesJSONObject1.getLong("segmentsExperienceId"));
+		Assert.assertEquals(
+			_language.get(_getMockHttpServletRequest(), "active"),
+			segmentsExperiencesJSONObject1.getString("statusLabel"));
 
 		segmentsExperiencesJSONObject2 =
 			segmentsExperiencesJSONArray.getJSONObject(2);
@@ -150,6 +157,9 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			segmentsExperiencesJSONObject2.getLong("segmentsExperienceId"));
+		Assert.assertEquals(
+			_language.get(_getMockHttpServletRequest(), "inactive"),
+			segmentsExperiencesJSONObject2.getString("statusLabel"));
 
 		segmentsExperiencesJSONObject3 =
 			segmentsExperiencesJSONArray.getJSONObject(3);
@@ -158,6 +168,38 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		Assert.assertEquals(
 			segmentsExperience3.getSegmentsExperienceId(),
 			segmentsExperiencesJSONObject3.getLong("segmentsExperienceId"));
+
+		Assert.assertEquals(
+			_language.get(_getMockHttpServletRequest(), "inactive"),
+			segmentsExperiencesJSONObject3.getString("statusLabel"));
+	}
+
+	@Test
+	public void testGetSegmentsExperienceSelectedJSONObject() throws Exception {
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
+				_layout.getPlid());
+
+		long selectedSegmentsExperienceId =
+			segmentsExperience.getSegmentsExperienceId();
+
+		JSONObject jsonObject = _getSegmentsExperienceSelectedJSONObject(
+			selectedSegmentsExperienceId);
+
+		Assert.assertEquals(
+			selectedSegmentsExperienceId,
+			jsonObject.getLong("segmentsExperienceId"));
+
+		selectedSegmentsExperienceId = -1;
+
+		jsonObject = _getSegmentsExperienceSelectedJSONObject(
+			selectedSegmentsExperienceId);
+
+		Assert.assertEquals(
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			jsonObject.getLong("segmentsExperienceId"));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()
@@ -174,21 +216,24 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		return mockHttpServletRequest;
 	}
 
-	private JSONArray _getSegmentsExperiencesJSONArray() throws Exception {
+	private JSONObject _getSegmentsExperienceSelectedJSONObject(
+			long selectedSegmentsExperienceId)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest();
 
-		_productNavigationControlMenuEntry.includeIcon(
-			mockHttpServletRequest, new MockHttpServletResponse());
+		mockHttpServletRequest.addParameter(
+			"segmentsExperienceId",
+			String.valueOf(selectedSegmentsExperienceId));
 
-		Object segmentsExperienceSelectorDisplayContext =
-			mockHttpServletRequest.getAttribute(
-				"com.liferay.segments.web.internal.display.context." +
-					"SegmentsExperienceSelectorDisplayContext");
+		return _invokeMethod(
+			"getSegmentsExperienceSelectedJSONObject", mockHttpServletRequest);
+	}
 
-		return ReflectionTestUtil.invoke(
-			segmentsExperienceSelectorDisplayContext,
-			"getSegmentsExperiencesJSONArray", new Class<?>[0], null);
+	private JSONArray _getSegmentsExperiencesJSONArray() throws Exception {
+		return _invokeMethod(
+			"getSegmentsExperiencesJSONArray", _getMockHttpServletRequest());
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -202,11 +247,31 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 		return themeDisplay;
 	}
 
+	private <T> T _invokeMethod(
+			String methodName, MockHttpServletRequest mockHttpServletRequest)
+		throws Exception {
+
+		_productNavigationControlMenuEntry.includeIcon(
+			mockHttpServletRequest, new MockHttpServletResponse());
+
+		Object segmentsExperienceSelectorDisplayContext =
+			mockHttpServletRequest.getAttribute(
+				"com.liferay.segments.web.internal.display.context." +
+					"SegmentsExperienceSelectorDisplayContext");
+
+		return ReflectionTestUtil.invoke(
+			segmentsExperienceSelectorDisplayContext, methodName,
+			new Class<?>[0], null);
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Language _language;
 
 	private Layout _layout;
 

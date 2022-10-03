@@ -160,9 +160,8 @@ public class DispatchTriggerDisplayContextTest {
 			dispatchTrigger.getDispatchTriggerId());
 
 		Assert.assertEquals(
-			DispatchTaskClusterMode.SINGLE_NODE_PERSISTED,
-			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getDispatchTaskClusterMode()));
+			dispatchTaskClusterMode.getMode(),
+			dispatchTrigger.getDispatchTaskClusterMode());
 
 		Object dispatchTriggerDisplayContext =
 			_getDispatchTriggerDisplayContext(mockHttpServletRequest);

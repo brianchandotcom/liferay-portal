@@ -498,8 +498,8 @@ definition {
 				LexiconEntry.viewEntryName(rowEntry = "${orgName}");
 
 				AssertElementNotPresent(
-					key_assigneeName = "${orgName}",
-					locator1 = "Icon#REMOVE_ASSIGNEE");
+					key_entryName = "${orgName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
 
 				AssertElementNotPresent(
 					key_rowEntry = "${orgName}",

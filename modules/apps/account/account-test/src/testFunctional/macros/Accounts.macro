@@ -1090,8 +1090,8 @@ definition {
 
 	macro removeOrganizationAsAssignee {
 		ClickNoError(
-			locator1 = "Icon#REMOVE_ASSIGNEE",
-			value1 = "${assigneeName}");
+			key_entryName = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
 
 		AssertConfirm(value1 = "Are you sure you want to remove this organization?");
 

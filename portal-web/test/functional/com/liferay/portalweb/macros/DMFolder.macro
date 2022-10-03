@@ -45,6 +45,31 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 	}
 
+	macro addDMFolderLoginUserPG {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		if (isSet(siteName)) {
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
+
+		DMFolder.addPG(
+			dmFolder = "${dmFolder}",
+			dmFolderDescription = "${dmFolderDescription}",
+			dmFolderName = "${dmFolderName}",
+			viewableBy = "${viewableBy}");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "${userLoginEmailAddress}",
+			userLoginFullName = "${userLoginFullName}");
+	}
+
 	macro addPG {
 		if (isSet(contentPage)) {
 			LexiconEntry.gotoAdd();

@@ -13,8 +13,16 @@
  */
 
 import React from 'react';
-
-import {TGenericComponent} from '../wizard/WizardPage';
-interface IStepProps extends TGenericComponent {}
-declare const Step: React.FC<IStepProps>;
-export default Step;
+declare type TDataSource = {
+	dataSourceId: string;
+	siteIds: Array<number>;
+};
+declare type TProperty = {
+	dataSources: Array<TDataSource>;
+	name: string;
+};
+interface IPropertiesTable {
+	properties: Array<TProperty>;
+}
+declare const PropertiesTable: React.FC<IPropertiesTable>;
+export default PropertiesTable;

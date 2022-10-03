@@ -118,10 +118,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _checkVulnerabilities(
-		String fileName, String packageName, DefaultArtifactVersion version) {
+		String fileName, String packageName,
+		SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
+		DefaultArtifactVersion version) {
 
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
-			_vulnerableVersionMap.get(packageName);
+			_vulnerableVersionMap.get(
+				securityAdvisoryEcosystemEnum + ":" + packageName);
 
 		for (SecurityVulnerabilityNode securityVulnerabilityNode :
 				securityVulnerabilityNodes) {
@@ -153,14 +156,17 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		if (!_vulnerableVersionMap.containsKey(packageName)) {
+		if (!_vulnerableVersionMap.containsKey(
+				securityAdvisoryEcosystemEnum + ":" + packageName)) {
+
 			_generateVulnerableVersionMap(
 				packageName, securityAdvisoryEcosystemEnum,
 				getAttributeValues(_SEVERITIES, absolutePath));
 		}
 
 		_checkVulnerabilities(
-			fileName, packageName, new DefaultArtifactVersion(version));
+			fileName, packageName, securityAdvisoryEcosystemEnum,
+			new DefaultArtifactVersion(version));
 	}
 
 	private void _generateVulnerableVersionMap(
@@ -169,7 +175,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			List<String> severities)
 		throws Exception {
 
-		if (_vulnerableVersionMap.containsKey(packageName)) {
+		if (_vulnerableVersionMap.containsKey(
+				securityAdvisoryEcosystemEnum + ":" + packageName)) {
+
 			return;
 		}
 
@@ -198,7 +206,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		_vulnerableVersionMap.put(
-			packageName,
+			securityAdvisoryEcosystemEnum + ":" + packageName,
 			_getSecurityVulnerabilityNodes(
 				packageName, null, securityAdvisoryEcosystemEnum, severities,
 				githubToken));
@@ -294,6 +302,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				securityVulnerabilityNode.setSummary(
 					advisoryJSONObject.getString("summary"));
 
+				securityVulnerabilityNode.setSecurityAdvisoryEcosystemEnum(
+					securityAdvisoryEcosystemEnum);
 				securityVulnerabilityNode.setVersionRange(
 					nodeJSONObject.getString("vulnerableVersionRange"));
 
@@ -565,6 +575,12 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return _permalink;
 		}
 
+		public SecurityAdvisoryEcosystemEnum
+			getSecurityAdvisoryEcosystemEnum() {
+
+			return _securityAdvisoryEcosystemEnum;
+		}
+
 		public String getSummary() {
 			return _summary;
 		}
@@ -575,6 +591,12 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		public void setPermalink(String permalink) {
 			_permalink = permalink;
+		}
+
+		public void setSecurityAdvisoryEcosystemEnum(
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum) {
+
+			_securityAdvisoryEcosystemEnum = securityAdvisoryEcosystemEnum;
 		}
 
 		public void setSummary(String summary) {
@@ -635,6 +657,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		private String _permalink;
+		private SecurityAdvisoryEcosystemEnum _securityAdvisoryEcosystemEnum;
 		private String _summary;
 		private VersionRange _versionRange;
 

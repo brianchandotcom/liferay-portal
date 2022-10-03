@@ -15,6 +15,7 @@
 package com.liferay.notification.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.NotificationTemplateService;
@@ -160,12 +161,12 @@ public class NotificationTemplateServiceTest {
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			Collections.emptyList());
+			NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -191,12 +192,12 @@ public class NotificationTemplateServiceTest {
 					RandomTestUtil.randomString(),
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
-					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), null,
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
-					Collections.emptyList());
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 		}
 		finally {
 			if (notificationTemplate != null) {
@@ -271,12 +272,12 @@ public class NotificationTemplateServiceTest {
 					RandomTestUtil.randomString(),
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
-					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), null,
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
-					Collections.emptyList());
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 		}
 		finally {
 			if (notificationTemplate != null) {

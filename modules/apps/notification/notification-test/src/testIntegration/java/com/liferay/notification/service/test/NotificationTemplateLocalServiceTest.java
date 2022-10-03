@@ -15,6 +15,7 @@
 package com.liferay.notification.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
@@ -200,9 +201,10 @@ public class NotificationTemplateLocalServiceTest {
 				TestPropsValues.getUserId(), 0, term,
 				Collections.singletonMap(LocaleUtil.US, term), term, "",
 				emailTerm, Collections.singletonMap(LocaleUtil.US, term),
-				"New Template", Collections.singletonMap(LocaleUtil.US, term),
+				"New Template", null,
+				Collections.singletonMap(LocaleUtil.US, term),
 				Collections.singletonMap(LocaleUtil.US, emailTerm),
-				Collections.emptyList());
+				NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 
 		String emailTermValue = "test@liferay.com";
 		String termValue = "termValue";
@@ -289,12 +291,12 @@ public class NotificationTemplateLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), from,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			name,
+			name, null,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			Collections.emptyList());
+			NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 	}
 
 	private static final String _NOTIFICATION_TYPE_KEY = "notificationTypeKey";

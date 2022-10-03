@@ -313,6 +313,7 @@ public class AccountEntryLocalServiceTest {
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(accountEntry.getAccountEntryId())));
+		Assert.assertTrue(accountEntry.isRestrictMembership());
 	}
 
 	@Test

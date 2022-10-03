@@ -24,7 +24,7 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 	managementToolbarDisplayContext="<%= new LayoutUtilityPageEntryManagementToolbarDisplayContext(request, layoutUtilityPageEntryDisplayContext, liferayPortletRequest, liferayPortletResponse) %>"
 />
 
-<div cssClass="container-fluid container-fluid-max-xl">
+<aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<liferay-ui:search-container
 		id="entries"
 		searchContainer="<%= layoutUtilityPageEntryDisplayContext.getLayoutUtilityPageEntrySearchContainer() %>"
@@ -46,4 +46,4 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</aui:form>

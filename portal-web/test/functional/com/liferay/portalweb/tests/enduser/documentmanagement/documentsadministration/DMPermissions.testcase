@@ -631,7 +631,7 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Permissions.addDMFolderLoginUserPG(
+		DMFolder.addDMFolderLoginUserPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			pageName = "Documents and Media Page",

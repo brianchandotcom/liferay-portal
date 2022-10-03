@@ -198,6 +198,8 @@ public class CommerceInventoryTestUtil {
 
 			a2 = RandomTestUtil.randomString(
 				2, UniqueStringRandomizerBumper.INSTANCE);
+
+			safetyCount++;
 		}
 
 		safetyCount = 0;
@@ -211,6 +213,8 @@ public class CommerceInventoryTestUtil {
 
 			a3 = RandomTestUtil.randomString(
 				2, UniqueStringRandomizerBumper.INSTANCE);
+
+			safetyCount++;
 		}
 
 		return CountryLocalServiceUtil.addCountry(

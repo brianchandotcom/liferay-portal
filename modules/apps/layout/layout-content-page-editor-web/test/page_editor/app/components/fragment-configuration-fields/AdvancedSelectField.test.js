@@ -23,6 +23,7 @@ const FIELD = {
 	cssProperty: 'font-size',
 	defaultValue: '',
 	icon: 'font-size',
+	inherited: true,
 	label: 'font-size',
 	name: 'fontSize',
 	type: 'select',

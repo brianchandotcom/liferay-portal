@@ -163,7 +163,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			String title, String urlTitle, String content, String description,
 			String sourceURL, String[] sections, String[] selectedFileNames,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		// KB article
@@ -219,8 +219,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
 		kbArticle.setSourceURL(sourceURL);
+		kbArticle.setExpirationDate(expirationDate);
+		kbArticle.setReviewDate(reviewDate);
 		kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		kbArticle.setExpandoBridgeAttributes(serviceContext);
+		kbArticle.setExpirationDate(expirationDate);
+		kbArticle.setReviewDate(reviewDate);
 
 		kbArticle = kbArticlePersistence.update(kbArticle);
 

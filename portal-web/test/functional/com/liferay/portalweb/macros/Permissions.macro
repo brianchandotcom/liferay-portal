@@ -63,37 +63,6 @@ definition {
 			userLoginFullName = "${userLoginFullName}");
 	}
 
-	macro definePermissionCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
-			permissionDefinitionValue = "${permissionDefinitionValue}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}");
-	}
-
-	macro definePermissionLoginUserCP {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Permissions.definePermissionCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
-			permissionDefinitionValue = "${permissionDefinitionValue}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
-	}
-
 	macro definePermissionViaJSONAPI {
 		JSONPermission.addPermission(
 			actionId = "${resourceAction}",
@@ -101,37 +70,6 @@ definition {
 			name = "${resourceName}",
 			roleTitle = "${roleTitle}",
 			roleType = "${roleType}");
-	}
-
-	macro removePermissionCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.removePermissionCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
-			permissionDefinitionValue = "${permissionDefinitionValue}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}");
-	}
-
-	macro removePermissionLoginUserCP {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Permissions.removePermissionCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
-			permissionDefinitionValue = "${permissionDefinitionValue}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
 	}
 
 	macro removePermissionViaAPI {

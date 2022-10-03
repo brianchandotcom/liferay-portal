@@ -87,6 +87,18 @@ public class ObjectRelationshipResourceImpl
 					"postObjectDefinitionObjectRelationshipBatch",
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectDefinitionId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectRelationshipBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					null)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectRelationshipBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					null)
 			).build(),
 			booleanQuery -> {
 			},

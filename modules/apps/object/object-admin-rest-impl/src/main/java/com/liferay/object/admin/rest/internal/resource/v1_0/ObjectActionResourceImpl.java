@@ -75,11 +75,23 @@ public class ObjectActionResourceImpl
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectDefinitionId)
 			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectActionBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectActionsPage",
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectDefinitionId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectActionBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					null)
 			).build(),
 			booleanQuery -> {
 			},

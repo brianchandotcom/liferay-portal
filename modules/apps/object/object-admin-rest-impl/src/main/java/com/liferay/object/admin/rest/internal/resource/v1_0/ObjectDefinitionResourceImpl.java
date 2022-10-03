@@ -142,11 +142,21 @@ public class ObjectDefinitionResourceImpl
 					"postObjectDefinitionBatch", ObjectConstants.RESOURCE_NAME,
 					contextCompany.getCompanyId())
 			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectDefinitionBatch",
+					ObjectConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionsPage",
 					ObjectConstants.RESOURCE_NAME,
 					contextCompany.getCompanyId())
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectDefinitionBatch",
+					ObjectConstants.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 			},

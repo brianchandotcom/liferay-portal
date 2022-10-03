@@ -97,11 +97,23 @@ public class ObjectFieldResourceImpl
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectDefinitionId)
 			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectFieldBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectFieldsPage",
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectDefinitionId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectFieldBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					null)
 			).build(),
 			booleanQuery -> {
 			},

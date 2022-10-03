@@ -70,11 +70,21 @@ public class ObjectValidationRuleResourceImpl
 					"postObjectDefinitionObjectValidationRuleBatch",
 					ObjectDefinition.class.getName(), objectDefinitionId)
 			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectValidationRuleBatch",
+					ObjectDefinition.class.getName(), null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW,
 					"getObjectDefinitionObjectValidationRulesPage",
 					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectValidationRuleBatch",
+					ObjectDefinition.class.getName(), null)
 			).build(),
 			booleanQuery -> {
 			},

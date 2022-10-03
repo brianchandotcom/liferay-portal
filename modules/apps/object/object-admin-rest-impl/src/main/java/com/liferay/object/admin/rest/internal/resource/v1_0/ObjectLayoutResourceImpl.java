@@ -81,10 +81,20 @@ public class ObjectLayoutResourceImpl
 					ActionKeys.UPDATE, "postObjectDefinitionObjectLayoutBatch",
 					ObjectDefinition.class.getName(), objectDefinitionId)
 			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectLayoutBatch",
+					ObjectDefinition.class.getName(), null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectLayoutsPage",
 					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectLayoutBatch",
+					ObjectDefinition.class.getName(), null)
 			).build(),
 			booleanQuery -> {
 			},

@@ -79,10 +79,20 @@ public class ObjectViewResourceImpl
 					ActionKeys.UPDATE, "postObjectDefinitionObjectViewBatch",
 					ObjectDefinition.class.getName(), objectDefinitionId)
 			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectViewBatch",
+					ObjectDefinition.class.getName(), null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectViewsPage",
 					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putObjectViewBatch",
+					ObjectDefinition.class.getName(), null)
 			).build(),
 			booleanQuery -> {
 			},

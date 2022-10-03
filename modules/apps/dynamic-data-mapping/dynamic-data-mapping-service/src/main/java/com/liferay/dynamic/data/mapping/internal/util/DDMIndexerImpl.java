@@ -138,7 +138,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							_addToDocument(
 								document, field, indexType, name, value);
 						}
-						else {
+						else if (value != null) {
 							fieldArray.addField(
 								createField(
 									ddmFormField, field, indexType, locale,
@@ -155,7 +155,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					if (legacyDDMIndexFieldsEnabled) {
 						_addToDocument(document, field, indexType, name, value);
 					}
-					else {
+					else if (value != null) {
 						fieldArray.addField(
 							createField(
 								ddmFormField, field, indexType, null, name,
@@ -370,6 +370,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 				}
 
 				Serializable value = field.getValue(locale);
+
+				if (value == null) {
+					continue;
+				}
 
 				if (value instanceof Boolean || value instanceof Number) {
 					sb.append(value);

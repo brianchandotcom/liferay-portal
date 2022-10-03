@@ -108,7 +108,8 @@ export function FilterScreen() {
 		if (
 			selectedFilterType &&
 			(selectedFilterBy?.name === 'status' ||
-				selectedFilterBy?.businessType === 'Picklist') &&
+				selectedFilterBy?.businessType === 'Picklist' ||
+				selectedFilterBy?.businessType === 'Relationship') &&
 			!checkedItems.length
 		) {
 			currentErrors.items = REQUIRED_MSG;

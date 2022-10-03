@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.upload.AttachmentElementHandler;
 import com.liferay.upload.AttachmentElementReplacer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,17 +56,27 @@ public class HTMLImageAttachmentElementHandler
 
 		StringBuffer sb = new StringBuffer(content.length());
 
-		while (matcher.find()) {
-			FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
+		Map<String, FileEntry> fileEntries = new HashMap<>();
 
-			FileEntry attachmentFileEntry = saveTempFileUnsafeFunction.apply(
-				tempAttachmentFileEntry);
+		while (matcher.find()) {
+			String match = matcher.group(0);
+
+			FileEntry attachmentFileEntry = fileEntries.get(match);
+
+			if (attachmentFileEntry == null) {
+				FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
+
+				attachmentFileEntry = saveTempFileUnsafeFunction.apply(
+					tempAttachmentFileEntry);
+
+				fileEntries.put(match, attachmentFileEntry);
+			}
 
 			matcher.appendReplacement(
 				sb,
 				Matcher.quoteReplacement(
 					_attachmentElementReplacer.replace(
-						matcher.group(0), attachmentFileEntry)));
+						match, attachmentFileEntry)));
 		}
 
 		matcher.appendTail(sb);

@@ -15,9 +15,9 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVP Request Organization"
+		"en_US": "EVP Organization"
 	},
-	"name": "EVPRequestOrganization",
+	"name": "EVPOrganization",
 	"objectActions": [
 	],
 	"objectFields": [
@@ -393,7 +393,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVP Request Organizations"
+		"en_US": "EVP Organization"
 	},
 	"portlet": false,
 	"scope": "company",

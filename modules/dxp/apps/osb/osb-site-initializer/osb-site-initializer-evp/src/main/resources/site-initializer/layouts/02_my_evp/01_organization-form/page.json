@@ -1,6 +1,7 @@
-{	"friendlyURL_i18n": {
-     "en_US": "/evp/organization-form"
-    },
+{
+	"friendlyURL_i18n": {
+		"en_US": "/evp/organization-form"
+	},
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Organization Form"

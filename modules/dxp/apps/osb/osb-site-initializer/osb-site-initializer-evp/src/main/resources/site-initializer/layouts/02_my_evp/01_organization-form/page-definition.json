@@ -5,7 +5,7 @@
 				"definition": {
 					"formConfig": {
 						"formReference": {
-							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequestOrganization$]",
+							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 							"classType": 0
 						}
 					},
@@ -27,7 +27,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Organization Form"
@@ -57,7 +58,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "General Information"
@@ -104,13 +106,14 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
+										"inputFieldId": "ObjectField_organizationName",
 										"inputHelpText": {
 											"en_US": ""
 										},
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_organizationName"
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"borderColor": "colorNeutral7",
 										"borderRadius": "borderRadiusSm",
@@ -128,10 +131,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_organizationSiteSocialMediaLink"
+										"inputFieldId": "ObjectField_organizationSiteSocialMediaLink",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"borderColor": "colorNeutral7",
 										"textColor": "colorNeutral7",
@@ -150,10 +154,11 @@
 								"key": "BASIC_COMPONENT-separator"
 							},
 							"fragmentConfig": {
-								"separatorColor": "",
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -170,7 +175,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Address Information"
@@ -194,10 +200,11 @@
 								"key": "INPUTS-text-input"
 							},
 							"fragmentConfig": {
-								"inputRequired": true,
-								"inputFieldId": "ObjectField_street"
+								"inputFieldId": "ObjectField_street",
+								"inputRequired": true
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"marginBottom": "3",
 								"textColor": "colorNeutral7"
@@ -235,10 +242,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_city"
+										"inputFieldId": "ObjectField_city",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "33%"
@@ -253,10 +261,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_state"
+										"inputFieldId": "ObjectField_state",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "33%"
@@ -271,10 +280,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_country"
+										"inputFieldId": "ObjectField_country",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "33%"
@@ -314,10 +324,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_zip"
+										"inputFieldId": "ObjectField_zip",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "49%"
@@ -332,10 +343,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_taxIdentificationNumber"
+										"inputFieldId": "ObjectField_taxIdentificationNumber",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "49%"
@@ -353,10 +365,11 @@
 								"key": "BASIC_COMPONENT-separator"
 							},
 							"fragmentConfig": {
-								"separatorColor": "",
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -373,7 +386,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Contact Information"
@@ -397,10 +411,11 @@
 								"key": "INPUTS-text-input"
 							},
 							"fragmentConfig": {
-								"inputRequired": true,
-								"inputFieldId": "ObjectField_contactName"
+								"inputFieldId": "ObjectField_contactName",
+								"inputRequired": true
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"textColor": "colorNeutral7"
 							},
@@ -437,10 +452,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_contactEmail"
+										"inputFieldId": "ObjectField_contactEmail",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "49%"
@@ -455,10 +471,11 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputRequired": true,
-										"inputFieldId": "ObjectField_contactPhone"
+										"inputFieldId": "ObjectField_contactPhone",
+										"inputRequired": true
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"textColor": "colorNeutral7",
 										"width": "49%"
@@ -476,10 +493,12 @@
 								"key": "BASIC_COMPONENT-separator"
 							},
 							"fragmentConfig": {
-								"separatorColor": {},
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": {
+								}
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -490,10 +509,11 @@
 								"key": "INPUTS-text-input"
 							},
 							"fragmentConfig": {
-								"inputRequired": true,
-								"inputFieldId": "ObjectField_smallDescription"
+								"inputFieldId": "ObjectField_smallDescription",
+								"inputRequired": true
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"marginBottom": "3"
 							},
@@ -507,10 +527,11 @@
 								"key": "BASIC_COMPONENT-separator"
 							},
 							"fragmentConfig": {
-								"separatorColor": "",
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -521,14 +542,15 @@
 								"key": "INPUTS-submit-button"
 							},
 							"fragmentConfig": {
-								"buttonType": "primary",
-								"buttonSize": "nm"
+								"buttonSize": "nm",
+								"buttonType": "primary"
 							},
 							"fragmentFields": [
 								{
 									"id": "submit-button-text",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],

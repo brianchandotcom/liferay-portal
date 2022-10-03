@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplayFactory;
@@ -138,7 +139,11 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				}
 			}
 
-			return _getWrapper(content);
+			content = _getWrapper(content);
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
 		}
 
 		HttpServletRequest httpServletRequest = null;

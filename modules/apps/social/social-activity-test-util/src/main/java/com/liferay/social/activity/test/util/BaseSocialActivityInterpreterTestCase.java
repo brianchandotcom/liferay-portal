@@ -276,18 +276,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
-	private String _getFirstActivityTitle(
-			List<SocialActivity> activities)
-		throws Exception {
-
-		SocialActivity activity = activities.get(0);
-
-		return activity.getExtraDataValue("title", serviceContext.getLocale());
-	}
-
-	private Set<Long> _getActivitiesIds(
-		List<SocialActivity> activities) {
-
+	private Set<Long> _getActivitiesIds(List<SocialActivity> activities) {
 		Set<Long> activitiesIds = new HashSet<>();
 
 		for (SocialActivity activity : activities) {
@@ -295,6 +284,14 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 
 		return activitiesIds;
+	}
+
+	private String _getFirstActivityTitle(List<SocialActivity> activities)
+		throws Exception {
+
+		SocialActivity activity = activities.get(0);
+
+		return activity.getExtraDataValue("title", serviceContext.getLocale());
 	}
 
 }

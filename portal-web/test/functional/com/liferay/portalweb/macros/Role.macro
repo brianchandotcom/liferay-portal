@@ -407,10 +407,6 @@ definition {
 			roleType = "${roleType}",
 			roleUser = "${roleUser}",
 			siteNameScope = "${siteNameScope}");
-
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "${permissionDefinitionValue}",
-			permissionNavigationValue = "${permissionNavigationValue}");
 	}
 
 	macro removePermissionPG {

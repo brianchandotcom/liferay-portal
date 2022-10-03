@@ -76,16 +76,6 @@ public class DefaultCommerceOrderValidatorImpl
 
 		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
-		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
-			cpInstance);
-		String[] allowedOrderQuantities =
-			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
-
-		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance) &&
-			(quantity >= minOrderQuantity) && (quantity <= maxOrderQuantity)) {
-
-			return new CommerceOrderValidatorResult(true);
-		}
 
 		if (quantity < minOrderQuantity) {
 			return new CommerceOrderValidatorResult(
@@ -95,6 +85,9 @@ public class DefaultCommerceOrderValidatorImpl
 					new Object[] {minOrderQuantity}));
 		}
 
+		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
+			cpInstance);
+
 		if ((maxOrderQuantity > 0) && (quantity > maxOrderQuantity)) {
 			return new CommerceOrderValidatorResult(
 				false,
@@ -102,6 +95,9 @@ public class DefaultCommerceOrderValidatorImpl
 					locale, "the-maximum-quantity-is-x",
 					new Object[] {maxOrderQuantity}));
 		}
+
+		String[] allowedOrderQuantities =
+			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
@@ -147,10 +143,6 @@ public class DefaultCommerceOrderValidatorImpl
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
-			return new CommerceOrderValidatorResult(true);
-		}
-
 		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
 
@@ -187,6 +179,17 @@ public class DefaultCommerceOrderValidatorImpl
 				commerceOrderItem.getCommerceOrderItemId(), false,
 				_getLocalizedMessage(
 					locale, "the-specified-quantity-is-not-allowed", null));
+		}
+
+		int multipleOrderQuantity =
+			cpDefinitionInventoryEngine.getMultipleOrderQuantity(cpInstance);
+
+		if ((commerceOrderItem.getQuantity() % multipleOrderQuantity) != 0) {
+			return new CommerceOrderValidatorResult(
+				false,
+				_getLocalizedMessage(
+					locale, "the-specified-quantity-is-not-a-multiple-of-x",
+					new Object[] {multipleOrderQuantity}));
 		}
 
 		return new CommerceOrderValidatorResult(true);

@@ -255,15 +255,15 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		Assert.assertFalse(
 			originalActivities.toString(), originalActivities.isEmpty());
 
-		String originalTitle = _getActivitiesFirstTitle(originalActivities);
-		Set<Long> originalIds = _getActivitiesIds(originalActivities);
+		Set<Long> originalActivitiesIds = _getActivitiesIds(originalActivities);
+		String originalTitle = _getFirstActivityTitle(originalActivities);
 
 		List<SocialActivity> activities = getActivities();
 
 		Assert.assertFalse(activities.toString(), activities.isEmpty());
 
 		for (SocialActivity activity : activities) {
-			if (!originalIds.contains(activity.getActivityId())) {
+			if (!originalActivitiesIds.contains(activity.getActivityId())) {
 				String title = activity.getExtraDataValue(
 					"title", serviceContext.getLocale());
 
@@ -276,25 +276,25 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		}
 	}
 
-	private String _getActivitiesFirstTitle(
-			List<SocialActivity> originalActivities)
+	private String _getFirstActivityTitle(
+			List<SocialActivity> activities)
 		throws Exception {
 
-		SocialActivity activity = originalActivities.get(0);
+		SocialActivity activity = activities.get(0);
 
 		return activity.getExtraDataValue("title", serviceContext.getLocale());
 	}
 
 	private Set<Long> _getActivitiesIds(
-		List<SocialActivity> originalActivities) {
+		List<SocialActivity> activities) {
 
-		Set<Long> originalIds = new HashSet<>();
+		Set<Long> activitiesIds = new HashSet<>();
 
-		for (SocialActivity activity : originalActivities) {
-			originalIds.add(activity.getActivityId());
+		for (SocialActivity activity : activities) {
+			activitiesIds.add(activity.getActivityId());
 		}
 
-		return originalIds;
+		return activitiesIds;
 	}
 
 }

@@ -15,17 +15,13 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
@@ -233,27 +229,6 @@ public class LocalizationUtil {
 		LocalizedValuesMap localizedValuesMap) {
 
 		return _localization.getMap(localizedValuesMap);
-	}
-
-	public static List<Locale> getModifiedLocales(
-		Map<Locale, String> oldMap, Map<Locale, String> newMap) {
-
-		if ((newMap == null) || newMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> modifiedLocales = new ArrayList<>();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			String oldValue = oldMap.get(locale);
-			String newValue = newMap.get(locale);
-
-			if (!oldValue.equals(newValue)) {
-				modifiedLocales.add(locale);
-			}
-		}
-
-		return modifiedLocales;
 	}
 
 	public static String getPreferencesValue(

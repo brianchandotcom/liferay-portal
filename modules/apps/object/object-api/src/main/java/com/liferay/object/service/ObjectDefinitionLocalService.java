@@ -250,8 +250,7 @@ public interface ObjectDefinitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition fetchObjectDefinitionByClassName(
-			long companyId, String className)
-		throws PortalException;
+		long companyId, String className);
 
 	/**
 	 * Returns the object definition with the matching external reference code and company.

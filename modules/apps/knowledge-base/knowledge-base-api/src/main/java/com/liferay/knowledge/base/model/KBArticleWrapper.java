@@ -69,6 +69,8 @@ public class KBArticleWrapper
 		attributes.put("latest", isLatest());
 		attributes.put("main", isMain());
 		attributes.put("sourceURL", getSourceURL());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("reviewDate", getReviewDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -233,6 +235,18 @@ public class KBArticleWrapper
 			setSourceURL(sourceURL);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Date reviewDate = (Date)attributes.get("reviewDate");
+
+		if (reviewDate != null) {
+			setReviewDate(reviewDate);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -349,6 +363,16 @@ public class KBArticleWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the expiration date of this kb article.
+	 *
+	 * @return the expiration date of this kb article
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -503,6 +527,16 @@ public class KBArticleWrapper
 	@Override
 	public long getResourcePrimKey() {
 		return model.getResourcePrimKey();
+	}
+
+	/**
+	 * Returns the review date of this kb article.
+	 *
+	 * @return the review date of this kb article
+	 */
+	@Override
+	public Date getReviewDate() {
+		return model.getReviewDate();
 	}
 
 	/**
@@ -821,6 +855,16 @@ public class KBArticleWrapper
 	}
 
 	/**
+	 * Sets the expiration date of this kb article.
+	 *
+	 * @param expirationDate the expiration date of this kb article
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
+	}
+
+	/**
 	 * Sets the external reference code of this kb article.
 	 *
 	 * @param externalReferenceCode the external reference code of this kb article
@@ -958,6 +1002,16 @@ public class KBArticleWrapper
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
 		model.setResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	 * Sets the review date of this kb article.
+	 *
+	 * @param reviewDate the review date of this kb article
+	 */
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		model.setReviewDate(reviewDate);
 	}
 
 	/**

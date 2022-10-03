@@ -91,6 +91,10 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 		"main", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, String> sourceURL = createColumn(
 		"sourceURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KBArticleTable, Date> expirationDate = createColumn(
+		"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<KBArticleTable, Date> reviewDate = createColumn(
+		"reviewDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Integer> status = createColumn(

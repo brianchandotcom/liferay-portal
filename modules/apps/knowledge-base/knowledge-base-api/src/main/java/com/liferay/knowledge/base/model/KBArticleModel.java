@@ -473,6 +473,34 @@ public interface KBArticleModel
 	public void setSourceURL(String sourceURL);
 
 	/**
+	 * Returns the expiration date of this kb article.
+	 *
+	 * @return the expiration date of this kb article
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this kb article.
+	 *
+	 * @param expirationDate the expiration date of this kb article
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the review date of this kb article.
+	 *
+	 * @return the review date of this kb article
+	 */
+	public Date getReviewDate();
+
+	/**
+	 * Sets the review date of this kb article.
+	 *
+	 * @param reviewDate the review date of this kb article
+	 */
+	public void setReviewDate(Date reviewDate);
+
+	/**
 	 * Returns the last publish date of this kb article.
 	 *
 	 * @return the last publish date of this kb article

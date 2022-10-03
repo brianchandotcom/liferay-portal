@@ -89,6 +89,7 @@ public class KBArticleModelImpl
 		{"description", Types.VARCHAR}, {"priority", Types.DOUBLE},
 		{"sections", Types.VARCHAR}, {"latest", Types.BOOLEAN},
 		{"main", Types.BOOLEAN}, {"sourceURL", Types.VARCHAR},
+		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -123,6 +124,8 @@ public class KBArticleModelImpl
 		TABLE_COLUMNS_MAP.put("latest", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("reviewDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -131,7 +134,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
@@ -436,6 +439,15 @@ public class KBArticleModelImpl
 		attributeSetterBiConsumers.put(
 			"sourceURL",
 			(BiConsumer<KBArticle, String>)KBArticle::setSourceURL);
+		attributeGetterFunctions.put(
+			"expirationDate", KBArticle::getExpirationDate);
+		attributeSetterBiConsumers.put(
+			"expirationDate",
+			(BiConsumer<KBArticle, Date>)KBArticle::setExpirationDate);
+		attributeGetterFunctions.put("reviewDate", KBArticle::getReviewDate);
+		attributeSetterBiConsumers.put(
+			"reviewDate",
+			(BiConsumer<KBArticle, Date>)KBArticle::setReviewDate);
 		attributeGetterFunctions.put(
 			"lastPublishDate", KBArticle::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -1041,6 +1053,36 @@ public class KBArticleModelImpl
 
 	@JSON
 	@Override
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_expirationDate = expirationDate;
+	}
+
+	@JSON
+	@Override
+	public Date getReviewDate() {
+		return _reviewDate;
+	}
+
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_reviewDate = reviewDate;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1313,6 +1355,8 @@ public class KBArticleModelImpl
 		kbArticleImpl.setLatest(isLatest());
 		kbArticleImpl.setMain(isMain());
 		kbArticleImpl.setSourceURL(getSourceURL());
+		kbArticleImpl.setExpirationDate(getExpirationDate());
+		kbArticleImpl.setReviewDate(getReviewDate());
 		kbArticleImpl.setLastPublishDate(getLastPublishDate());
 		kbArticleImpl.setStatus(getStatus());
 		kbArticleImpl.setStatusByUserId(getStatusByUserId());
@@ -1372,6 +1416,10 @@ public class KBArticleModelImpl
 		kbArticleImpl.setMain(this.<Boolean>getColumnOriginalValue("main"));
 		kbArticleImpl.setSourceURL(
 			this.<String>getColumnOriginalValue("sourceURL"));
+		kbArticleImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		kbArticleImpl.setReviewDate(
+			this.<Date>getColumnOriginalValue("reviewDate"));
 		kbArticleImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		kbArticleImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
@@ -1581,6 +1629,24 @@ public class KBArticleModelImpl
 			kbArticleCacheModel.sourceURL = null;
 		}
 
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			kbArticleCacheModel.expirationDate = expirationDate.getTime();
+		}
+		else {
+			kbArticleCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
+		Date reviewDate = getReviewDate();
+
+		if (reviewDate != null) {
+			kbArticleCacheModel.reviewDate = reviewDate.getTime();
+		}
+		else {
+			kbArticleCacheModel.reviewDate = Long.MIN_VALUE;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1729,6 +1795,8 @@ public class KBArticleModelImpl
 	private boolean _latest;
 	private boolean _main;
 	private String _sourceURL;
+	private Date _expirationDate;
+	private Date _reviewDate;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1792,6 +1860,8 @@ public class KBArticleModelImpl
 		_columnOriginalValues.put("latest", _latest);
 		_columnOriginalValues.put("main", _main);
 		_columnOriginalValues.put("sourceURL", _sourceURL);
+		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("reviewDate", _reviewDate);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1870,15 +1940,19 @@ public class KBArticleModelImpl
 
 		columnBitmasks.put("sourceURL", 16777216L);
 
-		columnBitmasks.put("lastPublishDate", 33554432L);
+		columnBitmasks.put("expirationDate", 33554432L);
 
-		columnBitmasks.put("status", 67108864L);
+		columnBitmasks.put("reviewDate", 67108864L);
 
-		columnBitmasks.put("statusByUserId", 134217728L);
+		columnBitmasks.put("lastPublishDate", 134217728L);
 
-		columnBitmasks.put("statusByUserName", 268435456L);
+		columnBitmasks.put("status", 268435456L);
 
-		columnBitmasks.put("statusDate", 536870912L);
+		columnBitmasks.put("statusByUserId", 536870912L);
+
+		columnBitmasks.put("statusByUserName", 1073741824L);
+
+		columnBitmasks.put("statusDate", 2147483648L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

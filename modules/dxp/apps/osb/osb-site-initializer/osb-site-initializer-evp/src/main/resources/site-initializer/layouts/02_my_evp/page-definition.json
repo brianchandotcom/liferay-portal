@@ -99,6 +99,59 @@
 									"indexed": true
 								},
 								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/evp/request-form"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "EVP"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Create a Request"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"
@@ -546,7 +599,8 @@
 									],
 									"displayAllItems": false,
 									"displayAllPages": true,
-									"layout": {},
+									"layout": {
+									},
 									"listItemStyle": "",
 									"listStyle": "",
 									"numberOfColumns": 1,
@@ -560,7 +614,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -987,7 +1042,8 @@
 																		"iconLink": "request-page",
 																		"iconName": "search-experiences"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"

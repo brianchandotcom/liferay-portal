@@ -1,11 +1,12 @@
-{	"friendlyURL_i18n": {
-    "en_US": "/evp/request-form"
-   },
-   "hidden": true,
-   "name_i18n": {
-       "en_US": "Request Form"
-   },
-   "private": false,
-   "system": false,
-   "type": "content"
+{
+	"friendlyURL_i18n": {
+		"en_US": "/evp/request-form"
+	},
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "Request Form"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
 }

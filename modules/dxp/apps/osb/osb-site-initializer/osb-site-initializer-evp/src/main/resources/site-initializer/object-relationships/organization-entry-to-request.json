@@ -4,8 +4,8 @@
 		"en_US": "Organization"
 	},
 	"name": "organization",
-	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:EVPOrganization$]",
-	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPRequest$]",
-	"objectDefinitionName2": "EVPRequest",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:EVPRequestOrganization$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPRequestForm$]",
+	"objectDefinitionName2": "EVPRequestForm",
 	"type": "oneToMany"
 }

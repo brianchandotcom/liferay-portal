@@ -22,11 +22,12 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryWrapper;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionWrapper;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -252,13 +253,13 @@ public class JPAddressTextLocalizerTest {
 		_country = new CountryWrapper(null) {
 
 			@Override
-			public long getCountryId() {
-				return RandomTestUtil.randomLong();
+			public String getTitle(Locale locale) {
+				return countryName;
 			}
 
 			@Override
-			public String getName() {
-				return countryName;
+			public boolean isNew() {
+				return false;
 			}
 
 		};
@@ -273,8 +274,8 @@ public class JPAddressTextLocalizerTest {
 			}
 
 			@Override
-			public long getRegionId() {
-				return RandomTestUtil.randomLong();
+			public boolean isNew() {
+				return false;
 			}
 
 		};

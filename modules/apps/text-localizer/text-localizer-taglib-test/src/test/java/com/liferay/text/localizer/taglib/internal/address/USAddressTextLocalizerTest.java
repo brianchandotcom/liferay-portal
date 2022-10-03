@@ -28,6 +28,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
 
+import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -255,13 +257,13 @@ public class USAddressTextLocalizerTest {
 		_country = new CountryWrapper(null) {
 
 			@Override
-			public long getCountryId() {
-				return RandomTestUtil.randomLong();
+			public String getTitle(Locale locale) {
+				return countryName;
 			}
 
 			@Override
-			public String getName() {
-				return countryName;
+			public boolean isNew() {
+				return false;
 			}
 
 		};
@@ -276,8 +278,8 @@ public class USAddressTextLocalizerTest {
 			}
 
 			@Override
-			public long getRegionId() {
-				return RandomTestUtil.randomLong();
+			public boolean isNew() {
+				return false;
 			}
 
 		};

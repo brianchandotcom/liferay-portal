@@ -181,7 +181,8 @@ public class KBArticleStagedModelDataHandlerTest
 			null, serviceContext.getUserId(), parentResourceClassNameId,
 			parentResourcePrimKey, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, serviceContext);
+			StringUtil.randomString(), null, null, null, null, null,
+			serviceContext);
 	}
 
 	private ServiceContext _createServiceContext(Group group) throws Exception {

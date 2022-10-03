@@ -59,7 +59,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, serviceContext);
+			null, null, null, null, serviceContext);
 	}
 
 	@Override

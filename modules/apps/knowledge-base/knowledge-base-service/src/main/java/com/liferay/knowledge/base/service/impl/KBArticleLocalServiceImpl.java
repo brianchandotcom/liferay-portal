@@ -1071,7 +1071,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			userId, resourcePrimKey, kbArticle.getTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(),
 			kbArticle.getSourceURL(), StringUtil.split(kbArticle.getSections()),
-			null, null, serviceContext);
+			null, null, kbArticle.getExpirationDate(),
+			kbArticle.getReviewDate(), serviceContext);
 	}
 
 	@Override

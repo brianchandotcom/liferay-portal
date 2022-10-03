@@ -11601,6 +11601,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-poshi-runner-properties">
+		<delete file="${test.ext.properties.file}" />
+
 		<get-ip-address />
 
 		<echo append="true" file="${test.ext.properties.file}">

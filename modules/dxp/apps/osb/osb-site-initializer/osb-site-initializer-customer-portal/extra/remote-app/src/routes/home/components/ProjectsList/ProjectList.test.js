@@ -13,6 +13,15 @@ import {render, screen} from '@testing-library/react';
 import ProjectList from '.';
 
 describe('Project List', () => {
+	const koroneikiAccounts = {
+		items: [
+			{
+				name: 'Test Account',
+			},
+		],
+		totalCount: 6,
+	};
+
 	window.IntersectionObserver = jest.fn(() => ({
 		observer: jest.fn(),
 		unobserver: jest.fn(),
@@ -26,18 +35,25 @@ describe('Project List', () => {
 	});
 
 	it('displays projects as cards if has less than 05 projects', () => {
-		const {container} = render(<ProjectList hasManyProjects={false} />);
+		const {container} = render(
+			<ProjectList
+				compressed={false}
+				koroneikiAccounts={koroneikiAccounts}
+			/>
+		);
 
 		expect(
-			container.getElementsByClassName('cp-home-projects').length
+			container.getElementsByClassName('cp-project-card-lg').length
 		).toBe(1);
 	});
 
 	it('displays projects as a list if has more than 05 projects', () => {
-		const {container} = render(<ProjectList hasManyProjects />);
+		const {container} = render(
+			<ProjectList compressed koroneikiAccounts={koroneikiAccounts} />
+		);
 
-		expect(
-			container.getElementsByClassName('cp-home-projects-sm').length
-		).toBe(1);
+		expect(container.getElementsByClassName('card-horizontal').length).toBe(
+			1
+		);
 	});
 });

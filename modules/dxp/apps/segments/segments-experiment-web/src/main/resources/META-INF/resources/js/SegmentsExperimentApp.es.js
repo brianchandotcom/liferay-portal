@@ -12,30 +12,16 @@
 import {setSessionValue} from 'frontend-js-web';
 import React, {useEffect} from 'react';
 
-import ConnectToAC from './components/ConnectToAC.es';
-import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
-import SegmentsExperimentsContext from './context.es';
-import APIService from './util/APIService.es';
+import SegmentsExperimentsMain from './components/SegmentsExperimentsMain.es';
 
 import '../css/main.scss';
 
 export default function ({context, props}) {
-	const isAnalyticsSync = props.analyticsData?.isSynced;
-	const {endpoints, imagesPath, page} = context;
-	const {
-		calculateSegmentsExperimentEstimatedDurationURL,
-		createSegmentsExperimentURL,
-		createSegmentsVariantURL,
-		deleteSegmentsExperimentURL,
-		deleteSegmentsVariantURL,
-		editSegmentsExperimentStatusURL,
-		editSegmentsExperimentURL,
-		editSegmentsVariantLayoutURL,
-		editSegmentsVariantURL,
-		runSegmentsExperimentURL,
-	} = endpoints;
+	const {namespace} = context;
+	const {segmentExperimentDataURL} = props;
+
 	const segmentsExperimentPanelToggle = document.getElementById(
-		`${context.namespace}segmentsExperimentPanelToggleId`
+		`${namespace}segmentsExperimentPanelToggleId`
 	);
 
 	useEffect(() => {
@@ -65,61 +51,8 @@ export default function ({context, props}) {
 	}, [segmentsExperimentPanelToggle]);
 
 	return (
-		<div id={`${context.namespace}-segments-experiment-root`}>
-			{isAnalyticsSync ? (
-				<SegmentsExperimentsContext.Provider
-					value={{
-						APIService: APIService({
-							contentPageEditorNamespace:
-								context.contentPageEditorNamespace,
-							endpoints: {
-								calculateSegmentsExperimentEstimatedDurationURL,
-								createSegmentsExperimentURL,
-								createSegmentsVariantURL,
-								deleteSegmentsExperimentURL,
-								deleteSegmentsVariantURL,
-								editSegmentsExperimentStatusURL,
-								editSegmentsExperimentURL,
-								editSegmentsVariantURL,
-								runSegmentsExperimentURL,
-							},
-							namespace: context.namespace,
-						}),
-						editVariantLayoutURL: editSegmentsVariantLayoutURL,
-						imagesPath,
-						page,
-					}}
-				>
-					<div id={`${context.namespace}-segments-experiment-root`}>
-						<SegmentsExperimentsSidebar
-							initialExperimentHistory={
-								props.historySegmentsExperiments
-							}
-							initialGoals={props.segmentsExperimentGoals}
-							initialSegmentsExperiment={props.segmentsExperiment}
-							initialSegmentsVariants={
-								props.initialSegmentsVariants
-							}
-							initialSelectedSegmentsExperienceId={
-								props.selectedSegmentsExperienceId
-							}
-							winnerSegmentsVariantId={
-								props.winnerSegmentsVariantId
-							}
-						/>
-					</div>
-				</SegmentsExperimentsContext.Provider>
-			) : (
-				<ConnectToAC
-					analyticsCloudTrialURL={props.analyticsData?.cloudTrialURL}
-					analyticsURL={props.analyticsData?.url}
-					hideAnalyticsReportsPanelURL={
-						props.hideSegmentsExperimentPanelURL
-					}
-					isAnalyticsConnected={props.analyticsData?.isConnected}
-					pathToAssets={props.pathToAssets}
-				/>
-			)}
+		<div id={`${namespace}-segments-experiment-root`}>
+			<SegmentsExperimentsMain fetchDataURL={segmentExperimentDataURL} />
 		</div>
 	);
 }

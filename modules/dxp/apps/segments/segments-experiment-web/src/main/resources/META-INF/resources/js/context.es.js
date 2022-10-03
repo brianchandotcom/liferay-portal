@@ -31,6 +31,8 @@ const SegmentsExperimentsContext = React.createContext({
 	},
 });
 
+SegmentsExperimentsContext.displayName = 'SegmentsExperimentsContext';
+
 SegmentsExperimentsContext.Provider.propTypes = {
 	value: PropTypes.shape({
 		APIService: PropTypes.shape({
@@ -46,7 +48,8 @@ SegmentsExperimentsContext.Provider.propTypes = {
 		editVariantLayoutURL: PropTypes.string,
 		imagesPath: PropTypes.string.isRequired,
 		page: PropTypes.shape({
-			classNameId: PropTypes.string.isRequired,
+			classNameId:
+				PropTypes.string.isRequired | PropTypes.number.isRequired,
 			classPK: PropTypes.string.isRequired,
 			type: PropTypes.string.isRequired,
 		}),

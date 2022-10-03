@@ -236,6 +236,13 @@ definition {
 			permissionNavigationValue = "Blogs",
 			roleTitle = "Organization User",
 			roleType = "Organization");
+
+		var key_permissionDefinitionValue = "Add Entry";
+		var key_permissionNavigationValue = "Blogs";
+
+		AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+
+		AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_REMOVE");
 	}
 
 }

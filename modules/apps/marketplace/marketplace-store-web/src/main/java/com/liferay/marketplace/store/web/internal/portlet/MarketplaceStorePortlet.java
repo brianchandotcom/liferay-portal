@@ -161,6 +161,11 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			));
 	}
 
+	@Override
+	public OAuthManager getOAuthManager() {
+		return oAuthManager;
+	}
+
 	public void getPrepackagedApps(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -500,17 +505,14 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			"supportsHotDeploy", new String[] {Boolean.TRUE.toString()});
 	}
 
-	@Override
-	@Reference(unbind = "-")
-	protected void setOAuthManager(OAuthManager oAuthManager) {
-		super.setOAuthManager(oAuthManager);
-	}
-
 	@Reference
 	protected AppLocalService appLocalService;
 
 	@Reference
 	protected AppService appService;
+
+	@Reference
+	protected OAuthManager oAuthManager;
 
 	@Reference
 	protected Patcher patcher;

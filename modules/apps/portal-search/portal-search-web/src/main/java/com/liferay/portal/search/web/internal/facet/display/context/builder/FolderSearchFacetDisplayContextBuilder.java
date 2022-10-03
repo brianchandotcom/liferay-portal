@@ -288,19 +288,22 @@ public class FolderSearchFacetDisplayContextBuilder {
 			}
 		}
 
-		if (_order.equals("count:asc")) {
-			folderSearchFacetTermDisplayContexts.sort(
-				_COMPARATOR_FREQUENCY_ASC);
-		}
-		else if (_order.equals("count:desc")) {
-			folderSearchFacetTermDisplayContexts.sort(
-				_COMPARATOR_FREQUENCY_DESC);
-		}
-		else if (_order.equals("key:asc")) {
-			folderSearchFacetTermDisplayContexts.sort(_COMPARATOR_TERM_ASC);
-		}
-		else if (_order.equals("key:desc")) {
-			folderSearchFacetTermDisplayContexts.sort(_COMPARATOR_TERM_DESC);
+		if (_order != null) {
+			if (_order.equals("count:asc")) {
+				folderSearchFacetTermDisplayContexts.sort(
+					_COMPARATOR_FREQUENCY_ASC);
+			}
+			else if (_order.equals("count:desc")) {
+				folderSearchFacetTermDisplayContexts.sort(
+					_COMPARATOR_FREQUENCY_DESC);
+			}
+			else if (_order.equals("key:asc")) {
+				folderSearchFacetTermDisplayContexts.sort(_COMPARATOR_TERM_ASC);
+			}
+			else if (_order.equals("key:desc")) {
+				folderSearchFacetTermDisplayContexts.sort(
+					_COMPARATOR_TERM_DESC);
+			}
 		}
 
 		return folderSearchFacetTermDisplayContexts;

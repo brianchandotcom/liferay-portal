@@ -24,7 +24,6 @@ folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(new FolderTitleLooku
 folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
 folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
 folderSearchFacetDisplayContextBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
-folderSearchFacetDisplayContextBuilder.setOrder(dataJSONObject.getString("order"));
 folderSearchFacetDisplayContextBuilder.setParameterName(facet.getFieldId());
 folderSearchFacetDisplayContextBuilder.setParameterValue(fieldParam);
 

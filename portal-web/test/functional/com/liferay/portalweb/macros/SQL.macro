@@ -15,6 +15,18 @@ definition {
 		}
 	}
 
+	macro dropMySQLIndex {
+		Variables.assertDefined(parameterList = "${indexName},${tableName}");
+
+		SQL.executeMySQLStatement(mysqlStatement = "drop index ${indexName} on ${tableName};");
+
+		var hasMySQLIndex = SQL.hasMySQLIndex(indexName = "${indexName}");
+
+		if ("${hasMySQLIndex}" == "true") {
+			fail("Index ${indexName} wasn't dropped");
+		}
+	}
+
 	macro executeMySQLStatement {
 		Variables.assertDefined(parameterList = "${mysqlStatement}");
 

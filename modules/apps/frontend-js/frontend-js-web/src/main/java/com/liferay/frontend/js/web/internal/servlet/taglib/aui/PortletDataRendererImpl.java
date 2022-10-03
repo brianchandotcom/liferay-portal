@@ -54,14 +54,19 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 			writer.write("\n</script>");
 		}
 
-		writer.write("<script type=\"module\">\n");
-
-		// Write ES prologue
-
 		Map<String, IntegerWrapper> usedAliases = new HashMap<>();
 
 		Map<ESImport, ESImport> esImportsMap = _computeESImportsMap(
 			portletDatas, usedAliases);
+
+		if (esImportsMap.isEmpty()) {
+			writer.write("<script>\n");
+		}
+		else {
+			writer.write("<script type=\"module\">\n");
+		}
+
+		// Write ES prologue
 
 		if (!esImportsMap.isEmpty()) {
 			for (ESImport esImport : esImportsMap.values()) {

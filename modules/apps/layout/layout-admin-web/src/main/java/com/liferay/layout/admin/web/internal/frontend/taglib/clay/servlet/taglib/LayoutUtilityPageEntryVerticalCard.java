@@ -58,6 +58,20 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
+	public String getStickerIcon() {
+		if (_layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+			return "check-circle";
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getStickerStyle() {
+		return "primary";
+	}
+
+	@Override
 	public String getTitle() {
 		return HtmlUtil.escape(_layoutUtilityPageEntry.getName());
 	}

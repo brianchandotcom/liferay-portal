@@ -215,6 +215,10 @@ public interface LayoutUtilityPageEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
+		long groupId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long LayoutUtilityPageEntryId);
 

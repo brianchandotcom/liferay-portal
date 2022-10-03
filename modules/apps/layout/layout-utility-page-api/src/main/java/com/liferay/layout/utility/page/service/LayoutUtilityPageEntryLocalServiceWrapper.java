@@ -251,6 +251,14 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
+		long groupId, int type) {
+
+		return _layoutUtilityPageEntryLocalService.
+			fetchDefaultLayoutUtilityPageEntry(groupId, type);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long LayoutUtilityPageEntryId) {
 

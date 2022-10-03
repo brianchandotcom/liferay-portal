@@ -33,4 +33,19 @@ definition {
 		return "${output}";
 	}
 
+	macro hasMySQLIndex {
+		Variables.assertDefined(parameterList = "${indexName}");
+
+		var indexQuery = "SELECT COUNT(DISTINCT(index_name)) FROM information_schema.statistics WHERE index_schema = database() AND index_name = '${indexName}';";
+
+		var index = SQL.executeMySQLStatement(mysqlStatement = "${indexQuery}");
+
+		if (contains("${index}", "1")) {
+			return "true";
+		}
+		else {
+			return "false";
+		}
+	}
+
 }

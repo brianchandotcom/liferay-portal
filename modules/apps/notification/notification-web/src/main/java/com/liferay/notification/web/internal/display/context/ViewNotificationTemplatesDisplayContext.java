@@ -160,7 +160,8 @@ public class ViewNotificationTemplatesDisplayContext {
 	}
 
 	private void _addDropdownItem(
-		CreationMenu creationMenu, String labelKey, String templateType) {
+		CreationMenu creationMenu, String labelKey,
+			String notificationTemplateType) {
 
 		creationMenu.addDropdownItem(
 			dropdownItem -> {
@@ -168,7 +169,7 @@ public class ViewNotificationTemplatesDisplayContext {
 					_getPortletURL(), "mvcRenderCommandName",
 					"/notification_templates/edit_notification_template",
 					"backURL", _notificationRequestHelper.getCurrentURL(),
-					"templateType", templateType);
+					"notificationTemplateType", notificationTemplateType);
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_notificationRequestHelper.getRequest(), labelKey));

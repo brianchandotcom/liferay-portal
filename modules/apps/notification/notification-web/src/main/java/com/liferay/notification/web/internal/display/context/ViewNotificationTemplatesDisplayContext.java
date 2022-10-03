@@ -161,7 +161,7 @@ public class ViewNotificationTemplatesDisplayContext {
 
 	private void _addDropdownItem(
 		CreationMenu creationMenu, String labelKey,
-			String notificationTemplateType) {
+		String notificationTemplateType) {
 
 		creationMenu.addDropdownItem(
 			dropdownItem -> {

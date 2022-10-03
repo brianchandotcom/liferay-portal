@@ -608,7 +608,7 @@ public class NotificationTemplateLocalServiceImpl
 		}
 
 		if (Objects.equals(
-			NotificationConstants.TYPE_USER_NOTIFICATION, type)) {
+				NotificationConstants.TYPE_USER_NOTIFICATION, type)) {
 
 			return;
 		}

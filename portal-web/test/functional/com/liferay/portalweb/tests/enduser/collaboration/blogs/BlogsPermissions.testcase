@@ -644,7 +644,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -686,7 +686,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -811,7 +811,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -845,7 +845,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -890,7 +890,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -932,7 +932,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -991,7 +991,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -1033,7 +1033,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
@@ -1083,7 +1083,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Permissions.addBlogsEntryLoginUserPG(
+		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",

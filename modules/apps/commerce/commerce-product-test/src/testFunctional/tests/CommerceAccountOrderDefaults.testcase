@@ -8,9 +8,11 @@ definition {
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp(minium = "true");
+		task ("Setup: Create Minium site") {
+			CommerceConfiguration.commerceSetUp(minium = "true");
+		}
 
-		task ("Given a buyer user connected to the Commerce Account") {
+		task ("Setup: Create a Commerce Account and Buyer User") {
 			CommerceEntry.addAccountEntryUser(
 				accountName = "Commerce Account",
 				accountType = "Business",

@@ -170,11 +170,11 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 	private synchronized void _rebuildImportmaps() {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		JSONObject globalJSONObject = _getGlobalJSONObject();
-
-		globalJSONObject.put("scopes", _getScopesJSONObject());
-
-		jsonObject.put("imports", globalJSONObject);
+		jsonObject.put(
+			"imports", _getGlobalJSONObject()
+		).put(
+			"scopes", _getScopesJSONObject()
+		);
 
 		_importmaps.set(_jsonFactory.looseSerializeDeep(jsonObject));
 	}

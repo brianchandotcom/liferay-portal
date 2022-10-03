@@ -2091,16 +2091,18 @@ definition {
 			descriptionValue = "Execute conditional logic.",
 			labelValue = "Condition",
 			nodeType = "condition",
-			scriptValue = '''returnValue = "Transition Name"''');
+			scriptValue = '''returnValue = "Transition ID"''');
+
 
 		ProcessBuilderKaleoDesignerReact.hideSidebarFields(property = "Information");
+		
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfoNotVisible(
 			defaultIdValue = "true",
 			descriptionValue = "Execute conditional logic.",
 			labelValue = "Condition",
 			nodeType = "condition",
-			scriptValue = '''returnValue = "Transition Name"''');
+			scriptValue = '''returnValue = "Transition ID"''');
 	}
 
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."

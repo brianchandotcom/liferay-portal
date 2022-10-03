@@ -171,7 +171,7 @@ public class UserLocalServiceUtil {
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			java.util.Locale locale, String firstName, String middleName,
-			String lastName, long prefixId, long suffixId, boolean male,
+			String lastName, long prefixListTypeId, long suffixId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
@@ -179,8 +179,8 @@ public class UserLocalServiceUtil {
 		return getService().addOrUpdateUser(
 			externalReferenceCode, creatorUserId, companyId, autoPassword,
 			password1, password2, autoScreenName, screenName, emailAddress,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, sendEmail,
+			locale, firstName, middleName, lastName, prefixListTypeId, suffixId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, sendEmail,
 			serviceContext);
 	}
 
@@ -273,8 +273,8 @@ public class UserLocalServiceUtil {
 	 * @param firstName the user's first name
 	 * @param middleName the user's middle name
 	 * @param lastName the user's last name
-	 * @param prefixId the user's name prefix ID
-	 * @param suffixId the user's name suffix ID
+	 * @param prefixListTypeId the user's name prefix ID
+	 * @param suffixListTypeId the user's name suffix ID
 	 * @param male whether the user is male
 	 * @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 January)
@@ -297,19 +297,20 @@ public class UserLocalServiceUtil {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, java.util.Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
@@ -376,8 +377,8 @@ public class UserLocalServiceUtil {
 	 * @param firstName the user's first name
 	 * @param middleName the user's middle name
 	 * @param lastName the user's last name
-	 * @param prefixId the user's name prefix ID
-	 * @param suffixId the user's name suffix ID
+	 * @param prefixListTypeId the user's name prefix ID
+	 * @param suffixListTypeId the user's name suffix ID
 	 * @param male whether the user is male
 	 * @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 January)
@@ -400,19 +401,20 @@ public class UserLocalServiceUtil {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, java.util.Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
@@ -2768,8 +2770,8 @@ public class UserLocalServiceUtil {
 	 * @param firstName the user's first name
 	 * @param middleName the user's middle name
 	 * @param lastName the user's last name
-	 * @param prefixId the user's name prefix ID
-	 * @param suffixId the user's name suffix ID
+	 * @param prefixListTypeId the user's name prefix ID
+	 * @param suffixListTypeId the user's name suffix ID
 	 * @param male whether the user is male
 	 * @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 January)
@@ -2788,18 +2790,19 @@ public class UserLocalServiceUtil {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, java.util.Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, boolean updateUserInformation,
-			boolean sendEmail, ServiceContext serviceContext)
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, boolean updateUserInformation, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
-			sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			updateUserInformation, sendEmail, serviceContext);
 	}
 
 	/**
@@ -3093,8 +3096,8 @@ public class UserLocalServiceUtil {
 	 * @param firstName the user's new first name
 	 * @param middleName the user's new middle name
 	 * @param lastName the user's new last name
-	 * @param prefixId the user's new name prefix ID
-	 * @param suffixId the user's new name suffix ID
+	 * @param prefixListTypeId the user's new name prefix ID
+	 * @param suffixListTypeId the user's new name suffix ID
 	 * @param male whether user is male
 	 * @param birthdayMonth the user's new birthday month (0-based, meaning 0
 	 for January)
@@ -3124,11 +3127,11 @@ public class UserLocalServiceUtil {
 			String screenName, String emailAddress, boolean hasPortrait,
 			byte[] portraitBytes, String languageId, String timeZoneId,
 			String greeting, String comments, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
+			String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle,
+			long[] groupIds, long[] organizationIds, long[] roleIds,
 			List<com.liferay.portal.kernel.model.UserGroupRole> userGroupRoles,
 			long[] userGroupIds, ServiceContext serviceContext)
 		throws PortalException {
@@ -3137,11 +3140,11 @@ public class UserLocalServiceUtil {
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, hasPortrait, portraitBytes, languageId, timeZoneId,
-			greeting, comments, firstName, middleName, lastName, prefixId,
-			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, smsSn,
-			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds,
-			serviceContext);
+			greeting, comments, firstName, middleName, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle, groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	/**

@@ -326,7 +326,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 						actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getEmptyStateActionDropdownItems() %>"
 						animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
 						buttonCssClass="secondary"
-						title='<%= LanguageUtil.get(request, "knowledge-base-is-empty") %>'
+						title='<%= (parentResourcePrimKey == 0) ? LanguageUtil.get(request, "knowledge-base-is-empty") : LanguageUtil.get(request, "this-folder-is-empty") %>'
 					/>
 				</c:otherwise>
 			</c:choose>

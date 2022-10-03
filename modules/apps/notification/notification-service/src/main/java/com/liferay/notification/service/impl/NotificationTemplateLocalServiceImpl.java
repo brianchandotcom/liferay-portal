@@ -16,6 +16,7 @@ package com.liferay.notification.service.impl;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationTermContributorConstants;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
@@ -603,10 +604,12 @@ public class NotificationTemplateLocalServiceImpl
 				throw new NotificationTemplateTypeException();
 			}
 
-			type = "email";
+			type = NotificationConstants.TYPE_EMAIL;
 		}
 
-		if (Objects.equals("userNotification", type)) {
+		if (Objects.equals(
+			NotificationConstants.TYPE_USER_NOTIFICATION, type)) {
+
 			return;
 		}
 

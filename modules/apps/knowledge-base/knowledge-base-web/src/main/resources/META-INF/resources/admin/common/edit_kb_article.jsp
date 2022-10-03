@@ -161,7 +161,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						</c:if>
 
 						<c:if test="<%= editKBArticleDisplayContext.isSourceURLEnabled() %>">
-							<aui:input label="source-url" name="sourceURL" />
+							<aui:input label="source-url" name="sourceURL" value="<%= editKBArticleDisplayContext.getKBArticleSourceURL() %>" />
 						</c:if>
 
 						<c:if test="<%= editKBArticleDisplayContext.hasKBArticleSections() %>">

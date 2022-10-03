@@ -1244,9 +1244,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
 			kbArticle.getModifiedDate(), KBArticle.class.getName(),
 			kbArticle.getClassPK(), kbArticle.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null, null,
-			ContentTypes.TEXT_HTML, kbArticle.getTitle(),
-			kbArticle.getDescription(), summary, null, null, 0, 0, null);
+			assetTagNames, true, visible, null, null, null,
+			kbArticle.getExpirationDate(), ContentTypes.TEXT_HTML,
+			kbArticle.getTitle(), kbArticle.getDescription(), summary, null,
+			null, 0, 0, null);
 
 		_assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

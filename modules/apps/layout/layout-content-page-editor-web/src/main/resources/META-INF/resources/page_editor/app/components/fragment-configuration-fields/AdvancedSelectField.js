@@ -110,9 +110,12 @@ export function AdvancedSelectField({
 
 	useEffect(() => {
 		setIsTokenValueOrInherited(
-			!isNullOrUndefined(tokenValues[value]) || !value
+			Liferay.FeatureFlags['LPS-163362']
+				? !isNullOrUndefined(tokenValues[value]) ||
+						(!value && field.inherited)
+				: !isNullOrUndefined(tokenValues[value]) || !value
 		);
-	}, [selectedViewportSize, tokenValues, value]);
+	}, [selectedViewportSize, tokenValues, value, field.inherited]);
 
 	useEffect(() => {
 		if (!field.cssProperty) {
@@ -285,7 +288,8 @@ const SingleSelectWithIcon = ({
 
 	const defaultOptionLabel = useMemo(
 		() =>
-			options.find((option) => option.value === field.defaultValue).label,
+			options.find((option) => option.value === field.defaultValue)
+				?.label,
 		[field.defaultValue, options]
 	);
 

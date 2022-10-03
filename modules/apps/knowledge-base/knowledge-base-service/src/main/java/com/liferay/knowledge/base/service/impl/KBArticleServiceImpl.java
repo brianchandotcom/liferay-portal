@@ -97,7 +97,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return kbArticleLocalService.addKBArticle(
 			externalReferenceCode, getUserId(), parentResourceClassNameId,
 			parentResourcePrimKey, title, urlTitle, content, description,
-			sourceURL, sections, selectedFileNames, serviceContext);
+			sourceURL, sections, selectedFileNames, null, null, serviceContext);
 	}
 
 	@Override
@@ -785,8 +785,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		return kbArticleLocalService.updateKBArticle(
 			getUserId(), resourcePrimKey, title, content, description,
-			sourceURL, sections, selectedFileNames, removeFileEntryIds,
-			serviceContext);
+			sourceURL, sections, selectedFileNames, removeFileEntryIds, null,
+			null, serviceContext);
 	}
 
 	@Override

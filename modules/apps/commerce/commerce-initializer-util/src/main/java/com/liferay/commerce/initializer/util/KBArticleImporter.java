@@ -110,7 +110,7 @@ public class KBArticleImporter {
 		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
 			null, userId, folderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, null, content,
-			StringPool.BLANK, null, sections, selectedFileNames,
+			StringPool.BLANK, null, sections, selectedFileNames, null, null,
 			serviceContext);
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");

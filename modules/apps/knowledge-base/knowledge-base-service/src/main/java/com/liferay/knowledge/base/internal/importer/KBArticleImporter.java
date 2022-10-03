@@ -117,7 +117,7 @@ public class KBArticleImporter {
 					parentResourcePrimaryKey,
 					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
 					null, kbArticleMarkdownConverter.getSourceURL(), null, null,
-					serviceContext);
+					null, null, serviceContext);
 
 				serviceContext.setWorkflowAction(workflowAction);
 			}
@@ -144,6 +144,7 @@ public class KBArticleImporter {
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(),
 				kbArticleMarkdownConverter.getSourceURL(), null, null, null,
+				kbArticle.getExpirationDate(), kbArticle.getReviewDate(),
 				serviceContext);
 		}
 		catch (Exception exception) {

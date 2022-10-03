@@ -14,14 +14,26 @@
 
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import BasePage from '../../components/BasePage';
-import {ESteps, TGenericComponent} from './WizardPage';
+import PropertiesTable from '../../components/PropertiesTable';
+import {fetchProperties} from '../../utils/api';
+import {ESteps, TGenericComponent} from '../wizard/WizardPage';
 
 interface IStepProps extends TGenericComponent {}
 
 const Step: React.FC<IStepProps> = ({onChangeStep}) => {
+	const [properties, setProperties] = useState([]);
+
+	useEffect(() => {
+		const request = async () => {
+			const response = await fetchProperties();
+			setProperties(response.items);
+		};
+		request();
+	}, []);
+
 	return (
 		<BasePage
 			description={Liferay.Language.get('property-description')}
@@ -40,30 +52,36 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 				</ClayButton>
 			</div>
 
-			<div className="empty-state-border">
-				<ClayEmptyState
-					description={Liferay.Language.get(
-						'create-a-property-to-add-sites-and-channels'
-					)}
-					imgProps={{
-						alt: Liferay.Language.get('create-a-new-property'),
-						title: Liferay.Language.get('create-a-new-property'),
-					}}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
-					title={Liferay.Language.get('create-a-new-property')}
-				>
-					<ClayButton
-						displayType="secondary"
+			{!!properties.length && <PropertiesTable properties={properties} />}
 
-						// TODO: Replace this empty function with modal of LRAC-11980
-
-						onClick={() => {}}
-						type="button"
+			{!properties.length && (
+				<div className="empty-state-border">
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'create-a-property-to-add-sites-and-channels'
+						)}
+						imgProps={{
+							alt: Liferay.Language.get('create-a-new-property'),
+							title: Liferay.Language.get(
+								'create-a-new-property'
+							),
+						}}
+						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
+						title={Liferay.Language.get('create-a-new-property')}
 					>
-						{Liferay.Language.get('new-property')}
-					</ClayButton>
-				</ClayEmptyState>
-			</div>
+						<ClayButton
+							displayType="secondary"
+
+							// TODO: Replace this empty function with modal of LRAC-11980
+
+							onClick={() => {}}
+							type="button"
+						>
+							{Liferay.Language.get('new-property')}
+						</ClayButton>
+					</ClayEmptyState>
+				</div>
+			)}
 
 			<BasePage.Footer>
 				<ClayButton.Group spaced>

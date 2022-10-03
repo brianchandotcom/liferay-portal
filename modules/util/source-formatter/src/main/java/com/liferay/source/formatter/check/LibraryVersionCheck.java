@@ -642,7 +642,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private enum SecurityAdvisoryEcosystemEnum {
 
-		COMPOSER, GO, MAVEN, NPM, NUGET, PIP, RUBYGEMS, RUST
+		MAVEN, NPM
 
 	}
 

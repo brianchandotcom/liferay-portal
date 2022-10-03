@@ -34,8 +34,11 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
@@ -79,6 +82,62 @@ public class PermissionUtil {
 		return resourcePermissionLocalService.getResourcePermissions(
 			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(resourceId));
+	}
+
+	public static List<Permission> getResourcePermissionsByResourceName(
+			long companyId, List<ResourceAction> resourceActions,
+			long resourceId, String resourceName,
+			ResourcePermissionLocalService resourcePermissionLocalService,
+			RoleLocalService roleLocalService, String[] roleNames)
+		throws PortalException {
+
+		_checkResources(
+			companyId, resourceId, resourceName,
+			resourcePermissionLocalService);
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourcePermissions(resourceName);
+
+		List<Permission> permissions = new ArrayList<>();
+
+		Map<String, Permission> permissionMap = new HashMap<>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if ((resourcePermission.getPrimKeyId() == 0L) ||
+				(resourcePermission.getPrimKeyId() == resourceId)) {
+
+				Role role = roleLocalService.getRole(
+					resourcePermission.getRoleId());
+
+				if ((roleNames == null) ||
+					((roleNames != null) &&
+					 ArrayUtil.contains(roleNames, role.getName()))) {
+
+					Permission existingPermission = permissionMap.get(
+						role.getName());
+					Permission newPermission = toPermission(
+						resourceActions, resourcePermission, role);
+
+					if (existingPermission == null) {
+						permissionMap.put(role.getName(), newPermission);
+						permissions.add(newPermission);
+					}
+					else {
+						Set<String> actions = new HashSet<>();
+
+						Collections.addAll(
+							actions, existingPermission.getActionIds());
+						Collections.addAll(
+							actions, newPermission.getActionIds());
+
+						existingPermission.setActionIds(
+							actions.toArray(new String[0]));
+					}
+				}
+			}
+		}
+
+		return permissions;
 	}
 
 	public static List<Role> getRoles(

@@ -698,7 +698,7 @@
 			<path>
 				<dirset
 					dir="${modules.dir}"
-					excludes="**/*-test*"
+					excludes="**/*-test,**/*-test-*"
 					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
@@ -721,7 +721,7 @@
 			<path>
 				<dirset
 					dir="${modules.dir}"
-					excludes="**/*-test*"
+					excludes="**/*-test,**/*-test-*"
 					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
@@ -734,7 +734,7 @@
 				</dirset>
 				<dirset
 					dir="${modules.dir}"
-					excludes="**/*-test*"
+					excludes="**/*-test,**/*-test-*"
 					includes="dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
@@ -760,7 +760,7 @@
 			<path>
 				<dirset
 					dir="${modules.dir}"
-					excludes="**/*-test*,${app.module.dirs.excludes}"
+					excludes="**/*-test,**/*-test-*,${app.module.dirs.excludes}"
 					includes="apps/${app.name}/**,dxp/apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">
@@ -795,7 +795,7 @@
 			<path>
 				<dirset
 					dir="${modules.dir}"
-					excludes="**/*-test*,${app.module.dirs.excludes}"
+					excludes="**/*-test,**/*-test-*,${app.module.dirs.excludes}"
 					includes="apps/${app.name}/**"
 				>
 					<present targetdir="${modules.dir}">

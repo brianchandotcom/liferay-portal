@@ -2093,9 +2093,7 @@ definition {
 			nodeType = "condition",
 			scriptValue = '''returnValue = "Transition ID"''');
 
-
 		ProcessBuilderKaleoDesignerReact.hideSidebarFields(property = "Information");
-		
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfoNotVisible(
 			defaultIdValue = "true",

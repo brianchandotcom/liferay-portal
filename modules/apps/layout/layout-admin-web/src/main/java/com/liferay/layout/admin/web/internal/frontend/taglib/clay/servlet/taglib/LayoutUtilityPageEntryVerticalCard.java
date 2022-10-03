@@ -62,6 +62,11 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		return HtmlUtil.escape(_layoutUtilityPageEntry.getName());
 	}
 
+	@Override
+	public boolean isSelectable() {
+		return true;
+	}
+
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

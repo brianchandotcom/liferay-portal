@@ -66,6 +66,7 @@ import java.math.BigDecimal;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
@@ -110,7 +111,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
-				_buildCPInstances(actionRequest);
+				Callable<CPInstance> cpInstanceCallable =
+					new CPInstanceCallable(actionRequest);
+
+				TransactionInvokerUtil.invoke(
+					_transactionConfig, cpInstanceCallable);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				_deleteCPInstances(actionRequest);
@@ -212,94 +217,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			deliveryMaxSubscriptionCycles);
 	}
 
-	private void _buildCPInstances(ActionRequest actionRequest)
-		throws Exception {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstance.class.getName(), actionRequest);
-
-		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
-	}
-
-	private void _deleteCPInstances(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCPInstanceIds = null;
-
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-
-		if (cpInstanceId > 0) {
-			deleteCPInstanceIds = new long[] {cpInstanceId};
-		}
-		else {
-			deleteCPInstanceIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPInstanceIds"), 0L);
-		}
-
-		for (long deleteCPInstanceId : deleteCPInstanceIds) {
-			_cpInstanceService.deleteCPInstance(deleteCPInstanceId);
-		}
-	}
-
-	private String _getCommercePricingConfigurationKey() throws Exception {
-		CommercePricingConfiguration commercePricingConfiguration =
-			_configurationProvider.getConfiguration(
-				CommercePricingConfiguration.class,
-				new SystemSettingsLocator(
-					CommercePricingConstants.SERVICE_NAME));
-
-		return commercePricingConfiguration.commercePricingCalculationKey();
-	}
-
-	private void _updateCommercePriceEntries(
-			CPInstance cpInstance, BigDecimal price, BigDecimal promoPrice,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		_updateCommercePriceEntry(
-			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
-			serviceContext);
-		_updateCommercePriceEntry(
-			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, promoPrice,
-			serviceContext);
-	}
-
-	private void _updateCommercePriceEntry(
-			CPInstance cpInstance, String type, BigDecimal price,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.
-				getCatalogBaseCommercePriceListByType(
-					cpInstance.getGroupId(), type);
-
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		if (commercePriceEntry == null) {
-			CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-			_commercePriceEntryLocalService.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), price, null,
-				serviceContext);
-		}
-		else {
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price, null,
-				serviceContext);
-		}
-	}
-
-	private CPInstance _updateCPInstance(ActionRequest actionRequest)
+	private CPInstance _addOrUpdateCPInstance(ActionRequest actionRequest)
 		throws Exception {
 
 		String externalReferenceCode = ParamUtil.getString(
@@ -465,6 +383,111 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		return cpInstance;
 	}
 
+	private void _buildCPInstances(ActionRequest actionRequest)
+		throws Exception {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstance.class.getName(), actionRequest);
+
+		List<CPInstance> cpInstances = _cpInstanceService.buildCPInstances(
+			cpDefinitionId, serviceContext);
+
+		for (CPInstance cpInstance : cpInstances) {
+			cpInstance = _cpInstanceService.updatePricingInfo(
+				cpInstance.getCPInstanceId(), cpInstance.getPrice(),
+				cpInstance.getPromoPrice(), cpInstance.getCost(),
+				serviceContext);
+
+			if (Objects.equals(
+					_getCommercePricingConfigurationKey(),
+					CommercePricingConstants.VERSION_2_0)) {
+
+				_updateCommercePriceEntries(
+					cpInstance, cpInstance.getPrice(),
+					cpInstance.getPromoPrice(),
+					ServiceContextFactory.getInstance(actionRequest));
+			}
+		}
+	}
+
+	private void _deleteCPInstances(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteCPInstanceIds = null;
+
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+
+		if (cpInstanceId > 0) {
+			deleteCPInstanceIds = new long[] {cpInstanceId};
+		}
+		else {
+			deleteCPInstanceIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPInstanceIds"), 0L);
+		}
+
+		for (long deleteCPInstanceId : deleteCPInstanceIds) {
+			_cpInstanceService.deleteCPInstance(deleteCPInstanceId);
+		}
+	}
+
+	private String _getCommercePricingConfigurationKey() throws Exception {
+		CommercePricingConfiguration commercePricingConfiguration =
+			_configurationProvider.getConfiguration(
+				CommercePricingConfiguration.class,
+				new SystemSettingsLocator(
+					CommercePricingConstants.SERVICE_NAME));
+
+		return commercePricingConfiguration.commercePricingCalculationKey();
+	}
+
+	private void _updateCommercePriceEntries(
+			CPInstance cpInstance, BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_updateCommercePriceEntry(
+			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
+			serviceContext);
+		_updateCommercePriceEntry(
+			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, promoPrice,
+			serviceContext);
+	}
+
+	private void _updateCommercePriceEntry(
+			CPInstance cpInstance, String type, BigDecimal price,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.
+				getCatalogBaseCommercePriceListByType(
+					cpInstance.getGroupId(), type);
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		if (commercePriceEntry == null) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price, null,
+				serviceContext);
+		}
+		else {
+			_commercePriceEntryLocalService.updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, null,
+				serviceContext);
+		}
+	}
+
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
@@ -492,7 +515,17 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public CPInstance call() throws Exception {
-			return _updateCPInstance(_actionRequest);
+			String cmd = ParamUtil.getString(_actionRequest, Constants.CMD);
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				return _addOrUpdateCPInstance(_actionRequest);
+			}
+
+			if (cmd.equals(Constants.ADD_MULTIPLE)) {
+				_buildCPInstances(_actionRequest);
+			}
+
+			return null;
 		}
 
 		private CPInstanceCallable(ActionRequest actionRequest) {

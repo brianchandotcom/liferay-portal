@@ -195,9 +195,10 @@ public class CPInstanceServiceHttp {
 		}
 	}
 
-	public static void buildCPInstances(
-			HttpPrincipal httpPrincipal, long cpDefinitionId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.List<com.liferay.commerce.product.model.CPInstance>
+			buildCPInstances(
+				HttpPrincipal httpPrincipal, long cpDefinitionId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -208,8 +209,10 @@ public class CPInstanceServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, serviceContext);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
 				if (exception instanceof
@@ -222,6 +225,9 @@ public class CPInstanceServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
+
+			return (java.util.List
+				<com.liferay.commerce.product.model.CPInstance>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {

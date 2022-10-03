@@ -115,12 +115,13 @@ public class CPInstanceServiceWrapper
 	}
 
 	@Override
-	public void buildCPInstances(
+	public java.util.List<CPInstance> buildCPInstances(
 			long cpDefinitionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
+		return _cpInstanceService.buildCPInstances(
+			cpDefinitionId, serviceContext);
 	}
 
 	@Override

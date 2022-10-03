@@ -137,7 +137,7 @@ public interface CPInstanceLocalService
 			int discontinuedDateYear, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void buildCPInstances(
+	public List<CPInstance> buildCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException;
 

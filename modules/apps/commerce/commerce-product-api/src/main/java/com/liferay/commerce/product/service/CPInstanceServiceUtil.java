@@ -117,12 +117,12 @@ public class CPInstanceServiceUtil {
 			serviceContext);
 	}
 
-	public static void buildCPInstances(
+	public static List<CPInstance> buildCPInstances(
 			long cpDefinitionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		getService().buildCPInstances(cpDefinitionId, serviceContext);
+		return getService().buildCPInstances(cpDefinitionId, serviceContext);
 	}
 
 	public static void deleteCPInstance(long cpInstanceId)

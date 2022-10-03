@@ -342,6 +342,7 @@
 													"fragmentStyle": {
 														"borderWidth": "0",
 														"marginTop": "4",
+														"paddingBottom": "2",
 														"textAlign": ""
 													},
 													"indexed": true,

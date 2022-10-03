@@ -73,7 +73,7 @@ import org.scribe.oauth.OAuthService;
  * @author Douglas Wong
  * @author Haote Chou
  */
-public class RemoteMVCPortlet extends MVCPortlet {
+public abstract class RemoteMVCPortlet extends MVCPortlet {
 
 	public void authorize(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -81,6 +81,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		OAuthManager oAuthManager = getOAuthManager();
 
 		OAuthService oAuthService = oAuthManager.getOAuthService();
 
@@ -105,6 +107,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		OAuthManager oAuthManager = getOAuthManager();
+
 		oAuthManager.deleteAccessToken(themeDisplay.getUser());
 
 		actionResponse.sendRedirect(
@@ -114,6 +118,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 				"/view.jsp"
 			).buildString());
 	}
+
+	public abstract OAuthManager getOAuthManager();
 
 	@Override
 	public void processAction(
@@ -224,6 +230,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 	protected Response getResponse(User user, OAuthRequest oAuthRequest)
 		throws Exception {
 
+		OAuthManager oAuthManager = getOAuthManager();
+
 		Token token = oAuthManager.getAccessToken(user);
 
 		if (token != null) {
@@ -272,12 +280,6 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			PortalUtil.getCurrentCompleteURL(httpServletRequest));
 		addOAuthParameter(oAuthRequest, "p_p_id", getServerPortletId());
 	}
-
-	protected void setOAuthManager(OAuthManager oAuthManager) {
-		this.oAuthManager = oAuthManager;
-	}
-
-	protected OAuthManager oAuthManager;
 
 	private void _checkOmniAdmin() throws PortletException {
 		PermissionChecker permissionChecker =
@@ -438,6 +440,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		OAuthManager oAuthManager = getOAuthManager();
 
 		Token requestToken = oAuthManager.getRequestToken(
 			themeDisplay.getUser());

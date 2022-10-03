@@ -232,7 +232,7 @@ const SelectSubscription = ({
 								{subscriptionGroups?.map((product) => (
 									<ClaySelect.Option
 										key={product.name}
-										label={product.name}
+										label={productGroupName}
 									/>
 								))}
 							</ClaySelect>

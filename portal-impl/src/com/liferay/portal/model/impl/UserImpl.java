@@ -394,29 +394,29 @@ public class UserImpl extends UserBaseImpl {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
 
-		long prefixId = 0;
+		long prefixListTypeId = 0;
 
 		if (usePrefix) {
 			Contact contact = fetchContact();
 
 			if (contact != null) {
-				prefixId = contact.getPrefixId();
+				prefixListTypeId = contact.getPrefixListTypeId();
 			}
 		}
 
-		long suffixId = 0;
+		long suffixListTypeId = 0;
 
 		if (useSuffix) {
 			Contact contact = fetchContact();
 
 			if (contact != null) {
-				suffixId = contact.getSuffixId();
+				suffixListTypeId = contact.getSuffixListTypeId();
 			}
 		}
 
 		return fullNameGenerator.getLocalizedFullName(
 			getFirstName(), getMiddleName(), getLastName(), getLocale(),
-			prefixId, suffixId);
+			prefixListTypeId, suffixListTypeId);
 	}
 
 	@Override

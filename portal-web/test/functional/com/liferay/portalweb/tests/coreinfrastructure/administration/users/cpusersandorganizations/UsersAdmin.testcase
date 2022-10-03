@@ -2571,10 +2571,15 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editCategorizationCP(
-			categoryName = "Category Name 1",
-			userScreenName = "usersn",
-			vocabularyName = "Vocabulary Name 1");
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		Click(
+			key_vocabularyName = "Vocabulary Name 1",
+			locator1 = "AssetCategorization#CATEGORY_SELECT");
+
+		AssetCategorization.selectCategories(categoryNameList = "Category Name 1");
+
+		PortletEntry.save();
 
 		User.openUsersAdmin();
 

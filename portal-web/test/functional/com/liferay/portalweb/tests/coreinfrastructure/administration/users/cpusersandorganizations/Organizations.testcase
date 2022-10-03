@@ -798,10 +798,11 @@ definition {
 
 		Organization.editOrganizationCP(orgName = "Organization Name");
 
-		Organization.editCategorizationCP(
-			categoryName = "Category Name 1",
-			orgName = "Organization Name",
-			vocabularyName = "Vocabulary Name 1");
+		Click(
+			key_vocabularyName = "Vocabulary Name 1",
+			locator1 = "AssetCategorization#CATEGORY_SELECT");
+
+		AssetCategorization.selectCategories(categoryNameList = "Category Name 1");
 
 		PortletEntry.save();
 

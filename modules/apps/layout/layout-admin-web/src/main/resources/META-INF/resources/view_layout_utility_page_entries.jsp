@@ -36,7 +36,8 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 		>
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new LayoutUtilityPageEntryVerticalCard(layoutUtilityPageEntry, renderRequest) %>"
+					propsTransformer="js/LayoutUtilityPageEntryDropdownPropsTransformer"
+					verticalCard="<%= new LayoutUtilityPageEntryVerticalCard(layoutUtilityPageEntry, renderRequest, renderResponse) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

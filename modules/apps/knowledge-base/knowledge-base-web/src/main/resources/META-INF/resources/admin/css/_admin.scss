@@ -186,8 +186,14 @@ $toolbarZIndex: 971;
 				min-height: $toolbarDesktopHeight;
 			}
 
-			.input-text-wrapper .form-validator-stack {
-				display: none;
+			.input-text-wrapper {
+				&:not(.has-error):not(.has-success) .form-control {
+					background-color: $gray-200;
+				}
+
+				.form-validator-stack {
+					display: none;
+				}
 			}
 		}
 	}

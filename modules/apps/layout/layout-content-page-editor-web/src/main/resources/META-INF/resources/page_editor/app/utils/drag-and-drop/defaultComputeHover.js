@@ -56,7 +56,8 @@ export default function defaultComputeHover({
 	const orientation = getOrientation(
 		siblingItem || targetItem,
 		monitor,
-		targetRefs
+		targetRefs,
+		layoutDataRef
 	);
 
 	const [
@@ -232,7 +233,14 @@ export default function defaultComputeHover({
 	}
 }
 
-function getOrientation(item, monitor, targetRefs) {
+function getOrientation(item, monitor, targetRefs, layoutDataRef) {
+	if (
+		!item.parentId ||
+		!itemIsContainerFlex(layoutDataRef.current.items[item.parentId])
+	) {
+		return ORIENTATIONS.vertical;
+	}
+
 	const targetRef = targetRefs.get(item.toControlsId(item.itemId));
 	const targetRect = targetRef.current.getBoundingClientRect();
 	const hoverMiddle = targetRect.left + targetRect.width / 2;

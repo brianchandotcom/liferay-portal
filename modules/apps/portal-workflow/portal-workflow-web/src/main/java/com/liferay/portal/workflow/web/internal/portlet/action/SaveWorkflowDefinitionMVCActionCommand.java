@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -51,7 +50,7 @@ public class SaveWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = localization.getLocalizationMap(
 			actionRequest, "title");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String content = ParamUtil.getString(actionRequest, "content");

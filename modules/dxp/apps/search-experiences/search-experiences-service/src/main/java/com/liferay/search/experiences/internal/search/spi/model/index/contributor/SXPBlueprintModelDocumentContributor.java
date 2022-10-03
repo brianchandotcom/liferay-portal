@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
@@ -51,24 +51,26 @@ public class SXPBlueprintModelDocumentContributor
 
 			document.addKeyword(
 				Field.getSortableFieldName(
-					LocalizationUtil.getLocalizedName(
+					_localization.getLocalizedName(
 						Field.DESCRIPTION, languageId)),
 				sxpBlueprint.getDescription(locale), true);
 			document.addKeyword(
 				Field.getSortableFieldName(
-					LocalizationUtil.getLocalizedName(Field.TITLE, languageId)),
+					_localization.getLocalizedName(Field.TITLE, languageId)),
 				sxpBlueprint.getTitle(locale), true);
 			document.addText(
-				LocalizationUtil.getLocalizedName(
-					Field.DESCRIPTION, languageId),
+				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
 				sxpBlueprint.getDescription(locale));
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				_localization.getLocalizedName(Field.TITLE, languageId),
 				sxpBlueprint.getTitle(locale));
 		}
 	}
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,11 +68,10 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "ddmTemplateId");
 
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			uploadPortletRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				uploadPortletRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			uploadPortletRequest, "description");
 		String script = ParamUtil.getString(
 			uploadPortletRequest, "scriptContent");
 		boolean cacheable = ParamUtil.getBoolean(
@@ -146,6 +145,9 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

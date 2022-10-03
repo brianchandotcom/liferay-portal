@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -404,7 +404,7 @@ public class WebFormPortlet extends MVCPortlet {
 
 			fieldLabels.add(fieldLabel);
 
-			String localizedfieldLabel = LocalizationUtil.getPreferencesValue(
+			String localizedfieldLabel = _localization.getPreferencesValue(
 				preferences, "fieldLabel" + i, themeDisplay.getLanguageId());
 
 			sb.append(_getCSVFormattedValue(localizedfieldLabel));
@@ -641,6 +641,9 @@ public class WebFormPortlet extends MVCPortlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

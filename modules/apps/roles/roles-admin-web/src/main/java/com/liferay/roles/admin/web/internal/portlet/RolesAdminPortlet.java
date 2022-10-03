@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -224,10 +224,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 		String subtype = ParamUtil.getString(actionRequest, "subtype");
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Role.class.getName(), actionRequest);
@@ -859,6 +859,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

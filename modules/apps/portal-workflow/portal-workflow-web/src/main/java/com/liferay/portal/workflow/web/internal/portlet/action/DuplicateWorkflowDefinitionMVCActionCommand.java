@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,7 +61,7 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 			themeDisplay,
 			ParamUtil.getString(actionRequest, "duplicatedDefinitionName"));
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = localization.getLocalizationMap(
 			actionRequest, randomNamespace + "title");
 
 		validateTitle(actionRequest, titleMap);

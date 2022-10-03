@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -152,8 +152,7 @@ public class IndexerHelper {
 			kaleoDefinition.getKaleoDefinitionId()
 		).title(
 			kaleoDefinition.getTitle(
-				LocalizationUtil.getDefaultLanguageId(
-					kaleoDefinition.getTitle()))
+				_localization.getDefaultLanguageId(kaleoDefinition.getTitle()))
 		).titleMap(
 			kaleoDefinition.getTitleMap()
 		);
@@ -302,7 +301,7 @@ public class IndexerHelper {
 				assetRenderer.getClassName(), assetRenderer.getClassPK());
 
 			if (assetEntry != null) {
-				return LocalizationUtil.populateLocalizationMap(
+				return _localization.populateLocalizationMap(
 					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 					assetEntry.getGroupId());
 			}
@@ -387,8 +386,7 @@ public class IndexerHelper {
 			kaleoDefinition.getKaleoDefinitionId()
 		).title(
 			kaleoDefinition.getTitle(
-				LocalizationUtil.getDefaultLanguageId(
-					kaleoDefinition.getTitle()))
+				_localization.getDefaultLanguageId(kaleoDefinition.getTitle()))
 		).titleMap(
 			kaleoDefinition.getTitleMap()
 		).version(
@@ -497,6 +495,9 @@ public class IndexerHelper {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private UserLocalService _userLocalService;

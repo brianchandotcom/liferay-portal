@@ -78,7 +78,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
@@ -3094,12 +3094,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
-				LocalizationUtil.getMap(bodyLocalizedValuesMap));
+				_localization.getMap(bodyLocalizedValuesMap));
 		}
 
 		if (subjectLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(
-				LocalizationUtil.getMap(subjectLocalizedValuesMap));
+				_localization.getMap(subjectLocalizedValuesMap));
 		}
 
 		subscriptionSender.setMailId(
@@ -3483,6 +3483,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private MimeTypes _mimeTypes;

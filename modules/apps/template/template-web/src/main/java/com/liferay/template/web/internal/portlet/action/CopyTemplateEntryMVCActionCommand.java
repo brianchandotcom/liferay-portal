@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
@@ -59,10 +59,10 @@ public class CopyTemplateEntryMVCActionCommand
 		long templateEntryId = ParamUtil.getLong(
 			actionRequest, "templateEntryId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
@@ -88,6 +88,9 @@ public class CopyTemplateEntryMVCActionCommand
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;

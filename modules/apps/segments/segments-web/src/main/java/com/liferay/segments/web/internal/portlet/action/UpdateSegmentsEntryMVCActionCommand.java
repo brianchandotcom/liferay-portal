@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,14 +72,14 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		long segmentsEntryId = ParamUtil.getLong(
 			actionRequest, "segmentsEntryId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 
 		String segmentsEntryKey = ParamUtil.getString(
 			actionRequest, "segmentsEntryKey");
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
 		String type = ParamUtil.getString(actionRequest, "type");
 
@@ -193,6 +193,9 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private SegmentsCriteriaContributorRegistry

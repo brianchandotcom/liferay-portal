@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -99,11 +99,10 @@ public class EditDetailsMVCActionCommand
 
 		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name", liveGroup.getNameMap());
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "description", liveGroup.getDescriptionMap());
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description", liveGroup.getDescriptionMap());
 		int type = ParamUtil.getInteger(
 			actionRequest, "type", liveGroup.getType());
 		boolean manualMembership = ParamUtil.getBoolean(
@@ -165,6 +164,9 @@ public class EditDetailsMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;

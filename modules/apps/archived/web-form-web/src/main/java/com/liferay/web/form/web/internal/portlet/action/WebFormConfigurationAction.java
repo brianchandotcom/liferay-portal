@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.web.form.web.internal.constants.WebFormPortletKeys;
 import com.liferay.web.form.web.internal.util.WebFormUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -93,19 +95,19 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 		PortletPreferences preferences = actionRequest.getPreferences();
 
-		LocalizationUtil.setLocalizedPreferencesValues(
+		_localization.setLocalizedPreferencesValues(
 			actionRequest, preferences, "title");
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");
 
 		preferences.setValue("title", titleMap.get(defaultLocale));
 
-		LocalizationUtil.setLocalizedPreferencesValues(
+		_localization.setLocalizedPreferencesValues(
 			actionRequest, preferences, "description");
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		preferences.setValue("description", descriptionMap.get(defaultLocale));
 
@@ -125,7 +127,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 			for (int formFieldsIndex : formFieldsIndexes) {
 				Map<Locale, String> fieldLabelMap =
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						actionRequest, "fieldLabel" + formFieldsIndex);
 
 				if (Validator.isNull(fieldLabelMap.get(defaultLocale))) {
@@ -137,10 +139,10 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 				boolean fieldOptional = ParamUtil.getBoolean(
 					actionRequest, "fieldOptional" + formFieldsIndex);
 				Map<Locale, String> fieldOptionsMap =
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						actionRequest, "fieldOptions" + formFieldsIndex);
 				Map<Locale, String> fieldParagraphMap =
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						actionRequest, "fieldParagraph" + formFieldsIndex);
 
 				String fieldValidationScript = ParamUtil.getString(
@@ -185,24 +187,24 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 			// Clear previous preferences that are now blank
 
-			String fieldLabel = LocalizationUtil.getPreferencesValue(
+			String fieldLabel = _localization.getPreferencesValue(
 				preferences, "fieldLabel" + i, defaultLanguageId);
 
 			while (Validator.isNotNull(fieldLabel)) {
 				Map<Locale, String> fieldLabelMap =
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						actionRequest, "fieldLabel" + i);
 
 				for (Locale locale : fieldLabelMap.keySet()) {
 					String languageId = LocaleUtil.toLanguageId(locale);
 
-					LocalizationUtil.setPreferencesValue(
+					_localization.setPreferencesValue(
 						preferences, "fieldLabel" + i, languageId,
 						StringPool.BLANK);
-					LocalizationUtil.setPreferencesValue(
+					_localization.setPreferencesValue(
 						preferences, "fieldOptions" + i, languageId,
 						StringPool.BLANK);
-					LocalizationUtil.setPreferencesValue(
+					_localization.setPreferencesValue(
 						preferences, "fieldParagraph" + i, languageId,
 						StringPool.BLANK);
 				}
@@ -217,7 +219,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 				i++;
 
-				fieldLabel = LocalizationUtil.getPreferencesValue(
+				fieldLabel = _localization.getPreferencesValue(
 					preferences, "fieldLabel" + i, defaultLanguageId);
 			}
 		}
@@ -256,7 +258,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 			String languageId = LocaleUtil.toLanguageId(locale);
 			String value = newLocalizationMap.get(locale);
 
-			LocalizationUtil.setPreferencesValue(
+			_localization.setPreferencesValue(
 				preferences, parameter, languageId, value);
 		}
 	}
@@ -305,7 +307,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 		for (int formFieldsIndex : formFieldsIndexes) {
 			Map<Locale, String> fieldLabelMap =
-				LocalizationUtil.getLocalizationMap(
+				_localization.getLocalizationMap(
 					actionRequest, "fieldLabel" + formFieldsIndex);
 
 			for (Map.Entry<Locale, String> entry : fieldLabelMap.entrySet()) {
@@ -369,7 +371,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 		for (int formFieldsIndex : formFieldsIndexes) {
 			Map<Locale, String> fieldLabelMap =
-				LocalizationUtil.getLocalizationMap(
+				_localization.getLocalizationMap(
 					actionRequest, "fieldLabel" + formFieldsIndex);
 
 			if (Validator.isNull(fieldLabelMap.get(defaultLocale))) {

@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -45,8 +46,8 @@ public class SXPElementModelSummaryContributor
 
 		return _createSummary(
 			document,
-			LocalizationUtil.getLocalizedName(Field.DESCRIPTION, languageId),
-			LocalizationUtil.getLocalizedName(Field.TITLE, languageId));
+			_localization.getLocalizedName(Field.DESCRIPTION, languageId),
+			_localization.getLocalizedName(Field.TITLE, languageId));
 	}
 
 	private Summary _createSummary(
@@ -58,5 +59,8 @@ public class SXPElementModelSummaryContributor
 			document.get(prefix + titleField, titleField),
 			document.get(prefix + descriptionField, descriptionField));
 	}
+
+	@Reference
+	private Localization _localization;
 
 }

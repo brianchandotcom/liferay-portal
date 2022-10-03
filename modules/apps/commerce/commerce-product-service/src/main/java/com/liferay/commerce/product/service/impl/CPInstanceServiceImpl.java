@@ -131,14 +131,15 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public void buildCPInstances(
+	public List<CPInstance> buildCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
-		cpInstanceLocalService.buildCPInstances(cpDefinitionId, serviceContext);
+		return cpInstanceLocalService.buildCPInstances(
+			cpDefinitionId, serviceContext);
 	}
 
 	@Override

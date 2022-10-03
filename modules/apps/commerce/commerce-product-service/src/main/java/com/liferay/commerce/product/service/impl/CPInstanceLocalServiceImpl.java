@@ -328,7 +328,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void buildCPInstances(
+	public List<CPInstance> buildCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -341,8 +341,37 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			neverExpire = true;
 		}
 
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+
+		if (!neverExpire) {
+			Date expirationDate = cpDefinition.getExpirationDate();
+
+			Calendar expirationDateCalendar = CalendarFactoryUtil.getCalendar(
+				expirationDate.getTime(), user.getTimeZone());
+
+			expirationDateMonth = expirationDateCalendar.get(Calendar.MONTH);
+			expirationDateDay = expirationDateCalendar.get(
+				Calendar.DAY_OF_MONTH);
+			expirationDateYear = expirationDateCalendar.get(Calendar.YEAR);
+			expirationDateHour = expirationDateCalendar.get(Calendar.HOUR);
+			expirationDateMinute = expirationDateCalendar.get(Calendar.MINUTE);
+		}
+
 		SKUCombinationsIterator iterator = _getSKUCombinationsIterator(
 			cpDefinitionId);
+
+		Date displayDate = cpDefinition.getDisplayDate();
+
+		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
+			displayDate.getTime(), user.getTimeZone());
+
+		List<CPInstance> cpInstances = new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			CPDefinitionOptionValueRel[] cpDefinitionOptionValueRels =
@@ -358,17 +387,28 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			_addCPInstance(
-				cpDefinitionId, cpDefinition.getGroupId(), sku,
-				StringPool.BLANK, StringPool.BLANK, true,
-				_toCpDefinitionOptionRelIdCPDefinitionOptionValueRelIds(
-					cpDefinitionOptionValueRels),
-				cpDefinition.getWidth(), cpDefinition.getHeight(),
-				cpDefinition.getDepth(), cpDefinition.getWeight(),
-				BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, true,
-				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
-				neverExpire, serviceContext);
+			cpInstances.add(
+				cpInstanceLocalService.addCPInstance(
+					null, cpDefinitionId, cpDefinition.getGroupId(), sku, null,
+					null, true,
+					_toCpDefinitionOptionRelIdCPDefinitionOptionValueRelIds(
+						cpDefinitionOptionValueRels),
+					cpDefinition.getWidth(), cpDefinition.getHeight(),
+					cpDefinition.getDepth(), cpDefinition.getWeight(),
+					BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, true,
+					displayDateCalendar.get(Calendar.MONTH),
+					displayDateCalendar.get(Calendar.DAY_OF_MONTH),
+					displayDateCalendar.get(Calendar.YEAR),
+					displayDateCalendar.get(Calendar.HOUR),
+					displayDateCalendar.get(Calendar.MINUTE),
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					false, false, 1, StringPool.BLANK, null, 0, false, 1,
+					StringPool.BLANK, null, 0, null, false, null, 0, 0, 0, 0,
+					serviceContext));
 		}
+
+		return cpInstances;
 	}
 
 	@Override
@@ -1060,76 +1100,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			deliveryMaxSubscriptionCycles);
 
 		return cpInstancePersistence.update(cpInstance);
-	}
-
-	private CPInstance _addCPInstance(
-			long cpDefinitionId, long groupId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable,
-			Map<Long, List<Long>>
-				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, Date displayDate, Date expirationDate,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		return _addCPInstance(
-			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
-			purchasable, cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
-			width, height, depth, weight, price, promoPrice, cost, published,
-			displayDate, expirationDate, neverExpire, null, serviceContext);
-	}
-
-	private CPInstance _addCPInstance(
-			long cpDefinitionId, long groupId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable,
-			Map<Long, List<Long>>
-				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, Date displayDate, Date expirationDate,
-			boolean neverExpire, String unspsc, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
-			displayDate.getTime(), user.getTimeZone());
-
-		int displayDateMonth = displayDateCalendar.get(Calendar.MONTH);
-		int displayDateDay = displayDateCalendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = displayDateCalendar.get(Calendar.YEAR);
-		int displayDateHour = displayDateCalendar.get(Calendar.HOUR);
-		int displayDateMinute = displayDateCalendar.get(Calendar.MINUTE);
-
-		int expirationDateMonth = 0;
-		int expirationDateDay = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-
-		if (!neverExpire) {
-			Calendar expirationDateCalendar = CalendarFactoryUtil.getCalendar(
-				expirationDate.getTime(), user.getTimeZone());
-
-			expirationDateMonth = expirationDateCalendar.get(Calendar.MONTH);
-			expirationDateDay = expirationDateCalendar.get(
-				Calendar.DAY_OF_MONTH);
-			expirationDateYear = expirationDateCalendar.get(Calendar.YEAR);
-			expirationDateHour = expirationDateCalendar.get(Calendar.HOUR);
-			expirationDateMinute = expirationDateCalendar.get(Calendar.MINUTE);
-		}
-
-		return cpInstanceLocalService.addCPInstance(
-			StringPool.BLANK, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds, width, height,
-			depth, weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, false, false,
-			1, StringPool.BLANK, null, 0, false, 1, null, null, 0, unspsc,
-			false, null, 0, 0, 0, 0, serviceContext);
 	}
 
 	private SearchContext _buildSearchContext(

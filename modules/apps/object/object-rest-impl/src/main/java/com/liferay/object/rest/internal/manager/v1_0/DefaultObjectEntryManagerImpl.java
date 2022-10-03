@@ -713,7 +713,7 @@ public class DefaultObjectEntryManagerImpl
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
 
-			if (!objectDefinition2.isApproved()) {
+			if (!objectDefinition2.isActive()) {
 				continue;
 			}
 

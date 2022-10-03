@@ -39,8 +39,6 @@ public interface FolderFacetSearchContributor {
 
 		public FolderFacetBuilder maxTerms(int maxTerms);
 
-		public FolderFacetBuilder order(String order);
-
 		public FolderFacetBuilder selectedFolderIds(long... selectedFolderIds);
 
 	}

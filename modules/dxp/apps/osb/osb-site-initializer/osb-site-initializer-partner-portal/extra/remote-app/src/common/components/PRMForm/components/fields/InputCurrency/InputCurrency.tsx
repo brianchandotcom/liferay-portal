@@ -26,6 +26,7 @@ const InputCurrency = ({
 	meta,
 	onAccept,
 	required,
+	value,
 }: PRMFormFieldProps & PRMFormFieldStateProps<number> & IProps) => (
 	<WrapperInput
 		{...meta}
@@ -49,7 +50,7 @@ const InputCurrency = ({
 			scale={2}
 			thousandsSeparator=","
 			unmask="typed"
-			value={field.value || ''}
+			value={value || field.value || ''}
 		/>
 	</WrapperInput>
 );

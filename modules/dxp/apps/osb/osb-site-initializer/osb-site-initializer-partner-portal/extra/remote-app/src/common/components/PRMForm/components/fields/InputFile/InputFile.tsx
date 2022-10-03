@@ -15,12 +15,14 @@ import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
-const InputText = ({
+const InputFile = ({
 	description,
 	field,
 	label,
 	meta,
+	onChange,
 	required,
+	value,
 	...props
 }: PRMFormFieldProps &
 	PRMFormFieldStateProps<string> &
@@ -34,11 +36,12 @@ const InputText = ({
 		<ClayInput
 			{...props}
 			{...field}
+			onChange={onChange || field.onChange}
 			required={required}
-			type="text"
-			value={field.value || ''}
+			type="file"
+			value={value || field.value || ''}
 		/>
 	</WrapperInput>
 );
 
-export default InputText;
+export default InputFile;

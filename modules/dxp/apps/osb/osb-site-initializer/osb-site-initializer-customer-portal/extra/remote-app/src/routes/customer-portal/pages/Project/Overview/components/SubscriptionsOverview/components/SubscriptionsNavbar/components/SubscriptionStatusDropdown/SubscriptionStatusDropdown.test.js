@@ -14,7 +14,7 @@ import userEvent from '@testing-library/user-event';
 import SubscriptionStatusDropdown from '.';
 
 describe('Subscription Status Dropdown', () => {
-	it('Displays All Status changing with the user click in DropDown', async () => {
+	it('Change the Status with the user click in DropDown', async () => {
 		const user = userEvent.setup();
 		render(<SubscriptionStatusDropdown />);
 

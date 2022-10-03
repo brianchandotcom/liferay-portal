@@ -46,13 +46,14 @@ const AccountSubscriptionGroupsDropdown = ({
 				<Button
 					borderless
 					className="align-items-center d-flex px-2"
+					data-testid="subscriptionDropDown"
 					disabled={disabled}
 					small
 				>
 					{loading ? (
 						<Skeleton height={16} width={80} />
 					) : (
-						accountSubscriptionGroups[selectedIndex].name
+						accountSubscriptionGroups[selectedIndex]?.name
 					)}
 
 					<span className="inline-item inline-item-after">

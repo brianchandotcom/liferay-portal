@@ -276,7 +276,8 @@ html#{$cadmin-selector} {
 			padding: 0;
 		}
 
-		&__container.flex-row {
+		&__container.flex-row,
+		&__collection .flex-row {
 			.page-editor__collection-item.empty {
 				min-width: $emptyCollectionItemMinWidth;
 			}

@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
@@ -132,7 +133,8 @@
 										"backgroundColor": "colorNeutral0",
 										"borderColor": "colorNeutral4",
 										"borderWidth": "",
-										"height": "65px"
+										"height": "65px",
+										"textAlign": ""
 									},
 									"indexed": true,
 									"layout": {
@@ -160,6 +162,7 @@
 												"height": "65px",
 												"maxWidth": "12%",
 												"paddingLeft": "2",
+												"textAlign": "",
 												"width": "12%"
 											},
 											"indexed": true,
@@ -202,7 +205,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
+														"fontWeight": "fontWeightBold",
+														"textAlign": ""
 													},
 													"indexed": true
 												},
@@ -218,6 +222,7 @@
 												"borderWidth": "",
 												"height": "65px",
 												"maxWidth": "18%",
+												"textAlign": "",
 												"width": "18%"
 											},
 											"indexed": true,
@@ -260,7 +265,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
+														"fontWeight": "fontWeightBold",
+														"textAlign": ""
 													},
 													"indexed": true
 												},
@@ -276,6 +282,7 @@
 												"borderWidth": "",
 												"height": "65px",
 												"maxWidth": "16%",
+												"textAlign": "",
 												"width": "16%"
 											},
 											"indexed": true,
@@ -318,7 +325,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
+														"fontWeight": "fontWeightBold",
+														"textAlign": ""
 													},
 													"indexed": true
 												},
@@ -334,6 +342,7 @@
 												"borderWidth": "",
 												"height": "65px",
 												"maxWidth": "12%",
+												"textAlign": "",
 												"width": "12%"
 											},
 											"indexed": true,
@@ -376,7 +385,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
+														"fontWeight": "fontWeightBold",
+														"textAlign": ""
 													},
 													"indexed": true
 												},
@@ -392,6 +402,7 @@
 												"borderWidth": "",
 												"height": "65px",
 												"maxWidth": "16%",
+												"textAlign": "",
 												"width": "16%"
 											},
 											"indexed": true,
@@ -434,7 +445,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
+														"fontWeight": "fontWeightBold",
+														"textAlign": ""
 													},
 													"indexed": true
 												},
@@ -450,6 +462,7 @@
 												"borderWidth": "",
 												"height": "65px",
 												"maxWidth": "18%",
+												"textAlign": "",
 												"width": "18%"
 											},
 											"indexed": true,
@@ -492,7 +505,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
+														"fontWeight": "fontWeightBold",
+														"textAlign": ""
 													},
 													"indexed": true
 												},
@@ -532,8 +546,7 @@
 									],
 									"displayAllItems": false,
 									"displayAllPages": true,
-									"layout": {
-									},
+									"layout": {},
 									"listItemStyle": "",
 									"listStyle": "",
 									"numberOfColumns": 1,
@@ -547,8 +560,7 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {
-											}
+											"collectionItemConfig": {}
 										},
 										"pageElements": [
 											{
@@ -560,7 +572,8 @@
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"borderWidth": "",
-														"height": "65px"
+														"height": "65px",
+														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
@@ -587,6 +600,7 @@
 																"height": "65px",
 																"maxWidth": "12%",
 																"paddingLeft": "2",
+																"textAlign": "",
 																"width": "12%"
 															},
 															"indexed": true,
@@ -644,6 +658,7 @@
 																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "18%",
+																"textAlign": "",
 																"width": "18%"
 															},
 															"indexed": true,
@@ -701,6 +716,7 @@
 																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "16%",
+																"textAlign": "",
 																"width": "16%"
 															},
 															"indexed": true,
@@ -758,6 +774,7 @@
 																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "12%",
+																"textAlign": "",
 																"width": "12%"
 															},
 															"indexed": true,
@@ -815,6 +832,7 @@
 																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "16%",
+																"textAlign": "",
 																"width": "16%"
 															},
 															"indexed": true,
@@ -873,6 +891,7 @@
 																"height": "65px",
 																"maxWidth": "18%",
 																"paddingRight": "2",
+																"textAlign": "",
 																"width": "18%"
 															},
 															"indexed": true,
@@ -938,6 +957,7 @@
 																"borderWidth": "0",
 																"height": "65px",
 																"maxWidth": "8%",
+																"textAlign": "",
 																"width": "8%"
 															},
 															"indexed": true,
@@ -967,8 +987,7 @@
 																		"iconLink": "request-page",
 																		"iconName": "search-experiences"
 																	},
-																	"fragmentFields": [
-																	],
+																	"fragmentFields": [],
 																	"indexed": true
 																},
 																"type": "Fragment"

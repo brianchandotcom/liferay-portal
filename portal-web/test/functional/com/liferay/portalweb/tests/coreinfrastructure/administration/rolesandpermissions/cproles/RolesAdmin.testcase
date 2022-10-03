@@ -156,11 +156,13 @@ definition {
 
 		Role.openRolesAdmin();
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "Remove Permission Scope",
-			siteNameScope = "Liferay");
+			siteNameScope = "${siteName}");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
@@ -172,7 +174,7 @@ definition {
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
-			removeSiteScope = "Liferay",
+			removeSiteScope = "${siteName}",
 			roleTitle = "Remove Permission Scope");
 
 		Role.viewPermissionCP(

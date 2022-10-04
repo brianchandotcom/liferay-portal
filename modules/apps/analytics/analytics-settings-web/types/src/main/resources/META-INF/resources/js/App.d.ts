@@ -13,14 +13,13 @@
  */
 
 import React from 'react';
-export declare const AppContext: React.Context<{
-	connected: boolean;
-	liferayAnalyticsURL: string;
-	token: string;
-}>;
+export declare const AppContext: React.Context<any>;
 export declare enum EPageView {
 	Wizard = 'VIEW_WIZARD_MODE',
 	Default = 'VIEW_DEFAULT_MODE',
+}
+export declare enum Events {
+	Connected = 'CONNECTED',
 }
 interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	connected: boolean;

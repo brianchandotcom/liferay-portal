@@ -12,4 +12,6 @@
  * details.
  */
 
-export {};
+import React from 'react';
+declare const LoadingInline: React.FC;
+export default LoadingInline;

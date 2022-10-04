@@ -12,4 +12,10 @@
  * details.
  */
 
-export {};
+import React from 'react';
+interface IDisconnectModalProps {
+	observer: any;
+	onOpenChange: (value: boolean) => void;
+}
+declare const DisconnectModal: React.FC<IDisconnectModalProps>;
+export default DisconnectModal;

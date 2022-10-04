@@ -12,4 +12,11 @@
  * details.
  */
 
-export {};
+import React from 'react';
+import {ESteps} from '../pages/wizard/WizardPage';
+interface IConnectProps {
+	onChangeStep?: (step: ESteps) => void;
+	title: string;
+}
+declare const Connect: React.FC<IConnectProps>;
+export default Connect;

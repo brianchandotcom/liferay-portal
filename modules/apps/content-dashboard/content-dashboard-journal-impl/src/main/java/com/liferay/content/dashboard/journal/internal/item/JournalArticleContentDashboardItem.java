@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -119,9 +120,13 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public List<ContentDashboardItemVersion> getAllContentDashboardItemVersions(
-		ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest) {
 
 		int status = WorkflowConstants.STATUS_APPROVED;
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

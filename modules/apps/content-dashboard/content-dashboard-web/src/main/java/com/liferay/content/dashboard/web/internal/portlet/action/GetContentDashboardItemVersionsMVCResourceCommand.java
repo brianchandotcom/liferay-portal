@@ -31,13 +31,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -97,13 +95,9 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		List<ContentDashboardItemVersion> contentDashboardItemVersions =
 			versionableContentDashboardItem.getAllContentDashboardItemVersions(
-				themeDisplay);
+				httpServletRequest);
 
 		if (ListUtil.isEmpty(contentDashboardItemVersions)) {
 			return jsonArray;
@@ -151,10 +145,6 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		int displayVersions = ParamUtil.getInteger(
 			resourceRequest, "maxDisplayVersions", 10);
 
@@ -163,7 +153,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 
 		List<ContentDashboardItemVersion> contentDashboardItemVersions =
 			versionableContentDashboardItem.getAllContentDashboardItemVersions(
-				themeDisplay);
+				httpServletRequest);
 
 		return JSONUtil.put(
 			"versions",

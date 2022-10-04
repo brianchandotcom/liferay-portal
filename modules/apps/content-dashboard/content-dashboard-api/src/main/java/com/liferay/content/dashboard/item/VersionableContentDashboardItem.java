@@ -14,8 +14,6 @@
 
 package com.liferay.content.dashboard.item;
 
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +25,7 @@ public interface VersionableContentDashboardItem<T>
 	extends ContentDashboardItem<T> {
 
 	public List<ContentDashboardItemVersion> getAllContentDashboardItemVersions(
-		ThemeDisplay themeDisplay);
+		HttpServletRequest httpServletRequest);
 
 	public String getViewVersionsURL(HttpServletRequest httpServletRequest);
 

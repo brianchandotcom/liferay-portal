@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -208,7 +207,8 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 
 		@Override
 		public List<ContentDashboardItemVersion>
-			getAllContentDashboardItemVersions(ThemeDisplay themeDisplay) {
+			getAllContentDashboardItemVersions(
+				HttpServletRequest httpServletRequest) {
 
 			List<ContentDashboardItemVersion> contentDashboardItemVersions =
 				new ArrayList<>();

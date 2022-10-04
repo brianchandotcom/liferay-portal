@@ -110,9 +110,13 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public List<ContentDashboardItemVersion> getAllContentDashboardItemVersions(
-		ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest) {
 
 		int status = WorkflowConstants.STATUS_APPROVED;
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

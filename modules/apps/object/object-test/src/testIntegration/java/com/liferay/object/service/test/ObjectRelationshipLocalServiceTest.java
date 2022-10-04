@@ -31,19 +31,15 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.test.system.TestSystemObjectDefinitionMetadata;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
-import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.object.util.ObjectRelationshipUtil;
-import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -59,7 +55,6 @@ import java.sql.Connection;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -154,7 +149,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				TestSystemObjectDefinitionMetadata.NAME, null, null,
+				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 				Arrays.asList(
@@ -728,87 +723,5 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _systemObjectDefinition2;
-
-	private static class TestSystemObjectDefinitionMetadata
-		extends BaseSystemObjectDefinitionMetadata {
-
-		public TestSystemObjectDefinitionMetadata(
-			Class<?> modelClass, String name) {
-
-			_modelClass = modelClass;
-			_name = name;
-		}
-
-		@Override
-		public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
-			throws PortalException {
-
-			return null;
-		}
-
-		@Override
-		public String getJaxRsApplicationName() {
-			return "";
-		}
-
-		@Override
-		public Map<Locale, String> getLabelMap() {
-			return null;
-		}
-
-		@Override
-		public Class<?> getModelClass() {
-			return _modelClass;
-		}
-
-		@Override
-		public String getModelClassName() {
-			return null;
-		}
-
-		@Override
-		public String getName() {
-			return _name;
-		}
-
-		@Override
-		public List<ObjectField> getObjectFields() {
-			return null;
-		}
-
-		@Override
-		public Map<Locale, String> getPluralLabelMap() {
-			return null;
-		}
-
-		@Override
-		public Column<?, Long> getPrimaryKeyColumn() {
-			return null;
-		}
-
-		@Override
-		public String getRESTContextPath() {
-			return "/o/test-endpoint/rel/{relId}/entries";
-		}
-
-		@Override
-		public String getScope() {
-			return null;
-		}
-
-		@Override
-		public Table getTable() {
-			return null;
-		}
-
-		@Override
-		public int getVersion() {
-			return 1;
-		}
-
-		private final Class<?> _modelClass;
-		private final String _name;
-
-	}
 
 }

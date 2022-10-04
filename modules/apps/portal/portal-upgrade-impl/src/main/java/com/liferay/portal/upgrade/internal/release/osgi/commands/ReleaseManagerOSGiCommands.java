@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.release.osgi.commands;
 
+import com.liferay.gogo.shell.logging.TeeLoggingUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -76,14 +77,18 @@ public class ReleaseManagerOSGiCommands {
 			return "No upgrade processes registered for " + bundleSymbolicName;
 		}
 
-		try {
-			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
-		}
-		catch (Throwable throwable) {
-			_log.error(
-				"Failed upgrade process for module ".concat(bundleSymbolicName),
-				throwable);
-		}
+		TeeLoggingUtil.runWithTeeLogging(
+			() -> {
+				try {
+					_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
+				}
+				catch (Throwable throwable) {
+					_log.error(
+						"Failed upgrade process for module ".concat(
+							bundleSymbolicName),
+						throwable);
+				}
+			});
 
 		return null;
 	}
@@ -100,11 +105,13 @@ public class ReleaseManagerOSGiCommands {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
 
-		_upgradeExecutor.executeUpgradeInfos(
-			bundleSymbolicName,
-			releaseGraphManager.getUpgradeInfos(
-				_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName),
-				toVersionString));
+		TeeLoggingUtil.runWithTeeLogging(
+			() -> _upgradeExecutor.executeUpgradeInfos(
+				bundleSymbolicName,
+				releaseGraphManager.getUpgradeInfos(
+					_releaseManagerImpl.getSchemaVersionString(
+						bundleSymbolicName),
+					toVersionString)));
 
 		return null;
 	}
@@ -113,7 +120,8 @@ public class ReleaseManagerOSGiCommands {
 	public String executeAll() {
 		Set<String> upgradeThrewExceptionBundleSymbolicNames = new HashSet<>();
 
-		executeAll(upgradeThrewExceptionBundleSymbolicNames);
+		TeeLoggingUtil.runWithTeeLogging(
+			() -> executeAll(upgradeThrewExceptionBundleSymbolicNames));
 
 		if (upgradeThrewExceptionBundleSymbolicNames.isEmpty()) {
 			return "All modules were successfully upgraded";

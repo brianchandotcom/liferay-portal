@@ -15,6 +15,7 @@
 package com.liferay.portal.verify.extender.internal.osgi.commands;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.gogo.shell.logging.TeeLoggingUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -115,18 +116,23 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Descriptor("Execute a specific verify process")
 	public void execute(String verifyProcessName) {
-		_executeVerifyProcesses(
-			_getVerifyProcesses(_verifyProcesses, verifyProcessName),
-			verifyProcessName, true);
+		TeeLoggingUtil.runWithTeeLogging(
+			() -> _executeVerifyProcesses(
+				_getVerifyProcesses(_verifyProcesses, verifyProcessName),
+				verifyProcessName, true));
 	}
 
 	@Descriptor("Execute all verify processes")
 	public void executeAll() {
-		for (String verifyProcessName : _verifyProcesses.keySet()) {
-			_executeVerifyProcesses(
-				_getVerifyProcesses(_verifyProcesses, verifyProcessName),
-				verifyProcessName, true);
-		}
+		TeeLoggingUtil.runWithTeeLogging(
+			() -> {
+				for (String verifyProcessName : _verifyProcesses.keySet()) {
+					_executeVerifyProcesses(
+						_getVerifyProcesses(
+							_verifyProcesses, verifyProcessName),
+						verifyProcessName, true);
+				}
+			});
 	}
 
 	@Descriptor("List all registered verify processes")

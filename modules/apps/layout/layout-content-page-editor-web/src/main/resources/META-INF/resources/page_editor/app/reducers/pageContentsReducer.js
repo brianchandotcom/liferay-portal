@@ -13,6 +13,7 @@
  */
 
 import {
+	ADD_ITEM,
 	DELETE_ITEM,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_PAGE_CONTENTS,
@@ -26,6 +27,7 @@ export default function pageContentsReducer(
 	action
 ) {
 	switch (action.type) {
+		case ADD_ITEM:
 		case DELETE_ITEM:
 		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
 		case UPDATE_PAGE_CONTENTS:

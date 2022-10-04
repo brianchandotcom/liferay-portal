@@ -13,8 +13,6 @@
  */
 
 import addItem from '../../actions/addItem';
-import updatePageContents from '../../actions/updatePageContents';
-import InfoItemService from '../../services/InfoItemService';
 import LayoutService from '../../services/LayoutService';
 import getFragmentEntryLinkIdsFromItemId from '../../utils/getFragmentEntryLinkIdsFromItemId';
 
@@ -26,34 +24,22 @@ function undoAction({action, store}) {
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
-		})
-			.then(({layoutData}) => {
-				const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
+		}).then(({layoutData, pageContents}) => {
+			const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
+				itemId,
+				layoutData,
+			});
+
+			dispatch(
+				addItem({
+					fragmentEntryLinkIds,
 					itemId,
 					layoutData,
-				});
-
-				dispatch(
-					addItem({
-						fragmentEntryLinkIds,
-						itemId,
-						layoutData,
-						portletIds,
-					})
-				);
-			})
-			.then(() => {
-				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch,
-					segmentsExperienceId: store.segmentsExperienceId,
-				}).then((pageContents) => {
-					dispatch(
-						updatePageContents({
-							pageContents,
-						})
-					);
-				});
-			});
+					pageContents,
+					portletIds,
+				})
+			);
+		});
 	};
 }
 

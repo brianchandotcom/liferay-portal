@@ -108,6 +108,61 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9854. The default discount for the account should persist when viewing an item."
+	@priority = "5"
+	test CanAddDefaultDiscount {
+		task ("Given 2 different discounts for the same product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "10",
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 10% off",
+				productName = "U-Joint");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 2 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 20% off",
+				productName = "U-Joint");
+		}
+
+		task ("and the second discount is set as the Account Default") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultDiscount(
+				channelEntry = "Minium Portal",
+				discountTitle = "Discount 2 20% off");
+		}
+
+		task ("When the Minium catalog is viewed by an account user") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
+
+		task ("Then the U-Joint product should display the discounted price set in the default.") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "20",
+				productDiscountedPrice = "19.20",
+				productListPrice = "24.00");
+		}
+	}
+
 	@description = "COMMERCE-9724. The default Payment Terms and Conditions should persist at checkout."
 	@priority = "4"
 	test CanAddDefaultPaymentTermWithCheckout {

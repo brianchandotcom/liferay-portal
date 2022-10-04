@@ -96,7 +96,7 @@ const VersionsContent = ({
 						<ul className="list-group sidebar-list-group">
 							{versions.map((version) => (
 								<li
-									className="list-group-item list-group-item-flex"
+									className="list-group-item list-group-item-flex p-0"
 									key={version.version}
 								>
 									<ClayLayout.ContentCol expand>

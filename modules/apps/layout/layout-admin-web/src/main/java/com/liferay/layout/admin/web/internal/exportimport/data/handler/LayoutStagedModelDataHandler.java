@@ -312,7 +312,7 @@ public class LayoutStagedModelDataHandler
 
 		Element layoutElement = portletDataContext.getExportDataElement(layout);
 
-		_populateElementLayoutMetadata(layoutElement, layout);
+		_populateElementLayoutMetadata(layout, layoutElement);
 
 		layoutElement.addAttribute(Constants.ACTION, Constants.ADD);
 
@@ -349,36 +349,36 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
-		_exportCollectionLayoutCollection(portletDataContext, layout);
+		_exportCollectionLayoutCollection(layout, portletDataContext);
 
 		if (_layoutExportImportConfiguration.exportDraftLayout()) {
-			_exportDraftLayout(portletDataContext, layout, layoutElement);
+			_exportDraftLayout(layout, layoutElement, portletDataContext);
 		}
 
-		_exportMasterLayout(portletDataContext, layout, layoutElement);
+		_exportMasterLayout(layout, layoutElement, portletDataContext);
 
 		_exportLayoutFriendlyURLs(layout, portletDataContext);
 
 		_exportLayoutSEOEntries(layout, portletDataContext);
 
-		_exportLayoutClassedModelUsages(portletDataContext, layout);
+		_exportLayoutClassedModelUsages(layout, portletDataContext);
 
 		if (layout.isIconImage()) {
-			_exportLayoutIconImage(portletDataContext, layout, layoutElement);
+			_exportLayoutIconImage(layout, layoutElement, portletDataContext);
 		}
 
-		_exportLayoutPageTemplateStructure(portletDataContext, layout);
+		_exportLayoutPageTemplateStructure(layout, portletDataContext);
 
 		if (layout.isTypeLinkToLayout()) {
-			_exportLinkedLayout(portletDataContext, layout, layoutElement);
+			_exportLinkedLayout(layout, layoutElement, portletDataContext);
 		}
 		else if (layout.isTypePortlet() || layout.isTypeAssetDisplay() ||
 				 layout.isTypeContent()) {
 
-			_exportLayoutPortlets(portletDataContext, layout, layoutElement);
+			_exportLayoutPortlets(layout, layoutElement, portletDataContext);
 		}
 		else if (layout.isTypeURL()) {
-			_exportLinkedURL(portletDataContext, layout, layoutElement);
+			_exportLinkedURL(layout, layoutElement, portletDataContext);
 		}
 
 		_exportFaviconFileEntry(layout, layoutElement, portletDataContext);
@@ -389,7 +389,7 @@ public class LayoutStagedModelDataHandler
 
 		_fixExportTypeSettings(layout);
 
-		_exportTheme(portletDataContext, layout);
+		_exportTheme(layout, portletDataContext);
 
 		portletDataContext.addClassedModel(
 			layoutElement, ExportImportPathUtil.getModelPath(layout),
@@ -844,13 +844,13 @@ public class LayoutStagedModelDataHandler
 		}
 		else if (layout.isTypeLinkToLayout()) {
 			_importLinkedLayout(
-				portletDataContext, layout, importedLayout, layoutElement);
+				importedLayout, layout, layoutElement, portletDataContext);
 
 			_updateTypeSettings(importedLayout, layout);
 		}
 		else if (layout.isTypeURL()) {
 			_importLinkedURL(
-				portletDataContext, layout, importedLayout, layoutElement);
+				importedLayout, layout, layoutElement, portletDataContext);
 
 			_updateTypeSettings(importedLayout, layout);
 		}
@@ -870,11 +870,11 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setSystem(layout.isSystem());
 		importedLayout.setFriendlyURL(
 			_getUniqueFriendlyURL(
-				portletDataContext, importedLayout, friendlyURL));
+				importedLayout, friendlyURL, portletDataContext));
 
 		if (layout.getIconImageId() > 0) {
 			_importLayoutIconImage(
-				portletDataContext, importedLayout, layoutElement);
+				importedLayout, layoutElement, portletDataContext);
 		}
 		else if (importedLayout.getIconImageId() > 0) {
 			_imageLocalService.deleteImage(importedLayout.getIconImageId());
@@ -920,11 +920,11 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setExpandoBridgeAttributes(serviceContext);
 
 		_importFaviconFileEntry(
-			portletDataContext, layout, layoutElement, importedLayout);
+			layout, layoutElement, importedLayout, portletDataContext);
 
-		_importClientExtensionEntryRels(portletDataContext, layout);
+		_importClientExtensionEntryRels(layout, portletDataContext);
 
-		_importLayoutLocalizations(portletDataContext, layout);
+		_importLayoutLocalizations(layout, portletDataContext);
 
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
@@ -934,28 +934,28 @@ public class LayoutStagedModelDataHandler
 		_updateLastMergeLayoutModifiedTime(
 			layoutElement, importedLayout, portletDataContext);
 
-		_importTheme(portletDataContext, layout, importedLayout);
+		_importTheme(importedLayout, layout, portletDataContext);
 
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
-		_importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
+		_importLayoutFriendlyURLs(importedLayout, layout, portletDataContext);
 
 		if ((layout.isTypePortlet() &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
 			layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 
 			_importLayoutPortlets(
-				portletDataContext, importedLayout, layoutElement);
+				importedLayout, layoutElement, portletDataContext);
 		}
 
-		_importAssets(portletDataContext, layout, importedLayout);
+		_importAssets(importedLayout, layout, portletDataContext);
 
 		_importLayoutPageTemplateStructures(
-			portletDataContext, layout, importedLayout);
+			importedLayout, layout, portletDataContext);
 
-		_importLayoutSEOEntries(portletDataContext, layout);
+		_importLayoutSEOEntries(layout, portletDataContext);
 
-		_importLayoutClassedModelUsages(portletDataContext, layout);
+		_importLayoutClassedModelUsages(layout, portletDataContext);
 
 		importedLayout = _layoutLocalService.getLayout(
 			importedLayout.getPlid());
@@ -965,7 +965,7 @@ public class LayoutStagedModelDataHandler
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
 		importedLayout = _updateCollectionLayoutTypeSettings(
-			portletDataContext, layout, importedLayout);
+			importedLayout, layout, portletDataContext);
 
 		if (existingLayout == null) {
 			_addMasterLayoutRevision(importedLayout);
@@ -1144,7 +1144,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _deleteMissingLayoutFriendlyURLs(
-		PortletDataContext portletDataContext, Layout layout) {
+		Layout layout, PortletDataContext portletDataContext) {
 
 		Map<Long, Long> layoutFriendlyURLIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -1203,7 +1203,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportCollectionLayoutCollection(
-		PortletDataContext portletDataContext, Layout layout) {
+		Layout layout, PortletDataContext portletDataContext) {
 
 		if (!layout.isTypeCollection()) {
 			return;
@@ -1244,8 +1244,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportDraftLayout(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -1301,7 +1301,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLayoutClassedModelUsages(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
@@ -1345,8 +1345,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLayoutIconImage(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		Image image = _imageLocalService.getImage(layout.getIconImageId());
@@ -1388,7 +1388,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLayoutPageTemplateStructure(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
@@ -1413,8 +1413,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLayoutPortlets(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		Map<String, String[]> parameterMap =
@@ -1428,7 +1428,7 @@ public class LayoutStagedModelDataHandler
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
 		Map<String, Object[]> portletIds = _getPortletIds(
-			portletDataContext, layout);
+			layout, portletDataContext);
 
 		for (Map.Entry<String, Object[]> portletIdsEntry :
 				portletIds.entrySet()) {
@@ -1520,8 +1520,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLinkedLayout(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -1556,8 +1556,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLinkedURL(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -1576,8 +1576,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportMasterLayout(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		if (layout.getMasterLayoutPlid() <= 0) {
@@ -1625,7 +1625,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportTheme(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		boolean exportThemeSettings = MapUtil.getBoolean(
@@ -1810,7 +1810,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private Map<String, Object[]> _getPortletIds(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		if (!LayoutStagingUtil.prepareLayoutStagingHandler(
@@ -1941,8 +1941,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private String _getUniqueFriendlyURL(
-		PortletDataContext portletDataContext, Layout existingLayout,
-		String friendlyURL) {
+		Layout existingLayout, String friendlyURL,
+		PortletDataContext portletDataContext) {
 
 		for (int i = 1;; i++) {
 			Layout duplicateFriendlyURLLayout =
@@ -1964,8 +1964,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importAssets(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout)
+			Layout importedLayout, Layout layout,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		_layoutLocalService.updateAsset(
@@ -1977,7 +1977,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importClientExtensionEntryRels(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<Element> clientExtensionEntryRelsElements =
@@ -1993,8 +1993,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importFaviconFileEntry(
-		PortletDataContext portletDataContext, Layout layout,
-		Element layoutElement, Layout importedLayout) {
+		Layout layout, Element layoutElement, Layout importedLayout,
+		PortletDataContext portletDataContext) {
 
 		Map<Long, Long> fileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -2030,8 +2030,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importFriendlyURLEntries(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout)
+			Layout importedLayout, Layout layout,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<Element> friendlyURLEntryElements =
@@ -2053,7 +2053,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLayoutClassedModelUsages(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<Element> layoutClassedModelUsageElements =
@@ -2069,8 +2069,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLayoutFriendlyURLs(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout)
+			Layout importedLayout, Layout layout,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<Element> layoutFriendlyURLElements =
@@ -2089,14 +2089,14 @@ public class LayoutStagedModelDataHandler
 				portletDataContext, layoutFriendlyURL);
 		}
 
-		_importFriendlyURLEntries(portletDataContext, layout, importedLayout);
+		_importFriendlyURLEntries(importedLayout, layout, portletDataContext);
 
-		_deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
+		_deleteMissingLayoutFriendlyURLs(importedLayout, portletDataContext);
 	}
 
 	private void _importLayoutIconImage(
-			PortletDataContext portletDataContext, Layout importedLayout,
-			Element layoutElement)
+			Layout importedLayout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		String iconImagePath = layoutElement.attributeValue("icon-image-path");
@@ -2116,7 +2116,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLayoutLocalizations(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<Element> layoutLocalizationsElements =
@@ -2130,8 +2130,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLayoutPageTemplateStructures(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout)
+			Layout importedLayout, Layout layout,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
@@ -2160,8 +2160,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLayoutPortlets(
-			PortletDataContext portletDataContext, Layout layout,
-			Element layoutElement)
+			Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
@@ -2350,7 +2350,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLayoutSEOEntries(
-			PortletDataContext portletDataContext, Layout layout)
+			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
 		List<Element> layoutSEOSiteElements =
@@ -2384,8 +2384,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLinkedLayout(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout, Element layoutElement)
+			Layout importedLayout, Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -2421,8 +2421,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importLinkedURL(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout, Element layoutElement)
+			Layout importedLayout, Layout layout, Element layoutElement,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		String linkedToURL = layoutElement.attributeValue("linked-to-url");
@@ -2444,8 +2444,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importTheme(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout)
+			Layout importedLayout, Layout layout,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		boolean importThemeSettings = MapUtil.getBoolean(
@@ -2650,7 +2650,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _populateElementLayoutMetadata(
-			Element layoutElement, Layout layout)
+			Layout layout, Element layoutElement)
 		throws Exception {
 
 		if (layout.isTypeContent()) {
@@ -2666,7 +2666,7 @@ public class LayoutStagedModelDataHandler
 
 			if ((layoutPageTemplateEntry != null) &&
 				(layoutPageTemplateEntry.getType() ==
-				 LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
 
 				layoutElement.addAttribute(
 					"layout-content-page-template", Boolean.TRUE.toString());
@@ -2760,8 +2760,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private Layout _updateCollectionLayoutTypeSettings(
-		PortletDataContext portletDataContext, Layout layout,
-		Layout importedLayout) {
+		Layout importedLayout, Layout layout,
+		PortletDataContext portletDataContext) {
 
 		if (!layout.isTypeCollection()) {
 			return importedLayout;

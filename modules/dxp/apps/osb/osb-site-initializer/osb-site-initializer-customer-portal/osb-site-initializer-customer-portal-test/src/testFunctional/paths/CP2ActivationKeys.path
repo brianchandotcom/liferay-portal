@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD</td>
-	<td>xpath=(//*[contains(text(),'${key_label}')]//*[contains(@class, 'form-control')  and @type='text'])[${key_index}]</td>
+	<td>xpath=(//*[contains(text(),'${key_label}')]//*[contains(@class, 'form-control') and @type='text'])[${key_index}]</td>
 	<td></td>
 </tr>
 

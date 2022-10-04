@@ -150,6 +150,14 @@ definition {
 		AssertElementPresent(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
 	}
 
+	macro assertSelectedFieldText {
+		var key_label = "${field}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
+			value1 = "${option}");
+	}
+
 	macro assertTextAtTable {
 		var key_linePosition = "${linePosition}";
 		var key_colunmPosition = "${lineColunm}";
@@ -290,6 +298,71 @@ definition {
 		return "${downloadedFileName}";
 	}
 
+	macro fulfillActivationKey {
+		var key_text = "Add Activation Key";
+
+		if (!(isSet(hostName))) {
+			var hostName = "localhost";
+		}
+
+		if (!(isSet(ipAddress))) {
+			var ipAddress = "192.168.1.1";
+		}
+
+		if (!(isSet(macAddress))) {
+			var macAddress = "0A-1B-2C-3D-4E-5F";
+		}
+
+		if (!(isSet(numberOfActivationKeys))) {
+			var numberOfActivationKeys = "1";
+		}
+
+		var count = "1";
+		var isAddButtonIsPresent = "true";
+
+		while (("${isAddButtonIsPresent}" == "true") && (maxIterations = "100")) {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "${hostName}",
+				field = "Host Name",
+				index = "${count}");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "${ipAddress}",
+				field = "IP Address",
+				index = "${count}");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "${macAddress}",
+				field = "MAC Address",
+				index = "${count}");
+
+			if ((IsElementNotPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON")) || ("${numberOfActivationKeys}" == "${count}")) {
+				var isAddButtonIsPresent = "false";
+			}
+			else {
+				var count = ${count} + 1;
+
+				CustomerPortal.clickAtButton(text = "${key_text}");
+			}
+		}
+
+		return "${count}";
+	}
+
+	macro fulfillGenerateActivationKeyTextField {
+		var key_index = "1";
+
+		if (isSet(index)) {
+			var key_index = "${index}";
+		}
+
+		var key_label = "${field}";
+
+		Type(
+			locator1 = "CP2ActivationKeys#GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD",
+			value1 = "${content}");
+	}
+
 	macro generateNewKey {
 		CustomerPortal.clickAtButton(text = "Actions");
 
@@ -328,6 +401,24 @@ definition {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_ALL");
 	}
 
+	macro selectFistActiveSubscriptionInput {
+		var key_index = "1";
+
+		if (isSet(index)) {
+			var key_index = "${index}";
+		}
+
+		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
+	}
+
+	macro selectGenerateActivationKeyOptionByField {
+		var key_label = "${field}";
+
+		Select(
+			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
+			value1 = "${option}");
+	}
+
 	macro selectKeyCheckboxByEnvironmentName {
 		var key_environmentName = "${environmentName}";
 
@@ -355,47 +446,6 @@ definition {
 		}
 	}
 
-	macro selectGenerateActivationKeyOptionByField {
-		var key_label = "${field}";
-
-		Select(
-			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
-			value1 = "${option}");
-	}
-
-	macro assertSelectedFieldText {
-		var key_label = "${field}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
-			value1 = "${option}");
-	}
-
-	macro fulfillGenerateActivationKeyTextField {
-		var key_index = "1";
-
-		if (isSet(index)) {
-			var key_index = "${index}";
-		}
-
-		var key_label = "${field}";
-
-		Type(
-			locator1 = "CP2ActivationKeys#GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD",
-			value1 = "${content}");
-	}
-
-
-	macro selectFistActiveSubscriptionInput {
-		var key_index = "1";
-
-		if (isSet(index)) {
-			var key_index = "${index}";
-		}
-
-		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
-	}
-
 	macro selectSubscription {
 		Click(
 			key_position = "${position}",
@@ -414,54 +464,4 @@ definition {
 			locator1 = "CP2ActivationKeys#KEY_DETAILS_MODAL");
 	}
 
-	macro fulfillActivationKey {
-		var key_text = "Add Activation Key";
-
-		if(!(isSet(hostName))) {
-			var hostName = "localhost";
-		}
-
-		if(!(isSet(ipAddress))) {
-			var ipAddress = "192.168.1.1";
-		}
-
-		if(!(isSet(macAddress))) {
-			var macAddress = "0A-1B-2C-3D-4E-5F";
-		}
-
-		if(!(isSet(numberOfActivationKeys))) {
-			var numberOfActivationKeys = "1";
-		}
-
-		var count = "1";
-
-		var isAddButtonIsPresent = "true";
-
-		while(("${isAddButtonIsPresent}" == "true") && (maxIterations = "100")) {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Host Name",
-				content = "${hostName}",
-				index = "${count}");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "IP Address",
-				content = "${ipAddress}",
-				index = "${count}");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "MAC Address",
-				content = "${macAddress}",
-				index = "${count}");
-
-			if((IsElementNotPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON")) || ("${numberOfActivationKeys}" == "${count}")) {
-				var isAddButtonIsPresent = "false";
-			} else {
-				var count = ${count} + 1;
-
-				CustomerPortal.clickAtButton(text = "${key_text}");
-			}
-		}
-
-		return "${count}";
-	}
 }

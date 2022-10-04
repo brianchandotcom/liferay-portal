@@ -59,24 +59,21 @@ public class HTMLImageAttachmentElementHandler
 		Map<String, FileEntry> fileEntries = new HashMap<>();
 
 		while (matcher.find()) {
-			String match = matcher.group(0);
+			String fileName = matcher.group(0);
 
-			FileEntry attachmentFileEntry = fileEntries.get(match);
+			FileEntry fileEntry = fileEntries.get(fileName);
 
-			if (attachmentFileEntry == null) {
-				FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
+			if (fileEntry == null) {
+				fileEntry = saveTempFileUnsafeFunction.apply(
+					_getFileEntry(matcher));
 
-				attachmentFileEntry = saveTempFileUnsafeFunction.apply(
-					tempAttachmentFileEntry);
-
-				fileEntries.put(match, attachmentFileEntry);
+				fileEntries.put(fileName, fileEntry);
 			}
 
 			matcher.appendReplacement(
 				sb,
 				Matcher.quoteReplacement(
-					_attachmentElementReplacer.replace(
-						match, attachmentFileEntry)));
+					_attachmentElementReplacer.replace(fileName, fileEntry)));
 		}
 
 		matcher.appendTail(sb);

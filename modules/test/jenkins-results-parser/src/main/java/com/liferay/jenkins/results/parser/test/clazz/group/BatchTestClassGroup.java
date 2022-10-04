@@ -59,43 +59,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		axisTestClassGroups.add(axisTestClassGroup);
 	}
 
-	public long getAverageDuration() {
-		if (_averageDuration != null) {
-			return _averageDuration;
-		}
-
-		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
-			batchName, getJob());
-
-		if (batchHistory != null) {
-			_averageDuration = batchHistory.getAverageDuration();
-		}
-		else {
-			_averageDuration = 0L;
-		}
-
-		return _averageDuration;
-	}
-
-	public long getAverageOverheadDuration() {
-		if (_averageOverheadDuration != null) {
-			return _averageOverheadDuration;
-		}
-
-		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
-			batchName, getJob());
-
-		if (batchHistory != null) {
-			_averageOverheadDuration =
-				batchHistory.getAverageOverheadDuration();
-		}
-		else {
-			_averageOverheadDuration = 0L;
-		}
-
-		return _averageOverheadDuration;
-	}
-
 	public long getAverageTestDuration(String testName) {
 		if (_averageTestDurations.containsKey(testName)) {
 			return _averageTestDurations.get(testName);
@@ -259,9 +222,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jsonObject = new JSONObject();
 
-		jsonObject.put("average_duration", getAverageDuration());
-		jsonObject.put(
-			"average_overhead_duration", getAverageOverheadDuration());
 		jsonObject.put("batch_name", getBatchName());
 		jsonObject.put("include_stable_test_suite", includeStableTestSuite);
 		jsonObject.put("job_properties", _getJobPropertiesMap());
@@ -1149,8 +1109,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"(?<jobBaseName>.*)(?<jobVariant>\\([^\\)]+\\))");
 
-	private Long _averageDuration;
-	private Long _averageOverheadDuration;
 	private final Map<String, Long> _averageTestDurations = new HashMap<>();
 	private final Map<String, Long> _averageTestOverheadDurations =
 		new HashMap<>();

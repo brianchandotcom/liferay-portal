@@ -97,14 +97,6 @@ function getBatchSummaryElement(batch) {
 
 	infoBoxElement.appendChild(createInfoItemElement("Job Name", data.job_name));
 
-	if (batch.average_duration != undefined) {
-		infoBoxElement.appendChild(createInfoItemElement("Average Duration", getDurationString(batch.average_duration)));
-	}
-
-	if (batch.average_overhead_duration != undefined) {
-		infoBoxElement.appendChild(createInfoItemElement("Average Overhead Duration", getDurationString(batch.average_overhead_duration)));
-	}
-
 	if (batch.target_duration != undefined) {
 		infoBoxElement.appendChild(createInfoItemElement("Target Duration", getDurationString(batch.target_duration)));
 	}

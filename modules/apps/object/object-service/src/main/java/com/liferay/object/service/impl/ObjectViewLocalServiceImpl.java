@@ -435,22 +435,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			List<ObjectViewFilterColumn> objectViewFilterColumns)
 		throws PortalException {
 
-		Set<String> filterableObjectFieldBusinessTypes = null;
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152650"))) {
-			filterableObjectFieldBusinessTypes = Collections.unmodifiableSet(
-				SetUtil.fromArray(
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP));
-		}
-		else {
-			filterableObjectFieldBusinessTypes = Collections.unmodifiableSet(
-				SetUtil.fromArray(ObjectFieldConstants.BUSINESS_TYPE_PICKLIST));
-		}
-
-		Set<String> filterableObjectFieldNames = Collections.unmodifiableSet(
-			SetUtil.fromArray("status", "createDate", "modifiedDate"));
-
 		for (ObjectViewFilterColumn objectViewFilterColumn :
 				objectViewFilterColumns) {
 
@@ -463,9 +447,23 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				objectDefinitionId,
 				objectViewFilterColumn.getObjectFieldName());
 
-			if (!(filterableObjectFieldBusinessTypes.contains(
+			if (!(_filterableObjectFieldBusinessTypes.contains(
 					objectField.getBusinessType()) ||
-				  filterableObjectFieldNames.contains(objectField.getName()))) {
+				  _filterableObjectFieldNames.contains(
+					  objectField.getName()))) {
+
+				throw new ObjectViewFilterColumnException(
+					StringBundler.concat(
+						"Object field name \"",
+						objectViewFilterColumn.getObjectFieldName(),
+						"\" is not filterable"));
+			}
+
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-152650")) &&
+				StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 				throw new ObjectViewFilterColumnException(
 					StringBundler.concat(
@@ -552,6 +550,15 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	private static final Set<String> _filterableObjectFieldBusinessTypes =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP));
+	private static final Set<String> _filterableObjectFieldNames =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray("status", "createDate", "modifiedDate"));
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

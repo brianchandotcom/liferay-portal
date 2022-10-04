@@ -93,9 +93,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationCountry Test");
 
-			Segmentation.viewSegment(
-				criterion = "options",
-				value = "spain");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Spain");
 		}
 	}
 
@@ -147,7 +147,11 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationDateModified Test");
 
-			Segmentation.checkModifiedDate();
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "${currentDate}");
 		}
 	}
 
@@ -199,7 +203,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationHierarchyPath Test");
 
-			Segmentation.viewSegment(propertyField = "Organization Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Organization Name");
 		}
 	}
 
@@ -251,7 +257,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationName Test");
 
-			Segmentation.viewSegment(propertyField = "Organization Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Organization Name");
 		}
 	}
 
@@ -303,9 +311,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationOrganization Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Organization Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Organization Name");
 		}
 	}
 
@@ -362,9 +370,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationParentOrganization Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Parent Organization Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Parent Organization Name");
 		}
 	}
 
@@ -419,9 +427,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationRegion Test");
 
-			Segmentation.viewSegment(
-				criterion = "options",
-				value = "madrid");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Madrid");
 		}
 	}
 
@@ -488,9 +496,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationTag Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "tagname");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "tagname");
 		}
 	}
 
@@ -542,7 +550,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationType Test");
 
-			Segmentation.viewSegment(propertyField = "organization");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "organization");
 		}
 	}
 
@@ -602,10 +612,6 @@ definition {
 			Segmentation.fillTitle(titleField = "AddSegmentByOtherSegments Test");
 
 			Segmentation.viewMembers(memberNameList = "userfn1 userln1,userfn2 userln2");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
 		}
 	}
 
@@ -734,7 +740,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionBrowser Test");
 
-			Segmentation.viewSegment(propertyField = "Chrome");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Chrome");
 		}
 	}
 
@@ -765,9 +773,13 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionCookies Test");
 
-			Segmentation.viewSegment(
-				criterionKey = "GUEST_LANGUAGE_ID",
-				criterionValue = "en_US");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "en_US");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_KEY_ANY",
+				value1 = "GUEST_LANGUAGE_ID");
 		}
 	}
 
@@ -796,7 +808,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionDeviceBrand Test");
 
-			Segmentation.viewSegment(propertyField = "Apple");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Apple");
 		}
 	}
 
@@ -825,7 +839,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionDeviceModel Test");
 
-			Segmentation.viewSegment(propertyField = "ios");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "ios");
 		}
 	}
 
@@ -854,9 +870,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionDeviceScreenResolutionHeight Test");
 
-			Segmentation.viewSegment(
-				criterion = "decimal-number",
-				value = "480.00");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "480.00");
 		}
 	}
 
@@ -885,9 +901,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionDeviceScreenResolutionWidth Test");
 
-			Segmentation.viewSegment(
-				criterion = "decimal-number",
-				value = "320.00");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "320.00");
 		}
 	}
 
@@ -916,7 +932,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionHostname Test");
 
-			Segmentation.viewSegment(propertyField = "localhost");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "localhost");
 		}
 	}
 
@@ -943,9 +961,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionIPGeocoderCountry Test");
 
-			Segmentation.viewSegment(
-				criterion = "options-string",
-				value = "ES");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "ES");
 		}
 	}
 
@@ -977,9 +995,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionLanguage Test");
 
-			Segmentation.viewSegment(
-				criterion = "options",
-				value = "es_ES");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "es_ES");
 		}
 	}
 
@@ -1008,9 +1026,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionLastSignInDate Test");
 
-			Segmentation.viewSegment(
-				criterion = "date",
-				value = "2021-03-31");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "2021-03-31");
 		}
 	}
 
@@ -1039,9 +1057,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionLocalDate Test");
 
-			Segmentation.viewSegment(
-				criterion = "date",
-				value = "2021-03-31");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "2021-03-31");
 		}
 	}
 
@@ -1070,7 +1088,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionReferrerURL Test");
 
-			Segmentation.viewSegment(propertyField = "http://localhost:8080");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "http://localhost:8080");
 		}
 	}
 
@@ -1101,9 +1121,13 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionRequestParameters Test");
 
-			Segmentation.viewSegment(
-				criterionKey = "languageId",
-				criterionValue = "en_US");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "en_US");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_KEY_ANY",
+				value1 = "languageId");
 		}
 	}
 
@@ -1135,9 +1159,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "Signed In Test");
 
-			Segmentation.viewSegment(
-				criterion = "options",
-				value = "false");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "false");
 		}
 	}
 
@@ -1166,7 +1190,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionURL Test");
 
-			Segmentation.viewSegment(propertyField = "http://localhost:8080");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "http://localhost:8080");
 		}
 	}
 
@@ -1197,9 +1223,13 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionUserAgent Test");
 
-			Segmentation.viewSegment(
-				criterionInputOption = "contains",
-				propertyField = "Chrome");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Chrome");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_OPERATOR",
+				value1 = "contains");
 		}
 	}
 
@@ -1241,7 +1271,11 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserDateModified Test");
 
-			Segmentation.checkModifiedDate();
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "${currentDate}");
 		}
 	}
 
@@ -1283,9 +1317,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserDateOfBirth Test");
 
-			Segmentation.viewSegment(
-				criterion = "date",
-				value = "1986-05-31");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "1986-05-31");
 		}
 	}
 
@@ -1329,7 +1363,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserEmailAddress Test");
 
-			Segmentation.viewSegment(propertyField = "liferay");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "liferay");
 		}
 	}
 
@@ -1354,6 +1390,18 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+
+		task ("Assert the segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressEquals Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "liferay");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_OPERATOR",
+				value1 = "equals");
+		}
 	}
 
 	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Contains Option"
@@ -1377,6 +1425,18 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+
+		task ("Assert the segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressEquals Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "liferay");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_OPERATOR",
+				value1 = "not contains");
+		}
 	}
 
 	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Equals Option"
@@ -1399,6 +1459,18 @@ definition {
 			Button.clickSave();
 
 			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressEquals Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "liferay");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_OPERATOR",
+				value1 = "not equals");
 		}
 	}
 
@@ -1440,7 +1512,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserFirstName Test");
 
-			Segmentation.viewSegment(propertyField = "userfn");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "userfn");
 		}
 	}
 
@@ -1483,7 +1557,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserJobTitle Test");
 
-			Segmentation.viewSegment(propertyField = "QA");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "QA");
 		}
 	}
 
@@ -1525,7 +1601,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserLastName Test");
 
-			Segmentation.viewSegment(propertyField = "userln");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "userln");
 		}
 	}
 
@@ -1567,7 +1645,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserName Test");
 
-			Segmentation.viewSegment(propertyField = "userfn userln");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "userfn userln");
 		}
 	}
 
@@ -1614,9 +1694,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserRole Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Regular Role");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Regular Role");
 		}
 	}
 
@@ -1658,7 +1738,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserScreenName Test");
 
-			Segmentation.viewSegment(propertyField = "usersn");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "usersn");
 		}
 	}
 
@@ -1703,9 +1785,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserSite Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Test Site Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Test Site Name");
 		}
 	}
 
@@ -1762,9 +1844,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserSiteOrganizationRole Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Site Role Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Site Role Name");
 		}
 	}
 
@@ -1802,9 +1884,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserSiteOrganizationRole Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "tagname");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "tagname");
 		}
 	}
 
@@ -1861,9 +1943,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserTeam Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Site Team Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Site Team Name");
 		}
 	}
 
@@ -1900,9 +1982,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserUser Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "userfn userln");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "userfn userln");
 		}
 	}
 
@@ -1950,9 +2032,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserUserGroup Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "UG UserGroup Name");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "UG UserGroup Name");
 		}
 	}
 
@@ -2017,7 +2099,9 @@ definition {
 		task ("Assert the segment is correctly created") {
 			Segmentation.editSegment(entry = "COINers");
 
-			Segmentation.viewSegment(propertyField = "COIN");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "COIN");
 		}
 	}
 
@@ -2112,13 +2196,13 @@ definition {
 		task ("Assert the name and property remain with script tag after saving") {
 			Segmentation.editSegment(entry = "</script>");
 
-			Segmentation.viewSegment(
-				criterionInputOption = "contains",
-				propertyField = "</script>");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "</script>");
 		}
 	}
 
-	@description = "Test Automation for LPS-106196: Conjunction selector works as a switch"
+	@description = "Test Automation for LPS-106196 Bug: Conjunction selector works as a switch"
 	@priority = "3"
 	test CanEditConjunctionInConditionsSegments {
 		task ("Add segment with condition and change the default conjunction") {
@@ -2207,7 +2291,9 @@ definition {
 		task ("Checks if the first segmentation is edited correctly") {
 			Segmentation.editSegment(entry = "First Segment");
 
-			Segmentation.viewSegment(propertyField = "User");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "User");
 		}
 
 		task ("Create second segmentation") {
@@ -2241,7 +2327,9 @@ definition {
 		task ("Checks if the second segmentation is edited correctly") {
 			Segmentation.editSegment(entry = "Second Segment");
 
-			Segmentation.viewSegment(propertyField = "User");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "User");
 		}
 	}
 
@@ -2254,10 +2342,17 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("Validate tag name") {
-			Segmentation.assetLanguageTag(
-				locale = "${defaultLanguage}",
-				tagName = "Default Value");
+		task ("Open localizations dropdwon") {
+			Click.clickNoMouseOver(
+				key_currentLocale = "en-us",
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+		}
+
+		task ("Validate tag text") {
+			AssertTextEquals(
+				key_locale = StringUtil.replace("${defaultLanguage}", "_", "-"),
+				locator1 = "Translation#TRANSLATION_LANGUAGE_STATUS_LABEL",
+				value1 = "Default Value");
 		}
 	}
 
@@ -2336,6 +2431,14 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+
+		task ("Checks if the second segmentation is edited correctly") {
+			Segmentation.editSegment(entry = "CheckSegmentationWithApostropheValueFilter Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "user'ln");
+		}
 	}
 
 	@description = "LPS-135495 Validate if, The title shown in the segments list shows the value for the current user language or the value for the criteria default language."
@@ -2350,16 +2453,6 @@ definition {
 				text = "Test");
 
 			Refresh();
-		}
-
-		task ("Check if default language") {
-			Segmentation.editSegment(entry = "Original Segment");
-
-			Segmentation.assetLanguageTag(
-				locale = "en-US",
-				tagName = "Default Value");
-
-			Button.clickCancel();
 		}
 
 		task ("Create segment's translation") {
@@ -2539,6 +2632,14 @@ definition {
 			Segmentation.fillProperty(optionsValue = "Audience Category 1");
 
 			Button.clickSave();
+		}
+
+		task ("Checks if the second segmentation is edited correctly") {
+			Segmentation.editSegment(entry = "Second Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Audience Category 1");
 		}
 	}
 
@@ -3205,15 +3306,13 @@ definition {
 		}
 
 		task ("Check if Vocabularies Created are being displayed") {
-			Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
+			AssertElementPresent(
+				key_selectOption = "Vocabulary Name 1",
+				locator1 = "FormFields#SELECT_FIELD_OPTIONS_LIST");
 
 			AssertElementPresent(
-				locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
-				vocabularyName = "Vocabulary Name 1");
-
-			AssertElementPresent(
-				locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
-				vocabularyName = "Vocabulary Name 2");
+				key_selectOption = "Vocabulary Name 2",
+				locator1 = "FormFields#SELECT_FIELD_OPTIONS_LIST");
 		}
 	}
 

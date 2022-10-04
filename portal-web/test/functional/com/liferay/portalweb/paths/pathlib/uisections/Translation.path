@@ -117,6 +117,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_LANGUAGE_STATUS_LABEL</td>
+	<td>//*[contains(@class,'dropdown-menu')] //li[contains(.,'${key_locale}')] //span[contains(@class,'label')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRANSLATION_MANAGE_BUTTON</td>
 	<td>//button[@id='manage-translations']//span[text()='Manage Translations']</td>
 	<td></td>

@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -53,10 +55,13 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, _updateItemConfig(actionRequest));
+			actionRequest, actionResponse,
+			_updateItemConfig(actionRequest, actionResponse));
 	}
 
-	private JSONObject _updateItemConfig(ActionRequest actionRequest) {
+	private JSONObject _updateItemConfig(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -68,11 +73,20 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			jsonObject = LayoutStructureUtil.updateLayoutPageTemplateData(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId,
-				themeDisplay.getPlid(),
-				layoutStructure -> layoutStructure.updateItemConfig(
-					JSONFactoryUtil.createJSONObject(itemConfig), itemId));
+			jsonObject.put(
+				"layoutData",
+				LayoutStructureUtil.updateLayoutPageTemplateData(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					layoutStructure -> layoutStructure.updateItemConfig(
+						JSONFactoryUtil.createJSONObject(itemConfig), itemId))
+			).put(
+				"pageContents",
+				ContentUtil.getPageContentsJSONArray(
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse),
+					themeDisplay.getPlid(), segmentsExperienceId)
+			);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -93,5 +107,8 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

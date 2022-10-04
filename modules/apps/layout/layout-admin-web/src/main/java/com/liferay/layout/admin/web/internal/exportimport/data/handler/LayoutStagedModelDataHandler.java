@@ -349,26 +349,6 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
-		if (layout.isTypeContent()) {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-			if (layoutPageTemplateEntry == null) {
-				layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
-			}
-
-			if ((layoutPageTemplateEntry != null) &&
-				(layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
-
-				layoutElement.addAttribute(
-					"content-page-template", Boolean.TRUE.toString());
-			}
-		}
-
 		_exportCollectionLayoutCollection(portletDataContext, layout);
 
 		if (_layoutExportImportConfiguration.exportDraftLayout()) {
@@ -2672,6 +2652,26 @@ public class LayoutStagedModelDataHandler
 	private void _populateElementLayoutMetadata(
 			Element layoutElement, Layout layout)
 		throws Exception {
+
+		if (layout.isTypeContent()) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry == null) {
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+			}
+
+			if ((layoutPageTemplateEntry != null) &&
+				(layoutPageTemplateEntry.getType() ==
+				 LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+
+				layoutElement.addAttribute(
+					"content-page-template", Boolean.TRUE.toString());
+			}
+		}
 
 		LayoutStagingHandler layoutStagingHandler =
 			LayoutStagingUtil.getLayoutStagingHandler(layout);

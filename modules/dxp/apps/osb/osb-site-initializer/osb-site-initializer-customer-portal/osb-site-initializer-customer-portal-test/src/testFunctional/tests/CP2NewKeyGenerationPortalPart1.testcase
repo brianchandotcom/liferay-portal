@@ -71,13 +71,33 @@ definition {
 		}
 	}
 
-    @description = "Automation Ticket: LPS-151332 | Test Summary: Verify if the product field is already selected by default."
-    @priority = "2"
-    test TheProductFieldIsSelectedByDefault {
-        task ("Then I should be able to see that 'Portal' product is selected by default") {
-            CP2ActivationKeys.assertSelectedFieldText(
-                    field = "Product",
-                    option = "${testProduct}");
-        }
-    }
+	@description = "Automation Ticket: LPS-151333 | Test Summary: Verify that the version field displays a drop-down list where you can select a version."
+	@priority = "3"
+	test CanViewADropdownListInTheVersionField {
+		var portalVersionList = "6.1 GA1,6.1 GA2,6.1 GA3,6.2 EE";
+		var fieldLabel = "Version";
+
+		task ("Given I should be able to view all Portal versions options") {
+			for (var version : list "${portalVersionList}") {
+				CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+					field = "${fieldLabel}",
+					option = "${version}");
+
+				CP2ActivationKeys.assertSelectedFieldText(
+					field = "${fieldLabel}",
+					option = "${version}");
+			}
+		}
+	}
+
+	@description = "Automation Ticket: LPS-151332 | Test Summary: Verify if the product field is already selected by default."
+	@priority = "2"
+	test TheProductFieldIsSelectedByDefault {
+		task ("Then I should be able to see that 'Portal' product is selected by default") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "${testProduct}");
+		}
+	}
+
 }

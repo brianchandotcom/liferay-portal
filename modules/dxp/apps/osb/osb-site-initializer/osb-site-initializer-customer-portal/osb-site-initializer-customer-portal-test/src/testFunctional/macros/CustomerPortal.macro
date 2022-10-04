@@ -121,10 +121,40 @@ definition {
 		}
 	}
 
+	macro assertButtonIsActive {
+		var key_text = "${text}";
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON");
+	}
+
+	macro assertButtonIsDisabled {
+		var key_text = "${text}";
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON");
+	}
+
 	macro assertButtonIsVisible {
 		var key_text = "${text}";
 
 		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
+	}
+
+	macro assertButtonNotPresent {
+		var key_text = "${text}";
+
+		AssertElementNotPresent(locator1 = "CustomerPortalSite#ANY_BUTTON");
+	}
+
+	macro assertErrorMessageIsNotVisible {
+		var key_errorMessage = "${errorMessage}";
+
+		AssertElementNotPresent(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
+	}
+
+	macro assertErrorMessageIsVisible {
+		var key_errorMessage = "${errorMessage}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
 	macro assertPageTitle {
@@ -235,36 +265,6 @@ definition {
 		var key_text = "${text}";
 
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
-	}
-
-	macro putMouseOverButton {
-		var key_text = "${text}";
-
-		MouseOver(locator1 = "CustomerPortalSite#ANY_BUTTON");
-	}
-
-	macro assertButtonIsDisabled {
-		var key_text = "${text}";
-
-		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON");
-	}
-
-	macro assertButtonIsActive {
-		var key_text = "${text}";
-
-		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON");
-	}
-
-	macro assertErrorMessageIsVisible {
-		var key_errorMessage = "${errorMessage}";
-
-		AssertVisible(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
-	}
-
-	macro assertErrorMessageIsNotVisible {
-		var key_errorMessage = "${errorMessage}";
-
-		AssertElementNotPresent(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
 	macro clickOnCancelButton {
@@ -450,6 +450,12 @@ definition {
 		Accounts.goToEntryMenuItem(
 			menuItem = "Assign Roles",
 			rowEntry = "Test Test");
+	}
+
+	macro putMouseOverButton {
+		var key_text = "${text}";
+
+		MouseOver(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro replaceCertificateAndPrivateKey {
@@ -700,12 +706,6 @@ definition {
 		var key_text = "${text}";
 
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
-	}
-
-		macro assertButtonNotPresent {
-		var key_text = "${text}";
-
-		AssertElementNotPresent(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro viewCardValue {

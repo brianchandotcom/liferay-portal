@@ -15,7 +15,7 @@ definition {
 	var testAccount = "Test Account DXP";
 	var testProduct = "DXP";
 
-    setUp {
+	setUp {
 		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
 
@@ -75,10 +75,9 @@ definition {
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
-    }
+	}
 
-    tearDown {
-
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
@@ -103,12 +102,12 @@ definition {
 
 		task ("And I fulfill the Environment and Host name fields") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Environment Name",
-				content = "Environment Test Name");
+				content = "Environment Test Name",
+				field = "Environment Name");
 
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Host Name",
-				content = "localhost");
+				content = "localhost",
+				field = "Host Name");
 		}
 
 		task ("Then The Generate button should be active") {
@@ -117,8 +116,8 @@ definition {
 
 		task ("When I erase the Environment Name field content") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Environment Name",
-				content = "");
+				content = "",
+				field = "Environment Name");
 		}
 
 		task ("Then I should see the alert with the text 'This field is required.'") {
@@ -131,90 +130,12 @@ definition {
 
 		task ("When I erase the Host Name field content") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Host Name",
-				content = "");
+				content = "",
+				field = "Host Name");
 		}
 
 		task ("Then The Generate button should be deactivated") {
 			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
-		}
-	}
-
-	@description = "Automation ID: LPS-157446 | Test Summary: Verify if the user enters an invalid IP address and Mac Address an error message appears"
-	@priority = "3"
-	test CanViewTheErrorMessageForInvalidIPAddressAndMACAddress {
-		task ("Given I active IP and MAC Address field") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "IP Address",
-				content = "");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "MAC Address",
-				content = "");
-		}
-
-		task ("Given I fulfill the IP Address field with a invalid IP") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "IP Address",
-				content = "1234567789");
-		}
-
-		task ("Then I should see the alert with the text 'Invalid IP.'") {
-			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid IP.");
-		}
-
-		task ("Given I fulfill the IP Address field with a IP with white spaces") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "IP Address",
-				content = "192.168 .1.1");
-		}
-
-		task ("Then I should see the alert with the text 'The IP most not have spaces.'") {
-			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The IP must not have spaces.");
-		}
-
-		task ("When I fulfill the IP Address field with a valid IP") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "IP Address",
-				content = "192.168.1.1");
-		}
-
-		task ("Then I should not see the alert with the text 'Invalid IP.'") {
-			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid IP.");
-		}
-
-		task ("Then I should not see the alert with the text 'The IP must not have spaces.'") {
-			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "The IP must not have spaces.");
-		}
-
-		task ("When I fulfill the MAC Address field with a invalid MAC") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "MAC Address",
-				content = "InvalidMACAddress");
-		}
-
-		task ("Then I should see the alert with the text 'Invalid Mac.'") {
-			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid MAC.");
-		}
-
-		task ("When I fulfill the MAC Address field with a MAC with white spaces") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "MAC Address",
-				content = "A0-B1-C2- D3-E4-F5");
-		}
-
-		task ("Then I should see the alert with the text 'The Mac must not have spaces.'") {
-			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The MAC must not have spaces.");
-		}
-
-		task ("When I fulfill the MAC Address field with a valid MAC") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "MAC Address",
-				content = "A0-B1-C2-D3-E4-F5");
-		}
-
-		task ("Then I should not see the alert with the text 'Invalid MAC.'") {
-			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid MAC.");
 		}
 	}
 
@@ -223,8 +144,8 @@ definition {
 	test CanViewTheAddActivationKeysButtonIsDisabled {
 		task ("Given I fulfill the Environment field") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Environment Name",
-				content = "Environment Test Name");
+				content = "Environment Test Name",
+				field = "Environment Name");
 		}
 
 		task ("When I add the maximum of Activation Keys") {
@@ -244,13 +165,91 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-157446 | Test Summary: Verify if the user enters an invalid IP address and Mac Address an error message appears"
+	@priority = "3"
+	test CanViewTheErrorMessageForInvalidIPAddressAndMACAddress {
+		task ("Given I active IP and MAC Address field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "IP Address");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "MAC Address");
+		}
+
+		task ("Given I fulfill the IP Address field with a invalid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1234567789",
+				field = "IP Address");
+		}
+
+		task ("Then I should see the alert with the text 'Invalid IP.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid IP.");
+		}
+
+		task ("Given I fulfill the IP Address field with a IP with white spaces") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168 .1.1",
+				field = "IP Address");
+		}
+
+		task ("Then I should see the alert with the text 'The IP most not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The IP must not have spaces.");
+		}
+
+		task ("When I fulfill the IP Address field with a valid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168.1.1",
+				field = "IP Address");
+		}
+
+		task ("Then I should not see the alert with the text 'Invalid IP.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid IP.");
+		}
+
+		task ("Then I should not see the alert with the text 'The IP must not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "The IP must not have spaces.");
+		}
+
+		task ("When I fulfill the MAC Address field with a invalid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "InvalidMACAddress",
+				field = "MAC Address");
+		}
+
+		task ("Then I should see the alert with the text 'Invalid Mac.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid MAC.");
+		}
+
+		task ("When I fulfill the MAC Address field with a MAC with white spaces") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2- D3-E4-F5",
+				field = "MAC Address");
+		}
+
+		task ("Then I should see the alert with the text 'The Mac must not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The MAC must not have spaces.");
+		}
+
+		task ("When I fulfill the MAC Address field with a valid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2-D3-E4-F5",
+				field = "MAC Address");
+		}
+
+		task ("Then I should not see the alert with the text 'Invalid MAC.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid MAC.");
+		}
+	}
+
 	@description = "Automation Ticket: LPS-157449 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
 	@priority = "4"
 	test CanViewTheRemoveActivationKeyButton {
 		task ("Given I fulfill the Environment field") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Environment Name",
-				content = "Environment Test Name");
+				content = "Environment Test Name",
+				field = "Environment Name");
 		}
 
 		task ("And the '- Remove Activation Key' button should not preset") {
@@ -295,6 +294,34 @@ definition {
 
 		task ("Then the '- Remove Activation Key' button should not preset") {
 			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157452 | Test Summary: Verify if the success message after the user generates a key"
+	@priority = "4"
+	test CanViewTheSuccessMessage {
+		task ("Given I fulfill All fields for the product") {
+			var numberOfActivationKeys = "3";
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Description",
+				field = "Description");
+
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "${numberOfActivationKeys}");
+		}
+
+		task ("And click at Generate Keys button") {
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = "${generateButtom}");
+		}
+
+		task ("Then I should be able to view the success message with the text 'Activation Key was generated successfully'") {
+			CustomerPortal.viewAlert(alertText = "Activation Key was generated successfully");
 		}
 	}
 
@@ -356,32 +383,4 @@ definition {
 		}
 	}
 
-	@description = "Automation Ticket: LPS-157452 | Test Summary: Verify if the success message after the user generates a key"
-	@priority = "4"
-	test CanViewTheSuccessMessage {
-		task ("Given I fulfill All fields for the product") {
-			var numberOfActivationKeys = "3";
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Environment Name",
-				content = "Environment Test Name");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				field = "Description",
-				content = "Environment Test Description");
-
-			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "${numberOfActivationKeys}");
-
-		}
-
-		task ("And click at Generate Keys button") {
-			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
-
-			CustomerPortal.clickAtButton(text = "${generateButtom}");
-		}
-
-		task ("Then I should be able to view the success message with the text 'Activation Key was generated successfully'") {
-			CustomerPortal.viewAlert(alertText = "Activation Key was generated successfully");
-		}
-	}
 }

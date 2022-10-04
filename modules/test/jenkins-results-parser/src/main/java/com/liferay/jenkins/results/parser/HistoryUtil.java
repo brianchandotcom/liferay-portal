@@ -46,6 +46,10 @@ public class HistoryUtil {
 			return null;
 		}
 
+		if (batchName.endsWith("_stable")) {
+			batchName = batchName.replaceAll("(.+)_stable", "$1");
+		}
+
 		return batchHistories.get(batchName);
 	}
 

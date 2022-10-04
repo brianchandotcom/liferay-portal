@@ -165,9 +165,6 @@ public class TestHistoryMap {
 
 			batchJSONObject.put(
 				"averageDuration", batchHistory.getAverageDuration());
-			batchJSONObject.put(
-				"averageOverheadDuration",
-				batchHistory.getAverageOverheadDuration());
 			batchJSONObject.put("batchName", batchHistory.getBatchName());
 			batchJSONObject.put("tests", testsJSONArray);
 
@@ -416,30 +413,6 @@ public class TestHistoryMap {
 					_downstreamBuildReports) {
 
 				long duration = downstreamBuildReport.getDuration();
-
-				if (duration > _MAXIMUM_BATCH_DURATION) {
-					continue;
-				}
-
-				count++;
-				totalDuration = totalDuration + duration;
-			}
-
-			if (count == 0) {
-				return 0;
-			}
-
-			return totalDuration / count;
-		}
-
-		public long getAverageOverheadDuration() {
-			long count = 0;
-			long totalDuration = 0;
-
-			for (DownstreamBuildReport downstreamBuildReport :
-					_downstreamBuildReports) {
-
-				long duration = downstreamBuildReport.getOverheadDuration();
 
 				if (duration > _MAXIMUM_BATCH_DURATION) {
 					continue;

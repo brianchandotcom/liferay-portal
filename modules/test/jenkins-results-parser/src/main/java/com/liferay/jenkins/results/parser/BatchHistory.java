@@ -29,10 +29,6 @@ public class BatchHistory {
 		return _averageDuration;
 	}
 
-	public long getAverageOverheadDuration() {
-		return _averageOverheadDuration;
-	}
-
 	public String getBatchName() {
 		return _batchName;
 	}
@@ -43,8 +39,6 @@ public class BatchHistory {
 
 	protected BatchHistory(JSONObject jsonObject) {
 		_averageDuration = jsonObject.optLong("averageDuration");
-		_averageOverheadDuration = jsonObject.optLong(
-			"averageOverheadDuration");
 		_batchName = jsonObject.getString("batchName");
 
 		JSONArray testsJSONArray = jsonObject.optJSONArray("tests");
@@ -62,7 +56,6 @@ public class BatchHistory {
 	}
 
 	private final long _averageDuration;
-	private final long _averageOverheadDuration;
 	private final String _batchName;
 	private final Map<String, TestHistory> _testHistories = new HashMap<>();
 

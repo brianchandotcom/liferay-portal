@@ -143,10 +143,9 @@ public class OneToManyObjectFieldFilterStrategy
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			ObjectEntry objectEntry =
-				_objectEntryLocalService.getObjectEntry(
-					(String)jsonArray.get(i),
-					_objectDefinition1.getObjectDefinitionId());
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				(String)jsonArray.get(i),
+				_objectDefinition1.getObjectDefinitionId());
 
 			itemsValues.add(
 				HashMapBuilder.<String, Object>put(
@@ -200,7 +199,7 @@ public class OneToManyObjectFieldFilterStrategy
 					throw new ObjectViewFilterColumnException(
 						StringBundler.concat(
 							"No ", _objectDefinition1.getShortName(),
-							" exists with the External Reference Code ",
+							" exists with the external reference code ",
 							(String)jsonArray.get(i)));
 				}
 			}

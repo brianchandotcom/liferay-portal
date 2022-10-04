@@ -640,7 +640,7 @@ public class ObjectViewLocalServiceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"No ", objectDefinition1.getShortName(),
-					" exists with the External Reference Code ",
+					" exists with the external reference code ",
 					externalReferenceCode),
 				objectViewFilterColumnException.getMessage());
 		}

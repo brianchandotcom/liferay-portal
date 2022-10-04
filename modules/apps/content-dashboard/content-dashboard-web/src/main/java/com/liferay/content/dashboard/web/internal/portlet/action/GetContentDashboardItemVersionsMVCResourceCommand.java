@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -153,21 +154,35 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int displayVersions = ParamUtil.getInteger(
+			resourceRequest, "maxDisplayVersions",
+			_DEFAULT_MAX_DISPLAY_VERSIONS);
+
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			versionableContentDashboardItem.getAllContentDashboardItemVersions(
+				themeDisplay);
+
 		return JSONUtil.put(
 			"versions",
-			() -> {
-				int displayVersions = ParamUtil.getInteger(
-					resourceRequest, "maxDisplayVersions",
-					_DEFAULT_MAX_DISPLAY_VERSIONS);
-
-				return _getContentDashboardItemVersionsJSONArray(
-					displayVersions, httpServletRequest,
-					versionableContentDashboardItem);
-			}
+			_getContentDashboardItemVersionsJSONArray(
+				displayVersions, httpServletRequest,
+				versionableContentDashboardItem)
 		).put(
 			"viewVersionsURL",
-			versionableContentDashboardItem.getViewVersionsURL(
-				httpServletRequest)
+			() -> {
+				if (ListUtil.isEmpty(contentDashboardItemVersions) ||
+					(contentDashboardItemVersions.size() <= displayVersions)) {
+
+					return StringPool.BLANK;
+				}
+
+				return versionableContentDashboardItem.getViewVersionsURL(
+					httpServletRequest);
+			}
 		);
 	}
 

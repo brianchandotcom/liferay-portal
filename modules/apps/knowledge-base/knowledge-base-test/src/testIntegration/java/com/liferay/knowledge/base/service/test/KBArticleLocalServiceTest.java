@@ -20,7 +20,9 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
+import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
+import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
 import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
@@ -59,9 +61,15 @@ import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.io.InputStream;
 
+import java.time.Duration;
+import java.time.Instant;
+
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -213,6 +221,38 @@ public class KBArticleLocalServiceTest {
 			_serviceContext);
 	}
 
+	@Test(expected = KBArticleExpirationDateException.class)
+	public void testAddKBArticleInvalidExpirationDateException()
+		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		Instant instant = Instant.now();
+
+		_kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, Date.from(instant.minus(Duration.ofDays(1))), null,
+			_serviceContext);
+	}
+
+	@Test(expected = KBArticleReviewDateException.class)
+	public void testAddKBArticleInvalidReviewDateException() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		Instant instant = Instant.now();
+
+		_kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, null, Date.from(instant.minus(Duration.ofDays(1))),
+			_serviceContext);
+	}
+
 	@Test
 	public void testAddKBArticlesMarkdownWithNoWorkflow() throws Exception {
 		updateWorkflowDefinitionForKBArticle("");
@@ -227,6 +267,40 @@ public class KBArticleLocalServiceTest {
 		updateWorkflowDefinitionForKBArticle("Single Approver@1");
 
 		importMarkdownArticles();
+	}
+
+	@Test
+	public void testAddKBArticleUpdateExpirationReviewDate() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		Date expirationDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
+		Date reviewDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, expirationDate, reviewDate, _serviceContext);
+
+		Assert.assertEquals(expirationDate, kbArticle.getExpirationDate());
+		Assert.assertEquals(reviewDate, kbArticle.getReviewDate());
+
+		expirationDate = DateUtils.addDays(RandomTestUtil.nextDate(), 2);
+		reviewDate = DateUtils.addDays(RandomTestUtil.nextDate(), 2);
+
+		_kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, null, expirationDate,
+			reviewDate, _serviceContext);
+
+		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
+			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			expirationDate, latestKBArticle.getExpirationDate());
+		Assert.assertEquals(reviewDate, latestKBArticle.getReviewDate());
 	}
 
 	@Test(expected = KBArticleContentException.class)
@@ -1124,6 +1198,33 @@ public class KBArticleLocalServiceTest {
 		Assert.assertEquals(
 			childKBArticle2, topLevelPreviousAndNextKBArticles[0]);
 		Assert.assertNull(topLevelPreviousAndNextKBArticles[2]);
+	}
+
+	@Test
+	public void testRemoveExpirationReviewDate() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		Date expirationDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
+		Date reviewDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, expirationDate, reviewDate, _serviceContext);
+
+		_kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, null, null, null,
+			_serviceContext);
+
+		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
+			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertNull(latestKBArticle.getExpirationDate());
+		Assert.assertNull(latestKBArticle.getReviewDate());
 	}
 
 	protected void importMarkdownArticles() throws PortalException {

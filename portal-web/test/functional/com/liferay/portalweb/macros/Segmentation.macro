@@ -10,10 +10,6 @@ definition {
 		}
 	}
 
-	macro addConditionWithConjunction {
-		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION_BUTTON");
-	}
-
 	macro addProperties {
 		var key_propertyOption = "${propertyOption}";
 
@@ -23,15 +19,6 @@ definition {
 			locator1 = "Segmentation#ADD_FIELD_TYPE",
 			locator2 = "Segmentation#ADD_FIELD_POSITION",
 			value1 = "${propertyOption}");
-	}
-
-	macro assetLanguageTag {
-		Click(locator1 = "Segmentation#TRANSLATION_BUTTON");
-
-		AssertTextEquals(
-			key_locale = StringUtil.replace("${locale}", "_", "-"),
-			locator1 = "Segmentation#TRANSLATION_STATUS_TITLE",
-			value1 = "${tagName}");
 	}
 
 	macro assignSiteRoles {
@@ -76,28 +63,6 @@ definition {
 		Click(
 			key_locale = StringUtil.replace("${locale}", "_", "-"),
 			locator1 = "Segmentation#TRANSLATION_STATUS_TITLE");
-	}
-
-	macro checkModifiedDate {
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonth();
-
-		if (("${displayDateMonth}" != "10") && ("${displayDateMonth}" != "11") && ("${displayDateMonth}" != "12")) {
-			var displayDateMonth = "0${displayDateMonth}";
-		}
-
-		var displayDateYear = DateUtil.getCurrentYear();
-		var i = ${displayDateDay} / 10;
-
-		if ("${i}" == "0") {
-			var displayDateDay = "0${displayDateDay}";
-		}
-
-		var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
-
-		Segmentation.viewSegment(
-			criterion = "date",
-			value = "${displayDate}");
 	}
 
 	macro checkSegmentationDisabledWarning {
@@ -251,12 +216,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editSegment {
-		Click.waitForMenuToggleJSClick(
-			key_tableEntry = "${entry}",
-			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+	macro duplicateCriteria {
+		Click(locator1 = "Segmentation#DUPLICATE_BUTTON");
+	}
 
-		MenuItem.clickNoError(menuItem = "Edit");
+	macro editSegment {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${entry}");
 	}
 
 	macro enableAssingRolesBySegmentsCheckbox {
@@ -499,16 +466,25 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro setVocabularySessionPropertyDropdown {
-		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY");
+	macro setVocabularySessionProperty {
+		PortalSettings.openInstanceSettingsAdmin();
 
-		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Session Property Vocabularies",
+			configurationScope = "Virtual Instance Scope");
 
-		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
+		Button.clickAdd();
 
-		Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION");
+		FormFields.selectSelectOption(
+			fieldName = "Session Property Name",
+			selectOption = "${propertyName}");
 
-		Button.click(button = "Save");
+		FormFields.selectSelectOption(
+			fieldName = "Vocabulary Name",
+			selectOption = "${vocabularyName}");
+
+		Button.clickSave();
 	}
 
 	macro tearDown {
@@ -547,17 +523,20 @@ definition {
 	macro viewMembers {
 		var key_memberName = "${memberName}";
 
-		Click(locator1 = "Segmentation#VIEW_MEMBERS_BUTTON");
+		Click(
+			key_text = "View Members",
+			locator1 = "Button#ANY");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		if (isSet(memberNameList)) {
-			for (var key_memberName : list "${memberNameList}") {
-				AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
-			}
+		if (!(isSet(memberNameList))) {
+			var memberNameList = "${memberName}";
 		}
-		else {
-			AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
+
+		for (var key_memberName : list "${memberNameList}") {
+			AssertVisible(
+				key_tableEntry = "${key_memberName}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 
 		SelectFrame(value1 = "relative=top");

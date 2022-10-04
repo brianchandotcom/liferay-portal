@@ -81,7 +81,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CRITERION_CONJUNCTION_BUTTON</td>
+	<td>DUPLICATE_BUTTON</td>
 	<td>//button//*[contains(@class,'lexicon-icon lexicon-icon-paste')]</td>
 	<td></td>
 </tr>

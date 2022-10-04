@@ -695,7 +695,11 @@ definition {
 		}
 
 		task ("Delete one of the segments") {
-			Segmentation.deleteSegment(entry = "Segment With User1");
+			JSONSegmentsentry.deleteSegment(
+				groupName = "Test Site Name",
+				segmentName = "Segment With User1");
+
+			Refresh();
 		}
 
 		task ("Assert that a warning is shown") {
@@ -1993,11 +1997,7 @@ definition {
 		}
 
 		task ("Create a segment using the custom field") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Segments");
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
 
@@ -2075,10 +2075,7 @@ definition {
 	@priority = "3"
 	test AnonymousUserSegmentsCacheExpirationCheckText {
 		task ("Go to Instance Settings > Segments") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Segments",
@@ -2135,7 +2132,7 @@ definition {
 
 			Segmentation.fillProperty(propertyField = "@liferay.com");
 
-			Segmentation.addConditionWithConjunction();
+			Segmentation.duplicateCriteria();
 
 			AssertTextEquals(
 				locator1 = "Segmentation#CRITERION_CONJUNCTION",
@@ -2419,7 +2416,11 @@ definition {
 		}
 
 		task ("Delete the first criteria") {
-			Segmentation.deleteSegment(entry = "First Segment");
+			JSONSegmentsentry.deleteSegment(
+				groupName = "Test Site Name",
+				segmentName = "First Segment");
+
+			Refresh();
 		}
 
 		task ("Remove from second segment criteria related to the first segment") {
@@ -2447,10 +2448,7 @@ definition {
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesBreadcrumb";
 
 		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Segments",
@@ -2459,7 +2457,7 @@ definition {
 		}
 
 		task ("Click on add") {
-			Button.click(button = "Add");
+			Button.clickAdd();
 		}
 
 		task ("Click on the breadcrumb at Segments") {
@@ -2483,10 +2481,7 @@ definition {
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesCancelButton";
 
 		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Segments",
@@ -2495,11 +2490,11 @@ definition {
 		}
 
 		task ("Click on add") {
-			Button.click(button = "Add");
+			Button.clickAdd();
 		}
 
 		task ("Click on Cancel") {
-			Button.click(button = "Cancel");
+			Button.clickCancel();
 		}
 
 		task ("Check the user is lead to the main tab Session Property Vocabularies") {
@@ -2518,19 +2513,7 @@ definition {
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabularyInSegmentsEditor";
 
 		task ("Set Session Property Vocabulary") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Segments",
-				configurationName = "Session Property Vocabularies",
-				configurationScope = "Virtual Instance Scope");
-
-			Button.click(button = "Add");
-
-			Segmentation.setVocabularySessionPropertyDropdown(
+			Segmentation.setVocabularySessionProperty(
 				propertyName = "Browser",
 				vocabularyName = "Audience");
 		}
@@ -2565,10 +2548,7 @@ definition {
 	@priority = "3"
 	test InterestTermsCacheCacheExpirationCheckText {
 		task ("Go to Instance Settings > Segments") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Segments",
@@ -2590,19 +2570,7 @@ definition {
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#KeepInfomationOfDeleteVocabularyInSegment";
 
 		task ("Set Session Property Vocabulary") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Segments",
-				configurationName = "Session Property Vocabularies",
-				configurationScope = "System Scope");
-
-			Button.click(button = "Add");
-
-			Segmentation.setVocabularySessionPropertyDropdown(
+			Segmentation.setVocabularySessionProperty(
 				propertyName = "Browser",
 				vocabularyName = "Audience");
 		}
@@ -2654,10 +2622,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to segments editor page") {
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Segments");
-
 			LexiconEntry.gotoAdd();
 		}
 
@@ -3231,7 +3195,13 @@ definition {
 				configurationName = "Session Property Vocabularies",
 				configurationScope = "System Scope");
 
-			Button.click(button = "Add");
+			Button.clickAdd();
+		}
+
+		task ("Open Vocabulary Name dropdown") {
+			Click(
+				locator1 = "FormFields#SELECT_FIELD",
+				value1 = "Vocabulary Name");
 		}
 
 		task ("Check if Vocabularies Created are being displayed") {

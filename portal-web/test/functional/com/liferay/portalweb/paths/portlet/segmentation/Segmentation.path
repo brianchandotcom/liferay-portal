@@ -16,13 +16,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_FIELD_POSITION_EMPTY</td>
-	<td>//div[contains(@class, 'empty-drop-zone-dashed')] //*[contains(@class, 'drop-zone-target')]</td>
+	<td>ADD_FIELD_POSITION_EDIT</td>
+	<td>//*[contains(@class, 'edit-container')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_FIELD_POSITION_EDIT</td>
-	<td>//*[contains(@class, 'edit-container')]</td>
+	<td>ADD_FIELD_POSITION_EMPTY</td>
+	<td>//div[contains(@class, 'empty-drop-zone-dashed')] //*[contains(@class, 'drop-zone-target')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,33 +31,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_TAG_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Select')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSIGN_SITE_ROLES_DISABLED_WARNING</td>
 	<td>//*[contains(@class,'autofit-section') and contains(text(), '${textValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSIGN_SITE_ROLES_OPTION</td>
-	<td>//*[contains(@class,'assign-site-roles-link')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSIGN_SITE_ROLES_MODAL_TITLE</td>
-	<td>//*[contains(@class,'modal-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CRITERION_INPUT</td>
-	<td>//div[@class='criterion'][1]//select[contains(@class, 'criterion-input')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CRITERION_INPUT_FORM_CONTROL</td>
-	<td>//div[@class='criterion']//*[contains(@data-testid, '${key_criterion}') and (contains(@class,'form-control'))] | //div[@class='criterion']//*[contains(@data-testid, '${key_criterion}')]/following-sibling::input[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,33 +41,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_MODAL</td>
-	<td>//button[@aria-label='close']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CRITERION_INPUT_OPTION</td>
-	<td>//div[@class='criterion'][1]//select[contains(@class, 'criterion-input')]/option[.='${key_criterionInputOption}']</td>
+	<td>CONDITIONS_PROPERTY_NAME</td>
+	<td>//div[@class='criterion'] //span[contains(.,'${propertyName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CRITERION_CONJUNCTION</td>
 	<td>//div[contains(@class,'criteria')]//button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DUPLICATE_BUTTON</td>
-	<td>//button//*[contains(@class,'lexicon-icon lexicon-icon-paste')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CRITERION_CONJUNCTION_ITEM</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_criterionConjunctionItem}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CRITERION_VIEW_MODE</td>
-	<td>//span[contains(@class, 'criterion-string')] //b[contains(text(), '${propertyValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERION_VIEW_MODE</td>
+	<td>//span[contains(@class, 'criterion-string')] //b[contains(text(), '${propertyValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DUPLICATE_BUTTON</td>
 	<td>//button//*[contains(@class,'lexicon-icon lexicon-icon-paste')]</td>
 	<td></td>
@@ -123,11 +83,6 @@
 <tr>
 	<td>ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX</td>
 	<td>//input[contains(@class, 'custom-control-input') and contains(@name, 'roleSegmentation')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_TOGGLE</td>
-	<td>//label[contains(@class,'toggle-switch toggle-editing')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,28 +96,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MEMBER_NAME_LISTED</td>
-	<td>//*[contains(@class,'table-title') and contains(text(),"${key_memberName}")]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MESSAGE_NO_SEGMENTS</td>
 	<td>//div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'There are no segments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PROPERTY_FIELD</td>
-	<td>//div[@class='criterion'][1]//*[@data-testid='simple-string']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PROPERTY_FIELD_2</td>
-	<td>//div[@class='criterion'][${key_indexNumber}]//*[@data-testid='simple-string']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONDITIONS_PROPERTY_NAME</td>
-	<td>//div[@class='criterion'] //span[contains(.,'${propertyName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -176,48 +111,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_TAG_FIELD</td>
-	<td>//*[contains(@class,'form-control') and contains(@class,'input-group-inset') and contains(@class,'input-group-inset-after')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEGMENT_LIST</td>
-	<td>//*[@id='_com_liferay_segments_web_internal_portlet_SegmentsPortlet_segmentsEntriesSearchContainer']//td</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEGMENT_FIELDS_TYPE</td>
 	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'${key_typeName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEGMENT_OPTIONS_MENU</td>
-	<td>//*[@id='qfkd____']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY</td>
-	<td>//label[text()='Session Property Name']/following-sibling::div[contains(@class, 'input-group-container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION</td>
-	<td>//div[contains(@class, 'dropdown-menu ddm-btn-full ddm-select-dropdown show')] //button[text()='${propertyName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY</td>
-	<td>//label[text()='Vocabulary Name']/following-sibling::div[contains(@class, 'input-group-container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION</td>
-	<td>//div[contains(@class, 'dropdown-menu ddm-btn-full ddm-select-dropdown show')] //button[text()='${vocabularyName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAG_OPTION</td>
-	<td>//*[contains(@class,'selector-button')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,16 +133,6 @@
 <tr>
 	<td>TRANSLATION_STATUS_TITLE</td>
 	<td>//ul[contains(@class, 'dropdown-menu')]/li[contains(@role, 'presentation')]/descendant::span[contains(text(), '${key_locale}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TRANSLATION_TITLE</td>
-	<td>//ul[contains(@class, 'dropdown-menu')]/li[contains(@role, 'presentation')]/descendant::span[contains(text(), '${key_locale}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_MEMBERS_BUTTON</td>
-	<td>//button[contains(@class,'btn-secondary') and contains(text(),'View Members')]</td>
 	<td></td>
 </tr>
 </tbody>

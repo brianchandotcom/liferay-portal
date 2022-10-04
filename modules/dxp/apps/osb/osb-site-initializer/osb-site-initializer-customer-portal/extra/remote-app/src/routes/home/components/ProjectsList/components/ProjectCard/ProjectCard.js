@@ -101,7 +101,10 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => (
 
 							<span className="font-weight-bold ml-1 text-paragraph">
 								{getDateCustomFormat(
-									koroneikiAccount.slaCurrentEndDate,
+									koroneikiAccount.status ===
+										SLA_STATUS_TYPES.future
+										? koroneikiAccount.slaFutureStartDate
+										: koroneikiAccount.slaCurrentEndDate,
 									FORMAT_DATE_TYPES.day2DMonthSYearN
 								)}
 							</span>

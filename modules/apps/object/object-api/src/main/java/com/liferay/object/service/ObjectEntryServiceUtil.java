@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -93,6 +94,15 @@ public class ObjectEntryServiceUtil {
 
 		return getService().getObjectEntry(
 			externalReferenceCode, companyId, groupId);
+	}
+
+	public static List<ObjectEntry> getOneToManyObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, int start, int end)
+		throws PortalException {
+
+		return getService().getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, start, end);
 	}
 
 	/**

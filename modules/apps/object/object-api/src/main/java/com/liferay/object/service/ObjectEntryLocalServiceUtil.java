@@ -466,20 +466,26 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, int start, int end)
+			boolean related, int start, int end,
+			com.liferay.portal.kernel.security.permission.PermissionChecker
+				permissionChecker)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, related, start, end);
+			groupId, objectRelationshipId, primaryKey, related, start, end,
+			permissionChecker);
 	}
 
 	public static int getOneToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related)
+			boolean related,
+			com.liferay.portal.kernel.security.permission.PermissionChecker
+				permissionChecker)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related);
+			groupId, objectRelationshipId, primaryKey, related,
+			permissionChecker);
 	}
 
 	/**

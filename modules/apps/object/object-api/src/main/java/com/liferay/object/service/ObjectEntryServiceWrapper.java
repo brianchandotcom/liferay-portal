@@ -99,6 +99,17 @@ public class ObjectEntryServiceWrapper
 			externalReferenceCode, companyId, groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntry>
+			getOneToManyObjectEntries(
+				long groupId, long objectRelationshipId, long primaryKey,
+				boolean related, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

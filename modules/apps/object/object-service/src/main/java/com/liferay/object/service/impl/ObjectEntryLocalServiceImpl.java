@@ -594,15 +594,6 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException {
-
-		return objectEntryPersistence.findByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
-	}
-
-	@Override
-	public ObjectEntry getObjectEntry(
 			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException {
 
@@ -612,6 +603,15 @@ public class ObjectEntryLocalServiceImpl
 		return objectEntryPersistence.fetchByC_ERC_ODI(
 			objectDefinition.getCompanyId(), externalReferenceCode,
 			objectDefinitionId);
+	}
+
+	@Override
+	public ObjectEntry getObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException {
+
+		return objectEntryPersistence.findByG_C_ERC(
+			groupId, companyId, externalReferenceCode);
 	}
 
 	public List<ObjectEntry> getOneToManyObjectEntries(

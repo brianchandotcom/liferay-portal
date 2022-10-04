@@ -16,6 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
-<div>
+<%
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, journalDisplayContext.getArticle());
+%>
 
+<p class="text-secondary">
+	<liferay-ui:message key="preview-this-web-content-through-the-display-page-templates-of-a-specific-site" />
+</p>
+
+<div>
+	<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+
+	<react:component
+		data="<%= journalEditArticleDisplayContext.getDisplayPagePreviewContext() %>"
+		module="js/article/DisplayPagePreview"
+	/>
 </div>

@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,8 +64,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -410,6 +414,32 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return _defaultArticleLanguageId;
+	}
+
+	public Map<String, Object> getDisplayPagePreviewContext() {
+		return HashMapBuilder.<String, Object>put(
+			"itemSelectorURL",
+			() -> {
+				SiteItemSelectorCriterion siteItemSelectorCriterion =
+					new SiteItemSelectorCriterion();
+
+				siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new URLItemSelectorReturnType());
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						_liferayPortletResponse.getNamespace() + "selectSite",
+						siteItemSelectorCriterion));
+			}
+		).put(
+			"sites", Collections.emptyList()
+		).put(
+			"sitesCount",
+			() -> GroupLocalServiceUtil.getGroupsCount(
+				_themeDisplay.getCompanyId(), 0, Boolean.TRUE)
+		).build();
 	}
 
 	public String getEditArticleURL() {

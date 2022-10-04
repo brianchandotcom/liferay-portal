@@ -33,17 +33,6 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 	<liferay-frontend:edit-form-body>
 
 		<%
-		List<String> draftStyleBookEntryZipProcessorImportResultEntryNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntryNames(StyleBookEntryZipProcessorImportResultEntry.Status.IMPORTED_DRAFT);
-		%>
-
-		<c:if test="<%= ListUtil.isNotEmpty(draftStyleBookEntryZipProcessorImportResultEntryNames) %>">
-			<clay:alert
-				dismissible="<%= true %>"
-				message='<%= LanguageUtil.format(request, "the-following-style-books-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(draftStyleBookEntryZipProcessorImportResultEntryNames, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
-			/>
-		</c:if>
-
-		<%
 		List<String> invalidStyleBookEntryZipProcessorImportResultEntryNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntryNames(StyleBookEntryZipProcessorImportResultEntry.Status.INVALID);
 		%>
 

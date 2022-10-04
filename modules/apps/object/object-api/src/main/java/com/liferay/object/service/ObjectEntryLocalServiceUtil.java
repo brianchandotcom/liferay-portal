@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -467,8 +468,7 @@ public class ObjectEntryLocalServiceUtil {
 	public static List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, int start, int end,
-			com.liferay.portal.kernel.security.permission.PermissionChecker
-				permissionChecker)
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
@@ -478,9 +478,7 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static int getOneToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related,
-			com.liferay.portal.kernel.security.permission.PermissionChecker
-				permissionChecker)
+			boolean related, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntriesCount(

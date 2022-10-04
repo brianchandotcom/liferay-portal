@@ -26,6 +26,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -152,7 +153,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, true, 0, 1);
+			groupId, objectRelationshipId, primaryKey, true, 0, 1,
+			PermissionThreadLocal.getPermissionChecker());
 	}
 
 	@Override

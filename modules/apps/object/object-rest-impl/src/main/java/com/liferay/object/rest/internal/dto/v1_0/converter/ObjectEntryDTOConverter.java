@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -191,7 +192,8 @@ public class ObjectEntryDTOConverter
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
 					objectEntry.getObjectEntryId(), true, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS));
+					QueryUtil.ALL_POS,
+					PermissionThreadLocal.getPermissionChecker()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

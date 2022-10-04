@@ -247,7 +247,8 @@ public class ObjectRelatedModelsProviderTest {
 			_objectEntryLocalService.getOneToManyObjectEntries(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS));
+				QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker()));
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryB.getObjectEntryId(),

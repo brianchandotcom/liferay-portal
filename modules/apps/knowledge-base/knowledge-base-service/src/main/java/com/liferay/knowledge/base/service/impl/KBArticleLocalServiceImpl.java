@@ -29,6 +29,8 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
+import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
+import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
@@ -100,6 +102,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -178,7 +181,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
-		validate(title, content, sourceURL);
+		validate(title, content, sourceURL, expirationDate, reviewDate);
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
 		long kbFolderId = KnowledgeBaseUtil.getKBFolderId(
@@ -1132,7 +1135,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(title, content, sourceURL);
+		validate(title, content, sourceURL, expirationDate, reviewDate);
 
 		KBArticle oldKBArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
@@ -1938,7 +1941,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String title, String content, String sourceURL)
+	protected void validate(String title, String content, String sourceURL, Date expirationDate, Date reviewDate)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -1950,6 +1953,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		validateSourceURL(sourceURL);
+
+		_validateExpirationReviewDate(expirationDate, reviewDate);
 	}
 
 	protected void validateParent(
@@ -2060,6 +2065,22 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (!kbArticles.isEmpty()) {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
+		}
+	}
+
+	private void _validateExpirationReviewDate(
+			Date expirationDate, Date reviewDate)
+		throws PortalException {
+
+		if ((expirationDate != null) &&
+			expirationDate.before(DateUtil.newDate())) {
+
+			throw new KBArticleExpirationDateException(
+				"Expiration date is in the past");
+		}
+
+		if ((reviewDate != null) && reviewDate.before(DateUtil.newDate())) {
+			throw new KBArticleReviewDateException("Review date is in the past");
 		}
 	}
 

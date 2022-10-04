@@ -105,7 +105,7 @@ definition {
 
 		task ("Edit the created notification Template") {
 			ObjectNotifications.editNotificationTemplate(
-				name = "Notification Template Edited",
+				name = "New Notification Edited",
 				notificationTemplateName = "Notification Template");
 
 			Button.clickSave();
@@ -115,7 +115,7 @@ definition {
 			Refresh();
 
 			AssertElementPresent(
-				key_name = "Notification Template Edited",
+				key_name = "New Notification Edited",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
 			AssertElementNotPresent(

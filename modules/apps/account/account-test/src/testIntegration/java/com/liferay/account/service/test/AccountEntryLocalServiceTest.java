@@ -1104,6 +1104,31 @@ public class AccountEntryLocalServiceTest {
 		Assert.assertEquals(accountEntry, accountEntries.get(0));
 	}
 
+	@Test
+	public void testUpdateRestrictMembership() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		boolean expectedRestrictMembership =
+			!accountEntry.isRestrictMembership();
+		long mvccVersion = accountEntry.getMvccVersion();
+
+		accountEntry = _accountEntryLocalService.updateRestrictMembership(
+			accountEntry.getAccountEntryId(), expectedRestrictMembership);
+
+		Assert.assertNotEquals(mvccVersion, accountEntry.getMvccVersion());
+		Assert.assertEquals(
+			expectedRestrictMembership, accountEntry.isRestrictMembership());
+
+		mvccVersion = accountEntry.getMvccVersion();
+
+		accountEntry = _accountEntryLocalService.updateRestrictMembership(
+			accountEntry.getAccountEntryId(),
+			accountEntry.isRestrictMembership());
+
+		Assert.assertEquals(mvccVersion, accountEntry.getMvccVersion());
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

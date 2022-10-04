@@ -52,10 +52,23 @@ definition {
 		}
 
 		task ("Then new JS URL field is added") {
-			AssertElementPresent(locator1 = "RemoteAppsEntry#REMOTE_URL_FIELD");
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
 		}
 
 		task ("And Then repeatable button + and - are present for both JS URL fields") {
+			AssertElementPresent(
+				key_fieldLabelName = "URL",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+
+			AssertElementPresent(
+				key_fieldLabelName = "URL",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "2",
@@ -64,7 +77,7 @@ definition {
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "2",
-				locator1 = "RemoteAppsEntry#REMOTE_URL_MINUS");
+				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 		}
 	}
 

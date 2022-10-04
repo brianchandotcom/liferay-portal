@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REMOTE_URL_FIELD</td>
-	<td>//button[contains(@class,'delete-row') and not(contains(@class,'disabled'))]//ancestor::div[@class='lfr-form-rows']//div[(@class='lfr-form-row')][1]//label[normalize-space(text())='URL']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DELETE_ROW_FIELD_LABEL_NAME_INDEX</td>
 	<td>//button[contains(@class,'delete-row') and not(contains(@class,'disabled'))]//ancestor::div[@class='lfr-form-rows']//div[(@class='lfr-form-row')][${key_index}]//label[normalize-space(text())='${key_fieldLabelName}']</td>
 	<td></td>

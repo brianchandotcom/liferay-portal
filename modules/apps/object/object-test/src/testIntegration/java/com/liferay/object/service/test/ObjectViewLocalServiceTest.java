@@ -430,18 +430,6 @@ public class ObjectViewLocalServiceTest {
 				_createObjectViewSortColumn("baker", "asc")));
 	}
 
-	private long[] _addUsers(int count) throws Exception {
-		long[] userIds = new long[count];
-
-		for (int i = 0; i < count; i++) {
-			User user = UserTestUtil.addUser();
-
-			userIds[i] = user.getUserId();
-		}
-
-		return userIds;
-	}
-
 	private void _assertFailureAddOrUpdateObjectView(
 		boolean defaultObjectView, Class<?> expectedExceptionClass,
 		String message, ObjectView objectView,
@@ -730,7 +718,13 @@ public class ObjectViewLocalServiceTest {
 				objectViewFilterColumnException.getMessage());
 		}
 
-		long[] userIds = _addUsers(3);
+		long[] userIds = new long[3];
+
+		for (int i = 0; i < 3; i++) {
+			User user = UserTestUtil.addUser();
+
+			userIds[i] = user.getUserId();
+		}
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),

@@ -151,10 +151,30 @@ describe('AdvancedSelectField', () => {
 		expect(select.options[1].selected).toBeTruthy();
 	});
 
-	it('displays Detach button if the selected option is a token', () => {
-		renderAdvancedSelectField({value: 'fontSizeSm'});
+	it('displays always Detach button', () => {
+		renderAdvancedSelectField();
 
 		expect(screen.getByTitle('detach-style')).toBeInTheDocument();
+	});
+
+	it('only renders the inherited value indicator if the style is inherited and no value is selected', () => {
+		renderAdvancedSelectField();
+		const select = screen.getByLabelText('font-size');
+
+		expect(select.tagName).toBe('SELECT');
+		expect(screen.getByTitle('inherited-value')).toBeInTheDocument();
+
+		userEvent.selectOptions(select, 'fontSizeSm');
+		fireEvent.change(select);
+
+		expect(screen.queryByTitle('inherited-value')).not.toBeInTheDocument();
+	});
+
+	it('renders a custom input when there is no value and the style is not inherited', () => {
+		renderAdvancedSelectField({field: {...FIELD, inherited: false}});
+
+		expect(screen.getByLabelText('font-size').tagName).toBe('INPUT');
+		expect(screen.queryByTitle('inherited-value')).not.toBeInTheDocument();
 	});
 
 	it('renders an input with the token value when Detach button is clicked', () => {

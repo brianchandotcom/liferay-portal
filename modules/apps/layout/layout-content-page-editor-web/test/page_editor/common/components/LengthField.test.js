@@ -35,6 +35,10 @@ const renderLengthField = ({
 	);
 
 describe('LengthField', () => {
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPS-163362'] = true;
+	});
+
 	it('renders LengthField', () => {
 		renderLengthField();
 
@@ -123,6 +127,28 @@ describe('LengthField', () => {
 
 		expect(input).toHaveValue(null);
 	});
+
+	it('allows a default unit and disables the button', () => {
+		const field = {
+			...FIELD,
+			typeOptions: {
+				defaultUnit: '%',
+			},
+		};
+
+		renderLengthField({field});
+
+		const button = screen.getByLabelText('select-a-unit');
+
+		expect(button.textContent).toBe('%');
+		expect(button).toBeDisabled();
+	});
+
+	const FIELD = {
+		label: 'length-field',
+		name: 'lengthField',
+		typeOptions: {defaultUnit: '%'},
+	};
 
 	describe('LengthField when it is part of a Select field', () => {
 		const field = {

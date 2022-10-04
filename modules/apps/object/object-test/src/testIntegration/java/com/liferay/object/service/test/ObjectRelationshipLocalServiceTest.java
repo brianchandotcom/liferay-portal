@@ -154,7 +154,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"TestSystemObjectDefinition", null, null,
+				TestSystemObjectDefinitionMetadata.NAME, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 				Arrays.asList(

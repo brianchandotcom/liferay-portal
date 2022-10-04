@@ -1016,6 +1016,8 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to update a Picklist without the Update permission"
 	@priority = "4"
 	test CannotUpdatePicklistWithoutUpdatePermission {
+		property portal.acceptance = "quarantine";
+
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaAPI(
@@ -1221,6 +1223,7 @@ definition {
 	@description = "LPS-146759 - Verify it is not possible to update a single Picklist created by the user if the Update Owner permission is removed"
 	@priority = "4"
 	test CannotUpdateSinglePicklistWithoutUpdateOwnerPermission {
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateSinglePicklistWithoutUpdateOwnerPermission";
 
 		JSONRole.addRegularRole(

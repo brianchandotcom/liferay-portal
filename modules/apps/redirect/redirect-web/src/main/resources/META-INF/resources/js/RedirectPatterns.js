@@ -102,26 +102,26 @@ const PatternField = ({
 
 const RedirectPattern = ({
 	description = Liferay.Language.get('redirect-patterns-description'),
-	patternList: initialPatternList,
+	patternsList: initialPatternsList,
 	portletNamespace,
 }) => {
 	const emptyRow = () => ({destinationURL: '', id: uuidv4(), pattern: ''});
 
 	const addRow = (index) => {
-		const tempList = [...patternsList];
+		const tempList = [...patterns];
 		tempList.splice(index + 1, 0, emptyRow());
-		setPatternsList(tempList);
+		setPatterns(tempList);
 	};
 
 	const removeRow = (index) => {
-		const tempList = [...patternsList];
+		const tempList = [...patterns];
 		tempList.splice(index, 1);
-		setPatternsList(tempList);
+		setPatterns(tempList);
 	};
 
-	const [patternsList, setPatternsList] = useState(
-		initialPatternList && !!initialPatternList.length
-			? initialPatternList
+	const [patterns, setPatterns] = useState(
+		initialPatternsList && !!initialPatternsList.length
+			? initialPatternsList
 			: [emptyRow()]
 	);
 
@@ -129,7 +129,7 @@ const RedirectPattern = ({
 		<>
 			<p className="text-muted">{description}</p>
 
-			{patternsList.map((item, index) => (
+			{patterns.map((item, index) => (
 				<PatternField
 					destinationURL={item.destinationURL}
 					handleAddClick={addRow}
@@ -146,7 +146,7 @@ const RedirectPattern = ({
 
 RedirectPattern.propTypes = {
 	description: PropTypes.string,
-	patternList: PropTypes.arrayOf(
+	patternsList: PropTypes.arrayOf(
 		PropTypes.shape({
 			destinationURL: PropTypes.string,
 			pattern: PropTypes.string,

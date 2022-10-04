@@ -99,7 +99,7 @@ public class RedirectProviderImpl
 	}
 
 	@Override
-	public Map<Pattern, String> getRedirectionPatternsMap(long groupId) {
+	public Map<Pattern, String> getRedirectPatterns(long groupId) {
 		Map<Pattern, String> patternStringMap = _groupPatternStrings.get(
 			groupId);
 

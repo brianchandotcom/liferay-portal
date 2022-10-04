@@ -38,13 +38,13 @@ import org.osgi.service.component.annotations.Reference;
 public class RedirectPatternConfigurationProviderImpl
 	implements RedirectPatternConfigurationProvider {
 
-	public Map<Pattern, String> getRedirectionPatternsMap(long groupId) {
-		return _redirectProvider.getRedirectionPatternsMap(groupId);
+	public Map<Pattern, String> getRedirectPatterns(long groupId) {
+		return _redirectProvider.getRedirectPatterns(groupId);
 	}
 
 	@Override
-	public void updateRedirectionPatterns(
-			long groupId, Map<String, String> redirectionPatters)
+	public void updateRedirectPatterns(
+			long groupId, Map<String, String> redirectPatterns)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
@@ -76,7 +76,7 @@ public class RedirectPatternConfigurationProviderImpl
 			properties = configuration.getProperties();
 		}
 
-		_updatePatternsProperty(properties, redirectionPatters);
+		_updatePatternsProperty(properties, redirectPatterns);
 
 		configuration.update(properties);
 	}

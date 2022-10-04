@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  */
 @Component(immediate = true, service = ConfigurationScreen.class)
-public class RedirectionPatternConfigurationScreen
-	implements ConfigurationScreen {
+public class RedirectPatternConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getCategoryKey() {

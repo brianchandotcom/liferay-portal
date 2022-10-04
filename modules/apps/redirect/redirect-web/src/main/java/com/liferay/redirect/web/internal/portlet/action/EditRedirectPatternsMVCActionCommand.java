@@ -50,9 +50,9 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			_redirectPatternConfigurationProvider.updateRedirectionPatterns(
+			_redirectPatternConfigurationProvider.updateRedirectPatterns(
 				ParamUtil.getLong(actionRequest, "scopePK"),
-				_getRedirectionPatterns(actionRequest));
+				_getRedirectPatterns(actionRequest));
 		}
 		catch (ConfigurationModelListenerException
 					configurationModelListenerException) {
@@ -65,7 +65,7 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Map<String, String> _getRedirectionPatterns(
+	private Map<String, String> _getRedirectPatterns(
 		ActionRequest actionRequest) {
 
 		Map<String, String> redirectPatterns = new LinkedHashMap<>();

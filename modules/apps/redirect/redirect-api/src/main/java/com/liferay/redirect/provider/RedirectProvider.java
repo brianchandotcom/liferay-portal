@@ -25,7 +25,7 @@ public interface RedirectProvider {
 	public Redirect getRedirect(
 		long groupId, String friendlyURL, String fullURL);
 
-	public Map<Pattern, String> getRedirectionPatternsMap(long groupId);
+	public Map<Pattern, String> getRedirectPatterns(long groupId);
 
 	public interface Redirect {
 

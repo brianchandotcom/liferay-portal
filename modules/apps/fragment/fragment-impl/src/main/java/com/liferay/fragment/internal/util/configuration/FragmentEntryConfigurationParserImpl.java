@@ -40,8 +40,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -390,9 +393,14 @@ public class FragmentEntryConfigurationParserImpl
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+		Group group = themeDisplay.getScopeGroup();
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			themeDisplay.getSiteGroupId(), group.isLayoutSetPrototype());
+
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				themeDisplay.getThemeId());
+				layoutSet.getThemeId());
 
 		if (frontendTokenDefinition == null) {
 			return fieldValue;
@@ -884,6 +892,9 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private ListObjectReferenceFactoryTracker

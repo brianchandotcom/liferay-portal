@@ -33,8 +33,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -227,11 +229,17 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 				styleBookEntry.getFrontendTokensValues());
 		}
 
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-			ServletContextUtil.getFrontendTokenDefinitionRegistry();
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			groupId, false);
+			group.getGroupId(), group.isLayoutSetPrototype());
+
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			ServletContextUtil.getFrontendTokenDefinitionRegistry();
 
 		FrontendTokenDefinition frontendTokenDefinition =
 			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
@@ -461,6 +469,9 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			_sortedViewportSizes,
 			Comparator.comparingInt(ViewportSize::getOrder));
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

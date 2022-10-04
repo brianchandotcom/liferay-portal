@@ -340,9 +340,12 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"frontendTokens",
 				() -> {
+					Group group = themeDisplay.getScopeGroup();
+
 					LayoutSet layoutSet =
 						LayoutSetLocalServiceUtil.fetchLayoutSet(
-							themeDisplay.getSiteGroupId(), false);
+							themeDisplay.getSiteGroupId(),
+							group.isLayoutSetPrototype());
 
 					FrontendTokenDefinition frontendTokenDefinition =
 						_frontendTokenDefinitionRegistry.

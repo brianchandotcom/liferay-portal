@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
@@ -89,7 +90,9 @@ export default withRouter(
 
 		const editorRef = useRef('');
 
+		const [isModerate, setIsModerate] = useState(false);
 		const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
+		const [isVisibleEditor, setIsVisibleEditor] = useState(false);
 		const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
 
 		const [allowSubscription, setAllowSubscription] = useState(false);
@@ -129,8 +132,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -203,6 +205,19 @@ export default withRouter(
 			[allowSubscription, question, subscribe, setQuestion]
 		);
 
+		const onShowEditorAnswer = () => {
+			const threadAnswers = answers.items || [];
+
+			const hasUserAnswered = threadAnswers.some(
+				(answer) => answer.creator.id === Number(context.userId)
+			);
+			if (!context.trustedUser && hasUserAnswered) {
+				setIsModerate(true);
+			}
+
+			return setIsVisibleEditor(true);
+		};
+
 		const onCreateAnswer = async () => {
 			try {
 				await createAnswer({
@@ -227,8 +242,8 @@ export default withRouter(
 					pageSize: 20,
 					siteKey: context.siteKey,
 				});
-			}
-			catch (error) {}
+				setIsVisibleEditor(false);
+			} catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(
@@ -316,6 +331,37 @@ export default withRouter(
 							</ClayEmptyState>
 						</div>
 					</div>
+				)}
+
+				{isModerate && (
+					<ClayAlert.ToastContainer>
+						<ClayAlert
+							autoClose={6000}
+							displayType="warning"
+							onClose={() => setIsModerate(false)}
+							title={Liferay.Language.get(
+								'are-you-sure-you-want-to-add-another-answer'
+							)}
+							variant="inline"
+						>
+							<div>
+								{Liferay.Language.get(
+									'you-could-use-the-add-comment-to-continue-the-existing-thread-instead'
+								)}
+							</div>
+
+							<ClayAlert.Footer>
+								<ClayButton.Group className="ml-0">
+									<ClayButton
+										alert
+										onClick={() => setIsModerate(false)}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
+								</ClayButton.Group>
+							</ClayAlert.Footer>
+						</ClayAlert>
+					</ClayAlert.ToastContainer>
 				)}
 
 				<div className="c-mt-5">
@@ -570,43 +616,59 @@ export default withRouter(
 									question.actions &&
 									question.actions['reply-to-thread'] && (
 										<div className="c-mt-5">
-											<DefaultQuestionsEditor
-												label={Liferay.Language.get(
-													'your-answer'
-												)}
-												onContentLengthValid={
-													setIsPostButtonDisable
-												}
-												question={question}
-												ref={editorRef}
-											/>
+											{isVisibleEditor && (
+												<>
+													<DefaultQuestionsEditor
+														label={Liferay.Language.get(
+															'your-answer'
+														)}
+														onContentLengthValid={
+															setIsPostButtonDisable
+														}
+														question={question}
+														ref={editorRef}
+													/>
 
-											{!question.subscribed && (
-												<SubscritionCheckbox
-													checked={allowSubscription}
-													setChecked={
-														setAllowSubscription
-													}
-												/>
+													<SubscritionCheckbox
+														checked={
+															allowSubscription
+														}
+														setChecked={
+															setAllowSubscription
+														}
+													/>
+												</>
 											)}
 
-											{!question.locked && (
+											{!isVisibleEditor && (
 												<ClayButton
-													disabled={
-														isPostButtonDisable
-													}
 													displayType="primary"
-													onClick={onCreateAnswer}
+													onClick={onShowEditorAnswer}
 												>
-													{context.trustedUser
-														? Liferay.Language.get(
-																'post-answer'
-														  )
-														: Liferay.Language.get(
-																'submit-for-publication'
-														  )}
+													{Liferay.Language.get(
+														'add-answer'
+													)}
 												</ClayButton>
 											)}
+
+											{!question.locked &&
+												isVisibleEditor && (
+													<ClayButton
+														disabled={
+															isPostButtonDisable
+														}
+														displayType="primary"
+														onClick={onCreateAnswer}
+													>
+														{context.trustedUser
+															? Liferay.Language.get(
+																	'post-answer'
+															  )
+															: Liferay.Language.get(
+																	'submit-for-publication'
+															  )}
+													</ClayButton>
+												)}
 										</div>
 									)}
 							</div>

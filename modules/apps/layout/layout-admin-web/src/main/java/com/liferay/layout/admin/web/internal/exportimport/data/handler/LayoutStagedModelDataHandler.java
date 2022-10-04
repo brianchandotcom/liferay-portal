@@ -389,18 +389,15 @@ public class LayoutStagedModelDataHandler
 
 		_exportLayoutPageTemplateStructure(portletDataContext, layout);
 
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
-
+		if (layout.isTypeLinkToLayout()) {
 			_exportLinkedLayout(portletDataContext, layout, layoutElement);
 		}
-		else if (Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_PORTLET) ||
-				 layout.isTypeAssetDisplay() || layout.isTypeContent()) {
+		else if (layout.isTypePortlet() || layout.isTypeAssetDisplay() ||
+				 layout.isTypeContent()) {
 
 			_exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
-		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+		else if (layout.isTypeURL()) {
 			_exportLinkedURL(portletDataContext, layout, layoutElement);
 		}
 
@@ -857,7 +854,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE,
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE);
 
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
+		if (layout.isTypePortlet() &&
 			Validator.isNotNull(layout.getTypeSettings()) &&
 			!portletsMergeMode.equals(
 				PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE)) {
@@ -865,15 +862,13 @@ public class LayoutStagedModelDataHandler
 			_mergePortlets(
 				importedLayout, layout.getTypeSettings(), portletsMergeMode);
 		}
-		else if (Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
-
+		else if (layout.isTypeLinkToLayout()) {
 			_importLinkedLayout(
 				portletDataContext, layout, importedLayout, layoutElement);
 
 			_updateTypeSettings(importedLayout, layout);
 		}
-		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+		else if (layout.isTypeURL()) {
 			_importLinkedURL(
 				portletDataContext, layout, importedLayout, layoutElement);
 
@@ -965,7 +960,7 @@ public class LayoutStagedModelDataHandler
 
 		_importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
-		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
+		if ((layout.isTypePortlet() &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
 			layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 
@@ -1230,9 +1225,7 @@ public class LayoutStagedModelDataHandler
 	private void _exportCollectionLayoutCollection(
 		PortletDataContext portletDataContext, Layout layout) {
 
-		if (!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-
+		if (!layout.isTypeCollection()) {
 			return;
 		}
 
@@ -1707,7 +1700,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private Object[] _extractFriendlyURLInfo(Layout layout) {
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+		if (!layout.isTypeURL()) {
 			return null;
 		}
 
@@ -2529,9 +2522,7 @@ public class LayoutStagedModelDataHandler
 
 		boolean addGuestPermissions = false;
 
-		if (!privateLayout ||
-			Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||
+		if (!privateLayout || layout.isTypeControlPanel() ||
 			group.isLayoutSetPrototype()) {
 
 			addGuestPermissions = true;
@@ -2772,9 +2763,7 @@ public class LayoutStagedModelDataHandler
 		PortletDataContext portletDataContext, Layout layout,
 		Layout importedLayout) {
 
-		if (!Objects.equals(
-				importedLayout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-
+		if (!layout.isTypeCollection()) {
 			return importedLayout;
 		}
 

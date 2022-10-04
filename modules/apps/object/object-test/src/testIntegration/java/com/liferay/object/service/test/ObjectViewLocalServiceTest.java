@@ -373,15 +373,6 @@ public class ObjectViewLocalServiceTest {
 		_objectViewLocalService.deleteObjectView(objectView.getObjectViewId());
 	}
 
-	private ObjectEntry _addObjectEntry(
-			long objectDefinitionId, Map<String, Serializable> values)
-		throws Exception {
-
-		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, objectDefinitionId, values,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
 	private String _addObjectField(
 			String objectFieldLabel, String objectFieldName)
 		throws Exception {
@@ -669,11 +660,13 @@ public class ObjectViewLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition1.getObjectDefinitionId());
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
 			objectDefinition1.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"title", "Roger"
-			).build());
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),

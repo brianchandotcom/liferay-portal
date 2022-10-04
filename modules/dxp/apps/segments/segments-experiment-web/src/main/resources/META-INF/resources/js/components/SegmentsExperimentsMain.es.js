@@ -18,9 +18,11 @@ import APIService from '../util/APIService.es';
 import ConnectToAC from './ConnectToAC.es';
 import SegmentsExperimentsSidebar from './SegmentsExperimentsSidebar.es';
 
-const useExperimentsData = (fetchDataURL) => {
+const useExperimentsData = (fetchDataURL, isPanelStateOpen) => {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState({context: null, props: null});
+
+	const componentHasData = !!Object.values(data).filter(Boolean).length;
 
 	const fetchExperimentsData = useCallback(async () => {
 		try {
@@ -44,14 +46,16 @@ const useExperimentsData = (fetchDataURL) => {
 	}, [fetchDataURL]);
 
 	useEffect(() => {
-		fetchExperimentsData();
-	}, [fetchExperimentsData]);
+		if (isPanelStateOpen && !componentHasData) {
+			fetchExperimentsData();
+		}
+	}, [fetchExperimentsData, componentHasData, isPanelStateOpen]);
 
 	return [loading, data];
 };
 
-const SegmentsExperimentsMain = ({fetchDataURL}) => {
-	const [loading, data] = useExperimentsData(fetchDataURL);
+const SegmentsExperimentsMain = ({fetchDataURL, isPanelStateOpen}) => {
+	const [loading, data] = useExperimentsData(fetchDataURL, isPanelStateOpen);
 
 	const {context, props} = data;
 

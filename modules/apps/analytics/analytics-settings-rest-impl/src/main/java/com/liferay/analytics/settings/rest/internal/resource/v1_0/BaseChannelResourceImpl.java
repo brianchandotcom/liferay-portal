@@ -14,8 +14,8 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
-import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
-import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
+import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -47,38 +50,66 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseDataSourceResourceImpl implements DataSourceResource {
+public abstract class BaseChannelResourceImpl implements ChannelResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/analytics-settings-rest/v1.0/data-sources'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/analytics-settings-rest/v1.0/channels'  -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DataSource")}
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "keywords"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
 	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/data-sources")
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Channel")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/channels")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteDataSource() throws Exception {
+	public Page<Channel> getChannelsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("keywords")
+			String keywords,
+			@javax.ws.rs.core.Context Filter filter,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/analytics-settings-rest/v1.0/data-sources' -d $'{"token": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/analytics-settings-rest/v1.0/channels' -d $'{"channelId": ___, "createDate": ___, "dataSources": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DataSource")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Channel")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/data-sources")
+	@javax.ws.rs.Path("/channels")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postDataSource(DataSourceToken dataSourceToken)
-		throws Exception {
+	public Channel postChannel(Channel channel) throws Exception {
+		return new Channel();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -252,6 +283,6 @@ public abstract class BaseDataSourceResourceImpl implements DataSourceResource {
 	protected RoleLocalService roleLocalService;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseDataSourceResourceImpl.class);
+		LogFactoryUtil.getLog(BaseChannelResourceImpl.class);
 
 }

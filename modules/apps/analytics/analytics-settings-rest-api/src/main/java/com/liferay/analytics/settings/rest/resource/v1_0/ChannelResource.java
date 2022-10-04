@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.settings.rest.resource.v1_0;
 
-import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
+import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,16 +50,17 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface DataSourceResource {
+public interface ChannelResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteDataSource() throws Exception;
-
-	public void postDataSource(DataSourceToken dataSourceToken)
+	public Page<Channel> getChannelsPage(
+			String keywords, Filter filter, Pagination pagination)
 		throws Exception;
+
+	public Channel postChannel(Channel channel) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -116,7 +119,7 @@ public interface DataSourceResource {
 	@ProviderType
 	public interface Builder {
 
-		public DataSourceResource build();
+		public ChannelResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

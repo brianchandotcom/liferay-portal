@@ -107,6 +107,7 @@ paths:
             tags: ["Channel"]
     "/data-sources":
         delete:
+            operationId: deleteDataSource
             responses:
                 204:
                     content:
@@ -126,6 +127,7 @@ paths:
                         Unexpected error
             tags: ["DataSource"]
         post:
+            operationId: postDataSource
             requestBody:
                 content:
                     application/json:

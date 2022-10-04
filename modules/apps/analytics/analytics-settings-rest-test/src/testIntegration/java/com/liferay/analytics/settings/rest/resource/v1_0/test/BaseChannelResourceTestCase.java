@@ -22,11 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.analytics.settings.rest.client.dto.v1_0.DataSource;
+import com.liferay.analytics.settings.rest.client.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.client.http.HttpInvoker;
 import com.liferay.analytics.settings.rest.client.pagination.Page;
-import com.liferay.analytics.settings.rest.client.resource.v1_0.DataSourceResource;
-import com.liferay.analytics.settings.rest.client.serdes.v1_0.DataSourceSerDes;
+import com.liferay.analytics.settings.rest.client.pagination.Pagination;
+import com.liferay.analytics.settings.rest.client.resource.v1_0.ChannelResource;
+import com.liferay.analytics.settings.rest.client.serdes.v1_0.ChannelSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -40,10 +41,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -54,6 +57,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,6 +72,8 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,7 +87,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseDataSourceResourceTestCase {
+public abstract class BaseChannelResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -102,11 +108,11 @@ public abstract class BaseDataSourceResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_dataSourceResource.setContextCompany(testCompany);
+		_channelResource.setContextCompany(testCompany);
 
-		DataSourceResource.Builder builder = DataSourceResource.builder();
+		ChannelResource.Builder builder = ChannelResource.builder();
 
-		dataSourceResource = builder.authentication(
+		channelResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -137,13 +143,13 @@ public abstract class BaseDataSourceResourceTestCase {
 			}
 		};
 
-		DataSource dataSource1 = randomDataSource();
+		Channel channel1 = randomChannel();
 
-		String json = objectMapper.writeValueAsString(dataSource1);
+		String json = objectMapper.writeValueAsString(channel1);
 
-		DataSource dataSource2 = DataSourceSerDes.toDTO(json);
+		Channel channel2 = ChannelSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(dataSource1, dataSource2));
+		Assert.assertTrue(equals(channel1, channel2));
 	}
 
 	@Test
@@ -163,10 +169,10 @@ public abstract class BaseDataSourceResourceTestCase {
 			}
 		};
 
-		DataSource dataSource = randomDataSource();
+		Channel channel = randomChannel();
 
-		String json1 = objectMapper.writeValueAsString(dataSource);
-		String json2 = DataSourceSerDes.toJSON(dataSource);
+		String json1 = objectMapper.writeValueAsString(channel);
+		String json2 = ChannelSerDes.toJSON(channel);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -176,49 +182,198 @@ public abstract class BaseDataSourceResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		DataSource dataSource = randomDataSource();
+		Channel channel = randomChannel();
 
-		dataSource.setDataSourceId(regex);
+		channel.setChannelId(regex);
+		channel.setName(regex);
 
-		String json = DataSourceSerDes.toJSON(dataSource);
+		String json = ChannelSerDes.toJSON(channel);
 
 		Assert.assertFalse(json.contains(regex));
 
-		dataSource = DataSourceSerDes.toDTO(json);
+		channel = ChannelSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, dataSource.getDataSourceId());
+		Assert.assertEquals(regex, channel.getChannelId());
+		Assert.assertEquals(regex, channel.getName());
 	}
 
 	@Test
-	public void testDeleteDataSource() throws Exception {
+	public void testGetChannelsPage() throws Exception {
+		Page<Channel> page = channelResource.getChannelsPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
+
+		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
+
+		page = channelResource.getChannelsPage(
+			null, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(channel1, (List<Channel>)page.getItems());
+		assertContains(channel2, (List<Channel>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetChannelsPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Channel channel1 = randomChannel();
+
+		channel1 = testGetChannelsPage_addChannel(channel1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Channel> page = channelResource.getChannelsPage(
+				null, getFilterString(entityField, "between", channel1),
+				Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(channel1),
+				(List<Channel>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
+
+		for (EntityField entityField : entityFields) {
+			Page<Channel> page = channelResource.getChannelsPage(
+				null, getFilterString(entityField, "eq", channel1),
+				Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(channel1),
+				(List<Channel>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelsPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
+
+		for (EntityField entityField : entityFields) {
+			Page<Channel> page = channelResource.getChannelsPage(
+				null, getFilterString(entityField, "eq", channel1),
+				Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(channel1),
+				(List<Channel>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelsPageWithPagination() throws Exception {
+		Page<Channel> totalPage = channelResource.getChannelsPage(
+			null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
+
+		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
+
+		Channel channel3 = testGetChannelsPage_addChannel(randomChannel());
+
+		Page<Channel> page1 = channelResource.getChannelsPage(
+			null, null, Pagination.of(1, totalCount + 2));
+
+		List<Channel> channels1 = (List<Channel>)page1.getItems();
+
+		Assert.assertEquals(
+			channels1.toString(), totalCount + 2, channels1.size());
+
+		Page<Channel> page2 = channelResource.getChannelsPage(
+			null, null, Pagination.of(2, totalCount + 2));
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<Channel> channels2 = (List<Channel>)page2.getItems();
+
+		Assert.assertEquals(channels2.toString(), 1, channels2.size());
+
+		Page<Channel> page3 = channelResource.getChannelsPage(
+			null, null, Pagination.of(1, totalCount + 3));
+
+		assertContains(channel1, (List<Channel>)page3.getItems());
+		assertContains(channel2, (List<Channel>)page3.getItems());
+		assertContains(channel3, (List<Channel>)page3.getItems());
+	}
+
+	protected Channel testGetChannelsPage_addChannel(Channel channel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetChannelsPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLDeleteDataSource() throws Exception {
-		Assert.assertTrue(false);
+	public void testPostChannel() throws Exception {
+		Channel randomChannel = randomChannel();
+
+		Channel postChannel = testPostChannel_addChannel(randomChannel);
+
+		assertEquals(randomChannel, postChannel);
+		assertValid(postChannel);
 	}
 
-	@Test
-	public void testPostDataSource() throws Exception {
-		Assert.assertTrue(false);
+	protected Channel testPostChannel_addChannel(Channel channel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected void assertContains(
-		DataSource dataSource, List<DataSource> dataSources) {
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected void assertContains(Channel channel, List<Channel> channels) {
 		boolean contains = false;
 
-		for (DataSource item : dataSources) {
-			if (equals(dataSource, item)) {
+		for (Channel item : channels) {
+			if (equals(channel, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(
-			dataSources + " does not contain " + dataSource, contains);
+		Assert.assertTrue(channels + " does not contain " + channel, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -229,37 +384,35 @@ public abstract class BaseDataSourceResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		DataSource dataSource1, DataSource dataSource2) {
-
+	protected void assertEquals(Channel channel1, Channel channel2) {
 		Assert.assertTrue(
-			dataSource1 + " does not equal " + dataSource2,
-			equals(dataSource1, dataSource2));
+			channel1 + " does not equal " + channel2,
+			equals(channel1, channel2));
 	}
 
 	protected void assertEquals(
-		List<DataSource> dataSources1, List<DataSource> dataSources2) {
+		List<Channel> channels1, List<Channel> channels2) {
 
-		Assert.assertEquals(dataSources1.size(), dataSources2.size());
+		Assert.assertEquals(channels1.size(), channels2.size());
 
-		for (int i = 0; i < dataSources1.size(); i++) {
-			DataSource dataSource1 = dataSources1.get(i);
-			DataSource dataSource2 = dataSources2.get(i);
+		for (int i = 0; i < channels1.size(); i++) {
+			Channel channel1 = channels1.get(i);
+			Channel channel2 = channels2.get(i);
 
-			assertEquals(dataSource1, dataSource2);
+			assertEquals(channel1, channel2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<DataSource> dataSources1, List<DataSource> dataSources2) {
+		List<Channel> channels1, List<Channel> channels2) {
 
-		Assert.assertEquals(dataSources1.size(), dataSources2.size());
+		Assert.assertEquals(channels1.size(), channels2.size());
 
-		for (DataSource dataSource1 : dataSources1) {
+		for (Channel channel1 : channels1) {
 			boolean contains = false;
 
-			for (DataSource dataSource2 : dataSources2) {
-				if (equals(dataSource1, dataSource2)) {
+			for (Channel channel2 : channels2) {
+				if (equals(channel1, channel2)) {
 					contains = true;
 
 					break;
@@ -267,36 +420,42 @@ public abstract class BaseDataSourceResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				dataSources2 + " does not contain " + dataSource1, contains);
+				channels2 + " does not contain " + channel1, contains);
 		}
 	}
 
-	protected void assertValid(DataSource dataSource) throws Exception {
+	protected void assertValid(Channel channel) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"commerceChannelIds", additionalAssertFieldName)) {
-
-				if (dataSource.getCommerceChannelIds() == null) {
+			if (Objects.equals("channelId", additionalAssertFieldName)) {
+				if (channel.getChannelId() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("dataSourceId", additionalAssertFieldName)) {
-				if (dataSource.getDataSourceId() == null) {
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
+				if (channel.getCreateDate() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("siteIds", additionalAssertFieldName)) {
-				if (dataSource.getSiteIds() == null) {
+			if (Objects.equals("dataSources", additionalAssertFieldName)) {
+				if (channel.getDataSources() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (channel.getName() == null) {
 					valid = false;
 				}
 
@@ -311,12 +470,12 @@ public abstract class BaseDataSourceResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DataSource> page) {
+	protected void assertValid(Page<Channel> page) {
 		boolean valid = false;
 
-		java.util.Collection<DataSource> dataSources = page.getItems();
+		java.util.Collection<Channel> channels = page.getItems();
 
-		int size = dataSources.size();
+		int size = channels.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -337,7 +496,7 @@ public abstract class BaseDataSourceResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.analytics.settings.rest.dto.v1_0.DataSource.
+					com.liferay.analytics.settings.rest.dto.v1_0.Channel.
 						class)) {
 
 			if (!ArrayUtil.contains(
@@ -386,20 +545,17 @@ public abstract class BaseDataSourceResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(DataSource dataSource1, DataSource dataSource2) {
-		if (dataSource1 == dataSource2) {
+	protected boolean equals(Channel channel1, Channel channel2) {
+		if (channel1 == channel2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"commerceChannelIds", additionalAssertFieldName)) {
-
+			if (Objects.equals("channelId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dataSource1.getCommerceChannelIds(),
-						dataSource2.getCommerceChannelIds())) {
+						channel1.getChannelId(), channel2.getChannelId())) {
 
 					return false;
 				}
@@ -407,10 +563,9 @@ public abstract class BaseDataSourceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("dataSourceId", additionalAssertFieldName)) {
+			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dataSource1.getDataSourceId(),
-						dataSource2.getDataSourceId())) {
+						channel1.getCreateDate(), channel2.getCreateDate())) {
 
 					return false;
 				}
@@ -418,9 +573,19 @@ public abstract class BaseDataSourceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteIds", additionalAssertFieldName)) {
+			if (Objects.equals("dataSources", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dataSource1.getSiteIds(), dataSource2.getSiteIds())) {
+						channel1.getDataSources(), channel2.getDataSources())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						channel1.getName(), channel2.getName())) {
 
 					return false;
 				}
@@ -478,13 +643,13 @@ public abstract class BaseDataSourceResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_dataSourceResource instanceof EntityModelResource)) {
+		if (!(_channelResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_dataSourceResource;
+			(EntityModelResource)_channelResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -513,7 +678,7 @@ public abstract class BaseDataSourceResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, DataSource dataSource) {
+		EntityField entityField, String operator, Channel channel) {
 
 		StringBundler sb = new StringBundler();
 
@@ -525,22 +690,56 @@ public abstract class BaseDataSourceResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("commerceChannelIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("dataSourceId")) {
+		if (entityFieldName.equals("channelId")) {
 			sb.append("'");
-			sb.append(String.valueOf(dataSource.getDataSourceId()));
+			sb.append(String.valueOf(channel.getChannelId()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("siteIds")) {
+		if (entityFieldName.equals("createDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(channel.getCreateDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(channel.getCreateDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(channel.getCreateDate()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dataSources")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(channel.getName()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -584,26 +783,28 @@ public abstract class BaseDataSourceResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected DataSource randomDataSource() throws Exception {
-		return new DataSource() {
+	protected Channel randomChannel() throws Exception {
+		return new Channel() {
 			{
-				dataSourceId = StringUtil.toLowerCase(
+				channelId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				createDate = RandomTestUtil.nextDate();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected DataSource randomIrrelevantDataSource() throws Exception {
-		DataSource randomIrrelevantDataSource = randomDataSource();
+	protected Channel randomIrrelevantChannel() throws Exception {
+		Channel randomIrrelevantChannel = randomChannel();
 
-		return randomIrrelevantDataSource;
+		return randomIrrelevantChannel;
 	}
 
-	protected DataSource randomPatchDataSource() throws Exception {
-		return randomDataSource();
+	protected Channel randomPatchChannel() throws Exception {
+		return randomChannel();
 	}
 
-	protected DataSourceResource dataSourceResource;
+	protected ChannelResource channelResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -789,12 +990,12 @@ public abstract class BaseDataSourceResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseDataSourceResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseChannelResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource
-		_dataSourceResource;
+	private com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource
+		_channelResource;
 
 }

@@ -377,48 +377,11 @@ public class LayoutStagedModelDataHandler
 
 		_exportMasterLayout(portletDataContext, layout, layoutElement);
 
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
-				layout.getPlid());
+		_exportLayoutFriendlyURLs(layout, portletDataContext);
 
-		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutFriendlyURL,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		_exportLayoutSEOEntries(layout, portletDataContext);
 
-			List<FriendlyURLEntry> friendlyURLEntries = _getFriendlyURLEntries(
-				layoutFriendlyURL);
-
-			for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, friendlyURLEntry);
-
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, layout, friendlyURLEntry,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-		}
-
-		LayoutSEOSite layoutSEOSite =
-			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
-				portletDataContext.getScopeGroupId());
-
-		if (layoutSEOSite != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutSEOSite,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
-
-		LayoutSEOEntry layoutSEOEntry =
-			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
-
-		if (layoutSEOEntry != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutSEOEntry,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
+		_exportLayoutClassedModelUsages(portletDataContext, layout);
 
 		if (layout.isIconImage()) {
 			_exportLayoutIconImage(portletDataContext, layout, layoutElement);
@@ -450,18 +413,6 @@ public class LayoutStagedModelDataHandler
 		_fixExportTypeSettings(layout);
 
 		_exportTheme(portletDataContext, layout);
-
-		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			_layoutClassedModelUsageLocalService.
-				getLayoutClassedModelUsagesByPlid(layout.getPlid());
-
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				layoutClassedModelUsages) {
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutClassedModelUsage,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-		}
 
 		portletDataContext.addClassedModel(
 			layoutElement, ExportImportPathUtil.getModelPath(layout),
@@ -1376,6 +1327,50 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 	}
 
+	private void _exportLayoutClassedModelUsages(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(layout.getPlid());
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutClassedModelUsage,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _exportLayoutFriendlyURLs(
+			Layout layout, PortletDataContext portletDataContext)
+		throws Exception {
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutFriendlyURL,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+
+			List<FriendlyURLEntry> friendlyURLEntries = _getFriendlyURLEntries(
+				layoutFriendlyURL);
+
+			for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, friendlyURLEntry);
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, layout, friendlyURLEntry,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
+		}
+	}
+
 	private void _exportLayoutIconImage(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)
@@ -1523,6 +1518,32 @@ public class LayoutStagedModelDataHandler
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
+	}
+
+	private void _exportLayoutSEOEntries(
+			Layout layout, PortletDataContext portletDataContext)
+		throws Exception {
+
+		LayoutSEOSite layoutSEOSite =
+			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
+				portletDataContext.getScopeGroupId());
+
+		if (layoutSEOSite != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutSEOSite,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if (layoutSEOEntry != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutSEOEntry,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
 	}
 
 	private void _exportLinkedLayout(

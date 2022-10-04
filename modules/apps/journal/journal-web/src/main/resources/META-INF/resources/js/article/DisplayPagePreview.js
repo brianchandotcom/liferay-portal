@@ -14,17 +14,25 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {openSelectionModal, sub} from 'frontend-js-web';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {createPortletURL, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 export default function DisplayPagePreview({
-	itemSelectorURL,
 	namespace,
+	selectDisplayPageEventName,
+	selectDisplayPageURL,
+	selectSiteEventName,
+	siteItemSelectorURL,
 	sites,
 	sitesCount,
 }) {
 	const [selectedSite, setSelectedSite] = useState();
 	const [active, setActive] = useState(false);
+	const [displayPageSelected, setDisplayPageSelected] = useState();
+
+	const siteInputId = `${namespace}siteInput`;
 
 	const items = useMemo(() => {
 		return [{groupId: 0, name: Liferay.Language.get('none')}, ...sites].map(
@@ -40,11 +48,12 @@ export default function DisplayPagePreview({
 
 	return (
 		<>
-			<label className="control-label">
+			<label className="control-label" htmlFor={siteInputId}>
 				{Liferay.Language.get('site')}
 			</label>
 			<ClayDropDown
 				active={active}
+				aria-labelledby={siteInputId}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
@@ -89,9 +98,9 @@ export default function DisplayPagePreview({
 												selectedItem.groupdescriptivename,
 										});
 									},
-									selectEventName: `${namespace}selectSite`,
+									selectEventName: selectSiteEventName,
 									title: Liferay.Language.get('select-site'),
-									url: itemSelectorURL,
+									url: siteItemSelectorURL,
 								});
 							}}
 							small
@@ -102,6 +111,95 @@ export default function DisplayPagePreview({
 					</>
 				)}
 			</ClayDropDown>
+
+			{selectedSite?.groupId && (
+				<DisplayPageInput
+					displayPageSelected={displayPageSelected}
+					namespace={namespace}
+					selectDisplayPageEventName={selectDisplayPageEventName}
+					selectDisplayPageURL={selectDisplayPageURL}
+					selectedSite={selectedSite}
+					setDisplayPageSelected={setDisplayPageSelected}
+				/>
+			)}
 		</>
+	);
+}
+
+function DisplayPageInput({
+	displayPageSelected,
+	namespace,
+	selectDisplayPageEventName,
+	selectDisplayPageURL,
+	selectedSite,
+	setDisplayPageSelected,
+}) {
+	const displayPageId = `${namespace}displayPageId`;
+
+	const openDisplayPageSelector = () => {
+		const url = new URL(selectDisplayPageURL);
+
+		url.searchParams.set(
+			`${getPortletNamespace(Liferay.PortletKeys.ITEM_SELECTOR)}groupId`,
+			selectedSite.groupId
+		);
+
+		openSelectionModal({
+			containerProps: {
+				className: 'cadmin',
+			},
+			onSelect(selectedItem) {
+				setDisplayPageSelected({
+					id: selectedItem.id,
+					name: selectedItem.name,
+				});
+			},
+			selectEventName: selectDisplayPageEventName,
+			title: Liferay.Language.get('select-page'),
+			url,
+		});
+	};
+
+	return (
+		<div className="mb-3 mt-2">
+			<ClayForm.Group>
+				<label className="sr-only" htmlFor={displayPageId}>
+					{Liferay.Language.get('display-page')}
+				</label>
+
+				<ClayInput.Group small>
+					<ClayInput.GroupItem>
+						<ClayInput
+							placeholder={Liferay.Language.get(
+								'select-display-page'
+							)}
+							readOnly
+							sizing="sm"
+							value={displayPageSelected?.name ?? ''}
+						/>
+					</ClayInput.GroupItem>
+
+					<ClayInput.GroupItem shrink>
+						<ClayButton
+							displayType="secondary"
+							monospaced
+							onClick={() => openDisplayPageSelector()}
+							small
+							title={sub(
+								displayPageSelected
+									? Liferay.Language.get('change-x')
+									: Liferay.Language.get('select-x'),
+								Liferay.Language.get('image')
+							)}
+						>
+							<ClayIcon
+								className="mt-0"
+								symbol={displayPageSelected ? 'change' : 'plus'}
+							/>
+						</ClayButton>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+			</ClayForm.Group>
+		</div>
 	);
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.service.test;
+package com.liferay.object.service.test.system;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;

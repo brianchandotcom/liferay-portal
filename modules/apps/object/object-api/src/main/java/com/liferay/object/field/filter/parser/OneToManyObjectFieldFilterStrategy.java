@@ -144,7 +144,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ObjectEntry objectEntry =
-				_objectEntryLocalService.getObjectEntryByERC_ODI(
+				_objectEntryLocalService.getObjectEntry(
 					(String)jsonArray.get(i),
 					_objectDefinition1.getObjectDefinitionId());
 
@@ -193,7 +193,7 @@ public class OneToManyObjectFieldFilterStrategy
 		else {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				if (Validator.isNull(
-						_objectEntryLocalService.getObjectEntryByERC_ODI(
+						_objectEntryLocalService.getObjectEntry(
 							(String)jsonArray.get(i),
 							_objectDefinition1.getObjectDefinitionId()))) {
 

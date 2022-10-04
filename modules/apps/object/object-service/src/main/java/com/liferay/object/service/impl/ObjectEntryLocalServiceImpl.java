@@ -602,7 +602,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public ObjectEntry getObjectEntryByERC_ODI(
+	public ObjectEntry getObjectEntry(
 			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException {
 

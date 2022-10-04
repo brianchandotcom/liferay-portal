@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -584,16 +586,32 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				chromeBinaryPath =
 					"C:\\Program Files (x86)\\Google\\Chrome\\Application" +
 						"\\chrome.exe";
+
+				String bitMode = OSDetector.getBitmode();
+
+				if (bitMode.equals("64")) {
+					String chrome64BitBinaryPath =
+						"C:\\Program Files\\Google\\Chrome\\Application" +
+							"\\chrome.exe";
+
+					if (Files.exists(Paths.get(chrome64BitBinaryPath))) {
+						chromeBinaryPath = chrome64BitBinaryPath;
+					}
+				}
 			}
 
-			File chromeBinaryFile = new File(chromeBinaryPath);
-
-			if (!chromeBinaryFile.exists()) {
+			if (Files.notExists(Paths.get(chromeBinaryPath))) {
 				throw new IllegalArgumentException(
 					"Unable to find a Google Chrome binary. Manually set " +
 						"\"browser.chrome.bin.file\" in \"poshi.properties\" " +
 							"to a Google Chrome or Chromium binary.");
 			}
+		}
+
+		if (OSDetector.isWindows()) {
+			chromeBinaryPath = chromeBinaryPath.replace("/", "\\");
+
+			chromeBinaryPath = chromeBinaryPath.replace("\\", "\\\\");
 		}
 
 		final String finalChromeBinaryPath = chromeBinaryPath;
@@ -610,7 +628,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 						execSpec.commandLine(
 							"cmd", "/c",
 							"wmic datafile where name=\"" +
-								finalChromeBinaryPath.replace("\\", "\\\\") +
+								finalChromeBinaryPath +
 									"\" get Version /value");
 					}
 					else {

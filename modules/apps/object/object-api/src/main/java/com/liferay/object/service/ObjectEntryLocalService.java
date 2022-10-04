@@ -360,12 +360,12 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
+			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectEntry getObjectEntryByERC_ODI(
-			String externalReferenceCode, long objectDefinitionId)
+	public ObjectEntry getObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
 		throws PortalException;
 
 	/**

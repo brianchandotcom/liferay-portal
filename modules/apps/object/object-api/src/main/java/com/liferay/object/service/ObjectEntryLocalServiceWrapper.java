@@ -494,20 +494,20 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry getObjectEntry(
+			String externalReferenceCode, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getObjectEntry(
+			externalReferenceCode, objectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry getObjectEntry(
 			String externalReferenceCode, long companyId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getObjectEntry(
 			externalReferenceCode, companyId, groupId);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectEntry getObjectEntryByERC_ODI(
-			String externalReferenceCode, long objectDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectEntryLocalService.getObjectEntryByERC_ODI(
-			externalReferenceCode, objectDefinitionId);
 	}
 
 	/**

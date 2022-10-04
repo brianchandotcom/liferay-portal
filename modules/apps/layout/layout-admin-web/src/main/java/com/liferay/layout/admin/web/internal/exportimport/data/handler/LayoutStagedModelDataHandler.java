@@ -2887,17 +2887,8 @@ public class LayoutStagedModelDataHandler
 					prototypeTypeSettingsUnicodeProperties.toString()
 				).build();
 
-			if (newTypeSettingsUnicodeProperties.containsKey(
-					Sites.LAST_MERGE_TIME)) {
-
-				newTypeSettingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-			}
-
-			if (newTypeSettingsUnicodeProperties.containsKey(
-					Sites.MERGE_FAIL_COUNT)) {
-
-				newTypeSettingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
-			}
+			newTypeSettingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+			newTypeSettingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
 
 			importedLayout.setTypeSettingsProperties(
 				newTypeSettingsUnicodeProperties);

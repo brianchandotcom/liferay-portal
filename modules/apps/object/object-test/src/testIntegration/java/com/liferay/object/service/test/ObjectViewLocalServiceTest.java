@@ -67,7 +67,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -221,7 +220,7 @@ public class ObjectViewLocalServiceTest {
 				"feature.flag.LPS-152650", "true"
 			).build());
 
-		_objectViewRelationshipFilterColumn();
+		_testAddObjectViewRelationshipFilterColumn();
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
@@ -602,7 +601,7 @@ public class ObjectViewLocalServiceTest {
 		}
 	}
 
-	private void _objectViewRelationshipFilterColumn() throws Exception {
+	private void _testAddObjectViewRelationshipFilterColumn() throws Exception {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				_objectDefinitionLocalService,
@@ -630,7 +629,8 @@ public class ObjectViewLocalServiceTest {
 					_createObjectViewFilterColumn(
 						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
 						StringBundler.concat(
-							"{\"includes\": [\"", externalReferenceCode, "\"]}"),
+							"{\"includes\": [\"", externalReferenceCode,
+							"\"]}"),
 						objectField.getName())),
 				Collections.emptyList());
 		}
@@ -640,7 +640,8 @@ public class ObjectViewLocalServiceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"No ", objectDefinition1.getShortName(),
-					" exists with the External Reference Code ", externalReferenceCode),
+					" exists with the External Reference Code ",
+					externalReferenceCode),
 				objectViewFilterColumnException.getMessage());
 		}
 
@@ -660,7 +661,7 @@ public class ObjectViewLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Arrays.asList(_createObjectViewColumn("Foxtrot", "foxtrot")),
+			Arrays.asList(_createObjectViewColumn("How", "how")),
 			Arrays.asList(
 				_createObjectViewFilterColumn(
 					ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
@@ -718,9 +719,9 @@ public class ObjectViewLocalServiceTest {
 				objectViewFilterColumnException.getMessage());
 		}
 
-		long[] userIds = new long[3];
+		long[] userIds = new long[2];
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 2; i++) {
 			User user = UserTestUtil.addUser();
 
 			userIds[i] = user.getUserId();
@@ -735,7 +736,8 @@ public class ObjectViewLocalServiceTest {
 				_createObjectViewFilterColumn(
 					ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
 					StringBundler.concat(
-						"{\"includes\": [\"", userIds[0], "\"]}"),
+						"{\"includes\": [\"", userIds[0], "\",\"", userIds[1],
+						"\"]}"),
 					objectField.getName())),
 			Collections.emptyList());
 

@@ -37,6 +37,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLInfoPan
 page import="com.liferay.document.library.web.internal.display.context.DLSizeLimitConfigurationDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewEntriesDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLViewEntryHistoryDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.FolderActionDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.exception.FileEntryExpirationDateException" %><%@

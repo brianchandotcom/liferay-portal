@@ -578,7 +578,7 @@ public class UIItemsBuilder {
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.DELETE,
 					_getRenderURL(
-						"/document_library/view_file_entry", _getRedirect()
+						"/document_library/view_file_entry", _getCurrentURL()
 					).toString())
 			).setParameter(
 				"fileEntryId", _fileEntry.getFileEntryId()
@@ -766,7 +766,7 @@ public class UIItemsBuilder {
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.REVERT,
 					_getRenderURL(
-						"/document_library/view_file_entry", _getRedirect()
+						"/document_library/view_file_entry", _getCurrentURL()
 					).toString())
 			).setParameter(
 				"fileEntryId", _fileEntry.getFileEntryId()
@@ -799,8 +799,9 @@ public class UIItemsBuilder {
 	public DropdownItem createViewVersionDropdownItem() {
 		return DropdownItemBuilder.setHref(
 			PortletURLBuilder.create(
-				_getRenderURL(
-					"/document_library/view_file_entry", _getRedirect())
+				_getRenderURL("/document_library/view_file_entry")
+			).setBackURL(
+				_getCurrentURL()
 			).setParameter(
 				"version", _fileVersion.getVersion()
 			).buildString()

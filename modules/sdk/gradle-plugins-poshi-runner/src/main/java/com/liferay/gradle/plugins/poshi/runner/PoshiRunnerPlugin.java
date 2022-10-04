@@ -624,6 +624,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
+					System.out.println(
+						"Using Google Chrome binary at: " +
+							finalChromeBinaryPath);
+
 					if (OSDetector.isWindows()) {
 						execSpec.commandLine(
 							"cmd", "/c",

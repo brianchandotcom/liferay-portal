@@ -50,6 +50,7 @@ import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.La
 import com.liferay.layout.configuration.LayoutExportImportConfiguration;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -60,6 +61,7 @@ import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -442,6 +444,8 @@ public class LayoutStagedModelDataHandler
 		_exportFaviconFileEntry(layout, layoutElement, portletDataContext);
 
 		_exportClientExtensionEntryRels(layout, portletDataContext);
+
+		_exportLayoutLocalizations(layout, portletDataContext);
 
 		_fixExportTypeSettings(layout);
 
@@ -994,6 +998,8 @@ public class LayoutStagedModelDataHandler
 
 		_importClientExtensionEntryRels(portletDataContext, layout);
 
+		_importLayoutLocalizations(portletDataContext, layout);
+
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
 
@@ -1395,6 +1401,21 @@ public class LayoutStagedModelDataHandler
 			}
 
 			layout.setIconImageId(0);
+		}
+	}
+
+	private void _exportLayoutLocalizations(
+			Layout layout, PortletDataContext portletDataContext)
+		throws Exception {
+
+		List<LayoutLocalization> layoutLocalizations =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				layout.getPlid());
+
+		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutLocalization,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
 
@@ -2097,6 +2118,20 @@ public class LayoutStagedModelDataHandler
 			_imageLocalService.updateImage(
 				importedLayout.getCompanyId(), importedLayout.getIconImageId(),
 				iconBytes);
+		}
+	}
+
+	private void _importLayoutLocalizations(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		List<Element> layoutLocalizationsElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutLocalization.class);
+
+		for (Element layoutLocalizationsElement : layoutLocalizationsElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutLocalizationsElement);
 		}
 	}
 
@@ -2934,6 +2969,9 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
+	@Reference
+	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

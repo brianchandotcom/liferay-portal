@@ -175,6 +175,16 @@ public class RepositoryBrowserTagDisplayContext {
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
 
+	public Map<String, Object> getRepositoryBrowserComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"parentFolderId", String.valueOf(_folderId)
+		).put(
+			"repositoryBrowserURL", _getRepositoryBrowserURL()
+		).put(
+			"repositoryId", String.valueOf(_repositoryId)
+		).build();
+	}
+
 	public ResultRowSplitter getResultRowSplitter() {
 		return resultRows -> {
 			List<ResultRowSplitterEntry> resultRowSplitterEntries =

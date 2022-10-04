@@ -31,6 +31,8 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 		breadcrumbEntries="<%= repositoryBrowserTagDisplayContext.getBreadcrumbEntries() %>"
 	/>
 
+	<input id="<portlet:namespace />file" style="display: none;" type="file" />
+
 	<liferay-ui:search-container
 		id="repositoryEntries"
 		searchContainer="<%= repositoryBrowserTagDisplayContext.getSearchContainer() %>"
@@ -68,5 +70,10 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 	<liferay-frontend:component
 		componentId="repositoryBrowserEventHandler"
 		module="repository_browser/js/RepositoryBrowserDropdownDefaultEventHandler"
+	/>
+
+	<liferay-frontend:component
+		context="<%= repositoryBrowserTagDisplayContext.getRepositoryBrowserComponentContext() %>"
+		module="repository_browser/js/RepositoryBrowserComponent"
 	/>
 </div>

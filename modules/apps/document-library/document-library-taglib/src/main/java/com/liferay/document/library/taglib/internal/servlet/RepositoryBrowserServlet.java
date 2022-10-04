@@ -31,11 +31,13 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.Servlet;
@@ -181,11 +183,59 @@ public class RepositoryBrowserServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			String name = ParamUtil.getString(httpServletRequest, "name");
 			long repositoryId = ParamUtil.getLong(
 				httpServletRequest, "repositoryId");
 
-			if (Validator.isNull(name) || (repositoryId <= 0)) {
+			if (repositoryId <= 0) {
+				httpServletResponse.setContentType(
+					ContentTypes.APPLICATION_JSON);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_BAD_REQUEST);
+
+				ServletResponseUtil.write(
+					httpServletResponse,
+					JSONUtil.put(
+						"success", false
+					).toString());
+
+				return;
+			}
+
+			UploadServletRequest uploadServletRequest =
+				_portal.getUploadServletRequest(httpServletRequest);
+
+			File file = uploadServletRequest.getFile("file");
+
+			if (file != null) {
+				long parentFolderId = ParamUtil.getLong(
+					httpServletRequest, "parentFolderId");
+
+				_dlAppService.addFileEntry(
+					null, repositoryId, parentFolderId, file.getName(),
+					uploadServletRequest.getContentType("file"),
+					uploadServletRequest.getFileName("file"), null, null, null,
+					file, null, null,
+					ServiceContextFactory.getInstance(
+						FileEntry.class.getName(), httpServletRequest));
+
+				SessionMessages.add(httpServletRequest, "requestProcessed");
+
+				httpServletResponse.setContentType(
+					ContentTypes.APPLICATION_JSON);
+				httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+
+				ServletResponseUtil.write(
+					httpServletResponse,
+					JSONUtil.put(
+						"success", true
+					).toString());
+
+				return;
+			}
+
+			String name = ParamUtil.getString(httpServletRequest, "name");
+
+			if (Validator.isNull(name)) {
 				httpServletResponse.sendError(
 					HttpServletResponse.SC_BAD_REQUEST);
 
@@ -199,6 +249,8 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				repositoryId, parentFolderId, name, StringPool.BLANK,
 				ServiceContextFactory.getInstance(
 					Folder.class.getName(), httpServletRequest));
+
+			SessionMessages.add(httpServletRequest, "requestProcessed");
 
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 			httpServletResponse.setStatus(HttpServletResponse.SC_OK);

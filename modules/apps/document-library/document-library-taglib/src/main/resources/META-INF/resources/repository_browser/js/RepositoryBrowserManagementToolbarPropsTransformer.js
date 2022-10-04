@@ -61,7 +61,7 @@ export default function propsTransformer({
 			}
 		},
 
-		onCreateButtonClick: (event, {item}) => {
+		onCreationMenuItemClick: (event, {item}) => {
 			if (item?.data?.action === 'addFolder') {
 				const createFolderURL = `${repositoryBrowserURL}?repositoryId=${item.data.repositoryId}&parentFolderId=${item.data.parentFolderId}`;
 
@@ -74,6 +74,9 @@ export default function propsTransformer({
 					namespace: '',
 					onFormSuccess: () => window.location.reload(),
 				});
+			}
+			else if (item?.data?.action === 'uploadFile') {
+				window[`${portletNamespace}UploadFile`]();
 			}
 		},
 	};

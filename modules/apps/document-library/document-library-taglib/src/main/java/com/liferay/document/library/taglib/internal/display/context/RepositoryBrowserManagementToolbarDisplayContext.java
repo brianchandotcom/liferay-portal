@@ -74,7 +74,14 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "uploadFile");
+				dropdownItem.setIcon("upload");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "file-upload"));
+			}
+		).addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addFolder");
 				dropdownItem.putData(

@@ -16,14 +16,21 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.tagli
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.layout.admin.web.internal.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutUtilityPageEntryActionDropdownItemsProvider;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -37,6 +44,7 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		super(null, renderRequest, null);
 
 		_layoutUtilityPageEntry = layoutUtilityPageEntry;
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -46,7 +54,8 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		LayoutUtilityPageEntryActionDropdownItemsProvider
 			layoutUtilityPageEntryActionDropdownItemsProvider =
 				new LayoutUtilityPageEntryActionDropdownItemsProvider(
-					_layoutUtilityPageEntry, _renderRequest, _renderResponse);
+					_layoutUtilityPageEntry,
+					_renderRequest, _renderResponse);
 
 		return layoutUtilityPageEntryActionDropdownItemsProvider.
 			getActionDropdownItems();
@@ -76,13 +85,26 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		return HtmlUtil.escape(_layoutUtilityPageEntry.getName());
 	}
 
+	public String getSubtitle() {
+
+		if (Objects.equals(
+			_layoutUtilityPageEntry.getType(),
+			LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE)) {
+
+			return LanguageUtil.get(_httpServletRequest, "terms-of-use");
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "404");
+	}
+
 	@Override
 	public boolean isSelectable() {
 		return true;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry;
-	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final RenderRequest _renderRequest;
 
 }

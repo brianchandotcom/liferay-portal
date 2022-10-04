@@ -143,31 +143,33 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		</div>
 	</commerce-ui:panel>
 
-	<commerce-ui:panel
-		title='<%= LanguageUtil.get(request, "shipping-override") %>'
-	>
-		<div class="row">
-			<div class="col-6">
-				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="width" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
+	<c:if test="<%= cpDefinition.isShippable() %>">
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "shipping-override") %>'
+		>
+			<div class="row">
+				<div class="col-6">
+					<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="width" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
 
-				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="depth" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
+					<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="depth" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
+				</div>
+
+				<div class="col-6">
+					<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="height" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
+
+					<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="weight" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT)) %>">
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
+				</div>
 			</div>
-
-			<div class="col-6">
-				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="height" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION)) %>">
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
-
-				<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="weight" suffix="<%= HtmlUtil.escape(cpInstanceDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT)) %>">
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
-			</div>
-		</div>
-	</commerce-ui:panel>
+		</commerce-ui:panel>
+	</c:if>
 
 	<commerce-ui:panel
 		title='<%= LanguageUtil.get(request, "schedule") %>'

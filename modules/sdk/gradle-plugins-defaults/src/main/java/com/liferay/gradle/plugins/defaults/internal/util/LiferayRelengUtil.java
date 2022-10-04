@@ -162,9 +162,10 @@ public class LiferayRelengUtil {
 
 			String[] tokens = artifactUrl.split("/");
 
+			String artifactName = tokens[tokens.length - 3];
+
 			String compatVersion = GradleUtil.getProperty(
-				project, "build.compat.version." + tokens[tokens.length - 3],
-				(String)null);
+				project, "build.compat.version." + artifactName, (String)null);
 
 			if (Validator.isNotNull(compatVersion)) {
 				continue;
@@ -182,7 +183,23 @@ public class LiferayRelengUtil {
 			VersionNumber versionNumber = VersionNumber.parse(
 				properties.getProperty(Constants.BUNDLE_VERSION));
 
-			if (versionNumber.getMinor() != artifactVersionNumber.getMinor()) {
+			if (versionNumber.getMinor() == artifactVersionNumber.getMinor()) {
+				continue;
+			}
+
+			Properties bndProperties = null;
+
+			try {
+				bndProperties = FileUtil.readProperties(project, "bnd.bnd");
+			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
+			}
+
+			String includeResource = bndProperties.getProperty(
+				Constants.INCLUDERESOURCE);
+
+			if (includeResource.contains(artifactName)) {
 				return true;
 			}
 		}

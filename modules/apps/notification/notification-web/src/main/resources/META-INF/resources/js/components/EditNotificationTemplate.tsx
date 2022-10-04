@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import ClayMultiSelect from '@clayui/multi-select';
 import {
 	API,
 	Card,
@@ -40,6 +41,63 @@ const HEADERS = new Headers({
 });
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+interface Item {
+	label?: string;
+	value?: string;
+}
+
+interface IProps {
+	baseResourceURL: string;
+	editorConfig: object;
+	notificationTemplateId: number;
+	notificationTemplateType: string;
+}
+interface Role {
+	accountId: number;
+	description: string;
+	displayName: string;
+	id: number;
+	name: string;
+	roleId: number;
+}
+
+interface User {
+	alternateName: string;
+	givenName: string;
+}
+
+
+export type TNotificationTemplate = {
+	attachmentObjectFieldIds: string[] | number[];
+	bcc: string;
+	body: LocalizedValue<string>;
+	cc: string;
+	description: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	name: string;
+	objectDefinitionId: number | null;
+	recipientType: string;
+	subject: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+	type: string;
+};
+
+
+const RECIPIENT_OPTIONS = [
+	{
+		label: Liferay.Language.get('definition-of-terms'),
+		value: 'term',
+	},
+	{
+		label: Liferay.Language.get('user'),
+		value: 'user',
+	},
+	{
+		label: Liferay.Language.get('role'),
+		value: 'role',
+	},
+];
 
 export default function EditNotificationTemplate({
 	baseResourceURL,
@@ -61,6 +119,8 @@ export default function EditNotificationTemplate({
 			[defaultLanguageId]: '',
 		},
 		name: '',
+		recipientType:
+			notificationTemplateType !== 'userNotification' ? 'term' : '',
 		subject: {
 			[defaultLanguageId]: '',
 		},
@@ -91,11 +151,14 @@ export default function EditNotificationTemplate({
 			errors.name = Liferay.Language.get('required');
 		}
 
-		if (!values.from) {
+		if (notificationTemplateType === 'email' && !values.from) {
 			errors.from = Liferay.Language.get('required');
 		}
 
-		if (!values.fromName[defaultLanguageId]) {
+		if (
+			notificationTemplateType === 'email' &&
+			!values.fromName[defaultLanguageId]
+		) {
 			errors.fromName = Liferay.Language.get('required');
 		}
 
@@ -149,6 +212,77 @@ export default function EditNotificationTemplate({
 	const [notificationType, setNotificationType] = useState<string>(
 		notificationTemplateType
 	);
+	const [rolesList, setRolesList] = useState<Role[]>([]);
+
+	const [userList, setUserList] = useState<User[]>([]);
+
+	const [roles, setRoles] = useState<Item[]>([]);
+
+	const [searchTerm, setSearchTerm] = useState('');
+
+	const getAccountRoles = async (searchTerm: string) => {
+		const apiURL = '/o/headless-admin-user/v1.0/accounts/0/account-roles';
+		const query = `${apiURL}?page=1&pageSize=10&sort=name:asc${
+			searchTerm ? `&filter=contains(name, '${searchTerm}')` : ''
+		}`;
+		const response = await fetch(query, {
+			headers: HEADERS,
+			method: 'GET',
+		});
+
+		const responseJSON = await response.json();
+
+		const roles = responseJSON.items.map(({displayName, name}: Role) => {
+			return {
+				label: displayName,
+				value: name,
+			};
+		});
+
+		setRolesList(roles);
+	};
+
+	const getUserAccounts = async (searchTerm: string) => {
+		const apiURL = '/o/headless-admin-user/v1.0/user-accounts';
+		const query = `${apiURL}?page=1&pageSize=10&sort=givenName:asc${
+			searchTerm ? `&search=${searchTerm}` : ''
+		}`;
+		const response = await fetch(query, {
+			headers: HEADERS,
+			method: 'GET',
+		});
+
+		const responseJSON = await response.json();
+
+		const users = responseJSON.items.map(({alternateName, givenName}: User) => {
+			return {
+				label: givenName,
+				value: alternateName,
+			};
+		});
+
+		setUserList(users);
+	};
+
+	useEffect(() => {
+		const delayDebounceFn = setTimeout(() => {
+			values.recipientType === 'role'
+				? getAccountRoles(searchTerm)
+				: getUserAccounts(searchTerm);
+		}, 1000);
+
+		return () => clearTimeout(delayDebounceFn);
+	}, [searchTerm, values.recipientType]);
+
+	const handleMultiSelectItemsChange = (items: Item[]) => {
+		setValues({
+			...values,
+			to: {
+				[defaultLanguageId]: items.map((item) => item.value).toString(),
+			},
+		});
+		setRoles(items);
+	};
 
 	useEffect(() => {
 		if (notificationTemplateId !== 0) {
@@ -163,6 +297,7 @@ export default function EditNotificationTemplate({
 					fromName,
 					name,
 					objectDefinitionId,
+					recipientType,
 					subject,
 					to,
 					type,
@@ -178,6 +313,7 @@ export default function EditNotificationTemplate({
 						fromName,
 						name,
 						objectDefinitionId,
+						recipientType,
 						subject,
 						to,
 						type,
@@ -277,89 +413,216 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								<InputLocalized
-									label={Liferay.Language.get('to')}
-									name="to"
-									onChange={(translation) => {
-										setValues({
-											...values,
-											to: translation,
-										});
-									}}
-									placeholder=""
-									selectedLocale={selectedLocale}
-									translations={values.to}
-								/>
-
-								<div className="row">
-									<div className="col-lg-6">
-										<Input
-											label={Liferay.Language.get('cc')}
-											name="cc"
-											onChange={({target}) =>
-												setValues({
-													...values,
-													cc: target.value,
-												})
-											}
-											value={values.cc}
-										/>
-									</div>
-
-									<div className="col-lg-6">
-										<Input
-											label={Liferay.Language.get('bcc')}
-											name="bcc"
-											onChange={({target}) =>
-												setValues({
-													...values,
-													bcc: target.value,
-												})
-											}
-											value={values.bcc}
-										/>
-									</div>
-								</div>
-
-								<div className="row">
-									<div className="col-lg-6">
-										<Input
-											error={errors.from}
+								{Liferay.FeatureFlags['LPS-162133'] &&
+								notificationTemplateType !== 'email' ? (
+									<>
+										<SingleSelect
 											label={Liferay.Language.get(
-												'from-address'
+												'recipients'
 											)}
-											name="fromAddress"
-											onChange={({target}) =>
+											onChange={(item) => {
 												setValues({
 													...values,
-													from: target.value,
-												})
-											}
-											required
-											value={values.from}
-										/>
-									</div>
+													recipientType: item.value,
+												});
 
-									<div className="col-lg-6">
+												if (item.value === 'role') {
+													getAccountRoles('');
+												}
+											}}
+											options={RECIPIENT_OPTIONS}
+											value={
+												RECIPIENT_OPTIONS.find(
+													(recipient) =>
+														values.recipientType ===
+														recipient.value
+												)?.label
+											}
+										/>
+
+										{values.recipientType === 'term' && (
+											<Input
+												component="textarea"
+												label={Liferay.Language.get(
+													'to'
+												)}
+												name="to"
+												onChange={({target}) =>
+													setValues({
+														...values,
+														to: {
+															[defaultLanguageId]:
+																target.value,
+														},
+													})
+												}
+												placeholder={Liferay.Language.get(
+													'use-terms-to-configure-recipients-for-this-notifications'
+												)}
+												type="text"
+												value={
+													values.to[defaultLanguageId]
+												}
+											/>
+										)}
+
+										{values.recipientType === 'role' && (
+											<>
+												<ClayForm.Group>
+													<label>
+														{Liferay.Language.get(
+															'role'
+														)}
+													</label>
+
+													<ClayMultiSelect
+														items={roles}
+														onChange={setSearchTerm}
+														onItemsChange={
+															handleMultiSelectItemsChange
+														}
+														placeholder={Liferay.Language.get(
+															'enter-a-role'
+														)}
+														sourceItems={rolesList}
+														value={searchTerm}
+													/>
+
+													<ClayForm.Text>
+														{Liferay.Language.get(
+															'you-can-use-a-comma-to-enter-multiple-users'
+														)}
+													</ClayForm.Text>
+												</ClayForm.Group>
+											</>
+										)}
+
+										{values.recipientType === 'user' && (
+											<>
+												<ClayForm.Group>
+													<label>
+														{Liferay.Language.get(
+															'users'
+														)}
+													</label>
+
+													<ClayMultiSelect
+														items={roles}
+														onChange={setSearchTerm}
+														onItemsChange={
+															handleMultiSelectItemsChange
+														}
+														placeholder={Liferay.Language.get(
+															'enter-user-name'
+														)}
+														sourceItems={userList}
+														value={searchTerm}
+													/>
+
+													<ClayForm.Text>
+														{Liferay.Language.get(
+															'you-can-use-a-comma-to-enter-multiple-users'
+														)}
+													</ClayForm.Text>
+												</ClayForm.Group>
+											</>
+										)}
+									</>
+								) : (
+									<>
 										<InputLocalized
-											error={errors.fromName}
-											label={Liferay.Language.get(
-												'from-name'
-											)}
-											name="fromName"
+											label={Liferay.Language.get('to')}
+											name="to"
 											onChange={(translation) => {
 												setValues({
 													...values,
-													fromName: translation,
+													to: translation,
 												});
 											}}
 											placeholder=""
-											required
 											selectedLocale={selectedLocale}
-											translations={values.fromName}
+											translations={values.to}
 										/>
-									</div>
-								</div>
+
+										<div className="row">
+											<div className="col-lg-6">
+												<Input
+													label={Liferay.Language.get(
+														'cc'
+													)}
+													name="cc"
+													onChange={({target}) =>
+														setValues({
+															...values,
+															cc: target.value,
+														})
+													}
+													value={values.cc}
+												/>
+											</div>
+
+											<div className="col-lg-6">
+												<Input
+													label={Liferay.Language.get(
+														'bcc'
+													)}
+													name="bcc"
+													onChange={({target}) =>
+														setValues({
+															...values,
+															bcc: target.value,
+														})
+													}
+													value={values.bcc}
+												/>
+											</div>
+										</div>
+
+										<div className="row">
+											<div className="col-lg-6">
+												<Input
+													error={errors.from}
+													label={Liferay.Language.get(
+														'from-address'
+													)}
+													name="fromAddress"
+													onChange={({target}) =>
+														setValues({
+															...values,
+															from: target.value,
+														})
+													}
+													required
+													value={values.from}
+												/>
+											</div>
+
+											<div className="col-lg-6">
+												<InputLocalized
+													error={errors.fromName}
+													label={Liferay.Language.get(
+														'from-name'
+													)}
+													name="fromName"
+													onChange={(translation) => {
+														setValues({
+															...values,
+															fromName: translation,
+														});
+													}}
+													placeholder=""
+													required
+													selectedLocale={
+														selectedLocale
+													}
+													translations={
+														values.fromName
+													}
+												/>
+											</div>
+										</div>
+									</>
+								)}
 							</Card>
 						</div>
 					</div>
@@ -405,25 +668,3 @@ export default function EditNotificationTemplate({
 		</ClayForm>
 	);
 }
-
-interface IProps {
-	baseResourceURL: string;
-	editorConfig: object;
-	notificationTemplateId: number;
-	notificationTemplateType: string;
-}
-
-export type TNotificationTemplate = {
-	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
-	body: LocalizedValue<string>;
-	cc: string;
-	description: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	name: string;
-	objectDefinitionId: number | null;
-	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-	type: string;
-};

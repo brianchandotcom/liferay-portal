@@ -32,12 +32,17 @@ interface NotificationTemplate {
 	id: number;
 	name: string;
 	objectDefinitionId: number | null;
+	recipientType: RecipientType;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
-	type: string;
+	type: NotificationTemplateType;
 }
 
 type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
+
+type RecipientType = 'role' | 'term' | 'user';
+
+type NotificationTemplateType = 'email' | 'userNotification';
 
 interface ObjectRelationship {
 	deletionType: string;

@@ -23,11 +23,14 @@ interface NotificationTemplate {
 	id: number;
 	name: string;
 	objectDefinitionId: number | null;
+	recipientType: RecipientType;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
-	type: string;
+	type: NotificationTemplateType;
 }
 declare type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
+declare type RecipientType = 'role' | 'term' | 'user';
+declare type NotificationTemplateType = 'email' | 'userNotification';
 interface ObjectRelationship {
 	deletionType: string;
 	id: number;

@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.layout.adaptive.media,\
 	com.liferay.layout.configuration,\
 	com.liferay.layout.constants,\
+	com.liferay.layout.content,\
 	com.liferay.layout.crawler,\
 	com.liferay.layout.exception,\
 	com.liferay.layout.friendly.url,\

@@ -36,14 +36,19 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
+import com.liferay.journal.web.internal.util.RecentGroupManagerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -57,6 +62,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -65,9 +71,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.util.RecentGroupManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -434,7 +440,59 @@ public class JournalEditArticleDisplayContext {
 						siteItemSelectorCriterion));
 			}
 		).put(
-			"sites", Collections.emptyList()
+			"sites",
+			() -> {
+				RecentGroupManager recentGroupManager =
+					RecentGroupManagerUtil.getRecentGroupManager();
+
+				List<Group> recentGroups = ListUtil.subList(
+					recentGroupManager.getRecentGroups(_httpServletRequest), 0,
+					_MAX_SITES);
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (Group group : recentGroups) {
+					jsonArray.put(
+						JSONUtil.put(
+							"groupId", group.getGroupId()
+						).put(
+							"name",
+							group.getDescriptiveName(_themeDisplay.getLocale())
+						));
+				}
+
+				if (recentGroups.size() == _MAX_SITES) {
+					return jsonArray;
+				}
+
+				int max = _MAX_SITES - recentGroups.size();
+
+				List<Group> groups = GroupServiceUtil.getGroups(
+					_themeDisplay.getCompanyId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
+
+				for (Group group : groups) {
+					if (max == 0) {
+						break;
+					}
+
+					if (recentGroups.contains(group)) {
+						continue;
+					}
+
+					max -= 1;
+
+					jsonArray.put(
+						JSONUtil.put(
+							"groupId", group.getGroupId()
+						).put(
+							"name",
+							group.getDescriptiveName(_themeDisplay.getLocale())
+						));
+				}
+
+				return jsonArray;
+			}
 		).put(
 			"sitesCount",
 			() -> GroupServiceUtil.getGroupsCount(
@@ -996,6 +1054,8 @@ public class JournalEditArticleDisplayContext {
 			renderResponse.setTitle(_getTitle());
 		}
 	}
+
+	private static final int _MAX_SITES = 6;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditArticleDisplayContext.class);

@@ -157,7 +157,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						</aui:field-wrapper>
 
 						<c:if test="<%= editKBArticleDisplayContext.isKBArticleDescriptionEnabled() %>">
-							<aui:input name="description" />
+							<aui:input name="description" value="<%= editKBArticleDisplayContext.getKBArticleDescription() %>" />
 						</c:if>
 
 						<c:if test="<%= editKBArticleDisplayContext.isSourceURLEnabled() %>">

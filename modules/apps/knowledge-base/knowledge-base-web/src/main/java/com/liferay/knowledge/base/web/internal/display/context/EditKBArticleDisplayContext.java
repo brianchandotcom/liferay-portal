@@ -151,6 +151,16 @@ public class EditKBArticleDisplayContext {
 		return kbArticle.getClassPK();
 	}
 
+	public String getKBArticleDescription() {
+		KBArticle kbArticle = getKBArticle();
+
+		if (kbArticle == null) {
+			return StringPool.BLANK;
+		}
+
+		return kbArticle.getDescription();
+	}
+
 	public long getKBArticleId() {
 		KBArticle kbArticle = getKBArticle();
 

@@ -103,6 +103,12 @@ boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, 
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
+
+	<c:if test="<%= allowUpdateDomains %>">
+		<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+			<aui:input label="restrict-membership-to-domains" labelOff="not-restricted" labelOn="restricted" name="restrictMembership" type="toggle-switch" value="<%= accountEntryDisplay.isRestrictMembership() %>" />
+		</aui:field-wrapper>
+	</c:if>
 </clay:sheet-section>
 
 <c:if test="<%= allowUpdateDomains %>">

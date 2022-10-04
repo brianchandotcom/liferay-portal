@@ -164,6 +164,10 @@ public class AccountEntryDisplay {
 		return _emailAddressDomainValidationEnabled;
 	}
 
+	public boolean isRestrictMembership() {
+		return _restrictMembership;
+	}
+
 	public boolean isSelectedAccountEntry(long groupId, long userId)
 		throws PortalException {
 
@@ -207,6 +211,7 @@ public class AccountEntryDisplay {
 		_name = StringPool.BLANK;
 		_organizationNames = StringPool.BLANK;
 		_personAccountEntryUserOptional = Optional.empty();
+		_restrictMembership = true;
 		_statusLabel = StringPool.BLANK;
 		_statusLabelStyle = StringPool.BLANK;
 		_taxIdNumber = StringPool.BLANK;
@@ -234,6 +239,7 @@ public class AccountEntryDisplay {
 		_organizationNames = _getOrganizationNames(accountEntry);
 		_personAccountEntryUserOptional = _getPersonAccountEntryUserOptional(
 			accountEntry);
+		_restrictMembership = accountEntry.isRestrictMembership();
 		_statusLabel = _getStatusLabel(accountEntry);
 		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
 		_taxIdNumber = accountEntry.getTaxIdNumber();
@@ -377,6 +383,7 @@ public class AccountEntryDisplay {
 	private final String _name;
 	private final String _organizationNames;
 	private final Optional<User> _personAccountEntryUserOptional;
+	private final boolean _restrictMembership;
 	private final String _statusLabel;
 	private final String _statusLabelStyle;
 	private final String _taxIdNumber;

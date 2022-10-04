@@ -85,15 +85,26 @@ public class EditAccountEntryMVCActionCommand
 		try {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
+			AccountEntry accountEntry = null;
+
 			if (cmd.equals(Constants.ADD)) {
-				AccountEntry accountEntry = _addAccountEntry(actionRequest);
+				accountEntry = _addAccountEntry(actionRequest);
 
 				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "accountEntryId",
 					accountEntry.getAccountEntryId());
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				updateAccountEntry(actionRequest);
+				accountEntry = updateAccountEntry(actionRequest);
+			}
+
+			if (accountEntry != null) {
+				accountEntry.setRestrictMembership(
+					ParamUtil.getBoolean(
+						actionRequest, "restrictMembership",
+						accountEntry.isRestrictMembership()));
+
+				_accountEntryService.updateAccountEntry(accountEntry);
 			}
 
 			if (Validator.isNotNull(redirect)) {
@@ -127,7 +138,7 @@ public class EditAccountEntryMVCActionCommand
 		}
 	}
 
-	protected void updateAccountEntry(ActionRequest actionRequest)
+	protected AccountEntry updateAccountEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		long accountEntryId = ParamUtil.getLong(
@@ -179,6 +190,8 @@ public class EditAccountEntryMVCActionCommand
 						accountEntryId);
 			}
 		}
+
+		return accountEntry;
 	}
 
 	private AccountEntry _addAccountEntry(ActionRequest actionRequest)

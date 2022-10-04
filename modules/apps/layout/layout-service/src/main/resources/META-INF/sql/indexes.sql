@@ -11,3 +11,8 @@ create index IX_A3F4F834 on LayoutClassedModelUsage (plid, ctCollectionId);
 create index IX_B0FEE15D on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_ACA55FE7 on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_8A32D79F on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+
+create unique index IX_E26CFF79 on LayoutLocalization (languageId[$COLUMN_LENGTH:75$], plid, ctCollectionId);
+create index IX_1E12A3F2 on LayoutLocalization (plid, ctCollectionId);
+create index IX_7232E01B on LayoutLocalization (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_763D2BE9 on LayoutLocalization (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);

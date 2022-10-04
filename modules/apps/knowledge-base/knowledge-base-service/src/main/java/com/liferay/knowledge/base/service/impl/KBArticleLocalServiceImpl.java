@@ -29,11 +29,11 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
-import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
-import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
+import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
+import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
 import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
@@ -1941,24 +1941,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	private void _validate(
-		Date expirationDate, String content, Date reviewDate, String sourceURL,
-		String title)
-		throws PortalException {
-
-		if (Validator.isNull(title)) {
-			throw new KBArticleTitleException("Title is null");
-		}
-
-		if (Validator.isNull(content)) {
-			throw new KBArticleContentException("Content is null");
-		}
-
-		_validateSourceURL(sourceURL);
-
-		_validateExpirationReviewDate(expirationDate, reviewDate);
-	}
-
 	protected void validateParent(
 			KBArticle kbArticle, long parentResourceClassNameId,
 			long parentResourcePrimKey)
@@ -2031,16 +2013,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	private void _validateSourceURL(String sourceURL) throws PortalException {
-		if (Validator.isNull(sourceURL)) {
-			return;
-		}
-
-		if (!Validator.isUrl(sourceURL)) {
-			throw new KBArticleSourceURLException(sourceURL);
-		}
-	}
-
 	protected void validateUrlTitle(
 			long groupId, long kbFolderId, String urlTitle)
 		throws PortalException {
@@ -2070,6 +2042,23 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
+	private void _validate(
+			Date expirationDate, String content, Date reviewDate,
+			String sourceURL, String title)
+		throws PortalException {
+
+		if (Validator.isNull(title)) {
+			throw new KBArticleTitleException("Title is null");
+		}
+
+		if (Validator.isNull(content)) {
+			throw new KBArticleContentException("Content is null");
+		}
+
+		_validateExpirationReviewDate(expirationDate, reviewDate);
+		_validateSourceURL(sourceURL);
+	}
+
 	private void _validateExpirationReviewDate(
 			Date expirationDate, Date reviewDate)
 		throws PortalException {
@@ -2082,7 +2071,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		if ((reviewDate != null) && reviewDate.before(DateUtil.newDate())) {
-			throw new KBArticleReviewDateException("Review date is in the past");
+			throw new KBArticleReviewDateException(
+				"Review date is in the past");
 		}
 	}
 
@@ -2102,6 +2092,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				StringBundler.concat(
 					"Duplicate knowledge base article external reference code ",
 					externalReferenceCode, " in group ", groupId));
+		}
+	}
+
+	private void _validateSourceURL(String sourceURL) throws PortalException {
+		if (Validator.isNull(sourceURL)) {
+			return;
+		}
+
+		if (!Validator.isUrl(sourceURL)) {
+			throw new KBArticleSourceURLException(sourceURL);
 		}
 	}
 

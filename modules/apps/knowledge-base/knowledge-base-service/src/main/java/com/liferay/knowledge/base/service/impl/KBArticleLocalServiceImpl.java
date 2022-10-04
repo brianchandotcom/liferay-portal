@@ -181,7 +181,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
-		validate(title, content, sourceURL, expirationDate, reviewDate);
+		_validate(expirationDate, content, reviewDate, sourceURL, title);
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
 		long kbFolderId = KnowledgeBaseUtil.getKBFolderId(
@@ -1135,7 +1135,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(title, content, sourceURL, expirationDate, reviewDate);
+		_validate(expirationDate, content, reviewDate, sourceURL, title);
 
 		KBArticle oldKBArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
@@ -1941,7 +1941,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String title, String content, String sourceURL, Date expirationDate, Date reviewDate)
+	private void _validate(
+		Date expirationDate, String content, Date reviewDate, String sourceURL,
+		String title)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -1952,7 +1954,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleContentException("Content is null");
 		}
 
-		validateSourceURL(sourceURL);
+		_validateSourceURL(sourceURL);
 
 		_validateExpirationReviewDate(expirationDate, reviewDate);
 	}
@@ -2029,7 +2031,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateSourceURL(String sourceURL) throws PortalException {
+	private void _validateSourceURL(String sourceURL) throws PortalException {
 		if (Validator.isNull(sourceURL)) {
 			return;
 		}

@@ -504,6 +504,62 @@ public class VariableNameCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkShortTypeNames(
+		DetailAST detailAST, String variableName, String typeName,
+		String expectedVariableName) {
+
+		if (!detailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
+			detailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+
+			return;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.OBJBLOCK) {
+			return;
+		}
+
+		List<String> enforceShortTypeNames = getAttributeValues(
+			_ENFORCE_SHORT_TYPE_NAMES_KEY);
+
+		if (!enforceShortTypeNames.contains(typeName)) {
+			return;
+		}
+
+		List<DetailAST> variableDeclarationDetailASTList = new ArrayList<>();
+
+		variableDeclarationDetailASTList.addAll(
+			getAllChildTokens(parentDetailAST, false, TokenTypes.VARIABLE_DEF));
+
+		int count = 0;
+
+		for (DetailAST variableDeclarationDetailAST :
+				variableDeclarationDetailASTList) {
+
+			DetailAST typeDetailAST =
+				variableDeclarationDetailAST.findFirstToken(TokenTypes.TYPE);
+
+			DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
+
+			if (firstChildDetailAST == null) {
+				continue;
+			}
+
+			if ((firstChildDetailAST.getType() != TokenTypes.DOT) &&
+				typeName.equals(getTypeName(typeDetailAST, false))) {
+
+				count++;
+			}
+		}
+
+		if (count == 1) {
+			log(
+				detailAST, MSG_RENAME_VARIABLE, variableName,
+				"_" + expectedVariableName);
+		}
+	}
+
 	private void _checkTypeName(
 		DetailAST detailAST, String variableName, String typeName) {
 
@@ -595,6 +651,9 @@ public class VariableNameCheck extends BaseCheck {
 				return;
 			}
 		}
+
+		_checkShortTypeNames(
+			detailAST, variableName, typeName, expectedVariableName);
 	}
 
 	private void _checkTypo(DetailAST detailAST, String variableName) {
@@ -932,6 +991,9 @@ public class VariableNameCheck extends BaseCheck {
 
 	private static final String _ALLOWED_VARIABLE_NAMES_KEY =
 		"allowedVariableNames";
+
+	private static final String _ENFORCE_SHORT_TYPE_NAMES_KEY =
+		"enforceShortTypeNames";
 
 	private static final String _ENFORCE_TABLE_SCHEMA_FIELD_TYPE_NAMES_KEY =
 		"enforceTableSchemaFieldTypeNames";

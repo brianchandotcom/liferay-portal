@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
@@ -180,9 +179,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 					bundleSymbolicName);
 
 				try {
-					_upgradeExecutor.execute(
-						bundleSymbolicName, upgradeSteps,
-						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+					_upgradeExecutor.execute(bundleSymbolicName, upgradeSteps);
 				}
 				catch (Throwable throwable) {
 					_log.error(
@@ -326,7 +323,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 					(PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
 					 (_releaseLocalService.fetchRelease(key) == null))) {
 
-					_upgradeExecutor.execute(key, upgradeInfos, null);
+					_upgradeExecutor.execute(key, upgradeInfos);
 				}
 			}
 		}

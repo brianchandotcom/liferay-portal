@@ -27,23 +27,14 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.output.stream.container.OutputStreamContainer;
-import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
-import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
-import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.felix.service.command.Descriptor;
 
@@ -124,45 +115,18 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Descriptor("Execute a specific verify process")
 	public void execute(String verifyProcessName) {
-		execute(verifyProcessName, null);
-	}
-
-	@Descriptor("Execute a specific verify process with a specific output")
-	public void execute(
-		String verifyProcessName, String outputStreamContainerFactoryName) {
-
-		_execute(
+		_executeVerifyProcesses(
 			_getVerifyProcesses(_verifyProcesses, verifyProcessName),
-			verifyProcessName, outputStreamContainerFactoryName, true);
+			verifyProcessName, true);
 	}
 
 	@Descriptor("Execute all verify processes")
 	public void executeAll() {
-		executeAll(null);
-	}
-
-	@Descriptor("Execute all verify processes with a specific output")
-	public void executeAll(String outputStreamContainerFactoryName) {
-		OutputStreamContainerFactory outputStreamContainerFactory =
-			_outputStreamContainerFactoryTracker.
-				getOutputStreamContainerFactory(
-					outputStreamContainerFactoryName);
-
-		OutputStreamContainer outputStreamContainer =
-			outputStreamContainerFactory.create("all-verifiers");
-
-		OutputStream outputStream = outputStreamContainer.getOutputStream();
-
-		_outputStreamContainerFactoryTracker.runWithSwappedLog(
-			() -> {
-				for (String verifyProcessName : _verifyProcesses.keySet()) {
-					_executeVerifyProcesses(
-						_getVerifyProcesses(
-							_verifyProcesses, verifyProcessName),
-						verifyProcessName, outputStream, true);
-				}
-			},
-			outputStreamContainer.getDescription(), outputStream);
+		for (String verifyProcessName : _verifyProcesses.keySet()) {
+			_executeVerifyProcesses(
+				_getVerifyProcesses(_verifyProcesses, verifyProcessName),
+				verifyProcessName, true);
+		}
 	}
 
 	@Descriptor("List all registered verify processes")
@@ -191,19 +155,6 @@ public class VerifyProcessTrackerOSGiCommands {
 		System.out.println("Registered verify process " + verifyProcessName);
 	}
 
-	@Descriptor("Show all available outputs")
-	public void showReports() {
-		Set<String> outputStreamContainerFactoryNames =
-			_outputStreamContainerFactoryTracker.
-				getOutputStreamContainerFactoryNames();
-
-		for (String outputStreamContainerFactoryName :
-				outputStreamContainerFactoryNames) {
-
-			System.out.println(outputStreamContainerFactoryName);
-		}
-	}
-
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
@@ -226,12 +177,11 @@ public class VerifyProcessTrackerOSGiCommands {
 					if (upgrading ||
 						_isInitialDeployment(serviceReference, verifyProcess)) {
 
-						_execute(
+						_executeVerifyProcesses(
 							Collections.singletonList(verifyProcess),
 							String.valueOf(
 								serviceReference.getProperty(
 									"verify.process.name")),
-							OutputStreamContainerConstants.FACTORY_NAME_DUMMY,
 							false);
 					}
 
@@ -260,40 +210,9 @@ public class VerifyProcessTrackerOSGiCommands {
 		_verifyProcesses.close();
 	}
 
-	private void _execute(
-		List<VerifyProcess> verifyProcesses, String verifyProcessName,
-		String outputStreamContainerFactoryName, boolean force) {
-
-		String outputStreamName = "verify-" + verifyProcessName;
-
-		OutputStreamContainerFactory outputStreamContainerFactory =
-			_outputStreamContainerFactoryTracker.
-				getOutputStreamContainerFactory(
-					outputStreamContainerFactoryName);
-
-		OutputStreamContainer outputStreamContainer =
-			outputStreamContainerFactory.create(outputStreamName);
-
-		OutputStream outputStream = outputStreamContainer.getOutputStream();
-
-		_outputStreamContainerFactoryTracker.runWithSwappedLog(
-			() -> _executeVerifyProcesses(
-				verifyProcesses, verifyProcessName, outputStream, force),
-			outputStreamName, outputStream);
-
-		try {
-			outputStream.close();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	private void _executeVerifyProcesses(
 		List<VerifyProcess> verifyProcesses, String verifyProcessName,
-		OutputStream outputStream, boolean force) {
-
-		PrintWriter printWriter = new PrintWriter(outputStream, true);
+		boolean force) {
 
 		NotificationThreadLocal.setEnabled(false);
 		StagingAdvicesThreadLocal.setEnabled(false);
@@ -319,7 +238,7 @@ public class VerifyProcessTrackerOSGiCommands {
 				release.setVerified(false);
 			}
 
-			printWriter.println(
+			System.out.println(
 				"Executing verifiers registered for " + verifyProcessName);
 
 			VerifyException verifyException1 = null;
@@ -410,10 +329,6 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private OutputStreamContainerFactoryTracker
-		_outputStreamContainerFactoryTracker;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

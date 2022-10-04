@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -78,16 +77,12 @@ public class ReleaseManagerOSGiCommands {
 		}
 
 		try {
-			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos, null);
+			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
 		}
 		catch (Throwable throwable) {
-			_swappedLogExecutor.execute(
-				bundleSymbolicName,
-				() -> _log.error(
-					"Failed upgrade process for module ".concat(
-						bundleSymbolicName),
-					throwable),
-				null);
+			_log.error(
+				"Failed upgrade process for module ".concat(bundleSymbolicName),
+				throwable);
 		}
 
 		return null;
@@ -109,8 +104,7 @@ public class ReleaseManagerOSGiCommands {
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
 				_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName),
-				toVersionString),
-			null);
+				toVersionString));
 
 		return null;
 	}
@@ -208,16 +202,13 @@ public class ReleaseManagerOSGiCommands {
 						upgradableBundleSymbolicName);
 
 				_upgradeExecutor.execute(
-					upgradableBundleSymbolicName, upgradeInfos, null);
+					upgradableBundleSymbolicName, upgradeInfos);
 			}
 			catch (Throwable throwable) {
-				_swappedLogExecutor.execute(
-					upgradableBundleSymbolicName,
-					() -> _log.error(
-						"Failed upgrade process for module ".concat(
-							upgradableBundleSymbolicName),
-						throwable),
-					null);
+				_log.error(
+					"Failed upgrade process for module ".concat(
+						upgradableBundleSymbolicName),
+					throwable);
 
 				upgradeThrewExceptionBundleSymbolicNames.add(
 					upgradableBundleSymbolicName);
@@ -402,9 +393,6 @@ public class ReleaseManagerOSGiCommands {
 
 	@Reference
 	private ReleaseManagerImpl _releaseManagerImpl;
-
-	@Reference
-	private SwappedLogExecutor _swappedLogExecutor;
 
 	@Reference
 	private UpgradeExecutor _upgradeExecutor;

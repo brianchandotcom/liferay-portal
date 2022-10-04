@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
-import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.util.PropsValues;
@@ -61,12 +59,10 @@ public class UpgradeStepRegistratorTracker {
 
 	public UpgradeStepRegistratorTracker(
 		BundleContext bundleContext, ReleaseLocalService releaseLocalService,
-		SwappedLogExecutor swappedLogExecutor,
 		UpgradeExecutor upgradeExecutor) {
 
 		_bundleContext = bundleContext;
 		_releaseLocalService = releaseLocalService;
-		_swappedLogExecutor = swappedLogExecutor;
 		_upgradeExecutor = upgradeExecutor;
 	}
 
@@ -127,7 +123,6 @@ public class UpgradeStepRegistratorTracker {
 		new HashMap<>();
 	private ServiceTracker<UpgradeStepRegistrator, SafeCloseable>
 		_serviceTracker;
-	private final SwappedLogExecutor _swappedLogExecutor;
 	private final UpgradeExecutor _upgradeExecutor;
 
 	private class InitialReleaseServiceTrackerCustomizer
@@ -256,18 +251,13 @@ public class UpgradeStepRegistratorTracker {
 					null)) {
 
 				try {
-					_upgradeExecutor.execute(
-						bundleSymbolicName, upgradeInfos,
-						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+					_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
 				}
 				catch (Throwable throwable) {
-					_swappedLogExecutor.execute(
-						bundleSymbolicName,
-						() -> _log.error(
-							"Failed upgrade process for module ".concat(
-								bundleSymbolicName),
-							throwable),
-						null);
+					_log.error(
+						"Failed upgrade process for module ".concat(
+							bundleSymbolicName),
+						throwable);
 				}
 			}
 

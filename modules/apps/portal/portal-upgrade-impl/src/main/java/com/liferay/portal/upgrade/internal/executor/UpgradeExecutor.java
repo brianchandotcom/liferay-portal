@@ -39,7 +39,6 @@ import java.io.OutputStream;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -57,8 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeExecutor {
 
 	public void execute(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
-		String outputStreamContainerFactoryName) {
+		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
 
 		Bundle bundle = null;
 
@@ -119,8 +117,7 @@ public class UpgradeExecutor {
 
 		if (size != 0) {
 			release = executeUpgradeInfos(
-				bundleSymbolicName, upgradeInfosList.get(0),
-				outputStreamContainerFactoryName);
+				bundleSymbolicName, upgradeInfosList.get(0));
 		}
 
 		if (release != null) {
@@ -142,8 +139,7 @@ public class UpgradeExecutor {
 	}
 
 	public Release executeUpgradeInfos(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
-		String outputStreamContainerFactoryName) {
+		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
@@ -155,12 +151,9 @@ public class UpgradeExecutor {
 		}
 
 		UpgradeInfosRunnable upgradeInfosRunnable = new UpgradeInfosRunnable(
-			bundleSymbolicName, upgradeInfos,
-			_swappedLogExecutor::getOutputStream);
+			bundleSymbolicName, upgradeInfos);
 
-		_swappedLogExecutor.execute(
-			bundleSymbolicName, upgradeInfosRunnable,
-			outputStreamContainerFactoryName);
+		upgradeInfosRunnable.run();
 
 		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
@@ -187,7 +180,7 @@ public class UpgradeExecutor {
 		_bundleContext = bundleContext;
 
 		_upgradeStepRegistratorTracker = new UpgradeStepRegistratorTracker(
-			bundleContext, _releaseLocalService, _swappedLogExecutor, this);
+			bundleContext, _releaseLocalService, this);
 
 		_upgradeStepRegistratorTracker.open();
 	}
@@ -224,9 +217,6 @@ public class UpgradeExecutor {
 	@Reference
 	private ReleasePublisher _releasePublisher;
 
-	@Reference
-	private SwappedLogExecutor _swappedLogExecutor;
-
 	private UpgradeStepRegistratorTracker _upgradeStepRegistratorTracker;
 
 	private class UpgradeInfosRunnable implements Runnable {
@@ -252,7 +242,7 @@ public class UpgradeExecutor {
 
 							@Override
 							public OutputStream getOutputStream() {
-								return _outputStreamSupplier.get();
+								return null;
 							}
 
 						});
@@ -301,12 +291,10 @@ public class UpgradeExecutor {
 		}
 
 		private UpgradeInfosRunnable(
-			String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
-			Supplier<OutputStream> outputStreamSupplier) {
+			String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
 
 			_bundleSymbolicName = bundleSymbolicName;
 			_upgradeInfos = upgradeInfos;
-			_outputStreamSupplier = outputStreamSupplier;
 		}
 
 		private boolean _requiresUpdateIndexes(Bundle bundle) {
@@ -335,7 +323,6 @@ public class UpgradeExecutor {
 		private static final int _STATE_IN_PROGRESS = -1;
 
 		private final String _bundleSymbolicName;
-		private final Supplier<OutputStream> _outputStreamSupplier;
 		private final List<UpgradeInfo> _upgradeInfos;
 
 	}

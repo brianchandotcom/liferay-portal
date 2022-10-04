@@ -68,7 +68,7 @@ const ActionButton = ({
 		return (
 			<ButtonDropDown
 				items={activationKeysDownloadItems}
-				label={i18n.translate('download')}
+				label={i18n.translate('Download')}
 				menuElementAttrs={{
 					className: 'p-0 cp-drop-down-action-button',
 				}}
@@ -90,7 +90,7 @@ const ActionButton = ({
 					)
 				}
 			>
-				{i18n.translate('download')}
+				{i18n.translate('Download')}
 			</Button>
 		);
 	}

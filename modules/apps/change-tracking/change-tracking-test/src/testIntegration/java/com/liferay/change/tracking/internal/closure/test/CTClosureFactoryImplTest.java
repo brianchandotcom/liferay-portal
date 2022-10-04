@@ -919,11 +919,6 @@ public class CTClosureFactoryImplTest {
 			throw new UnsupportedOperationException();
 		}
 
-		@Override
-		public String toXmlString() {
-			throw new UnsupportedOperationException();
-		}
-
 		private TestModelImpl(long primaryKey) {
 			_primaryKey = primaryKey;
 		}

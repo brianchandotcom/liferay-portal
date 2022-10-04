@@ -187,6 +187,4 @@ public interface BaseModel<T>
 	 *
 	 * @return the XML representation of this model instance
 	 */
-	public String toXmlString();
-
 }

@@ -187,6 +187,56 @@ public interface LayoutLocalizationPersistence
 	public int countByUuid(String uuid);
 
 	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout localization
+	 * @throws NoSuchLocalizationException if a matching layout localization could not be found
+	 */
+	public LayoutLocalization findByUUID_G(String uuid, long groupId)
+		throws NoSuchLocalizationException;
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
+	 */
+	public LayoutLocalization fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
+	 */
+	public LayoutLocalization fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the layout localization where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the layout localization that was removed
+	 */
+	public LayoutLocalization removeByUUID_G(String uuid, long groupId)
+		throws NoSuchLocalizationException;
+
+	/**
+	 * Returns the number of layout localizations where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching layout localizations
+	 */
+	public int countByUUID_G(String uuid, long groupId);
+
+	/**
 	 * Returns all the layout localizations where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -535,62 +585,62 @@ public interface LayoutLocalizationPersistence
 	public int countByL_P(String languageId, long plid);
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the matching layout localization
 	 * @throws NoSuchLocalizationException if a matching layout localization could not be found
 	 */
-	public LayoutLocalization findByC_L_P(
-			long companyId, String languageId, long plid)
+	public LayoutLocalization findByG_L_P(
+			long groupId, String languageId, long plid)
 		throws NoSuchLocalizationException;
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
-	public LayoutLocalization fetchByC_L_P(
-		long companyId, String languageId, long plid);
+	public LayoutLocalization fetchByG_L_P(
+		long groupId, String languageId, long plid);
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
-	public LayoutLocalization fetchByC_L_P(
-		long companyId, String languageId, long plid, boolean useFinderCache);
+	public LayoutLocalization fetchByG_L_P(
+		long groupId, String languageId, long plid, boolean useFinderCache);
 
 	/**
-	 * Removes the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; from the database.
+	 * Removes the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; from the database.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the layout localization that was removed
 	 */
-	public LayoutLocalization removeByC_L_P(
-			long companyId, String languageId, long plid)
+	public LayoutLocalization removeByG_L_P(
+			long groupId, String languageId, long plid)
 		throws NoSuchLocalizationException;
 
 	/**
-	 * Returns the number of layout localizations where companyId = &#63; and languageId = &#63; and plid = &#63;.
+	 * Returns the number of layout localizations where groupId = &#63; and languageId = &#63; and plid = &#63;.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the number of matching layout localizations
 	 */
-	public int countByC_L_P(long companyId, String languageId, long plid);
+	public int countByG_L_P(long groupId, String languageId, long plid);
 
 	/**
 	 * Caches the layout localization in the entity cache if it is enabled.

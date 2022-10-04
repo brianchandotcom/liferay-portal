@@ -127,6 +127,20 @@ public interface LayoutLocalizationModel
 	public void setLayoutLocalizationId(long layoutLocalizationId);
 
 	/**
+	 * Returns the group ID of this layout localization.
+	 *
+	 * @return the group ID of this layout localization
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this layout localization.
+	 *
+	 * @param groupId the group ID of this layout localization
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this layout localization.
 	 *
 	 * @return the company ID of this layout localization

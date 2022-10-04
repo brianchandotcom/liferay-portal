@@ -61,6 +61,14 @@ public class LayoutLocalizationLocalServiceUtil {
 		return getService().addLayoutLocalization(layoutLocalization);
 	}
 
+	public static LayoutLocalization addLayoutLocalization(
+		long groupId, String content, String languageId, long plid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().addLayoutLocalization(
+			groupId, content, languageId, plid, serviceContext);
+	}
+
 	/**
 	 * Creates a new layout localization with the primary key. Does not add the layout localization to the database.
 	 *
@@ -218,18 +226,24 @@ public class LayoutLocalizationLocalServiceUtil {
 		return getService().fetchLayoutLocalization(layoutLocalizationId);
 	}
 
+	public static LayoutLocalization fetchLayoutLocalization(
+		long groupId, String languageId, long plid) {
+
+		return getService().fetchLayoutLocalization(groupId, languageId, plid);
+	}
+
 	/**
-	 * Returns the layout localization with the matching UUID and company.
+	 * Returns the layout localization matching the UUID and group.
 	 *
 	 * @param uuid the layout localization's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
-	public static LayoutLocalization fetchLayoutLocalizationByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public static LayoutLocalization fetchLayoutLocalizationByUuidAndGroupId(
+		String uuid, long groupId) {
 
-		return getService().fetchLayoutLocalizationByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().fetchLayoutLocalizationByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -267,20 +281,27 @@ public class LayoutLocalizationLocalServiceUtil {
 		return getService().getLayoutLocalization(layoutLocalizationId);
 	}
 
+	public static LayoutLocalization getLayoutLocalization(
+			String languageId, long plid)
+		throws PortalException {
+
+		return getService().getLayoutLocalization(languageId, plid);
+	}
+
 	/**
-	 * Returns the layout localization with the matching UUID and company.
+	 * Returns the layout localization matching the UUID and group.
 	 *
 	 * @param uuid the layout localization's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching layout localization
 	 * @throws PortalException if a matching layout localization could not be found
 	 */
-	public static LayoutLocalization getLayoutLocalizationByUuidAndCompanyId(
-			String uuid, long companyId)
+	public static LayoutLocalization getLayoutLocalizationByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException {
 
-		return getService().getLayoutLocalizationByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().getLayoutLocalizationByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	/**
@@ -298,6 +319,43 @@ public class LayoutLocalizationLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getLayoutLocalizations(start, end);
+	}
+
+	public static List<LayoutLocalization> getLayoutLocalizations(long plid) {
+		return getService().getLayoutLocalizations(plid);
+	}
+
+	/**
+	 * Returns all the layout localizations matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout localizations
+	 * @param companyId the primary key of the company
+	 * @return the matching layout localizations, or an empty list if no matches were found
+	 */
+	public static List<LayoutLocalization>
+		getLayoutLocalizationsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getLayoutLocalizationsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of layout localizations matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout localizations
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of layout localizations
+	 * @param end the upper bound of the range of layout localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching layout localizations, or an empty list if no matches were found
+	 */
+	public static List<LayoutLocalization>
+		getLayoutLocalizationsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<LayoutLocalization> orderByComparator) {
+
+		return getService().getLayoutLocalizationsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -341,6 +399,12 @@ public class LayoutLocalizationLocalServiceUtil {
 		LayoutLocalization layoutLocalization) {
 
 		return getService().updateLayoutLocalization(layoutLocalization);
+	}
+
+	public static LayoutLocalization updateLayoutLocalization(
+		String content, String languageId, long plid) {
+
+		return getService().updateLayoutLocalization(content, languageId, plid);
 	}
 
 	public static LayoutLocalizationLocalService getService() {

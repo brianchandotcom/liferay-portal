@@ -71,10 +71,10 @@ public class LayoutLocalizationModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"uuid_", Types.VARCHAR}, {"layoutLocalizationId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"content", Types.VARCHAR},
-		{"languageId", Types.VARCHAR}, {"plid", Types.BIGINT},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"content", Types.CLOB}, {"languageId", Types.VARCHAR},
+		{"plid", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,17 +85,18 @@ public class LayoutLocalizationModelImpl
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutLocalizationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutLocalizationId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,content VARCHAR(75) null,languageId VARCHAR(75) null,plid LONG,lastPublishDate DATE null,primary key (layoutLocalizationId, ctCollectionId))";
+		"create table LayoutLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutLocalizationId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,content TEXT null,languageId VARCHAR(75) null,plid LONG,lastPublishDate DATE null,primary key (layoutLocalizationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutLocalization";
 
@@ -121,26 +122,32 @@ public class LayoutLocalizationModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LANGUAGEID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PLID_COLUMN_BITMASK = 4L;
+	public static final long LANGUAGEID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long PLID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LAYOUTLOCALIZATIONID_COLUMN_BITMASK = 16L;
+	public static final long LAYOUTLOCALIZATIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -279,6 +286,11 @@ public class LayoutLocalizationModelImpl
 			"layoutLocalizationId",
 			(BiConsumer<LayoutLocalization, Long>)
 				LayoutLocalization::setLayoutLocalizationId);
+		attributeGetterFunctions.put("groupId", LayoutLocalization::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<LayoutLocalization, Long>)
+				LayoutLocalization::setGroupId);
 		attributeGetterFunctions.put(
 			"companyId", LayoutLocalization::getCompanyId);
 		attributeSetterBiConsumers.put(
@@ -393,6 +405,29 @@ public class LayoutLocalizationModelImpl
 		}
 
 		_layoutLocalizationId = layoutLocalizationId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -606,6 +641,7 @@ public class LayoutLocalizationModelImpl
 		layoutLocalizationImpl.setUuid(getUuid());
 		layoutLocalizationImpl.setLayoutLocalizationId(
 			getLayoutLocalizationId());
+		layoutLocalizationImpl.setGroupId(getGroupId());
 		layoutLocalizationImpl.setCompanyId(getCompanyId());
 		layoutLocalizationImpl.setCreateDate(getCreateDate());
 		layoutLocalizationImpl.setModifiedDate(getModifiedDate());
@@ -632,6 +668,8 @@ public class LayoutLocalizationModelImpl
 			this.<String>getColumnOriginalValue("uuid_"));
 		layoutLocalizationImpl.setLayoutLocalizationId(
 			this.<Long>getColumnOriginalValue("layoutLocalizationId"));
+		layoutLocalizationImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
 		layoutLocalizationImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
 		layoutLocalizationImpl.setCreateDate(
@@ -738,6 +776,8 @@ public class LayoutLocalizationModelImpl
 
 		layoutLocalizationCacheModel.layoutLocalizationId =
 			getLayoutLocalizationId();
+
+		layoutLocalizationCacheModel.groupId = getGroupId();
 
 		layoutLocalizationCacheModel.companyId = getCompanyId();
 
@@ -884,6 +924,7 @@ public class LayoutLocalizationModelImpl
 	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutLocalizationId;
+	private long _groupId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -927,6 +968,7 @@ public class LayoutLocalizationModelImpl
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"layoutLocalizationId", _layoutLocalizationId);
+		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
@@ -965,19 +1007,21 @@ public class LayoutLocalizationModelImpl
 
 		columnBitmasks.put("layoutLocalizationId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("content", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("languageId", 256L);
+		columnBitmasks.put("content", 256L);
 
-		columnBitmasks.put("plid", 512L);
+		columnBitmasks.put("languageId", 512L);
 
-		columnBitmasks.put("lastPublishDate", 1024L);
+		columnBitmasks.put("plid", 1024L);
+
+		columnBitmasks.put("lastPublishDate", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

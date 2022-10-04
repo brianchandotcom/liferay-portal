@@ -288,6 +288,69 @@ public class LayoutLocalizationUtil {
 	}
 
 	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout localization
+	 * @throws NoSuchLocalizationException if a matching layout localization could not be found
+	 */
+	public static LayoutLocalization findByUUID_G(String uuid, long groupId)
+		throws com.liferay.layout.exception.NoSuchLocalizationException {
+
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
+	 */
+	public static LayoutLocalization fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
+	 */
+	public static LayoutLocalization fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the layout localization where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the layout localization that was removed
+	 */
+	public static LayoutLocalization removeByUUID_G(String uuid, long groupId)
+		throws com.liferay.layout.exception.NoSuchLocalizationException {
+
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the number of layout localizations where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching layout localizations
+	 */
+	public static int countByUUID_G(String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns all the layout localizations where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -701,78 +764,76 @@ public class LayoutLocalizationUtil {
 	}
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the matching layout localization
 	 * @throws NoSuchLocalizationException if a matching layout localization could not be found
 	 */
-	public static LayoutLocalization findByC_L_P(
-			long companyId, String languageId, long plid)
+	public static LayoutLocalization findByG_L_P(
+			long groupId, String languageId, long plid)
 		throws com.liferay.layout.exception.NoSuchLocalizationException {
 
-		return getPersistence().findByC_L_P(companyId, languageId, plid);
+		return getPersistence().findByG_L_P(groupId, languageId, plid);
 	}
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
-	public static LayoutLocalization fetchByC_L_P(
-		long companyId, String languageId, long plid) {
+	public static LayoutLocalization fetchByG_L_P(
+		long groupId, String languageId, long plid) {
 
-		return getPersistence().fetchByC_L_P(companyId, languageId, plid);
+		return getPersistence().fetchByG_L_P(groupId, languageId, plid);
 	}
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
-	public static LayoutLocalization fetchByC_L_P(
-		long companyId, String languageId, long plid, boolean useFinderCache) {
+	public static LayoutLocalization fetchByG_L_P(
+		long groupId, String languageId, long plid, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_L_P(
-			companyId, languageId, plid, useFinderCache);
+		return getPersistence().fetchByG_L_P(
+			groupId, languageId, plid, useFinderCache);
 	}
 
 	/**
-	 * Removes the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; from the database.
+	 * Removes the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; from the database.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the layout localization that was removed
 	 */
-	public static LayoutLocalization removeByC_L_P(
-			long companyId, String languageId, long plid)
+	public static LayoutLocalization removeByG_L_P(
+			long groupId, String languageId, long plid)
 		throws com.liferay.layout.exception.NoSuchLocalizationException {
 
-		return getPersistence().removeByC_L_P(companyId, languageId, plid);
+		return getPersistence().removeByG_L_P(groupId, languageId, plid);
 	}
 
 	/**
-	 * Returns the number of layout localizations where companyId = &#63; and languageId = &#63; and plid = &#63;.
+	 * Returns the number of layout localizations where groupId = &#63; and languageId = &#63; and plid = &#63;.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the number of matching layout localizations
 	 */
-	public static int countByC_L_P(
-		long companyId, String languageId, long plid) {
-
-		return getPersistence().countByC_L_P(companyId, languageId, plid);
+	public static int countByG_L_P(long groupId, String languageId, long plid) {
+		return getPersistence().countByG_L_P(groupId, languageId, plid);
 	}
 
 	/**

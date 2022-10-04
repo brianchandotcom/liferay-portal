@@ -268,18 +268,17 @@ public abstract class LayoutLocalizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the layout localization with the matching UUID and company.
+	 * Returns the layout localization matching the UUID and group.
 	 *
 	 * @param uuid the layout localization's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization fetchLayoutLocalizationByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public LayoutLocalization fetchLayoutLocalizationByUuidAndGroupId(
+		String uuid, long groupId) {
 
-		return layoutLocalizationPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
+		return layoutLocalizationPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -453,20 +452,52 @@ public abstract class LayoutLocalizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the layout localization with the matching UUID and company.
+	 * Returns all the layout localizations matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout localizations
+	 * @param companyId the primary key of the company
+	 * @return the matching layout localizations, or an empty list if no matches were found
+	 */
+	@Override
+	public List<LayoutLocalization> getLayoutLocalizationsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return layoutLocalizationPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of layout localizations matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout localizations
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of layout localizations
+	 * @param end the upper bound of the range of layout localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching layout localizations, or an empty list if no matches were found
+	 */
+	@Override
+	public List<LayoutLocalization> getLayoutLocalizationsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LayoutLocalization> orderByComparator) {
+
+		return layoutLocalizationPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the layout localization matching the UUID and group.
 	 *
 	 * @param uuid the layout localization's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching layout localization
 	 * @throws PortalException if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization getLayoutLocalizationByUuidAndCompanyId(
-			String uuid, long companyId)
+	public LayoutLocalization getLayoutLocalizationByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException {
 
-		return layoutLocalizationPersistence.findByUuid_C_First(
-			uuid, companyId, null);
+		return layoutLocalizationPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

@@ -131,6 +131,8 @@ public class LayoutLocalizationPersistenceTest {
 
 		newLayoutLocalization.setUuid(RandomTestUtil.randomString());
 
+		newLayoutLocalization.setGroupId(RandomTestUtil.nextLong());
+
 		newLayoutLocalization.setCompanyId(RandomTestUtil.nextLong());
 
 		newLayoutLocalization.setCreateDate(RandomTestUtil.nextDate());
@@ -163,6 +165,9 @@ public class LayoutLocalizationPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutLocalization.getLayoutLocalizationId(),
 			newLayoutLocalization.getLayoutLocalizationId());
+		Assert.assertEquals(
+			existingLayoutLocalization.getGroupId(),
+			newLayoutLocalization.getGroupId());
 		Assert.assertEquals(
 			existingLayoutLocalization.getCompanyId(),
 			newLayoutLocalization.getCompanyId());
@@ -198,6 +203,15 @@ public class LayoutLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
 	public void testCountByUuid_C() throws Exception {
 		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
@@ -223,13 +237,13 @@ public class LayoutLocalizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_L_P() throws Exception {
-		_persistence.countByC_L_P(
+	public void testCountByG_L_P() throws Exception {
+		_persistence.countByG_L_P(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
 
-		_persistence.countByC_L_P(0L, "null", 0L);
+		_persistence.countByG_L_P(0L, "null", 0L);
 
-		_persistence.countByC_L_P(0L, (String)null, 0L);
+		_persistence.countByG_L_P(0L, (String)null, 0L);
 	}
 
 	@Test
@@ -259,8 +273,8 @@ public class LayoutLocalizationPersistenceTest {
 	protected OrderByComparator<LayoutLocalization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"LayoutLocalization", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "layoutLocalizationId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "content", true,
+			"uuid", true, "layoutLocalizationId", true, "groupId", true,
+			"companyId", true, "createDate", true, "modifiedDate", true,
 			"languageId", true, "plid", true, "lastPublishDate", true);
 	}
 
@@ -541,6 +555,17 @@ public class LayoutLocalizationPersistenceTest {
 
 	private void _assertOriginalValues(LayoutLocalization layoutLocalization) {
 		Assert.assertEquals(
+			layoutLocalization.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(layoutLocalization.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			layoutLocalization.getLanguageId(),
 			ReflectionTestUtil.invoke(
 				layoutLocalization, "getColumnOriginalValue",
@@ -552,10 +577,10 @@ public class LayoutLocalizationPersistenceTest {
 				new Class<?>[] {String.class}, "plid"));
 
 		Assert.assertEquals(
-			Long.valueOf(layoutLocalization.getCompanyId()),
+			Long.valueOf(layoutLocalization.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				layoutLocalization, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			layoutLocalization.getLanguageId(),
 			ReflectionTestUtil.invoke(
@@ -578,6 +603,8 @@ public class LayoutLocalizationPersistenceTest {
 		layoutLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutLocalization.setUuid(RandomTestUtil.randomString());
+
+		layoutLocalization.setGroupId(RandomTestUtil.nextLong());
 
 		layoutLocalization.setCompanyId(RandomTestUtil.nextLong());
 

@@ -78,7 +78,7 @@ public class LayoutLocalizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +88,8 @@ public class LayoutLocalizationCacheModel
 		sb.append(uuid);
 		sb.append(", layoutLocalizationId=");
 		sb.append(layoutLocalizationId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", createDate=");
@@ -123,6 +125,7 @@ public class LayoutLocalizationCacheModel
 		}
 
 		layoutLocalizationImpl.setLayoutLocalizationId(layoutLocalizationId);
+		layoutLocalizationImpl.setGroupId(groupId);
 		layoutLocalizationImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -169,7 +172,9 @@ public class LayoutLocalizationCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -177,10 +182,12 @@ public class LayoutLocalizationCacheModel
 
 		layoutLocalizationId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 		languageId = objectInput.readUTF();
 
 		plid = objectInput.readLong();
@@ -202,15 +209,17 @@ public class LayoutLocalizationCacheModel
 
 		objectOutput.writeLong(layoutLocalizationId);
 
+		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
 		if (languageId == null) {
@@ -228,6 +237,7 @@ public class LayoutLocalizationCacheModel
 	public long ctCollectionId;
 	public String uuid;
 	public long layoutLocalizationId;
+	public long groupId;
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;

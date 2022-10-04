@@ -662,6 +662,269 @@ public class LayoutLocalizationPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_UUID_3 =
 		"(layoutLocalization.uuid IS NULL OR layoutLocalization.uuid = '')";
 
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout localization
+	 * @throws NoSuchLocalizationException if a matching layout localization could not be found
+	 */
+	@Override
+	public LayoutLocalization findByUUID_G(String uuid, long groupId)
+		throws NoSuchLocalizationException {
+
+		LayoutLocalization layoutLocalization = fetchByUUID_G(uuid, groupId);
+
+		if (layoutLocalization == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("uuid=");
+			sb.append(uuid);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchLocalizationException(sb.toString());
+		}
+
+		return layoutLocalization;
+	}
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
+	 */
+	@Override
+	public LayoutLocalization fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
+	 */
+	@Override
+	public LayoutLocalization fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutLocalization.class);
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache && productionMode) {
+			result = finderCache.getResult(
+				_finderPathFetchByUUID_G, finderArgs);
+		}
+
+		if (result instanceof LayoutLocalization) {
+			LayoutLocalization layoutLocalization = (LayoutLocalization)result;
+
+			if (!Objects.equals(uuid, layoutLocalization.getUuid()) ||
+				(groupId != layoutLocalization.getGroupId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_LAYOUTLOCALIZATION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				List<LayoutLocalization> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
+				}
+				else {
+					LayoutLocalization layoutLocalization = list.get(0);
+
+					result = layoutLocalization;
+
+					cacheResult(layoutLocalization);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LayoutLocalization)result;
+		}
+	}
+
+	/**
+	 * Removes the layout localization where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the layout localization that was removed
+	 */
+	@Override
+	public LayoutLocalization removeByUUID_G(String uuid, long groupId)
+		throws NoSuchLocalizationException {
+
+		LayoutLocalization layoutLocalization = findByUUID_G(uuid, groupId);
+
+		return remove(layoutLocalization);
+	}
+
+	/**
+	 * Returns the number of layout localizations where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching layout localizations
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutLocalization.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUUID_G;
+
+			finderArgs = new Object[] {uuid, groupId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LAYOUTLOCALIZATION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"layoutLocalization.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(layoutLocalization.uuid IS NULL OR layoutLocalization.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"layoutLocalization.groupId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -2031,33 +2294,33 @@ public class LayoutLocalizationPersistenceImpl
 	private static final String _FINDER_COLUMN_L_P_PLID_2 =
 		"layoutLocalization.plid = ?";
 
-	private FinderPath _finderPathFetchByC_L_P;
-	private FinderPath _finderPathCountByC_L_P;
+	private FinderPath _finderPathFetchByG_L_P;
+	private FinderPath _finderPathCountByG_L_P;
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLocalizationException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the matching layout localization
 	 * @throws NoSuchLocalizationException if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization findByC_L_P(
-			long companyId, String languageId, long plid)
+	public LayoutLocalization findByG_L_P(
+			long groupId, String languageId, long plid)
 		throws NoSuchLocalizationException {
 
-		LayoutLocalization layoutLocalization = fetchByC_L_P(
-			companyId, languageId, plid);
+		LayoutLocalization layoutLocalization = fetchByG_L_P(
+			groupId, languageId, plid);
 
 		if (layoutLocalization == null) {
 			StringBundler sb = new StringBundler(8);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
+			sb.append("groupId=");
+			sb.append(groupId);
 
 			sb.append(", languageId=");
 			sb.append(languageId);
@@ -2078,32 +2341,32 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization fetchByC_L_P(
-		long companyId, String languageId, long plid) {
+	public LayoutLocalization fetchByG_L_P(
+		long groupId, String languageId, long plid) {
 
-		return fetchByC_L_P(companyId, languageId, plid, true);
+		return fetchByG_L_P(groupId, languageId, plid, true);
 	}
 
 	/**
-	 * Returns the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
 	@Override
-	public LayoutLocalization fetchByC_L_P(
-		long companyId, String languageId, long plid, boolean useFinderCache) {
+	public LayoutLocalization fetchByG_L_P(
+		long groupId, String languageId, long plid, boolean useFinderCache) {
 
 		languageId = Objects.toString(languageId, "");
 
@@ -2113,19 +2376,19 @@ public class LayoutLocalizationPersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {companyId, languageId, plid};
+			finderArgs = new Object[] {groupId, languageId, plid};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_L_P, finderArgs);
+			result = finderCache.getResult(_finderPathFetchByG_L_P, finderArgs);
 		}
 
 		if (result instanceof LayoutLocalization) {
 			LayoutLocalization layoutLocalization = (LayoutLocalization)result;
 
-			if ((companyId != layoutLocalization.getCompanyId()) ||
+			if ((groupId != layoutLocalization.getGroupId()) ||
 				!Objects.equals(
 					languageId, layoutLocalization.getLanguageId()) ||
 				(plid != layoutLocalization.getPlid())) {
@@ -2139,20 +2402,20 @@ public class LayoutLocalizationPersistenceImpl
 
 			sb.append(_SQL_SELECT_LAYOUTLOCALIZATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_L_P_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_G_L_P_GROUPID_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_L_P_LANGUAGEID_3);
+				sb.append(_FINDER_COLUMN_G_L_P_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				sb.append(_FINDER_COLUMN_C_L_P_LANGUAGEID_2);
+				sb.append(_FINDER_COLUMN_G_L_P_LANGUAGEID_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_L_P_PLID_2);
+			sb.append(_FINDER_COLUMN_G_L_P_PLID_2);
 
 			String sql = sb.toString();
 
@@ -2165,7 +2428,7 @@ public class LayoutLocalizationPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
+				queryPos.add(groupId);
 
 				if (bindLanguageId) {
 					queryPos.add(languageId);
@@ -2178,7 +2441,7 @@ public class LayoutLocalizationPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByC_L_P, finderArgs, list);
+							_finderPathFetchByG_L_P, finderArgs, list);
 					}
 				}
 				else {
@@ -2206,34 +2469,34 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Removes the layout localization where companyId = &#63; and languageId = &#63; and plid = &#63; from the database.
+	 * Removes the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; from the database.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the layout localization that was removed
 	 */
 	@Override
-	public LayoutLocalization removeByC_L_P(
-			long companyId, String languageId, long plid)
+	public LayoutLocalization removeByG_L_P(
+			long groupId, String languageId, long plid)
 		throws NoSuchLocalizationException {
 
-		LayoutLocalization layoutLocalization = findByC_L_P(
-			companyId, languageId, plid);
+		LayoutLocalization layoutLocalization = findByG_L_P(
+			groupId, languageId, plid);
 
 		return remove(layoutLocalization);
 	}
 
 	/**
-	 * Returns the number of layout localizations where companyId = &#63; and languageId = &#63; and plid = &#63;.
+	 * Returns the number of layout localizations where groupId = &#63; and languageId = &#63; and plid = &#63;.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param languageId the language ID
 	 * @param plid the plid
 	 * @return the number of matching layout localizations
 	 */
 	@Override
-	public int countByC_L_P(long companyId, String languageId, long plid) {
+	public int countByG_L_P(long groupId, String languageId, long plid) {
 		languageId = Objects.toString(languageId, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -2245,9 +2508,9 @@ public class LayoutLocalizationPersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByC_L_P;
+			finderPath = _finderPathCountByG_L_P;
 
-			finderArgs = new Object[] {companyId, languageId, plid};
+			finderArgs = new Object[] {groupId, languageId, plid};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
@@ -2257,20 +2520,20 @@ public class LayoutLocalizationPersistenceImpl
 
 			sb.append(_SQL_COUNT_LAYOUTLOCALIZATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_L_P_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_G_L_P_GROUPID_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_L_P_LANGUAGEID_3);
+				sb.append(_FINDER_COLUMN_G_L_P_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				sb.append(_FINDER_COLUMN_C_L_P_LANGUAGEID_2);
+				sb.append(_FINDER_COLUMN_G_L_P_LANGUAGEID_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_L_P_PLID_2);
+			sb.append(_FINDER_COLUMN_G_L_P_PLID_2);
 
 			String sql = sb.toString();
 
@@ -2283,7 +2546,7 @@ public class LayoutLocalizationPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
+				queryPos.add(groupId);
 
 				if (bindLanguageId) {
 					queryPos.add(languageId);
@@ -2308,16 +2571,16 @@ public class LayoutLocalizationPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_L_P_COMPANYID_2 =
-		"layoutLocalization.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_P_GROUPID_2 =
+		"layoutLocalization.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_L_P_LANGUAGEID_2 =
+	private static final String _FINDER_COLUMN_G_L_P_LANGUAGEID_2 =
 		"layoutLocalization.languageId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_L_P_LANGUAGEID_3 =
+	private static final String _FINDER_COLUMN_G_L_P_LANGUAGEID_3 =
 		"(layoutLocalization.languageId IS NULL OR layoutLocalization.languageId = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_L_P_PLID_2 =
+	private static final String _FINDER_COLUMN_G_L_P_PLID_2 =
 		"layoutLocalization.plid = ?";
 
 	public LayoutLocalizationPersistenceImpl() {
@@ -2351,6 +2614,13 @@ public class LayoutLocalizationPersistenceImpl
 			layoutLocalization);
 
 		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {
+				layoutLocalization.getUuid(), layoutLocalization.getGroupId()
+			},
+			layoutLocalization);
+
+		finderCache.putResult(
 			_finderPathFetchByL_P,
 			new Object[] {
 				layoutLocalization.getLanguageId(), layoutLocalization.getPlid()
@@ -2358,9 +2628,9 @@ public class LayoutLocalizationPersistenceImpl
 			layoutLocalization);
 
 		finderCache.putResult(
-			_finderPathFetchByC_L_P,
+			_finderPathFetchByG_L_P,
 			new Object[] {
-				layoutLocalization.getCompanyId(),
+				layoutLocalization.getGroupId(),
 				layoutLocalization.getLanguageId(), layoutLocalization.getPlid()
 			},
 			layoutLocalization);
@@ -2445,6 +2715,15 @@ public class LayoutLocalizationPersistenceImpl
 		LayoutLocalizationModelImpl layoutLocalizationModelImpl) {
 
 		Object[] args = new Object[] {
+			layoutLocalizationModelImpl.getUuid(),
+			layoutLocalizationModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, layoutLocalizationModelImpl);
+
+		args = new Object[] {
 			layoutLocalizationModelImpl.getLanguageId(),
 			layoutLocalizationModelImpl.getPlid()
 		};
@@ -2454,14 +2733,14 @@ public class LayoutLocalizationPersistenceImpl
 			_finderPathFetchByL_P, args, layoutLocalizationModelImpl);
 
 		args = new Object[] {
-			layoutLocalizationModelImpl.getCompanyId(),
+			layoutLocalizationModelImpl.getGroupId(),
 			layoutLocalizationModelImpl.getLanguageId(),
 			layoutLocalizationModelImpl.getPlid()
 		};
 
-		finderCache.putResult(_finderPathCountByC_L_P, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByG_L_P, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_L_P, args, layoutLocalizationModelImpl);
+			_finderPathFetchByG_L_P, args, layoutLocalizationModelImpl);
 	}
 
 	/**
@@ -3126,6 +3405,7 @@ public class LayoutLocalizationPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
@@ -3144,10 +3424,12 @@ public class LayoutLocalizationPersistenceImpl
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
 		_uniqueIndexColumnNames.add(new String[] {"languageId", "plid"});
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"companyId", "languageId", "plid"});
+			new String[] {"groupId", "languageId", "plid"});
 	}
 
 	/**
@@ -3187,6 +3469,16 @@ public class LayoutLocalizationPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, true);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, false);
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -3233,21 +3525,21 @@ public class LayoutLocalizationPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"languageId", "plid"}, false);
 
-		_finderPathFetchByC_L_P = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_L_P",
+		_finderPathFetchByG_L_P = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_L_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"companyId", "languageId", "plid"}, true);
+			new String[] {"groupId", "languageId", "plid"}, true);
 
-		_finderPathCountByC_L_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L_P",
+		_finderPathCountByG_L_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"companyId", "languageId", "plid"}, false);
+			new String[] {"groupId", "languageId", "plid"}, false);
 
 		_setLayoutLocalizationUtilPersistence(this);
 	}

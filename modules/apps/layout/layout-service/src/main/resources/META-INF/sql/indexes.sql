@@ -16,3 +16,4 @@ create unique index IX_E26CFF79 on LayoutLocalization (languageId[$COLUMN_LENGTH
 create index IX_1E12A3F2 on LayoutLocalization (plid, ctCollectionId);
 create index IX_7232E01B on LayoutLocalization (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_763D2BE9 on LayoutLocalization (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_9336DDD on LayoutLocalization (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

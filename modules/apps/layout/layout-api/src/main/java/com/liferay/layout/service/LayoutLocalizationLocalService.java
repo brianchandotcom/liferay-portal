@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -83,6 +84,10 @@ public interface LayoutLocalizationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutLocalization addLayoutLocalization(
 		LayoutLocalization layoutLocalization);
+
+	public LayoutLocalization addLayoutLocalization(
+		long groupId, String content, String languageId, long plid,
+		ServiceContext serviceContext);
 
 	/**
 	 * Creates a new layout localization with the primary key. Does not add the layout localization to the database.
@@ -213,16 +218,20 @@ public interface LayoutLocalizationLocalService
 	public LayoutLocalization fetchLayoutLocalization(
 		long layoutLocalizationId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutLocalization fetchLayoutLocalization(
+		long groupId, String languageId, long plid);
+
 	/**
-	 * Returns the layout localization with the matching UUID and company.
+	 * Returns the layout localization matching the UUID and group.
 	 *
 	 * @param uuid the layout localization's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching layout localization, or <code>null</code> if a matching layout localization could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutLocalization fetchLayoutLocalizationByUuidAndCompanyId(
-		String uuid, long companyId);
+	public LayoutLocalization fetchLayoutLocalizationByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -245,17 +254,22 @@ public interface LayoutLocalizationLocalService
 	public LayoutLocalization getLayoutLocalization(long layoutLocalizationId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutLocalization getLayoutLocalization(
+			String languageId, long plid)
+		throws PortalException;
+
 	/**
-	 * Returns the layout localization with the matching UUID and company.
+	 * Returns the layout localization matching the UUID and group.
 	 *
 	 * @param uuid the layout localization's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching layout localization
 	 * @throws PortalException if a matching layout localization could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutLocalization getLayoutLocalizationByUuidAndCompanyId(
-			String uuid, long companyId)
+	public LayoutLocalization getLayoutLocalizationByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	/**
@@ -271,6 +285,35 @@ public interface LayoutLocalizationLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutLocalization> getLayoutLocalizations(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutLocalization> getLayoutLocalizations(long plid);
+
+	/**
+	 * Returns all the layout localizations matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout localizations
+	 * @param companyId the primary key of the company
+	 * @return the matching layout localizations, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutLocalization> getLayoutLocalizationsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of layout localizations matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout localizations
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of layout localizations
+	 * @param end the upper bound of the range of layout localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching layout localizations, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutLocalization> getLayoutLocalizationsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LayoutLocalization> orderByComparator);
 
 	/**
 	 * Returns the number of layout localizations.
@@ -308,6 +351,9 @@ public interface LayoutLocalizationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutLocalization updateLayoutLocalization(
 		LayoutLocalization layoutLocalization);
+
+	public LayoutLocalization updateLayoutLocalization(
+		String content, String languageId, long plid);
 
 	@Override
 	@Transactional(enabled = false)

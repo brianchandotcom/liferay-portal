@@ -17,6 +17,7 @@ package com.liferay.layout.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -46,6 +47,8 @@ public class LayoutLocalizationTable
 		createColumn(
 			"layoutLocalizationId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<LayoutLocalizationTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LayoutLocalizationTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LayoutLocalizationTable, Date> createDate =
@@ -54,8 +57,8 @@ public class LayoutLocalizationTable
 	public final Column<LayoutLocalizationTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<LayoutLocalizationTable, String> content = createColumn(
-		"content", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutLocalizationTable, Clob> content = createColumn(
+		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutLocalizationTable, String> languageId =
 		createColumn(
 			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

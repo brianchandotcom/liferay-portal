@@ -25,6 +25,7 @@
 		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutLocalizationId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />

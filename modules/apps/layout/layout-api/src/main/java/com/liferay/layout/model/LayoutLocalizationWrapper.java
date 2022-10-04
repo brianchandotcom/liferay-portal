@@ -49,6 +49,7 @@ public class LayoutLocalizationWrapper
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("layoutLocalizationId", getLayoutLocalizationId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -85,6 +86,12 @@ public class LayoutLocalizationWrapper
 
 		if (layoutLocalizationId != null) {
 			setLayoutLocalizationId(layoutLocalizationId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -173,6 +180,16 @@ public class LayoutLocalizationWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the group ID of this layout localization.
+	 *
+	 * @return the group ID of this layout localization
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
 	}
 
 	/**
@@ -298,6 +315,16 @@ public class LayoutLocalizationWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the group ID of this layout localization.
+	 *
+	 * @param groupId the group ID of this layout localization
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**

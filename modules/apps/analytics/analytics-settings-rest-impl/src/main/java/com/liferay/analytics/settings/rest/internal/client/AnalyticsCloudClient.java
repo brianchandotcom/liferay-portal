@@ -14,7 +14,9 @@
 
 package com.liferay.analytics.settings.rest.internal.client;
 
-import com.liferay.analytics.settings.rest.internal.client.model.DataSource;
+import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
+import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
+import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 
 import java.util.Map;
 
@@ -23,10 +25,18 @@ import java.util.Map;
  */
 public interface AnalyticsCloudClient {
 
-	public Map<String, Object> connectDataSource(
+	public AnalyticsChannel addAnalyticsChannel(long companyId, String name)
+		throws Exception;
+
+	public Map<String, Object> connectAnalyticsDataSource(
 			long companyId, String connectionToken)
 		throws Exception;
 
-	public DataSource disconnectDataSource(long companyId) throws Exception;
+	public AnalyticsDataSource disconnectAnalyticsDataSource(long companyId)
+		throws Exception;
+
+	public Page<AnalyticsChannel> fetchAnalyticsChannelsPage(
+			long companyId, String keywords, int page, int size)
+		throws Exception;
 
 }

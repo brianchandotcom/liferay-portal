@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_TOGGLE</td>
+	<td>//label[contains(@class,'toggle-switch toggle-editing')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS</td>
 	<td>//label[contains(@for,'enableSocialBookmarks')]/input/../span/span</td>
 	<td></td>

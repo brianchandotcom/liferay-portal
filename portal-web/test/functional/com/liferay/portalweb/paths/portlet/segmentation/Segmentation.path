@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERION_INPUT_INDEX</td>
+	<td>xpath=(//*[contains(@class,'edit-container')] //*[contains(@class,'form-control') and not(contains(@class,'operator-input')) and not(@placeholder='Key')])[${indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_KEY_ANY</td>
 	<td>//*[contains(@class,'edit-container')] //*[contains(@class,'form-control') and not(contains(@class,'operator-input')) and (@placeholder='Key')]</td>
 	<td></td>
@@ -111,8 +116,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_SEGMENT</td>
-	<td>//*[contains(@class, 'lexicon-icon-times-circle')]</td>
+	<td>DUPLICATE_BUTTON</td>
+	<td>//button//*[contains(@class,'lexicon-icon lexicon-icon-paste')]</td>
 	<td></td>
 </tr>
 <tr>

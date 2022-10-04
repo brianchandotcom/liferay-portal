@@ -44,16 +44,14 @@ definition {
 	macro changeCriterionConjunction {
 		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION");
 
-		Click(
-			key_criterionConjunctionItem = "${criterionConjunctionItem}",
-			locator1 = "Segmentation#CRITERION_CONJUNCTION_ITEM");
+		MenuItem.click(menuItem = "${criterionConjunctionItem}");
 	}
 
 	macro changeCriterionInput {
 		var key_criterionInputOption = "${criterionInputOption}";
 
 		Select(
-			locator1 = "Segmentation#CRITERION_INPUT",
+			locator1 = "Segmentation#CRITERION_INPUT_ANY",
 			value1 = "${criterionInputOption}");
 	}
 
@@ -73,18 +71,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_3",
 			value1 = "${textValue}");
-	}
-
-	macro clickAssignSiteRolesOption {
-		Click(locator1 = "Segmentation#SEGMENT_OPTIONS_MENU");
-
-		Click(locator1 = "Segmentation#ASSIGN_SITE_ROLES_OPTION");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextPresent(
-			locator1 = "Segmentation#ASSIGN_SITE_ROLES_MODAL_TITLE",
-			value1 = "Assign Site Roles");
 	}
 
 	macro clickToReEnableSegmentsWarningLink {
@@ -121,8 +107,8 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
-	macro deleteProperties {
-		Click(locator1 = "Segmentation#DELETE_SEGMENT");
+	macro deleteProperty {
+		Click(locator1 = "Icon#REMOVE");
 	}
 
 	macro deleteSegment {
@@ -246,37 +232,24 @@ definition {
 
 	macro fillProperty {
 		if (isSet(criterionKey)) {
-			Type.type(
-				key_criterion = "key",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+			Type(
+				locator1 = "Segmentation#CRITERION_KEY_ANY",
 				value1 = "${criterionKey}");
+		}
 
-			Type.type(
-				key_criterion = "value",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${criterionValue}");
-		}
-		else if (isSet(resolutionValue)) {
-			Type.type(
-				key_criterion = "decimal-number",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${resolutionValue}");
-		}
-		else if (isSet(selectCheckbox)) {
-			Click(locator1 = "Button#SELECT");
+		if (isSet(selectCheckbox)) {
+			Button.clickSelect();
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Check(
-				key_checkboxName = "${selectCheckbox}",
-				locator1 = "Checkbox#ENABLE_CHECKBOX");
+			LexiconTable.checkTableCheckbox(tableEntry = "${selectCheckbox}");
 
 			SelectFrame(value1 = "relative=top");
 
 			Click(locator1 = "Modal#SELECT_BUTTON");
 		}
 		else if (isSet(chooseItem)) {
-			Click(locator1 = "Button#SELECT");
+			Button.clickSelect();
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -295,7 +268,7 @@ definition {
 					locator1 = "Button#ANY_N");
 			}
 			else {
-				Click(locator1 = "Button#SELECT");
+				Button.clickSelect();
 			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -309,28 +282,24 @@ definition {
 		}
 		else if (isSet(dateValue)) {
 			Type.sendKeys(
-				key_criterion = "date",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "${dateValue}");
 		}
 		else if (isSet(optionsValue)) {
 			Select(
-				key_criterion = "options",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "${optionsValue}");
 		}
-		else if (isSet(propertyField)) {
-			if (isSet(indexNumber)) {
-				Type.type(
-					key_indexNumber = "${indexNumber}",
-					locator1 = "Segmentation#PROPERTY_FIELD_2",
-					value1 = "${propertyField}");
-			}
-			else {
-				Type.type(
-					locator1 = "Segmentation#PROPERTY_FIELD",
-					value1 = "${propertyField}");
-			}
+		else if (isSet(indexNumber)) {
+			Type.type(
+				indexNumber = "${indexNumber}",
+				locator1 = "Segmentation#CRITERION_INPUT_INDEX",
+				value1 = "${criterionValue}");
+		}
+		else {
+			Type.type(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "${criterionValue}");
 		}
 	}
 
@@ -446,26 +415,6 @@ definition {
 		Segmentation.resetDefaultValues();
 	}
 
-	macro selectTag {
-		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Segmentation#SEARCH_TAG_FIELD");
-
-		Type.type(
-			locator1 = "Segmentation#SEARCH_TAG_FIELD",
-			value1 = "${tagOption}");
-
-		KeyPress(
-			locator1 = "Segmentation#SEARCH_TAG_FIELD",
-			value1 = "\ENTER");
-
-		Click(locator1 = "Segmentation#TAG_OPTION");
-
-		SelectFrameTop();
-	}
-
 	macro setVocabularySessionProperty {
 		PortalSettings.openInstanceSettingsAdmin();
 
@@ -485,14 +434,6 @@ definition {
 			selectOption = "${vocabularyName}");
 
 		Button.clickSave();
-	}
-
-	macro tearDown {
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation._deleteAllSegments();
-		}
-
-		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");
 	}
 
 	macro updateSegmentsInterval {
@@ -541,39 +482,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "Segmentation#CLOSE_MODAL");
+		Click(locator1 = "Icon#CLOSE");
 
 		SelectFrame(value1 = "relative=top");
-	}
-
-	macro viewSegment {
-		if (isSet(criterionKey)) {
-			AssertValue(
-				key_criterion = "key",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${criterionKey}");
-
-			AssertValue(
-				key_criterion = "value",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${criterionValue}");
-		}
-		else if (isSet(criterionInputOption)) {
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT",
-				value1 = "${criterionInputOption}");
-		}
-		else if (isSet(criterion)) {
-			AssertValue(
-				key_criterion = "${criterion}",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${value}");
-		}
-		else {
-			AssertValue(
-				locator1 = "Segmentation#PROPERTY_FIELD",
-				value1 = "${propertyField}");
-		}
 	}
 
 }

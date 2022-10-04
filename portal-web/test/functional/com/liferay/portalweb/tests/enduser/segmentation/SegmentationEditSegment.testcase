@@ -53,7 +53,7 @@ definition {
 				checkboxName = "",
 				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 
-			Segmentation.deleteProperties();
+			Segmentation.deleteProperty();
 
 			Segmentation.addProperties(propertyOption = "Regular Role");
 
@@ -69,9 +69,9 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentIfHaveASelectInput Test");
 
-			Segmentation.viewSegment(
-				criterion = "select-input",
-				value = "Administrator");
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Administrator");
 
 			Segmentation.fillProperty(selectCheckbox = "Power User");
 
@@ -84,8 +84,7 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 
 			AssertValue(
-				key_criterion = "select-input",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "Power User");
 		}
 
@@ -117,7 +116,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "EditSegmentUserByCountry Test");
 
-			Segmentation.deleteProperties();
+			Segmentation.deleteProperty();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
@@ -134,8 +133,7 @@ definition {
 			Segmentation.editSegment(entry = "EditSegmentUserByCountry Test");
 
 			AssertValue(
-				key_criterion = "options",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "china");
 		}
 	}
@@ -153,7 +151,7 @@ definition {
 		task ("Edit the segment") {
 			Segmentation.editSegment(entry = "EditSegment Test");
 
-			Segmentation.deleteProperties();
+			Segmentation.deleteProperty();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
@@ -172,8 +170,7 @@ definition {
 			Segmentation.editSegment(entry = "EditSegmentUserByRegion Test");
 
 			AssertValue(
-				key_criterion = "options",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "madrid");
 		}
 	}
@@ -193,7 +190,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "EditSegmentUserBySessionURL Test");
 
-			Segmentation.deleteProperties();
+			Segmentation.deleteProperty();
 
 			Segmentation.gotoSidebar(fieldType = "Session");
 
@@ -208,7 +205,7 @@ definition {
 			Segmentation.editSegment(entry = "EditSegmentUserBySessionURL Test");
 
 			AssertValue(
-				locator1 = "Segmentation#PROPERTY_FIELD",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "http://localhost:8080");
 		}
 	}
@@ -235,7 +232,7 @@ definition {
 		task ("Edit the segment") {
 			Segmentation.editSegment(entry = "EditSegment Test");
 
-			Segmentation.deleteProperties();
+			Segmentation.deleteProperty();
 
 			Segmentation.addProperties(propertyOption = "Tag");
 
@@ -252,8 +249,7 @@ definition {
 			Segmentation.editSegment(entry = "EditSegmentUserByUserTag Test");
 
 			AssertValue(
-				key_criterion = "select-input",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "tagname");
 		}
 	}
@@ -282,7 +278,7 @@ definition {
 			Segmentation.editSegment(entry = "EditSegmentUserEmailAddressContainsToEquals Test");
 
 			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "eq");
 		}
 	}

@@ -189,7 +189,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Hierarchy Path");
 
-			Segmentation.fillProperty(propertyField = "Organization Name");
+			Segmentation.fillProperty(criterionValue = "Organization Name");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationHierarchyPath Test");
 
@@ -243,7 +243,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Name");
 
-			Segmentation.fillProperty(propertyField = "Organization Name");
+			Segmentation.fillProperty(criterionValue = "Organization Name");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationName Test");
 
@@ -536,7 +536,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Type");
 
-			Segmentation.fillProperty(propertyField = "organization");
+			Segmentation.fillProperty(criterionValue = "organization");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationType Test");
 
@@ -730,7 +730,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionBrowser Test");
 
-			Segmentation.fillProperty(propertyField = "Chrome");
+			Segmentation.fillProperty(criterionValue = "Chrome");
 
 			Button.clickSave();
 
@@ -798,7 +798,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceBrand Test");
 
-			Segmentation.fillProperty(propertyField = "Apple");
+			Segmentation.fillProperty(criterionValue = "Apple");
 
 			Button.clickSave();
 
@@ -829,7 +829,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceModel Test");
 
-			Segmentation.fillProperty(propertyField = "ios");
+			Segmentation.fillProperty(criterionValue = "ios");
 
 			Button.clickSave();
 
@@ -860,7 +860,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceScreenResolutionHeight Test");
 
-			Segmentation.fillProperty(resolutionValue = "480");
+			Segmentation.fillProperty(criterionValue = "480");
 
 			Button.clickSave();
 
@@ -891,7 +891,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionDeviceScreenResolutionWidth Test");
 
-			Segmentation.fillProperty(resolutionValue = "320");
+			Segmentation.fillProperty(criterionValue = "320");
 
 			Button.clickSave();
 
@@ -922,7 +922,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionHostname Test");
 
-			Segmentation.fillProperty(propertyField = "localhost");
+			Segmentation.fillProperty(criterionValue = "localhost");
 
 			Button.clickSave();
 
@@ -983,8 +983,7 @@ definition {
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionLanguage Test");
 
 			Select(
-				key_criterion = "options",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "Spanish (Spain)");
 
 			Button.clickSave();
@@ -1078,7 +1077,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionReferrerURL Test");
 
-			Segmentation.fillProperty(propertyField = "http://localhost:8080");
+			Segmentation.fillProperty(criterionValue = "http://localhost:8080");
 
 			Button.clickSave();
 
@@ -1147,8 +1146,7 @@ definition {
 			Segmentation.fillTitle(titleField = "Signed In Test");
 
 			Select(
-				key_criterion = "options",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "False");
 
 			Button.clickSave();
@@ -1180,7 +1178,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentBySessionURL Test");
 
-			Segmentation.fillProperty(propertyField = "http://localhost:8080");
+			Segmentation.fillProperty(criterionValue = "http://localhost:8080");
 
 			Button.clickSave();
 
@@ -1213,7 +1211,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "Chrome");
+			Segmentation.fillProperty(criterionValue = "Chrome");
 
 			Button.clickSave();
 
@@ -1351,7 +1349,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "liferay");
+			Segmentation.fillProperty(criterionValue = "liferay");
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
@@ -1384,7 +1382,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-			Segmentation.fillProperty(propertyField = "liferay");
+			Segmentation.fillProperty(criterionValue = "liferay");
 
 			Button.clickSave();
 
@@ -1419,7 +1417,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Not Contains");
 
-			Segmentation.fillProperty(propertyField = "liferay");
+			Segmentation.fillProperty(criterionValue = "liferay");
 
 			Button.clickSave();
 
@@ -1454,7 +1452,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
 
-			Segmentation.fillProperty(propertyField = "liferay");
+			Segmentation.fillProperty(criterionValue = "liferay");
 
 			Button.clickSave();
 
@@ -1500,7 +1498,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserFirstName Test");
 
-			Segmentation.fillProperty(propertyField = "userfn");
+			Segmentation.fillProperty(criterionValue = "userfn");
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
@@ -1545,7 +1543,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserJobTitle Test");
 
-			Segmentation.fillProperty(propertyField = "QA");
+			Segmentation.fillProperty(criterionValue = "QA");
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
@@ -1589,7 +1587,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserLastName Test");
 
-			Segmentation.fillProperty(propertyField = "userln");
+			Segmentation.fillProperty(criterionValue = "userln");
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
@@ -1633,7 +1631,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserName Test");
 
-			Segmentation.fillProperty(propertyField = "userfn userln");
+			Segmentation.fillProperty(criterionValue = "userfn userln");
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
@@ -1726,7 +1724,7 @@ definition {
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserScreenName Test");
 
-			Segmentation.fillProperty(propertyField = "usersn");
+			Segmentation.fillProperty(criterionValue = "usersn");
 
 			Segmentation.viewMembers(memberName = "userfn userln");
 
@@ -2085,7 +2083,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Business Unit");
 
-			Segmentation.fillProperty(propertyField = "COIN");
+			Segmentation.fillProperty(criterionValue = "COIN");
 
 			Segmentation.fillTitle(titleField = "COINers");
 
@@ -2125,7 +2123,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Last Name");
 
-			Segmentation.fillProperty(propertyField = "O'Neal");
+			Segmentation.fillProperty(criterionValue = "O'Neal");
 		}
 
 		task ("Check that segment includes user") {
@@ -2186,7 +2184,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "</script>");
+			Segmentation.fillProperty(criterionValue = "</script>");
 
 			Button.clickSave();
 
@@ -2214,7 +2212,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "@liferay.com");
+			Segmentation.fillProperty(criterionValue = "@liferay.com");
 
 			Segmentation.duplicateCriteria();
 
@@ -2225,8 +2223,8 @@ definition {
 			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
 
 			Segmentation.fillProperty(
-				indexNumber = "2",
-				propertyField = "@liferay2.com");
+				criterionValue = "@liferay2.com",
+				indexNumber = "2");
 
 			AssertTextEquals(
 				locator1 = "Segmentation#CRITERION_CONJUNCTION",
@@ -2281,7 +2279,7 @@ definition {
 
 			Segmentation.editSegment(entry = "First Segment");
 
-			Segmentation.fillProperty(propertyField = "User");
+			Segmentation.fillProperty(criterionValue = "User");
 
 			Button.clickSave();
 
@@ -2303,7 +2301,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Last Name");
 
-			Segmentation.fillProperty(propertyField = "Test");
+			Segmentation.fillProperty(criterionValue = "Test");
 
 			Segmentation.fillTitle(titleField = "Second Segment");
 
@@ -2317,7 +2315,7 @@ definition {
 		task ("Edit second segmentation") {
 			Segmentation.editSegment(entry = "Second Segment");
 
-			Segmentation.fillProperty(propertyField = "User");
+			Segmentation.fillProperty(criterionValue = "User");
 
 			Button.clickSave();
 
@@ -2389,7 +2387,7 @@ definition {
 
 			AssertElementPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
 
-			Check.checkToggleSwitch(locator1 = "Segmentation#EDIT_TOGGLE");
+			Check.checkToggleSwitch(locator1 = "ToggleSwitch#EDIT_TOGGLE");
 
 			AssertElementNotPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
 		}
@@ -2421,7 +2419,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "user'ln");
+			Segmentation.fillProperty(criterionValue = "user'ln");
 
 			Segmentation.fillTitle(titleField = "CheckSegmentationWithApostropheValueFilter Test");
 
@@ -2503,7 +2501,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "First Name");
 
-			Segmentation.fillProperty(propertyField = "liferay");
+			Segmentation.fillProperty(criterionValue = "liferay");
 
 			Button.clickSave();
 		}
@@ -2712,7 +2710,7 @@ definition {
 			Segmentation.editSegment(entry = "KeepInfomationOfDeleteVocabularyInSegment Test");
 
 			AssertValue(
-				locator1 = "Segmentation#PROPERTY_FIELD",
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "Audience Category 1");
 		}
 	}
@@ -2772,7 +2770,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "test");
+			Segmentation.fillProperty(criterionValue = "test");
 
 			AssertTextEquals(
 				locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -2782,7 +2780,7 @@ definition {
 		task ("Modify the criteria and check the user Belongs To the segment") {
 			Segmentation.viewMembers(memberName = "Test");
 
-			Segmentation.fillProperty(propertyField = "liferay");
+			Segmentation.fillProperty(criterionValue = "liferay");
 
 			AssertTextEquals(
 				locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -2817,13 +2815,13 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Job Title");
 
-			Segmentation.fillProperty(propertyField = "Developer");
+			Segmentation.fillProperty(criterionValue = "Developer");
 
 			Segmentation.addProperties(propertyOption = "First Name");
 
 			Segmentation.fillProperty(
-				indexNumber = "2",
-				propertyField = "Test");
+				criterionValue = "Test",
+				indexNumber = "2");
 
 			Segmentation.fillTitle(titleField = "SegmentationCheckMembersWithConditions Test");
 		}
@@ -2866,7 +2864,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "+ / ? # &");
+			Segmentation.fillProperty(criterionValue = "+ / ? # &");
 
 			AssertTextEquals(
 				locator1 = "Segmentation#MEMBERS_MATCHED",

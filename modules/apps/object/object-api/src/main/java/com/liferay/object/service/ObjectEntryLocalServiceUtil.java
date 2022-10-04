@@ -434,19 +434,19 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry getObjectEntry(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getObjectEntry(
+			externalReferenceCode, objectDefinitionId);
+	}
+
+	public static ObjectEntry getObjectEntry(
 			String externalReferenceCode, long companyId, long groupId)
 		throws PortalException {
 
 		return getService().getObjectEntry(
 			externalReferenceCode, companyId, groupId);
-	}
-
-	public static ObjectEntry getObjectEntryByERC_ODI(
-			String externalReferenceCode, long objectDefinitionId)
-		throws PortalException {
-
-		return getService().getObjectEntryByERC_ODI(
-			externalReferenceCode, objectDefinitionId);
 	}
 
 	/**

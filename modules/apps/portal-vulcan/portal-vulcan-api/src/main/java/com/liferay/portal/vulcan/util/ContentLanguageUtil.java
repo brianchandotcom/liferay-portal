@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -42,10 +43,11 @@ public class ContentLanguageUtil {
 		).orElse(
 			LocaleUtil.fromLanguageId(defaultLocaleId)
 		);
-
-		httpServletResponse.addHeader(
-			HttpHeaders.CONTENT_LANGUAGE,
-			LocaleUtil.toW3cLanguageId(contentLocale));
+		if(httpServletResponse != null) {
+			httpServletResponse.addHeader(
+				HttpHeaders.CONTENT_LANGUAGE,
+				LocaleUtil.toW3cLanguageId(contentLocale));
+		}
 	}
 
 }

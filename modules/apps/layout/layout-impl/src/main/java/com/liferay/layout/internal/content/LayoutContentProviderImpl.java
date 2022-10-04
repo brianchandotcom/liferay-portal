@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.layout.internal.util;
+package com.liferay.layout.internal.content;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.crawler.LayoutCrawler;
 import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.LayoutContentHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -99,8 +99,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = LayoutContentHelper.class)
-public class LayoutContentHelperImpl implements LayoutContentHelper {
+@Component(immediate = true, service = LayoutContentProvider.class)
+public class LayoutContentProviderImpl implements LayoutContentProvider {
 
 	@Override
 	public String getLayoutContent(Layout layout, Locale locale) {
@@ -326,7 +326,7 @@ public class LayoutContentHelperImpl implements LayoutContentHelper {
 	private static final String _WRAPPER_ELEMENT = "id=\"wrapper\">";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutContentHelperImpl.class);
+		LayoutContentProviderImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

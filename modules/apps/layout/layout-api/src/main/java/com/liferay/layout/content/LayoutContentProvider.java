@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util;
+package com.liferay.layout.content;
 
 import com.liferay.portal.kernel.model.Layout;
 
@@ -24,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Eudaldo Alonso
  */
 @ProviderType
-public interface LayoutContentHelper {
+public interface LayoutContentProvider {
 
 	public String getLayoutContent(Layout layout, Locale locale);
 

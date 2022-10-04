@@ -14,7 +14,7 @@
 
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
-import com.liferay.layout.util.LayoutContentHelper;
+import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
@@ -72,7 +72,7 @@ public class LayoutModelDocumentContributor
 		for (Locale locale : locales) {
 			document.addText(
 				Field.getLocalizedName(locale, Field.CONTENT),
-				_layoutContentHelper.getLayoutContent(layout, locale));
+				_layoutContentProvider.getLayoutContent(layout, locale));
 		}
 	}
 
@@ -88,6 +88,6 @@ public class LayoutModelDocumentContributor
 	private Language _language;
 
 	@Reference
-	private LayoutContentHelper _layoutContentHelper;
+	private LayoutContentProvider _layoutContentProvider;
 
 }

@@ -25,11 +25,7 @@ public interface DownstreamBuildReport extends BuildReport {
 
 	public String getBatchName();
 
-	public long getOverheadDuration();
-
 	public List<TestClassReport> getTestClassReports();
-
-	public long getTestExecutionDuration();
 
 	public List<TestReport> getTestReports();
 

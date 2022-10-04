@@ -1230,8 +1230,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Link#READ_MORE");
 
 		AssertVisible(
-			locator1 = "Link#VIEW_IN_CONTEXT",
-			value1 = "View in Context »");
+			key_text = "View on New Page »",
+			locator1 = "Link#ANY");
 
 		AssertVisible(
 			key_text = "${url}",

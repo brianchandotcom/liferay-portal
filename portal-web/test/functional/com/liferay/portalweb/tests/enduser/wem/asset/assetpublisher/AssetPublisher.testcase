@@ -1009,7 +1009,7 @@ definition {
 		task ("View the default asset link behavior is View in Context") {
 			AssertSelectedLabel(
 				locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
-				value1 = "View in Context");
+				value1 = "View on New Page");
 		}
 	}
 

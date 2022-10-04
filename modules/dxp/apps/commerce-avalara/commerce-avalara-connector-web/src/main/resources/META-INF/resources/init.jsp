@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration" %><%@
-page import="com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants" %><%@
 page import="com.liferay.commerce.avalara.connector.exception.CommerceAvalaraConnectionException" %><%@
 page import="com.liferay.commerce.avalara.connector.web.internal.display.context.CommerceAvalaraDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

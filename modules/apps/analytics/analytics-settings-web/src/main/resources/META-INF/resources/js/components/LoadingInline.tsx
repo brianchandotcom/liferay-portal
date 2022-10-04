@@ -14,16 +14,12 @@
 
 import React from 'react';
 
-import Connect from '../../components/Connect';
-import {TGenericComponent} from './WizardPage';
+const LoadingInline: React.FC = () => {
+	return (
+		<span className="inline-item inline-item-before">
+			<span aria-hidden="true" className="loading-animation" />
+		</span>
+	);
+};
 
-interface IStepProps extends TGenericComponent {}
-
-const Step: React.FC<IStepProps> = ({onChangeStep}) => (
-	<Connect
-		onChangeStep={onChangeStep}
-		title={Liferay.Language.get('connect-analytics-cloud')}
-	/>
-);
-
-export default Step;
+export default LoadingInline;

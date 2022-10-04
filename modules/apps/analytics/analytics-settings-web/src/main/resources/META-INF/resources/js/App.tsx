@@ -13,7 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import React from 'react';
+import React, {useReducer} from 'react';
 
 import DefaultPage from './pages/default/DefaultPage';
 import WizardPage from './pages/wizard/WizardPage';
@@ -22,11 +22,15 @@ export const AppContext = React.createContext({
 	connected: false,
 	liferayAnalyticsURL: '',
 	token: '',
-});
+} as any);
 
 export enum EPageView {
 	Wizard = 'VIEW_WIZARD_MODE',
 	Default = 'VIEW_DEFAULT_MODE',
+}
+
+export enum Events {
+	Connected = 'CONNECTED',
 }
 
 type TView = {
@@ -45,17 +49,24 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const App: React.FC<IAppProps> = ({connected, liferayAnalyticsURL, token}) => {
+	const initialState = {
+		connected,
+		liferayAnalyticsURL,
+		token,
+	};
+
+	const [state, dispatch] = useReducer(reducer, initialState);
 	const PageView: React.FC =
 		View[connected ? EPageView.Default : EPageView.Wizard];
 
 	const spritemap =
 		Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
+	const value: any = [state, dispatch];
+
 	return (
 		<ClayIconSpriteContext.Provider value={spritemap}>
-			<AppContext.Provider
-				value={{connected, liferayAnalyticsURL, token}}
-			>
+			<AppContext.Provider value={value}>
 				<div className="analytics-settings-web mt-5">
 					<PageView />
 				</div>
@@ -63,5 +74,17 @@ const App: React.FC<IAppProps> = ({connected, liferayAnalyticsURL, token}) => {
 		</ClayIconSpriteContext.Provider>
 	);
 };
+
+function reducer(state: any, action: any) {
+	switch (action.type) {
+		case Events.Connected:
+			return {
+				...state,
+				...action.payload,
+			};
+		default:
+			throw new Error();
+	}
+}
 
 export default App;

@@ -33,6 +33,7 @@ export interface TGenericComponent {
 
 type TStep = {
 	Component: React.FC<TGenericComponent>;
+	available: boolean;
 	title: string;
 	value: ESteps;
 };
@@ -40,21 +41,25 @@ type TStep = {
 const STEPS: TStep[] = [
 	{
 		Component: ConnectStep,
+		available: true,
 		title: Liferay.Language.get('connect'),
 		value: ESteps.ConnectAC,
 	},
 	{
 		Component: PropertyStep,
+		available: false,
 		title: Liferay.Language.get('property'),
 		value: ESteps.Property,
 	},
 	{
 		Component: PeopleStep,
+		available: false,
 		title: Liferay.Language.get('people'),
 		value: ESteps.People,
 	},
 	{
 		Component: PeopleDataStep,
+		available: false,
 		title: Liferay.Language.get('people-data'),
 		value: ESteps.PeopleData,
 	},
@@ -62,35 +67,60 @@ const STEPS: TStep[] = [
 
 const WizardPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [value, setValue] = useState<number>(ESteps.ConnectAC);
+	const [steps, setSteps] = useState<TStep[]>(STEPS);
 
 	return (
 		<div className="sheet-lg">
 			<ClayMultiStepNav indicatorLabel="top">
-				{STEPS.map(({title, value: curValue}, index) => (
-					<ClayMultiStepNav.Item
-						active={curValue === value}
-						complete={value > curValue}
-						expand={index + 1 !== STEPS.length}
-						key={curValue}
-					>
-						{index < STEPS.length - 1 && (
-							<ClayMultiStepNav.Divider />
-						)}
+				{steps.map(({available, title, value: nextValue}, index) => {
+					const completed = value > nextValue && nextValue !== value;
 
-						<ClayMultiStepNav.Indicator
-							complete={value > curValue && curValue !== value}
-							label={1 + index}
-							onClick={() => setValue(curValue)}
-							subTitle={title}
-						/>
-					</ClayMultiStepNav.Item>
-				))}
+					return (
+						<ClayMultiStepNav.Item
+							active={nextValue === value}
+							complete={value > nextValue}
+							expand={index + 1 !== STEPS.length}
+							key={nextValue}
+						>
+							{index < STEPS.length - 1 && (
+								<ClayMultiStepNav.Divider />
+							)}
+
+							<ClayMultiStepNav.Indicator
+								complete={completed}
+								label={1 + index}
+								onClick={
+									available
+										? () => setValue(nextValue)
+										: () => {}
+								}
+								subTitle={title}
+							/>
+						</ClayMultiStepNav.Item>
+					);
+				})}
 			</ClayMultiStepNav>
 
 			{STEPS.map(({Component, value: curValue}) => (
 				<div key={curValue}>
 					{curValue === value && (
-						<Component onChangeStep={setValue} />
+						<Component
+							onChangeStep={(nextValue) => {
+								const updatedSteps = steps.map((step) => {
+									if (nextValue === step.value) {
+										return {
+											...step,
+											available: true,
+										};
+									}
+
+									return step;
+								});
+
+								setSteps(updatedSteps);
+								setValue(nextValue);
+							}}
+						/>
 					)}
 				</div>
 			))}

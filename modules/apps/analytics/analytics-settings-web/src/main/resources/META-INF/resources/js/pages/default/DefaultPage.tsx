@@ -68,10 +68,11 @@ const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				</ClayLayout.Col>
 
 				<ClayLayout.Col size={9}>
-					{PAGES.map(
-						({Component, key}) =>
-							activePage === key && <Component />
-					)}
+					{PAGES.map(({Component, key}) => (
+						<div key={key}>
+							{activePage === key && <Component />}
+						</div>
+					))}
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</ClayLayout.ContainerFluid>

@@ -76,6 +76,8 @@ definition {
 	@description = "LPS-152677 - Verify that it's possible to create an object with a state added to the picklist"
 	@priority = "4"
 	test CanCreateObjectWithState {
+		property portal.upstream = "quarantine";
+
 		task ("Add a Custom Picklist and Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
@@ -226,6 +228,8 @@ definition {
 	@description = "LPS-152677 - Verify that it's possible to edit an object with a state added to the picklist"
 	@priority = "4"
 	test CanEditObjectWithState {
+		property portal.upstream = "quarantine";
+
 		task ("Add a Custom Picklist and Items (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 

@@ -3604,6 +3604,8 @@ definition {
 	@description = "LPS-135635 - Verify it is possible to update the Name of a Field before the Object is published"
 	@priority = "4"
 	test CanUpdateFieldNameBeforePublished {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 90",
 			objectName = "CustomObject90",
@@ -5272,6 +5274,8 @@ definition {
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many will allow to delete only the entry with relation but not its relations"
 	@priority = "4"
 	test CascadeDeletionManyToManyWillAllowDelete {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 122",
@@ -6773,6 +6777,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object entries are displayed again on Page fragments from an Object that was reactivated"
 	@priority = "4"
 	test ObjectEntriesReappearsPageFragmentsWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 142598",
 			objectName = "CustomObject142598",
@@ -6917,6 +6923,8 @@ definition {
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"
 	@priority = "4"
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140887",
 			objectName = "CustomObject140887",
@@ -7071,6 +7079,8 @@ definition {
 	@description = "LPS-139603 - Verify that the Object Name is displayed on the Relationship tab when a Relationship is created"
 	@priority = "4"
 	test ObjectNameDisplayedOnTheRelationshipTab {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 149",
@@ -7640,6 +7650,8 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
 	@priority = "4"
 	test PreventDeletionManyToManyWontAllowDelete {
+		property portal.upstream = "quarantine";
+
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${nameObject} 163",
@@ -8104,6 +8116,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"
 	@priority = "4"
 	test RelationshipFieldCannotBeSelectedForPageFragmentWhenInactivated {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 170",
@@ -8444,6 +8458,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the child object is inactivated (One to Many)"
 	@priority = "4"
 	test RelationshipTabDisappearsWhenInactivatedOneToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 174",
@@ -8527,6 +8543,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is displayed again when the other object is reactivated (Many to Many)"
 	@priority = "4"
 	test RelationshipTabReappearsWhenReactivatedManyToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 140875 ${letter}",
@@ -8630,6 +8648,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is displayed again when the child object is reactivated (One to Many)"
 	@priority = "4"
 	test RelationshipTabReappearsWhenReactivatedOneToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 140873 ${letter}",

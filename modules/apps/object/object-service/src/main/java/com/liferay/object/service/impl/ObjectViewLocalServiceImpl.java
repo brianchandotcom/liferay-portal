@@ -407,11 +407,11 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		Set<String> objectViewColumnFieldNames = new LinkedHashSet<>();
 
 		for (ObjectViewColumn objectViewColumn : objectViewColumns) {
-			if (Validator.isNull(
-					_objectFieldPersistence.fetchByODI_N(
-						objectView.getObjectDefinitionId(),
-						objectViewColumn.getObjectFieldName()))) {
+			ObjectField objectField = _objectFieldPersistence.fetchByODI_N(
+				objectView.getObjectDefinitionId(),
+				objectViewColumn.getObjectFieldName());
 
+			if (objectField == null) {
 				throw new ObjectViewColumnFieldNameException(
 					"There is no object field with the name: " +
 						objectViewColumn.getObjectFieldName());
@@ -435,7 +435,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			List<ObjectViewFilterColumn> objectViewFilterColumns)
 		throws PortalException {
 
-		Set<String> filterableObjectFieldBusinessTypes;
+		Set<String> filterableObjectFieldBusinessTypes = null;
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152650"))) {
 			filterableObjectFieldBusinessTypes = Collections.unmodifiableSet(

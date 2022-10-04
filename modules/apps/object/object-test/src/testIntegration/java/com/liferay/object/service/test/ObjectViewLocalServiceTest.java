@@ -618,7 +618,7 @@ public class ObjectViewLocalServiceTest {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		String randomERC = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		try {
 			_objectViewLocalService.addObjectView(
@@ -630,7 +630,7 @@ public class ObjectViewLocalServiceTest {
 					_createObjectViewFilterColumn(
 						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
 						StringBundler.concat(
-							"{\"includes\": [\"", randomERC, "\"]}"),
+							"{\"includes\": [\"", externalReferenceCode, "\"]}"),
 						objectField.getName())),
 				Collections.emptyList());
 		}
@@ -640,7 +640,7 @@ public class ObjectViewLocalServiceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"No ", objectDefinition1.getShortName(),
-					" exists with the External Reference Code ", randomERC),
+					" exists with the External Reference Code ", externalReferenceCode),
 				objectViewFilterColumnException.getMessage());
 		}
 

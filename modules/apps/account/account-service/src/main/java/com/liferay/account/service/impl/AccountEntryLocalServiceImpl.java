@@ -179,6 +179,7 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxHeight(),
 			_userFileUploadsSettings.getImageMaxWidth());
 
+		accountEntry.setRestrictMembership(true);
 		accountEntry.setTaxIdNumber(taxIdNumber);
 
 		_validateType(type);

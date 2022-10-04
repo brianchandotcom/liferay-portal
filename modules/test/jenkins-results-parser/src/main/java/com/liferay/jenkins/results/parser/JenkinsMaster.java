@@ -625,26 +625,33 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-			JSONObject taskJSONObject = null;
-
-			if (itemJSONObject.has("task")) {
-				taskJSONObject = itemJSONObject.getJSONObject("task");
+			if (!itemJSONObject.has("task")) {
+				continue;
 			}
 
-			if (taskJSONObject != null) {
-				String taskName = taskJSONObject.getString("name");
+			JSONObject taskJSONObject = itemJSONObject.getJSONObject("task");
 
-				if (taskName.equals("verification-node")) {
-					continue;
-				}
+			String taskName = taskJSONObject.getString("name");
+
+			if (taskName.equals("verification-node")) {
+				continue;
 			}
 
 			if (itemJSONObject.has("why")) {
 				String why = itemJSONObject.optString("why");
 
+				if (taskName.startsWith("label=")) {
+					String offlineSlaveWhy = JenkinsResultsParserUtil.combine(
+						"‘", taskName.substring("label=".length()),
+						"’ is offline");
+
+					if (why.contains(offlineSlaveWhy)) {
+						continue;
+					}
+				}
+
 				if (why.startsWith("There are no nodes") ||
-					why.contains("already in progress") ||
-					why.endsWith("is offline")) {
+					why.contains("already in progress")) {
 
 					continue;
 				}

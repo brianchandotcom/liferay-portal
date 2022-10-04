@@ -72,10 +72,10 @@ export const createCommentQuery = `
 			creator {
 				name
 			}
-			companyMx
 			dateCreated
 			dateModified
 			friendlyUrlPath
+			hasCompanyMx
 			id
 		}
 	}
@@ -406,17 +406,16 @@ export const getMessagesQuery = `
 					postsNumber
 					rank
 				}
-				companyMx
 				dateCreated
 				dateModified
 				encodingFormat
 				friendlyUrlPath
+				hasCompanyMx
 				id
 				messageBoardMessages(flatten: true, sort: "dateCreated:asc") {
 					items {
 						actions
 						articleBody
-						companyMx
 						creator {
 							id
 							image
@@ -425,6 +424,7 @@ export const getMessagesQuery = `
 						dateCreated
 						dateModified
 						encodingFormat
+						hasCompanyMx
 						id
 						friendlyUrlPath
 						showAsAnswer

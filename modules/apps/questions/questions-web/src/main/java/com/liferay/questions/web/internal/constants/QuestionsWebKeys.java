@@ -19,6 +19,8 @@ package com.liferay.questions.web.internal.constants;
  */
 public class QuestionsWebKeys {
 
+	public static final String COMPANY_NAME = "COMPANY_NAME";
+
 	public static final String DEFAULT_RANK = "DEFAULT_RANK";
 
 	public static final String FLAGS_PROPERTIES = "FLAGS_PROPERTIES";

@@ -44,6 +44,7 @@ const FlagsContainer = ({
 			[`${namespace}reportedUserId`]: content?.creator?.id,
 		},
 		btnProps,
+		companyName: context.companyName,
 		message: Liferay.Language.get('report'),
 		onlyIcon,
 		showIcon,

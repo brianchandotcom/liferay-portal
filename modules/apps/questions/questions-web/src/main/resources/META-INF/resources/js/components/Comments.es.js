@@ -29,6 +29,7 @@ export default withRouter(
 	({
 		comments,
 		commentsChange,
+		companyName,
 		editable = true,
 		entityId,
 		match: {
@@ -97,8 +98,9 @@ export default withRouter(
 					<Comment
 						comment={comment}
 						commentChange={_commentChange}
-						companyMx={comment.companyMx}
+						companyName={companyName}
 						editable={editable}
+						hasCompanyMx={comment.companyMx}
 						key={comment.id}
 					/>
 				))}

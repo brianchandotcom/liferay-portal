@@ -143,6 +143,10 @@ public class QuestionsPortlet extends MVCPortlet {
 			"Youngling"
 		);
 
+		Company company = themeDisplay.getCompany();
+
+		renderRequest.setAttribute(QuestionsWebKeys.COMPANY_NAME, company.getName());
+
 		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
 
 		renderRequest.setAttribute(
@@ -156,13 +160,6 @@ public class QuestionsPortlet extends MVCPortlet {
 				"props",
 				() -> HashMapBuilder.<String, Object>put(
 					"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
-				).put(
-					"companyName",
-					() -> {
-						Company company = themeDisplay.getCompany();
-
-						return company.getName();
-					}
 				).put(
 					"isFlagEnabled",
 					FlagsTagUtil.isFlagsEnabled(themeDisplay) &&

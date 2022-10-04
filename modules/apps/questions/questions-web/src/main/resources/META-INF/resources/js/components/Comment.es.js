@@ -27,15 +27,13 @@ import EditedTimestamp from './EditedTimestamp.es';
 import Modal from './Modal.es';
 
 export default withRouter(
-	({comment, commentChange, editable = true, match: {url}}) => {
+	({comment, commentChange, companyName, editable = true, match: {url}}) => {
 		const context = useContext(AppContext);
 		const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(
 			false
 		);
 		const [deleteMessage] = useMutation(deleteMessageQuery);
-		const companyMx = `(${comment.companyMx
-			?.split('.', 1)
-			.join()})`;
+		const hasCompanyMx = `(${comment.hasCompanyMx})`;
 
 		return (
 			<div className="c-my-3 questions-reply row">
@@ -66,9 +64,8 @@ export default withRouter(
 					<div className="c-mb-0">
 						<ArticleBodyRenderer
 							{...comment}
-							companyMx={
-								comment.companyMx && companyMx
-							}
+							companyName={companyName}
+							hasCompanyMx={comment.hasCompanyMx && hasCompanyMx}
 							signature={comment.creator && comment.creator.name}
 						/>
 					</div>

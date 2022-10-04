@@ -199,8 +199,7 @@ export default withRouter(
 																			);
 																		}
 																	);
-																}
-																else {
+																} else {
 																	deleteAnswer(
 																		answer
 																	);
@@ -298,8 +297,9 @@ export default withRouter(
 
 								<div className="c-ml-md-auto c-ml-sm-2 c-mr-lg-2 c-mr-md-4 c-mr-xl-2">
 									<UserRow
-										companyMx={answer.companyMx}
+										companyName={context.companyName}
 										creator={answer.creator}
+										hasCompanyMx={answer.hasCompanyMx}
 										statistics={answer.creatorStatistics}
 									/>
 								</div>
@@ -313,9 +313,10 @@ export default withRouter(
 						<Comments
 							comments={comments}
 							commentsChange={_commentsChange}
-							companyMx={comments.companyMx}
+							companyName={context.companyName}
 							editable={editable}
 							entityId={answer.id}
+							hasCompanyMx={comments.companyMx}
 							onSubscription={onSubscription}
 							question={question}
 							showNewComment={showNewComment}

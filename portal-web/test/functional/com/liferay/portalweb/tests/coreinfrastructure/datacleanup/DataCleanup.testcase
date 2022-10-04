@@ -21,6 +21,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
+		property test.name.skip.portal.instance = "DataCleanup#CanCleanupHelloWorldDataAfterUpgrade";
 
 		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.hello.world.web%';";
 		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%com.liferay.hello.world.web%';";
@@ -88,6 +89,7 @@ definition {
 		property data.archive.type = "data-archive-opensocial";
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
+		property test.name.skip.portal.instance = "DataCleanup#CanCleanupOpensocialDataAfterUpgrade";
 
 		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.opensocial.model.%';";
 		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%opensocial-portlet%';";
@@ -172,6 +174,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
+		property test.name.skip.portal.instance = "DataCleanup#CanCleanupShoppingDataAfterUpgrade";
 
 		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.portlet.shopping%';";
 		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%com.liferay.shopping.service%';";
@@ -243,6 +246,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
+		property test.name.skip.portal.instance = "DataCleanup#CanCleanupSoftwareCatalogDataAfterUpgrade";
 
 		var classNameQuery = "SELECT * FROM ClassName_ WHERE value LIKE '%com.liferay.portlet.softwarecatalog%';";
 		var releaseQuery = "SELECT * FROM Release_ WHERE servletContextName LIKE '%com.liferay.softwarecatalog.service%';";

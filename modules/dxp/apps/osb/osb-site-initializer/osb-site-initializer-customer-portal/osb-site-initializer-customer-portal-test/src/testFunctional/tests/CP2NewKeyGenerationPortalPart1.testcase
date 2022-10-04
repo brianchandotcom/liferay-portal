@@ -15,5 +15,59 @@ definition {
 	var testUserFirstName = "Test";
 	var testProduct = "Portal";
 
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+
+		task ("Login on OKTA") {
+			CustomerPortal.loginOktaToUpdateCP();
+		}
+
+		task ("Go to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+		}
+
+		task ("I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("I generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 }

@@ -673,6 +673,15 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateRestrictMembership(
+			accountEntryId, restrictMembership);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateStatus(
 		com.liferay.account.model.AccountEntry accountEntry, int status) {
 

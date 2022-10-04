@@ -457,6 +457,10 @@ public interface AccountEntryLocalService
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException;
 
+	public AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateStatus(AccountEntry accountEntry, int status);
 

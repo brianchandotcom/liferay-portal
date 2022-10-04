@@ -953,7 +953,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			String oldCDNURL, boolean old)
 		throws PortalException {
 
-		if (fileEntryId == 0) {
+		if ((fileEntryId == 0) && !cdnEnabled) {
 			throw new NoSuchFileEntryException();
 		}
 

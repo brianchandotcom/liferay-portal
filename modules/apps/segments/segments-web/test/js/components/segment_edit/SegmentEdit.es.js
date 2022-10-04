@@ -95,6 +95,7 @@ describe('SegmentEdit', () => {
 	beforeAll(() => {
 		window.Liferay = {
 			...Liferay,
+			CustomDialogs: {},
 			FeatureFlags: {},
 		};
 	});

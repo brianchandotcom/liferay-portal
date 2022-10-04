@@ -152,6 +152,7 @@ describe('ExperienceToolbarSection', () => {
 		window.Liferay = {
 			...Liferay,
 			FeatureFlags: {},
+			CustomDialogs: {}
 		};
 	});
 

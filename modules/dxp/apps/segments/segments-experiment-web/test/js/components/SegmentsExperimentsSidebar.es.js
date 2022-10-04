@@ -248,6 +248,7 @@ describe('Review and Run test', () => {
 	beforeAll(() => {
 		window.Liferay = {
 			...Liferay,
+			CustomDialogs: {},
 			FeatureFlags: {},
 		};
 	});

@@ -382,6 +382,13 @@ describe('CollectionGeneralPanel', () => {
 	describe('Collection Display with filtering', () => {
 		let globalConfirm;
 
+		beforeAll(() => {
+			window.Liferay = {
+				...Liferay,
+				CustomDialogs: {}
+			};
+		})
+
 		beforeEach(() => {
 			globalConfirm = window.confirm;
 			window.confirm = jest.fn();

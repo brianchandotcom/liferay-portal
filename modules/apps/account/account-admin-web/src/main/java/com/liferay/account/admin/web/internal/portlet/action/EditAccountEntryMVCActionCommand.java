@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -83,16 +82,17 @@ public class EditAccountEntryMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			AccountEntry accountEntry = null;
 
 			if (cmd.equals(Constants.ADD)) {
 				accountEntry = _addAccountEntry(actionRequest);
 
-				redirect = HttpComponentsUtil.setParameter(
-					redirect, actionResponse.getNamespace() + "accountEntryId",
-					accountEntry.getAccountEntryId());
+				actionRequest.setAttribute(
+					WebKeys.REDIRECT,
+					HttpComponentsUtil.setParameter(
+						ParamUtil.getString(actionRequest, "redirect"),
+						actionResponse.getNamespace() + "accountEntryId",
+						accountEntry.getAccountEntryId()));
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				accountEntry = updateAccountEntry(actionRequest);
@@ -106,10 +106,6 @@ public class EditAccountEntryMVCActionCommand
 
 				_accountEntryService.updateAccountEntry(accountEntry);
 			}
-
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
 		}
 		catch (Exception exception) {
 			if (exception instanceof PrincipalException) {
@@ -122,19 +118,12 @@ public class EditAccountEntryMVCActionCommand
 					 exception instanceof
 						 DuplicateAccountEntryExternalReferenceCodeException) {
 
-				SessionErrors.add(actionRequest, exception.getClass());
-
 				hideDefaultErrorMessage(actionRequest);
 
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName",
-					"/account_admin/edit_account_entry");
+				sendRedirect(actionRequest, actionResponse);
 			}
 
-			throw exception;
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
+			throw new PortletException(exception);
 		}
 	}
 

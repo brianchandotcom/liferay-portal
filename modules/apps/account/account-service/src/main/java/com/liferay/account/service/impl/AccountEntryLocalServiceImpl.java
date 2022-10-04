@@ -700,6 +700,22 @@ public class AccountEntryLocalServiceImpl
 			getAccountEntry(accountEntryId), externalReferenceCode);
 	}
 
+	@Override
+	public AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws PortalException {
+
+		AccountEntry accountEntry = getAccountEntry(accountEntryId);
+
+		if (restrictMembership == accountEntry.isRestrictMembership()) {
+			return accountEntry;
+		}
+
+		accountEntry.setRestrictMembership(restrictMembership);
+
+		return updateAccountEntry(accountEntry);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountEntry updateStatus(AccountEntry accountEntry, int status) {

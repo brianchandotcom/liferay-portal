@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CSVLogMessageFormatterConfiguration {
 
 	@Meta.AD(
-		deflt = "additionalInfo|className|classPK|clientHost|clientIP|companyId|eventType|message|serverName|serverPort|sessionID|timestamp|userId|userName",
+		deflt = "additionalInfo|className|classPK|clientHost|clientIP|companyId|eventType|message|serverName|serverPort|sessionID|timestamp|userEmail|userId|userLogin|userName",
 		name = "columns", required = false
 	)
 	public String[] columns();

@@ -103,10 +103,12 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 			userLogin = _getUserLogin(user);
 
-			auditRequestThreadLocal.setRealUserId(userId.longValue());
-			auditRequestThreadLocal.setRealUserLogin(userLogin);
-
 			emailAddress = user.getEmailAddress();
+
+			auditRequestThreadLocal.setRealUserEmail(emailAddress);
+
+			auditRequestThreadLocal.setRealUserId(userId);
+			auditRequestThreadLocal.setRealUserLogin(userLogin);
 		}
 
 		StringBuffer sb = httpServletRequest.getRequestURL();

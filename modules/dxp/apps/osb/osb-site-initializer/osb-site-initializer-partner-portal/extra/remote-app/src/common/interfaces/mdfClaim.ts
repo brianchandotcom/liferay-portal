@@ -11,8 +11,10 @@
 
 import LiferayObject from './liferayObject';
 import MDFClaimActivity from './mdfClaimActivity';
+import MDFClaimDocument from './mdfClaimDocument';
 
 export default interface MDFClaim extends Partial<LiferayObject> {
 	activities?: MDFClaimActivity[];
+	document?: MDFClaimDocument;
 	totalClaimAmount?: number;
 }

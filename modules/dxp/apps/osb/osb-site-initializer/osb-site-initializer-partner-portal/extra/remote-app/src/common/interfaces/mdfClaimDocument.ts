@@ -13,6 +13,6 @@ import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
 
 export default interface MDFClaimDocument extends Partial<LiferayObject> {
+	file: File;
 	type: LiferayPicklist;
-	url: string;
 }

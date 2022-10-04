@@ -9,39 +9,76 @@
  * distribution rights of the Software.
  */
 
+import Button from '@clayui/button';
+import {DisplayType} from '@clayui/button/lib/Button';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import {useRef} from 'react';
 
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
+interface IProps {
+	displayType: DisplayType;
+	outline?: boolean;
+	small?: boolean;
+}
+
 const InputFile = ({
 	description,
+	displayType,
 	field,
 	label,
 	meta,
 	onChange,
+	outline,
 	required,
+	small,
 	value,
-	...props
-}: PRMFormFieldProps &
-	PRMFormFieldStateProps<string> &
-	React.ComponentProps<typeof ClayInput>) => (
-	<WrapperInput
-		{...meta}
-		description={description}
-		label={label}
-		required={required}
-	>
-		<ClayInput
-			{...props}
-			{...field}
-			onChange={onChange || field.onChange}
+}: PRMFormFieldProps & PRMFormFieldStateProps<string> & IProps) => {
+	const inputFileRef = useRef<HTMLInputElement>(null);
+
+	return (
+		<WrapperInput
+			{...meta}
+			description={description}
+			label={label}
 			required={required}
-			type="file"
-			value={value || field.value || ''}
-		/>
-	</WrapperInput>
-);
+		>
+			<div>
+				<Button
+					className={classNames({
+						'border-danger': meta.touched && meta.error,
+						'border-success': meta.touched && !meta.error,
+					})}
+					displayType={displayType}
+					name={field.name}
+					onBlur={field.onBlur}
+					onClick={() => inputFileRef.current?.click()}
+					outline={outline}
+					small={small}
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="upload" />
+					</span>
+
+					{value || field.value || 'Upload file'}
+				</Button>
+			</div>
+
+			<ClayInput
+				hidden
+				name={field.name}
+				onChange={onChange || field.onChange}
+				ref={inputFileRef}
+				required={required}
+				type="file"
+				value=""
+			/>
+		</WrapperInput>
+	);
+};
 
 export default InputFile;

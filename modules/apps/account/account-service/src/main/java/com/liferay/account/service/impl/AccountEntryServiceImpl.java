@@ -234,6 +234,8 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 					accountEntry.getAccountEntryId());
 
 			accountEntry.setDomains(originalAccountEntry.getDomains());
+			accountEntry.setRestrictMembership(
+				originalAccountEntry.isRestrictMembership());
 		}
 
 		return accountEntryLocalService.updateAccountEntry(accountEntry);

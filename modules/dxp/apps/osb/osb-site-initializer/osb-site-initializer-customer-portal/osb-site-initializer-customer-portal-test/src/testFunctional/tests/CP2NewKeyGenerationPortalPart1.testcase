@@ -70,4 +70,14 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
+
+    @description = "Automation Ticket: LPS-151332 | Test Summary: Verify if the product field is already selected by default."
+    @priority = "2"
+    test TheProductFieldIsSelectedByDefault {
+        task ("Then I should be able to see that 'Portal' product is selected by default") {
+            CP2ActivationKeys.assertSelectedFieldText(
+                    field = "Product",
+                    option = "${testProduct}");
+        }
+    }
 }

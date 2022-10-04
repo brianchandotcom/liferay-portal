@@ -39,7 +39,7 @@ function send(url) {
 	submitForm(document.hrefFm, url);
 }
 
-export default function LiferayUtilityPageEntryDropdownPropsTransformer({
+export default function LayoutUtilityPageEntryDropdownPropsTransformer({
 	actions,
 	portletNamespace,
 	...otherProps

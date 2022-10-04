@@ -55,16 +55,16 @@
 			"productName": "Home"
 		},
 		{
-			"applicationCreateDate": "2022-09-09",
+			"applicationCreateDate": "2022-09-09T13:00:00Z",
 			"applicationStatus": "quoted",
 			"email": "joana@liferay.com",
 			"externalReferenceCode": "RAYAPP-007",
-			"firstName": "Joana",
+			"firstName": "Eduardo",
 			"lastName": "Test",
 			"productName": "Home"
 		},
 		{
-			"applicationCreateDate": "2022-09-09",
+			"applicationCreateDate": "2022-09-09T15:00:00Z",
 			"applicationStatus": "open",
 			"email": "joana@liferay.com",
 			"externalReferenceCode": "RAYAPP-008",

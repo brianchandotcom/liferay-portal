@@ -13,10 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Header from '../../../../common/components/header';
 import Table from '../../../../common/components/table';
@@ -24,6 +25,7 @@ import {
 	deleteApplicationByExternalReferenceCode,
 	getApplications,
 } from '../../../../common/services';
+import {Parameters} from '../../../../common/services/index';
 import formatDate from '../../../../common/utils/dateFormatter';
 
 const HEADERS = [
@@ -66,12 +68,6 @@ const HEADERS = [
 
 const STATUS_DISABLED = ['Bound', 'Quoted'];
 
-const PARAMETERS = {
-	page: '0',
-	pageSize: '0',
-	sort: 'applicationCreateDate:desc',
-};
-
 type Application = {
 	applicationCreateDate: Date;
 	applicationNumber: number;
@@ -96,8 +92,43 @@ const ApplicationsTable = () => {
 		1
 	);
 
-	PARAMETERS.pageSize = pageSize.toString();
-	PARAMETERS.page = page.toString();
+	const [searchInput, setSearchInput] = useState('');
+	const firstNameSearched = searchInput.split(' ')[0];
+	const lastNameSearched = searchInput.split(' ')[1];
+
+	const PARAMETERS_DEFAULT = {
+		page: '0',
+		pageSize: '0',
+		sort: 'applicationCreateDate:desc',
+	};
+
+	const PARAMETERS_SEARCH = {
+		filter: !lastNameSearched
+			? `contains(firstName,'${firstNameSearched}') or contains(lastName,'${firstNameSearched}') or contains(email, '${firstNameSearched}') or contains(externalReferenceCode, '${firstNameSearched}')`
+			: `contains(firstName,'${firstNameSearched}') and contains(lastName,'${lastNameSearched}')`,
+		page: '0',
+		pageSize: '0',
+		sort: 'applicationCreateDate:desc',
+	};
+
+	const [parameters, setParameters] = useState<Parameters>(
+		PARAMETERS_DEFAULT
+	);
+
+	parameters.pageSize = pageSize.toString();
+	parameters.page = page.toString();
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchInput(event.target.value);
+	};
+
+	const handleClick = () => {
+		if (!searchInput) {
+			setParameters(PARAMETERS_DEFAULT);
+		}
+
+		return setParameters(PARAMETERS_SEARCH);
+	};
 
 	const handleDeleteApplication = (externalReferenceCode: string) => {
 		deleteApplicationByExternalReferenceCode(externalReferenceCode);
@@ -123,8 +154,9 @@ const ApplicationsTable = () => {
 	};
 
 	useEffect(() => {
-		getApplications(PARAMETERS).then((results) => {
+		getApplications(parameters).then((results) => {
 			const applicationsList: TableContent[] = [];
+
 			results?.data?.items.forEach(
 				({
 					applicationCreateDate,
@@ -166,13 +198,37 @@ const ApplicationsTable = () => {
 				totalCount > page * pageSize ? page * pageSize : totalCount;
 			setSecondPaginationLabel(secondPaginationLabel);
 		});
-	}, [pageSize, page]);
+	}, [pageSize, page, parameters, searchInput]);
 
 	const title = `Applications (${totalCount})`;
 
 	return (
 		<div className="px-3 ray-dashboard-recent-applications">
-			<Header className="mb-5 pt-3" title={title} />
+			<div className="d-flex justify-content-between">
+				<Header className="mb-5 pt-3" title={title} />
+
+				<ClayForm.Group className="mt-3 w-25">
+					<ClayInput.Group>
+						<ClayInput.GroupItem prepend>
+							<ClayInput
+								onChange={handleChange}
+								placeholder="Search for..."
+								type="text"
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem append shrink>
+							<ClayButton
+								displayType="secondary"
+								onClick={handleClick}
+								type="submit"
+							>
+								<ClayIcon symbol="search" />
+							</ClayButton>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
+			</div>
 
 			<Table
 				actions={[

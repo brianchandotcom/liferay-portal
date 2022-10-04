@@ -614,7 +614,6 @@ const ProductPerformance = () => {
 										format(x: string) {
 											return '$' + x;
 										},
-										stepSize: 10000,
 									},
 								},
 							}}

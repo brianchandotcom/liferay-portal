@@ -24,6 +24,7 @@ import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeCompanyId;
 import com.liferay.layout.internal.upgrade.v1_2_1.LayoutAssetUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_3.LayoutRevisionUpgradeProcess;
+import com.liferay.layout.internal.upgrade.v1_3_0.util.LayoutLocalizationTable;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -72,6 +73,8 @@ public class LayoutServiceUpgradeStepRegistrator
 			new LayoutRevisionUpgradeProcess(
 				_layoutBranchLocalService, _layoutLocalService,
 				_layoutRevisionLocalService, _layoutSetBranchLocalService));
+
+		registry.register("1.2.3", "1.3.0", LayoutLocalizationTable.create());
 	}
 
 	@Reference

@@ -90,6 +90,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-157445 | Test Summary: Verify if the fields (Environment Name - Host Name) are required"
+	@ignore = "true"
 	@priority = "5"
 	test CanViewAMandatoryMessageForBothFields {
 		task ("Given I go to next form at Genarate New Key") {
@@ -140,6 +141,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-157448 | Test Summary: Verify if the button '+ Add Activation Key' is disabled when the user reaches the maximum number of activation keys allowed."
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheAddActivationKeysButtonIsDisabled {
 		task ("Given I fulfill the Environment field") {
@@ -166,6 +168,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-157446 | Test Summary: Verify if the user enters an invalid IP address and Mac Address an error message appears"
+	@ignore = "true"
 	@priority = "3"
 	test CanViewTheErrorMessageForInvalidIPAddressAndMACAddress {
 		task ("Given I active IP and MAC Address field") {
@@ -244,6 +247,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-157449 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheRemoveActivationKeyButton {
 		task ("Given I fulfill the Environment field") {
@@ -298,6 +302,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-157452 | Test Summary: Verify if the success message after the user generates a key"
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheSuccessMessage {
 		task ("Given I fulfill All fields for the product") {
@@ -326,6 +331,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-157450 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
+	@ignore = "true"
 	@priority = "4"
 	test IfYouClickOnThePreviousButtonTheUserGoesBackToThePreviousStep {
 		task ("Given I click at 'Provious' button") {

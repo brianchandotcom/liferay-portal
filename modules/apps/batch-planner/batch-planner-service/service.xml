@@ -4,7 +4,7 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.batch.planner">
 	<author>Igor Beslic</author>
 	<namespace>BatchPlanner</namespace>
-	<entity local-service="true" name="BatchPlannerMapping" remote-service="true">
+	<entity external-reference-code="company" local-service="true" name="BatchPlannerMapping" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -44,7 +44,7 @@
 			<finder-column name="internalFieldName" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="BatchPlannerPlan" remote-service="true">
+	<entity external-reference-code="none" local-service="true" name="BatchPlannerPlan" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -105,7 +105,7 @@
 			<finder-column name="template" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="BatchPlannerPolicy" remote-service="true">
+	<entity external-reference-code="group" local-service="true" name="BatchPlannerPolicy" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -114,6 +114,7 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="groupId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />

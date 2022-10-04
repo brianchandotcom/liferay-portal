@@ -116,7 +116,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 					<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
 
 					<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
-						<aui:input label="parameters" name="properties" placeholder="define-the-default-parameters-that-are-included-in-all-instances-of-the-client-extension-override-the-properties-of-these-instances-in-the-widget-configuration" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
+						<aui:input label="properties" name="properties" placeholder="define-the-default-properties-that-are-included-in-all-instances-of-the-client-extension-these-properties-are-passed-to-the-application-as-additional-url-attributes-so-they-be-accessed-programmatically" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
 					</c:if>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

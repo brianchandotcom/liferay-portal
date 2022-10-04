@@ -470,7 +470,7 @@ public class LayoutStagedModelDataHandler
 		if ((portletDataContext.isPrivateLayout() &&
 			 !layout.isTypeAssetDisplay()) ||
 			GetterUtil.getBoolean(
-				layoutElement.attributeValue("content-page-template"))) {
+				layoutElement.attributeValue("layout-content-page-template"))) {
 
 			privateLayout = true;
 		}
@@ -2669,7 +2669,7 @@ public class LayoutStagedModelDataHandler
 				 LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
 
 				layoutElement.addAttribute(
-					"content-page-template", Boolean.TRUE.toString());
+					"layout-content-page-template", Boolean.TRUE.toString());
 			}
 		}
 

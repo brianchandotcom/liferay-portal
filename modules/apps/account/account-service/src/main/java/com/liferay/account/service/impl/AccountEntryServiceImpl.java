@@ -281,6 +281,19 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			accountEntryId, externalReferenceCode);
 	}
 
+	@Override
+	public AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_DOMAINS);
+
+		return accountEntryLocalService.updateRestrictMembership(
+			accountEntryId, restrictMembership);
+	}
+
 	private String[] _getManageableDomains(
 			long accountEntryId, String[] domains)
 		throws PortalException {

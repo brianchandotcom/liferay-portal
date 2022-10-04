@@ -15,12 +15,14 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -29,6 +31,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -65,7 +68,17 @@ public class MarkItemForDeletionMVCActionCommand
 				themeDisplay.getPlid(),
 				layoutStructure ->
 					layoutStructure.markLayoutStructureItemForDeletion(
-						itemId, Arrays.asList(portletIds))));
+						itemId, Arrays.asList(portletIds)))
+		).put(
+			"pageContents",
+			ContentUtil.getPageContentsJSONArray(
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse),
+				themeDisplay.getPlid(), segmentsExperienceId)
+		);
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -15,13 +15,11 @@
 import {openToast} from 'frontend-js-web';
 
 import deleteItemAction from '../actions/deleteItem';
-import updatePageContents from '../actions/updatePageContents';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import selectEditableValue from '../selectors/selectEditableValue';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
-import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from '../utils/cache';
 import {
@@ -46,8 +44,8 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			layoutData,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
-		})
-			.then(({portletIds = [], layoutData: nextLayoutData}) => {
+		}).then(
+			({pageContents, portletIds = [], layoutData: nextLayoutData}) => {
 				selectItem(null);
 
 				const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
@@ -60,24 +58,14 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 						fragmentEntryLinkIds,
 						itemId,
 						layoutData: nextLayoutData,
+						pageContents,
 						portletIds,
 					})
 				);
 
 				maybeShowAlert(layoutData, itemId, fragmentEntryLinks);
-			})
-			.then(() => {
-				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch,
-					segmentsExperienceId,
-				}).then((pageContents) => {
-					dispatch(
-						updatePageContents({
-							pageContents,
-						})
-					);
-				});
-			});
+			}
+		);
 	};
 }
 

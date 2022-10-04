@@ -35,6 +35,8 @@ import org.osgi.service.component.annotations.Component;
 public class TestSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
+	public static final String NAME = "TestSystemObjectDefinition";
+
 	@Override
 	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
 		throws PortalException {
@@ -59,7 +61,7 @@ public class TestSystemObjectDefinitionMetadata
 
 	@Override
 	public String getName() {
-		return "TestSystemObjectDefinition";
+		return NAME;
 	}
 
 	@Override

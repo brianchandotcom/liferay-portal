@@ -56,8 +56,7 @@ public class StyleBookEntryZipProcessorImportResultEntry {
 
 	public enum Status {
 
-		IMPORTED("imported"), IMPORTED_DRAFT("imported-draft"),
-		INVALID("invalid");
+		IMPORTED("imported"), INVALID("invalid");
 
 		public String getLabel() {
 			return _label;

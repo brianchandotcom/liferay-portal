@@ -145,7 +145,8 @@ public class QuestionsPortlet extends MVCPortlet {
 
 		Company company = themeDisplay.getCompany();
 
-		renderRequest.setAttribute(QuestionsWebKeys.COMPANY_NAME, company.getName());
+		renderRequest.setAttribute(
+			QuestionsWebKeys.COMPANY_NAME, company.getName());
 
 		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
 

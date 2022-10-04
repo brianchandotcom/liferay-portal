@@ -77,6 +77,22 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		Organization organization =
+			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.
+				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
+					_accountEntry.getExternalReferenceCode(),
+					organization.getId()));
+	}
+
+	@Override
+	@Test
 	public void testDeleteUserAccountByEmailAddress() throws Exception {
 		Organization organization = _toOrganization(
 			_addOrganization(randomOrganization(), "0"));
@@ -268,18 +284,22 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization()
 		throws Exception {
 
-		return organizationResource.putOrganizationByExternalReferenceCode(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()),
-			randomOrganization());
+		Organization organization =
+			organizationResource.putOrganizationByExternalReferenceCode(
+				RandomTestUtil.randomString(), randomOrganization());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			_accountEntry.getAccountEntryId(),
+			GetterUtil.getLong(organization.getId()));
+
+		return organization;
 	}
 
 	@Override
 	protected Organization testDeleteAccountOrganization_addOrganization()
 		throws Exception {
 
-		return organizationResource.putOrganizationByExternalReferenceCode(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()),
-			randomOrganization());
+		return testDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
 	}
 
 	@Override
@@ -448,8 +468,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return organizationResource.putOrganizationByExternalReferenceCode(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()),
-			randomOrganization());
+			_accountEntry.getExternalReferenceCode(), randomOrganization());
 	}
 
 	@Override

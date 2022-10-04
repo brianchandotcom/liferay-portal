@@ -19,9 +19,11 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -87,12 +89,25 @@ public class EditFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId());
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId");
+
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
-			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				layoutStructure));
+			JSONUtil.put(
+				"fragmentEntryLink",
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					fragmentEntryLink,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse),
+					layoutStructure)
+			).put(
+				"pageContents",
+				ContentUtil.getPageContentsJSONArray(
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse),
+					themeDisplay.getPlid(), segmentsExperienceId)
+			));
 	}
 
 	@Reference

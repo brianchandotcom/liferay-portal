@@ -16,6 +16,7 @@ import {
 	ADD_ITEM,
 	DELETE_ITEM,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
+	UPDATE_EDITABLE_VALUES,
 	UPDATE_PAGE_CONTENTS,
 	UPDATE_PREVIEW_IMAGE,
 } from '../actions/types';
@@ -30,6 +31,7 @@ export default function pageContentsReducer(
 		case ADD_ITEM:
 		case DELETE_ITEM:
 		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
+		case UPDATE_EDITABLE_VALUES:
 		case UPDATE_PAGE_CONTENTS:
 			return [...action.pageContents];
 

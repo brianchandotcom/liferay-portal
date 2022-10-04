@@ -954,10 +954,10 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoViewInContext {
-		AssertClick(
-			locator1 = "Link#VIEW_IN_CONTEXT",
-			value1 = "View in Context »");
+	macro gotoViewOnNewPage {
+		Click(
+			key_text = "View in Context »",
+			locator1 = "Link#ANY");
 	}
 
 	macro removeSiteScope {

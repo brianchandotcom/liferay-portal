@@ -372,7 +372,7 @@ public class KBArticleLocalServiceTest {
 				StringUtil.randomString(), null, null, null, null, null,
 				_serviceContext);
 
-			Matcher matcher = _tagetBlankPattern.matcher(
+			Matcher matcher = _targetBlankPattern.matcher(
 				kbArticle.getContent());
 
 			Assert.assertTrue(matcher.matches());
@@ -1252,7 +1252,7 @@ public class KBArticleLocalServiceTest {
 			KBArticle.class.getName(), 0, 0, workflowDefinition);
 	}
 
-	private static final Pattern _tagetBlankPattern = Pattern.compile(
+	private static final Pattern _targetBlankPattern = Pattern.compile(
 		".*target=\"_blank\".*");
 
 	@DeleteAfterTestRun

@@ -176,6 +176,14 @@ public class AccountEntryServiceUtil {
 			accountEntryId, externalReferenceCode);
 	}
 
+	public static AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws PortalException {
+
+		return getService().updateRestrictMembership(
+			accountEntryId, restrictMembership);
+	}
+
 	public static AccountEntryService getService() {
 		return _service;
 	}

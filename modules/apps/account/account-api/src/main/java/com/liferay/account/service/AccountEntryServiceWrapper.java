@@ -196,6 +196,15 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.updateRestrictMembership(
+			accountEntryId, restrictMembership);
+	}
+
+	@Override
 	public AccountEntryService getWrappedService() {
 		return _accountEntryService;
 	}

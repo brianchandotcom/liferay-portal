@@ -131,4 +131,8 @@ public interface AccountEntryService extends BaseService {
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException;
 
+	public AccountEntry updateRestrictMembership(
+			long accountEntryId, boolean restrictMembership)
+		throws PortalException;
+
 }

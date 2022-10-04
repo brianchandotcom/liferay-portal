@@ -704,6 +704,48 @@ public class AccountEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntry
+			updateRestrictMembership(
+				HttpPrincipal httpPrincipal, long accountEntryId,
+				boolean restrictMembership)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "updateRestrictMembership",
+				_updateRestrictMembershipParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, restrictMembership);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountEntryServiceHttp.class);
 
@@ -760,5 +802,7 @@ public class AccountEntryServiceHttp {
 		_updateExternalReferenceCodeParameterTypes15 = new Class[] {
 			long.class, String.class
 		};
+	private static final Class<?>[] _updateRestrictMembershipParameterTypes16 =
+		new Class[] {long.class, boolean.class};
 
 }

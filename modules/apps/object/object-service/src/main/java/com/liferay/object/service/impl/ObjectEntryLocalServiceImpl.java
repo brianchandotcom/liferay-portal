@@ -109,6 +109,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -617,12 +618,14 @@ public class ObjectEntryLocalServiceImpl
 
 	public List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, int start, int end)
+			boolean related, int start, int end,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			groupId, objectRelationshipId, primaryKey, related,
-			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE)
+			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE),
+			permissionChecker
 		).limit(
 			start, end
 		);
@@ -637,13 +640,14 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public int getOneToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related)
+			boolean related, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			groupId, objectRelationshipId, primaryKey, related,
 			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId));
+				ObjectEntryTable.INSTANCE.objectEntryId),
+			permissionChecker);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1737,7 +1741,8 @@ public class ObjectEntryLocalServiceImpl
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, FromStep fromStep)
+			boolean related, FromStep fromStep,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -1810,7 +1815,7 @@ public class ObjectEntryLocalServiceImpl
 				}
 			).and(
 				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
+					if (permissionChecker == null) {
 						return null;
 					}
 

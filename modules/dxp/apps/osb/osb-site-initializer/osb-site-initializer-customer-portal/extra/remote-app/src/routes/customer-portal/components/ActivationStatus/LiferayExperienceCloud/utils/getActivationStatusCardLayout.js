@@ -72,7 +72,8 @@ export default function getActivationStatusCardLayout(
 			title: i18n.translate('liferay-experience-cloud-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
-			dropdownIcon: userAccount.isStaff && userAccount.isProvisioning && (
+			dropdownIcon: (userAccount.isStaff || 
+				userAccount.isProvisioning) && (
 				<ButtonDropDown
 					align={Align.BottomRight}
 					customDropDownButton={

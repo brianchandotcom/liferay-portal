@@ -62,11 +62,6 @@ public class CucumberTestClassResult implements TestClassResult {
 	}
 
 	@Override
-	public long getOverheadDuration() {
-		return 0L;
-	}
-
-	@Override
 	public String getPackageName() {
 		return null;
 	}

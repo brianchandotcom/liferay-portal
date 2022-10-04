@@ -35,8 +35,6 @@ public interface TestResult {
 
 	public Element getGitHubElement();
 
-	public long getOverheadDuration();
-
 	public String getPackageName();
 
 	public String getSimpleClassName();

@@ -35,7 +35,12 @@ import org.osgi.service.component.annotations.Component;
 public class TestSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
-	public static final String NAME = "TestSystemObjectDefinition";
+	public TestSystemObjectDefinitionMetadata(
+		Class<?> modelClass, String name) {
+
+		_modelClass = modelClass;
+		_name = name;
+	}
 
 	@Override
 	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
@@ -46,7 +51,7 @@ public class TestSystemObjectDefinitionMetadata
 
 	@Override
 	public String getJaxRsApplicationName() {
-		return null;
+		return "";
 	}
 
 	@Override
@@ -56,12 +61,12 @@ public class TestSystemObjectDefinitionMetadata
 
 	@Override
 	public Class<?> getModelClass() {
-		return null;
+		return _modelClass;
 	}
 
 	@Override
 	public String getName() {
-		return NAME;
+		return _name;
 	}
 
 	@Override
@@ -81,7 +86,7 @@ public class TestSystemObjectDefinitionMetadata
 
 	@Override
 	public String getRESTContextPath() {
-		return "/test-system-object-definition";
+		return "/o/test-endpoint/rel/{relId}/entries";
 	}
 
 	@Override
@@ -96,7 +101,10 @@ public class TestSystemObjectDefinitionMetadata
 
 	@Override
 	public int getVersion() {
-		return 0;
+		return 1;
 	}
+
+	private final Class<?> _modelClass;
+	private final String _name;
 
 }

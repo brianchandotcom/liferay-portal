@@ -19,7 +19,25 @@ exports[`Projects > render projects with success 1`] = `
         </h5>
         <ul
           class="navbar-nav"
-        />
+        >
+          <li
+            class="nav-item ml-2"
+          >
+            <button
+              class="nav-btn nav-btn-monospaced btn btn-monospaced btn-primary"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-plus"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#plus"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
       </div>
     </nav>
     <div
@@ -53,7 +71,7 @@ exports[`Projects > render projects with success 1`] = `
         <div
           class="pagination-results"
         >
-          Showing 1 to 20 of 100
+          Showing 1 to 1 of 1
         </div>
         <ul
           class="pagination pagination-root"
@@ -89,51 +107,12 @@ exports[`Projects > render projects with success 1`] = `
             </button>
           </li>
           <li
-            class="page-item"
-          >
-            <button
-              class="page-link"
-              type="button"
-            >
-              2
-            </button>
-          </li>
-          <li
-            class="page-item"
-          >
-            <button
-              class="page-link"
-              type="button"
-            >
-              3
-            </button>
-          </li>
-          <li
-            class="page-item"
-          >
-            <button
-              class="page-link"
-              type="button"
-            >
-              4
-            </button>
-          </li>
-          <li
-            class="page-item"
-          >
-            <button
-              class="page-link"
-              type="button"
-            >
-              5
-            </button>
-          </li>
-          <li
-            class="page-item"
+            class="page-item disabled"
           >
             <button
               aria-label="Next"
               class="page-link"
+              disabled=""
               type="button"
             >
               <svg
@@ -241,7 +220,7 @@ exports[`Projects > render projects with success 1`] = `
       <div
         class="pagination-results"
       >
-        Showing 1 to 20 of 100
+        Showing 1 to 1 of 1
       </div>
       <ul
         class="pagination pagination-root"
@@ -277,51 +256,12 @@ exports[`Projects > render projects with success 1`] = `
           </button>
         </li>
         <li
-          class="page-item"
-        >
-          <button
-            class="page-link"
-            type="button"
-          >
-            2
-          </button>
-        </li>
-        <li
-          class="page-item"
-        >
-          <button
-            class="page-link"
-            type="button"
-          >
-            3
-          </button>
-        </li>
-        <li
-          class="page-item"
-        >
-          <button
-            class="page-link"
-            type="button"
-          >
-            4
-          </button>
-        </li>
-        <li
-          class="page-item"
-        >
-          <button
-            class="page-link"
-            type="button"
-          >
-            5
-          </button>
-        </li>
-        <li
-          class="page-item"
+          class="page-item disabled"
         >
           <button
             aria-label="Next"
             class="page-link"
+            disabled=""
             type="button"
           >
             <svg

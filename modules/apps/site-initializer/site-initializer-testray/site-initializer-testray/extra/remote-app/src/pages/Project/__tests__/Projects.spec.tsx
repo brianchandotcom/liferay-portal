@@ -15,36 +15,18 @@
 import Projects from '..';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {Route} from 'react-router-dom';
-import {Mock, vi} from 'vitest';
+import {vi} from 'vitest';
 
 import PageWrapper from '../../../test/PageWrapper';
 
 describe('Projects', () => {
-	let baseFetch: Mock;
-
-	beforeAll(() => {
-		vi.resetAllMocks();
-		vi.useFakeTimers();
-	});
-
 	beforeEach(() => {
-		baseFetch = vi.fn().mockImplementationOnce(() => ({
-			items: [
-				{description: 'DXP Version', id: 1, name: 'Liferay Portal 7.4'},
-			],
-			lastPage: true,
-			pageIndex: 1,
-			pageSize: 20,
-			totalCount: 100,
-		}));
-
 		vi.useFakeTimers();
 	});
 
 	afterEach(() => {
 		cleanup();
 		vi.clearAllTimers();
-		vi.restoreAllMocks();
 	});
 
 	afterAll(() => {
@@ -53,9 +35,7 @@ describe('Projects', () => {
 
 	it('render projects with success', async () => {
 		const {asFragment} = render(<Projects />, {
-			wrapper: ({children}) => (
-				<PageWrapper fetcher={baseFetch}>{children}</PageWrapper>
-			),
+			wrapper: ({children}) => <PageWrapper>{children}</PageWrapper>,
 		});
 
 		await act(async () => {
@@ -66,23 +46,6 @@ describe('Projects', () => {
 	});
 
 	it('check project permissions to open new project page', async () => {
-		baseFetch = vi.fn().mockImplementationOnce(() => ({
-			actions: {
-				create: {},
-			},
-			items: [
-				{
-					description: 'DXP Version',
-					id: 1,
-					name: 'Liferay Portal 7.4',
-				},
-			],
-			lastPage: true,
-			pageIndex: 1,
-			pageSize: 20,
-			totalCount: 100,
-		}));
-
 		const {container, queryByText} = render(<Projects />, {
 			wrapper: ({children}) => (
 				<PageWrapper
@@ -93,7 +56,6 @@ describe('Projects', () => {
 							path="/project/create"
 						/>
 					}
-					fetcher={baseFetch}
 				>
 					{children}
 				</PageWrapper>

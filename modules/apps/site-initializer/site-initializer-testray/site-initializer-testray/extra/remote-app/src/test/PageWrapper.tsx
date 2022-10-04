@@ -16,18 +16,20 @@ import {ReactElement} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {SWRConfig} from 'swr';
 
+import baseFetcher from '../services/fetcher';
+
 type PageWrapperProps = {
 	children: ReactElement;
 	clearCache?: boolean;
 	customRoutes?: ReactElement;
-	fetcher: () => any;
+	fetcher?: () => any;
 };
 
 const PageWrapper: React.FC<PageWrapperProps> = ({
 	children,
 	clearCache,
 	customRoutes,
-	fetcher,
+	fetcher = baseFetcher,
 }) => {
 	return (
 		<SWRConfig

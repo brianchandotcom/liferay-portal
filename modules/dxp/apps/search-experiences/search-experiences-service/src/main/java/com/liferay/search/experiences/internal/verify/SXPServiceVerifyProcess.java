@@ -12,37 +12,43 @@
  *
  */
 
-package com.liferay.search.experiences.internal.upgrade.v1_0_0;
+package com.liferay.search.experiences.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
 import com.liferay.search.experiences.service.SXPElementLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-public class SXPElementUpgradeProcess extends UpgradeProcess {
-
-	public SXPElementUpgradeProcess(
-		CompanyLocalService companyLocalService,
-		CompanyModelListener companyModelListener,
-		SXPElementLocalService sxpElementLocalService) {
-
-		_companyLocalService = companyLocalService;
-		_companyModelListener = companyModelListener;
-		_sxpElementLocalService = sxpElementLocalService;
-	}
+@Component(
+	enabled = false,
+	property = {
+		"initial.deployment=true",
+		"verify.process.name=com.liferay.search.experiences.service"
+	},
+	service = VerifyProcess.class
+)
+public class SXPServiceVerifyProcess extends VerifyProcess {
 
 	@Override
-	protected void doUpgrade() throws Exception {
+	protected void doVerify() throws Exception {
 		_companyLocalService.forEachCompany(
 			company -> _companyModelListener.addSXPElements(
 				company, _sxpElementLocalService));
 	}
 
-	private final CompanyLocalService _companyLocalService;
-	private final CompanyModelListener _companyModelListener;
-	private final SXPElementLocalService _sxpElementLocalService;
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CompanyModelListener _companyModelListener;
+
+	@Reference
+	private SXPElementLocalService _sxpElementLocalService;
 
 }

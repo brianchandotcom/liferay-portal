@@ -14,16 +14,11 @@
 
 package com.liferay.search.experiences.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
-import com.liferay.search.experiences.internal.upgrade.v1_0_0.SXPElementUpgradeProcess;
-import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -36,11 +31,6 @@ public class SXPServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.registerInitialDeploymentUpgradeSteps(
-			new SXPElementUpgradeProcess(
-				_companyLocalService, _companyModelListener,
-				_sxpElementLocalService));
-
 		registry.register(
 			"1.0.0", "1.1.0",
 			UpgradeProcessFactory.addColumns(
@@ -74,14 +64,5 @@ public class SXPServiceUpgradeStepRegistrator
 			new com.liferay.search.experiences.internal.upgrade.v1_3_1.
 				SXPBlueprintUpgradeProcess());
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private CompanyModelListener _companyModelListener;
-
-	@Reference
-	private SXPElementLocalService _sxpElementLocalService;
 
 }

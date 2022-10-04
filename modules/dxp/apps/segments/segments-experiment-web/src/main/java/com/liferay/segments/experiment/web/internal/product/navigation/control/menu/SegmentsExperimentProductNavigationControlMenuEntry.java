@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -342,7 +343,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			SegmentsExperimentDisplayContext segmentsExperimentDisplayContext =
 				new SegmentsExperimentDisplayContext(
-					_layoutLocalService, _portal,
+					_layoutLocalService, _portal, _groupLocalService,
 					(HttpServletRequest)pageContext.getRequest(),
 					(HttpServletResponse)pageContext.getResponse(),
 					_servletContext.getContextPath(),
@@ -371,6 +372,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	private static final String _SESSION_CLICKS_KEY =
 		"com.liferay.segments.experiment.web_panelState";
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Html _html;

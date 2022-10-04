@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -73,6 +75,7 @@ public class SegmentsExperimentDisplayContext {
 
 	public SegmentsExperimentDisplayContext(
 		LayoutLocalService layoutLocalService, Portal portal,
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String pathToAssets,
 		SegmentsExperienceService segmentsExperienceService,
@@ -83,6 +86,7 @@ public class SegmentsExperimentDisplayContext {
 
 		_layoutLocalService = layoutLocalService;
 		_portal = portal;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_pathToAssets = pathToAssets;
@@ -324,8 +328,13 @@ public class SegmentsExperimentDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"analyticsData",
-			_getAnalyticsDataJSONObject(
-				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId())
+			() -> {
+				Group group = _groupLocalService.getGroup(
+					_themeDisplay.getScopeGroupId());
+
+				return _getAnalyticsDataJSONObject(
+					_themeDisplay.getCompanyId(), group.getLiveGroupId());
+			}
 		).put(
 			"hideSegmentsExperimentPanelURL",
 			PortletURLBuilder.create(
@@ -552,6 +561,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private Map<String, Object> _data;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final LayoutLocalService _layoutLocalService;

@@ -38,9 +38,7 @@ export default withRouter(({creator = {}, statistics, companyMx}) => (
 			<p className="c-mb-0 font-weight-bold text-dark">{creator.name}</p>
 
 			{companyMx && (
-				<p className="text-capitalize">
-					{companyMx?.split('.', 1)}
-				</p>
+				<p className="text-capitalize">{companyMx?.split('.', 1)}</p>
 			)}
 		</div>
 

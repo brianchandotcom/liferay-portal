@@ -304,6 +304,46 @@ public class AccountEntryUserRelServiceHttp {
 		}
 	}
 
+	public static void inviteUser(
+			HttpPrincipal httpPrincipal, long accountEntryId,
+			long[] accountRoleIds, String emailAddress,
+			com.liferay.portal.kernel.model.User inviter,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryUserRelServiceUtil.class, "inviteUser",
+				_inviteUserParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, accountRoleIds, emailAddress,
+				inviter, serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void setPersonTypeAccountEntryUser(
 			HttpPrincipal httpPrincipal, long accountEntryId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -312,7 +352,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryUserRelServiceUtil.class,
 				"setPersonTypeAccountEntryUser",
-				_setPersonTypeAccountEntryUserParameterTypes6);
+				_setPersonTypeAccountEntryUserParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, userId);
@@ -371,8 +411,13 @@ public class AccountEntryUserRelServiceHttp {
 		};
 	private static final Class<?>[] _deleteAccountEntryUserRelsParameterTypes5 =
 		new Class[] {long.class, long[].class};
+	private static final Class<?>[] _inviteUserParameterTypes6 = new Class[] {
+		long.class, long[].class, String.class,
+		com.liferay.portal.kernel.model.User.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
 	private static final Class<?>[]
-		_setPersonTypeAccountEntryUserParameterTypes6 = new Class[] {
+		_setPersonTypeAccountEntryUserParameterTypes7 = new Class[] {
 			long.class, long.class
 		};
 

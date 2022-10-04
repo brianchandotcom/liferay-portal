@@ -478,6 +478,32 @@ public class AccountEntryUserRelLocalServiceWrapper
 			accountEntryId, userId);
 	}
 
+	/**
+	 * Invites users to the account by email address. If the email address is
+	 * associated with a registered user, the user will be added to the account
+	 * immediately. Otherwise, an email will be sent to the user to sign up.
+	 * The user will be added to the account upon registration.
+	 *
+	 * @param accountEntryId the primary key of the account
+	 * @param accountRoleIds the primary keys of the account roles that will be
+	 assigned to the user
+	 * @param emailAddress the invited user's email address
+	 * @param inviter the user that makes the invitation request
+	 * @param serviceContext the service context to be applied. Can set the
+	 request used to send the invitation email
+	 */
+	@Override
+	public void inviteUser(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			com.liferay.portal.kernel.model.User inviter,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelLocalService.inviteUser(
+			accountEntryId, accountRoleIds, emailAddress, inviter,
+			serviceContext);
+	}
+
 	@Override
 	public boolean isAccountEntryUser(long userId) {
 		return _accountEntryUserRelLocalService.isAccountEntryUser(userId);

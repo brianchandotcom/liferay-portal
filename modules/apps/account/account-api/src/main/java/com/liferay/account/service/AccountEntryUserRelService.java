@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -88,6 +89,25 @@ public interface AccountEntryUserRelService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	/**
+	 * Invites users to the account by email address. If the email address is
+	 * associated with a registered user, the user will be added to the account
+	 * immediately. Otherwise, an email will be sent to the user to sign up.
+	 * The user will be added to the account upon registration.
+	 *
+	 * @param accountEntryId the primary key of the account
+	 * @param accountRoleIds the primary keys of the account roles that will be
+	 assigned to the user
+	 * @param emailAddress the invited user's email address
+	 * @param inviter the user that makes the invitation request
+	 * @param serviceContext the service context to be applied. Can set the
+	 request used to send the invitation email
+	 */
+	public void inviteUser(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
 		throws PortalException;

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -329,6 +330,25 @@ public interface AccountEntryUserRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasAccountEntryUserRel(long accountEntryId, long userId);
+
+	/**
+	 * Invites users to the account by email address. If the email address is
+	 * associated with a registered user, the user will be added to the account
+	 * immediately. Otherwise, an email will be sent to the user to sign up.
+	 * The user will be added to the account upon registration.
+	 *
+	 * @param accountEntryId the primary key of the account
+	 * @param accountRoleIds the primary keys of the account roles that will be
+	 assigned to the user
+	 * @param emailAddress the invited user's email address
+	 * @param inviter the user that makes the invitation request
+	 * @param serviceContext the service context to be applied. Can set the
+	 request used to send the invitation email
+	 */
+	public void inviteUser(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isAccountEntryUser(long userId);

@@ -50,6 +50,8 @@ if (portletTitleBasedNavigation) {
 	portletDisplay.setURLBack(redirect);
 	renderResponse.setTitle(kbArticle.getTitle());
 }
+
+KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
@@ -63,6 +65,12 @@ if (portletTitleBasedNavigation) {
 					<liferay-frontend:sidebar-toggler-button
 						cssClass="btn btn-monospaced btn-sm btn-unstyled"
 						icon="info-circle-open"
+					/>
+				</li>
+				<li class="nav-item">
+					<clay:dropdown-actions
+						dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
+						propsTransformer="admin/js/KBDropdownPropsTransformer"
 					/>
 				</li>
 			</ul>

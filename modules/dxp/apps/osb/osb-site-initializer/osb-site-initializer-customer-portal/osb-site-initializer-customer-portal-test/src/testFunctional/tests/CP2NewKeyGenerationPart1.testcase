@@ -39,6 +39,7 @@ definition {
 	}
 
 	@description = "LPS-149705 - Verify if the amount of available keys are shown on subscriptions."
+	@ignore = "true"
 	@priority = "5"
 	test IfAvailableKeysAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
@@ -71,6 +72,7 @@ definition {
 	}
 
 	@description = "LPS-149727 - Verify if 'Cancel' button brings user back to Product Actiation DXP Page."
+	@ignore = "true"
 	@priority = "4"
 	test IfCancelButtonBringsToActivationDXPPage {
 		property portal.upstream = "quarantine";
@@ -105,6 +107,7 @@ definition {
 	}
 
 	@description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
+	@ignore = "true"
 	@priority = "4"
 	test IfKeyTypeCanBeSelected {
 		property portal.upstream = "quarantine";
@@ -137,6 +140,7 @@ definition {
 	}
 
 	@description = "LPS-149707 - Verify a message with valid activation dates appears after a subscription is selected"
+	@ignore = "true"
 	@priority = "3"
 	test IfMessageAppearsAfterSelectSubscription {
 		property portal.upstream = "quarantine";
@@ -180,6 +184,7 @@ definition {
 	}
 
 	@description = "LPS-149708 - Verify a message appears after selecting a subscription with a permanent license"
+	@ignore = "true"
 	@priority = "3"
 	test IfMessageAppearsOnSubscriptionsThatAllowPermanentLicenses {
 		property portal.upstream = "quarantine";
@@ -214,6 +219,7 @@ definition {
 	}
 
 	@description = "LPS-149706 - Verify if a subscription has 0 keys then the option is disabled."
+	@ignore = "true"
 	@priority = "5"
 	test IfNoAvailableKeysAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
@@ -246,6 +252,7 @@ definition {
 	}
 
 	@description = "LPS-149731 - Verify if product field is already enabled with the product the user selected in product activation."
+	@ignore = "true"
 	@priority = "4"
 	test IfProductEnabledFromStart {
 		property portal.upstream = "quarantine";
@@ -278,6 +285,7 @@ definition {
 	}
 
 	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
+	@ignore = "true"
 	@priority = "5"
 	test IfProductVersionCanBeSelected {
 		property portal.upstream = "quarantine";
@@ -310,6 +318,7 @@ definition {
 	}
 
 	@description = "LPS-149704 - Verify if start and end dates are displayed on subscriptions."
+	@ignore = "true"
 	@priority = "4"
 	test IfStartAndEndDateAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
@@ -343,6 +352,7 @@ definition {
 	}
 
 	@description = "LPS-149715 - Verify the 'Next' button is disabled until required options are selected."
+	@ignore = "true"
 	@priority = "3"
 	test NextButtonOnlyAvailableIfAllOptionsAreSelected {
 		property portal.upstream = "quarantine";

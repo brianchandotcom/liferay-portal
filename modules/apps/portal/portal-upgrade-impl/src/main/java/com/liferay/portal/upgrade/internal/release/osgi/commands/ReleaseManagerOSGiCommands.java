@@ -183,39 +183,39 @@ public class ReleaseManagerOSGiCommands {
 	protected void executeAll(
 		Set<String> upgradeThrewExceptionBundleSymbolicNames) {
 
-		Set<String> upgradableBundleSymbolicNames =
-			_releaseManagerImpl.getUpgradableBundleSymbolicNames();
+		while (true) {
+			Set<String> upgradableBundleSymbolicNames =
+				_releaseManagerImpl.getUpgradableBundleSymbolicNames();
 
-		upgradableBundleSymbolicNames.removeAll(
-			upgradeThrewExceptionBundleSymbolicNames);
+			upgradableBundleSymbolicNames.removeAll(
+				upgradeThrewExceptionBundleSymbolicNames);
 
-		if (upgradableBundleSymbolicNames.isEmpty()) {
-			return;
-		}
+			if (upgradableBundleSymbolicNames.isEmpty()) {
+				return;
+			}
 
-		for (String upgradableBundleSymbolicName :
-				upgradableBundleSymbolicNames) {
+			for (String upgradableBundleSymbolicName :
+					upgradableBundleSymbolicNames) {
 
-			try {
-				List<UpgradeInfo> upgradeInfos =
-					_releaseManagerImpl.getUpgradeInfos(
+				try {
+					List<UpgradeInfo> upgradeInfos =
+						_releaseManagerImpl.getUpgradeInfos(
+							upgradableBundleSymbolicName);
+
+					_upgradeExecutor.execute(
+						upgradableBundleSymbolicName, upgradeInfos);
+				}
+				catch (Throwable throwable) {
+					_log.error(
+						"Failed upgrade process for module ".concat(
+							upgradableBundleSymbolicName),
+						throwable);
+
+					upgradeThrewExceptionBundleSymbolicNames.add(
 						upgradableBundleSymbolicName);
-
-				_upgradeExecutor.execute(
-					upgradableBundleSymbolicName, upgradeInfos);
-			}
-			catch (Throwable throwable) {
-				_log.error(
-					"Failed upgrade process for module ".concat(
-						upgradableBundleSymbolicName),
-					throwable);
-
-				upgradeThrewExceptionBundleSymbolicNames.add(
-					upgradableBundleSymbolicName);
+				}
 			}
 		}
-
-		executeAll(upgradeThrewExceptionBundleSymbolicNames);
 	}
 
 	private String _check(boolean showUpgradeSteps) {

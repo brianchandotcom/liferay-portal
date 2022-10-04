@@ -15,6 +15,8 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.constants.AccountTicketConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.AccountEntryUserRelEmailAddressException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
@@ -25,19 +27,36 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
+import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.mail.kernel.template.MailTemplate;
+import com.liferay.mail.kernel.template.MailTemplateContext;
+import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
+import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,6 +68,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.mail.internet.InternetAddress;
+
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -352,6 +377,40 @@ public class AccountEntryUserRelLocalServiceImpl
 		return false;
 	}
 
+	/**
+	 * Invites users to the account by email address. If the email address is
+	 * associated with a registered user, the user will be added to the account
+	 * immediately. Otherwise, an email will be sent to the user to sign up.
+	 * The user will be added to the account upon registration.
+	 *
+	 * @param accountEntryId the primary key of the account
+	 * @param accountRoleIds the primary keys of the account roles that will be
+	 *                          assigned to the user
+	 * @param emailAddress the invited user's email address
+	 * @param inviter the user that makes the invitation request
+	 * @param serviceContext the service context to be applied. Can set the
+	 *                       request used to send the invitation email
+	 */
+	public void inviteUser(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = _userLocalService.fetchUserByEmailAddress(
+			inviter.getCompanyId(), emailAddress);
+
+		if (user != null) {
+			addAccountEntryUserRel(accountEntryId, user.getUserId());
+
+			_updateRoles(accountEntryId, user.getUserId(), accountRoleIds);
+		}
+		else {
+			_sendEmail(
+				accountEntryId, accountRoleIds, emailAddress, inviter,
+				serviceContext);
+		}
+	}
+
 	public boolean isAccountEntryUser(long userId) {
 		if (accountEntryUserRelPersistence.countByAccountUserId(userId) > 0) {
 			return true;
@@ -444,6 +503,92 @@ public class AccountEntryUserRelLocalServiceImpl
 		return accountEntry.getDomainsArray();
 	}
 
+	private void _sendEmail(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException {
+
+		try {
+			Ticket ticket = _ticketLocalService.addTicket(
+				inviter.getCompanyId(), AccountEntry.class.getName(),
+				accountEntryId, AccountTicketConstants.TYPE_USER_INVITATION,
+				JSONUtil.put(
+					"accountRoleIds", accountRoleIds
+				).put(
+					"emailAddress", emailAddress
+				).toString(),
+				null, serviceContext);
+
+			Group guestGroup = _groupLocalService.getGroup(
+				inviter.getCompanyId(), GroupConstants.GUEST);
+
+			String url = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					serviceContext.getRequest(),
+					AccountPortletKeys.ACCOUNT_USERS_REGISTRATION,
+					_layoutLocalService.fetchDefaultLayout(
+						guestGroup.getGroupId(), false),
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/account_admin/create_account_user"
+			).setParameter(
+				"ticketKey", ticket.getKey()
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString();
+
+			MailTemplateContextBuilder mailTemplateContextBuilder =
+				MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			mailTemplateContextBuilder.put(
+				"[$ACCOUNT_NAME$]", HtmlUtil.escape(accountEntry.getName()));
+
+			mailTemplateContextBuilder.put("[$CREATE_ACCOUNT_URL$]", url);
+			mailTemplateContextBuilder.put(
+				"[$INVITE_SENDER_NAME$]",
+				HtmlUtil.escape(inviter.getFullName()));
+
+			MailTemplateContext mailTemplateContext =
+				mailTemplateContextBuilder.build();
+
+			String subject = StringUtil.read(
+				getClassLoader(),
+				"com/liferay/account/dependencies" +
+					"/account_entry_invite_user_subject.tmpl");
+
+			MailTemplate subjectTemplate =
+				MailTemplateFactoryUtil.createMailTemplate(subject, false);
+
+			String body = StringUtil.read(
+				getClassLoader(),
+				"com/liferay/account/dependencies" +
+					"/account_entry_invite_user_body.tmpl");
+
+			MailTemplate bodyTemplate =
+				MailTemplateFactoryUtil.createMailTemplate(body, true);
+
+			MailMessage mailMessage = new MailMessage(
+				new InternetAddress(
+					inviter.getEmailAddress(), inviter.getFullName()),
+				new InternetAddress(emailAddress),
+				subjectTemplate.renderAsString(
+					inviter.getLocale(), mailTemplateContext),
+				bodyTemplate.renderAsString(
+					inviter.getLocale(), mailTemplateContext),
+				true);
+
+			_mailService.sendEmail(mailMessage);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
 	private void _updateRoles(
 			long accountEntryId, long userId, long[] accountRoleIds)
 		throws PortalException {
@@ -489,6 +634,21 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private MailService _mailService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

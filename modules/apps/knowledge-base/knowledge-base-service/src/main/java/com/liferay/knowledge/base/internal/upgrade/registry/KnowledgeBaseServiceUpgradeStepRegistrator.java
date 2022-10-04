@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
+import com.liferay.knowledge.base.internal.upgrade.v4_3_0.UpgradeKBArticle;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -176,6 +177,8 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register("4.2.0", "4.3.0", new UpgradeKBArticle());
 	}
 
 	@Reference

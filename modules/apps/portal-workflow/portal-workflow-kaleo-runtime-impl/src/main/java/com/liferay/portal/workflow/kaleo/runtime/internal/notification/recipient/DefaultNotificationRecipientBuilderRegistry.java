@@ -40,7 +40,7 @@ public class DefaultNotificationRecipientBuilderRegistry
 		RecipientType recipientType) {
 
 		NotificationRecipientBuilder notificationRecipientBuilder =
-			_notificationRecipientBuilders.getService(recipientType);
+			_serviceTrackerMap.getService(recipientType);
 
 		if (notificationRecipientBuilder == null) {
 			throw new IllegalArgumentException(
@@ -52,40 +52,38 @@ public class DefaultNotificationRecipientBuilderRegistry
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_notificationRecipientBuilders =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, NotificationRecipientBuilder.class, null,
-				new ServiceReferenceMapper
-					<RecipientType, NotificationRecipientBuilder>() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NotificationRecipientBuilder.class, null,
+			new ServiceReferenceMapper
+				<RecipientType, NotificationRecipientBuilder>() {
 
-					@Override
-					public void map(
-						ServiceReference<NotificationRecipientBuilder>
-							serviceReference,
-						ServiceReferenceMapper.Emitter<RecipientType> emitter) {
+				@Override
+				public void map(
+					ServiceReference<NotificationRecipientBuilder>
+						serviceReference,
+					ServiceReferenceMapper.Emitter<RecipientType> emitter) {
 
-						Object value = serviceReference.getProperty(
-							"recipient.type");
+					Object value = serviceReference.getProperty(
+						"recipient.type");
 
-						if (Validator.isNull(value)) {
-							throw new IllegalArgumentException(
-								"The property \"recipient.type\" is invalid " +
-									"for " + serviceReference);
-						}
-
-						emitter.emit(
-							RecipientType.valueOf(String.valueOf(value)));
+					if (Validator.isNull(value)) {
+						throw new IllegalArgumentException(
+							"The property \"recipient.type\" is invalid for " +
+								serviceReference);
 					}
 
-				});
+					emitter.emit(RecipientType.valueOf(String.valueOf(value)));
+				}
+
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_notificationRecipientBuilders.close();
+		_serviceTrackerMap.close();
 	}
 
 	private ServiceTrackerMap<RecipientType, NotificationRecipientBuilder>
-		_notificationRecipientBuilders;
+		_serviceTrackerMap;
 
 }

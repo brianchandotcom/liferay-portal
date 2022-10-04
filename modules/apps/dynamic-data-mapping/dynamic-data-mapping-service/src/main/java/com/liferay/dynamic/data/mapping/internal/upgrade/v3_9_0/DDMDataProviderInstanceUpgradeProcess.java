@@ -50,10 +50,10 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		DDMFormValuesDeserializer ddmFormValuesDeserializer,
 		DDMFormValuesSerializer ddmFormValuesSerializer) {
 
-		_ddmDataProviderSettingsProviderServiceTracker =
-			ddmDataProviderSettingsProviderServiceTracker;
 		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
 		_ddmFormValuesSerializer = ddmFormValuesSerializer;
+
+		_serviceTrackerMap = ddmDataProviderSettingsProviderServiceTracker;
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		DDMDataProviderSettingsProvider ddmDataProviderSettingsProvider =
-			_ddmDataProviderSettingsProviderServiceTracker.getService(type);
+			_serviceTrackerMap.getService(type);
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			ddmDataProviderSettingsProvider.getSettings());
@@ -180,9 +180,9 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 			ddmFormValues, _ddmFormValuesSerializer);
 	}
 
-	private final ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
-		_ddmDataProviderSettingsProviderServiceTracker;
 	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
+	private final ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
+		_serviceTrackerMap;
 
 }

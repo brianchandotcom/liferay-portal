@@ -56,7 +56,7 @@ public class CommerceChannelHealthStatusRegistryImpl
 
 		ServiceWrapper<CommerceChannelHealthStatus>
 			commerceChannelHealthStatusServiceWrapper =
-				_commerceChannelHealthStatusRegistryMap.getService(key);
+				_serviceTrackerMap.getService(key);
 
 		if (commerceChannelHealthStatusServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -79,8 +79,7 @@ public class CommerceChannelHealthStatusRegistryImpl
 
 		List<ServiceWrapper<CommerceChannelHealthStatus>>
 			commerceChannelHealthStatusServiceWrappers =
-				ListUtil.fromCollection(
-					_commerceChannelHealthStatusRegistryMap.values());
+				ListUtil.fromCollection(_serviceTrackerMap.values());
 
 		Collections.sort(
 			commerceChannelHealthStatusServiceWrappers,
@@ -99,17 +98,16 @@ public class CommerceChannelHealthStatusRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_commerceChannelHealthStatusRegistryMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CommerceChannelHealthStatus.class,
-				"commerce.channel.health.status.key",
-				ServiceTrackerCustomizerFactory.
-					<CommerceChannelHealthStatus>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CommerceChannelHealthStatus.class,
+			"commerce.channel.health.status.key",
+			ServiceTrackerCustomizerFactory.
+				<CommerceChannelHealthStatus>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_commerceChannelHealthStatusRegistryMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -121,6 +119,6 @@ public class CommerceChannelHealthStatusRegistryImpl
 
 	private ServiceTrackerMap
 		<String, ServiceWrapper<CommerceChannelHealthStatus>>
-			_commerceChannelHealthStatusRegistryMap;
+			_serviceTrackerMap;
 
 }

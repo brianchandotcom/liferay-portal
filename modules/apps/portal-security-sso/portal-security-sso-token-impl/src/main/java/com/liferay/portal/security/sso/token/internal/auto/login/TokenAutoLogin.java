@@ -67,13 +67,13 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_tokenRetrievers = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, TokenRetriever.class, "token.location");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_tokenRetrievers.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		String tokenLocation = tokenCompanyServiceSettings.tokenLocation();
 
-		TokenRetriever tokenRetriever = _tokenRetrievers.getService(
+		TokenRetriever tokenRetriever = _serviceTrackerMap.getService(
 			tokenLocation);
 
 		if (tokenRetriever == null) {
@@ -206,7 +206,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	@Reference
 	private Portal _portal;
 
-	private ServiceTrackerMap<String, TokenRetriever> _tokenRetrievers;
+	private ServiceTrackerMap<String, TokenRetriever> _serviceTrackerMap;
 
 	@Reference
 	private UserImporter _userImporter;

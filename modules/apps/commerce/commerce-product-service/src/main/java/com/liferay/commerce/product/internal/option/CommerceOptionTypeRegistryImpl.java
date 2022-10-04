@@ -53,7 +53,7 @@ public class CommerceOptionTypeRegistryImpl
 		}
 
 		ServiceWrapper<CommerceOptionType> commerceOptionTypeServiceWrapper =
-			_commerceOptionTypeRegistryMap.getService(key);
+			_serviceTrackerMap.getService(key);
 
 		if (commerceOptionTypeServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -73,7 +73,7 @@ public class CommerceOptionTypeRegistryImpl
 
 		List<ServiceWrapper<CommerceOptionType>>
 			commerceOptionTypeServiceWrappers = ListUtil.fromCollection(
-				_commerceOptionTypeRegistryMap.values());
+				_serviceTrackerMap.values());
 
 		Collections.sort(
 			commerceOptionTypeServiceWrappers,
@@ -92,17 +92,15 @@ public class CommerceOptionTypeRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_commerceOptionTypeRegistryMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CommerceOptionType.class,
-				"commerce.option.type.key",
-				ServiceTrackerCustomizerFactory.
-					<CommerceOptionType>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CommerceOptionType.class, "commerce.option.type.key",
+			ServiceTrackerCustomizerFactory.<CommerceOptionType>serviceWrapper(
+				bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_commerceOptionTypeRegistryMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -113,6 +111,6 @@ public class CommerceOptionTypeRegistryImpl
 			new CommerceOptionTypeServiceWrapperDisplayOrderComparator();
 
 	private ServiceTrackerMap<String, ServiceWrapper<CommerceOptionType>>
-		_commerceOptionTypeRegistryMap;
+		_serviceTrackerMap;
 
 }

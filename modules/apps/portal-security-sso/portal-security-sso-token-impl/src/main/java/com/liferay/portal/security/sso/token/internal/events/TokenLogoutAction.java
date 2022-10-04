@@ -92,7 +92,7 @@ public class TokenLogoutAction extends Action {
 
 			if (ArrayUtil.isNotEmpty(authenticationCookies)) {
 				LogoutProcessor cookieLogoutProcessor =
-					_logoutProcessors.getService(LogoutProcessorType.COOKIE);
+					_serviceTrackerMap.getService(LogoutProcessorType.COOKIE);
 
 				if (cookieLogoutProcessor != null) {
 					cookieLogoutProcessor.logout(
@@ -106,7 +106,7 @@ public class TokenLogoutAction extends Action {
 
 			if (Validator.isNotNull(logoutRedirectURL)) {
 				LogoutProcessor redirectLogoutProcessor =
-					_logoutProcessors.getService(LogoutProcessorType.REDIRECT);
+					_serviceTrackerMap.getService(LogoutProcessorType.REDIRECT);
 
 				if (redirectLogoutProcessor != null) {
 					redirectLogoutProcessor.logout(
@@ -122,13 +122,13 @@ public class TokenLogoutAction extends Action {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_logoutProcessors = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, LogoutProcessor.class, "logout.processor.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_logoutProcessors.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -137,9 +137,9 @@ public class TokenLogoutAction extends Action {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private ServiceTrackerMap<String, LogoutProcessor> _logoutProcessors;
-
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, LogoutProcessor> _serviceTrackerMap;
 
 }

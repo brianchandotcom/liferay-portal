@@ -380,23 +380,22 @@ public class DLURLHelperImpl implements DLURLHelper {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_dlFileVersionURLProviders =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLFileVersionURLProvider.class, null,
-				(serviceReference, emitter) -> {
-					DLFileVersionURLProvider dlFileVersionURLProvider =
-						bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DLFileVersionURLProvider.class, null,
+			(serviceReference, emitter) -> {
+				DLFileVersionURLProvider dlFileVersionURLProvider =
+					bundleContext.getService(serviceReference);
 
-					List<DLFileVersionURLProvider.Type> types =
-						dlFileVersionURLProvider.getTypes();
+				List<DLFileVersionURLProvider.Type> types =
+					dlFileVersionURLProvider.getTypes();
 
-					types.forEach(emitter::emit);
-				});
+				types.forEach(emitter::emit);
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dlFileVersionURLProviders.close();
+		_serviceTrackerMap.close();
 	}
 
 	private String _getDLFileVersionURLProviderURL(
@@ -404,7 +403,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		DLFileVersionURLProvider.Type type) {
 
 		DLFileVersionURLProvider dlFileVersionURLProvider =
-			_dlFileVersionURLProviders.getService(type);
+			_serviceTrackerMap.getService(type);
 
 		if (dlFileVersionURLProvider != null) {
 			String url = dlFileVersionURLProvider.getURL(
@@ -547,10 +546,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	private ServiceTrackerMap
-		<DLFileVersionURLProvider.Type, DLFileVersionURLProvider>
-			_dlFileVersionURLProviders;
-
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
@@ -559,6 +554,10 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap
+		<DLFileVersionURLProvider.Type, DLFileVersionURLProvider>
+			_serviceTrackerMap;
 
 	@Reference
 	private TrashHelper _trashHelper;

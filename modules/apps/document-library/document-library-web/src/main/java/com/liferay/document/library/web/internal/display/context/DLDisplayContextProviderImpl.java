@@ -160,8 +160,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			FileVersion fileVersion = fileShortcut.getFileVersion();
 
 			DLPreviewRendererProvider dlPreviewRendererProvider =
-				_dlPreviewRendererProviders.getService(
-					fileVersion.getMimeType());
+				_serviceTrackerMap.getService(fileVersion.getMimeType());
 
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
@@ -199,7 +198,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			themeDisplay.getLocale(), getClass());
 
 		DLPreviewRendererProvider dlPreviewRendererProvider =
-			_dlPreviewRendererProviders.getService(fileVersion.getMimeType());
+			_serviceTrackerMap.getService(fileVersion.getMimeType());
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
@@ -225,27 +224,26 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		_dlDisplayContextFactories = ServiceTrackerListFactory.open(
 			bundleContext, DLDisplayContextFactory.class);
 
-		_dlPreviewRendererProviders =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLPreviewRendererProvider.class, null,
-				(serviceReference, emitter) -> {
-					DLPreviewRendererProvider dlPreviewRendererProvider =
-						bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DLPreviewRendererProvider.class, null,
+			(serviceReference, emitter) -> {
+				DLPreviewRendererProvider dlPreviewRendererProvider =
+					bundleContext.getService(serviceReference);
 
-					for (String mimeType :
-							dlPreviewRendererProvider.getMimeTypes()) {
+				for (String mimeType :
+						dlPreviewRendererProvider.getMimeTypes()) {
 
-						emitter.emit(mimeType);
-					}
+					emitter.emit(mimeType);
+				}
 
-					bundleContext.ungetService(serviceReference);
-				});
+				bundleContext.ungetService(serviceReference);
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_dlDisplayContextFactories.close();
-		_dlPreviewRendererProviders.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
@@ -264,9 +262,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 	)
 	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
-	private ServiceTrackerMap<String, DLPreviewRendererProvider>
-		_dlPreviewRendererProviders;
-
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
 
@@ -275,6 +270,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	private ServiceTrackerMap<String, DLPreviewRendererProvider>
+		_serviceTrackerMap;
 
 	@Reference
 	private StorageEngine _storageEngine;

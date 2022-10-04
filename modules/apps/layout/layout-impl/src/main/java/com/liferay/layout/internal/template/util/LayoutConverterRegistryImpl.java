@@ -32,7 +32,7 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 
 	@Override
 	public LayoutConverter getLayoutConverter(String layoutTemplateId) {
-		LayoutConverter layoutConverter = _layoutConverters.getService(
+		LayoutConverter layoutConverter = _serviceTrackerMap.getService(
 			layoutTemplateId);
 
 		if (layoutConverter == null) {
@@ -44,13 +44,13 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_layoutConverters = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, LayoutConverter.class, "layout.template.id");
 	}
 
 	@Reference(target = "(layout.template.id=default)")
 	private LayoutConverter _defaultLayoutConverter;
 
-	private ServiceTrackerMap<String, LayoutConverter> _layoutConverters;
+	private ServiceTrackerMap<String, LayoutConverter> _serviceTrackerMap;
 
 }

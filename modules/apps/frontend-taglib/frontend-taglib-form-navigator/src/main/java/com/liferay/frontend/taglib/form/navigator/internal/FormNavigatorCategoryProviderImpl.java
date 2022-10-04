@@ -48,7 +48,7 @@ public class FormNavigatorCategoryProviderImpl
 		String formNavigatorId) {
 
 		List<FormNavigatorCategory> formNavigatorCategories =
-			_formNavigatorCategories.getService(formNavigatorId);
+			_serviceTrackerMap.getService(formNavigatorId);
 
 		if (formNavigatorCategories != null) {
 			return formNavigatorCategories;
@@ -107,7 +107,7 @@ public class FormNavigatorCategoryProviderImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_formNavigatorCategories = ServiceTrackerMapFactory.openMultiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, FormNavigatorCategory.class, null,
 			ServiceReferenceMapperFactory.createFromFunction(
 				bundleContext, FormNavigatorCategory::getFormNavigatorId),
@@ -126,13 +126,13 @@ public class FormNavigatorCategoryProviderImpl
 	protected void deactivate() {
 		_serviceTracker.close();
 
-		_formNavigatorCategories.close();
+		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, List<FormNavigatorCategory>>
-		_formNavigatorCategories;
 	private ServiceTracker
 		<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory, ?>
 			_serviceTracker;
+	private ServiceTrackerMap<String, List<FormNavigatorCategory>>
+		_serviceTrackerMap;
 
 }

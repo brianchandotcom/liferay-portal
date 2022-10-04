@@ -79,15 +79,14 @@ public class PortletSharedSearchRequestImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_portletSharedSearchContributors =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, PortletSharedSearchContributor.class,
-				"javax.portlet.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, PortletSharedSearchContributor.class,
+			"javax.portlet.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletSharedSearchContributors.close();
+		_serviceTrackerMap.close();
 	}
 
 	protected ThemeDisplay getThemeDisplay(RenderRequest renderRequest) {
@@ -240,8 +239,7 @@ public class PortletSharedSearchRequestImpl
 		RenderRequest renderRequest) {
 
 		PortletSharedSearchContributor portletSharedSearchContributor =
-			_portletSharedSearchContributors.getService(
-				portlet.getPortletName());
+			_serviceTrackerMap.getService(portlet.getPortletName());
 
 		if (portletSharedSearchContributor == null) {
 			return null;
@@ -312,6 +310,6 @@ public class PortletSharedSearchRequestImpl
 	}
 
 	private ServiceTrackerMap<String, PortletSharedSearchContributor>
-		_portletSharedSearchContributors;
+		_serviceTrackerMap;
 
 }

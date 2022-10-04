@@ -127,13 +127,13 @@ public class CompositePasswordEncryptor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_passwordEncryptors = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, PasswordEncryptor.class, "type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_passwordEncryptors.close();
+		_serviceTrackerMap.close();
 	}
 
 	private String _getAlgorithmName(String algorithm) {
@@ -154,13 +154,13 @@ public class CompositePasswordEncryptor
 		PasswordEncryptor passwordEncryptor = null;
 
 		if (algorithm.startsWith(TYPE_BCRYPT)) {
-			passwordEncryptor = _passwordEncryptors.getService(TYPE_BCRYPT);
+			passwordEncryptor = _serviceTrackerMap.getService(TYPE_BCRYPT);
 		}
 		else if (algorithm.startsWith(TYPE_PBKDF2)) {
-			passwordEncryptor = _passwordEncryptors.getService(TYPE_PBKDF2);
+			passwordEncryptor = _serviceTrackerMap.getService(TYPE_PBKDF2);
 		}
 		else {
-			passwordEncryptor = _passwordEncryptors.getService(algorithm);
+			passwordEncryptor = _serviceTrackerMap.getService(algorithm);
 		}
 
 		if (passwordEncryptor == null) {
@@ -168,7 +168,7 @@ public class CompositePasswordEncryptor
 				_log.debug("No password encryptor found for " + algorithm);
 			}
 
-			passwordEncryptor = _passwordEncryptors.getService(TYPE_DEFAULT);
+			passwordEncryptor = _serviceTrackerMap.getService(TYPE_DEFAULT);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -184,6 +184,6 @@ public class CompositePasswordEncryptor
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompositePasswordEncryptor.class);
 
-	private ServiceTrackerMap<String, PasswordEncryptor> _passwordEncryptors;
+	private ServiceTrackerMap<String, PasswordEncryptor> _serviceTrackerMap;
 
 }

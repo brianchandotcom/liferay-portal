@@ -40,14 +40,14 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 
 	@Override
 	public void close() {
-		_modelAdapterBuilders.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Override
 	public <T, V> ModelAdapterBuilder<T, V> locate(
 		Class<T> adapteeModelClass, Class<V> adaptedModelClass) {
 
-		return _modelAdapterBuilders.getService(
+		return _serviceTrackerMap.getService(
 			_getKey(adapteeModelClass, adaptedModelClass));
 	}
 
@@ -110,7 +110,7 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private final ServiceTrackerMap<String, ModelAdapterBuilder>
-		_modelAdapterBuilders = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, ModelAdapterBuilder.class, null,
 			new ServiceReferenceMapper<String, ModelAdapterBuilder>() {
 

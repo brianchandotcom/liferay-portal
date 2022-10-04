@@ -172,8 +172,8 @@ public class DDMServiceUpgradeStepRegistrator
 			new DDMStructureIndexTypeUpgradeProcess(_jsonFactory),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_1.
 				DataProviderInstanceUpgradeProcess(
-					_ddmDataProviderSettingsProviderServiceTracker,
-					ddmFormValuesDeserializer, ddmFormValuesSerializer));
+					_serviceTrackerMap, ddmFormValuesDeserializer,
+					ddmFormValuesSerializer));
 
 		registry.register(
 			"1.1.1", "1.1.2",
@@ -391,8 +391,8 @@ public class DDMServiceUpgradeStepRegistrator
 			"3.8.1", "3.9.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_9_0.
 				DDMDataProviderInstanceUpgradeProcess(
-					_ddmDataProviderSettingsProviderServiceTracker,
-					ddmFormValuesDeserializer, ddmFormValuesSerializer));
+					_serviceTrackerMap, ddmFormValuesDeserializer,
+					ddmFormValuesSerializer));
 
 		registry.register(
 			"3.9.0", "3.9.1",
@@ -505,15 +505,14 @@ public class DDMServiceUpgradeStepRegistrator
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_ddmDataProviderSettingsProviderServiceTracker =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DDMDataProviderSettingsProvider.class,
-				"ddm.data.provider.type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMDataProviderSettingsProvider.class,
+			"ddm.data.provider.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmDataProviderSettingsProviderServiceTracker.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
@@ -530,9 +529,6 @@ public class DDMServiceUpgradeStepRegistrator
 
 	@Reference
 	private DDMDataDefinitionConverter _ddmDataDefinitionConverter;
-
-	private ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
-		_ddmDataProviderSettingsProviderServiceTracker;
 
 	@Reference
 	private DDMDataProviderTracker _ddmDataProviderTracker;
@@ -590,6 +586,9 @@ public class DDMServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
+		_serviceTrackerMap;
 
 	@Reference(target = "(dl.store.impl.enabled=true)")
 	private StoreFactory _storeFactory;

@@ -43,17 +43,16 @@ public class BackgroundTaskModelResourcePermissionWrapper
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_backgroundTaskModelResourcePermissionLogics =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<ModelResourcePermissionLogic<BackgroundTask>>)
-					(Class<?>)ModelResourcePermissionLogic.class,
-				"background.task.executor.class.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<ModelResourcePermissionLogic<BackgroundTask>>)
+				(Class<?>)ModelResourcePermissionLogic.class,
+			"background.task.executor.class.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_backgroundTaskModelResourcePermissionLogics.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -72,7 +71,7 @@ public class BackgroundTaskModelResourcePermissionWrapper
 
 	private ServiceTrackerMap
 		<String, ModelResourcePermissionLogic<BackgroundTask>>
-			_backgroundTaskModelResourcePermissionLogics;
+			_serviceTrackerMap;
 
 	private class BackgroundTaskModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<BackgroundTask> {
@@ -85,7 +84,7 @@ public class BackgroundTaskModelResourcePermissionWrapper
 
 			ModelResourcePermissionLogic<BackgroundTask>
 				backgroundTaskModelResourcePermissionLogic =
-					_backgroundTaskModelResourcePermissionLogics.getService(
+					_serviceTrackerMap.getService(
 						backgroundTask.getTaskExecutorClassName());
 
 			if (backgroundTaskModelResourcePermissionLogic == null) {

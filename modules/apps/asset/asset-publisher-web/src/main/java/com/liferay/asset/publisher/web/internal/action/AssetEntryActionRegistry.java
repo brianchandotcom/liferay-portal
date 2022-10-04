@@ -34,7 +34,7 @@ public class AssetEntryActionRegistry {
 
 	public List<AssetEntryAction<?>> getAssetEntryActions(String className) {
 		List<AssetEntryAction<?>> assetEntryActions =
-			_assetEntryActionsMap.getService(className);
+			_serviceTrackerMap.getService(className);
 
 		if (assetEntryActions != null) {
 			return assetEntryActions;
@@ -45,7 +45,7 @@ public class AssetEntryActionRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_assetEntryActionsMap =
+		_serviceTrackerMap =
 			ServiceTrackerMapBuilder.SelectorFactory.newSelector(
 				bundleContext,
 				(Class<AssetEntryAction<?>>)(Class<?>)AssetEntryAction.class
@@ -59,6 +59,6 @@ public class AssetEntryActionRegistry {
 	}
 
 	private ServiceTrackerMap<String, List<AssetEntryAction<?>>>
-		_assetEntryActionsMap;
+		_serviceTrackerMap;
 
 }

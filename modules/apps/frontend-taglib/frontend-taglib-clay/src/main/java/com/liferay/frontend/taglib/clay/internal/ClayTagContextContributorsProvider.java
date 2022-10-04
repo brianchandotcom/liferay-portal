@@ -49,7 +49,7 @@ public class ClayTagContextContributorsProvider {
 
 		ServiceTrackerMap<String, List<ClayTagContextContributor>>
 			clayTagContextContributors =
-				_clayTagContextContributorsProvider._clayTagContextContributors;
+				_clayTagContextContributorsProvider._serviceTrackerMap;
 
 		return clayTagContextContributors.getService(
 			clayTagContextContributorKey);
@@ -61,20 +61,19 @@ public class ClayTagContextContributorsProvider {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_clayTagContextContributors =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ClayTagContextContributor.class,
-				"(clay.tag.context.contributor.key=*)",
-				new PropertyServiceReferenceMapper<>(
-					"clay.tag.context.contributor.key"),
-				new PropertyServiceReferenceComparator<>("service.ranking"));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ClayTagContextContributor.class,
+			"(clay.tag.context.contributor.key=*)",
+			new PropertyServiceReferenceMapper<>(
+				"clay.tag.context.contributor.key"),
+			new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_clayTagContextContributors.close();
+		_serviceTrackerMap.close();
 
-		_clayTagContextContributors = null;
+		_serviceTrackerMap = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -84,6 +83,6 @@ public class ClayTagContextContributorsProvider {
 		_clayTagContextContributorsProvider;
 
 	private ServiceTrackerMap<String, List<ClayTagContextContributor>>
-		_clayTagContextContributors;
+		_serviceTrackerMap;
 
 }

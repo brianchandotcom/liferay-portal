@@ -35,22 +35,20 @@ public class DDMFormPageChangeTrackerImpl implements DDMFormPageChangeTracker {
 	public DDMFormPageChange getDDMFormPageChangeByDDMFormInstanceId(
 		String ddmFormInstanceId) {
 
-		return _ddmFormPageChangeIdTrackerMap.getService(ddmFormInstanceId);
+		return _serviceTrackerMap.getService(ddmFormInstanceId);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_ddmFormPageChangeIdTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DDMFormPageChange.class, "ddm.form.instance.id");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMFormPageChange.class, "ddm.form.instance.id");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmFormPageChangeIdTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DDMFormPageChange>
-		_ddmFormPageChangeIdTrackerMap;
+	private ServiceTrackerMap<String, DDMFormPageChange> _serviceTrackerMap;
 
 }

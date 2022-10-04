@@ -316,13 +316,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		modified(properties);
 
-		_permissionSQLContributors = ServiceTrackerMapFactory.openMultiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PermissionSQLContributor.class, "model.class.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_permissionSQLContributors.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Modified
@@ -337,7 +337,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String permissionSQL) {
 
 		List<PermissionSQLContributor> permissionSQLContributors =
-			_permissionSQLContributors.getService(className);
+			_serviceTrackerMap.getService(className);
 
 		StringBundler permissionSQLContributorsSQLSB = null;
 
@@ -427,7 +427,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			resourcePermissionDSLQuery);
 
 		List<PermissionSQLContributor> permissionSQLContributors =
-			_permissionSQLContributors.getService(modelClassName);
+			_serviceTrackerMap.getService(modelClassName);
 
 		if ((permissionSQLContributors != null) &&
 			!permissionSQLContributors.isEmpty()) {
@@ -856,10 +856,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private volatile InlinePermissionConfiguration
 		_inlinePermissionConfiguration;
-	private ServiceTrackerMap<String, List<PermissionSQLContributor>>
-		_permissionSQLContributors;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private ServiceTrackerMap<String, List<PermissionSQLContributor>>
+		_serviceTrackerMap;
 
 }

@@ -41,7 +41,7 @@ public class ExpandoBridgeDocumentContributor
 		Document document, BaseModel<ExpandoBridge> baseModel) {
 
 		ExpandoBridgeRetriever expandoBridgeRetriever =
-			_expandoBridgeIndexers.getService(baseModel.getModelClassName());
+			_serviceTrackerMap.getService(baseModel.getModelClassName());
 
 		ExpandoBridge expandoBridge = null;
 
@@ -57,19 +57,19 @@ public class ExpandoBridgeDocumentContributor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_expandoBridgeIndexers = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ExpandoBridgeRetriever.class, "indexer.class.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_expandoBridgeIndexers.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
 	protected ExpandoBridgeIndexer expandoBridgeIndexer;
 
 	private ServiceTrackerMap<String, ExpandoBridgeRetriever>
-		_expandoBridgeIndexers;
+		_serviceTrackerMap;
 
 }

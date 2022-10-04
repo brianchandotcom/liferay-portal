@@ -314,10 +314,9 @@ export default withRouter(
 						<Comments
 							comments={comments}
 							commentsChange={_commentsChange}
-							companyName={context.companyName}
 							editable={editable}
 							entityId={answer.id}
-							hasCompanyMx={comments.companyMx}
+							hasCompanyMx={comments.hasCompanyMx}
 							onSubscription={onSubscription}
 							question={question}
 							showNewComment={showNewComment}

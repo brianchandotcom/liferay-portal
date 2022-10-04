@@ -81,7 +81,7 @@ function EditSXPBlueprintForm({
 	initialTitle = {},
 	sxpBlueprintId,
 }) {
-	const {locale, redirectURL} = useContext(ThemeContext);
+	const {isCompanyAdmin, locale, redirectURL} = useContext(ThemeContext);
 
 	const formRef = useRef();
 	const sxpElementIdCounterRef = useRef(
@@ -416,18 +416,24 @@ function EditSXPBlueprintForm({
 			.then((responseContent) => setIndexFields(responseContent.items))
 			.catch(() => setIndexFields([]));
 
-		// TODO: Create API for search indexes (LPS-163750) where first item
-		// is the company index.
+		if (isCompanyAdmin) {
 
-		setSearchIndexes([]);
+			// TODO: Create API for search indexes (LPS-163750) where first item
+			// is the company index.
 
-		/*
-		fetchData(`/o/search-experiences-rest/v1.0/search-indexes`)
-			.then((responseContent) =>
-				setSearchIndexes(responseContent?.items)
-			)
-			.catch(() => setSearchIndexes([]));
-		*/
+			setSearchIndexes([]);
+
+			/*
+			fetchData(`/o/search-experiences-rest/v1.0/search-indexes`)
+				.then((responseContent) =>
+					setSearchIndexes(responseContent?.items)
+				)
+				.catch(() => setSearchIndexes([]));
+			*/
+		}
+		else {
+			setSearchIndexes([]);
+		}
 
 		setStorageAddSXPElementSidebar('open');
 	}, []); //eslint-disable-line

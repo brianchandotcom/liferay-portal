@@ -44,7 +44,7 @@ function ConfigurationTab({
 	sortConfig,
 	touched,
 }) {
-	const {featureFlagLps153813} = useContext(ThemeContext);
+	const {featureFlagLps153813, isCompanyAdmin} = useContext(ThemeContext);
 
 	const _renderEditor = (configName, configValue) => (
 		<div
@@ -179,7 +179,7 @@ function ConfigurationTab({
 						{_renderEditor('advancedConfig', advancedConfig)}
 					</ClayForm.Group>
 
-					{featureFlagLps153813 && (
+					{featureFlagLps153813 && isCompanyAdmin && (
 						<ClayForm.Group>
 							<label>
 								{Liferay.Language.get('index-configuration')}

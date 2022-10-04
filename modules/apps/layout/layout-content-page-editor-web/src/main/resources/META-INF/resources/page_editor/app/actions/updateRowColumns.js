@@ -14,10 +14,11 @@
 
 import {UPDATE_ROW_COLUMNS} from './types';
 
-export default function updateRowColumns({itemId, layoutData}) {
+export default function updateRowColumns({itemId, layoutData, pageContents}) {
 	return {
 		itemId,
 		layoutData,
+		pageContents,
 		type: UPDATE_ROW_COLUMNS,
 	};
 }

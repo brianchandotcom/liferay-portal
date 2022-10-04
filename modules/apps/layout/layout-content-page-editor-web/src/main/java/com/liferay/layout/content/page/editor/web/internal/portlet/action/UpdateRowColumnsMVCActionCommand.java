@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -107,6 +108,12 @@ public class UpdateRowColumnsMVCActionCommand
 
 				return layoutStructure.toJSONObject();
 			}
+		).put(
+			"pageContents",
+			ContentUtil.getPageContentsJSONArray(
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse),
+				themeDisplay.getPlid(), segmentsExperienceId)
 		);
 	}
 

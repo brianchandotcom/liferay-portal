@@ -22,11 +22,12 @@ export default function updateRowColumns({itemId, numberOfColumns}) {
 			numberOfColumns,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
-		}).then(({layoutData}) => {
+		}).then(({layoutData, pageContents}) => {
 			dispatch(
 				updateRowColumnsAction({
 					itemId,
 					layoutData,
+					pageContents,
 				})
 			);
 		});

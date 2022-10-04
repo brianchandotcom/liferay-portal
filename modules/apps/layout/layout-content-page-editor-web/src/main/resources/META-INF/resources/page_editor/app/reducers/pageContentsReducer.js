@@ -21,6 +21,7 @@ import {
 	UPDATE_ITEM_CONFIG,
 	UPDATE_PAGE_CONTENTS,
 	UPDATE_PREVIEW_IMAGE,
+	UPDATE_ROW_COLUMNS,
 } from '../actions/types';
 
 const INITIAL_STATE = [];
@@ -37,6 +38,7 @@ export default function pageContentsReducer(
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ITEM_CONFIG:
 		case UPDATE_PAGE_CONTENTS:
+		case UPDATE_ROW_COLUMNS:
 			return [...action.pageContents];
 
 		case UPDATE_PREVIEW_IMAGE: {

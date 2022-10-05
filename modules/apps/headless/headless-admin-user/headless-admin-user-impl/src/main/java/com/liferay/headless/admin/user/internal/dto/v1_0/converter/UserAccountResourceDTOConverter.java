@@ -186,7 +186,7 @@ public class UserAccountResourceDTOConverter
 
 						return ServiceBuilderListTypeUtil.
 							getServiceBuilderListTypeMessage(
-								contact.getPrefixId(),
+								contact.getPrefixListTypeId(),
 								dtoConverterContext.getLocale());
 					});
 				setHonorificSuffix(
@@ -197,7 +197,7 @@ public class UserAccountResourceDTOConverter
 
 						return ServiceBuilderListTypeUtil.
 							getServiceBuilderListTypeMessage(
-								contact.getSuffixId(),
+								contact.getSuffixListTypeId(),
 								dtoConverterContext.getLocale());
 					});
 				setImage(

@@ -53,6 +53,7 @@ import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -82,7 +83,8 @@ public class SegmentsExperimentDisplayContext {
 		SegmentsExperienceService segmentsExperienceService,
 		SegmentsExperimentConfiguration segmentsExperimentConfiguration,
 		SegmentsExperimentRelService segmentsExperimentRelService,
-		SegmentsExperimentService segmentsExperimentService) {
+		SegmentsExperimentService segmentsExperimentService,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
@@ -95,6 +97,7 @@ public class SegmentsExperimentDisplayContext {
 		_segmentsExperimentConfiguration = segmentsExperimentConfiguration;
 		_segmentsExperimentRelService = segmentsExperimentRelService;
 		_segmentsExperimentService = segmentsExperimentService;
+		_stagingGroupHelper = stagingGroupHelper;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -314,6 +317,17 @@ public class SegmentsExperimentDisplayContext {
 		return _pathToAssets + "/images";
 	}
 
+	private long _getLiveGroupId() throws Exception {
+		Group group = _groupLocalService.getGroup(
+			_themeDisplay.getScopeGroupId());
+
+		if (_stagingGroupHelper.isStagingGroup(group)) {
+			return group.getLiveGroupId();
+		}
+
+		return _themeDisplay.getScopeGroupId();
+	}
+
 	private Map<String, Object> _getPage() {
 		return HashMapBuilder.<String, Object>put(
 			"classNameId", PortalUtil.getClassNameId(Layout.class.getName())
@@ -334,13 +348,8 @@ public class SegmentsExperimentDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"analyticsData",
-			() -> {
-				Group group = _groupLocalService.getGroup(
-					_themeDisplay.getScopeGroupId());
-
-				return _getAnalyticsDataJSONObject(
-					_themeDisplay.getCompanyId(), group.getLiveGroupId());
-			}
+			_getAnalyticsDataJSONObject(
+				_themeDisplay.getCompanyId(), _getLiveGroupId())
 		).put(
 			"hideSegmentsExperimentPanelURL",
 			PortletURLBuilder.create(
@@ -581,6 +590,7 @@ public class SegmentsExperimentDisplayContext {
 		_segmentsExperimentConfiguration;
 	private final SegmentsExperimentRelService _segmentsExperimentRelService;
 	private final SegmentsExperimentService _segmentsExperimentService;
+	private final StagingGroupHelper _stagingGroupHelper;
 	private final ThemeDisplay _themeDisplay;
 
 }

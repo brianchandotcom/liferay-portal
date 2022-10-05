@@ -21,6 +21,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResourc
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -57,6 +58,25 @@ public class MessageBoardAttachmentResourceImpl
 	}
 
 	@Override
+	public void
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageService.getMBMessageByExternalReferenceCode(
+				siteId, messageBoardMessageExternalReferenceCode);
+
+		FileEntry fileEntry =
+			mbMessage.getAttachmentsFileEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		_portletFileRepository.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public MessageBoardAttachment getMessageBoardAttachment(
 			Long messageBoardAttachmentId)
 		throws Exception {
@@ -85,6 +105,24 @@ public class MessageBoardAttachmentResourceImpl
 			messageBoardThreadId);
 
 		return _getMessageBoardAttachmentsPage(mbThread.getRootMessageId());
+	}
+
+	@Override
+	public MessageBoardAttachment
+			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageService.getMBMessageByExternalReferenceCode(
+				siteId, messageBoardMessageExternalReferenceCode);
+
+		FileEntry fileEntry =
+			mbMessage.getAttachmentsFileEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		return _toMessageBoardAttachment(fileEntry);
 	}
 
 	@Override
@@ -157,6 +195,7 @@ public class MessageBoardAttachmentResourceImpl
 					"contentValue", fileEntry::getContentStream,
 					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
+				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
 				sizeInBytes = fileEntry.getSize();
@@ -167,6 +206,9 @@ public class MessageBoardAttachmentResourceImpl
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
 	private MBMessageService _mbMessageService;

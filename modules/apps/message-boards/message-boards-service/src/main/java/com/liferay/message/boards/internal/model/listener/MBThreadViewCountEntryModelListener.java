@@ -20,7 +20,7 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.view.count.listener.ViewCountEntryModelListener;
+import com.liferay.view.count.model.listener.ViewCountEntryModelListener;
 import com.liferay.view.count.model.ViewCountEntry;
 
 import org.osgi.service.component.annotations.Component;

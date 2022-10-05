@@ -140,9 +140,12 @@ const ActivityClaimPanel = ({
 							description="You can downloaded the Excel Template, fill it out, and upload it back here"
 							displayType="secondary"
 							label="List of Qualified Leads"
-							name="listQualifiedLeads"
+							name={`activities[${activityIndex}].listQualifiedLeads`}
 							onAccept={(value: File) =>
-								setFieldValue('listQualifiedLeads', value)
+								setFieldValue(
+									`activities[${activityIndex}].listQualifiedLeads`,
+									value
+								)
 							}
 							outline
 							required

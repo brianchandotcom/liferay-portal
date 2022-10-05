@@ -16,14 +16,12 @@ import {useState} from 'react';
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import MDFClaimBudget from '../../../../../../../../common/interfaces/mdfClaimBudget';
-import MDFClaimDocument from '../../../../../../../../common/interfaces/mdfClaimDocument';
-import {DocumentType} from '../../../../../../../../common/utils/constants/documentType';
 import getIconSpriteMap from '../../../../../../../../common/utils/getIconSpriteMap';
 
 interface IProps {
 	name: string;
 	onCancel: React.MouseEventHandler<HTMLButtonElement>;
-	onConfirm: (claimAmount?: number, invoice?: MDFClaimDocument) => void;
+	onConfirm: (claimAmount?: number, invoice?: File) => void;
 }
 
 const BudgetModal = ({
@@ -40,7 +38,7 @@ const BudgetModal = ({
 	>(budget?.claimAmount);
 
 	const [currentInvoiceFile, setCurrentInvoiceFile] = useState<
-		MDFClaimDocument | undefined
+		File | undefined
 	>(budget?.invoice);
 
 	return (
@@ -75,16 +73,13 @@ const BudgetModal = ({
 						name={`${name}.document`}
 						onAccept={(value: File) => {
 							if (value) {
-								setCurrentInvoiceFile({
-									file: value,
-									type: DocumentType.INVOICE,
-								});
+								setCurrentInvoiceFile(value);
 							}
 						}}
 						outline
 						required
 						small
-						value={currentInvoiceFile?.file}
+						value={currentInvoiceFile}
 					/>
 				</ClayModal.Body>
 

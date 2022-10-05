@@ -11,11 +11,10 @@
 
 import LiferayObject from './liferayObject';
 import MDFClaimActivity from './mdfClaimActivity';
-import MDFClaimDocument from './mdfClaimDocument';
 
 export default interface MDFClaim extends Partial<LiferayObject> {
 	activities?: MDFClaimActivity[];
-	reimbursementInvoice?: MDFClaimDocument;
+	reimbursementInvoice?: File;
 	totalClaimAmount?: number;
 	totalrequestedAmount?: number;
 }

@@ -157,9 +157,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 	 * @param  baseModel the base model to be converted into an XML string
 	 * @return an XML string representation of the base model
 	 */
-	protected String toXmlString(T baseModel) {
-		return baseModel.toXmlString();
-	}
+	protected abstract String toXmlString(T baseModel);
 
 	/**
 	 * Converts the type {@code T} base model to a byte array and writes it to

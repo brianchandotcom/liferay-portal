@@ -101,13 +101,19 @@ definition {
 	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list their LES subscriptions"
 	@priority = "5"
 	test SeeListOfLESSSubscriptions {
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		// Needs refactor since it depends on example Avangrid Portals account
+		
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
-			CustomerPortal.enterOnProject(title = "Test Account Enterprise Search");
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 		}
 
-		task ("Go to the product activation page") {
+		task ("When a user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "${testAccounts}");
+
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");

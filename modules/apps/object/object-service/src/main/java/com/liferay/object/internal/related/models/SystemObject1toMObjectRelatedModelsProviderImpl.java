@@ -174,8 +174,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getRelatedModels(
-		long groupId, long objectRelationshipId, long primaryKey, int start,
-		int end, PermissionChecker permissionChecker)
+			long groupId, long objectRelationshipId, long primaryKey, int start,
+			int end, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =
@@ -194,8 +194,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-		long groupId, long objectRelationshipId, long primaryKey,
-		PermissionChecker permissionChecker)
+			long groupId, long objectRelationshipId, long primaryKey,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =

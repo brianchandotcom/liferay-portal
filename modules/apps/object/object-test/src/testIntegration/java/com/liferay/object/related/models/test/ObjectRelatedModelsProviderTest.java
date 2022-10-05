@@ -175,7 +175,8 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+				QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -301,7 +302,8 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+				QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -450,7 +452,8 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+				QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -656,7 +659,8 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry.getPrimaryKey(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+				QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
@@ -853,7 +857,8 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+				QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 

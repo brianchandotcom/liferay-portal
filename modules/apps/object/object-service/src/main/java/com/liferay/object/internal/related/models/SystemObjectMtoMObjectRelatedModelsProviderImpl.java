@@ -145,8 +145,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getRelatedModels(
-		long groupId, long objectRelationshipId, long primaryKey, int start,
-		int end, PermissionChecker permissionChecker)
+			long groupId, long objectRelationshipId, long primaryKey, int start,
+			int end, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =
@@ -164,8 +164,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-		long groupId, long objectRelationshipId, long primaryKey,
-		PermissionChecker permissionChecker)
+			long groupId, long objectRelationshipId, long primaryKey,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =

@@ -150,8 +150,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-		long groupId, long objectRelationshipId, long primaryKey, int start,
-		int end, PermissionChecker permissionChecker)
+			long groupId, long objectRelationshipId, long primaryKey, int start,
+			int end, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
@@ -161,8 +161,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-		long groupId, long objectRelationshipId, long primaryKey,
-		PermissionChecker permissionChecker)
+			long groupId, long objectRelationshipId, long primaryKey,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(

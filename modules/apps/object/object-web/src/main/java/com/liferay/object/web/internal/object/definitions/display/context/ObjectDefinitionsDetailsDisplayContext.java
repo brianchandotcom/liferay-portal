@@ -32,11 +32,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -118,10 +116,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 		for (String panelCategoryKey :
 				objectScopeProvider.getRootPanelCategoryKeys()) {
 
-			if (panelCategoryKey.equals(PanelCategoryKeys.COMMERCE) &&
-				!GetterUtil.getBoolean(
-					PropsUtil.get("enterprise.product.commerce.enabled"))) {
-
+			if (panelCategoryKey.equals(PanelCategoryKeys.COMMERCE)) {
 				continue;
 			}
 

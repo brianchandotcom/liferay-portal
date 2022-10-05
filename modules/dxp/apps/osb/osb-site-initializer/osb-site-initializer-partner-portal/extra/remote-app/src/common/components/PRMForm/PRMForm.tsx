@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import Checkbox from './components/fields/Checkbox';
 import CheckboxGroup from './components/fields/CheckboxGroup';
 import DatePicker from './components/fields/DatePicker';
 import InputCurrency from './components/fields/InputCurrency';
@@ -55,6 +56,7 @@ PRMForm.Footer = Footer;
 PRMForm.Group = Group;
 PRMForm.Section = Section;
 
+PRMForm.Checkbox = Checkbox;
 PRMForm.CheckboxGroup = CheckboxGroup;
 PRMForm.DatePicker = DatePicker;
 PRMForm.InputCurrency = InputCurrency;

@@ -9,16 +9,20 @@
  * distribution rights of the Software.
  */
 
-import {FieldInputProps} from 'formik';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 
-interface MetaState {
-	error?: string;
-	touched: boolean;
-}
+import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
+import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
-export default interface PRMFormFieldStateProps<T> {
-	field: FieldInputProps<T>;
-	meta: MetaState;
-	onChange?: (event: React.ChangeEvent) => void;
-	value?: T;
-}
+const Checkbox = ({
+	field,
+}: PRMFormFieldProps & PRMFormFieldStateProps<boolean>) => (
+	<ClayForm.Group className="mb-0">
+		<ClayCheckbox
+			checked={field.value}
+			name={field.name}
+			onChange={field.onChange}
+		/>
+	</ClayForm.Group>
+);
+export default Checkbox;

@@ -9,16 +9,4 @@
  * distribution rights of the Software.
  */
 
-import {FieldInputProps} from 'formik';
-
-interface MetaState {
-	error?: string;
-	touched: boolean;
-}
-
-export default interface PRMFormFieldStateProps<T> {
-	field: FieldInputProps<T>;
-	meta: MetaState;
-	onChange?: (event: React.ChangeEvent) => void;
-	value?: T;
-}
+export {default} from './Checkbox';

@@ -104,6 +104,8 @@
 				<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 			</for>
 
+			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="&quot;double quoted&quot;" />
+
 			<if>
 				<isset var="duplicate" />
 				<then>

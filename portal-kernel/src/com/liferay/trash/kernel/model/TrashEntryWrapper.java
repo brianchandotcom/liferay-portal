@@ -289,11 +289,6 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		return _trashEntry.toString();
 	}
 
-	@Override
-	public java.lang.String toXmlString() {
-		return _trashEntry.toXmlString();
-	}
-
 	/**
 	* Returns the create date of this trash entry.
 	*

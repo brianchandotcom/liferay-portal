@@ -308,6 +308,4 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
 	@Override
 	public String toString();
 
-	@Override
-	public String toXmlString();
 }

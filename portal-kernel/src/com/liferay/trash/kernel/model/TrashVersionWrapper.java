@@ -226,11 +226,6 @@ public class TrashVersionWrapper implements TrashVersion,
 		return _trashVersion.toString();
 	}
 
-	@Override
-	public java.lang.String toXmlString() {
-		return _trashVersion.toXmlString();
-	}
-
 	/**
 	* Returns the class name ID of this trash version.
 	*

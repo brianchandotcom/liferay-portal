@@ -327,8 +327,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153532");
 
 		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
-
-		ObjectPortlet.viewEntry(entry = "Entry A");
 	}
 
 	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"

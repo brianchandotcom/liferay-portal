@@ -21,13 +21,13 @@ export function getDTOFromMDFRequest(
 	return {
 		...getSummaryActivities(mdfRequest.activities),
 		additionalOption: mdfRequest.additionalOption,
+		companyName: mdfRequest.companyNameSF,
 		country: mdfRequest.country,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCodeSF,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			'; '
 		),
-		liferaysUserId: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),

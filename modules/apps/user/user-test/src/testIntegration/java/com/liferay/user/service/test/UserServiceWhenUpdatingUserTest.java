@@ -114,9 +114,10 @@ public class UserServiceWhenUpdatingUserTest {
 			user.getScreenName(), user.getEmailAddress(), user.getLanguageId(),
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			contact.getFirstName(), contact.getMiddleName(),
-			contact.getLastName(), contact.getPrefixId(), contact.getSuffixId(),
-			contact.isMale(), birthdayMonth, birthdayDay, birthdayYear,
-			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getLastName(), contact.getPrefixListTypeId(),
+			contact.getSuffixListTypeId(), contact.isMale(), birthdayMonth,
+			birthdayDay, birthdayYear, contact.getSmsSn(),
+			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), contact.getJobTitle(),
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
 			new ServiceContext());

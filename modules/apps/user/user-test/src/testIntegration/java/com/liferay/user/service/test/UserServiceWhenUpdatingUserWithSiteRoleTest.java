@@ -108,12 +108,12 @@ public class UserServiceWhenUpdatingUserWithSiteRoleTest {
 			user.isPasswordReset(), null, null, user.getScreenName(),
 			user.getEmailAddress(), user.getLanguageId(), user.getTimeZoneId(),
 			user.getGreeting(), user.getComments(), user.getFirstName(),
-			user.getMiddleName(), user.getLastName(), contact.getPrefixId(),
-			contact.getSuffixId(), user.isMale(), birthdayMonth, birthdayDay,
-			birthdayYear, contact.getSmsSn(), contact.getFacebookSn(),
-			contact.getJabberSn(), contact.getSkypeSn(), contact.getTwitterSn(),
-			user.getJobTitle(), null, null, null, userGroupRoles, null,
-			new ServiceContext());
+			user.getMiddleName(), user.getLastName(),
+			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
+			user.isMale(), birthdayMonth, birthdayDay, birthdayYear,
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
+			null, null, null, userGroupRoles, null, new ServiceContext());
 	}
 
 	@DeleteAfterTestRun

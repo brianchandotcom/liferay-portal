@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -25,6 +23,7 @@ public interface SearchEngineConfigurator {
 
 	public void destroy();
 
-	public void setSearchEngines(Map<String, SearchEngine> searchEngines);
+	public void setSearchEngine(
+		String searchEngineId, SearchEngine searchEngine);
 
 }

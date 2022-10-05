@@ -1020,7 +1020,8 @@ public class ObjectRelatedModelsProviderTest {
 			0,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				0, objectRelationship.getObjectRelationshipId(),
-				parentObjectEntry.getObjectEntryId()));
+				parentObjectEntry.getObjectEntryId(),
+				PermissionThreadLocal.getPermissionChecker()));
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
@@ -1031,7 +1032,8 @@ public class ObjectRelatedModelsProviderTest {
 			expectedRelatedModelsCount,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				0, objectRelationship.getObjectRelationshipId(),
-				parentObjectEntry.getObjectEntryId()));
+				parentObjectEntry.getObjectEntryId(),
+				PermissionThreadLocal.getPermissionChecker()));
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),

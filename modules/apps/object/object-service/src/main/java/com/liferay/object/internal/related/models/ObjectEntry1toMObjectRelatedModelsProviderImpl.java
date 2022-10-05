@@ -160,7 +160,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+		long groupId, long objectRelationshipId, long primaryKey,
+		PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntriesCount(

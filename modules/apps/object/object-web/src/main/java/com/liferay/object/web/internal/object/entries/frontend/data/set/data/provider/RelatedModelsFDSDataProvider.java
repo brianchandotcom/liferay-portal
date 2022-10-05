@@ -30,6 +30,7 @@ import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDS
 import com.liferay.object.web.internal.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -119,7 +120,8 @@ public class RelatedModelsFDSDataProvider
 
 		return objectRelatedModelsProvider.getRelatedModelsCount(
 			objectScopeProvider.getGroupId(httpServletRequest),
-			objectRelationshipId, objectEntryId);
+			objectRelationshipId, objectEntryId,
+			PermissionThreadLocal.getPermissionChecker());
 	}
 
 	@Reference

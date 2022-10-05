@@ -746,7 +746,8 @@ public class DefaultObjectEntryManagerImpl
 			int count = objectRelatedModelsProvider.getRelatedModelsCount(
 				objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getPrimaryKey());
+				objectEntry.getPrimaryKey(),
+				PermissionThreadLocal.getPermissionChecker());
 
 			if (count > 0) {
 				return true;

@@ -48,7 +48,8 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 		throws PortalException;
 
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			long groupId, long objectRelationshipId, long primaryKey,
+			PermissionChecker permissionChecker)
 		throws PortalException;
 
 	public default List<T> getUnrelatedModels(

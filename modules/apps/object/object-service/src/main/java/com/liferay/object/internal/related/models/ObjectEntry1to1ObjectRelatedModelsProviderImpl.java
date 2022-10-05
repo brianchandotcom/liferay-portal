@@ -161,7 +161,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+		long groupId, long objectRelationshipId, long primaryKey,
+		PermissionChecker permissionChecker)
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(

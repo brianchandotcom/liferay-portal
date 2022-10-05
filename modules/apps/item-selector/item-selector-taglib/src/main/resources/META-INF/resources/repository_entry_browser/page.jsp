@@ -470,7 +470,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 									data.put("url", DLURLHelperUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
 									data.put("value", ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay));
 
-									String cssClass = "item-preview form-check form-check-card";
+									String cssClass = "form-check form-check-card item-preview";
 
 									if (repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion)) {
 										cssClass += " item-preview-editable";

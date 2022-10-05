@@ -705,8 +705,7 @@ definition {
 		CommerceEntry.addNewWarehousesEntry(warehouseName = "Test Warehouse");
 
 		Type(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			locator1 = "TextArea#DESCRIPTION",
 			value1 = "${fieldDescription}");
 
 		Check.checkToggleSwitch(
@@ -773,8 +772,7 @@ definition {
 			value1 = "${fieldName}");
 
 		AssertTextEquals(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			locator1 = "TextArea#DESCRIPTION",
 			value1 = "${fieldDescription}");
 
 		AssertChecked.assertCheckedNotVisible(

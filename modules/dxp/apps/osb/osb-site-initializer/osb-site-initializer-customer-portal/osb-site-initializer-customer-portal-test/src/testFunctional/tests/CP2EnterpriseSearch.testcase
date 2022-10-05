@@ -75,9 +75,27 @@ definition {
 	@description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"
 	@priority = "5"
 	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
+		// Needs refactor since it depends on example Avangrid Portals account
 
-		// TODO LPS-146022 CanViewListOfStartAndEndDatesActiveSubscriptionTerms pending implementation
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("When a user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "${testAccounts}");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
+		}
+
+		task ("Assert the list of LES subscriptions terms") {
+			CP2Utils.assertDropdownSubscriptionTermsList();
+		}
 	}
 
 	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list their LES subscriptions"

@@ -87,16 +87,6 @@ public abstract class BaseSearchEngineConfigurator
 		_searchEngines = searchEngines;
 	}
 
-	public interface DestinationServiceRegistrarHelper {
-
-		public Destination getDestination(
-			ServiceRegistration<Destination> serviceRegistration);
-
-		public ServiceRegistration<Destination> registerDestination(
-			Destination destination);
-
-	}
-
 	protected Destination createSearchReaderDestination(
 		String searchReaderDestinationName) {
 
@@ -200,12 +190,6 @@ public abstract class BaseSearchEngineConfigurator
 			Destination.class, destination,
 			MapUtil.singletonDictionary(
 				"destination.name", destination.getName()));
-	}
-
-	protected void setDestinationServiceRegistrarHelper(
-		DestinationServiceRegistrarHelper destinationServiceRegistrarHelper) {
-
-		_destinationServiceRegistrarHelper = destinationServiceRegistrarHelper;
 	}
 
 	protected void setSearchEngine(
@@ -408,8 +392,7 @@ public abstract class BaseSearchEngineConfigurator
 			_destinationServiceRegistrars.get(searchEngineId);
 
 		if (destinationServiceRegistrar == null) {
-			destinationServiceRegistrar = new DestinationServiceRegistrar(
-				_destinationServiceRegistrarHelper);
+			destinationServiceRegistrar = new DestinationServiceRegistrar();
 
 			_destinationServiceRegistrars.put(
 				searchEngineId, destinationServiceRegistrar);
@@ -473,86 +456,11 @@ public abstract class BaseSearchEngineConfigurator
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSearchEngineConfigurator.class);
 
-	private DestinationServiceRegistrarHelper
-		_destinationServiceRegistrarHelper =
-			new DestinationServiceRegistrarHelperImpl(this);
 	private final Map<String, DestinationServiceRegistrar>
 		_destinationServiceRegistrars = new ConcurrentHashMap<>();
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =
 		new ArrayList<>();
 	private Map<String, SearchEngine> _searchEngines;
-
-	private static class DestinationServiceRegistrar {
-
-		public synchronized void destroy() {
-			for (ServiceRegistration<Destination> serviceRegistration :
-					_serviceRegistrations) {
-
-				Destination destination =
-					_destinationServiceRegistrarHelper.getDestination(
-						serviceRegistration);
-
-				serviceRegistration.unregister();
-
-				destination.destroy();
-			}
-
-			_serviceRegistrations.clear();
-		}
-
-		public synchronized void registerService(
-			Class<Destination> clazz, Destination destination,
-			Map<String, Object> properties) {
-
-			_serviceRegistrations.add(
-				_destinationServiceRegistrarHelper.registerDestination(
-					destination));
-		}
-
-		private DestinationServiceRegistrar(
-			DestinationServiceRegistrarHelper
-				destinationServiceRegistrarHelper) {
-
-			_destinationServiceRegistrarHelper =
-				destinationServiceRegistrarHelper;
-		}
-
-		private final DestinationServiceRegistrarHelper
-			_destinationServiceRegistrarHelper;
-		private final Set<ServiceRegistration<Destination>>
-			_serviceRegistrations = new HashSet<>();
-
-	}
-
-	private static class DestinationServiceRegistrarHelperImpl
-		implements DestinationServiceRegistrarHelper {
-
-		@Override
-		public Destination getDestination(
-			ServiceRegistration<Destination> serviceRegistration) {
-
-			return _baseSearchEngineConfigurator.getDestination(
-				serviceRegistration);
-		}
-
-		@Override
-		public ServiceRegistration<Destination> registerDestination(
-			Destination destination) {
-
-			return _baseSearchEngineConfigurator.registerDestination(
-				destination);
-		}
-
-		private DestinationServiceRegistrarHelperImpl(
-			BaseSearchEngineConfigurator baseSearchEngineConfigurator) {
-
-			_baseSearchEngineConfigurator = baseSearchEngineConfigurator;
-		}
-
-		private final BaseSearchEngineConfigurator
-			_baseSearchEngineConfigurator;
-
-	}
 
 	private static class SearchEngineRegistration {
 
@@ -635,6 +543,34 @@ public abstract class BaseSearchEngineConfigurator
 		private final String _searchEngineId;
 		private String _searchReaderDestinationName;
 		private String _searchWriterDestinationName;
+
+	}
+
+	private class DestinationServiceRegistrar {
+
+		public synchronized void destroy() {
+			for (ServiceRegistration<Destination> serviceRegistration :
+					_serviceRegistrations) {
+
+				Destination destination = getDestination(serviceRegistration);
+
+				serviceRegistration.unregister();
+
+				destination.destroy();
+			}
+
+			_serviceRegistrations.clear();
+		}
+
+		public synchronized void registerService(
+			Class<Destination> clazz, Destination destination,
+			Map<String, Object> properties) {
+
+			_serviceRegistrations.add(registerDestination(destination));
+		}
+
+		private final Set<ServiceRegistration<Destination>>
+			_serviceRegistrations = new HashSet<>();
 
 	}
 

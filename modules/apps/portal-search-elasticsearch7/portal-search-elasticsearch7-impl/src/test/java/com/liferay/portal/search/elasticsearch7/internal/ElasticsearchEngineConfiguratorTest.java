@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.search.elasticsearch7.internal.BaseSearchEngineConfigurator.DestinationServiceRegistrarHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.BeforeClass;
@@ -32,9 +32,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
-
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 
 /**
  * @author André de Oliveira
@@ -68,7 +65,7 @@ public class ElasticsearchEngineConfiguratorTest {
 			_createElasticsearchEngineConfigurator(destinationFactory);
 
 		elasticsearchEngineConfigurator.activate(
-			Mockito.mock(ComponentContext.class));
+			SystemBundleUtil.getBundleContext());
 
 		elasticsearchEngineConfigurator.destroy();
 
@@ -79,31 +76,6 @@ public class ElasticsearchEngineConfiguratorTest {
 		);
 	}
 
-	private DestinationServiceRegistrarHelper
-		_createDestinationServiceRegistrarHelper() {
-
-		DestinationServiceRegistrarHelper destinationServiceRegistrarHelper =
-			Mockito.mock(DestinationServiceRegistrarHelper.class);
-
-		Mockito.doReturn(
-			Mockito.mock(ServiceRegistration.class)
-		).when(
-			destinationServiceRegistrarHelper
-		).registerDestination(
-			Mockito.any()
-		);
-
-		Mockito.doReturn(
-			Mockito.mock(Destination.class)
-		).when(
-			destinationServiceRegistrarHelper
-		).getDestination(
-			Mockito.any()
-		);
-
-		return destinationServiceRegistrarHelper;
-	}
-
 	private ElasticsearchEngineConfigurator
 		_createElasticsearchEngineConfigurator(
 			DestinationFactory destinationFactory) {
@@ -112,8 +84,6 @@ public class ElasticsearchEngineConfiguratorTest {
 			{
 				ReflectionTestUtil.setFieldValue(
 					this, "_destinationFactory", destinationFactory);
-				setDestinationServiceRegistrarHelper(
-					_createDestinationServiceRegistrarHelper());
 				ReflectionTestUtil.setFieldValue(
 					this, "_messageBus", Mockito.mock(MessageBus.class));
 				ReflectionTestUtil.setFieldValue(

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import java.util.Collections;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,8 +40,8 @@ public class ElasticsearchEngineConfigurator
 	extends BaseSearchEngineConfigurator {
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_bundleContext = componentContext.getBundleContext();
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
 		setSearchEngines(
 			Collections.singletonMap(

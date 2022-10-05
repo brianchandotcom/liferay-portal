@@ -11,6 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import {useFormikContext} from 'formik';
+import {useCallback} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -20,7 +21,8 @@ import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
-import ActivityClaimPanel from '../ActivityClaimPanel';
+import ActivityClaimPanel from './components/ActivityClaimPanel';
+import useActivitiesAmount from './hooks/useActivitiesAmount';
 
 interface IProps {
 	mdfRequest: MDFRequestDTO;
@@ -39,13 +41,25 @@ const MDFClaimPage = ({
 		...formikHelpers
 	} = useFormikContext<MDFClaim>();
 
+	useActivitiesAmount(
+		values.activities,
+		useCallback(
+			(amountValue) =>
+				setFieldValue('totalClaimAmount', amountValue * 0.5),
+			[setFieldValue]
+		)
+	);
+
 	return (
 		<PRMForm name="New" title="Reimbursement Claim">
 			<PRMForm.Section
 				subtitle="Check each expense you would like claim and please provide proof of performance for each of the selected expenses."
 				title={`${mdfRequest?.overallCampaignDescription} (${mdfRequest?.id})`}
 			>
-				<h5 className="my-4">Upload Proof of Performance Documents</h5>
+				<p className="font-weight-bold my-4 text-paragraph">
+					Upload Proof of Performance Documents
+					<span className="text-danger">*</span>
+				</p>
 
 				{values.activities?.map((activity, index) => (
 					<ActivityClaimPanel
@@ -55,6 +69,7 @@ const MDFClaimPage = ({
 						overallCampaignDescription={
 							mdfRequest.overallCampaignDescription
 						}
+						setFieldValue={setFieldValue}
 					/>
 				))}
 			</PRMForm.Section>
@@ -63,17 +78,31 @@ const MDFClaimPage = ({
 				subtitle="Total Claim is the reimbursement of your expenses, and is up to the Total MDF Requested. In case need to claim more than the MDF Requested you need to apply for a New MDF Request."
 				title="Total Claim"
 			>
-				<div className="my-3">
-					<ResumeCard
-						leftContent="Total MDF Requested Amount"
-						rightContent={getIntlNumberFormat().format(
-							mdfRequest?.totalMDFRequestAmount || 0
-						)}
-					/>
-				</div>
+				<PRMFormik.Field
+					component={PRMForm.InputFile}
+					description="Upload an invoice for the Total Claim Amount"
+					displayType="secondary"
+					label="Reimbursement Invoice"
+					name="reimbursementInvoice"
+					onAccept={(value: File) =>
+						setFieldValue('reimbursementInvoice', value)
+					}
+					outline
+					required
+					small
+				/>
+
+				<ResumeCard
+					className="mb-4"
+					leftContent="Total MDF Requested Amount"
+					rightContent={getIntlNumberFormat().format(
+						values.totalrequestedAmount || 0
+					)}
+				/>
 
 				<PRMFormik.Field
 					component={PRMForm.InputCurrency}
+					description="The amount to be claimed for the Total of  selected expenses"
 					label="Total Claim Amount"
 					name="totalClaimAmount"
 					onAccept={(value: number) =>

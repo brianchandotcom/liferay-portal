@@ -11,26 +11,26 @@
 
 import {useEffect} from 'react';
 
-import useDebounce from '../../../../../../../common/hooks/useDebounce';
-import MDFClaimBudget from '../../../../../../../common/interfaces/mdfClaimBudget';
+import useDebounce from '../../../../../common/hooks/useDebounce';
+import MDFClaimActivity from '../../../../../common/interfaces/mdfClaimActivity';
 
-export default function useBudgetsAmount(
-	budgets: MDFClaimBudget[] | undefined,
+export default function useActivitiesAmount(
+	activities: MDFClaimActivity[] | undefined,
 	onAmountUpdate: (value: number) => void
 ) {
-	const debouncedBudgets = useDebounce<MDFClaimBudget[] | undefined>(
-		budgets,
+	const debouncedActivities = useDebounce<MDFClaimActivity[] | undefined>(
+		activities,
 		500
 	);
 
 	useEffect(() => {
-		const amountValue = debouncedBudgets?.reduce<number>(
+		const amountValue = debouncedActivities?.reduce<number>(
 			(previousValue, currentValue) => {
-				if (!currentValue.invoice) {
+				if (!currentValue.selected) {
 					return previousValue;
 				}
 
-				return previousValue + +currentValue.claimAmount;
+				return previousValue + +currentValue.totalCost;
 			},
 			0
 		);
@@ -38,5 +38,5 @@ export default function useBudgetsAmount(
 		if (amountValue) {
 			onAmountUpdate(amountValue);
 		}
-	}, [debouncedBudgets, onAmountUpdate]);
+	}, [debouncedActivities, onAmountUpdate]);
 }

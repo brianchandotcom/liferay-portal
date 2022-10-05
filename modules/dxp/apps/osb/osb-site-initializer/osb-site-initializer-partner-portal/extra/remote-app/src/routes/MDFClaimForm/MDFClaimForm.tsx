@@ -21,24 +21,21 @@ import MDFClaimPage from './components/MDFClaimPage';
 const getInitialFormValues = (
 	totalrequestedAmount?: number,
 	activitiesDTO?: MDFRequestActivityDTO[]
-): MDFClaim => {
-	return {
-		activities: activitiesDTO?.map((activity) => ({
-			budgets: activity.activityToBudgets?.map((budget) => ({
-				claimAmount: budget.cost,
-				expenseName: budget.expense.name,
-				invoices: [],
-			})),
-			documents: [],
-			finished: false,
-			id: activity.id,
-			metrics: '',
-			name: activity.name,
-			totalCost: activity.totalCostOfExpense,
+): MDFClaim => ({
+	activities: activitiesDTO?.map((activity) => ({
+		budgets: activity.activityToBudgets?.map((budget) => ({
+			claimAmount: budget.cost,
+			expenseName: budget.expense.name,
 		})),
-		totalClaimAmount: totalrequestedAmount,
-	};
-};
+		id: activity.id,
+		metrics: '',
+		name: activity.name,
+		selected: false,
+		totalCost: 0,
+	})),
+	totalClaimAmount: 0,
+	totalrequestedAmount,
+});
 
 const MDFClaimForm = () => {
 	const {data: mdfRequest, isValidating} = useGetMDFRequestById(46006);

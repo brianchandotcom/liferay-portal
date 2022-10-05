@@ -17,4 +17,5 @@ export default interface MDFClaim extends Partial<LiferayObject> {
 	activities?: MDFClaimActivity[];
 	reimbursementInvoice?: MDFClaimDocument;
 	totalClaimAmount?: number;
+	totalrequestedAmount?: number;
 }

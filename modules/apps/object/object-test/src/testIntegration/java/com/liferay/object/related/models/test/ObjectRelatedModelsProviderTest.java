@@ -175,7 +175,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -190,7 +190,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
@@ -239,7 +239,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 		Assert.assertEquals(
@@ -260,7 +260,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -301,7 +301,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -316,7 +316,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
@@ -331,7 +331,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
@@ -345,7 +345,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 3, objectEntries.size());
 
@@ -359,7 +359,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
@@ -450,7 +450,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -463,7 +463,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
@@ -481,7 +481,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
@@ -518,7 +518,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
@@ -533,7 +533,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -568,7 +568,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
@@ -585,7 +585,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
@@ -656,7 +656,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry.getPrimaryKey(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
@@ -690,7 +690,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 3, relatedObjectEntries.size());
@@ -701,7 +702,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 2, relatedObjectEntries.size());
@@ -732,7 +734,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
@@ -750,7 +753,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
@@ -773,7 +777,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			relatedObjectEntries.toString(), 2, relatedObjectEntries.size());
@@ -848,7 +853,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
 				objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -867,7 +872,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
 			objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
@@ -883,7 +888,8 @@ public class ObjectRelatedModelsProviderTest {
 		List<ObjectEntry> reverseObjectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
 				0, reverseObjectRelationship.getObjectRelationshipId(),
-				userIds[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				userIds[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(
 			reverseObjectEntries.toString(), 1, reverseObjectEntries.size());
@@ -919,7 +925,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 
@@ -941,7 +948,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
@@ -976,7 +984,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			objectEntry.getPrimaryKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 

@@ -145,7 +145,8 @@ public class SystemRelatedModelsTableFDSView
 				objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition()),
+				fdsPagination.getEndPosition(),
+				PermissionThreadLocal.getPermissionChecker()),
 			relatedModel -> {
 				String objectFieldDBColumnName =
 					objectDefinition.getPKObjectFieldDBColumnName();

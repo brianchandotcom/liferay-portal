@@ -35,6 +35,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 
@@ -79,7 +80,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 		List<T> relatedModels = getRelatedModels(
 			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -144,8 +145,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+		long groupId, long objectRelationshipId, long primaryKey, int start,
+		int end, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =

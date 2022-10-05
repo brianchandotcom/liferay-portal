@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -68,7 +69,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
 			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -148,8 +149,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+		long groupId, long objectRelationshipId, long primaryKey, int start,
+		int end, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(

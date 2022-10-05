@@ -83,7 +83,8 @@ public class RelatedModelsFDSDataProvider
 				objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition()),
+				fdsPagination.getEndPosition(),
+				PermissionThreadLocal.getPermissionChecker()),
 			objectEntry -> new RelatedModel(
 				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 				objectEntry.getTitleValue(), false));

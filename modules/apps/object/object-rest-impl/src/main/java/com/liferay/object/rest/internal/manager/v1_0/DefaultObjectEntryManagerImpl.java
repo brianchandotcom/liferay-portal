@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -539,7 +540,8 @@ public class DefaultObjectEntryManagerImpl
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
 					objectEntry.getPrimaryKey(), pagination.getStartPosition(),
-					pagination.getEndPosition())));
+					pagination.getEndPosition(),
+					PermissionThreadLocal.getPermissionChecker())));
 	}
 
 	@Override
@@ -572,7 +574,8 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getObjectRelationshipId(),
 						objectEntry.getPrimaryKey(),
 						pagination.getStartPosition(),
-						pagination.getEndPosition()),
+						pagination.getEndPosition(),
+						PermissionThreadLocal.getPermissionChecker()),
 				baseModel -> _toDTO(baseModel, objectEntry)));
 	}
 
@@ -712,7 +715,8 @@ public class DefaultObjectEntryManagerImpl
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
 					assetEntry.getClassPK(), pagination.getStartPosition(),
-					pagination.getEndPosition())));
+					pagination.getEndPosition(),
+					PermissionThreadLocal.getPermissionChecker())));
 	}
 
 	private boolean _hasRelatedObjectEntries(

@@ -12,9 +12,5 @@
  * details.
  */
 
-import React from 'react';
-
-import {TGenericComponent} from './WizardPage';
-interface IStepProps extends TGenericComponent {}
-declare const Step: React.FC<IStepProps>;
-export default Step;
+declare const SitesTab: () => JSX.Element;
+export default SitesTab;

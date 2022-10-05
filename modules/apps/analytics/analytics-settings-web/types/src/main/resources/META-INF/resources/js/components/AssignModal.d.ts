@@ -13,8 +13,12 @@
  */
 
 import React from 'react';
-
-import {TGenericComponent} from './WizardPage';
-interface IStepProps extends TGenericComponent {}
-declare const Step: React.FC<IStepProps>;
-export default Step;
+interface IAssignModal {
+	observer: any;
+}
+export declare enum ETabs {
+	Channel = 0,
+	Sites = 1,
+}
+declare const AssignModal: React.FC<IAssignModal>;
+export default AssignModal;

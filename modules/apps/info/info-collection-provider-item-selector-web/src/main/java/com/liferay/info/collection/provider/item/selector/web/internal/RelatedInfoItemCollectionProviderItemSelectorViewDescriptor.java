@@ -98,7 +98,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	public String[] getOrderByKeys() {
 		Set<String> keysSet = new HashSet<>();
 
-		for (RelatedInfoItemCollectionProvider
+		for (RelatedInfoItemCollectionProvider<?, ?>
 				relatedInfoItemCollectionProvider :
 					_relatedInfoItemCollectionProviders) {
 

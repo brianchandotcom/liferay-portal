@@ -38,7 +38,8 @@ public class RelatedInfoItemCollectionProviderItemDescriptor
 
 	public RelatedInfoItemCollectionProviderItemDescriptor(
 		HttpServletRequest httpServletRequest,
-		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider) {
+		RelatedInfoItemCollectionProvider<?, ?>
+			relatedInfoItemCollectionProvider) {
 
 		_httpServletRequest = httpServletRequest;
 		_relatedInfoItemCollectionProvider = relatedInfoItemCollectionProvider;
@@ -113,7 +114,7 @@ public class RelatedInfoItemCollectionProviderItemDescriptor
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final RelatedInfoItemCollectionProvider
+	private final RelatedInfoItemCollectionProvider<?, ?>
 		_relatedInfoItemCollectionProvider;
 
 }

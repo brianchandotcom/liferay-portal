@@ -138,7 +138,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				}
 			}
 
-			return _html.stripHtml(_getWrapper(content));
+			return _getWrapper(content);
 		}
 
 		HttpServletRequest httpServletRequest = null;
@@ -176,7 +176,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				}
 			}
 
-			return _html.stripHtml(_getWrapper(content));
+			return _getWrapper(content);
 		}
 
 		Layout originalRequestLayout = (Layout)httpServletRequest.getAttribute(
@@ -215,7 +215,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				}
 			}
 
-			return _html.stripHtml(_getWrapper(content));
+			return _getWrapper(content);
 		}
 		finally {
 			httpServletRequest.setAttribute(
@@ -279,8 +279,8 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			return layoutContent;
 		}
 
-		return layoutContent.substring(
-			wrapperIndex + _WRAPPER_ELEMENT.length());
+		return _html.stripHtml(
+			layoutContent.substring(wrapperIndex + _WRAPPER_ELEMENT.length()));
 	}
 
 	private boolean _isHttpsEnabled() {

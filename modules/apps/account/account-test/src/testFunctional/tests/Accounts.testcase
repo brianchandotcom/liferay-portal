@@ -147,11 +147,8 @@ definition {
 
 			User.viewMemberships(
 				assetType = "Accounts",
-				assigneeName = "Account Name");
-
-			AssertElementPresent(
-				key_accountRole = "Account Administrator",
-				locator1 = "UsersAndOrganizationsEditUser#ACCOUNTS_TABLE_ACCOUNT_ROLES");
+				assigneeName = "Account Name",
+				roleName = "Account Administrator");
 		}
 	}
 

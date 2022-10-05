@@ -71,7 +71,7 @@
 																	"fields": [
 																		{
 																			"fieldName": "friendlyURL",
-																			"fieldValue": "/evp/organization-form"
+																			"fieldValue": "/organization-form"
 																		},
 																		{
 																			"fieldName": "privatePage",
@@ -79,7 +79,7 @@
 																		},
 																		{
 																			"fieldName": "siteKey",
-																			"fieldValue": "EVP"
+																			"fieldValue": "[$GROUP_KEY$]"
 																		}
 																	]
 																}

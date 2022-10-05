@@ -18,12 +18,14 @@ export default function addItem({
 	itemId,
 	layoutData,
 	fragmentEntryLinkIds,
+	pageContents,
 	portletIds = [],
 }) {
 	return {
 		fragmentEntryLinkIds,
 		itemId,
 		layoutData,
+		pageContents,
 		portletIds,
 		type: ADD_ITEM,
 	};

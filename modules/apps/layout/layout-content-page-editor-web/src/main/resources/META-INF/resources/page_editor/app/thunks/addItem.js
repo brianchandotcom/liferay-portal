@@ -22,14 +22,18 @@ export default function addItem({
 	selectItem = () => {},
 }) {
 	return (dispatch, getState) => {
+		const {pageContents, segmentsExperienceId} = getState();
+
 		return LayoutService.addItem({
 			itemType,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId: getState().segmentsExperienceId,
+			segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
-			dispatch(addItemAction({itemId: addedItemId, layoutData}));
+			dispatch(
+				addItemAction({itemId: addedItemId, layoutData, pageContents})
+			);
 
 			if (addedItemId) {
 				selectItem(addedItemId);

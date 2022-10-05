@@ -651,6 +651,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELIGIBILITY_CARD_TITLE</td>
+	<td>//div/h4[contains(.,'${key_eligibilityCardTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_ROW_NUMBER</td>
 	<td>//div[@class='dnd-tbody']/div[contains(@class,'dnd-tr')][${key_rowNumber}]//a</td>
 	<td></td>

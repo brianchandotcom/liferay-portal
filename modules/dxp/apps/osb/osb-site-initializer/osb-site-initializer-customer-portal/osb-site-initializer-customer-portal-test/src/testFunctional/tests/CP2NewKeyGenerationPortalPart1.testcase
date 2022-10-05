@@ -71,6 +71,25 @@ definition {
 		}
 	}
 
+	@description = "Automation Ticket: LPS-151334 | Test Summary: Verify that the Key Type field displays a drop-down list where you can select a key."
+	@priority = "3"
+	test CanViewADropdownListInTheKeyTypeField {
+		var portalKeyTypeList = "Backup,Flex,Limited,Non-Production,OEM,Production,Unlimited Enterprise-Wide";
+		var fieldLabel = "Key Type";
+
+		task ("Given I should be able to view all Portal versions options") {
+			for (var keyType : list "${portalKeyTypeList}") {
+				CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+					field = "${fieldLabel}",
+					option = "${keyType}");
+
+				CP2ActivationKeys.assertSelectedFieldText(
+					field = "${fieldLabel}",
+					option = "${keyType}");
+			}
+		}
+	}
+
 	@description = "Automation Ticket: LPS-151333 | Test Summary: Verify that the version field displays a drop-down list where you can select a version."
 	@priority = "3"
 	test CanViewADropdownListInTheVersionField {

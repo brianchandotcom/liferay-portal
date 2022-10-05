@@ -715,8 +715,7 @@ public class DefaultObjectEntryManagerImpl
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
 					assetEntry.getClassPK(), pagination.getStartPosition(),
-					pagination.getEndPosition(),
-					PermissionThreadLocal.getPermissionChecker())));
+					pagination.getEndPosition(), null)));
 	}
 
 	private boolean _hasRelatedObjectEntries(
@@ -746,8 +745,7 @@ public class DefaultObjectEntryManagerImpl
 			int count = objectRelatedModelsProvider.getRelatedModelsCount(
 				objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getPrimaryKey(),
-				PermissionThreadLocal.getPermissionChecker());
+				objectEntry.getPrimaryKey(), null);
 
 			if (count > 0) {
 				return true;

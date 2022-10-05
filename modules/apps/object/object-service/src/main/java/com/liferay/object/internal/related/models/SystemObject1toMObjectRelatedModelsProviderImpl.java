@@ -90,7 +90,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 		List<T> relatedModels = getRelatedModels(
 			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+			QueryUtil.ALL_POS, null);
 
 		if (relatedModels.isEmpty()) {
 			return;

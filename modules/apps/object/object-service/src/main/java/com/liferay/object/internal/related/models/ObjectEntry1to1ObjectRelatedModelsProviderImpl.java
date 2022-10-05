@@ -27,7 +27,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -67,8 +66,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, 0, 1,
-			PermissionThreadLocal.getPermissionChecker());
+			groupId, objectRelationshipId, primaryKey, 0, 1, null);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -156,7 +154,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
 			groupId, objectRelationshipId, primaryKey, true, 0, 1,
-			PermissionThreadLocal.getPermissionChecker());
+			permissionChecker);
 	}
 
 	@Override
@@ -166,8 +164,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, 0, 1,
-			PermissionThreadLocal.getPermissionChecker());
+			groupId, objectRelationshipId, primaryKey, 0, 1, permissionChecker);
 
 		return relatedModels.size();
 	}

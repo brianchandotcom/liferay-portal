@@ -69,7 +69,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
 			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, PermissionThreadLocal.getPermissionChecker());
+			QueryUtil.ALL_POS, null);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -155,7 +155,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
 			groupId, objectRelationshipId, primaryKey, true, start, end,
-			PermissionThreadLocal.getPermissionChecker());
+			permissionChecker);
 	}
 
 	@Override
@@ -165,8 +165,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, true,
-			PermissionThreadLocal.getPermissionChecker());
+			groupId, objectRelationshipId, primaryKey, true, permissionChecker);
 	}
 
 	@Override

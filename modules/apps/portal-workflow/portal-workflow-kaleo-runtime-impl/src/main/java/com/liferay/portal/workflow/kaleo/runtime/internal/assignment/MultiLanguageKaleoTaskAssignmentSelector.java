@@ -77,7 +77,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		if (kaleoTaskAssignmentSelector == null) {
 			throw new IllegalArgumentException(
 				"No task assignment selector found for " +
-					kaleoTaskAssignment.toXmlString());
+					kaleoTaskAssignment.toString());
 		}
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments =

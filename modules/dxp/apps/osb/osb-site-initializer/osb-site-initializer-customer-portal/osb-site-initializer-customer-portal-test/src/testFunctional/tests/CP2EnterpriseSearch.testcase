@@ -45,6 +45,7 @@ definition {
 	@description = "Automation ID: LPS-146026 | Test Summary: Verify that after clicking the Download Key button the user download the appropriate Elasticsearch license"
 	@priority = "4"
 	test CanDownloadTheKeyWhenASubscriptionIsSelected {
+
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -67,14 +68,16 @@ definition {
 			CustomerPortal.clickAtButton(text = "Download Key");
 		}
 
-		// task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
-		// 	CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
-		// }
+		//task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
+		//	CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
+		//}
+
 	}
 
 	@description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"
 	@priority = "5"
 	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
+
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -101,8 +104,9 @@ definition {
 	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list their LES subscriptions"
 	@priority = "5"
 	test SeeListOfLESSSubscriptions {
+
 		// Needs refactor since it depends on example Avangrid Portals account
-		
+
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 

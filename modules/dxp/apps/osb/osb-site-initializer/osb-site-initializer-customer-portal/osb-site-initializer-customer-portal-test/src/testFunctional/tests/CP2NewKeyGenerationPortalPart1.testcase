@@ -109,6 +109,20 @@ definition {
 		}
 	}
 
+	@description = "Automation Ticket: LPS-151336 | Test Summary: Verify that after selecting a subscription, you receive an informational message."
+	@priority = "3"
+	test CanViewAnInformationalMessageInTheSubscription {
+		task ("Given I select the first available signature") {
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+		}
+
+		task ("Then I assert the Alert Info message content"){
+			var startDate = CP2ActivationKeys.getStartDateTextFromSignature();
+
+			CustomerPortal.assertAlertInfoMessage(messageText = "Activation Keys will be valid indefinitely starting ${startDate} or until manually deactivated.");
+		}
+	}
+
 	@description = "Automation Ticket: LPS-151335 | Test Summary: Verify that signatures without available keys are displayed as disabled options."
 	@priority = "3"
 	test SignaturesWithoutAvailableKeysWillBeDisabled {

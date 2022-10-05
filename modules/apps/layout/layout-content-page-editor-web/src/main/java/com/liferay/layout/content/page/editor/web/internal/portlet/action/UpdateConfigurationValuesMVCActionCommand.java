@@ -127,6 +127,8 @@ public class UpdateConfigurationValuesMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId");
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 
@@ -173,24 +175,20 @@ public class UpdateConfigurationValuesMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId());
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				layoutStructure));
-
-		jsonObject.put("layoutData", layoutStructure.toJSONObject());
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId");
-
-		return jsonObject.put(
+				_portal.getHttpServletResponse(actionResponse), layoutStructure)
+		).put(
+			"layoutData", layoutStructure.toJSONObject()
+		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
 				_portal.getHttpServletRequest(actionRequest),
 				_portal.getHttpServletResponse(actionResponse),
-				themeDisplay.getPlid(), segmentsExperienceId));
+				themeDisplay.getPlid(), segmentsExperienceId)
+		);
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {

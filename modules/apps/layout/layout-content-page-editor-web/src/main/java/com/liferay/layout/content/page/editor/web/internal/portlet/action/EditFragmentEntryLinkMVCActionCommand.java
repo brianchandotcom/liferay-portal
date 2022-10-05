@@ -62,6 +62,8 @@ public class EditFragmentEntryLinkMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId");
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 
@@ -88,9 +90,6 @@ public class EditFragmentEntryLinkMVCActionCommand
 			LayoutStructureUtil.getLayoutStructure(
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId());
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId");
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,

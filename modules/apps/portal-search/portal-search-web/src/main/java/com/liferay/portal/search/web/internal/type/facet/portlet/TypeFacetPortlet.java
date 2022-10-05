@@ -119,10 +119,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 		Facet facet = portletSharedSearchResponse.getFacet(
 			_getAggregationName(renderRequest));
 
-		AssetEntriesFacetConfiguration assetEntriesFacetConfiguration =
-			new AssetEntriesFacetConfigurationImpl(
-				facet.getFacetConfiguration());
-
 		TypeFacetPortletPreferences typeFacetPortletPreferences =
 			new TypeFacetPortletPreferencesImpl(
 				objectDefinitionLocalService,
@@ -144,7 +140,7 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		assetEntriesSearchFacetDisplayContextBuilder.setFacet(facet);
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			assetEntriesFacetConfiguration.getFrequencyThreshold());
+			typeFacetPortletPreferences.getFrequencyThreshold());
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			typeFacetPortletPreferences.isFrequenciesVisible());
 		assetEntriesSearchFacetDisplayContextBuilder.setLocale(

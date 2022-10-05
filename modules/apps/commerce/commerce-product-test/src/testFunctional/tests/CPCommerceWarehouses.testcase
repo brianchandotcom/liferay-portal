@@ -259,8 +259,8 @@ definition {
 				portlet = "Warehouses");
 
 			Click(
-				key_language = "Italy",
-				locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+				key_value = "Italy",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Permissions");
 
@@ -329,8 +329,8 @@ definition {
 				portlet = "Warehouses");
 
 			Click(
-				key_language = "Italy",
-				locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+			key_value = "Italy",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Permissions");
 
@@ -958,8 +958,8 @@ definition {
 		}
 
 		Click(
-			key_metadataSetName = "Italy",
-			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+			key_value = "Minium2 Portal",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 
 		Uncheck.uncheckToggleSwitch(
@@ -971,8 +971,8 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		Click(
-			key_metadataSetName = "United States - Northeast",
-			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+			key_value = "Minium Portal",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 
 		Uncheck.uncheckToggleSwitch(

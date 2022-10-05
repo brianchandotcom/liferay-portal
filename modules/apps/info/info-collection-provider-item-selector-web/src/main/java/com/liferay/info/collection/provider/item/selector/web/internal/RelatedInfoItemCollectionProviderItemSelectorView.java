@@ -85,7 +85,6 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 			relatedInfoItemCollectionProviderItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new RelatedInfoItemCollectionProviderItemSelectorViewDescriptor(
-				relatedInfoItemCollectionProviderItemSelectorCriterion,
 				_language, (HttpServletRequest)servletRequest, portletURL,
 				_getRelatedInfoItemCollectionProviders(
 					relatedInfoItemCollectionProviderItemSelectorCriterion)));

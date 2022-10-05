@@ -15,7 +15,6 @@
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -51,23 +50,16 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		<RelatedInfoItemCollectionProvider<?, ?>> {
 
 	public RelatedInfoItemCollectionProviderItemSelectorViewDescriptor(
-		RelatedInfoItemCollectionProviderItemSelectorCriterion
-			relatedInfoItemCollectionProviderItemSelectorCriterion,
 		Language language, HttpServletRequest httpServletRequest,
 		PortletURL portletURL,
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders) {
 
-		_relatedInfoItemCollectionProviderItemSelectorCriterion =
-			relatedInfoItemCollectionProviderItemSelectorCriterion;
 		_language = language;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_relatedInfoItemCollectionProviders =
 			relatedInfoItemCollectionProviders;
-
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -188,10 +180,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final PortletURL _portletURL;
-	private final RelatedInfoItemCollectionProviderItemSelectorCriterion
-		_relatedInfoItemCollectionProviderItemSelectorCriterion;
 	private final List<RelatedInfoItemCollectionProvider<?, ?>>
 		_relatedInfoItemCollectionProviders;
-	private final ThemeDisplay _themeDisplay;
 
 }

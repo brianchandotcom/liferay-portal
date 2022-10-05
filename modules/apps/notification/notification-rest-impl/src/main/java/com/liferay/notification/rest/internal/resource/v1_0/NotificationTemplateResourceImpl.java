@@ -237,10 +237,14 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getNameMap());
 				objectDefinitionId =
 					serviceBuilderNotificationTemplate.getObjectDefinitionId();
+				recipientType = NotificationTemplate.RecipientType.create(
+					serviceBuilderNotificationTemplate.getRecipientType());
 				subject = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
 				to = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getToMap());
+				type = NotificationTemplate.Type.create(
+					serviceBuilderNotificationTemplate.getType());
 			}
 		};
 	}

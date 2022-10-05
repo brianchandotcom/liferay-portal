@@ -37,10 +37,6 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		_buildNumber = buildNumber;
 	}
 
-	public List<UpgradeStep> getInitialDeploymentUpgradeSteps() {
-		return _initialDeploymentUpgradeSteps;
-	}
-
 	public List<UpgradeStep> getReleaseCreationUpgradeSteps() {
 		return _releaseCreationUpgradeSteps;
 	}
@@ -73,13 +69,6 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		_createUpgradeInfos(
 			fromSchemaVersionString, toSchemaVersionString, _buildNumber,
 			upgradeSteps);
-	}
-
-	@Override
-	public void registerInitialDeploymentUpgradeSteps(
-		UpgradeStep... upgradeSteps) {
-
-		Collections.addAll(_initialDeploymentUpgradeSteps, upgradeSteps);
 	}
 
 	@Override
@@ -168,8 +157,6 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	}
 
 	private final int _buildNumber;
-	private final List<UpgradeStep> _initialDeploymentUpgradeSteps =
-		new ArrayList<>();
 	private boolean _initialization;
 	private final List<UpgradeStep> _releaseCreationUpgradeSteps =
 		new ArrayList<>();

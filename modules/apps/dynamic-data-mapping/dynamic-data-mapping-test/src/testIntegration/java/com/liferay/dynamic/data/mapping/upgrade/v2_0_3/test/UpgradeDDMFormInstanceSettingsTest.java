@@ -252,11 +252,6 @@ public class UpgradeDDMFormInstanceSettingsTest {
 					}
 				}
 
-				@Override
-				public void registerInitialDeploymentUpgradeSteps(
-					UpgradeStep... upgradeSteps) {
-				}
-
 			});
 	}
 

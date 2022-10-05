@@ -16,8 +16,6 @@ package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBContext;
@@ -44,9 +42,7 @@ import java.util.Properties;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
@@ -125,57 +121,6 @@ public class UpgradeStepRegistratorTracker {
 		_serviceTracker;
 	private final UpgradeExecutor _upgradeExecutor;
 
-	private class InitialReleaseServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Release, Void> {
-
-		@Override
-		public Void addingService(ServiceReference<Release> serviceReference) {
-			DBProcessContext dbProcessContext = new DBProcessContext() {
-
-				@Override
-				public DBContext getDBContext() {
-					return new DBContext();
-				}
-
-				@Override
-				public OutputStream getOutputStream() {
-					return null;
-				}
-
-			};
-
-			for (UpgradeStep upgradeStep : _initialDeploymentUpgradeSteps) {
-				try {
-					upgradeStep.upgrade(dbProcessContext);
-				}
-				catch (UpgradeException upgradeException) {
-					_log.error(upgradeException);
-				}
-			}
-
-			return null;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Release> serviceReference, Void v) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Release> serviceReference, Void v) {
-		}
-
-		private InitialReleaseServiceTrackerCustomizer(
-			List<UpgradeStep> initialDeploymentUpgradeSteps) {
-
-			_initialDeploymentUpgradeSteps = initialDeploymentUpgradeSteps;
-		}
-
-		private final List<UpgradeStep> _initialDeploymentUpgradeSteps;
-
-	}
-
 	private class UpgradeStepRegistratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<UpgradeStepRegistrator, SafeCloseable> {
@@ -224,23 +169,6 @@ public class UpgradeStepRegistratorTracker {
 			if (!releaseUpgradeSteps.isEmpty()) {
 				_releaseUpgradeStepsMap.put(
 					bundleSymbolicName, releaseUpgradeSteps);
-			}
-
-			List<UpgradeStep> initialDeploymentUpgradeSteps =
-				upgradeStepRegistry.getInitialDeploymentUpgradeSteps();
-
-			ServiceTracker<Release, Void> releaseServiceTracker;
-
-			if (initialDeploymentUpgradeSteps.isEmpty()) {
-				releaseServiceTracker = null;
-			}
-			else {
-				releaseServiceTracker = new ServiceTracker<>(
-					_bundleContext, _createFilter(bundleSymbolicName),
-					new InitialReleaseServiceTrackerCustomizer(
-						initialDeploymentUpgradeSteps));
-
-				releaseServiceTracker.open();
 			}
 
 			List<UpgradeInfo> upgradeInfos =
@@ -295,10 +223,6 @@ public class UpgradeStepRegistratorTracker {
 					serviceRegistration.unregister();
 				}
 
-				if (releaseServiceTracker != null) {
-					releaseServiceTracker.close();
-				}
-
 				_releaseUpgradeStepsMap.remove(bundleSymbolicName);
 			};
 		}
@@ -315,19 +239,6 @@ public class UpgradeStepRegistratorTracker {
 			SafeCloseable safeCloseable) {
 
 			safeCloseable.close();
-		}
-
-		private Filter _createFilter(String bundleSymbolicName) {
-			try {
-				return _bundleContext.createFilter(
-					StringBundler.concat(
-						"(&(objectClass=", Release.class.getName(),
-						")(release.bundle.symbolic.name=", bundleSymbolicName,
-						")(release.initial=true))"));
-			}
-			catch (InvalidSyntaxException invalidSyntaxException) {
-				return ReflectionUtil.throwException(invalidSyntaxException);
-			}
 		}
 
 	}

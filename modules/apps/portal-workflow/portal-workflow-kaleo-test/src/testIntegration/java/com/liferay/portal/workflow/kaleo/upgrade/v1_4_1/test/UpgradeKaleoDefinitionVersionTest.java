@@ -225,11 +225,6 @@ public class UpgradeKaleoDefinitionVersionTest {
 					}
 				}
 
-				@Override
-				public void registerInitialDeploymentUpgradeSteps(
-					UpgradeStep... upgradeSteps) {
-				}
-
 			});
 	}
 

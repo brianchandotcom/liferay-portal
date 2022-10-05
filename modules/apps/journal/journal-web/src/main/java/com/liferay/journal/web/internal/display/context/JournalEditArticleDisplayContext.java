@@ -39,6 +39,7 @@ import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConf
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.util.RecentGroupManagerUtil;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -53,7 +54,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -62,8 +65,10 @@ import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -86,6 +91,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -431,6 +437,45 @@ public class JournalEditArticleDisplayContext {
 			_liferayPortletResponse.getNamespace() + "selectSite";
 
 		return HashMapBuilder.<String, Object>put(
+			"newArticle", _article == null
+		).put(
+			"previewURL",
+			() -> {
+				LiferayPortletURL getPagePreviewURL =
+					PortletURLFactoryUtil.create(
+						_httpServletRequest,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						_themeDisplay.getLayout(),
+						PortletRequest.RESOURCE_PHASE);
+
+				getPagePreviewURL.setResourceID(
+					"/layout_content_page_editor/get_page_preview");
+
+				getPagePreviewURL.setParameter(
+					"className", JournalArticle.class.getName());
+
+				if (_article != null) {
+					getPagePreviewURL.setParameter(
+						"classPK",
+						String.valueOf(_article.getResourcePrimKey()));
+
+					getPagePreviewURL.setParameter(
+						"version", String.valueOf(_article.getVersion()));
+				}
+
+				return HttpComponentsUtil.addParameter(
+					getPagePreviewURL.toString(), "p_l_mode",
+					Constants.PREVIEW);
+			}
+		).put(
+			"saveAsDraftURL",
+			PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/journal/save_as_draft_article"
+			).buildString()
+		).put(
 			"selectDisplayPageEventName", selectDisplayPageEventName
 		).put(
 			"selectDisplayPageURL",

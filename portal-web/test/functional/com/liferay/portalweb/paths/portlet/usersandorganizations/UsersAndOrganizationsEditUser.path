@@ -115,6 +115,11 @@
 <!--MEMBERSHIPS-->
 
 <tr>
+	<td>MEMBERSHIPS_SELECT_ASSET_BUTTON</td>
+	<td>//a[contains(@id,'${key_selectId}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MEMBERSHIPS_TABLE_ENTRY_NAME</td>
 	<td>//table[contains(@data-searchcontainerid,'${key_assetType}')]//tr[contains(.,'${key_assigneeName}')]/td</td>
 	<td></td>

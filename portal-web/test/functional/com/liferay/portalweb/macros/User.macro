@@ -2361,6 +2361,27 @@ definition {
 		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
+	macro selectMembership {
+		UserNavigator.gotoMemberships();
+
+		if ("${assetType}" == "Sites") {
+			var key_selectId = "selectSiteLink";
+		}
+		else if ("${assetType}" == "User Groups") {
+			var key_selectId = "UserGroupsLink";
+		}
+		else if ("${assetType}" == "Accounts") {
+			var key_selectId = "selectAccountLink";
+		}
+		else if ("${assetType}" == "Asset Libraries") {
+			var key_selectId = "selectDepotGroupLink";
+		}
+
+		AssertClick(
+			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_SELECT_ASSET_BUTTON",
+			value1 = "Select");
+	}
+
 	macro selectUserTagCP {
 		AssertElementPresent.assertVisible(
 			locator1 = "AssetCategorization#TAGS_SELECT_BUTTON",

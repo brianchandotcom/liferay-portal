@@ -17,7 +17,6 @@ package com.liferay.portal.search.web.internal.type.facet.portlet;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -116,12 +115,10 @@ public class TypeFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			_getAggregationName(renderRequest));
-
-		AssetEntriesFacetConfiguration assetEntriesFacetConfiguration =
-			new AssetEntriesFacetConfigurationImpl(
-				facet.getFacetConfiguration());
+		AssetEntriesSearchFacetDisplayContextBuilder
+			assetEntriesSearchFacetDisplayContextBuilder =
+				_createAssetEntriesSearchFacetDisplayContextBuilder(
+					renderRequest);
 
 		TypeFacetPortletPreferences typeFacetPortletPreferences =
 			new TypeFacetPortletPreferencesImpl(
@@ -130,11 +127,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 					renderRequest),
 				searchableAssetClassNamesProvider);
 
-		AssetEntriesSearchFacetDisplayContextBuilder
-			assetEntriesSearchFacetDisplayContextBuilder =
-				_createAssetEntriesSearchFacetDisplayContextBuilder(
-					renderRequest);
-
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
 
@@ -142,9 +134,11 @@ public class TypeFacetPortlet extends MVCPortlet {
 			_getAssetTypesClassNames(
 				typeFacetPortletPreferences, themeDisplay));
 
-		assetEntriesSearchFacetDisplayContextBuilder.setFacet(facet);
+		assetEntriesSearchFacetDisplayContextBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				_getAggregationName(renderRequest)));
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			assetEntriesFacetConfiguration.getFrequencyThreshold());
+			typeFacetPortletPreferences.getFrequencyThreshold());
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			typeFacetPortletPreferences.isFrequenciesVisible());
 		assetEntriesSearchFacetDisplayContextBuilder.setLocale(

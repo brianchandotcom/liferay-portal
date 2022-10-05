@@ -15,6 +15,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -36,6 +37,15 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class ObjectEntryImpl extends ObjectEntryBaseImpl {
+
+	@Override
+	public ObjectEntry cloneWithOriginalValues() {
+		ObjectEntry objectEntry = super.cloneWithOriginalValues();
+
+		objectEntry.setValues(_transientValues);
+
+		return objectEntry;
+	}
 
 	@Override
 	public String getModelClassName() {
@@ -110,6 +120,11 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	@Override
 	public void setTransientValues(Map<String, Serializable> values) {
 		_transientValues = values;
+	}
+
+	@Override
+	public void setValues(Map<String, Serializable> values) {
+		_values = values;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

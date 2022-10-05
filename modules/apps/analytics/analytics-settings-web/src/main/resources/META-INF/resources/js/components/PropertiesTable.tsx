@@ -66,7 +66,7 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 								className="mr-2"
 								columnTextAlignment="end"
 							>
-								{/* TODO: When backend for commerce is copmpleted, display the channels linked*/}
+								{/* TODO: When backend for commerce is completed, display the channels linked*/}
 								-
 							</ClayTable.Cell>
 
@@ -85,17 +85,17 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 							>
 								<ClayToggle
 
-									// TODO: When backend for commerce is copmpleted, create function to connect to commerce
+									// TODO: When backend for commerce is completed, create function to connect to commerce
 									// onToggle={() => setActiveCommerce(!active)}
 
-									toggled={true}
+									toggled
 								/>
 							</ClayTable.Cell>
 
 							<ClayTable.Cell columnTextAlignment="end">
 								<ClayButton
 
-									// TODO: When backend for commerce is copmpleted, create function to open modal
+									// TODO: When backend for commerce is completed, create function to open modal
 									// onClick={()=> openModalAssignToProperty()}
 
 									displayType="secondary"

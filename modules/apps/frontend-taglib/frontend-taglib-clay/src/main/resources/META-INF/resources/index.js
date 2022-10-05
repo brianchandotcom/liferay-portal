@@ -16,6 +16,7 @@ export {default as Button} from './Button';
 export {default as Checkbox} from './Checkbox';
 export {default as DefaultEventHandlersPropsTransformer} from './DefaultEventHandlersPropsTransformer';
 export {default as DropdownMenu} from './DropdownMenu';
+export {default as Link} from './Link';
 export {default as Multiselect} from './Multiselect';
 export {default as NavigationBar} from './NavigationBar';
 export {default as PaginationBar} from './PaginationBar';

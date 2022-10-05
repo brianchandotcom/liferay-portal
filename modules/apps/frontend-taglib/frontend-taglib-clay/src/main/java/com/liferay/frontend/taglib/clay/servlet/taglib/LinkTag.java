@@ -171,7 +171,7 @@ public class LinkTag extends BaseContainerTag {
 	@Override
 	protected String getHydratedModuleName() {
 		if ((getAdditionalProps() != null) || (getPropsTransformer() != null)) {
-			return "frontend-taglib-clay/Link";
+			return "{Link} from frontend-taglib-clay";
 		}
 
 		return null;

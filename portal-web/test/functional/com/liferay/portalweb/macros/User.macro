@@ -780,11 +780,7 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
-		UserNavigator.gotoMemberships();
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ACCOUNTS_SELECT_LINK",
-			value1 = "SELECT");
+		User.selectMembership(assetType = "Accounts");
 
 		SelectFrame(
 			key_title = "Select Account",
@@ -930,11 +926,7 @@ definition {
 	}
 
 	macro assignUserGroupCP {
-		UserNavigator.gotoMemberships();
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_SELECT_LINK",
-			value1 = "Select");
+		User.selectMembership(assetType = "User Groups");
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_GROUP");
 
@@ -1560,15 +1552,7 @@ definition {
 	macro editUserAssetLibraryCP {
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
-		UserNavigator.gotoMemberships();
-
-		AssertElementPresent.assertVisible(
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_SELECT_LINK",
-			value1 = "SELECT");
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_SELECT_LINK",
-			value1 = "SELECT");
+		User.selectMembership(assetType = "Asset Libraries");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1711,17 +1695,11 @@ definition {
 	macro editUserSiteCP {
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
-		UserNavigator.gotoMemberships();
-
-		var key_siteName = "${siteName}";
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#SITES_SELECT_LINK",
-			value1 = "SELECT");
+		User.selectMembership(assetType = "Sites");
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_SITES");
+
+		var key_siteName = "${siteName}";
 
 		Type(
 			locator1 = "TextInput#SITE_SEARCH_KEYWORDS",

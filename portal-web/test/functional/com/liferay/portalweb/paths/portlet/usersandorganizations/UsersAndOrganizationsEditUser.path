@@ -11,14 +11,6 @@
 
 <tbody>
 
-<!--Accounts-->
-
-<tr>
-	<td>ACCOUNTS_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectAccountLink')]/span</td>
-	<td></td>
-</tr>
-
 <!--DETAILS-->
 
 <tr>
@@ -158,39 +150,8 @@
 	<td></td>
 </tr>
 
-<!--ORGANIZATIONS-->
-
-<tr>
-	<td>ORGANIZATIONS_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectOrganizationLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-
-<!--SITES-->
-
-<tr>
-	<td>SITES_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectSiteLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-
 <!--DEPOT-->
 
-<tr>
-	<td>DEPOT_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectDepotGroupLink')]/span</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DEPOT_ROLES_SELECT_BUTTON</td>
 	<td>//button[contains(@data-rolename,'${roleTitle}')]</td>
@@ -232,11 +193,6 @@
 <tr>
 	<td>USER_GROUPS_CHOOSE_BUTTON</td>
 	<td>//*[*[normalize-space(text())='${key_userGroupName}']]/..//following-sibling::td/*[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUPS_SELECT_LINK</td>
-	<td>//a[contains(@id,'openUserGroupsLink')]/span</td>
 	<td></td>
 </tr>
 <tr>

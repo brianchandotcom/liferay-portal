@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true, property = "service.ranking:Integer=100",
 	service = PortalInstanceLifecycleListener.class
 )
-public class AddCommerceSalesforceConnectorPortalInstanceLifecycleListener
+public class AddSalesforceConnectorPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override

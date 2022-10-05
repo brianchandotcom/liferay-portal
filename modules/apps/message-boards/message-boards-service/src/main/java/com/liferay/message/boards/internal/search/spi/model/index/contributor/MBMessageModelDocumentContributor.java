@@ -133,15 +133,8 @@ public class MBMessageModelDocumentContributor
 				MBMessage.class.getName(), mbThread.getRootMessageId());
 
 			if(ratingsStats != null) {
-				document.addNumber("ratingValue", ratingsStats.getTotalScore());
+				document.addNumber("ratingValueTotalScore", ratingsStats.getTotalScore());
 			}
-
-			document.addKeyword(
-				"tagNames",
-				ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						MBMessage.class.getName(), mbMessage.getMessageId()),
-					AssetTag.NAME_ACCESSOR));
 
 			document.addNumber("viewCount", mbThread.getViewCount());
 		}

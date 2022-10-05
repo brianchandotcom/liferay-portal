@@ -19,6 +19,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -325,21 +326,32 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
+<<<<<<< Updated upstream
 			boolean related, boolean reverse, int start, int end)
+=======
+			boolean related, boolean reverse, int start, int end,
+			PermissionChecker permissionChecker)
+>>>>>>> Stashed changes
 		throws PortalException {
 
 		return getService().getManyToManyObjectEntries(
 			groupId, objectRelationshipId, primaryKey, related, reverse, start,
-			end);
+			end, permissionChecker);
 	}
 
 	public static int getManyToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
+<<<<<<< Updated upstream
 			boolean related, boolean reverse)
+=======
+			boolean related, boolean reverse,
+			PermissionChecker permissionChecker)
+>>>>>>> Stashed changes
 		throws PortalException {
 
 		return getService().getManyToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, reverse);
+			groupId, objectRelationshipId, primaryKey, related, reverse,
+			permissionChecker);
 	}
 
 	/**
@@ -467,8 +479,7 @@ public class ObjectEntryLocalServiceUtil {
 	public static List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, int start, int end,
-			com.liferay.portal.kernel.security.permission.PermissionChecker
-				permissionChecker)
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
@@ -478,9 +489,7 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static int getOneToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related,
-			com.liferay.portal.kernel.security.permission.PermissionChecker
-				permissionChecker)
+			boolean related, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntriesCount(

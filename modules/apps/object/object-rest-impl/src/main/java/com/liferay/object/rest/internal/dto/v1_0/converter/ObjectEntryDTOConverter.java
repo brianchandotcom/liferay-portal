@@ -151,7 +151,8 @@ public class ObjectEntryDTOConverter
 					objectRelationship.getObjectRelationshipId(),
 					objectEntry.getObjectEntryId(), true,
 					objectRelationship.isReverse(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS));
+					QueryUtil.ALL_POS,
+					PermissionThreadLocal.getPermissionChecker()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

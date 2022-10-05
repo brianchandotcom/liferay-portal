@@ -534,12 +534,14 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, int start, int end)
+			boolean related, boolean reverse, int start, int end,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getManyToManyObjectEntriesGroupByStep(
 			groupId, objectRelationshipId, primaryKey, related, reverse,
-			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE)
+			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE),
+			permissionChecker
 		).limit(
 			start, end
 		);
@@ -554,13 +556,15 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public int getManyToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse)
+			boolean related, boolean reverse,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getManyToManyObjectEntriesGroupByStep(
 			groupId, objectRelationshipId, primaryKey, related, reverse,
 			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId));
+				ObjectEntryTable.INSTANCE.objectEntryId),
+			permissionChecker);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1572,7 +1576,8 @@ public class ObjectEntryLocalServiceImpl
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, FromStep fromStep)
+			boolean related, boolean reverse, FromStep fromStep,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -1641,7 +1646,7 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinitionId2)
 			).and(
 				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
+					if (permissionChecker == null) {
 						return null;
 					}
 

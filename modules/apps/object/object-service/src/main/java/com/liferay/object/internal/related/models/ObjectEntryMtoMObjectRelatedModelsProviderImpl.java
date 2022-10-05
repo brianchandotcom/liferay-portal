@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import java.util.List;
 import java.util.Objects;
@@ -126,7 +127,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, objectRelationship.isReverse(), start, end);
+			true, objectRelationship.isReverse(), start, end,
+			permissionChecker);
 	}
 
 	@Override
@@ -141,7 +143,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, objectRelationship.isReverse());
+			true, objectRelationship.isReverse(), permissionChecker);
 	}
 
 	@Override
@@ -157,7 +159,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		return _objectEntryLocalService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(),
 			objectEntryId, false, objectRelationship.isReverse(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			PermissionThreadLocal.getPermissionChecker());
 	}
 
 	private final String _className;

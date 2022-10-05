@@ -14,7 +14,13 @@
 
 package com.liferay.object.service;
 
+<<<<<<< Updated upstream
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+=======
+import PermissionChecker
+import com.liferay.portal.kernel.security.permission.PermissionChecker; rt com.liferay.portal.kernel.service.ServiceWrapper;
+>>>>>>> Stashed changes
 
 /**
  * Provides a wrapper for {@link ObjectEntryLocalService}.
@@ -367,23 +373,37 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntry>
 			getManyToManyObjectEntries(
+<<<<<<< Updated upstream
+		long groupId, long objectRelationshipId, long primaryKey,
+		boolean related, boolean reverse, int start, int end,
+		PermissionChecker permissionChecker)
+=======
 				long groupId, long objectRelationshipId, long primaryKey,
-				boolean related, boolean reverse, int start, int end)
+				boolean related, boolean reverse, int start, int end,
+				PermissionChecker permissionChecker)
+>>>>>>> Stashed changes
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getManyToManyObjectEntries(
 			groupId, objectRelationshipId, primaryKey, related, reverse, start,
-			end);
+			end, permissionChecker);
 	}
 
 	@Override
 	public int getManyToManyObjectEntriesCount(
+<<<<<<< Updated upstream
+		long groupId, long objectRelationshipId, long primaryKey,
+		boolean related, boolean reverse, PermissionChecker permissionChecker)
+=======
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse)
+			boolean related, boolean reverse,
+			PermissionChecker permissionChecker)
+>>>>>>> Stashed changes
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, related, reverse);
+			groupId, objectRelationshipId, primaryKey, related, reverse,
+			permissionChecker);
 	}
 
 	/**
@@ -532,8 +552,7 @@ public class ObjectEntryLocalServiceWrapper
 			getOneToManyObjectEntries(
 				long groupId, long objectRelationshipId, long primaryKey,
 				boolean related, int start, int end,
-				com.liferay.portal.kernel.security.permission.PermissionChecker
-					permissionChecker)
+				PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
@@ -544,9 +563,7 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public int getOneToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related,
-			com.liferay.portal.kernel.security.permission.PermissionChecker
-				permissionChecker)
+			boolean related, PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntriesCount(

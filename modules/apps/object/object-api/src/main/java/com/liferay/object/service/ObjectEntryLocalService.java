@@ -277,13 +277,13 @@ public interface ObjectEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, int start, int end)
+			boolean related, boolean reverse, int start, int end, PermissionChecker permissionChecker)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getManyToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse)
+			boolean related, boolean reverse, PermissionChecker permissionChecker)
 		throws PortalException;
 
 	/**

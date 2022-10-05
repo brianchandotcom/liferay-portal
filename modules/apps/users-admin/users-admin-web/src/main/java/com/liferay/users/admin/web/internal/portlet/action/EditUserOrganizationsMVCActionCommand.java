@@ -86,13 +86,14 @@ public class EditUserOrganizationsMVCActionCommand
 				user.getEmailAddress(), user.getLanguageId(),
 				user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 				user.getFirstName(), user.getMiddleName(), user.getLastName(),
-				contact.getPrefixId(), contact.getSuffixId(), user.isMale(),
-				birthdayCal.get(Calendar.MONTH), birthdayCal.get(Calendar.DATE),
-				birthdayCal.get(Calendar.YEAR), contact.getSmsSn(),
-				contact.getFacebookSn(), contact.getJabberSn(),
-				contact.getSkypeSn(), contact.getTwitterSn(),
-				user.getJobTitle(), user.getGroupIds(), organizationIds,
-				user.getRoleIds(), _usersAdmin.getUserGroupRoles(actionRequest),
+				contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
+				user.isMale(), birthdayCal.get(Calendar.MONTH),
+				birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
+				contact.getSmsSn(), contact.getFacebookSn(),
+				contact.getJabberSn(), contact.getSkypeSn(),
+				contact.getTwitterSn(), user.getJobTitle(), user.getGroupIds(),
+				organizationIds, user.getRoleIds(),
+				_usersAdmin.getUserGroupRoles(actionRequest),
 				user.getUserGroupIds(), serviceContext);
 		}
 		catch (Exception exception) {

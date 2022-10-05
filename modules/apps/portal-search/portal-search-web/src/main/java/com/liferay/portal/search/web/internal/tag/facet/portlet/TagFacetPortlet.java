@@ -23,8 +23,6 @@ import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
-import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfiguration;
-import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -112,9 +110,6 @@ public class TagFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		AssetTagsFacetConfiguration assetTagsFacetConfiguration =
-			new AssetTagsFacetConfigurationImpl(facet.getFacetConfiguration());
-
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
 				_createTagsSearchFacetDisplayContextBuilder(renderRequest);
@@ -125,9 +120,9 @@ public class TagFacetPortlet extends MVCPortlet {
 		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			tagFacetPortletPreferences.isFrequenciesVisible());
 		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			assetTagsFacetConfiguration.getFrequencyThreshold());
+			tagFacetPortletPreferences.getFrequencyThreshold());
 		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(
-			assetTagsFacetConfiguration.getMaxTerms());
+			tagFacetPortletPreferences.getMaxTerms());
 		assetTagsSearchFacetDisplayContextBuilder.
 			setPaginationStartParameterName(
 				_getPaginationStartParameterName(portletSharedSearchResponse));

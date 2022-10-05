@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACCOUNTS_TABLE_ACCOUNT_NAMES</td>
-	<td>//div[contains(.,'Accounts')]//td[contains(@class,'lfr-name-column') and contains(.,'${key_accountName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACCOUNTS_TABLE_ACCOUNT_ROLES</td>
 	<td>//div[contains(.,'Accounts')]//td[contains(@class,'lfr-roles-column') and contains(.,'${key_accountRole}')]</td>
 	<td></td>
@@ -174,11 +169,6 @@
 <!--SITES-->
 
 <tr>
-	<td>SITES_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITES_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectSiteLink')]/span</td>
 	<td></td>
@@ -217,11 +207,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEPOT_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_depotName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEPOT_TABLE_SPECIFIC_NAME</td>
 	<td>//tr[${key_position}][contains(.,'${key_depotName}')]/td[1]</td>
 	<td></td>
@@ -234,11 +219,6 @@
 
 <!--USER_GROUPS-->
 
-<tr>
-	<td>USER_GROUPS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_GROUPS_TABLE_REMOVE</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>

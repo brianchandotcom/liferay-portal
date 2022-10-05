@@ -46,6 +46,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -118,6 +119,31 @@ public class NotificationTemplateLocalServiceTest {
 			HashMapDictionaryBuilder.put(
 				"notification.type.key", _NOTIFICATION_TYPE_KEY
 			).build());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntries) {
+
+			_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+				notificationQueueEntry.getNotificationQueueEntryId());
+		}
+
+		List<NotificationTemplate> notificationTemplates =
+			_notificationTemplateLocalService.getNotificationTemplates(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (NotificationTemplate notificationTemplate :
+				notificationTemplates) {
+
+			_notificationTemplateLocalService.deleteNotificationTemplate(
+				notificationTemplate.getNotificationTemplateId());
+		}
 	}
 
 	@Test
@@ -242,25 +268,33 @@ public class NotificationTemplateLocalServiceTest {
 	public void testSendNotificationTemplateToMultipleEmailAddresses()
 		throws Exception {
 
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 0,
+			notificationQueueEntries.size());
+
 		NotificationTemplate notificationTemplate =
 			_notificationTemplateLocalService.addNotificationTemplate(
 				TestPropsValues.getUserId(), 0, "",
 				Collections.singletonMap(LocaleUtil.US, ""), "", "",
 				"test@liferay.com", Collections.singletonMap(LocaleUtil.US, ""),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
 				Collections.singletonMap(LocaleUtil.US, ""),
 				Collections.singletonMap(
 					LocaleUtil.US,
 					"abc@def.hij.com, br@test.com;caleb@able.test.com\n" +
 						"david@test.com"),
-				Collections.emptyList());
+				NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 
 		_notificationTemplateLocalService.sendNotificationTemplate(
 			TestPropsValues.getUserId(),
 			notificationTemplate.getNotificationTemplateId(),
 			_NOTIFICATION_TYPE_KEY, new Object());
 
-		List<NotificationQueueEntry> notificationQueueEntries =
+		notificationQueueEntries =
 			_notificationQueueEntryLocalService.getNotificationQueueEntries(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 

@@ -15,6 +15,7 @@
 package com.liferay.notification.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
@@ -96,12 +97,12 @@ public class NotificationQueueEntryLocalServiceTest {
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				Collections.emptyList());
+				NotificationConstants.TYPE_EMAIL, Collections.emptyList());
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
 			TestPropsValues.getUserId(),

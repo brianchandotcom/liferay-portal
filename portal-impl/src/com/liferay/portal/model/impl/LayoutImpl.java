@@ -687,15 +687,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return "list";
 		}
 
-		if (isTypePortlet()) {
-			return "page-template";
+		if (isTypeContent()) {
+			return "page";
 		}
 
 		if (isTypeURL() || isTypeLinkToLayout()) {
 			return "link";
 		}
 
-		return "page";
+		return "page-template";
 	}
 
 	/**

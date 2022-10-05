@@ -157,6 +157,9 @@ definition {
 			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
 			value1 = "${option}");
 	}
+	macro assertSignatureWithNoKeysIsVisible {
+		AssertVisible(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED");
+	}
 
 	macro assertTextAtTable {
 		var key_linePosition = "${linePosition}";

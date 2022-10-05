@@ -70,11 +70,11 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/provider":
+    "/saml-provider":
         get:
             description:
                 Retrieves the SAML Provider configuration.
-            operationId: getProvider
+            operationId: getSamlProvider
             responses:
                 200:
                     content:
@@ -88,7 +88,7 @@ paths:
         patch:
             description:
                 Patch the SAML Provider configuration.
-            operationId: patchProvider
+            operationId: patchSamlProvider
             requestBody:
                 content:
                     application/json:
@@ -113,7 +113,7 @@ paths:
         post:
             description:
                 Creates a full SAML Provider configuration with peer connections.
-            operationId: postProvider
+            operationId: postSamlProvider
             requestBody:
                 content:
                     application/json:

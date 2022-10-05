@@ -14,15 +14,37 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.SearchEngineProxyWrapper;
+import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
+import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
+import com.liferay.portal.kernel.search.messaging.SearchWriterMessageListener;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +57,32 @@ import org.osgi.service.component.annotations.Reference;
 	service = SearchEngineConfigurator.class
 )
 public class ElasticsearchEngineConfigurator
-	extends BaseSearchEngineConfigurator {
+	implements SearchEngineConfigurator {
+
+	@Override
+	public void afterPropertiesSet() {
+	}
+
+	@Override
+	public void destroy() {
+		_searchEngineHelper.removeSearchEngine(_searchEngineId);
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_destinationServiceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_destinationServiceRegistrations.clear();
+	}
+
+	@Override
+	public void setSearchEngine(
+		String searchEngineId, SearchEngine searchEngine) {
+
+		_searchEngineId = searchEngineId;
+		_searchEngine = searchEngine;
+	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -46,47 +93,161 @@ public class ElasticsearchEngineConfigurator
 		initialize();
 	}
 
-	@Override
-	protected BundleContext getBundleContext() {
-		return _bundleContext;
+	protected Destination createSearchReaderDestination(
+		String searchReaderDestinationName) {
+
+		DestinationConfiguration destinationConfiguration =
+			DestinationConfiguration.createSynchronousDestinationConfiguration(
+				searchReaderDestinationName);
+
+		return _destinationFactory.createDestination(destinationConfiguration);
 	}
 
-	@Override
-	protected DestinationFactory getDestinationFactory() {
-		return _destinationFactory;
+	protected Destination createSearchWriterDestination(
+		String searchWriterDestinationName) {
+
+		DestinationConfiguration destinationConfiguration = null;
+
+		if (PortalRunMode.isTestMode()) {
+			destinationConfiguration =
+				DestinationConfiguration.
+					createSynchronousDestinationConfiguration(
+						searchWriterDestinationName);
+		}
+		else {
+			destinationConfiguration =
+				DestinationConfiguration.createParallelDestinationConfiguration(
+					searchWriterDestinationName);
+		}
+
+		if (_INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE > 0) {
+			destinationConfiguration.setMaximumQueueSize(
+				_INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE);
+
+			RejectedExecutionHandler rejectedExecutionHandler =
+				new ThreadPoolExecutor.CallerRunsPolicy() {
+
+					@Override
+					public void rejectedExecution(
+						Runnable runnable,
+						ThreadPoolExecutor threadPoolExecutor) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"The search index writer's task queue is ",
+									"at its maximum capacity. The current ",
+									"thread will handle the request."));
+						}
+
+						super.rejectedExecution(runnable, threadPoolExecutor);
+					}
+
+				};
+
+			destinationConfiguration.setRejectedExecutionHandler(
+				rejectedExecutionHandler);
+		}
+
+		return _destinationFactory.createDestination(destinationConfiguration);
 	}
 
-	@Override
-	protected IndexSearcher getIndexSearcher() {
-		return _indexSearcher;
+	protected void initialize() {
+		_registerSearchEngineMessageListener(
+			_searchEngineId, _searchEngine, _getSearchReaderDestination(),
+			new SearchReaderMessageListener(),
+			_searchEngine.getIndexSearcher());
+
+		_registerSearchEngineMessageListener(
+			_searchEngineId, _searchEngine, _getSearchWriterDestination(),
+			new SearchWriterMessageListener(), _searchEngine.getIndexWriter());
+
+		SearchEngineProxyWrapper searchEngineProxyWrapper =
+			new SearchEngineProxyWrapper(
+				_searchEngine, _indexSearcher, _indexWriter);
+
+		_searchEngineHelper.setSearchEngine(
+			_searchEngineId, searchEngineProxyWrapper);
+
+		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
 	}
 
-	@Override
-	protected IndexWriter getIndexWriter() {
-		return _indexWriter;
+	private Destination _getSearchReaderDestination() {
+		String searchReaderDestinationName =
+			SearchEngineHelperUtil.getSearchReaderDestinationName(
+				_searchEngineId);
+
+		Destination searchReaderDestination = _messageBus.getDestination(
+			searchReaderDestinationName);
+
+		if (searchReaderDestination == null) {
+			searchReaderDestination = createSearchReaderDestination(
+				searchReaderDestinationName);
+
+			_destinationServiceRegistrations.add(
+				_bundleContext.registerService(
+					Destination.class, searchReaderDestination,
+					MapUtil.singletonDictionary(
+						"destination.name",
+						searchReaderDestination.getName())));
+		}
+
+		return searchReaderDestination;
 	}
 
-	@Override
-	protected MessageBus getMessageBus() {
-		return _messageBus;
+	private Destination _getSearchWriterDestination() {
+		String searchWriterDestinationName =
+			SearchEngineHelperUtil.getSearchWriterDestinationName(
+				_searchEngineId);
+
+		Destination searchWriterDestination = _messageBus.getDestination(
+			searchWriterDestinationName);
+
+		if (searchWriterDestination == null) {
+			searchWriterDestination = createSearchWriterDestination(
+				searchWriterDestinationName);
+
+			_destinationServiceRegistrations.add(
+				_bundleContext.registerService(
+					Destination.class, searchWriterDestination,
+					MapUtil.singletonDictionary(
+						"destination.name",
+						searchWriterDestination.getName())));
+		}
+
+		return searchWriterDestination;
 	}
 
-	@Override
-	protected ClassLoader getOperatingClassLoader() {
-		Class<?> clazz = getClass();
+	private void _registerSearchEngineMessageListener(
+		String searchEngineId, SearchEngine searchEngine,
+		Destination destination,
+		BaseSearchEngineMessageListener baseSearchEngineMessageListener,
+		Object manager) {
 
-		return clazz.getClassLoader();
+		baseSearchEngineMessageListener.setManager(manager);
+		baseSearchEngineMessageListener.setMessageBus(_messageBus);
+		baseSearchEngineMessageListener.setSearchEngine(searchEngine);
+		baseSearchEngineMessageListener.setSearchEngineId(searchEngineId);
+
+		destination.register(
+			baseSearchEngineMessageListener,
+			ElasticsearchEngineConfigurator.class.getClassLoader());
 	}
 
-	@Override
-	protected SearchEngineHelper getSearchEngineHelper() {
-		return _searchEngineHelper;
-	}
+	private static final int _INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE));
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchEngineConfigurator.class);
 
 	private BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
+
+	private final List<ServiceRegistration<?>>
+		_destinationServiceRegistrations = new ArrayList<>();
 
 	@Reference(target = "(!(search.engine.impl=*))")
 	private IndexSearcher _indexSearcher;
@@ -104,5 +265,7 @@ public class ElasticsearchEngineConfigurator
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;
+
+	private String _searchEngineId;
 
 }

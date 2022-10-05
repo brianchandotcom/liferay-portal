@@ -15,17 +15,14 @@
 import {
 	getCheckedCheckboxes,
 	openConfirmModal,
+	openModal,
 	openSelectionModal,
 	postForm,
 	sub,
 } from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {
-		accountEntryName,
-		assignAccountUsersURL,
-		selectAccountUsersURL,
-	},
+	additionalProps: {accountEntryName},
 	portletNamespace,
 	...otherProps
 }) {
@@ -63,40 +60,72 @@ export default function propsTransformer({
 				});
 			}
 		},
-		onCreateButtonClick: () => {
-			openSelectionModal({
-				buttonAddLabel: Liferay.Language.get('assign'),
-				containerProps: {
-					className: '',
-				},
-				iframeBodyCssClass: '',
-				multiple: true,
-				onSelect: (selectedItems) => {
-					if (!selectedItems?.length) {
-						return;
-					}
+		onCreationMenuItemClick: (event, {item}) => {
+			const data = item?.data;
 
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+			const action = data?.action;
 
-					if (form) {
-						const values = selectedItems.map((item) => item.value);
-
-						postForm(form, {
-							data: {
-								accountUserIds: values.join(','),
+			if (action === 'inviteAccountUsers') {
+				openModal({
+					buttons: [
+						{
+							displayType: 'secondary',
+							label: Liferay.Language.get('cancel'),
+							type: 'cancel',
+						},
+						{
+							label: Liferay.Language.get('send'),
+							onClick: ({processClose}) => {
+								processClose();
 							},
-							url: assignAccountUsersURL,
-						});
-					}
-				},
-				title: sub(
-					Liferay.Language.get('assign-users-to-x'),
-					accountEntryName
-				),
-				url: selectAccountUsersURL,
-			});
+						},
+					],
+					iframeBodyCssClass: '',
+					size: 'lg',
+					title: sub(
+						Liferay.Language.get('invite-users-to-x'),
+						accountEntryName
+					),
+					url: data?.modalURL,
+				});
+			}
+			else if (action === 'selectAccountUsers') {
+				openSelectionModal({
+					buttonAddLabel: Liferay.Language.get('assign'),
+					containerProps: {
+						className: '',
+					},
+					iframeBodyCssClass: '',
+					multiple: true,
+					onSelect: (selectedItems) => {
+						if (!selectedItems?.length) {
+							return;
+						}
+
+						const form = document.getElementById(
+							`${portletNamespace}fm`
+						);
+
+						if (form) {
+							const values = selectedItems.map(
+								(item) => item.value
+							);
+
+							postForm(form, {
+								data: {
+									accountUserIds: values.join(','),
+								},
+								url: data?.assignAccountUsersURL,
+							});
+						}
+					},
+					title: sub(
+						Liferay.Language.get('assign-users-to-x'),
+						accountEntryName
+					),
+					url: data?.modalURL,
+				});
+			}
 		},
 	};
 }

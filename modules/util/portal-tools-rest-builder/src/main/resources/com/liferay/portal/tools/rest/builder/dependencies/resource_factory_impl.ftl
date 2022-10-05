@@ -40,9 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -109,16 +107,6 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		${schemaName}Resource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		${schemaName}Resource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, ${schemaName}Resource> _getProxyProviderFunction() {

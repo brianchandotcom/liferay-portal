@@ -304,7 +304,7 @@ public class ObjectActionLocalServiceTest {
 				payloadJSONObject, "JSONObject/originalObjectEntry",
 				"Object/status"));
 		Assert.assertEquals(
-			"John",
+			"João",
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalObjectEntry",
 				"JSONObject/values", "Object/firstName"));

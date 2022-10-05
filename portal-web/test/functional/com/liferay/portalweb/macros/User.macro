@@ -3032,16 +3032,6 @@ definition {
 			value1 = "${siteName}");
 	}
 
-	macro viewUserInfomationUserGroupsCP {
-		UserNavigator.gotoMemberships();
-
-		var key_userGroupName = "${userGroupName}";
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_NAME",
-			value1 = "${userGroupName}");
-	}
-
 	macro viewUserTableName {
 		AssertTextEquals(
 			key_userScreenName = "${key_userScreenName}",

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.collection.provider.item.selector.web.internal;
+package com.liferay.info.collection.provider.item.selector.web.internal.item.selector;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;

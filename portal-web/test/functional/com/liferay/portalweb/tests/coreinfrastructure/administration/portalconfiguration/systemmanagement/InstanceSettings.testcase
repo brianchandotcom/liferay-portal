@@ -714,9 +714,9 @@ definition {
 
 		User.gotoEditCP(userScreenName = "usersn");
 
-		User.viewUserInfomationOrganizationSitesCP(
-			orgName = "Organization Name",
-			siteName = "Organization Name");
+		User.viewMemberships(
+			assetType = "Sites",
+			assigneeName = "Organization Name");
 	}
 
 	@priority = "4"
@@ -770,7 +770,9 @@ definition {
 
 		User.gotoEditCP(userScreenName = "usersn");
 
-		User.viewUserInfomationSitesCP(siteName = "Site Name");
+		User.viewMemberships(
+			assetType = "Sites",
+			assigneeName = "Site Name");
 	}
 
 	@priority = "4"

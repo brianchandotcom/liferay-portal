@@ -1498,7 +1498,9 @@ definition {
 
 		User.gotoEditCP(userScreenName = "usersn");
 
-		User.viewUserInfomationSitesCP(siteName = "Site Name Alpha");
+		User.viewMemberships(
+			assetType = "Sites",
+			assigneeName = "Site Name Alpha");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1507,7 +1509,9 @@ definition {
 
 		User.gotoEditCP(userScreenName = "usersn");
 
-		User.viewUserInfomationSitesCP(siteName = "Organization Site Bravo");
+		User.viewMemberships(
+			assetType = "Sites",
+			assigneeName = "Organization Site Bravo");
 	}
 
 	@priority = "3"

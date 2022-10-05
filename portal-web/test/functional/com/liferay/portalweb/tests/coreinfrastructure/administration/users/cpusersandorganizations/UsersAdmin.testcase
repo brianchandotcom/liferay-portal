@@ -1607,7 +1607,9 @@ definition {
 
 		User.gotoEditCP(userScreenName = "usersn");
 
-		User.viewUserInfomationSitesCP(siteName = "Site Name");
+		User.viewMemberships(
+			assetType = "Sites",
+			assigneeName = "Site Name");
 	}
 
 	@priority = "4"

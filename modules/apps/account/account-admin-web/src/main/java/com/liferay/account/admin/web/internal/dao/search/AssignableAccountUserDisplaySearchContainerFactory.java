@@ -67,7 +67,7 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 		throws PortalException {
 
 		SearchContainer<AccountUserDisplay> searchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				liferayPortletRequest,
 				PortletURLUtil.getCurrent(
 					liferayPortletRequest, liferayPortletResponse),

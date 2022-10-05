@@ -1783,6 +1783,10 @@ public class TestrayImporter {
 			"$(portal.version)",
 			portalGitWorkingDirectory.getMajorPortalVersion());
 
+		string = string.replace(
+			"$(portal.product.version)",
+			portalGitWorkingDirectory.getMajorPortalVersion() + ".x");
+
 		if (!(_topLevelBuild instanceof PortalBranchInformationBuild)) {
 			return string;
 		}
@@ -1819,6 +1823,8 @@ public class TestrayImporter {
 				"$(portal.release.tomcat.url)", portalBundleTomcatURLString);
 			string = string.replace(
 				"$(portal.release.version)", portalRelease.getPortalVersion());
+			string = string.replace(
+				"$(portal.product.version)", portalRelease.getPortalVersion());
 
 			Matcher matcher = _releaseArtifactURLPattern.matcher(
 				portalBundleTomcatURLString);
@@ -1877,6 +1883,12 @@ public class TestrayImporter {
 				"$(portal.hotfix.release.version)",
 				portalHotfixRelease.getPortalHotfixReleaseVersion());
 
+			if (portalRelease != null) {
+				string = string.replace(
+					"$(portal.product.version)",
+					portalRelease.getPortalVersion());
+			}
+
 			Matcher matcher = _releaseArtifactURLPattern.matcher(
 				portalHotfixURL);
 
@@ -1896,9 +1908,16 @@ public class TestrayImporter {
 			sb.append(portalGitWorkingDirectory.getMajorPortalVersion());
 
 			sb.append(".x");
+
+			string = string.replace(
+				"$(portal.product.version)",
+				portalGitWorkingDirectory.getMajorPortalVersion() + ".x");
 		}
 		else {
 			sb.append(portalRelease.getPortalVersion());
+
+			string = string.replace(
+				"$(portal.product.version)", portalRelease.getPortalVersion());
 
 			if (portalFixpackRelease != null) {
 				sb.append(" FP");

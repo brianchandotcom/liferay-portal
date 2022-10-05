@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.view.count.listener;
+package com.liferay.view.count.model.listener;
 
 import com.liferay.view.count.model.ViewCountEntry;
 

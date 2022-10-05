@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.view.count.configuration.ViewCountConfiguration;
-import com.liferay.view.count.listener.ViewCountEntryModelListener;
+import com.liferay.view.count.model.listener.ViewCountEntryModelListener;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.model.ViewCountEntryTable;
 import com.liferay.view.count.service.ViewCountEntryLocalService;

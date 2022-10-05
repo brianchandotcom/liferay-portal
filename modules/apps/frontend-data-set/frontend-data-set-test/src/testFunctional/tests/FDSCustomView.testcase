@@ -1,0 +1,73 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "upgrade.database.auto.run=false";
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Frontend Dataset sample portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				widgetName = "Frontend Data Set Sample");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				layoutTemplate = "1 Column");
+
+			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+		}
+	}
+
+	@description = "LPS-164617. Assert that it's possible to make changes in the FDS "
+	@priority = "4"
+	test CanBeEditted {
+
+		// To-do CanBeEditted Autom. test
+
+	}
+
+	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
+	@priority = "4"
+	test CanBeSaved {
+
+		// To-do CanBeSaved Autom. test
+
+	}
+
+	@description = "LPS-164618. Assert that it's possible can edit a new instance was previously created"
+	@priority = "4"
+	test CanCreateMultiple {
+
+		// To-do CanBeSaved Autom. test
+
+	}
+
+}

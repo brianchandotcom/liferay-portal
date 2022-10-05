@@ -29,9 +29,7 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
-<portlet:actionURL name="/account_admin/assign_account_users" var="assignAccountUsersURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
+<portlet:actionURL name="/account_admin/assign_account_users" var="assignAccountUsersURL" />
 
 <portlet:renderURL var="selectAccountUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
@@ -57,8 +55,11 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
 		<aui:input name="accountUserIds" type="hidden" />
+
+		<liferay-ui:error exception="<%= UserEmailAddressException.MustHaveValidDomain.class %>" message="one-or-more-of-the-selected-users-have-invalid-email-address-domains" />
 
 		<liferay-ui:search-container
 			searchContainer="<%= accountUserDisplaySearchContainer %>"

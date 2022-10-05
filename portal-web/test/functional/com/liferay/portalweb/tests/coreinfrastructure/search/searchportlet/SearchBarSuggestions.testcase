@@ -52,7 +52,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "New Search Page");
 
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "New Search Page");
+		// Workaround for LPS-164852
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "/new-search-page");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",

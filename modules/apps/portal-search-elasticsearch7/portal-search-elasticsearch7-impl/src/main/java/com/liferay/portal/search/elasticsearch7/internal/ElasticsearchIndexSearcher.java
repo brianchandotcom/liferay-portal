@@ -297,8 +297,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setSorts(searchContext.getSorts());
 		searchSearchRequest.setSorts(searchRequest.getSorts());
 		searchSearchRequest.setStats(searchContext.getStats());
-		searchSearchRequest.setTrackTotalHits(
-			_elasticsearchConfigurationWrapper.trackTotalHits());
 
 		return searchSearchRequest;
 	}
@@ -356,9 +354,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_prepare(
 			countSearchRequest, _getSearchRequest(searchContext), query,
 			searchContext);
-
-		countSearchRequest.setTrackTotalHits(
-			_elasticsearchConfigurationWrapper.trackTotalHits());
 
 		return countSearchRequest;
 	}
@@ -453,6 +448,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequest.getPostFilterComplexQueryParts());
 		baseSearchRequest.setRescores(searchRequest.getRescores());
 		baseSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
+		baseSearchRequest.setTrackTotalHits(
+			_elasticsearchConfigurationWrapper.trackTotalHits());
 
 		_setAggregations(baseSearchRequest, searchRequest);
 		_setConnectionId(baseSearchRequest, searchRequest);

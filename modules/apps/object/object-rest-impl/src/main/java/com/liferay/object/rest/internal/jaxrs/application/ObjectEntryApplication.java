@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.jaxrs.application;
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -43,10 +44,11 @@ public class ObjectEntryApplication extends Application {
 
 		objects.add(
 			new ObjectDefinitionIdContainerRequestFilter(
-				_objectDefinitionId, _objectDefinitionName));
+				_objectDefinitionLocalService, _objectDefinitionName));
 		objects.add(
 			new OpenAPIResourceImpl(
-				_objectDefinitionId, _objectEntryOpenAPIResource));
+				_objectDefinitionLocalService, _objectDefinitionName,
+				_objectEntryOpenAPIResource));
 
 		return objects;
 	}
@@ -55,11 +57,11 @@ public class ObjectEntryApplication extends Application {
 	protected void activate(Map<String, Object> properties) {
 		_objectDefinitionName = (String)properties.get(
 			"liferay.object.definition.name");
-		_objectDefinitionId = (Long)properties.get(
-			"liferay.object.definition.id");
 	}
 
-	private Long _objectDefinitionId;
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private String _objectDefinitionName;
 
 	@Reference

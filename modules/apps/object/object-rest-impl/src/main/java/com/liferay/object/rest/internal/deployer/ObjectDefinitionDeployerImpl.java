@@ -109,27 +109,34 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
+		_objectDefinitionInstanceKey =
+			objectDefinition.getRESTContextPath() +
+				objectDefinition.getCompanyId();
+
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
+			_objectDefinitionsMap.get(_objectDefinitionInstanceKey);
 
 		if (objectDefinitions == null) {
 			objectDefinitions = new HashMap<>();
 
 			_objectDefinitionsMap.put(
-				objectDefinition.getRESTContextPath(), objectDefinitions);
+				_objectDefinitionInstanceKey, objectDefinitions);
 
 			_excludeScopedMethods(objectDefinition, objectScopeProvider);
 
 			_componentInstancesMap.put(
-				objectDefinition.getRESTContextPath(),
+				_objectDefinitionInstanceKey,
 				Arrays.asList(
 					_objectEntryApplicationComponentFactory.newInstance(
 						HashMapDictionaryBuilder.<String, Object>put(
 							"liferay.jackson", false
+						).put(
+							"liferay.object.definition.company.id",
+							objectDefinition.getObjectDefinitionId()
 						).put(
 							"liferay.object.definition.id",
 							objectDefinition.getObjectDefinitionId()
@@ -143,11 +150,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension.select",
 							"(osgi.jaxrs.name=Liferay.Vulcan)"
 						).put(
-							"osgi.jaxrs.name", objectDefinition.getName()
+							"osgi.jaxrs.name",
+							objectDefinition.getName() +
+								objectDefinition.getCompanyId()
 						).build())));
 
 			_serviceRegistrationsMap.put(
-				objectDefinition.getRESTContextPath(),
+				_objectDefinitionInstanceKey,
 				Arrays.asList(
 					_bundleContext.registerService(
 						ContextProvider.class,
@@ -157,13 +166,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						).put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
-								")"
+								objectDefinition.getCompanyId() + ")"
 						).put(
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
 							objectDefinition.getName() +
-								"ObjectDefinitionContextProvider"
+								objectDefinition.getCompanyId() +
+									"ObjectDefinitionContextProvider"
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -171,13 +181,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
-								")"
+								objectDefinition.getCompanyId() + ")"
 						).put(
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
 							objectDefinition.getName() +
-								"ObjectEntryManagerHttpExceptionMapper"
+								objectDefinition.getCompanyId() +
+									"ObjectEntryManagerHttpExceptionMapper"
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -185,13 +196,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
-								")"
+								objectDefinition.getCompanyId() + ")"
 						).put(
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
 							objectDefinition.getName() +
-								"ObjectEntryValuesExceptionMapper"
+								objectDefinition.getCompanyId() +
+									"ObjectEntryValuesExceptionMapper"
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -199,13 +211,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
-								")"
+								objectDefinition.getCompanyId() + ")"
 						).put(
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
 							objectDefinition.getName() +
-								"ObjectValidationRuleEngineExceptionMapper"
+								objectDefinition.getCompanyId() +
+									"ObjectValidationRuleEngineExceptionMapper"
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -213,13 +226,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
-								")"
+								objectDefinition.getCompanyId() + ")"
 						).put(
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
 							objectDefinition.getName() +
-								"RequiredObjectRelationshipExceptionMapper"
+								objectDefinition.getCompanyId() +
+									"RequiredObjectRelationshipExceptionMapper"
 						).build()),
 					_bundleContext.registerService(
 						ObjectEntryResource.class,
@@ -260,7 +274,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"batch.engine.task.item.delegate", "true"
 						).put(
 							"batch.engine.task.item.delegate.name",
-							objectDefinition.getShortName()
+							objectDefinition.getShortName() +
+								objectDefinition.getCompanyId()
 						).put(
 							"batch.planner.export.enabled", "true"
 						).put(
@@ -272,7 +287,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						).put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + objectDefinition.getName() +
-								")"
+								objectDefinition.getCompanyId() + ")"
 						).put(
 							"osgi.jaxrs.resource", "true"
 						).build())));
@@ -299,7 +314,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		long companyId, String restContextPath) {
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(restContextPath);
+			_objectDefinitionsMap.get(restContextPath + companyId);
 
 		if (objectDefinitions != null) {
 			return objectDefinitions.get(companyId);
@@ -311,26 +326,22 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
+			_objectDefinitionsMap.get(_objectDefinitionInstanceKey);
 
 		if (objectDefinitions != null) {
 			objectDefinitions.remove(objectDefinition.getCompanyId());
 
 			if (objectDefinitions.isEmpty()) {
-				_objectDefinitionsMap.remove(
-					objectDefinition.getRESTContextPath());
+				_objectDefinitionsMap.remove(_objectDefinitionInstanceKey);
 			}
 		}
 
-		if (_objectDefinitionsMap.containsKey(
-				objectDefinition.getRESTContextPath())) {
-
+		if (_objectDefinitionsMap.containsKey(_objectDefinitionInstanceKey)) {
 			return;
 		}
 
 		List<ComponentInstance> componentInstances =
-			_componentInstancesMap.remove(
-				objectDefinition.getRESTContextPath());
+			_componentInstancesMap.remove(_objectDefinitionInstanceKey);
 
 		if (componentInstances != null) {
 			for (ComponentInstance componentInstance : componentInstances) {
@@ -339,8 +350,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrationsMap.remove(
-				objectDefinition.getRESTContextPath());
+			_serviceRegistrationsMap.remove(_objectDefinitionInstanceKey);
 
 		if (serviceRegistrations != null) {
 			for (ServiceRegistration<?> serviceRegistration :
@@ -419,6 +429,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;
+
+	private String _objectDefinitionInstanceKey;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

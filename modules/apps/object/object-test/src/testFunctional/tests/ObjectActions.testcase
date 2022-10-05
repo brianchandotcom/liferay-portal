@@ -184,7 +184,7 @@ definition {
 	@description = "LPS-156312 - Assert an Action can be created with Expression Builder."
 	@priority = "4"
 	test CanCreateActionWithExpressionBuilder {
-		task ("Given an object and field is created") {
+		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",

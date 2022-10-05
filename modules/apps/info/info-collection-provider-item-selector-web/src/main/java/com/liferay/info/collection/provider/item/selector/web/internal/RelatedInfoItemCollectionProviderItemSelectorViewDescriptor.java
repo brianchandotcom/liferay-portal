@@ -19,7 +19,6 @@ import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoI
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -116,8 +115,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	}
 
 	public SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
-			getSearchContainer()
-		throws PortalException {
+		getSearchContainer() {
 
 		PortletRequest portletRequest =
 			(PortletRequest)_httpServletRequest.getAttribute(

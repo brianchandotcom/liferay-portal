@@ -108,9 +108,6 @@ public class UserFacetPortlet extends MVCPortlet {
 		Facet facet = portletSharedSearchResponse.getFacet(
 			_getAggregationName(renderRequest));
 
-		UserFacetConfiguration userFacetConfiguration =
-			new UserFacetConfigurationImpl(facet.getFacetConfiguration());
-
 		UserFacetPortletPreferences userFacetPortletPreferences =
 			new UserFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
@@ -124,9 +121,9 @@ public class UserFacetPortlet extends MVCPortlet {
 		userSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			userFacetPortletPreferences.isFrequenciesVisible());
 		userSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			userFacetConfiguration.getFrequencyThreshold());
+			userFacetPortletPreferences.getFrequencyThreshold());
 		userSearchFacetDisplayContextBuilder.setMaxTerms(
-			userFacetConfiguration.getMaxTerms());
+			userFacetPortletPreferences.getMaxTerms());
 		userSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

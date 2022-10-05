@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
-import {Card, Select} from '@liferay/object-js-components-web';
+import {Card, SingleSelect} from '@liferay/object-js-components-web';
 import React, {useMemo} from 'react';
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
@@ -108,13 +108,12 @@ export function SearchableContainer({
 			)}
 
 			{isSearchableString && !objectField.indexedAsKeyword && (
-				<Select
+				<SingleSelect
 					label={Liferay.Language.get('language')}
-					name="indexedLanguageId"
-					onChange={({target: {value}}) => {
+					onChange={(value) => {
 						const [indexedLanguageId] = Object.entries(
 							languages
-						).find(([, label]) => value === label) as [
+						).find(([, label]) => value.label === label) as [
 							Locale,
 							string
 						];

@@ -37,3 +37,11 @@ export function fetchProperties() {
 		.then((response) => response.json())
 		.then((data) => data);
 }
+
+export function fetchConnectionModal(propertyName: string) {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve({connected: true, propertyName});
+		}, 2000);
+	});
+}

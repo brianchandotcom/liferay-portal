@@ -14,9 +14,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
+import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import BasePage from '../../components/BasePage';
+import CreatePropertyModal from '../../components/CreatePropertyModal';
 import PropertiesTable from '../../components/PropertiesTable';
 import {fetchProperties} from '../../utils/api';
 import {ESteps, TGenericComponent} from './WizardPage';
@@ -33,6 +35,7 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 		};
 		request();
 	}, []);
+	const {observer, onOpenChange, open} = useModal();
 
 	return (
 		<BasePage
@@ -42,10 +45,7 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 			<div className="text-right">
 				<ClayButton
 					displayType="secondary"
-
-					// TODO: Replace this empty function with modal of LRAC-11980
-
-					onClick={() => {}}
+					onClick={() => onOpenChange(true)}
 					type="button"
 				>
 					{Liferay.Language.get('new-property')}
@@ -71,10 +71,7 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					>
 						<ClayButton
 							displayType="secondary"
-
-							// TODO: Replace this empty function with modal of LRAC-11980
-
-							onClick={() => {}}
+							onClick={() => onOpenChange(true)}
 							type="button"
 						>
 							{Liferay.Language.get('new-property')}
@@ -82,6 +79,8 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					</ClayEmptyState>
 				</div>
 			)}
+
+			{open && <CreatePropertyModal observer={observer} />}
 
 			<BasePage.Footer>
 				<ClayButton.Group spaced>

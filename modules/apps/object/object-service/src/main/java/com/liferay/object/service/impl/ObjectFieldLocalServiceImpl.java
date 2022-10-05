@@ -796,6 +796,20 @@ public class ObjectFieldLocalServiceImpl
 			throw new RequiredObjectFieldException();
 		}
 
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingPersistence.fetchByOFI_N(
+					objectField.getObjectFieldId(), "fileSource");
+
+			if (Objects.equals(objectFieldSetting.getValue(), "userComputer")) {
+				_deleteFileEntries(
+					objectField.getObjectDefinitionId(), objectField.getName());
+			}
+		}
+
 		objectField = objectFieldPersistence.remove(objectField);
 
 		if (objectDefinition.getAccountEntryRestrictedObjectFieldId() ==
@@ -806,19 +820,6 @@ public class ObjectFieldLocalServiceImpl
 
 			objectDefinition = _objectDefinitionPersistence.update(
 				objectDefinition);
-		}
-
-		String objectFieldSettingFileSource = StringPool.BLANK;
-
-		if (Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
-			ObjectFieldSetting objectFieldSetting =
-				_objectFieldSettingPersistence.fetchByOFI_N(
-					objectField.getObjectFieldId(), "fileSource");
-
-			objectFieldSettingFileSource = objectFieldSetting.getValue();
 		}
 
 		_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
@@ -844,11 +845,6 @@ public class ObjectFieldLocalServiceImpl
 			!Objects.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
-
-			if (Objects.equals(objectFieldSettingFileSource, "userComputer")) {
-				_deleteFileEntries(
-					objectField.getObjectDefinitionId(), objectField.getName());
-			}
 
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(

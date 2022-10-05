@@ -193,37 +193,37 @@ public abstract class BaseSamlProviderResourceTestCase {
 	}
 
 	@Test
-	public void testGetProvider() throws Exception {
+	public void testGetSamlProvider() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetProvider() throws Exception {
+	public void testGraphQLGetSamlProvider() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetProviderNotFound() throws Exception {
+	public void testGraphQLGetSamlProviderNotFound() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testPatchProvider() throws Exception {
+	public void testPatchSamlProvider() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPostProvider() throws Exception {
+	public void testPostSamlProvider() throws Exception {
 		SamlProvider randomSamlProvider = randomSamlProvider();
 
-		SamlProvider postSamlProvider = testPostProvider_addSamlProvider(
+		SamlProvider postSamlProvider = testPostSamlProvider_addSamlProvider(
 			randomSamlProvider);
 
 		assertEquals(randomSamlProvider, postSamlProvider);
 		assertValid(postSamlProvider);
 	}
 
-	protected SamlProvider testPostProvider_addSamlProvider(
+	protected SamlProvider testPostSamlProvider_addSamlProvider(
 			SamlProvider samlProvider)
 		throws Exception {
 

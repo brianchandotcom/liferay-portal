@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.saml.admin.rest.dto.v1_0.SamlProvider;
@@ -32,6 +33,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -52,29 +54,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Patch the SAML Provider configuration.")
-	public SamlProvider patchProvider(
+	public SamlProvider patchSamlProvider(
 			@GraphQLName("samlProvider") SamlProvider samlProvider)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_samlProviderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			samlProviderResource -> samlProviderResource.patchProvider(
+			samlProviderResource -> samlProviderResource.patchSamlProvider(
 				samlProvider));
 	}
 
 	@GraphQLField(
 		description = "Creates a full SAML Provider configuration with peer connections."
 	)
-	public SamlProvider createProvider(
+	public SamlProvider createSamlProvider(
 			@GraphQLName("samlProvider") SamlProvider samlProvider)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_samlProviderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			samlProviderResource -> samlProviderResource.postProvider(
+			samlProviderResource -> samlProviderResource.postSamlProvider(
 				samlProvider));
+	}
+
+	@GraphQLField
+	public Response createSamlProviderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_samlProviderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			samlProviderResource -> samlProviderResource.postSamlProviderBatch(
+				callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -128,6 +143,9 @@ public class Mutation {
 		samlProviderResource.setContextUser(_user);
 		samlProviderResource.setGroupLocalService(_groupLocalService);
 		samlProviderResource.setRoleLocalService(_roleLocalService);
+
+		samlProviderResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<SamlProviderResource>
@@ -142,5 +160,7 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineImportTaskResource
+		_vulcanBatchEngineImportTaskResource;
 
 }

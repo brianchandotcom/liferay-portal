@@ -19,6 +19,17 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutUtilityPageEntryConstants {
 
+	public static Type parse(int type) {
+		if (Type.ERROR_404.getType() == type) {
+			return Type.ERROR_404;
+		}
+		else if (Type.TERMS_OF_USE.getType() == type) {
+			return Type.TERMS_OF_USE;
+		}
+
+		throw new IllegalArgumentException("Invalid type " + type);
+	}
+
 	public enum Type {
 
 		ERROR_404("404", 1), TERMS_OF_USE("terms-of-use", 2);

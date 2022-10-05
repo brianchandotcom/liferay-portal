@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -132,8 +130,9 @@ public class MBMessageModelDocumentContributor
 			RatingsStats ratingsStats = _ratingsStatsLocalService.fetchStats(
 				MBMessage.class.getName(), mbThread.getRootMessageId());
 
-			if(ratingsStats != null) {
-				document.addNumber("ratingValueTotalScore", ratingsStats.getTotalScore());
+			if (ratingsStats != null) {
+				document.addNumber(
+					"ratingValueTotalScore", ratingsStats.getTotalScore());
 			}
 
 			document.addNumber("viewCount", mbThread.getViewCount());

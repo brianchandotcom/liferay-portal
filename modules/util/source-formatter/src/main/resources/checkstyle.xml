@@ -200,6 +200,11 @@
 
 		<!-- Custom checks -->
 
+		<module name="com.liferay.source.formatter.checkstyle.check.AccessModifierCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks for cases where visibility of methods can be decreased." />
+			<message key="access.modifier.incorrect" value="Access modifier of method ''{0}'' should be private" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.AnonymousClassCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks for serialization issue when using anonymous class." />

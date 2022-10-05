@@ -688,7 +688,7 @@ public class GroupFinderImpl
 		Object[] finderArgs = {companyId, active};
 
 		List<Long> list = (List<Long>)FinderCacheUtil.getResult(
-			FINDER_PATH_FIND_BY_C_A, finderArgs, null);
+			FINDER_PATH_FIND_BY_C_A, finderArgs);
 
 		if (list != null) {
 			return list;

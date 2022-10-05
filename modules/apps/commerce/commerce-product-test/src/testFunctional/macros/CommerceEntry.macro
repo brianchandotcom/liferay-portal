@@ -1654,9 +1654,11 @@ definition {
 			}
 		}
 		else {
-			AssertChecked(
-				locator1 = "Radio#ANY",
-				radioLabel = "All Accounts");
+			if (IsElementPresent(key_eligibilityCardTitle = "Accounts Entry", locator1 = "CommerceEntry#ELIGIBILITY_CARD_TITLE")) {
+				AssertChecked(
+					locator1 = "Radio#ANY",
+					radioLabel = "All Accounts");
+			}
 		}
 
 		if (isSet(channelsEligibility)) {

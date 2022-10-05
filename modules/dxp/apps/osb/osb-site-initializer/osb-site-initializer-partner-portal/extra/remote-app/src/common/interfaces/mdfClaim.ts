@@ -15,6 +15,6 @@ import MDFClaimDocument from './mdfClaimDocument';
 
 export default interface MDFClaim extends Partial<LiferayObject> {
 	activities?: MDFClaimActivity[];
-	document?: MDFClaimDocument;
+	reimbursementInvoice?: MDFClaimDocument;
 	totalClaimAmount?: number;
 }

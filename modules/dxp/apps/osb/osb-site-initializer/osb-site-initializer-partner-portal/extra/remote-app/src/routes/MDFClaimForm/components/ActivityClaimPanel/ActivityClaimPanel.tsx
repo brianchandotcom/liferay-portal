@@ -9,18 +9,23 @@
  * distribution rights of the Software.
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import Button from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
-import {useEffect, useState} from 'react';
+import {FormikContextType} from 'formik';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
+import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../common/interfaces/mdfClaimActivity';
-import MDFClaimBudget from '../../../../common/interfaces/mdfClaimBudget';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
-import BudgetButton from './components/BudgetButton/BudgetButton';
+import BudgetCard from './components/BudgetCard/BudgetCard';
 import BudgetModal from './components/BudgetModal';
+import PanelBody from './components/PanelBody';
+import PanelHeader from './components/PanelHeader';
+import useBudgetsAmount from './hooks/useBudgetsAmount';
 
 interface IProps {
 	activity: MDFClaimActivity;
@@ -32,82 +37,130 @@ const ActivityClaimPanel = ({
 	activity,
 	activityIndex,
 	overallCampaignDescription,
-}: IProps) => {
-	const [currentBudget, setCurrentBudget] = useState<MDFClaimBudget>();
+	setFieldValue,
+}: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
+	const [currentBudgetIndex, setCurrentBudgetIndex] = useState<number>();
 	const {observer, onOpenChange, open} = useModal();
 
-	useEffect(() => onOpenChange(!!currentBudget), [
-		currentBudget,
-		onOpenChange,
-	]);
+	useBudgetsAmount(
+		activity.budgets,
+		useCallback(
+			(amountValue) =>
+				setFieldValue(
+					`activities[${activityIndex}].totalCost`,
+					amountValue
+				),
+			[activityIndex, setFieldValue]
+		)
+	);
+
+	const currentBudgetFieldName = `activities[${activityIndex}].budgets[${currentBudgetIndex}]`;
+
+	const getCurrentBudget = () => {
+		if (currentBudgetIndex !== undefined && activity.budgets) {
+			return activity.budgets[currentBudgetIndex];
+		}
+	};
 
 	return (
-		<ClayPanel
-			className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 text-neutral-7"
-			collapsable
-			displayTitle={
-				<ClayPanel.Title>
-					<div className="d-flex">
-						<div className="align-items-center d-flex mb-2 mr-3">
-							<PRMFormik.Field
-								component={ClayCheckbox}
-								name={`activities[${activityIndex}].finished`}
-							/>
-						</div>
-
-						<div className="w-100">
-							<h6>{overallCampaignDescription}</h6>
-
-							<h4 className="text-neutral-10">
-								{activity.name} ({activity.id})
-							</h4>
-
-							<div className="d-flex justify-content-end">
-								<h5 className="text-neutral-10">
-									{getIntlNumberFormat().format(
-										activity.totalCost
-									)}
-								</h5>
-							</div>
-						</div>
-					</div>
-				</ClayPanel.Title>
-			}
-			displayType="secondary"
-			showCollapseIcon
-		>
-			<ClayPanel.Body>
-				{activity.budgets?.map((budget, index) => (
-					<BudgetButton
-						budget={budget}
-						key={`${budget.id}-${index}`}
-						onClick={() => setCurrentBudget({...budget})}
-					/>
-				))}
-
-				<div className="mt-4">
-					<PRMFormik.Field
-						component={PRMForm.InputText}
-						label="Metrics"
-						name={`mdfClaimActivities[${activityIndex}].metrics`}
-					/>
-				</div>
-			</ClayPanel.Body>
-
+		<>
 			{open && (
 				<BudgetModal
-					{...currentBudget}
+					{...getCurrentBudget()}
+					name={currentBudgetFieldName}
 					observer={observer}
 					onCancel={() => onOpenChange(false)}
-					onConfirm={(value) => {
-						// eslint-disable-next-line no-console
-						console.log(value);
+					onConfirm={(claimAmount, invoice) => {
+						setFieldValue(
+							`${currentBudgetFieldName}.claimAmount`,
+							claimAmount
+						);
+						setFieldValue(
+							`${currentBudgetFieldName}.invoice`,
+							invoice
+						);
 
 						onOpenChange(false);
 					}}
 				/>
 			)}
-		</ClayPanel>
+
+			<ClayPanel
+				className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 mb-4 text-neutral-7"
+				displayType="secondary"
+				expanded={activity.selected}
+			>
+				<PanelHeader expanded={activity.selected}>
+					<PRMFormik.Field
+						component={PRMForm.Checkbox}
+						name={`activities[${activityIndex}].selected`}
+					/>
+
+					<div className="flex-grow-1 mx-3">
+						<p className="mb-1 text-neutral-7 text-paragraph-sm">
+							{overallCampaignDescription}
+						</p>
+
+						<h5 className="text-neutral-10">
+							{activity.name} ({activity.id})
+						</h5>
+
+						<div className="d-flex justify-content-end">
+							<h5 className="mb-0 text-neutral-10">
+								{getIntlNumberFormat().format(
+									activity.totalCost
+								)}
+							</h5>
+						</div>
+					</div>
+				</PanelHeader>
+
+				<PanelBody expanded={activity.selected}>
+					{activity.budgets?.map((budget, index) => (
+						<BudgetCard
+							budget={budget}
+							key={`${budget.id}-${index}`}
+							onClick={() => {
+								setCurrentBudgetIndex(index);
+								onOpenChange(true);
+							}}
+						/>
+					))}
+
+					<PRMFormik.Field
+						component={PRMForm.InputText}
+						label="Metrics"
+						name={`activities[${activityIndex}].metrics`}
+						textArea
+					/>
+
+					<div className="align-items-center d-flex justify-content-between">
+						<PRMFormik.Field
+							component={PRMForm.InputFile}
+							description="You can downloaded the Excel Template, fill it out, and upload it back here"
+							displayType="secondary"
+							label="List of Qualified Leads"
+							name="listQualifiedLeads"
+							onAccept={(value: File) =>
+								setFieldValue('listQualifiedLeads', value)
+							}
+							outline
+							required
+							small
+						/>
+
+						<div className="mb-3">
+							<Button displayType="secondary" outline small>
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol="download" />
+								</span>
+								Download template
+							</Button>
+						</div>
+					</div>
+				</PanelBody>
+			</ClayPanel>
+		</>
 	);
 };
 

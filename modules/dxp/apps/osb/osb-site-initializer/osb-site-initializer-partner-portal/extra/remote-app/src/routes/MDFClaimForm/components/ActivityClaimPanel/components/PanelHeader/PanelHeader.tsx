@@ -9,16 +9,28 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-import MDFClaimBudget from './mdfClaimBudget';
-import MDFClaimDocument from './mdfClaimDocument';
+import ClayPanel from '@clayui/panel';
+import classNames from 'classnames';
 
-export default interface MDFClaimActivity extends Partial<LiferayObject> {
-	budgets?: MDFClaimBudget[];
-	contents?: MDFClaimDocument[];
-	listQualifiedLeads?: MDFClaimDocument;
-	metrics: string;
-	name: string;
-	selected: boolean;
-	totalCost: number;
+interface IProps {
+	children?: React.ReactNode;
+	expanded: boolean;
 }
+
+const PanelHeader = ({children, expanded}: IProps) => (
+	<ClayPanel.Title
+		aria-expanded={expanded}
+		className={classNames(
+			'panel-header panel-header-link align-items-center d-flex pl-4 pr-5 py-4',
+			{
+				collapsed: !expanded,
+				show: expanded,
+			}
+		)}
+		role="tab"
+	>
+		{children}
+	</ClayPanel.Title>
+);
+
+export default PanelHeader;

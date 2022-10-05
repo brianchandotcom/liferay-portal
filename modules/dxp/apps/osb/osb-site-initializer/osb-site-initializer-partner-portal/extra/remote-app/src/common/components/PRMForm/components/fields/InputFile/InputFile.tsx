@@ -22,6 +22,7 @@ import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps'
 
 interface IProps {
 	displayType: DisplayType;
+	onAccept: (value: File) => void;
 	outline?: boolean;
 	small?: boolean;
 }
@@ -32,13 +33,19 @@ const InputFile = ({
 	field,
 	label,
 	meta,
-	onChange,
+	onAccept,
 	outline,
 	required,
 	small,
 	value,
-}: PRMFormFieldProps & PRMFormFieldStateProps<string> & IProps) => {
+}: PRMFormFieldProps & PRMFormFieldStateProps<File> & IProps) => {
 	const inputFileRef = useRef<HTMLInputElement>(null);
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+
+		return file && onAccept(file);
+	};
 
 	return (
 		<WrapperInput
@@ -64,14 +71,14 @@ const InputFile = ({
 						<ClayIcon symbol="upload" />
 					</span>
 
-					{value || field.value || 'Upload file'}
+					{value?.name || field.value?.name || 'Upload file'}
 				</Button>
 			</div>
 
 			<ClayInput
 				hidden
 				name={field.name}
-				onChange={onChange || field.onChange}
+				onChange={handleChange}
 				ref={inputFileRef}
 				required={required}
 				type="file"

@@ -9,16 +9,4 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-import MDFClaimBudget from './mdfClaimBudget';
-import MDFClaimDocument from './mdfClaimDocument';
-
-export default interface MDFClaimActivity extends Partial<LiferayObject> {
-	budgets?: MDFClaimBudget[];
-	contents?: MDFClaimDocument[];
-	listQualifiedLeads?: MDFClaimDocument;
-	metrics: string;
-	name: string;
-	selected: boolean;
-	totalCost: number;
-}
+export {default} from './PanelHeader';

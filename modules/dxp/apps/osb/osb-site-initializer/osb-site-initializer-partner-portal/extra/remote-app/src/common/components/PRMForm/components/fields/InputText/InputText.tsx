@@ -15,16 +15,18 @@ import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
+interface IProps {
+	textArea?: boolean;
+}
+
 const InputText = ({
 	description,
 	field,
 	label,
 	meta,
 	required,
-	...props
-}: PRMFormFieldProps &
-	PRMFormFieldStateProps<string> &
-	React.ComponentProps<typeof ClayInput>) => (
+	textArea,
+}: PRMFormFieldProps & PRMFormFieldStateProps<string> & IProps) => (
 	<WrapperInput
 		{...meta}
 		description={description}
@@ -32,8 +34,8 @@ const InputText = ({
 		required={required}
 	>
 		<ClayInput
-			{...props}
 			{...field}
+			component={textArea ? 'textarea' : 'input'}
 			required={required}
 			type="text"
 			value={field.value || ''}

@@ -18,6 +18,7 @@ import PRMFormik from '../../../../../../common/components/PRMFormik';
 import MDFClaimBudget from '../../../../../../common/interfaces/mdfClaimBudget';
 import MDFClaimDocument from '../../../../../../common/interfaces/mdfClaimDocument';
 import {DocumentType} from '../../../../../../common/utils/constants/documentType';
+import getIconSpriteMap from '../../../../../../common/utils/getIconSpriteMap';
 
 interface IProps {
 	name: string;
@@ -43,7 +44,7 @@ const BudgetModal = ({
 	>(budget?.invoice);
 
 	return (
-		<ClayModal center observer={observer}>
+		<ClayModal center observer={observer} spritemap={getIconSpriteMap()}>
 			<div className="bg-brand-primary-lighten-6 p-4">
 				<ClayModal.Header className="p-0">
 					<h5 className="text-neutral-9">{budget?.expenseName}</h5>
@@ -54,7 +55,7 @@ const BudgetModal = ({
 					</h6>
 				</ClayModal.Header>
 
-				<ClayModal.Body className="p-0 py-4">
+				<ClayModal.Body className="p-0 pt-4">
 					<PRMFormik.Field
 						component={PRMForm.InputCurrency}
 						description="Silver Partner can claim up to 50%"
@@ -71,13 +72,11 @@ const BudgetModal = ({
 						component={PRMForm.InputFile}
 						displayType="secondary"
 						label="Third Party Invoice"
-						name={`${name}.invoice`}
-						onChange={(
-							value: React.ChangeEvent<HTMLInputElement>
-						) => {
-							if (value.target.files) {
+						name={`${name}.document`}
+						onAccept={(value: File) => {
+							if (value) {
 								setCurrentInvoiceFile({
-									file: value.target.files[0],
+									file: value,
 									type: DocumentType.INVOICE,
 								});
 							}
@@ -85,7 +84,7 @@ const BudgetModal = ({
 						outline
 						required
 						small
-						value={currentInvoiceFile?.file.name}
+						value={currentInvoiceFile?.file}
 					/>
 				</ClayModal.Body>
 

@@ -25,7 +25,7 @@ const BudgetCard = ({
 	budget,
 	onClick,
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => {
-	const hasInvoices = budget.invoices.length;
+	const hasInvoices = !!budget.invoice;
 
 	return (
 		<ClayCard
@@ -40,9 +40,9 @@ const BudgetCard = ({
 						</div>
 
 						<div
-							className={classNames({
+							className={classNames('text-paragraph-xs', {
+								'text-brand-primary-lighten-2': hasInvoices,
 								'text-neutral-7': !hasInvoices,
-								'text-success': hasInvoices,
 							})}
 						>
 							<ClayIcon

@@ -22,6 +22,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.lang.reflect.Method;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -68,6 +70,10 @@ public interface GraphQLDTOContributor<D, R> {
 		return null;
 	}
 
+	public Class<?> getResourceClass();
+
+	public Method getResourceMethod(Operation operation);
+
 	public String getResourceName();
 
 	public String getTypeName();
@@ -76,5 +82,11 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public R updateDTO(D dto, DTOConverterContext dtoConverterContext, long id)
 		throws Exception;
+
+	public enum Operation {
+
+		CREATE, DELETE, GET, GET_RELATIONSHIP, LIST, UPDATE
+
+	}
 
 }

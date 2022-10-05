@@ -43,7 +43,7 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 		GraphQLRequestContext graphQLRequestContext,
 		ServiceTrackerList<GraphQLRequestContextValidator>
 			graphQLRequestContextValidators,
-		Operation operation) {
+		GraphQLDTOContributor.Operation operation) {
 
 		super(graphQLRequestContext, graphQLRequestContextValidators);
 
@@ -61,7 +61,7 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 		GraphQLRequestContext graphQLRequestContext,
 		ServiceTrackerList<GraphQLRequestContextValidator>
 			graphQLRequestContextValidators,
-		Operation operation) {
+		GraphQLDTOContributor.Operation operation) {
 
 		this(
 			graphQLDTOContributor, graphQLDTOContributorDataFetchingProcessor,
@@ -76,26 +76,28 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (_operation == Operation.CREATE) {
+		if (_operation == GraphQLDTOContributor.Operation.CREATE) {
 			return _graphQLDTOContributorDataFetchingProcessor.create(
 				dataFetchingEnvironment.getArgument(
 					_graphQLDTOContributor.getResourceName()),
 				_graphQLDTOContributor, httpServletRequest,
 				(String)dataFetchingEnvironment.getArgument("scopeKey"));
 		}
-		else if (_operation == Operation.DELETE) {
+		else if (_operation == GraphQLDTOContributor.Operation.DELETE) {
 			return _graphQLDTOContributorDataFetchingProcessor.delete(
 				_graphQLDTOContributor,
 				dataFetchingEnvironment.<Long>getArgument(
 					_graphQLDTOContributor.getIdName()));
 		}
-		else if (_operation == Operation.GET) {
+		else if (_operation == GraphQLDTOContributor.Operation.GET) {
 			return _graphQLDTOContributorDataFetchingProcessor.get(
 				_graphQLDTOContributor, httpServletRequest,
 				dataFetchingEnvironment.getArgument(
 					_graphQLDTOContributor.getIdName()));
 		}
-		else if (_operation == Operation.GET_RELATIONSHIP) {
+		else if (_operation ==
+					GraphQLDTOContributor.Operation.GET_RELATIONSHIP) {
+
 			Map<String, Object> source = dataFetchingEnvironment.getSource();
 
 			Object id = source.get(_graphQLDTOContributor.getIdName());
@@ -108,7 +110,7 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 				_graphQLDTOContributor, _graphQLDTOProperty, httpServletRequest,
 				(long)id);
 		}
-		else if (_operation == Operation.LIST) {
+		else if (_operation == GraphQLDTOContributor.Operation.LIST) {
 			return _graphQLDTOContributorDataFetchingProcessor.list(
 				dataFetchingEnvironment.getArgument("aggregation"),
 				(String)dataFetchingEnvironment.getArgument("filter"),
@@ -119,7 +121,7 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 				dataFetchingEnvironment.getArgument("search"),
 				dataFetchingEnvironment.getArgument("sort"));
 		}
-		else if (_operation == Operation.UPDATE) {
+		else if (_operation == GraphQLDTOContributor.Operation.UPDATE) {
 			return _graphQLDTOContributorDataFetchingProcessor.update(
 				dataFetchingEnvironment.<Map<String, Serializable>>getArgument(
 					_graphQLDTOContributor.getResourceName()),
@@ -132,16 +134,10 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 			"Operation not supported: " + _operation);
 	}
 
-	public enum Operation {
-
-		CREATE, DELETE, GET, GET_RELATIONSHIP, LIST, UPDATE
-
-	}
-
 	private final GraphQLDTOContributor _graphQLDTOContributor;
 	private final GraphQLDTOContributorDataFetchingProcessor
 		_graphQLDTOContributorDataFetchingProcessor;
 	private final GraphQLDTOProperty _graphQLDTOProperty;
-	private final Operation _operation;
+	private final GraphQLDTOContributor.Operation _operation;
 
 }

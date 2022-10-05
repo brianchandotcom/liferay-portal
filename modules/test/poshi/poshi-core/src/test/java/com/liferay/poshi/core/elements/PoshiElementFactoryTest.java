@@ -157,6 +157,19 @@ public class PoshiElementFactoryTest {
 	}
 
 	@Test
+	public void testPoshiScriptToPoshiXMLToPoshiScript() throws Exception {
+		PoshiElement actualElement = _getPoshiElement("PoshiScript.testcase");
+
+		String expected = FileUtil.read(_getFile("PoshiScript.testcase"));
+
+		String actual = actualElement.toPoshiScript();
+
+		_assertEqualStrings(
+			actual, expected,
+			"Poshi XML syntax does not translate to Poshi script syntax");
+	}
+
+	@Test
 	public void testPoshiXMLFunctionToPoshiScript() throws Exception {
 		String expected = FileUtil.read(
 			_getFile("PoshiScriptFunction.function"));

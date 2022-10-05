@@ -133,7 +133,9 @@ public class JournalArticleAssetRendererTest {
 
 		Assert.assertNotNull(version);
 
-		Assert.assertEquals(article.getId(), GetterUtil.getLong(version));
+		Assert.assertEquals(
+			article.getVersion(), GetterUtil.getDouble(version),
+			GetterUtil.DEFAULT_DOUBLE);
 
 		article = JournalTestUtil.updateArticleWithWorkflow(article, true);
 

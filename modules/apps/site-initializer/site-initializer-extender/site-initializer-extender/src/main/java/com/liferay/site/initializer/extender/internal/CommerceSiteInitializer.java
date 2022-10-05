@@ -119,7 +119,7 @@ public class CommerceSiteInitializer {
 			return;
 		}
 
-		_addCommerceCatalogs(
+		_addOrUpdateCommerceCatalogs(
 			bundle, channel,
 			_addCommerceInventoryWarehouses(serviceContext, servletContext),
 			serviceContext, servletContext);
@@ -164,7 +164,7 @@ public class CommerceSiteInitializer {
 		return CommerceOrder.class.getName();
 	}
 
-	private void _addCommerceCatalogs(
+	private void _addOrUpdateCommerceCatalogs(
 			Bundle bundle, Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
 			ServiceContext serviceContext, ServletContext servletContext)

@@ -148,8 +148,8 @@ public class MBMessageModelIndexerWriterContributor
 				_mbMessageLocalService.fetchMBMessage(
 					mbThread.getRootMessageId()));
 		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 

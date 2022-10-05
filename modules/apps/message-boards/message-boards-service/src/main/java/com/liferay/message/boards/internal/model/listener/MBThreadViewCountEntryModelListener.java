@@ -20,6 +20,7 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.view.count.model.listener.ViewCountEntryModelListener;
 import com.liferay.view.count.model.ViewCountEntry;
 
@@ -49,11 +50,12 @@ public class MBThreadViewCountEntryModelListener
 		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
+
 		try {
 			indexer.reindex(mbMessage);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

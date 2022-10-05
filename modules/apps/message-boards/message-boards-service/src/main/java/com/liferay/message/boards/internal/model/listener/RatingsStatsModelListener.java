@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.staging.model.listener.StagingModelListener;
 
@@ -47,8 +48,8 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 		try {
 			indexer.reindex(mbMessage);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 
 		_stagingModelListener.onAfterCreate(ratingsStats);
@@ -68,8 +69,8 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 		try {
 			indexer.reindex(mbMessage);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

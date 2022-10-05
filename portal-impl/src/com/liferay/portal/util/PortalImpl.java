@@ -1115,17 +1115,9 @@ public class PortalImpl implements Portal {
 		Layout layout = null;
 
 		if (Validator.isNull(friendlyURL)) {
+			layout = _getLayout(groupId, privateLayout);
 
-			// We need to ensure that virtual layouts are merged
-
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
-
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
-			}
-			else {
+			if (layout == null) {
 				throw new NoSuchLayoutException(
 					StringBundler.concat(
 						"{groupId=", groupId, ", privateLayout=", privateLayout,
@@ -8537,6 +8529,21 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
+	}
+
+	private Layout _getLayout(long groupId, boolean privateLayout) {
+
+		// We need to ensure that virtual layouts are merged
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			true, 0, 1);
+
+		if (layouts.isEmpty()) {
+			return null;
+		}
+
+		return layouts.get(0);
 	}
 
 	private String _getPortalURL(

@@ -26,6 +26,7 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -164,6 +165,39 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 				Assert.assertEquals(_VIEW_VERSIONS_URL, viewVersionsURL);
 
 				_assertVersions(jsonObject, maxDisplayVersions, versionsCount);
+			},
+			versionsCount);
+	}
+
+	@Test
+	public void testGetContentDashboardItemVersionsWithoutViewVersionURL()
+		throws Exception {
+
+		int versionsCount = 5;
+
+		_withTestItemContentDashboardItemFactoryRegistered(
+			() -> {
+				MockLiferayResourceRequest mockLiferayResourceRequest =
+					_getMockLiferayPortletResourceRequest();
+
+				mockLiferayResourceRequest.setParameter(
+					"className", TestItem.class.getName());
+				mockLiferayResourceRequest.setParameter("classPK", "0");
+
+				JSONObject jsonObject = ReflectionTestUtil.invoke(
+					_mvcResourceCommand,
+					"_getContentDashboardItemVersionsJSONObject",
+					new Class<?>[] {ResourceRequest.class},
+					mockLiferayResourceRequest);
+
+				Assert.assertNotNull(jsonObject);
+
+				String viewVersionsURL = jsonObject.getString(
+					"viewVersionsURL");
+
+				Assert.assertEquals(StringPool.BLANK, viewVersionsURL);
+
+				_assertVersions(jsonObject, versionsCount, versionsCount);
 			},
 			versionsCount);
 	}

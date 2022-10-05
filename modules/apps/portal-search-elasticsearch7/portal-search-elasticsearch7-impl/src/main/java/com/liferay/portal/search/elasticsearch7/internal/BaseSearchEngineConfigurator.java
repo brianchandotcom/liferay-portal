@@ -160,10 +160,10 @@ public abstract class BaseSearchEngineConfigurator
 		MessageBus messageBus = getMessageBus();
 
 		Destination searchReaderDestination = _getSearchReaderDestination(
-			messageBus, _searchEngineId, true);
+			messageBus, _searchEngineId);
 
 		Destination searchWriterDestination = _getSearchWriterDestination(
-			messageBus, _searchEngineId, true);
+			messageBus, _searchEngineId);
 
 		_createSearchEngineListeners(
 			_searchEngineId, _searchEngine, searchReaderDestination,
@@ -207,7 +207,7 @@ public abstract class BaseSearchEngineConfigurator
 	}
 
 	private Destination _getSearchReaderDestination(
-		MessageBus messageBus, String searchEngineId, boolean createIfAbsent) {
+		MessageBus messageBus, String searchEngineId) {
 
 		String searchReaderDestinationName =
 			SearchEngineHelperUtil.getSearchReaderDestinationName(
@@ -216,7 +216,7 @@ public abstract class BaseSearchEngineConfigurator
 		Destination searchReaderDestination = messageBus.getDestination(
 			searchReaderDestinationName);
 
-		if (createIfAbsent && (searchReaderDestination == null)) {
+		if (searchReaderDestination == null) {
 			searchReaderDestination = createSearchReaderDestination(
 				searchReaderDestinationName);
 
@@ -228,7 +228,7 @@ public abstract class BaseSearchEngineConfigurator
 	}
 
 	private Destination _getSearchWriterDestination(
-		MessageBus messageBus, String searchEngineId, boolean createIfAbsent) {
+		MessageBus messageBus, String searchEngineId) {
 
 		String searchWriterDestinationName =
 			SearchEngineHelperUtil.getSearchWriterDestinationName(
@@ -237,7 +237,7 @@ public abstract class BaseSearchEngineConfigurator
 		Destination searchWriterDestination = messageBus.getDestination(
 			searchWriterDestinationName);
 
-		if (createIfAbsent && (searchWriterDestination == null)) {
+		if (searchWriterDestination == null) {
 			searchWriterDestination = createSearchWriterDestination(
 				searchWriterDestinationName);
 

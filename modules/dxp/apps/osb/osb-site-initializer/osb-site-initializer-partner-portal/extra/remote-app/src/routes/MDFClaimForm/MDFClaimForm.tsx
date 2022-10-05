@@ -51,14 +51,15 @@ const MDFClaimForm = () => {
 				mdfRequest.mdfRequestToActivities
 			)}
 			onSubmit={(values, formikHelpers) =>
-				// eslint-disable-next-line no-console
 				console.log(values, formikHelpers)
 			}
 		>
 			<MDFClaimPage
 				mdfRequest={mdfRequest}
 				onCancel={() => console.log('canceled')}
-				onSaveAsDraft={(values, formik) => console.log(values, formik)}
+				onSaveAsDraft={(values, formikHelpers) =>
+					console.log(values, formikHelpers)
+				}
 			/>
 		</PRMFormik>
 	);

@@ -34,13 +34,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -77,40 +75,37 @@ public class AddSegmentsExperienceMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
 			actionRequest);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long plid = ParamUtil.getLong(actionRequest, "plid");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			actionRequest, _portal.getClassNameId(Layout.class),
-			themeDisplay.getPlid(), segmentsExperiment, serviceContext);
+			actionRequest, _portal.getClassNameId(Layout.class), plid,
+			segmentsExperiment, serviceContext);
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
-			segmentsExperiment, themeDisplay);
+			plid, segmentsExperiment);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
-			themeDisplay.getPlid(), _commentManager,
-			themeDisplay.getScopeGroupId(), _portletRegistry,
+			plid, _commentManager, groupId, _portletRegistry,
 			baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId(),
-			className -> serviceContext, themeDisplay.getUserId());
+			className -> serviceContext, _portal.getUserId(actionRequest));
 
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLinks",
 			_getFragmentEntryLinksJSONObject(
-				actionRequest, actionResponse, themeDisplay.getPlid(),
-				themeDisplay.getScopeGroupId(),
+				actionRequest, actionResponse, plid, groupId,
 				segmentsExperience.getSegmentsExperienceId())
 		).put(
 			"layoutData",
 			_getLayoutDataJSONObject(
-				themeDisplay.getPlid(), themeDisplay.getScopeGroupId(),
-				segmentsExperience.getSegmentsExperienceId())
+				plid, groupId, segmentsExperience.getSegmentsExperienceId())
 		).put(
 			"segmentsExperience",
 			SegmentsExperienceUtil.getSegmentsExperienceJSONObject(
@@ -127,11 +122,11 @@ public class AddSegmentsExperienceMVCActionCommand
 		jsonObject.put(
 			"segmentsExperimentRel",
 			_getSegmentsSegmentsExperimentRelJSONObject(
-				segmentsExperimentRel, themeDisplay.getLocale()));
+				segmentsExperimentRel, _portal.getLocale(actionRequest)));
 
 		_initializeDraftLayout(
-			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			segmentsExperience, baseSegmentsExperienceId, serviceContext);
+			groupId, plid, segmentsExperience, baseSegmentsExperienceId,
+			serviceContext);
 
 		return jsonObject;
 	}
@@ -187,11 +182,11 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	private long _getBaseSegmentsExperienceId(
-		SegmentsExperiment segmentsExperiment, ThemeDisplay themeDisplay) {
+		long plid, SegmentsExperiment segmentsExperiment) {
 
 		if (segmentsExperiment == null) {
 			return _segmentsExperienceLocalService.
-				fetchDefaultSegmentsExperienceId(themeDisplay.getPlid());
+				fetchDefaultSegmentsExperienceId(plid);
 		}
 
 		return segmentsExperiment.getSegmentsExperienceId();

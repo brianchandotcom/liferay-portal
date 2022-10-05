@@ -189,8 +189,14 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getCreateSegmentsVariantURL() {
-		return _getContentPageEditorActionURL(
-			"/layout_content_page_editor/add_segments_experience");
+		return HttpComponentsUtil.addParameter(
+			HttpComponentsUtil.addParameter(
+				_getContentPageEditorActionURL(
+					"/layout_content_page_editor/add_segments_experience"),
+				_getContentPageEditorPortletNamespace() + "plid",
+				_themeDisplay.getPlid()),
+			_getContentPageEditorPortletNamespace() + "groupId",
+			_themeDisplay.getScopeGroupId());
 	}
 
 	private String _getDeleteSegmentsExperimentURL() {

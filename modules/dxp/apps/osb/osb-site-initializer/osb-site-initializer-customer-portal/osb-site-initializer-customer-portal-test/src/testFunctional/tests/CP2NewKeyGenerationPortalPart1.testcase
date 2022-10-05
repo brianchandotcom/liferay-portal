@@ -109,6 +109,14 @@ definition {
 		}
 	}
 
+	@description = "Automation Ticket: LPS-151335 | Test Summary: Verify that signatures without available keys are displayed as disabled options."
+	@priority = "3"
+	test SignaturesWithoutAvailableKeysWillBeDisabled {
+		task ("Given I should be able to view a signature with no keys availables") {
+			CP2ActivationKeys.assertSignatureWithNoKeysIsVisible();
+		}
+	}
+
 	@description = "Automation Ticket: LPS-151332 | Test Summary: Verify if the product field is already selected by default."
 	@priority = "2"
 	test TheProductFieldIsSelectedByDefault {

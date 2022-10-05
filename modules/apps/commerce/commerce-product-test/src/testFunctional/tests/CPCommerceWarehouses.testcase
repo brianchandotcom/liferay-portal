@@ -724,8 +724,9 @@ definition {
 
 		Button.clickSave();
 
-		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
+		Click(locator1 = "Icon#BACK");
 
+		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
 
 		Type(
 			key_fieldLabel = "Street 1",
@@ -763,6 +764,8 @@ definition {
 			value1 = "${fieldCity}");
 
 		Button.clickSave();
+
+		Click(locator1 = "Icon#BACK");
 
 		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
 
@@ -826,13 +829,17 @@ definition {
 
 		Button.clickSave();
 
+		Click(locator1 = "Icon#BACK");
+
 		Click(
 			key_text = "Test Warehouse",
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AssertElementNotPresent(
+			key_entryName = "Test Warehouse",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-5707. As a product specialist i want to be able to deactivate a warehouse"
@@ -948,34 +955,29 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
+		CommerceNavigator.gotoEntry(entryName = "Italy");
 
-		for (var commerceChannelId : list "${commerceChannelIds}") {
-			var commerceChannel1 = StringUtil.extractFirst("${commerceChannelIds}", ",");
-			var commerceChannel2 = StringUtil.extractLast("${commerceChannelIds}", ",");
-		}
+		Navigator.gotoNavTab(navTab = "Eligibility");
 
 		Click(
 			key_value = "Minium2 Portal",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-
-		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "${commerceChannel2}",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Button.click(button = "Save");
+		MenuItem.click(menuItem = "Remove");
 
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+		Navigator.gotoBack();
+
+		CommerceNavigator.gotoEntry(entryName = "United States - Northeast");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
 
 		Click(
 			key_value = "Minium Portal",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
-
-		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "${commerceChannel1}",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		MenuItem.click(menuItem = "Remove");
 
 		Button.click(button = "Save");
 
@@ -1136,20 +1138,13 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		Click(
-			key_itemName = "Italy",
-			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+		CommerceNavigator.gotoEntry(entryName = "Italy");
 
+		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		Button.clickSave();
+		CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
 
-		Click(
-			key_itemName = "Italy",
-			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
-
-		AssertChecked(
-			checkboxName = "Minium Portal",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+		CommerceEntry.viewEntryEligibility(channelsEligibility = "Minium Portal");
 	}
 
 	@description = "This is a test for COMMERCE-6208. Concurrency management for inventory entities"
@@ -1167,9 +1162,7 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		Click(
-			key_metadataSetName = "Italy",
-			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+		CommerceNavigator.gotoEntry(entryName = "Italy");
 
 		Open.openInTheNewTab(locator1 = "${portalURL}");
 
@@ -1177,9 +1170,7 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		Click(
-			key_metadataSetName = "Italy",
-			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+		CommerceNavigator.gotoEntry(entryName = "Italy");
 
 		Type(
 			key_fieldLabel = "Name",

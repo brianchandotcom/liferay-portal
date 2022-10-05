@@ -45,7 +45,7 @@ public class TagFacetPortletSharedSearchContributor
 
 		tagFacetSearchContributor.contribute(
 			portletSharedSearchSettings.getSearchRequestBuilder(),
-			siteFacetBuilder -> siteFacetBuilder.aggregationName(
+			tagFacetBuilder -> tagFacetBuilder.aggregationName(
 				portletSharedSearchSettings.getPortletId()
 			).frequencyThreshold(
 				tagFacetPortletPreferences.getFrequencyThreshold()

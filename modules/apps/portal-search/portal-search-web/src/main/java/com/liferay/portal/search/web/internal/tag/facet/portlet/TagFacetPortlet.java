@@ -16,15 +16,12 @@ package com.liferay.portal.search.web.internal.tag.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
-import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfiguration;
-import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -104,30 +101,27 @@ public class TagFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			_getAggregationName(renderRequest));
+		AssetTagsSearchFacetDisplayContextBuilder
+			assetTagsSearchFacetDisplayContextBuilder =
+				_createTagsSearchFacetDisplayContextBuilder(renderRequest);
 
 		TagFacetPortletPreferences tagFacetPortletPreferences =
 			new TagFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		AssetTagsFacetConfiguration assetTagsFacetConfiguration =
-			new AssetTagsFacetConfigurationImpl(facet.getFacetConfiguration());
-
-		AssetTagsSearchFacetDisplayContextBuilder
-			assetTagsSearchFacetDisplayContextBuilder =
-				_createTagsSearchFacetDisplayContextBuilder(renderRequest);
-
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle(
 			tagFacetPortletPreferences.getDisplayStyle());
-		assetTagsSearchFacetDisplayContextBuilder.setFacet(facet);
+
+		assetTagsSearchFacetDisplayContextBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				_getAggregationName(renderRequest)));
 		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			tagFacetPortletPreferences.isFrequenciesVisible());
 		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			assetTagsFacetConfiguration.getFrequencyThreshold());
+			tagFacetPortletPreferences.getFrequencyThreshold());
 		assetTagsSearchFacetDisplayContextBuilder.setMaxTerms(
-			assetTagsFacetConfiguration.getMaxTerms());
+			tagFacetPortletPreferences.getMaxTerms());
 		assetTagsSearchFacetDisplayContextBuilder.
 			setPaginationStartParameterName(
 				_getPaginationStartParameterName(portletSharedSearchResponse));

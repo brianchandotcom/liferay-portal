@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>CP2Subscription</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2Subscription</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SUBSCRIPTION_TERM_DROPDOWN_BUTTON</td>
+	<td>//label[contains(@class, 'cp-subscription-term-select')] //select[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_OPTIONS</td>
+	<td>//option[contains(@value, '${key_number}') and contains(text(), '${key_options}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

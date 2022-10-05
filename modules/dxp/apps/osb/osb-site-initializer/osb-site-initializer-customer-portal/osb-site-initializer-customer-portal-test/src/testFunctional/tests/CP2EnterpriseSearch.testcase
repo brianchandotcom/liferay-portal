@@ -45,9 +45,31 @@ definition {
 	@description = "Automation ID: LPS-146026 | Test Summary: Verify that after clicking the Download Key button the user download the appropriate Elasticsearch license"
 	@priority = "4"
 	test CanDownloadTheKeyWhenASubscriptionIsSelected {
+		// Needs refactor since it depends on example Avangrid Portals account
 
-		// TODO LPS-146026 CanDownloadTheKeyWhenASubscriptionIsSelected pending implementation
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("When a user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "${testAccounts}");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
+		}
+
+		task ("When I click at the download button") {
+			CustomerPortal.clickAtButton(text = "Download Key");
+		}
+
+		// task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
+		// 	CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
+		// }
 	}
 
 	@description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"

@@ -16,13 +16,18 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.tagli
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.admin.web.internal.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutUtilityPageEntryActionDropdownItemsProvider;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +52,9 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			_layoutUtilityPageEntry.getPlid());
 	}
 
 	@Override
@@ -63,6 +71,17 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getIcon() {
 		return "list";
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		if (_draftLayout == null) {
+			return Collections.emptyList();
+		}
+
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(_draftLayout.getStatus())
+		).build();
 	}
 
 	@Override
@@ -100,6 +119,7 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		return true;
 	}
 
+	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry;
 	private final RenderRequest _renderRequest;

@@ -203,7 +203,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryUserRelLocalService.addAccountEntryUserRel(
 				accountEntryId, user.getUserId());
 
-		updateRoles(accountEntryId, user.getUserId(), accountRoleIds);
+		_updateRoles(accountEntryId, user.getUserId(), accountRoleIds);
 
 		return accountEntryUserRel;
 	}
@@ -433,18 +433,6 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 	}
 
-	protected void updateRoles(
-			long accountEntryId, long userId, long[] accountRoleIds)
-		throws PortalException {
-
-		if (accountRoleIds == null) {
-			return;
-		}
-
-		_accountRoleLocalService.associateUser(
-			accountEntryId, accountRoleIds, userId);
-	}
-
 	private String[] _getAccountDomains(long accountEntryId) {
 		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
@@ -454,6 +442,18 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 
 		return new String[0];
+	}
+
+	private void _updateRoles(
+			long accountEntryId, long userId, long[] accountRoleIds)
+		throws PortalException {
+
+		if (accountRoleIds == null) {
+			return;
+		}
+
+		_accountRoleLocalService.associateUser(
+			accountEntryId, accountRoleIds, userId);
 	}
 
 	private void _validateEmailAddress(

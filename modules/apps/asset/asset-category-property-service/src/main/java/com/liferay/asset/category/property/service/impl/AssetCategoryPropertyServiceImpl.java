@@ -96,7 +96,7 @@ public class AssetCategoryPropertyServiceImpl
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
 		long companyId, String key) {
 
-		return filterAssetCategoryProperties(
+		return _filterAssetCategoryProperties(
 			assetCategoryPropertyLocalService.getCategoryPropertyValues(
 				companyId, key));
 	}
@@ -126,7 +126,7 @@ public class AssetCategoryPropertyServiceImpl
 		return updateCategoryProperty(0, categoryPropertyId, key, value);
 	}
 
-	protected List<AssetCategoryProperty> filterAssetCategoryProperties(
+	private List<AssetCategoryProperty> _filterAssetCategoryProperties(
 		List<AssetCategoryProperty> assetCategoryProperties) {
 
 		List<AssetCategoryProperty> filteredAssetCategoryProperties =

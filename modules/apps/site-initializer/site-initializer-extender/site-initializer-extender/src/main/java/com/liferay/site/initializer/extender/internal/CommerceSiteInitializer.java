@@ -113,7 +113,7 @@ public class CommerceSiteInitializer {
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Channel channel = _addCommerceChannel(serviceContext, servletContext);
+		Channel channel = _addOrUpdateCommerceChannel(serviceContext, servletContext);
 
 		if (channel == null) {
 			return;
@@ -238,7 +238,7 @@ public class CommerceSiteInitializer {
 		}
 	}
 
-	private Channel _addCommerceChannel(
+	private Channel _addOrUpdateCommerceChannel(
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 

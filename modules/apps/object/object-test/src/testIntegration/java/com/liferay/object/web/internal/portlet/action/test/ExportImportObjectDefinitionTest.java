@@ -202,14 +202,14 @@ public class ExportImportObjectDefinitionTest {
 			new MockLiferayPortletActionResponse());
 
 		ObjectDefinitionResource.Builder builder =
-			ObjectDefinitionResource.builder();
+			_objectDefinitionResourceFactory.create();
 
-		_objectDefinitionResource = builder.user(
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
 			TestPropsValues.getUser()
 		).build();
 
 		Page<ObjectDefinition> page =
-			_objectDefinitionResource.getObjectDefinitionsPage(
+			objectDefinitionResource.getObjectDefinitionsPage(
 				"ImportedObjectDefinition", null, null, Pagination.of(1, 1),
 				null);
 
@@ -233,5 +233,8 @@ public class ExportImportObjectDefinitionTest {
 
 	@Inject
 	private ObjectDefinitionResource _objectDefinitionResource;
+
+	@Inject
+	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 }

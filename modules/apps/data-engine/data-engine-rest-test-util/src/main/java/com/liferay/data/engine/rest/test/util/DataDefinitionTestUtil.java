@@ -24,13 +24,15 @@ import com.liferay.portal.kernel.model.User;
 public class DataDefinitionTestUtil {
 
 	public static DataDefinition addDataDefinition(
-			String contentType, long groupId, String json, User user)
+			String contentType,
+			DataDefinitionResource.Factory dataDefinitionResourceFactory,
+			long groupId, String json, User user)
 		throws Exception {
 
 		DataDefinition dataDefinition = DataDefinition.toDTO(json);
 
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			DataDefinitionResource.builder();
+			dataDefinitionResourceFactory.create();
 
 		DataDefinitionResource dataDefinitionResource =
 			dataDefinitionResourcedBuilder.user(

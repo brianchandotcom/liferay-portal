@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -59,8 +60,8 @@ public class ExportDataDefinitionMVCActionCommandTest {
 
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
-				"journal", TestPropsValues.getGroupId(), json,
-				TestPropsValues.getUser());
+				"journal", _dataDefinitionResourceFactory,
+				TestPropsValues.getGroupId(), json, TestPropsValues.getUser());
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_createMockLiferayResourceRequest(dataDefinition.getId());
@@ -100,6 +101,9 @@ public class ExportDataDefinitionMVCActionCommandTest {
 
 		return mockLiferayResourceRequest;
 	}
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject(filter = "mvc.command.name=/journal/export_data_definition")
 	private MVCResourceCommand _mvcResourceCommand;

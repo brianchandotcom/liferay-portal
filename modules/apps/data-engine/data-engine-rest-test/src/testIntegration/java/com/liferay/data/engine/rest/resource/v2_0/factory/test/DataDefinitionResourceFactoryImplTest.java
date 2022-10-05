@@ -62,9 +62,11 @@ public class DataDefinitionResourceFactoryImplTest {
 
 	@Test
 	public void testHttpServletRequestLocale() throws Exception {
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).httpServletRequest(
+			dataDefinitionResourceBuilder.httpServletRequest(
 				new MockHttpServletRequest() {
 
 					@Override
@@ -90,9 +92,11 @@ public class DataDefinitionResourceFactoryImplTest {
 
 	@Test
 	public void testPreferredLocale() throws Exception {
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).preferredLocale(
+			dataDefinitionResourceBuilder.preferredLocale(
 				LocaleUtil.BRAZIL
 			).user(
 				UserTestUtil.addUser()
@@ -107,9 +111,11 @@ public class DataDefinitionResourceFactoryImplTest {
 
 	@Test
 	public void testUserLocale() throws Exception {
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).user(
+			dataDefinitionResourceBuilder.user(
 				UserTestUtil.addUser()
 			).build();
 
@@ -160,6 +166,9 @@ public class DataDefinitionResourceFactoryImplTest {
 		return GetterUtil.getString(
 			ResourceBundleUtil.getString(resourceBundle, key), key);
 	}
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

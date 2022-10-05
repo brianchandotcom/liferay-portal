@@ -515,11 +515,11 @@ public class DataDefinitionResourceTest
 
 		Group group = GroupTestUtil.addGroup();
 
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			DataDefinitionResource.builder();
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
 
 		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
+			dataDefinitionResourceBuilder.user(
 				TestPropsValues.getUser()
 			).build();
 
@@ -800,6 +800,9 @@ public class DataDefinitionResourceTest
 	}
 
 	private static final String _CONTENT_TYPE = "test";
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject(type = DataEngineNativeObjectTracker.class)
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;

@@ -16,6 +16,7 @@ package com.liferay.document.library.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
@@ -231,8 +232,8 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
-				"document-library", group.getGroupId(), json,
-				TestPropsValues.getUser());
+				"document-library", _dataDefinitionResourceFactory,
+				group.getGroupId(), json, TestPropsValues.getUser());
 
 		Assert.assertNotNull(
 			_ddmStructureLocalService.fetchDDMStructure(
@@ -683,6 +684,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DLAppHelperLocalService _dlAppHelperLocalService;

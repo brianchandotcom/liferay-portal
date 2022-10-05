@@ -258,14 +258,14 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 	private DataDefinition _getImportedDataDefinition() throws Exception {
 		DataDefinitionResource.Builder builder =
-			DataDefinitionResource.builder();
+			_dataDefinitionResourceFactory.create();
 
-		_dataDefinitionResource = builder.user(
+		DataDefinitionResource dataDefinitionResource = builder.user(
 			TestPropsValues.getUser()
 		).build();
 
 		Page<DataDefinition> page =
-			_dataDefinitionResource.
+			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeContentTypePage(
 					TestPropsValues.getGroupId(), "journal",
 					"Imported Structure", Pagination.of(1, 1), null);
@@ -292,7 +292,7 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	}
 
 	@Inject
-	private DataDefinitionResource _dataDefinitionResource;
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private File _file;

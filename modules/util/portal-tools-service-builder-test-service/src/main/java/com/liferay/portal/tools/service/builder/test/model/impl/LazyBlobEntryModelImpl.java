@@ -594,39 +594,6 @@ public class LazyBlobEntryModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-
-		sb.append(getUuid());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lazyBlobEntryId</column-name><column-value><![CDATA[");
-
-		sb.append(getLazyBlobEntryId());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-
-		sb.append(getGroupId());
-
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, LazyBlobEntry>

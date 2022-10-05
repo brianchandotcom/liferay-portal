@@ -656,57 +656,6 @@ public class AnalyticsMessageModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.analytics.message.storage.model.AnalyticsMessage");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-
-		sb.append(getMvccVersion());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>analyticsMessageId</column-name><column-value><![CDATA[");
-
-		sb.append(getAnalyticsMessageId());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-
-		sb.append(getCompanyId());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-
-		sb.append(getUserId());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-
-		sb.append(getUserName());
-
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-
-		sb.append(getCreateDate());
-
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, AnalyticsMessage>

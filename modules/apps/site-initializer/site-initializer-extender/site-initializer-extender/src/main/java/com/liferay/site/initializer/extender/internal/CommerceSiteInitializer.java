@@ -113,7 +113,8 @@ public class CommerceSiteInitializer {
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Channel channel = _addOrUpdateCommerceChannel(serviceContext, servletContext);
+		Channel channel = _addOrUpdateCommerceChannel(
+			serviceContext, servletContext);
 
 		if (channel == null) {
 			return;
@@ -162,163 +163,6 @@ public class CommerceSiteInitializer {
 
 	public String getCommerceOrderClassName() {
 		return CommerceOrder.class.getName();
-	}
-
-	private void _addOrUpdateCommerceCatalogs(
-			Bundle bundle, Channel channel,
-			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
-			ServiceContext serviceContext, ServletContext servletContext)
-		throws Exception {
-
-		Set<String> resourcePaths = servletContext.getResourcePaths(
-			"/site-initializer/commerce-catalogs");
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
-		}
-
-		CatalogResource.Builder builder = _catalogResourceFactory.create();
-
-		CatalogResource catalogResource = builder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith(".options.json") ||
-				resourcePath.endsWith(".products.json") ||
-				resourcePath.endsWith(".products.specifications.json") ||
-				resourcePath.endsWith(
-					".products.subscriptions.properties.json") ||
-				!resourcePath.endsWith(".json")) {
-
-				continue;
-			}
-
-			String json = SiteInitializerUtil.read(
-				resourcePath, servletContext);
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
-
-			String assetVocabularyName = jsonObject.getString(
-				"assetVocabularyName");
-
-			jsonObject.remove("assetVocabularyName");
-
-			Catalog catalog = Catalog.toDTO(String.valueOf(jsonObject));
-
-			if (catalog == null) {
-				_log.error(
-					"Unable to transform commerce catalog from JSON: " + json);
-
-				continue;
-			}
-
-			catalog = catalogResource.postCatalog(catalog);
-
-			_addCPOptions(
-				catalog,
-				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
-				serviceContext, servletContext);
-			_addCPDefinitions(
-				assetVocabularyName, bundle, catalog, channel,
-				commerceInventoryWarehouses,
-				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
-				serviceContext, servletContext);
-
-			_addCommerceProductSpecifications(
-				StringUtil.replaceLast(
-					resourcePath, ".json", ".products.specifications.json"),
-				serviceContext, servletContext);
-
-			_addCPInstanceSubscriptions(
-				StringUtil.replaceLast(
-					resourcePath, ".json",
-					".products.subscriptions.properties.json"),
-				serviceContext, servletContext);
-		}
-	}
-
-	private Channel _addOrUpdateCommerceChannel(
-			ServiceContext serviceContext, ServletContext servletContext)
-		throws Exception {
-
-		String resourcePath = "/site-initializer/commerce-channel.json";
-
-		String json = SiteInitializerUtil.read(resourcePath, servletContext);
-
-		if (json == null) {
-			return null;
-		}
-
-		ChannelResource.Builder channelResourceBuilder =
-			_channelResourceFactory.create();
-
-		ChannelResource channelResource = channelResourceBuilder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
-
-		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
-
-		Channel channel = Channel.toDTO(jsonObject.toString());
-
-		if (channel == null) {
-			_log.error(
-				"Unable to transform commerce channel from JSON: " + json);
-
-			return null;
-		}
-
-		Page<Channel> channelsPage = channelResource.getChannelsPage(
-			null,
-			channelResource.toFilter(
-				StringBundler.concat(
-					"siteGroupId eq '", serviceContext.getScopeGroupId(), "'")),
-			null, null);
-
-		Channel existingChannel = channelsPage.fetchFirstItem();
-
-		if (existingChannel == null) {
-			channel = channelResource.postChannel(channel);
-		}
-		else {
-			channel = channelResource.putChannel(
-				existingChannel.getId(), channel);
-		}
-
-		_addDefaultCPDisplayLayout(
-			channel,
-			StringUtil.replaceLast(
-				resourcePath, ".json", ".default-cp-display-layout.json"),
-			serviceContext, servletContext);
-		_addModelResourcePermissions(
-			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
-			StringUtil.replaceLast(
-				resourcePath, ".json", ".model-resource-permissions.json"),
-			serviceContext, servletContext);
-
-		Settings settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				serviceContext.getScopeGroupId(),
-				CommerceAccountConstants.SERVICE_NAME));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		modifiableSettings.setValue(
-			"commerceSiteType",
-			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
-
-		modifiableSettings.store();
-
-		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
-
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-		return channel;
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
@@ -685,6 +529,163 @@ public class CommerceSiteInitializer {
 					).build(),
 					null));
 		}
+	}
+
+	private void _addOrUpdateCommerceCatalogs(
+			Bundle bundle, Channel channel,
+			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			ServiceContext serviceContext, ServletContext servletContext)
+		throws Exception {
+
+		Set<String> resourcePaths = servletContext.getResourcePaths(
+			"/site-initializer/commerce-catalogs");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		CatalogResource.Builder builder = _catalogResourceFactory.create();
+
+		CatalogResource catalogResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith(".options.json") ||
+				resourcePath.endsWith(".products.json") ||
+				resourcePath.endsWith(".products.specifications.json") ||
+				resourcePath.endsWith(
+					".products.subscriptions.properties.json") ||
+				!resourcePath.endsWith(".json")) {
+
+				continue;
+			}
+
+			String json = SiteInitializerUtil.read(
+				resourcePath, servletContext);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+			String assetVocabularyName = jsonObject.getString(
+				"assetVocabularyName");
+
+			jsonObject.remove("assetVocabularyName");
+
+			Catalog catalog = Catalog.toDTO(String.valueOf(jsonObject));
+
+			if (catalog == null) {
+				_log.error(
+					"Unable to transform commerce catalog from JSON: " + json);
+
+				continue;
+			}
+
+			catalog = catalogResource.postCatalog(catalog);
+
+			_addCPOptions(
+				catalog,
+				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
+				serviceContext, servletContext);
+			_addCPDefinitions(
+				assetVocabularyName, bundle, catalog, channel,
+				commerceInventoryWarehouses,
+				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
+				serviceContext, servletContext);
+
+			_addCommerceProductSpecifications(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".products.specifications.json"),
+				serviceContext, servletContext);
+
+			_addCPInstanceSubscriptions(
+				StringUtil.replaceLast(
+					resourcePath, ".json",
+					".products.subscriptions.properties.json"),
+				serviceContext, servletContext);
+		}
+	}
+
+	private Channel _addOrUpdateCommerceChannel(
+			ServiceContext serviceContext, ServletContext servletContext)
+		throws Exception {
+
+		String resourcePath = "/site-initializer/commerce-channel.json";
+
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
+
+		if (json == null) {
+			return null;
+		}
+
+		ChannelResource.Builder channelResourceBuilder =
+			_channelResourceFactory.create();
+
+		ChannelResource channelResource = channelResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
+
+		Channel channel = Channel.toDTO(jsonObject.toString());
+
+		if (channel == null) {
+			_log.error(
+				"Unable to transform commerce channel from JSON: " + json);
+
+			return null;
+		}
+
+		Page<Channel> channelsPage = channelResource.getChannelsPage(
+			null,
+			channelResource.toFilter(
+				StringBundler.concat(
+					"siteGroupId eq '", serviceContext.getScopeGroupId(), "'")),
+			null, null);
+
+		Channel existingChannel = channelsPage.fetchFirstItem();
+
+		if (existingChannel == null) {
+			channel = channelResource.postChannel(channel);
+		}
+		else {
+			channel = channelResource.putChannel(
+				existingChannel.getId(), channel);
+		}
+
+		_addDefaultCPDisplayLayout(
+			channel,
+			StringUtil.replaceLast(
+				resourcePath, ".json", ".default-cp-display-layout.json"),
+			serviceContext, servletContext);
+		_addModelResourcePermissions(
+			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
+			StringUtil.replaceLast(
+				resourcePath, ".json", ".model-resource-permissions.json"),
+			serviceContext, servletContext);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				serviceContext.getScopeGroupId(),
+				CommerceAccountConstants.SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"commerceSiteType",
+			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
+
+		modifiableSettings.store();
+
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+		return channel;
 	}
 
 	private void _addOrUpdateCommercePriceEntries(

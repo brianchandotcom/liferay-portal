@@ -102,6 +102,10 @@ definition {
 					value1 = "${breadcrumbNameUppercase}");
 			}
 
+			AssertTextEquals(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "\"double quoted\"");
+
 			if (isSet(duplicate)) {
 				Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 

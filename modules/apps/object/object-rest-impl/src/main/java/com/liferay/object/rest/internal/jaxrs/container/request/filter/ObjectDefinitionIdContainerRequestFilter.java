@@ -14,6 +14,10 @@
 
 package com.liferay.object.rest.internal.jaxrs.container.request.filter;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+
 import java.util.List;
 import java.util.Map;
 
@@ -34,9 +38,10 @@ public class ObjectDefinitionIdContainerRequestFilter
 	implements ContainerRequestFilter {
 
 	public ObjectDefinitionIdContainerRequestFilter(
-		Long objectDefinitionId, String objectDefinitionName) {
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		String objectDefinitionName) {
 
-		_objectDefinitionId = objectDefinitionId;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionName = objectDefinitionName;
 	}
 
@@ -49,8 +54,14 @@ public class ObjectDefinitionIdContainerRequestFilter
 		MultivaluedMap<String, String> queryParameters =
 			uriInfo.getQueryParameters();
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				CompanyThreadLocal.getCompanyId(),
+				"C_" + _objectDefinitionName);
+
 		queryParameters.add(
-			"objectDefinitionId", String.valueOf(_objectDefinitionId));
+			"objectDefinitionId",
+			String.valueOf(objectDefinition.getObjectDefinitionId()));
 
 		for (Map.Entry<String, List<String>> entry :
 				queryParameters.entrySet()) {
@@ -58,12 +69,14 @@ public class ObjectDefinitionIdContainerRequestFilter
 			uriBuilder.queryParam(entry.getKey(), entry.getValue());
 		}
 
-		uriBuilder.queryParam("taskItemDelegateName", _objectDefinitionName);
+		uriBuilder.queryParam(
+			"taskItemDelegateName",
+			_objectDefinitionName + CompanyThreadLocal.getCompanyId());
 
 		containerRequestContext.setRequestUri(uriBuilder.build());
 	}
 
-	private final Long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final String _objectDefinitionName;
 
 }

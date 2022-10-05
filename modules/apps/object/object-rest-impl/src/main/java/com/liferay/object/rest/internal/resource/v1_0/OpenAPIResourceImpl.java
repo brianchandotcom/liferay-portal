@@ -14,7 +14,10 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -35,10 +38,12 @@ import javax.ws.rs.core.UriInfo;
 public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(
-		long objectDefinitionId,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		String objectDefinitionName,
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource) {
 
-		_objectDefinitionId = objectDefinitionId;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectDefinitionName = objectDefinitionName;
 		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
 	}
 
@@ -48,11 +53,17 @@ public class OpenAPIResourceImpl {
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				CompanyThreadLocal.getCompanyId(),
+				"C_" + _objectDefinitionName);
+
 		return _objectEntryOpenAPIResource.getOpenAPI(
-			_objectDefinitionId, type, _uriInfo);
+			objectDefinition.getObjectDefinitionId(), type, _uriInfo);
 	}
 
-	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final String _objectDefinitionName;
 	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Context

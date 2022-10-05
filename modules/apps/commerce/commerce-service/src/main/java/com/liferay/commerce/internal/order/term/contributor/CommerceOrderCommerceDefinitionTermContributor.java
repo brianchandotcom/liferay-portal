@@ -335,10 +335,10 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 		Contact contact = user.getContact();
 
-		long prefixId = contact.getPrefixId();
+		long prefixListTypeId = contact.getPrefixListTypeId();
 
-		if (prefixId > 0) {
-			ListType listType = _listTypeService.getListType(prefixId);
+		if (prefixListTypeId > 0) {
+			ListType listType = _listTypeService.getListType(prefixListTypeId);
 
 			return _language.get(locale, listType.getName());
 		}

@@ -67,6 +67,6 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 <div>
 	<liferay-frontend:component
 		componentId="repositoryBrowserEventHandler"
-		module="repository_browser/js/ElementsDefaultEventHandler.es"
+		module="repository_browser/js/RepositoryBrowserDropdownDefaultEventHandler"
 	/>
 </div>

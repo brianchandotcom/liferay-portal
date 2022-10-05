@@ -1318,13 +1318,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			user.getReminderQueryAnswer(), screenName, emailAddress,
 			!deleteLogo, portraitBytes, user.getLanguageId(),
 			user.getTimeZoneId(), user.getGreeting(), comments, firstName,
-			middleName, lastName, contact.getPrefixId(), contact.getSuffixId(),
-			user.isMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
-			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
-			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
-			null, user.getUserGroupIds(), user.getAddresses(), null,
-			user.getPhones(), user.getWebsites(), announcementsDeliveries,
-			new ServiceContext());
+			middleName, lastName, contact.getPrefixListTypeId(),
+			contact.getSuffixListTypeId(), user.isMale(), birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle, user.getGroupIds(), user.getOrganizationIds(),
+			user.getRoleIds(), null, user.getUserGroupIds(),
+			user.getAddresses(), null, user.getPhones(), user.getWebsites(),
+			announcementsDeliveries, new ServiceContext());
 	}
 
 	private void _updateWebsites(ActionRequest actionRequest) throws Exception {

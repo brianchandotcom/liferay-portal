@@ -23,6 +23,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -44,6 +45,8 @@ import com.liferay.portal.vulcan.graphql.dto.v1_0.Creator;
 import com.liferay.portal.vulcan.list.type.ListEntry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
 
@@ -297,6 +300,24 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
+	public Class<?> getResourceClass() {
+		return ObjectEntryResourceImpl.class;
+	}
+
+	@Override
+	public Method getResourceMethod(Operation operation) {
+		for (Method method : ObjectEntryResourceImpl.class.getMethods()) {
+			if (Objects.equals(
+					method.getName(), _resourceMethods.get(operation))) {
+
+				return method;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getResourceName() {
 		return _resourceName;
 	}
@@ -393,6 +414,21 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return objectEntry;
 	}
 
+	private static final Map<Operation, String> _resourceMethods =
+		HashMapBuilder.<Operation, String>put(
+			Operation.CREATE, "postObjectEntry"
+		).put(
+			Operation.DELETE, "deleteObjectEntry"
+		).put(
+			Operation.GET, "getObjectEntry"
+		).put(
+			Operation.GET_RELATIONSHIP,
+			"getCurrentObjectEntriesObjectRelationshipNamePage"
+		).put(
+			Operation.LIST, "getObjectEntriesPage"
+		).put(
+			Operation.UPDATE, "putObjectEntry"
+		).build();
 	private static final Map<String, Class<?>> _typedClasses =
 		HashMapBuilder.<String, Class<?>>put(
 			"BigDecimal", BigDecimal.class

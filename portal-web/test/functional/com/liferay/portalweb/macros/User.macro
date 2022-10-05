@@ -2862,6 +2862,29 @@ definition {
 		}
 	}
 
+	macro viewMemberships {
+		UserNavigator.gotoMemberships();
+
+		if ("${assetType}" == "Sites") {
+			var key_assetType = "groups";
+		}
+		else if ("${assetType}" == "User Groups") {
+			var key_assetType = "userGroups";
+		}
+		else if ("${assetType}" == "Accounts") {
+			var key_assetType = "accountEntries";
+		}
+		else if ("${assetType}" == "Asset Libraries") {
+			var key_assetType = "depotGroups";
+		}
+
+		var key_assigneeName = "${assigneeName}";
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_NAME",
+			value1 = "${assigneeName}");
+	}
+
 	macro viewNotPrimary {
 		if (isSet(primaryValue)) {
 			var key_primaryValue = "${primaryValue}";

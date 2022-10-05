@@ -25,16 +25,11 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.info.collection.provider.InfoCollectionProvider" %><%@
-page import="com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider" %><%@
 page import="com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys" %><%@
 page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.InfoCollectionProviderItemSelectorDisplayContext" %><%@
 page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.InfoCollectionProviderItemSelectorManagementToolbarDisplayContext" %><%@
-page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorDisplayContext" %><%@
-page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorManagementToolbarDisplayContext" %><%@
 page import="com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.InfoCollectionProviderVerticalCard" %><%@
-page import="com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.RelatedInfoItemCollectionProviderVerticalCard" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 

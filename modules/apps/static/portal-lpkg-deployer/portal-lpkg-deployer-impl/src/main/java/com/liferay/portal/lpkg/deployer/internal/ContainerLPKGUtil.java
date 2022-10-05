@@ -14,6 +14,8 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -21,8 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
@@ -39,9 +39,6 @@ public class ContainerLPKGUtil {
 
 	public static List<File> deploy(File lpkgFile, Properties properties)
 		throws IOException {
-
-		Path deployerDirPath = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR);
 
 		List<File> lpkgFiles = new ArrayList<>();
 
@@ -70,13 +67,29 @@ public class ContainerLPKGUtil {
 					return null;
 				}
 
-				Path lpkgPath = deployerDirPath.resolve(name);
+				File deployerDir = new File(
+					PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR);
+
+				File innerLPKGFile = new File(deployerDir, name);
+
+				String innerLPKGCanonicalPath =
+					innerLPKGFile.getCanonicalPath();
+
+				if (!innerLPKGCanonicalPath.startsWith(
+						deployerDir.getCanonicalPath() + File.separator)) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn("Invalid LPKG File name: " + name);
+					}
+
+					continue;
+				}
 
 				Files.copy(
-					zipFile.getInputStream(zipEntry), lpkgPath,
+					zipFile.getInputStream(zipEntry), innerLPKGFile.toPath(),
 					StandardCopyOption.REPLACE_EXISTING);
 
-				lpkgFiles.add(lpkgPath.toFile());
+				lpkgFiles.add(innerLPKGFile);
 			}
 		}
 
@@ -88,5 +101,8 @@ public class ContainerLPKGUtil {
 
 		return lpkgFiles;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContainerLPKGUtil.class);
 
 }

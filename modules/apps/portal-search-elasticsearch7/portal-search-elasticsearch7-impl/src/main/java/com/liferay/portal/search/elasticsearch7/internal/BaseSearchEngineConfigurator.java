@@ -60,7 +60,9 @@ public abstract class BaseSearchEngineConfigurator
 
 	@Override
 	public void destroy() {
-		_destroySearchEngine();
+		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
+
+		searchEngineHelper.removeSearchEngine(_searchEngineId);
 
 		for (List<ServiceRegistration<?>> destinationServiceRegistrations :
 				_destinationServiceRegistrations.values()) {
@@ -208,39 +210,6 @@ public abstract class BaseSearchEngineConfigurator
 		_registerSearchEngineMessageListener(
 			searchEngineId, searchEngine, searchWriterDestination,
 			new SearchWriterMessageListener(), searchEngine.getIndexWriter());
-	}
-
-	private void _destroySearchEngine() {
-		MessageBus messageBus = getMessageBus();
-
-		Destination searchReaderDestination = _getSearchReaderDestination(
-			messageBus, _searchEngineId, false);
-
-		if (searchReaderDestination != null) {
-			searchReaderDestination.unregisterMessageListeners();
-		}
-
-		Destination searchWriterDestination = _getSearchWriterDestination(
-			messageBus, _searchEngineId, false);
-
-		if (searchWriterDestination != null) {
-			searchWriterDestination.unregisterMessageListeners();
-		}
-
-		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
-
-		searchEngineHelper.removeSearchEngine(_searchEngineId);
-
-		List<ServiceRegistration<?>> destinationServiceRegistrations =
-			_destinationServiceRegistrations.remove(_searchEngineId);
-
-		if (destinationServiceRegistrations != null) {
-			for (ServiceRegistration<?> serviceRegistration :
-					destinationServiceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
-		}
 	}
 
 	private Destination _getSearchReaderDestination(

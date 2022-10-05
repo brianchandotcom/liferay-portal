@@ -16,12 +16,11 @@ package com.liferay.info.collection.provider.item.selector.web.internal;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
-import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
-import com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorDisplayContext;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -35,8 +34,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -83,23 +80,15 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		List<RelatedInfoItemCollectionProvider<?, ?>>
-			relatedInfoItemCollectionProviders =
+		_itemSelectorViewDescriptorRenderer.renderHTML(
+			servletRequest, servletResponse,
+			relatedInfoItemCollectionProviderItemSelectorCriterion, portletURL,
+			itemSelectedEventName, search,
+			new RelatedInfoItemCollectionProviderItemSelectorViewDescriptor(
+				relatedInfoItemCollectionProviderItemSelectorCriterion,
+				_language, (HttpServletRequest)servletRequest, portletURL,
 				_getRelatedInfoItemCollectionProviders(
-					relatedInfoItemCollectionProviderItemSelectorCriterion);
-
-		servletRequest.setAttribute(
-			InfoCollectionProviderItemSelectorWebKeys.
-				RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			new RelatedInfoItemCollectionProviderItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest, itemSelectedEventName,
-				_language, portletURL, relatedInfoItemCollectionProviders));
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/view_related_info_collection_providers.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
+					relatedInfoItemCollectionProviderItemSelectorCriterion)));
 	}
 
 	private List<RelatedInfoItemCollectionProvider<?, ?>>
@@ -133,11 +122,11 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
-	private Language _language;
+	private ItemSelectorViewDescriptorRenderer
+		<RelatedInfoItemCollectionProviderItemSelectorCriterion>
+			_itemSelectorViewDescriptorRenderer;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.info.collection.provider.item.selector.web)"
-	)
-	private ServletContext _servletContext;
+	@Reference
+	private Language _language;
 
 }

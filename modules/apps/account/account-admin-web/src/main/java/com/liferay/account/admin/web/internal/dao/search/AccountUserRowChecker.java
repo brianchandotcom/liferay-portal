@@ -54,7 +54,7 @@ public class AccountUserRowChecker extends EmptyOnClickRowChecker {
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.fetchAccountEntry(_accountEntryId);
 
-		if (accountEntry == null) {
+		if ((accountEntry == null) || !accountEntry.isRestrictMembership()) {
 			return false;
 		}
 

@@ -84,7 +84,21 @@ public class ElasticsearchEngineConfigurator
 		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
 	}
 
-	protected Destination createSearchReaderDestination(
+	@Deactivate
+	protected void deactivate() {
+		_searchEngineHelper.removeSearchEngine(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_destinationServiceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_destinationServiceRegistrations.clear();
+	}
+
+	private Destination _createSearchReaderDestination(
 		String searchReaderDestinationName) {
 
 		DestinationConfiguration destinationConfiguration =
@@ -94,7 +108,7 @@ public class ElasticsearchEngineConfigurator
 		return _destinationFactory.createDestination(destinationConfiguration);
 	}
 
-	protected Destination createSearchWriterDestination(
+	private Destination _createSearchWriterDestination(
 		String searchWriterDestinationName) {
 
 		DestinationConfiguration destinationConfiguration = null;
@@ -143,20 +157,6 @@ public class ElasticsearchEngineConfigurator
 		return _destinationFactory.createDestination(destinationConfiguration);
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_searchEngineHelper.removeSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
-
-		for (ServiceRegistration<?> serviceRegistration :
-				_destinationServiceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_destinationServiceRegistrations.clear();
-	}
-
 	private Destination _getSearchReaderDestination() {
 		String searchReaderDestinationName =
 			SearchEngineHelperUtil.getSearchReaderDestinationName(
@@ -166,7 +166,7 @@ public class ElasticsearchEngineConfigurator
 			searchReaderDestinationName);
 
 		if (searchReaderDestination == null) {
-			searchReaderDestination = createSearchReaderDestination(
+			searchReaderDestination = _createSearchReaderDestination(
 				searchReaderDestinationName);
 
 			_destinationServiceRegistrations.add(
@@ -189,7 +189,7 @@ public class ElasticsearchEngineConfigurator
 			searchWriterDestinationName);
 
 		if (searchWriterDestination == null) {
-			searchWriterDestination = createSearchWriterDestination(
+			searchWriterDestination = _createSearchWriterDestination(
 				searchWriterDestinationName);
 
 			_destinationServiceRegistrations.add(

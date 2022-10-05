@@ -161,22 +161,13 @@ public abstract class BaseSearchEngineConfigurator
 	protected abstract SearchEngineHelper getSearchEngineHelper();
 
 	protected void initialize() {
-		_searchEngineRegistration = new SearchEngineRegistration(
-			_searchEngineId);
-
 		MessageBus messageBus = getMessageBus();
 
 		Destination searchReaderDestination = _getSearchReaderDestination(
 			messageBus, _searchEngineId, true);
 
-		_searchEngineRegistration.setSearchReaderDestinationName(
-			searchReaderDestination.getName());
-
 		Destination searchWriterDestination = _getSearchWriterDestination(
 			messageBus, _searchEngineId, true);
-
-		_searchEngineRegistration.setSearchWriterDestinationName(
-			searchWriterDestination.getName());
 
 		_createSearchEngineListeners(
 			_searchEngineId, _searchEngine, searchReaderDestination,
@@ -223,14 +214,14 @@ public abstract class BaseSearchEngineConfigurator
 		MessageBus messageBus = getMessageBus();
 
 		Destination searchReaderDestination = _getSearchReaderDestination(
-			messageBus, _searchEngineRegistration.getSearchEngineId(), false);
+			messageBus, _searchEngineId, false);
 
 		if (searchReaderDestination != null) {
 			searchReaderDestination.unregisterMessageListeners();
 		}
 
 		Destination searchWriterDestination = _getSearchWriterDestination(
-			messageBus, _searchEngineRegistration.getSearchEngineId(), false);
+			messageBus, _searchEngineId, false);
 
 		if (searchWriterDestination != null) {
 			searchWriterDestination.unregisterMessageListeners();
@@ -238,12 +229,10 @@ public abstract class BaseSearchEngineConfigurator
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
-		searchEngineHelper.removeSearchEngine(
-			_searchEngineRegistration.getSearchEngineId());
+		searchEngineHelper.removeSearchEngine(_searchEngineId);
 
 		List<ServiceRegistration<?>> destinationServiceRegistrations =
-			_destinationServiceRegistrations.remove(
-				_searchEngineRegistration.getSearchEngineId());
+			_destinationServiceRegistrations.remove(_searchEngineId);
 
 		if (destinationServiceRegistrations != null) {
 			for (ServiceRegistration<?> serviceRegistration :
@@ -332,42 +321,5 @@ public abstract class BaseSearchEngineConfigurator
 		_destinationServiceRegistrations = new ConcurrentHashMap<>();
 	private SearchEngine _searchEngine;
 	private String _searchEngineId;
-	private SearchEngineRegistration _searchEngineRegistration;
-
-	private static class SearchEngineRegistration {
-
-		public String getSearchEngineId() {
-			return _searchEngineId;
-		}
-
-		public String getSearchReaderDestinationName() {
-			return _searchReaderDestinationName;
-		}
-
-		public String getSearchWriterDestinationName() {
-			return _searchWriterDestinationName;
-		}
-
-		public void setSearchReaderDestinationName(
-			String searchReaderDestinationName) {
-
-			_searchReaderDestinationName = searchReaderDestinationName;
-		}
-
-		public void setSearchWriterDestinationName(
-			String searchWriterDestinationName) {
-
-			_searchWriterDestinationName = searchWriterDestinationName;
-		}
-
-		private SearchEngineRegistration(String searchEngineId) {
-			_searchEngineId = searchEngineId;
-		}
-
-		private final String _searchEngineId;
-		private String _searchReaderDestinationName;
-		private String _searchWriterDestinationName;
-
-	}
 
 }

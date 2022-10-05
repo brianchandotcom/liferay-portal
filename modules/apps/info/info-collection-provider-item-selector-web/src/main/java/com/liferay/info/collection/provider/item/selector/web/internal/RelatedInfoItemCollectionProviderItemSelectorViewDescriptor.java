@@ -18,12 +18,10 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -50,12 +47,10 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		<RelatedInfoItemCollectionProvider<?, ?>> {
 
 	public RelatedInfoItemCollectionProviderItemSelectorViewDescriptor(
-		Language language, HttpServletRequest httpServletRequest,
-		PortletURL portletURL,
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders) {
 
-		_language = language;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_relatedInfoItemCollectionProviders =
@@ -113,18 +108,10 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 			(PortletRequest)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
 		SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
 			searchContainer = new SearchContainer<>(
 				portletRequest, _portletURL, null,
-				_language.get(
-					resourceBundle,
-					"there-are-no-related-items-collection-providers"));
+				"there-are-no-related-items-collection-providers");
 
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders = new ArrayList<>(
@@ -152,6 +139,10 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			relatedInfoItemCollectionProviders = ListUtil.filter(
 				relatedInfoItemCollectionProviders,
 				relatedInfoItemCollectionProvider -> {
@@ -178,7 +169,6 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final Language _language;
 	private final PortletURL _portletURL;
 	private final List<RelatedInfoItemCollectionProvider<?, ?>>
 		_relatedInfoItemCollectionProviders;

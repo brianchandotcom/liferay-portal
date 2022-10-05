@@ -19,7 +19,8 @@ export default function useCompanyOptions(
 	companyOptions: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	handleSelected: (
 		country: LiferayPicklist,
-		company: LiferayAccountBrief
+		company: LiferayAccountBrief,
+		externalReferenceCodeSF?: string
 	) => void
 ) {
 	const [selectedAccountBrief, setSelectedAccountBrief] = useState<
@@ -32,11 +33,11 @@ export default function useCompanyOptions(
 
 	useEffect(() => {
 		if (selectedAccountBrief) {
-			handleSelected(companyExtender?.country || {}, {
-				...selectedAccountBrief,
-				externalReferenceCodeSF:
-					companyExtender?.externalReferenceCodeSF,
-			});
+			handleSelected(
+				companyExtender?.country || {},
+				selectedAccountBrief,
+				companyExtender?.externalReferenceCodeSF
+			);
 		}
 	}, [companyExtender, handleSelected, selectedAccountBrief]);
 

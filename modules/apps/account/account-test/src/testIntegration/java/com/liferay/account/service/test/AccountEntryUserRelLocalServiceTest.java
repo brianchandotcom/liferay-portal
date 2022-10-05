@@ -238,6 +238,7 @@ public class AccountEntryUserRelLocalServiceTest {
 
 		try {
 			_accountEntry.setDomains("test1.com,test2.com");
+			_accountEntry.setRestrictMembership(true);
 
 			_accountEntry = _accountEntryLocalService.updateAccountEntry(
 				_accountEntry);
@@ -247,23 +248,32 @@ public class AccountEntryUserRelLocalServiceTest {
 			_userInfo.emailAddress =
 				_userInfo.screenName + "@invalid-domain.com";
 
+			try {
+				_addAccountEntryUserRel(_accountEntry.getAccountEntryId());
+
+				Assert.fail();
+			}
+			catch (UserEmailAddressException.MustHaveValidDomain
+						userEmailAddressException) {
+
+				Assert.assertEquals(
+					_userInfo.emailAddress,
+					userEmailAddressException.emailAddress);
+				Assert.assertEquals(
+					_accountEntry.getDomains(),
+					userEmailAddressException.validDomains);
+				Assert.assertEquals(
+					String.format(
+						"Email address %s must have one of the valid " +
+							"domains: %s",
+						_userInfo.emailAddress, _accountEntry.getDomains()),
+					userEmailAddressException.getMessage());
+			}
+
+			_accountEntry = _accountEntryLocalService.updateRestrictMembership(
+				_accountEntry.getAccountEntryId(), false);
+
 			_addAccountEntryUserRel(_accountEntry.getAccountEntryId());
-
-			Assert.fail();
-		}
-		catch (UserEmailAddressException.MustHaveValidDomain
-					userEmailAddressException) {
-
-			Assert.assertEquals(
-				_userInfo.emailAddress, userEmailAddressException.emailAddress);
-			Assert.assertEquals(
-				_accountEntry.getDomains(),
-				userEmailAddressException.validDomains);
-			Assert.assertEquals(
-				String.format(
-					"Email address %s must have one of the valid domains: %s",
-					_userInfo.emailAddress, _accountEntry.getDomains()),
-				userEmailAddressException.getMessage());
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);

@@ -24,6 +24,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
+	cssClass="pt-0"
 	method="post"
 	name="fm"
 >
@@ -45,6 +46,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 			<liferay-frontend:fieldset
 				collapsed="<%= false %>"
 				collapsible="<%= true %>"
+				cssClass="mb-4"
 				label="content-selection"
 			>
 				<div class="form-group">
@@ -80,6 +82,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 			<liferay-frontend:fieldset
 				collapsed="<%= false %>"
 				collapsible="<%= true %>"
+				cssClass="mb-4"
 				label="set-and-enable"
 			>
 				<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleDescription() %>" />

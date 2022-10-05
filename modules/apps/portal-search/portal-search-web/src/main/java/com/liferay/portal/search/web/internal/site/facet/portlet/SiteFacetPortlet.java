@@ -123,9 +123,6 @@ public class SiteFacetPortlet extends MVCPortlet {
 		Facet facet = portletSharedSearchResponse.getFacet(
 			_getAggregationName(renderRequest));
 
-		ScopeFacetConfiguration siteFacetConfiguration =
-			new ScopeFacetConfigurationImpl(facet.getFacetConfiguration());
-
 		SiteFacetPortletPreferences siteFacetPortletPreferences =
 			new SiteFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
@@ -142,7 +139,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 			scopeSearchFacetDisplayContextBuilder::setFilteredGroupIds);
 
 		scopeSearchFacetDisplayContextBuilder.setFrequencyThreshold(
-			siteFacetConfiguration.getFrequencyThreshold());
+			siteFacetPortletPreferences.getFrequencyThreshold());
 		scopeSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			siteFacetPortletPreferences.isFrequenciesVisible());
 		scopeSearchFacetDisplayContextBuilder.setGroupLocalService(
@@ -151,7 +148,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 		scopeSearchFacetDisplayContextBuilder.setLocale(
 			_getLocale(portletSharedSearchResponse, renderRequest));
 		scopeSearchFacetDisplayContextBuilder.setMaxTerms(
-			siteFacetConfiguration.getMaxTerms());
+			siteFacetPortletPreferences.getMaxTerms());
 		scopeSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

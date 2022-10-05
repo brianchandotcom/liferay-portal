@@ -329,8 +329,8 @@ definition {
 				portlet = "Warehouses");
 
 			Click(
-			key_value = "Italy",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+				key_value = "Italy",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Permissions");
 

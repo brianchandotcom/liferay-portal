@@ -97,16 +97,6 @@ public abstract class BaseSearchEngineConfigurator
 
 	}
 
-	public interface SearchDestinationHelper {
-
-		public Destination createSearchReaderDestination(
-			String searchReaderDestinationName);
-
-		public Destination createSearchWriterDestination(
-			String searchWriterDestinationName);
-
-	}
-
 	protected Destination createSearchReaderDestination(
 		String searchReaderDestinationName) {
 
@@ -218,12 +208,6 @@ public abstract class BaseSearchEngineConfigurator
 		_destinationServiceRegistrarHelper = destinationServiceRegistrarHelper;
 	}
 
-	protected void setSearchDestinationHelper(
-		SearchDestinationHelper searchDestinationHelper) {
-
-		_searchDestinationHelper = searchDestinationHelper;
-	}
-
 	protected void setSearchEngine(
 		String searchEngineId, SearchEngine searchEngine) {
 
@@ -317,9 +301,8 @@ public abstract class BaseSearchEngineConfigurator
 			searchReaderDestinationName);
 
 		if (createIfAbsent && (searchReaderDestination == null)) {
-			searchReaderDestination =
-				_searchDestinationHelper.createSearchReaderDestination(
-					searchReaderDestinationName);
+			searchReaderDestination = createSearchReaderDestination(
+				searchReaderDestinationName);
 
 			_registerSearchEngineDestination(
 				searchEngineId, searchReaderDestination);
@@ -339,9 +322,8 @@ public abstract class BaseSearchEngineConfigurator
 			searchWriterDestinationName);
 
 		if (createIfAbsent && (searchWriterDestination == null)) {
-			searchWriterDestination =
-				_searchDestinationHelper.createSearchWriterDestination(
-					searchWriterDestinationName);
+			searchWriterDestination = createSearchWriterDestination(
+				searchWriterDestinationName);
 
 			_registerSearchEngineDestination(
 				searchEngineId, searchWriterDestination);
@@ -496,8 +478,6 @@ public abstract class BaseSearchEngineConfigurator
 			new DestinationServiceRegistrarHelperImpl(this);
 	private final Map<String, DestinationServiceRegistrar>
 		_destinationServiceRegistrars = new ConcurrentHashMap<>();
-	private SearchDestinationHelper _searchDestinationHelper =
-		new SearchDestinationHelperImpl(this);
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =
 		new ArrayList<>();
 	private Map<String, SearchEngine> _searchEngines;
@@ -564,36 +544,6 @@ public abstract class BaseSearchEngineConfigurator
 		}
 
 		private DestinationServiceRegistrarHelperImpl(
-			BaseSearchEngineConfigurator baseSearchEngineConfigurator) {
-
-			_baseSearchEngineConfigurator = baseSearchEngineConfigurator;
-		}
-
-		private final BaseSearchEngineConfigurator
-			_baseSearchEngineConfigurator;
-
-	}
-
-	private static class SearchDestinationHelperImpl
-		implements SearchDestinationHelper {
-
-		@Override
-		public Destination createSearchReaderDestination(
-			String searchReaderDestinationName) {
-
-			return _baseSearchEngineConfigurator.createSearchReaderDestination(
-				searchReaderDestinationName);
-		}
-
-		@Override
-		public Destination createSearchWriterDestination(
-			String searchWriterDestinationName) {
-
-			return _baseSearchEngineConfigurator.createSearchWriterDestination(
-				searchWriterDestinationName);
-		}
-
-		private SearchDestinationHelperImpl(
 			BaseSearchEngineConfigurator baseSearchEngineConfigurator) {
 
 			_baseSearchEngineConfigurator = baseSearchEngineConfigurator;

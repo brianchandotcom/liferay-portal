@@ -15,6 +15,8 @@
 package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -22,7 +24,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.internal.BaseSearchEngineConfigurator.DestinationServiceRegistrarHelper;
-import com.liferay.portal.search.elasticsearch7.internal.BaseSearchEngineConfigurator.SearchDestinationHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.BeforeClass;
@@ -53,11 +54,18 @@ public class ElasticsearchEngineConfiguratorTest {
 
 	@Test
 	public void testDestroyMustNotCreateDestinationsAgain() {
-		SearchDestinationHelper searchDestinationHelper =
-			_createSearchDestinationHelper();
+		DestinationFactory destinationFactory = Mockito.mock(
+			DestinationFactory.class);
+
+		Mockito.when(
+			destinationFactory.createDestination(
+				Mockito.any(DestinationConfiguration.class))
+		).thenReturn(
+			Mockito.mock(Destination.class)
+		);
 
 		ElasticsearchEngineConfigurator elasticsearchEngineConfigurator =
-			_createElasticsearchEngineConfigurator(searchDestinationHelper);
+			_createElasticsearchEngineConfigurator(destinationFactory);
 
 		elasticsearchEngineConfigurator.activate(
 			Mockito.mock(ComponentContext.class));
@@ -65,15 +73,9 @@ public class ElasticsearchEngineConfiguratorTest {
 		elasticsearchEngineConfigurator.destroy();
 
 		Mockito.verify(
-			searchDestinationHelper, Mockito.times(1)
-		).createSearchReaderDestination(
-			Mockito.nullable(String.class)
-		);
-
-		Mockito.verify(
-			searchDestinationHelper, Mockito.times(1)
-		).createSearchWriterDestination(
-			Mockito.nullable(String.class)
+			destinationFactory, Mockito.times(2)
+		).createDestination(
+			Mockito.any(DestinationConfiguration.class)
 		);
 	}
 
@@ -104,15 +106,16 @@ public class ElasticsearchEngineConfiguratorTest {
 
 	private ElasticsearchEngineConfigurator
 		_createElasticsearchEngineConfigurator(
-			SearchDestinationHelper searchDestinationHelper) {
+			DestinationFactory destinationFactory) {
 
 		return new ElasticsearchEngineConfigurator() {
 			{
+				ReflectionTestUtil.setFieldValue(
+					this, "_destinationFactory", destinationFactory);
 				setDestinationServiceRegistrarHelper(
 					_createDestinationServiceRegistrarHelper());
 				ReflectionTestUtil.setFieldValue(
 					this, "_messageBus", Mockito.mock(MessageBus.class));
-				setSearchDestinationHelper(searchDestinationHelper);
 				ReflectionTestUtil.setFieldValue(
 					this, "_searchEngine", Mockito.mock(SearchEngine.class));
 				ReflectionTestUtil.setFieldValue(
@@ -120,29 +123,6 @@ public class ElasticsearchEngineConfiguratorTest {
 					Mockito.mock(SearchEngineHelper.class));
 			}
 		};
-	}
-
-	private SearchDestinationHelper _createSearchDestinationHelper() {
-		SearchDestinationHelper searchDestinationHelper = Mockito.mock(
-			SearchDestinationHelper.class);
-
-		Mockito.doReturn(
-			Mockito.mock(Destination.class)
-		).when(
-			searchDestinationHelper
-		).createSearchReaderDestination(
-			Mockito.nullable(String.class)
-		);
-
-		Mockito.doReturn(
-			Mockito.mock(Destination.class)
-		).when(
-			searchDestinationHelper
-		).createSearchWriterDestination(
-			Mockito.nullable(String.class)
-		);
-
-		return searchDestinationHelper;
 	}
 
 }

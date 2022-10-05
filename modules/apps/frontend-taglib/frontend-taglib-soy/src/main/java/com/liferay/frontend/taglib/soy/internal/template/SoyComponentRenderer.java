@@ -17,8 +17,6 @@ package com.liferay.frontend.taglib.soy.internal.template;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
-import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -32,11 +30,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
+ * @author Julius Lee
  */
-@Component(immediate = true, service = SoyComponentRenderer.class)
-public class SoyComponentRendererImpl implements SoyComponentRenderer {
+@Component(service = SoyComponentRenderer.class)
+public class SoyComponentRenderer {
 
-	@Override
 	public void renderSoyComponent(
 			HttpServletRequest httpServletRequest, Writer writer,
 			ComponentDescriptor componentDescriptor, Map<String, ?> context)

@@ -159,15 +159,16 @@ public abstract class BaseSearchEngineConfigurator
 	protected void initialize() {
 		MessageBus messageBus = getMessageBus();
 
-		Destination searchReaderDestination = _getSearchReaderDestination(
-			messageBus, _searchEngineId);
+		_registerSearchEngineMessageListener(
+			_searchEngineId, _searchEngine,
+			_getSearchReaderDestination(messageBus, _searchEngineId),
+			new SearchReaderMessageListener(),
+			_searchEngine.getIndexSearcher());
 
-		Destination searchWriterDestination = _getSearchWriterDestination(
-			messageBus, _searchEngineId);
-
-		_createSearchEngineListeners(
-			_searchEngineId, _searchEngine, searchReaderDestination,
-			searchWriterDestination);
+		_registerSearchEngineMessageListener(
+			_searchEngineId, _searchEngine,
+			_getSearchWriterDestination(messageBus, _searchEngineId),
+			new SearchWriterMessageListener(), _searchEngine.getIndexWriter());
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
@@ -179,31 +180,6 @@ public abstract class BaseSearchEngineConfigurator
 			_searchEngineId, searchEngineProxyWrapper);
 
 		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
-	}
-
-	protected ServiceRegistration<Destination> registerDestination(
-		Destination destination) {
-
-		BundleContext bundleContext = getBundleContext();
-
-		return bundleContext.registerService(
-			Destination.class, destination,
-			MapUtil.singletonDictionary(
-				"destination.name", destination.getName()));
-	}
-
-	private void _createSearchEngineListeners(
-		String searchEngineId, SearchEngine searchEngine,
-		Destination searchReaderDestination,
-		Destination searchWriterDestination) {
-
-		_registerSearchEngineMessageListener(
-			searchEngineId, searchEngine, searchReaderDestination,
-			new SearchReaderMessageListener(), searchEngine.getIndexSearcher());
-
-		_registerSearchEngineMessageListener(
-			searchEngineId, searchEngine, searchWriterDestination,
-			new SearchWriterMessageListener(), searchEngine.getIndexWriter());
 	}
 
 	private Destination _getSearchReaderDestination(
@@ -220,8 +196,14 @@ public abstract class BaseSearchEngineConfigurator
 			searchReaderDestination = createSearchReaderDestination(
 				searchReaderDestinationName);
 
+			BundleContext bundleContext = getBundleContext();
+
 			_destinationServiceRegistrations.add(
-				registerDestination(searchReaderDestination));
+				bundleContext.registerService(
+					Destination.class, searchReaderDestination,
+					MapUtil.singletonDictionary(
+						"destination.name",
+						searchReaderDestination.getName())));
 		}
 
 		return searchReaderDestination;
@@ -241,8 +223,14 @@ public abstract class BaseSearchEngineConfigurator
 			searchWriterDestination = createSearchWriterDestination(
 				searchWriterDestinationName);
 
+			BundleContext bundleContext = getBundleContext();
+
 			_destinationServiceRegistrations.add(
-				registerDestination(searchWriterDestination));
+				bundleContext.registerService(
+					Destination.class, searchWriterDestination,
+					MapUtil.singletonDictionary(
+						"destination.name",
+						searchWriterDestination.getName())));
 		}
 
 		return searchWriterDestination;

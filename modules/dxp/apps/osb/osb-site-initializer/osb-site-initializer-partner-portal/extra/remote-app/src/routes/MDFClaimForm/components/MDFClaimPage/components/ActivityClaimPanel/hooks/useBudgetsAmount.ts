@@ -11,8 +11,8 @@
 
 import {useEffect} from 'react';
 
-import useDebounce from '../../../../../common/hooks/useDebounce';
-import MDFClaimBudget from '../../../../../common/interfaces/mdfClaimBudget';
+import useDebounce from '../../../../../../../common/hooks/useDebounce';
+import MDFClaimBudget from '../../../../../../../common/interfaces/mdfClaimBudget';
 
 export default function useBudgetsAmount(
 	budgets: MDFClaimBudget[] | undefined,

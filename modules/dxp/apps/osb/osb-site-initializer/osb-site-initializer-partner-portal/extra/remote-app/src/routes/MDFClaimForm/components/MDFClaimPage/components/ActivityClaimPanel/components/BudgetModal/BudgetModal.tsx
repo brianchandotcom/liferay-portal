@@ -13,12 +13,12 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
-import PRMForm from '../../../../../../common/components/PRMForm';
-import PRMFormik from '../../../../../../common/components/PRMFormik';
-import MDFClaimBudget from '../../../../../../common/interfaces/mdfClaimBudget';
-import MDFClaimDocument from '../../../../../../common/interfaces/mdfClaimDocument';
-import {DocumentType} from '../../../../../../common/utils/constants/documentType';
-import getIconSpriteMap from '../../../../../../common/utils/getIconSpriteMap';
+import PRMForm from '../../../../../../../../common/components/PRMForm';
+import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import MDFClaimBudget from '../../../../../../../../common/interfaces/mdfClaimBudget';
+import MDFClaimDocument from '../../../../../../../../common/interfaces/mdfClaimDocument';
+import {DocumentType} from '../../../../../../../../common/utils/constants/documentType';
+import getIconSpriteMap from '../../../../../../../../common/utils/getIconSpriteMap';
 
 interface IProps {
 	name: string;

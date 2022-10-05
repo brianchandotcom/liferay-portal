@@ -13,8 +13,8 @@ import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
-import MDFClaimBudget from '../../../../../../common/interfaces/mdfClaimBudget';
-import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
+import MDFClaimBudget from '../../../../../../../../common/interfaces/mdfClaimBudget';
+import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
 
 interface IProps {
 	budget: MDFClaimBudget;

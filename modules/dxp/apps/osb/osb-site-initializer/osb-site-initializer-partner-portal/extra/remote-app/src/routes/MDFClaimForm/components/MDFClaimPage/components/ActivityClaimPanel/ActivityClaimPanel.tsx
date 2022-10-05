@@ -16,11 +16,11 @@ import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
 import {useCallback, useState} from 'react';
 
-import PRMForm from '../../../../common/components/PRMForm';
-import PRMFormik from '../../../../common/components/PRMFormik';
-import MDFClaim from '../../../../common/interfaces/mdfClaim';
-import MDFClaimActivity from '../../../../common/interfaces/mdfClaimActivity';
-import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
+import PRMForm from '../../../../../../common/components/PRMForm';
+import PRMFormik from '../../../../../../common/components/PRMFormik';
+import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
+import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
+import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
 import BudgetCard from './components/BudgetCard/BudgetCard';
 import BudgetModal from './components/BudgetModal';
 import PanelBody from './components/PanelBody';

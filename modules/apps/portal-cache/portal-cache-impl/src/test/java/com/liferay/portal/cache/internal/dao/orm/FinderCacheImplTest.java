@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.key.HashCodeHexStringCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -146,7 +145,8 @@ public class FinderCacheImplTest {
 		finderCache.putResult(finderPath, _KEY1, Collections.emptyList());
 
 		Assert.assertSame(
-			Collections.emptyList(), finderCache.getResult(finderPath, _KEY1));
+			Collections.emptyList(),
+			finderCache.getResult(finderPath, _KEY1, null));
 
 		// Not empty list
 
@@ -154,7 +154,7 @@ public class FinderCacheImplTest {
 
 		finderCache.putResult(finderPath, _KEY1, list);
 
-		Assert.assertSame(list, finderCache.getResult(finderPath, _KEY1));
+		Assert.assertSame(list, finderCache.getResult(finderPath, _KEY1, null));
 	}
 
 	@Test
@@ -179,33 +179,23 @@ public class FinderCacheImplTest {
 				"b", new TestBaseModel("b")
 			).build();
 
-		TestBasePersistence testBasePersistence = new TestBasePersistence(map);
-
-		ReflectionTestUtil.setFieldValue(
-			finderCache, "_basePersistenceServiceTrackerMap",
-			ProxyUtil.newProxyInstance(
-				ServiceTrackerMap.class.getClassLoader(),
-				new Class<?>[] {ServiceTrackerMap.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(method.getName(), "getService")) {
-						return testBasePersistence;
-					}
-
-					return null;
-				}));
-
 		List<TestBaseModel> values = new ArrayList<>(map.values());
 
 		finderCache.putResult(_finderPath, _KEY1, values);
 
-		Assert.assertEquals(values, finderCache.getResult(_finderPath, _KEY1));
+		Assert.assertEquals(
+			values,
+			finderCache.getResult(
+				_finderPath, _KEY1, new TestBasePersistence(map)));
 
 		map.put("c", new TestBaseModel("c"));
 
 		finderCache.putResult(
 			_finderPath, _KEY1, new ArrayList<>(map.values()));
 
-		Assert.assertNull(finderCache.getResult(_finderPath, _KEY1));
+		Assert.assertNull(
+			finderCache.getResult(
+				_finderPath, _KEY1, new TestBasePersistence(map)));
 	}
 
 	private FinderCacheImpl _activateFinderCache(MultiVMPool multiVMPool) {
@@ -236,7 +226,7 @@ public class FinderCacheImplTest {
 
 		finderCache.putResult(_finderPath, _KEY1, Collections.emptyList());
 
-		Assert.assertNull(finderCache.getResult(_finderPath, _KEY2));
+		Assert.assertNull(finderCache.getResult(_finderPath, _KEY2, null));
 	}
 
 	private void _assertPutEmptyListValid(MultiVMPool multiVMPool) {
@@ -245,7 +235,8 @@ public class FinderCacheImplTest {
 		finderCache.putResult(_finderPath, _KEY1, Collections.emptyList());
 
 		Assert.assertSame(
-			Collections.emptyList(), finderCache.getResult(_finderPath, _KEY1));
+			Collections.emptyList(),
+			finderCache.getResult(_finderPath, _KEY1, null));
 	}
 
 	private static final String[] _KEY1 = {"home"};

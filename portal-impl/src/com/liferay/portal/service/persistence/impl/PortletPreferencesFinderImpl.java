@@ -211,7 +211,8 @@ public class PortletPreferencesFinderImpl
 
 		List<PortletPreferences> list =
 			(List<PortletPreferences>)FinderCacheUtil.getResult(
-				FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs);
+				FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs,
+				PortletPreferencesUtil.getPersistence());
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PortletPreferences portletPreferences : list) {

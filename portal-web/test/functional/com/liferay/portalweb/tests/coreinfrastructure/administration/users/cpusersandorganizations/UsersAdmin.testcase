@@ -734,7 +734,9 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		User.viewUserInfomationUserGroupsCP(userGroupName = "UG UserGroup Name");
+		User.viewMemberships(
+			assetType = "User Groups",
+			assigneeName = "UG UserGroup Name");
 	}
 
 	@priority = "4"

@@ -2888,6 +2888,15 @@ definition {
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_NAME",
 			value1 = "${assigneeName}");
+
+		if (isSet(roleName)) {
+			var key_assigneeName = "${assigneeName}";
+			var key_roleName = "${roleName}";
+
+			AssertElementPresent(
+				locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_ROLE",
+				value1 = "${roleName}");
+		}
 	}
 
 	macro viewNotPrimary {

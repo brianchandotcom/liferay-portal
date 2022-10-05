@@ -13,7 +13,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {Children, ReactNode, useState} from 'react';
 
 import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
 
@@ -21,14 +21,16 @@ import './index.scss';
 
 interface IProps<T extends CustomItem<number | string> = CustomItem>
 	extends SelectProps {
+	children?: ReactNode;
 	onChange?: (selected: T) => void;
 	options: T[];
 }
 
 export function SingleSelect<
 	T extends CustomItem<number | string> = CustomItem
->({onChange = () => {}, options, ...otherProps}: IProps<T>) {
+>({onChange = () => {}, options, children, ...otherProps}: IProps<T>) {
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
+	const arrayChildren = Children.toArray(children);
 
 	return (
 		<BaseSelect
@@ -38,6 +40,11 @@ export function SingleSelect<
 		>
 			{options.map((option, index) => (
 				<ClayDropDown.Item
+					className={
+						option.type
+							? 'lfr-object__single-select--with-label'
+							: ''
+					}
 					key={index}
 					onClick={() => {
 						setDropdownActive(false);
@@ -49,6 +56,8 @@ export function SingleSelect<
 					{option.description && (
 						<span className="text-small">{option.description}</span>
 					)}
+
+					{arrayChildren?.[index]}
 				</ClayDropDown.Item>
 			))}
 		</BaseSelect>

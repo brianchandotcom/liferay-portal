@@ -12,16 +12,16 @@
  * details.
  */
 
-/// <reference types="react" />
-
+import {ReactNode} from 'react';
 import {CustomItem, SelectProps} from './BaseSelect';
 import './index.scss';
 interface IProps<T extends CustomItem<number | string> = CustomItem>
 	extends SelectProps {
+	children?: ReactNode;
 	onChange?: (selected: T) => void;
 	options: T[];
 }
 export declare function SingleSelect<
 	T extends CustomItem<number | string> = CustomItem
->({onChange, options, ...otherProps}: IProps<T>): JSX.Element;
+>({onChange, options, children, ...otherProps}: IProps<T>): JSX.Element;
 export {};

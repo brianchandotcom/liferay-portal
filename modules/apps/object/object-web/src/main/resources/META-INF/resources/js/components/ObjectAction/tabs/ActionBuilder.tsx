@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayCheckbox, ClaySelect, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	API,
@@ -156,8 +157,9 @@ export default function ActionBuilder({
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
 			API.getNotificationTemplates().then((items) => {
-				const notificationsArray = items.map(({id, name}) => ({
+				const notificationsArray = items.map(({id, name, type}) => ({
 					label: name,
+					type,
 					value: id,
 				}));
 
@@ -519,7 +521,6 @@ export default function ActionBuilder({
 							<SingleSelect<CustomItem<number>>
 								className="lfr-object__action-builder-notification-then"
 								error={errors.objectActionExecutorKey}
-								label={Liferay.Language.get('notification')}
 								onChange={({value}) => {
 									setValues({
 										parameters: {
@@ -531,7 +532,29 @@ export default function ActionBuilder({
 								options={notificationTemplates}
 								required
 								value={notificationTemplateLabel}
-							/>
+							>
+								{notificationTemplates.map(
+									(option) =>
+										Liferay.FeatureFlags['LPS-162133'] &&
+										option.type && (
+											<ClayLabel
+												displayType={
+													option.type === 'email'
+														? 'success'
+														: 'info'
+												}
+											>
+												{option.type === 'email'
+													? Liferay.Language.get(
+															'email'
+													  )
+													: Liferay.Language.get(
+															'user-notification'
+													  )}
+											</ClayLabel>
+										)
+								)}
+							</SingleSelect>
 						)}
 					</div>
 				</Card>

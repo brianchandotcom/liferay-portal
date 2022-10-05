@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleC
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.exception.MessageBoardAttachmentException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -119,6 +120,25 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 
 		return attachmentsFileEntriesCount;
+	}
+
+	@Override
+	public FileEntry getAttachmentsFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		FileEntry fileEntry =
+			PortletFileRepositoryUtil.
+				getPortletFileEntryByExternalReferenceCode(
+					groupId, externalReferenceCode);
+
+		long attachmentsFolderId = getAttachmentsFolderId();
+
+		if (attachmentsFolderId == fileEntry.getFolderId()) {
+			return fileEntry;
+		}
+
+		throw new MessageBoardAttachmentException();
 	}
 
 	@Override

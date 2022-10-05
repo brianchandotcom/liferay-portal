@@ -143,7 +143,11 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		mockLiferayPortletActionRequest.addParameter(
+			"groupId", String.valueOf(_layout.getGroupId()));
 		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter(
+			"plid", String.valueOf(_layout.getPlid()));
 		mockLiferayPortletActionRequest.addParameter(
 			"segmentsEntryId", String.valueOf(segmentsEntryId));
 		mockLiferayPortletActionRequest.setAttribute(

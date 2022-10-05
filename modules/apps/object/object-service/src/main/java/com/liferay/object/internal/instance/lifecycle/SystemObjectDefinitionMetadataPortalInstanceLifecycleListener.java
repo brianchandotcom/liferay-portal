@@ -221,21 +221,21 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build());
+			_bundleContext.registerService(
+				NotificationTermContributor.class,
+				new ObjectDefinitionNotificationTermContributor(
+					objectDefinition, _objectFieldLocalService,
+					_userLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"notification.term.contributor.key",
+					objectDefinition.getClassName()
+				).put(
+					"notification.type.key", objectDefinition.getClassName()
+				).build());
 
 			if (GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-158482"))) {
 
-				_bundleContext.registerService(
-					NotificationTermContributor.class,
-					new ObjectDefinitionNotificationTermContributor(
-						objectDefinition, _objectFieldLocalService,
-						_userLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"notification.term.contributor.key",
-						objectDefinition.getClassName()
-					).put(
-						"notification.type.key", objectDefinition.getClassName()
-					).build());
 				_bundleContext.registerService(
 					NotificationType.class,
 					new ObjectDefinitionNotificationType(objectDefinition),

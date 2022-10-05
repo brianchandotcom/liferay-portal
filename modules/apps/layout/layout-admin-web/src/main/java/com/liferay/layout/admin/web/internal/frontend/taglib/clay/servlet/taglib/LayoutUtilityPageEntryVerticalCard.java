@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -99,14 +98,11 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	public String getSubtitle() {
-		if (Objects.equals(
-				_layoutUtilityPageEntry.getType(),
-				LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE)) {
+		LayoutUtilityPageEntryConstants.Type type =
+			LayoutUtilityPageEntryConstants.parse(
+				_layoutUtilityPageEntry.getType());
 
-			return LanguageUtil.get(_httpServletRequest, "terms-of-use");
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "404");
+		return LanguageUtil.get(_httpServletRequest, type.getLabel());
 	}
 
 	@Override

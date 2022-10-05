@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIGNATURE_PERIOD_TEXT</td>
+	<td>xpath=(//*[contains(@class, 'text-success') and not(contains(@class, 'text-danger'))]/preceding-sibling::*//*[contains(@class, 'cp-radio-card-label')]//*)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIPTION_CHOICE</td>
 	<td>//div[contains(@class, 'cp-radio-card')][${key_position}]</td>
 	<td></td>

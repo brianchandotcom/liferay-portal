@@ -41,7 +41,7 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
 				new StringEntityField(
-					"tagNames", locale -> "assetTagNames.raw")),
+					"keywords", locale -> "assetTagNames.raw")),
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

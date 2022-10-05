@@ -47,6 +47,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -59,38 +60,28 @@ import org.osgi.service.component.annotations.Reference;
 public class ElasticsearchEngineConfigurator
 	implements SearchEngineConfigurator {
 
-	@Override
-	public void afterPropertiesSet() {
-	}
-
-	@Override
-	public void destroy() {
-		_searchEngineHelper.removeSearchEngine(_searchEngineId);
-
-		for (ServiceRegistration<?> serviceRegistration :
-				_destinationServiceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_destinationServiceRegistrations.clear();
-	}
-
-	@Override
-	public void setSearchEngine(
-		String searchEngineId, SearchEngine searchEngine) {
-
-		_searchEngineId = searchEngineId;
-		_searchEngine = searchEngine;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		setSearchEngine(SearchEngineHelper.SYSTEM_ENGINE_ID, _searchEngine);
+		_registerSearchEngineMessageListener(
+			SearchEngineHelper.SYSTEM_ENGINE_ID, _searchEngine,
+			_getSearchReaderDestination(), new SearchReaderMessageListener(),
+			_searchEngine.getIndexSearcher());
 
-		initialize();
+		_registerSearchEngineMessageListener(
+			SearchEngineHelper.SYSTEM_ENGINE_ID, _searchEngine,
+			_getSearchWriterDestination(), new SearchWriterMessageListener(),
+			_searchEngine.getIndexWriter());
+
+		SearchEngineProxyWrapper searchEngineProxyWrapper =
+			new SearchEngineProxyWrapper(
+				_searchEngine, _indexSearcher, _indexWriter);
+
+		_searchEngineHelper.setSearchEngine(
+			SearchEngineHelper.SYSTEM_ENGINE_ID, searchEngineProxyWrapper);
+
+		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
 	}
 
 	protected Destination createSearchReaderDestination(
@@ -152,30 +143,24 @@ public class ElasticsearchEngineConfigurator
 		return _destinationFactory.createDestination(destinationConfiguration);
 	}
 
-	protected void initialize() {
-		_registerSearchEngineMessageListener(
-			_searchEngineId, _searchEngine, _getSearchReaderDestination(),
-			new SearchReaderMessageListener(),
-			_searchEngine.getIndexSearcher());
+	@Deactivate
+	protected void deactivate() {
+		_searchEngineHelper.removeSearchEngine(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
-		_registerSearchEngineMessageListener(
-			_searchEngineId, _searchEngine, _getSearchWriterDestination(),
-			new SearchWriterMessageListener(), _searchEngine.getIndexWriter());
+		for (ServiceRegistration<?> serviceRegistration :
+				_destinationServiceRegistrations) {
 
-		SearchEngineProxyWrapper searchEngineProxyWrapper =
-			new SearchEngineProxyWrapper(
-				_searchEngine, _indexSearcher, _indexWriter);
+			serviceRegistration.unregister();
+		}
 
-		_searchEngineHelper.setSearchEngine(
-			_searchEngineId, searchEngineProxyWrapper);
-
-		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
+		_destinationServiceRegistrations.clear();
 	}
 
 	private Destination _getSearchReaderDestination() {
 		String searchReaderDestinationName =
 			SearchEngineHelperUtil.getSearchReaderDestinationName(
-				_searchEngineId);
+				SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		Destination searchReaderDestination = _messageBus.getDestination(
 			searchReaderDestinationName);
@@ -198,7 +183,7 @@ public class ElasticsearchEngineConfigurator
 	private Destination _getSearchWriterDestination() {
 		String searchWriterDestinationName =
 			SearchEngineHelperUtil.getSearchWriterDestinationName(
-				_searchEngineId);
+				SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		Destination searchWriterDestination = _messageBus.getDestination(
 			searchWriterDestinationName);
@@ -265,7 +250,5 @@ public class ElasticsearchEngineConfigurator
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;
-
-	private String _searchEngineId;
 
 }

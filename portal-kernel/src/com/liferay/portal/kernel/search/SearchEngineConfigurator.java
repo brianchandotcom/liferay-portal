@@ -18,12 +18,4 @@ package com.liferay.portal.kernel.search;
  * @author Brian Wing Shun Chan
  */
 public interface SearchEngineConfigurator {
-
-	public void afterPropertiesSet();
-
-	public void destroy();
-
-	public void setSearchEngine(
-		String searchEngineId, SearchEngine searchEngine);
-
 }

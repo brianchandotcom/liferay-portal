@@ -67,7 +67,7 @@ public class ElasticsearchEngineConfiguratorTest {
 		elasticsearchEngineConfigurator.activate(
 			SystemBundleUtil.getBundleContext());
 
-		elasticsearchEngineConfigurator.destroy();
+		elasticsearchEngineConfigurator.deactivate();
 
 		Mockito.verify(
 			destinationFactory, Mockito.times(2)

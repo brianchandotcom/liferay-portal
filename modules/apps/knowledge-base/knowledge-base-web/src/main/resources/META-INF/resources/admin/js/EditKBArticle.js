@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function _EditKBArticle({namespace}) {
+export default function EditKBArticle({namespace}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);

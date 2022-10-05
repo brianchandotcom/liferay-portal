@@ -25,6 +25,86 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginBottom": "4",
+								"textAlign": ""
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "SpaceAround",
+								"marginBottom": 2,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/evp/organization-form"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "EVP"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Create an Organization"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
 								"borderWidth": "0"
 							},
 							"indexed": true,

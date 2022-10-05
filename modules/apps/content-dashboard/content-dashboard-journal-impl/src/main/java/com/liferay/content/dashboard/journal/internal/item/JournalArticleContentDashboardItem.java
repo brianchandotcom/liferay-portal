@@ -149,11 +149,12 @@ public class JournalArticleContentDashboardItem
 		return ListUtil.toList(
 			journalArticles,
 			journalArticle -> new ContentDashboardItemVersion(
-				null, journalArticle.getStatusDate(),
+				null, null, journalArticle.getStatusDate(),
 				_language.get(
 					themeDisplay.getLocale(),
 					WorkflowConstants.getStatusLabel(
 						journalArticle.getStatus())),
+				null,
 				WorkflowConstants.getStatusStyle(journalArticle.getStatus()),
 				journalArticle.getUserName(),
 				String.valueOf(journalArticle.getVersion())));
@@ -508,11 +509,12 @@ public class JournalArticleContentDashboardItem
 			journalArticle
 		).map(
 			curJournalArticle -> new ContentDashboardItemVersion(
-				null, curJournalArticle.getCreateDate(),
+				null, null, curJournalArticle.getCreateDate(),
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(
 						curJournalArticle.getStatus())),
+				null,
 				WorkflowConstants.getStatusStyle(curJournalArticle.getStatus()),
 				curJournalArticle.getUserName(),
 				String.valueOf(curJournalArticle.getVersion()))

@@ -256,11 +256,11 @@ public class BlogsEntryContentDashboardItem
 
 		return Collections.singletonList(
 			new ContentDashboardItemVersion(
-				null, _blogsEntry.getCreateDate(),
+				null, null, _blogsEntry.getCreateDate(),
 				_language.get(
 					locale,
 					WorkflowConstants.getStatusLabel(_blogsEntry.getStatus())),
-				WorkflowConstants.getStatusStyle(_blogsEntry.getStatus()),
+				null, WorkflowConstants.getStatusStyle(_blogsEntry.getStatus()),
 				_blogsEntry.getUserName(), "1.0"));
 	}
 

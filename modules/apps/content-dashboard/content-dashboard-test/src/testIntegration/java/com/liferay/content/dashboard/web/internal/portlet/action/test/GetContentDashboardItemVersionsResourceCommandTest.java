@@ -216,7 +216,7 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 			for (int i = _VERSIONS_COUNT; i > 0; i--) {
 				contentDashboardItemVersions.add(
 					new ContentDashboardItemVersion(
-						null, null, RandomTestUtil.randomString(),
+						null, null, null, RandomTestUtil.randomString(), null,
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString(), String.valueOf(i)));
 			}

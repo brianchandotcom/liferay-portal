@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
+	property osgi.modules.includes = "frontend-js-walkthrough-sample-web,frontend-editor-ckeditor-sample-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Walkthrough";
@@ -34,7 +34,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given walkthrough enabled site-level") {
-			Walkthrough.setupWalkthroughPage(filename = "walkthrough_configuration_single_page.json");
+			Walkthrough.setupWalkthroughPage(
+				filename = "walkthrough_configuration_single_page.json",
+				siteName = "Site Name");
 		}
 
 		task ("And When navigate to second step") {
@@ -71,9 +73,7 @@ definition {
 
 		task ("Given walkthrough enabled site-level") {
 			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration_multiple_page.json");
-		}
 
-		task ("Given a page width larger than the preview window.") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Walkthrough Page 1");
@@ -82,7 +82,9 @@ definition {
 				groupName = "Site Name",
 				layoutName = "Walkthrough Page 1",
 				widgetName = "JS Walkthrough Sample");
+		}
 
+		task ("Given a page width larger than the preview window.") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Walkthrough Page 2");
@@ -90,7 +92,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Walkthrough Page 2",
-				widgetName = "Documents and Media");
+				widgetName = "CKEditor Sample");
 
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",
@@ -111,7 +113,7 @@ definition {
 		}
 
 		task ("Then popover element is visible when rendered") {
-			AssertElementPresent(
+			AssertVisible(
 				key_title = "Step 2 of 2: Enter Your Name",
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}

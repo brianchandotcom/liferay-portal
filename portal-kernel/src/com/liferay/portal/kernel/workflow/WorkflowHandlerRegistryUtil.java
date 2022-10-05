@@ -156,6 +156,8 @@ public class WorkflowHandlerRegistryUtil {
 		T updatedModel = workflowHandler.updateStatus(
 			model, status, workflowContext);
 
+		workflowContext.remove(WorkflowConstants.CONTEXT_SKIP_MODEL_LISTENER);
+
 		if (workflowDefinitionLink != null) {
 			Map<String, Serializable> tempWorkflowContext = workflowContext;
 

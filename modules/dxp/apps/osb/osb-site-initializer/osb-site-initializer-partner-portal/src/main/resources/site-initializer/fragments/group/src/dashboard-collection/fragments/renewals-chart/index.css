@@ -4,8 +4,8 @@
 }
 
 .renewals-chart-card-height {
-	height: 482px;
 	box-sizing: border-box;
+	height: 482px;
 }
 
 .bb-chart-arcs .bb-chart-arcs-background {
@@ -28,8 +28,8 @@
 }
 
 .bb-area {
-	stroke-width: 0;
 	opacity: 0.2;
+	stroke-width: 0;
 }
 
 .bb-bar {
@@ -107,8 +107,8 @@
 }
 
 .bb-legend-background {
-	opacity: 0.75;
 	fill: white;
+	opacity: 0.75;
 	stroke: lightgray;
 	stroke-width: 1;
 }
@@ -154,17 +154,17 @@
 }
 
 .loading-icon {
-	min-height: 320px;
-	min-height: 320px;
+	align-items: center;
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	min-height: 320px;
+	min-height: 320px;
 	vertical-align: middle;
 }
 
 .bb-circle._expanded_ {
-	stroke-width: 1px;
 	stroke: white;
+	stroke-width: 1px;
 }
 
 .bb-selected-circle {
@@ -185,8 +185,8 @@
 	stroke-width: 0.5px;
 }
 .bb-chart-radars .bb-axis text {
-	font-size: 1.15em;
 	cursor: default;
+	font-size: 1.15em;
 }
 .bb-chart-radars .bb-shapes polygon {
 	fill-opacity: 0.2;
@@ -208,30 +208,30 @@
 }
 
 .bb-tooltip-container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 1060;
 	display: block;
+	left: 0;
 	max-width: 276px;
 	padding: 12px;
+	position: absolute;
+	top: 0;
+	z-index: 1060;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
 		'Segoe UI Emoji', 'Segoe UI Symbol';
-	font-style: normal;
-	font-weight: normal;
-	line-height: 1.5;
-	text-align: start;
-	word-break: normal;
-	word-spacing: normal;
-	white-space: normal;
-	line-break: auto;
-	font-size: 0.875rem;
-	word-wrap: break-word;
-	background-color: #fff;
 	background-clip: padding-box;
+	background-color: #fff;
 	border-radius: 0.3rem;
 	box-shadow: 0 1px 15px -2px rgba(0, 0, 0, 0.2);
+	font-size: 0.875rem;
+	font-style: normal;
+	font-weight: normal;
+	line-break: auto;
+	line-height: 1.5;
+	text-align: start;
+	white-space: normal;
+	word-break: normal;
+	word-spacing: normal;
+	word-wrap: break-word;
 }
 
 .bb-tooltip {
@@ -241,23 +241,23 @@
 
 .bb-tooltip th {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	color: #000;
 	font-size: 14px;
 	padding: 2px 5px;
 	text-align: left;
-	color: #000;
 }
 
 .bb-tooltip td {
+	background-color: #fff;
 	font-size: 13px;
 	padding: 3px 6px;
-	background-color: #fff;
 }
 
 .bb-tooltip td > span {
 	display: inline-block;
-	width: 10px;
 	height: 10px;
 	margin-right: 6px;
+	width: 10px;
 }
 
 .bb-tooltip td.value {
@@ -265,9 +265,9 @@
 }
 
 .bb-tooltip td svg {
-	width: 10px;
 	height: 10px;
 	margin-right: 2px;
+	width: 10px;
 }
 .status-bar-vertical {
 	border-radius: 6px;

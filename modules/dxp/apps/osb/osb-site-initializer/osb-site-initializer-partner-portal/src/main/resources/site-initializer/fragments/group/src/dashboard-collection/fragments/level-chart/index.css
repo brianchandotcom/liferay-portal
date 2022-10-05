@@ -2,14 +2,14 @@
 	font-weight: 500;
 }
 .level-chart-card-height {
-	height: 482px;
 	box-sizing: border-box;
+	height: 482px;
 }
 
 .label-gold {
 	color: #c28b00;
-	font-weight: 600;
 	font-size: 26px;
+	font-weight: 600;
 	line-height: 32px;
 }
 
@@ -45,8 +45,8 @@
 }
 
 .level-progress-bar .progress-bar-item.achieved {
-	border-radius: 4px;
 	background-color: #4b9bff;
+	border-radius: 4px;
 }
 
 .level-progress-bar .legend-item-label {

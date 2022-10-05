@@ -3,8 +3,8 @@
 }
 
 .mdf-chart-card-height {
-	height: 479px;
 	box-sizing: border-box;
+	height: 479px;
 }
 
 .label-chart.pending {
@@ -35,8 +35,8 @@
 }
 
 .mdf-progress-bar .progress-bar-item.approved {
-	border-radius: 4px;
 	background-color: #47c464;
+	border-radius: 4px;
 }
 
 .mdf-progress-bar .legend-item-label {

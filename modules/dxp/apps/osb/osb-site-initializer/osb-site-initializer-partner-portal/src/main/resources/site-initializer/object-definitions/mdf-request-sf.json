@@ -131,7 +131,7 @@
 			"label": {
 				"en_US": "Liferay's User ID"
 			},
-			"name": "liferaysUserID",
+			"name": "liferaysUserId",
 			"required": false,
 			"type": "Integer"
 		}

@@ -14,16 +14,17 @@ import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
 import getDTOFromMDFRequestActivity from '../../../../utils/dto/mdf-request-activity/getDTOFromMDFRequestActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
+import {ResourceName} from '../enum/resourceName';
 
 export default async function createMDFRequestActivities(
-	APIOption: string,
+	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
 	mdfRequestId?: number,
 	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string
 ) {
 	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/${APIOption}`,
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,

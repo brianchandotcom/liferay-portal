@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-export enum resourceName {
+export enum ResourceName {
 	MDF_REQUEST_DXP = 'mdfrequests',
 	MDF_REQUEST_SALESFORCE = 'mdfrequestsfs',
 	ACTIVITY_DXP = 'activities',

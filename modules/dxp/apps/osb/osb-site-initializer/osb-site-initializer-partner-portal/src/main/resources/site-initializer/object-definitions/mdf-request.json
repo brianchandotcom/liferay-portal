@@ -30,7 +30,7 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -39,10 +39,10 @@
 			},
 			"name": "campaignName",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -51,10 +51,10 @@
 			},
 			"name": "overallCampaignDescription",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -63,7 +63,7 @@
 			},
 			"name": "emailAddress",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",

@@ -27,7 +27,7 @@ export function getDTOFromMDFRequest(
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			'; '
 		),
-		liferaysUserID: Number(Liferay.ThemeDisplay.getUserId()),
+		liferaysUserId: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),

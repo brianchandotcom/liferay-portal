@@ -57,14 +57,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {provider{enabled, entityId, idp, keyStoreCredentialPassword, role, signMetadata, sp, sslRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {samlProvider{enabled, entityId, idp, keyStoreCredentialPassword, role, signMetadata, sp, sslRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the SAML Provider configuration.")
-	public SamlProvider provider() throws Exception {
+	public SamlProvider samlProvider() throws Exception {
 		return _applyComponentServiceObjects(
 			_samlProviderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			samlProviderResource -> samlProviderResource.getProvider());
+			samlProviderResource -> samlProviderResource.getSamlProvider());
 	}
 
 	@GraphQLName("SamlProviderPage")

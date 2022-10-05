@@ -44,7 +44,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 	<liferay-frontend:edit-form-body>
 				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
+					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="content-selection">
 						<div class="form-group">
 
 							<%
@@ -74,10 +74,8 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							<aui:button name="selectKBObjectButton" value="select" />
 						</div>
 					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
 
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
+					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="set-and-enable">
 						<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleDescription() %>" />
 
 						<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleRatings() %>" />
@@ -95,11 +93,9 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 						<aui:input label="enable-history" name="preferences--enableKBArticleHistory--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticleHistory() %>" />
 
 						<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbDisplayPortletInstanceConfiguration.enableKBArticlePrint() %>" />
+					</liferay-frontend:fieldset>
 
-						<h4 class="section-header">
-							<liferay-ui:message key="social-bookmarks" />
-						</h4>
-
+					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="social-bookmarks">
 						<liferay-social-bookmarks:bookmarks-settings
 							displayStyle="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 							types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbDisplayPortletInstanceConfiguration.socialBookmarksTypes()) %>"

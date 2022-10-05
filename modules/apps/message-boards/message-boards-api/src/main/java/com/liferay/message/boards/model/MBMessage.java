@@ -77,6 +77,11 @@ public interface MBMessage extends MBMessageModel, PersistedModel, TreeModel {
 	public long getAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentsFileEntryByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getBody(boolean translate);
 
 	public MBCategory getCategory()

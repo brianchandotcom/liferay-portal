@@ -11,6 +11,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
@@ -18,7 +19,7 @@ import APIService from '../util/APIService.es';
 import ConnectToAC from './ConnectToAC.es';
 import SegmentsExperimentsSidebar from './SegmentsExperimentsSidebar.es';
 
-const useExperimentsData = (fetchDataURL, isPanelStateOpen) => {
+const useExperimentsData = (eventTriggered, fetchDataURL, isPanelStateOpen) => {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState({context: null, props: null});
 
@@ -46,16 +47,29 @@ const useExperimentsData = (fetchDataURL, isPanelStateOpen) => {
 	}, [fetchDataURL]);
 
 	useEffect(() => {
-		if (isPanelStateOpen && !componentHasData) {
+		if ((isPanelStateOpen || eventTriggered) && !componentHasData) {
 			fetchExperimentsData();
 		}
-	}, [fetchExperimentsData, componentHasData, isPanelStateOpen]);
+	}, [
+		componentHasData,
+		eventTriggered,
+		fetchExperimentsData,
+		isPanelStateOpen,
+	]);
 
 	return [loading, data];
 };
 
-const SegmentsExperimentsMain = ({fetchDataURL, isPanelStateOpen}) => {
-	const [loading, data] = useExperimentsData(fetchDataURL, isPanelStateOpen);
+const SegmentsExperimentsMain = ({
+	eventTriggered,
+	fetchDataURL,
+	isPanelStateOpen,
+}) => {
+	const [loading, data] = useExperimentsData(
+		eventTriggered,
+		fetchDataURL,
+		isPanelStateOpen
+	);
 
 	const {context, props} = data;
 
@@ -125,6 +139,12 @@ const SegmentsExperimentsMain = ({fetchDataURL, isPanelStateOpen}) => {
 			pathToAssets={props.pathToAssets}
 		/>
 	);
+};
+
+SegmentsExperimentsMain.propTypes = {
+	eventTriggered: PropTypes.bool,
+	fetchDataURL: PropTypes.string,
+	isPanelStateOpen: PropTypes.bool,
 };
 
 export default SegmentsExperimentsMain;

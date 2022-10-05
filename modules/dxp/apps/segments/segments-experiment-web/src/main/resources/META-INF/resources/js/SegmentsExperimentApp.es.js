@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {getSessionValue, setSessionValue} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -37,6 +38,7 @@ const useInitialPanelState = () => {
 
 export default function SegmentsExperimentApp({context, props}) {
 	const [panelState, setPanelState] = useInitialPanelState();
+	const [eventTriggered, setEventTriggered] = useState(false);
 
 	const {namespace} = context;
 	const {segmentExperimentDataURL} = props;
@@ -73,9 +75,24 @@ export default function SegmentsExperimentApp({context, props}) {
 		}
 	}, [segmentsExperimentPanelToggle, setPanelState]);
 
+	useEventListener(
+		'mouseenter',
+		() => setEventTriggered(true),
+		{once: true},
+		segmentsExperimentPanelToggle
+	);
+
+	useEventListener(
+		'focus',
+		() => setEventTriggered(true),
+		{once: true},
+		segmentsExperimentPanelToggle
+	);
+
 	return (
 		<div id={`${namespace}-segments-experiment-root`}>
 			<SegmentsExperimentsMain
+				eventTriggered={eventTriggered}
 				fetchDataURL={segmentExperimentDataURL}
 				isPanelStateOpen={
 					panelState === SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE

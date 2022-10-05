@@ -14,7 +14,6 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
-import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -51,19 +50,6 @@ import javax.servlet.http.HttpServletRequest;
 public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor
 		<RelatedInfoItemCollectionProvider<?, ?>> {
-
-	public static boolean supportsFilters(
-		RelatedInfoItemCollectionProvider<?, ?>
-			relatedInfoItemCollectionProvider) {
-
-		if (relatedInfoItemCollectionProvider instanceof
-				FilteredInfoCollectionProvider) {
-
-			return true;
-		}
-
-		return false;
-	}
 
 	public RelatedInfoItemCollectionProviderItemSelectorViewDescriptor(
 		RelatedInfoItemCollectionProviderItemSelectorCriterion

@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.soy.internal.util;
 
-import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
+import com.liferay.frontend.taglib.soy.internal.template.SoyComponentRenderer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

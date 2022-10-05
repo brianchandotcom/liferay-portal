@@ -437,11 +437,11 @@ public class AccountEntryUserRelLocalServiceImpl
 		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
 
-		if (accountEntry != null) {
-			return accountEntry.getDomainsArray();
+		if ((accountEntry == null) || !accountEntry.isRestrictMembership()) {
+			return new String[0];
 		}
 
-		return new String[0];
+		return accountEntry.getDomainsArray();
 	}
 
 	private void _updateRoles(

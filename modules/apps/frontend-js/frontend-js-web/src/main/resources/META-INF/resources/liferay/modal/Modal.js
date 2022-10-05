@@ -22,30 +22,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
 import delegate from '../delegate/delegate.es';
-import {escapeHTML} from '../util/html_util';
 import navigate from '../util/navigate.es';
-
-const openAlertModal = ({message}) => {
-	if (Liferay.CustomDialogs.enabled) {
-		openModal({
-			bodyHTML: escapeHTML(message),
-			buttons: [
-				{
-					autoFocus: true,
-					label: Liferay.Language.get('ok'),
-					onClick: ({processClose}) => {
-						processClose();
-					},
-				},
-			],
-			center: true,
-			disableHeader: true,
-		});
-	}
-	else {
-		alert(message);
-	}
-};
 
 const Modal = ({
 	bodyComponent,
@@ -314,37 +291,6 @@ const Modal = ({
 			)}
 		</>
 	);
-};
-
-const openConfirmModal = ({message, onConfirm, title}) => {
-	if (Liferay.CustomDialogs.enabled) {
-		openModal({
-			bodyHTML: escapeHTML(message),
-			buttons: [
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('cancel'),
-					type: 'cancel',
-				},
-				{
-					autoFocus: true,
-					label: Liferay.Language.get('ok'),
-					onClick: ({processClose}) => {
-						processClose();
-
-						onConfirm(true);
-					},
-				},
-			],
-			center: true,
-			disableHeader: true,
-			onClose: () => onConfirm(false),
-			title,
-		});
-	}
-	else {
-		onConfirm(confirm(message));
-	}
 };
 
 const openModal = (props) => {
@@ -758,8 +704,6 @@ Modal.propTypes = {
 
 export {
 	Modal,
-	openAlertModal,
-	openConfirmModal,
 	openModal,
 	openPortletModal,
 	openPortletWindow,

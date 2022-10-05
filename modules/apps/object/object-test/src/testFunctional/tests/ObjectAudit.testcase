@@ -647,8 +647,6 @@ definition {
 	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"
 	@priority = "4"
 	test CanViewDefaultResourcesOnSystemObjects {
-		property portal.upstream = "quarantine";
-
 		for (var loops : list "1,2,3,4,5,6") {
 			Audit.openAuditAdmin();
 
@@ -836,8 +834,6 @@ definition {
 	@description = "LPS-149508 - Verify if the default resources has not User ID and User Name on the Audit Portlet"
 	@priority = "4"
 	test CanViewEmptyValuesDefaultOnColumnsOnSystemObjects {
-		property portal.upstream = "quarantine";
-
 		Audit.openAuditAdmin();
 
 		WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");

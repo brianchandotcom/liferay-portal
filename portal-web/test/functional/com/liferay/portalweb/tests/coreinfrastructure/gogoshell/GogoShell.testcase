@@ -161,7 +161,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Site.assignUserSitesCP(
+		User.editUserSiteCP(
 			siteName = "${siteName}",
 			userScreenName = "usersn");
 

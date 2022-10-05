@@ -112,7 +112,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Site.assignUserSitesCP(
+		User.editUserSiteCP(
 			siteName = "Site Test",
 			userScreenName = "usersn_");
 
@@ -258,7 +258,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Site.assignUserSitesCP(
+		User.editUserSiteCP(
 			siteName = "Site Test",
 			userScreenName = "usersn_");
 

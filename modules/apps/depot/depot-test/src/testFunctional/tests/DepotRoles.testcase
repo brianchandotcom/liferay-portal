@@ -164,7 +164,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Site.assignUserSitesCP(
+		User.editUserSiteCP(
 			siteName = "Site Name",
 			userScreenName = "usersn");
 
@@ -709,7 +709,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Site.assignUserSitesCP(
+		User.editUserSiteCP(
 			siteName = "Site Name",
 			userScreenName = "usersn");
 

@@ -374,7 +374,7 @@ definition {
 		task ("Make user a member of new site via User Admin CP") {
 			User.openUsersAdmin();
 
-			Site.assignUserSitesCP(
+			User.editUserSiteCP(
 				siteName = "Site Name",
 				userScreenName = "usersn");
 		}

@@ -120,7 +120,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		Site.assignUserSitesCP(
+		User.editUserSiteCP(
 			siteName = "Liferay",
 			userScreenName = "user1");
 

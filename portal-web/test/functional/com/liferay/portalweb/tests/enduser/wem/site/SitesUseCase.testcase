@@ -282,7 +282,7 @@ definition {
 		task ("Assign the first organization site to user") {
 			User.openUsersAdmin();
 
-			Site.assignUserSitesCP(
+			User.editUserSiteCP(
 				siteName = "Organization Name 1",
 				userScreenName = "usersn");
 		}
@@ -290,7 +290,7 @@ definition {
 		task ("Assign the second organization site to user") {
 			User.openUsersAdmin();
 
-			Site.assignUserSitesCP(
+			User.editUserSiteCP(
 				siteName = "Organization Name 2",
 				userScreenName = "usersn");
 		}
@@ -1047,7 +1047,7 @@ definition {
 		task ("Assign created site to the user") {
 			User.openUsersAdmin();
 
-			Site.assignUserSitesCP(
+			User.editUserSiteCP(
 				siteName = "World Cup - Russia 2018",
 				userScreenName = "usersn");
 		}

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'panel-body')]//p</td>
+	<td>//div[contains(@class,'kb-entity-body')]//p</td>
 	<td></td>
 </tr>
 <tr>

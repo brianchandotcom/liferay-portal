@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccounts = "Avangrid Portals";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -19,6 +20,12 @@ definition {
 
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
 		}
 	}
 

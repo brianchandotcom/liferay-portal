@@ -677,7 +677,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5706. As a system admin i want to be able to create / update and delete a new warehouse"
 	@priority = "3"
-	test CreateAndUpdateNewWarehouse {
+	test CreateEditAndDeleteWarehouseEntry {
 		property portal.acceptance = "false";
 
 		// TODO Review

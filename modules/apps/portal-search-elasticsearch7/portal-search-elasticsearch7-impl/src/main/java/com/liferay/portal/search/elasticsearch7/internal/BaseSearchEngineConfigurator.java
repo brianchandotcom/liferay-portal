@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -64,14 +62,10 @@ public abstract class BaseSearchEngineConfigurator
 
 		searchEngineHelper.removeSearchEngine(_searchEngineId);
 
-		for (List<ServiceRegistration<?>> destinationServiceRegistrations :
-				_destinationServiceRegistrations.values()) {
+		for (ServiceRegistration<?> serviceRegistration :
+				_destinationServiceRegistrations) {
 
-			for (ServiceRegistration<?> serviceRegistration :
-					destinationServiceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
+			serviceRegistration.unregister();
 		}
 
 		_destinationServiceRegistrations.clear();
@@ -226,8 +220,8 @@ public abstract class BaseSearchEngineConfigurator
 			searchReaderDestination = createSearchReaderDestination(
 				searchReaderDestinationName);
 
-			_registerSearchEngineDestination(
-				searchEngineId, searchReaderDestination);
+			_destinationServiceRegistrations.add(
+				registerDestination(searchReaderDestination));
 		}
 
 		return searchReaderDestination;
@@ -247,21 +241,11 @@ public abstract class BaseSearchEngineConfigurator
 			searchWriterDestination = createSearchWriterDestination(
 				searchWriterDestinationName);
 
-			_registerSearchEngineDestination(
-				searchEngineId, searchWriterDestination);
+			_destinationServiceRegistrations.add(
+				registerDestination(searchWriterDestination));
 		}
 
 		return searchWriterDestination;
-	}
-
-	private void _registerSearchEngineDestination(
-		String searchEngineId, Destination destination) {
-
-		List<ServiceRegistration<?>> destinationServiceRegistrations =
-			_destinationServiceRegistrations.computeIfAbsent(
-				searchEngineId, key -> new ArrayList<>());
-
-		destinationServiceRegistrations.add(registerDestination(destination));
 	}
 
 	private void _registerSearchEngineMessageListener(
@@ -286,8 +270,8 @@ public abstract class BaseSearchEngineConfigurator
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSearchEngineConfigurator.class);
 
-	private final Map<String, List<ServiceRegistration<?>>>
-		_destinationServiceRegistrations = new ConcurrentHashMap<>();
+	private final List<ServiceRegistration<?>>
+		_destinationServiceRegistrations = new ArrayList<>();
 	private SearchEngine _searchEngine;
 	private String _searchEngineId;
 

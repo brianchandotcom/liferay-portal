@@ -52,6 +52,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionRe
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -272,7 +273,8 @@ public class CommerceSiteInitializer {
 		Page<Channel> channelsPage = channelResource.getChannelsPage(
 			null,
 			channelResource.toFilter(
-				"siteGroupId eq" + serviceContext.getScopeGroupId()),
+				StringBundler.concat(
+					"siteGroupId eq '", serviceContext.getScopeGroupId(), "'")),
 			null, null);
 
 		Channel existingChannel = channelsPage.fetchFirstItem();

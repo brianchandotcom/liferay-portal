@@ -1104,7 +1104,8 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
 
 		if (GetterUtil.getBoolean(
-				serviceContext.getAttribute("skipModelListener"))) {
+				serviceContext.getAttribute(
+					WorkflowConstants.CONTEXT_SKIP_MODEL_LISTENER))) {
 
 			while (objectEntry instanceof ModelWrapper) {
 				ModelWrapper<ObjectEntry> modelWrapper =
@@ -2506,7 +2507,7 @@ public class ObjectEntryLocalServiceImpl
 		serviceContext.setAttribute(
 			"workflowContext",
 			HashMapBuilder.put(
-				"skipModelListener", true
+				WorkflowConstants.CONTEXT_SKIP_MODEL_LISTENER, true
 			).build());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(

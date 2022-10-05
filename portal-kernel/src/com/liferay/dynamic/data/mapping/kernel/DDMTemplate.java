@@ -118,6 +118,4 @@ public interface DDMTemplate extends StagedGroupedModel {
 
 	public boolean isSmallImage();
 
-	public String toXmlString();
-
 }

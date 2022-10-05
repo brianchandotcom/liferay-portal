@@ -362,11 +362,6 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 		return _expandoColumn.toUnescapedModel();
 	}
 
-	@Override
-	public String toXmlString() {
-		return _expandoColumn.toXmlString();
-	}
-
 	private ExpandoColumn _expandoColumn;
 	private String _expandoTableClassName;
 	private String _expandoTableName;

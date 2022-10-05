@@ -470,11 +470,6 @@ public class DDMStructureImpl implements DDMStructure {
 		_ddmStructure.setUuid(uuid);
 	}
 
-	@Override
-	public String toXmlString() {
-		return _ddmStructure.toXmlString();
-	}
-
 	private final com.liferay.dynamic.data.mapping.model.DDMStructure
 		_ddmStructure;
 

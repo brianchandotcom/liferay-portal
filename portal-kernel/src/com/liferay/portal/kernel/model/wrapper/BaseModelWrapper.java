@@ -181,11 +181,6 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 		return wrap(model.toUnescapedModel());
 	}
 
-	@Override
-	public String toXmlString() {
-		return model.toXmlString();
-	}
-
 	protected abstract T wrap(T model);
 
 	protected final T model;

@@ -1376,11 +1376,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			throw new UnsupportedOperationException();
 		}
 
-		@Override
-		public String toXmlString() {
-			throw new UnsupportedOperationException();
-		}
-
 	}
 
 	private enum ModelPKType {

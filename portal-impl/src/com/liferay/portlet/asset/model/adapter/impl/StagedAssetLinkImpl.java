@@ -382,11 +382,6 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 		return null;
 	}
 
-	@Override
-	public String toXmlString() {
-		return null;
-	}
-
 	protected void populateEntry1Attributes() {
 		if (Validator.isNotNull(_entry1ClassName) &&
 			Validator.isNotNull(_entry1Uuid)) {

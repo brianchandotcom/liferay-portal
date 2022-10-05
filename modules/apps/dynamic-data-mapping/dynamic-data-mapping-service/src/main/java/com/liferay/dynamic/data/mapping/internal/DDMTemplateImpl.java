@@ -390,11 +390,6 @@ public class DDMTemplateImpl implements DDMTemplate {
 		return _ddmTemplate.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		return _ddmTemplate.toXmlString();
-	}
-
 	private final com.liferay.dynamic.data.mapping.model.DDMTemplate
 		_ddmTemplate;
 

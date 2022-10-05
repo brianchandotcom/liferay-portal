@@ -385,9 +385,9 @@ describe('CollectionGeneralPanel', () => {
 		beforeAll(() => {
 			window.Liferay = {
 				...Liferay,
-				CustomDialogs: {}
+				CustomDialogs: {},
 			};
-		})
+		});
 
 		beforeEach(() => {
 			globalConfirm = window.confirm;

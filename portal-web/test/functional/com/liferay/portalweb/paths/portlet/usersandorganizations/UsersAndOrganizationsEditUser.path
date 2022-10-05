@@ -122,6 +122,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MEMBERSHIPS_TABLE_ENTRY_REMOVE_ASSIGNEE_ICON</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_assetType}')]//tr[contains(.,'${key_assigneeName}')]//*[*[name()='svg'][contains(@class,'times-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -185,11 +190,6 @@
 
 <!--USER_GROUPS-->
 
-<tr>
-	<td>USER_GROUPS_TABLE_REMOVE</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_GROUPS_CHOOSE_BUTTON</td>
 	<td>//*[*[normalize-space(text())='${key_userGroupName}']]/..//following-sibling::td/*[contains(.,'Choose')]</td>

@@ -24,9 +24,12 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 
@@ -59,13 +62,22 @@ public class GraphWalkerPortalExecutor {
 			return;
 		}
 
+		ExecutionContext executionContext = pathElement.getExecutionContext();
+
+		ServiceContext serviceContext = executionContext.getServiceContext();
+
+		long companyId = serviceContext.getCompanyId();
+
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		if (waitForCompletion) {
 			NoticeableFuture<?> noticeableFuture =
 				_noticeableExecutorService.submit(
 					() -> {
-						try (SafeCloseable safeCloseable =
+						try (SafeCloseable safeCloseable1 =
+								CompanyThreadLocal.setWithSafeCloseable(
+									companyId);
+							SafeCloseable safeCloseable2 =
 								CTCollectionThreadLocal.
 									setCTCollectionIdWithSafeCloseable(
 										ctCollectionId)) {
@@ -87,7 +99,9 @@ public class GraphWalkerPortalExecutor {
 		else {
 			_noticeableExecutorService.submit(
 				() -> {
-					try (SafeCloseable safeCloseable =
+					try (SafeCloseable safeCloseable1 =
+							CompanyThreadLocal.setWithSafeCloseable(companyId);
+						SafeCloseable safeCloseable2 =
 							CTCollectionThreadLocal.
 								setCTCollectionIdWithSafeCloseable(
 									ctCollectionId)) {

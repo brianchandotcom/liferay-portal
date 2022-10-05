@@ -12,9 +12,9 @@
  * details.
  */
 
-export declare function fetchConnection(token: string): Promise<Response>;
-export declare function deleteConnection(): Promise<Response>;
-export declare function fetchProperties(): Promise<any>;
-export declare function fetchConnectionModal(
-	propertyName: string
-): Promise<unknown>;
+import React from 'react';
+interface IModalProps {
+	observer: any;
+}
+declare const Modal: React.FC<IModalProps>;
+export default Modal;

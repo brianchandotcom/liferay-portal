@@ -111,11 +111,11 @@ public class AdminUtil {
 			user.getReminderQueryAnswer(), screenName, emailAddress, facebookId,
 			openId, languageId, timeZoneId, greeting, comments,
 			contact.getFirstName(), contact.getMiddleName(),
-			contact.getLastName(), contact.getPrefixId(), contact.getSuffixId(),
-			contact.isMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
-			facebookSn, jabberSn, skypeSn, twitterSn, contact.getJobTitle(),
-			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
-			new ServiceContext());
+			contact.getLastName(), contact.getPrefixListTypeId(),
+			contact.getSuffixListTypeId(), contact.isMale(), birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, contact.getJobTitle(), groupIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, new ServiceContext());
 	}
 
 	public static User updateUser(
@@ -152,10 +152,10 @@ public class AdminUtil {
 			user.getReminderQueryAnswer(), screenName, emailAddress, languageId,
 			timeZoneId, greeting, comments, contact.getFirstName(),
 			contact.getMiddleName(), contact.getLastName(),
-			contact.getPrefixId(), contact.getSuffixId(), contact.isMale(),
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-			jabberSn, skypeSn, twitterSn, contact.getJobTitle(), groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds,
+			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
+			contact.isMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn, contact.getJobTitle(),
+			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
 			new ServiceContext());
 	}
 

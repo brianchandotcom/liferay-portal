@@ -18,11 +18,6 @@
 	<td>//a[contains(@id,'selectAccountLink')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ACCOUNTS_TABLE_ACCOUNT_ROLES</td>
-	<td>//div[contains(.,'Accounts')]//td[contains(@class,'lfr-roles-column') and contains(.,'${key_accountRole}')]</td>
-	<td></td>
-</tr>
 
 <!--DETAILS-->
 

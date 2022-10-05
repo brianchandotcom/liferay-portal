@@ -14,10 +14,9 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
+import com.liferay.oauth2.provider.rest.spi.scope.checker.JaxRsResourceScopeChecker;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
-import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -39,9 +38,9 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.framework.BundleContext;
@@ -57,7 +56,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	property = {
-		"ignore.missing.scopes=HEAD", "ignore.missing.scopes=OPTIONS",
 		"osgi.jaxrs.application.select=(|(&(!(oauth2.scope.checker.type=*))(!(oauth2.scopechecker.type=*)))(|(oauth2.scope.checker.type=http.method)(oauth2.scopechecker.type=http.method)))",
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
@@ -77,14 +75,6 @@ public class HttpMethodFeature implements Feature {
 			(Map<String, Object>)configuration.getProperty(
 				"osgi.jaxrs.application.serviceProperties");
 
-		Object ignoreMissingScopesObject = applicationProperties.get(
-			"ignore.missing.scopes");
-
-		if (ignoreMissingScopesObject != null) {
-			_ignoreMissingScopes = new HashSet<>(
-				StringPlus.asList(ignoreMissingScopesObject));
-		}
-
 		context.register((DynamicFeature)this::_collectHttpMethods);
 		context.register(
 			new HttpScopeCheckerContainerRequestFilter(),
@@ -103,9 +93,6 @@ public class HttpMethodFeature implements Feature {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_bundleContext = bundleContext;
-
-		_ignoreMissingScopes = new HashSet<>(
-			StringPlus.asList(properties.get("ignore.missing.scopes")));
 	}
 
 	@Deactivate
@@ -165,10 +152,9 @@ public class HttpMethodFeature implements Feature {
 		HttpMethodFeature.class);
 
 	private BundleContext _bundleContext;
-	private Set<String> _ignoreMissingScopes;
 
-	@Reference
-	private ScopeChecker _scopeChecker;
+	@Reference(target = "(oauth2.scope.checker.type=http.method)")
+	private JaxRsResourceScopeChecker _jaxRsResourceScopeChecker;
 
 	private final Set<String> _scopes = new HashSet<>();
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
@@ -179,19 +165,13 @@ public class HttpMethodFeature implements Feature {
 		public boolean isContainerRequestContextAllowed(
 			ContainerRequestContext containerRequestContext) {
 
-			Request request = containerRequestContext.getRequest();
-
-			String requestMethod = request.getMethod();
-
-			if ((!_scopes.contains(requestMethod) &&
-				 _ignoreMissingScopes.contains(requestMethod)) ||
-				_scopeChecker.checkScope(requestMethod)) {
-
-				return true;
-			}
-
-			return false;
+			return _jaxRsResourceScopeChecker.check(
+				_resourceInfo.getResourceClass(),
+				_resourceInfo.getResourceMethod());
 		}
+
+		@Context
+		private ResourceInfo _resourceInfo;
 
 	}
 

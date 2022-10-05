@@ -132,7 +132,9 @@ public class MBMessageModelDocumentContributor
 			RatingsStats ratingsStats = _ratingsStatsLocalService.fetchStats(
 				MBMessage.class.getName(), mbThread.getRootMessageId());
 
-			document.addNumber("ratingValue", ratingsStats.getTotalScore());
+			if(ratingsStats != null) {
+				document.addNumber("ratingValue", ratingsStats.getTotalScore());
+			}
 
 			document.addKeyword(
 				"tagNames",

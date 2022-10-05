@@ -73,7 +73,8 @@ function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
 	else if (
 		scriptElement.type &&
 		scriptElement.type !== 'text/javascript' &&
-		scriptElement.type !== 'module'
+		scriptElement.type !== 'module' &&
+		scriptElement.type !== 'module-shim'
 	) {
 		runNextScript();
 	}

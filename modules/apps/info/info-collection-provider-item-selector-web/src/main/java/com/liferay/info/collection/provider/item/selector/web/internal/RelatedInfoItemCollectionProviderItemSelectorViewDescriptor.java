@@ -58,11 +58,6 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	}
 
 	@Override
-	public String getDefaultDisplayStyle() {
-		return "icon";
-	}
-
-	@Override
 	public String[] getDisplayViews() {
 		return new String[] {"icon"};
 	}

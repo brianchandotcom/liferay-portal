@@ -21,9 +21,23 @@ export default function _EditKBArticle({namespace}) {
 		`${namespace}contextualSidebarContainer`
 	);
 
-	contextualSidebarButton.addEventListener('click', () => {
+	const contextualSidebarButtonOnClick = () => {
 		contextualSidebarContainer?.classList.toggle(
 			'contextual-sidebar-visible'
 		);
-	});
+	};
+
+	contextualSidebarButton.addEventListener(
+		'click',
+		contextualSidebarButtonOnClick
+	);
+
+	return {
+		dispose() {
+			contextualSidebarButton.removeEventListener(
+				'click',
+				contextualSidebarButtonOnClick
+			);
+		},
+	};
 }

@@ -24,6 +24,8 @@ import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type'
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 async function fetchOptions<T>(url: string) {
@@ -45,7 +47,9 @@ function getLabel<T extends ObjectMap<any>>(item: T, key: keyof T) {
 		return value ? String(value) : '';
 	}
 
-	const label = value[defaultLanguageId] ?? value['name'];
+	const label =
+		(value as LocalizedValue<string>)[defaultLanguageId] ??
+		(value as {[key: string]: string})['name'];
 
 	return label ? String(label) : '';
 }

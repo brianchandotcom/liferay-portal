@@ -437,6 +437,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUMMARY_SHIPPING_COST</td>
+	<td>//div[contains(@class,'shipping-method')]//div[contains(@class,'shipping-cost') and contains(.,'${key_shippingCost}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_SHIPPING_OPTION</td>
+	<td>//div[contains(@class,'shipping-method')]//div[contains(@class,'shipping-description') and contains(.,'${key_shippingOption}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_SUBTOTAL</td>
 	<td>//li[contains(@class,'commerce-subtotal')]//div[contains(@class,'commerce-value') and contains (.,'${key_subtotalValue}')]</td>
 	<td></td>

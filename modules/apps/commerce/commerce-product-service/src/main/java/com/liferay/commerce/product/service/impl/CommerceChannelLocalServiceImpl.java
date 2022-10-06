@@ -16,7 +16,6 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
-import com.liferay.commerce.product.exception.DuplicateCommerceChannelSiteGroupIdException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelTable;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -536,12 +535,6 @@ public class CommerceChannelLocalServiceImpl
 			IndexerRegistryUtil.nullSafeGetIndexer(CommerceChannel.class);
 
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
-	}
-
-	private void _validate(long siteGroupId) throws PortalException {
-		if (fetchCommerceChannelBySiteGroupId(siteGroupId) != null) {
-			throw new DuplicateCommerceChannelSiteGroupIdException();
-		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

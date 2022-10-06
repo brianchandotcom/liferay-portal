@@ -33,10 +33,11 @@ const eventObserver = new EventObserver();
 
 export default function WorkflowInstanceTracker({workflowInstanceId}) {
 	const [currentNodes, setCurrentNodes] = useState([]);
+	const [definitionElements, setDefinitionElements] = useState({});
+	const [filteredCurrentNodes, setFilteredCurrentNodes] = useState([]);
 	const [nodes, setNodes] = useState([]);
 	const [transitions, setTransitions] = useState([]);
 	const [visitedNodes, setVisitedNodes] = useState([]);
-	const [definitionElements, setDefinitionElements] = useState({});
 
 	const languageId = themeDisplay.getLanguageId().replace('_', '-');
 
@@ -62,12 +63,12 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 					}
 				)
 					.then((response) => response.json())
-					.then((data) =>
+					.then((data) => {
 						setDefinitionElements({
 							nodes: data.nodes,
 							transitions: data.transitions,
-						})
-					);
+						});
+					});
 			});
 
 		fetch(
@@ -97,7 +98,11 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 					return {
 						data: {
 							current: isCurrent(currentNodes, node),
-							done: isVisited(visitedNodes, node),
+							done: isVisited(
+								visitedNodes,
+								transitionElements,
+								node
+							),
 							initial: node.type === 'INITIAL_STATE',
 							label: node.label,
 							notifyVisibilityChange: (visible) => () => {
@@ -133,6 +138,18 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [definitionElements, visitedNodes]);
 
+	useEffect(() => {
+		const filteredCurrentNodes = [];
+
+		nodes.map((node) => {
+			if (node.data.current) {
+				filteredCurrentNodes.push(node.id);
+			}
+		});
+
+		setFilteredCurrentNodes(filteredCurrentNodes);
+	}, [nodes]);
+
 	const elements = nodes.concat(transitions);
 
 	const layoutedElements = getLayoutedElements(elements);
@@ -159,7 +176,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 
 					<Controls showInteractive={false} />
 
-					<CurrentNodes nodesNames={currentNodes} />
+					<CurrentNodes nodesNames={filteredCurrentNodes} />
 				</ReactFlowProvider>
 			)}
 		</div>

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -103,8 +102,5 @@ public class CheckGuestCommerceOrdersMessageListener
 
 	@Reference
 	private TriggerFactory _triggerFactory;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -1837,6 +1837,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				kbArticle, serviceContext);
 
 		subscriptionSender.setBody(body);
+		subscriptionSender.setClassName(kbArticle.getModelClassName());
+		subscriptionSender.setClassPK(kbArticle.getClassPK());
 		subscriptionSender.setCompanyId(kbArticle.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", kbArticleContent, false);

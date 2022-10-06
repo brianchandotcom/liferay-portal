@@ -31,7 +31,6 @@ import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission;
 
 import javax.portlet.PortletRequest;
@@ -173,8 +172,5 @@ public class WikiPageAssetRendererFactory
 
 	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
-
-	@Reference
-	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

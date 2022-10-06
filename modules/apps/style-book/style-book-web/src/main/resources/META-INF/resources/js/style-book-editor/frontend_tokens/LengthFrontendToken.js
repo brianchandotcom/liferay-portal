@@ -12,7 +12,7 @@
  * details.
  */
 
-import {LengthField} from '@liferay/layout-content-page-editor-web';
+import {LengthInput} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -22,7 +22,7 @@ export default function LengthFrontendToken({
 	value,
 }) {
 	return (
-		<LengthField
+		<LengthInput
 			field={frontendToken}
 			onValueSelect={(_, value) => onValueSelect(value)}
 			value={value}

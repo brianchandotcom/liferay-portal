@@ -41,9 +41,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>USER_ELLIPSIS</td>
-    <td>//tr[contains(.,'${key_user}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
-    <td></td>
+	<td>USER_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_user}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

@@ -204,10 +204,8 @@ definition {
 		User.searchCP(searchTerm = "1user user1");
 
 		var key_user = "1user user1";
-		
 
 		Click(locator1 = "WorkflowMetricsAllItemsList#USER_ELLIPSIS");
-
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -247,7 +245,6 @@ definition {
 		var key_user = "1user user1";
 
 		Click(locator1 = "WorkflowMetricsAllItemsList#USER_ELLIPSIS");
-
 
 		MenuItem.clickNoError(menuItem = "Deactivate");
 

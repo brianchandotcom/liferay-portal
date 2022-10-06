@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -535,14 +534,9 @@ public class ObjectFieldLocalServiceImpl
 				newObjectField.getObjectDefinitionId());
 
 		if (Validator.isNotNull(newObjectField.getRelationshipType())) {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-158962"))) {
+			_validateObjectRelationshipDeletionType(objectFieldId, required);
 
-				_validateObjectRelationshipDeletionType(
-					objectFieldId, required);
-
-				newObjectField.setRequired(required);
-			}
+			newObjectField.setRequired(required);
 
 			if (!Objects.equals(newObjectField.getDBType(), dbType) ||
 				!Objects.equals(newObjectField.getName(), name)) {
@@ -624,8 +618,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158962")) &&
-			StringUtil.equals(
+		if (StringUtil.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 

@@ -228,7 +228,6 @@ export default function ObjectFieldFormBase({
 
 	const getMandatoryToggleState = () => {
 		if (
-			Liferay.FeatureFlags['LPS-158962'] &&
 			oneToManyRelationship &&
 			oneToManyRelationship.deletionType !== 'disassociate'
 		) {

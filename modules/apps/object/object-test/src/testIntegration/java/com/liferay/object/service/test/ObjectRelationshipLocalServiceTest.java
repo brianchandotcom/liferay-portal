@@ -46,10 +46,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 
@@ -390,11 +388,6 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationshipReverseException.getMessage());
 		}
 
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158962", "true"
-			).build());
-
 		ObjectRelationship objectRelationship2 =
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
@@ -420,11 +413,6 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship2.getObjectFieldId2());
 
 		Assert.assertFalse(objectField.isRequired());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158962", "false"
-			).build());
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

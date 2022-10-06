@@ -17,7 +17,6 @@ package com.liferay.segments.asah.connector.internal.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.constants.SegmentsAsahDestinationNames;
 
@@ -47,8 +46,5 @@ public class IndividualSegmentsMessageListener extends BaseMessageListener {
 
 	@Reference
 	private IndividualSegmentsChecker _individualSegmentsChecker;
-
-	@Reference
-	private Portal _portal;
 
 }

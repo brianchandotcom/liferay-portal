@@ -1308,7 +1308,7 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceList = commercePriceListPersistence.update(
 				commercePriceList);
 
-			_doReindex(commercePriceList.getCommercePriceListId());
+			_reindex(commercePriceList.getCommercePriceListId());
 		}
 	}
 
@@ -1513,13 +1513,6 @@ public class CommercePriceListLocalServiceImpl
 					new HashMap<String, Serializable>());
 			}
 		}
-	}
-
-	private void _doReindex(long commercePriceListId) throws PortalException {
-		Indexer<CommercePriceList> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
-
-		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
 	}
 
 	private List<CommercePriceList> _getCommercePriceLists(Hits hits)
@@ -1753,6 +1746,13 @@ public class CommercePriceListLocalServiceImpl
 		}
 
 		return joinStep.where(predicate);
+	}
+
+	private void _reindex(long commercePriceListId) throws PortalException {
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
 	}
 
 	private BaseModelSearchResult<CommercePriceList> _searchCommercePriceLists(

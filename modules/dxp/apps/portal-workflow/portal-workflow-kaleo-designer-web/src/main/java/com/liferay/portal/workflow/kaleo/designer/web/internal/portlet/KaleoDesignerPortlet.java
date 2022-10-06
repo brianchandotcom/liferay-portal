@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -544,9 +543,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

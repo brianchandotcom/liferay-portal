@@ -37,8 +37,6 @@ import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -285,15 +283,9 @@ public class InfoCollectionProviderLayoutListRetriever
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

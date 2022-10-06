@@ -152,6 +152,7 @@ export function AdvancedSelectField({
 				/>
 			) : field.typeOptions?.showLengthField ? (
 				<LengthInput
+					className="mb-0"
 					field={field}
 					onValueSelect={onValueSelect}
 					showLabel={!field.icon}

@@ -52,8 +52,4 @@ html#{$cadmin-selector} .cadmin .page-editor__select-field {
 	#{$prefix}:focus-within {
 		box-shadow: $btn-focus-box-shadow;
 	}
-
-	.page-editor__length-field.form-group {
-		margin-bottom: 0;
-	}
 }

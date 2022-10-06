@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "SHARE_LINK",
+	"name": "Share Link",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

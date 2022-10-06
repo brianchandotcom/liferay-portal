@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "PUBLISHED_DATE",
+	"name": "Published Date",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

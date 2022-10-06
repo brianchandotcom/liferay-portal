@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "TABS_DESCRIPTION",
+	"name": "Tabs Description",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

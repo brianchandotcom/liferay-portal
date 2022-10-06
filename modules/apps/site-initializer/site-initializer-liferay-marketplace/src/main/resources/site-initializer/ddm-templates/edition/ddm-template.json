@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "EDITION",
+	"name": "Edition",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

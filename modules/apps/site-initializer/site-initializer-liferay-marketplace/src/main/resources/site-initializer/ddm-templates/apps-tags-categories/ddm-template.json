@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "APPS_TAGS_CATEGORIES",
+	"name": "Apps Tags Categories",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

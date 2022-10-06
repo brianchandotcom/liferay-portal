@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "HELP_AND_SUPPORT",
+	"name": "Help and Support",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

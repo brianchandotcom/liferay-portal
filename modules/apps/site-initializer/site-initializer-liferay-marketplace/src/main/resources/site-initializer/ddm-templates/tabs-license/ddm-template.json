@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "TABS_LICENSE",
+	"name": "Tabs License",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

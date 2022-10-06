@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "TABS_RELEASE",
+	"name": "Tabs Release",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

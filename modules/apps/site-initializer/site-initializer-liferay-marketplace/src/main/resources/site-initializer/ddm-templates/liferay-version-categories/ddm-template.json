@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "LIFERAY_VERSION_CATEGORIES",
+	"name": "Liferay Version Categories",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

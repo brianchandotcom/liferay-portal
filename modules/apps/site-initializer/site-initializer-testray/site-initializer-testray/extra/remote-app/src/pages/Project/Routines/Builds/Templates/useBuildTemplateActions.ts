@@ -20,6 +20,7 @@ import useMutate from '../../../../../hooks/useMutate';
 import i18n from '../../../../../i18n';
 import {TestrayBuild, testrayBuildImpl} from '../../../../../services/rest';
 import {Action} from '../../../../../types';
+
 const useBuildTemplateActions = () => {
 	const formModal = useFormModal();
 	const {form} = useFormActions();
@@ -41,24 +42,18 @@ const useBuildTemplateActions = () => {
 			},
 			icon: 'logout',
 			name: (build) =>
-				build.active
-					? i18n.translate('deactivate')
-					: i18n.translate('activate'),
+				i18n.translate(build.active ? 'deactivate' : 'active'),
 			permission: 'UPDATE',
 		},
 		{
 			action: (build, mutate) => {
-				if (build.active) {
-					alert(i18n.sub('x-items-cannot-be-deleted', 'activate'));
-				}
-				else {
-					testrayBuildImpl
-						.remove(build.id)
-						.then(() => removeItemFromList(mutate, build.id))
-						.then(form.onSuccess)
-						.catch(form.onError);
-				}
+				testrayBuildImpl
+					.remove(build.id)
+					.then(() => removeItemFromList(mutate, build.id))
+					.then(form.onSuccess)
+					.catch(form.onError);
 			},
+			hidden: (build) => build.active,
 			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',

@@ -27,7 +27,7 @@ type DropDownActionProps<T = any> = {
 };
 
 const DropDownAction: React.FC<DropDownActionProps> = ({
-	action: {action, disabled, icon, name},
+	action: {action, disabled, hidden, icon, name},
 	item,
 	mutate = () => {},
 	onBeforeClickAction,
@@ -40,6 +40,7 @@ const DropDownAction: React.FC<DropDownActionProps> = ({
 	return (
 		<ClayDropDown.Item
 			disabled={disabled}
+			hidden={typeof hidden === 'function' ? hidden(item) : hidden}
 			onClick={(event) => {
 				event.preventDefault();
 

@@ -58,7 +58,7 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 							"title", parentTitle
 						).build()
 					%>'
-					value='<%= (kbSelectParentDisplayContext.getParentResourceClassNameId() == kbFolderClassNameId) ? "choose-this-folder" : "choose-this-article" %>'
+					value='<%= (kbSelectParentDisplayContext.getParentResourceClassNameId() == kbFolderClassNameId) ? "select-this-folder" : "select-this-article" %>'
 				/>
 			</aui:button-row>
 		</c:if>

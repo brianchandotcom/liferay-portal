@@ -22,7 +22,6 @@ import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.Ind
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
@@ -88,9 +87,6 @@ public class TransitionWorkflowMetricsReindexer
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-
-	@Reference
-	private KaleoTaskLocalService _kaleoTaskLocalService;
 
 	@Reference
 	private KaleoTransitionLocalService _kaleoTransitionLocalService;

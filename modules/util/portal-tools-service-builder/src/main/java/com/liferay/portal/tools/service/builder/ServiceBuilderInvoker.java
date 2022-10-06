@@ -76,8 +76,8 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getSqlSequencesFileName(),
 			serviceBuilderArgs.getTargetEntityName(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDirName()),
-			_getAbsolutePath(baseDir, serviceBuilderArgs.getUADDirName()),
-			true);
+			_getAbsolutePath(baseDir, serviceBuilderArgs.getUADDirName()), true,
+			false);
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {

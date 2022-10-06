@@ -2404,6 +2404,10 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "test");
 
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit User");
+
 		User.editUserInformation(
 			userEmailAddressEdit = "testadmin@liferay.com",
 			userScreenNameEdit = "testscreen");

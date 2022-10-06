@@ -113,6 +113,13 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 			) : (
 				getManageUsersButton()
 			)}
+
+			{!accountSubscriptionGroupsLoading &&
+				!accountSubscriptionGroups?.length && (
+					<p className="mb-0 text-neutral-7 text-paragraph-sm">
+						There is no active product
+					</p>
+				)}
 		</div>
 	);
 };

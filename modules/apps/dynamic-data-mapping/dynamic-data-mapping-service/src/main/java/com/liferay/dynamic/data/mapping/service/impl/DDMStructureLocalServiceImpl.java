@@ -1670,10 +1670,6 @@ public class DDMStructureLocalServiceImpl
 		return _deserializeDDMForm(content, _jsonDDMFormDeserializer);
 	}
 
-	private DDMForm _deserializeXSDDDMForm(String content) {
-		return _deserializeDDMForm(content, _xsdDDMFormDeserializer);
-	}
-
 	private DDMStructure _doUpdateStructure(
 			long userId, long parentStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,

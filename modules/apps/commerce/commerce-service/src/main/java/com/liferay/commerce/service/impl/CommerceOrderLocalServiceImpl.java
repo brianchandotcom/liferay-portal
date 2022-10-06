@@ -1755,25 +1755,6 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
-	private SearchContext _addFacetOrderStatus(
-		boolean negated, int[] orderStatuses, SearchContext searchContext) {
-
-		NegatableMultiValueFacet negatableMultiValueFacet =
-			new NegatableMultiValueFacet(searchContext);
-
-		negatableMultiValueFacet.setFieldName("orderStatus");
-
-		searchContext.addFacet(negatableMultiValueFacet);
-
-		negatableMultiValueFacet.setNegated(negated);
-
-		searchContext.setAttribute(
-			negatableMultiValueFacet.getFieldId(),
-			StringUtil.merge(orderStatuses));
-
-		return searchContext;
-	}
-
 	private SearchContext _buildSearchContext(
 			long companyId, long commerceChannelGroupId,
 			long[] commerceAccountIds, String keywords, boolean negated,
@@ -1808,12 +1789,6 @@ public class CommerceOrderLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
-	}
-
-	private String _getCommerceOrderPaymentContent(
-		CommercePaymentEngineException commercePaymentEngineException) {
-
-		return StackTraceUtil.getStackTrace(commercePaymentEngineException);
 	}
 
 	private List<CommerceOrder> _getCommerceOrders(Hits hits)
@@ -2245,59 +2220,6 @@ public class CommerceOrderLocalServiceImpl
 
 			throw new CommerceOrderAccountLimitException(
 				"The account carts limit was reached");
-		}
-	}
-
-	private void _validateCheckout(CommerceOrder commerceOrder)
-		throws PortalException {
-
-		if (commerceOrder.isDraft() ||
-			(!commerceOrder.isOpen() && !commerceOrder.isSubscription())) {
-
-			throw new CommerceOrderStatusException();
-		}
-
-		if (commerceOrder.isB2B() &&
-			(commerceOrder.getBillingAddressId() <= 0)) {
-
-			throw new CommerceOrderBillingAddressException();
-		}
-
-		CommerceShippingMethod commerceShippingMethod = null;
-
-		long commerceShippingMethodId =
-			commerceOrder.getCommerceShippingMethodId();
-
-		if (commerceShippingMethodId > 0) {
-			commerceShippingMethod =
-				_commerceShippingMethodLocalService.getCommerceShippingMethod(
-					commerceShippingMethodId);
-
-			if (!commerceShippingMethod.isActive()) {
-				commerceShippingMethod = null;
-			}
-			else if (commerceOrder.getShippingAddressId() <= 0) {
-				throw new CommerceOrderShippingAddressException();
-			}
-		}
-
-		int count =
-			_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
-				commerceOrder.getGroupId(), true);
-
-		if ((commerceShippingMethod == null) && (count > 0) &&
-			_commerceShippingHelper.isShippable(commerceOrder)) {
-
-			throw new CommerceOrderShippingMethodException();
-		}
-
-		BigDecimal subtotal = commerceOrder.getSubtotal();
-
-		if (commerceOrder.isSubscriptionOrder() &&
-			Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) &&
-			(subtotal.compareTo(BigDecimal.ZERO) > 0)) {
-
-			throw new CommerceOrderPaymentMethodException();
 		}
 	}
 

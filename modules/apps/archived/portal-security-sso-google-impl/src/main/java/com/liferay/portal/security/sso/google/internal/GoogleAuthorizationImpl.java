@@ -224,8 +224,8 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		String firstName = userinfoplus.getGivenName();
 		String middleName = StringPool.BLANK;
 		String lastName = userinfoplus.getFamilyName();
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = Objects.equals(userinfoplus.getGender(), "male");
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
@@ -240,9 +240,10 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, new ServiceContext());
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail,
+			new ServiceContext());
 
 		user = _userLocalService.updateGoogleUserId(
 			user.getUserId(), googleUserId);

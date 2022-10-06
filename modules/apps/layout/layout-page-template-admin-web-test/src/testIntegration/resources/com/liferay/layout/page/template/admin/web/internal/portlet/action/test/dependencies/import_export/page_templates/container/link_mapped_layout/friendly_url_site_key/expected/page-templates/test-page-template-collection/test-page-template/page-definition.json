@@ -28,7 +28,6 @@
 					},
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"opacity": "100",
 						"textAlign": ""
 					},
 					"indexed": true,

@@ -431,7 +431,7 @@ public class DDMFormInstanceLocalServiceImpl
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
 			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 
-		return _doUpdateFormInstance(
+		return _updateFormInstance(
 			userId, ddmFormInstance.getStructureId(), nameMap, descriptionMap,
 			settingsDDMFormValues, serviceContext, ddmFormInstance);
 	}
@@ -446,7 +446,7 @@ public class DDMFormInstanceLocalServiceImpl
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
 
-		return _doUpdateFormInstance(
+		return _updateFormInstance(
 			serviceContext.getUserId(), ddmStructureId, nameMap, descriptionMap,
 			settingsDDMFormValues, serviceContext, ddmFormInstance);
 	}
@@ -486,7 +486,7 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstanceVersion);
 	}
 
-	private DDMFormInstance _doUpdateFormInstance(
+	private DDMFormInstance _updateFormInstance(
 			long userId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
 			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext,

@@ -100,6 +100,13 @@ public class CompanyThreadLocal {
 	}
 
 	public static SafeCloseable setWithSafeCloseable(Long companyId) {
+		return setWithSafeCloseable(
+			companyId, CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION);
+	}
+
+	public static SafeCloseable setWithSafeCloseable(
+		Long companyId, Long ctCollectionId) {
+
 		long currentCompanyId = _companyId.get();
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 		TimeZone defaultTimeZone = TimeZoneThreadLocal.getDefaultTimeZone();
@@ -107,7 +114,8 @@ public class CompanyThreadLocal {
 		_setCompanyId(companyId);
 
 		SafeCloseable ctCollectionSafeCloseable =
-			CTCollectionThreadLocal.setProductionModeWithSafeCloseable();
+			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+				ctCollectionId);
 
 		return () -> {
 			_companyId.set(currentCompanyId);

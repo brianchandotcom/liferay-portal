@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class CTCollectionThreadLocal {
 
+	public static final long CT_COLLECTION_ID_PRODUCTION = 0;
+
 	public static long getCTCollectionId() {
 		return _ctCollectionId.get();
 	}
 
 	public static boolean isProductionMode() {
-		if (_ctCollectionId.get() == _CT_COLLECTION_ID_PRODUCTION) {
+		if (_ctCollectionId.get() == CT_COLLECTION_ID_PRODUCTION) {
 			return true;
 		}
 
@@ -46,14 +48,14 @@ public class CTCollectionThreadLocal {
 	}
 
 	public static SafeCloseable setProductionModeWithSafeCloseable() {
-		return setCTCollectionIdWithSafeCloseable(_CT_COLLECTION_ID_PRODUCTION);
+		return setCTCollectionIdWithSafeCloseable(CT_COLLECTION_ID_PRODUCTION);
 	}
 
 	private static long _getCTCollectionId() {
 		CTCollectionIdSupplier ctCollectionIdSupplier = _ctCollectionIdSupplier;
 
 		if (ctCollectionIdSupplier == null) {
-			return _CT_COLLECTION_ID_PRODUCTION;
+			return CT_COLLECTION_ID_PRODUCTION;
 		}
 
 		return ctCollectionIdSupplier.getCTCollectionId();
@@ -61,8 +63,6 @@ public class CTCollectionThreadLocal {
 
 	private CTCollectionThreadLocal() {
 	}
-
-	private static final int _CT_COLLECTION_ID_PRODUCTION = 0;
 
 	private static final CentralizedThreadLocal<Long> _ctCollectionId =
 		new CentralizedThreadLocal<>(

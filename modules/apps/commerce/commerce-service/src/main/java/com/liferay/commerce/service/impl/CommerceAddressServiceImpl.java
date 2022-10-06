@@ -387,7 +387,7 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 	private void _checkPermission(CommerceAddress commerceAddress)
 		throws PortalException {
 
-		checkPermission(
+		_checkPermission(
 			commerceAddress.getClassName(), commerceAddress.getClassPK());
 	}
 

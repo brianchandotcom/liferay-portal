@@ -1927,141 +1927,6 @@ public class CommerceOrderLocalServiceImpl
 			});
 	}
 
-	private CommerceOrder _updateAddress(
-			long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			Function<CommerceOrder, Long> commerceAddressIdGetter,
-			BiConsumer<CommerceOrder, Long> commerceAddressIdSetter,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		CommerceAddress commerceAddress = null;
-
-		long commerceAddressId = commerceAddressIdGetter.apply(commerceOrder);
-
-		if (commerceAddressId > 0) {
-			commerceAddress =
-				_commerceAddressLocalService.updateCommerceAddress(
-					commerceAddressId, name, description, street1, street2,
-					street3, city, zip, regionId, countryId, phoneNumber, false,
-					false, serviceContext);
-		}
-		else {
-			commerceAddress = _commerceAddressLocalService.addCommerceAddress(
-				commerceOrder.getModelClassName(),
-				commerceOrder.getCommerceOrderId(), name, description, street1,
-				street2, street3, city, zip, regionId, countryId, phoneNumber,
-				false, false, serviceContext);
-		}
-
-		commerceAddressIdSetter.accept(
-			commerceOrder, commerceAddress.getCommerceAddressId());
-
-		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	private void _validateAccountOrdersLimit(
-			long commerceChannelGroupId, long commerceAccountId)
-		throws PortalException {
-
-		Group group = _groupLocalService.getGroup(commerceChannelGroupId);
-
-		int pendingCommerceOrdersCount =
-			(int)commerceOrderLocalService.getCommerceOrdersCount(
-				group.getCompanyId(), commerceChannelGroupId,
-				new long[] {commerceAccountId}, StringPool.BLANK,
-				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, false);
-
-		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
-			_configurationProvider.getConfiguration(
-				CommerceOrderFieldsConfiguration.class,
-				new GroupServiceSettingsLocator(
-					commerceChannelGroupId,
-					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
-
-		if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() > 0) &&
-			(pendingCommerceOrdersCount >=
-				commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
-
-			throw new CommerceOrderAccountLimitException(
-				"The account carts limit was reached");
-		}
-	}
-
-	private void _validateCheckout(CommerceOrder commerceOrder)
-		throws PortalException {
-
-		if (commerceOrder.isDraft() ||
-			(!commerceOrder.isOpen() && !commerceOrder.isSubscription())) {
-
-			throw new CommerceOrderStatusException();
-		}
-
-		if (commerceOrder.isB2B() &&
-			(commerceOrder.getBillingAddressId() <= 0)) {
-
-			throw new CommerceOrderBillingAddressException();
-		}
-
-		CommerceShippingMethod commerceShippingMethod = null;
-
-		long commerceShippingMethodId =
-			commerceOrder.getCommerceShippingMethodId();
-
-		if (commerceShippingMethodId > 0) {
-			commerceShippingMethod =
-				_commerceShippingMethodLocalService.getCommerceShippingMethod(
-					commerceShippingMethodId);
-
-			if (!commerceShippingMethod.isActive()) {
-				commerceShippingMethod = null;
-			}
-			else if (commerceOrder.getShippingAddressId() <= 0) {
-				throw new CommerceOrderShippingAddressException();
-			}
-		}
-
-		int count =
-			_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
-				commerceOrder.getGroupId(), true);
-
-		if ((commerceShippingMethod == null) && (count > 0) &&
-			_commerceShippingHelper.isShippable(commerceOrder)) {
-
-			throw new CommerceOrderShippingMethodException();
-		}
-
-		BigDecimal subtotal = commerceOrder.getSubtotal();
-
-		if (commerceOrder.isSubscriptionOrder() &&
-			Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) &&
-			(subtotal.compareTo(BigDecimal.ZERO) > 0)) {
-
-			throw new CommerceOrderPaymentMethodException();
-		}
-	}
-
-	private void _validateGuestOrders() throws PortalException {
-		int count = commerceOrderPersistence.countByUserId(
-			UserConstants.USER_ID_DEFAULT);
-
-		if (count >= _commerceOrderConfiguration.guestCartMaxAllowed()) {
-			throw new GuestCartMaxAllowedException();
-		}
-	}
-
-	private void _validatePurchaseOrderNumber(String purchaseOrderNumber)
-		throws PortalException {
-
-		if (Validator.isNull(purchaseOrderNumber)) {
-			throw new CommerceOrderPurchaseOrderNumberException();
-		}
-	}
-
 	private void _setCommerceOrderPrices(
 		CommerceOrder commerceOrder, BigDecimal shippingAmount,
 		BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
@@ -2282,6 +2147,43 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
+	private CommerceOrder _updateAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long regionId, long countryId, String phoneNumber,
+			Function<CommerceOrder, Long> commerceAddressIdGetter,
+			BiConsumer<CommerceOrder, Long> commerceAddressIdSetter,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		CommerceAddress commerceAddress = null;
+
+		long commerceAddressId = commerceAddressIdGetter.apply(commerceOrder);
+
+		if (commerceAddressId > 0) {
+			commerceAddress =
+				_commerceAddressLocalService.updateCommerceAddress(
+					commerceAddressId, name, description, street1, street2,
+					street3, city, zip, regionId, countryId, phoneNumber, false,
+					false, serviceContext);
+		}
+		else {
+			commerceAddress = _commerceAddressLocalService.addCommerceAddress(
+				commerceOrder.getModelClassName(),
+				commerceOrder.getCommerceOrderId(), name, description, street1,
+				street2, street3, city, zip, regionId, countryId, phoneNumber,
+				false, false, serviceContext);
+		}
+
+		commerceAddressIdSetter.accept(
+			commerceOrder, commerceAddress.getCommerceAddressId());
+
+		return commerceOrderPersistence.update(commerceOrder);
+	}
+
 	private void _updateCommerceOrderAddresses(
 			List<CommerceOrder> commerceOrders, long addressId)
 		throws PortalException {
@@ -2315,6 +2217,104 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrder.getPurchaseOrderNumber(), shippingPrice,
 				shippingOptionName, commerceOrder.getSubtotal(),
 				commerceOrder.getTotal(), null);
+		}
+	}
+
+	private void _validateAccountOrdersLimit(
+			long commerceChannelGroupId, long commerceAccountId)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(commerceChannelGroupId);
+
+		int pendingCommerceOrdersCount =
+			(int)commerceOrderLocalService.getCommerceOrdersCount(
+				group.getCompanyId(), commerceChannelGroupId,
+				new long[] {commerceAccountId}, StringPool.BLANK,
+				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, false);
+
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderFieldsConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannelGroupId,
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() > 0) &&
+			(pendingCommerceOrdersCount >=
+				commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
+
+			throw new CommerceOrderAccountLimitException(
+				"The account carts limit was reached");
+		}
+	}
+
+	private void _validateCheckout(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (commerceOrder.isDraft() ||
+			(!commerceOrder.isOpen() && !commerceOrder.isSubscription())) {
+
+			throw new CommerceOrderStatusException();
+		}
+
+		if (commerceOrder.isB2B() &&
+			(commerceOrder.getBillingAddressId() <= 0)) {
+
+			throw new CommerceOrderBillingAddressException();
+		}
+
+		CommerceShippingMethod commerceShippingMethod = null;
+
+		long commerceShippingMethodId =
+			commerceOrder.getCommerceShippingMethodId();
+
+		if (commerceShippingMethodId > 0) {
+			commerceShippingMethod =
+				_commerceShippingMethodLocalService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			if (!commerceShippingMethod.isActive()) {
+				commerceShippingMethod = null;
+			}
+			else if (commerceOrder.getShippingAddressId() <= 0) {
+				throw new CommerceOrderShippingAddressException();
+			}
+		}
+
+		int count =
+			_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+				commerceOrder.getGroupId(), true);
+
+		if ((commerceShippingMethod == null) && (count > 0) &&
+			_commerceShippingHelper.isShippable(commerceOrder)) {
+
+			throw new CommerceOrderShippingMethodException();
+		}
+
+		BigDecimal subtotal = commerceOrder.getSubtotal();
+
+		if (commerceOrder.isSubscriptionOrder() &&
+			Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) &&
+			(subtotal.compareTo(BigDecimal.ZERO) > 0)) {
+
+			throw new CommerceOrderPaymentMethodException();
+		}
+	}
+
+	private void _validateGuestOrders() throws PortalException {
+		int count = commerceOrderPersistence.countByUserId(
+			UserConstants.USER_ID_DEFAULT);
+
+		if (count >= _commerceOrderConfiguration.guestCartMaxAllowed()) {
+			throw new GuestCartMaxAllowedException();
+		}
+	}
+
+	private void _validatePurchaseOrderNumber(String purchaseOrderNumber)
+		throws PortalException {
+
+		if (Validator.isNull(purchaseOrderNumber)) {
+			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
 

@@ -348,24 +348,6 @@ public class CommerceQualifierEntryLocalServiceImpl
 				sourceCommerceQualifierMetadata.getKeywordsColumn()));
 	}
 
-	private void _reindexSource(long sourceClassNameId, long sourceClassPK)
-		throws PortalException {
-
-		ClassName sourceClassName = _classNameLocalService.getClassName(
-			sourceClassNameId);
-
-		_reindexSource(sourceClassName.getClassName(), sourceClassPK);
-	}
-
-	private void _reindexSource(String sourceClassName, long sourceClassPK)
-		throws PortalException {
-
-		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			sourceClassName);
-
-		indexer.reindex(sourceClassName, sourceClassPK);
-	}
-
 	private GroupByStep _getGroupByStep(
 		long companyId, FromStep fromStep,
 		CommerceQualifierMetadata sourceCommerceQualifierMetadata,
@@ -590,6 +572,24 @@ public class CommerceQualifierEntryLocalServiceImpl
 		).or(
 			primaryKeyColumn.isNull()
 		).withParentheses();
+	}
+
+	private void _reindexSource(long sourceClassNameId, long sourceClassPK)
+		throws PortalException {
+
+		ClassName sourceClassName = _classNameLocalService.getClassName(
+			sourceClassNameId);
+
+		_reindexSource(sourceClassName.getClassName(), sourceClassPK);
+	}
+
+	private void _reindexSource(String sourceClassName, long sourceClassPK)
+		throws PortalException {
+
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			sourceClassName);
+
+		indexer.reindex(sourceClassName, sourceClassPK);
 	}
 
 	@Reference

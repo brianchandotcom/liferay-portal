@@ -1184,6 +1184,20 @@ public class CommerceOrderItemLocalServiceImpl
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
+	protected void validateParentCommerceOrderId(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		if (commerceOrderItem.getParentCommerceOrderItemId() != 0) {
+			throw new ProductBundleException(
+				StringBundler.concat(
+					"Operation not allowed on an item ",
+					commerceOrderItem.getCommerceOrderItemId(),
+					" because it is a child commerce order item ",
+					commerceOrderItem.getParentCommerceOrderItemId()));
+		}
+	}
+
 	private SearchContext _buildSearchContext(
 			long commerceOrderId, Long parentCommerceOrderItemId, int start,
 			int end, Sort sort)
@@ -1218,129 +1232,6 @@ public class CommerceOrderItemLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
-	}
-
-	private List<CommerceOrderItem> _getCommerceOrderItems(Hits hits)
-		throws PortalException {
-
-		List<Document> documents = hits.toList();
-
-		List<CommerceOrderItem> commerceOrderItems = new ArrayList<>(
-			documents.size());
-
-		for (Document document : documents) {
-			long commerceOrderItemId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			CommerceOrderItem commerceOrderItem = fetchCommerceOrderItem(
-				commerceOrderItemId);
-
-			if (commerceOrderItem == null) {
-				commerceOrderItems = null;
-			}
-			else if (commerceOrderItems != null) {
-				commerceOrderItems.add(commerceOrderItem);
-			}
-		}
-
-		return commerceOrderItems;
-	}
-
-	private BaseModelSearchResult<CommerceOrderItem> _searchCommerceOrderItems(
-			SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommerceOrderItem> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderItem.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CommerceOrderItem> commerceOrderItems = _getCommerceOrderItems(
-				hits);
-
-			if (commerceOrderItems != null) {
-				return new BaseModelSearchResult<>(
-					commerceOrderItems, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	private CommerceOrder _updateWorkflow(
-			CommerceOrder commerceOrder, ServiceContext serviceContext)
-		throws PortalException {
-
-		WorkflowDefinitionLink workflowDefinitionLink =
-			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
-				commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
-				CommerceOrder.class.getName(), 0,
-				CommerceOrderConstants.TYPE_PK_APPROVAL, true);
-
-		if ((workflowDefinitionLink != null) && commerceOrder.isApproved()) {
-			return _commerceOrderLocalService.updateStatus(
-				serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext,
-				Collections.emptyMap());
-		}
-
-		return commerceOrder;
-	}
-
-	private void _validate(
-			Locale locale, CommerceOrder commerceOrder,
-			CPDefinition cpDefinition, CPInstance cpInstance, int quantity,
-			boolean validateOrder)
-		throws PortalException {
-
-		if (commerceOrder.getUserId() == 0) {
-			int count = commerceOrderItemPersistence.countByCommerceOrderId(
-				commerceOrder.getCommerceOrderId());
-
-			if (count >=
-					_commerceOrderConfiguration.guestCartItemMaxAllowed()) {
-
-				throw new GuestCartItemMaxAllowedException();
-			}
-		}
-
-		if ((cpDefinition != null) && (cpInstance != null) &&
-			(cpDefinition.getCPDefinitionId() !=
-				cpInstance.getCPDefinitionId())) {
-
-			throw new NoSuchCPInstanceException(
-				StringBundler.concat(
-					"CPInstance ", cpInstance.getCPInstanceId(),
-					" belongs to a different CPDefinition than ",
-					cpDefinition.getCPDefinitionId()));
-		}
-
-		if (!ExportImportThreadLocal.isImportInProcess() && validateOrder) {
-			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
-				_commerceOrderValidatorRegistry.validate(
-					locale, commerceOrder, cpInstance, quantity);
-
-			if (!commerceCartValidatorResults.isEmpty()) {
-				throw new CommerceOrderValidatorException(
-					commerceCartValidatorResults);
-			}
-		}
-	}
-
-	protected void validateParentCommerceOrderId(
-			CommerceOrderItem commerceOrderItem)
-		throws PortalException {
-
-		if (commerceOrderItem.getParentCommerceOrderItemId() != 0) {
-			throw new ProductBundleException(
-				StringBundler.concat(
-					"Operation not allowed on an item ",
-					commerceOrderItem.getCommerceOrderItemId(),
-					" because it is a child commerce order item ",
-					commerceOrderItem.getParentCommerceOrderItemId()));
-		}
 	}
 
 	private CommerceOrderItem _createCommerceOrderItem(
@@ -1470,6 +1361,32 @@ public class CommerceOrderItemLocalServiceImpl
 			ServiceContextThreadLocal.getServiceContext());
 
 		return commerceOrderItem;
+	}
+
+	private List<CommerceOrderItem> _getCommerceOrderItems(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceOrderItem> commerceOrderItems = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commerceOrderItemId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceOrderItem commerceOrderItem = fetchCommerceOrderItem(
+				commerceOrderItemId);
+
+			if (commerceOrderItem == null) {
+				commerceOrderItems = null;
+			}
+			else if (commerceOrderItems != null) {
+				commerceOrderItems.add(commerceOrderItem);
+			}
+		}
+
+		return commerceOrderItems;
 	}
 
 	private CommerceProductPrice _getCommerceProductPrice(
@@ -1863,6 +1780,29 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private BaseModelSearchResult<CommerceOrderItem> _searchCommerceOrderItems(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceOrderItem> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderItem.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceOrderItem> commerceOrderItems = _getCommerceOrderItems(
+				hits);
+
+			if (commerceOrderItems != null) {
+				return new BaseModelSearchResult<>(
+					commerceOrderItems, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	private void _setCommerceOrderItemDiscountValue(
@@ -2281,6 +2221,66 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
+	private CommerceOrder _updateWorkflow(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
+		throws PortalException {
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+				commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+				CommerceOrder.class.getName(), 0,
+				CommerceOrderConstants.TYPE_PK_APPROVAL, true);
+
+		if ((workflowDefinitionLink != null) && commerceOrder.isApproved()) {
+			return _commerceOrderLocalService.updateStatus(
+				serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
+				WorkflowConstants.STATUS_DRAFT, serviceContext,
+				Collections.emptyMap());
+		}
+
+		return commerceOrder;
+	}
+
+	private void _validate(
+			Locale locale, CommerceOrder commerceOrder,
+			CPDefinition cpDefinition, CPInstance cpInstance, int quantity,
+			boolean validateOrder)
+		throws PortalException {
+
+		if (commerceOrder.getUserId() == 0) {
+			int count = commerceOrderItemPersistence.countByCommerceOrderId(
+				commerceOrder.getCommerceOrderId());
+
+			if (count >=
+					_commerceOrderConfiguration.guestCartItemMaxAllowed()) {
+
+				throw new GuestCartItemMaxAllowedException();
+			}
+		}
+
+		if ((cpDefinition != null) && (cpInstance != null) &&
+			(cpDefinition.getCPDefinitionId() !=
+				cpInstance.getCPDefinitionId())) {
+
+			throw new NoSuchCPInstanceException(
+				StringBundler.concat(
+					"CPInstance ", cpInstance.getCPInstanceId(),
+					" belongs to a different CPDefinition than ",
+					cpDefinition.getCPDefinitionId()));
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess() && validateOrder) {
+			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
+				_commerceOrderValidatorRegistry.validate(
+					locale, commerceOrder, cpInstance, quantity);
+
+			if (!commerceCartValidatorResults.isEmpty()) {
+				throw new CommerceOrderValidatorException(
+					commerceCartValidatorResults);
+			}
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

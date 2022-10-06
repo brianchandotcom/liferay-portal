@@ -167,22 +167,6 @@ public class CPDefinitionVirtualSettingServiceImpl
 				serviceContext);
 	}
 
-	private void _checkPermission(
-			String className, long classPK, String action)
-		throws PortalException {
-
-		long cpDefinitionId = classPK;
-
-		if (className.equals(CPInstance.class.getName())) {
-			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-				classPK);
-
-			cpDefinitionId = cpInstance.getCPDefinitionId();
-		}
-
-		_checkCommerceCatalog(cpDefinitionId, action);
-	}
-
 	@Reference
 	protected CommerceCatalogLocalService commerceCatalogLocalService;
 
@@ -209,6 +193,21 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 		_commerceCatalogModelResourcePermission.check(
 			getPermissionChecker(), commerceCatalog, actionId);
+	}
+
+	private void _checkPermission(String className, long classPK, String action)
+		throws PortalException {
+
+		long cpDefinitionId = classPK;
+
+		if (className.equals(CPInstance.class.getName())) {
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				classPK);
+
+			cpDefinitionId = cpInstance.getCPDefinitionId();
+		}
+
+		_checkCommerceCatalog(cpDefinitionId, action);
 	}
 
 	@Reference(

@@ -553,6 +553,25 @@ public class CommerceAddressLocalServiceImpl
 		return CommerceAddressImpl.fromAddress(address);
 	}
 
+	private OrderByComparator<Address> _getAddressOrderByComparator(
+		OrderByComparator<CommerceAddress> orderByComparator) {
+
+		if (orderByComparator == null) {
+			return null;
+		}
+
+		return new OrderByComparator<Address>() {
+
+			@Override
+			public int compare(Address address1, Address address2) {
+				return orderByComparator.compare(
+					CommerceAddressImpl.fromAddress(address1),
+					CommerceAddressImpl.fromAddress(address2));
+			}
+
+		};
+	}
+
 	private void _validate(
 			String name, String street1, String city, String zip,
 			long countryId, int type)
@@ -581,25 +600,6 @@ public class CommerceAddressLocalServiceImpl
 		if (!ArrayUtil.contains(CommerceAddressConstants.ADDRESS_TYPES, type)) {
 			throw new CommerceAddressTypeException();
 		}
-	}
-
-	private OrderByComparator<Address> _getAddressOrderByComparator(
-		OrderByComparator<CommerceAddress> orderByComparator) {
-
-		if (orderByComparator == null) {
-			return null;
-		}
-
-		return new OrderByComparator<Address>() {
-
-			@Override
-			public int compare(Address address1, Address address2) {
-				return orderByComparator.compare(
-					CommerceAddressImpl.fromAddress(address1),
-					CommerceAddressImpl.fromAddress(address2));
-			}
-
-		};
 	}
 
 	@ServiceReference(type = AddressLocalService.class)

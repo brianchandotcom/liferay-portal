@@ -717,6 +717,50 @@ public class CommerceShipmentLocalServiceImpl
 		return commerceShipmentPersistence.update(commerceShipment);
 	}
 
+	@Transactional(
+		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
+	)
+	protected void sendShipmentStatusMessage(
+		CommerceShipment commerceShipment) {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Message message = new Message();
+
+				message.setPayload(
+					JSONUtil.put(
+						"commerceShipment",
+						() -> {
+							DTOConverter<?, ?> dtoConverter =
+								_dtoConverterRegistry.getDTOConverter(
+									CommerceShipment.class.getName());
+
+							Object object = dtoConverter.toDTO(
+								new DefaultDTOConverterContext(
+									_dtoConverterRegistry,
+									commerceShipment.getCommerceShipmentId(),
+									LocaleUtil.getSiteDefault(), null, null));
+
+							return JSONFactoryUtil.createJSONObject(
+								JSONFactoryUtil.looseSerializeDeep(object));
+						}
+					).put(
+						"commerceShipmentId",
+						commerceShipment.getCommerceShipmentId()
+					));
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.COMMERCE_SHIPMENT_STATUS, message);
+
+				return null;
+			});
+	}
+
+	protected int[] messageShipmentStatuses = {
+		CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
+		CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED
+	};
+
 	private SearchContext _buildSearchContext(
 			long companyId, long[] groupIds, long[] commerceAccountIds,
 			String keywords, boolean negated, int[] shipmentStatuses, int start,
@@ -783,43 +827,21 @@ public class CommerceShipmentLocalServiceImpl
 		return commerceShipments;
 	}
 
-	@Transactional(
-		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
-	)
-	protected void sendShipmentStatusMessage(
-		CommerceShipment commerceShipment) {
+	private Date _getDate(
+			int dateMonth, int dateDay, int dateYear, int dateHour,
+			int dateMinute, TimeZone timeZone,
+			Class<? extends PortalException> clazz)
+		throws PortalException {
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				Message message = new Message();
+		if ((dateMonth == 0) && (dateDay == 0) && (dateYear == 0) &&
+			(dateHour == 0) && (dateMinute == 0)) {
 
-				message.setPayload(
-					JSONUtil.put(
-						"commerceShipment",
-						() -> {
-							DTOConverter<?, ?> dtoConverter =
-								_dtoConverterRegistry.getDTOConverter(
-									CommerceShipment.class.getName());
+			return null;
+		}
 
-							Object object = dtoConverter.toDTO(
-								new DefaultDTOConverterContext(
-									_dtoConverterRegistry,
-									commerceShipment.getCommerceShipmentId(),
-									LocaleUtil.getSiteDefault(), null, null));
-
-							return JSONFactoryUtil.createJSONObject(
-								JSONFactoryUtil.looseSerializeDeep(object));
-						}
-					).put(
-						"commerceShipmentId",
-						commerceShipment.getCommerceShipmentId()
-					));
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.COMMERCE_SHIPMENT_STATUS, message);
-
-				return null;
-			});
+		return PortalUtil.getDate(
+			dateMonth, dateDay, dateYear, dateHour, dateMinute, timeZone,
+			clazz);
 	}
 
 	private CommerceAddress _updateCommerceShipmentAddress(
@@ -853,28 +875,6 @@ public class CommerceShipmentLocalServiceImpl
 			phoneNumber,
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
 			serviceContext);
-	}
-
-	protected int[] messageShipmentStatuses = {
-		CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
-		CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED
-	};
-
-	private Date _getDate(
-			int dateMonth, int dateDay, int dateYear, int dateHour,
-			int dateMinute, TimeZone timeZone,
-			Class<? extends PortalException> clazz)
-		throws PortalException {
-
-		if ((dateMonth == 0) && (dateDay == 0) && (dateYear == 0) &&
-			(dateHour == 0) && (dateMinute == 0)) {
-
-			return null;
-		}
-
-		return PortalUtil.getDate(
-			dateMonth, dateDay, dateYear, dateHour, dateMinute, timeZone,
-			clazz);
 	}
 
 	private void _validateExternalReferenceCode(

@@ -247,6 +247,15 @@
 			height: 24px;
 			width: 44px;
 
+			&.disabled {
+				cursor: not-allowed;
+
+				& ~ .toggle-switch-bar {
+					cursor: not-allowed;
+					opacity: 0.4;
+				}
+			}
+
 			&:checked ~ .toggle-switch-bar:after {
 				left: 24px;
 			}

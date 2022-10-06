@@ -702,7 +702,7 @@ public class DDLRecordSetLocalServiceImpl
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
-		return _doUpdateRecordSet(
+		return _updateRecordSet(
 			serviceContext.getUserId(), ddmStructureId, nameMap, descriptionMap,
 			minDisplayRows, serviceContext, recordSet);
 	}
@@ -734,7 +734,7 @@ public class DDLRecordSetLocalServiceImpl
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
 			groupId, recordSetKey);
 
-		return _doUpdateRecordSet(
+		return _updateRecordSet(
 			serviceContext.getUserId(), ddmStructureId, nameMap, descriptionMap,
 			minDisplayRows, serviceContext, recordSet);
 	}
@@ -802,7 +802,7 @@ public class DDLRecordSetLocalServiceImpl
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	private DDLRecordSet _doUpdateRecordSet(
+	private DDLRecordSet _updateRecordSet(
 			long userId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
 			ServiceContext serviceContext, DDLRecordSet recordSet)

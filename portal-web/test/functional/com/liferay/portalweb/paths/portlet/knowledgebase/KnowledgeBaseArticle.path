@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>HTML_BOLD_CONTENT</td>
-	<td>//div[contains(@class,'panel-body')]//b</td>
+	<td>//div[contains(@class,'kb-article-title')]//b</td>
 	<td></td>
 </tr>
 <tr>

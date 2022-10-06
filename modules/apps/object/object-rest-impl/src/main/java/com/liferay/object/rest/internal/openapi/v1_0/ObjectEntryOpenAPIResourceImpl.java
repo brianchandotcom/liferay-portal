@@ -61,10 +61,10 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Override
 	public Map<String, Field> getFields(
-			long objectDefinitionId, UriInfo uriInfo)
+			ObjectDefinition objectDefinition, UriInfo uriInfo)
 		throws Exception {
 
-		Response response = getOpenAPI(objectDefinitionId, "json", uriInfo);
+		Response response = getOpenAPI(objectDefinition, "json", uriInfo);
 
 		OpenAPI openAPI = (OpenAPI)response.getEntity();
 
@@ -126,11 +126,10 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Override
 	public Response getOpenAPI(
-			long objectDefinitionId, String type, UriInfo uriInfo)
+			ObjectDefinition objectDefinition, String type, UriInfo uriInfo)
 		throws Exception {
 
-		_objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
-			objectDefinitionId);
+		_objectDefinition = objectDefinition;
 
 		return _openAPIResource.getOpenAPI(
 			new ObjectEntryOpenAPIContributor(

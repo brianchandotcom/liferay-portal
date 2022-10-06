@@ -68,7 +68,7 @@ public class FieldProvider {
 				companyId, objectDefinitionName);
 
 		Map<String, Field> fields = _objectEntryOpenAPIResource.getFields(
-			objectDefinition.getObjectDefinitionId(), uriInfo);
+			objectDefinition, uriInfo);
 
 		return new ArrayList<>(fields.values());
 	}

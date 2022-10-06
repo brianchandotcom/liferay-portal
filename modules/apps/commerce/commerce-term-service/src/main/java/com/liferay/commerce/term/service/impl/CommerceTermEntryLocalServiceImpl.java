@@ -348,10 +348,10 @@ public class CommerceTermEntryLocalServiceImpl
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, accountEntryId, type, keywords, start, end, sort);
 
-		return searchCommerceTermEntries(searchContext);
+		return _searchCommerceTermEntries(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -487,7 +487,7 @@ public class CommerceTermEntryLocalServiceImpl
 		return commerceTermEntryPersistence.update(commerceTermEntry);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long accountEntryId, String type, String keywords,
 		int start, int end, Sort sort) {
 
@@ -522,7 +522,7 @@ public class CommerceTermEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceTermEntry> getCommerceTermEntries(Hits hits)
+	private List<CommerceTermEntry> _getCommerceTermEntries(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -556,8 +556,8 @@ public class CommerceTermEntryLocalServiceImpl
 		return commerceTermEntries;
 	}
 
-	protected BaseModelSearchResult<CommerceTermEntry>
-			searchCommerceTermEntries(SearchContext searchContext)
+	private BaseModelSearchResult<CommerceTermEntry>
+			_searchCommerceTermEntries(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CommerceTermEntry> indexer =
@@ -567,7 +567,7 @@ public class CommerceTermEntryLocalServiceImpl
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			List<CommerceTermEntry> commerceTermEntries =
-				getCommerceTermEntries(hits);
+				_getCommerceTermEntries(hits);
 
 			if (commerceTermEntries != null) {
 				return new BaseModelSearchResult<>(

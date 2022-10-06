@@ -62,10 +62,10 @@ public class CommerceWishListLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 
 		if (user.isDefaultUser()) {
-			validateGuestWishLists();
+			_validateGuestWishLists();
 		}
 
-		validate(0, groupId, user.getUserId(), name, defaultWishList);
+		_validate(0, groupId, user.getUserId(), name, defaultWishList);
 
 		long commerceWishListId = counterLocalService.increment();
 
@@ -222,7 +222,7 @@ public class CommerceWishListLocalServiceImpl
 		}
 
 		if (guestCommerceWishList != null) {
-			mergeCommerceWishList(
+			_mergeCommerceWishList(
 				guestCommerceWishList.getCommerceWishListId(),
 				commerceWishList.getCommerceWishListId(), serviceContext);
 		}
@@ -238,7 +238,7 @@ public class CommerceWishListLocalServiceImpl
 		CommerceWishList commerceWishList =
 			commerceWishListPersistence.findByPrimaryKey(commerceWishListId);
 
-		validate(
+		_validate(
 			commerceWishList.getCommerceWishListId(),
 			commerceWishList.getGroupId(), commerceWishList.getUserId(), name,
 			defaultWishList);
@@ -249,11 +249,11 @@ public class CommerceWishListLocalServiceImpl
 		return commerceWishListPersistence.update(commerceWishList);
 	}
 
-	protected String getCookieName(long groupId) {
+	private String _getCookieName(long groupId) {
 		return CommerceWishList.class.getName() + StringPool.POUND + groupId;
 	}
 
-	protected void mergeCommerceWishList(
+	private void _mergeCommerceWishList(
 			long fromCommerceWishListId, long toCommerceWishListId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -308,7 +308,7 @@ public class CommerceWishListLocalServiceImpl
 			fromCommerceWishListId);
 	}
 
-	protected void validate(
+	private void _validate(
 			long commerceWishListId, long groupId, long userId, String name,
 			boolean defaultWishList)
 		throws PortalException {
@@ -333,7 +333,7 @@ public class CommerceWishListLocalServiceImpl
 		}
 	}
 
-	protected void validateGuestWishLists() throws PortalException {
+	private void _validateGuestWishLists() throws PortalException {
 		int count = commerceWishListPersistence.countByUserId(
 			UserConstants.USER_ID_DEFAULT);
 

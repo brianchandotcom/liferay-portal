@@ -64,7 +64,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(cpTaxCategoryId, commerceTaxMethodId);
+		_validate(cpTaxCategoryId, commerceTaxMethodId);
 
 		long commerceTaxFixedRateId = counterLocalService.increment();
 
@@ -145,7 +145,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		return commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
 	}
 
-	protected void validate(long cpTaxCategoryId, long commerceTaxMethodId)
+	private void _validate(long cpTaxCategoryId, long commerceTaxMethodId)
 		throws PortalException {
 
 		int count = commerceTaxFixedRatePersistence.countByC_C(

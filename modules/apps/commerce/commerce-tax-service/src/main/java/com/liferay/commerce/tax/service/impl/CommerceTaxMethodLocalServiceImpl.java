@@ -54,7 +54,7 @@ public class CommerceTaxMethodLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(nameMap, engineKey);
+		_validate(nameMap, engineKey);
 
 		long commerceTaxMethodId = counterLocalService.increment();
 
@@ -147,7 +147,7 @@ public class CommerceTaxMethodLocalServiceImpl
 		CommerceTaxMethod commerceTaxMethod =
 			commerceTaxMethodPersistence.findByPrimaryKey(commerceTaxMethodId);
 
-		validate(nameMap, commerceTaxMethod.getEngineKey());
+		_validate(nameMap, commerceTaxMethod.getEngineKey());
 
 		commerceTaxMethod.setNameMap(nameMap);
 		commerceTaxMethod.setDescriptionMap(descriptionMap);
@@ -157,7 +157,7 @@ public class CommerceTaxMethodLocalServiceImpl
 		return commerceTaxMethodPersistence.update(commerceTaxMethod);
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String engineKey)
+	private void _validate(Map<Locale, String> nameMap, String engineKey)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();

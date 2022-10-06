@@ -50,7 +50,7 @@ public class CommerceWishListServiceImpl
 		throws PortalException {
 
 		if (getUserId() != serviceContext.getUserId()) {
-			checkManagePermission(serviceContext.getScopeGroupId());
+			_checkManagePermission(serviceContext.getScopeGroupId());
 		}
 
 		return commerceWishListLocalService.addCommerceWishList(
@@ -102,7 +102,7 @@ public class CommerceWishListServiceImpl
 			OrderByComparator<CommerceWishList> orderByComparator)
 		throws PortalException {
 
-		checkManagePermission(groupId);
+		_checkManagePermission(groupId);
 
 		return commerceWishListLocalService.getCommerceWishLists(
 			groupId, start, end, orderByComparator);
@@ -115,7 +115,7 @@ public class CommerceWishListServiceImpl
 		throws PortalException {
 
 		if (getUserId() != userId) {
-			checkManagePermission(groupId);
+			_checkManagePermission(groupId);
 		}
 
 		return commerceWishListLocalService.getCommerceWishLists(
@@ -124,7 +124,7 @@ public class CommerceWishListServiceImpl
 
 	@Override
 	public int getCommerceWishListsCount(long groupId) throws PortalException {
-		checkManagePermission(groupId);
+		_checkManagePermission(groupId);
 
 		return commerceWishListLocalService.getCommerceWishListsCount(groupId);
 	}
@@ -134,7 +134,7 @@ public class CommerceWishListServiceImpl
 		throws PortalException {
 
 		if (getUserId() != userId) {
-			checkManagePermission(groupId);
+			_checkManagePermission(groupId);
 		}
 
 		return commerceWishListLocalService.getCommerceWishListsCount(
@@ -170,7 +170,7 @@ public class CommerceWishListServiceImpl
 			commerceWishListId, name, defaultWishList);
 	}
 
-	protected void checkManagePermission(long groupId) throws PortalException {
+	private void _checkManagePermission(long groupId) throws PortalException {
 		PortletResourcePermission portletResourcePermission =
 			_commerceWishListModelResourcePermission.
 				getPortletResourcePermission();

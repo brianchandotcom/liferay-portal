@@ -63,7 +63,7 @@ public class CSDiagramEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(null, cpDefinitionId, sequence);
+		_validate(null, cpDefinitionId, sequence);
 
 		long csDiagramEntryId = counterLocalService.increment();
 
@@ -186,7 +186,7 @@ public class CSDiagramEntryLocalServiceImpl
 		CSDiagramEntry csDiagramEntry =
 			csDiagramEntryLocalService.getCSDiagramEntry(csDiagramEntryId);
 
-		validate(csDiagramEntry, csDiagramEntry.getCPDefinitionId(), sequence);
+		_validate(csDiagramEntry, csDiagramEntry.getCPDefinitionId(), sequence);
 
 		csDiagramEntry.setCPInstanceId(cpInstanceId);
 		csDiagramEntry.setCProductId(cProductId);
@@ -199,7 +199,7 @@ public class CSDiagramEntryLocalServiceImpl
 		return csDiagramEntryPersistence.update(csDiagramEntry);
 	}
 
-	protected void validate(
+	private void _validate(
 			CSDiagramEntry oldCSDiagramEntry, long cpDefinitionId,
 			String sequence)
 		throws PortalException {

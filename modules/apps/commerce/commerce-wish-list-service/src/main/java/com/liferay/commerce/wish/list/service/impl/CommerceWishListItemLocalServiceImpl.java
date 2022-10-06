@@ -90,7 +90,7 @@ public class CommerceWishListItemLocalServiceImpl
 			_commerceWishListPersistence.findByPrimaryKey(commerceWishListId);
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		validate(commerceWishList, cProductId, cpInstanceUuid);
+		_validate(commerceWishList, cProductId, cpInstanceUuid);
 
 		long commerceWishListItemId = _counterLocalService.increment();
 
@@ -188,7 +188,7 @@ public class CommerceWishListItemLocalServiceImpl
 			commerceWishListId);
 	}
 
-	protected void validate(
+	private void _validate(
 			CommerceWishList commerceWishList, long cProductId,
 			String cpInstanceUuid)
 		throws PortalException {

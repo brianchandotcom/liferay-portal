@@ -209,7 +209,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			String keywords, int start, int end)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, commerceShippingMethodId, keywords, start, end);
 
 		BaseModelSearchResult<CommerceShippingFixedOption>
@@ -233,7 +233,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, commerceShippingMethodId, keywords, 0, 0);
 
 		Indexer<CommerceShippingFixedOption> indexer =
@@ -257,7 +257,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			Hits hits = indexer.search(searchContext);
 
 			List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-				getCommerceShippingFixedOptions(hits);
+				_getCommerceShippingFixedOptions(hits);
 
 			if (commerceShippingFixedOptions != null) {
 				return new BaseModelSearchResult<>(
@@ -296,7 +296,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			commerceShippingFixedOption);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long groupId, long commerceShippingMethodId,
 		String keywords, int start, int end) {
 
@@ -322,7 +322,7 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+	private List<CommerceShippingFixedOption> _getCommerceShippingFixedOptions(
 			Hits hits)
 		throws PortalException {
 

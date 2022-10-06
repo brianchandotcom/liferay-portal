@@ -87,7 +87,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 		commerceTermEntryRel = commerceTermEntryRelPersistence.update(
 			commerceTermEntryRel);
 
-		reindexCommerceTermEntry(commerceTermEntryId);
+		_reindexCommerceTermEntry(commerceTermEntryId);
 
 		return commerceTermEntryRel;
 	}
@@ -100,7 +100,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 		commerceTermEntryRelPersistence.remove(commerceTermEntryRel);
 
-		reindexCommerceTermEntry(commerceTermEntryRel.getCommerceTermEntryId());
+		_reindexCommerceTermEntry(commerceTermEntryRel.getCommerceTermEntryId());
 
 		return commerceTermEntryRel;
 	}
@@ -217,7 +217,7 @@ public class CommerceTermEntryRelLocalServiceImpl
 			commerceTermEntryId);
 	}
 
-	protected void reindexCommerceTermEntry(long commerceTermEntryId)
+	private void _reindexCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException {
 
 		Indexer<CommerceTermEntry> indexer =

@@ -313,6 +313,12 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			return fieldName + ".name";
 		}
 
+		if (Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+			return fieldName + "RawText";
+		}
+
 		return fieldName;
 	}
 

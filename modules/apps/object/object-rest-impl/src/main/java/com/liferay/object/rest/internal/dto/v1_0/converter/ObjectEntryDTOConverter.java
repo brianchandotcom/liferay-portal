@@ -382,8 +382,9 @@ public class ObjectEntryDTOConverter
 						objectField.getBusinessType(),
 						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
+				map.put(objectFieldName, serializable);
 				map.put(
-					objectFieldName,
+					objectFieldName + "RawText",
 					ObjectEntryFieldValueUtil.getValueString(
 						objectField, values));
 			}

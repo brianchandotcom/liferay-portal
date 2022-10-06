@@ -47,7 +47,10 @@ const Goals = ({
 			(country, company, accountExternalReferenceCodeSF) => {
 				setFieldValue('company', company);
 				setFieldValue('country', country);
-				setFieldValue('accountExternalReferenceCodeSF', accountExternalReferenceCodeSF);
+				setFieldValue(
+					'accountExternalReferenceCodeSF',
+					accountExternalReferenceCodeSF
+				);
 			},
 			[setFieldValue]
 		)

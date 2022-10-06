@@ -20,7 +20,8 @@ export function getDTOFromMDFRequest(
 ): MDFRequestDTO {
 	return {
 		...getSummaryActivities(mdfRequest.activities),
-		accountExternalReferenceCodeSF: mdfRequest.accountExternalReferenceCodeSF,
+		accountExternalReferenceCodeSF:
+			mdfRequest.accountExternalReferenceCodeSF,
 		additionalOption: mdfRequest.additionalOption,
 		campaignName: mdfRequest.campaignName,
 		country: mdfRequest.country,

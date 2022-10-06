@@ -80,7 +80,7 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 			commerceDiscountOrderTypeRelPersistence.update(
 				commerceDiscountOrderTypeRel);
 
-		reindexCommerceDiscount(commerceDiscountId);
+		_reindexCommerceDiscount(commerceDiscountId);
 
 		return commerceDiscountOrderTypeRel;
 	}
@@ -97,7 +97,7 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			commerceDiscountOrderTypeRel.getCommerceDiscountOrderTypeRelId());
 
-		reindexCommerceDiscount(
+		_reindexCommerceDiscount(
 			commerceDiscountOrderTypeRel.getCommerceDiscountId());
 
 		return commerceDiscountOrderTypeRel;
@@ -178,15 +178,6 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 				commerceDiscountId, name));
 	}
 
-	protected void reindexCommerceDiscount(long commerceDiscountId)
-		throws PortalException {
-
-		Indexer<CommerceDiscount> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
-
-		indexer.reindex(CommerceDiscount.class.getName(), commerceDiscountId);
-	}
-
 	private GroupByStep _getGroupByStep(
 			FromStep fromStep, Long commerceDiscountId, String keywords)
 		throws PortalException {
@@ -216,6 +207,15 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 
 				return predicate;
 			});
+	}
+
+	private void _reindexCommerceDiscount(long commerceDiscountId)
+		throws PortalException {
+
+		Indexer<CommerceDiscount> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceDiscount.class);
+
+		indexer.reindex(CommerceDiscount.class.getName(), commerceDiscountId);
 	}
 
 	@Reference

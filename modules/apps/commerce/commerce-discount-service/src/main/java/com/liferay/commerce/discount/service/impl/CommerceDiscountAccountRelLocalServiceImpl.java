@@ -70,7 +70,7 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 			commerceDiscountAccountRelPersistence.update(
 				commerceDiscountAccountRel);
 
-		reindexCommerceDiscount(commerceDiscountId);
+		_reindexCommerceDiscount(commerceDiscountId);
 
 		return commerceDiscountAccountRel;
 	}
@@ -87,7 +87,7 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			commerceDiscountAccountRel.getCommerceDiscountAccountRelId());
 
-		reindexCommerceDiscount(
+		_reindexCommerceDiscount(
 			commerceDiscountAccountRel.getCommerceDiscountId());
 
 		return commerceDiscountAccountRel;
@@ -174,7 +174,7 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 			commerceDiscountId, name);
 	}
 
-	protected void reindexCommerceDiscount(long commerceDiscountId)
+	private void _reindexCommerceDiscount(long commerceDiscountId)
 		throws PortalException {
 
 		Indexer<CommerceDiscount> indexer =

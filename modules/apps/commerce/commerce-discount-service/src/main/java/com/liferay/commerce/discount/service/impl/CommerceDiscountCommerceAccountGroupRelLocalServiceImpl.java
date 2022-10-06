@@ -75,7 +75,7 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 			commerceDiscountCommerceAccountGroupRelPersistence.update(
 				commerceDiscountCommerceAccountGroupRel);
 
-		reindexCommerceDiscount(commerceDiscountId);
+		_reindexCommerceDiscount(commerceDiscountId);
 
 		return commerceDiscountCommerceAccountGroupRel;
 	}
@@ -95,7 +95,7 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 			commerceDiscountCommerceAccountGroupRel.
 				getCommerceDiscountCommerceAccountGroupRelId());
 
-		reindexCommerceDiscount(
+		_reindexCommerceDiscount(
 			commerceDiscountCommerceAccountGroupRel.getCommerceDiscountId());
 
 		return commerceDiscountCommerceAccountGroupRel;
@@ -197,7 +197,7 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 			countByCommerceDiscountId(commerceDiscountId, name);
 	}
 
-	protected void reindexCommerceDiscount(long commerceDiscountId)
+	private void _reindexCommerceDiscount(long commerceDiscountId)
 		throws PortalException {
 
 		Indexer<CommerceDiscount> indexer =

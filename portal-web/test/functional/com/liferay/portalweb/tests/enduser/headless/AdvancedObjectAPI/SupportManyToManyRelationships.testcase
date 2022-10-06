@@ -1044,6 +1044,7 @@ definition {
 	@priority = "4"
 	test ObjectEntryDeletionImpossibleWithPreventDeletionTypeRelationshipCreated {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Given manyToMany relationship universitySubjects with deletionType prevent created") {
 			var relationshipName = ObjectDefinitionAPI.createRelationship(

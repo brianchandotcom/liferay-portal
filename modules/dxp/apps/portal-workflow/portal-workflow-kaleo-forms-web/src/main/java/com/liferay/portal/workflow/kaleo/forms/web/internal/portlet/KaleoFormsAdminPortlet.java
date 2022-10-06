@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.portlet;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.petra.string.CharPool;
@@ -443,9 +442,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;
-
-	@Reference
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 
 	@Reference
 	private HtmlParser _htmlParser;

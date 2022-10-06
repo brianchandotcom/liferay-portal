@@ -1,8 +1,72 @@
+/* source-sans-pro-200 - vietnamese_latin_cyrillic */
 @font-face {
-	font-display: swap;
-	font-family: 'Source Serif Pro';
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 200;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-200.eot$]); /* ---------- IE9 compat modes ---------- */
+	src: local(''),
+		 url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-200.eot?#iefix$]) format('embedded-opentype'), /* IE6-IE8 */
+		 url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-200.woff2$]) format('woff2'), /* ---------- Super modern browsers ---------- */
+		 url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-200.woff$]) format('woff'), /* ---------- Modern browsers ---------- */
+		 url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-200.ttf$]) format('truetype'); /* Safari, Android, iOS */
+  }
+/* source-sans-pro-300 - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 300;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-300.eot$]); /* ---------- IE9 compat modes ---------- */
+	src: local(''),
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-300.eot?#iefix$]) format('embedded-opentype'), /* IE6-IE8 */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-300.woff2$]) format('woff2'), /* ---------- Super modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-300.woff$]) format('woff'), /* ---------- Modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-300.ttf$]) format('truetype'); /* Safari, Android, iOS */
+}
+/* source-sans-pro-regular - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
 	font-style: normal;
 	font-weight: 400;
-	src:
-		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-regular.eot$]); /* ---------- IE9 compat modes ---------- */
+	src: local(''),
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-regular.eot?#iefix$]) format('embedded-opentype'), /* IE6-IE8 */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-regular.woff2$]) format('woff2'), /* ---------- Super modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-regular.woff$]) format('woff'), /* ---------- Modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-regular.ttf$]) format('truetype'); /* Safari, Android, iOS */
+}
+/* source-sans-pro-italic - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: italic;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-italic.eot$]); /* ---------- IE9 compat modes ---------- */
+	src: local(''),
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-italic.eot?#iefix$]) format('embedded-opentype'), /* IE6-IE8 */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-italic.woff2$]) format('woff2'), /* ---------- Super modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-italic.woff$]) format('woff'), /* ---------- Modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-italic.ttf$]) format('truetype'); /* Safari, Android, iOS */
+}
+/* source-sans-pro-600 - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 600;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-600.eot$]); /* ---------- IE9 compat modes ---------- */
+	src: local(''),
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-600.eot?#iefix$]) format('embedded-opentype'), /* IE6-IE8 */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-600.woff2$]) format('woff2'), /* ---------- Super modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-600.woff$]) format('woff'), /* ---------- Modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-600.ttf$]) format('truetype'); /* Safari, Android, iOS */
+}
+/* source-sans-pro-700 - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 700;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-700.eot$]); /* ---------- IE9 compat modes ---------- */
+	src: local(''),
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-700.eot?#iefix$]) format('embedded-opentype'), /* IE6-IE8 */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-700.woff2$]) format('woff2'), /* ---------- Super modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-700.woff$]) format('woff'), /* ---------- Modern browsers ---------- */
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/source-sans-pro-v21-vietnamese_latin_cyrillic-700.ttf$]) format('truetype'); /* Safari, Android, iOS */
 }

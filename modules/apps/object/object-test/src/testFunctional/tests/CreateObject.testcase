@@ -7682,8 +7682,6 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
 	@priority = "4"
 	test PreventDeletionManyToManyWontAllowDelete {
-		property portal.upstream = "quarantine";
-
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${nameObject} 163",
@@ -7771,7 +7769,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA163");
 
-		ObjectPortlet.deleteEntry(entry = "Entry A");
+		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
 
@@ -7779,7 +7777,7 @@ definition {
 
 		ObjectPortlet.deleteEntry(entry = "Entry B");
 
-		ObjectPortlet.viewEntry(entry = "Entry B");
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many will allow the user to delete an entry with relation from the child Object"
@@ -7892,8 +7890,6 @@ definition {
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many won't allow the user to delete an entry with relation from the parent Object"
 	@priority = "5"
 	test PreventDeletionOneToManyWontAllowDelete {
-		property portal.acceptance = "quarantine";
-
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${nameObject} 165",
@@ -7951,7 +7947,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA165");
 
-		ObjectPortlet.deleteEntry(entry = "Entry A");
+		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Entry A");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
 	}

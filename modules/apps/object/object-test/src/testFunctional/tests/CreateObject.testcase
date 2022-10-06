@@ -7161,6 +7161,8 @@ definition {
 	@description = "LPS-135649 - Verify that when Objects are not scoped by Site it should not be displayed on the Workflow settings from the Site Menu"
 	@priority = "4"
 	test ObjectNotScopedBySiteNotDisplayedOnSiteMenu {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151",
 			objectName = "CustomObject151",
@@ -7177,6 +7179,7 @@ definition {
 	@priority = "5"
 	test ObjectPorletDisappearsOpenMenuWhenInactivated {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140856",
@@ -7214,6 +7217,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Site Menu when inactivated"
 	@priority = "4"
 	test ObjectPorletDisappearsSiteMenuWhenInactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152",
 			objectName = "CustomObject152",
@@ -8213,6 +8218,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field is no longer displayed when the parent object is inactivated (One to Many)"
 	@priority = "4"
 	test RelationshipFieldDisappearsWhenInactivatedOneToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 171",
@@ -8281,6 +8288,8 @@ definition {
 	@description = "LPS-135401 - Verify that the Relationship field is not created"
 	@priority = "4"
 	test RelationshipFieldNotCreatedOnManyToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 141659 ${letter}",
@@ -8307,6 +8316,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"
 	@priority = "4"
 	test RelationshipFieldReappearsWhenReactivatedOneToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 172",
@@ -8381,6 +8392,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the other object is inactivated (Many to Many)"
 	@priority = "4"
 	test RelationshipTabDisappearsWhenInactivatedManyToMany {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 173",
@@ -8783,6 +8796,8 @@ definition {
 	@description = "LPS-138213 - Verify that updated data is kept when clicking on the Publish button"
 	@priority = "4"
 	test UpdatedDataIsKeptWhenPublishing {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141685",
 			objectName = "CustomObject141685",

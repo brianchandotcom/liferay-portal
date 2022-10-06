@@ -1465,7 +1465,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		return _doUpdateStructure(
+		return _updateStructure(
 			userId, structure.getParentStructureId(), structure.getNameMap(),
 			structure.getDescriptionMap(), ddmForm, ddmFormLayout,
 			serviceContext, structure);
@@ -1485,7 +1485,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
 			groupId, classNameId, structureKey);
 
-		return _doUpdateStructure(
+		return _updateStructure(
 			userId, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext, structure);
 	}
@@ -1502,7 +1502,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		return _doUpdateStructure(
+		return _updateStructure(
 			userId, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext, structure);
 	}
@@ -1668,82 +1668,6 @@ public class DDMStructureLocalServiceImpl
 
 	private DDMForm _deserializeJSONDDMForm(String content) {
 		return _deserializeDDMForm(content, _jsonDDMFormDeserializer);
-	}
-
-	private DDMStructure _doUpdateStructure(
-			long userId, long parentStructureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, ServiceContext serviceContext,
-			DDMStructure structure)
-		throws PortalException {
-
-		// Structure
-
-		User user = _userLocalService.getUser(userId);
-
-		DDMForm parentDDMForm = _getParentDDMForm(parentStructureId);
-
-		_validateParentStructure(structure.getStructureId(), parentStructureId);
-		_validate(nameMap, parentDDMForm, ddmForm);
-
-		structure.setUserId(userId);
-		structure.setParentStructureId(parentStructureId);
-
-		DDMStructureVersion latestStructureVersion =
-			_ddmStructureVersionLocalService.getLatestStructureVersion(
-				structure.getStructureId());
-
-		boolean majorVersion = GetterUtil.getBoolean(
-			serviceContext.getAttribute("majorVersion"));
-
-		String version = _getNextVersion(
-			latestStructureVersion.getVersion(), majorVersion);
-
-		structure.setVersion(version);
-
-		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
-		structure.setVersionUserId(user.getUserId());
-		structure.setVersionUserName(user.getFullName());
-		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
-		structure.setDefinition(_serializeJSONDDMForm(ddmForm));
-
-		// Structure version
-
-		DDMStructureVersion structureVersion = _addStructureVersion(
-			user, structure, version, serviceContext);
-
-		// Structure layout
-
-		// Explicitly pop UUID from service context to ensure no lingering
-		// values remain there from other components (e.g. Journal)
-
-		serviceContext.getUuid();
-
-		_ddmStructureLayoutLocalService.addStructureLayout(
-			structureVersion.getUserId(), structureVersion.getGroupId(),
-			structureVersion.getStructureVersionId(), ddmFormLayout,
-			serviceContext);
-
-		if (!structureVersion.isApproved() && structureVersion.isPending()) {
-			return structure;
-		}
-
-		structure = ddmStructurePersistence.update(structure);
-
-		// Structure templates
-
-		_syncStructureTemplatesFields(structure);
-
-		// Data provider instance links
-
-		_updateDataProviderInstanceLinks(
-			structure.getGroupId(), structure.getStructureId(), ddmForm);
-
-		// Indexer
-
-		_reindexStructure(structure, serviceContext);
-
-		return structure;
 	}
 
 	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
@@ -2015,6 +1939,82 @@ public class DDMStructureLocalServiceImpl
 				addDataProviderInstanceLink(
 					dataProviderInstanceId, structureId);
 		}
+	}
+
+	private DDMStructure _updateStructure(
+			long userId, long parentStructureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, ServiceContext serviceContext,
+			DDMStructure structure)
+		throws PortalException {
+
+		// Structure
+
+		User user = _userLocalService.getUser(userId);
+
+		DDMForm parentDDMForm = _getParentDDMForm(parentStructureId);
+
+		_validateParentStructure(structure.getStructureId(), parentStructureId);
+		_validate(nameMap, parentDDMForm, ddmForm);
+
+		structure.setUserId(userId);
+		structure.setParentStructureId(parentStructureId);
+
+		DDMStructureVersion latestStructureVersion =
+			_ddmStructureVersionLocalService.getLatestStructureVersion(
+				structure.getStructureId());
+
+		boolean majorVersion = GetterUtil.getBoolean(
+			serviceContext.getAttribute("majorVersion"));
+
+		String version = _getNextVersion(
+			latestStructureVersion.getVersion(), majorVersion);
+
+		structure.setVersion(version);
+
+		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
+		structure.setVersionUserId(user.getUserId());
+		structure.setVersionUserName(user.getFullName());
+		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
+		structure.setDefinition(_serializeJSONDDMForm(ddmForm));
+
+		// Structure version
+
+		DDMStructureVersion structureVersion = _addStructureVersion(
+			user, structure, version, serviceContext);
+
+		// Structure layout
+
+		// Explicitly pop UUID from service context to ensure no lingering
+		// values remain there from other components (e.g. Journal)
+
+		serviceContext.getUuid();
+
+		_ddmStructureLayoutLocalService.addStructureLayout(
+			structureVersion.getUserId(), structureVersion.getGroupId(),
+			structureVersion.getStructureVersionId(), ddmFormLayout,
+			serviceContext);
+
+		if (!structureVersion.isApproved() && structureVersion.isPending()) {
+			return structure;
+		}
+
+		structure = ddmStructurePersistence.update(structure);
+
+		// Structure templates
+
+		_syncStructureTemplatesFields(structure);
+
+		// Data provider instance links
+
+		_updateDataProviderInstanceLinks(
+			structure.getGroupId(), structure.getStructureId(), ddmForm);
+
+		// Indexer
+
+		_reindexStructure(structure, serviceContext);
+
+		return structure;
 	}
 
 	private void _validate(DDMForm ddmForm) throws PortalException {

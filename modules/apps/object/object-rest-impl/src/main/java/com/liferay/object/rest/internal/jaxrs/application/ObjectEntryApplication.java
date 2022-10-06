@@ -17,15 +17,12 @@ package com.liferay.object.rest.internal.jaxrs.application;
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,27 +40,10 @@ public class ObjectEntryApplication extends Application {
 		Set<Object> objects = new HashSet<>();
 
 		objects.add(new ObjectDefinitionIdContainerRequestFilter());
-		objects.add(
-			new ObjectDefinitionIdContainerRequestFilter(
-				_objectDefinitionLocalService, _objectDefinitionName));
-		objects.add(
-			new OpenAPIResourceImpl(
-				_objectDefinitionLocalService, _objectDefinitionName,
-				_objectEntryOpenAPIResource));
+		objects.add(new OpenAPIResourceImpl(_objectEntryOpenAPIResource));
 
 		return objects;
 	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_objectDefinitionName = (String)properties.get(
-			"liferay.object.definition.name");
-	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private String _objectDefinitionName;
 
 	@Reference
 	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;

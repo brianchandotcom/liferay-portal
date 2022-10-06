@@ -12,7 +12,7 @@
  * details.
  */
 
-import memoize from 'lodash.memoize';
+import memoize from './memoize';
 
 const toCharCode = memoize((name) =>
 	name

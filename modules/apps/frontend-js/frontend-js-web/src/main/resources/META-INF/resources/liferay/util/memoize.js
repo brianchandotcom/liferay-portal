@@ -12,28 +12,33 @@
  * details.
  */
 
-export default function memoize(fn, resolver) {
+export default function memoize(fn) {
+	if (typeof fn !== 'function') {
+		throw new TypeError(`Parameter fn must be a function`);
+	}
 
-	/**
-	 * Using the Map to enable storing objects as keys
-	 */
 	const cache = new Map();
 
-	/**
-	 * Returns a memoized function.
-	 * Takes the passed function and adds cache handling to it,
-	 * applying the passed arguments to maintain expected functionality
-	 */
-	return (...args) => {
+	const memoized = (...args) => {
+		let key;
 
-		/**
-		 * Use the resolver function if it is provided, otherwise use the first argument
-		 */
-		const key = resolver ? resolver.apply(null, args) : args[0];
+		if (args.find((arg) => typeof arg === 'object')) {
+			const objectArguments = args.filter(
+				(arg) => typeof arg === 'object'
+			);
 
-		/**
-		 * Check if the first argument is cached, if yes, return it, otherwise store it
-		 */
+			key = objectArguments.map((objArg) => JSON.stringify(objArg));
+
+			if (args.length > 1 && objectArguments.length < args.length) {
+				args.forEach((arg) => typeof arg !== 'object' && key.push(arg));
+			}
+
+			key = key.join(',');
+		}
+		else {
+			key = args.length > 1 ? args.join(',') : args[0];
+		}
+
 		if (cache.has(key)) {
 			return cache.get(key);
 		}
@@ -45,4 +50,8 @@ export default function memoize(fn, resolver) {
 			return result;
 		}
 	};
+
+	memoized.getCache = () => cache;
+
+	return memoized;
 }

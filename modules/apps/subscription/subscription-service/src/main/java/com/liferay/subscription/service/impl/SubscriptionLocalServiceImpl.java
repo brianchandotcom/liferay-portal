@@ -15,7 +15,9 @@
 package com.liferay.subscription.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -26,6 +28,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
@@ -155,7 +160,21 @@ public class SubscriptionLocalServiceImpl
 					extraDataJSONObject.toString(), 0);
 			}
 		}
+		if(className.equals(AssetTag.class.getName())){
+			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(classPK);
+			if(assetTag == null){
+				return subscription;
+			}
+			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				AssetTag.class);
 
+			try {
+				indexer.reindex(assetTag);
+			}
+			catch (SearchException searchException) {
+				throw new RuntimeException(searchException);
+			}
+		}
 		return subscription;
 	}
 
@@ -201,6 +220,23 @@ public class SubscriptionLocalServiceImpl
 
 		if (subscription != null) {
 			deleteSubscription(subscription);
+		}
+
+		if(className.equals(AssetTag.class.getName())){
+			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(classPK);
+			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				AssetTag.class);
+
+			if(assetTag == null){
+				return;
+			}
+
+			try {
+				indexer.reindex(assetTag);
+			}
+			catch (SearchException searchException) {
+				throw new RuntimeException(searchException);
+			}
 		}
 	}
 
@@ -516,6 +552,9 @@ public class SubscriptionLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

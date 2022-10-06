@@ -741,6 +741,14 @@ public class DefaultObjectEntryManagerImplTest {
 						expectedEntry.getKey(), "richTextObjectFieldName")) {
 
 				Assert.assertEquals(
+					expectedEntry.getValue(),
+					actualObjectEntryProperties.get(expectedEntry.getKey()));
+			}
+			else if (Objects.equals(
+						expectedEntry.getKey(),
+						"richTextObjectFieldNameRawText")) {
+
+				Assert.assertEquals(
 					HtmlParserUtil.extractText(
 						String.valueOf(expectedEntry.getValue())),
 					String.valueOf(

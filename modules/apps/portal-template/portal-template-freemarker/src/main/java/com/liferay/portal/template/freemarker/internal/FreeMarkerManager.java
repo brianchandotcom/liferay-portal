@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.log.Log;
@@ -588,10 +587,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private volatile BeansWrapper _restrictedBeansWrapper;
 	private volatile ServiceRegistration<PortalExecutorConfig>
 		_serviceRegistration;
-
-	@Reference
-	private SingleVMPool _singleVMPool;
-
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
 

@@ -276,7 +276,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			DDMForm ddmForm, long storageId, String storageType)
 		throws StorageException {
 
-		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter(storageType);
+		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter(
+			storageType);
 
 		DDMStorageAdapterGetResponse ddmStorageAdapterGetResponse =
 			ddmStorageAdapter.get(
@@ -645,6 +646,41 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersion);
 	}
 
+	private SearchContext _buildSearchContext(
+			long formInstanceId, String[] notEmptyFields, int status, int start,
+			int end, Sort sort)
+		throws PortalException {
+
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(true);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.CLASS_NAME_ID,
+				_classNameLocalService.getClassNameId(DDMFormInstance.class)
+			).put(
+				Field.STATUS, status
+			).put(
+				"formInstanceId", ddmFormInstance.getFormInstanceId()
+			).put(
+				"languageIds", ddmFormInstance.getAvailableLanguageIds()
+			).put(
+				"notEmptyFields", notEmptyFields
+			).put(
+				"structureId", ddmFormInstance.getStructureId()
+			).build());
+		searchContext.setCompanyId(ddmFormInstance.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {ddmFormInstance.getGroupId()});
+		searchContext.setSorts(sort);
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
 	private long _createDDMContent(
 			long groupId, long ddmFormInstanceId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
@@ -691,7 +727,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	private void _deleteStorage(long storageId, String storageType)
 		throws StorageException {
 
-		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter(storageType);
+		DDMStorageAdapter ddmStorageAdapter = _getDDMStorageAdapter(
+			storageType);
 
 		ddmStorageAdapter.delete(
 			DDMStorageAdapterDeleteRequest.Builder.newBuilder(
@@ -777,8 +814,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return _portal.getResourceBundle(defaultLocale);
 	}
 
-	private boolean _isEmailNotificationEnabled(
-			DDMFormInstance ddmFormInstance)
+	private boolean _isEmailNotificationEnabled(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
 		DDMFormInstanceSettings formInstanceSettings =
@@ -974,41 +1010,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				"Record group ID is not the same as the form instance group " +
 					"ID");
 		}
-	}
-
-	private SearchContext _buildSearchContext(
-			long formInstanceId, String[] notEmptyFields, int status, int start,
-			int end, Sort sort)
-		throws PortalException {
-
-		DDMFormInstance ddmFormInstance =
-			_ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAndSearch(true);
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.CLASS_NAME_ID,
-				_classNameLocalService.getClassNameId(DDMFormInstance.class)
-			).put(
-				Field.STATUS, status
-			).put(
-				"formInstanceId", ddmFormInstance.getFormInstanceId()
-			).put(
-				"languageIds", ddmFormInstance.getAvailableLanguageIds()
-			).put(
-				"notEmptyFields", notEmptyFields
-			).put(
-				"structureId", ddmFormInstance.getStructureId()
-			).build());
-		searchContext.setCompanyId(ddmFormInstance.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {ddmFormInstance.getGroupId()});
-		searchContext.setSorts(sort);
-		searchContext.setStart(start);
-
-		return searchContext;
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

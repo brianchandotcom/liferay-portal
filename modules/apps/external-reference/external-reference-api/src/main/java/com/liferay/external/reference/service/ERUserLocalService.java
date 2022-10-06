@@ -55,11 +55,12 @@ public interface ERUserLocalService extends BaseLocalService {
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName,
-			long prefixId, long suffixId, boolean male, int birthdayMonth,
-			int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, List<UserGroupRole> userGroupRoles,
+			long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

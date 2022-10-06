@@ -270,9 +270,9 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		Click(
-			key_language = "Italy",
-			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+		ClickNoError(
+			key_entryName = "Italy",
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Deactivate");
 
@@ -312,9 +312,9 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		Click(
-			key_language = "Italy",
-			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+		ClickNoError(
+			key_entryName = "Italy",
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Activate");
 

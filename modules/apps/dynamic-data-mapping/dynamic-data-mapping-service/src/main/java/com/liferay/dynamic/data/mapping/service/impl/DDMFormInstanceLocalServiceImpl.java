@@ -486,77 +486,6 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstanceVersion);
 	}
 
-	private DDMFormInstance _updateFormInstance(
-			long userId, long ddmStructureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap,
-			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext,
-			DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		Locale defaultLocale = _getDDMFormDefaultLocale(ddmStructureId);
-
-		User user = _userLocalService.getUser(userId);
-
-		_validate(
-			ddmStructureId, defaultLocale, nameMap, settingsDDMFormValues,
-			user.getTimeZone());
-
-		DDMFormInstanceVersion latestDDMFormInstanceVersion =
-			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
-				ddmFormInstance.getFormInstanceId());
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		boolean updateVersion = false;
-
-		if ((latestDDMFormInstanceVersion.getStatus() ==
-				WorkflowConstants.STATUS_DRAFT) &&
-			(status == WorkflowConstants.STATUS_DRAFT)) {
-
-			updateVersion = true;
-		}
-
-		boolean majorVersion = GetterUtil.getBoolean(
-			serviceContext.getAttribute("majorVersion"));
-
-		String version = _getNextVersion(
-			latestDDMFormInstanceVersion.getVersion(), majorVersion);
-
-		if (!updateVersion) {
-			ddmFormInstance.setVersionUserId(user.getUserId());
-			ddmFormInstance.setVersionUserName(user.getFullName());
-			ddmFormInstance.setVersion(version);
-		}
-
-		ddmFormInstance.setNameMap(nameMap, defaultLocale);
-		ddmFormInstance.setDescriptionMap(descriptionMap, defaultLocale);
-		ddmFormInstance.setSettings(_serialize(settingsDDMFormValues));
-
-		DDMFormInstance updatedDDMFormInstance =
-			ddmFormInstancePersistence.update(ddmFormInstance);
-
-		if (status != WorkflowConstants.STATUS_DRAFT) {
-			_updateWorkflowDefinitionLink(
-				ddmFormInstance, settingsDDMFormValues, serviceContext);
-		}
-
-		long ddmStructureVersionId = _getStructureVersionId(ddmStructureId);
-
-		if (updateVersion) {
-			_updateFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance);
-		}
-		else {
-			_addFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance, version,
-				serviceContext);
-		}
-
-		return updatedDDMFormInstance;
-	}
-
 	private Locale _getDDMFormDefaultLocale(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
@@ -655,6 +584,77 @@ public class DDMFormInstanceLocalServiceImpl
 				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
+	private DDMFormInstance _updateFormInstance(
+			long userId, long ddmStructureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext,
+			DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		Locale defaultLocale = _getDDMFormDefaultLocale(ddmStructureId);
+
+		User user = _userLocalService.getUser(userId);
+
+		_validate(
+			ddmStructureId, defaultLocale, nameMap, settingsDDMFormValues,
+			user.getTimeZone());
+
+		DDMFormInstanceVersion latestDDMFormInstanceVersion =
+			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
+				ddmFormInstance.getFormInstanceId());
+
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_APPROVED);
+
+		boolean updateVersion = false;
+
+		if ((latestDDMFormInstanceVersion.getStatus() ==
+				WorkflowConstants.STATUS_DRAFT) &&
+			(status == WorkflowConstants.STATUS_DRAFT)) {
+
+			updateVersion = true;
+		}
+
+		boolean majorVersion = GetterUtil.getBoolean(
+			serviceContext.getAttribute("majorVersion"));
+
+		String version = _getNextVersion(
+			latestDDMFormInstanceVersion.getVersion(), majorVersion);
+
+		if (!updateVersion) {
+			ddmFormInstance.setVersionUserId(user.getUserId());
+			ddmFormInstance.setVersionUserName(user.getFullName());
+			ddmFormInstance.setVersion(version);
+		}
+
+		ddmFormInstance.setNameMap(nameMap, defaultLocale);
+		ddmFormInstance.setDescriptionMap(descriptionMap, defaultLocale);
+		ddmFormInstance.setSettings(_serialize(settingsDDMFormValues));
+
+		DDMFormInstance updatedDDMFormInstance =
+			ddmFormInstancePersistence.update(ddmFormInstance);
+
+		if (status != WorkflowConstants.STATUS_DRAFT) {
+			_updateWorkflowDefinitionLink(
+				ddmFormInstance, settingsDDMFormValues, serviceContext);
+		}
+
+		long ddmStructureVersionId = _getStructureVersionId(ddmStructureId);
+
+		if (updateVersion) {
+			_updateFormInstanceVersion(
+				ddmStructureVersionId, user, ddmFormInstance);
+		}
+		else {
+			_addFormInstanceVersion(
+				ddmStructureVersionId, user, ddmFormInstance, version,
+				serviceContext);
+		}
+
+		return updatedDDMFormInstance;
 	}
 
 	private void _updateFormInstanceVersion(

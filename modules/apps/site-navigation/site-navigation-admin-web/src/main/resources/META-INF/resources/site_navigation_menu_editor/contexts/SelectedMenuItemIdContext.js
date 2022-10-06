@@ -12,8 +12,7 @@
  * details.
  */
 
-import {useSessionState} from '@liferay/layout-content-page-editor-web';
-import React, {useContext} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import {useConstants} from './ConstantsContext';
 
@@ -30,14 +29,34 @@ export function useSelectedMenuItemId() {
 
 export function SelectedMenuItemIdProvider({children}) {
 	const {portletNamespace} = useConstants();
+	const selectedMenuItemIdKey = `${portletNamespace}_selectedMenuItemId`;
 
-	const [selectedMenuItemId, setSelectedMenuItemId] = useSessionState(
-		`${portletNamespace}_selectedMenuItemId`,
-		null
+	const [selectedMenuItemId, setSelectedMenuItemId] = useState(() => {
+		const persistedSelectedMenuItemId = window.sessionStorage.getItem(
+			selectedMenuItemIdKey
+		);
+
+		window.sessionStorage.removeItem(selectedMenuItemIdKey);
+
+		return persistedSelectedMenuItemId || null;
+	});
+
+	const updateSelectedMenuItemId = useCallback(
+		(nextMenuItemId, {persist = false} = {}) => {
+			setSelectedMenuItemId(nextMenuItemId);
+
+			if (persist && nextMenuItemId) {
+				window.sessionStorage.setItem(
+					selectedMenuItemIdKey,
+					nextMenuItemId
+				);
+			}
+		},
+		[selectedMenuItemIdKey]
 	);
 
 	return (
-		<SetSelectedMenuItemIdContext.Provider value={setSelectedMenuItemId}>
+		<SetSelectedMenuItemIdContext.Provider value={updateSelectedMenuItemId}>
 			<SelectedMenuItemIdContext.Provider value={selectedMenuItemId}>
 				{children}
 			</SelectedMenuItemIdContext.Provider>

@@ -125,7 +125,7 @@
 																	"fields": [
 																		{
 																			"fieldName": "friendlyURL",
-																			"fieldValue": "/evp/request-form"
+																			"fieldValue": "/request-form"
 																		},
 																		{
 																			"fieldName": "privatePage",
@@ -133,7 +133,7 @@
 																		},
 																		{
 																			"fieldName": "siteKey",
-																			"fieldValue": "EVP"
+																			"fieldValue": "[$GROUP_KEY$]"
 																		}
 																	]
 																}

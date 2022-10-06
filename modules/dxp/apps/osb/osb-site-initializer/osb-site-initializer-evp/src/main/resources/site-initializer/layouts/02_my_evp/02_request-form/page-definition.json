@@ -5,7 +5,7 @@
 				"definition": {
 					"formConfig": {
 						"formReference": {
-							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequestForm$]",
+							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 							"classType": 0
 						}
 					},
@@ -203,7 +203,7 @@
 								"key": "INPUTS-select-from-list"
 							},
 							"fragmentConfig": {
-								"inputFieldId": "ObjectField_r_organization_c_evpRequestOrganizationId",
+								"inputFieldId": "ObjectField_r_organization_c_evpOrganizationId",
 								"inputRequired": true
 							},
 							"fragmentFields": [

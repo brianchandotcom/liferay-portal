@@ -13,9 +13,9 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVP Request Form"
+		"en_US": "EVP Request"
 	},
-	"name": "EVPRequestForm",
+	"name": "EVPRequest",
 	"objectActions": [
 	],
 	"objectFields": [
@@ -276,7 +276,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVP Request Forms"
+		"en_US": "EVP Request"
 	},
 	"portlet": false,
 	"scope": "company",

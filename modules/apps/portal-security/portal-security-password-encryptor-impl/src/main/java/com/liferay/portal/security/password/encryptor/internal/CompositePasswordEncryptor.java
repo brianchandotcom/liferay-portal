@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -49,22 +48,11 @@ public class CompositePasswordEncryptor
 			throw new PwdEncryptorException("Unable to encrypt blank password");
 		}
 
-		String legacyAlgorithm =
-			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY;
+		String encryptedPasswordAlgorithm = getPasswordAlgorithmType(
+			encryptedPassword);
 
-		if (_log.isDebugEnabled() && Validator.isNotNull(legacyAlgorithm)) {
-			if (Validator.isNull(encryptedPassword)) {
-				_log.debug(
-					StringBundler.concat(
-						"Using legacy detection scheme for algorithm ",
-						legacyAlgorithm, " with empty current password"));
-			}
-			else {
-				_log.debug(
-					StringBundler.concat(
-						"Using legacy detection scheme for algorithm ",
-						legacyAlgorithm, " with provided current password"));
-			}
+		if (Validator.isNotNull(encryptedPasswordAlgorithm)) {
+			algorithm = encryptedPasswordAlgorithm;
 		}
 
 		boolean prependAlgorithm = true;
@@ -72,13 +60,7 @@ public class CompositePasswordEncryptor
 		if (Validator.isNotNull(encryptedPassword) &&
 			(encryptedPassword.charAt(0) != CharPool.OPEN_CURLY_BRACE)) {
 
-			algorithm = legacyAlgorithm;
-
 			prependAlgorithm = false;
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Using legacy algorithm " + algorithm);
-			}
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {
@@ -86,13 +68,7 @@ public class CompositePasswordEncryptor
 			int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
 
 			if (index > 0) {
-				algorithm = encryptedPassword.substring(1, index);
-
 				encryptedPassword = encryptedPassword.substring(index + 1);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Upgraded password to use algorithm " + algorithm);
 			}
 		}
 

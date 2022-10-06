@@ -140,20 +140,24 @@ public class LiferayRelengUtil {
 	}
 
 	public static boolean hasStalePortalDependencies(
-		Project project, String artifactGitId) {
+		Project project, File artifactPropertiesFile) {
+
+		if (!artifactPropertiesFile.exists()) {
+			return false;
+		}
 
 		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(
 			project, true);
 
-		for (File artifactPropertiesFile : artifactPropertiesFiles) {
+		for (File curArtifactPropertiesFile : artifactPropertiesFiles) {
 			Properties artifactProperties = GUtil.loadProperties(
-				artifactPropertiesFile);
+				curArtifactPropertiesFile);
 
 			String artifactUrl = artifactProperties.getProperty("artifact.url");
 
 			if (Validator.isNull(artifactUrl)) {
 				File artifactProjectDir = _getArtifactProjectDir(
-					artifactPropertiesFile);
+					curArtifactPropertiesFile);
 
 				throw new GradleException(
 					"The dependency '" + artifactProjectDir.getName() +
@@ -175,7 +179,7 @@ public class LiferayRelengUtil {
 				tokens[tokens.length - 2]);
 
 			File artifactProjectDir = _getArtifactProjectDir(
-				artifactPropertiesFile);
+				curArtifactPropertiesFile);
 
 			Properties properties = GUtil.loadProperties(
 				new File(artifactProjectDir, "bnd.bnd"));

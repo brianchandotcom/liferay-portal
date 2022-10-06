@@ -149,6 +149,11 @@ public class AccountServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.8.1", "2.9.0",
+			UpgradeProcessFactory.addColumns(
+				"AccountEntry", "restrictMembership BOOLEAN"));
 	}
 
 	@Reference

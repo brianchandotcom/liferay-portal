@@ -10,7 +10,7 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import {getSessionValue, setSessionValue} from 'frontend-js-web';
+import {setSessionValue} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import SegmentsExperimentsMain from './components/SegmentsExperimentsMain.es';
@@ -22,26 +22,10 @@ const SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE = 'open';
 const SEGMENTS_EXPERIMENT_PANEL_ID =
 	'com.liferay.segments.experiment.web_panelState';
 
-const useInitialPanelState = () => {
-	const [panelState, setPanelState] = useState(
-		SEGMENTS_EXPERIMENT_CLOSED_PANEL_VALUE
-	);
-
-	useEffect(() => {
-		getSessionValue(SEGMENTS_EXPERIMENT_PANEL_ID).then((value) => {
-			setPanelState(value);
-		});
-	}, []);
-
-	return [panelState, setPanelState];
-};
-
 export default function SegmentsExperimentApp({context}) {
-	const [panelState, setPanelState] = useInitialPanelState();
 	const [eventTriggered, setEventTriggered] = useState(false);
 
-	const {namespace} = context;
-	const {segmentExperimentDataURL} = context;
+	const {isPanelStateOpen, namespace, segmentExperimentDataURL} = context;
 
 	const segmentsExperimentPanelToggle = document.getElementById(
 		`${namespace}segmentsExperimentPanelToggleId`
@@ -58,7 +42,6 @@ export default function SegmentsExperimentApp({context}) {
 					SEGMENTS_EXPERIMENT_PANEL_ID,
 					SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE
 				);
-				setPanelState(SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE);
 			});
 
 			sidenavInstance.on('closed.lexicon.sidenav', () => {
@@ -66,14 +49,13 @@ export default function SegmentsExperimentApp({context}) {
 					SEGMENTS_EXPERIMENT_PANEL_ID,
 					SEGMENTS_EXPERIMENT_CLOSED_PANEL_VALUE
 				);
-				setPanelState(SEGMENTS_EXPERIMENT_CLOSED_PANEL_VALUE);
 			});
 
 			Liferay.once('screenLoad', () => {
 				Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
 			});
 		}
-	}, [segmentsExperimentPanelToggle, setPanelState]);
+	}, [segmentsExperimentPanelToggle]);
 
 	useEventListener(
 		'mouseenter',
@@ -94,9 +76,7 @@ export default function SegmentsExperimentApp({context}) {
 			<SegmentsExperimentsMain
 				eventTriggered={eventTriggered}
 				fetchDataURL={segmentExperimentDataURL}
-				isPanelStateOpen={
-					panelState === SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE
-				}
+				isPanelStateOpen={isPanelStateOpen}
 			/>
 		</div>
 	);

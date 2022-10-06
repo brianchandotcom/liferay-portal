@@ -286,12 +286,15 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			SegmentsExperimentConfiguration.class, properties);
 	}
 
-	private Map<String, Object> _getData(HttpServletRequest httpServletRequest)
+	private Map<String, Object> _getData(
+			HttpServletRequest httpServletRequest, boolean panelStateOpen)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
 			"context",
 			HashMapBuilder.<String, Object>put(
+				"isPanelStateOpen", panelStateOpen
+			).put(
 				"namespace",
 				_portal.getPortletNamespace(
 					SegmentsPortletKeys.SEGMENTS_EXPERIMENT)
@@ -436,7 +439,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			sb.append("<div class=\"");
 
-			if (isPanelStateOpen(httpServletRequest)) {
+			boolean panelStateOpen = isPanelStateOpen(httpServletRequest);
+
+			if (panelStateOpen) {
 				sb.append(
 					"lfr-has-segments-experiment-panel open-admin-panel ");
 			}
@@ -485,7 +490,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 				new ComponentDescriptor(
 					_npmResolver.resolveModuleName("segments-experiment-web") +
 						"/js/SegmentsExperimentApp.es"),
-				_getData(httpServletRequest), httpServletRequest, jspWriter);
+				_getData(httpServletRequest, panelStateOpen),
+				httpServletRequest, jspWriter);
 
 			jspWriter.write("</div></div></div></div>");
 		}

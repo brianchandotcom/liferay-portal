@@ -79,7 +79,7 @@ public class CPOptionCategoryLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		validate(0, user.getCompanyId(), key);
+		_validate(0, user.getCompanyId(), key);
 
 		long cpOptionCategoryId = counterLocalService.increment();
 
@@ -205,10 +205,10 @@ public class CPOptionCategoryLocalServiceImpl
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, keywords, start, end, sort);
 
-		return searchCPOptionCategories(searchContext);
+		return _searchCPOptionCategories(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -223,7 +223,7 @@ public class CPOptionCategoryLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		validate(
+		_validate(
 			cpOptionCategory.getCPOptionCategoryId(),
 			cpOptionCategory.getCompanyId(), key);
 
@@ -235,7 +235,7 @@ public class CPOptionCategoryLocalServiceImpl
 		return cpOptionCategoryPersistence.update(cpOptionCategory);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -276,7 +276,7 @@ public class CPOptionCategoryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CPOptionCategory> getCPOptionCategories(Hits hits)
+	private List<CPOptionCategory> _getCPOptionCategories(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -308,7 +308,7 @@ public class CPOptionCategoryLocalServiceImpl
 		return cpOptionCategories;
 	}
 
-	protected BaseModelSearchResult<CPOptionCategory> searchCPOptionCategories(
+	private BaseModelSearchResult<CPOptionCategory> _searchCPOptionCategories(
 			SearchContext searchContext)
 		throws PortalException {
 
@@ -319,14 +319,14 @@ public class CPOptionCategoryLocalServiceImpl
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			return new BaseModelSearchResult<>(
-				getCPOptionCategories(hits), hits.getLength());
+				_getCPOptionCategories(hits), hits.getLength());
 		}
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validate(long cpOptionCategoryId, long companyId, String key)
+	private void _validate(long cpOptionCategoryId, long companyId, String key)
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =

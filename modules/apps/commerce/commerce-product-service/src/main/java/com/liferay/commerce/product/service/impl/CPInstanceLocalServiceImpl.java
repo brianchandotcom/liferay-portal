@@ -229,7 +229,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
 		}
 
-		reindexCPDefinition(cpDefinitionId);
+		_reindexCPDefinition(cpDefinitionId);
 
 		if (!_isWorkflowActionPublish(serviceContext)) {
 			return cpInstance;
@@ -264,7 +264,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		// Workflow
 
 		if (cpInstance.getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			cpInstance = startWorkflowInstance(
+			cpInstance = _startWorkflowInstance(
 				user.getUserId(), cpInstance, serviceContext);
 		}
 
@@ -358,7 +358,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				continue;
 			}
 
-			addCPInstance(
+			_addCPInstance(
 				cpDefinitionId, cpDefinition.getGroupId(), sku,
 				StringPool.BLANK, StringPool.BLANK, true,
 				_toCpDefinitionOptionRelIdCPDefinitionOptionValueRelIds(
@@ -374,7 +374,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public void checkCPInstances(long cpDefinitionId) throws PortalException {
 		checkCPInstancesByDisplayDate(cpDefinitionId);
-		checkCPInstancesByExpirationDate();
+		_checkCPInstancesByExpirationDate();
 	}
 
 	@Override
@@ -468,7 +468,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
-		reindexCPDefinition(cpInstance.getCPDefinitionId());
+		_reindexCPDefinition(cpInstance.getCPDefinitionId());
 
 		return cpInstance;
 	}
@@ -700,7 +700,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, cpDefinitionId, keywords, status, start, end, sort);
 
 		return searchCPInstances(searchContext);
@@ -712,7 +712,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, cpDefinitionId, keywords, status, sort);
 
 		return searchCPInstances(searchContext);
@@ -724,7 +724,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupIds, keywords, status, start, end, sort);
 
 		return searchCPInstances(searchContext);
@@ -736,7 +736,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, keywords, status, start, end, sort);
 
 		return searchCPInstances(searchContext);
@@ -753,7 +753,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			List<CPInstance> cpInstances = getCPInstances(hits);
+			List<CPInstance> cpInstances = _getCPInstances(hits);
 
 			if (cpInstances != null) {
 				return new BaseModelSearchResult<>(
@@ -857,7 +857,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
-		reindexCPDefinition(cpInstance.getCPDefinitionId());
+		_reindexCPDefinition(cpInstance.getCPDefinitionId());
 
 		if (!_isWorkflowActionPublish(serviceContext)) {
 			return cpInstance;
@@ -888,7 +888,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
 			_isWorkflowActionPublish(serviceContext)) {
 
-			cpInstance = startWorkflowInstance(
+			cpInstance = _startWorkflowInstance(
 				user.getUserId(), cpInstance, serviceContext);
 		}
 
@@ -1062,7 +1062,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstancePersistence.update(cpInstance);
 	}
 
-	protected CPInstance addCPInstance(
+	private CPInstance _addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			Map<Long, List<Long>>
@@ -1073,14 +1073,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCPInstance(
+		return _addCPInstance(
 			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
 			purchasable, cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
 			width, height, depth, weight, price, promoPrice, cost, published,
 			displayDate, expirationDate, neverExpire, null, serviceContext);
 	}
 
-	protected CPInstance addCPInstance(
+	private CPInstance _addCPInstance(
 			long cpDefinitionId, long groupId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			Map<Long, List<Long>>
@@ -1132,7 +1132,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			false, null, 0, 0, 0, 0, serviceContext);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long cpDefinitionId, String keywords, int status,
 		int start, int end, Sort sort) {
 
@@ -1174,7 +1174,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long cpDefinitionId, String keywords, int status,
 		Sort sort) {
 
@@ -1213,7 +1213,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long[] groupIds, String keywords, int status, int start,
 		int end, Sort sort) {
 
@@ -1252,7 +1252,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, String keywords, int status, int start, int end,
 		Sort sort) {
 
@@ -1290,7 +1290,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected void checkCPInstancesByExpirationDate() throws PortalException {
+	private void _checkCPInstancesByExpirationDate() throws PortalException {
 		List<CPInstance> cpInstances = cpInstanceFinder.findByExpirationDate(
 			new Date(),
 			new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
@@ -1316,59 +1316,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					WorkflowConstants.STATUS_EXPIRED);
 			}
 		}
-	}
-
-	protected List<CPInstance> getCPInstances(Hits hits)
-		throws PortalException {
-
-		List<Document> documents = hits.toList();
-
-		List<CPInstance> cpInstances = new ArrayList<>(documents.size());
-
-		for (Document document : documents) {
-			long cpInstanceId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			CPInstance cpInstance = fetchCPInstance(cpInstanceId);
-
-			if (cpInstance == null) {
-				cpInstances = null;
-
-				Indexer<CPInstance> indexer = IndexerRegistryUtil.getIndexer(
-					CPInstance.class);
-
-				long companyId = GetterUtil.getLong(
-					document.get(Field.COMPANY_ID));
-
-				indexer.delete(companyId, document.getUID());
-			}
-			else if (cpInstances != null) {
-				cpInstances.add(cpInstance);
-			}
-		}
-
-		return cpInstances;
-	}
-
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
-	}
-
-	protected CPInstance startWorkflowInstance(
-			long userId, CPInstance cpInstance, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
-			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-			cpInstance, serviceContext, workflowContext);
 	}
 
 	private void _checkReplacementCPInstance(
@@ -1466,6 +1413,36 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				serviceContext.getUserId(), curCPInstance.getCPInstanceId(),
 				WorkflowConstants.STATUS_EXPIRED);
 		}
+	}
+
+	private List<CPInstance> _getCPInstances(Hits hits) throws PortalException {
+		List<Document> documents = hits.toList();
+
+		List<CPInstance> cpInstances = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long cpInstanceId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPInstance cpInstance = fetchCPInstance(cpInstanceId);
+
+			if (cpInstance == null) {
+				cpInstances = null;
+
+				Indexer<CPInstance> indexer = IndexerRegistryUtil.getIndexer(
+					CPInstance.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (cpInstances != null) {
+				cpInstances.add(cpInstance);
+			}
+		}
+
+		return cpInstances;
 	}
 
 	private String _getSKU(
@@ -1601,6 +1578,27 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return false;
+	}
+
+	private void _reindexCPDefinition(long cpDefinitionId)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
+	}
+
+	private CPInstance _startWorkflowInstance(
+			long userId, CPInstance cpInstance, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
+			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
+			cpInstance, serviceContext, workflowContext);
 	}
 
 	private Map<Long, List<Long>>

@@ -202,11 +202,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry = cpAttachmentFileEntryPersistence.update(
 			cpAttachmentFileEntry);
 
-		reindex(classNameId, classPK);
+		_reindex(classNameId, classPK);
 
 		// Workflow
 
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), cpAttachmentFileEntry, serviceContext);
 	}
 
@@ -264,8 +264,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Override
 	public void checkCPAttachmentFileEntries() throws PortalException {
-		checkCPAttachmentFileEntriesByDisplayDate();
-		checkCPAttachmentFileEntriesByExpirationDate();
+		_checkCPAttachmentFileEntriesByDisplayDate();
+		_checkCPAttachmentFileEntriesByExpirationDate();
 	}
 
 	@Override
@@ -366,7 +366,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
-		reindex(
+		_reindex(
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK());
 
@@ -711,7 +711,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		// Workflow
 
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), cpAttachmentFileEntry, serviceContext);
 	}
 
@@ -759,20 +759,20 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry = cpAttachmentFileEntryPersistence.update(
 			cpAttachmentFileEntry);
 
-		reindex(
+		_reindex(
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK());
 
 		return cpAttachmentFileEntry;
 	}
 
-	protected void checkCPAttachmentFileEntriesByDisplayDate()
+	private void _checkCPAttachmentFileEntriesByDisplayDate()
 		throws PortalException {
 
 		checkCPAttachmentFileEntriesByDisplayDate(0, 0);
 	}
 
-	protected void checkCPAttachmentFileEntriesByExpirationDate()
+	private void _checkCPAttachmentFileEntriesByExpirationDate()
 		throws PortalException {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
@@ -808,36 +808,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					new HashMap<String, Serializable>());
 			}
 		}
-	}
-
-	protected void reindex(long classNameId, long classPK)
-		throws PortalException {
-
-		ClassName className = _classNameLocalService.getClassName(classNameId);
-
-		String classNameValue = className.getValue();
-
-		if (classNameValue.equals(CPDefinition.class.getName())) {
-			Indexer<CPDefinition> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
-
-			indexer.reindex(CPDefinition.class.getName(), classPK);
-		}
-	}
-
-	protected CPAttachmentFileEntry startWorkflowInstance(
-			long userId, CPAttachmentFileEntry cpAttachmentFileEntry,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			cpAttachmentFileEntry.getCompanyId(),
-			cpAttachmentFileEntry.getGroupId(), userId,
-			CPAttachmentFileEntry.class.getName(),
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-			cpAttachmentFileEntry, serviceContext, workflowContext);
 	}
 
 	private long _getFileEntryId(
@@ -945,6 +915,36 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		).put(
 			defaultLocale, defaultTitle
 		).build();
+	}
+
+	private void _reindex(long classNameId, long classPK)
+		throws PortalException {
+
+		ClassName className = _classNameLocalService.getClassName(classNameId);
+
+		String classNameValue = className.getValue();
+
+		if (classNameValue.equals(CPDefinition.class.getName())) {
+			Indexer<CPDefinition> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+
+			indexer.reindex(CPDefinition.class.getName(), classPK);
+		}
+	}
+
+	private CPAttachmentFileEntry _startWorkflowInstance(
+			long userId, CPAttachmentFileEntry cpAttachmentFileEntry,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			cpAttachmentFileEntry.getCompanyId(),
+			cpAttachmentFileEntry.getGroupId(), userId,
+			CPAttachmentFileEntry.class.getName(),
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+			cpAttachmentFileEntry, serviceContext, workflowContext);
 	}
 
 	private void _validate(

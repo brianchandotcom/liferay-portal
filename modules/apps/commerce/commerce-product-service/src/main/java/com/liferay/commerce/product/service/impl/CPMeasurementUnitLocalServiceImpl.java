@@ -56,7 +56,7 @@ public class CPMeasurementUnitLocalServiceImpl
 			rate = 1;
 		}
 
-		validate(
+		_validate(
 			externalReferenceCode, 0, serviceContext.getCompanyId(), key,
 			primary, type);
 
@@ -271,7 +271,7 @@ public class CPMeasurementUnitLocalServiceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId);
 
-		validate(
+		_validate(
 			cpMeasurementUnit.getExternalReferenceCode(), cpMeasurementUnitId,
 			cpMeasurementUnit.getCompanyId(), cpMeasurementUnit.getKey(),
 			primary, cpMeasurementUnit.getType());
@@ -296,7 +296,7 @@ public class CPMeasurementUnitLocalServiceImpl
 			rate = 1;
 		}
 
-		validate(
+		_validate(
 			externalReferenceCode, cpMeasurementUnit.getCPMeasurementUnitId(),
 			serviceContext.getCompanyId(), key, primary, type);
 
@@ -314,7 +314,27 @@ public class CPMeasurementUnitLocalServiceImpl
 		return cpMeasurementUnitPersistence.update(cpMeasurementUnit);
 	}
 
-	protected void validate(
+	private void _addCPMeasurementUnit(
+			String name, String key, double rate, boolean primary,
+			double priority, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			serviceContext.getLocale(), name
+		).build();
+
+		CPMeasurementUnit cpMeasurementUnit =
+			cpMeasurementUnitPersistence.fetchByC_K(
+				serviceContext.getCompanyId(), key);
+
+		if (cpMeasurementUnit == null) {
+			cpMeasurementUnitLocalService.addCPMeasurementUnit(
+				null, nameMap, key, rate, primary, priority, type,
+				serviceContext);
+		}
+	}
+
+	private void _validate(
 			String externalReferenceCode, long cpMeasurementUnitId,
 			long companyId, String key, boolean primary, int type)
 		throws PortalException {
@@ -362,26 +382,6 @@ public class CPMeasurementUnitLocalServiceImpl
 					cpMeasurementUnitPersistence.update(curCPMeasurementUnit);
 				}
 			}
-		}
-	}
-
-	private void _addCPMeasurementUnit(
-			String name, String key, double rate, boolean primary,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			serviceContext.getLocale(), name
-		).build();
-
-		CPMeasurementUnit cpMeasurementUnit =
-			cpMeasurementUnitPersistence.fetchByC_K(
-				serviceContext.getCompanyId(), key);
-
-		if (cpMeasurementUnit == null) {
-			cpMeasurementUnitLocalService.addCPMeasurementUnit(
-				null, nameMap, key, rate, primary, priority, type,
-				serviceContext);
 		}
 	}
 

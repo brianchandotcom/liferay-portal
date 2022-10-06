@@ -202,7 +202,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionId);
+		_reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionOptionRel;
 	}
@@ -274,7 +274,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
+		_reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
@@ -615,10 +615,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				String keywords, int start, int end, Sort[] sorts)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, cpDefinitionId, keywords, start, end, sorts);
 
-		return searchCPOptions(searchContext);
+		return _searchCPOptions(searchContext);
 	}
 
 	@Override
@@ -626,11 +626,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			long companyId, long groupId, long cpDefinitionId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, cpDefinitionId, keywords, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		return searchCPDefinitionOptionRelsCount(searchContext);
+		return _searchCPDefinitionOptionRelsCount(searchContext);
 	}
 
 	@Override
@@ -706,12 +706,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
+		_reindexCPDefinition(cpDefinitionOptionRel.getCPDefinitionId());
 
 		return cpDefinitionOptionRel;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long groupId, long cpDefinitionId, String keywords,
 		int start, int end, Sort[] sorts) {
 
@@ -754,7 +754,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CPDefinitionOptionRel> getCPDefinitionOptionRels(Hits hits)
+	private List<CPDefinitionOptionRel> _getCPDefinitionOptionRels(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -788,47 +788,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRels;
 	}
 
-	protected void reindexCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
-	}
-
-	protected int searchCPDefinitionOptionRelsCount(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CPDefinitionOptionRel> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionOptionRel.class);
-
-		return GetterUtil.getInteger(indexer.searchCount(searchContext));
-	}
-
-	protected BaseModelSearchResult<CPDefinitionOptionRel> searchCPOptions(
-			SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CPDefinitionOptionRel> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionOptionRel.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				getCPDefinitionOptionRels(hits);
-
-			if (cpDefinitionOptionRels != null) {
-				return new BaseModelSearchResult<>(
-					cpDefinitionOptionRels, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
 	private CPOptionConfiguration _getCPOptionConfiguration()
 		throws ConfigurationException {
 
@@ -848,6 +807,47 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _reindexCPDefinition(long cpDefinitionId)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
+	}
+
+	private int _searchCPDefinitionOptionRelsCount(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinitionOptionRel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionOptionRel.class);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
+	}
+
+	private BaseModelSearchResult<CPDefinitionOptionRel> _searchCPOptions(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinitionOptionRel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionOptionRel.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				_getCPDefinitionOptionRels(hits);
+
+			if (cpDefinitionOptionRels != null) {
+				return new BaseModelSearchResult<>(
+					cpDefinitionOptionRels, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	private void _updateCPDefinitionIgnoreSKUCombinations(

@@ -66,7 +66,7 @@ public class CPAttachmentFileEntryServiceImpl
 			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(
+		_checkCPAttachmentFileEntryPermissions(
 			serviceContext.getScopeGroupId(), classNameId, classPK, type);
 
 		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
@@ -105,11 +105,11 @@ public class CPAttachmentFileEntryServiceImpl
 		}
 
 		if (cpAttachmentFileEntry == null) {
-			checkCPAttachmentFileEntryPermissions(
+			_checkCPAttachmentFileEntryPermissions(
 				serviceContext.getScopeGroupId(), classNameId, classPK, type);
 		}
 		else {
-			checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+			_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
 		}
 
 		return cpAttachmentFileEntryLocalService.
@@ -127,7 +127,7 @@ public class CPAttachmentFileEntryServiceImpl
 	public void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+		_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
 		cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
 			cpAttachmentFileEntryId);
@@ -153,7 +153,7 @@ public class CPAttachmentFileEntryServiceImpl
 					cpAttachmentFileEntry.getClassPK(), ActionKeys.VIEW);
 			}
 			else {
-				checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+				_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
 			}
 		}
 
@@ -190,7 +190,7 @@ public class CPAttachmentFileEntryServiceImpl
 					ActionKeys.VIEW);
 			}
 			else {
-				checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+				_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 			}
 		}
 
@@ -203,7 +203,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int end)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(
+		_checkCPAttachmentFileEntryPermissions(
 			classNameId, classPK, ActionKeys.VIEW);
 
 		List<CPAttachmentFileEntry> filteredCPAttachmentFileEntries =
@@ -239,7 +239,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(
+		_checkCPAttachmentFileEntryPermissions(
 			classNameId, classPK, ActionKeys.VIEW);
 
 		List<CPAttachmentFileEntry> filteredCPAttachmentFileEntries =
@@ -276,7 +276,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int status, int start, int end)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(
+		_checkCPAttachmentFileEntryPermissions(
 			classNameId, classPK, ActionKeys.VIEW);
 
 		List<CPAttachmentFileEntry> filteredCPAttachmentFileEntries =
@@ -311,7 +311,7 @@ public class CPAttachmentFileEntryServiceImpl
 			long classNameId, long classPK, int type, int status)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(
+		_checkCPAttachmentFileEntryPermissions(
 			classNameId, classPK, ActionKeys.VIEW);
 
 		return cpAttachmentFileEntryLocalService.
@@ -324,7 +324,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int status)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(
+		_checkCPAttachmentFileEntryPermissions(
 			classNameId, classPK, ActionKeys.VIEW);
 
 		return cpAttachmentFileEntryLocalService.
@@ -362,7 +362,7 @@ public class CPAttachmentFileEntryServiceImpl
 					ActionKeys.VIEW);
 			}
 			else {
-				checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+				_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 			}
 		}
 
@@ -381,7 +381,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+		_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
 		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 			getUserId(), cpAttachmentFileEntryId, fileEntryId, cdnEnabled,
@@ -390,59 +390,6 @@ public class CPAttachmentFileEntryServiceImpl
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, titleMap, json, priority, type,
 			serviceContext);
-	}
-
-	protected void checkCPAttachmentFileEntryPermissions(
-			CPAttachmentFileEntry cpAttachmentFileEntry)
-		throws PortalException {
-
-		checkCPAttachmentFileEntryPermissions(
-			cpAttachmentFileEntry.getGroupId(),
-			cpAttachmentFileEntry.getClassNameId(),
-			cpAttachmentFileEntry.getClassPK(),
-			cpAttachmentFileEntry.getType());
-	}
-
-	protected void checkCPAttachmentFileEntryPermissions(
-			long cpAttachmentFileEntryId)
-		throws PortalException {
-
-		checkCPAttachmentFileEntryPermissions(
-			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
-				cpAttachmentFileEntryId));
-	}
-
-	protected void checkCPAttachmentFileEntryPermissions(
-			long scopeGroupId, long classNameId, long classPK, int type)
-		throws PortalException {
-
-		String actionKey = getActionKeyByCPAttachmentFileEntryType(type);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), scopeGroupId, actionKey);
-
-		checkCPAttachmentFileEntryPermissions(
-			classNameId, classPK, ActionKeys.UPDATE);
-	}
-
-	protected void checkCPAttachmentFileEntryPermissions(
-			long classNameId, long classPK, String actionId)
-		throws PortalException {
-
-		long cpDefinitionClassNameId = _portal.getClassNameId(
-			CPDefinition.class);
-
-		if (classNameId == cpDefinitionClassNameId) {
-			_checkCommerceCatalog(classPK, actionId);
-		}
-	}
-
-	protected String getActionKeyByCPAttachmentFileEntryType(int type) {
-		if (type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
-			return CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS;
-		}
-
-		return CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES;
 	}
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
@@ -465,6 +412,59 @@ public class CPAttachmentFileEntryServiceImpl
 
 		_commerceCatalogModelResourcePermission.check(
 			getPermissionChecker(), commerceCatalog, actionId);
+	}
+
+	private void _checkCPAttachmentFileEntryPermissions(
+			CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws PortalException {
+
+		_checkCPAttachmentFileEntryPermissions(
+			cpAttachmentFileEntry.getGroupId(),
+			cpAttachmentFileEntry.getClassNameId(),
+			cpAttachmentFileEntry.getClassPK(),
+			cpAttachmentFileEntry.getType());
+	}
+
+	private void _checkCPAttachmentFileEntryPermissions(
+			long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		_checkCPAttachmentFileEntryPermissions(
+			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
+				cpAttachmentFileEntryId));
+	}
+
+	private void _checkCPAttachmentFileEntryPermissions(
+			long scopeGroupId, long classNameId, long classPK, int type)
+		throws PortalException {
+
+		String actionKey = _getActionKeyByCPAttachmentFileEntryType(type);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), scopeGroupId, actionKey);
+
+		_checkCPAttachmentFileEntryPermissions(
+			classNameId, classPK, ActionKeys.UPDATE);
+	}
+
+	private void _checkCPAttachmentFileEntryPermissions(
+			long classNameId, long classPK, String actionId)
+		throws PortalException {
+
+		long cpDefinitionClassNameId = _portal.getClassNameId(
+			CPDefinition.class);
+
+		if (classNameId == cpDefinitionClassNameId) {
+			_checkCommerceCatalog(classPK, actionId);
+		}
+	}
+
+	private String _getActionKeyByCPAttachmentFileEntryType(int type) {
+		if (type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
+			return CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS;
+		}
+
+		return CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES;
 	}
 
 	private static volatile ModelResourcePermission<CommerceCatalog>

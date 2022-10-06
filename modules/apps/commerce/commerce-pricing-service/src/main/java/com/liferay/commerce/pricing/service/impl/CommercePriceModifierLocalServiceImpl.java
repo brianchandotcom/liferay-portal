@@ -136,7 +136,7 @@ public class CommercePriceModifierLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		validateExternalReferenceCode(
+		_validateExternalReferenceCode(
 			externalReferenceCode, serviceContext.getCompanyId());
 
 		// Commerce price modifier
@@ -161,7 +161,7 @@ public class CommercePriceModifierLocalServiceImpl
 
 		long commercePriceModifierId = counterLocalService.increment();
 
-		validate(title, target, modifierType, modifierAmount);
+		_validate(title, target, modifierType, modifierAmount);
 
 		CommercePriceModifier commercePriceModifier =
 			commercePriceModifierPersistence.create(commercePriceModifierId);
@@ -198,7 +198,7 @@ public class CommercePriceModifierLocalServiceImpl
 
 		// Workflow
 
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), commercePriceModifier, serviceContext);
 	}
 
@@ -270,8 +270,8 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@Override
 	public void checkCommercePriceModifiers() throws PortalException {
-		checkCommercePriceModifiersByDisplayDate();
-		checkCommercePriceModifiersByExpirationDate();
+		_checkCommercePriceModifiersByDisplayDate();
+		_checkCommercePriceModifiersByExpirationDate();
 	}
 
 	@Override
@@ -420,7 +420,7 @@ public class CommercePriceModifierLocalServiceImpl
 			commercePriceModifierPersistence.findByPrimaryKey(
 				commercePriceModifierId);
 
-		validate(title, target, modifierType, modifierAmount);
+		_validate(title, target, modifierType, modifierAmount);
 
 		String currentTarget = commercePriceModifier.getTarget();
 
@@ -472,7 +472,7 @@ public class CommercePriceModifierLocalServiceImpl
 		commercePriceModifier = commercePriceModifierPersistence.update(
 			commercePriceModifier);
 
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), commercePriceModifier, serviceContext);
 	}
 
@@ -527,7 +527,7 @@ public class CommercePriceModifierLocalServiceImpl
 		return commercePriceModifierPersistence.update(commercePriceModifier);
 	}
 
-	protected void checkCommercePriceModifiersByDisplayDate()
+	private void _checkCommercePriceModifiersByDisplayDate()
 		throws PortalException {
 
 		List<CommercePriceModifier> commercePriceModifiers =
@@ -553,7 +553,7 @@ public class CommercePriceModifierLocalServiceImpl
 		}
 	}
 
-	protected void checkCommercePriceModifiersByExpirationDate()
+	private void _checkCommercePriceModifiersByExpirationDate()
 		throws PortalException {
 
 		List<CommercePriceModifier> commercePriceModifiers =
@@ -590,7 +590,33 @@ public class CommercePriceModifierLocalServiceImpl
 		}
 	}
 
-	protected CommercePriceModifier startWorkflowInstance(
+	private long[] _getAssetCategoryIds(long cpDefinitionId) {
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				CPDefinition.class.getName(), cpDefinitionId);
+
+			Set<AssetCategory> assetCategories = new HashSet<>();
+
+			for (AssetCategory assetCategory : assetEntry.getCategories()) {
+				assetCategories.add(assetCategory);
+				assetCategories.addAll(assetCategory.getAncestors());
+			}
+
+			Stream<AssetCategory> stream = assetCategories.stream();
+
+			LongStream longStream = stream.mapToLong(
+				AssetCategory::getCategoryId);
+
+			return longStream.toArray();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return new long[0];
+	}
+
+	private CommercePriceModifier _startWorkflowInstance(
 			long userId, CommercePriceModifier commercePriceModifier,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -604,7 +630,7 @@ public class CommercePriceModifierLocalServiceImpl
 			commercePriceModifier, serviceContext, workflowContext);
 	}
 
-	protected void validate(
+	private void _validate(
 			String title, String target, String modifierType,
 			BigDecimal modifierAmount)
 		throws PortalException {
@@ -635,7 +661,7 @@ public class CommercePriceModifierLocalServiceImpl
 		}
 	}
 
-	protected void validateExternalReferenceCode(
+	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {
 
@@ -652,32 +678,6 @@ public class CommercePriceModifierLocalServiceImpl
 				"There is another commerce price modifier with external " +
 					"reference code " + externalReferenceCode);
 		}
-	}
-
-	private long[] _getAssetCategoryIds(long cpDefinitionId) {
-		try {
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				CPDefinition.class.getName(), cpDefinitionId);
-
-			Set<AssetCategory> assetCategories = new HashSet<>();
-
-			for (AssetCategory assetCategory : assetEntry.getCategories()) {
-				assetCategories.add(assetCategory);
-				assetCategories.addAll(assetCategory.getAncestors());
-			}
-
-			Stream<AssetCategory> stream = assetCategories.stream();
-
-			LongStream longStream = stream.mapToLong(
-				AssetCategory::getCategoryId);
-
-			return longStream.toArray();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return new long[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -94,7 +94,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionId);
+		_reindexCPDefinition(cpDefinitionId);
 
 		return cpDefinitionSpecificationOptionValue;
 	}
@@ -154,7 +154,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			cpDefinitionSpecificationOptionValue.
 				getCPDefinitionSpecificationOptionValueId());
 
-		reindexCPDefinition(
+		_reindexCPDefinition(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
@@ -206,7 +206,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionId);
+		_reindexCPDefinition(cpDefinitionId);
 	}
 
 	@Override
@@ -231,7 +231,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 			// Commerce product definition
 
-			reindexCPDefinition(
+			_reindexCPDefinition(
 				cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 		}
 	}
@@ -349,7 +349,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(
+		_reindexCPDefinition(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
@@ -391,13 +391,13 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(
+		_reindexCPDefinition(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
 	}
 
-	protected void reindexCPDefinition(long cpDefinitionId)
+	private void _reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(

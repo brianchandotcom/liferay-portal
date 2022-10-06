@@ -351,24 +351,24 @@ public class CommerceChannelLocalServiceImpl
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, start, end, sort);
 
 		searchContext.setKeywords(keywords);
 
-		return search(searchContext);
+		return _search(searchContext);
 	}
 
 	@Override
 	public int searchCommerceChannelsCount(long companyId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		searchContext.setKeywords(keywords);
 
-		return searchCommerceChannelsCount(searchContext);
+		return _searchCommerceChannelsCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -430,7 +430,7 @@ public class CommerceChannelLocalServiceImpl
 		return commerceChannelPersistence.update(commerceChannel);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -452,7 +452,7 @@ public class CommerceChannelLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceChannel> getCommerceChannels(Hits hits)
+	private List<CommerceChannel> _getCommerceChannels(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -486,41 +486,6 @@ public class CommerceChannelLocalServiceImpl
 		return commerceChannels;
 	}
 
-	protected List<CommerceChannel> search(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommerceChannel> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceChannel.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CommerceChannel> commerceChannels = getCommerceChannels(hits);
-
-			if (commerceChannels != null) {
-				return commerceChannels;
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	protected int searchCommerceChannelsCount(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommerceChannel> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceChannel.class);
-
-		return GetterUtil.getInteger(indexer.searchCount(searchContext));
-	}
-
-	protected void validate(long siteGroupId) throws PortalException {
-		if (fetchCommerceChannelBySiteGroupId(siteGroupId) != null) {
-			throw new DuplicateCommerceChannelSiteGroupIdException();
-		}
-	}
-
 	private GroupByStep _getGroupByStep(
 			JoinStep joinStep, Long companyId, String keywords,
 			Expression<String> keywordsPredicateExpression)
@@ -542,6 +507,41 @@ public class CommerceChannelLocalServiceImpl
 					return null;
 				}
 			));
+	}
+
+	private List<CommerceChannel> _search(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceChannel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceChannel.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceChannel> commerceChannels = _getCommerceChannels(hits);
+
+			if (commerceChannels != null) {
+				return commerceChannels;
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	private int _searchCommerceChannelsCount(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceChannel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceChannel.class);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
+	}
+
+	private void _validate(long siteGroupId) throws PortalException {
+		if (fetchCommerceChannelBySiteGroupId(siteGroupId) != null) {
+			throw new DuplicateCommerceChannelSiteGroupIdException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

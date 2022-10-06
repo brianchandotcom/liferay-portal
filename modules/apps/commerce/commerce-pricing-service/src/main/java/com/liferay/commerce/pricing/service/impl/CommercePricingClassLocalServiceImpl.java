@@ -97,7 +97,7 @@ public class CommercePricingClassLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(titleMap);
+		_validate(titleMap);
 
 		long commercePricingClassId = counterLocalService.increment();
 
@@ -299,10 +299,10 @@ public class CommercePricingClassLocalServiceImpl
 				long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, keywords, start, end, sort);
 
-		return searchCommercePricingClasses(searchContext);
+		return _searchCommercePricingClasses(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -319,7 +319,7 @@ public class CommercePricingClassLocalServiceImpl
 			commercePricingClassPersistence.findByPrimaryKey(
 				commercePricingClassId);
 
-		validate(titleMap);
+		_validate(titleMap);
 
 		commercePricingClass.setCompanyId(serviceContext.getCompanyId());
 		commercePricingClass.setUserId(user.getUserId());
@@ -355,7 +355,7 @@ public class CommercePricingClassLocalServiceImpl
 			commercePricingClass);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -394,7 +394,7 @@ public class CommercePricingClassLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommercePricingClass> getCommercePricingClasses(Hits hits)
+	private List<CommercePricingClass> _getCommercePricingClasses(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -428,8 +428,8 @@ public class CommercePricingClassLocalServiceImpl
 		return commercePricingClasses;
 	}
 
-	protected BaseModelSearchResult<CommercePricingClass>
-			searchCommercePricingClasses(SearchContext searchContext)
+	private BaseModelSearchResult<CommercePricingClass>
+			_searchCommercePricingClasses(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CommercePricingClass> indexer =
@@ -439,7 +439,7 @@ public class CommercePricingClassLocalServiceImpl
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			List<CommercePricingClass> commercePricingClasses =
-				getCommercePricingClasses(hits);
+				_getCommercePricingClasses(hits);
 
 			if (commercePricingClasses != null) {
 				return new BaseModelSearchResult<>(
@@ -451,7 +451,7 @@ public class CommercePricingClassLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validate(Map<Locale, String> titleMap)
+	private void _validate(Map<Locale, String> titleMap)
 		throws PortalException {
 
 		if ((titleMap == null) || titleMap.isEmpty()) {

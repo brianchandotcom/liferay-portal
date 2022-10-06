@@ -117,7 +117,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		validate(0, cpDefinitionOptionRelId, key);
+		_validate(0, cpDefinitionOptionRelId, key);
 
 		long cpDefinitionOptionValueRelId = counterLocalService.increment();
 
@@ -171,7 +171,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel);
+		_reindexCPDefinition(cpDefinitionOptionRel);
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -220,7 +220,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel);
+		_reindexCPDefinition(cpDefinitionOptionRel);
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -534,11 +534,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				String keywords, int start, int end, Sort[] sorts)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, cpDefinitionOptionRelId, keywords, start, end,
 			sorts);
 
-		return searchCPOptions(searchContext);
+		return _searchCPOptions(searchContext);
 	}
 
 	@Override
@@ -547,11 +547,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, cpDefinitionOptionRelId, keywords,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return searchCPOptionsCount(searchContext);
+		return _searchCPOptionsCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -571,7 +571,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		validate(
+		_validate(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(), key);
 
@@ -627,7 +627,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionOptionRel);
+		_reindexCPDefinition(cpDefinitionOptionRel);
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -645,7 +645,30 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRel, preselected);
 	}
 
-	protected SearchContext buildSearchContext(
+	private void _addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, List<CPOptionValue> cpOptionValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		for (CPOptionValue cpOptionValue : cpOptionValues) {
+			if (_hasCustomAttributes(cpOptionValue)) {
+				ExpandoBridge expandoBridge = cpOptionValue.getExpandoBridge();
+
+				serviceContext.setExpandoBridgeAttributes(
+					expandoBridge.getAttributes());
+			}
+			else {
+				serviceContext.setExpandoBridgeAttributes(
+					Collections.emptyMap());
+			}
+
+			cpDefinitionOptionValueRelLocalService.
+				addCPDefinitionOptionValueRel(
+					cpDefinitionOptionRelId, cpOptionValue, serviceContext);
+		}
+	}
+
+	private SearchContext _buildSearchContext(
 		long companyId, long groupId, long cpDefinitionOptionRelId,
 		String keywords, int start, int end, Sort[] sorts) {
 
@@ -690,7 +713,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+	private List<CPDefinitionOptionValueRel> _getCPDefinitionOptionValueRels(
 			Hits hits)
 		throws PortalException {
 
@@ -726,92 +749,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return cpDefinitionOptionValueRels;
 	}
 
-	protected void reindexCPDefinition(
-			CPDefinitionOptionRel cpDefinitionOptionRel)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.reindex(
-			CPDefinition.class.getName(),
-			cpDefinitionOptionRel.getCPDefinitionId());
-	}
-
-	protected BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPOptions(
-			SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CPDefinitionOptionValueRel> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(
-				CPDefinitionOptionValueRel.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				getCPDefinitionOptionValueRels(hits);
-
-			if (cpDefinitionOptionValueRels != null) {
-				return new BaseModelSearchResult<>(
-					cpDefinitionOptionValueRels, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	protected int searchCPOptionsCount(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CPDefinitionOptionValueRel> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(
-				CPDefinitionOptionValueRel.class);
-
-		return GetterUtil.getInteger(indexer.searchCount(searchContext));
-	}
-
-	protected void validate(
-			long cpDefinitionOptionValueRelId, long cpDefinitionOptionRelId,
-			String key)
-		throws PortalException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			cpDefinitionOptionValueRelPersistence.fetchByC_K(
-				cpDefinitionOptionRelId, key);
-
-		if ((cpDefinitionOptionValueRel != null) &&
-			(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId() !=
-				cpDefinitionOptionValueRelId)) {
-
-			throw new CPDefinitionOptionValueRelKeyException();
-		}
-	}
-
-	private void _addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId, List<CPOptionValue> cpOptionValues,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		for (CPOptionValue cpOptionValue : cpOptionValues) {
-			if (_hasCustomAttributes(cpOptionValue)) {
-				ExpandoBridge expandoBridge = cpOptionValue.getExpandoBridge();
-
-				serviceContext.setExpandoBridgeAttributes(
-					expandoBridge.getAttributes());
-			}
-			else {
-				serviceContext.setExpandoBridgeAttributes(
-					Collections.emptyMap());
-			}
-
-			cpDefinitionOptionValueRelLocalService.
-				addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRelId, cpOptionValue, serviceContext);
-		}
-	}
-
 	private boolean _hasCustomAttributes(CPOptionValue cpOptionValue)
 		throws PortalException {
 
@@ -823,6 +760,52 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
+	}
+
+	private void _reindexCPDefinition(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(
+			CPDefinition.class.getName(),
+			cpDefinitionOptionRel.getCPDefinitionId());
+	}
+
+	private BaseModelSearchResult<CPDefinitionOptionValueRel> _searchCPOptions(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinitionOptionValueRel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CPDefinitionOptionValueRel.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				_getCPDefinitionOptionValueRels(hits);
+
+			if (cpDefinitionOptionValueRels != null) {
+				return new BaseModelSearchResult<>(
+					cpDefinitionOptionValueRels, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	private int _searchCPOptionsCount(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinitionOptionValueRel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CPDefinitionOptionValueRel.class);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
 	private CPDefinitionOptionValueRel
@@ -878,6 +861,23 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		return cpDefinitionOptionValueRelPersistence.update(
 			cpDefinitionOptionValueRel);
+	}
+
+	private void _validate(
+			long cpDefinitionOptionValueRelId, long cpDefinitionOptionRelId,
+			String key)
+		throws PortalException {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelPersistence.fetchByC_K(
+				cpDefinitionOptionRelId, key);
+
+		if ((cpDefinitionOptionValueRel != null) &&
+			(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId() !=
+				cpDefinitionOptionValueRelId)) {
+
+			throw new CPDefinitionOptionValueRelKeyException();
+		}
 	}
 
 	private void _validateLinkedCPDefinitionOptionValueRel(

@@ -63,7 +63,7 @@ public class CPDisplayLayoutLocalServiceImpl
 			String layoutUuid)
 		throws PortalException {
 
-		validate(classPK, layoutUuid);
+		_validate(classPK, layoutUuid);
 
 		long classNameId = _classNameLocalService.getClassNameId(clazz);
 
@@ -171,10 +171,10 @@ public class CPDisplayLayoutLocalServiceImpl
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, className, keywords, start, end, sort);
 
-		return searchCPDisplayLayout(searchContext);
+		return _searchCPDisplayLayout(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -186,7 +186,7 @@ public class CPDisplayLayoutLocalServiceImpl
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutPersistence.findByPrimaryKey(cpDisplayLayoutId);
 
-		validate(cpDisplayLayout.getClassPK(), layoutUuid);
+		_validate(cpDisplayLayout.getClassPK(), layoutUuid);
 
 		cpDisplayLayout.setClassPK(classPK);
 		cpDisplayLayout.setLayoutUuid(layoutUuid);
@@ -194,7 +194,7 @@ public class CPDisplayLayoutLocalServiceImpl
 		return cpDisplayLayoutPersistence.update(cpDisplayLayout);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long groupId, String className, String keywords,
 		int start, int end, Sort sort) {
 
@@ -233,7 +233,7 @@ public class CPDisplayLayoutLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CPDisplayLayout> getCPDisplayLayouts(Hits hits)
+	private List<CPDisplayLayout> _getCPDisplayLayouts(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -265,7 +265,7 @@ public class CPDisplayLayoutLocalServiceImpl
 		return cpDisplayLayouts;
 	}
 
-	protected BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
+	private BaseModelSearchResult<CPDisplayLayout> _searchCPDisplayLayout(
 			SearchContext searchContext)
 		throws PortalException {
 
@@ -275,7 +275,7 @@ public class CPDisplayLayoutLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			List<CPDisplayLayout> cpDisplayLayouts = getCPDisplayLayouts(hits);
+			List<CPDisplayLayout> cpDisplayLayouts = _getCPDisplayLayouts(hits);
 
 			if (cpDisplayLayouts != null) {
 				return new BaseModelSearchResult<>(
@@ -287,7 +287,7 @@ public class CPDisplayLayoutLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validate(long classPK, String layoutUuid)
+	private void _validate(long classPK, String layoutUuid)
 		throws PortalException {
 
 		if (classPK <= 0) {

@@ -52,7 +52,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			externalReferenceCode = null;
 		}
 
-		validate(externalReferenceCode, user.getCompanyId());
+		_validate(externalReferenceCode, user.getCompanyId());
 
 		CProduct cProduct = cProductLocalService.createCProduct(
 			counterLocalService.increment());
@@ -120,13 +120,13 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			return cProduct;
 		}
 
-		validate(externalReferenceCode, cProduct.getCompanyId());
+		_validate(externalReferenceCode, cProduct.getCompanyId());
 
 		cProduct.setExternalReferenceCode(externalReferenceCode);
 
 		cProduct = cProductPersistence.update(cProduct);
 
-		reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		_reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
 
 		return cProduct;
 	}
@@ -149,13 +149,16 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		cProduct = cProductPersistence.update(cProduct);
 
-		reindexCPDefinition(originalPublishedCPDefinitionId);
-		reindexCPDefinition(publishedCPDefinitionId);
+		_reindexCPDefinition(originalPublishedCPDefinitionId);
+		_reindexCPDefinition(publishedCPDefinitionId);
 
 		return cProduct;
 	}
 
-	protected void reindexCPDefinition(long cpDefinitionId)
+	@BeanReference(type = CPInstancePersistence.class)
+	protected CPInstancePersistence cpInstancePersistence;
+
+	private void _reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -164,7 +167,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
-	protected void validate(String externalReferenceCode, long companyId)
+	private void _validate(String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {
@@ -180,9 +183,6 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 					"code " + externalReferenceCode);
 		}
 	}
-
-	@BeanReference(type = CPInstancePersistence.class)
-	protected CPInstancePersistence cpInstancePersistence;
 
 	@BeanReference(type = CPDefinitionLinkLocalService.class)
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

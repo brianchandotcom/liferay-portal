@@ -49,7 +49,7 @@ public class CPTaxCategoryLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		validate(user.getCompanyId(), 0, externalReferenceCode, nameMap);
+		_validate(user.getCompanyId(), 0, externalReferenceCode, nameMap);
 
 		long cpTaxCategoryId = counterLocalService.increment();
 
@@ -140,7 +140,7 @@ public class CPTaxCategoryLocalServiceImpl
 		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.findByPrimaryKey(
 			cpTaxCategoryId);
 
-		validate(
+		_validate(
 			cpTaxCategory.getCompanyId(), cpTaxCategoryId,
 			externalReferenceCode, nameMap);
 
@@ -151,7 +151,7 @@ public class CPTaxCategoryLocalServiceImpl
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long cpTaxCategoryId, String externalReferenceCode,
 			Map<Locale, String> nameMap)
 		throws PortalException {
@@ -169,12 +169,10 @@ public class CPTaxCategoryLocalServiceImpl
 			}
 		}
 
-		validate(nameMap);
+		_validate(nameMap);
 	}
 
-	protected void validate(Map<Locale, String> nameMap)
-		throws PortalException {
-
+	private void _validate(Map<Locale, String> nameMap) throws PortalException {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		String name = nameMap.get(locale);

@@ -91,7 +91,7 @@ public class CPOptionValueLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		validate(0, cpOptionId, key);
+		_validate(0, cpOptionId, key);
 
 		long cpOptionValueId = counterLocalService.increment();
 
@@ -110,7 +110,7 @@ public class CPOptionValueLocalServiceImpl
 
 		cpOptionValue = cpOptionValuePersistence.update(cpOptionValue);
 
-		reindexCPOption(cpOptionId);
+		_reindexCPOption(cpOptionId);
 
 		return cpOptionValue;
 	}
@@ -155,7 +155,7 @@ public class CPOptionValueLocalServiceImpl
 
 		_expandoRowLocalService.deleteRows(cpOptionValue.getCPOptionValueId());
 
-		reindexCPOption(cpOptionValue.getCPOptionId());
+		_reindexCPOption(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
 	}
@@ -241,10 +241,10 @@ public class CPOptionValueLocalServiceImpl
 			int end, Sort[] sorts)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, cpOptionId, keywords, start, end, sorts);
 
-		return searchCPOptionValues(searchContext);
+		return _searchCPOptionValues(searchContext);
 	}
 
 	@Override
@@ -252,11 +252,11 @@ public class CPOptionValueLocalServiceImpl
 			long companyId, long cpOptionId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, cpOptionId, keywords, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		return searchCPOptionValuesCount(searchContext);
+		return _searchCPOptionValuesCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -273,7 +273,7 @@ public class CPOptionValueLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		validate(
+		_validate(
 			cpOptionValue.getCPOptionValueId(), cpOptionValue.getCPOptionId(),
 			key);
 
@@ -284,12 +284,12 @@ public class CPOptionValueLocalServiceImpl
 
 		cpOptionValue = cpOptionValuePersistence.update(cpOptionValue);
 
-		reindexCPOption(cpOptionValue.getCPOptionId());
+		_reindexCPOption(cpOptionValue.getCPOptionId());
 
 		return cpOptionValue;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long cpOptionId, String keywords, int start, int end,
 		Sort[] sorts) {
 
@@ -333,7 +333,7 @@ public class CPOptionValueLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CPOptionValue> getCPOptionValues(Hits hits)
+	private List<CPOptionValue> _getCPOptionValues(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -365,14 +365,14 @@ public class CPOptionValueLocalServiceImpl
 		return cpOptionValues;
 	}
 
-	protected void reindexCPOption(long cpOptionId) throws PortalException {
+	private void _reindexCPOption(long cpOptionId) throws PortalException {
 		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPOption.class);
 
 		indexer.reindex(CPOption.class.getName(), cpOptionId);
 	}
 
-	protected BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+	private BaseModelSearchResult<CPOptionValue> _searchCPOptionValues(
 			SearchContext searchContext)
 		throws PortalException {
 
@@ -382,7 +382,7 @@ public class CPOptionValueLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			List<CPOptionValue> cpOptionValues = getCPOptionValues(hits);
+			List<CPOptionValue> cpOptionValues = _getCPOptionValues(hits);
 
 			if (cpOptionValues != null) {
 				return new BaseModelSearchResult<>(
@@ -394,7 +394,7 @@ public class CPOptionValueLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected int searchCPOptionValuesCount(SearchContext searchContext)
+	private int _searchCPOptionValuesCount(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CPOptionValue> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -403,7 +403,7 @@ public class CPOptionValueLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
-	protected void validate(long cpOptionValueId, long cpOptionId, String key)
+	private void _validate(long cpOptionValueId, long cpOptionId, String key)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_K(

@@ -151,7 +151,7 @@ public class CommerceCatalogLocalServiceImpl
 			CommerceCatalog commerceCatalog)
 		throws PortalException {
 
-		validate(commerceCatalog);
+		_validate(commerceCatalog);
 
 		long groupId = commerceCatalog.getGroupId();
 
@@ -289,24 +289,24 @@ public class CommerceCatalogLocalServiceImpl
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, start, end, sort);
 
 		searchContext.setKeywords(keywords);
 
-		return search(searchContext);
+		return _search(searchContext);
 	}
 
 	@Override
 	public int searchCommerceCatalogsCount(long companyId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		searchContext.setKeywords(keywords);
 
-		return searchCommerceCatalogsCount(searchContext);
+		return _searchCommerceCatalogsCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -340,7 +340,7 @@ public class CommerceCatalogLocalServiceImpl
 		return commerceCatalogPersistence.update(commerceCatalog);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -362,7 +362,7 @@ public class CommerceCatalogLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceCatalog> getCommerceCatalogs(Hits hits)
+	private List<CommerceCatalog> _getCommerceCatalogs(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -396,7 +396,7 @@ public class CommerceCatalogLocalServiceImpl
 		return commerceCatalogs;
 	}
 
-	protected List<CommerceCatalog> search(SearchContext searchContext)
+	private List<CommerceCatalog> _search(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CommerceCatalog> indexer =
@@ -405,7 +405,7 @@ public class CommerceCatalogLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			List<CommerceCatalog> commerceCatalogs = getCommerceCatalogs(hits);
+			List<CommerceCatalog> commerceCatalogs = _getCommerceCatalogs(hits);
 
 			if (commerceCatalogs != null) {
 				return commerceCatalogs;
@@ -416,7 +416,7 @@ public class CommerceCatalogLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected int searchCommerceCatalogsCount(SearchContext searchContext)
+	private int _searchCommerceCatalogsCount(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CommerceCatalog> indexer =
@@ -425,7 +425,7 @@ public class CommerceCatalogLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
-	protected void validate(CommerceCatalog commerceCatalog)
+	private void _validate(CommerceCatalog commerceCatalog)
 		throws PortalException {
 
 		if (commerceCatalog.isSystem()) {

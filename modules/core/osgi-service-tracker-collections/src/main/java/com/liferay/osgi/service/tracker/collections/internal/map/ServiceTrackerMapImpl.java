@@ -57,7 +57,12 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			bundleContext, clazz, filterString,
 			new ServiceReferenceServiceTrackerCustomizer());
 
-		_serviceTracker.open();
+		if (clazz == null) {
+			_serviceTracker.open(true);
+		}
+		else {
+			_serviceTracker.open();
+		}
 	}
 
 	@Override

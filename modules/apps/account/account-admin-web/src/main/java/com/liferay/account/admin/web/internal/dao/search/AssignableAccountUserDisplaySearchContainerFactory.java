@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -110,34 +108,21 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 			accountEntryIds = new long[0];
 		}
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		BaseModelSearchResult<User> baseModelSearchResult =
+			_accountUserRetriever.searchAccountUsers(
+				accountEntryIds, keywords,
+				LinkedHashMapBuilder.<String, Serializable>put(
+					"emailAddressDomains",
+					_getEmailAddressDomains(accountEntryId, navigation)
+				).build(),
+				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
+				searchContainer.getDelta(), searchContainer.getOrderByCol(),
+				_isReverseOrder(searchContainer.getOrderByType()));
 
-		try {
-			PermissionThreadLocal.setPermissionChecker(null);
-
-			BaseModelSearchResult<User> baseModelSearchResult =
-				_accountUserRetriever.searchAccountUsers(
-					accountEntryIds, keywords,
-					LinkedHashMapBuilder.<String, Serializable>put(
-						"emailAddressDomains",
-						_getEmailAddressDomains(accountEntryId, navigation)
-					).build(),
-					WorkflowConstants.STATUS_APPROVED,
-					searchContainer.getStart(), searchContainer.getDelta(),
-					searchContainer.getOrderByCol(),
-					_isReverseOrder(searchContainer.getOrderByType()));
-
-			searchContainer.setResultsAndTotal(
-				() -> TransformUtil.transform(
-					baseModelSearchResult.getBaseModels(),
-					AccountUserDisplay::of),
-				baseModelSearchResult.getLength());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		searchContainer.setResultsAndTotal(
+			() -> TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountUserDisplay::of),
+			baseModelSearchResult.getLength());
 
 		searchContainer.setRowChecker(rowChecker);
 

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -72,11 +71,9 @@ public class CurrentAccountEntryManagerTest {
 
 	@Test
 	public void testGetCurrentAccountEntry() throws Exception {
-		AccountEntry accountEntry1 = _addAccountEntry(
-			"aaa", true, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+		AccountEntry accountEntry1 = _addAccountEntry("aaa");
 
-		_addAccountEntry(
-			"bbb", true, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+		_addAccountEntry("bbb");
 
 		Assert.assertEquals(
 			accountEntry1,
@@ -86,18 +83,19 @@ public class CurrentAccountEntryManagerTest {
 
 	@Test
 	public void testGetCurrentAccountEntryDefault() throws Exception {
+		AccountEntry inactiveAccountEntry = _addAccountEntry("aInactive");
+
+		_accountEntryLocalService.deactivateAccountEntry(inactiveAccountEntry);
+
 		_addAccountEntry(
-			"aInactive", false, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
-		_addAccountEntry(
-			"bInvalidType", true, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON);
+			"bInvalidType", AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON);
 
 		_setAllowedTypes(
 			_group.getGroupId(),
 			new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS});
 
 		AccountEntry noPermissionAccountEntry = _addAccountEntry(
-			"cNoPermission", true,
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+			"cNoPermission");
 
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
 			noPermissionAccountEntry.getAccountEntryId(),
@@ -111,9 +109,7 @@ public class CurrentAccountEntryManagerTest {
 			noPermissionAccountEntry.getAccountEntryId(),
 			organization.getOrganizationId());
 
-		AccountEntry expectedAccountEntry = _addAccountEntry(
-			"dHasPermission", true,
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+		AccountEntry expectedAccountEntry = _addAccountEntry("dHasPermission");
 
 		AccountEntry currentAccountEntry =
 			_currentAccountEntryManager.getCurrentAccountEntry(
@@ -129,7 +125,7 @@ public class CurrentAccountEntryManagerTest {
 
 		Group group = GroupTestUtil.addGroup();
 		AccountEntry personAccountEntry = _addAccountEntry(
-			RandomTestUtil.randomString(), true,
+			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON);
 
 		_currentAccountEntryManager.setCurrentAccountEntry(
@@ -207,8 +203,7 @@ public class CurrentAccountEntryManagerTest {
 	@Test
 	public void testSetCurrentAccountEntry() throws Exception {
 		AccountEntry accountEntry = _addAccountEntry(
-			RandomTestUtil.randomString(), true,
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+			RandomTestUtil.randomString());
 
 		_currentAccountEntryManager.setCurrentAccountEntry(
 			accountEntry.getAccountEntryId(), _group.getGroupId(),
@@ -263,19 +258,18 @@ public class CurrentAccountEntryManagerTest {
 		}
 	}
 
-	private AccountEntry _addAccountEntry(
-			String name, boolean active, String type)
+	private AccountEntry _addAccountEntry(String name) throws Exception {
+		return _addAccountEntry(
+			name, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+	}
+
+	private AccountEntry _addAccountEntry(String name, String type)
 		throws Exception {
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
 
 		accountEntry.setName(name);
-
-		if (!active) {
-			accountEntry.setStatus(WorkflowConstants.STATUS_INACTIVE);
-		}
-
 		accountEntry.setType(type);
 
 		accountEntry = _accountEntryLocalService.updateAccountEntry(

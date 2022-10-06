@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.TermCommerceCheckoutStepDisplayContext;
@@ -23,7 +22,6 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
@@ -157,12 +155,6 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			httpServletRequest, httpServletResponse,
 			"/checkout_step/payment_term.jsp");
 	}
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;

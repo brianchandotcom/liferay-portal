@@ -124,7 +124,7 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.fetchCommerceOrderNote(
 				commerceOrderNoteId);
 
-		checkCommerceOrderNotePermissions(commerceOrderNote);
+		_checkCommerceOrderNotePermissions(commerceOrderNote);
 
 		return commerceOrderNote;
 	}
@@ -137,7 +137,7 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.getCommerceOrderNote(
 				commerceOrderNoteId);
 
-		checkCommerceOrderNotePermissions(commerceOrderNote);
+		_checkCommerceOrderNotePermissions(commerceOrderNote);
 
 		return commerceOrderNote;
 	}
@@ -248,7 +248,7 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNote.getCommerceOrderNoteId(), content, restricted);
 	}
 
-	protected void checkCommerceOrderNotePermissions(
+	private void _checkCommerceOrderNotePermissions(
 			CommerceOrderNote commerceOrderNote)
 		throws PortalException {
 

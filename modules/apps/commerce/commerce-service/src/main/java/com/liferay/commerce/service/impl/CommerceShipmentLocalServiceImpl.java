@@ -121,7 +121,7 @@ public class CommerceShipmentLocalServiceImpl
 		commerceShipment.setStatus(
 			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
 
-		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
+		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
 			city, zip, regionId, countryId, phoneNumber, null);
 
@@ -285,7 +285,7 @@ public class CommerceShipmentLocalServiceImpl
 			boolean excludeShipmentStatus, int start, int end)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupIds, commerceAccountIds, keywords,
 			excludeShipmentStatus, shipmentStatuses, start, end);
 
@@ -334,7 +334,7 @@ public class CommerceShipmentLocalServiceImpl
 			boolean excludeShipmentStatus)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupIds, commerceAccountIds, keywords,
 			excludeShipmentStatus, shipmentStatuses, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
@@ -410,7 +410,7 @@ public class CommerceShipmentLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
 
-			List<CommerceShipment> commerceShipments = getCommerceShipments(
+			List<CommerceShipment> commerceShipments = _getCommerceShipments(
 				hits);
 
 			if (commerceShipments != null) {
@@ -464,7 +464,7 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
+		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
 			city, zip, regionId, countryId, phoneNumber, serviceContext);
 
@@ -580,7 +580,7 @@ public class CommerceShipmentLocalServiceImpl
 			commerceShipment.setShippingOptionName(null);
 		}
 
-		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
+		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
 			city, zip, regionId, countryId, phoneNumber, serviceContext);
 
@@ -717,7 +717,7 @@ public class CommerceShipmentLocalServiceImpl
 		return commerceShipmentPersistence.update(commerceShipment);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 			long companyId, long[] groupIds, long[] commerceAccountIds,
 			String keywords, boolean negated, int[] shipmentStatuses, int start,
 			int end)
@@ -749,7 +749,7 @@ public class CommerceShipmentLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceShipment> getCommerceShipments(Hits hits)
+	private List<CommerceShipment> _getCommerceShipments(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -822,7 +822,7 @@ public class CommerceShipmentLocalServiceImpl
 			});
 	}
 
-	protected CommerceAddress updateCommerceShipmentAddress(
+	private CommerceAddress _updateCommerceShipmentAddress(
 			CommerceShipment commerceShipment, String name, String description,
 			String street1, String street2, String street3, String city,
 			String zip, long regionId, long countryId, String phoneNumber,

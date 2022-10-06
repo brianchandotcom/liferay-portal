@@ -110,7 +110,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 		CPDefinition cpDefinition = null;
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		validate(cpDefinitionId, entryCProductId, quantity);
+		_validate(cpDefinitionId, entryCProductId, quantity);
 
 		long cpDefinitionGroupedEntryId = counterLocalService.increment();
 
@@ -264,7 +264,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 					cpDefinitionGroupedEntry.getEntryCProductId());
 		}
 
-		validate(
+		_validate(
 			cpDefinitionGroupedEntry.getCPDefinitionId(),
 			cpDefinitionGroupedEntry.getEntryCProductId(), quantity);
 
@@ -275,7 +275,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 			cpDefinitionGroupedEntry);
 	}
 
-	protected void validate(
+	private void _validate(
 			long cpDefinitionId, long entryCProductId, int quantity)
 		throws PortalException {
 

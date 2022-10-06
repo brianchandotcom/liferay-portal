@@ -83,7 +83,7 @@ public class CommerceShipmentItemLocalServiceImpl
 				commerceOrderItemId);
 
 		if (validateInventory) {
-			validate(
+			_validate(
 				commerceOrderItem,
 				_commerceShipmentLocalService.getCommerceShipment(
 					commerceShipmentId),
@@ -355,7 +355,7 @@ public class CommerceShipmentItemLocalServiceImpl
 		int originalQuantity = commerceShipmentItem.getQuantity();
 
 		if (validateInventory) {
-			validate(
+			_validate(
 				commerceOrderItem, commerceShipmentItem.getCommerceShipment(),
 				commerceInventoryWarehouseId, originalQuantity, quantity);
 		}
@@ -419,7 +419,7 @@ public class CommerceShipmentItemLocalServiceImpl
 		return commerceShipmentItemPersistence.update(commerceShipmentItem);
 	}
 
-	protected void validate(
+	private void _validate(
 			CommerceOrderItem commerceOrderItem,
 			CommerceShipment commerceShipment,
 			long commerceInventoryWarehouseId, int quantity, int newQuantity)

@@ -150,7 +150,7 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 			long commerceAvailabilityEstimateId, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(commerceAvailabilityEstimateId);
+		_validate(commerceAvailabilityEstimateId);
 
 		if (cpdAvailabilityEstimateId > 0) {
 			CPDAvailabilityEstimate cpdAvailabilityEstimate =
@@ -175,11 +175,11 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 				cpdAvailabilityEstimate);
 		}
 
-		return addCPDAvailabilityEstimateByCProductId(
+		return _addCPDAvailabilityEstimateByCProductId(
 			cProductId, commerceAvailabilityEstimateId, serviceContext);
 	}
 
-	protected CPDAvailabilityEstimate addCPDAvailabilityEstimateByCProductId(
+	private CPDAvailabilityEstimate _addCPDAvailabilityEstimateByCProductId(
 			long cProductId, long commerceAvailabilityEstimateId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -203,7 +203,7 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 			cpdAvailabilityEstimate);
 	}
 
-	protected void validate(long commerceAvailabilityEstimateId)
+	private void _validate(long commerceAvailabilityEstimateId)
 		throws PortalException {
 
 		if (commerceAvailabilityEstimateId > 0) {

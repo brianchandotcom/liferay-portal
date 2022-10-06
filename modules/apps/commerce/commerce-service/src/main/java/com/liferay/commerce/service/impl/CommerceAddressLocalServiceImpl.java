@@ -108,7 +108,7 @@ public class CommerceAddressLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(name, street1, city, zip, countryId, type);
+		_validate(name, street1, city, zip, countryId, type);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
@@ -542,7 +542,7 @@ public class CommerceAddressLocalServiceImpl
 
 		Address address = _addressLocalService.getAddress(commerceAddressId);
 
-		validate(name, street1, city, zip, countryId, type);
+		_validate(name, street1, city, zip, countryId, type);
 
 		address = _addressLocalService.updateAddress(
 			commerceAddressId, name, description, street1, street2, street3,
@@ -553,7 +553,7 @@ public class CommerceAddressLocalServiceImpl
 		return CommerceAddressImpl.fromAddress(address);
 	}
 
-	protected void validate(
+	private void _validate(
 			String name, String street1, String city, String zip,
 			long countryId, int type)
 		throws PortalException {

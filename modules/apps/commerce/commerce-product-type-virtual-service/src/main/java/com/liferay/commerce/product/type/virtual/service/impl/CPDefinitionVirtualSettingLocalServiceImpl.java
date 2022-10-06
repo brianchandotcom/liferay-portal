@@ -108,7 +108,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			termsOfUseJournalArticleResourcePrimKey = 0;
 		}
 
-		validate(
+		_validate(
 			fileEntryId, url, useSample, sampleFileEntryId, sampleUrl,
 			termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePrimKey);
@@ -332,7 +332,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			termsOfUseJournalArticleResourcePrimKey = 0;
 		}
 
-		validate(
+		_validate(
 			fileEntryId, url, useSample, sampleFileEntryId, sampleUrl,
 			termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePrimKey);
@@ -421,7 +421,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				false, serviceContext);
 	}
 
-	protected void validate(
+	private void _validate(
 			long fileEntryId, String url, boolean useSample,
 			long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,

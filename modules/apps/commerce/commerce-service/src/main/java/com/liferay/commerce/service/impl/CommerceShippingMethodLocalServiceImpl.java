@@ -90,7 +90,7 @@ public class CommerceShippingMethodLocalServiceImpl
 			imageFile = null;
 		}
 
-		validate(nameMap, engineKey);
+		_validate(nameMap, engineKey);
 
 		long commerceShippingMethodId = counterLocalService.increment();
 
@@ -329,7 +329,7 @@ public class CommerceShippingMethodLocalServiceImpl
 		return commerceShippingMethod;
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String engineKey)
+	private void _validate(Map<Locale, String> nameMap, String engineKey)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();

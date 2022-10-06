@@ -428,11 +428,11 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, null, maxSubscriptionCycles, subscriptionStatus,
 			keywords, start, end, sort);
 
-		return searchCommerceSubscriptionEntries(searchContext);
+		return _searchCommerceSubscriptionEntries(searchContext);
 	}
 
 	@Override
@@ -443,11 +443,11 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
 			keywords, start, end, sort);
 
-		return searchCommerceSubscriptionEntries(searchContext);
+		return _searchCommerceSubscriptionEntries(searchContext);
 	}
 
 	/**
@@ -503,11 +503,11 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		User user = _userLocalService.getUser(
 			commerceSubscriptionEntry.getUserId());
 
-		validateSubscriptionStatus(
+		_validateSubscriptionStatus(
 			subscriptionStatus,
 			commerceSubscriptionEntry.getSubscriptionStatus());
 
-		validateSubscriptionStatus(
+		_validateSubscriptionStatus(
 			deliverySubscriptionStatus,
 			commerceSubscriptionEntry.getDeliverySubscriptionStatus());
 
@@ -607,7 +607,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			commerceSubscriptionEntryPersistence.findByPrimaryKey(
 				commerceSubscriptionEntryId);
 
-		validateSubscriptionStatus(
+		_validateSubscriptionStatus(
 			subscriptionStatus,
 			commerceSubscriptionEntry.getSubscriptionStatus());
 
@@ -616,7 +616,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		// Messaging
 
-		sendSubscriptionStatusMessage(
+		_sendSubscriptionStatusMessage(
 			commerceSubscriptionEntryId, subscriptionStatus);
 
 		return commerceSubscriptionEntryPersistence.update(
@@ -633,7 +633,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			commerceSubscriptionEntryPersistence.findByPrimaryKey(
 				commerceSubscriptionEntryId);
 
-		validateSubscriptionStatus(
+		_validateSubscriptionStatus(
 			subscriptionStatus,
 			commerceSubscriptionEntry.getSubscriptionStatus());
 
@@ -641,14 +641,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		// Messaging
 
-		sendSubscriptionStatusMessage(
+		_sendSubscriptionStatusMessage(
 			commerceSubscriptionEntryId, subscriptionStatus);
 
 		return commerceSubscriptionEntryPersistence.update(
 			commerceSubscriptionEntry);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long[] groupIds, Long maxSubscriptionCycles,
 		Integer subscriptionStatus, String keywords, int start, int end,
 		Sort sort) {
@@ -699,7 +699,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceSubscriptionEntry> getCommerceSubscriptionEntries(
+	private List<CommerceSubscriptionEntry> _getCommerceSubscriptionEntries(
 			Hits hits)
 		throws PortalException {
 
@@ -735,8 +735,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		return commerceSubscriptionEntries;
 	}
 
-	protected BaseModelSearchResult<CommerceSubscriptionEntry>
-			searchCommerceSubscriptionEntries(SearchContext searchContext)
+	private BaseModelSearchResult<CommerceSubscriptionEntry>
+			_searchCommerceSubscriptionEntries(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CommerceSubscriptionEntry> indexer =
@@ -747,7 +747,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
-				getCommerceSubscriptionEntries(hits);
+				_getCommerceSubscriptionEntries(hits);
 
 			if (commerceSubscriptionEntries != null) {
 				return new BaseModelSearchResult<>(
@@ -759,7 +759,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void sendSubscriptionStatusMessage(
+	private void _sendSubscriptionStatusMessage(
 		long commerceSubscriptionEntryId, int subscriptionStatus) {
 
 		TransactionCommitCallbackUtil.registerCallback(
@@ -781,7 +781,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			});
 	}
 
-	protected void validateSubscriptionStatus(
+	private void _validateSubscriptionStatus(
 			int subscriptionStatus, int oldSubscriptionStatus)
 		throws PortalException {
 

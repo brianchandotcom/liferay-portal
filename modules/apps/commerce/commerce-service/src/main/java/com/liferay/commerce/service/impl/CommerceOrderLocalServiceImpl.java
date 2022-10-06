@@ -209,7 +209,7 @@ public class CommerceOrderLocalServiceImpl
 
 		// Check approval workflow
 
-		if (hasWorkflowDefinition(
+		if (_hasWorkflowDefinition(
 				groupId, CommerceOrderConstants.TYPE_PK_APPROVAL)) {
 
 			serviceContext.setWorkflowAction(
@@ -220,8 +220,8 @@ public class CommerceOrderLocalServiceImpl
 
 		// Commerce order
 
-		validateAccountOrdersLimit(groupId, commerceAccountId);
-		validateGuestOrders();
+		_validateAccountOrdersLimit(groupId, commerceAccountId);
+		_validateGuestOrders();
 
 		if (commerceCurrencyId <= 0) {
 			CommerceCurrency commerceCurrency =
@@ -649,7 +649,7 @@ public class CommerceOrderLocalServiceImpl
 			int start, int end)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, commerceAccountIds, keywords,
 			excludeOrderStatus, orderStatuses, start, end);
 
@@ -708,7 +708,7 @@ public class CommerceOrderLocalServiceImpl
 			String keywords, int[] orderStatuses, boolean excludeOrderStatus)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, commerceAccountIds, keywords,
 			excludeOrderStatus, orderStatuses, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
@@ -932,7 +932,7 @@ public class CommerceOrderLocalServiceImpl
 		long billingAddressId = 0;
 		long shippingAddressId = 0;
 
-		CommerceAddress billingAddress = getNewCommerceAddress(
+		CommerceAddress billingAddress = _getNewCommerceAddress(
 			commerceOrder, commerceOrder.getBillingAddress(), serviceContext);
 
 		CommerceAddress shippingAddress = billingAddress;
@@ -940,7 +940,7 @@ public class CommerceOrderLocalServiceImpl
 		if (commerceOrder.getBillingAddressId() !=
 				commerceOrder.getShippingAddressId()) {
 
-			shippingAddress = getNewCommerceAddress(
+			shippingAddress = _getNewCommerceAddress(
 				commerceOrder, commerceOrder.getShippingAddress(),
 				serviceContext);
 		}
@@ -1061,7 +1061,7 @@ public class CommerceOrderLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
 
-			List<CommerceOrder> commerceOrders = getCommerceOrders(hits);
+			List<CommerceOrder> commerceOrders = _getCommerceOrders(hits);
 
 			if (commerceOrders != null) {
 				return new BaseModelSearchResult<>(
@@ -1124,7 +1124,7 @@ public class CommerceOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateAddress(
+		return _updateAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
 			zip, regionId, countryId, phoneNumber,
 			CommerceOrder::getBillingAddressId,
@@ -1560,7 +1560,7 @@ public class CommerceOrderLocalServiceImpl
 
 		// Messaging
 
-		sendPaymentStatusMessage(commerceOrder, previousPaymentStatus);
+		_sendPaymentStatusMessage(commerceOrder, previousPaymentStatus);
 
 		return commerceOrder;
 	}
@@ -1588,7 +1588,7 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		validatePurchaseOrderNumber(purchaseOrderNumber);
+		_validatePurchaseOrderNumber(purchaseOrderNumber);
 
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 
@@ -1618,7 +1618,7 @@ public class CommerceOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateAddress(
+		return _updateAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
 			zip, regionId, countryId, phoneNumber,
 			CommerceOrder::getShippingAddressId,
@@ -1755,7 +1755,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
-	protected SearchContext addFacetOrderStatus(
+	private SearchContext _addFacetOrderStatus(
 		boolean negated, int[] orderStatuses, SearchContext searchContext) {
 
 		NegatableMultiValueFacet negatableMultiValueFacet =
@@ -1774,7 +1774,7 @@ public class CommerceOrderLocalServiceImpl
 		return searchContext;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 			long companyId, long commerceChannelGroupId,
 			long[] commerceAccountIds, String keywords, boolean negated,
 			int[] orderStatuses, int start, int end)
@@ -1810,13 +1810,13 @@ public class CommerceOrderLocalServiceImpl
 		return searchContext;
 	}
 
-	protected String getCommerceOrderPaymentContent(
+	private String _getCommerceOrderPaymentContent(
 		CommercePaymentEngineException commercePaymentEngineException) {
 
 		return StackTraceUtil.getStackTrace(commercePaymentEngineException);
 	}
 
-	protected List<CommerceOrder> getCommerceOrders(Hits hits)
+	private List<CommerceOrder> _getCommerceOrders(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -1848,7 +1848,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrders;
 	}
 
-	protected CommerceAddress getNewCommerceAddress(
+	private CommerceAddress _getNewCommerceAddress(
 			CommerceOrder commerceOrder, CommerceAddress commerceAddress,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1874,7 +1874,7 @@ public class CommerceOrderLocalServiceImpl
 			serviceContext);
 	}
 
-	protected boolean hasWorkflowDefinition(long groupId, long typePK)
+	private boolean _hasWorkflowDefinition(long groupId, long typePK)
 		throws PortalException {
 
 		Group group = _groupLocalService.fetchGroup(groupId);
@@ -1888,7 +1888,7 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrder.class.getName(), 0, typePK);
 	}
 
-	protected void sendPaymentStatusMessage(
+	private void _sendPaymentStatusMessage(
 		CommerceOrder commerceOrder, int previousPaymentStatus) {
 
 		TransactionCommitCallbackUtil.registerCallback(
@@ -1927,7 +1927,7 @@ public class CommerceOrderLocalServiceImpl
 			});
 	}
 
-	protected CommerceOrder updateAddress(
+	private CommerceOrder _updateAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
 			String zip, long regionId, long countryId, String phoneNumber,
@@ -1964,7 +1964,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
-	protected void validateAccountOrdersLimit(
+	private void _validateAccountOrdersLimit(
 			long commerceChannelGroupId, long commerceAccountId)
 		throws PortalException {
 
@@ -1992,7 +1992,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
-	protected void validateCheckout(CommerceOrder commerceOrder)
+	private void _validateCheckout(CommerceOrder commerceOrder)
 		throws PortalException {
 
 		if (commerceOrder.isDraft() ||
@@ -2045,7 +2045,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
-	protected void validateGuestOrders() throws PortalException {
+	private void _validateGuestOrders() throws PortalException {
 		int count = commerceOrderPersistence.countByUserId(
 			UserConstants.USER_ID_DEFAULT);
 
@@ -2054,7 +2054,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
-	protected void validatePurchaseOrderNumber(String purchaseOrderNumber)
+	private void _validatePurchaseOrderNumber(String purchaseOrderNumber)
 		throws PortalException {
 
 		if (Validator.isNull(purchaseOrderNumber)) {

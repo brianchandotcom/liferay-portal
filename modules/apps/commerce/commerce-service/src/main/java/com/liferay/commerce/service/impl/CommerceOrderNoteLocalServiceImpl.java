@@ -56,13 +56,13 @@ public class CommerceOrderNoteLocalServiceImpl
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		validate(content);
+		_validate(content);
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
 
-		validateExternalReferenceCode(
+		_validateExternalReferenceCode(
 			externalReferenceCode, serviceContext.getCompanyId());
 
 		long commerceOrderNoteId = counterLocalService.increment();
@@ -189,7 +189,7 @@ public class CommerceOrderNoteLocalServiceImpl
 		CommerceOrderNote commerceOrderNote =
 			commerceOrderNotePersistence.findByPrimaryKey(commerceOrderNoteId);
 
-		validate(content);
+		_validate(content);
 
 		if (Validator.isNull(commerceOrderNote.getExternalReferenceCode())) {
 			if (Validator.isBlank(externalReferenceCode)) {
@@ -205,13 +205,13 @@ public class CommerceOrderNoteLocalServiceImpl
 		return commerceOrderNotePersistence.update(commerceOrderNote);
 	}
 
-	protected void validate(String content) throws PortalException {
+	private void _validate(String content) throws PortalException {
 		if (Validator.isNull(content)) {
 			throw new CommerceOrderNoteContentException();
 		}
 	}
 
-	protected void validateExternalReferenceCode(
+	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {
 

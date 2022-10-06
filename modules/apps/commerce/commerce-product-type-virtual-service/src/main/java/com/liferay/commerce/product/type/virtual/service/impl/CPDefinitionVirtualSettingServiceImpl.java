@@ -63,7 +63,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkPermission(className, classPK, ActionKeys.UPDATE);
+		_checkPermission(className, classPK, ActionKeys.UPDATE);
 
 		return cpDefinitionVirtualSettingLocalService.
 			addCPDefinitionVirtualSetting(
@@ -85,7 +85,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkPermission(className, classPK, ActionKeys.UPDATE);
+		_checkPermission(className, classPK, ActionKeys.UPDATE);
 
 		return cpDefinitionVirtualSettingLocalService.
 			addCPDefinitionVirtualSetting(
@@ -105,7 +105,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				fetchCPDefinitionVirtualSetting(className, classPK);
 
 		if (cpDefinitionVirtualSetting != null) {
-			checkPermission(className, classPK, ActionKeys.VIEW);
+			_checkPermission(className, classPK, ActionKeys.VIEW);
 		}
 
 		return cpDefinitionVirtualSetting;
@@ -126,7 +126,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			cpDefinitionVirtualSettingLocalService.
 				getCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
 
-		checkPermission(
+		_checkPermission(
 			cpDefinitionVirtualSetting.getClassName(),
 			cpDefinitionVirtualSetting.getClassPK(), ActionKeys.UPDATE);
 
@@ -154,7 +154,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			cpDefinitionVirtualSettingLocalService.
 				getCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
 
-		checkPermission(
+		_checkPermission(
 			cpDefinitionVirtualSetting.getClassName(),
 			cpDefinitionVirtualSetting.getClassPK(), ActionKeys.UPDATE);
 
@@ -167,7 +167,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				serviceContext);
 	}
 
-	protected void checkPermission(
+	private void _checkPermission(
 			String className, long classPK, String action)
 		throws PortalException {
 

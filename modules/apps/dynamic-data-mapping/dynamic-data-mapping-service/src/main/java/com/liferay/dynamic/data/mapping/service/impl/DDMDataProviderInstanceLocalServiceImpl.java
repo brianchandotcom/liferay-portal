@@ -349,6 +349,22 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			dataProviderInstance.getDataProviderInstanceId(), modelPermissions);
 	}
 
+	private boolean _isLocalNetworkURL(String value) {
+		try {
+			URL url = new URL(value);
+
+			return InetAddressUtil.isLocalInetAddress(
+				InetAddressUtil.getInetAddressByName(url.getHost()));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return true;
+	}
+
 	private String _serialize(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
@@ -385,22 +401,6 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		_validateInputParameterNames(ddmFormValues);
 
 		_ddmFormValuesValidator.validate(ddmFormValues);
-	}
-
-	private boolean _isLocalNetworkURL(String value) {
-		try {
-			URL url = new URL(value);
-
-			return InetAddressUtil.isLocalInetAddress(
-				InetAddressUtil.getInetAddressByName(url.getHost()));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return true;
 	}
 
 	private void _validateInputParameterNames(DDMFormValues ddmFormValues)

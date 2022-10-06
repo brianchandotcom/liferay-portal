@@ -153,8 +153,8 @@ public class DDMFormInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMFormValues settingsDDMFormValues = _getFormInstanceSettingsFormValues(
-			serializedSettingsDDMFormValues);
+		DDMFormValues settingsDDMFormValues =
+			_getFormInstanceSettingsFormValues(serializedSettingsDDMFormValues);
 
 		return addFormInstance(
 			userId, groupId, ddmStructureId, nameMap, descriptionMap,

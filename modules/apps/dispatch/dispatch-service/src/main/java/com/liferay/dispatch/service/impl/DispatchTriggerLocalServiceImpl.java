@@ -70,7 +70,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(0, user.getCompanyId(), name);
+		_validate(0, user.getCompanyId(), name);
 
 		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.create(
 			counterLocalService.increment());
@@ -323,7 +323,7 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 
-		validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
+		_validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
 
 		dispatchTrigger.setName(name);
 		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
@@ -332,7 +332,13 @@ public class DispatchTriggerLocalServiceImpl
 		return dispatchTriggerPersistence.update(dispatchTrigger);
 	}
 
-	protected void validate(long dispatchTriggerId, long companyId, String name)
+	private Date _getUTCDate(Date date, String timeZoneId) {
+		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+
+		return new Date(date.getTime() - timeZone.getOffset(date.getTime()));
+	}
+
+	private void _validate(long dispatchTriggerId, long companyId, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -354,12 +360,6 @@ public class DispatchTriggerLocalServiceImpl
 			StringBundler.concat(
 				"Dispatch trigger name \"", name,
 				"\" already exists for company ", companyId));
-	}
-
-	private Date _getUTCDate(Date date, String timeZoneId) {
-		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-
-		return new Date(date.getTime() - timeZone.getOffset(date.getTime()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

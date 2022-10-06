@@ -52,7 +52,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
-		validate(user.getCompanyId(), 0, userId, fullName, emailAddress);
+		_validate(user.getCompanyId(), 0, userId, fullName, emailAddress);
 
 		long contactId = counterLocalService.increment();
 
@@ -114,7 +114,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		Entry entry = entryPersistence.findByPrimaryKey(entryId);
 
-		validate(
+		_validate(
 			entry.getCompanyId(), entryId, entry.getUserId(), fullName,
 			emailAddress);
 
@@ -126,7 +126,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return entryPersistence.update(entry);
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long entryId, long userId, String fullName,
 			String emailAddress)
 		throws PortalException {
@@ -150,15 +150,15 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			if (!StringUtil.equalsIgnoreCase(
 					emailAddress, entry.getEmailAddress())) {
 
-				validateEmailAddress(companyId, userId, emailAddress);
+				_validateEmailAddress(companyId, userId, emailAddress);
 			}
 		}
 		else {
-			validateEmailAddress(companyId, userId, emailAddress);
+			_validateEmailAddress(companyId, userId, emailAddress);
 		}
 	}
 
-	protected void validateEmailAddress(
+	private void _validateEmailAddress(
 			long companyId, long userId, String emailAddress)
 		throws PortalException {
 

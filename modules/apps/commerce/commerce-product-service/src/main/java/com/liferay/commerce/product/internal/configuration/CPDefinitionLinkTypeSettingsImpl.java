@@ -15,16 +15,15 @@
 package com.liferay.commerce.product.internal.configuration;
 
 import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Alessio Antonio Rendina
@@ -38,33 +37,26 @@ public class CPDefinitionLinkTypeSettingsImpl
 
 	@Override
 	public String[] getTypes() {
-		return ArrayUtil.toStringArray(
-			_cpDefinitionLinkTypeConfigurationWrappers.keySet());
+		return ArrayUtil.toStringArray(_serviceTrackerMap.keySet());
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addCPDefinitionLinkTypeConfigurationWrapper(
-		CPDefinitionLinkTypeConfigurationWrapper
-			cpDefinitionLinkTypeConfigurationWrapper) {
-
-		_cpDefinitionLinkTypeConfigurationWrappers.put(
-			cpDefinitionLinkTypeConfigurationWrapper.getType(),
-			cpDefinitionLinkTypeConfigurationWrapper);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CPDefinitionLinkTypeConfigurationWrapper.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(cpDefinitionLinkTypeConfigurationWrapper, emitter) ->
+					emitter.emit(
+						cpDefinitionLinkTypeConfigurationWrapper.getType())));
 	}
 
-	protected void removeCPDefinitionLinkTypeConfigurationWrapper(
-		CPDefinitionLinkTypeConfigurationWrapper
-			cpDefinitionLinkTypeConfigurationWrapper) {
-
-		_cpDefinitionLinkTypeConfigurationWrappers.remove(
-			cpDefinitionLinkTypeConfigurationWrapper.getType());
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, CPDefinitionLinkTypeConfigurationWrapper>
-		_cpDefinitionLinkTypeConfigurationWrappers = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, CPDefinitionLinkTypeConfigurationWrapper>
+		_serviceTrackerMap;
 
 }

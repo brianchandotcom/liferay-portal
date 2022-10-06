@@ -1,0 +1,72 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Site Name",
+					"label": "Show Site Name",
+					"name": "showSiteName",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Account Menu",
+					"label": "Show Account Menu",
+					"name": "showAccountMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Language Menu",
+					"label": "Show Language Menu",
+					"name": "showLanguageMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Search",
+					"label": "Show Search",
+					"name": "showSearch",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Dark Nav",
+					"label": "Dark Nav",
+					"name": "darkNav",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Button Type",
+					"label": "Button Type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "none",
+								"value": ""
+							},
+							{
+								"label": "CTA",
+								"value": "cta"
+							},
+							{
+								"label": "Sign In",
+								"value": "signin"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

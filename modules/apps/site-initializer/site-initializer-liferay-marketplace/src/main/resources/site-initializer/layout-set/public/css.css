@@ -1,0 +1,8 @@
+@font-face {
+	font-display: swap;
+	font-family: 'Source Serif Pro';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);
+}

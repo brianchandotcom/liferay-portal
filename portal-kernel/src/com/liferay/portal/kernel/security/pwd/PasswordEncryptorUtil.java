@@ -69,6 +69,10 @@ public class PasswordEncryptorUtil {
 		return _passwordEncryptor.getDefaultPasswordAlgorithmType();
 	}
 
+	public static String getPasswordAlgorithmType(String encryptedPassword) {
+		return _passwordEncryptor.getPasswordAlgorithmType(encryptedPassword);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PasswordEncryptorUtil.class);
 

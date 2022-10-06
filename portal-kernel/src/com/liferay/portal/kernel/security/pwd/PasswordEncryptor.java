@@ -53,4 +53,6 @@ public interface PasswordEncryptor {
 
 	public String getDefaultPasswordAlgorithmType();
 
+	public String getPasswordAlgorithmType(String encryptedPassword);
+
 }

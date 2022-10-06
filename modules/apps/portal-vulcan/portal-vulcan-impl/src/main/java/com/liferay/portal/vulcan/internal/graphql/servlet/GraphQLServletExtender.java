@@ -18,17 +18,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -37,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
@@ -1803,24 +1798,12 @@ public class GraphQLServletExtender {
 	private DefaultTypeFunction _defaultTypeFunction;
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
 	private GraphQLDTOContributorDataFetchingProcessor
 		_graphQLDTOContributorDataFetchingProcessor;
 
 	private ServiceTrackerMap<String, GraphQLDTOContributor>
 		_graphQLDTOContributorServiceTrackerMap;
 	private GraphQLFieldRetriever _graphQLFieldRetriever;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LiferayMethodDataFetchingProcessor
@@ -1830,10 +1813,6 @@ public class GraphQLServletExtender {
 	private Portal _portal;
 
 	private final Map<String, String> _registeredClassNames = new HashMap<>();
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();

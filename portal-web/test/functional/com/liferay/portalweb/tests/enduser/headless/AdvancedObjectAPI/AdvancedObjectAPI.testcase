@@ -5,7 +5,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Object";
-	property testray.main.component.name = "Headless Frontend Infrastructure";
+	property testray.main.component.name = "Headless";
 
 	setUp {
 		TestCase.setUpPortalInstance();

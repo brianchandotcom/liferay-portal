@@ -25,6 +25,7 @@ definition {
 	@priority = "5"
 	test CanActivateOrDeactivateAction {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Add an object, field, action, and check if an action is active") {
 			ObjectAdmin.addObjectViaAPI(
@@ -265,6 +266,8 @@ definition {
 	@description = "LPS-145665 - Verify that you can edit the Action name"
 	@priority = "4"
 	test CanEditActionName {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145",
 			objectName = "CustomObject145",

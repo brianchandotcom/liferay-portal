@@ -46,7 +46,6 @@ import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
-import javax.portlet.RenderRequest;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -89,8 +88,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 				_suggestionsRetriever.getSuggestionsContributorResults(
 					liferayRenderRequest,
 					RenderResponseFactory.create(
-						contextHttpServletResponse,
-						(RenderRequest)liferayRenderRequest),
+						contextHttpServletResponse, liferayRenderRequest),
 					_createSearchContext(
 						destinationFriendlyURL, _getGroupId(groupId), scope,
 						search, suggestionsContributorConfigurations)),

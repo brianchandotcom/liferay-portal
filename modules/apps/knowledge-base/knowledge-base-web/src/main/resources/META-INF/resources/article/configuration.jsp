@@ -33,13 +33,8 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	<aui:input name="preferences--resourcePrimKey--" type="hidden" value="<%= kbArticlePortletInstanceConfiguration.resourcePrimKey() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="<%= tabsNames %>"
-			refresh="<%= false %>"
-		>
-			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
+					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="content-selection">
 						<div class="form-group">
 
 							<%
@@ -57,12 +52,8 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							<aui:button name="selectKBArticleButton" value="select" />
 						</div>
 					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
-			</liferay-ui:section>
 
-			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
+					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="set-and-enable">
 						<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleDescription() %>" />
 
 						<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleRatings() %>" />
@@ -80,19 +71,15 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 						<aui:input label="enable-history" name="preferences--enableKBArticleHistory--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleHistory() %>" />
 
 						<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticlePrint() %>" />
+					</liferay-frontend:fieldset>
 
-						<h4 class="section-header">
-							<liferay-ui:message key="social-bookmarks" />
-						</h4>
-
+					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="social-bookmarks">
 						<liferay-social-bookmarks:bookmarks-settings
 							displayStyle="<%= kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 							types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbArticlePortletInstanceConfiguration.socialBookmarksTypes()) %>"
 						/>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
-			</liferay-ui:section>
-		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

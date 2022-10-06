@@ -4,7 +4,6 @@
 		"lodash.escape": "4.0.1",
 		"lodash.groupby": "4.6.0",
 		"lodash.isequal": "4.5.0",
-		"lodash.memoize": "4.1.2",
 		"lodash.unescape": "4.0.1",
 		"uuid": "^3.3.2"
 	},

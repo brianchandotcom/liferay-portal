@@ -99,6 +99,12 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						%>
 
 						<liferay-ui:search-container-column-text>
+							<span class="mr-2 text-secondary">
+								<clay:icon
+									symbol="folder"
+								/>
+							</span>
+
 							<c:choose>
 								<c:when test="<%= rowURL != null %>">
 									<aui:a href="<%= rowURL.toString() %>">
@@ -175,6 +181,12 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						%>
 
 						<liferay-ui:search-container-column-text>
+							<span class="mr-2 text-secondary">
+								<clay:icon
+									symbol="document"
+								/>
+							</span>
+
 							<c:choose>
 								<c:when test="<%= rowURL != null %>">
 									<aui:a href="<%= rowURL.toString() %>">

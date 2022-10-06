@@ -487,98 +487,6 @@ public class CommerceTermEntryLocalServiceImpl
 		return commerceTermEntryPersistence.update(commerceTermEntry);
 	}
 
-	private SearchContext _buildSearchContext(
-		long companyId, long accountEntryId, String type, String keywords,
-		int start, int end, Sort sort) {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.NAME, keywords
-			).put(
-				Field.TYPE, type
-			).put(
-				"accountEntryId", accountEntryId
-			).build());
-		searchContext.setCompanyId(companyId);
-		searchContext.setEnd(end);
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		searchContext.setStart(start);
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		return searchContext;
-	}
-
-	private List<CommerceTermEntry> _getCommerceTermEntries(Hits hits)
-		throws PortalException {
-
-		List<Document> documents = hits.toList();
-
-		List<CommerceTermEntry> commerceTermEntries = new ArrayList<>(
-			documents.size());
-
-		for (Document document : documents) {
-			long commerceTermEntryId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			CommerceTermEntry commerceTermEntry = fetchCommerceTermEntry(
-				commerceTermEntryId);
-
-			if (commerceTermEntry == null) {
-				commerceTermEntries = null;
-
-				Indexer<CommerceTermEntry> indexer =
-					IndexerRegistryUtil.getIndexer(CommerceTermEntry.class);
-
-				long companyId = GetterUtil.getLong(
-					document.get(Field.COMPANY_ID));
-
-				indexer.delete(companyId, document.getUID());
-			}
-			else if (commerceTermEntries != null) {
-				commerceTermEntries.add(commerceTermEntry);
-			}
-		}
-
-		return commerceTermEntries;
-	}
-
-	private BaseModelSearchResult<CommerceTermEntry>
-			_searchCommerceTermEntries(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommerceTermEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceTermEntry.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CommerceTermEntry> commerceTermEntries =
-				_getCommerceTermEntries(hits);
-
-			if (commerceTermEntries != null) {
-				return new BaseModelSearchResult<>(
-					commerceTermEntries, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
 	private List<CTermEntryLocalization> _addCommerceTermEntryLocalizedFields(
 		long companyId, long commerceTermEntryId,
 		Map<Locale, String> descriptionMap, Map<Locale, String> labelMap) {
@@ -650,6 +558,41 @@ public class CommerceTermEntryLocalServiceImpl
 		return cTermEntryLocalizationPersistence.update(cTermEntryLocalization);
 	}
 
+	private SearchContext _buildSearchContext(
+		long companyId, long accountEntryId, String type, String keywords,
+		int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.NAME, keywords
+			).put(
+				Field.TYPE, type
+			).put(
+				"accountEntryId", accountEntryId
+			).build());
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
+	}
+
 	private void _checkCommerceTermEntriesByDisplayDate()
 		throws PortalException {
 
@@ -698,6 +641,40 @@ public class CommerceTermEntryLocalServiceImpl
 				userId, commerceTermEntry.getCommerceTermEntryId(),
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
 		}
+	}
+
+	private List<CommerceTermEntry> _getCommerceTermEntries(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceTermEntry> commerceTermEntries = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commerceTermEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceTermEntry commerceTermEntry = fetchCommerceTermEntry(
+				commerceTermEntryId);
+
+			if (commerceTermEntry == null) {
+				commerceTermEntries = null;
+
+				Indexer<CommerceTermEntry> indexer =
+					IndexerRegistryUtil.getIndexer(CommerceTermEntry.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceTermEntries != null) {
+				commerceTermEntries.add(commerceTermEntry);
+			}
+		}
+
+		return commerceTermEntries;
 	}
 
 	private GroupByStep _getDeliveryTermsEntryGroupByStep(
@@ -829,6 +806,29 @@ public class CommerceTermEntryLocalServiceImpl
 					CommerceTermEntryTable.INSTANCE.type.eq(
 						CommerceTermEntryConstants.TYPE_PAYMENT_TERMS)
 				));
+	}
+
+	private BaseModelSearchResult<CommerceTermEntry> _searchCommerceTermEntries(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceTermEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceTermEntry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceTermEntry> commerceTermEntries =
+				_getCommerceTermEntries(hits);
+
+			if (commerceTermEntries != null) {
+				return new BaseModelSearchResult<>(
+					commerceTermEntries, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	private CommerceTermEntry _startWorkflowInstance(

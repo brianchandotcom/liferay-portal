@@ -100,7 +100,8 @@ public class CommerceTermEntryRelLocalServiceImpl
 
 		commerceTermEntryRelPersistence.remove(commerceTermEntryRel);
 
-		_reindexCommerceTermEntry(commerceTermEntryRel.getCommerceTermEntryId());
+		_reindexCommerceTermEntry(
+			commerceTermEntryRel.getCommerceTermEntryId());
 
 		return commerceTermEntryRel;
 	}
@@ -217,15 +218,6 @@ public class CommerceTermEntryRelLocalServiceImpl
 			commerceTermEntryId);
 	}
 
-	private void _reindexCommerceTermEntry(long commerceTermEntryId)
-		throws PortalException {
-
-		Indexer<CommerceTermEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceTermEntry.class);
-
-		indexer.reindex(CommerceTermEntry.class.getName(), commerceTermEntryId);
-	}
-
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Table innerJoinTable, Predicate innerJoinPredicate,
 		Long commerceTermEntryId, String className, String keywords,
@@ -260,6 +252,15 @@ public class CommerceTermEntryRelLocalServiceImpl
 					return null;
 				}
 			));
+	}
+
+	private void _reindexCommerceTermEntry(long commerceTermEntryId)
+		throws PortalException {
+
+		Indexer<CommerceTermEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceTermEntry.class);
+
+		indexer.reindex(CommerceTermEntry.class.getName(), commerceTermEntryId);
 	}
 
 	private void _validate(

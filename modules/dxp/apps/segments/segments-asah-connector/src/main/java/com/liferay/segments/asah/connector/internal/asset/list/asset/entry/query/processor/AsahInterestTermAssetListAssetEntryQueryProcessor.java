@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,8 +80,5 @@ public class AsahInterestTermAssetListAssetEntryQueryProcessor
 
 	@Reference
 	private AsahInterestTermProvider _asahInterestTermProvider;
-
-	@Reference
-	private Portal _portal;
 
 }

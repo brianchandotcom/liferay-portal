@@ -210,6 +210,7 @@
 		},
 		{
 			"accountKey": "ERC-014",
+			"externalReferenceCode": "ERC-014_dxp",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "DXP",

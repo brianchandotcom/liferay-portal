@@ -218,6 +218,7 @@
 			"accountKey": "ERC-014",
 			"code": "TESTACCOUNT14",
 			"dxpVersion": "7.4",
+			"externalReferenceCode": "ERC-014",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
 			"liferayContactName": "Liferay Support",
 			"maxRequestors": -1,

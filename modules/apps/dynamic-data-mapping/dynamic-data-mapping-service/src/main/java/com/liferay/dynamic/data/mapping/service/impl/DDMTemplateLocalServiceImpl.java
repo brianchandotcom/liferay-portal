@@ -1581,6 +1581,8 @@ public class DDMTemplateLocalServiceImpl
 			DDMWebConfiguration.class, properties);
 	}
 
+	protected volatile DDMWebConfiguration ddmWebConfiguration;
+
 	private DDMTemplate _addTemplate(
 			User user, long groupId, long classNameId, long classPK,
 			long resourceClassNameId, String templateKey,
@@ -1728,6 +1730,25 @@ public class DDMTemplateLocalServiceImpl
 			serviceContext);
 
 		return newTemplate;
+	}
+
+	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
+		try {
+			SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
+				_siteConnectedGroupGroupProvider;
+
+			if (siteConnectedGroupGroupProvider == null) {
+				return _portal.getAncestorSiteGroupIds(groupId);
+			}
+
+			return siteConnectedGroupGroupProvider.
+				getAncestorSiteAndDepotGroupIds(groupId, true);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return new long[0];
+		}
 	}
 
 	private DDMGroupServiceConfiguration _getDDMGroupServiceConfiguration(
@@ -1895,27 +1916,6 @@ public class DDMTemplateLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new TemplateNameException("Name is null");
-		}
-	}
-
-	protected volatile DDMWebConfiguration ddmWebConfiguration;
-
-	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
-		try {
-			SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
-				_siteConnectedGroupGroupProvider;
-
-			if (siteConnectedGroupGroupProvider == null) {
-				return _portal.getAncestorSiteGroupIds(groupId);
-			}
-
-			return siteConnectedGroupGroupProvider.
-				getAncestorSiteAndDepotGroupIds(groupId, true);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return new long[0];
 		}
 	}
 

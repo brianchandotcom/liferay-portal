@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserOperation;
 import com.liferay.portal.security.ldap.ContactConverterKeys;
@@ -732,9 +731,6 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	@Reference
 	private PasswordEncryptor _passwordEncryptor;
-
-	@Reference
-	private Props _props;
 
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();

@@ -184,7 +184,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 					message = LanguageUtil.format(
 						_httpServletRequest,
 						"do-you-want-to-replace-x-for-x-as-the-default-" +
-							"utility-page-entry",
+							"utility-page",
 						new String[] {
 							_layoutUtilityPageEntry.getName(),
 							defaultLayoutUtilityPageEntry.getName()

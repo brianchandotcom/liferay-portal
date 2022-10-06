@@ -58,7 +58,7 @@ const ACTIONS = {
 		namespace
 	) {
 		openSimpleInputModal({
-			dialogTitle: Liferay.Language.get('rename-layout-utility-page'),
+			dialogTitle: Liferay.Language.get('rename-utility-page'),
 			formSubmitURL: updateLayoutUtilityPageEntryURL,
 			idFieldName: 'layoutUtilityPageEntryId',
 			idFieldValue: layoutUtilityPageEntryId,

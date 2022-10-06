@@ -40,6 +40,11 @@
 	<td>//span[contains(@class, 'diagram-builder-connector-name') and contains(text(), '${nodeName}' )]</td>
 	<td></td>
 </tr>
+<tr>
+    <td>USER_ELLIPSIS</td>
+    <td>//tr[contains(.,'${key_user}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -184,7 +184,6 @@ definition {
 	@description = "LPS-97669 - Verify that when editing a user name with pending instances, the Workload by Assignee card is updated accordingly"
 	@priority = "3"
 	test CardIsUpdatedWhenUserNameIsEdited {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserNameIsEdited";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -204,9 +203,11 @@ definition {
 
 		User.searchCP(searchTerm = "1user user1");
 
-		var key_rowEntry = "1user user1";
+		var key_user = "1user user1";
+		
 
-		Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+		Click(locator1 = "WorkflowMetricsAllItemsList#USER_ELLIPSIS");
+
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -224,7 +225,6 @@ definition {
 	@description = "LPS-97669 - Verify that when deleting a user with pending instances, the Workload by Assignee card is updated accordingly"
 	@priority = "4"
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserWithPendingInstanceIsDeleted";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -244,9 +244,10 @@ definition {
 
 		User.searchCP(searchTerm = "1user user1");
 
-		var key_rowEntry = "1user user1";
+		var key_user = "1user user1";
 
-		Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+		Click(locator1 = "WorkflowMetricsAllItemsList#USER_ELLIPSIS");
+
 
 		MenuItem.clickNoError(menuItem = "Deactivate");
 

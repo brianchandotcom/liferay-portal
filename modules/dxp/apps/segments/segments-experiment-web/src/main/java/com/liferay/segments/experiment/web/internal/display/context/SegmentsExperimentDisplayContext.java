@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -34,7 +33,6 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentService;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
@@ -64,37 +62,15 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	public Map<String, Object> getData() throws Exception {
-		if (_data != null) {
-			return _data;
-		}
-
-		_data = HashMapBuilder.<String, Object>put(
-			"context", _getContext()
-		).build();
-
-		return _data;
-	}
-
-	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(
-			long segmentsExperienceId)
-		throws Exception {
-
-		Layout layout = _themeDisplay.getLayout();
-
-		return Optional.ofNullable(
-			_segmentsExperimentService.fetchSegmentsExperiment(
-				segmentsExperienceId, _portal.getClassNameId(Layout.class),
-				layout.getPlid(),
-				SegmentsExperimentConstants.Status.getExclusiveStatusValues()));
-	}
-
-	private Map<String, Object> _getContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"namespace",
-			_portal.getPortletNamespace(
-				SegmentsPortletKeys.SEGMENTS_EXPERIMENT)
-		).put(
-			"segmentExperimentDataURL", _getSegmentExperimentDataURL()
+			"context",
+			HashMapBuilder.<String, Object>put(
+				"namespace",
+				_portal.getPortletNamespace(
+					SegmentsPortletKeys.SEGMENTS_EXPERIMENT)
+			).put(
+				"segmentExperimentDataURL", _getSegmentExperimentDataURL()
+			).build()
 		).build();
 	}
 
@@ -160,59 +136,42 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private long _getSegmentsExperienceId() throws Exception {
-		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment();
+		long segmentsExperienceId = _getSelectedSegmentsExperienceId();
+
+		Layout layout = _themeDisplay.getLayout();
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentService.fetchSegmentsExperiment(
+				segmentsExperienceId, _portal.getClassNameId(Layout.class),
+				layout.getPlid(),
+				SegmentsExperimentConstants.Status.getExclusiveStatusValues());
 
 		if (segmentsExperiment != null) {
 			return segmentsExperiment.getSegmentsExperienceId();
 		}
 
-		return _getSelectedSegmentsExperienceId();
-	}
-
-	private SegmentsExperiment _getSegmentsExperiment() throws Exception {
-		if (_segmentsExperiment != null) {
-			return _segmentsExperiment;
-		}
-
-		_segmentsExperiment = _getActiveSegmentsExperimentOptional(
-			_getSelectedSegmentsExperienceId()
-		).orElse(
-			null
-		);
-
-		return _segmentsExperiment;
+		return segmentsExperienceId;
 	}
 
 	private long _getSelectedSegmentsExperienceId() {
-		if (Validator.isNotNull(_segmentsExperienceId)) {
-			return _segmentsExperienceId;
-		}
-
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(_httpServletRequest);
 
-		long selectedSegmentsExperienceId = ParamUtil.getLong(
+		long segmentsExperienceId = ParamUtil.getLong(
 			originalHttpServletRequest, "segmentsExperienceId", -1);
 
-		if (selectedSegmentsExperienceId != -1) {
-			_segmentsExperienceId = selectedSegmentsExperienceId;
-		}
-		else {
-			_segmentsExperienceId =
-				_segmentsExperienceManager.getSegmentsExperienceId(
-					_httpServletRequest);
+		if (segmentsExperienceId != -1) {
+			return segmentsExperienceId;
 		}
 
-		return _segmentsExperienceId;
+		return _segmentsExperienceManager.getSegmentsExperienceId(
+			_httpServletRequest);
 	}
 
-	private Map<String, Object> _data;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
-	private Long _segmentsExperienceId;
 	private final SegmentsExperienceManager _segmentsExperienceManager;
-	private SegmentsExperiment _segmentsExperiment;
 	private final SegmentsExperimentService _segmentsExperimentService;
 	private final ThemeDisplay _themeDisplay;
 

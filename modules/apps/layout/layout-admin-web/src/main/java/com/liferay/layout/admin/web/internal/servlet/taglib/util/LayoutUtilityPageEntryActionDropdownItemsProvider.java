@@ -53,10 +53,15 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
-				DropdownItemListBuilder.add(
-					_getMarkAsDefaultLayoutUtilityPageEntryActionUnsafeConsumer()
-				).build())
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_getMarkAsDefaultLayoutUtilityPageEntryActionUnsafeConsumer()
+					).add(
+						_getRenameUtilityPageActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 
@@ -126,6 +131,38 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			}
 
 			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getRenameUtilityPageActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "renameLayoutUtilityPageEntry");
+			dropdownItem.putData(
+				"layoutUtilityPageEntryId",
+				String.valueOf(
+					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
+			dropdownItem.putData(
+				"layoutUtilityPageEntryName",
+				_layoutUtilityPageEntry.getName());
+			dropdownItem.putData(
+				"updateLayoutUtilityPageEntryURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_admin/update_layout_utility_page_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutUtilityPageCollectionId",
+					_layoutUtilityPageEntry.getCtCollectionId()
+				).setParameter(
+					"layoutUtilityPageEntryId",
+					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()
+				).buildString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "rename"));
 		};
 	}
 

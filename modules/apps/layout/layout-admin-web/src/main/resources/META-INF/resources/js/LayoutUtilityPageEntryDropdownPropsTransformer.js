@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, openSimpleInputModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	markAsDefaultLayoutUtilityPageEntry({
@@ -32,6 +32,27 @@ const ACTIONS = {
 		else {
 			send(markAsDefaultLayoutUtilityPageEntryURL);
 		}
+	},
+
+	renameLayoutUtilityPageEntry(
+		{
+			layoutUtilityPageEntryId,
+			layoutUtilityPageEntryName,
+			updateLayoutUtilityPageEntryURL,
+		},
+		namespace
+	) {
+		openSimpleInputModal({
+			dialogTitle: Liferay.Language.get('rename-layout-utility-page'),
+			formSubmitURL: updateLayoutUtilityPageEntryURL,
+			idFieldName: 'layoutUtilityPageEntryId',
+			idFieldValue: layoutUtilityPageEntryId,
+			mainFieldLabel: Liferay.Language.get('name'),
+			mainFieldName: 'name',
+			mainFieldPlaceholder: Liferay.Language.get('name'),
+			mainFieldValue: layoutUtilityPageEntryName,
+			namespace,
+		});
 	},
 };
 

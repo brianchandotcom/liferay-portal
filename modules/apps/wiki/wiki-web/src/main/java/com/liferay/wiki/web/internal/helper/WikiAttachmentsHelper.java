@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.service.TrashEntryService;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
@@ -184,9 +183,6 @@ public class WikiAttachmentsHelper {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TrashEntryService _trashEntryService;
 
 	@Reference
 	private WikiPageService _wikiPageService;

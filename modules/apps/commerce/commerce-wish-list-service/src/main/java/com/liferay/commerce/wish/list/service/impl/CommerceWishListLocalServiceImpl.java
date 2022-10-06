@@ -249,10 +249,6 @@ public class CommerceWishListLocalServiceImpl
 		return commerceWishListPersistence.update(commerceWishList);
 	}
 
-	private String _getCookieName(long groupId) {
-		return CommerceWishList.class.getName() + StringPool.POUND + groupId;
-	}
-
 	private void _mergeCommerceWishList(
 			long fromCommerceWishListId, long toCommerceWishListId,
 			ServiceContext serviceContext)

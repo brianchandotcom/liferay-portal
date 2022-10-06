@@ -15,14 +15,14 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Pavel Savinov
@@ -36,35 +36,32 @@ public class DefaultAssetPublisherCustomizerRegistry
 		String portletId) {
 
 		AssetPublisherCustomizer assetPublisherCustomizer =
-			_assetPublisherCustomizers.get(portletId);
+			_serviceTrackerMap.getService(portletId);
 
 		if (assetPublisherCustomizer == null) {
-			assetPublisherCustomizer = _assetPublisherCustomizers.get(
+			assetPublisherCustomizer = _serviceTrackerMap.getService(
 				AssetPublisherPortletKeys.ASSET_PUBLISHER);
 		}
 
 		return assetPublisherCustomizer;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	public void registerAssetPublisherCustomizer(
-		AssetPublisherCustomizer assetPublisherCustomizer) {
-
-		_assetPublisherCustomizers.put(
-			assetPublisherCustomizer.getPortletId(), assetPublisherCustomizer);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, AssetPublisherCustomizer.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(assetPublisherCustomizer, emitter) -> emitter.emit(
+					assetPublisherCustomizer.getPortletId())));
 	}
 
-	public void unregisterAssetPublisherCustomizer(
-		AssetPublisherCustomizer assetPublisherCustomizer) {
-
-		_assetPublisherCustomizers.remove(
-			assetPublisherCustomizer.getPortletId());
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, AssetPublisherCustomizer>
-		_assetPublisherCustomizers = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, AssetPublisherCustomizer>
+		_serviceTrackerMap;
 
 }

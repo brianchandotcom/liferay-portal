@@ -68,6 +68,20 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getStickerIcon() {
+		if (_layoutPageTemplateEntry.isDefaultTemplate()) {
+			return "check-circle";
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getStickerStyle() {
+		return "primary";
+	}
+
+	@Override
 	public String getSubtitle() {
 		Date createDate = _layoutPageTemplateEntry.getCreateDate();
 

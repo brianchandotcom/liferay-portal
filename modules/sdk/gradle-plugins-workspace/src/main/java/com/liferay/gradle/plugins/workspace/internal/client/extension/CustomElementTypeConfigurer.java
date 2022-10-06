@@ -146,7 +146,7 @@ public class CustomElementTypeConfigurer
 
 	@SuppressWarnings("unchecked")
 	private void _expandClientExtensionConfigURLs(
-		File clientExtensionConfigFile, File serveDir) {
+		File clientExtensionConfigFile, File staticDir) {
 
 		String originalConfigFileContent = FileUtil.read(
 			clientExtensionConfigFile);
@@ -192,11 +192,11 @@ public class CustomElementTypeConfigurer
 					Collectors.toList()
 				);
 
-				Path servePath = serveDir.toPath();
+				Path staticPath = staticDir.toPath();
 
-				try (Stream<Path> files = Files.walk(servePath)) {
+				try (Stream<Path> files = Files.walk(staticPath)) {
 					files.map(
-						servePath::relativize
+						staticPath::relativize
 					).forEach(
 						buildFile -> {
 							Stream<Pattern> stream = globs.stream();

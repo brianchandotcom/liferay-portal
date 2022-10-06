@@ -139,34 +139,36 @@ public class ClientExtensionProjectConfigurator
 
 			JsonNode rootJsonNode = objectMapper.readTree(clientExtensionFile);
 
-			Iterator<Map.Entry<String, JsonNode>> nodeIterator =
+			Iterator<Map.Entry<String, JsonNode>> iterator =
 				rootJsonNode.fields();
 
-			nodeIterator.forEachRemaining(
-				node -> {
-					String id = node.getKey();
+			iterator.forEachRemaining(
+				entry -> {
+					String id = entry.getKey();
 
 					if (Objects.equals("assemble", id)) {
-						JsonNode assembleNode = node.getValue();
+						JsonNode assembleJsonNode = entry.getValue();
 
 						_configureAssembleClientExtensionTask(
-							assembleClientExtensionTaskProvider, assembleNode);
+							assembleClientExtensionTaskProvider,
+							assembleJsonNode);
 					}
 					else if (Objects.equals("runtime", id)) {
-						JsonNode runtimeNode = node.getValue();
+						JsonNode runtimeJsonNode = entry.getValue();
 
-						JsonNode runtimeType = runtimeNode.get("type");
+						JsonNode runtimeTypeJsonNode = runtimeJsonNode.get(
+							"type");
 
-						if (runtimeType != null) {
+						if (runtimeTypeJsonNode != null) {
 							createClientExtensionConfigTaskProvider.configure(
 								createClientExtensionConfigTask ->
 									createClientExtensionConfigTask.setType(
-										runtimeType.asText()));
+										runtimeTypeJsonNode.asText()));
 
 							List<ClientExtensionTypeConfigurer>
 								clientExtensionTypeConfigurers =
 									_clientExtensionConfigurers.getOrDefault(
-										runtimeType.asText(),
+										runtimeTypeJsonNode.asText(),
 										Collections.emptyList());
 
 							clientExtensionTypeConfigurers.forEach(
@@ -177,12 +179,13 @@ public class ClientExtensionProjectConfigurator
 						}
 					}
 					else {
-						JsonNode clientExtensionNode = node.getValue();
+						JsonNode clientExtensionJsonNode = entry.getValue();
 
 						try {
 							ClientExtension clientExtension =
 								objectMapper.treeToValue(
-									clientExtensionNode, ClientExtension.class);
+									clientExtensionJsonNode,
+									ClientExtension.class);
 
 							clientExtension.id = id;
 							clientExtension.projectName = project.getName();
@@ -329,22 +332,22 @@ public class ClientExtensionProjectConfigurator
 	@SuppressWarnings("serial")
 	private void _configureAssembleClientExtensionTask(
 		TaskProvider<Copy> assembleClientExtensionTaskProvider,
-		JsonNode assembleNode) {
+		JsonNode assembleJsonNode) {
 
 		assembleClientExtensionTaskProvider.configure(
-			copy -> assembleNode.forEach(
-				copyNode -> {
-					JsonNode fromNode = copyNode.get("from");
-					JsonNode includeNode = copyNode.get("include");
-					JsonNode intoNode = copyNode.get("into");
+			copy -> assembleJsonNode.forEach(
+				copyJsonNode -> {
+					JsonNode fromJsonNode = copyJsonNode.get("from");
+					JsonNode includeJsonNode = copyJsonNode.get("include");
+					JsonNode intoJsonNode = copyJsonNode.get("into");
 
 					copy.into(
 						new Callable<String>() {
 
 							@Override
 							public String call() throws Exception {
-								if (intoNode != null) {
-									return intoNode.asText();
+								if (intoJsonNode != null) {
+									return intoJsonNode.asText();
 								}
 
 								return "static";
@@ -355,18 +358,18 @@ public class ClientExtensionProjectConfigurator
 
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {
-								copySpec.from(fromNode.asText());
+								copySpec.from(fromJsonNode.asText());
 
-								if (includeNode instanceof ArrayNode) {
+								if (includeJsonNode instanceof ArrayNode) {
 									ArrayNode arrayNode =
-										(ArrayNode)includeNode;
+										(ArrayNode)includeJsonNode;
 
 									arrayNode.forEach(
 										include -> copySpec.include(
 											include.asText()));
 								}
 								else {
-									copySpec.include(includeNode.asText());
+									copySpec.include(includeJsonNode.asText());
 								}
 
 								copySpec.setIncludeEmptyDirs(false);

@@ -187,13 +187,14 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		DirectoryProperty buildDirectoryProperty =
 			projectLayout.getBuildDirectory();
 
-		Provider<RegularFile> buildFile = buildDirectoryProperty.file(path);
+		Provider<RegularFile> buildFileProvider = buildDirectoryProperty.file(
+			path);
 
 		TaskOutputs taskOutputs = getOutputs();
 
-		taskOutputs.files(buildFile);
+		taskOutputs.files(buildFileProvider);
 
-		return buildFile;
+		return buildFileProvider;
 	}
 
 	private String _loadTemplate(

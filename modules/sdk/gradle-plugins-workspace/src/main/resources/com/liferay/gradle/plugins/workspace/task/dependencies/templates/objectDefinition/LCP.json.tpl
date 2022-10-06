@@ -1,12 +1,12 @@
 {
-	"kind": "Job",
-	"id": "__CLIENT_EXTENSION_ID__",
 	"cpu": 0.2,
-	"scale": 1,
-	"memory": 300,
 	"environments": {
 		"infra": {
 			"deploy": false
 		}
-	}
+	},
+	"id": "__CLIENT_EXTENSION_ID__",
+	"kind": "Job",
+	"memory": 300,
+	"scale": 1
 }

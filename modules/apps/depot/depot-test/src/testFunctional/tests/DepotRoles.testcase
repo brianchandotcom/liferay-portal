@@ -510,6 +510,7 @@ definition {
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media",
 			roleTitle = "AL Role Name",
 			roleType = "Asset Library");
 
@@ -541,6 +542,7 @@ definition {
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media",
 			roleTitle = "AL Role Name",
 			roleType = "Asset Library");
 
@@ -555,6 +557,7 @@ definition {
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX",
 			permissionDefinitionValue = "Add Document",
+			permissionNavigationValue = "Documents and Media",
 			roleTitle = "AL Role Name",
 			roleTitleEdit = "AL Role Name Edit",
 			roleType = "Asset Library");

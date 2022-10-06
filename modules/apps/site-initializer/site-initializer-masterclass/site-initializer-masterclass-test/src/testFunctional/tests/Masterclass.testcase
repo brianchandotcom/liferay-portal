@@ -1281,6 +1281,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
 				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Pages",
 				roleTitle = "Student",
 				roleType = "Site");
 
@@ -1292,6 +1293,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX",
 				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Pages",
 				roleTitle = "Student",
 				roleType = "Site");
 
@@ -1303,6 +1305,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX",
 				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Site",
 				roleTitle = "Student",
 				roleType = "Site");
 		}
@@ -1340,6 +1343,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
 				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Pages",
 				roleTitle = "Teacher",
 				roleType = "Site");
 
@@ -1351,6 +1355,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX",
 				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Pages",
 				roleTitle = "Teacher",
 				roleType = "Site");
 
@@ -1362,6 +1367,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX",
 				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Site",
 				roleTitle = "Teacher",
 				roleType = "Site");
 		}

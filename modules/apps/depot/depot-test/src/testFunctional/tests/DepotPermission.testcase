@@ -232,6 +232,7 @@ definition {
 			assetLibrariesScope = "true",
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX",
 			permissionDefinitionValue = "Add Web Content",
+			permissionNavigationValue = "Web Content",
 			roleTitle = "Depot Regrole Name",
 			siteNameScope = "Test Depot Name");
 

@@ -69,6 +69,7 @@ definition {
 			Role.definePermissionCP(
 				permissionDefinitionKey = "CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX",
 				permissionDefinitionValue = "View Staging",
+				permissionNavigationValue = "Settings",
 				roleTitle = "Regrole Name");
 
 			JSONRole.assignRoleToUser(

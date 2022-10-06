@@ -22,10 +22,12 @@ export const CORE_USER_ACCOUNT_FIELDS = gql`
 				name
 			}
 		}
-		externalReferenceCode
-		hasProvisioningRole @client
+		emailAddress
 		id
+		isCurrentUser @client
 		isLiferayStaff @client
+		isProvisioning @client
+		lastLoginDate
 		name
 		organizationBriefs {
 			id

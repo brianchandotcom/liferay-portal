@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface NotificationType {
 
 	public String getType();
-	
-	public void sendNotification(Object context);
+
+	public void sendNotification(NotificationContext notificationContext)
+		throws PortalException;
 
 	public default void sendUnsentNotifications() {
 	}

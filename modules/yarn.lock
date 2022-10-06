@@ -1808,10 +1808,10 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@liferay/amd-loader@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.1.0.tgz#f49294299d0fd062f004aad532c5497b17454099"
-  integrity sha512-nJcJpltU4IB+tLT0jAE4aWQFbQ7DiSv9ywdQ0c9JK17iov+SnlmgLp7XlJZm9D/IWNZwmfd4V+Wmmq3jrQNrmA==
+"@liferay/amd-loader@5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.2.0.tgz#760905b2cad058048c96063329f8a178b5ce0dc7"
+  integrity sha512-6Fd036qsogJaH71KUNrPA2tk3o1c1EYBsMBPMnqsTsn4iwRxqDEs1+/bxuUg4PkyXo9hFme/wXgRLFy0x5pifw==
 
 "@liferay/eslint-plugin@1.3.0":
   version "1.3.0"

@@ -202,14 +202,14 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						<liferay-ui:search-container-column-text
 							align="right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
-							name="folders"
+							name="num-of-kb-folders"
 							value="-"
 						/>
 
 						<liferay-ui:search-container-column-text
 							align="right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
-							name="articles"
+							name="num-of-kb-articles"
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 

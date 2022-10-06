@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -135,9 +134,6 @@ public class DepotItemSelectorView
 
 	@Reference
 	private DepotPanelAppController _depotPanelAppController;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SiteItemSelectorViewRenderer _siteItemSelectorViewRenderer;

@@ -21,7 +21,6 @@ import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.display.context.DepotAdminViewDepotDashboardDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.util.GroupURLProvider;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -92,12 +90,6 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DepotEntryService _depotEntryService;
-
-	@Reference
-	private GroupURLProvider _groupURLProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

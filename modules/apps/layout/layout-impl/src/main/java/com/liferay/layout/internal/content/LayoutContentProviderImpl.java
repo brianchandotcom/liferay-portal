@@ -24,7 +24,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Locale;
@@ -60,17 +58,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Layout layout, Locale locale) {
 
-		if ((httpServletRequest == null) || (httpServletResponse == null) ||
-			layout.isSystem() ||
-			(layout.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
-			!layout.isPublished()) {
-
-			return StringPool.BLANK;
-		}
-
-		Group group = layout.getGroup();
-
-		if (group.isStagingGroup()) {
+		if ((httpServletRequest == null) || (httpServletResponse == null)) {
 			return StringPool.BLANK;
 		}
 

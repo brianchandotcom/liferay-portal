@@ -17,9 +17,15 @@ package com.liferay.asset.tags.internal.search.spi.model.index.contributor;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import com.liferay.subscription.service.SubscriptionLocalService;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import static com.liferay.portal.kernel.security.auth.PrincipalThreadLocal.getUserId;
+
 
 /**
  * @author Luan Maoski
@@ -38,6 +44,13 @@ public class AssetTagModelDocumentContributor
 		document.addTextSortable(Field.NAME, assetTag.getName());
 
 		document.addNumberSortable("assetCount", assetTag.getAssetCount());
+
+		document.addKeyword("subscribed", _subscriptionLocalService.isSubscribed(
+			assetTag.getCompanyId(), getUserId(),
+			AssetTag.class.getName(), assetTag.getTagId()));
 	}
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

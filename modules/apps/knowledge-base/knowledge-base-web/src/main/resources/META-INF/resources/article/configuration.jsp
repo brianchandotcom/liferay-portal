@@ -26,6 +26,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
+	cssClass="pt-0"
 	method="post"
 	name="fm"
 >
@@ -34,7 +35,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 
 	<liferay-frontend:edit-form-body>
 				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="content-selection">
+					<liferay-frontend:fieldset cssClass="mb-4" collapsed="<%= false %>" collapsible="<%= true %>" label="content-selection">
 						<div class="form-group">
 
 							<%
@@ -53,7 +54,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 						</div>
 					</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="set-and-enable">
+					<liferay-frontend:fieldset cssClass="mb-4" collapsed="<%= false %>" collapsible="<%= true %>" label="set-and-enable">
 						<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleDescription() %>" />
 
 						<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= kbArticlePortletInstanceConfiguration.enableKBArticleRatings() %>" />

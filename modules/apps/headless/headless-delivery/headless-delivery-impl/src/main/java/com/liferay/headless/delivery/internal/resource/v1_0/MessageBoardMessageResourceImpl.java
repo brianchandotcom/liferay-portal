@@ -740,20 +740,16 @@ public class MessageBoardMessageResourceImpl
 				contextUser));
 	}
 
-	private MBMessage _updateAnswer(
+	private void _updateAnswer(
 			MBMessage mbMessage, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		Boolean showAsAnswer = messageBoardMessage.getShowAsAnswer();
 
 		if ((showAsAnswer != null) && (showAsAnswer != mbMessage.isAnswer())) {
-			mbMessage = _mbMessageService.updateAnswer(
+			_mbMessageService.updateAnswer(
 				mbMessage.getMessageId(), showAsAnswer, false);
-
-			mbMessage.setAnswer(showAsAnswer);
 		}
-
-		return mbMessage;
 	}
 
 	private MessageBoardMessage _updateMessageBoardMessage(

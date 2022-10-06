@@ -508,6 +508,14 @@ public class AMImageEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean hasAMImageEntryContent(
+		String configurationUuid,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion) {
+
+		return getService().hasAMImageEntryContent(
+			configurationUuid, fileVersion);
+	}
+
 	/**
 	 * Updates the am image entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

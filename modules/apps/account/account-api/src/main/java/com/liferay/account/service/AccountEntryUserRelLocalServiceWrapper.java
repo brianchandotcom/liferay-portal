@@ -68,15 +68,15 @@ public class AccountEntryUserRelLocalServiceWrapper
 	public com.liferay.account.model.AccountEntryUserRel addAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, java.util.Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle,
+			String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, String jobTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
-			serviceContext);
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId,
+			jobTitle, serviceContext);
 	}
 
 	@Override
@@ -107,16 +107,16 @@ public class AccountEntryUserRelLocalServiceWrapper
 			addPersonTypeAccountEntryUserRel(
 				long accountEntryId, long creatorUserId, String screenName,
 				String emailAddress, java.util.Locale locale, String firstName,
-				String middleName, String lastName, long prefixId,
-				long suffixId, String jobTitle,
+				String middleName, String lastName, long prefixListTypeId,
+				long suffixListTypeId, String jobTitle,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryUserRelLocalService.
 			addPersonTypeAccountEntryUserRel(
 				accountEntryId, creatorUserId, screenName, emailAddress, locale,
-				firstName, middleName, lastName, prefixId, suffixId, jobTitle,
-				serviceContext);
+				firstName, middleName, lastName, prefixListTypeId,
+				suffixListTypeId, jobTitle, serviceContext);
 	}
 
 	/**

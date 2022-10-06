@@ -419,14 +419,15 @@ function EditSXPBlueprintForm({
 		if (isCompanyAdmin) {
 
 			// TODO: Create API for search indexes (LPS-163750) where first item
-			// is the company index.
+			// is the company index. The company index gets removed to avoid
+			// confusion with the "Default Company Index" selection.
 
 			setSearchIndexes([]);
 
 			/*
 			fetchData(`/o/search-experiences-rest/v1.0/search-indexes`)
 				.then((responseContent) =>
-					setSearchIndexes(responseContent?.items)
+					setSearchIndexes(responseContent?.items.slice(1))
 				)
 				.catch(() => setSearchIndexes([]));
 			*/
@@ -474,7 +475,7 @@ function EditSXPBlueprintForm({
 			sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
 		};
 
-		if (indexConfig && indexConfig !== searchIndexes[0]) {
+		if (indexConfig) {
 			configuration.indexConfiguration = indexConfig;
 		}
 
@@ -829,10 +830,7 @@ function EditSXPBlueprintForm({
 				return (
 					<>
 						<AddSXPElementSidebar
-							isIndexCompany={
-								!formik.values.indexConfig ||
-								formik.values.indexConfig === searchIndexes[0]
-							}
+							isIndexCompany={!formik.values.indexConfig}
 							onAddSXPElement={_handleAddSXPElement}
 							onClose={_handleCloseSidebar}
 							visible={openSidebar === SIDEBARS.ADD_SXP_ELEMENT}
@@ -914,11 +912,7 @@ function EditSXPBlueprintForm({
 								errors={formik.errors.elementInstances}
 								frameworkConfig={formik.values.frameworkConfig}
 								indexFields={indexFields}
-								isIndexCompany={
-									!formik.values.indexConfig ||
-									formik.values.indexConfig ===
-										searchIndexes[0]
-								}
+								isIndexCompany={!formik.values.indexConfig}
 								isSubmitting={
 									formik.isSubmitting || previewInfo.loading
 								}

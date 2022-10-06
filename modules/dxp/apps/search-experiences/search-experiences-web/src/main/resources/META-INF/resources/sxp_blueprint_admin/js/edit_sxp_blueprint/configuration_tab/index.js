@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayForm, {ClaySelect} from '@clayui/form';
+import ClayForm, {ClayRadio, ClayRadioGroup, ClaySelect} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import getCN from 'classnames';
 import React, {useContext} from 'react';
@@ -45,6 +45,10 @@ function ConfigurationTab({
 	touched,
 }) {
 	const {featureFlagLps153813, isCompanyAdmin} = useContext(ThemeContext);
+
+	const _handleIndexConfigRadioChange = (value) => {
+		setFieldValue('indexConfig', value ? '' : searchIndexes[0]);
+	};
 
 	const _renderEditor = (configName, configValue) => (
 		<div
@@ -185,28 +189,7 @@ function ConfigurationTab({
 								{Liferay.Language.get('index-configuration')}
 							</label>
 
-							<ClaySelect
-								aria-label={Liferay.Language.get(
-									'index-configuration'
-								)}
-								onChange={(event) =>
-									setFieldValue(
-										'indexConfig',
-										event.target.value
-									)
-								}
-								value={indexConfig}
-							>
-								{searchIndexes.map((index) => (
-									<ClaySelect.Option
-										key={index}
-										label={index}
-										value={index}
-									/>
-								))}
-							</ClaySelect>
-
-							<div className="sheet-text">
+							<div className="mb-4 sheet-text">
 								<span className="help-text">
 									{Liferay.Language.get(
 										'index-configuration-description'
@@ -215,6 +198,49 @@ function ConfigurationTab({
 
 								<LearnMessage resourceKey="index-configuration" />
 							</div>
+
+							<ClayRadioGroup
+								onChange={_handleIndexConfigRadioChange}
+								value={!indexConfig}
+							>
+								<ClayRadio
+									label={Liferay.Language.get(
+										'default-company-index'
+									)}
+									value={true}
+								/>
+
+								<ClayRadio
+									disabled={!searchIndexes.length}
+									label={Liferay.Language.get(
+										'configure-a-different-index'
+									)}
+									value={false}
+								/>
+							</ClayRadioGroup>
+
+							{!!indexConfig && (
+								<ClaySelect
+									aria-label={Liferay.Language.get(
+										'index-configuration'
+									)}
+									onChange={(event) =>
+										setFieldValue(
+											'indexConfig',
+											event.target.value
+										)
+									}
+									value={indexConfig}
+								>
+									{searchIndexes.map((index) => (
+										<ClaySelect.Option
+											key={index}
+											label={index}
+											value={index}
+										/>
+									))}
+								</ClaySelect>
+							)}
 						</ClayForm.Group>
 					)}
 				</div>

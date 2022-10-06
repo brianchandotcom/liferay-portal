@@ -121,7 +121,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
 
-		if (!adaptiveMediaOptional.isPresent()) {
+		if (_isProcessingRequired(adaptiveMediaOptional, fileVersion)) {
 			_processAMImage(fileVersion);
 
 			return fileVersion.getContentStream(false);
@@ -147,7 +147,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
 
-		if (!adaptiveMediaOptional.isPresent()) {
+		if (_isProcessingRequired(adaptiveMediaOptional, fileVersion)) {
 			_processAMImage(fileVersion);
 
 			return fileVersion.getSize();
@@ -176,7 +176,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
 
-		if (!adaptiveMediaOptional.isPresent()) {
+		if (_isProcessingRequired(adaptiveMediaOptional, fileVersion)) {
 			_processAMImage(fileVersion);
 		}
 
@@ -197,7 +197,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 			adaptiveMediaStream.findFirst();
 
-		if (!adaptiveMediaOptional.isPresent()) {
+		if (_isProcessingRequired(adaptiveMediaOptional, fileVersion)) {
 			_processAMImage(fileVersion);
 		}
 
@@ -228,7 +228,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
 				adaptiveMediaStream.findFirst();
 
-			if (adaptiveMediaOptional.isPresent()) {
+			if (!_isProcessingRequired(adaptiveMediaOptional, fileVersion)) {
 				return true;
 			}
 
@@ -356,6 +356,26 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	private boolean _isMimeTypeSupported(String mimeType) {
 		return _amImageMimeTypeProvider.isMimeTypeSupported(mimeType);
+	}
+
+	private boolean _isProcessingRequired(
+		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional,
+		FileVersion fileVersion) {
+
+		if (!adaptiveMediaOptional.isPresent()) {
+			return true;
+		}
+
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+			adaptiveMediaOptional.get();
+
+		if (_amImageValidator.isProcessingRequired(
+				adaptiveMedia, fileVersion)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _processAMImage(FileVersion fileVersion) {

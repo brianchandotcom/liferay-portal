@@ -161,7 +161,10 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 			AMImageEntry amImageEntry, FileVersion fileVersion)
 		throws PortalException {
 
-		if (amImageEntry == null) {
+		if ((amImageEntry == null) ||
+			!_amImageEntryLocalService.hasAMImageEntryContent(
+				amImageEntry.getConfigurationUuid(), fileVersion)) {
+
 			return true;
 		}
 

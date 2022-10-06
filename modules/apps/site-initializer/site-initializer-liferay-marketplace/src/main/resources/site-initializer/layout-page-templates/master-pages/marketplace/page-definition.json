@@ -4,13 +4,36 @@
 			{
 				"definition": {
 					"fragment": {
+						"key": "BASIC_COMPONENT-html"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "element-html",
+							"value": {
+								"html": {
+									"value_i18n": {
+										"en_US": "<link href=\"https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,400i,600,700|Source+Serif+Pro\" rel=\"stylesheet\">\n<svg display=\"none\" height=\"0\" version=\"1.1\" width=\"0\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><symbol id=\"languageIcon\" viewBox=\"0 0 24 24\">\n    <g fill-rule=\"evenodd\" fill=\"none\" stroke-width=\"2\" stroke=\"currentColor\">\n        <path d=\"M4 12h16M5 7c2.333.667 4.667 1 7 1s4.667-.333 7-1M5 17c2.333-.667 4.667-1 7-1s4.667.333 7 1\" stroke-linecap=\"square\"></path>\n        <ellipse cx=\"12\" cy=\"12\" rx=\"3\" ry=\"9\"></ellipse><circle cx=\"12\" cy=\"12\" r=\"9\"></circle>\n    </g>\n  </symbol></svg>\n<style>\n#footer.f-navigation-footer {\n    margin: 0;\n}\n#footer.f-navigation-footer .footer-content .footer-navigation .navigation {\n    display: flex;    \n}\n\nhtml .layout-content .class-toggle {\n    cursor: pointer;\n    position: relative;\n}\n\n.layout-content {\n    font: 400 16px/1.5 'Source Sans Pro', Tahoma, 'Trebuchet MS', sans-serif;\n}\n\n:root {\n  --black: #09101D;\n  --primary-10: #e7effa;\n  --primary-5: #f3f7fd;\n  --primary-7: #eef4fc;\n  --primary-dark: #134194;\n  --primary: #0b63ce;\n  --white: #FFFFFF;\n  --accent-1: #1AA0E8;\n  --accent-2: #E06E31;\n  --accent-3: #D33A2F;\n  --accent-4: #42BFC2;\n  --accent-5: #E55E75;\n  --accent-6: #19AB4F;\n  --accent-7: #503690;\n  --accent-8: #FDCC4A;\n  --accent-9: #47C6F5;\n  --accent-10:#072252;\n  --neutral-1: #2C3A4B;\n  --neutral-2: #394452;\n  --neutral-3: #545D69;\n  --neutral-4: #6D7580;\n  --neutral-5: #858C94;\n  --neutral-6: #A5ABB3;\n  --neutral-7: #dadee3;\n  --neutral-8: #ebeef2;\n  --neutral-9: #f4f6f9;\n  --neutral-10: #09101D;\n  --transparent: transparent;\n  --action-primary-dark-active: #0d2d67;\n  --action-primary-dark-hover: #10377d;\n  --action-default: #0b5fff;\n  --action-default-active: #004ad7;\n  --action-default-hover: #0053f0;\n  --action-secondary: #19ab4f;\n  --action-visited: #5e38ba;\n  --rounded-pill: 8px;\n  --border-radius: 4px;\n  --border-radius-sm: 2px;\n  --border-radius-lg: 6px;\n  --spacer-10: auto;\n}\n</style>"
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
 						"key": "public-sites-navigation"
 					},
 					"fragmentConfig": {
 						"buttonType": "",
-						"darkNav": true,
+						"darkNav": false,
 						"showAccountMenu": true,
-						"showLanguageMenu": true,
+						"showLanguageMenu": false,
 						"showSearch": true,
 						"showSiteName": true
 					},
@@ -26,6 +49,11 @@
 							"id": "siteName",
 							"value": {
 								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Marketplace"
+									}
 								}
 							}
 						}
@@ -36,46 +64,18 @@
 			},
 			{
 				"definition": {
-					"fragmentStyle": {
-						"borderWidth": "0",
-						"textAlign": ""
-					},
-					"indexed": true,
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
 					}
 				},
-				"pageElements": [
-					{
-						"definition": {
-							"fragmentSettings": {
-								"unallowedFragments": [
-								]
-							}
-						},
-						"type": "DropZone"
-					}
-				],
-				"type": "Section"
+				"type": "DropZone"
 			}
 		],
 		"type": "Root"
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"styleBook": {
-			"key": "learn",
-			"name": "Learn"
-		},
 		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

@@ -18,7 +18,6 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.frontend.internal.account.model.Order;
 import com.liferay.commerce.frontend.internal.account.model.OrderList;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -136,9 +135,6 @@ public class CommerceOrderResource {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

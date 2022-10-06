@@ -248,7 +248,7 @@ export function AdvancedSelectField({
 
 			{value ? (
 				<ClayButtonWithIcon
-					className="border-0 mb-0 ml-2 page-editor__select-field__action-button"
+					className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__select-field__action-button"
 					displayType="secondary"
 					onClick={() =>
 						onSetValue({isTokenValue: true, value: null})

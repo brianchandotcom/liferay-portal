@@ -18,7 +18,6 @@ import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
@@ -144,10 +143,6 @@ public class KBArticleItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new InfoItemItemSelectorReturnType());
-
-	@Reference
-	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
-		_itemSelectorViewDescriptorRenderer;
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;

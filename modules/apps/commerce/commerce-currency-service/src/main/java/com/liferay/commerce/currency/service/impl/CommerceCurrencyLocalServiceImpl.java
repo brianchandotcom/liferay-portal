@@ -97,7 +97,7 @@ public class CommerceCurrencyLocalServiceImpl
 			rate = BigDecimal.ONE;
 		}
 
-		validate(0, user.getCompanyId(), code, nameMap, primary);
+		_validate(0, user.getCompanyId(), code, nameMap, primary);
 
 		if (formatPatternMap.isEmpty()) {
 			formatPatternMap.put(
@@ -315,7 +315,7 @@ public class CommerceCurrencyLocalServiceImpl
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
-		validate(
+		_validate(
 			commerceCurrencyId, commerceCurrency.getCompanyId(),
 			commerceCurrency.getCode(), commerceCurrency.getNameMap(), primary);
 
@@ -340,7 +340,7 @@ public class CommerceCurrencyLocalServiceImpl
 			rate = BigDecimal.ONE;
 		}
 
-		validate(
+		_validate(
 			commerceCurrency.getCommerceCurrencyId(),
 			serviceContext.getCompanyId(), code, nameMap, primary);
 
@@ -468,7 +468,21 @@ public class CommerceCurrencyLocalServiceImpl
 		}
 	}
 
-	protected void validate(
+	private void _updateExchangeRates(
+			long companyId, String exchangeRateProviderKey)
+		throws PortalException {
+
+		List<CommerceCurrency> commerceCurrencies =
+			commerceCurrencyLocalService.getCommerceCurrencies(companyId, true);
+
+		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
+			commerceCurrencyLocalService.updateExchangeRate(
+				commerceCurrency.getCommerceCurrencyId(),
+				exchangeRateProviderKey);
+		}
+	}
+
+	private void _validate(
 			long commerceCurrencyId, long companyId, String code,
 			Map<Locale, String> nameMap, boolean primary)
 		throws PortalException {
@@ -496,20 +510,6 @@ public class CommerceCurrencyLocalServiceImpl
 					commerceCurrencyPersistence.update(commerceCurrency);
 				}
 			}
-		}
-	}
-
-	private void _updateExchangeRates(
-			long companyId, String exchangeRateProviderKey)
-		throws PortalException {
-
-		List<CommerceCurrency> commerceCurrencies =
-			commerceCurrencyLocalService.getCommerceCurrencies(companyId, true);
-
-		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
-			commerceCurrencyLocalService.updateExchangeRate(
-				commerceCurrency.getCommerceCurrencyId(),
-				exchangeRateProviderKey);
 		}
 	}
 

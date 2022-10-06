@@ -86,7 +86,7 @@ public class COREntryRelLocalServiceImpl
 
 		corEntryRel = corEntryRelPersistence.update(corEntryRel);
 
-		reindexCOREntry(corEntryId);
+		_reindexCOREntry(corEntryId);
 
 		return corEntryRel;
 	}
@@ -98,7 +98,7 @@ public class COREntryRelLocalServiceImpl
 
 		corEntryRelPersistence.remove(corEntryRel);
 
-		reindexCOREntry(corEntryRel.getCOREntryId());
+		_reindexCOREntry(corEntryRel.getCOREntryId());
 
 		return corEntryRel;
 	}
@@ -291,13 +291,6 @@ public class COREntryRelLocalServiceImpl
 		return corEntryRelPersistence.countByCOREntryId(corEntryId);
 	}
 
-	protected void reindexCOREntry(long corEntryId) throws PortalException {
-		Indexer<COREntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			COREntry.class);
-
-		indexer.reindex(COREntry.class.getName(), corEntryId);
-	}
-
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Table innerJoinTable, Predicate innerJoinPredicate,
 		Long corEntryId, String className, String keywords,
@@ -332,6 +325,13 @@ public class COREntryRelLocalServiceImpl
 					return null;
 				}
 			));
+	}
+
+	private void _reindexCOREntry(long corEntryId) throws PortalException {
+		Indexer<COREntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			COREntry.class);
+
+		indexer.reindex(COREntry.class.getName(), corEntryId);
 	}
 
 	@Reference

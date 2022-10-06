@@ -99,7 +99,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 			imageFile = null;
 		}
 
-		validate(nameMap, engineKey);
+		_validate(nameMap, engineKey);
 
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 			commercePaymentMethodGroupRelPersistence.create(
@@ -401,7 +401,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 		return commercePaymentMethodGroupRel;
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String engineKey)
+	private void _validate(Map<Locale, String> nameMap, String engineKey)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();

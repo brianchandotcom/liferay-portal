@@ -1,0 +1,53 @@
+.has-control-menu header.public-sites-navigation {
+	margin-top: 3.5rem;
+}
+
+.has-control-menu.has-edit-mode-menu header.public-sites-navigation {
+	margin-top: 0;
+	position: static;
+}
+
+header.public-sites-navigation {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+
+	&.dark-nav {
+		background-color: var(--color-brand-primary-darken-5);
+
+		.btn {
+			background-color: var(--white);
+			color: var(--color-action-primary-default);
+		}
+
+		.liferay-logo {
+			color: var(--white);
+		}
+
+		.svg-liferay-text, .svg-waffle {
+			fill: var(--white);
+		}
+	}
+
+	&.light-nav {
+		color: var(--color-neutral-10);
+
+		.svg-liferay-text {
+			fill: var(--color-neutral-10);
+		}
+
+		.svg-waffle {
+			fill: var(--color-brand-primary);
+		}
+	}
+
+	.liferay-logo:hover,
+	.liferay-logo .logo-text:hover {
+		text-decoration: none;
+	}
+}
+
+html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
+	margin-top: 3.5rem;
+}

@@ -228,6 +228,16 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(22, 0, 0),
 			UpgradeProcessFactory.alterColumnName(
 				"Organization_", "statusId", "statusListTypeId LONG"));
+
+		upgradeVersionTreeMap.put(
+			new Version(23, 0, 0),
+			UpgradeProcessFactory.alterColumnName(
+				"Contact_", "prefixId", "prefixListTypeId LONG"));
+
+		upgradeVersionTreeMap.put(
+			new Version(24, 0, 0),
+			UpgradeProcessFactory.alterColumnName(
+				"Contact_", "suffixId", "suffixListTypeId LONG"));
 	}
 
 }

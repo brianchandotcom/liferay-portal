@@ -1750,6 +1750,25 @@ public class DDMStructureLocalServiceImpl
 		return structure;
 	}
 
+	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
+			_siteConnectedGroupGroupProvider;
+
+		try {
+			if (siteConnectedGroupGroupProvider == null) {
+				return _portal.getAncestorSiteGroupIds(groupId);
+			}
+
+			return siteConnectedGroupGroupProvider.
+				getAncestorSiteAndDepotGroupIds(groupId, true);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return new long[0];
+		}
+	}
+
 	private Set<Long> _getDataProviderInstanceIds(
 		long groupId, DDMForm ddmForm) {
 
@@ -2144,25 +2163,6 @@ public class DDMStructureLocalServiceImpl
 			}
 
 			parentStructureId = parentStructure.getParentStructureId();
-		}
-	}
-
-	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
-		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
-			_siteConnectedGroupGroupProvider;
-
-		try {
-			if (siteConnectedGroupGroupProvider == null) {
-				return _portal.getAncestorSiteGroupIds(groupId);
-			}
-
-			return siteConnectedGroupGroupProvider.
-				getAncestorSiteAndDepotGroupIds(groupId, true);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return new long[0];
 		}
 	}
 

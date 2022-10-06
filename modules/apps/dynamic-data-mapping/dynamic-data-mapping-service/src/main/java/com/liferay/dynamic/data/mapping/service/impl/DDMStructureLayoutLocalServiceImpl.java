@@ -367,9 +367,7 @@ public class DDMStructureLayoutLocalServiceImpl
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
-	private void _validate(DDMFormLayout ddmFormLayout)
-		throws PortalException {
-
+	private void _validate(DDMFormLayout ddmFormLayout) throws PortalException {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 

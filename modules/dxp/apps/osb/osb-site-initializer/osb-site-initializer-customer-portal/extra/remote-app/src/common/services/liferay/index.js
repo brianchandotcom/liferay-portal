@@ -24,7 +24,7 @@ export const Liferay = window.Liferay || {
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,
-		getUserId: () => 0,
+		getUserId: () => '0',
 	},
 	Util: {
 		isTablet: () => false,

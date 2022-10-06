@@ -42,6 +42,7 @@ public class ObjectEntryApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> objects = new HashSet<>();
 
+		objects.add(new ObjectDefinitionIdContainerRequestFilter());
 		objects.add(
 			new ObjectDefinitionIdContainerRequestFilter(
 				_objectDefinitionLocalService, _objectDefinitionName));

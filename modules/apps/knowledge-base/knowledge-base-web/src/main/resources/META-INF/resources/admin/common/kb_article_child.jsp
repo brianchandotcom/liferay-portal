@@ -46,7 +46,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		%>
 
 			<li class="list-group-item">
-				<h3>
+				<div class="list-group-title">
 
 					<%
 					PortletURL viewKBArticleURL = null;
@@ -60,17 +60,21 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 					%>
 
 					<aui:a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(childrenKBArticle.getTitle()) %></aui:a>
-				</h3>
+				</div>
 
-				<p class="text-default">
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
-							<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
-						</c:when>
-						<c:otherwise>
-							<%= HtmlUtil.escape(StringUtil.shorten(HtmlParserUtil.extractText(childrenKBArticle.getContent()), 200)) %>
-						</c:otherwise>
-					</c:choose>
+				<p class="list-group-subtext">
+					<span class="text-truncate-inline">
+						<span class="text-truncate">
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
+									<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(StringUtil.shorten(HtmlParserUtil.extractText(childrenKBArticle.getContent()), 200)) %>
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</span>
 				</p>
 			</li>
 

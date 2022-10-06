@@ -18,7 +18,6 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
@@ -82,9 +81,6 @@ public class AddObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;
-
-	@Reference
-	private ObjectActionService _objectActionService;
 
 	@Reference
 	private ObjectActionTriggerRegistry _objectActionTriggerRegistry;

@@ -17,6 +17,7 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {LengthField} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/LengthField';
 
 const FIELD = {label: 'length-field', name: 'lengthField'};
@@ -25,13 +26,21 @@ const renderLengthField = ({
 	onValueSelect = () => {},
 	value = '12px',
 	field = FIELD,
+	selectedViewportSize = 'desktop',
 } = {}) =>
 	render(
-		<LengthField
-			field={field}
-			onValueSelect={onValueSelect}
-			value={value}
-		/>
+		<StoreAPIContextProvider
+			dispatch={() => {}}
+			getState={() => ({
+				selectedViewportSize,
+			})}
+		>
+			<LengthField
+				field={field}
+				onValueSelect={onValueSelect}
+				value={value}
+			/>
+		</StoreAPIContextProvider>
 	);
 
 describe('LengthField', () => {
@@ -144,11 +153,28 @@ describe('LengthField', () => {
 		expect(button).toBeDisabled();
 	});
 
-	const FIELD = {
-		label: 'length-field',
-		name: 'lengthField',
-		typeOptions: {defaultUnit: '%'},
-	};
+	it('renders the restore button when a value is introduced', () => {
+		renderLengthField({
+			field: {defaultValue: '', label: 'opacity', name: 'opacity'},
+			value: '',
+		});
+		const input = screen.getByLabelText('opacity');
+
+		expect(screen.queryByTitle('reset-to-x-value')).not.toBeInTheDocument();
+
+		userEvent.type(input, '100');
+		fireEvent.blur(input);
+
+		expect(screen.queryByTitle('reset-to-x-value')).toBeInTheDocument();
+	});
+
+	it('clears the value when the restore button is clicked', () => {
+		renderLengthField({field: {label: 'opacity', name: 'opacity'}});
+
+		userEvent.click(screen.getByTitle('reset-to-x-value'));
+
+		expect(screen.getByLabelText('opacity').textContent).toBe('');
+	});
 
 	describe('LengthField when it is part of a Select field', () => {
 		const field = {

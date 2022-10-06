@@ -131,7 +131,7 @@
 			"label": {
 				"en_US": "User to MDF Requests"
 			},
-			"name": "r_userToMDFRequests_userId",
+			"name": "liferaysUserIdSF",
 			"required": false,
 			"type": "BigDecimal"
 		}

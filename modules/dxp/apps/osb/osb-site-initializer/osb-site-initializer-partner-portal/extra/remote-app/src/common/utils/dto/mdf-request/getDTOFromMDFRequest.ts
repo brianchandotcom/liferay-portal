@@ -19,7 +19,6 @@ export function getDTOFromMDFRequest(
 	externalReferenceCodeSF?: string
 ): MDFRequestDTO {
 	return {
-		
 		...getSummaryActivities(mdfRequest.activities),
 		accountExternalReferenceCodeSF: mdfRequest.accountExternalReferenceCodeSF,
 		additionalOption: mdfRequest.additionalOption,
@@ -30,6 +29,7 @@ export function getDTOFromMDFRequest(
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			'; '
 		),
+		liferaysUserIdSF: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),

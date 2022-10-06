@@ -63,12 +63,22 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchBarPortletDisplayContextFactory {
 
 	public SearchBarPortletDisplayContextFactory(
-		LayoutLocalService layoutLocalService, Portal portal,
-		RenderRequest renderRequest) {
+			LayoutLocalService layoutLocalService, Portal portal,
+			RenderRequest renderRequest)
+		throws ConfigurationException {
 
 		_layoutLocalService = layoutLocalService;
 		_portal = portal;
 		_renderRequest = renderRequest;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_searchBarPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				SearchBarPortletInstanceConfiguration.class);
 	}
 
 	public SearchBarPortletDisplayContext create(
@@ -79,15 +89,11 @@ public class SearchBarPortletDisplayContextFactory {
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
 
-		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				Optional.ofNullable(_renderRequest.getPreferences()));
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String destinationString =
-			searchBarPortletPreferences.getDestinationString();
+			_searchBarPortletInstanceConfiguration.destination();
 
 		if (Validator.isBlank(destinationString)) {
 			searchBarPortletDisplayContext.setSearchURL(
@@ -106,6 +112,10 @@ public class SearchBarPortletDisplayContextFactory {
 
 			searchBarPortletDisplayContext.setSearchURL(destinationURL);
 		}
+
+		SearchBarPortletPreferences searchBarPortletPreferences =
+			new SearchBarPortletPreferencesImpl(
+				Optional.ofNullable(_renderRequest.getPreferences()));
 
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(_renderRequest);
@@ -486,5 +496,7 @@ public class SearchBarPortletDisplayContextFactory {
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
+	private final SearchBarPortletInstanceConfiguration
+		_searchBarPortletInstanceConfiguration;
 
 }

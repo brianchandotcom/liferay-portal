@@ -6,7 +6,7 @@
 	"name": "MDFRequestSF",
 	"objectFields": [
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "Campaign_Name__c",
 			"indexed": true,
@@ -16,10 +16,10 @@
 			},
 			"name": "overallCampaignName",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "Campaign_Description__c",
 			"indexed": true,
@@ -29,10 +29,10 @@
 			},
 			"name": "overallCampaignDescription",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "Email_Address__c",
 			"indexed": true,
@@ -42,20 +42,20 @@
 			},
 			"name": "emailAddress",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
-			"DBType": "Clob",
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "Company_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Company Name"
+				"en_US": "Account External Reference Code SF"
 			},
-			"name": "companyName",
+			"name": "accountExternalReferenceCodeSF",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",
@@ -97,7 +97,7 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "String",
+			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"externalReferenceCode": "Total_Cost__c",
 			"indexed": true,
@@ -110,7 +110,7 @@
 			"type": "BigDecimal"
 		},
 		{
-			"DBType": "String",
+			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"externalReferenceCode": "Total_MDF_Requested_Amount__c",
 			"indexed": true,
@@ -123,17 +123,17 @@
 			"type": "BigDecimal"
 		},
 		{
-			"DBType": "Integer",
+			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"externalReferenceCode": "User_ID__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Liferay's User ID"
+				"en_US": "User to MDF Requests"
 			},
-			"name": "liferaysUserId",
+			"name": "r_userToMDFRequests_userId",
 			"required": false,
-			"type": "Integer"
+			"type": "BigDecimal"
 		}
 	],
 	"pluralLabel": {

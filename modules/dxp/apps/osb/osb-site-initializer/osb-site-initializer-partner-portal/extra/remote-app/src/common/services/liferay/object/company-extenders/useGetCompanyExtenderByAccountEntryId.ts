@@ -18,8 +18,8 @@ import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
 interface CompanyExtender {
+	accountExternalReferenceCodeSF: string;
 	country: LiferayPicklist;
-	externalReferenceCodeSF: string;
 	id: number;
 	r_accountToCompanyExtenders_accountEntryId: number;
 }

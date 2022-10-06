@@ -20,7 +20,7 @@ export default function useCompanyOptions(
 	handleSelected: (
 		country: LiferayPicklist,
 		company: LiferayAccountBrief,
-		externalReferenceCodeSF?: string
+		accountExternalReferenceCodeSF?: string
 	) => void
 ) {
 	const [selectedAccountBrief, setSelectedAccountBrief] = useState<
@@ -36,7 +36,7 @@ export default function useCompanyOptions(
 			handleSelected(
 				companyExtender?.country || {},
 				selectedAccountBrief,
-				companyExtender?.externalReferenceCodeSF
+				companyExtender?.accountExternalReferenceCodeSF
 			);
 		}
 	}, [companyExtender, handleSelected, selectedAccountBrief]);

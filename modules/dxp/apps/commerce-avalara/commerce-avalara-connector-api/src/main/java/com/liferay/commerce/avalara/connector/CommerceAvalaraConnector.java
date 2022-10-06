@@ -26,7 +26,7 @@ public interface CommerceAvalaraConnector {
 
 	public Map<String, String> getCompanyCodes() throws Exception;
 
-	public List<TaxCodeModel> getTaxCodes() throws Exception;
+	public List<TaxCodeModel> getTaxCodeModels() throws Exception;
 
 	public String getTaxRateByZipCode() throws Exception;
 

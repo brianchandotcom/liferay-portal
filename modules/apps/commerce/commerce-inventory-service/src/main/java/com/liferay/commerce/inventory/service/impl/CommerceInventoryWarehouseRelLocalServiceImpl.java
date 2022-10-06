@@ -88,7 +88,7 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 			commerceInventoryWarehouseRelPersistence.update(
 				commerceInventoryWarehouseRel);
 
-		reindexCommerceInventoryWarehouse(commerceInventoryWarehouseId);
+		_reindexCommerceInventoryWarehouse(commerceInventoryWarehouseId);
 
 		return commerceInventoryWarehouseRel;
 	}
@@ -102,7 +102,7 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 		commerceInventoryWarehouseRelPersistence.remove(
 			commerceInventoryWarehouseRel);
 
-		reindexCommerceInventoryWarehouse(
+		_reindexCommerceInventoryWarehouse(
 			commerceInventoryWarehouseRel.getCommerceInventoryWarehouseId());
 
 		return commerceInventoryWarehouseRel;
@@ -232,19 +232,6 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 				keywords, CommerceOrderTypeTable.INSTANCE.name));
 	}
 
-	protected void reindexCommerceInventoryWarehouse(
-			long commerceInventoryWarehouseId)
-		throws PortalException {
-
-		Indexer<CommerceInventoryWarehouse> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(
-				CommerceInventoryWarehouse.class);
-
-		indexer.reindex(
-			CommerceInventoryWarehouse.class.getName(),
-			commerceInventoryWarehouseId);
-	}
-
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Table innerJoinTable, Predicate innerJoinPredicate,
 		Long commerceInventoryWarehouseId, String className, String keywords,
@@ -283,6 +270,19 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 							return null;
 						}
 					));
+	}
+
+	private void _reindexCommerceInventoryWarehouse(
+			long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		Indexer<CommerceInventoryWarehouse> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CommerceInventoryWarehouse.class);
+
+		indexer.reindex(
+			CommerceInventoryWarehouse.class.getName(),
+			commerceInventoryWarehouseId);
 	}
 
 	private void _validate(

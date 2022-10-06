@@ -271,12 +271,12 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, active, commerceCountryCode, keywords, start, end, sort);
 
 		searchContext.setKeywords(keywords);
 
-		return search(searchContext);
+		return _search(searchContext);
 	}
 
 	@Override
@@ -285,13 +285,13 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, active, commerceCountryCode, keywords, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
 		searchContext.setKeywords(keywords);
 
-		return searchCommerceInventoryWarehousesCount(searchContext);
+		return _searchCommerceInventoryWarehousesCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -373,7 +373,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			commerceInventoryWarehouse);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, Boolean active, String commerceCountryCode,
 		String keywords, int start, int end, Sort sort) {
 
@@ -427,7 +427,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
+	private List<CommerceInventoryWarehouse> _getCommerceInventoryWarehouses(
 			Hits hits)
 		throws PortalException {
 
@@ -465,7 +465,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		return commerceInventoryWarehouses;
 	}
 
-	protected List<CommerceInventoryWarehouse> search(
+	private List<CommerceInventoryWarehouse> _search(
 			SearchContext searchContext)
 		throws PortalException {
 
@@ -477,7 +477,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
-				getCommerceInventoryWarehouses(hits);
+				_getCommerceInventoryWarehouses(hits);
 
 			if (commerceInventoryWarehouses != null) {
 				return commerceInventoryWarehouses;
@@ -488,7 +488,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected int searchCommerceInventoryWarehousesCount(
+	private int _searchCommerceInventoryWarehousesCount(
 			SearchContext searchContext)
 		throws PortalException {
 

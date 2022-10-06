@@ -80,7 +80,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(sku)) {
-			validate(commerceInventoryWarehouseId, sku);
+			_validate(commerceInventoryWarehouseId, sku);
 		}
 
 		long commerceInventoryWarehouseItemId = counterLocalService.increment();
@@ -535,7 +535,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		return commerceInventoryWarehouseItem;
 	}
 
-	protected void validate(long commerceInventoryWarehouseId, String sku)
+	private void _validate(long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =

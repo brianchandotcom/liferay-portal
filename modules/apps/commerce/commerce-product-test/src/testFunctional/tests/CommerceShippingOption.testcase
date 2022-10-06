@@ -177,6 +177,124 @@ definition {
 		}
 	}
 
+	@description = "Verify that not eligible default shipping method cannot be selected into the checkout."
+	@priority = "3"
+	test CheckIfNotEligibleDefaultShippingMethodIntoTheCheckoutCanNotBeSelected {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a buyer user associated with the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given Flat Rate / Standard Delivery is set as the default shipping option for the Commerce Account") {
+			CommerceJSONShippingMethods._setDefaultAccountShippingOption(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("And the Sales Manager goes into the Minium Portal channel and disables the Flat Rate Shipping Method") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editShippingMethod(
+				active = "false",
+				shippingMethod = "Flat Rate");
+		}
+
+		task ("And the Sales Manager activates 'Variable Rate' and creates a new shipping option") {
+			Click(
+				key_entryName = "Variable Rate",
+				locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+			CommerceEntry.AddShippingOptionVariableRate(
+				key_description = "",
+				key_name = "Test Shipping Option",
+				key_priority = "");
+
+			Alert.viewSuccessMessage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("And the Sales Manager configures correctly 'Variable Rate', changing the field 'Weight To' to 100 and the 'Fixed Price' to 100") {
+			CommerceEntry.gotoMenuTab(menuTab = "Shipping Option Settings");
+
+			CommerceEntry.addShippingOptionSettingsVariableRate(
+				fixedPrice = "100",
+				shippingOption = "Test Shipping Option",
+				weightTo = "100");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the Buyer adds something to the cart and tries to complete the checkout") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then the Buyer will skip the the 'Shipping Method' step") {
+			AssertElementNotPresent(
+				key_label = "Shipping Method",
+				locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL");
+		}
+
+		task ("And checks if in the 'Order Summary' step the Shipping Method used is 'Test Shipping Option'") {
+			AssertElementPresent(
+				key_shippingOption = "Test Shipping Option",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_OPTION");
+		}
+	}
+
 	@description = "Verify only one default account shipping option can be set."
 	@priority = "3"
 	test DefaultShippingOptionsAreSingleSelectable {

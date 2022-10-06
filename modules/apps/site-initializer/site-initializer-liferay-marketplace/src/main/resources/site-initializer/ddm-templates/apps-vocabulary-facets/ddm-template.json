@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext",
+	"ddmTemplateKey": "APPS_VOCABULARY_FACETS",
+	"name": "Apps Vocabulary Facets",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

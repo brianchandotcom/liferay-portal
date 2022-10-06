@@ -36,12 +36,12 @@ const useInitialPanelState = () => {
 	return [panelState, setPanelState];
 };
 
-export default function SegmentsExperimentApp({context, props}) {
+export default function SegmentsExperimentApp({context}) {
 	const [panelState, setPanelState] = useInitialPanelState();
 	const [eventTriggered, setEventTriggered] = useState(false);
 
 	const {namespace} = context;
-	const {segmentExperimentDataURL} = props;
+	const {segmentExperimentDataURL} = context;
 
 	const segmentsExperimentPanelToggle = document.getElementById(
 		`${namespace}segmentsExperimentPanelToggleId`

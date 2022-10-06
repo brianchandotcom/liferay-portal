@@ -181,6 +181,8 @@ public class SegmentsExperimentDisplayContext {
 			"namespace", _getSegmentsExperimentPortletNamespace()
 		).put(
 			"page", _getPage()
+		).put(
+			"segmentExperimentDataURL", _getSegmentExperimentDataURL()
 		).build();
 	}
 
@@ -353,8 +355,6 @@ public class SegmentsExperimentDisplayContext {
 			_getSegmentsExperimentRelsJSONArray(locale)
 		).put(
 			"pathToAssets", _pathToAssets
-		).put(
-			"segmentExperimentDataURL", _getSegmentExperimentDataURL()
 		).put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale)
 		).put(

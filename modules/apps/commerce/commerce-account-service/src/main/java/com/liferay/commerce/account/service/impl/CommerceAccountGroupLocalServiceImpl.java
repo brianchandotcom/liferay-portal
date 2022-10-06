@@ -88,7 +88,7 @@ public class CommerceAccountGroupLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		validate(companyId, 0, name, externalReferenceCode);
+		_validate(companyId, 0, name, externalReferenceCode);
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
 			serviceContext.getUserId(), null, name);
@@ -357,7 +357,7 @@ public class CommerceAccountGroupLocalServiceImpl
 			throw new SystemCommerceAccountGroupException();
 		}
 
-		validate(
+		_validate(
 			serviceContext.getCompanyId(), accountGroup.getAccountGroupId(),
 			name, accountGroup.getExternalReferenceCode());
 
@@ -368,7 +368,7 @@ public class CommerceAccountGroupLocalServiceImpl
 			_accountGroupLocalService.updateAccountGroup(accountGroup));
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long commerceAccountGroupId, String name,
 			String externalReferenceCode)
 		throws PortalException {

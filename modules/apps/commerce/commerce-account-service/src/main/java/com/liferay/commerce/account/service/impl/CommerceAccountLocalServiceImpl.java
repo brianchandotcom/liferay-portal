@@ -130,14 +130,15 @@ public class CommerceAccountLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		parentCommerceAccountId = getParentCommerceAccountId(
+		parentCommerceAccountId = _getParentCommerceAccountId(
 			serviceContext.getCompanyId(), parentCommerceAccountId);
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
 
-		validate(serviceContext.getCompanyId(), 0, name, externalReferenceCode);
+		_validate(
+			serviceContext.getCompanyId(), 0, name, externalReferenceCode);
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			user.getUserId(), parentCommerceAccountId, name, null, null, email,
@@ -578,7 +579,7 @@ public class CommerceAccountLocalServiceImpl
 		// Using this method will skip default address validation.
 		// Use updateDefault*Address if you want validation
 
-		validate(
+		_validate(
 			serviceContext.getCompanyId(), accountEntry.getAccountEntryId(),
 			name, externalReferenceCode);
 
@@ -657,7 +658,7 @@ public class CommerceAccountLocalServiceImpl
 			_accountEntryLocalService.updateStatus(commerceAccountId, status));
 	}
 
-	protected long getParentCommerceAccountId(
+	private long _getParentCommerceAccountId(
 		long companyId, long parentCommerceAccountId) {
 
 		if (parentCommerceAccountId !=
@@ -682,7 +683,7 @@ public class CommerceAccountLocalServiceImpl
 		return parentCommerceAccountId;
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long commerceAccountId, String name,
 			String externalReferenceCode)
 		throws PortalException {

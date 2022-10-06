@@ -80,7 +80,7 @@ public class CommerceAccountUserRelLocalServiceImpl
 			commerceAccountUserRelLocalService.addCommerceAccountUserRel(
 				commerceAccountId, commerceAccountUserId, serviceContext);
 
-		updateRoles(
+		_updateRoles(
 			commerceAccountUserRel.getCommerceAccountId(),
 			commerceAccountUserRel.getCommerceAccountUserId(), roleIds);
 
@@ -93,7 +93,7 @@ public class CommerceAccountUserRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(commerceAccountId, commerceAccountUserId);
+		_validate(commerceAccountId, commerceAccountUserId);
 
 		CommerceAccountUserRel commerceAccountUserRel =
 			CommerceAccountUserRelImpl.fromAccountEntryUserRel(
@@ -415,7 +415,7 @@ public class CommerceAccountUserRelLocalServiceImpl
 			commerceAccountUserRelLocalService.addCommerceAccountUserRel(
 				commerceAccountId, user.getUserId(), serviceContext);
 
-		updateRoles(
+		_updateRoles(
 			commerceAccountUserRel.getCommerceAccountId(),
 			commerceAccountUserRel.getCommerceAccountUserId(), roleIds);
 
@@ -429,7 +429,7 @@ public class CommerceAccountUserRelLocalServiceImpl
 		throw new UnsupportedOperationException();
 	}
 
-	protected void updateRoles(
+	private void _updateRoles(
 			long commerceAccountId, long userId, long[] roleIds)
 		throws PortalException {
 
@@ -448,7 +448,7 @@ public class CommerceAccountUserRelLocalServiceImpl
 		}
 	}
 
-	protected void validate(long commerceAccountId, long commerceAccountUserId)
+	private void _validate(long commerceAccountId, long commerceAccountUserId)
 		throws PortalException {
 
 		CommerceAccount commerceAccount = CommerceAccountImpl.fromAccountEntry(

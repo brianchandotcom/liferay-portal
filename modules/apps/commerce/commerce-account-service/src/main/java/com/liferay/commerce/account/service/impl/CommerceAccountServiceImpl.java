@@ -259,7 +259,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 
 		Boolean active = true;
 
-		if (hasManageCommerceAccountPermissions()) {
+		if (_hasManageCommerceAccountPermissions()) {
 			active = null;
 		}
 
@@ -276,7 +276,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 
 		Boolean active = true;
 
-		if (hasManageCommerceAccountPermissions()) {
+		if (_hasManageCommerceAccountPermissions()) {
 			active = null;
 		}
 
@@ -405,7 +405,7 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 			commerceAccountId, commerceAddressId);
 	}
 
-	protected boolean hasManageCommerceAccountPermissions()
+	private boolean _hasManageCommerceAccountPermissions()
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =

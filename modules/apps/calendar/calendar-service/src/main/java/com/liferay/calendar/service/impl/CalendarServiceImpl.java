@@ -195,7 +195,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			companyId, groupIds, calendarResourceIds, keywords, start, end,
 			orderByComparator);
 
-		return filterCalendars(calendars, actionId);
+		return _filterCalendars(calendars, actionId);
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			companyId, groupIds, calendarResourceIds, name, description,
 			andOperator, start, end, orderByComparator);
 
-		return filterCalendars(calendars, actionId);
+		return _filterCalendars(calendars, actionId);
 	}
 
 	@Override
@@ -316,7 +316,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			calendarId, color, serviceContext);
 	}
 
-	protected List<Calendar> filterCalendars(
+	private List<Calendar> _filterCalendars(
 			List<Calendar> calendars, String actionId)
 		throws PortalException {
 

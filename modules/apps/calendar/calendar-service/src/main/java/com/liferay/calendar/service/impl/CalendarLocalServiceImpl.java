@@ -93,7 +93,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		Date date = new Date();
 
-		validate(nameMap);
+		_validate(nameMap);
 
 		long calendarId = counterLocalService.increment();
 
@@ -123,7 +123,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		// Calendar
 
-		updateDefaultCalendar(calendar);
+		_updateDefaultCalendar(calendar);
 
 		// Calendar notification templates
 
@@ -328,7 +328,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		calendar = calendarPersistence.update(calendar);
 
-		updateDefaultCalendar(calendar);
+		_updateDefaultCalendar(calendar);
 	}
 
 	@Override
@@ -363,7 +363,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
 
-		validate(nameMap);
+		_validate(nameMap);
 
 		calendar.setModifiedDate(serviceContext.getModifiedDate(null));
 		calendar.setNameMap(nameMap);
@@ -378,7 +378,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		// Calendar
 
-		updateDefaultCalendar(calendar);
+		_updateDefaultCalendar(calendar);
 
 		return calendar;
 	}
@@ -398,35 +398,6 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		calendar.setColor(color);
 
 		return calendarPersistence.update(calendar);
-	}
-
-	protected void updateDefaultCalendar(Calendar calendar)
-		throws PortalException {
-
-		if (!calendar.isDefaultCalendar()) {
-			return;
-		}
-
-		List<Calendar> defaultCalendars = getCalendarResourceCalendars(
-			calendar.getGroupId(), calendar.getCalendarResourceId(), true);
-
-		for (Calendar defaultCalendar : defaultCalendars) {
-			if (defaultCalendar.getCalendarId() == calendar.getCalendarId()) {
-				continue;
-			}
-
-			updateCalendar(defaultCalendar.getCalendarId(), false);
-		}
-	}
-
-	protected void validate(Map<Locale, String> nameMap)
-		throws PortalException {
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
-			throw new CalendarNameException();
-		}
 	}
 
 	private void _addCalendarNotificationTemplate(
@@ -464,6 +435,33 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
+		}
+	}
+
+	private void _updateDefaultCalendar(Calendar calendar)
+		throws PortalException {
+
+		if (!calendar.isDefaultCalendar()) {
+			return;
+		}
+
+		List<Calendar> defaultCalendars = getCalendarResourceCalendars(
+			calendar.getGroupId(), calendar.getCalendarResourceId(), true);
+
+		for (Calendar defaultCalendar : defaultCalendars) {
+			if (defaultCalendar.getCalendarId() == calendar.getCalendarId()) {
+				continue;
+			}
+
+			updateCalendar(defaultCalendar.getCalendarId(), false);
+		}
+	}
+
+	private void _validate(Map<Locale, String> nameMap) throws PortalException {
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
+			throw new CalendarNameException();
 		}
 	}
 

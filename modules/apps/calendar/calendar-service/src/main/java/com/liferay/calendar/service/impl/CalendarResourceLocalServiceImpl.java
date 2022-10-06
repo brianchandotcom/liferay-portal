@@ -99,7 +99,7 @@ public class CalendarResourceLocalServiceImpl
 
 		Date date = new Date();
 
-		validate(groupId, classNameId, classPK, code, nameMap);
+		_validate(groupId, classNameId, classPK, code, nameMap);
 
 		CalendarResource calendarResource = calendarResourcePersistence.create(
 			calendarResourceId);
@@ -302,7 +302,7 @@ public class CalendarResourceLocalServiceImpl
 
 		// Calendar resource
 
-		validate(nameMap);
+		_validate(nameMap);
 
 		CalendarResource calendarResource =
 			calendarResourcePersistence.findByPrimaryKey(calendarResourceId);
@@ -338,12 +338,12 @@ public class CalendarResourceLocalServiceImpl
 		return calendarResource;
 	}
 
-	protected void validate(
+	private void _validate(
 			long groupId, long classNameId, long classPK, String code,
 			Map<Locale, String> nameMap)
 		throws PortalException {
 
-		validate(nameMap);
+		_validate(nameMap);
 
 		if (Validator.isNull(code) || (code.indexOf(CharPool.SPACE) != -1)) {
 			throw new CalendarResourceCodeException();
@@ -361,9 +361,7 @@ public class CalendarResourceLocalServiceImpl
 		}
 	}
 
-	protected void validate(Map<Locale, String> nameMap)
-		throws PortalException {
-
+	private void _validate(Map<Locale, String> nameMap) throws PortalException {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {

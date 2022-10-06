@@ -233,9 +233,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"layoutUtilityPageCollectionId",
-					_layoutUtilityPageEntry.getCtCollectionId()
-				).setParameter(
 					"layoutUtilityPageEntryId",
 					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()
 				).buildString());

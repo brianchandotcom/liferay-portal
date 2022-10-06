@@ -14,7 +14,10 @@
 
 package com.liferay.adaptive.media.image.internal.validator;
 
+import com.liferay.adaptive.media.AMAttribute;
+import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
+import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.size.AMImageSizeProvider;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -42,6 +45,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +56,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AMImageValidator.class)
 public class AMImageValidatorImpl implements AMImageValidator {
+
+	@Override
+	public <T> boolean isProcessingRequired(
+		AdaptiveMedia<T> adaptiveMedia, FileVersion fileVersion) {
+
+		Optional<String> configurationUuidOptional =
+			adaptiveMedia.getValueOptional(
+				AMAttribute.getConfigurationUuidAMAttribute());
+
+		if (!configurationUuidOptional.isPresent()) {
+			return true;
+		}
+
+		String configurationUuid = configurationUuidOptional.get();
+
+		if (_amImageEntryLocalService.hasAMImageEntryContent(
+				configurationUuid, fileVersion)) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 	@Override
 	public boolean isProcessingSupported(FileVersion fileVersion) {
@@ -93,6 +120,12 @@ public class AMImageValidatorImpl implements AMImageValidator {
 		}
 
 		return true;
+	}
+
+	protected void setAMImageEntryLocalService(
+		AMImageEntryLocalService amImageEntryLocalService) {
+
+		_amImageEntryLocalService = amImageEntryLocalService;
 	}
 
 	private boolean _isFileVersionStoredMetadataSupported(
@@ -211,6 +244,9 @@ public class AMImageValidatorImpl implements AMImageValidator {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMImageValidatorImpl.class);
+
+	@Reference
+	private AMImageEntryLocalService _amImageEntryLocalService;
 
 	@Reference
 	private AMImageMimeTypeProvider _amImageMimeTypeProvider;

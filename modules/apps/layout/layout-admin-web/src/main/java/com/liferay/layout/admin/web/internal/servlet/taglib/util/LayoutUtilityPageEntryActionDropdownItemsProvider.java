@@ -50,12 +50,11 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		_layoutUtilityPageEntry = layoutUtilityPageEntry;
 		_renderResponse = renderResponse;
 
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layoutUtilityPageEntry.getPlid());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			layoutUtilityPageEntry.getPlid());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

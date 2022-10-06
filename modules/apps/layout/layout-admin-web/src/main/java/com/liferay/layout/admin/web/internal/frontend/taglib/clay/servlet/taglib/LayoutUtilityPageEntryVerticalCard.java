@@ -97,6 +97,7 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		return "primary";
 	}
 
+	@Override
 	public String getSubtitle() {
 		LayoutUtilityPageEntryConstants.Type type =
 			LayoutUtilityPageEntryConstants.parse(

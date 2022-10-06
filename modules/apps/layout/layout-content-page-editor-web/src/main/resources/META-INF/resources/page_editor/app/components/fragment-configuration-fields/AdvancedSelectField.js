@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
-import {LengthField} from '../../../common/components/LengthField';
+import {LengthInput} from '../../../common/components/LengthField';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useId} from '../../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -154,7 +154,7 @@ export function AdvancedSelectField({
 					value={nextValue}
 				/>
 			) : field.typeOptions?.showLengthField ? (
-				<LengthField
+				<LengthInput
 					field={field}
 					onValueSelect={onValueSelect}
 					showLabel={!field.icon}

@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.frontend.internal.address.model.CountryModel;
 import com.liferay.commerce.frontend.internal.address.model.RegionModel;
@@ -194,9 +193,6 @@ public class AddressResource {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
-
-	@Reference
-	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private CommerceCountryManager _commerceCountryManager;

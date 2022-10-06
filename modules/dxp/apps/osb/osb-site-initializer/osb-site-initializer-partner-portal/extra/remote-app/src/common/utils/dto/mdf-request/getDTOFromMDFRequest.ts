@@ -19,9 +19,11 @@ export function getDTOFromMDFRequest(
 	externalReferenceCodeSF?: string
 ): MDFRequestDTO {
 	return {
+		
 		...getSummaryActivities(mdfRequest.activities),
 		accountExternalReferenceCodeSF: mdfRequest.accountExternalReferenceCodeSF,
 		additionalOption: mdfRequest.additionalOption,
+		campaignName: mdfRequest.campaignName,
 		country: mdfRequest.country,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCodeSF,

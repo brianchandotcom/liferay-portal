@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.SchemaUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeCompanyId;
@@ -533,9 +532,6 @@ public class DDMServiceUpgradeStepRegistrator
 
 	private ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
 		_ddmDataProviderSettingsProviderServiceTracker;
-
-	@Reference
-	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
 	private DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;

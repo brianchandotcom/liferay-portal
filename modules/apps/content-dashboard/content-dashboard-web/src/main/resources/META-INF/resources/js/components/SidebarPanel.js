@@ -24,7 +24,11 @@ import React, {
 	useState,
 } from 'react';
 
-import {CLOSE_PANEL_VALUE} from '../utils/constants';
+import {
+	CLOSE_PANEL_VALUE,
+	DEFAULT_ACTIVE_PANEL_TAB,
+	TABS_STATE_SESSION_KEY,
+} from '../utils/constants';
 import Sidebar from './Sidebar';
 
 const initialState = {
@@ -44,6 +48,8 @@ const resetSessionPanelValues = () => {
 		'com.liferay.content.dashboard.web_selectedItemRowId',
 		''
 	);
+
+	Liferay.Util.Session.set(TABS_STATE_SESSION_KEY, DEFAULT_ACTIVE_PANEL_TAB);
 };
 
 const dataReducer = (state, action) => {

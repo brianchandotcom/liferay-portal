@@ -19,14 +19,36 @@ import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classnames from 'classnames';
+import {getSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
+import {
+	DEFAULT_ACTIVE_PANEL_TAB,
+	TABS_STATE_SESSION_KEY,
+} from '../../utils/constants';
 import Sidebar from '../Sidebar';
 import DetailsContent from './DetailsContent';
 import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
 import VersionsContent from './VersionsContent';
+
+const useInitialActiveTabState = () => {
+	const [activeTab, setActiveTab] = useState(DEFAULT_ACTIVE_PANEL_TAB);
+
+	useEffect(() => {
+		getSessionValue(TABS_STATE_SESSION_KEY).then((value) => {
+			const parsedValue = parseInt(value, 10);
+			const safeValue = isNaN(parsedValue)
+				? DEFAULT_ACTIVE_PANEL_TAB
+				: parsedValue;
+
+			setActiveTab(safeValue);
+		});
+	}, []);
+
+	return [activeTab, setActiveTab];
+};
 
 const SidebarPanelInfoView = ({
 	classPK,
@@ -50,7 +72,10 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
+	const [
+		activeTabKeyValue,
+		setActiveTabKeyValue,
+	] = useInitialActiveTabState();
 
 	const showTabs = !!getItemVersionsURL;
 
@@ -61,6 +86,11 @@ const SidebarPanelInfoView = ({
 	const handleError = useCallback(() => {
 		setError(true);
 	}, []);
+
+	const handleTabClick = (tab) => {
+		setActiveTabKeyValue(tab);
+		Liferay.Util.Session.set(TABS_STATE_SESSION_KEY, tab);
+	};
 
 	return (
 		<>
@@ -157,7 +187,7 @@ const SidebarPanelInfoView = ({
 										innerProps={{
 											'aria-controls': 'details',
 										}}
-										onClick={() => setActiveTabKeyValue(0)}
+										onClick={() => handleTabClick(0)}
 									>
 										{Liferay.Language.get('details')}
 									</ClayTabs.Item>
@@ -167,7 +197,7 @@ const SidebarPanelInfoView = ({
 										innerProps={{
 											'aria-controls': 'versions',
 										}}
-										onClick={() => setActiveTabKeyValue(1)}
+										onClick={() => handleTabClick(1)}
 									>
 										{Liferay.Language.get('versions')}
 									</ClayTabs.Item>

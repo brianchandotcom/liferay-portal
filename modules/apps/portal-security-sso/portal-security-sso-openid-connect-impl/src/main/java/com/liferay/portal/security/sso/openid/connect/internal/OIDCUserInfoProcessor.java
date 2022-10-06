@@ -73,9 +73,23 @@ public class OIDCUserInfoProcessor {
 			companyId, issuer, serviceContext, userInfoJSON,
 			userInfoMapperJSON);
 
-		_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
+		try {
+			_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
+		}
+		catch (Exception exception) {
+			if (_log.isInfoEnabled()) {
+				_log.info(exception);
+			}
+		}
 
-		_addPhone(serviceContext, user, userInfoJSON, userInfoMapperJSON);
+		try {
+			_addPhone(serviceContext, user, userInfoJSON, userInfoMapperJSON);
+		}
+		catch (Exception exception) {
+			if (_log.isInfoEnabled()) {
+				_log.info(exception);
+			}
+		}
 
 		return user.getUserId();
 	}

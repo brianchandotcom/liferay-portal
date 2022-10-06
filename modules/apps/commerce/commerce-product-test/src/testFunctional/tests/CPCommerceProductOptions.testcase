@@ -14,6 +14,118 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-9633. CanAddToCartGeneratedProductSkus"
+	@priority = "3"
+	test CanAddToCartGeneratedProductSkus {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a simple product with a new option is created") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "New Option");
+
+			Refresh();
+
+			CommerceProductOptions.editProductOption(
+				key_fieldType = "Select from List",
+				key_option = "New Option",
+				productOptionFieldType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+		}
+
+		task ("And 2 values are added to the option") {
+			for (var valueName : list "Value1,Value2") {
+				CommerceProductOptions.createProductOptionValue(key_name = "${valueName}");
+
+				SelectFrame.selectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			}
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("And from the SKUs tab, plus button is clicked, Generate all SKUs combination button is selected") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(locator1 = "Button#PLUS");
+
+			Click(
+				key_fieldName = "Generate All SKU Combinations",
+				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
+
+		task ("When buyer user logs in navigating in Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer searches the product in the Catalog") {
+			Type(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				value1 = "Simple T-Shirt");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the product is listed in the Catalog") {
+			AssertElementPresent(
+				key_productName = "Simple T-Shirt",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		task ("And can be added to the cart") {
+			CommerceAccelerators.viewAllVariants(productName = "Simple T-Shirt");
+
+			FrontStore.addToCartFromProductDetails(
+				productName = "Simple T-Shirt",
+				productSku = "VALUE1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "Simple T-Shirt",
+				cartItemQuantity = "1",
+				cartItemSku = "VALUE1");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9824. CanAssertChangesNotSavedOnCorrespondingOptions"
 	@priority = "3"
 	test CanAssertChangesNotSavedOnCorrespondingOptions {

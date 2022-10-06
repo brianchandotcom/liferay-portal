@@ -17,7 +17,6 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentProcessCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -134,9 +133,6 @@ public class PaymentProcessCommerceCheckoutStep
 
 	@Reference
 	private CartResource.Factory _cartResourceFactory;
-
-	@Reference
-	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -24,7 +24,7 @@ import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useSelector} from '../../app/contexts/StoreContext';
 import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
-import {LengthField} from '../../common/components/LengthField';
+import {LengthInput} from '../../common/components/LengthField';
 import {useId} from '../../core/hooks/useId';
 import {useStyleBook} from '../../plugins/page-design-options/hooks/useStyleBook';
 
@@ -298,7 +298,7 @@ function SpacingSelectorButton({
 									className="list-unstyled"
 									role="group"
 								>
-									<LengthField
+									<LengthInput
 										className="mb-3 mt-2 px-3"
 										field={field}
 										onEnter={() => {

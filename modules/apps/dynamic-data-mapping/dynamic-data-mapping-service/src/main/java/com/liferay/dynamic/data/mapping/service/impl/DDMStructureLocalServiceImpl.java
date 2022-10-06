@@ -2068,7 +2068,7 @@ public class DDMStructureLocalServiceImpl
 			throw structureDuplicateStructureKeyException;
 		}
 
-		validate(nameMap, _getParentDDMForm(parentStructureId), ddmForm);
+		_validate(nameMap, _getParentDDMForm(parentStructureId), ddmForm);
 	}
 
 	private void _validate(

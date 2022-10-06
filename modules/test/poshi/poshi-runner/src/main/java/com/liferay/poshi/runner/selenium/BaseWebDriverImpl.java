@@ -3073,7 +3073,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				charSequences.add(charSequence);
 			}
 
-			webElement.sendKeys(Keys.chord(charSequences));
+			webElement.sendKeys(charSequences.toArray(new CharSequence[0]));
 
 			return;
 		}

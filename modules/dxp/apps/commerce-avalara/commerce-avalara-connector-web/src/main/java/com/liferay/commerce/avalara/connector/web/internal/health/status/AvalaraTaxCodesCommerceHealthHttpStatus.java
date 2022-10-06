@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.avalara.connector.web.internal.util;
+package com.liferay.commerce.avalara.connector.web.internal.health.status;
 
 import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.helper.CommerceAvalaraConnectorHelper;

@@ -1478,7 +1478,7 @@ definition {
 		if (isSet(featureFlag)) {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-				value1 = "Knowledge base is empty.");
+				value1 = "This folder is empty.");
 		}
 		else {
 			AssertTextEquals.assertPartialText(

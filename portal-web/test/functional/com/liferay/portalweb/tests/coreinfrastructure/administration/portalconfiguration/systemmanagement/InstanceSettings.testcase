@@ -712,7 +712,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		User.viewMemberships(
 			assetType = "Sites",
@@ -738,7 +738,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		User.viewUserInfomationRolesCP(roleTitle = "Roles Regrole Name");
 	}
@@ -765,7 +765,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		User.viewMemberships(
 			assetType = "Sites",
@@ -794,7 +794,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		User.viewMemberships(
 			assetType = "User Groups",

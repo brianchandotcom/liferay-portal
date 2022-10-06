@@ -153,7 +153,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		UserNavigator.gotoDisplaySettings();
 
@@ -173,7 +173,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		UserNavigator.gotoDisplaySettings();
 
@@ -579,7 +579,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "test");
+		UserNavigator.gotoUser(userScreenName = "test");
 
 		UserNavigator.gotoDisplaySettings();
 
@@ -671,7 +671,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "test");
+		UserNavigator.gotoUser(userScreenName = "test");
 
 		UserNavigator.gotoDisplaySettings();
 

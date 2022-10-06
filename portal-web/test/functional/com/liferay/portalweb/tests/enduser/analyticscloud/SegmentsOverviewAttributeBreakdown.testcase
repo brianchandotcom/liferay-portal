@@ -246,7 +246,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "user1");
+			UserNavigator.gotoUser(userScreenName = "user1");
 
 			User.editUserInformation(
 				userCustomField = "50",

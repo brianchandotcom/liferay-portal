@@ -506,7 +506,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "ac");
+			UserNavigator.gotoUser(userScreenName = "ac");
 
 			User.editUserInformation(
 				userCustomField = "VIP",
@@ -523,7 +523,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "ac");
+			UserNavigator.gotoUser(userScreenName = "ac");
 
 			User.editUserInformation(
 				userCustomField = "VIP AC",

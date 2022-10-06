@@ -84,7 +84,7 @@ definition {
 		task ("View user information roles CP") {
 			User.openUsersAdmin();
 
-			User.gotoEditCP(userScreenName = "test");
+			UserNavigator.gotoUser(userScreenName = "test");
 
 			User.viewUserInfomationRolesCP(
 				roleTitle = "TestSiteRole",
@@ -2235,7 +2235,7 @@ definition {
 
 			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
-			User.gotoEditCP(userScreenName = "usera");
+			UserNavigator.gotoUser(userScreenName = "usera");
 
 			User.viewUserCustomFieldsCP(
 				customFieldName = "inputfield",
@@ -2534,7 +2534,7 @@ definition {
 
 			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
-			User.gotoEditCP(userScreenName = "usera");
+			UserNavigator.gotoUser(userScreenName = "usera");
 
 			User.viewUserCustomFieldsCP(
 				customFieldName = "inputfield",
@@ -2664,7 +2664,7 @@ definition {
 
 			User.openUsersAdmin();
 
-			User.gotoEditCP(userScreenName = "usera");
+			UserNavigator.gotoUser(userScreenName = "usera");
 
 			User.editUserInformation(
 				userCustomField = "textChanged",
@@ -2694,7 +2694,7 @@ definition {
 
 			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
-			User.gotoEditCP(userScreenName = "usera");
+			UserNavigator.gotoUser(userScreenName = "usera");
 
 			User.viewUserCustomFieldsCP(
 				customFieldName = "inputfield",

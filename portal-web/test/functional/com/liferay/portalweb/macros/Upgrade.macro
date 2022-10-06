@@ -3754,7 +3754,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		UserNavigator.gotoOrganizations();
 
@@ -3820,7 +3820,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn");
+		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		User.deleteProfileImage();
 
@@ -3883,7 +3883,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.gotoEditCP(userScreenName = "usersn1");
+		UserNavigator.gotoUser(userScreenName = "usersn1");
 
 		AssetCategorization.removeTag(tagName = "tag1");
 

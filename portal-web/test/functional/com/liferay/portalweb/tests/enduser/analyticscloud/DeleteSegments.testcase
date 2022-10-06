@@ -404,7 +404,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "ac");
+			UserNavigator.gotoUser(userScreenName = "ac");
 
 			User.editUserInformation(
 				userCustomField = "reading",
@@ -421,7 +421,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "ac");
+			UserNavigator.gotoUser(userScreenName = "ac");
 
 			User.editUserInformation(
 				userCustomField = "writing",

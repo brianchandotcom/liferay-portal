@@ -398,7 +398,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "user3");
+			UserNavigator.gotoUser(userScreenName = "user3");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -524,7 +524,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.gotoEditCP(userScreenName = "user3");
+			UserNavigator.gotoUser(userScreenName = "user3");
 
 			User.editUserJobTitleCP(
 				userJobTitle = "Doctor",
@@ -1016,7 +1016,7 @@ definition {
 					panel = "Control Panel",
 					portlet = "Users and Organizations");
 
-				User.gotoEditCP(userScreenName = "${userName}");
+				UserNavigator.gotoUser(userScreenName = "${userName}");
 
 				User.editUserInformation(
 					userCustomField = "50",

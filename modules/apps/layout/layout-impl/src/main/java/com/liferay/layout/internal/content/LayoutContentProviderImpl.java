@@ -141,7 +141,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				}
 			}
 
-			return _getWrapper(content);
+			return _html.stripHtml(content);
 		}
 		finally {
 			httpServletRequest.setAttribute(

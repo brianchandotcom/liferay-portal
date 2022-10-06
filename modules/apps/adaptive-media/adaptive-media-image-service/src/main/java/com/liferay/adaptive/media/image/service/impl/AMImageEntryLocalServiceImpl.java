@@ -308,6 +308,13 @@ public class AMImageEntryLocalServiceImpl
 		return Math.min(percentage, 100);
 	}
 
+	@Override
+	public boolean hasAMImageEntryContent(
+		String configurationUuid, FileVersion fileVersion) {
+
+		return _imageStorage.hasContent(fileVersion, configurationUuid);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(

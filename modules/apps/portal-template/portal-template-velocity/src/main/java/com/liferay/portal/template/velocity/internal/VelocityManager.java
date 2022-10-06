@@ -18,7 +18,6 @@ import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -253,9 +252,6 @@ public class VelocityManager extends BaseTemplateManager {
 
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
-
-	@Reference
-	private SingleVMPool _singleVMPool;
 
 	@Reference(service = VelocityTemplateContextHelper.class)
 	private TemplateContextHelper _templateContextHelper;

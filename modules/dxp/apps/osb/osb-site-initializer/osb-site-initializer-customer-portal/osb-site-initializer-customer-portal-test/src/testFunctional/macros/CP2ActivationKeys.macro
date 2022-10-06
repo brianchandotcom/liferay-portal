@@ -374,6 +374,28 @@ definition {
 		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
 	}
 
+	macro getStartDateTextFromSignature {
+		var key_index = "1";
+
+		if(isSet(index)) {
+			var key_index = "${index}";
+		}
+
+		WaitForElementPresent(locator1 = "CP2ActivationKeys#SIGNATURE_PERIOD_TEXT");
+
+		var signatureDate = selenium.getText("CP2ActivationKeys#SIGNATURE_PERIOD_TEXT");
+
+		var startDate = StringUtil.substring("${signatureDate}", "0","12");
+
+		var endsWithWhiteSpace = StringUtil.endsWith("${startDate}", " ");
+
+		if("${endsWithWhiteSpace}" == "true") {
+			var startDate = StringUtil.substring("${signatureDate}", "0","11");
+		}
+
+		return "${startDate}";
+	}
+
 	macro gotoKeyDeactivation {
 		CustomerPortal.clickAtButton(text = "Actions");
 

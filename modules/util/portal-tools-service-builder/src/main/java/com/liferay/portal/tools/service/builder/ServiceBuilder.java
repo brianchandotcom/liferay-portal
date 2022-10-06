@@ -76,9 +76,11 @@ import freemarker.template.TemplateHashModel;
 
 import java.beans.Introspector;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -113,6 +115,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -221,6 +224,8 @@ public class ServiceBuilder {
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDirName = arguments.get("service.test.dir");
 		String uadDirName = arguments.get("service.uad.dir");
+		boolean updateServiceMethodSignatureWithErc = GetterUtil.getBoolean(
+			arguments.get("service.impl.update.signature.erc"));
 
 		Set<String> resourceActionModels = readResourceActionModels(
 			implDirName, resourcesDirName, resourceActionsConfigs);
@@ -245,7 +250,7 @@ public class ServiceBuilder {
 				resourceActionModels, resourcesDirName, springFileName,
 				springNamespaces, sqlDirName, sqlFileName, sqlIndexesFileName,
 				sqlSequencesFileName, targetEntityName, testDirName, uadDirName,
-				true);
+				true, updateServiceMethodSignatureWithErc);
 
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
@@ -497,7 +502,7 @@ public class ServiceBuilder {
 			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
 			resourcesDirName, springFileName, springNamespaces, sqlDirName,
 			sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
-			targetEntityName, testDirName, uadDirName, true);
+			targetEntityName, testDirName, uadDirName, true, false);
 	}
 
 	public ServiceBuilder(
@@ -512,7 +517,8 @@ public class ServiceBuilder {
 			String springFileName, String[] springNamespaces, String sqlDirName,
 			String sqlFileName, String sqlIndexesFileName,
 			String sqlSequencesFileName, String targetEntityName,
-			String testDirName, String uadDirName, boolean build)
+			String testDirName, String uadDirName, boolean build,
+			boolean updateServiceImplMethodSignatureWithERC)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -601,6 +607,8 @@ public class ServiceBuilder {
 			_testDirName = _normalize(testDirName);
 			_uadDirName = _normalize(uadDirName);
 			_build = build;
+			_updateServiceImplMethodSignatureWithERC =
+				updateServiceImplMethodSignatureWithERC;
 
 			_badAliasNames = _readLines(_tplBadAliasNames);
 			_badColumnNames = _readLines(_tplBadColumnNames);
@@ -1265,7 +1273,7 @@ public class ServiceBuilder {
 			_resourceActionModels, _resourcesDirName, _springFileName,
 			_springNamespaces, _sqlDirName, _sqlFileName, _sqlIndexesFileName,
 			_sqlSequencesFileName, _targetEntityName, _testDirName, _uadDirName,
-			false);
+			false, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -3774,6 +3782,12 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType), "ServiceImpl.java"));
 
 		if (file.exists()) {
+			if (entity.hasExternalReferenceCode() &&
+				_updateServiceImplMethodSignatureWithERC) {
+
+				_updateServiceImplMethodSignatureWithERC(entity, file);
+			}
+
 			return;
 		}
 
@@ -5870,6 +5884,14 @@ public class ServiceBuilder {
 		version = version.substring(1);
 
 		return Version.getInstance(version);
+	}
+
+	private boolean _hasAnyOf(String string, String[] expressions) {
+		if (StringUtil.indexOfAny(string, expressions) > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _hasFinderThatIsNotUniqueByCompany(
@@ -7990,6 +8012,76 @@ public class ServiceBuilder {
 		Files.createFile(file.toPath());
 	}
 
+	private void _updateServiceImplMethodSignatureWithERC(
+			Entity entity, File file)
+		throws Exception {
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		Scanner scanner = new Scanner(new FileInputStream(file));
+
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+
+			if (_hasAnyOf(
+					line,
+					new String[] {
+						"add(",
+						"add" + entity.getName() + StringPool.OPEN_PARENTHESIS
+					})) {
+
+				line = _updateSignature(line, scanner);
+			}
+
+			byteArrayOutputStream.write(line.getBytes());
+
+			if (scanner.hasNextLine()) {
+				byteArrayOutputStream.write(CharPool.NEW_LINE);
+			}
+		}
+
+		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+			fileOutputStream.write(byteArrayOutputStream.toByteArray());
+		}
+	}
+
+	private String _updateSignature(String line, Scanner scanner) {
+		StringBuilder stringBuilder = new StringBuilder(line);
+
+		while (!line.contains(StringPool.OPEN_CURLY_BRACE)) {
+			line = scanner.nextLine();
+
+			stringBuilder.append(line);
+
+			if (!line.contains(StringPool.OPEN_CURLY_BRACE)) {
+				stringBuilder.append(StringPool.NEW_LINE);
+			}
+		}
+
+		if (stringBuilder.indexOf("externalReferenceCode") > 0) {
+			return stringBuilder.toString();
+		}
+
+		String externalReferenceCodeArgumentExpression =
+			"String externalReferenceCode, ";
+
+		if ((stringBuilder.indexOf(StringPool.PERIOD) > 0) &&
+			(stringBuilder.indexOf(StringPool.PERIOD) < stringBuilder.indexOf(
+				StringPool.OPEN_PARENTHESIS))) {
+
+			externalReferenceCodeArgumentExpression = "externalReferenceCode, ";
+		}
+
+		stringBuilder.replace(
+			stringBuilder.indexOf(StringPool.OPEN_PARENTHESIS),
+			stringBuilder.indexOf(StringPool.OPEN_PARENTHESIS) + 1,
+			StringPool.OPEN_PARENTHESIS +
+				externalReferenceCodeArgumentExpression);
+
+		return stringBuilder.toString();
+	}
+
 	private void _write(File file, String s) throws IOException {
 		Path path = file.toPath();
 
@@ -8185,5 +8277,6 @@ public class ServiceBuilder {
 	private final Map<String, List<Entity>> _uadApplicationEntities =
 		new HashMap<>();
 	private String _uadDirName;
+	private boolean _updateServiceImplMethodSignatureWithERC;
 
 }

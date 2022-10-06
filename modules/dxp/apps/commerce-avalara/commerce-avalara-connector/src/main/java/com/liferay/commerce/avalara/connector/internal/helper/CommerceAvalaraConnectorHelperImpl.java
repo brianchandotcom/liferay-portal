@@ -61,7 +61,7 @@ public class CommerceAvalaraConnectorHelperImpl
 	@Override
 	public void createTaxCategories(long userId) throws Exception {
 		List<TaxCodeModel> taxCodeModels =
-			_commerceAvalaraConnector.getTaxCodes();
+			_commerceAvalaraConnector.getTaxCodeModels();
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -105,7 +105,7 @@ public class CommerceAvalaraConnectorHelperImpl
 			taxRateByZipCode);
 
 		Country country = _countryLocalService.fetchCountryByA2(
-			commerceTaxMethod.getCompanyId(), _TWO_LETTERS_ISO_CODE_US);
+			commerceTaxMethod.getCompanyId(), "US");
 
 		if (country == null) {
 			country = _addUnitedStates(commerceTaxMethod);
@@ -117,7 +117,7 @@ public class CommerceAvalaraConnectorHelperImpl
 			_cpTaxCategoryLocalService.
 				fetchCPTaxCategoryByExternalReferenceCode(
 					commerceTaxMethod.getCompanyId(),
-					_TANGIBLE_PERSONAL_PROPERTY_AVALARA_TAX_CODE);
+					CommerceAvalaraConstants.TANGIBLE_PERSONAL_PROPERTY);
 
 		if (tangiblePersonalPropertyCPTaxCategory != null) {
 			cpTaxCategoryId =
@@ -147,9 +147,8 @@ public class CommerceAvalaraConnectorHelperImpl
 
 		try {
 			country = _countryLocalService.addCountry(
-				_TWO_LETTERS_ISO_CODE_US, _THREE_LETTERS_ISO_CODE_US, true,
-				true, "", _NAME_US, String.valueOf(_NUMERIC_ISO_CODE_US),
-				_PRIORITY_US, true, false, true, serviceContext);
+				"US", "USA", true, true, "", "united-states", "840", 19, true,
+				false, true, serviceContext);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -209,19 +208,6 @@ public class CommerceAvalaraConnectorHelperImpl
 					commerceTaxFixedRateAddressRel);
 		}
 	}
-
-	private static final String _NAME_US = "united-states";
-
-	private static final int _NUMERIC_ISO_CODE_US = 840;
-
-	private static final int _PRIORITY_US = 19;
-
-	private static final String _TANGIBLE_PERSONAL_PROPERTY_AVALARA_TAX_CODE =
-		"P0000000";
-
-	private static final String _THREE_LETTERS_ISO_CODE_US = "USA";
-
-	private static final String _TWO_LETTERS_ISO_CODE_US = "US";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAvalaraConnectorHelperImpl.class);

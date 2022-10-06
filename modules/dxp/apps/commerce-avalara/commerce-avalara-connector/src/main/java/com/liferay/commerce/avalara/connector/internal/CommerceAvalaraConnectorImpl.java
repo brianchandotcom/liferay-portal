@@ -59,18 +59,18 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 		FetchResult<CompanyModel> companyModelFetchResult =
 			avaTaxClient.queryCompanies(null, null, 0, 0, null);
 
-		Map<String, String> companyNamesWithCodes = new HashMap<>();
+		Map<String, String> companyCodes = new HashMap<>();
 
 		for (CompanyModel companyModel : companyModelFetchResult.getValue()) {
-			companyNamesWithCodes.put(
+			companyCodes.put(
 				companyModel.getName(), companyModel.getCompanyCode());
 		}
 
-		return companyNamesWithCodes;
+		return companyCodes;
 	}
 
 	@Override
-	public List<TaxCodeModel> getTaxCodes() throws Exception {
+	public List<TaxCodeModel> getTaxCodeModels() throws Exception {
 		AvaTaxClient avaTaxClient = _getAvaTaxClient();
 
 		String expiredTaxCodeFilter = "isActive eq true";

@@ -59,6 +59,22 @@ public class ImageStorage {
 		}
 	}
 
+	public boolean hasContent(
+		FileVersion fileVersion, String configurationUuid) {
+
+		try {
+			String fileVersionPath = AMStoreUtil.getFileVersionPath(
+				fileVersion, configurationUuid);
+
+			return DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
+				fileVersionPath);
+		}
+		catch (PortalException portalException) {
+			throw new AMRuntimeException.IOException(portalException);
+		}
+	}
+
 	public void save(
 		FileVersion fileVersion, String configurationUuid,
 		InputStream inputStream) {

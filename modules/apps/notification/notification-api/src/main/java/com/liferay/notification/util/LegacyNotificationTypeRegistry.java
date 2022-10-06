@@ -14,13 +14,13 @@
 
 package com.liferay.notification.util;
 
-import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.LegacyNotificationType;
 
 /**
  * @author Gustavo Lima
  */
-public interface NotificationTypeRegistry {
+public interface LegacyNotificationTypeRegistry {
 
-	public NotificationType getNotificationType(String key);
+	public LegacyNotificationType getNotificationType(String key);
 
 }

@@ -19,8 +19,8 @@ import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.service.NotificationQueueEntryService;
-import com.liferay.notification.type.NotificationType;
-import com.liferay.notification.util.NotificationTypeRegistry;
+import com.liferay.notification.type.LegacyNotificationType;
+import com.liferay.notification.util.LegacyNotificationTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -108,7 +108,7 @@ public class NotificationQueueEntryResourceImpl
 				serviceBuilderNotificationQueueEntry)
 		throws PortalException {
 
-		NotificationType notificationType =
+		LegacyNotificationType notificationType =
 			_notificationTypeRegistry.getNotificationType(
 				_portal.getClassName(
 					serviceBuilderNotificationQueueEntry.getClassNameId()));
@@ -173,7 +173,7 @@ public class NotificationQueueEntryResourceImpl
 	private NotificationQueueEntryService _notificationQueueEntryService;
 
 	@Reference
-	private NotificationTypeRegistry _notificationTypeRegistry;
+	private LegacyNotificationTypeRegistry _notificationTypeRegistry;
 
 	@Reference
 	private Portal _portal;

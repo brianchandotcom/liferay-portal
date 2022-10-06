@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * @author Gustavo Lima
  */
-public interface NotificationType {
+public interface LegacyNotificationType {
 
 	public String getClassName(Object object);
 

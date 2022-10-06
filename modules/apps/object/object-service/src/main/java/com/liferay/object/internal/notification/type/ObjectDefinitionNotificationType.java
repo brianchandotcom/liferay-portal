@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.notification.type;
 
-import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.LegacyNotificationType;
 import com.liferay.object.model.ObjectDefinition;
 
 import java.util.Locale;
@@ -23,7 +23,8 @@ import java.util.Map;
 /**
  * @author Gustavo Lima
  */
-public class ObjectDefinitionNotificationType implements NotificationType {
+public class ObjectDefinitionNotificationType
+	implements LegacyNotificationType {
 
 	public ObjectDefinitionNotificationType(ObjectDefinition objectDefinition) {
 		_objectDefinition = objectDefinition;

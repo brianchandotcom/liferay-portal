@@ -36,7 +36,6 @@ import com.liferay.gradle.plugins.defaults.task.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.task.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.task.WritePropertiesTask;
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -46,7 +45,6 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -787,12 +785,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 				if (LiferayRelengUtil.hasStaleUnstyledTheme(
-						project, recordArtifactTask.getOutputFile())) {
-
-					return true;
-				}
-
-				if (LiferayRelengUtil.hasStalePortalDependencies(
+						project, recordArtifactTask.getOutputFile()) ||
+					LiferayRelengUtil.hasStalePortalDependencies(
 						project, recordArtifactTask.getOutputFile())) {
 
 					return true;

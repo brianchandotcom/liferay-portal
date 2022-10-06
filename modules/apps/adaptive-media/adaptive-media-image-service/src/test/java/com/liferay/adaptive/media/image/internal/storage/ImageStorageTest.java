@@ -14,13 +14,19 @@
 
 package com.liferay.adaptive.media.image.internal.storage;
 
+import com.liferay.document.library.kernel.store.DLStore;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Adolfo Pérez
@@ -31,6 +37,13 @@ public class ImageStorageTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		DLStoreUtil dlStoreUtil = new DLStoreUtil();
+
+		dlStoreUtil.setStore(_dlStore);
+	}
 
 	@Test
 	public void testGetConfigurationEntryPath() {
@@ -43,6 +56,49 @@ public class ImageStorageTest {
 			"adaptive/" + configurationUuid, configurationEntryPath);
 	}
 
+	@Test
+	public void testHasContentWithNoStoreFile() throws Exception {
+		Mockito.when(
+			_dlStore.hasFile(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			false
+		);
+
+		Assert.assertFalse(
+			_imageStorage.hasContent(
+				Mockito.mock(FileVersion.class),
+				RandomTestUtil.randomString()));
+
+		_verifyDLStoreMock();
+	}
+
+	@Test
+	public void testHasContentWithStoreFile() throws Exception {
+		Mockito.when(
+			_dlStore.hasFile(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_imageStorage.hasContent(
+				Mockito.mock(FileVersion.class),
+				RandomTestUtil.randomString()));
+
+		_verifyDLStoreMock();
+	}
+
+	private void _verifyDLStoreMock() throws Exception {
+		Mockito.verify(
+			_dlStore, Mockito.times(1)
+		).hasFile(
+			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString()
+		);
+	}
+
+	private final DLStore _dlStore = Mockito.mock(DLStore.class);
 	private final ImageStorage _imageStorage = new ImageStorage();
 
 }

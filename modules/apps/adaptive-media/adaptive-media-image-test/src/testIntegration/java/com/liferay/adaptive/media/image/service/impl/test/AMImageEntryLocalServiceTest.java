@@ -25,10 +25,12 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -590,6 +592,57 @@ public class AMImageEntryLocalServiceTest {
 		finally {
 			_companyLocalService.deleteCompany(company);
 		}
+	}
+
+	@Test
+	public void testHasAMImageEntryContentWhenContentPresent()
+		throws Exception {
+
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			_addAMImageConfigurationEntry("uuid", 100, 200);
+
+		byte[] bytes = _getImageBytes();
+
+		FileEntry fileEntry = _addFileEntry(
+			bytes,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		AMImageEntryLocalServiceUtil.addAMImageEntry(
+			amImageConfigurationEntry, fileVersion, 100, 300,
+			new UnsyncByteArrayInputStream(bytes), 12345);
+
+		Assert.assertTrue(
+			AMImageEntryLocalServiceUtil.hasAMImageEntryContent(
+				amImageConfigurationEntry.getUUID(), fileVersion));
+	}
+
+	@Test
+	public void testHasAMImageEntryContentWhenNoContentPresent()
+		throws Exception {
+
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			_addAMImageConfigurationEntry("uuid", 100, 200);
+
+		byte[] bytes = _getImageBytes();
+
+		FileEntry fileEntry = _addFileEntry(
+			bytes,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		AMImageEntryLocalServiceUtil.addAMImageEntry(
+			amImageConfigurationEntry, fileVersion, 100, 300,
+			new UnsyncByteArrayInputStream(bytes), 12345);
+
+		DLStoreUtil.deleteDirectory(
+			fileEntry.getCompanyId(), CompanyConstants.SYSTEM, "adaptive");
+
+		Assert.assertFalse(
+			AMImageEntryLocalServiceUtil.hasAMImageEntryContent(
+				amImageConfigurationEntry.getUUID(), fileVersion));
 	}
 
 	protected void deleteAllAMImageConfigurationEntries()

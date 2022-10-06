@@ -60,7 +60,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionP
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
-import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -2222,9 +2221,6 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private DDMTemplatePersistence _ddmTemplatePersistence;
-
-	@Reference
-	private DDMXML _ddmXML;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _jsonDDMFormDeserializer;

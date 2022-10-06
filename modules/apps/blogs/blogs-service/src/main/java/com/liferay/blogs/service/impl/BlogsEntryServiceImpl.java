@@ -230,7 +230,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		List<BlogsEntry> blogsEntries = getCompanyEntries(
 			companyId, displayDate, status, max);
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, name, type, version, displayStyle, feedURL, entryURL,
 			blogsEntries, themeDisplay);
 	}
@@ -393,7 +393,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		List<BlogsEntry> blogsEntries = getGroupEntries(
 			groupId, displayDate, status, max);
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, name, type, version, displayStyle, feedURL, entryURL,
 			blogsEntries, themeDisplay);
 	}
@@ -541,7 +541,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		List<BlogsEntry> blogsEntries = getOrganizationEntries(
 			organizationId, displayDate, status, max);
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, name, type, version, displayStyle, feedURL, entryURL,
 			blogsEntries, themeDisplay);
 	}
@@ -621,7 +621,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			smallImageImageSelector, serviceContext);
 	}
 
-	protected String exportToRSS(
+	private String _exportToRSS(
 		String name, String description, String type, double version,
 		String displayStyle, String feedURL, String entryURL,
 		List<BlogsEntry> blogsEntries, ThemeDisplay themeDisplay) {

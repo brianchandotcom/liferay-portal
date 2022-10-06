@@ -47,6 +47,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,25 +65,28 @@ public class CurrentAccountEntryManagerTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_user = UserTestUtil.addUser();
+	}
+
 	@Test
 	public void testGetCurrentAccountEntry() throws Exception {
-		User user = UserTestUtil.addUser();
-
 		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry1.getAccountEntryId(), user.getUserId());
+			accountEntry1.getAccountEntryId(), _user.getUserId());
 
 		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry2.getAccountEntryId(), user.getUserId());
+			accountEntry2.getAccountEntryId(), _user.getUserId());
 
 		List<AccountEntry> accountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
-				user.getUserId(),
+				_user.getUserId(),
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
@@ -94,7 +98,7 @@ public class CurrentAccountEntryManagerTest {
 		Assert.assertEquals(
 			accountEntries.get(0),
 			_currentAccountEntryManager.getCurrentAccountEntry(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), _user.getUserId()));
 	}
 
 	@Test
@@ -155,11 +159,9 @@ public class CurrentAccountEntryManagerTest {
 	public void testGetCurrentAccountEntryForUserWithNoAccountEntries()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		Assert.assertNull(
 			_currentAccountEntryManager.getCurrentAccountEntry(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), _user.getUserId()));
 	}
 
 	@Test
@@ -169,15 +171,13 @@ public class CurrentAccountEntryManagerTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
 
-		User user = UserTestUtil.addUser();
-
 		_currentAccountEntryManager.setCurrentAccountEntry(
 			accountEntry.getAccountEntryId(), TestPropsValues.getGroupId(),
-			user.getUserId());
+			_user.getUserId());
 
 		Assert.assertNull(
 			_currentAccountEntryManager.getCurrentAccountEntry(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), _user.getUserId()));
 	}
 
 	@Test
@@ -188,9 +188,8 @@ public class CurrentAccountEntryManagerTest {
 			_accountEntryLocalService);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-		User user = UserTestUtil.addUser();
 
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), _user.getUserId());
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
@@ -200,12 +199,12 @@ public class CurrentAccountEntryManagerTest {
 
 		_currentAccountEntryManager.setCurrentAccountEntry(
 			accountEntry.getAccountEntryId(), TestPropsValues.getGroupId(),
-			user.getUserId());
+			_user.getUserId());
 
 		Assert.assertEquals(
 			accountEntry,
 			_currentAccountEntryManager.getCurrentAccountEntry(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				TestPropsValues.getGroupId(), _user.getUserId()));
 	}
 
 	@Test
@@ -291,5 +290,7 @@ public class CurrentAccountEntryManagerTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private User _user;
 
 }

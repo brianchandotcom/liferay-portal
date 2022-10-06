@@ -599,8 +599,9 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 
 		Check(
+			key_columnName = "name",
 			key_tableEntry = "${assigneeName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECKBOX");
 
 		SelectFrameTop();
 

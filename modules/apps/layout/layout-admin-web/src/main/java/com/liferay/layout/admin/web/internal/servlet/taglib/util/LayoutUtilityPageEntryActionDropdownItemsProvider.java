@@ -63,7 +63,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						_getEditDisplayPageActionUnsafeConsumer()
+						_getEditLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -73,7 +73,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						_getMarkAsDefaultLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
-						_getRenameUtilityPageActionUnsafeConsumer()
+						_getRenameLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -81,7 +81,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						_getDeleteLayoutUtilityPageActionUnsafeConsumer()
+						_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 
 				dropdownGroupItem.setSeparator(true);
@@ -90,10 +90,10 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getDeleteLayoutUtilityPageActionUnsafeConsumer() {
+		_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteLayoutUtilityPage");
+			dropdownItem.putData("action", "deleteLayoutUtilityPageEntry");
 
 			String key = "are-you-sure-you-want-to-delete-this";
 
@@ -103,10 +103,10 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			}
 
 			dropdownItem.putData(
-				"deleteLayoutUtilityPageMessage",
+				"deleteLayoutUtilityPageEntryMessage",
 				LanguageUtil.get(_httpServletRequest, key));
 			dropdownItem.putData(
-				"deleteLayoutUtilityPageURL",
+				"deleteLayoutUtilityPageEntryURL",
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
@@ -124,7 +124,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditDisplayPageActionUnsafeConsumer() {
+		_getEditLayoutUtilityPageEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
@@ -213,7 +213,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getRenameUtilityPageActionUnsafeConsumer() {
+		_getRenameLayoutUtilityPageEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameLayoutUtilityPageEntry");

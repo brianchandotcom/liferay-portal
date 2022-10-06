@@ -17,14 +17,14 @@ import {openConfirmModal, openSimpleInputModal} from 'frontend-js-web';
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
 const ACTIONS = {
-	deleteLayoutUtilityPage({
-		deleteLayoutUtilityPageMessage,
-		deleteLayoutUtilityPageURL,
+	deleteLayoutUtilityPageEntry({
+		deleteLayoutUtilityPageEntryMessage,
+		deleteLayoutUtilityPageEntryURL,
 	}) {
 		openDeleteLayoutModal({
-			message: deleteLayoutUtilityPageMessage,
+			message: deleteLayoutUtilityPageEntryMessage,
 			onDelete: () => {
-				send(deleteLayoutUtilityPageURL);
+				send(deleteLayoutUtilityPageEntryURL);
 			},
 			title: Liferay.Language.get('utility-pages'),
 		});

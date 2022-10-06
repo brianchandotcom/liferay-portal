@@ -28,7 +28,6 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
-import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -410,9 +409,6 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 		EditPageAttachmentMVCActionCommand.class);
 
 	private volatile DLConfiguration _dlConfiguration;
-
-	@Reference
-	private DLValidator _dlValidator;
 
 	@Reference
 	private Language _language;

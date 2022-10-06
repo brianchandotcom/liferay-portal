@@ -15,7 +15,6 @@
 package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -161,9 +160,6 @@ public class DepotAdminGroupSearchProvider {
 	}
 
 	private long[] _classNameIds;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

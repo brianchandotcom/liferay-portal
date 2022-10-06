@@ -162,6 +162,8 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to cancel the addition of a column for the View"
 	@priority = "4"
 	test CanCancelColumnAddition {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147766",
 			objectName = "CustomObject147766",
@@ -572,6 +574,8 @@ definition {
 	@description = "LPS-144472 - Verify it is possible the user to delete the pre-order column"
 	@priority = "4"
 	test CanDeletePreOrderColumn {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152057",
 			objectName = "CustomObject152057",
@@ -2141,6 +2145,8 @@ definition {
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"
 	@priority = "3"
 	test EmptyStateViewBuilder {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147760",
 			objectName = "CustomObject147760",

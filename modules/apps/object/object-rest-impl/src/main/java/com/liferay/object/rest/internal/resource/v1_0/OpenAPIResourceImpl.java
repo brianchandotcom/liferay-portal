@@ -48,7 +48,7 @@ public class OpenAPIResourceImpl {
 		throws Exception {
 
 		return _objectEntryOpenAPIResource.getOpenAPI(
-			_objectDefinition.getObjectDefinitionId(), type, _uriInfo);
+			_objectDefinition, type, _uriInfo);
 	}
 
 	@Context

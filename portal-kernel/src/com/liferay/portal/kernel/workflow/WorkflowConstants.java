@@ -49,6 +49,9 @@ public class WorkflowConstants {
 
 	public static final String CONTEXT_SERVICE_CONTEXT = "serviceContext";
 
+	public static final String CONTEXT_SKIP_MODEL_LISTENER =
+		"skipModelListener";
+
 	public static final String CONTEXT_TASK_COMMENTS = "taskComments";
 
 	public static final String CONTEXT_TRANSITION_NAME = "transitionName";

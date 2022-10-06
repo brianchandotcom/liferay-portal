@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -108,6 +109,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -1083,7 +1085,7 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public ObjectEntry updateStatus(
 			long userId, long objectEntryId, int status,
-			ServiceContext serviceContext)
+			ServiceContext workflowContextServiceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
@@ -1100,9 +1102,28 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setStatusByUserId(user.getUserId());
 		objectEntry.setStatusByUserName(user.getFullName());
 
-		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
+		objectEntry.setStatusDate(
+			workflowContextServiceContext.getModifiedDate(null));
 
-		objectEntry = objectEntryPersistence.update(objectEntry);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (GetterUtil.getBoolean(
+				serviceContext.getAttribute(
+					WorkflowConstants.CONTEXT_SKIP_MODEL_LISTENER))) {
+
+			while (objectEntry instanceof ModelWrapper) {
+				ModelWrapper<ObjectEntry> modelWrapper =
+					(ModelWrapper<ObjectEntry>)objectEntry;
+
+				objectEntry = modelWrapper.getWrappedModel();
+			}
+
+			objectEntry = objectEntryPersistence.updateImpl(objectEntry);
+		}
+		else {
+			objectEntry = objectEntryPersistence.update(objectEntry);
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(
@@ -2491,6 +2512,12 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		ServiceContext threadLocalServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		threadLocalServiceContext.setAttribute(
+			WorkflowConstants.CONTEXT_SKIP_MODEL_LISTENER, Boolean.TRUE);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,

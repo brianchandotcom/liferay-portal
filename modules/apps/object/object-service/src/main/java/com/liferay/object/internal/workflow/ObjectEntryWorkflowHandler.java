@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -94,17 +95,34 @@ public class ObjectEntryWorkflowHandler
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		long userId = GetterUtil.getLong(
-			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
-		long classPK = GetterUtil.getLong(
-			(String)workflowContext.get(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+		ObjectEntry objectEntry = null;
 
-		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-			"serviceContext");
+		try {
+			objectEntry = _objectEntryLocalService.updateStatus(
+				GetterUtil.getLong(
+					(String)workflowContext.get(
+						WorkflowConstants.CONTEXT_USER_ID)),
+				GetterUtil.getLong(
+					(String)workflowContext.get(
+						WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)),
+				status,
+				(ServiceContext)workflowContext.get(
+					WorkflowConstants.CONTEXT_SERVICE_CONTEXT));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+		finally {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-		return _objectEntryLocalService.updateStatus(
-			userId, classPK, status, serviceContext);
+			if (serviceContext != null) {
+				serviceContext.removeAttribute(
+					WorkflowConstants.CONTEXT_SKIP_MODEL_LISTENER);
+			}
+		}
+
+		return objectEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

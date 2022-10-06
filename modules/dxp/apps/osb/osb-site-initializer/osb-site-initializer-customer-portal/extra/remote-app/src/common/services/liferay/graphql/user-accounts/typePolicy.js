@@ -9,32 +9,41 @@
  * distribution rights of the Software.
  */
 
+import {Liferay} from '../..';
+
 export const userAccountsTypePolicy = {
 	AccountBrief: {
-		keyFields: ['externalReferenceCode'],
+		keyFields: false,
 	},
 	OrganizationBrief: {
-		keyFields: ['id'],
+		keyFields: false,
 	},
 	RoleBrief: {
 		keyFields: ['id'],
 	},
 	UserAccount: {
 		fields: {
-			hasProvisioningRole: {
+			isCurrentUser: {
 				read(_, {readField}) {
-					return !!readField('roleBriefs')?.some(
-						(roleBrief) =>
-							readField('name', roleBrief) === 'Provisioning'
+					return (
+						readField('id') === +Liferay.ThemeDisplay.getUserId()
 					);
 				},
 			},
 			isLiferayStaff: {
 				read(_, {readField}) {
-					return !!readField('organizationBriefs')?.some(
+					return !!readField('organizationBriefs').some(
 						(organizationBrief) =>
 							readField('name', organizationBrief) ===
 							'Liferay Staff'
+					);
+				},
+			},
+			isProvisioning: {
+				read(_, {readField}) {
+					return !!readField('roleBriefs')?.some(
+						(roleBrief) =>
+							readField('name', roleBrief) === 'Provisioning'
 					);
 				},
 			},

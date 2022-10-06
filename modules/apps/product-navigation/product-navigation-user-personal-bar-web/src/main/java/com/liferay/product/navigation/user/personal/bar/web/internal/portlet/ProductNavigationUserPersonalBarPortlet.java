@@ -14,8 +14,6 @@
 
 package com.liferay.product.navigation.user.personal.bar.web.internal.portlet;
 
-import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -97,12 +95,6 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 				themeDisplay.getUserId(),
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
-
-	@Reference
-	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -24,7 +24,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
-import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.LegacyNotificationType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -78,10 +78,10 @@ public class NotificationTemplateLocalServiceTest {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		bundleContext.registerService(
-			NotificationType.class,
-			(NotificationType)ProxyUtil.newProxyInstance(
-				NotificationType.class.getClassLoader(),
-				new Class<?>[] {NotificationType.class},
+			LegacyNotificationType.class,
+			(LegacyNotificationType)ProxyUtil.newProxyInstance(
+				LegacyNotificationType.class.getClassLoader(),
+				new Class<?>[] {LegacyNotificationType.class},
 				(proxy, method, args) -> {
 					if (Objects.equals(method.getName(), "getClassName")) {
 						return StringPool.BLANK;

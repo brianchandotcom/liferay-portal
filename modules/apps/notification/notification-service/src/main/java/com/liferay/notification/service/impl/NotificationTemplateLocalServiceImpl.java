@@ -34,8 +34,8 @@ import com.liferay.notification.service.persistence.NotificationQueueEntryPersis
 import com.liferay.notification.service.persistence.NotificationTemplateAttachmentPersistence;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
-import com.liferay.notification.type.NotificationType;
-import com.liferay.notification.util.NotificationTypeRegistry;
+import com.liferay.notification.type.LegacyNotificationType;
+import com.liferay.notification.util.LegacyNotificationTypeRegistry;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -208,7 +208,7 @@ public class NotificationTemplateLocalServiceImpl
 			return;
 		}
 
-		NotificationType notificationType =
+		LegacyNotificationType notificationType =
 			_notificationTypeRegistry.getNotificationType(notificationTypeKey);
 
 		if (notificationType == null) {
@@ -437,7 +437,7 @@ public class NotificationTemplateLocalServiceImpl
 	private String _formatContent(
 			String content, Locale locale,
 			String notificationTermContributorKey,
-			NotificationType notificationType, Object object)
+			LegacyNotificationType notificationType, Object object)
 		throws PortalException {
 
 		if (Validator.isNull(content)) {
@@ -470,7 +470,7 @@ public class NotificationTemplateLocalServiceImpl
 	}
 
 	private String _formatTo(
-			String to, Locale locale, NotificationType notificationType,
+			String to, Locale locale, LegacyNotificationType notificationType,
 			Object object)
 		throws PortalException {
 
@@ -652,7 +652,7 @@ public class NotificationTemplateLocalServiceImpl
 		_notificationTermContributorRegistry;
 
 	@Reference
-	private NotificationTypeRegistry _notificationTypeRegistry;
+	private LegacyNotificationTypeRegistry _notificationTypeRegistry;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

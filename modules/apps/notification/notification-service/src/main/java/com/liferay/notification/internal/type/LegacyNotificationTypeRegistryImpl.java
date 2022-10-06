@@ -14,8 +14,8 @@
 
 package com.liferay.notification.internal.type;
 
-import com.liferay.notification.type.NotificationType;
-import com.liferay.notification.util.NotificationTypeRegistry;
+import com.liferay.notification.type.LegacyNotificationType;
+import com.liferay.notification.util.LegacyNotificationTypeRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -31,12 +31,13 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Gustavo Lima
  */
-@Component(service = NotificationTypeRegistry.class)
-public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
+@Component(service = LegacyNotificationTypeRegistry.class)
+public class LegacyNotificationTypeRegistryImpl
+	implements LegacyNotificationTypeRegistry {
 
 	@Override
-	public NotificationType getNotificationType(String key) {
-		ServiceWrapper<NotificationType> notificationTypeServiceWrapper =
+	public LegacyNotificationType getNotificationType(String key) {
+		ServiceWrapper<LegacyNotificationType> notificationTypeServiceWrapper =
 			_serviceTrackerMap.getService(key);
 
 		if (notificationTypeServiceWrapper == null) {
@@ -53,9 +54,10 @@ public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, NotificationType.class, "notification.type.key",
-			ServiceTrackerCustomizerFactory.<NotificationType>serviceWrapper(
-				bundleContext));
+			bundleContext, LegacyNotificationType.class,
+			"notification.type.key",
+			ServiceTrackerCustomizerFactory.
+				<LegacyNotificationType>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
@@ -64,9 +66,9 @@ public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationTypeRegistryImpl.class);
+		LegacyNotificationTypeRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<NotificationType>>
+	private ServiceTrackerMap<String, ServiceWrapper<LegacyNotificationType>>
 		_serviceTrackerMap;
 
 }

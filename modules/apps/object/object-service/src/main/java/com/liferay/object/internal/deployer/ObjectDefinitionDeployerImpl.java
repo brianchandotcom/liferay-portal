@@ -21,7 +21,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.constants.NotificationTermContributorConstants;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
-import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.LegacyNotificationType;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
@@ -238,7 +238,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"notification.type.key", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				NotificationType.class,
+				LegacyNotificationType.class,
 				new ObjectDefinitionNotificationType(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 

@@ -1,0 +1,3290 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "OSB_WWW_COMPONENTS_GLOBAL-modal"
+					},
+					"fragmentConfig": {
+						"contentInitEvent": "",
+						"modalEditMode": true,
+						"modalId": "solutions-details-video",
+						"modalOverlayColor": "transparent",
+						"modalSize": "lg"
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"pageElements": [
+					{
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "OSB_WWW_COMPONENTS_GLOBAL-embeddedVideo"
+									},
+									"fragmentConfig": {
+										"hideOverlay": false,
+										"html5videoUrl": "",
+										"overlayBackgroundImageUrl": "",
+										"playButtonPosition": "center",
+										"showPlayButton": true,
+										"videoPlayerAspectRatio": "16:9",
+										"videoPlayerMaxWidth": "max-width-large",
+										"videoPosition": "mx-10",
+										"wistiaId": "",
+										"youtubeId": ""
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#F4F6F9"
+					},
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "OSB_WWW_COMPONENTS_GLOBAL-contentContainer"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "light",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"paddingLeft": "6",
+										"paddingRight": "6"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingBottom": "4",
+																"paddingTop": "4"
+															},
+															"id": "landscapeMobile"
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "ddmTemplate_449486070",
+															"displayStyleGroupId": "448812852",
+															"showCurrentGroup": "true",
+															"showGuestGroup": "true",
+															"showLayout": "true",
+															"showParentGroups": "true",
+															"showPortletBreadcrumb": "true"
+														},
+														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "top"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 9
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexDirection": "",
+																		"flexWrap": "",
+																		"items": 2,
+																		"justifyContent": "justify-content-start"
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"pageElements": [
+																	{
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "",
+																						"iconType": "large",
+																						"lazyLoadingImage": true,
+																						"useHtml": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "iconImage",
+																							"value": {
+																								"fragmentImage": {
+																									"description": {
+																										"value_i18n": {
+																											"en_US": ""
+																										}
+																									},
+																									"title": {
+																										"value": "rivet_logic_1.jpg"
+																									},
+																									"url": {
+																										"value_i18n": {
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"paddingRight": "4"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f4",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"defaultFragmentInlineValue": {
+																										"value": "Live Video and Conferencing Solution"
+																									},
+																									"mapping": {
+																										"fieldKey": "name",
+																										"itemReference": {
+																											"className": "com.liferay.commerce.product.model.CPDefinition",
+																											"classPK": 450251967
+																										}
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-"
+																					},
+																					"fragmentConfig": {
+																						"alignItems": "align-items-start",
+																						"flexDirection": "",
+																						"flexWrap": "",
+																						"items": 2,
+																						"justifyContent": "justify-content-start"
+																					},
+																					"fragmentFields": [
+																					],
+																					"indexed": true
+																				},
+																				"pageElements": [
+																					{
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																									},
+																									"fragmentConfig": {
+																										"alignment": "",
+																										"iconType": "small",
+																										"lazyLoadingImage": true,
+																										"useHtml": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "iconImage",
+																											"value": {
+																												"fragmentImage": {
+																													"description": {
+																														"value_i18n": {
+																															"en_US": ""
+																														}
+																													},
+																													"fragmentImageClassPKReference": {
+																														"classPKReferences": {
+																															"en_US": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": 449814588
+																															}
+																														},
+																														"fragmentImageConfiguration": {
+																															"landscapeMobile": "auto",
+																															"portraitMobile": "auto",
+																															"tablet": "auto"
+																														}
+																													},
+																													"title": {
+																														"value": "insurance_logo.jpg"
+																													}
+																												},
+																												"fragmentLink": {
+																													"value_i18n": {
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"hidden": true
+																									},
+																									"indexed": true
+																								},
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																									},
+																									"fragmentConfig": {
+																										"alignment": "flex justify-center",
+																										"iconType": "small",
+																										"lazyLoadingImage": true,
+																										"useHtml": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "iconImage",
+																											"value": {
+																												"fragmentImage": {
+																													"description": {
+																														"value_i18n": {
+																															"en_US": ""
+																														}
+																													},
+																													"title": {
+																														"value": "rivetlogic_logo (1).gif"
+																													},
+																													"url": {
+																														"value_i18n": {
+																														}
+																													}
+																												},
+																												"fragmentLink": {
+																													"value_i18n": {
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"paddingRight": "4"
+																									},
+																									"indexed": true
+																								},
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "FragmentDropZone"
+																					},
+																					{
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-small",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {
+																													"value_i18n": {
+																													}
+																												},
+																												"text": {
+																													"defaultFragmentInlineValue": {
+																														"value": "Ibermática"
+																													},
+																													"mapping": {
+																														"fieldKey": "_CUSTOM_FIELD_Developer_Name",
+																														"itemReference": {
+																															"className": "com.liferay.commerce.product.model.CPDefinition",
+																															"classPK": 449826879
+																														}
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"hidden": true,
+																										"marginLeft": "2"
+																									},
+																									"indexed": true
+																								},
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "FragmentDropZone"
+																					}
+																				],
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"defaultFragmentInlineValue": {
+																										"value": "<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExperience Management\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tPersonalization and Segmentation\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tAnalytics and Optimization\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tCollaboration & Knowledge Sharing\n\t\t\t\t\t</div>\n\t\t</div>"
+																									},
+																									"mapping": {
+																										"fieldKey": "ddmTemplate_449798619",
+																										"itemReference": {
+																											"className": "com.liferay.commerce.product.model.CPDefinition",
+																											"classPK": 450251967
+																										}
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginTop": "2"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 3
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexDirection": "",
+																		"flexWrap": "",
+																		"items": 1,
+																		"justifyContent": "justify-content-center"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginLeft": "0",
+																				"marginRight": "0"
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true
+																},
+																"pageElements": [
+																	{
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-button"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "center",
+																						"buttonIconAlignment": "osb-btn--icon-end",
+																						"buttonType": "osb-btn osb-btn--flat osb-btn--primary",
+																						"icon": "none",
+																						"size": "default",
+																						"target": "_self",
+																						"url": "#solutions-details-form"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "buttonText",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Contact Partner"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": false,
+																								"marginBottom": "2",
+																								"marginLeft": "0",
+																								"marginRight": "0",
+																								"marginTop": "2",
+																								"paddingLeft": "0",
+																								"paddingRight": "0",
+																								"textAlign": "left"
+																							},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": true
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "3",
+														"paddingTop": "3"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingBottom": "4",
+																"paddingTop": "4"
+															},
+															"id": "landscapeMobile"
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "OSB_WWW_COMPONENTS_GLOBAL-html"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "htmlFragment",
+									"value": {
+										"html": {
+											"value_i18n": {
+												"en_US": "<style>\n    section .portlet {\n        min-height: 50px;\n    }\n</style>"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#0B5FFF"
+					},
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "OSB_WWW_COMPONENTS_GLOBAL-contentContainer"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "dark",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"paddingLeft": "6",
+										"paddingRight": "6"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"pageElements": [
+											{
+												"definition": {
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+																"modulesPerRow": 2
+															}
+														}
+													],
+													"verticalAlignment": "top"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 6
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 7
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"paddingBottom": "6",
+																		"paddingTop": "6"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingBottom": "4",
+																				"paddingTop": "4"
+																			},
+																			"id": "landscapeMobile"
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-heading-f1",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Limitless Experiences, One Solution"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textColor": "whiteColor"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"paddingBottom": "3",
+																		"paddingTop": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-large",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Eliminate physical barriers and broaden your audience to global scalability. Our solution allows attendees to join live or watch pre-recorded sessions, no matter where they are."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textColor": "whiteColor"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"paddingBottom": "6",
+																		"paddingTop": "6"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingBottom": "4",
+																				"paddingTop": "0"
+																			},
+																			"id": "landscapeMobile"
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 6
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 5
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"paddingBottom": "5",
+																		"paddingTop": "5"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingBottom": "0",
+																				"paddingTop": "0"
+																			},
+																			"id": "landscapeMobile"
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "OSB_WWW_COMPONENTS_GLOBAL-imageCarousel"
+																	},
+																	"fragmentConfig": {
+																		"colorScheme": "dark",
+																		"imageAspectRatio": "aspect-ratio-4-to-3",
+																		"imageCarouselMaxWidth": "517px",
+																		"lazyLoadingImage": true,
+																		"numberOfImages": "3"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "imageCarousel0",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				}
+																			}
+																		},
+																		{
+																			"id": "imageCarousel1",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				}
+																			}
+																		},
+																		{
+																			"id": "imageCarousel2",
+																			"value": {
+																				"fragmentLink": {
+																					"value_i18n": {
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "OSB_WWW_COMPONENTS_GLOBAL-contentContainer"
+							},
+							"fragmentConfig": {
+								"background": "",
+								"backgroundDarkOrLight": "light",
+								"backgroundImageUrl": "",
+								"backgroundPosition": "center",
+								"backgroundSize": "cover",
+								"blockAlignment": "",
+								"borderRadius": "border-radius-none",
+								"boxShadow": "",
+								"containerWidth": "",
+								"lazyLoadingImage": true,
+								"moveIcon": "-75px 0 0 0",
+								"showIcon": false,
+								"showIconBoxShadow": false
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"paddingLeft": "6",
+								"paddingRight": "6"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "5",
+										"paddingRight": "5"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": ""
+													}
+												},
+												"target": "Blank"
+											},
+											"htmlProperties": {
+												"htmlTag": "Div"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "4",
+														"paddingTop": "5"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingBottom": "3",
+																"paddingTop": "3"
+															},
+															"id": "landscapeMobile"
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+													},
+													"fragmentConfig": {
+														"fontSize": "font-size-heading-f4",
+														"smallCaps": false,
+														"tabletScreenCenter": false
+													},
+													"fragmentFields": [
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Description"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textColor": "gray900Color"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+													},
+													"fragmentConfig": {
+														"fontSize": "font-size-paragraph-large",
+														"smallCaps": false,
+														"tabletScreenCenter": false
+													},
+													"fragmentFields": [
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Rivet Logic's <strong>Live Video and Conferencing Solution</strong> is a globally accessible communication platform for hosting virtual events. Live video streaming and conferencing is available to configure for both internal and external use.<br />\n<br />\n<a href=\"https://rivetlogic.com/services/solution-areas/live-video-solutions\" target=\"_blank\">Learn More</a>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textColor": "#394452"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"paddingBottom": "5",
+								"paddingTop": "5"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingBottom": "3",
+										"paddingTop": "3"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#EBEEF2"
+					},
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "OSB_WWW_COMPONENTS_GLOBAL-contentContainer"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "light",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"paddingLeft": "6",
+										"paddingRight": "6"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"pageElements": [
+											{
+												"definition": {
+													"htmlProperties": {
+														"htmlTag": "Div"
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 6
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "6",
+																				"paddingTop": "5"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingBottom": "3",
+																						"paddingTop": "3"
+																					},
+																					"id": "landscapeMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f2",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																							"value_i18n": {
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Key Benefits:"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textColor": "#2C3A4B"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "1"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-large",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																							"value_i18n": {
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "<strong>Virtual Expo Center&nbsp;</strong>\n<ul>\n\t<li>Deliver exhibitor and sponsor ROI</li>\n\t<li>Virtual Booths</li>\n\t<li>Ability to live stream separate rooms&nbsp;</li>\n\t<li>We are able to ingest, capture, and activate event attendee data making post event leads easily and quickly available</li>\n</ul>\n&nbsp;<strong>NPO and Houses of worship&nbsp;</strong>\n\n<ul>\n\t<li>Our Interactive chat announces donations and give aways to keep virtual attendees engaged during the event</li>\n\t<li>Our Platform for virtual events allows the organization to set donation goals before and during the event</li>\n\t<li>Live streaming and VOD</li>\n</ul>\n"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textColor": "#394452"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 6
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "6",
+																				"paddingTop": "5"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingBottom": "3",
+																						"paddingTop": "3"
+																					},
+																					"id": "landscapeMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "6",
+																				"paddingTop": "5"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingBottom": "3",
+																						"paddingTop": "3"
+																					},
+																					"id": "landscapeMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "6",
+																				"paddingTop": "5"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingBottom": "3",
+																						"paddingTop": "3"
+																					},
+																					"id": "landscapeMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-image"
+																			},
+																			"fragmentConfig": {
+																				"alignment": "",
+																				"borderRadius": "medium",
+																				"colorScheme": "",
+																				"imageRatio": "auto",
+																				"lazyLoadingImage": true,
+																				"maxWidth": "",
+																				"showBoxShadow": false,
+																				"type": "regular"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "osbImage",
+																					"value": {
+																						"fragmentImage": {
+																							"description": {
+																								"value_i18n": {
+																									"en_US": ""
+																								}
+																							},
+																							"title": {
+																								"value": "solutions-details-video (1).png"
+																							},
+																							"url": {
+																								"value_i18n": {
+																								}
+																							}
+																						},
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value": "{\"en_US\":\"#solutions-details-video\"}"
+																								}
+																							},
+																							"value_i18n": {
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "6",
+																"paddingTop": "3"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "3",
+																		"paddingTop": "3"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"paddingBottom": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#F7F8F9"
+					},
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "OSB_WWW_COMPONENTS_GLOBAL-contentContainer"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "light",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"paddingLeft": "6",
+										"paddingRight": "6"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"pageElements": [
+											{
+												"definition": {
+													"htmlProperties": {
+														"htmlTag": "Div"
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "5",
+																"paddingTop": "5"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "3",
+																		"paddingTop": "3"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f2",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Solution Highlights"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginTop": "5"
+															},
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 3,
+															"numberOfColumns": 3,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"htmlProperties": {
+																				"htmlTag": "Div"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "flex justify-center",
+																						"iconType": "large",
+																						"lazyLoadingImage": true,
+																						"useHtml": true
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "iconHtml",
+																							"value": {
+																								"html": {
+																									"value_i18n": {
+																										"en_US": "<svg width=\"80\" height=\"80\" viewBox=\"0 0 80 80\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<mask id=\"mask0_9883_527245\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"3\" y=\"5\" width=\"74\" height=\"70\">\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M3.49752 38.0127C5.36418 19.4794 20.9975 5.0127 39.9975 5.0127C58.9975 5.0127 74.6309 19.4794 76.4975 38.0127C76.6975 39.9794 75.1309 41.6794 73.1642 41.6794C71.4642 41.6794 70.0309 40.4127 69.8642 38.746C68.3975 23.546 55.5642 11.6794 39.9975 11.6794C24.4309 11.6794 11.5975 23.546 10.1308 38.746C9.96418 40.4127 8.53085 41.6794 6.83085 41.6794C4.86418 41.6794 3.33085 39.9794 3.49752 38.0127ZM39.9975 18.346C28.3975 18.346 18.7642 26.8127 16.9642 37.9127C16.6308 39.8794 18.2642 41.6794 20.2975 41.6794C21.9309 41.6794 23.2975 40.4794 23.5642 38.846C24.9309 30.9794 31.7642 25.0127 39.9975 25.0127C48.2309 25.0127 55.0642 30.9794 56.4308 38.846C56.6975 40.4794 58.0642 41.6794 59.6975 41.6794C61.7309 41.6794 63.3308 39.8794 62.9975 37.9127C61.2309 26.8127 51.5975 18.346 39.9975 18.346ZM43.3308 49.3127C46.8975 47.7127 49.1975 43.7794 48.0308 39.346C47.2975 36.646 45.1309 34.446 42.4309 33.6794C36.7975 32.0794 31.6642 36.2794 31.6642 41.6794C31.6642 45.0794 33.7309 48.0127 36.6642 49.3127V60.3127L27.6308 69.3127C26.3308 70.6127 26.3308 72.7127 27.6308 74.0127C28.9308 75.3127 31.0308 75.3127 32.3308 74.0127L39.9975 66.346L47.6642 74.0127C48.9642 75.3127 51.0642 75.3127 52.3642 74.0127C53.6642 72.7127 53.6642 70.6127 52.3642 69.3127L43.3308 60.3127V49.3127Z\" fill=\"black\"/>\n</mask>\n<g mask=\"url(#mask0_9883_527245)\">\n<rect width=\"80\" height=\"80\" fill=\"#0B5FFF\"/>\n</g>\n</svg>\n"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"hidden": true
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingLeft": "0"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "flex justify-center",
+																						"iconType": "large",
+																						"lazyLoadingImage": true,
+																						"useHtml": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "iconImage",
+																							"value": {
+																								"fragmentImage": {
+																									"description": {
+																										"value_i18n": {
+																											"en_US": ""
+																										}
+																									},
+																									"title": {
+																										"value": "lr-icon-008"
+																									},
+																									"url": {
+																										"value_i18n": {
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"paddingBottom": "1",
+																						"paddingTop": "2"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f4",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Fast, Secure, Reliable"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"paddingBottom": "1"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "A customizable platform that allows you to reap all the benefits of professionally executed video at a fraction of cost without sacrificing on features, capabilities, and time to market."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center",
+																						"textColor": "#394452"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																			},
+																			"fragmentConfig": {
+																				"alignment": "flex justify-center",
+																				"iconType": "large",
+																				"lazyLoadingImage": true,
+																				"useHtml": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "iconImage",
+																					"value": {
+																						"fragmentImage": {
+																							"description": {
+																								"value_i18n": {
+																									"en_US": ""
+																								}
+																							},
+																							"title": {
+																								"value": "lr-icon-033"
+																							},
+																							"url": {
+																								"value_i18n": {
+																								}
+																							}
+																						},
+																						"fragmentLink": {
+																							"value_i18n": {
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"htmlProperties": {
+																				"htmlTag": "Div"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "flex justify-center",
+																						"iconType": "large",
+																						"lazyLoadingImage": true,
+																						"useHtml": true
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "iconHtml",
+																							"value": {
+																								"html": {
+																									"value_i18n": {
+																										"en_US": "<svg width=\"80\" height=\"80\" viewBox=\"0 0 80 80\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<mask id=\"mask0_9883_527256\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"9\" y=\"13\" width=\"62\" height=\"54\">\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.6665 20.0002H63.3332C65.1665 20.0002 66.6665 18.5002 66.6665 16.6668C66.6665 14.8335 65.1665 13.3335 63.3332 13.3335H16.6665C14.8332 13.3335 13.3332 14.8335 13.3332 16.6668C13.3332 18.5002 14.8332 20.0002 16.6665 20.0002ZM67.1998 26.0002C66.8998 24.4668 65.5332 23.3335 63.9332 23.3335H16.0665C14.4665 23.3335 13.0998 24.4668 12.7998 26.0002L9.4665 42.6668C9.0665 44.7335 10.6332 46.6668 12.7332 46.6668H13.3332V63.3335C13.3332 65.1668 14.8332 66.6668 16.6665 66.6668H43.3332C45.1665 66.6668 46.6665 65.1668 46.6665 63.3335V46.6668H59.9998V63.3335C59.9998 65.1668 61.4998 66.6668 63.3332 66.6668C65.1665 66.6668 66.6665 65.1668 66.6665 63.3335V46.6668H67.2665C69.3665 46.6668 70.9332 44.7335 70.5332 42.6668L67.1998 26.0002ZM19.9998 60.0002H39.9998V46.6668H19.9998V60.0002Z\" fill=\"black\"/>\n</mask>\n<g mask=\"url(#mask0_9883_527256)\">\n<rect width=\"80\" height=\"80\" fill=\"#0B5FFF\"/>\n</g>\n</svg>\n"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"hidden": true
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingTop": "4"
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingLeft": "0"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"paddingBottom": "1",
+																						"paddingTop": "2"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f4",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Local, yet Global"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"paddingBottom": "1"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Members around the world will be able to participate, join rooms, chat with virtual exhibitors, and enjoy an amazing virtual experience with site and language translation."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center",
+																						"textColor": "#394452"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"htmlProperties": {
+																				"htmlTag": "Div"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "flex justify-center",
+																						"iconType": "large",
+																						"lazyLoadingImage": true,
+																						"useHtml": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "iconImage",
+																							"value": {
+																								"fragmentImage": {
+																									"description": {
+																										"value_i18n": {
+																											"en_US": ""
+																										}
+																									},
+																									"title": {
+																										"value": "lr-icon-137"
+																									},
+																									"url": {
+																										"value_i18n": {
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-icon"
+																					},
+																					"fragmentConfig": {
+																						"alignment": "flex justify-center",
+																						"iconType": "large",
+																						"lazyLoadingImage": true,
+																						"useHtml": true
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "iconHtml",
+																							"value": {
+																								"html": {
+																									"value_i18n": {
+																										"en_US": "<svg width=\"80\" height=\"80\" viewBox=\"0 0 80 80\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<mask id=\"mask0_9883_527266\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"10\" y=\"6\" width=\"60\" height=\"68\">\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M63.3333 13.3332H60V9.99984C60 8.1665 58.5 6.6665 56.6667 6.6665C54.8333 6.6665 53.3333 8.1665 53.3333 9.99984V13.3332H26.6667V9.99984C26.6667 8.1665 25.1667 6.6665 23.3333 6.6665C21.5 6.6665 20 8.1665 20 9.99984V13.3332H16.6667C12.9667 13.3332 10.0333 16.3332 10.0333 19.9998L10 66.6665C10 70.3332 12.9667 73.3332 16.6667 73.3332H63.3333C67 73.3332 70 70.3332 70 66.6665V19.9998C70 16.3332 67 13.3332 63.3333 13.3332ZM63.3333 63.3332C63.3333 65.1665 61.8333 66.6665 60 66.6665H20C18.1667 66.6665 16.6667 65.1665 16.6667 63.3332V29.9998H63.3333V63.3332ZM36.6667 36.6665H26.6667C24.8333 36.6665 23.3333 38.1665 23.3333 39.9998V49.9998C23.3333 51.8332 24.8333 53.3332 26.6667 53.3332H36.6667C38.5 53.3332 40 51.8332 40 49.9998V39.9998C40 38.1665 38.5 36.6665 36.6667 36.6665Z\" fill=\"black\"/>\n</mask>\n<g mask=\"url(#mask0_9883_527266)\">\n<rect width=\"80\" height=\"80\" fill=\"#0B5FFF\"/>\n</g>\n</svg>\n"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"hidden": true
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingTop": "4"
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingLeft": "0"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"paddingBottom": "1",
+																						"paddingTop": "2"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"paddingTop": "2"
+																							},
+																							"id": "landscapeMobile"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-heading-f4",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Cost Effective"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+																					},
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																						"paddingBottom": "1"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																									"value_i18n": {
+																									}
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "We offer the highest quality, most reliable, professional video content without interruptions, plus a configurable environment for crafting unique digital experiences for all types of events and use cases. At a simple based price."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center",
+																						"textColor": "#394452"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f2",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Realize business benefits with Liferay Content Hub Advantage<br />\nby EPAM:"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"hidden": true,
+																"textColor": "#2C3A4B"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "5",
+																"paddingTop": "4"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "3",
+																		"paddingTop": "3"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "1",
+																"paddingTop": "2"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-large",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "<strong>Company Profile</strong><br />\nFor the Fortune 2000 across all vertical markets as well as major government agencies who have digital transformation needs, Rivet Logic provides responsible full stack design, implementation, and business continuity consulting services.<br />\n<br />\nWe&nbsp;guarantee low-risk, top-quality, and long lasting success. Unlike bottom-line-only driven Solution Providers who tend to cut corners, don’t architect their solutions for the future, and mainly compete on price, Rivet Logic brings unparalleled technical expertise in a targeted set of best-of-breed cloud and open source technologies, coupled with vast real-world experience, to help its customers realize their digital vision without fail.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"https://rivetlogic.com\" target=\"_blank\">https://rivetlogic.com</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@rivetlogic.com\" target=\"_blank\">sales@rivetlogic.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+1.703.955.3480"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "5",
+																"paddingTop": "4"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "3",
+																		"paddingTop": "3"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "OSB_WWW_COMPONENTS_OTHER-anchorTarget"
+													},
+													"fragmentConfig": {
+														"id": "solutions-details-form",
+														"topPosition": "0"
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#EBEEF2"
+					},
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "OSB_WWW_COMPONENTS_GLOBAL-contentContainer"
+									},
+									"fragmentConfig": {
+										"background": "",
+										"backgroundDarkOrLight": "light",
+										"backgroundImageUrl": "",
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"paddingLeft": "6",
+										"paddingRight": "6"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"pageElements": [
+											{
+												"definition": {
+													"htmlProperties": {
+														"htmlTag": "Div"
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "5",
+																"paddingTop": "4"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "3",
+																		"paddingTop": "3"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f2",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Contact Us"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textColor": "#2C3A4B"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "1",
+																"paddingTop": "2"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-"
+															},
+															"fragmentConfig": {
+																"alignItems": "align-items-start",
+																"flexDirection": "",
+																"flexWrap": "",
+																"items": 2,
+																"justifyContent": "justify-content-start"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"pageElements": [
+															{
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-large",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																							"value_i18n": {
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Find out more about&nbsp;"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textColor": "#2C3A4B"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "FragmentDropZone"
+															},
+															{
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "OSB_WWW_COMPONENTS_GLOBAL-globalText"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-large",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																							"value_i18n": {
+																							}
+																						},
+																						"text": {
+																							"defaultFragmentInlineValue": {
+																								"value": "Live Video and Conferencing Solution"
+																							},
+																							"mapping": {
+																								"fieldKey": "name",
+																								"itemReference": {
+																									"className": "com.liferay.commerce.product.model.CPDefinition",
+																									"classPK": 450251967
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textColor": "#2C3A4B"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "FragmentDropZone"
+															}
+														],
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "3",
+																"paddingTop": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-marketoFormEmbed"
+															},
+															"fragmentConfig": {
+																"asset": {
+																},
+																"customFormId": "{'default': '2786'}",
+																"darkForm": false,
+																"formId": "custom",
+																"redirectToAsset": false,
+																"redirectUrl": "/web/marketplace/solutions/thank-you",
+																"submitButtonColor": "action-default",
+																"submitButtonText": "submit-text"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "OSB_WWW_COMPONENTS_GLOBAL-osbSpacer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"paddingBottom": "6",
+																"paddingTop": "6"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "marketplace"
+		},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

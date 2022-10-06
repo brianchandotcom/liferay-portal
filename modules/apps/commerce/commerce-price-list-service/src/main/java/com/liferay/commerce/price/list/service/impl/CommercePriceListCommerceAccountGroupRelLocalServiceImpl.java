@@ -82,7 +82,7 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 			commercePriceListCommerceAccountGroupRelPersistence.update(
 				commercePriceListCommerceAccountGroupRel);
 
-		reindexPriceList(commercePriceListId);
+		_reindexPriceList(commercePriceListId);
 
 		return commercePriceListCommerceAccountGroupRel;
 	}
@@ -110,7 +110,7 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 			commercePriceListCommerceAccountGroupRel.
 				getCommercePriceListCommerceAccountGroupRelId());
 
-		reindexPriceList(
+		_reindexPriceList(
 			commercePriceListCommerceAccountGroupRel.getCommercePriceListId());
 
 		return commercePriceListCommerceAccountGroupRel;
@@ -226,14 +226,14 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 
 		// Commerce price list
 
-		reindexPriceList(
+		_reindexPriceList(
 			commercePriceListCommerceAccountGroupRel.getCommercePriceListId());
 
 		return commercePriceListCommerceAccountGroupRelPersistence.update(
 			commercePriceListCommerceAccountGroupRel);
 	}
 
-	protected void reindexPriceList(long commercePriceListId)
+	private void _reindexPriceList(long commercePriceListId)
 		throws PortalException {
 
 		Indexer<CommercePriceList> indexer =

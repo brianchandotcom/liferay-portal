@@ -149,13 +149,13 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		validate(0, commercePriceEntryId, minQuantity);
+		_validate(0, commercePriceEntryId, minQuantity);
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
 
-		validateExternalReferenceCode(
+		_validateExternalReferenceCode(
 			externalReferenceCode, serviceContext.getCompanyId());
 
 		Date expirationDate = null;
@@ -214,7 +214,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		_commercePriceEntryLocalService.setHasTierPrice(
 			commercePriceEntryId, true, bulkPricing);
 
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), commerceTierPriceEntry, serviceContext);
 	}
 
@@ -328,7 +328,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		// Add
 
 		if (commercePriceEntryId > 0) {
-			validate(0L, commercePriceEntryId, minQuantity);
+			_validate(0L, commercePriceEntryId, minQuantity);
 
 			CommercePriceEntry commercePriceEntry =
 				_commercePriceEntryPersistence.findByPrimaryKey(
@@ -351,7 +351,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					serviceContext.getCompanyId(),
 					priceEntryExternalReferenceCode);
 
-			validate(
+			_validate(
 				0L, commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
 			return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
@@ -445,8 +445,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public void checkCommerceTierPriceEntries() throws PortalException {
-		checkCommerceTierPriceEntriesByDisplayDate();
-		checkCommerceTierPriceEntriesByExpirationDate();
+		_checkCommerceTierPriceEntriesByDisplayDate();
+		_checkCommerceTierPriceEntriesByExpirationDate();
 	}
 
 	@Override
@@ -610,10 +610,10 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, commercePriceEntryId, keywords, start, end, sort);
 
-		return searchCommerceTierPriceEntries(searchContext);
+		return _searchCommerceTierPriceEntries(searchContext);
 	}
 
 	@Override
@@ -621,11 +621,11 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			long companyId, long commercePriceEntryId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, commercePriceEntryId, keywords, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		return searchCommerceTierPriceEntriesCount(searchContext);
+		return _searchCommerceTierPriceEntriesCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -649,7 +649,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			commerceTierPriceEntryPersistence.findByPrimaryKey(
 				commerceTierPriceEntryId);
 
-		validate(
+		_validate(
 			commerceTierPriceEntryId,
 			commerceTierPriceEntry.getCommercePriceEntryId(), minQuantity);
 
@@ -700,7 +700,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry = commerceTierPriceEntryPersistence.update(
 			commerceTierPriceEntry);
 
-		commerceTierPriceEntry = startWorkflowInstance(
+		commerceTierPriceEntry = _startWorkflowInstance(
 			user.getUserId(), commerceTierPriceEntry, serviceContext);
 
 		return commerceTierPriceEntry;
@@ -805,7 +805,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long commercePriceEntryId, String keywords, int start,
 		int end, Sort sort) {
 
@@ -843,7 +843,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void checkCommerceTierPriceEntriesByDisplayDate()
+	private void _checkCommerceTierPriceEntriesByDisplayDate()
 		throws PortalException {
 
 		List<CommerceTierPriceEntry> commerceTierPriceEntries =
@@ -876,7 +876,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		}
 	}
 
-	protected void checkCommerceTierPriceEntriesByExpirationDate()
+	private void _checkCommerceTierPriceEntriesByExpirationDate()
 		throws PortalException {
 
 		List<CommerceTierPriceEntry> commerceTierPriceEntries =
@@ -920,8 +920,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		}
 	}
 
-	protected List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
-			Hits hits)
+	private List<CommerceTierPriceEntry> _getCommerceTierPriceEntries(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -956,8 +955,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return commerceTierPriceEntries;
 	}
 
-	protected BaseModelSearchResult<CommerceTierPriceEntry>
-			searchCommerceTierPriceEntries(SearchContext searchContext)
+	private BaseModelSearchResult<CommerceTierPriceEntry>
+			_searchCommerceTierPriceEntries(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CommerceTierPriceEntry> indexer =
@@ -968,7 +967,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
 			List<CommerceTierPriceEntry> commerceTierPriceEntries =
-				getCommerceTierPriceEntries(hits);
+				_getCommerceTierPriceEntries(hits);
 
 			if (commerceTierPriceEntries != null) {
 				return new BaseModelSearchResult<>(
@@ -980,7 +979,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected int searchCommerceTierPriceEntriesCount(
+	private int _searchCommerceTierPriceEntriesCount(
 			SearchContext searchContext)
 		throws PortalException {
 
@@ -991,7 +990,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
-	protected CommerceTierPriceEntry startWorkflowInstance(
+	private CommerceTierPriceEntry _startWorkflowInstance(
 			long userId, CommerceTierPriceEntry commerceTierPriceEntry,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -1005,7 +1004,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			commerceTierPriceEntry, serviceContext, workflowContext);
 	}
 
-	protected void validate(
+	private void _validate(
 			long commerceTierPriceEntryId, long commercePriceEntryId,
 			int minQuantity)
 		throws PortalException {
@@ -1026,7 +1025,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		}
 	}
 
-	protected void validateExternalReferenceCode(
+	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {
 

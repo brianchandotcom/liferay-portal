@@ -258,7 +258,7 @@ public class CommercePriceEntryLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		validateExternalReferenceCode(
+		_validateExternalReferenceCode(
 			externalReferenceCode, serviceContext.getCompanyId());
 
 		Date expirationDate = null;
@@ -312,7 +312,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry = commercePriceEntryPersistence.update(
 			commercePriceEntry);
 
-		commercePriceEntry = startWorkflowInstance(
+		commercePriceEntry = _startWorkflowInstance(
 			user.getUserId(), commercePriceEntry, serviceContext);
 
 		return commercePriceEntry;
@@ -532,8 +532,8 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Override
 	public void checkCommercePriceEntries() throws PortalException {
-		checkCommercePriceEntriesByDisplayDate();
-		checkCommercePriceEntriesByExpirationDate();
+		_checkCommercePriceEntriesByDisplayDate();
+		_checkCommercePriceEntriesByExpirationDate();
 	}
 
 	@Override
@@ -892,10 +892,10 @@ public class CommercePriceEntryLocalServiceImpl
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, commercePriceListId, keywords, start, end, sort);
 
-		return searchCommercePriceEntries(searchContext);
+		return _searchCommercePriceEntries(searchContext);
 	}
 
 	@Override
@@ -903,11 +903,11 @@ public class CommercePriceEntryLocalServiceImpl
 			long companyId, long commercePriceListId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, commercePriceListId, keywords, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		return searchCommercePriceEntriesCount(searchContext);
+		return _searchCommercePriceEntriesCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1006,7 +1006,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry = commercePriceEntryPersistence.update(
 			commercePriceEntry);
 
-		commercePriceEntry = startWorkflowInstance(
+		commercePriceEntry = _startWorkflowInstance(
 			user.getUserId(), commercePriceEntry, serviceContext);
 
 		return commercePriceEntry;
@@ -1264,7 +1264,7 @@ public class CommercePriceEntryLocalServiceImpl
 			serviceContext);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long commercePriceListId, String keywords, int start,
 		int end, Sort sort) {
 
@@ -1302,7 +1302,7 @@ public class CommercePriceEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void checkCommercePriceEntriesByDisplayDate()
+	private void _checkCommercePriceEntriesByDisplayDate()
 		throws PortalException {
 
 		List<CommercePriceEntry> commercePriceEntries =
@@ -1330,7 +1330,7 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 	}
 
-	protected void checkCommercePriceEntriesByExpirationDate()
+	private void _checkCommercePriceEntriesByExpirationDate()
 		throws PortalException {
 
 		List<CommercePriceEntry> commercePriceEntries =
@@ -1366,7 +1366,7 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 	}
 
-	protected List<CommercePriceEntry> getCommercePriceEntries(Hits hits)
+	private List<CommercePriceEntry> _getCommercePriceEntries(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -1400,71 +1400,6 @@ public class CommercePriceEntryLocalServiceImpl
 		return commercePriceEntries;
 	}
 
-	protected BaseModelSearchResult<CommercePriceEntry>
-			searchCommercePriceEntries(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommercePriceEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceEntry.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
-
-			List<CommercePriceEntry> commercePriceEntries =
-				getCommercePriceEntries(hits);
-
-			if (commercePriceEntries != null) {
-				return new BaseModelSearchResult<>(
-					commercePriceEntries, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	protected int searchCommercePriceEntriesCount(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CommercePriceEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceEntry.class);
-
-		return GetterUtil.getInteger(indexer.searchCount(searchContext));
-	}
-
-	protected CommercePriceEntry startWorkflowInstance(
-			long userId, CommercePriceEntry commercePriceEntry,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			commercePriceEntry.getCompanyId(), 0L, userId,
-			CommercePriceEntry.class.getName(),
-			commercePriceEntry.getCommercePriceEntryId(), commercePriceEntry,
-			serviceContext, workflowContext);
-	}
-
-	protected void validateExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
-
-		if (commercePriceEntry != null) {
-			throw new DuplicateCommercePriceEntryException(
-				"There is another commerce price entry with external " +
-					"reference code " + externalReferenceCode);
-		}
-	}
-
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, long commercePriceListId, String cpInstanceUuid,
 		int status) {
@@ -1488,6 +1423,71 @@ public class CommercePriceEntryLocalServiceImpl
 				}
 			)
 		);
+	}
+
+	private BaseModelSearchResult<CommercePriceEntry>
+			_searchCommercePriceEntries(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommercePriceEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceEntry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommercePriceEntry> commercePriceEntries =
+				_getCommercePriceEntries(hits);
+
+			if (commercePriceEntries != null) {
+				return new BaseModelSearchResult<>(
+					commercePriceEntries, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	private int _searchCommercePriceEntriesCount(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommercePriceEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceEntry.class);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
+	}
+
+	private CommercePriceEntry _startWorkflowInstance(
+			long userId, CommercePriceEntry commercePriceEntry,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			commercePriceEntry.getCompanyId(), 0L, userId,
+			CommercePriceEntry.class.getName(),
+			commercePriceEntry.getCommercePriceEntryId(), commercePriceEntry,
+			serviceContext, workflowContext);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryPersistence.fetchByC_ERC(
+				companyId, externalReferenceCode);
+
+		if (commercePriceEntry != null) {
+			throw new DuplicateCommercePriceEntryException(
+				"There is another commerce price entry with external " +
+					"reference code " + externalReferenceCode);
+		}
 	}
 
 	private void _validatePrice(

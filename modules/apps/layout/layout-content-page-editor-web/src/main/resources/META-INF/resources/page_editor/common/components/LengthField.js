@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -21,6 +21,9 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+import {VIEWPORT_SIZES} from '../../app/config/constants/viewportSizes';
+import {useSelector} from '../../app/contexts/StoreContext';
+import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
 import useControlledState from '../../core/hooks/useControlledState';
 import {useId} from '../../core/hooks/useId';
@@ -31,6 +34,8 @@ import './LengthField.scss';
 const CUSTOM = 'custom';
 
 const KEYS_NOT_ALLOWED = new Set(['+', ',', 'e']);
+
+const RESTORABLE_FIELDS = new Set(['opacity', 'borderWidth']);
 
 // Try to parse a value
 // 1st group: a number, a number with decimal and a decimal without integer part
@@ -63,18 +68,48 @@ const getInitialValue = (value) => {
 };
 
 export function LengthField({field, onEnter, onValueSelect, value}) {
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+	const [showRestoreButton, setShowRestoreButton] = useState(
+		RESTORABLE_FIELDS.has(field.name) && value !== field.defaultValue
+	);
+
 	return (
-		<LengthInput
-			defaultUnit={
-				Liferay.FeatureFlags['LPS-163362']
-					? field.typeOptions?.defaultUnit
-					: null
-			}
-			field={field}
-			onEnter={onEnter}
-			onValueSelect={onValueSelect}
-			value={value}
-		/>
+		<div className="align-items-center d-flex page-editor__length-field">
+			<LengthInput
+				className={field.icon ? 'mb-0' : null}
+				defaultUnit={
+					Liferay.FeatureFlags['LPS-163362']
+						? field.typeOptions?.defaultUnit
+						: null
+				}
+				field={field}
+				onEnter={onEnter}
+				onValueSelect={(name, value) => {
+					setShowRestoreButton(true);
+					onValueSelect(name, value);
+				}}
+				showLabel={!field.icon}
+				value={value}
+			/>
+
+			{showRestoreButton ? (
+				<ClayButtonWithIcon
+					className="border-0 flex-shrink-0 mb-0 ml-2"
+					displayType="secondary"
+					onClick={() => {
+						setShowRestoreButton(
+							selectedViewportSize !== VIEWPORT_SIZES.desktop
+						);
+						onValueSelect(field.name, null);
+					}}
+					small
+					symbol="restore"
+					title={getResetLabelByViewport(selectedViewportSize)}
+				/>
+			) : null}
+		</div>
 	);
 }
 

@@ -18,6 +18,7 @@ export const CORE_KORONEIKI_ACCOUNT_FIELDS = gql`
 		code
 		dxpVersion
 		externalReferenceCode
+		hasSLAGoldPlatinum @client
 		liferayContactEmailAddress
 		liferayContactName
 		liferayContactRole

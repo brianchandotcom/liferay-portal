@@ -4,7 +4,7 @@ dependencies {
 	compileInclude group: "com.github.virtuald", name: "curvesapi", version: "1.06"
 	compileInclude group: "com.google.zxing", name: "core", version: "3.2.1"
 	compileInclude group: "com.ibm.icu", name: "icu4j", version: "57.1"
-	compileInclude group: "com.lowagie", name: "itext", version: "2.1.7"
+	compileInclude group: "com.liferay", name: "com.lowagie.itext", version: "2.1.7.js10.LIFERAY-PATCHED-1"
 	compileInclude group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "commons-digester", name: "commons-digester", version: "2.1"

@@ -934,11 +934,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks the version for dependencies in `package.json` files." />
 		</check>
-		<check name="JSONPackageJSONRedundantDependenciesCheck">
-			<category name="Performance" />
-			<description name="Checks for preventing internal dependencies from being added to `package.json`." />
-			<property name="enabled" value="false" />
-		</check>
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
 		<check name="ArrayCheck">

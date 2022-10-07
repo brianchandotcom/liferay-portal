@@ -98,30 +98,36 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				<liferay-ui:search-container-column-text>
 					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" tabindex="0" thumbnailId="<%= thumbnailId %>" title="<%= title %>">
-						<c:choose>
-							<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
-								<liferay-frontend:icon-vertical-card
-									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
-									actionJspServletContext="<%= application %>"
-									cardCssClass="card-interactive card-interactive-secondary"
-									cssClass="entry-display-style"
-									icon="documents-and-media"
-									resultRow="<%= row %>"
-									title="<%= dlPortletInstanceSettingsHelper.isShowActions() ? fileEntry.getTitle() : StringPool.BLANK %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-frontend:vertical-card
-									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/image_gallery_display/image_action.jsp" : StringPool.BLANK %>'
-									actionJspServletContext="<%= application %>"
-									cardCssClass="card-interactive card-interactive-secondary"
-									cssClass="entry-display-style"
-									imageUrl="<%= thumbnailSrc %>"
-									resultRow="<%= row %>"
-									title="<%= dlPortletInstanceSettingsHelper.isShowActions() ? fileEntry.getTitle() : StringPool.BLANK %>"
-								/>
-							</c:otherwise>
-						</c:choose>
+						<div class="card-type-asset entry-display-style">
+							<div class="card card-interactive card-interactive-secondary">
+								<div class="aspect-ratio card-item-first">
+									<c:choose>
+										<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
+											<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="documents-and-media" markupView="lexicon" />
+										</c:when>
+										<c:otherwise>
+											<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />
+										</c:otherwise>
+									</c:choose>
+								</div>
+
+								<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+									<div class="card-body">
+										<div class="card-row">
+											<div class="autofit-col autofit-col-expand">
+												<aui:a cssClass="card-title text-truncate" href="" title="<%= HtmlUtil.escapeAttribute(title) %>">
+													<%= HtmlUtil.escape(title) %>
+												</aui:a>
+											</div>
+
+											<div class="autofit-col">
+												<liferay-util:include page="/image_gallery_display/image_action.jsp" servletContext="<%= application %>" />
+											</div>
+										</div>
+									</div>
+								</c:if>
+							</div>
+						</div>
 					</div>
 				</liferay-ui:search-container-column-text>
 			</c:when>

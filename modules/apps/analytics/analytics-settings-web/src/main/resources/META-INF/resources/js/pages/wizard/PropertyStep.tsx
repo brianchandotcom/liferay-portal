@@ -76,11 +76,11 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 						>
 							{Liferay.Language.get('new-property')}
 						</ClayButton>
+
+						{open && <CreatePropertyModal observer={observer} />}
 					</ClayEmptyState>
 				</div>
 			)}
-
-			{open && <CreatePropertyModal observer={observer} />}
 
 			<BasePage.Footer>
 				<ClayButton.Group spaced>

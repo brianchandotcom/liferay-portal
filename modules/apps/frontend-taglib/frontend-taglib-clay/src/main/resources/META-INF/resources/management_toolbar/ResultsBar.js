@@ -69,6 +69,13 @@ const ResultsBar = ({
 
 				<ManagementToolbar.ResultsBarItem>
 					<ClayLink
+						aria-label={sub(
+							itemsTotal === 1
+								? Liferay.Language.get('clear-x-result-for-x')
+								: Liferay.Language.get('clear-x-results-for-x'),
+							itemsTotal,
+							searchValue
+						)}
 						className="component-link tbar-link"
 						href={clearResultsURL}
 					>

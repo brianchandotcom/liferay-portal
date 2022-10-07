@@ -10,8 +10,8 @@
  */
 
 import {useMemo} from 'react';
-import {useGetMyUserAccount} from '../../../../../../../../common/services/liferay/graphql/user-accounts/queries/useGetMyUserAccount';
-import hasAccountAdministratorRole from '../utils/hasAccountAdministratorRole ';
+import {useGetMyUserAccount} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
+import hasAccountAdministratorRole from '../utils/hasAccountAdministratorRole';
 
 export default function useMyUserAccountByAccountExternalReferenceCode(
 	externalReferenceCode,

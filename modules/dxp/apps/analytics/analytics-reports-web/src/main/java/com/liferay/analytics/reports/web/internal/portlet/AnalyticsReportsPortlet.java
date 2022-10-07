@@ -19,7 +19,6 @@ import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifie
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -148,9 +147,6 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			)
 		);
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

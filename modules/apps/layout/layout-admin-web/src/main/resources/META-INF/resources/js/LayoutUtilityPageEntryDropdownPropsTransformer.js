@@ -69,6 +69,19 @@ const ACTIONS = {
 			namespace,
 		});
 	},
+
+	unmarkAsDefaultLayoutUtilityPageEntry({
+		unmarkAsDefaultLayoutUtilityPageEntryURL,
+	}) {
+		openConfirmModal({
+			message: Liferay.Language.get('unmark-default-confirmation'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					send(unmarkAsDefaultLayoutUtilityPageEntryURL);
+				}
+			},
+		});
+	},
 };
 
 function send(url) {

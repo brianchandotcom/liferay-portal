@@ -54,6 +54,11 @@ public class MarkAsDefaultLayoutUtilityPageEntryMVCActionCommand
 				layoutUtilityPageEntryId);
 
 		if (layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+			layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(false);
+
+			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+				layoutUtilityPageEntry);
+
 			sendRedirect(actionRequest, actionResponse);
 
 			return;

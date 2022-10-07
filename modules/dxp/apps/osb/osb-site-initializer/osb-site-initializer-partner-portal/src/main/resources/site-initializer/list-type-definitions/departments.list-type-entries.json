@@ -48,14 +48,6 @@
 		"type": "string"
 	},
 	{
-		"key": "other",
-		"name": "Other",
-		"name_i18n": {
-			"en-US": "Other"
-		},
-		"type": "string"
-	},
-	{
 		"key": "technicalDevelopmentEngineering",
 		"name": "Technical - Development/Engineering",
 		"name_i18n": {
@@ -68,6 +60,14 @@
 		"name": "Technical - IT/Support",
 		"name_i18n": {
 			"en-US": "Technical - IT/Support"
+		},
+		"type": "string"
+	},
+	{
+		"key": "other",
+		"name": "Other",
+		"name_i18n": {
+			"en-US": "Other"
 		},
 		"type": "string"
 	}

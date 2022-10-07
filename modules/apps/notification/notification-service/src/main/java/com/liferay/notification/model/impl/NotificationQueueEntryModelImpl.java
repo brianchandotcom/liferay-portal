@@ -84,7 +84,8 @@ public class NotificationQueueEntryModelImpl
 		{"from_", Types.VARCHAR}, {"fromName", Types.VARCHAR},
 		{"priority", Types.DOUBLE}, {"sentDate", Types.TIMESTAMP},
 		{"subject", Types.VARCHAR}, {"to_", Types.VARCHAR},
-		{"toName", Types.VARCHAR}, {"status", Types.INTEGER}
+		{"toName", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,11 +112,12 @@ public class NotificationQueueEntryModelImpl
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("to_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("toName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,status INTEGER)";
+		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationQueueEntry";
@@ -389,6 +391,11 @@ public class NotificationQueueEntryModelImpl
 			"toName",
 			(BiConsumer<NotificationQueueEntry, String>)
 				NotificationQueueEntry::setToName);
+		attributeGetterFunctions.put("type", NotificationQueueEntry::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<NotificationQueueEntry, String>)
+				NotificationQueueEntry::setType);
 		attributeGetterFunctions.put(
 			"status", NotificationQueueEntry::getStatus);
 		attributeSetterBiConsumers.put(
@@ -810,6 +817,26 @@ public class NotificationQueueEntryModelImpl
 
 	@JSON
 	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -913,6 +940,7 @@ public class NotificationQueueEntryModelImpl
 		notificationQueueEntryImpl.setSubject(getSubject());
 		notificationQueueEntryImpl.setTo(getTo());
 		notificationQueueEntryImpl.setToName(getToName());
+		notificationQueueEntryImpl.setType(getType());
 		notificationQueueEntryImpl.setStatus(getStatus());
 
 		notificationQueueEntryImpl.resetOriginalValues();
@@ -965,6 +993,8 @@ public class NotificationQueueEntryModelImpl
 			this.<String>getColumnOriginalValue("to_"));
 		notificationQueueEntryImpl.setToName(
 			this.<String>getColumnOriginalValue("toName"));
+		notificationQueueEntryImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
 		notificationQueueEntryImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 
@@ -1164,6 +1194,14 @@ public class NotificationQueueEntryModelImpl
 			notificationQueueEntryCacheModel.toName = null;
 		}
 
+		notificationQueueEntryCacheModel.type = getType();
+
+		String type = notificationQueueEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			notificationQueueEntryCacheModel.type = null;
+		}
+
 		notificationQueueEntryCacheModel.status = getStatus();
 
 		return notificationQueueEntryCacheModel;
@@ -1249,6 +1287,7 @@ public class NotificationQueueEntryModelImpl
 	private String _subject;
 	private String _to;
 	private String _toName;
+	private String _type;
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1302,6 +1341,7 @@ public class NotificationQueueEntryModelImpl
 		_columnOriginalValues.put("subject", _subject);
 		_columnOriginalValues.put("to_", _to);
 		_columnOriginalValues.put("toName", _toName);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
 	}
 
@@ -1312,6 +1352,7 @@ public class NotificationQueueEntryModelImpl
 
 		attributeNames.put("from_", "from");
 		attributeNames.put("to_", "to");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1367,7 +1408,9 @@ public class NotificationQueueEntryModelImpl
 
 		columnBitmasks.put("toName", 524288L);
 
-		columnBitmasks.put("status", 1048576L);
+		columnBitmasks.put("type_", 1048576L);
+
+		columnBitmasks.put("status", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

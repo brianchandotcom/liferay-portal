@@ -24,6 +24,7 @@
 		<field name="subject" type="String" />
 		<field name="to" type="String" />
 		<field name="toName" type="String" />
+		<field name="type" type="String" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationQueueEntryAttachment">

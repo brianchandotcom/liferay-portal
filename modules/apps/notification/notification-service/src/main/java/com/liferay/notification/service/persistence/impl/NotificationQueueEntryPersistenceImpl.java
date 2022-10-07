@@ -2866,6 +2866,7 @@ public class NotificationQueueEntryPersistenceImpl
 
 		dbColumnNames.put("from", "from_");
 		dbColumnNames.put("to", "to_");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -3613,7 +3614,7 @@ public class NotificationQueueEntryPersistenceImpl
 		NotificationQueueEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"from", "to"});
+		new String[] {"from", "to", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

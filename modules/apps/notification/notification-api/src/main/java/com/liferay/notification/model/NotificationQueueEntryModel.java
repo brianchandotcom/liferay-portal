@@ -393,6 +393,21 @@ public interface NotificationQueueEntryModel
 	public void setToName(String toName);
 
 	/**
+	 * Returns the type of this notification queue entry.
+	 *
+	 * @return the type of this notification queue entry
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this notification queue entry.
+	 *
+	 * @param type the type of this notification queue entry
+	 */
+	public void setType(String type);
+
+	/**
 	 * Returns the status of this notification queue entry.
 	 *
 	 * @return the status of this notification queue entry

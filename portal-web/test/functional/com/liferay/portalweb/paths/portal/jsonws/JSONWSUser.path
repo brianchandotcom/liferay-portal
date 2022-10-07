@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>API_EXECUTE_PREFIX_ID_FIELD</td>
-	<td>//textarea[@name='prefixId']</td>
+	<td>//textarea[@name='prefixListTypeId']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>API_EXECUTE_SUFFIX_ID_FIELD</td>
-	<td>//textarea[@name='suffixId']</td>
+	<td>//textarea[@name='suffixListTypeId']</td>
 	<td></td>
 </tr>
 <tr>

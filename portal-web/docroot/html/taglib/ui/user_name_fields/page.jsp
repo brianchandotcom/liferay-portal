@@ -74,7 +74,7 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 					String listTypeName = StringPool.BLANK;
 
 					if (selContact != null) {
-						int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
+						int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("ListTypeId"));
 
 						try {
 							ListType listType = ListTypeServiceUtil.getListType(listTypeId);

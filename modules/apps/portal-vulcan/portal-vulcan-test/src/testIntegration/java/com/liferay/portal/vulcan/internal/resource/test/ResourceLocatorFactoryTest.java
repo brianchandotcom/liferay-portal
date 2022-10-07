@@ -58,7 +58,7 @@ public class ResourceLocatorFactoryTest {
 			bundleContext.registerService(
 				TestResource.Factory.class, new TestResourceFactoryImpl(),
 				MapUtil.singletonDictionary(
-					"component.name", TestResourceFactoryImpl.class.getName()));
+					"resource.locator.key", "/test/v1.0/Test"));
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -69,8 +69,7 @@ public class ResourceLocatorFactoryTest {
 			ResourceLocator resourceLocator = _resourceLocatorFactory.create(
 				httpServletRequest, user);
 
-			Object testResource = resourceLocator.locate(
-				TestResource.class.getName());
+			Object testResource = resourceLocator.locate("/test/v1.0/Test");
 
 			Assert.assertSame(TestResourceImpl.class, testResource.getClass());
 

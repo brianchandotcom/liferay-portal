@@ -19,6 +19,6 @@ package com.liferay.portal.vulcan.resource;
  */
 public interface ResourceLocator {
 
-	public Object locate(String resourceName);
+	public Object locate(String resourceLocatorKey);
 
 }

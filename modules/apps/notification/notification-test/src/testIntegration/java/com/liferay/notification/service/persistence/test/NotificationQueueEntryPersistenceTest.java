@@ -264,10 +264,12 @@ public class NotificationQueueEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByStatus() throws Exception {
-		_persistence.countByStatus(RandomTestUtil.nextInt());
+	public void testCountByT_S() throws Exception {
+		_persistence.countByT_S("", RandomTestUtil.nextInt());
 
-		_persistence.countByStatus(0);
+		_persistence.countByT_S("null", 0);
+
+		_persistence.countByT_S((String)null, 0);
 	}
 
 	@Test

@@ -10,6 +10,10 @@
  */
 
 import {
+	accountRolesQueryTypePolicy,
+	accountRolesTypePolicy,
+} from './account-roles/typePolicy';
+import {
 	accountSubscriptionGroupsQueryTypePolicy,
 	accountSubscriptionGroupsTypePolicy,
 } from './account-subscription-groups/typePolicy';
@@ -30,6 +34,7 @@ import {userAccountsTypePolicy} from './user-accounts/typePolicy';
 export const liferayTypePolicies = {
 	...accountSubscriptionsTypePolicy,
 	...accountSubscriptionGroupsTypePolicy,
+	...accountRolesTypePolicy,
 	...userAccountsTypePolicy,
 	...koroneikiAccountsTypePolicy,
 	...orderItemsTypePolicy,
@@ -38,6 +43,7 @@ export const liferayTypePolicies = {
 	},
 	Query: {
 		fields: {
+			...accountRolesQueryTypePolicy,
 			...orderItemsQueryTypePolicy,
 		},
 	},

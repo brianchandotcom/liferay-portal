@@ -165,6 +165,7 @@ public class NotificationQueueEntryResourceImpl
 				toName = serviceBuilderNotificationQueueEntry.getToName();
 				triggerBy = notificationType.getLabel(
 					contextAcceptLanguage.getPreferredLocale());
+				type = serviceBuilderNotificationQueueEntry.getType();
 			}
 		};
 	}

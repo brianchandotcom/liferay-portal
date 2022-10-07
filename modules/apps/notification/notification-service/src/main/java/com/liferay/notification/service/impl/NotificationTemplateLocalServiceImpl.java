@@ -330,7 +330,8 @@ public class NotificationTemplateLocalServiceImpl
 							notificationType.getClassName(object),
 							notificationType.getClassPK(object), from, fromName,
 							0, subject, emailAddressOrUserId,
-							emailAddressOrUserId, fileEntryIds);
+							emailAddressOrUserId,
+							NotificationConstants.TYPE_EMAIL, fileEntryIds);
 
 					continue;
 				}
@@ -340,7 +341,8 @@ public class NotificationTemplateLocalServiceImpl
 				userId, notificationTemplate.getNotificationTemplateId(), bcc,
 				body, cc, notificationType.getClassName(object),
 				notificationType.getClassPK(object), from, fromName, 0, subject,
-				toUser.getEmailAddress(), toUser.getFullName(), fileEntryIds);
+				toUser.getEmailAddress(), toUser.getFullName(),
+				NotificationConstants.TYPE_EMAIL, fileEntryIds);
 		}
 	}
 

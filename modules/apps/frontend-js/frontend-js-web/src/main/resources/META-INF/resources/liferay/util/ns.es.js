@@ -14,15 +14,7 @@
 
 import memoize from './memoize';
 
-const cached = (fn) => {
-	return memoize(fn, (...args) => {
-		return args.length > 1
-			? Array.prototype.join.call(args, '_')
-			: String(args[0]);
-	});
-};
-
-const nsCached = cached((namespace, str) => {
+const nsCached = memoize((namespace, str) => {
 	if (typeof str !== 'undefined' && !(str.lastIndexOf(namespace, 0) === 0)) {
 		str = `${namespace}${str}`;
 	}
@@ -30,7 +22,7 @@ const nsCached = cached((namespace, str) => {
 	return str;
 });
 
-export default function (namespace, object) {
+export default function ns(namespace, object) {
 	let value;
 
 	if (typeof object !== 'object') {
@@ -45,6 +37,7 @@ export default function (namespace, object) {
 			const originalItem = item;
 
 			item = nsCached(namespace, item);
+
 			value[item] = object[originalItem];
 		});
 	}

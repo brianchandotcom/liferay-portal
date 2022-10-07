@@ -14,7 +14,7 @@
 
 import ClayChart from '@clayui/charts';
 import ClayIcon from '@clayui/icon';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
@@ -26,13 +26,13 @@ import {testrayBuildImpl} from '../../../services/rest';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
+import BuildAddButton from './Builds/BuildAddButton';
 import useBuildActions from './Builds/useBuildActions';
 
 const Routine = () => {
 	const {actions, formModal} = useBuildActions();
 	const {barChart, colors} = useBuildHistory();
 	const {routineId} = useParams();
-	const navigate = useNavigate();
 
 	return (
 		<Container>
@@ -47,7 +47,7 @@ const Routine = () => {
 					},
 				}}
 				managementToolbarProps={{
-					addButton: () => navigate('create'),
+					buttons: <BuildAddButton routineId={routineId as string} />,
 					filterFields: filters.build.index as any,
 					title: i18n.translate('build-history'),
 				}}

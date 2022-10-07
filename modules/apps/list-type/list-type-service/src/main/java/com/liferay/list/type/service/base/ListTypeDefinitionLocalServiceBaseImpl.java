@@ -282,6 +282,50 @@ public abstract class ListTypeDefinitionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the list type definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the list type definition's external reference code
+	 * @return the matching list type definition, or <code>null</code> if a matching list type definition could not be found
+	 */
+	@Override
+	public ListTypeDefinition fetchListTypeDefinitionByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return listTypeDefinitionPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchListTypeDefinitionByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public ListTypeDefinition fetchListTypeDefinitionByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchListTypeDefinitionByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the list type definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the list type definition's external reference code
+	 * @return the matching list type definition
+	 * @throws PortalException if a matching list type definition could not be found
+	 */
+	@Override
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return listTypeDefinitionPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the list type definition with the primary key.
 	 *
 	 * @param listTypeDefinitionId the primary key of the list type definition

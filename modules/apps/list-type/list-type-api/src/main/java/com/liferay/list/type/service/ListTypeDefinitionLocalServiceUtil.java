@@ -229,6 +229,32 @@ public class ListTypeDefinitionLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the list type definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the list type definition's external reference code
+	 * @return the matching list type definition, or <code>null</code> if a matching list type definition could not be found
+	 */
+	public static ListTypeDefinition
+		fetchListTypeDefinitionByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().fetchListTypeDefinitionByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchListTypeDefinitionByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static ListTypeDefinition fetchListTypeDefinitionByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchListTypeDefinitionByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the list type definition with the matching UUID and company.
 	 *
 	 * @param uuid the list type definition's UUID
@@ -275,6 +301,23 @@ public class ListTypeDefinitionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getListTypeDefinition(listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns the list type definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the list type definition's external reference code
+	 * @return the matching list type definition
+	 * @throws PortalException if a matching list type definition could not be found
+	 */
+	public static ListTypeDefinition
+			getListTypeDefinitionByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getListTypeDefinitionByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

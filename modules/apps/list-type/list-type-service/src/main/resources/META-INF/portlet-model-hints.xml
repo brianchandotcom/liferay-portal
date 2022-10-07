@@ -4,6 +4,7 @@
 	<model name="com.liferay.list.type.model.ListTypeDefinition">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="listTypeDefinitionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

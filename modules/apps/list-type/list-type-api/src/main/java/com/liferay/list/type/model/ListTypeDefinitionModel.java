@@ -98,6 +98,21 @@ public interface ListTypeDefinitionModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this list type definition.
+	 *
+	 * @return the external reference code of this list type definition
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this list type definition.
+	 *
+	 * @param externalReferenceCode the external reference code of this list type definition
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the list type definition ID of this list type definition.
 	 *
 	 * @return the list type definition ID of this list type definition

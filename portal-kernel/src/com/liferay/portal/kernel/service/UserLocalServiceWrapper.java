@@ -178,17 +178,17 @@ public class UserLocalServiceWrapper
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			java.util.Locale locale, String firstName, String middleName,
-			String lastName, long prefixListTypeId, long suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String lastName, long prefixListTypeId, long suffixListTypeId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, boolean sendEmail, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userLocalService.addOrUpdateUser(
 			externalReferenceCode, creatorUserId, companyId, autoPassword,
 			password1, password2, autoScreenName, screenName, emailAddress,
-			locale, firstName, middleName, lastName, prefixListTypeId, suffixId,
-			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, sendEmail,
-			serviceContext);
+			locale, firstName, middleName, lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
+			jobTitle, sendEmail, serviceContext);
 	}
 
 	/**

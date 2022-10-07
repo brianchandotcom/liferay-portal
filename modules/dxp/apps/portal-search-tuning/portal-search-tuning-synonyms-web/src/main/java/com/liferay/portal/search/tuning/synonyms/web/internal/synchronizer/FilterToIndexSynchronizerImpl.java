@@ -15,7 +15,6 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
-import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReader;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.name.SynonymSetFilterNameHolder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
@@ -76,9 +75,6 @@ public class FilterToIndexSynchronizerImpl
 
 	@Reference
 	private SynonymSetFilterReader _synonymSetFilterReader;
-
-	@Reference
-	private SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder;
 
 	@Reference
 	private SynonymSetStorageAdapter _synonymSetStorageAdapter;

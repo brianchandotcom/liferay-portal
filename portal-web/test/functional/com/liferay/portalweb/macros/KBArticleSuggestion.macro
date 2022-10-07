@@ -101,10 +101,6 @@ definition {
 	macro viewSubmittedSuggestionCountNoPermissionPG {
 		var kbSuggestionCount = "${kbSuggestionCount}";
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS",
-			value1 = "Do you have any suggestions?");
-
 		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#NAVIGATION_BAR");
 
 		if ("${kbSuggestionCount}" == "1") {

@@ -61,11 +61,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DO_YOU_HAVE_ANY_SUGGESTIONS</td>
-	<td>//div[contains(.,'Do you have any suggestions')]/h5[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

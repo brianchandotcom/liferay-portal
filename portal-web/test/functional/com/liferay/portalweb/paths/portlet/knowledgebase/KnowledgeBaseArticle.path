@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>HTML_BOLD_CONTENT</td>
-	<td>//div[contains(@class,'kb-article-title')]//b</td>
+	<td>//div[contains(@class,'kb-entity-body')]//b</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>DO_YOU_HAVE_ANY_SUGGESTIONS</td>
-	<td>//div[contains(.,'Do you have any suggestions?')]/h5</td>
+	<td>//div[contains(.,'Do you have any suggestions')]/h5[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>INFO_VERSION_TITLE</td>
-	<td>//li[contains(.,'${key_entryVersion}')]//div[@class='list-group-title']</td>
+	<td>//div[contains(.,'${key_entryVersion}') and contains(@class,'list-group-title')]</td>
 	<td></td>
 </tr>
 <tr>

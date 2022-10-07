@@ -731,7 +731,7 @@ definition {
 			value1 = "${key_editLocalized}");
 
 		AssertTextEquals(
-			locator1 = "Portlet#H3_HEADER",
+			locator1 = "ControlMenu#HEADING",
 			value1 = "${kbArticleTitle}");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -937,7 +937,7 @@ definition {
 			value1 = "Move");
 
 		AssertTextEquals(
-			locator1 = "Portlet#H3_HEADER",
+			locator1 = "ControlMenu#HEADING",
 			value1 = "${kbArticleTitle}");
 
 		AssertTextEquals(

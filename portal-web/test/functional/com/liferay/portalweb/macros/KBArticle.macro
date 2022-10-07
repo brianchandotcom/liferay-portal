@@ -845,6 +845,8 @@ definition {
 				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
 				value1 = "${kbArticleTitle}");
 		}
+
+		WaitForPageLoad();
 	}
 
 	macro gotoViaKBDisplayPG {
@@ -1286,6 +1288,8 @@ definition {
 		AssertClick.assertTextClickAt(
 			locator1 = "AssetRelatedAssets#KB_RELATED_ASSETS_LINKS",
 			value1 = "${kbArticleRelatedAssetTitle}");
+
+		WaitForPageLoad();
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT_GENERIC",

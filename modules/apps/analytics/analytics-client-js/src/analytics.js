@@ -473,11 +473,19 @@ class Analytics {
 	 * @protected
 	 */
 	_setCookie(key, data) {
-		const expirationDate = new Date();
+		const expires = new Date();
 
-		expirationDate.setDate(expirationDate.getDate() + 365);
+		expires.setDate(expires.getDate() + 365);
 
-		document.cookie = `${key}=${data}; expires=${expirationDate.toUTCString()}; path=/; Secure`;
+		return Liferay.Util.Cookie.set(
+			key,
+			data,
+			Liferay.Util.Cookie.TYPES.PERSONALIZATION,
+			{
+				expires,
+				secure: true,
+			}
+		);
 	}
 
 	/**

@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import i18n from '../../../../../../../../../common/I18n';
 import {Button} from '../../../../../../../../../common/components';
+import {useAppPropertiesContext} from '../../../../../../../../../common/contexts/AppPropertiesContext';
 import {ROLE_TYPES} from '../../../../../../../../../common/utils/constants';
 import BadgeFilter from './components/BadgeFilter/BadgeFilter';
 import InvitesModal from './components/InvitesModal/InvitesModal';
@@ -32,6 +33,7 @@ const TeamMembersTableHeader = ({
 	filterState: [filters, setFilters],
 }) => {
 	const [visible, setVisible] = useState(false);
+	const {articleAccountSupportURL} = useAppPropertiesContext();
 
 	useEffect(() => {
 		const currentAdministrators = userAccounts?.filter((userAccount) =>
@@ -83,7 +85,12 @@ const TeamMembersTableHeader = ({
 				<div className="align-items-center d-flex ml-auto">
 					{project?.maxRequestors > 0 && (
 						<>
-							<PopoverIconButton alignPosition="top" />
+							<PopoverIconButton
+								alignPosition="top"
+								articleAccountSupportURL={
+									articleAccountSupportURL
+								}
+							/>
 
 							<p className="font-weight-bold m-0">
 								{i18n.translate('support-seats-available')}:

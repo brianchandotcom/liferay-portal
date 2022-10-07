@@ -17,12 +17,14 @@ package com.liferay.portal.store.file.system;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
 
@@ -60,6 +62,16 @@ public class FileSystemStore implements Store {
 		_rootDir = rootDir;
 
 		_rootDir.mkdirs();
+
+		try {
+			FileUtil.write(
+				new File(_rootDir, "README.txt"),
+				StringUtil.read(
+					FileSystemStore.class, "dependencies/README.txt"));
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
 	}
 
 	@Override

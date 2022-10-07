@@ -121,4 +121,10 @@ definition {
 			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
 	}
 
+	macro removeURLRow {
+		Click(
+			key_id = "${key_id}",
+			locator1 = "RemoteAppsEntry#REMOVE_URL_ROW");
+	}
+
 }

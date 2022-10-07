@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -78,6 +79,8 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 		String[] sections = actionRequest.getParameterValues("sections");
 		String[] selectedFileNames = ParamUtil.getParameterValues(
 			actionRequest, "selectedFileName");
+		Date expirationDate = null;
+		Date reviewDate = null;
 
 		KBArticle kbArticle = null;
 
@@ -97,7 +100,7 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 				null, _portal.getPortletId(actionRequest),
 				parentResourceClassNameId, parentResourcePrimKey, title,
 				urlTitle, content, description, sourceURL, sections,
-				selectedFileNames, serviceContext);
+				selectedFileNames, expirationDate, reviewDate, serviceContext);
 		}
 		else if (cmd.equals(Constants.REVERT)) {
 			int version = ParamUtil.getInteger(
@@ -112,8 +115,8 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 
 			kbArticle = _kbArticleService.updateKBArticle(
 				resourcePrimKey, title, content, description, sourceURL,
-				sections, selectedFileNames, removeFileEntryIds,
-				serviceContext);
+				sections, selectedFileNames, removeFileEntryIds, expirationDate,
+				reviewDate, serviceContext);
 		}
 
 		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {

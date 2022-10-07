@@ -19,7 +19,7 @@
 				"collectionConfig": {
 					"collectionReference": {
 						"className": "com.liferay.asset.list.model.AssetListEntry",
-						"classPK": "[$ASSET_LIST_ENTRY_ID:BLOG-ENTRIES$]"
+						"classPK": "[#ASSET_LIST_ENTRY_ID:BLOG-ENTRIES#]"
 					},
 					"collectionType": "Collection"
 				},

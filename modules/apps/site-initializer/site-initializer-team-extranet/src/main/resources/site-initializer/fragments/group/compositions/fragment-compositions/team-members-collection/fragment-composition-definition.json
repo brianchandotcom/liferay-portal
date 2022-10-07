@@ -23,7 +23,7 @@
 				"collectionConfig": {
 					"collectionReference": {
 						"className": "com.liferay.asset.list.model.AssetListEntry",
-						"classPK": "[$ASSET_LIST_ENTRY_ID:TEAM-MEMBERS$]"
+						"classPK": "[#ASSET_LIST_ENTRY_ID:TEAM-MEMBERS#]"
 					},
 					"collectionType": "Collection"
 				},

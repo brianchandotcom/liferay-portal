@@ -325,8 +325,8 @@ definition {
 		Click(locator1 = "Icon#BACK");
 
 		AssertElementPresent(
-			key_warehouseName = "Italy",
 			key_activeStatus = "Yes",
+			key_warehouseName = "Italy",
 			locator1 = "CommerceEntry#WAREHOUSE_ACTIVE_STATUS");
 	}
 

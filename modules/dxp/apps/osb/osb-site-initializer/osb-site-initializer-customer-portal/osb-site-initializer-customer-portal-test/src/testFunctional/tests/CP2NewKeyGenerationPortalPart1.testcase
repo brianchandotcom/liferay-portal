@@ -116,7 +116,7 @@ definition {
 			CP2ActivationKeys.selectFistActiveSubscriptionInput();
 		}
 
-		task ("Then I assert the Alert Info message content"){
+		task ("Then I assert the Alert Info message content") {
 			var startDate = CP2ActivationKeys.getStartDateTextFromSignature();
 
 			CustomerPortal.assertAlertInfoMessage(messageText = "Activation Keys will be valid indefinitely starting ${startDate} or until manually deactivated.");
@@ -149,7 +149,7 @@ definition {
 		task ("Then I should be able to see that the Next button is enabled") {
 			CustomerPortal.assertButtonIsActive(text = "Next");
 		}
-}
+	}
 
 	@description = "Automation Ticket: LPS-151335 | Test Summary: Verify that signatures without available keys are displayed as disabled options."
 	@priority = "3"

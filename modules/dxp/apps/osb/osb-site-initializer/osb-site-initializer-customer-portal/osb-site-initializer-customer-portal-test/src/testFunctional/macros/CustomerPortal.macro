@@ -121,6 +121,12 @@ definition {
 		}
 	}
 
+	macro assertAlertInfoMessage {
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#ALERT_INFO_MESSAGE",
+			value1 = "${messageText}");
+	}
+
 	macro assertButtonIsActive {
 		var key_text = "${text}";
 
@@ -131,12 +137,6 @@ definition {
 		var key_text = "${text}";
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON");
-	}
-
-	macro assertAlertInfoMessage {
-		AssertTextEquals(
-			locator1 = "CustomerPortalSite#ALERT_INFO_MESSAGE",
-			value1 = "${messageText}");
 	}
 
 	macro assertButtonIsVisible {

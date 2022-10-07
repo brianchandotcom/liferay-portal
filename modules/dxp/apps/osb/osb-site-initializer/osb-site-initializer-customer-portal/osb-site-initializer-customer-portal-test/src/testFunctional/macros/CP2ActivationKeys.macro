@@ -157,6 +157,7 @@ definition {
 			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
 			value1 = "${option}");
 	}
+
 	macro assertSignatureWithNoKeysIsVisible {
 		AssertVisible(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED");
 	}
@@ -377,7 +378,7 @@ definition {
 	macro getStartDateTextFromSignature {
 		var key_index = "1";
 
-		if(isSet(index)) {
+		if (isSet(index)) {
 			var key_index = "${index}";
 		}
 
@@ -385,12 +386,12 @@ definition {
 
 		var signatureDate = selenium.getText("CP2ActivationKeys#SIGNATURE_PERIOD_TEXT");
 
-		var startDate = StringUtil.substring("${signatureDate}", "0","12");
+		var startDate = StringUtil.substring("${signatureDate}", "0", "12");
 
 		var endsWithWhiteSpace = StringUtil.endsWith("${startDate}", " ");
 
-		if("${endsWithWhiteSpace}" == "true") {
-			var startDate = StringUtil.substring("${signatureDate}", "0","11");
+		if ("${endsWithWhiteSpace}" == "true") {
+			var startDate = StringUtil.substring("${signatureDate}", "0", "11");
 		}
 
 		return "${startDate}";

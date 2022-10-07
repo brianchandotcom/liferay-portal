@@ -120,8 +120,10 @@ public class CreateAccountUserMVCActionCommand
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
+		long prefixListTypeId = ParamUtil.getInteger(
+			actionRequest, "prefixListTypeId");
+		long suffixListTypeId = ParamUtil.getInteger(
+			actionRequest, "suffixListTypeId");
 		boolean male = true;
 		int birthdayMonth = Month.JANUARY.getValue();
 		int birthdayDay = 1;
@@ -150,9 +152,9 @@ public class CreateAccountUserMVCActionCommand
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
+			lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		byte[] portraitBytes = null;
 

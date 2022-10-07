@@ -293,7 +293,7 @@ public class NotificationTemplateSerDes {
 
 			sb.append("\"");
 
-			sb.append(notificationTemplate.getType());
+			sb.append(_escape(notificationTemplate.getType()));
 
 			sb.append("\"");
 		}
@@ -600,9 +600,7 @@ public class NotificationTemplateSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					notificationTemplate.setType(
-						NotificationTemplate.Type.create(
-							(String)jsonParserFieldValue));
+					notificationTemplate.setType((String)jsonParserFieldValue);
 				}
 			}
 		}

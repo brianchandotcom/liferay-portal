@@ -395,23 +395,15 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, String> to;
 
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -420,7 +412,7 @@ public class NotificationTemplate implements Cloneable, Serializable {
 		}
 	}
 
-	protected Type type;
+	protected String type;
 
 	@Override
 	public NotificationTemplate clone() throws CloneNotSupportedException {
@@ -480,39 +472,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 		}
 
 		private RecipientType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	public static enum Type {
-
-		EMAIL("email"), USER_NOTIFICATION("userNotification");
-
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value) ||
-					Objects.equals(type.name(), value)) {
-
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
 			_value = value;
 		}
 

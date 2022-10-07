@@ -552,26 +552,16 @@ public class NotificationTemplate implements Serializable {
 	protected Map<String, String> to;
 
 	@Schema
-	@Valid
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	@JsonIgnore
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -585,7 +575,7 @@ public class NotificationTemplate implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected String type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -839,7 +829,7 @@ public class NotificationTemplate implements Serializable {
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(_escape(type));
 
 			sb.append("\"");
 		}
@@ -887,44 +877,6 @@ public class NotificationTemplate implements Serializable {
 		}
 
 		private RecipientType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		EMAIL("email"), USER_NOTIFICATION("userNotification");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
 			_value = value;
 		}
 

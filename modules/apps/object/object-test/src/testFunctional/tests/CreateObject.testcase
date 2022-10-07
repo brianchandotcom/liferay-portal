@@ -2499,6 +2499,8 @@ definition {
 	@description = "LPS-135635 - Verify it is not possible to update the Searchable section after the Object is published"
 	@priority = "4"
 	test CannotUpdateSearchableSectionAfterPublished {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 68",
 			objectName = "CustomObject68",

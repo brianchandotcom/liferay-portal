@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -62,7 +65,7 @@ public class ExpandoInfoItemFieldReader
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
 			InfoLocalizedValue.<String>builder(
 			).value(
-				LocaleUtil.getDefault(), _attributeName
+				LocaleUtil.getDefault(), _getLabel(LocaleUtil.getDefault())
 			).defaultLocale(
 				LocaleUtil.getDefault()
 			).build();
@@ -200,6 +203,29 @@ public class ExpandoInfoItemFieldReader
 
 		return ExpandoConverterUtil.getStringFromAttribute(
 			attributeType, attributeValue);
+	}
+
+	private String _getLabel(Locale locale) {
+		String localizedName = _attributeName;
+
+		UnicodeProperties unicodeProperties =
+			_expandoBridge.getAttributeProperties(_attributeName);
+
+		boolean propertyLocalizeFieldName = GetterUtil.getBoolean(
+			unicodeProperties.getProperty(
+				ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME),
+			true);
+
+		if (propertyLocalizeFieldName) {
+			localizedName = LanguageUtil.get(locale, _attributeName);
+
+			if (_attributeName.equals(localizedName)) {
+				localizedName = TextFormatter.format(
+					_attributeName, TextFormatter.J);
+			}
+		}
+
+		return localizedName;
 	}
 
 	private static final String _CUSTOM_FIELD_PREFIX = "_CUSTOM_FIELD_";

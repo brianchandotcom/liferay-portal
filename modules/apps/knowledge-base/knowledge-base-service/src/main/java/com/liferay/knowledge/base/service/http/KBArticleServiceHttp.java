@@ -56,6 +56,7 @@ public class KBArticleServiceHttp {
 			long parentResourcePrimKey, String title, String urlTitle,
 			String content, String description, String sourceURL,
 			String[] sections, String[] selectedFileNames,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -68,7 +69,7 @@ public class KBArticleServiceHttp {
 				methodKey, externalReferenceCode, portletId,
 				parentResourceClassNameId, parentResourcePrimKey, title,
 				urlTitle, content, description, sourceURL, sections,
-				selectedFileNames, serviceContext);
+				selectedFileNames, expirationDate, reviewDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -1586,7 +1587,8 @@ public class KBArticleServiceHttp {
 			HttpPrincipal httpPrincipal, long resourcePrimKey, String title,
 			String content, String description, String sourceURL,
 			String[] sections, String[] selectedFileNames,
-			long[] removeFileEntryIds,
+			long[] removeFileEntryIds, java.util.Date expirationDate,
+			java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1598,7 +1600,7 @@ public class KBArticleServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, resourcePrimKey, title, content, description,
 				sourceURL, sections, selectedFileNames, removeFileEntryIds,
-				serviceContext);
+				expirationDate, reviewDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -1670,7 +1672,8 @@ public class KBArticleServiceHttp {
 	private static final Class<?>[] _addKBArticleParameterTypes0 = new Class[] {
 		String.class, String.class, long.class, long.class, String.class,
 		String.class, String.class, String.class, String.class, String[].class,
-		String[].class, com.liferay.portal.kernel.service.ServiceContext.class
+		String[].class, java.util.Date.class, java.util.Date.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addKBArticlesMarkdownParameterTypes1 =
 		new Class[] {
@@ -1806,7 +1809,8 @@ public class KBArticleServiceHttp {
 	private static final Class<?>[] _updateKBArticleParameterTypes39 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
-			String[].class, String[].class, long[].class,
+			String[].class, String[].class, long[].class, java.util.Date.class,
+			java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

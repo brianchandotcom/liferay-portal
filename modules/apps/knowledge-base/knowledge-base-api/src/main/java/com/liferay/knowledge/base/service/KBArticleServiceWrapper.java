@@ -40,13 +40,15 @@ public class KBArticleServiceWrapper
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			String title, String urlTitle, String content, String description,
 			String sourceURL, String[] sections, String[] selectedFileNames,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.addKBArticle(
 			externalReferenceCode, portletId, parentResourceClassNameId,
 			parentResourcePrimKey, title, urlTitle, content, description,
-			sourceURL, sections, selectedFileNames, serviceContext);
+			sourceURL, sections, selectedFileNames, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	@Override
@@ -434,12 +436,14 @@ public class KBArticleServiceWrapper
 			long resourcePrimKey, String title, String content,
 			String description, String sourceURL, String[] sections,
 			String[] selectedFileNames, long[] removeFileEntryIds,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.updateKBArticle(
 			resourcePrimKey, title, content, description, sourceURL, sections,
-			selectedFileNames, removeFileEntryIds, serviceContext);
+			selectedFileNames, removeFileEntryIds, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	@Override

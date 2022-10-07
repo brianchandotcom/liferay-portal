@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true, service = DiagramResource.Factory.class
+	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-catalog/v1.0/Diagram",
+	service = DiagramResource.Factory.class
 )
 @Generated("")
 public class DiagramResourceFactoryImpl implements DiagramResource.Factory {

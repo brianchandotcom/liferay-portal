@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(immediate = true, service = FieldMappingInfoResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/search-experiences-rest/v1.0/FieldMappingInfo",
+	service = FieldMappingInfoResource.Factory.class
+)
 @Generated("")
 public class FieldMappingInfoResourceFactoryImpl
 	implements FieldMappingInfoResource.Factory {

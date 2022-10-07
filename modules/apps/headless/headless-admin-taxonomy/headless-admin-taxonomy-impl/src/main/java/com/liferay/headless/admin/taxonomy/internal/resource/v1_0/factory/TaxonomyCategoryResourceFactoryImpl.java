@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = TaxonomyCategoryResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-taxonomy/v1.0/TaxonomyCategory",
+	service = TaxonomyCategoryResource.Factory.class
+)
 @Generated("")
 public class TaxonomyCategoryResourceFactoryImpl
 	implements TaxonomyCategoryResource.Factory {

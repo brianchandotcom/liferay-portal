@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = PhoneResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-user/v1.0/Phone",
+	service = PhoneResource.Factory.class
+)
 @Generated("")
 public class PhoneResourceFactoryImpl implements PhoneResource.Factory {
 

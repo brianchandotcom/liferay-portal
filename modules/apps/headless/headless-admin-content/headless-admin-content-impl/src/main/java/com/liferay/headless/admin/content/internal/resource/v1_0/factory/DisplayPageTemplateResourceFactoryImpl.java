@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = DisplayPageTemplateResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-content/v1.0/DisplayPageTemplate",
+	service = DisplayPageTemplateResource.Factory.class
 )
 @Generated("")
 public class DisplayPageTemplateResourceFactoryImpl

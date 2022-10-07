@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = ActiveViewResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/frontend-view-state/v1.0/ActiveView",
+	service = ActiveViewResource.Factory.class
+)
 @Generated("")
 public class ActiveViewResourceFactoryImpl
 	implements ActiveViewResource.Factory {

@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = TimeRangeResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/portal-workflow-metrics/v1.0/TimeRange",
+	service = TimeRangeResource.Factory.class
+)
 @Generated("")
 public class TimeRangeResourceFactoryImpl implements TimeRangeResource.Factory {
 

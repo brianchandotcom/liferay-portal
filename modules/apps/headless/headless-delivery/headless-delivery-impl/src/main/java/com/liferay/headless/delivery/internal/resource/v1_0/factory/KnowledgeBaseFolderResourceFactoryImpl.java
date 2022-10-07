@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = KnowledgeBaseFolderResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/headless-delivery/v1.0/KnowledgeBaseFolder",
+	service = KnowledgeBaseFolderResource.Factory.class
 )
 @Generated("")
 public class KnowledgeBaseFolderResourceFactoryImpl

@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = ProcessResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/portal-workflow-metrics/v1.0/Process",
+	service = ProcessResource.Factory.class
+)
 @Generated("")
 public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 

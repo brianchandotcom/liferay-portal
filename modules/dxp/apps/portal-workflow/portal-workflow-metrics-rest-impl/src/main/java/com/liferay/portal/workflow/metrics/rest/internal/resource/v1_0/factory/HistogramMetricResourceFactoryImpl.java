@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = HistogramMetricResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/portal-workflow-metrics/v1.0/HistogramMetric",
+	service = HistogramMetricResource.Factory.class
+)
 @Generated("")
 public class HistogramMetricResourceFactoryImpl
 	implements HistogramMetricResource.Factory {

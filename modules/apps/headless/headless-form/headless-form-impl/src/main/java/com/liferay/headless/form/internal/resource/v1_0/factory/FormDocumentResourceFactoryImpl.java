@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = FormDocumentResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-form/v1.0/FormDocument",
+	service = FormDocumentResource.Factory.class
+)
 @Generated("")
 public class FormDocumentResourceFactoryImpl
 	implements FormDocumentResource.Factory {

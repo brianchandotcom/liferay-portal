@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Ivica Cardic
  * @generated
  */
-@Component(immediate = true, service = ExportTaskResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-batch-engine/v1.0/ExportTask",
+	service = ExportTaskResource.Factory.class
+)
 @Generated("")
 public class ExportTaskResourceFactoryImpl
 	implements ExportTaskResource.Factory {

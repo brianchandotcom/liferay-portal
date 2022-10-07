@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Gabriel Albuquerque
  * @generated
  */
-@Component(immediate = true, service = ListTypeDefinitionResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-list-type/v1.0/ListTypeDefinition",
+	service = ListTypeDefinitionResource.Factory.class
+)
 @Generated("")
 public class ListTypeDefinitionResourceFactoryImpl
 	implements ListTypeDefinitionResource.Factory {

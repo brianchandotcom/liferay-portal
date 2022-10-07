@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = DataDefinitionFieldLinkResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/data-engine/v2.0/DataDefinitionFieldLink",
+	service = DataDefinitionFieldLinkResource.Factory.class
 )
 @Generated("")
 public class DataDefinitionFieldLinkResourceFactoryImpl

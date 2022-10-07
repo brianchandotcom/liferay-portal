@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = SLAResultResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/portal-workflow-metrics/v1.0/SLAResult",
+	service = SLAResultResource.Factory.class
+)
 @Generated("")
 public class SLAResultResourceFactoryImpl implements SLAResultResource.Factory {
 

@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  */
 @Component(
 	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-delivery-cart/v1.0/CartComment",
 	service = CartCommentResource.Factory.class
 )
 @Generated("")

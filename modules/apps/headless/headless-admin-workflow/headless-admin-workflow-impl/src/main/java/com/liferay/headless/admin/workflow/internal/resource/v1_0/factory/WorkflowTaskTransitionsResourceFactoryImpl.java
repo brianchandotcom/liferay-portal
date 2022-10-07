@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = WorkflowTaskTransitionsResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-workflow/v1.0/WorkflowTaskTransitions",
+	service = WorkflowTaskTransitionsResource.Factory.class
 )
 @Generated("")
 public class WorkflowTaskTransitionsResourceFactoryImpl

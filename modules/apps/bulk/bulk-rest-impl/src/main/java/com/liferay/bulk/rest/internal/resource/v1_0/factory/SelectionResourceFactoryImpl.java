@@ -62,7 +62,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Alejandro Tardín
  * @generated
  */
-@Component(immediate = true, service = SelectionResource.Factory.class)
+@Component(
+	immediate = true, property = "resource.locator.key=/bulk/v1.0/Selection",
+	service = SelectionResource.Factory.class
+)
 @Generated("")
 public class SelectionResourceFactoryImpl implements SelectionResource.Factory {
 

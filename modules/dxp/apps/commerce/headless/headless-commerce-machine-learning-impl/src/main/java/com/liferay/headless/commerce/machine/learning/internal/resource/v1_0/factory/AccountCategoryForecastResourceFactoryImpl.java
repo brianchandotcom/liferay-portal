@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  */
 @Component(
 	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-machine-learning/v1.0/AccountCategoryForecast",
 	service = AccountCategoryForecastResource.Factory.class
 )
 @Generated("")

@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Jeyvison Nascimento
  * @generated
  */
-@Component(immediate = true, service = DataLayoutResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/data-engine/v2.0/DataLayout",
+	service = DataLayoutResource.Factory.class
+)
 @Generated("")
 public class DataLayoutResourceFactoryImpl
 	implements DataLayoutResource.Factory {

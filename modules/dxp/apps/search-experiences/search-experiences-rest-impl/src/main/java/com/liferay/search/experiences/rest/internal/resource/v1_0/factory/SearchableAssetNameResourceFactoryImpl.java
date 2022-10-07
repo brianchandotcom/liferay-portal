@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = SearchableAssetNameResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/search-experiences-rest/v1.0/SearchableAssetName",
+	service = SearchableAssetNameResource.Factory.class
 )
 @Generated("")
 public class SearchableAssetNameResourceFactoryImpl

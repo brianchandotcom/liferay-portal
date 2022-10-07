@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  */
 @Component(
 	immediate = true,
+	property = "resource.locator.key=/headless-admin-workflow/v1.0/WorkflowTaskAssignableUsers",
 	service = WorkflowTaskAssignableUsersResource.Factory.class
 )
 @Generated("")

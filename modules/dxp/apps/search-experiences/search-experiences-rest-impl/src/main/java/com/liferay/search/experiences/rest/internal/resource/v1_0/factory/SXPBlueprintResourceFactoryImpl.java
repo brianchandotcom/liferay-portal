@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(immediate = true, service = SXPBlueprintResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/search-experiences-rest/v1.0/SXPBlueprint",
+	service = SXPBlueprintResource.Factory.class
+)
 @Generated("")
 public class SXPBlueprintResourceFactoryImpl
 	implements SXPBlueprintResource.Factory {

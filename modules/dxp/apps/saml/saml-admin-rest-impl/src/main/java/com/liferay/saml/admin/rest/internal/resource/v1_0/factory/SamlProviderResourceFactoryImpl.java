@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Stian Sigvartsen
  * @generated
  */
-@Component(immediate = true, service = SamlProviderResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/saml-admin/v1.0/SamlProvider",
+	service = SamlProviderResource.Factory.class
+)
 @Generated("")
 public class SamlProviderResourceFactoryImpl
 	implements SamlProviderResource.Factory {

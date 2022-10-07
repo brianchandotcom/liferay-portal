@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Drew Brokke
  * @generated
  */
-@Component(immediate = true, service = CountryResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-address/v1.0/Country",
+	service = CountryResource.Factory.class
+)
 @Generated("")
 public class CountryResourceFactoryImpl implements CountryResource.Factory {
 

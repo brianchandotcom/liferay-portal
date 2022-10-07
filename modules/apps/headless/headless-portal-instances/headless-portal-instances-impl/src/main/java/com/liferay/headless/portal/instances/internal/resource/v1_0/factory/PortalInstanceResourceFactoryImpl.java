@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Alberto Chaparro
  * @generated
  */
-@Component(immediate = true, service = PortalInstanceResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-portal-instances/v1.0/PortalInstance",
+	service = PortalInstanceResource.Factory.class
+)
 @Generated("")
 public class PortalInstanceResourceFactoryImpl
 	implements PortalInstanceResource.Factory {

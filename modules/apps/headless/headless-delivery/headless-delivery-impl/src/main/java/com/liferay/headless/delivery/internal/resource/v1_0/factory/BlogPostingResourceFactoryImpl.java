@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = BlogPostingResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-delivery/v1.0/BlogPosting",
+	service = BlogPostingResource.Factory.class
+)
 @Generated("")
 public class BlogPostingResourceFactoryImpl
 	implements BlogPostingResource.Factory {

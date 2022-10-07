@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = AssigneeMetricResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/portal-workflow-metrics/v1.0/AssigneeMetric",
+	service = AssigneeMetricResource.Factory.class
+)
 @Generated("")
 public class AssigneeMetricResourceFactoryImpl
 	implements AssigneeMetricResource.Factory {

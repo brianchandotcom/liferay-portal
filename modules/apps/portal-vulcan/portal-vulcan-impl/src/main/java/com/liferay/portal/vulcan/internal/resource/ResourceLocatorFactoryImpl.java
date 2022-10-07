@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -47,12 +48,12 @@ public class ResourceLocatorFactoryImpl implements ResourceLocatorFactory {
 		return new ResourceLocator() {
 
 			@Override
-			public Object locate(String resourceLocatorKey) {
+			public Object locate(String restContextPath, String resourceName) {
 				ServiceTrackerMap<String, Builder> serviceTrackerMap =
 					_getServiceTrackerMap();
 
 				Builder builder = serviceTrackerMap.getService(
-					resourceLocatorKey);
+					restContextPath + StringPool.SLASH + resourceName);
 
 				if (builder == null) {
 					return null;

@@ -41,6 +41,12 @@ public class EntityCacheUtil {
 		return _entityCache;
 	}
 
+	public static Serializable getLocalCacheResult(
+		Class<?> clazz, Serializable primaryKey) {
+
+		return _entityCache.getLocalCacheResult(clazz, primaryKey);
+	}
+
 	public static PortalCache<Serializable, Serializable> getPortalCache(
 		Class<?> clazz) {
 

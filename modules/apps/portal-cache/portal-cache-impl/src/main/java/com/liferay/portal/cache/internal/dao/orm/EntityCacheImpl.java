@@ -100,6 +100,22 @@ public class EntityCacheImpl
 	}
 
 	@Override
+	public Serializable getLocalCacheResult(
+		Class<?> clazz, Serializable primaryKey) {
+
+		if (_isLocalCacheEnabled()) {
+			Map<Serializable, Serializable> localCache = _localCache.get();
+
+			Serializable localCacheKey = new LocalCacheKey(
+				clazz.getName(), primaryKey);
+
+			return localCache.get(localCacheKey);
+		}
+
+		return null;
+	}
+
+	@Override
 	public PortalCache<Serializable, Serializable> getPortalCache(
 		Class<?> clazz) {
 

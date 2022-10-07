@@ -16,17 +16,17 @@ package com.liferay.data.engine.internal.nativeobject.tracker;
 
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Jeyvison Nascimento
@@ -37,36 +37,31 @@ public class DataEngineNativeObjectTrackerImpl
 
 	@Override
 	public DataEngineNativeObject getDataEngineNativeObject(String className) {
-		return _dataEngineNativeObjects.get(StringUtil.toUpperCase(className));
+		return _serviceTrackerMap.getService(StringUtil.toUpperCase(className));
 	}
 
 	@Override
 	public Collection<DataEngineNativeObject> getDataEngineNativeObjects() {
-		return _dataEngineNativeObjects.values();
+		return _serviceTrackerMap.values();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDataEngineNativeObject(
-			DataEngineNativeObject dataEngineNativeObject)
-		throws Exception {
-
-		_dataEngineNativeObjects.put(
-			StringUtil.toUpperCase(dataEngineNativeObject.getClassName()),
-			dataEngineNativeObject);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DataEngineNativeObject.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(dataEngineNativeObject, emitter) -> emitter.emit(
+					StringUtil.toUpperCase(
+						dataEngineNativeObject.getClassName()))));
 	}
 
-	protected void removeDataEngineNativeObject(
-		DataEngineNativeObject dataEngineNativeObject) {
-
-		_dataEngineNativeObjects.remove(
-			StringUtil.toUpperCase(dataEngineNativeObject.getClassName()));
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, DataEngineNativeObject> _dataEngineNativeObjects =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, DataEngineNativeObject>
+		_serviceTrackerMap;
 
 }

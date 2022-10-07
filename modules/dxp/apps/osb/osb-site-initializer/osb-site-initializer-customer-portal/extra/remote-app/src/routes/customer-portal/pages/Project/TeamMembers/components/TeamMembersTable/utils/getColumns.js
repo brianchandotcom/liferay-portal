@@ -10,7 +10,7 @@
  */
 
 import i18n from '../../../../../../../../common/I18n';
-import PopoverIconButton from '../components/TeamMembersTableHeader/components/PopoverIconButton/PopoverIconButton';
+import PopoverIconButton from '../components/PopoverIconButton/PopoverIconButton';
 
 const getInitialColumns = (articleAccountSupportURL) => [
 	{

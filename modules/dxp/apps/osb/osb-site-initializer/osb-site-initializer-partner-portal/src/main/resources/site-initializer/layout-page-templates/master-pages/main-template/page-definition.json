@@ -145,7 +145,7 @@
 																	"fieldKey": "FileEntry_previewImage",
 																	"itemReference": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg$]"
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg#]"
 																	}
 																}
 															}
@@ -352,7 +352,7 @@
 																	"fieldKey": "FileEntry_previewImage",
 																	"itemReference": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/placeholder/user-placeholder.png$]"
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/placeholder/user-placeholder.png#]"
 																	}
 																}
 															}
@@ -1630,7 +1630,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/github.svg$]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/github.svg#]"
 																							}
 																						}
 																					}
@@ -1713,7 +1713,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/linkedin.svg$]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/linkedin.svg#]"
 																							}
 																						}
 																					}
@@ -1796,7 +1796,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/youtube.svg$]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/youtube.svg#]"
 																							}
 																						}
 																					}
@@ -1879,7 +1879,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/facebook.svg$]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/facebook.svg#]"
 																							}
 																						}
 																					}
@@ -1962,7 +1962,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/instagram.svg$]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/instagram.svg#]"
 																							}
 																						}
 																					}
@@ -2044,7 +2044,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/twitter.svg$]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/twitter.svg#]"
 																							}
 																						}
 																					}

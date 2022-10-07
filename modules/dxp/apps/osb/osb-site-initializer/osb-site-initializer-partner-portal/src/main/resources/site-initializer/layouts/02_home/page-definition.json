@@ -855,7 +855,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/deal-registration.png$]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/deal-registration.png#]"
 																									}
 																								}
 																							}
@@ -946,7 +946,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/demo-access.png$]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/demo-access.png#]"
 																									}
 																								}
 																							}
@@ -1037,7 +1037,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/mdf.png$]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/mdf.png#]"
 																									}
 																								}
 																							}
@@ -1251,7 +1251,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/qsp-tracker.png$]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/qsp-tracker.png#]"
 																									}
 																								}
 																							}
@@ -1342,7 +1342,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png$]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png#]"
 																									}
 																								}
 																							}

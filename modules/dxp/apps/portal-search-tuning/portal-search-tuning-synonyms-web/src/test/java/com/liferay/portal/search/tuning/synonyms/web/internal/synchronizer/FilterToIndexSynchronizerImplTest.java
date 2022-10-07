@@ -47,9 +47,6 @@ public class FilterToIndexSynchronizerImplTest extends BaseSynonymsWebTestCase {
 			_filterToIndexSynchronizerImpl, "_synonymSetFilterReader",
 			synonymSetFilterReader);
 		ReflectionTestUtil.setFieldValue(
-			_filterToIndexSynchronizerImpl, "_synonymSetIndexNameBuilder",
-			synonymSetIndexNameBuilder);
-		ReflectionTestUtil.setFieldValue(
 			_filterToIndexSynchronizerImpl, "_synonymSetStorageAdapter",
 			synonymSetStorageAdapter);
 	}

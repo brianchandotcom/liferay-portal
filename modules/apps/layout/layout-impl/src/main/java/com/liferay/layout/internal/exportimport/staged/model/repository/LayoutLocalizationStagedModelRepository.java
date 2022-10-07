@@ -52,7 +52,7 @@ public class LayoutLocalizationStagedModelRepository
 		}
 
 		return _layoutLocalizationLocalService.addLayoutLocalization(
-			layoutLocalization.getGroupId(), layoutLocalization.getContent(),
+			serviceContext.getScopeGroupId(), layoutLocalization.getContent(),
 			layoutLocalization.getLanguageId(), layoutLocalization.getPlid(),
 			serviceContext);
 	}

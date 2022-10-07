@@ -256,7 +256,9 @@ definition {
 	}
 
 	macro clickOnTheCloseButton {
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+		var key_modalTitle = "${modalTitle}";
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL");
 	}
 
 	macro createCPSiteObjects {
@@ -335,7 +337,7 @@ definition {
 			cardName = "Non-Production",
 			locator1 = "CustomerPortalSite#CARD_NAME");
 
-		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+		CustomerPortal.clickOnTheCloseButton(modalTitle = "LXC - SM Non-Production");
 	}
 
 	macro fullOnboardingFlow {

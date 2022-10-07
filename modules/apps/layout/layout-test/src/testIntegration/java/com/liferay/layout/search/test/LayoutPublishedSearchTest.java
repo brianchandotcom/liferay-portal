@@ -36,7 +36,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -52,6 +55,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,7 +98,7 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(name);
 
-		_publishLayout(new MockHttpServletRequest(), layout);
+		_publishLayout(layout);
 
 		_layoutIndexerFixture.searchOnlyOne(name);
 	}
@@ -108,13 +114,13 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(content);
 
-		_publishLayout(_getHttpServletRequest(layout), layout);
+		_publishLayout(layout);
 
 		_layoutIndexerFixture.searchOnlyOne(content);
 	}
 
-	private HttpServletRequest _getHttpServletRequest(Layout layout)
-		throws Exception {
+	private HttpServletRequest _getHttpServletRequest(
+		ThemeDisplay themeDisplay) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -123,6 +129,15 @@ public class LayoutPublishedSearchTest {
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
@@ -136,36 +151,45 @@ public class LayoutPublishedSearchTest {
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
 		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(mockHttpServletRequest);
+
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
+		return themeDisplay;
 	}
 
-	private void _publishLayout(
-			HttpServletRequest httpServletRequest, Layout layout)
-		throws Exception {
-
+	private void _publishLayout(Layout layout) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				layout.getGroup(), TestPropsValues.getUserId());
 
+		ThemeDisplay themeDisplay = _getThemeDisplay(layout);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(
+			themeDisplay);
+
 		serviceContext.setRequest(httpServletRequest);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, httpServletRequest);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayout",
 			new Class<?>[] {
-				Layout.class, Layout.class, ServiceContext.class, long.class
+				ActionRequest.class, ActionResponse.class, Layout.class,
+				Layout.class, ServiceContext.class, long.class
 			},
-			layout.fetchDraftLayout(), layout, serviceContext,
-			TestPropsValues.getUserId());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse(), layout.fetchDraftLayout(),
+			layout, serviceContext, TestPropsValues.getUserId());
 	}
 
 	private void _setUpLayoutIndexerFixture() {

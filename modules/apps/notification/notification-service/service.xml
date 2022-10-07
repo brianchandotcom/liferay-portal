@@ -33,6 +33,7 @@
 		<column name="subject" type="String" />
 		<column name="to" type="String" />
 		<column name="toName" type="String" />
+		<column name="type" type="String" />
 		<column name="status" type="int" />
 
 		<!-- Finder methods -->

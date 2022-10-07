@@ -62,7 +62,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "LXC - SM Non-Production");
 		}
 	}
 
@@ -93,7 +93,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "LXC - SM Non-Production");
 		}
 	}
 
@@ -143,7 +143,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "Commerce Production");
 		}
 	}
 
@@ -189,7 +189,7 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
 
-		task ("Open the modal and assert the Provisioned column for Coomerce") {
+		task ("Open the modal and assert the Provisioned column for Commerce") {
 			Click(
 				cardName = "Developer Tools",
 				locator1 = "CustomerPortalSite#CARD_NAME");
@@ -201,7 +201,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "Commerce Developer Tools");
 		}
 	}
 
@@ -231,7 +231,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "DXP Production");
 		}
 	}
 
@@ -256,7 +256,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "LXC - SM Production");
 		}
 	}
 
@@ -277,7 +277,7 @@ definition {
 		}
 
 		task ("Close the modal") {
-			CustomerPortal.clickOnTheCloseButton();
+			CustomerPortal.clickOnTheCloseButton(modalTitle = "DXP Production");
 		}
 	}
 

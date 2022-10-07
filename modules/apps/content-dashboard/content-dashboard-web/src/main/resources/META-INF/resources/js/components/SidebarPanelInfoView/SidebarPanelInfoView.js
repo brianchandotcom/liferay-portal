@@ -21,7 +21,7 @@ import ClayTabs from '@clayui/tabs';
 import classnames from 'classnames';
 import {getSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
 
 import {
 	DEFAULT_ACTIVE_PANEL_TAB,
@@ -36,7 +36,7 @@ import VersionsContent from './VersionsContent';
 const useInitialActiveTabState = () => {
 	const [activeTab, setActiveTab] = useState(DEFAULT_ACTIVE_PANEL_TAB);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getSessionValue(TABS_STATE_SESSION_KEY).then((value) => {
 			const parsedValue = parseInt(value, 10);
 			const safeValue = isNaN(parsedValue)
@@ -180,7 +180,7 @@ const SidebarPanelInfoView = ({
 						</div>
 
 						<div className="mb-0 sidebar-section">
-							{showTabs && (
+							{showTabs && activeTabKeyValue !== null && (
 								<ClayTabs modern>
 									<ClayTabs.Item
 										active={activeTabKeyValue === 0}

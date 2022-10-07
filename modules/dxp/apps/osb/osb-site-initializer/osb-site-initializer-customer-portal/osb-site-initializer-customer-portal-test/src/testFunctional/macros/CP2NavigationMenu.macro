@@ -56,18 +56,16 @@ definition {
 		Click(locator1 = "CP2NavigationMenu#SHOW_BUTTON");
 	}
 
-	macro clickOnStatusButton {
+	macro assertStatusOptions {
 		Click(
 			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-			title = "${title}");
+			title = "All");
 
-		Click(
-			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
-			status = "All");
+		for (var status : list "${statusList}") {
+			var status = "${status}";
 
-		Click(
-			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
-			status = "${status}");
+			AssertVisible(locator1 = "CP2NavigationMenu#STATUS_OPTIONS");
+		}
 	}
 
 	macro goToCP2 {

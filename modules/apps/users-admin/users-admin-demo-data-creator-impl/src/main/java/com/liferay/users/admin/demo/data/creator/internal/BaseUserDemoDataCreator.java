@@ -186,8 +186,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		boolean autoScreenName = Validator.isNull(screenName);
 		Locale locale = LocaleUtil.getDefault();
 		String middleName = StringPool.BLANK;
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -207,8 +207,8 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		return userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
 			password2, autoScreenName, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail,
 			new ServiceContext());
 	}

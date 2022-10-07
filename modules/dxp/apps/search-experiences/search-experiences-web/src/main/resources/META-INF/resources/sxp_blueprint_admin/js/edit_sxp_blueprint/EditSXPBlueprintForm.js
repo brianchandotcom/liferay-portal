@@ -418,16 +418,18 @@ function EditSXPBlueprintForm({
 
 		if (isCompanyAdmin) {
 
-			// TODO: Create API for search indexes (LPS-163750) where first item
-			// is the company index. The company index gets removed to avoid
-			// confusion with the "Default Company Index" selection.
+			// TODO: Create API for search indexes (LPS-163750). The list should not
+			// include the company index, in order to avoid confusion with the
+			// "Default Company Index" selection.
 
 			setSearchIndexes([]);
 
 			/*
 			fetchData(`/o/search-experiences-rest/v1.0/search-indexes`)
 				.then((responseContent) =>
-					setSearchIndexes(responseContent?.items.slice(1))
+					setSearchIndexes(
+						responseContent?.items.map(({fullName}) => fullName)
+					)
 				)
 				.catch(() => setSearchIndexes([]));
 			*/

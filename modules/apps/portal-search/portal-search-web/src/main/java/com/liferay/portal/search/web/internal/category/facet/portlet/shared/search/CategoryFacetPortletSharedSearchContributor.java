@@ -60,6 +60,8 @@ public class CategoryFacetPortletSharedSearchContributor
 				_toLongArray(
 					portletSharedSearchSettings.getParameterValues(
 						categoryFacetPortletPreferences.getParameterName()))
+			).vocabularyIds(
+				categoryFacetPortletPreferences.getVocabularyIds()
 			));
 	}
 

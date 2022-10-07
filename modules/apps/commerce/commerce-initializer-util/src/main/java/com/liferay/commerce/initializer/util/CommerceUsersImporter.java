@@ -144,10 +144,11 @@ public class CommerceUsersImporter {
 			String emailAddress, long facebookId, String openId,
 			boolean portrait, byte[] portraitBytes, Locale locale,
 			String timeZoneId, String greeting, String comments,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String smsSn, String facebookSn, String jabberSn,
-			String skypeSn, String twitterSn, String jobTitle, long[] groupIds,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+			String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -172,9 +173,9 @@ public class CommerceUsersImporter {
 			user = _userLocalService.addUser(
 				creatorUserId, companyId, autoPassword, password, password,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-				roleIds, userGroupIds, false, serviceContext);
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupIds, false, serviceContext);
 		}
 		else {
 			groupIds = ArrayUtil.append(user.getGroupIds(), groupIds);
@@ -188,10 +189,11 @@ public class CommerceUsersImporter {
 				StringPool.BLANK, false, userReminderQueryQuestion,
 				userReminderQueryAnswer, screenName, emailAddress, portrait,
 				portraitBytes, LocaleUtil.toLanguageId(locale), timeZoneId,
-				greeting, comments, firstName, middleName, lastName, prefixId,
-				suffixId, male, birthdayMonth, birthdayDay, birthdayYear, smsSn,
-				facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
-				organizationIds, roleIds, null, userGroupIds, serviceContext);
+				greeting, comments, firstName, middleName, lastName,
+				prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+				birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+				twitterSn, jobTitle, groupIds, organizationIds, roleIds, null,
+				userGroupIds, serviceContext);
 		}
 		else if (portrait) {
 			_userLocalService.updatePortrait(user.getUserId(), portraitBytes);
@@ -288,8 +290,8 @@ public class CommerceUsersImporter {
 		String firstName = jsonObject.getString("firstName");
 		String middleName = jsonObject.getString("middleName");
 		String lastName = jsonObject.getString("lastName");
-		long prefixId = jsonObject.getLong("prefixId");
-		long suffixId = jsonObject.getLong("suffixId");
+		long prefixListTypeId = jsonObject.getLong("prefixListTypeId");
+		long suffixListTypeId = jsonObject.getLong("suffixListTypeId");
 		boolean male = jsonObject.getBoolean("male");
 
 		String gender = jsonObject.getString("gender");
@@ -369,9 +371,10 @@ public class CommerceUsersImporter {
 			password, userReminderQueryQuestion, userReminderQueryAnswer,
 			screenName, emailAddress, facebookId, openId, hasPortrait,
 			portraitBytes, locale, timeZoneId, greeting, comments, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
-			twitterSn, jobTitle, new long[] {serviceContext.getScopeGroupId()},
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+			jabberSn, skypeSn, twitterSn, jobTitle,
+			new long[] {serviceContext.getScopeGroupId()},
 			ArrayUtil.toLongArray(organizationIds),
 			ArrayUtil.toLongArray(roleIds), userGroupIds, serviceContext);
 

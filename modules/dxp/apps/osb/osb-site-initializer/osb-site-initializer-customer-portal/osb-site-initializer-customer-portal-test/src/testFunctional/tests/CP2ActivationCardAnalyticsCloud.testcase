@@ -58,12 +58,12 @@ definition {
 		task ("Given I go to the test account") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(
+			CustomerPortal.enterOnProject(
 				status = "Expired",
 				title = "${testAccount}");
-        }
+		}
 
 		task ("Going through onboarding") {
 			CustomerPortal.fullOnboardingFlow();

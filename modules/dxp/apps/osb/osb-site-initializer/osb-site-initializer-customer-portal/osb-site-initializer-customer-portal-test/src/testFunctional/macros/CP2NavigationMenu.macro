@@ -38,6 +38,18 @@ definition {
 		Click(locator1 = "CP2NavigationMenu#BUTTON_SAVE");
 	}
 
+	macro assertStatusOptions {
+		Click(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "All");
+
+		for (var status : list "${statusList}") {
+			var status = "${status}";
+
+			AssertVisible(locator1 = "CP2NavigationMenu#STATUS_OPTIONS");
+		}
+	}
+
 	macro cancelTeamMembersInvitation {
 		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
 	}
@@ -54,18 +66,6 @@ definition {
 
 	macro clickOnShowButton {
 		Click(locator1 = "CP2NavigationMenu#SHOW_BUTTON");
-	}
-
-	macro assertStatusOptions {
-		Click(
-			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-			title = "All");
-
-		for (var status : list "${statusList}") {
-			var status = "${status}";
-
-			AssertVisible(locator1 = "CP2NavigationMenu#STATUS_OPTIONS");
-		}
 	}
 
 	macro goToCP2 {

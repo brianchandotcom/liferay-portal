@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
@@ -83,9 +82,6 @@ public class SynonymsPortlet extends MVCPortlet {
 
 	@Reference
 	private DocumentToSynonymSetTranslator _documentToSynonymSetTranslator;
-
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Language _language;

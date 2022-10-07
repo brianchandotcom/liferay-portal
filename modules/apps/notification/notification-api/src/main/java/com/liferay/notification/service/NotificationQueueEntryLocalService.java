@@ -68,7 +68,7 @@ public interface NotificationQueueEntryLocalService
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName, List<Long> fileEntryIds)
+			String toName, String type, List<Long> fileEntryIds)
 		throws PortalException;
 
 	/**

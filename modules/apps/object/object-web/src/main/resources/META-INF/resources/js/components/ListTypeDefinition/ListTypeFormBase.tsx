@@ -29,6 +29,9 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 		if (invalidateRequired(label)) {
 			errors.name_i18n = REQUIRED_MSG;
 		}
+		if (invalidateRequired(picklist.externalReferenceCode)) {
+			errors.externalReferenceCode = REQUIRED_MSG;
+		}
 
 		return errors;
 	};

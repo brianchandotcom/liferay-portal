@@ -49,6 +49,7 @@ interface PickListItem {
 }
 interface PickList {
 	actions: Actions;
+	externalReferenceCode?: string;
 	id: number;
 	listTypeEntries: PickListItem[];
 	name: string;
@@ -108,9 +109,10 @@ export declare function getRelationship<T>(
 	objectRelationshipId: number
 ): Promise<T>;
 export declare function updatePickList({
+	externalReferenceCode,
 	id,
 	name_i18n,
-}: Partial<PickListItem>): Promise<void>;
+}: Partial<PickList>): Promise<void>;
 export declare function deletePickList(pickListId: number): Promise<void>;
 export declare function addPickListItem({
 	id,

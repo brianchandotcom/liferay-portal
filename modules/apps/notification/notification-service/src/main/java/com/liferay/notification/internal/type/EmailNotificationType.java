@@ -172,7 +172,7 @@ public class EmailNotificationType extends BaseNotificationType {
 							bcc, body, cc, notificationContext.getClassName(),
 							notificationContext.getClassPK(), from, fromName, 0,
 							subject, emailAddressOrUserId, emailAddressOrUserId,
-							fileEntryIds);
+							getType(), fileEntryIds);
 
 					continue;
 				}
@@ -183,7 +183,8 @@ public class EmailNotificationType extends BaseNotificationType {
 				notificationTemplate.getNotificationTemplateId(), bcc, body, cc,
 				notificationContext.getClassName(),
 				notificationContext.getClassPK(), from, fromName, 0, subject,
-				toUser.getEmailAddress(), toUser.getFullName(), fileEntryIds);
+				toUser.getEmailAddress(), toUser.getFullName(), getType(),
+				fileEntryIds);
 		}
 	}
 

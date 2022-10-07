@@ -64,7 +64,7 @@ public class NotificationQueueEntryLocalServiceImpl
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName, List<Long> fileEntryIds)
+			String toName, String type, List<Long> fileEntryIds)
 		throws PortalException {
 
 		NotificationQueueEntry notificationQueueEntry =
@@ -90,6 +90,7 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationQueueEntry.setSubject(subject);
 		notificationQueueEntry.setTo(to);
 		notificationQueueEntry.setToName(toName);
+		notificationQueueEntry.setType(type);
 		notificationQueueEntry.setStatus(
 			NotificationQueueEntryConstants.STATUS_UNSENT);
 

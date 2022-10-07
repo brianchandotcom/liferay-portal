@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,7 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
@@ -35,7 +34,7 @@ const TeamMembersTable = ({
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
 
 	const [
-		hasAccountAdministratorRole,
+		hasAccountAdministrator,
 		{loading: myUserAccountLoading},
 	] = useMyUserAccountByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey,
@@ -43,7 +42,7 @@ const TeamMembersTable = ({
 	);
 
 	const [
-		accountAdministratorsCount,
+		supportSeatsCount,
 		{data: userAccountsData, loading: userAccountsLoading},
 	] = useUserAccountsByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey,
@@ -58,23 +57,33 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
+	const getCurrentRoleBriefNames = useCallback(
+		(accountBriefs) =>
+			getAccountBriefByExternalReferenceCode(
+				accountBriefs,
+				koroneikiAccount?.accountKey
+			).roleBriefs.map((roleBrief) => roleBrief.name),
+		[koroneikiAccount?.accountKey]
+	);
+
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
 
 	const availableAccountRoles =
 		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
 
+	const availableSupportSeats =
+		koroneikiAccount?.maxRequestors - supportSeatsCount;
+
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
-
-	console.log(accountAdministratorsCount);
 
 	return (
 		<div className="cp-team-members-table-wrapper overflow-auto">
 			<Table
 				className="border-0 cp-team-members-table"
 				columns={getColumns(
-					hasAccountAdministratorRole,
+					hasAccountAdministrator,
 					articleAccountSupportURL
 				)}
 				isLoading={loading}
@@ -95,20 +104,20 @@ const TeamMembersTable = ({
 							edit={index === currentIndexEditing}
 							onCancel={() => setCurrentIndexEditing()}
 							onEdit={() => setCurrentIndexEditing(index)}
-							onRemove={() => console.log('Remove it')}
-							onSave={() => console.log('Save it')}
+							onRemove={() => {}}
+							onSave={() => {}}
 						/>
 					),
 					role: (
 						<RolesColumn
 							accountRoles={availableAccountRoles}
-							currentRoleBriefs={
-								getAccountBriefByExternalReferenceCode(
-									userAccount.accountBriefs,
-									koroneikiAccount?.accountKey
-								).roleBriefs
-							}
+							currentRoleBriefNames={getCurrentRoleBriefNames(
+								userAccount.accountBriefs
+							)}
 							edit={index === currentIndexEditing}
+							onClick={(selectedAccountRoleNames) =>
+								selectedAccountRoleNames
+							}
 						/>
 					),
 					status: (

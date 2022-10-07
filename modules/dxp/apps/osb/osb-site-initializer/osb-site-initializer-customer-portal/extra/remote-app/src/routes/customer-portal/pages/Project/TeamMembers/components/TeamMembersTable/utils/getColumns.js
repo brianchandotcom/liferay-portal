@@ -85,13 +85,10 @@ const optionColumn = {
 	},
 };
 
-export function getColumns(
-	hasAccountAdministratorRole,
-	articleAccountSupportURL
-) {
+export function getColumns(hasAccountAdministrator, articleAccountSupportURL) {
 	const columns = getInitialColumns(articleAccountSupportURL);
 
-	if (hasAccountAdministratorRole) {
+	if (hasAccountAdministrator) {
 		return [...columns, optionColumn];
 	}
 

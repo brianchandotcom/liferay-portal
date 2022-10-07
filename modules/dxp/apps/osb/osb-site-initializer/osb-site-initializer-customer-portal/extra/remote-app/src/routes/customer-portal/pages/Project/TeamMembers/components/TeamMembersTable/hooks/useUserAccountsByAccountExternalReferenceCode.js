@@ -10,8 +10,8 @@
  */
 
 import {useMemo} from 'react';
-import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts/queries/useGetUserAccountsByAccountExternalReferenceCode';
-import hasAccountAdministratorRoleByExternalReferenceCode from '../utils/hasAccountAdministratorRoleByExternalReferenceCode';
+import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
+import hasAccountSupportSeatRole from '../utils/hasAccountSupportSeatRole';
 
 export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
@@ -24,11 +24,11 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		}
 	);
 
-	const accountAdministratorsCount = useMemo(
+	const supportSeatsCount = useMemo(
 		() =>
 			data?.accountUserAccountsByExternalReferenceCode.items.filter(
 				(item) =>
-					hasAccountAdministratorRoleByExternalReferenceCode(
+					hasAccountSupportSeatRole(
 						item.accountBriefs,
 						externalReferenceCode
 					)
@@ -40,7 +40,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	);
 
 	return [
-		accountAdministratorsCount,
+		supportSeatsCount,
 		{data, loading: koroneikiAccountLoading || loading},
 	];
 }

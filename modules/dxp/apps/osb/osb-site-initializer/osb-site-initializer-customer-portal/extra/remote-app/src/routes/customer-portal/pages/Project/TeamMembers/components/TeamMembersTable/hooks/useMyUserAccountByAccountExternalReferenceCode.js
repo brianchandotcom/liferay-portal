@@ -11,7 +11,7 @@
 
 import {useMemo} from 'react';
 import {useGetMyUserAccount} from '../../../../../../../../common/services/liferay/graphql/user-accounts/queries/useGetMyUserAccount';
-import hasAccountAdministratorRoleByExternalReferenceCode from '../utils/hasAccountAdministratorRoleByExternalReferenceCode';
+import hasAccountAdministratorRole from '../utils/hasAccountAdministratorRole ';
 
 export default function useMyUserAccountByAccountExternalReferenceCode(
 	externalReferenceCode,
@@ -21,9 +21,9 @@ export default function useMyUserAccountByAccountExternalReferenceCode(
 		skip: koroneikiAccountLoading,
 	});
 
-	const hasAccountAdministratorRole = useMemo(
+	const hasAccountAdministrator = useMemo(
 		() =>
-			hasAccountAdministratorRoleByExternalReferenceCode(
+			hasAccountAdministratorRole(
 				data?.myUserAccount.accountBriefs,
 				externalReferenceCode
 			),
@@ -31,7 +31,7 @@ export default function useMyUserAccountByAccountExternalReferenceCode(
 	);
 
 	return [
-		hasAccountAdministratorRole,
+		hasAccountAdministrator,
 		{data, loading: koroneikiAccountLoading || loading},
 	];
 }

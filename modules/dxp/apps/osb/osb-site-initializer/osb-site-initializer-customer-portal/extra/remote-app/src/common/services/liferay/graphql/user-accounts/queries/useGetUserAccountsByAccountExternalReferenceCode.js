@@ -16,13 +16,15 @@ const GET_USER_ACCOUNTS_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`
 	${CORE_USER_ACCOUNT_FIELDS}
 	query getUserAccountsByAccountExternalReferenceCode(
 		$externalReferenceCode: String!
+		$pageSize: Int
 	) {
 		accountUserAccountsByExternalReferenceCode(
 			externalReferenceCode: $externalReferenceCode
+			pageSize: $pageSize
 		)
 			@rest(
 				type: "UserAccountPage"
-				path: "/headless-admin-user/v1.0/accounts/by-external-reference-code/{args.externalReferenceCode}/user-accounts"
+				path: "/headless-admin-user/v1.0/accounts/by-external-reference-code/{args.externalReferenceCode}/user-accounts?pageSize={args.pageSize}"
 			) {
 			items @type(name: "UserAccount") {
 				...CoreUserAccountFields
@@ -40,8 +42,6 @@ export function useGetUserAccountsByAccountExternalReferenceCode(
 	options = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,
-		page: 1,
-		pageSize: 20,
 		skip: false,
 	}
 ) {
@@ -57,7 +57,7 @@ export function useGetUserAccountsByAccountExternalReferenceCode(
 			externalReferenceCode,
 			filter: options.filter || '',
 			page: options.page || 1,
-			pageSize: options.pageSize || 20,
+			pageSize: options.pageSize || 9999,
 		},
 	});
 }

@@ -11,3 +11,4 @@
 
 export * from './queries/useGetUserAccount';
 export * from './queries/useGetMyUserAccount';
+export * from './queries/useGetUserAccountsByAccountExternalReferenceCode';

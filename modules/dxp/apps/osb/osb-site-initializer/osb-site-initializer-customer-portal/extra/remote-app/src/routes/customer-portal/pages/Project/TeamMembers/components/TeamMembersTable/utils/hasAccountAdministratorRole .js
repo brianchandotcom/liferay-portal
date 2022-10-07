@@ -11,7 +11,7 @@
 
 import getAccountBriefByExternalReferenceCode from './getAccountBriefByExternalReferenceCode';
 
-export default function hasAccountAdministratorRoleByExternalReferenceCode(
+export default function hasAccountAdministratorRole(
 	accountBriefs,
 	externalReferenceCode
 ) {

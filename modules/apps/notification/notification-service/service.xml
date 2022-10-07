@@ -44,7 +44,8 @@
 		<finder name="LtSentDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="sentDate" />
 		</finder>
-		<finder name="Status" return-type="Collection">
+		<finder name="T_S" return-type="Collection">
+			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>
 	</entity>

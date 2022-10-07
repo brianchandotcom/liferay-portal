@@ -9,24 +9,17 @@
  * distribution rights of the Software.
  */
 
-import SelectRole from '../../SelectRoles/SelectRoles';
+import RolesDropdown from './components/RolesDropdown';
 
-const RolesColumn = ({
-	accountRoles,
-	currentRoleBriefs,
-	edit,
-	onSelectAccountRoles,
-}) =>
+const RolesColumn = ({accountRoles, currentRoleBriefNames, edit, onClick}) =>
 	edit ? (
-		<SelectRole
+		<RolesDropdown
 			accountRoles={accountRoles}
-			currentRoleBriefs={currentRoleBriefs}
-			onSelectAccountRoles={onSelectAccountRoles}
+			currentRoleBriefNames={currentRoleBriefNames}
+			onClick={onClick}
 		/>
 	) : (
-		<p className="m-0 text-truncate">
-			{currentRoleBriefs.map((roleBrief) => roleBrief.name).join(', ')}
-		</p>
+		<p className="m-0 text-truncate">{currentRoleBriefNames.join(', ')}</p>
 	);
 
 export default RolesColumn;

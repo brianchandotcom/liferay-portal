@@ -9,4 +9,4 @@
  * distribution rights of the Software.
  */
 
-export {default} from './SelectRoles';
+export {default} from './RolesDropdown';

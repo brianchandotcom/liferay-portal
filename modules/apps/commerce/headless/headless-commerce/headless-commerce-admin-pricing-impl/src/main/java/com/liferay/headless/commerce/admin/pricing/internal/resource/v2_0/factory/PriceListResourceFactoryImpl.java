@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true, service = PriceListResource.Factory.class
+	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-pricing/v2.0/PriceList",
+	service = PriceListResource.Factory.class
 )
 @Generated("")
 public class PriceListResourceFactoryImpl implements PriceListResource.Factory {

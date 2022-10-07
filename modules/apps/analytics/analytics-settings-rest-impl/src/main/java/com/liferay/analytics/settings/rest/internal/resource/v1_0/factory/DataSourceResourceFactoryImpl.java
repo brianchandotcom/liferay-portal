@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Riccardo Ferrari
  * @generated
  */
-@Component(immediate = true, service = DataSourceResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/analytics-settings-rest/v1.0/DataSource",
+	service = DataSourceResource.Factory.class
+)
 @Generated("")
 public class DataSourceResourceFactoryImpl
 	implements DataSourceResource.Factory {

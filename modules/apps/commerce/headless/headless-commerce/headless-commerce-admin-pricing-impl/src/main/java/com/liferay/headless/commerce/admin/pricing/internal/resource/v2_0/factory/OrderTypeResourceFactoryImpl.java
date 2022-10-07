@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true, service = OrderTypeResource.Factory.class
+	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-pricing/v2.0/OrderType",
+	service = OrderTypeResource.Factory.class
 )
 @Generated("")
 public class OrderTypeResourceFactoryImpl implements OrderTypeResource.Factory {

@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = NotificationQueueEntryResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/notification/v1.0/NotificationQueueEntry",
+	service = NotificationQueueEntryResource.Factory.class
 )
 @Generated("")
 public class NotificationQueueEntryResourceFactoryImpl

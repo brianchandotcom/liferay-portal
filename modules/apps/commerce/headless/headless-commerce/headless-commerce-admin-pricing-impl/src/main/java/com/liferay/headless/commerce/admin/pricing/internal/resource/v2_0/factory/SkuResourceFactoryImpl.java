@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true, service = SkuResource.Factory.class
+	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-pricing/v2.0/Sku",
+	service = SkuResource.Factory.class
 )
 @Generated("")
 public class SkuResourceFactoryImpl implements SkuResource.Factory {

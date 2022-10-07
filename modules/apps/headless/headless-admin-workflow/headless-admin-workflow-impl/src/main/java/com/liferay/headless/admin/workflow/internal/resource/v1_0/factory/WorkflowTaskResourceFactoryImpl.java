@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = WorkflowTaskResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-workflow/v1.0/WorkflowTask",
+	service = WorkflowTaskResource.Factory.class
+)
 @Generated("")
 public class WorkflowTaskResourceFactoryImpl
 	implements WorkflowTaskResource.Factory {

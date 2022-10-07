@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, service = StructuredContentFolderResource.Factory.class
+	immediate = true,
+	property = "resource.locator.key=/headless-delivery/v1.0/StructuredContentFolder",
+	service = StructuredContentFolderResource.Factory.class
 )
 @Generated("")
 public class StructuredContentFolderResourceFactoryImpl

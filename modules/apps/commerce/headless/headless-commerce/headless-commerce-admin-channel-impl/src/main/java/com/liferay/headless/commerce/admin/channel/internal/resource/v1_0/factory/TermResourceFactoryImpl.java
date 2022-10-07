@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true, service = TermResource.Factory.class
+	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-channel/v1.0/Term",
+	service = TermResource.Factory.class
 )
 @Generated("")
 public class TermResourceFactoryImpl implements TermResource.Factory {

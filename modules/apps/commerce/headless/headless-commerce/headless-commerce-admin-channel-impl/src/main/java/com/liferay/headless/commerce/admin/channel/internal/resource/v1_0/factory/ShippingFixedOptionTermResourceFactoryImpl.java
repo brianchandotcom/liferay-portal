@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  */
 @Component(
 	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-channel/v1.0/ShippingFixedOptionTerm",
 	service = ShippingFixedOptionTermResource.Factory.class
 )
 @Generated("")

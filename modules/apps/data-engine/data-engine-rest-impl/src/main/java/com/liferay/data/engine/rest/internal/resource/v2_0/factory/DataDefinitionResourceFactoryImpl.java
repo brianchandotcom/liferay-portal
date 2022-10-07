@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Jeyvison Nascimento
  * @generated
  */
-@Component(immediate = true, service = DataDefinitionResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/data-engine/v2.0/DataDefinition",
+	service = DataDefinitionResource.Factory.class
+)
 @Generated("")
 public class DataDefinitionResourceFactoryImpl
 	implements DataDefinitionResource.Factory {

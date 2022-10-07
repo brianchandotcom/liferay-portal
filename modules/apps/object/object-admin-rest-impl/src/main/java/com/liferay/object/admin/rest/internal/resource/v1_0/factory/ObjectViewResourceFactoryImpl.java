@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = ObjectViewResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/object-admin/v1.0/ObjectView",
+	service = ObjectViewResource.Factory.class
+)
 @Generated("")
 public class ObjectViewResourceFactoryImpl
 	implements ObjectViewResource.Factory {

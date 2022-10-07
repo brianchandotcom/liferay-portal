@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = SitePageResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-delivery/v1.0/SitePage",
+	service = SitePageResource.Factory.class
+)
 @Generated("")
 public class SitePageResourceFactoryImpl implements SitePageResource.Factory {
 

@@ -63,7 +63,9 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true, service = PinResource.Factory.class
+	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-admin-catalog/v1.0/Pin",
+	service = PinResource.Factory.class
 )
 @Generated("")
 public class PinResourceFactoryImpl implements PinResource.Factory {

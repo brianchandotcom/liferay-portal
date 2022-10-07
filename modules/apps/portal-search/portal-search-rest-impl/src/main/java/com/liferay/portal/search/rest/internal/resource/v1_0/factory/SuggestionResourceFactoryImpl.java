@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Petteri Karttunen
  * @generated
  */
-@Component(immediate = true, service = SuggestionResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/portal-search-rest/v1.0/Suggestion",
+	service = SuggestionResource.Factory.class
+)
 @Generated("")
 public class SuggestionResourceFactoryImpl
 	implements SuggestionResource.Factory {

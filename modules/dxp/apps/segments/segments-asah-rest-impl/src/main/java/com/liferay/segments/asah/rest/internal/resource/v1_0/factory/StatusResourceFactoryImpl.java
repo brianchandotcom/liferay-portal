@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = StatusResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/segments-asah/v1.0/Status",
+	service = StatusResource.Factory.class
+)
 @Generated("")
 public class StatusResourceFactoryImpl implements StatusResource.Factory {
 

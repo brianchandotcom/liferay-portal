@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  */
 @Component(
 	immediate = true,
+	property = "resource.locator.key=/search-experiences-rest/v1.0/SXPParameterContributorDefinition",
 	service = SXPParameterContributorDefinitionResource.Factory.class
 )
 @Generated("")

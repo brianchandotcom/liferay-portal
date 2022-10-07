@@ -62,7 +62,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Alejandro Tardín
  * @generated
  */
-@Component(immediate = true, service = KeywordResource.Factory.class)
+@Component(
+	immediate = true, property = "resource.locator.key=/bulk/v1.0/Keyword",
+	service = KeywordResource.Factory.class
+)
 @Generated("")
 public class KeywordResourceFactoryImpl implements KeywordResource.Factory {
 

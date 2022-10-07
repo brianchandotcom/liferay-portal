@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Jeyvison Nascimento
  * @generated
  */
-@Component(immediate = true, service = DataRecordResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/data-engine/v2.0/DataRecord",
+	service = DataRecordResource.Factory.class
+)
 @Generated("")
 public class DataRecordResourceFactoryImpl
 	implements DataRecordResource.Factory {

@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Matija Petanjek
  * @generated
  */
-@Component(immediate = true, service = PlanResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/batch-planner/v1.0/Plan",
+	service = PlanResource.Factory.class
+)
 @Generated("")
 public class PlanResourceFactoryImpl implements PlanResource.Factory {
 

@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = ExperimentRunResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/segments-asah/v1.0/ExperimentRun",
+	service = ExperimentRunResource.Factory.class
+)
 @Generated("")
 public class ExperimentRunResourceFactoryImpl
 	implements ExperimentRunResource.Factory {

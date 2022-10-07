@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = WikiPageResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-delivery/v1.0/WikiPage",
+	service = WikiPageResource.Factory.class
+)
 @Generated("")
 public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 

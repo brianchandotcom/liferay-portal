@@ -62,7 +62,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = TransitionResource.Factory.class)
+@Component(
+	immediate = true,
+	property = "resource.locator.key=/headless-admin-workflow/v1.0/Transition",
+	service = TransitionResource.Factory.class
+)
 @Generated("")
 public class TransitionResourceFactoryImpl
 	implements TransitionResource.Factory {

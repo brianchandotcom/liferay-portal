@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  */
 @Component(
 	enabled = false, immediate = true,
+	property = "resource.locator.key=/headless-commerce-delivery-order/v1.0/PlacedOrderAddress",
 	service = PlacedOrderAddressResource.Factory.class
 )
 @Generated("")

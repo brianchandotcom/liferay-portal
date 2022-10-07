@@ -82,10 +82,10 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 		attributesBuilder.add("lastName");
 		attributesBuilder.add("male");
 		attributesBuilder.add("middleName");
-		attributesBuilder.add("prefixId");
+		attributesBuilder.add("prefixListTypeId");
 		attributesBuilder.add("skypeSn");
 		attributesBuilder.add("smsSn");
-		attributesBuilder.add("suffixId");
+		attributesBuilder.add("suffixListTypeId");
 		attributesBuilder.add("twitterSn");
 
 		return attributesBuilder.getAttributes();

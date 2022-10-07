@@ -319,6 +319,25 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 
 	protected String triggerBy;
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String type;
+
 	@Override
 	public NotificationQueueEntry clone() throws CloneNotSupportedException {
 		return (NotificationQueueEntry)super.clone();

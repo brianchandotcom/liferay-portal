@@ -15,12 +15,6 @@
 /// <reference types="react" />
 
 import './EditNotificationTemplate.scss';
-export default function EditNotificationTemplate({
-	baseResourceURL,
-	editorConfig,
-	notificationTemplateId,
-	notificationTemplateType,
-}: IProps): JSX.Element;
 interface IProps {
 	baseResourceURL: string;
 	editorConfig: object;
@@ -42,4 +36,10 @@ export declare type TNotificationTemplate = {
 	to: LocalizedValue<string>;
 	type: string;
 };
+export default function EditNotificationTemplate({
+	baseResourceURL,
+	editorConfig,
+	notificationTemplateId,
+	notificationTemplateType,
+}: IProps): JSX.Element;
 export {};

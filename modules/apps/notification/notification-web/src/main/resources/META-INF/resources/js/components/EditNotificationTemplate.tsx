@@ -66,7 +66,6 @@ interface User {
 	givenName: string;
 }
 
-
 export type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
@@ -82,7 +81,6 @@ export type TNotificationTemplate = {
 	to: LocalizedValue<string>;
 	type: string;
 };
-
 
 const RECIPIENT_OPTIONS = [
 	{
@@ -214,14 +212,11 @@ export default function EditNotificationTemplate({
 
 	const [templateTitle, setTemplateTitle] = useState<string>();
 
-	const [notificationType, setNotificationType] = useState<string>(
-		notificationTemplateType
-	);
 	const [rolesList, setRolesList] = useState<Role[]>([]);
 
 	const [userList, setUserList] = useState<User[]>([]);
 
-	const [roles, setRoles] = useState<Item[]>([]);
+	const [multiSelectItems, setMultiSelectItems] = useState<Item[]>([]);
 
 	const [searchTerm, setSearchTerm] = useState('');
 
@@ -259,12 +254,14 @@ export default function EditNotificationTemplate({
 
 		const responseJSON = await response.json();
 
-		const users = responseJSON.items.map(({alternateName, givenName}: User) => {
-			return {
-				label: givenName,
-				value: alternateName,
-			};
-		});
+		const users = responseJSON.items.map(
+			({alternateName, givenName}: User) => {
+				return {
+					label: givenName,
+					value: alternateName,
+				};
+			}
+		);
 
 		setUserList(users);
 	};
@@ -286,7 +283,7 @@ export default function EditNotificationTemplate({
 				[defaultLanguageId]: items.map((item) => item.value).toString(),
 			},
 		});
-		setRoles(items);
+		setMultiSelectItems(items);
 	};
 
 	useEffect(() => {
@@ -325,7 +322,16 @@ export default function EditNotificationTemplate({
 					});
 
 					setTemplateTitle(name);
-					setNotificationType(type);
+
+					if (recipientType === 'role' || recipientType === 'user') {
+						setMultiSelectItems(
+							(to[defaultLanguageId] as string)
+								.split(',')
+								.map((item: string) => {
+									return {label: item, value: item};
+								})
+						);
+					}
 				}
 			);
 		}
@@ -345,7 +351,7 @@ export default function EditNotificationTemplate({
 
 					{Liferay.FeatureFlags['LPS-162133'] && (
 						<div className="lfr__notification-template-label">
-							{notificationType === 'email' ? (
+							{notificationTemplateType === 'email' ? (
 								<ClayLabel displayType="success">
 									{Liferay.Language.get('email')}
 								</ClayLabel>
@@ -418,8 +424,10 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								{Liferay.FeatureFlags['LPS-162133'] &&
-								notificationTemplateType !== 'email' ? (
+								{(Liferay.FeatureFlags['LPS-162133'] &&
+									notificationTemplateType ===
+										'userNotification') ||
+								values.type === 'userNotification' ? (
 									<>
 										<SingleSelect
 											label={Liferay.Language.get(
@@ -481,7 +489,7 @@ export default function EditNotificationTemplate({
 													</label>
 
 													<ClayMultiSelect
-														items={roles}
+														items={multiSelectItems}
 														onChange={setSearchTerm}
 														onItemsChange={
 															handleMultiSelectItemsChange
@@ -512,7 +520,7 @@ export default function EditNotificationTemplate({
 													</label>
 
 													<ClayMultiSelect
-														items={roles}
+														items={multiSelectItems}
 														onChange={setSearchTerm}
 														onItemsChange={
 															handleMultiSelectItemsChange

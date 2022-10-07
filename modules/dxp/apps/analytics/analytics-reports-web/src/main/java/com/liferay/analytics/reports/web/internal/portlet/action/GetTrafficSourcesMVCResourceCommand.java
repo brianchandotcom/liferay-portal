@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -218,8 +217,5 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Props _props;
 
 }

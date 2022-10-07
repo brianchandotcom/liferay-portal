@@ -294,4 +294,15 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro assertFacetItemsByOrder {
+		var itemOrder = "0";
+        for (var current : list "${facetOrder}") {
+			var itemOrder = ${itemOrder} + 1;
+			AssertElementPresent(
+				key_itemName = "${current}",
+				key_itemOrder = "${itemOrder}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS_BY_ORDER");
+        }      
+    }
+
 }

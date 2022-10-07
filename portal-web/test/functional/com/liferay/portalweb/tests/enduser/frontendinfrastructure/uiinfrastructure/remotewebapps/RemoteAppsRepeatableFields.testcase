@@ -98,6 +98,108 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164436. The non-deleted field value can be retained."
+	@priority = "3"
+	test CanRetainNonDeletedFieldValue {
+		property portal.acceptance = "true";
+
+		task ("Given Custom Element with two valid JS URLs") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+
+			RemoteAppsEntry.addURLRow();
+
+			Type(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				value1 = "https://www.liferay.com/");
+
+			Type(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				value1 = "https://www.liferay.com/company/our-story");
+		}
+
+		task ("When delete first repeatable field") {
+			RemoteAppsEntry.removeURLRow(key_index = "1");
+		}
+
+		task ("Then only 1 JS URL field is present") {
+			AssertElementNotPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+		}
+
+		task ("And Then the JS URL value matches the 2nd JS URL value (prior to deletion)") {
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "1",
+				key_text = "https://www.liferay.com/company/our-story",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+		}
+
+		task ("And Then repeatable button - (minus) is not present") {
+			IsNotVisible(
+				key_fieldLabelName = "URL",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+		}
+	}
+
+	@description = "This is a test for LPS-164433. The JSON URL can be can be repeated."
+	@priority = "3"
+	test CSSURLCanBeRepeated {
+		property portal.acceptance = "true";
+
+		task ("Given Remote Application > Custom Elements create page") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When click repeatable button for CSS URL") {
+			RemoteAppsEntry.addCSSURLRow();
+		}
+
+		task ("Then new CSS URL field is added") {
+			AssertElementPresent(
+				key_id = "cssURLs",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+		}
+
+		task ("And Then repeatable button + and - are present for both CSS URL fields") {
+			AssertElementPresent(
+				key_fieldLabelName = "CSS URL",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+
+			AssertElementPresent(
+				key_fieldLabelName = "CSS URL",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+
+			AssertElementPresent(
+				key_fieldLabelName = "CSS URL",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+
+			AssertElementPresent(
+				key_fieldLabelName = "CSS URL",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+		}
+	}
+
 	@description = "This is a test for LPS-164433. The JSON URL can be can be repeatably clicked."
 	@priority = "3"
 	test JSURLCanBeRepeated {
@@ -120,7 +222,7 @@ definition {
 				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
 		}
 
-		task ("And Then repeatable button + and - are present for both JS URL fields") {
+		task ("And Then repeatable button + and - are present for both CSS URL fields") {
 			AssertElementPresent(
 				key_fieldLabelName = "URL",
 				key_index = "1",
@@ -140,6 +242,43 @@ definition {
 				key_fieldLabelName = "URL",
 				key_index = "2",
 				locator1 = "RemoteAppsEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
+		}
+	}
+
+	@description = "This is a test for LPS-164435. The JSON URL can be can be repeatably clicked."
+	@priority = "3"
+	test JSURLCanBeRepeatedMultipleTimes {
+		property portal.acceptance = "true";
+
+		task ("Given Remote Application > Custom Elements create page") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When click repeatable button 3 times for JS URL") {
+			RemoteAppsEntry.addURLRow();
+
+			RemoteAppsEntry.addURLRow();
+
+			RemoteAppsEntry.addURLRow();
+		}
+
+		task ("Then 3 new JS URL field are added") {
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "3",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "4",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
 		}
 	}
 

@@ -52,13 +52,13 @@ definition {
 		}
 
 		task ("Open the drop-down and assert the active status") {
-			CP2NavigationMenu.clickOnStatusButton(
-				status = "Active",
+			Click(
+				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 				title = "All");
 
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "Active");
+			AssertVisible(
+				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
+				status = "Active");
 		}
 	}
 
@@ -72,13 +72,13 @@ definition {
 		}
 
 		task ("Open the drop-down and assert the expired status") {
-			CP2NavigationMenu.clickOnStatusButton(
-				status = "Expired",
+			Click(
+				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 				title = "All");
 
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "Expired");
+			AssertVisible(
+				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
+				status = "Expired");
 		}
 	}
 
@@ -92,13 +92,13 @@ definition {
 		}
 
 		task ("Open the drop-down and assert the future status") {
-			CP2NavigationMenu.clickOnStatusButton(
-				status = "Future",
+			Click(
+				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 				title = "All");
 
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "Future");
+			AssertVisible(
+				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
+				status = "Future");
 		}
 	}
 
@@ -112,13 +112,9 @@ definition {
 		}
 
 		task ("Open the drop-down and assert the all status") {
-			CP2NavigationMenu.clickOnStatusButton(
-				status = "All",
-				title = "All");
+			var options = "Active,Expired,Future";
 
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "All");
+			CP2NavigationMenu.assertStatusOptions(statusList = "${options}");
 		}
 	}
 
@@ -132,17 +128,21 @@ definition {
 		}
 
 		task ("Select a status and open a subscription card") {
-			CP2NavigationMenu.clickOnStatusButton(
-				status = "Active",
+			AssertVisible(
+				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 				title = "All");
 
-			CustomerPortal.enterOnSubscription();
+			CustomerPortal.enterOnSubscription(modalTitle = "LXC - SM Non-Production");
 		}
 
 		task ("Assert that the subscription status is active") {
-			AssertElementPresent(
+			Click(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "Active");
+				title = "All");
+
+			AssertVisible(
+				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
+				status = "Active");
 		}
 
 		task ("Go back to Homepage and join a project again") {

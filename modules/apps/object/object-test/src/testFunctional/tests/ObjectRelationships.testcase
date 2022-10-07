@@ -885,6 +885,8 @@ definition {
 	@description = "LPS-152508 - Verify that it's not possible to delete a relationship with an incorrect input"
 	@priority = "4"
 	test CannotDeleteRelationshipWithIncorrectInput {
+		property portal.upstream = "quarantine";
+
 		task ("Create a custom object and a relationship to itself") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -954,6 +956,8 @@ definition {
 	@description = "LPS-135397 - Verify that it is not possible to leave a layout with a Relationship tab on first place by removing the fields tab"
 	@priority = "4"
 	test CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab {
+		property portal.upstream = "quarantine";
+
 		task ("Create a custom object and a relationship to itself") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -1024,6 +1028,8 @@ definition {
 	@description = "LPS-155537 - Verify that it's not possible to see the parameter when adding relationships that don't require it"
 	@priority = "3"
 	test CannotSeeParameterWhenNotRequiredByRelationship {
+		property portal.upstream = "quarantine";
+
 		task ("Create a custom object, and a relationship non-require by API") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -1080,6 +1086,8 @@ definition {
 	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"
 	@priority = "4"
 	test CannotSelectRelationshipFieldForObjectEntryTitle {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147735",
 			objectName = "CustomObject147735",

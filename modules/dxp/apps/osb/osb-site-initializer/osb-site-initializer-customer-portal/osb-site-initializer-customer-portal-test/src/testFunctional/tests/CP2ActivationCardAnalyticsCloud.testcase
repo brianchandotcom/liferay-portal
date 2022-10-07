@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account Analytics Cloud";
+	var testAccount = "Test Account Analytics Cloud";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -25,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -55,13 +55,15 @@ definition {
 				accountUserName = "Test Test");
 		}
 
-		task ("Go to CP2.0 and join a project") {
+		task ("Given I go to the test account") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(
+            CustomerPortal.search(searchItem = "${testAccount}");
+
+            CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "Test Account Analytics Cloud");
-		}
+				title = "${testAccount}");
+        }
 
 		task ("Going through onboarding") {
 			CustomerPortal.fullOnboardingFlow();

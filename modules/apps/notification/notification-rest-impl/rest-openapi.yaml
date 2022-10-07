@@ -42,6 +42,9 @@ components:
                     type: string
                 triggerBy:
                     type: string
+                type:
+                    readOnly: true
+                    type: string
             type: object
         NotificationTemplate:
             properties:
@@ -106,7 +109,6 @@ components:
                         type: string
                     type: object
                 type:
-                    enum: [email, userNotification]
                     type: string
             type: object
 info:

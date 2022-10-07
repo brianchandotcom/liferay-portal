@@ -121,7 +121,48 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 											</div>
 
 											<div class="autofit-col">
-												<liferay-util:include page="/image_gallery_display/image_action.jsp" servletContext="<%= application %>" />
+
+												<%
+												ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+												FileEntry fileEntry = null;
+												FileShortcut fileShortcut = null;
+
+												if (row != null) {
+													Object result = row.getObject();
+
+													if (result instanceof AssetEntry) {
+														AssetEntry assetEntry = (AssetEntry)result;
+
+														if (Objects.equals(assetEntry.getClassName(), DLFileEntryConstants.getClassName())) {
+															fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
+														}
+														else {
+															fileShortcut = DLAppLocalServiceUtil.getFileShortcut(assetEntry.getClassPK());
+														}
+													}
+													else if (result instanceof FileEntry) {
+														fileEntry = (FileEntry)result;
+													}
+													else if (result instanceof FileShortcut) {
+														fileShortcut = (FileShortcut)result;
+													}
+												}
+
+												IGViewFileVersionDisplayContext igViewFileVersionDisplayContext = null;
+
+												if (fileShortcut == null) {
+													igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+												}
+												else {
+													igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileShortcut);
+												}
+												%>
+
+												<clay:dropdown-actions
+													dropdownItems="<%= igViewFileVersionDisplayContext.getActionDropdownItems() %>"
+													propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+												/>
 											</div>
 										</div>
 									</div>

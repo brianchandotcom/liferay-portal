@@ -1615,10 +1615,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (propertyName.equals("male")) {
 				mappingPropertyName = ContactConverterKeys.GENDER;
 			}
-			else if (propertyName.equals("prefixId")) {
+			else if (propertyName.equals("prefixListTypeId")) {
 				mappingPropertyName = ContactConverterKeys.PREFIX;
 			}
-			else if (propertyName.equals("suffixId")) {
+			else if (propertyName.equals("suffixListTypeId")) {
 				mappingPropertyName = ContactConverterKeys.SUFFIX;
 			}
 

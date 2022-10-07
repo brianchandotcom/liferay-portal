@@ -524,11 +524,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		boolean listTypeFieldName = false;
 
 		if (fieldName.equals(ContactConverterKeys.PREFIX)) {
-			fieldName = "prefixId";
+			fieldName = "prefixListTypeId";
 			listTypeFieldName = true;
 		}
 		else if (fieldName.equals(ContactConverterKeys.SUFFIX)) {
-			fieldName = "suffixId";
+			fieldName = "suffixListTypeId";
 			listTypeFieldName = true;
 		}
 

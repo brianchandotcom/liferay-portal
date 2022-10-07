@@ -72,6 +72,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-151334 | Test Summary: Verify that the Key Type field displays a drop-down list where you can select a key."
+	@ignore = "true"
 	@priority = "3"
 	test CanViewADropdownListInTheKeyTypeField {
 		var portalKeyTypeList = "Backup,Flex,Limited,Non-Production,OEM,Production,Unlimited Enterprise-Wide";
@@ -91,6 +92,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-151333 | Test Summary: Verify that the version field displays a drop-down list where you can select a version."
+	@ignore = "true"
 	@priority = "3"
 	test CanViewADropdownListInTheVersionField {
 		var portalVersionList = "6.1 GA1,6.1 GA2,6.1 GA3,6.2 EE";
@@ -110,6 +112,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-151336 | Test Summary: Verify that after selecting a subscription, you receive an informational message."
+	@ignore = "true"
 	@priority = "3"
 	test CanViewAnInformationalMessageInTheSubscription {
 		task ("Given I select the first available signature") {
@@ -124,6 +127,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-151337 | Test Summary: Verify that after filling out all the fields the Next button is enabled."
+	@ignore = "true"
 	@priority = "3"
 	test CanViewTheNextButtonEnabled {
 		task ("Given I assert that the Next button is desabled") {
@@ -152,6 +156,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-151335 | Test Summary: Verify that signatures without available keys are displayed as disabled options."
+	@ignore = "true"
 	@priority = "3"
 	test SignaturesWithoutAvailableKeysWillBeDisabled {
 		task ("Given I should be able to view a signature with no keys availables") {
@@ -160,6 +165,7 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-151332 | Test Summary: Verify if the product field is already selected by default."
+	@ignore = "true"
 	@priority = "2"
 	test TheProductFieldIsSelectedByDefault {
 		task ("Then I should be able to see that 'Portal' product is selected by default") {

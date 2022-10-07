@@ -16,18 +16,19 @@ package com.liferay.analytics.reports.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author David Arques
@@ -42,34 +43,33 @@ public class AnalyticsReportsInfoItemTrackerImpl
 			return null;
 		}
 
-		return _analyticsReportsInfoItems.get(key);
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
 	public List<AnalyticsReportsInfoItem<?>> getAnalyticsReportsInfoItems() {
-		return new ArrayList<>(_analyticsReportsInfoItems.values());
+		return new ArrayList<>(_serviceTrackerMap.values());
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setAnalyticsReportsInfoItem(
-		AnalyticsReportsInfoItem<?> analyticsReportsInfo) {
-
-		_analyticsReportsInfoItems.put(
-			GenericUtil.getGenericClassName(analyticsReportsInfo),
-			analyticsReportsInfo);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<AnalyticsReportsInfoItem<?>>)
+				(Class<?>)AnalyticsReportsInfoItem.class,
+			null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(analyticsReportsInfo, emitter) -> emitter.emit(
+					GenericUtil.getGenericClassName(analyticsReportsInfo))));
 	}
 
-	protected void unsetAnalyticsReportsInfoItem(
-		AnalyticsReportsInfoItem<?> analyticsReportsInfo) {
-
-		_analyticsReportsInfoItems.remove(
-			GenericUtil.getGenericClassName(analyticsReportsInfo));
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, AnalyticsReportsInfoItem<?>>
-		_analyticsReportsInfoItems = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, AnalyticsReportsInfoItem<?>>
+		_serviceTrackerMap;
 
 }

@@ -21,6 +21,7 @@ import {
 	getPortletNamespace,
 	openModal,
 	openSelectionModal,
+	openToast,
 	sub,
 } from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
@@ -251,14 +252,34 @@ function DisplayPageSelector({
 						method: form.method,
 					})
 						.then((response) => response.json())
-						.then(({classPK, version}) => {
-							openModal({
-								title: Liferay.Language.get('preview'),
-								url: createPortletURL(previewURL, {
-									classPK,
-									selPlid: displayPageSelected?.plid,
-									version,
-								}).toString(),
+						.then(({classPK, error, version}) => {
+							if (error) {
+								openToast({
+									message: Liferay.Language.get(
+										'web-content-could-not-be-previewed-due-to-an-unexpected-error-while-generating-the-draft'
+									),
+									title: Liferay.Language.get('error'),
+									type: 'danger',
+								});
+							}
+							else {
+								openModal({
+									title: Liferay.Language.get('preview'),
+									url: createPortletURL(previewURL, {
+										classPK,
+										selPlid: displayPageSelected?.plid,
+										version,
+									}).toString(),
+								});
+							}
+						})
+						.catch(() => {
+							openToast({
+								message: Liferay.Language.get(
+									'web-content-could-not-be-previewed-due-to-an-unexpected-error-while-generating-the-draft'
+								),
+								title: Liferay.Language.get('error'),
+								type: 'danger',
 							});
 						});
 				}}

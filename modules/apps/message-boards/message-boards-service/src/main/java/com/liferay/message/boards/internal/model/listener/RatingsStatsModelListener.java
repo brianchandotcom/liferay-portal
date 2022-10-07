@@ -41,6 +41,10 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
 			ratingsStats.getClassPK());
 
+		if (mbMessage == null) {
+			return;
+		}
+
 		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
@@ -59,6 +63,10 @@ public class RatingsStatsModelListener extends BaseModelListener<RatingsStats> {
 
 		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
 			ratingsStats.getClassPK());
+
+		if (mbMessage == null) {
+			return;
+		}
 
 		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);

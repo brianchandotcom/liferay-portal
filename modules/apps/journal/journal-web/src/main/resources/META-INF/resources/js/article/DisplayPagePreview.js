@@ -94,31 +94,35 @@ export default function DisplayPagePreview({
 							)}
 						</ClayDropDown.Caption>
 
-						<ClayButton
-							className="w-100"
-							displayType="secondary"
-							onClick={() => {
-								openSelectionModal({
-									containerProps: {
-										className: 'cadmin',
-									},
-									onSelect(selectedItem) {
-										setSelectedSite({
-											groupId: selectedItem.groupid,
-											name:
-												selectedItem.groupdescriptivename,
-										});
-									},
-									selectEventName: selectSiteEventName,
-									title: Liferay.Language.get('select-site'),
-									url: siteItemSelectorURL,
-								});
-							}}
-							small
-							type="button"
-						>
-							{Liferay.Language.get('more')}
-						</ClayButton>
+						<div className="d-flex w-100">
+							<ClayButton
+								className="flex-grow-1 mx-3"
+								displayType="secondary"
+								onClick={() => {
+									openSelectionModal({
+										containerProps: {
+											className: 'cadmin',
+										},
+										onSelect(selectedItem) {
+											setSelectedSite({
+												groupId: selectedItem.groupid,
+												name:
+													selectedItem.groupdescriptivename,
+											});
+										},
+										selectEventName: selectSiteEventName,
+										title: Liferay.Language.get(
+											'select-site'
+										),
+										url: siteItemSelectorURL,
+									});
+								}}
+								small
+								type="button"
+							>
+								{Liferay.Language.get('more')}
+							</ClayButton>
+						</div>
 					</>
 				)}
 			</ClayDropDown>

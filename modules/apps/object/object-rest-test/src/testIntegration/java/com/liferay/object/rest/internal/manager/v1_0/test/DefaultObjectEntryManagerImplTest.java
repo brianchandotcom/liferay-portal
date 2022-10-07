@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
@@ -90,9 +91,12 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -475,6 +479,23 @@ public class DefaultObjectEntryManagerImplTest {
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
+				_buildRangeExpression(
+					objectDefinition2ObjectEntry1.getDateCreated(), new Date(),
+					"dateCreated")
+			).build(),
+			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildRangeExpression(
+					objectDefinition2ObjectEntry1.getDateModified(), new Date(),
+					"dateModified")
+			).build(),
+			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
 				_buildInExpressionFilterString(
 					"id", true, objectDefinition2ObjectEntry1.getId())
 			).build(),
@@ -822,6 +843,18 @@ public class DefaultObjectEntryManagerImplTest {
 		return StringBundler.concat(
 			"(", fieldName, "/any(x:",
 			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
+	}
+
+	private String _buildRangeExpression(
+		Date date1, Date date2, String fieldName) {
+
+		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+		return StringBundler.concat(
+			"( ", fieldName, " ge (", simpleDateFormat.format(date1),
+			") and ( ", fieldName, " le ", simpleDateFormat.format(date2),
+			"))");
 	}
 
 	private ObjectDefinition _createObjectDefinition(

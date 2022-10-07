@@ -42,8 +42,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(List<ObjectField> objectFields) {
 		_entityFieldsMap = HashMapBuilder.<String, EntityField>put(
-			"creator",
-			new StringEntityField("creator", locale -> Field.USER_NAME)
+			"creator", new StringEntityField("creator", locale -> "creator")
 		).put(
 			"creatorId",
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID)
@@ -99,9 +98,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 				_entityFieldsMap.put(
 					relationshipIdName,
 					new IdEntityField(
-						relationshipIdName,
-						locale ->
-							"nestedFieldArray.value_long#" + objectFieldName,
+						relationshipIdName, locale -> objectFieldName,
 						String::valueOf));
 			}
 			else {
@@ -121,30 +118,17 @@ public class ObjectEntryEntityModel implements EntityModel {
 	}
 
 	private Optional<EntityField> _getEntityField(ObjectField objectField) {
-		if (objectField.isIndexedAsKeyword()) {
-			return Optional.of(
-				new StringEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_keyword#" +
-							objectField.getName()));
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_CLOB) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_STRING)) {
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_CLOB) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			return Optional.of(
 				new StringEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_keyword_lowercase#" +
-							objectField.getName()));
+					objectField.getName(), locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
@@ -155,10 +139,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 			return Optional.of(
 				new DoubleEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_double#" +
-							objectField.getName()));
+					objectField.getName(), locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
@@ -166,10 +147,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 			return Optional.of(
 				new BooleanEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_boolean#" +
-							objectField.getName()));
+					objectField.getName(), locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
@@ -177,34 +155,19 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 			return Optional.of(
 				new DateEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_date#" + objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_date#" +
-							objectField.getName()));
+					objectField.getName(), locale -> objectField.getName(),
+					locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_INTEGER)) {
+					ObjectFieldConstants.DB_TYPE_INTEGER) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_LONG)) {
 
 			return Optional.of(
 				new IntegerEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_integer#" +
-							objectField.getName()));
-		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_LONG)) {
-
-			return Optional.of(
-				new IntegerEntityField(
-					objectField.getName(),
-					locale ->
-						"nestedFieldArray.value_long#" +
-							objectField.getName()));
+					objectField.getName(), locale -> objectField.getName()));
 		}
 
 		return Optional.empty();

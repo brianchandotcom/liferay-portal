@@ -55,12 +55,16 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -83,6 +87,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -121,6 +126,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Marco Leo
@@ -161,18 +169,15 @@ public class ObjectEntryLocalServiceTest {
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 1"));
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey2",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 2"));
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey3",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 3"));
 
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
@@ -215,12 +220,12 @@ public class ObjectEntryLocalServiceTest {
 					"Last Name", "lastName", false),
 				ObjectFieldUtil.createObjectField(
 					_listTypeDefinition.getListTypeDefinitionId(),
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"List Type Entry Key", "listTypeEntryKey", false, false),
 				ObjectFieldUtil.createObjectField(
 					_listTypeDefinition.getListTypeDefinitionId(),
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"List Type Entry Key Required", "listTypeEntryKeyRequired",
 					true, false),
@@ -500,13 +505,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectFieldSettingLocalService.updateObjectFieldSetting(
 				objectFieldSetting.getObjectFieldSettingId(), "jpg, png");
 
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
-				_objectDefinition.getPortletId(),
-				TempFileEntryUtil.getTempFileName(
-					StringUtil.randomString() + ".txt"),
-				FileUtil.createTempFile(RandomTestUtil.randomBytes()),
-				ContentTypes.TEXT_PLAIN);
+			FileEntry fileEntry = _addTempFileEntry(StringUtil.randomString());
 
 			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
@@ -995,6 +994,153 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAuditRouter() throws Exception {
+		Queue<AuditMessage> auditMessages = new LinkedList<>();
+
+		AuditRouter auditRouter =
+			(AuditRouter)ReflectionTestUtil.getAndSetFieldValue(
+				_objectEntryModelListener, "_auditRouter",
+				ProxyUtil.newProxyInstance(
+					AuditRouter.class.getClassLoader(),
+					new Class<?>[] {AuditRouter.class},
+					(proxy, method, arguments) -> {
+						auditMessages.add((AuditMessage)arguments[0]);
+
+						return null;
+					}));
+
+		_objectDefinition.setEnableObjectEntryHistory(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		FileEntry fileEntry = _addTempFileEntry("FileEntry");
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "james@liferay.com"
+			).put(
+				"firstName", "James"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"upload", fileEntry.getFileEntryId()
+			).build());
+
+		AuditMessage auditMessage = auditMessages.poll();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"emailAddressRequired", "james@liferay.com"
+			).put(
+				"firstName", "James"
+			).put(
+				"listTypeEntryKeyRequired",
+				JSONUtil.put(
+					"key", "listTypeEntryKey1"
+				).put(
+					"name", "List Type Entry Key 1"
+				)
+			).put(
+				"upload", JSONUtil.put("title", "FileEntry")
+			).toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+
+		auditMessages.clear();
+
+		fileEntry = _addTempFileEntry("NewFileEntry");
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"firstName", "Peter"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
+			).put(
+				"upload", fileEntry.getFileEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		auditMessage = auditMessages.poll();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"attributes",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"name", "emailAddressRequired"
+					).put(
+						"newValue", "peter@liferay.com"
+					).put(
+						"oldValue", "james@liferay.com"
+					),
+					JSONUtil.put(
+						"name", "firstName"
+					).put(
+						"newValue", "Peter"
+					).put(
+						"oldValue", "James"
+					),
+					JSONUtil.put(
+						"name", "listTypeEntryKeyRequired"
+					).put(
+						"newValue",
+						JSONUtil.put(
+							"key", "listTypeEntryKey3"
+						).put(
+							"name", "List Type Entry Key 3"
+						)
+					).put(
+						"oldValue",
+						JSONUtil.put(
+							"key", "listTypeEntryKey1"
+						).put(
+							"name", "List Type Entry Key 1"
+						)
+					),
+					JSONUtil.put(
+						"name", "upload"
+					).put(
+						"newValue", JSONUtil.put("title", "NewFileEntry")
+					).put(
+						"oldValue", JSONUtil.put("title", "FileEntry")
+					))
+			).toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+
+		auditMessages.clear();
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		auditMessage = auditMessages.poll();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"firstName", "Peter"
+			).put(
+				"listTypeEntryKeyRequired",
+				JSONUtil.put(
+					"key", "listTypeEntryKey3"
+				).put(
+					"name", "List Type Entry Key 3"
+				)
+			).put(
+				"upload", JSONUtil.put("title", "NewFileEntry")
+			).toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+
+		ReflectionTestUtil.setFieldValue(
+			_objectEntryModelListener, "_auditRouter", auditRouter);
+	}
+
+	@Test
 	public void testCachedValues() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -1049,13 +1195,7 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
-		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
-			_objectDefinition.getPortletId(),
-			TempFileEntryUtil.getTempFileName(
-				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
-			ContentTypes.TEXT_PLAIN);
+		FileEntry fileEntry = _addTempFileEntry(StringUtil.randomString());
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -1861,13 +2001,7 @@ public class ObjectEntryLocalServiceTest {
 		Date birthdayDate = calendar.getTime();
 
 		String script = RandomTestUtil.randomString(1500);
-		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
-			_objectDefinition.getPortletId(),
-			TempFileEntryUtil.getTempFileName(
-				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
-			ContentTypes.TEXT_PLAIN);
+		FileEntry fileEntry = _addTempFileEntry(StringUtil.randomString());
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -2175,6 +2309,15 @@ public class ObjectEntryLocalServiceTest {
 			externalReferenceCode, TestPropsValues.getUserId(), groupId,
 			_objectDefinition.getObjectDefinitionId(), values,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private FileEntry _addTempFileEntry(String title) throws Exception {
+		return TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			_objectDefinition.getPortletId(),
+			TempFileEntryUtil.getTempFileName(title + ".txt"),
+			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			ContentTypes.TEXT_PLAIN);
 	}
 
 	private void _assertCount(int count) throws Exception {
@@ -2557,6 +2700,11 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.model.listener.ObjectEntryModelListener"
+	)
+	private ModelListener<ObjectEntry> _objectEntryModelListener;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

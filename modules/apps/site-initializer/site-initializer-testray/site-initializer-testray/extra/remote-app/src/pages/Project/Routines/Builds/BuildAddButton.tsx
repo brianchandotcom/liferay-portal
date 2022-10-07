@@ -14,21 +14,49 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import Form from '../../../../components/Form';
 import Tooltip from '../../../../components/Tooltip';
 import {Dropdown} from '../../../../context/HeaderContext';
+import useDebounce from '../../../../hooks/useDebounce';
+import {useFetch} from '../../../../hooks/useFetch';
 import i18n from '../../../../i18n';
+import {APIResponse, TestrayBuild} from '../../../../services/rest';
+import {testrayBuildImpl} from '../../../../services/rest/TestrayBuild';
+import {searchUtil} from '../../../../util/search';
 
 type BuildAddButtonProps = {
 	routineId: string;
 };
 
-const BuildAddButton: React.FC<BuildAddButtonProps> = () => {
+const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 	const navigate = useNavigate();
-
+	const [value, setValue] = useState('');
+	const [state, setState] = useState([]);
 	const [active, setActive] = useState(false);
+
+	const debouncedValue = useDebounce(value, 100);
+
+	const {data} = useFetch<APIResponse<TestrayBuild>>(
+		`${testrayBuildImpl.resource}&filter=${searchUtil.eq(
+			'routineId',
+			routineId
+		)} and ${searchUtil.eq('template', true)} and ${searchUtil.eq(
+			'active',
+			true
+		)} and ${searchUtil.contains('name', debouncedValue)} `
+	);
+
+	const getBuildTemplate = useCallback(() => {
+		setState(data?.items as any);
+	}, []);
+
+	useEffect(() => {
+		getBuildTemplate();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const items: Dropdown = [
 		{
@@ -107,6 +135,52 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = () => {
 										</ClayDropDown.Item>
 									</React.Fragment>
 								)
+							)}
+
+							{state?.length > 0 && (
+								<>
+									<ClayDropDown.Divider />
+
+									<ClayDropDown.Group
+										header={i18n.translate('templates')}
+									>
+										<ClayDropDown.Item>
+											<Form.Input
+												name="search-filter"
+												onChange={(event) => {
+													setValue(
+														event.target.value
+													);
+												}}
+												placeholder="Search Templates"
+												value={value}
+											/>
+										</ClayDropDown.Item>
+
+										{data?.items.length !== 0 && (
+											<div className="dropdown-scrollbar">
+												<ClayDropDown.ItemList>
+													{data?.items.map(
+														(build, index) => (
+															<ClayDropDown.Item
+																key={index}
+															>
+																<li
+																	style={{
+																		listStyle:
+																			'none',
+																	}}
+																>
+																	{build.name}
+																</li>
+															</ClayDropDown.Item>
+														)
+													)}
+												</ClayDropDown.ItemList>
+											</div>
+										)}
+									</ClayDropDown.Group>
+								</>
 							)}
 						</ClayDropDown.Group>
 					</div>

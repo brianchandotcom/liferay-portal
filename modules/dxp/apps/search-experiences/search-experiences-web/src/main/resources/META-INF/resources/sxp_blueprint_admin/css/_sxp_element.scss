@@ -247,10 +247,14 @@
 			height: 24px;
 			width: 44px;
 
-			&.disabled {
+			&[aria-disabled='true'] {
 				cursor: not-allowed;
 
 				& ~ .toggle-switch-bar {
+					&::before {
+						box-shadow: none;
+					}
+
 					cursor: not-allowed;
 					opacity: 0.4;
 				}

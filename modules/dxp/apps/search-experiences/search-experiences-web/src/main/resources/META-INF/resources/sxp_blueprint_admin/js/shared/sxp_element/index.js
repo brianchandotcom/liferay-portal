@@ -365,27 +365,16 @@ function SXPElement({
 
 					{_isInactiveFromNonCompanyIndex() ? (
 						<ClayTooltipProvider>
-							<div className="toggle-switch">
-								<span
-									className="toggle-switch-check-bar"
-									data-tooltip-align="top"
-									title={Liferay.Language.get(
-										'query-element-inactive-from-index-help'
-									)}
-								>
-									<div
-										aria-disabled="true"
-										className="disabled toggle-switch-check"
-										type="checkbox"
-									/>
-
-									<span
-										aria-hidden="true"
-										className="disabled toggle-switch-bar"
-									>
-										<span className="toggle-switch-handle"></span>
-									</span>
-								</span>
+							<div
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'query-element-inactive-from-index-help'
+								)}
+							>
+								<ClayToggle
+									aria-disabled="true"
+									toggled={false}
+								/>
 							</div>
 						</ClayTooltipProvider>
 					) : (

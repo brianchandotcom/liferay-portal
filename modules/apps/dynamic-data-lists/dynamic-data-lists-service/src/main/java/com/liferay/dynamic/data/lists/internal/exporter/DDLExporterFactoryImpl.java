@@ -20,9 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -38,17 +35,6 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(immediate = true, service = DDLExporterFactory.class)
 public class DDLExporterFactoryImpl implements DDLExporterFactory {
-
-	/**
-	 * Returns the available formats that can be used to export record set
-	 * records.
-	 *
-	 * @return the available formats registered in the system
-	 */
-	@Override
-	public Set<String> getAvailableFormats() {
-		return Collections.unmodifiableSet(_serviceTrackerMap.keySet());
-	}
 
 	/**
 	 * Returns the DDL Exporter service instance for the format.

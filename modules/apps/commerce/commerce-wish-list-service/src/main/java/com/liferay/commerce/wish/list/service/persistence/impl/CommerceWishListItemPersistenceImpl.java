@@ -201,7 +201,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceWishListItem>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWishListItem commerceWishListItem : list) {
@@ -574,7 +574,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceWishListId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -718,7 +718,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceWishListItem>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWishListItem commerceWishListItem : list) {
@@ -1115,7 +1115,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPInstanceUuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1268,7 +1268,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceWishListItem>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWishListItem commerceWishListItem : list) {
@@ -1636,7 +1636,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CProductId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1787,7 +1787,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceWishListItem>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWishListItem commerceWishListItem : list) {
@@ -2209,7 +2209,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceWishListId, CPInstanceUuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2377,7 +2377,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceWishListItem>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceWishListItem commerceWishListItem : list) {
@@ -2772,7 +2772,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceWishListId, CProductId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2909,7 +2909,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByCW_CPI_CP, finderArgs);
+				_finderPathFetchByCW_CPI_CP, finderArgs, this);
 		}
 
 		if (result instanceof CommerceWishListItem) {
@@ -3054,7 +3054,7 @@ public class CommerceWishListItemPersistenceImpl
 			commerceWishListId, CPInstanceUuid, CProductId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3573,7 +3573,7 @@ public class CommerceWishListItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceWishListItem>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3643,7 +3643,7 @@ public class CommerceWishListItemPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

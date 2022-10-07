@@ -207,7 +207,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMTemplateVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplateVersion ddmTemplateVersion : list) {
@@ -583,7 +583,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 			finderArgs = new Object[] {templateId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -704,7 +704,8 @@ public class DDMTemplateVersionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByT_V, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByT_V, finderArgs, this);
 		}
 
 		if (result instanceof DDMTemplateVersion) {
@@ -824,7 +825,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 			finderArgs = new Object[] {templateId, version};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -994,7 +995,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMTemplateVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplateVersion ddmTemplateVersion : list) {
@@ -1394,7 +1395,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 			finderArgs = new Object[] {templateId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2037,7 +2038,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMTemplateVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2113,7 +2114,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

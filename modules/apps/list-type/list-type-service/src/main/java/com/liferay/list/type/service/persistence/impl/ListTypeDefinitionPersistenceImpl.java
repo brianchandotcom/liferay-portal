@@ -200,7 +200,7 @@ public class ListTypeDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ListTypeDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ListTypeDefinition listTypeDefinition : list) {
@@ -949,7 +949,7 @@ public class ListTypeDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1175,7 +1175,7 @@ public class ListTypeDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ListTypeDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ListTypeDefinition listTypeDefinition : list) {
@@ -1969,7 +1969,7 @@ public class ListTypeDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2536,7 +2536,7 @@ public class ListTypeDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ListTypeDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2606,7 +2606,7 @@ public class ListTypeDefinitionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

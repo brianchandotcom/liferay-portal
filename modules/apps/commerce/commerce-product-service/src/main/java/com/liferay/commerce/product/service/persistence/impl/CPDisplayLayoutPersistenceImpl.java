@@ -193,7 +193,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDisplayLayout cpDisplayLayout : list) {
@@ -586,7 +586,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -722,7 +722,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof CPDisplayLayout) {
@@ -842,7 +842,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1014,7 +1014,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDisplayLayout cpDisplayLayout : list) {
@@ -1439,7 +1439,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1602,7 +1602,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDisplayLayout cpDisplayLayout : list) {
@@ -1971,7 +1971,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2120,7 +2120,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDisplayLayout cpDisplayLayout : list) {
@@ -2519,7 +2519,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {groupId, classNameId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2677,7 +2677,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDisplayLayout cpDisplayLayout : list) {
@@ -3102,7 +3102,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {groupId, layoutUuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3272,7 +3272,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDisplayLayout cpDisplayLayout : list) {
@@ -3671,7 +3671,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3807,7 +3807,8 @@ public class CPDisplayLayoutPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_C_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_C, finderArgs, this);
 		}
 
 		if (result instanceof CPDisplayLayout) {
@@ -3923,7 +3924,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 			finderArgs = new Object[] {groupId, classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4607,7 +4608,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDisplayLayout>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4683,7 +4684,7 @@ public class CPDisplayLayoutPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

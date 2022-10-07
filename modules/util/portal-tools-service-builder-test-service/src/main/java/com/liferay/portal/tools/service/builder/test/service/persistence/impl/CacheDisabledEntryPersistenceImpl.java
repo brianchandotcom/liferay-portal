@@ -147,7 +147,7 @@ public class CacheDisabledEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = dummyFinderCache.getResult(
-				_finderPathFetchByName, finderArgs);
+				_finderPathFetchByName, finderArgs, this);
 		}
 
 		if (result instanceof CacheDisabledEntry) {
@@ -250,7 +250,8 @@ public class CacheDisabledEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {name};
 
-		Long count = (Long)dummyFinderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -713,7 +714,7 @@ public class CacheDisabledEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CacheDisabledEntry>)dummyFinderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -783,7 +784,7 @@ public class CacheDisabledEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)dummyFinderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

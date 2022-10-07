@@ -191,7 +191,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -583,7 +583,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -748,7 +749,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -1173,7 +1174,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1338,7 +1340,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -1706,7 +1708,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1848,7 +1851,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -2216,7 +2219,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {userId1};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2358,7 +2362,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -2726,7 +2730,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {userId2};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2865,7 +2870,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -3231,7 +3236,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3379,7 +3385,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -3778,7 +3784,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {companyId, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3934,7 +3941,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -4333,7 +4340,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {userId1, userId2};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4488,7 +4496,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -4886,7 +4894,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {userId1, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5041,7 +5050,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
@@ -5439,7 +5448,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {userId2, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5572,7 +5582,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU1_U2_T, finderArgs);
+				_finderPathFetchByU1_U2_T, finderArgs, this);
 		}
 
 		if (result instanceof SocialRelation) {
@@ -5686,7 +5696,8 @@ public class SocialRelationPersistenceImpl
 
 			finderArgs = new Object[] {userId1, userId2, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6328,7 +6339,7 @@ public class SocialRelationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialRelation>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -6404,7 +6415,7 @@ public class SocialRelationPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

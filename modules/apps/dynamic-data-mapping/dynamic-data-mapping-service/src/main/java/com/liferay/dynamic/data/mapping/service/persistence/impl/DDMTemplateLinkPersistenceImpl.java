@@ -201,7 +201,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMTemplateLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplateLink ddmTemplateLink : list) {
@@ -572,7 +572,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 			finderArgs = new Object[] {templateId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -691,7 +691,8 @@ public class DDMTemplateLinkPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof DDMTemplateLink) {
@@ -798,7 +799,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1416,7 +1417,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMTemplateLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1492,7 +1493,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

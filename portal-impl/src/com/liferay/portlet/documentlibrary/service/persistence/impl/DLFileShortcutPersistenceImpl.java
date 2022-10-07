@@ -196,7 +196,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -588,7 +588,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -724,7 +725,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof DLFileShortcut) {
@@ -844,7 +845,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1016,7 +1018,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -1441,7 +1443,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1606,7 +1609,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -1974,7 +1977,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2119,7 +2123,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -2494,7 +2498,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {toFileEntryId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2643,7 +2648,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -3388,7 +3393,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {groupId, folderId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3586,7 +3592,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -3985,7 +3991,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {companyId, status};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4148,7 +4155,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -4931,7 +4938,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {groupId, folderId, active};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5169,7 +5177,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
@@ -5995,7 +6003,8 @@ public class DLFileShortcutPersistenceImpl
 
 			finderArgs = new Object[] {groupId, folderId, active, status};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6735,7 +6744,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -6811,7 +6820,7 @@ public class DLFileShortcutPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

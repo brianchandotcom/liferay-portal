@@ -189,7 +189,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
@@ -555,7 +555,8 @@ public class AssetLinkPersistenceImpl
 
 			finderArgs = new Object[] {entryId1};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -695,7 +696,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
@@ -1061,7 +1062,8 @@ public class AssetLinkPersistenceImpl
 
 			finderArgs = new Object[] {entryId2};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1210,7 +1212,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
@@ -1607,7 +1609,8 @@ public class AssetLinkPersistenceImpl
 
 			finderArgs = new Object[] {entryId1, entryId2};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1762,7 +1765,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
@@ -2157,7 +2160,8 @@ public class AssetLinkPersistenceImpl
 
 			finderArgs = new Object[] {entryId1, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2312,7 +2316,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
@@ -2707,7 +2711,8 @@ public class AssetLinkPersistenceImpl
 
 			finderArgs = new Object[] {entryId2, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2840,7 +2845,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByE_E_T, finderArgs);
+				_finderPathFetchByE_E_T, finderArgs, this);
 		}
 
 		if (result instanceof AssetLink) {
@@ -2954,7 +2959,8 @@ public class AssetLinkPersistenceImpl
 
 			finderArgs = new Object[] {entryId1, entryId2, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3583,7 +3589,7 @@ public class AssetLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3659,7 +3665,7 @@ public class AssetLinkPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

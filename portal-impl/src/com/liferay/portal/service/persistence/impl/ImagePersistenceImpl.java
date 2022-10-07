@@ -176,7 +176,7 @@ public class ImagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Image>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Image image : list) {
@@ -539,7 +539,8 @@ public class ImagePersistenceImpl
 
 			finderArgs = new Object[] {size};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1120,7 +1121,7 @@ public class ImagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Image>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1196,7 +1197,7 @@ public class ImagePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

@@ -197,7 +197,7 @@ public class DDMFieldPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMField ddmField : list) {
@@ -563,7 +563,7 @@ public class DDMFieldPersistenceImpl
 
 			finderArgs = new Object[] {storageId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -708,7 +708,7 @@ public class DDMFieldPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMField ddmField : list) {
@@ -1083,7 +1083,7 @@ public class DDMFieldPersistenceImpl
 
 			finderArgs = new Object[] {structureVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1234,7 +1234,7 @@ public class DDMFieldPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMField ddmField : list) {
@@ -1657,7 +1657,7 @@ public class DDMFieldPersistenceImpl
 
 			finderArgs = new Object[] {companyId, fieldType};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1799,7 +1799,8 @@ public class DDMFieldPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByS_I, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByS_I, finderArgs, this);
 		}
 
 		if (result instanceof DDMField) {
@@ -1919,7 +1920,7 @@ public class DDMFieldPersistenceImpl
 
 			finderArgs = new Object[] {storageId, instanceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2524,7 +2525,7 @@ public class DDMFieldPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2600,7 +2601,7 @@ public class DDMFieldPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

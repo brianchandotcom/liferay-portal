@@ -208,7 +208,7 @@ public class LayoutLocalizationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutLocalization>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutLocalization layoutLocalization : list) {
@@ -605,7 +605,7 @@ public class LayoutLocalizationPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -741,7 +741,7 @@ public class LayoutLocalizationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof LayoutLocalization) {
@@ -861,7 +861,7 @@ public class LayoutLocalizationPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1033,7 +1033,7 @@ public class LayoutLocalizationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutLocalization>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutLocalization layoutLocalization : list) {
@@ -1459,7 +1459,7 @@ public class LayoutLocalizationPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1619,7 +1619,7 @@ public class LayoutLocalizationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutLocalization>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutLocalization layoutLocalization : list) {
@@ -1988,7 +1988,7 @@ public class LayoutLocalizationPersistenceImpl
 
 			finderArgs = new Object[] {plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2109,7 +2109,8 @@ public class LayoutLocalizationPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByL_P, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByL_P, finderArgs, this);
 		}
 
 		if (result instanceof LayoutLocalization) {
@@ -2230,7 +2231,7 @@ public class LayoutLocalizationPersistenceImpl
 
 			finderArgs = new Object[] {languageId, plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2382,7 +2383,8 @@ public class LayoutLocalizationPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_L_P, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_L_P, finderArgs, this);
 		}
 
 		if (result instanceof LayoutLocalization) {
@@ -2512,7 +2514,7 @@ public class LayoutLocalizationPersistenceImpl
 
 			finderArgs = new Object[] {groupId, languageId, plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3235,7 +3237,7 @@ public class LayoutLocalizationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutLocalization>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3311,7 +3313,7 @@ public class LayoutLocalizationPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

@@ -205,7 +205,7 @@ public class DDMContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMContent ddmContent : list) {
@@ -594,7 +594,7 @@ public class DDMContentPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -730,7 +730,7 @@ public class DDMContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof DDMContent) {
@@ -850,7 +850,7 @@ public class DDMContentPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1022,7 +1022,7 @@ public class DDMContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMContent ddmContent : list) {
@@ -1443,7 +1443,7 @@ public class DDMContentPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1604,7 +1604,7 @@ public class DDMContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMContent ddmContent : list) {
@@ -1969,7 +1969,7 @@ public class DDMContentPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2113,7 +2113,7 @@ public class DDMContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMContent ddmContent : list) {
@@ -2480,7 +2480,7 @@ public class DDMContentPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3115,7 +3115,7 @@ public class DDMContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3191,7 +3191,7 @@ public class DDMContentPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

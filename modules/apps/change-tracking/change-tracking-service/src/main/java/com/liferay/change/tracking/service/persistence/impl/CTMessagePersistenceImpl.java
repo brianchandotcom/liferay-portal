@@ -189,7 +189,7 @@ public class CTMessagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTMessage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTMessage ctMessage : list) {
@@ -548,7 +548,7 @@ public class CTMessagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -962,7 +962,7 @@ public class CTMessagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTMessage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1032,7 +1032,7 @@ public class CTMessagePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

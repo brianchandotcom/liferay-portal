@@ -160,7 +160,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUserId, finderArgs);
+				_finderPathFetchByUserId, finderArgs, this);
 		}
 
 		if (result instanceof MFAEmailOTPEntry) {
@@ -250,7 +250,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -717,7 +717,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MFAEmailOTPEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -787,7 +787,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

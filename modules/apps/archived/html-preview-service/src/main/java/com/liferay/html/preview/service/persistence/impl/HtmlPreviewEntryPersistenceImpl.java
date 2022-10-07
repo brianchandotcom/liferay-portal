@@ -179,7 +179,8 @@ public class HtmlPreviewEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByG_C_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_C, finderArgs, this);
 		}
 
 		if (result instanceof HtmlPreviewEntry) {
@@ -303,7 +304,7 @@ public class HtmlPreviewEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -792,7 +793,7 @@ public class HtmlPreviewEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<HtmlPreviewEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -862,7 +863,7 @@ public class HtmlPreviewEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

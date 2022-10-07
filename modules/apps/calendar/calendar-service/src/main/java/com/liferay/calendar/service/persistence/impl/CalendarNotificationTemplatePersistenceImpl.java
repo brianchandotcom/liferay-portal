@@ -211,7 +211,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarNotificationTemplate calendarNotificationTemplate :
@@ -616,7 +616,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -755,7 +755,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof CalendarNotificationTemplate) {
@@ -879,7 +879,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1053,7 +1053,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarNotificationTemplate calendarNotificationTemplate :
@@ -1485,7 +1485,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1653,7 +1653,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarNotificationTemplate calendarNotificationTemplate :
@@ -2036,7 +2036,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 			finderArgs = new Object[] {calendarId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2177,7 +2177,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_NT_NTT, finderArgs);
+				_finderPathFetchByC_NT_NTT, finderArgs, this);
 		}
 
 		if (result instanceof CalendarNotificationTemplate) {
@@ -2351,7 +2351,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				calendarId, notificationType, notificationTemplateType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3121,7 +3121,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CalendarNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3200,7 +3200,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

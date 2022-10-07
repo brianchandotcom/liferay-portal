@@ -200,7 +200,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -588,7 +588,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -747,7 +747,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -1164,7 +1164,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1327,7 +1327,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -1699,7 +1699,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId1};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1842,7 +1842,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -2214,7 +2214,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId2};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2324,7 +2324,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByObjectFieldId2, finderArgs);
+				_finderPathFetchByObjectFieldId2, finderArgs, this);
 		}
 
 		if (result instanceof ObjectRelationship) {
@@ -2430,7 +2430,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectFieldId2};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2578,7 +2578,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -2997,7 +2997,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId1, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3178,7 +3178,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -3630,7 +3630,7 @@ public class ObjectRelationshipPersistenceImpl
 			objectDefinitionId1, objectDefinitionId2, type
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3820,7 +3820,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -4272,7 +4272,7 @@ public class ObjectRelationshipPersistenceImpl
 			objectDefinitionId1, deletionType, reverse
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -4467,7 +4467,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectRelationship objectRelationship : list) {
@@ -4971,7 +4971,7 @@ public class ObjectRelationshipPersistenceImpl
 			objectDefinitionId1, objectDefinitionId2, name, type
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -5168,7 +5168,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByODI1_ODI2_N_R_T, finderArgs);
+				_finderPathFetchByODI1_ODI2_N_R_T, finderArgs, this);
 		}
 
 		if (result instanceof ObjectRelationship) {
@@ -5341,7 +5341,7 @@ public class ObjectRelationshipPersistenceImpl
 			objectDefinitionId1, objectDefinitionId2, name, reverse, type
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(6);
@@ -5919,7 +5919,7 @@ public class ObjectRelationshipPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectRelationship>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5989,7 +5989,7 @@ public class ObjectRelationshipPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

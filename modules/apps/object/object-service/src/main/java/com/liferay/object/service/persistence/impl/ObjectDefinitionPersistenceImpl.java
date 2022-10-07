@@ -198,7 +198,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -944,7 +944,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1170,7 +1170,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -1964,7 +1964,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2195,7 +2195,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -2893,7 +2893,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3076,7 +3076,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -3774,7 +3774,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {system};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3940,7 +3940,8 @@ public class ObjectDefinitionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof ObjectDefinition) {
@@ -4068,7 +4069,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, className};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4204,7 +4205,8 @@ public class ObjectDefinitionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_N, finderArgs, this);
 		}
 
 		if (result instanceof ObjectDefinition) {
@@ -4330,7 +4332,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4493,7 +4495,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -5233,7 +5235,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {system, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5446,7 +5448,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -6227,7 +6229,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, active, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -6459,7 +6461,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -7284,7 +7286,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, active, system, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -7495,7 +7497,8 @@ public class ObjectDefinitionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof ObjectDefinition) {
@@ -7610,7 +7613,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -8162,7 +8165,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -8232,7 +8235,7 @@ public class ObjectDefinitionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

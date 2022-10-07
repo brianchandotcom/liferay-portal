@@ -201,7 +201,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
@@ -567,7 +567,7 @@ public class KaleoLogPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -718,7 +718,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
@@ -1098,7 +1098,7 @@ public class KaleoLogPersistenceImpl
 
 			finderArgs = new Object[] {kaleoDefinitionVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1244,7 +1244,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
@@ -1612,7 +1612,7 @@ public class KaleoLogPersistenceImpl
 
 			finderArgs = new Object[] {kaleoInstanceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1764,7 +1764,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
@@ -2144,7 +2144,7 @@ public class KaleoLogPersistenceImpl
 
 			finderArgs = new Object[] {kaleoTaskInstanceTokenId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2297,7 +2297,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
@@ -2722,7 +2722,7 @@ public class KaleoLogPersistenceImpl
 
 			finderArgs = new Object[] {kaleoInstanceTokenId, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2915,7 +2915,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
@@ -3422,7 +3422,7 @@ public class KaleoLogPersistenceImpl
 				kaleoClassName, kaleoClassPK, kaleoInstanceTokenId, type
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4070,7 +4070,7 @@ public class KaleoLogPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoLog>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4146,7 +4146,7 @@ public class KaleoLogPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

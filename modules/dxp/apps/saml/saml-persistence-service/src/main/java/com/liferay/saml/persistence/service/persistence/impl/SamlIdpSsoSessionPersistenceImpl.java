@@ -189,7 +189,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlIdpSsoSession>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlIdpSsoSession samlIdpSsoSession : list) {
@@ -580,7 +580,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(createDate)};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -708,7 +708,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchBySamlIdpSsoSessionKey, finderArgs);
+				_finderPathFetchBySamlIdpSsoSessionKey, finderArgs, this);
 		}
 
 		if (result instanceof SamlIdpSsoSession) {
@@ -836,7 +836,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {samlIdpSsoSessionKey};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1331,7 +1331,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlIdpSsoSession>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1401,7 +1401,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

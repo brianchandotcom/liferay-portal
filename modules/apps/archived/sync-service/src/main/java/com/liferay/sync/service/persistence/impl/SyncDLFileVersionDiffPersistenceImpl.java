@@ -197,7 +197,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLFileVersionDiff>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLFileVersionDiff syncDLFileVersionDiff : list) {
@@ -565,7 +565,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		Object[] finderArgs = new Object[] {fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -695,7 +695,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLFileVersionDiff>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLFileVersionDiff syncDLFileVersionDiff : list) {
@@ -1090,7 +1090,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(expirationDate)};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1234,7 +1234,8 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByF_S_T, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByF_S_T, finderArgs, this);
 		}
 
 		if (result instanceof SyncDLFileVersionDiff) {
@@ -1349,7 +1350,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			fileEntryId, sourceFileVersionId, targetFileVersionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1840,7 +1841,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLFileVersionDiff>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1910,7 +1911,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

@@ -195,7 +195,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionInventory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionInventory cpDefinitionInventory : list) {
@@ -594,7 +594,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -731,7 +731,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof CPDefinitionInventory) {
@@ -853,7 +853,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1027,7 +1027,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionInventory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionInventory cpDefinitionInventory : list) {
@@ -1454,7 +1454,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1590,7 +1590,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByCPDefinitionId, finderArgs);
+				_finderPathFetchByCPDefinitionId, finderArgs, this);
 		}
 
 		if (result instanceof CPDefinitionInventory) {
@@ -1691,7 +1691,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2384,7 +2384,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionInventory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2460,7 +2460,7 @@ public class CPDefinitionInventoryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

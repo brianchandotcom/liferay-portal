@@ -195,7 +195,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -575,7 +575,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -734,7 +734,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -1147,7 +1147,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1311,7 +1311,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -1679,7 +1679,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {listTypeDefinitionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1821,7 +1821,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -2188,7 +2188,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2335,7 +2335,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -2725,7 +2725,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {listTypeDefinitionId, state};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2881,7 +2881,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -3298,7 +3298,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId, dbTableName};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3434,7 +3434,8 @@ public class ObjectFieldPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByODI_N, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByODI_N, finderArgs, this);
 		}
 
 		if (result instanceof ObjectField) {
@@ -3562,7 +3563,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3729,7 +3730,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -4119,7 +4120,7 @@ public class ObjectFieldPersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectDefinitionId, system};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4257,7 +4258,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC_ODI, finderArgs);
+				_finderPathFetchByC_ERC_ODI, finderArgs, this);
 		}
 
 		if (result instanceof ObjectField) {
@@ -4384,7 +4385,7 @@ public class ObjectFieldPersistenceImpl
 			companyId, externalReferenceCode, objectDefinitionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -4570,7 +4571,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectField objectField : list) {
@@ -5015,7 +5016,7 @@ public class ObjectFieldPersistenceImpl
 			objectDefinitionId, dbType, indexed
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -5549,7 +5550,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectField>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5619,7 +5620,7 @@ public class ObjectFieldPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

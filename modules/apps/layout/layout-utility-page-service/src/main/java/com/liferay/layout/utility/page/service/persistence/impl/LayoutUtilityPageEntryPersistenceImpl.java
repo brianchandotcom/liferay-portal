@@ -210,7 +210,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutUtilityPageEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutUtilityPageEntry layoutUtilityPageEntry : list) {
@@ -611,7 +611,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -748,7 +748,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof LayoutUtilityPageEntry) {
@@ -870,7 +870,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1044,7 +1044,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutUtilityPageEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutUtilityPageEntry layoutUtilityPageEntry : list) {
@@ -1471,7 +1471,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1634,7 +1634,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutUtilityPageEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutUtilityPageEntry layoutUtilityPageEntry : list) {
@@ -2349,7 +2349,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2545,7 +2545,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutUtilityPageEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutUtilityPageEntry layoutUtilityPageEntry : list) {
@@ -3298,7 +3298,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3525,7 +3525,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutUtilityPageEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutUtilityPageEntry layoutUtilityPageEntry : list) {
@@ -4331,7 +4331,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				groupId, defaultLayoutUtilityPageEntry, type
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4534,7 +4534,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_ERC, finderArgs, this);
 		}
 
 		if (result instanceof LayoutUtilityPageEntry) {
@@ -4659,7 +4660,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, externalReferenceCode};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5386,7 +5387,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutUtilityPageEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5462,7 +5463,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

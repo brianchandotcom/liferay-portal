@@ -166,7 +166,8 @@ public class MemberRequestPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByKey, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByKey, finderArgs, this);
 		}
 
 		if (result instanceof MemberRequest) {
@@ -284,7 +285,7 @@ public class MemberRequestPersistenceImpl
 
 		Object[] finderArgs = new Object[] {key};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -437,7 +438,7 @@ public class MemberRequestPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MemberRequest>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MemberRequest memberRequest : list) {
@@ -803,7 +804,7 @@ public class MemberRequestPersistenceImpl
 
 		Object[] finderArgs = new Object[] {receiverUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -946,7 +947,7 @@ public class MemberRequestPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MemberRequest>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MemberRequest memberRequest : list) {
@@ -1336,7 +1337,7 @@ public class MemberRequestPersistenceImpl
 
 		Object[] finderArgs = new Object[] {receiverUserId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1466,7 +1467,8 @@ public class MemberRequestPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByG_R_S, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_R_S, finderArgs, this);
 		}
 
 		if (result instanceof MemberRequest) {
@@ -1590,7 +1592,7 @@ public class MemberRequestPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, receiverUserId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2089,7 +2091,7 @@ public class MemberRequestPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MemberRequest>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2159,7 +2161,7 @@ public class MemberRequestPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

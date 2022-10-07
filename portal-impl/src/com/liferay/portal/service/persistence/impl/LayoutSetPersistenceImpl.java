@@ -191,7 +191,7 @@ public class LayoutSetPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSet layoutSet : list) {
@@ -555,7 +555,8 @@ public class LayoutSetPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -706,7 +707,7 @@ public class LayoutSetPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSet layoutSet : list) {
@@ -1112,7 +1113,8 @@ public class LayoutSetPersistenceImpl
 
 			finderArgs = new Object[] {layoutSetPrototypeUuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1250,7 +1252,7 @@ public class LayoutSetPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_P, finderArgs);
+				_finderPathFetchByG_P, finderArgs, this);
 		}
 
 		if (result instanceof LayoutSet) {
@@ -1357,7 +1359,8 @@ public class LayoutSetPersistenceImpl
 
 			finderArgs = new Object[] {groupId, privateLayout};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1519,7 +1522,7 @@ public class LayoutSetPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSet layoutSet : list) {
@@ -1945,7 +1948,8 @@ public class LayoutSetPersistenceImpl
 
 			finderArgs = new Object[] {companyId, layoutSetPrototypeUuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2086,7 +2090,7 @@ public class LayoutSetPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByP_L, finderArgs);
+				_finderPathFetchByP_L, finderArgs, this);
 		}
 
 		if (result instanceof LayoutSet) {
@@ -2210,7 +2214,8 @@ public class LayoutSetPersistenceImpl
 
 			finderArgs = new Object[] {privateLayout, logoId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2866,7 +2871,7 @@ public class LayoutSetPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2942,7 +2947,7 @@ public class LayoutSetPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

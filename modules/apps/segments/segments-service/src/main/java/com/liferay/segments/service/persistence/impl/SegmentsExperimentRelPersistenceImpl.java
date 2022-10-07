@@ -210,7 +210,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsExperimentRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsExperimentRel segmentsExperimentRel : list) {
@@ -593,7 +593,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 			finderArgs = new Object[] {segmentsExperimentId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -744,7 +744,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsExperimentRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsExperimentRel segmentsExperimentRel : list) {
@@ -1127,7 +1127,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 			finderArgs = new Object[] {segmentsExperienceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1255,7 +1255,8 @@ public class SegmentsExperimentRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByS_S, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByS_S, finderArgs, this);
 		}
 
 		if (result instanceof SegmentsExperimentRel) {
@@ -1371,7 +1372,7 @@ public class SegmentsExperimentRelPersistenceImpl
 				segmentsExperimentId, segmentsExperienceId
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2038,7 +2039,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsExperimentRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2114,7 +2115,7 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

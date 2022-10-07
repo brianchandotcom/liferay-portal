@@ -204,7 +204,7 @@ public class CalendarPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Calendar>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Calendar calendar : list) {
@@ -593,7 +593,7 @@ public class CalendarPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -729,7 +729,7 @@ public class CalendarPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof Calendar) {
@@ -849,7 +849,7 @@ public class CalendarPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1020,7 +1020,7 @@ public class CalendarPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Calendar>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Calendar calendar : list) {
@@ -1441,7 +1441,7 @@ public class CalendarPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1611,7 +1611,7 @@ public class CalendarPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Calendar>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Calendar calendar : list) {
@@ -2353,7 +2353,7 @@ public class CalendarPersistenceImpl
 
 			finderArgs = new Object[] {groupId, calendarResourceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2575,7 +2575,7 @@ public class CalendarPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Calendar>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Calendar calendar : list) {
@@ -3365,7 +3365,7 @@ public class CalendarPersistenceImpl
 				groupId, calendarResourceId, defaultCalendar
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4064,7 +4064,7 @@ public class CalendarPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Calendar>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4140,7 +4140,7 @@ public class CalendarPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

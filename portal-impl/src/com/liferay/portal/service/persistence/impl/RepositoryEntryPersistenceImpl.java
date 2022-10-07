@@ -194,7 +194,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<RepositoryEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RepositoryEntry repositoryEntry : list) {
@@ -587,7 +587,8 @@ public class RepositoryEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -723,7 +724,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof RepositoryEntry) {
@@ -843,7 +844,8 @@ public class RepositoryEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1015,7 +1017,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<RepositoryEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RepositoryEntry repositoryEntry : list) {
@@ -1440,7 +1442,8 @@ public class RepositoryEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1606,7 +1609,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<RepositoryEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RepositoryEntry repositoryEntry : list) {
@@ -1981,7 +1984,8 @@ public class RepositoryEntryPersistenceImpl
 
 			finderArgs = new Object[] {repositoryId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2103,7 +2107,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByR_M, finderArgs);
+				_finderPathFetchByR_M, finderArgs, this);
 		}
 
 		if (result instanceof RepositoryEntry) {
@@ -2223,7 +2227,8 @@ public class RepositoryEntryPersistenceImpl
 
 			finderArgs = new Object[] {repositoryId, mappedId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2914,7 +2919,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<RepositoryEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2990,7 +2995,7 @@ public class RepositoryEntryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

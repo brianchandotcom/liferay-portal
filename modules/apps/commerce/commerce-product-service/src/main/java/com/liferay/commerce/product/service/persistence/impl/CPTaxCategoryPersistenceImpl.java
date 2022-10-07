@@ -193,7 +193,7 @@ public class CPTaxCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPTaxCategory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPTaxCategory cpTaxCategory : list) {
@@ -584,7 +584,7 @@ public class CPTaxCategoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -749,7 +749,7 @@ public class CPTaxCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPTaxCategory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPTaxCategory cpTaxCategory : list) {
@@ -1174,7 +1174,7 @@ public class CPTaxCategoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1339,7 +1339,7 @@ public class CPTaxCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPTaxCategory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPTaxCategory cpTaxCategory : list) {
@@ -1707,7 +1707,7 @@ public class CPTaxCategoryPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1832,7 +1832,8 @@ public class CPTaxCategoryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof CPTaxCategory) {
@@ -1956,7 +1957,7 @@ public class CPTaxCategoryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, externalReferenceCode};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2628,7 +2629,7 @@ public class CPTaxCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPTaxCategory>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2704,7 +2705,7 @@ public class CPTaxCategoryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

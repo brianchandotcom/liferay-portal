@@ -482,7 +482,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -552,7 +553,7 @@ public class EntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

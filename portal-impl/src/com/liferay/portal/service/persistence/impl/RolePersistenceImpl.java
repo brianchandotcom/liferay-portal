@@ -202,7 +202,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -935,7 +935,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1165,7 +1166,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -1946,7 +1947,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2180,7 +2182,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -2868,7 +2870,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3056,7 +3059,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -3789,7 +3792,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4001,7 +4005,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -4682,7 +4686,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4873,7 +4878,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -5611,7 +5616,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {subtype};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5808,7 +5814,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_N, finderArgs);
+				_finderPathFetchByC_N, finderArgs, this);
 		}
 
 		if (result instanceof Role) {
@@ -5928,7 +5934,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {companyId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6095,7 +6102,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -7039,7 +7046,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_T, finderArgs);
+				_finderPathWithPaginationFindByC_T, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -7157,7 +7164,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {companyId, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7228,7 +7236,7 @@ public class RolePersistenceImpl
 			finderArgs = new Object[] {companyId, StringUtil.merge(types)};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_T, finderArgs);
+				_finderPathWithPaginationCountByC_T, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7525,7 +7533,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -8301,7 +8309,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {type, subtype};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8575,7 +8584,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_C_C, finderArgs);
+				_finderPathWithPaginationFindByC_C_C, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -8740,7 +8749,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_C_C, finderArgs);
+				_finderPathFetchByC_C_C, finderArgs, this);
 		}
 
 		if (result instanceof Role) {
@@ -8854,7 +8863,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {companyId, classNameId, classPK};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8932,7 +8942,7 @@ public class RolePersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_C_C, finderArgs);
+				_finderPathWithPaginationCountByC_C_C, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -9292,7 +9302,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_C_C_T, finderArgs);
+				_finderPathWithPaginationFindByC_C_C_T, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
@@ -9474,7 +9484,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_C_C_T, finderArgs);
+				_finderPathFetchByC_C_C_T, finderArgs, this);
 		}
 
 		if (result instanceof Role) {
@@ -9597,7 +9607,8 @@ public class RolePersistenceImpl
 
 			finderArgs = new Object[] {companyId, classNameId, classPK, type};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -9682,7 +9693,7 @@ public class RolePersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_C_C_T, finderArgs);
+				_finderPathWithPaginationCountByC_C_C_T, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -10530,7 +10541,7 @@ public class RolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Role>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -10606,7 +10617,7 @@ public class RolePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

@@ -199,7 +199,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RedirectNotFoundEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RedirectNotFoundEntry redirectNotFoundEntry : list) {
@@ -567,7 +567,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -682,7 +682,8 @@ public class RedirectNotFoundEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByG_U, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_U, finderArgs, this);
 		}
 
 		if (result instanceof RedirectNotFoundEntry) {
@@ -794,7 +795,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, url};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1338,7 +1339,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RedirectNotFoundEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1408,7 +1409,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

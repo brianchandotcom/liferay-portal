@@ -196,7 +196,7 @@ public class CommerceChannelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CommerceChannel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceChannel commerceChannel : list) {
@@ -947,7 +947,7 @@ public class CommerceChannelPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1179,7 +1179,7 @@ public class CommerceChannelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CommerceChannel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceChannel commerceChannel : list) {
@@ -1978,7 +1978,7 @@ public class CommerceChannelPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2215,7 +2215,7 @@ public class CommerceChannelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CommerceChannel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceChannel commerceChannel : list) {
@@ -2918,7 +2918,7 @@ public class CommerceChannelPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3080,7 +3080,7 @@ public class CommerceChannelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchBySiteGroupId, finderArgs);
+				_finderPathFetchBySiteGroupId, finderArgs, this);
 		}
 
 		if (result instanceof CommerceChannel) {
@@ -3194,7 +3194,7 @@ public class CommerceChannelPersistenceImpl
 
 			finderArgs = new Object[] {siteGroupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3319,7 +3319,8 @@ public class CommerceChannelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof CommerceChannel) {
@@ -3443,7 +3444,7 @@ public class CommerceChannelPersistenceImpl
 
 			finderArgs = new Object[] {companyId, externalReferenceCode};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4135,7 +4136,7 @@ public class CommerceChannelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CommerceChannel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4211,7 +4212,7 @@ public class CommerceChannelPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

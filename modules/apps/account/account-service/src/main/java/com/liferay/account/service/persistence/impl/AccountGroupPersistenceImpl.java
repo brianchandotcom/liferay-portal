@@ -198,7 +198,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -934,7 +934,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1160,7 +1160,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -1944,7 +1944,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2177,7 +2177,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -2746,7 +2746,8 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				_finderPathWithPaginationFindByAccountGroupId, finderArgs);
+				_finderPathWithPaginationFindByAccountGroupId, finderArgs,
+				this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -2849,7 +2850,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountGroupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2904,7 +2905,7 @@ public class AccountGroupPersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(accountGroupIds)};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByAccountGroupId, finderArgs);
+			_finderPathWithPaginationCountByAccountGroupId, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -3168,7 +3169,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -3856,7 +3857,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -4051,7 +4052,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -4793,7 +4794,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, defaultAccountGroup};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4997,7 +4998,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountGroup accountGroup : list) {
@@ -5781,7 +5782,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5993,7 +5994,8 @@ public class AccountGroupPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof AccountGroup) {
@@ -6108,7 +6110,7 @@ public class AccountGroupPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6616,7 +6618,7 @@ public class AccountGroupPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -6686,7 +6688,7 @@ public class AccountGroupPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

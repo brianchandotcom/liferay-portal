@@ -159,7 +159,7 @@ public class DLStorageQuotaPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByCompanyId, finderArgs);
+				_finderPathFetchByCompanyId, finderArgs, this);
 		}
 
 		if (result instanceof DLStorageQuota) {
@@ -249,7 +249,7 @@ public class DLStorageQuotaPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -688,7 +688,7 @@ public class DLStorageQuotaPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLStorageQuota>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -758,7 +758,7 @@ public class DLStorageQuotaPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

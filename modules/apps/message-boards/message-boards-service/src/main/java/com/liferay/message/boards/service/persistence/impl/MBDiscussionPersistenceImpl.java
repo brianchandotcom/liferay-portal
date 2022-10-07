@@ -204,7 +204,7 @@ public class MBDiscussionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBDiscussion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBDiscussion mbDiscussion : list) {
@@ -593,7 +593,7 @@ public class MBDiscussionPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -729,7 +729,7 @@ public class MBDiscussionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof MBDiscussion) {
@@ -849,7 +849,7 @@ public class MBDiscussionPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1021,7 +1021,7 @@ public class MBDiscussionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBDiscussion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBDiscussion mbDiscussion : list) {
@@ -1444,7 +1444,7 @@ public class MBDiscussionPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1577,7 +1577,7 @@ public class MBDiscussionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByThreadId, finderArgs);
+				_finderPathFetchByThreadId, finderArgs, this);
 		}
 
 		if (result instanceof MBDiscussion) {
@@ -1676,7 +1676,7 @@ public class MBDiscussionPersistenceImpl
 
 			finderArgs = new Object[] {threadId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1795,7 +1795,8 @@ public class MBDiscussionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof MBDiscussion) {
@@ -1902,7 +1903,7 @@ public class MBDiscussionPersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2575,7 +2576,7 @@ public class MBDiscussionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBDiscussion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2651,7 +2652,7 @@ public class MBDiscussionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

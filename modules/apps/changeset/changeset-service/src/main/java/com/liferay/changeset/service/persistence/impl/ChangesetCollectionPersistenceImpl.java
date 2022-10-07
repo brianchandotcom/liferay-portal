@@ -193,7 +193,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetCollection changesetCollection : list) {
@@ -559,7 +559,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -697,7 +697,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetCollection changesetCollection : list) {
@@ -1065,7 +1065,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1207,7 +1207,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetCollection changesetCollection : list) {
@@ -1598,7 +1598,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1720,7 +1720,8 @@ public class ChangesetCollectionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByG_N, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_N, finderArgs, this);
 		}
 
 		if (result instanceof ChangesetCollection) {
@@ -1832,7 +1833,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1997,7 +1998,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetCollection changesetCollection : list) {
@@ -2415,7 +2416,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2916,7 +2917,7 @@ public class ChangesetCollectionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2986,7 +2987,7 @@ public class ChangesetCollectionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

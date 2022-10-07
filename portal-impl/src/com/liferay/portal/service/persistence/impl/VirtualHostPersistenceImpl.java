@@ -191,7 +191,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VirtualHost virtualHost : list) {
@@ -558,7 +558,8 @@ public class VirtualHostPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -674,7 +675,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByHostname, finderArgs);
+				_finderPathFetchByHostname, finderArgs, this);
 		}
 
 		if (result instanceof VirtualHost) {
@@ -786,7 +787,8 @@ public class VirtualHostPersistenceImpl
 
 			finderArgs = new Object[] {hostname};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -949,7 +951,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VirtualHost virtualHost : list) {
@@ -1347,7 +1349,8 @@ public class VirtualHostPersistenceImpl
 
 			finderArgs = new Object[] {companyId, layoutSetId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1494,7 +1497,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VirtualHost virtualHost : list) {
@@ -2001,7 +2004,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByNotL_H, finderArgs);
+				_finderPathWithPaginationFindByNotL_H, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VirtualHost virtualHost : list) {
@@ -2138,7 +2141,8 @@ public class VirtualHostPersistenceImpl
 
 			finderArgs = new Object[] {layoutSetId, hostname};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2226,7 +2230,7 @@ public class VirtualHostPersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByNotL_H, finderArgs);
+				_finderPathWithPaginationCountByNotL_H, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2397,7 +2401,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_L_D, finderArgs);
+				_finderPathFetchByC_L_D, finderArgs, this);
 		}
 
 		if (result instanceof VirtualHost) {
@@ -2534,7 +2538,8 @@ public class VirtualHostPersistenceImpl
 				companyId, layoutSetId, defaultVirtualHost
 			};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3160,7 +3165,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3236,7 +3241,7 @@ public class VirtualHostPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

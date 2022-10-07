@@ -202,7 +202,7 @@ public class DDLRecordVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDLRecordVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordVersion ddlRecordVersion : list) {
@@ -573,7 +573,7 @@ public class DDLRecordVersionPersistenceImpl
 
 			finderArgs = new Object[] {recordId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -727,7 +727,7 @@ public class DDLRecordVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDLRecordVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordVersion ddlRecordVersion : list) {
@@ -1154,7 +1154,7 @@ public class DDLRecordVersionPersistenceImpl
 
 			finderArgs = new Object[] {recordSetId, recordSetVersion};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1296,7 +1296,8 @@ public class DDLRecordVersionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByR_V, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByR_V, finderArgs, this);
 		}
 
 		if (result instanceof DDLRecordVersion) {
@@ -1416,7 +1417,7 @@ public class DDLRecordVersionPersistenceImpl
 
 			finderArgs = new Object[] {recordId, version};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1585,7 +1586,7 @@ public class DDLRecordVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDLRecordVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordVersion ddlRecordVersion : list) {
@@ -1984,7 +1985,7 @@ public class DDLRecordVersionPersistenceImpl
 
 			finderArgs = new Object[] {recordId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2161,7 +2162,7 @@ public class DDLRecordVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDLRecordVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordVersion ddlRecordVersion : list) {
@@ -2642,7 +2643,7 @@ public class DDLRecordVersionPersistenceImpl
 				userId, recordSetId, recordSetVersion, status
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3303,7 +3304,7 @@ public class DDLRecordVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDLRecordVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3379,7 +3380,7 @@ public class DDLRecordVersionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

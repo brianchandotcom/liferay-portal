@@ -216,7 +216,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		if (useFinderCache && productionMode) {
 			list =
 				(List<CommercePriceListCommerceAccountGroupRel>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePriceListCommerceAccountGroupRel
@@ -645,7 +645,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -816,7 +816,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		if (useFinderCache && productionMode) {
 			list =
 				(List<CommercePriceListCommerceAccountGroupRel>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePriceListCommerceAccountGroupRel
@@ -1271,7 +1271,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1447,7 +1447,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		if (useFinderCache && productionMode) {
 			list =
 				(List<CommercePriceListCommerceAccountGroupRel>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePriceListCommerceAccountGroupRel
@@ -1862,7 +1862,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 			finderArgs = new Object[] {commercePriceListId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1994,7 +1994,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByCAGI_CPI, finderArgs);
+				_finderPathFetchByCAGI_CPI, finderArgs, this);
 		}
 
 		if (result instanceof CommercePriceListCommerceAccountGroupRel) {
@@ -2117,7 +2117,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				commercePriceListId, commerceAccountGroupId
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2887,7 +2887,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		if (useFinderCache && productionMode) {
 			list =
 				(List<CommercePriceListCommerceAccountGroupRel>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2968,7 +2968,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

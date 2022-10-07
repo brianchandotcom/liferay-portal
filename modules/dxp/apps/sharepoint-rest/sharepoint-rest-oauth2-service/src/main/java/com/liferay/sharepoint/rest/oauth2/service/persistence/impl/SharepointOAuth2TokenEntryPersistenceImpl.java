@@ -194,7 +194,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SharepointOAuth2TokenEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
@@ -565,7 +565,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -684,7 +684,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByU_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByU_C, finderArgs, this);
 		}
 
 		if (result instanceof SharepointOAuth2TokenEntry) {
@@ -801,7 +802,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, configurationPid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1322,7 +1323,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SharepointOAuth2TokenEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1395,7 +1396,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

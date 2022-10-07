@@ -189,7 +189,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityAchievement socialActivityAchievement :
@@ -569,7 +569,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -719,7 +720,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityAchievement socialActivityAchievement :
@@ -1123,7 +1124,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1282,7 +1284,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityAchievement socialActivityAchievement :
@@ -1712,7 +1714,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 			finderArgs = new Object[] {groupId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1884,7 +1887,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityAchievement socialActivityAchievement :
@@ -2289,7 +2292,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 			finderArgs = new Object[] {groupId, firstInGroup};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2428,7 +2432,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_U_N, finderArgs);
+				_finderPathFetchByG_U_N, finderArgs, this);
 		}
 
 		if (result instanceof SocialActivityAchievement) {
@@ -2559,7 +2563,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2743,7 +2748,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityAchievement socialActivityAchievement :
@@ -3172,7 +3177,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId, firstInGroup};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3839,7 +3845,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3916,7 +3922,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

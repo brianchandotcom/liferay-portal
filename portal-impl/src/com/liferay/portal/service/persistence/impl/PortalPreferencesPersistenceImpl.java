@@ -157,7 +157,7 @@ public class PortalPreferencesPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByO_O, finderArgs);
+				_finderPathFetchByO_O, finderArgs, this);
 		}
 
 		if (result instanceof PortalPreferences) {
@@ -270,7 +270,8 @@ public class PortalPreferencesPersistenceImpl
 
 		Object[] finderArgs = new Object[] {ownerId, ownerType};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -731,7 +732,7 @@ public class PortalPreferencesPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PortalPreferences>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -801,7 +802,7 @@ public class PortalPreferencesPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

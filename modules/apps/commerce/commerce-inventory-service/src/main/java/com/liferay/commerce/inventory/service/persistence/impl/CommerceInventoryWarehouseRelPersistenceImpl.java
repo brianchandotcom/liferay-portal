@@ -211,7 +211,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceInventoryWarehouseRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryWarehouseRel
@@ -611,7 +611,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceInventoryWarehouseId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -765,7 +765,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceInventoryWarehouseRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryWarehouseRel
@@ -1172,7 +1172,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			classNameId, commerceInventoryWarehouseId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1308,7 +1308,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_C_CIWI, finderArgs);
+				_finderPathFetchByC_C_CIWI, finderArgs, this);
 		}
 
 		if (result instanceof CommerceInventoryWarehouseRel) {
@@ -1424,7 +1424,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			classNameId, classPK, commerceInventoryWarehouseId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1969,7 +1969,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceInventoryWarehouseRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2042,7 +2042,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

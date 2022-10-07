@@ -193,7 +193,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -879,7 +879,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1067,7 +1067,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -1978,7 +1978,8 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				_finderPathWithPaginationFindByAccountEntryId, finderArgs);
+				_finderPathWithPaginationFindByAccountEntryId, finderArgs,
+				this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -2080,7 +2081,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2135,7 +2136,7 @@ public class AccountRolePersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(accountEntryIds)};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByAccountEntryId, finderArgs);
+			_finderPathWithPaginationCountByAccountEntryId, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -2365,7 +2366,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByRoleId, finderArgs);
+				_finderPathFetchByRoleId, finderArgs, this);
 		}
 
 		if (result instanceof AccountRole) {
@@ -2468,7 +2469,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {roleId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2613,7 +2614,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -3586,7 +3587,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_A, finderArgs);
+				_finderPathWithPaginationFindByC_A, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -3696,7 +3697,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, accountEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3758,7 +3759,7 @@ public class AccountRolePersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_A, finderArgs);
+			_finderPathWithPaginationCountByC_A, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -4336,7 +4337,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4406,7 +4407,7 @@ public class AccountRolePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

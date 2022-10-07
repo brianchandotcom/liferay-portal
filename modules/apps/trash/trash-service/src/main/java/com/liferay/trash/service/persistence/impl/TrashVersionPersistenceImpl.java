@@ -196,7 +196,7 @@ public class TrashVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<TrashVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TrashVersion trashVersion : list) {
@@ -563,7 +563,7 @@ public class TrashVersionPersistenceImpl
 
 			finderArgs = new Object[] {entryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -712,7 +712,7 @@ public class TrashVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<TrashVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TrashVersion trashVersion : list) {
@@ -1110,7 +1110,7 @@ public class TrashVersionPersistenceImpl
 
 			finderArgs = new Object[] {entryId, classNameId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1236,7 +1236,8 @@ public class TrashVersionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof TrashVersion) {
@@ -1343,7 +1344,7 @@ public class TrashVersionPersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1950,7 +1951,7 @@ public class TrashVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<TrashVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2026,7 +2027,7 @@ public class TrashVersionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

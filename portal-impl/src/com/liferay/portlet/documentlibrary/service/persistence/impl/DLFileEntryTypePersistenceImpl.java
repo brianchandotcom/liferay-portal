@@ -203,7 +203,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryType dlFileEntryType : list) {
@@ -596,7 +596,8 @@ public class DLFileEntryTypePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -732,7 +733,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof DLFileEntryType) {
@@ -852,7 +853,8 @@ public class DLFileEntryTypePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1024,7 +1026,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryType dlFileEntryType : list) {
@@ -1449,7 +1451,8 @@ public class DLFileEntryTypePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1613,7 +1616,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryType dlFileEntryType : list) {
@@ -2527,7 +2530,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByGroupId, finderArgs);
+				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryType dlFileEntryType : list) {
@@ -2637,7 +2640,8 @@ public class DLFileEntryTypePersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2703,7 +2707,7 @@ public class DLFileEntryTypePersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByGroupId, finderArgs);
+				_finderPathWithPaginationCountByGroupId, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2950,7 +2954,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_DDI, finderArgs);
+				_finderPathFetchByG_DDI, finderArgs, this);
 		}
 
 		if (result instanceof DLFileEntryType) {
@@ -3058,7 +3062,8 @@ public class DLFileEntryTypePersistenceImpl
 
 			finderArgs = new Object[] {groupId, dataDefinitionId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3187,7 +3192,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_F, finderArgs);
+				_finderPathFetchByG_F, finderArgs, this);
 		}
 
 		if (result instanceof DLFileEntryType) {
@@ -3308,7 +3313,8 @@ public class DLFileEntryTypePersistenceImpl
 
 			finderArgs = new Object[] {groupId, fileEntryTypeKey};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4021,7 +4027,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4097,7 +4103,7 @@ public class DLFileEntryTypePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

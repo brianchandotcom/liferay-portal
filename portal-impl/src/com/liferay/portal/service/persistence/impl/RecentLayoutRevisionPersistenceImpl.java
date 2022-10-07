@@ -177,7 +177,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RecentLayoutRevision>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RecentLayoutRevision recentLayoutRevision : list) {
@@ -544,7 +544,8 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -679,7 +680,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RecentLayoutRevision>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RecentLayoutRevision recentLayoutRevision : list) {
@@ -1045,7 +1046,8 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1186,7 +1188,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RecentLayoutRevision>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RecentLayoutRevision recentLayoutRevision : list) {
@@ -1557,7 +1559,8 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {layoutRevisionId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1683,7 +1686,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_L_P, finderArgs);
+				_finderPathFetchByU_L_P, finderArgs, this);
 		}
 
 		if (result instanceof RecentLayoutRevision) {
@@ -1792,7 +1795,8 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, layoutSetBranchId, plid};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2272,7 +2276,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RecentLayoutRevision>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2342,7 +2346,7 @@ public class RecentLayoutRevisionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

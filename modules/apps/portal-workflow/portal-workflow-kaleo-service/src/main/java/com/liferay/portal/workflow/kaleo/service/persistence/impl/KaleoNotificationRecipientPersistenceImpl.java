@@ -207,7 +207,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotificationRecipient>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotificationRecipient kaleoNotificationRecipient :
@@ -589,7 +589,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -741,7 +741,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotificationRecipient>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotificationRecipient kaleoNotificationRecipient :
@@ -1135,7 +1135,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 			finderArgs = new Object[] {kaleoDefinitionVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1285,7 +1285,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotificationRecipient>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotificationRecipient kaleoNotificationRecipient :
@@ -1671,7 +1671,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 			finderArgs = new Object[] {kaleoNotificationId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2329,7 +2329,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotificationRecipient>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2408,7 +2408,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

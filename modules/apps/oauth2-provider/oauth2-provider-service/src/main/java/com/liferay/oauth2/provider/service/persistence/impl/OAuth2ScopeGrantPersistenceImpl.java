@@ -210,7 +210,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuth2ScopeGrant>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2ScopeGrant oAuth2ScopeGrant : list) {
@@ -593,7 +593,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		Object[] finderArgs = new Object[] {oAuth2ApplicationScopeAliasesId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -745,7 +745,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_O_A_B_S, finderArgs);
+				_finderPathFetchByC_O_A_B_S, finderArgs, this);
 		}
 
 		if (result instanceof OAuth2ScopeGrant) {
@@ -934,7 +934,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 			bundleSymbolicName, scope
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1472,7 +1472,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuth2ScopeGrant>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1542,7 +1542,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

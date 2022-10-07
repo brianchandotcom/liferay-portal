@@ -182,7 +182,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExportImportConfiguration exportImportConfiguration :
@@ -553,7 +553,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -691,7 +692,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExportImportConfiguration exportImportConfiguration :
@@ -1062,7 +1063,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1204,7 +1206,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExportImportConfiguration exportImportConfiguration :
@@ -1599,7 +1601,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1748,7 +1751,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExportImportConfiguration exportImportConfiguration :
@@ -2143,7 +2146,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2299,7 +2303,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExportImportConfiguration exportImportConfiguration :
@@ -2717,7 +2721,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, type, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3220,7 +3225,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ExportImportConfiguration>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3291,7 +3296,7 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

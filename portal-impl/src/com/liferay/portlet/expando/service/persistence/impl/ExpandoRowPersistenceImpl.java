@@ -189,7 +189,7 @@ public class ExpandoRowPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoRow expandoRow : list) {
@@ -554,7 +554,8 @@ public class ExpandoRowPersistenceImpl
 
 			finderArgs = new Object[] {tableId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -694,7 +695,7 @@ public class ExpandoRowPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoRow expandoRow : list) {
@@ -1059,7 +1060,8 @@ public class ExpandoRowPersistenceImpl
 
 			finderArgs = new Object[] {classPK};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1179,7 +1181,7 @@ public class ExpandoRowPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByT_C, finderArgs);
+				_finderPathFetchByT_C, finderArgs, this);
 		}
 
 		if (result instanceof ExpandoRow) {
@@ -1286,7 +1288,8 @@ public class ExpandoRowPersistenceImpl
 
 			finderArgs = new Object[] {tableId, classPK};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1906,7 +1909,7 @@ public class ExpandoRowPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1982,7 +1985,7 @@ public class ExpandoRowPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

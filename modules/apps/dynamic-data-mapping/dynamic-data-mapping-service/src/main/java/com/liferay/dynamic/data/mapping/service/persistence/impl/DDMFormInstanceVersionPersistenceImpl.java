@@ -210,7 +210,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMFormInstanceVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMFormInstanceVersion ddmFormInstanceVersion : list) {
@@ -590,7 +590,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 			finderArgs = new Object[] {formInstanceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -714,7 +714,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByF_V, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByF_V, finderArgs, this);
 		}
 
 		if (result instanceof DDMFormInstanceVersion) {
@@ -838,7 +839,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 			finderArgs = new Object[] {formInstanceId, version};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1010,7 +1011,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMFormInstanceVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMFormInstanceVersion ddmFormInstanceVersion : list) {
@@ -1412,7 +1413,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 			finderArgs = new Object[] {formInstanceId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2079,7 +2080,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMFormInstanceVersion>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2155,7 +2156,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

@@ -150,7 +150,7 @@ public class CompanyInfoPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByCompanyId, finderArgs);
+				_finderPathFetchByCompanyId, finderArgs, this);
 		}
 
 		if (result instanceof CompanyInfo) {
@@ -240,7 +240,8 @@ public class CompanyInfoPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -681,7 +682,7 @@ public class CompanyInfoPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CompanyInfo>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -751,7 +752,7 @@ public class CompanyInfoPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

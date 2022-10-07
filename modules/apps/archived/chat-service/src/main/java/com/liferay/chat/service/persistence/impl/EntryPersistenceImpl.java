@@ -185,7 +185,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -541,7 +542,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {createDate};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -676,7 +677,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -1032,7 +1034,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {fromUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1164,7 +1166,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -1519,7 +1522,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {toUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1660,7 +1663,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -2048,7 +2052,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {createDate, fromUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2196,7 +2200,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -2580,7 +2585,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {createDate, toUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2728,7 +2733,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -3112,7 +3118,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {fromUserId, toUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3268,7 +3274,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -3680,7 +3687,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {createDate, fromUserId, toUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3844,7 +3851,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
@@ -4281,7 +4289,7 @@ public class EntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {fromUserId, toUserId, content};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -4713,7 +4721,8 @@ public class EntryPersistenceImpl
 		List<Entry> list = null;
 
 		if (useFinderCache) {
-			list = (List<Entry>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Entry>)finderCache.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4783,7 +4792,7 @@ public class EntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

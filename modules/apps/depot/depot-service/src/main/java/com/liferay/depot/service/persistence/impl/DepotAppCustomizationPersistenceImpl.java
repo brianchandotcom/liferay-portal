@@ -195,7 +195,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotAppCustomization>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotAppCustomization depotAppCustomization : list) {
@@ -565,7 +565,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {depotEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -681,7 +681,8 @@ public class DepotAppCustomizationPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByD_E, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByD_E, finderArgs, this);
 		}
 
 		if (result instanceof DepotAppCustomization) {
@@ -798,7 +799,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {depotEntryId, enabled};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -923,7 +924,8 @@ public class DepotAppCustomizationPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByD_P, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByD_P, finderArgs, this);
 		}
 
 		if (result instanceof DepotAppCustomization) {
@@ -1038,7 +1040,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {depotEntryId, portletId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1545,7 +1547,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotAppCustomization>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1615,7 +1617,7 @@ public class DepotAppCustomizationPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

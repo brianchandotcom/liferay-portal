@@ -194,7 +194,7 @@ public class FVSActiveEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<FVSActiveEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FVSActiveEntry fvsActiveEntry : list) {
@@ -577,7 +577,7 @@ public class FVSActiveEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -736,7 +736,7 @@ public class FVSActiveEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<FVSActiveEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FVSActiveEntry fvsActiveEntry : list) {
@@ -1152,7 +1152,7 @@ public class FVSActiveEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1311,7 +1311,7 @@ public class FVSActiveEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByU_CDSDI_P_P, finderArgs);
+				_finderPathFetchByU_CDSDI_P_P, finderArgs, this);
 		}
 
 		if (result instanceof FVSActiveEntry) {
@@ -1457,7 +1457,7 @@ public class FVSActiveEntryPersistenceImpl
 			userId, clayDataSetDisplayId, plid, portletId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -1999,7 +1999,7 @@ public class FVSActiveEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<FVSActiveEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2069,7 +2069,7 @@ public class FVSActiveEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

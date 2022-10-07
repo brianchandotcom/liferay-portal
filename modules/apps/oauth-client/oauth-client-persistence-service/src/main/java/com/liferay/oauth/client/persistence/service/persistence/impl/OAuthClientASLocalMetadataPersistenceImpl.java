@@ -199,7 +199,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
@@ -913,7 +913,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1096,7 +1096,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
@@ -1806,7 +1806,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1968,7 +1968,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByLocalWellKnownURI, finderArgs);
+				_finderPathFetchByLocalWellKnownURI, finderArgs, this);
 		}
 
 		if (result instanceof OAuthClientASLocalMetadata) {
@@ -2079,7 +2079,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		Object[] finderArgs = new Object[] {localWellKnownURI};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2605,7 +2605,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2678,7 +2678,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

@@ -192,7 +192,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -589,7 +589,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -743,7 +744,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -1185,7 +1186,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByScope, finderArgs);
+				_finderPathWithPaginationFindByScope, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -1294,7 +1295,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {scope};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1360,7 +1362,7 @@ public class ResourcePermissionPersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(scopes)};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByScope, finderArgs);
+				_finderPathWithPaginationCountByScope, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1515,7 +1517,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -1887,7 +1889,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {roleId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2029,7 +2032,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -2457,7 +2460,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, primKey};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2636,7 +2640,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -3086,7 +3090,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, scope, primKey};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3279,7 +3284,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -3780,7 +3785,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, name, scope, primKey};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3993,7 +3999,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -4470,7 +4476,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, name, scope, roleId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4703,7 +4710,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_N_S_P_R, finderArgs);
+				_finderPathWithPaginationFindByC_N_S_P_R, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -4963,7 +4970,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_N_S_P_R, finderArgs);
+				_finderPathFetchByC_N_S_P_R, finderArgs, this);
 		}
 
 		if (result instanceof ResourcePermission) {
@@ -5120,7 +5127,8 @@ public class ResourcePermissionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, name, scope, primKey, roleId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5236,7 +5244,7 @@ public class ResourcePermissionPersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_N_S_P_R, finderArgs);
+				_finderPathWithPaginationCountByC_N_S_P_R, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5523,7 +5531,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -6148,7 +6156,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs);
+				_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourcePermission resourcePermission : list) {
@@ -6361,7 +6369,8 @@ public class ResourcePermissionPersistenceImpl
 				companyId, name, scope, primKeyId, roleId, viewActionId
 			};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6471,7 +6480,7 @@ public class ResourcePermissionPersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_N_S_P_R_V, finderArgs);
+				_finderPathWithPaginationCountByC_N_S_P_R_V, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7203,7 +7212,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -7279,7 +7288,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

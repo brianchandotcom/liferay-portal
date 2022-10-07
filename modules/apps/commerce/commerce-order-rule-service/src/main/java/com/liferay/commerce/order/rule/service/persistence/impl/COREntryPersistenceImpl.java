@@ -197,7 +197,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -924,7 +924,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1149,7 +1149,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -1923,7 +1923,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2158,7 +2158,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -2880,7 +2880,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, active};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3076,7 +3076,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -3852,7 +3852,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4076,7 +4076,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -4847,7 +4847,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(displayDate), status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5063,7 +5063,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -5834,7 +5834,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(expirationDate), status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6059,7 +6059,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (COREntry corEntry : list) {
@@ -6883,7 +6883,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, active, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7108,7 +7108,8 @@ public class COREntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof COREntry) {
@@ -7221,7 +7222,7 @@ public class COREntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -7722,7 +7723,7 @@ public class COREntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<COREntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -7792,7 +7793,7 @@ public class COREntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

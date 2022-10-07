@@ -208,7 +208,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -590,7 +590,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -742,7 +742,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -1137,7 +1137,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {kaleoDefinitionVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1286,7 +1286,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -1670,7 +1670,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {kaleoInstanceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1823,7 +1823,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -2218,7 +2218,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {kaleoTaskInstanceTokenId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2370,7 +2370,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -2782,7 +2782,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {assigneeClassName};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2950,7 +2950,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -3357,7 +3357,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {groupId, assigneeClassPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3526,7 +3526,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -3973,7 +3973,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				kaleoTaskInstanceTokenId, assigneeClassName
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4152,7 +4152,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
@@ -4592,7 +4592,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 			finderArgs = new Object[] {assigneeClassName, assigneeClassPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5275,7 +5275,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTaskAssignmentInstance>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5354,7 +5354,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

@@ -170,7 +170,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByFileEntryId, finderArgs);
+				_finderPathFetchByFileEntryId, finderArgs, this);
 		}
 
 		if (result instanceof DLOpenerFileEntryReference) {
@@ -263,7 +263,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 		Object[] finderArgs = new Object[] {fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -382,7 +382,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByR_F, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByR_F, finderArgs, this);
 		}
 
 		if (result instanceof DLOpenerFileEntryReference) {
@@ -499,7 +500,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 		Object[] finderArgs = new Object[] {referenceType, fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1051,7 +1052,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLOpenerFileEntryReference>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1124,7 +1125,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

@@ -207,7 +207,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -598,7 +598,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -734,7 +734,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof JournalFolder) {
@@ -854,7 +854,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1026,7 +1026,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -1451,7 +1451,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1612,7 +1612,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -2311,7 +2311,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2503,7 +2503,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -2871,7 +2871,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3021,7 +3021,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -3770,7 +3770,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId, parentFolderId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3951,7 +3951,8 @@ public class JournalFolderPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_N, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_N, finderArgs, this);
 		}
 
 		if (result instanceof JournalFolder) {
@@ -4086,7 +4087,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId, name};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4245,7 +4246,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -4644,7 +4645,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {companyId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4783,7 +4784,8 @@ public class JournalFolderPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_P_N, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_P_N, finderArgs, this);
 		}
 
 		if (result instanceof JournalFolder) {
@@ -4912,7 +4914,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId, parentFolderId, name};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5097,7 +5099,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -5882,7 +5884,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId, parentFolderId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6103,7 +6105,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -6890,7 +6892,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId, parentFolderId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7118,7 +7120,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFolder journalFolder : list) {
@@ -7401,7 +7403,7 @@ public class JournalFolderPersistenceImpl
 				folderId, companyId, parentFolderId, status
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7546,7 +7548,8 @@ public class JournalFolderPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_ERC, finderArgs, this);
 		}
 
 		if (result instanceof JournalFolder) {
@@ -7670,7 +7673,7 @@ public class JournalFolderPersistenceImpl
 
 			finderArgs = new Object[] {groupId, externalReferenceCode};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8386,7 +8389,7 @@ public class JournalFolderPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalFolder>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -8462,7 +8465,7 @@ public class JournalFolderPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

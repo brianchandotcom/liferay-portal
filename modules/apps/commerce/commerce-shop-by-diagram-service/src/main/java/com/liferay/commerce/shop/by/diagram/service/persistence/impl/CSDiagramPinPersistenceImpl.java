@@ -204,7 +204,7 @@ public class CSDiagramPinPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CSDiagramPin>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CSDiagramPin csDiagramPin : list) {
@@ -577,7 +577,7 @@ public class CSDiagramPinPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1181,7 +1181,7 @@ public class CSDiagramPinPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CSDiagramPin>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1257,7 +1257,7 @@ public class CSDiagramPinPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

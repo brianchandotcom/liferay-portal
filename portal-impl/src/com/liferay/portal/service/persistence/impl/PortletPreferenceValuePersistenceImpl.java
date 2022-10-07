@@ -197,7 +197,7 @@ public class PortletPreferenceValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<PortletPreferenceValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletPreferenceValue portletPreferenceValue : list) {
@@ -580,7 +580,8 @@ public class PortletPreferenceValuePersistenceImpl
 
 			finderArgs = new Object[] {portletPreferencesId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -736,7 +737,7 @@ public class PortletPreferenceValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<PortletPreferenceValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletPreferenceValue portletPreferenceValue : list) {
@@ -1165,7 +1166,8 @@ public class PortletPreferenceValuePersistenceImpl
 
 			finderArgs = new Object[] {portletPreferencesId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1319,7 +1321,7 @@ public class PortletPreferenceValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByP_I_N, finderArgs);
+				_finderPathFetchByP_I_N, finderArgs, this);
 		}
 
 		if (result instanceof PortletPreferenceValue) {
@@ -1450,7 +1452,8 @@ public class PortletPreferenceValuePersistenceImpl
 
 			finderArgs = new Object[] {portletPreferencesId, index, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1643,7 +1646,7 @@ public class PortletPreferenceValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<PortletPreferenceValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletPreferenceValue portletPreferenceValue : list) {
@@ -2124,7 +2127,8 @@ public class PortletPreferenceValuePersistenceImpl
 
 			finderArgs = new Object[] {portletPreferencesId, name, smallValue};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2815,7 +2819,7 @@ public class PortletPreferenceValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<PortletPreferenceValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2891,7 +2895,7 @@ public class PortletPreferenceValuePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

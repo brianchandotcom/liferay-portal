@@ -203,7 +203,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMStorageLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
@@ -595,7 +595,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -760,7 +760,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMStorageLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
@@ -1185,7 +1185,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1318,7 +1318,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByClassPK, finderArgs);
+				_finderPathFetchByClassPK, finderArgs, this);
 		}
 
 		if (result instanceof DDMStorageLink) {
@@ -1417,7 +1417,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			finderArgs = new Object[] {classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1562,7 +1562,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMStorageLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
@@ -1932,7 +1932,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			finderArgs = new Object[] {structureId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2081,7 +2081,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMStorageLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
@@ -2537,7 +2537,8 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMStorageLink>)finderCache.getResult(
-				_finderPathWithPaginationFindByStructureVersionId, finderArgs);
+				_finderPathWithPaginationFindByStructureVersionId, finderArgs,
+				this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
@@ -2650,7 +2651,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			finderArgs = new Object[] {structureVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2716,7 +2717,8 @@ public class DDMStorageLinkPersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(structureVersionIds)};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByStructureVersionId, finderArgs);
+				_finderPathWithPaginationCountByStructureVersionId, finderArgs,
+				this);
 		}
 
 		if (count == null) {
@@ -3350,7 +3352,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMStorageLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3426,7 +3428,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

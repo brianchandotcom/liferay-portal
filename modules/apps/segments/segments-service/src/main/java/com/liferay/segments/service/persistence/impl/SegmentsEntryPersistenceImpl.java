@@ -208,7 +208,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -599,7 +599,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -735,7 +735,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof SegmentsEntry) {
@@ -855,7 +855,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1027,7 +1027,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -1452,7 +1452,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1614,7 +1614,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -2526,7 +2526,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByGroupId, finderArgs);
+				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -2636,7 +2636,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2702,7 +2702,7 @@ public class SegmentsEntryPersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByGroupId, finderArgs);
+				_finderPathWithPaginationCountByGroupId, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2969,7 +2969,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -3363,7 +3363,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {source};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3518,7 +3518,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -3909,7 +3909,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4044,7 +4044,8 @@ public class SegmentsEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_S, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_S, finderArgs, this);
 		}
 
 		if (result instanceof SegmentsEntry) {
@@ -4165,7 +4166,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, segmentsEntryKey};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4335,7 +4336,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -5309,7 +5310,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_A, finderArgs);
+				_finderPathWithPaginationFindByG_A, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -5430,7 +5431,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, active};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5501,7 +5502,7 @@ public class SegmentsEntryPersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(groupIds), active};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_A, finderArgs);
+				_finderPathWithPaginationCountByG_A, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5804,7 +5805,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -6226,7 +6227,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {active, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6405,7 +6406,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -7496,7 +7497,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_A_T, finderArgs);
+				_finderPathWithPaginationFindByG_A_T, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -7637,7 +7638,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, active, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7728,7 +7729,7 @@ public class SegmentsEntryPersistenceImpl
 			};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_A_T, finderArgs);
+				_finderPathWithPaginationCountByG_A_T, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8112,7 +8113,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -9317,7 +9318,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_A_S_T, finderArgs);
+				_finderPathWithPaginationFindByG_A_S_T, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
@@ -9482,7 +9483,7 @@ public class SegmentsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, active, source, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -9592,7 +9593,7 @@ public class SegmentsEntryPersistenceImpl
 			};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_A_S_T, finderArgs);
+				_finderPathWithPaginationCountByG_A_S_T, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -10530,7 +10531,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -10606,7 +10607,7 @@ public class SegmentsEntryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

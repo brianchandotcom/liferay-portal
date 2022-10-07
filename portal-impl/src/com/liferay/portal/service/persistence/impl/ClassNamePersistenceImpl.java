@@ -146,7 +146,7 @@ public class ClassNamePersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByValue, finderArgs);
+				_finderPathFetchByValue, finderArgs, this);
 		}
 
 		if (result instanceof ClassName) {
@@ -249,7 +249,8 @@ public class ClassNamePersistenceImpl
 
 		Object[] finderArgs = new Object[] {value};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -692,7 +693,7 @@ public class ClassNamePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ClassName>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -762,7 +763,7 @@ public class ClassNamePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

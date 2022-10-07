@@ -190,7 +190,7 @@ public class CTPreferencesPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTPreferences>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTPreferences ctPreferences : list) {
@@ -556,7 +556,7 @@ public class CTPreferencesPersistenceImpl
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -699,7 +699,7 @@ public class CTPreferencesPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTPreferences>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTPreferences ctPreferences : list) {
@@ -1070,7 +1070,7 @@ public class CTPreferencesPersistenceImpl
 
 		Object[] finderArgs = new Object[] {previousCtCollectionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1185,7 +1185,8 @@ public class CTPreferencesPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_U, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_U, finderArgs, this);
 		}
 
 		if (result instanceof CTPreferences) {
@@ -1283,7 +1284,7 @@ public class CTPreferencesPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1733,7 +1734,7 @@ public class CTPreferencesPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTPreferences>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1803,7 +1804,7 @@ public class CTPreferencesPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

@@ -182,7 +182,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsDelivery announcementsDelivery : list) {
@@ -550,7 +550,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -685,7 +686,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsDelivery announcementsDelivery : list) {
@@ -1052,7 +1053,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1168,7 +1170,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_T, finderArgs);
+				_finderPathFetchByU_T, finderArgs, this);
 		}
 
 		if (result instanceof AnnouncementsDelivery) {
@@ -1280,7 +1282,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1776,7 +1779,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1846,7 +1849,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

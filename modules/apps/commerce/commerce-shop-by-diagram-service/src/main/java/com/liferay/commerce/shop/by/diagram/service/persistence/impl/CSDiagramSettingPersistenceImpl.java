@@ -204,7 +204,7 @@ public class CSDiagramSettingPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CSDiagramSetting>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CSDiagramSetting csDiagramSetting : list) {
@@ -598,7 +598,7 @@ public class CSDiagramSettingPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -763,7 +763,7 @@ public class CSDiagramSettingPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CSDiagramSetting>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CSDiagramSetting csDiagramSetting : list) {
@@ -1189,7 +1189,7 @@ public class CSDiagramSettingPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1325,7 +1325,7 @@ public class CSDiagramSettingPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByCPDefinitionId, finderArgs);
+				_finderPathFetchByCPDefinitionId, finderArgs, this);
 		}
 
 		if (result instanceof CSDiagramSetting) {
@@ -1425,7 +1425,7 @@ public class CSDiagramSettingPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2076,7 +2076,7 @@ public class CSDiagramSettingPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CSDiagramSetting>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2152,7 +2152,7 @@ public class CSDiagramSettingPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

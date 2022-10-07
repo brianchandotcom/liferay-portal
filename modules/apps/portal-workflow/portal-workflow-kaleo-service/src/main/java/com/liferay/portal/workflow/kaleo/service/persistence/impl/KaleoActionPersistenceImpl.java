@@ -203,7 +203,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
@@ -570,7 +570,7 @@ public class KaleoActionPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -722,7 +722,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
@@ -1102,7 +1102,7 @@ public class KaleoActionPersistenceImpl
 
 			finderArgs = new Object[] {kaleoDefinitionVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1258,7 +1258,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
@@ -1683,7 +1683,7 @@ public class KaleoActionPersistenceImpl
 
 			finderArgs = new Object[] {kaleoClassName, kaleoClassPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1868,7 +1868,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
@@ -2320,7 +2320,7 @@ public class KaleoActionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, kaleoClassName, kaleoClassPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2513,7 +2513,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
@@ -2994,7 +2994,7 @@ public class KaleoActionPersistenceImpl
 				kaleoClassName, kaleoClassPK, executionType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3209,7 +3209,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
@@ -3720,7 +3720,7 @@ public class KaleoActionPersistenceImpl
 				companyId, kaleoClassName, kaleoClassPK, executionType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4369,7 +4369,7 @@ public class KaleoActionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoAction>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4445,7 +4445,7 @@ public class KaleoActionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

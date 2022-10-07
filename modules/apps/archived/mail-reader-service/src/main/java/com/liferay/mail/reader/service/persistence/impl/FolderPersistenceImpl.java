@@ -190,7 +190,8 @@ public class FolderPersistenceImpl
 		List<Folder> list = null;
 
 		if (useFinderCache) {
-			list = (List<Folder>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Folder>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Folder folder : list) {
@@ -545,7 +546,7 @@ public class FolderPersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -660,7 +661,8 @@ public class FolderPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByA_F, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByA_F, finderArgs, this);
 		}
 
 		if (result instanceof Folder) {
@@ -786,7 +788,7 @@ public class FolderPersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountId, fullName};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1251,7 +1253,8 @@ public class FolderPersistenceImpl
 		List<Folder> list = null;
 
 		if (useFinderCache) {
-			list = (List<Folder>)finderCache.getResult(finderPath, finderArgs);
+			list = (List<Folder>)finderCache.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1321,7 +1324,7 @@ public class FolderPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

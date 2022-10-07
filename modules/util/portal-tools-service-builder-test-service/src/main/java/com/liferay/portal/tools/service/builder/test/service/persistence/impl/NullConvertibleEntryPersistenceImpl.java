@@ -149,7 +149,7 @@ public class NullConvertibleEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = dummyFinderCache.getResult(
-				_finderPathFetchByName, finderArgs);
+				_finderPathFetchByName, finderArgs, this);
 		}
 
 		if (result instanceof NullConvertibleEntry) {
@@ -253,7 +253,8 @@ public class NullConvertibleEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {name};
 
-		Long count = (Long)dummyFinderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -723,7 +724,7 @@ public class NullConvertibleEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<NullConvertibleEntry>)dummyFinderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -793,7 +794,7 @@ public class NullConvertibleEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)dummyFinderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

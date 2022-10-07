@@ -208,7 +208,7 @@ public class DLContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLContent dlContent : list) {
@@ -605,7 +605,7 @@ public class DLContentPersistenceImpl
 
 			finderArgs = new Object[] {companyId, repositoryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -770,7 +770,7 @@ public class DLContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLContent dlContent : list) {
@@ -1216,7 +1216,7 @@ public class DLContentPersistenceImpl
 
 			finderArgs = new Object[] {companyId, repositoryId, path};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1391,7 +1391,7 @@ public class DLContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLContent dlContent : list) {
@@ -1842,7 +1842,7 @@ public class DLContentPersistenceImpl
 
 			finderArgs = new Object[] {companyId, repositoryId, path};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2010,7 +2010,7 @@ public class DLContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_R_P_V, finderArgs);
+				_finderPathFetchByC_R_P_V, finderArgs, this);
 		}
 
 		if (result instanceof DLContent) {
@@ -2160,7 +2160,7 @@ public class DLContentPersistenceImpl
 
 			finderArgs = new Object[] {companyId, repositoryId, path, version};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2818,7 +2818,7 @@ public class DLContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2894,7 +2894,7 @@ public class DLContentPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

@@ -191,7 +191,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MFAFIDO2CredentialEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry : list) {
@@ -560,7 +560,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -702,7 +702,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MFAFIDO2CredentialEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry : list) {
@@ -1075,7 +1075,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {credentialKeyHash};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1193,7 +1193,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByU_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByU_C, finderArgs, this);
 		}
 
 		if (result instanceof MFAFIDO2CredentialEntry) {
@@ -1296,7 +1297,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, credentialKeyHash};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1801,7 +1802,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MFAFIDO2CredentialEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1872,7 +1873,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

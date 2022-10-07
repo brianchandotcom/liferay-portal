@@ -213,7 +213,7 @@ public class KaleoTimerPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTimer>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimer kaleoTimer : list) {
@@ -638,7 +638,7 @@ public class KaleoTimerPersistenceImpl
 
 			finderArgs = new Object[] {kaleoClassName, kaleoClassPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -824,7 +824,7 @@ public class KaleoTimerPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTimer>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimer kaleoTimer : list) {
@@ -1277,7 +1277,7 @@ public class KaleoTimerPersistenceImpl
 
 			finderArgs = new Object[] {kaleoClassName, kaleoClassPK, blocking};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1907,7 +1907,7 @@ public class KaleoTimerPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoTimer>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1983,7 +1983,7 @@ public class KaleoTimerPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

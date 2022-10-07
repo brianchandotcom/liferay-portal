@@ -155,7 +155,7 @@ public class RenameFinderColumnEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByColumnToRename, finderArgs);
+				_finderPathFetchByColumnToRename, finderArgs, this);
 		}
 
 		if (result instanceof RenameFinderColumnEntry) {
@@ -279,7 +279,7 @@ public class RenameFinderColumnEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {columnToRename};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -762,7 +762,7 @@ public class RenameFinderColumnEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<RenameFinderColumnEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -833,7 +833,7 @@ public class RenameFinderColumnEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

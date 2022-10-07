@@ -204,7 +204,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSEOSite>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSEOSite layoutSEOSite : list) {
@@ -595,7 +595,7 @@ public class LayoutSEOSitePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -731,7 +731,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof LayoutSEOSite) {
@@ -851,7 +851,7 @@ public class LayoutSEOSitePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1023,7 +1023,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSEOSite>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSEOSite layoutSEOSite : list) {
@@ -1448,7 +1448,7 @@ public class LayoutSEOSitePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1581,7 +1581,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByGroupId, finderArgs);
+				_finderPathFetchByGroupId, finderArgs, this);
 		}
 
 		if (result instanceof LayoutSEOSite) {
@@ -1680,7 +1680,7 @@ public class LayoutSEOSitePersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2334,7 +2334,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutSEOSite>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2410,7 +2410,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

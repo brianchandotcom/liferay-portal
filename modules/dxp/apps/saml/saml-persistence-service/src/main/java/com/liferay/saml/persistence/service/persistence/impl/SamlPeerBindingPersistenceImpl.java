@@ -237,7 +237,7 @@ public class SamlPeerBindingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlPeerBinding>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlPeerBinding samlPeerBinding : list) {
@@ -829,7 +829,7 @@ public class SamlPeerBindingPersistenceImpl
 			samlNameIdNameQualifier, samlPeerEntityId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(7);
@@ -1106,7 +1106,7 @@ public class SamlPeerBindingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlPeerBinding>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlPeerBinding samlPeerBinding : list) {
@@ -1736,7 +1736,7 @@ public class SamlPeerBindingPersistenceImpl
 			samlNameIdValue, samlPeerEntityId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(7);
@@ -2286,7 +2286,7 @@ public class SamlPeerBindingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlPeerBinding>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2356,7 +2356,7 @@ public class SamlPeerBindingPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

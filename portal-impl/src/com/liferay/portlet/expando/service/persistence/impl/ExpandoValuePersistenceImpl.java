@@ -188,7 +188,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -555,7 +555,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {tableId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -697,7 +698,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -1064,7 +1065,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {columnId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1203,7 +1205,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -1568,7 +1570,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {rowId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1717,7 +1720,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -2114,7 +2117,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {tableId, columnId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2269,7 +2273,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -2665,7 +2669,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {tableId, rowId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2821,7 +2826,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -3218,7 +3223,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {tableId, classPK};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3345,7 +3351,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_R, finderArgs);
+				_finderPathFetchByC_R, finderArgs, this);
 		}
 
 		if (result instanceof ExpandoValue) {
@@ -3452,7 +3458,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {columnId, rowId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3608,7 +3615,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -4006,7 +4013,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4141,7 +4149,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByT_C_C, finderArgs);
+				_finderPathFetchByT_C_C, finderArgs, this);
 		}
 
 		if (result instanceof ExpandoValue) {
@@ -4255,7 +4263,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {tableId, columnId, classPK};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4427,7 +4436,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
@@ -4873,7 +4882,8 @@ public class ExpandoValuePersistenceImpl
 
 			finderArgs = new Object[] {tableId, columnId, data};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5525,7 +5535,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<ExpandoValue>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5601,7 +5611,7 @@ public class ExpandoValuePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

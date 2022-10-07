@@ -194,7 +194,7 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OpenIdConnectSession>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OpenIdConnectSession openIdConnectSession : list) {
@@ -560,7 +560,7 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -694,7 +694,7 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OpenIdConnectSession>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OpenIdConnectSession openIdConnectSession : list) {
@@ -1103,7 +1103,7 @@ public class OpenIdConnectSessionPersistenceImpl
 			_getTime(accessTokenExpirationDate)
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1283,7 +1283,7 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OpenIdConnectSession>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OpenIdConnectSession openIdConnectSession : list) {
@@ -1757,7 +1757,7 @@ public class OpenIdConnectSessionPersistenceImpl
 			companyId, authServerWellKnownURI, clientId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1928,7 +1928,8 @@ public class OpenIdConnectSessionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByU_A_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByU_A_C, finderArgs, this);
 		}
 
 		if (result instanceof OpenIdConnectSession) {
@@ -2067,7 +2068,7 @@ public class OpenIdConnectSessionPersistenceImpl
 			userId, authServerWellKnownURI, clientId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2589,7 +2590,7 @@ public class OpenIdConnectSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OpenIdConnectSession>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2659,7 +2660,7 @@ public class OpenIdConnectSessionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

@@ -192,7 +192,7 @@ public class FVSEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<FVSEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FVSEntry fvsEntry : list) {
@@ -572,7 +572,7 @@ public class FVSEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -730,7 +730,7 @@ public class FVSEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<FVSEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FVSEntry fvsEntry : list) {
@@ -1142,7 +1142,7 @@ public class FVSEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1616,7 +1616,7 @@ public class FVSEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<FVSEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1686,7 +1686,7 @@ public class FVSEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

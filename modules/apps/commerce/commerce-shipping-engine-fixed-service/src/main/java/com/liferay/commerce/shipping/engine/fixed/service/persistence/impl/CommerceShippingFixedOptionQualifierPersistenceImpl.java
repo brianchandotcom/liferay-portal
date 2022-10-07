@@ -215,7 +215,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceShippingFixedOptionQualifier>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShippingFixedOptionQualifier
@@ -625,7 +625,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceShippingFixedOptionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -784,7 +784,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceShippingFixedOptionQualifier>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShippingFixedOptionQualifier
@@ -1208,7 +1208,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			classNameId, commerceShippingFixedOptionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1345,7 +1345,8 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_C_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C_C, finderArgs, this);
 		}
 
 		if (result instanceof CommerceShippingFixedOptionQualifier) {
@@ -1464,7 +1465,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			classNameId, classPK, commerceShippingFixedOptionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2036,7 +2037,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceShippingFixedOptionQualifier>)
-					finderCache.getResult(finderPath, finderArgs);
+					finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2111,7 +2112,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

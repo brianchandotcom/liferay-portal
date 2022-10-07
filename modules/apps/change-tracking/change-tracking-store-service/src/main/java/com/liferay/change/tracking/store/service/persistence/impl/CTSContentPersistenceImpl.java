@@ -220,7 +220,7 @@ public class CTSContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CTSContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTSContent ctsContent : list) {
@@ -671,7 +671,7 @@ public class CTSContentPersistenceImpl
 
 			finderArgs = new Object[] {companyId, repositoryId, storeType};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -868,7 +868,7 @@ public class CTSContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CTSContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTSContent ctsContent : list) {
@@ -1367,7 +1367,7 @@ public class CTSContentPersistenceImpl
 				companyId, repositoryId, path, storeType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1572,7 +1572,7 @@ public class CTSContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CTSContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTSContent ctsContent : list) {
@@ -2073,7 +2073,7 @@ public class CTSContentPersistenceImpl
 				companyId, repositoryId, path, storeType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2274,7 +2274,7 @@ public class CTSContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_R_P_V_S, finderArgs);
+				_finderPathFetchByC_R_P_V_S, finderArgs, this);
 		}
 
 		if (result instanceof CTSContent) {
@@ -2447,7 +2447,7 @@ public class CTSContentPersistenceImpl
 				companyId, repositoryId, path, version, storeType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3133,7 +3133,7 @@ public class CTSContentPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CTSContent>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3209,7 +3209,7 @@ public class CTSContentPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

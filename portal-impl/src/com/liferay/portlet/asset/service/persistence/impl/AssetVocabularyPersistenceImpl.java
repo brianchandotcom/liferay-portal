@@ -198,7 +198,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -591,7 +591,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -727,7 +728,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof AssetVocabulary) {
@@ -847,7 +848,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1019,7 +1021,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -1444,7 +1446,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1608,7 +1611,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -2522,7 +2525,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByGroupId, finderArgs);
+				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -2632,7 +2635,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2698,7 +2702,7 @@ public class AssetVocabularyPersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByGroupId, finderArgs);
+				_finderPathWithPaginationCountByGroupId, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2968,7 +2972,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -3339,7 +3343,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3461,7 +3466,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_N, finderArgs);
+				_finderPathFetchByG_N, finderArgs, this);
 		}
 
 		if (result instanceof AssetVocabulary) {
@@ -3581,7 +3586,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {groupId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3742,7 +3748,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -4543,7 +4549,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {groupId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4781,7 +4788,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -5791,7 +5798,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_V, finderArgs);
+				_finderPathWithPaginationFindByG_V, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
@@ -5920,7 +5927,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {groupId, visibilityType};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6000,7 +6008,7 @@ public class AssetVocabularyPersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByG_V, finderArgs);
+				_finderPathWithPaginationCountByG_V, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6298,7 +6306,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_ERC, finderArgs);
+				_finderPathFetchByG_ERC, finderArgs, this);
 		}
 
 		if (result instanceof AssetVocabulary) {
@@ -6422,7 +6430,8 @@ public class AssetVocabularyPersistenceImpl
 
 			finderArgs = new Object[] {groupId, externalReferenceCode};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7136,7 +7145,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetVocabulary>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -7212,7 +7221,7 @@ public class AssetVocabularyPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

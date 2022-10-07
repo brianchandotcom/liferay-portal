@@ -203,7 +203,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -580,7 +580,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -726,7 +726,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -1131,7 +1131,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {portletId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1291,7 +1291,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -1696,7 +1696,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {articleId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1861,7 +1861,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -2263,7 +2263,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {groupId, privateLayout};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2423,7 +2423,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -2851,7 +2851,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {groupId, articleId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3030,7 +3030,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -3460,7 +3460,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {groupId, privateLayout, layoutId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3634,7 +3634,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -4091,7 +4091,7 @@ public class JournalContentSearchPersistenceImpl
 
 			finderArgs = new Object[] {groupId, privateLayout, articleId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4289,7 +4289,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
@@ -4773,7 +4773,7 @@ public class JournalContentSearchPersistenceImpl
 				groupId, privateLayout, layoutId, portletId
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4959,7 +4959,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_P_L_P_A, finderArgs);
+				_finderPathFetchByG_P_L_P_A, finderArgs, this);
 		}
 
 		if (result instanceof JournalContentSearch) {
@@ -5123,7 +5123,7 @@ public class JournalContentSearchPersistenceImpl
 				groupId, privateLayout, layoutId, portletId, articleId
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5815,7 +5815,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<JournalContentSearch>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5891,7 +5891,7 @@ public class JournalContentSearchPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

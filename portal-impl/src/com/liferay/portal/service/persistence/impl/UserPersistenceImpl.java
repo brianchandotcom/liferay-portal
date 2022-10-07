@@ -205,7 +205,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -592,7 +592,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -755,7 +756,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -1174,7 +1175,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1336,7 +1338,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -1700,7 +1702,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1810,7 +1813,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByContactId, finderArgs);
+				_finderPathFetchByContactId, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -1907,7 +1910,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {contactId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2053,7 +2057,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -2444,7 +2448,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {emailAddress};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2568,7 +2573,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByPortraitId, finderArgs);
+				_finderPathFetchByPortraitId, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -2680,7 +2685,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {portraitId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2817,7 +2823,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -3055,7 +3061,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {userId, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3182,7 +3189,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_U, finderArgs);
+				_finderPathFetchByC_U, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -3289,7 +3296,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, userId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3443,7 +3451,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -3858,7 +3866,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, _getTime(createDate)};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4028,7 +4037,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -4447,7 +4456,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4588,7 +4598,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_DU, finderArgs);
+				_finderPathFetchByC_DU, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -4712,7 +4722,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, defaultUser};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4841,7 +4852,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_SN, finderArgs);
+				_finderPathFetchByC_SN, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -4961,7 +4972,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, screenName};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5104,7 +5116,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_EA, finderArgs);
+				_finderPathFetchByC_EA, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -5224,7 +5236,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, emailAddress};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5365,7 +5378,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_FID, finderArgs);
+				_finderPathFetchByC_FID, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -5489,7 +5502,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, facebookId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5618,7 +5632,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_GUID, finderArgs);
+				_finderPathFetchByC_GUID, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -5755,7 +5769,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, googleUserId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5898,7 +5913,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_O, finderArgs);
+				_finderPathFetchByC_O, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -6033,7 +6048,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, openId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6201,7 +6217,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -6591,7 +6607,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, status};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6759,7 +6776,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -7230,7 +7247,8 @@ public class UserPersistenceImpl
 				companyId, _getTime(createDate), _getTime(modifiedDate)
 			};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7428,7 +7446,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -7851,7 +7869,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, defaultUser, status};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7987,7 +8006,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_ERC, finderArgs);
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -8108,7 +8127,8 @@ public class UserPersistenceImpl
 
 			finderArgs = new Object[] {companyId, externalReferenceCode};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8872,7 +8892,7 @@ public class UserPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -8948,7 +8968,7 @@ public class UserPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

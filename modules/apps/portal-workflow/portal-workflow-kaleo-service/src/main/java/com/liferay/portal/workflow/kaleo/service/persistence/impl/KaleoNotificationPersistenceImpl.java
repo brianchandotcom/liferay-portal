@@ -206,7 +206,7 @@ public class KaleoNotificationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotification>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotification kaleoNotification : list) {
@@ -581,7 +581,7 @@ public class KaleoNotificationPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -733,7 +733,7 @@ public class KaleoNotificationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotification>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotification kaleoNotification : list) {
@@ -1119,7 +1119,7 @@ public class KaleoNotificationPersistenceImpl
 
 			finderArgs = new Object[] {kaleoDefinitionVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1275,7 +1275,7 @@ public class KaleoNotificationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotification>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotification kaleoNotification : list) {
@@ -1703,7 +1703,7 @@ public class KaleoNotificationPersistenceImpl
 
 			finderArgs = new Object[] {kaleoClassName, kaleoClassPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1891,7 +1891,7 @@ public class KaleoNotificationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotification>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotification kaleoNotification : list) {
@@ -2376,7 +2376,7 @@ public class KaleoNotificationPersistenceImpl
 				kaleoClassName, kaleoClassPK, executionType
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3038,7 +3038,7 @@ public class KaleoNotificationPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoNotification>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3114,7 +3114,7 @@ public class KaleoNotificationPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

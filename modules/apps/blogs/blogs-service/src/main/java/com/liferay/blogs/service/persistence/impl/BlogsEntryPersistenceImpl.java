@@ -215,7 +215,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -604,7 +604,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -740,7 +740,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof BlogsEntry) {
@@ -860,7 +860,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1032,7 +1032,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -1453,7 +1453,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1614,7 +1614,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -2303,7 +2303,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2495,7 +2495,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -2862,7 +2862,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2983,7 +2983,8 @@ public class BlogsEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_UT, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_UT, finderArgs, this);
 		}
 
 		if (result instanceof BlogsEntry) {
@@ -3103,7 +3104,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, urlTitle};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3262,7 +3263,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -4043,7 +4044,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, _getTime(displayDate)};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4276,7 +4277,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -5007,7 +5008,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5205,7 +5206,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -5936,7 +5937,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6145,7 +6146,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -6542,7 +6543,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, userId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6687,7 +6688,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -7108,7 +7109,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, _getTime(displayDate)};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7278,7 +7279,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -7675,7 +7676,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7820,7 +7821,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -8217,7 +8218,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8362,7 +8363,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -8781,7 +8782,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {_getTime(displayDate), status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8948,7 +8949,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -9769,7 +9770,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId, _getTime(displayDate)};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -10023,7 +10024,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -11038,7 +11039,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_U_S, finderArgs);
+				_finderPathWithPaginationFindByG_U_S, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -11163,7 +11164,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -11241,7 +11242,7 @@ public class BlogsEntryPersistenceImpl
 			};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_U_S, finderArgs);
+				_finderPathWithPaginationCountByG_U_S, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -11550,7 +11551,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -12325,7 +12326,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -12556,7 +12557,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -13377,7 +13378,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, _getTime(displayDate), status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -13620,7 +13621,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -14440,7 +14441,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, _getTime(displayDate), status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -14685,7 +14686,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -15505,7 +15506,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, _getTime(displayDate), status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -15750,7 +15751,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -16570,7 +16571,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, _getTime(displayDate), status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -16825,7 +16826,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -17245,7 +17246,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, userId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -17404,7 +17405,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -17824,7 +17825,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {companyId, userId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -17985,7 +17986,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -18430,7 +18431,7 @@ public class BlogsEntryPersistenceImpl
 				companyId, _getTime(displayDate), status
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -18606,7 +18607,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -19053,7 +19054,7 @@ public class BlogsEntryPersistenceImpl
 				companyId, _getTime(displayDate), status
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -19234,7 +19235,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -20098,7 +20099,7 @@ public class BlogsEntryPersistenceImpl
 				groupId, userId, _getTime(displayDate), status
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -20362,7 +20363,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
@@ -21226,7 +21227,7 @@ public class BlogsEntryPersistenceImpl
 				groupId, userId, _getTime(displayDate), status
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -21458,7 +21459,8 @@ public class BlogsEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByG_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_ERC, finderArgs, this);
 		}
 
 		if (result instanceof BlogsEntry) {
@@ -21580,7 +21582,7 @@ public class BlogsEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, externalReferenceCode};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -22305,7 +22307,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -22381,7 +22383,7 @@ public class BlogsEntryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

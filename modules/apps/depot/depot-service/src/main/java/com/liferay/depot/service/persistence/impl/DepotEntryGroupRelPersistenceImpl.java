@@ -198,7 +198,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotEntryGroupRel depotEntryGroupRel : list) {
@@ -586,7 +586,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -716,7 +716,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof DepotEntryGroupRel) {
@@ -827,7 +827,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -993,7 +993,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotEntryGroupRel depotEntryGroupRel : list) {
@@ -1410,7 +1410,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1570,7 +1570,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotEntryGroupRel depotEntryGroupRel : list) {
@@ -1938,7 +1938,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {depotEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2076,7 +2076,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotEntryGroupRel depotEntryGroupRel : list) {
@@ -2443,7 +2443,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {toGroupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2591,7 +2591,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotEntryGroupRel depotEntryGroupRel : list) {
@@ -2990,7 +2990,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {ddmStructuresAvailable, toGroupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3112,7 +3112,8 @@ public class DepotEntryGroupRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByD_TGI, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByD_TGI, finderArgs, this);
 		}
 
 		if (result instanceof DepotEntryGroupRel) {
@@ -3211,7 +3212,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {depotEntryId, toGroupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3363,7 +3364,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DepotEntryGroupRel depotEntryGroupRel : list) {
@@ -3755,7 +3756,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {searchable, toGroupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4275,7 +4276,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DepotEntryGroupRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4345,7 +4346,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

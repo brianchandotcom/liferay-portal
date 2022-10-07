@@ -154,7 +154,7 @@ public class TicketPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByKey, finderArgs);
+				_finderPathFetchByKey, finderArgs, this);
 		}
 
 		if (result instanceof Ticket) {
@@ -270,7 +270,8 @@ public class TicketPersistenceImpl
 
 		Object[] finderArgs = new Object[] {key};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -433,7 +434,7 @@ public class TicketPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Ticket>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Ticket ticket : list) {
@@ -845,7 +846,8 @@ public class TicketPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, classNameId, classPK};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1006,7 +1008,7 @@ public class TicketPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Ticket>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Ticket ticket : list) {
@@ -1417,7 +1419,8 @@ public class TicketPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK, type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1590,7 +1593,7 @@ public class TicketPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Ticket>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Ticket ticket : list) {
@@ -2030,7 +2033,8 @@ public class TicketPersistenceImpl
 			companyId, classNameId, classPK, type
 		};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -2493,7 +2497,7 @@ public class TicketPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Ticket>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2563,7 +2567,7 @@ public class TicketPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

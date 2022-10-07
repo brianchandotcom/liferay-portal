@@ -205,7 +205,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<FriendlyURLEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FriendlyURLEntry friendlyURLEntry : list) {
@@ -599,7 +599,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -735,7 +735,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof FriendlyURLEntry) {
@@ -855,7 +855,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1027,7 +1027,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<FriendlyURLEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FriendlyURLEntry friendlyURLEntry : list) {
@@ -1453,7 +1453,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1630,7 +1630,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<FriendlyURLEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (FriendlyURLEntry friendlyURLEntry : list) {
@@ -2053,7 +2053,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2722,7 +2722,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<FriendlyURLEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2798,7 +2798,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

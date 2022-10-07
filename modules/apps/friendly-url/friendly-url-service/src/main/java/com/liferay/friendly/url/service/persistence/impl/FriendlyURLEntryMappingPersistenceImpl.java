@@ -178,7 +178,8 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof FriendlyURLEntryMapping) {
@@ -288,7 +289,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -936,7 +937,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<FriendlyURLEntryMapping>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1013,7 +1014,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

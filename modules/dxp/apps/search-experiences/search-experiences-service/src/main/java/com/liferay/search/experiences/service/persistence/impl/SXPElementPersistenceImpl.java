@@ -201,7 +201,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SXPElement sxpElement : list) {
@@ -929,7 +929,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1155,7 +1155,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SXPElement sxpElement : list) {
@@ -1929,7 +1929,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2160,7 +2160,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SXPElement sxpElement : list) {
@@ -2842,7 +2842,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3033,7 +3033,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SXPElement sxpElement : list) {
@@ -3762,7 +3762,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, readOnly};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3964,7 +3964,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SXPElement sxpElement : list) {
@@ -4686,7 +4686,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4897,7 +4897,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SXPElement sxpElement : list) {
@@ -5663,7 +5663,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, type, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -5855,7 +5855,8 @@ public class SXPElementPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof SXPElement) {
@@ -5969,7 +5970,7 @@ public class SXPElementPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6500,7 +6501,7 @@ public class SXPElementPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -6570,7 +6571,7 @@ public class SXPElementPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

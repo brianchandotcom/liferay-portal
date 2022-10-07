@@ -195,7 +195,7 @@ public class ObjectStatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectState>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectState objectState : list) {
@@ -575,7 +575,7 @@ public class ObjectStatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -734,7 +734,7 @@ public class ObjectStatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectState>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectState objectState : list) {
@@ -1147,7 +1147,7 @@ public class ObjectStatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1307,7 +1307,7 @@ public class ObjectStatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectState>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectState objectState : list) {
@@ -1671,7 +1671,7 @@ public class ObjectStatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {listTypeEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1812,7 +1812,7 @@ public class ObjectStatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectState>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectState objectState : list) {
@@ -2179,7 +2179,7 @@ public class ObjectStatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {objectStateFlowId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2298,7 +2298,7 @@ public class ObjectStatePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByLTEI_OSFI, finderArgs);
+				_finderPathFetchByLTEI_OSFI, finderArgs, this);
 		}
 
 		if (result instanceof ObjectState) {
@@ -2415,7 +2415,7 @@ public class ObjectStatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {listTypeEntryId, objectStateFlowId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2904,7 +2904,7 @@ public class ObjectStatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectState>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2974,7 +2974,7 @@ public class ObjectStatePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

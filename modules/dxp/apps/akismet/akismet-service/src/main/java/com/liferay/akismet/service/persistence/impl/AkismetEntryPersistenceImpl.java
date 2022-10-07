@@ -187,7 +187,7 @@ public class AkismetEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AkismetEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AkismetEntry akismetEntry : list) {
@@ -571,7 +571,7 @@ public class AkismetEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(modifiedDate)};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -698,7 +698,8 @@ public class AkismetEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof AkismetEntry) {
@@ -813,7 +814,7 @@ public class AkismetEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1280,7 +1281,7 @@ public class AkismetEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AkismetEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1350,7 +1351,7 @@ public class AkismetEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

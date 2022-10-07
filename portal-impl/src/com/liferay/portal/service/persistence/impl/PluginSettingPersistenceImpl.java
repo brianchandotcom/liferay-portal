@@ -182,7 +182,7 @@ public class PluginSettingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PluginSetting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PluginSetting pluginSetting : list) {
@@ -541,7 +541,8 @@ public class PluginSettingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -669,7 +670,7 @@ public class PluginSettingPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_P_P, finderArgs);
+				_finderPathFetchByC_P_P, finderArgs, this);
 		}
 
 		if (result instanceof PluginSetting) {
@@ -803,7 +804,8 @@ public class PluginSettingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, pluginId, pluginType};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1298,7 +1300,7 @@ public class PluginSettingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PluginSetting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1368,7 +1370,7 @@ public class PluginSettingPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

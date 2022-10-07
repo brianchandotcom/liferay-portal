@@ -195,7 +195,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -594,7 +594,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -731,7 +731,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof CPDefinitionOptionRel) {
@@ -853,7 +853,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1027,7 +1027,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -1454,7 +1454,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1617,7 +1617,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -1994,7 +1994,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2138,7 +2138,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -2515,7 +2515,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2662,7 +2662,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -3042,7 +3042,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3164,7 +3164,8 @@ public class CPDefinitionOptionRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
 		}
 
 		if (result instanceof CPDefinitionOptionRel) {
@@ -3274,7 +3275,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId, CPOptionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3433,7 +3434,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -3835,7 +3836,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId, required};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3995,7 +3996,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -4400,7 +4401,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId, skuContributor};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4529,7 +4530,8 @@ public class CPDefinitionOptionRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByC_K, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_K, finderArgs, this);
 		}
 
 		if (result instanceof CPDefinitionOptionRel) {
@@ -4651,7 +4653,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 			finderArgs = new Object[] {CPDefinitionId, key};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5383,7 +5385,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5459,7 +5461,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

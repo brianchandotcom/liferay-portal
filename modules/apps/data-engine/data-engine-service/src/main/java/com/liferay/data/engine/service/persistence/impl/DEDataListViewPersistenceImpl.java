@@ -204,7 +204,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DEDataListView deDataListView : list) {
@@ -596,7 +596,7 @@ public class DEDataListViewPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -732,7 +732,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof DEDataListView) {
@@ -852,7 +852,7 @@ public class DEDataListViewPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1024,7 +1024,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DEDataListView deDataListView : list) {
@@ -1449,7 +1449,7 @@ public class DEDataListViewPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1615,7 +1615,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DEDataListView deDataListView : list) {
@@ -1990,7 +1990,7 @@ public class DEDataListViewPersistenceImpl
 
 			finderArgs = new Object[] {ddmStructureId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2149,7 +2149,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DEDataListView deDataListView : list) {
@@ -2577,7 +2577,7 @@ public class DEDataListViewPersistenceImpl
 
 			finderArgs = new Object[] {groupId, companyId, ddmStructureId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3239,7 +3239,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3315,7 +3315,7 @@ public class DEDataListViewPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

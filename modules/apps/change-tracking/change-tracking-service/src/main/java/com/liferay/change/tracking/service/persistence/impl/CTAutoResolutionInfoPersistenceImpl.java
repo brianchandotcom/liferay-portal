@@ -199,7 +199,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTAutoResolutionInfo ctAutoResolutionInfo : list) {
@@ -570,7 +570,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -730,7 +730,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTAutoResolutionInfo ctAutoResolutionInfo : list) {
@@ -1253,7 +1253,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_MCNI_SMCPK, finderArgs);
+				_finderPathWithPaginationFindByC_MCNI_SMCPK, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTAutoResolutionInfo ctAutoResolutionInfo : list) {
@@ -1380,7 +1380,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 			ctCollectionId, modelClassNameId, sourceModelClassPK
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1451,7 +1451,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_MCNI_SMCPK, finderArgs);
+			_finderPathWithPaginationCountByC_MCNI_SMCPK, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -1938,7 +1938,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2008,7 +2008,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

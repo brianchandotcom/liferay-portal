@@ -177,7 +177,7 @@ public class UserIdMapperPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<UserIdMapper>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserIdMapper userIdMapper : list) {
@@ -534,7 +534,8 @@ public class UserIdMapperPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -650,7 +651,7 @@ public class UserIdMapperPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_T, finderArgs);
+				_finderPathFetchByU_T, finderArgs, this);
 		}
 
 		if (result instanceof UserIdMapper) {
@@ -761,7 +762,8 @@ public class UserIdMapperPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -899,7 +901,7 @@ public class UserIdMapperPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByT_E, finderArgs);
+				_finderPathFetchByT_E, finderArgs, this);
 		}
 
 		if (result instanceof UserIdMapper) {
@@ -1023,7 +1025,8 @@ public class UserIdMapperPersistenceImpl
 
 		Object[] finderArgs = new Object[] {type, externalUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1518,7 +1521,7 @@ public class UserIdMapperPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<UserIdMapper>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1588,7 +1591,7 @@ public class UserIdMapperPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

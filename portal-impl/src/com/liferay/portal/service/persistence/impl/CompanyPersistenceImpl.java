@@ -153,7 +153,7 @@ public class CompanyPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByWebId, finderArgs);
+				_finderPathFetchByWebId, finderArgs, this);
 		}
 
 		if (result instanceof Company) {
@@ -254,7 +254,8 @@ public class CompanyPersistenceImpl
 
 		Object[] finderArgs = new Object[] {webId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -374,7 +375,7 @@ public class CompanyPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByMx, finderArgs);
+				_finderPathFetchByMx, finderArgs, this);
 		}
 
 		if (result instanceof Company) {
@@ -490,7 +491,8 @@ public class CompanyPersistenceImpl
 
 		Object[] finderArgs = new Object[] {mx};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -607,7 +609,7 @@ public class CompanyPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByLogoId, finderArgs);
+				_finderPathFetchByLogoId, finderArgs, this);
 		}
 
 		if (result instanceof Company) {
@@ -710,7 +712,8 @@ public class CompanyPersistenceImpl
 
 		Object[] finderArgs = new Object[] {logoId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1199,7 +1202,7 @@ public class CompanyPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Company>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1269,7 +1272,7 @@ public class CompanyPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

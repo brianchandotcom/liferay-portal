@@ -198,7 +198,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -940,7 +940,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1166,7 +1166,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -1956,7 +1956,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2187,7 +2187,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -2881,7 +2881,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3072,7 +3072,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -3808,7 +3808,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4020,7 +4020,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -4829,7 +4829,7 @@ public class DispatchTriggerPersistenceImpl
 			companyId, dispatchTaskExecutorType
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5036,7 +5036,8 @@ public class DispatchTriggerPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_N, finderArgs, this);
 		}
 
 		if (result instanceof DispatchTrigger) {
@@ -5147,7 +5148,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5316,7 +5317,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -6309,7 +6310,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				_finderPathWithPaginationFindByA_DTCM, finderArgs);
+				_finderPathWithPaginationFindByA_DTCM, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -6421,7 +6422,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {active, dispatchTaskClusterMode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6484,7 +6485,7 @@ public class DispatchTriggerPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByA_DTCM, finderArgs);
+			_finderPathWithPaginationCountByA_DTCM, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -6759,7 +6760,8 @@ public class DispatchTriggerPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof DispatchTrigger) {
@@ -6874,7 +6876,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -7407,7 +7409,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -7477,7 +7479,7 @@ public class DispatchTriggerPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

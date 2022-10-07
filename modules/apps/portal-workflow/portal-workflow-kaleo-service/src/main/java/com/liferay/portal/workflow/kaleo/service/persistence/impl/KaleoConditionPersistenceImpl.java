@@ -204,7 +204,7 @@ public class KaleoConditionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoCondition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoCondition kaleoCondition : list) {
@@ -572,7 +572,7 @@ public class KaleoConditionPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -724,7 +724,7 @@ public class KaleoConditionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoCondition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoCondition kaleoCondition : list) {
@@ -1106,7 +1106,7 @@ public class KaleoConditionPersistenceImpl
 
 			finderArgs = new Object[] {kaleoDefinitionVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1222,7 +1222,7 @@ public class KaleoConditionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByKaleoNodeId, finderArgs);
+				_finderPathFetchByKaleoNodeId, finderArgs, this);
 		}
 
 		if (result instanceof KaleoCondition) {
@@ -1336,7 +1336,7 @@ public class KaleoConditionPersistenceImpl
 
 			finderArgs = new Object[] {kaleoNodeId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1963,7 +1963,7 @@ public class KaleoConditionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<KaleoCondition>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2039,7 +2039,7 @@ public class KaleoConditionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

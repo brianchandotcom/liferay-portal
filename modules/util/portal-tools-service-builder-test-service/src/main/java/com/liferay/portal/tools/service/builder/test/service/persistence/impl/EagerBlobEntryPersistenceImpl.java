@@ -179,7 +179,7 @@ public class EagerBlobEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<EagerBlobEntry>)dummyFinderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (EagerBlobEntry eagerBlobEntry : list) {
@@ -562,7 +562,8 @@ public class EagerBlobEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)dummyFinderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -692,7 +693,7 @@ public class EagerBlobEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = dummyFinderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof EagerBlobEntry) {
@@ -803,7 +804,8 @@ public class EagerBlobEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)dummyFinderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1286,7 +1288,7 @@ public class EagerBlobEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<EagerBlobEntry>)dummyFinderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1356,7 +1358,7 @@ public class EagerBlobEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)dummyFinderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

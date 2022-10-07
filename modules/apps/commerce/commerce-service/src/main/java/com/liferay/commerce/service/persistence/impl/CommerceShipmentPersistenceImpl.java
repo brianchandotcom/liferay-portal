@@ -185,7 +185,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -570,7 +570,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -700,7 +700,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof CommerceShipment) {
@@ -811,7 +811,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -977,7 +977,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -1394,7 +1394,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1552,7 +1552,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -1992,7 +1992,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				_finderPathWithPaginationFindByGroupId, finderArgs);
+				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -2093,7 +2093,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2148,7 +2148,7 @@ public class CommerceShipmentPersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByGroupId, finderArgs);
+			_finderPathWithPaginationCountByGroupId, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -2308,7 +2308,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -2789,7 +2789,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_C, finderArgs);
+				_finderPathWithPaginationFindByG_C, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -2902,7 +2902,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, commerceAddressId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2964,7 +2964,7 @@ public class CommerceShipmentPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_C, finderArgs);
+			_finderPathWithPaginationCountByG_C, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -3131,7 +3131,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -3604,7 +3604,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_S, finderArgs);
+				_finderPathWithPaginationFindByG_S, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShipment commerceShipment : list) {
@@ -3716,7 +3716,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3776,7 +3776,7 @@ public class CommerceShipmentPersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds), status};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_S, finderArgs);
+			_finderPathWithPaginationCountByG_S, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -3919,7 +3919,8 @@ public class CommerceShipmentPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof CommerceShipment) {
@@ -4034,7 +4035,7 @@ public class CommerceShipmentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4566,7 +4567,7 @@ public class CommerceShipmentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShipment>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -4636,7 +4637,7 @@ public class CommerceShipmentPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

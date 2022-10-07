@@ -209,7 +209,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBSuspiciousActivity>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBSuspiciousActivity mbSuspiciousActivity : list) {
@@ -608,7 +608,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -745,7 +745,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof MBSuspiciousActivity) {
@@ -866,7 +866,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1040,7 +1040,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBSuspiciousActivity>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBSuspiciousActivity mbSuspiciousActivity : list) {
@@ -1467,7 +1467,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1632,7 +1632,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBSuspiciousActivity>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBSuspiciousActivity mbSuspiciousActivity : list) {
@@ -2009,7 +2009,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {messageId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2151,7 +2151,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBSuspiciousActivity>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBSuspiciousActivity mbSuspiciousActivity : list) {
@@ -2528,7 +2528,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {threadId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2648,7 +2648,8 @@ public class MBSuspiciousActivityPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByU_M, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByU_M, finderArgs, this);
 		}
 
 		if (result instanceof MBSuspiciousActivity) {
@@ -2772,7 +2773,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {userId, messageId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2899,7 +2900,8 @@ public class MBSuspiciousActivityPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByU_T, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByU_T, finderArgs, this);
 		}
 
 		if (result instanceof MBSuspiciousActivity) {
@@ -3022,7 +3024,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 			finderArgs = new Object[] {userId, threadId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3733,7 +3735,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBSuspiciousActivity>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3809,7 +3811,7 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

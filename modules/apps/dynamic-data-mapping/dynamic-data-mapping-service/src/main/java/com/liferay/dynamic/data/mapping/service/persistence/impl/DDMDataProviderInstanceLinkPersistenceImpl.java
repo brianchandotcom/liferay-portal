@@ -209,7 +209,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstanceLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
@@ -601,7 +601,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 			finderArgs = new Object[] {dataProviderInstanceId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -750,7 +750,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstanceLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
@@ -1133,7 +1133,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 			finderArgs = new Object[] {structureId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1256,7 +1256,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(_finderPathFetchByD_S, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByD_S, finderArgs, this);
 		}
 
 		if (result instanceof DDMDataProviderInstanceLink) {
@@ -1368,7 +1369,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 			finderArgs = new Object[] {dataProviderInstanceId, structureId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2032,7 +2033,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstanceLink>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2111,7 +2112,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

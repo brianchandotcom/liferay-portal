@@ -189,7 +189,7 @@ public class PortletItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PortletItem>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletItem portletItem : list) {
@@ -578,7 +578,8 @@ public class PortletItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, classNameId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -738,7 +739,7 @@ public class PortletItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PortletItem>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletItem portletItem : list) {
@@ -1178,7 +1179,8 @@ public class PortletItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, portletId, classNameId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1340,7 +1342,7 @@ public class PortletItemPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_N_P_C, finderArgs);
+				_finderPathFetchByG_N_P_C, finderArgs, this);
 		}
 
 		if (result instanceof PortletItem) {
@@ -1500,7 +1502,8 @@ public class PortletItemPersistenceImpl
 			groupId, name, portletId, classNameId
 		};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -2016,7 +2019,7 @@ public class PortletItemPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PortletItem>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2086,7 +2089,7 @@ public class PortletItemPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

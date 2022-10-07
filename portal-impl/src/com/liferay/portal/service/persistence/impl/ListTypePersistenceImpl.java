@@ -176,7 +176,7 @@ public class ListTypePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ListType>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ListType listType : list) {
@@ -556,7 +556,8 @@ public class ListTypePersistenceImpl
 
 		Object[] finderArgs = new Object[] {type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -687,7 +688,7 @@ public class ListTypePersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByN_T, finderArgs);
+				_finderPathFetchByN_T, finderArgs, this);
 		}
 
 		if (result instanceof ListType) {
@@ -810,7 +811,8 @@ public class ListTypePersistenceImpl
 
 		Object[] finderArgs = new Object[] {name, type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1280,7 +1282,7 @@ public class ListTypePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ListType>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1350,7 +1352,7 @@ public class ListTypePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

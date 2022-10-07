@@ -175,7 +175,7 @@ public class VersionedEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<VersionedEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VersionedEntry versionedEntry : list) {
@@ -534,7 +534,7 @@ public class VersionedEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -677,7 +677,7 @@ public class VersionedEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<VersionedEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VersionedEntry versionedEntry : list) {
@@ -1067,7 +1067,7 @@ public class VersionedEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1180,7 +1180,7 @@ public class VersionedEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByHeadId, finderArgs);
+				_finderPathFetchByHeadId, finderArgs, this);
 		}
 
 		if (result instanceof VersionedEntry) {
@@ -1270,7 +1270,7 @@ public class VersionedEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {headId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1707,7 +1707,7 @@ public class VersionedEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<VersionedEntry>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1777,7 +1777,7 @@ public class VersionedEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

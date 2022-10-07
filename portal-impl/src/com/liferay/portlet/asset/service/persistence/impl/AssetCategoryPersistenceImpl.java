@@ -198,7 +198,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -589,7 +589,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -725,7 +726,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof AssetCategory) {
@@ -845,7 +846,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1017,7 +1019,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -1442,7 +1444,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1603,7 +1606,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -2302,7 +2305,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2495,7 +2499,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -2872,7 +2876,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {parentCategoryId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3018,7 +3023,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -3388,7 +3393,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3538,7 +3544,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -4288,7 +4294,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, parentCategoryId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4498,7 +4505,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -5503,7 +5510,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_V, finderArgs);
+				_finderPathWithPaginationFindByG_V, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -5631,7 +5638,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5711,7 +5719,7 @@ public class AssetCategoryPersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByG_V, finderArgs);
+				_finderPathWithPaginationCountByG_V, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6034,7 +6042,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -6460,7 +6468,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {parentCategoryId, name};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -6634,7 +6643,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -7035,7 +7044,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {parentCategoryId, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7193,7 +7203,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -7618,7 +7628,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {name, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -7801,7 +7812,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -8596,7 +8607,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, parentCategoryId, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -8819,7 +8831,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -9662,7 +9674,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, treePath, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -9910,7 +9923,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -11034,7 +11047,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_LikeN_V, finderArgs);
+				_finderPathWithPaginationFindByG_LikeN_V, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
@@ -11189,7 +11202,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, name, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -11290,7 +11304,7 @@ public class AssetCategoryPersistenceImpl
 			};
 
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByG_LikeN_V, finderArgs);
+				_finderPathWithPaginationCountByG_LikeN_V, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -11661,7 +11675,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByP_N_V, finderArgs);
+				_finderPathFetchByP_N_V, finderArgs, this);
 		}
 
 		if (result instanceof AssetCategory) {
@@ -11792,7 +11806,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {parentCategoryId, name, vocabularyId};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -11945,7 +11960,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_ERC, finderArgs);
+				_finderPathFetchByG_ERC, finderArgs, this);
 		}
 
 		if (result instanceof AssetCategory) {
@@ -12069,7 +12084,8 @@ public class AssetCategoryPersistenceImpl
 
 			finderArgs = new Object[] {groupId, externalReferenceCode};
 
-			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -12777,7 +12793,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategory>)FinderCacheUtil.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -12853,7 +12869,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

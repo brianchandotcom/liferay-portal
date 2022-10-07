@@ -208,7 +208,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -611,7 +611,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -748,7 +748,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs);
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof LayoutClassedModelUsage) {
@@ -871,7 +871,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1045,7 +1045,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -1473,7 +1473,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -1635,7 +1635,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -2011,7 +2011,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2162,7 +2162,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -2565,7 +2565,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -2734,7 +2734,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -3166,7 +3166,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {companyId, classNameId, containerType};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3336,7 +3336,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -3762,7 +3762,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -3937,7 +3937,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
@@ -4395,7 +4395,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			finderArgs = new Object[] {containerKey, containerType, plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -4573,7 +4573,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByCN_CPK_CK_CT_P, finderArgs);
+				_finderPathFetchByCN_CPK_CK_CT_P, finderArgs, this);
 		}
 
 		if (result instanceof LayoutClassedModelUsage) {
@@ -4725,7 +4725,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 				classNameId, classPK, containerKey, containerType, plid
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -5475,7 +5475,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -5552,7 +5552,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 		}
 
 		if (count == null) {

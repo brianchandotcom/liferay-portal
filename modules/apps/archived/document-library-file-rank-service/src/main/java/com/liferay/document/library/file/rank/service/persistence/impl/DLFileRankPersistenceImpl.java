@@ -190,7 +190,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -545,7 +545,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -684,7 +684,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -1042,7 +1042,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1184,7 +1184,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -1570,7 +1570,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1727,7 +1727,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -2138,7 +2138,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId, active};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2273,7 +2273,8 @@ public class DLFileRankPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_U_F, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_U_F, finderArgs, this);
 		}
 
 		if (result instanceof DLFileRank) {
@@ -2396,7 +2397,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, userId, fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2868,7 +2869,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -2938,7 +2939,7 @@ public class DLFileRankPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

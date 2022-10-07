@@ -198,7 +198,7 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceTermEntryRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceTermEntryRel commerceTermEntryRel : list) {
@@ -571,7 +571,7 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceTermEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -719,7 +719,7 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceTermEntryRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceTermEntryRel commerceTermEntryRel : list) {
@@ -1115,7 +1115,7 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, commerceTermEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1248,7 +1248,8 @@ public class CommerceTermEntryRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_C_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_C_C, finderArgs, this);
 		}
 
 		if (result instanceof CommerceTermEntryRel) {
@@ -1361,7 +1362,7 @@ public class CommerceTermEntryRelPersistenceImpl
 			classNameId, classPK, commerceTermEntryId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1865,7 +1866,7 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceTermEntryRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1935,7 +1936,7 @@ public class CommerceTermEntryRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

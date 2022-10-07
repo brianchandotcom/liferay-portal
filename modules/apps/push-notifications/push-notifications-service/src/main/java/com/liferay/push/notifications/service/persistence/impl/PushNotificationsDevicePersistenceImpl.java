@@ -168,7 +168,8 @@ public class PushNotificationsDevicePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByToken, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByToken, finderArgs, this);
 		}
 
 		if (result instanceof PushNotificationsDevice) {
@@ -273,7 +274,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		Object[] finderArgs = new Object[] {token};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -434,7 +435,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PushNotificationsDevice>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PushNotificationsDevice pushNotificationsDevice : list) {
@@ -939,7 +940,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PushNotificationsDevice>)finderCache.getResult(
-				_finderPathWithPaginationFindByU_P, finderArgs);
+				_finderPathWithPaginationFindByU_P, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PushNotificationsDevice pushNotificationsDevice : list) {
@@ -1065,7 +1066,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, platform};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1140,7 +1141,7 @@ public class PushNotificationsDevicePersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByU_P, finderArgs);
+			_finderPathWithPaginationCountByU_P, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -1662,7 +1663,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PushNotificationsDevice>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1733,7 +1734,7 @@ public class PushNotificationsDevicePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

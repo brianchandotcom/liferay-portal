@@ -198,7 +198,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountEntryOrganizationRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountEntryOrganizationRel accountEntryOrganizationRel :
@@ -573,7 +573,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -714,7 +714,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountEntryOrganizationRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountEntryOrganizationRel accountEntryOrganizationRel :
@@ -1089,7 +1089,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {organizationId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1206,7 +1206,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByA_O, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByA_O, finderArgs, this);
 		}
 
 		if (result instanceof AccountEntryOrganizationRel) {
@@ -1327,7 +1328,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountEntryId, organizationId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1824,7 +1825,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountEntryOrganizationRel>)finderCache.getResult(
-				finderPath, finderArgs);
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1897,7 +1898,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;

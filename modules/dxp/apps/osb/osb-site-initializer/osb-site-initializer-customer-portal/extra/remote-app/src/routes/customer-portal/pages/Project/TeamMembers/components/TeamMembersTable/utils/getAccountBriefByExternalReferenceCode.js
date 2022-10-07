@@ -9,17 +9,12 @@
  * distribution rights of the Software.
  */
 
-import getAccountBriefByExternalReferenceCode from './getAccountBriefByExternalReferenceCode';
-
-export default function hasAccountAdministratorRoleByExternalReferenceCode(
+export default function getAccountBriefByExternalReferenceCode(
 	accountBriefs,
 	externalReferenceCode
 ) {
-	return getAccountBriefByExternalReferenceCode(
-		accountBriefs,
-		externalReferenceCode
-	)?.roleBriefs.some(
-		({name}) =>
-			name === 'Account Administrator' || name === 'Partner Manager'
+	return accountBriefs?.find(
+		(accountBrief) =>
+			accountBrief.externalReferenceCode === externalReferenceCode
 	);
 }

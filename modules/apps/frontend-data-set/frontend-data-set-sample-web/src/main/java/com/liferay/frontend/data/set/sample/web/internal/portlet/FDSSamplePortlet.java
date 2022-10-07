@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -46,7 +48,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -81,22 +82,22 @@ public class FDSSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			_generate(themeDisplay.getCompanyId());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
 		renderRequest.setAttribute(
 			FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT,
 			new FDSSampleDisplayContext(
 				_portal.getHttpServletRequest(renderRequest)));
 
 		super.doDispatch(renderRequest, renderResponse);
-	}
-
-	@Activate
-	protected void activate() {
-		try {
-			_generate(_portal.getDefaultCompanyId());
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 	}
 
 	private synchronized void _generate(long companyId) throws Exception {

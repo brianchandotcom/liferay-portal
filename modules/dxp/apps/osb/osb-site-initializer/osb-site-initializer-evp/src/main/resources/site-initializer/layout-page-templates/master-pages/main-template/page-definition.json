@@ -124,7 +124,7 @@
 														"classPKReferences": {
 															"en_US": {
 																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/evp_logo.svg$]"
+																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/evp_logo.svg#]"
 															}
 														},
 														"fragmentImageConfiguration": {
@@ -498,7 +498,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/liferay_logo.svg$]"
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/liferay_logo.svg#]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -620,7 +620,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/evp_icon_heart.svg$]"
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/evp_icon_heart.svg#]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {
@@ -719,7 +719,7 @@
 																				"classPKReferences": {
 																					"en_US": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/loop_icon.svg$]"
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos/loop_icon.svg#]"
 																					}
 																				},
 																				"fragmentImageConfiguration": {

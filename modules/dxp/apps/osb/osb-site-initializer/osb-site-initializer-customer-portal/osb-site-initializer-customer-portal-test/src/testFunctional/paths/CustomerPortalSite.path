@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>CARD_NAME</td>
-	<td>//div[contains(@class, 'cards-subscription')]//h5[(text()='${cardName}')]</td>
+	<td>//div[contains(@class, 'cp-account-subscription-card')]//h5[text()='${cardName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,8 +161,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_MODAL_CARD</td>
-	<td>//button[contains(@aria-label, 'close')]</td>
+	<td>CLOSE_MODAL</td>
+	<td>//h2[contains(text(), '${key_modalTitle}')]/..//following-sibling::button</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>PROJECT_TITLE_MAIN_PAGE</td>
-	<td>//div//h2[contains(@id,'project-title')]</td>
+	<td>//div[contains(@class, 'card-body')]//h4[contains(@class, 'text-truncate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -312,7 +312,7 @@
 </tr>
 <tr>
 	<td>WELCOME_PAGE_USER_NAME</td>
-	<td>//*[contains(@id,'customer-portal-user-name') and text()='${key_userFirstName}!']</td>
+	<td>//*[contains(@class,'customer-portal')]//*[contains(text(), '${key_userFirstName}!')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -322,7 +322,7 @@
 </tr>
 <tr>
 	<td>SEARCH_BAR</td>
-	<td>//*[contains(@class, 'cp-search-project')]</td>
+	<td>//*[contains(@class, 'cp-search-bar')]</td>
 	<td></td>
 </tr>
 <tr>

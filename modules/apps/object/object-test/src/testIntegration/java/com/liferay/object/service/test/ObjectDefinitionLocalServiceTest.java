@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -57,9 +58,11 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 
@@ -1012,13 +1015,18 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testUpdateCustomObjectDefinition() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-158473", "true"
+			).build());
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
 		Assert.assertFalse(objectDefinition.isActive());
@@ -1029,6 +1037,38 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Ables"),
 			objectDefinition.getPluralLabelMap());
+		Assert.assertEquals(
+			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+			objectDefinition.getStorageType());
+
+		try {
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
+				false, false, false, true,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				false, LocalizedMapUtil.getLocalizedMap("Ables"),
+				objectDefinition.getScope());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionEnableObjectEntryHistoryException
+					objectDefinitionEnableObjectEntryHistoryException) {
+
+			Assert.assertEquals(
+				"Enable object entry history is allowed only for object " +
+					"definitions with the default storage type",
+				objectDefinitionEnableObjectEntryHistoryException.getMessage());
+		}
+
+		objectDefinition.setStorageType(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		Assert.assertEquals(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			objectDefinition.getStorageType());
 
 		try {
 			objectDefinition =
@@ -1085,6 +1125,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(0, objectDefinition.getDescriptionObjectFieldId());
 		Assert.assertEquals(0, objectDefinition.getTitleObjectFieldId());
 		Assert.assertFalse(objectDefinition.isActive());
+		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
 			objectDefinition.getLabelMap());
@@ -1096,12 +1137,13 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
-				objectDefinition.isActive(), true, false, false,
+				objectDefinition.isActive(), true, false, true,
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
 				false, LocalizedMapUtil.getLocalizedMap("Bakers"),
 				objectDefinition.getScope());
 
 		Assert.assertFalse(objectDefinition.isActive());
+		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
 			objectDefinition.getLabelMap());
@@ -1114,7 +1156,7 @@ public class ObjectDefinitionLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		objectDefinition =
+		try {
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
 				true, true, false, false,
@@ -1122,7 +1164,27 @@ public class ObjectDefinitionLocalServiceTest {
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope());
 
+			Assert.fail();
+		}
+		catch (ObjectDefinitionEnableObjectEntryHistoryException
+					objectDefinitionEnableObjectEntryHistoryException) {
+
+			Assert.assertEquals(
+				"Enable object entry history cannot be updated when the " +
+					"object definition is published",
+				objectDefinitionEnableObjectEntryHistoryException.getMessage());
+		}
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
+				true, true, false, true,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
+				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
+				objectDefinition.getScope());
+
 		Assert.assertTrue(objectDefinition.isActive());
+		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Charlie"),
 			objectDefinition.getLabelMap());
@@ -1135,6 +1197,11 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-158473", "false"
+			).build());
 	}
 
 	@Test

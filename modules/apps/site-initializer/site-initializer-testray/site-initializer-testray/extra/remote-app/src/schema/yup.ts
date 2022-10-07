@@ -62,23 +62,32 @@ const passwordRequiredStructure = {
 		.required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 };
 
+const buildStructure = {
+	active: yup.boolean(),
+	caseIds: yup.array().of(yup.number()),
+	description: yup.string(),
+	factorStacks: yup.mixed(),
+	gitHash: yup.string(),
+	id: yup.string(),
+	name: yup.string().required(i18n.sub('x-is-a-required-field', 'name')),
+	productVersionId: yup
+		.string()
+		.required(i18n.sub('x-is-a-required-field', 'product-version')),
+	projectId: yup.number(),
+	promoted: yup.boolean(),
+	routineId: yup.string().required(),
+	template: yup.boolean(),
+	templateTestrayBuildId: yup.string(),
+};
+
+const buildTemplateStructure = {
+	...buildStructure,
+	productVersionId: yup.string(),
+};
+
 const yupSchema = {
-	build: yup.object({
-		active: yup.boolean(),
-		caseIds: yup.array().of(yup.number()),
-		description: yup.string(),
-		factorStacks: yup.mixed(),
-		gitHash: yup.string(),
-		id: yup.string(),
-		name: yup.string().required(i18n.sub('x-is-a-required-field', 'name')),
-		productVersionId: yup
-			.string()
-			.required(i18n.sub('x-is-a-required-field', 'product-version')),
-		projectId: yup.number(),
-		promoted: yup.boolean(),
-		routineId: yup.string().required(),
-		template: yup.boolean(),
-	}),
+	build: yup.object(buildStructure),
+	buildTemplate: yup.object(buildTemplateStructure),
 	case: yup.object({
 		addAnother: yup.boolean(),
 		caseTypeId: yup.string().required(),

@@ -38,7 +38,7 @@ const BuildTemplates = () => {
 		<Container>
 			<ListViewRest
 				managementToolbarProps={{
-					addButton: () => navigate('../create'),
+					addButton: () => navigate(`../create/template/${true}`),
 					filterFields: filters.template as any,
 					title: i18n.translate('templates'),
 				}}

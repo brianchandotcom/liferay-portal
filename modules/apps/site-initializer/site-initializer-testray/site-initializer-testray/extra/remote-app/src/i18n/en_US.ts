@@ -257,6 +257,7 @@ export default {
 	'screen-name': 'Screen Name',
 	'search': 'Search',
 	'search-in': 'Search in...',
+	'search-x': 'Search {0}',
 	'select-build': 'Select Build',
 	'select-case-parameters': 'Select Case Parameters',
 	'select-cases': 'Select Cases',

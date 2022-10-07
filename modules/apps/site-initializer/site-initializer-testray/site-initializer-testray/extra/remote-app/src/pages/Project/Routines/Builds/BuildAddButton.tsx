@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import Form from '../../../../components/Form';
@@ -25,7 +25,7 @@ import {useFetch} from '../../../../hooks/useFetch';
 import i18n from '../../../../i18n';
 import {APIResponse, TestrayBuild} from '../../../../services/rest';
 import {testrayBuildImpl} from '../../../../services/rest/TestrayBuild';
-import {searchUtil} from '../../../../util/search';
+import {SearchBuilder} from '../../../../util/search';
 
 type BuildAddButtonProps = {
 	routineId: string;
@@ -33,41 +33,49 @@ type BuildAddButtonProps = {
 
 const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 	const navigate = useNavigate();
-	const [value, setValue] = useState('');
-	const [state, setState] = useState([]);
+
 	const [active, setActive] = useState(false);
+	const [searchTemplate, setSearchTemplate] = useState('');
 
-	const debouncedValue = useDebounce(value, 100);
+	const debouncedValue = useDebounce(searchTemplate, 1000);
 
-	const {data} = useFetch<APIResponse<TestrayBuild>>(
-		`${testrayBuildImpl.resource}&filter=${searchUtil.eq(
-			'routineId',
-			routineId
-		)} and ${searchUtil.eq('template', true)} and ${searchUtil.eq(
-			'active',
-			true
-		)} and ${searchUtil.contains('name', debouncedValue)} `
+	const searchBuilder = new SearchBuilder();
+
+	const baseFilter = searchBuilder
+		.eq('routineId', routineId)
+		.and()
+		.eq('template', true)
+		.and()
+		.eq('active', true);
+
+	const totalFilter = baseFilter.build();
+
+	const searchFilter = baseFilter
+		.and()
+		.contains('name', debouncedValue)
+		.build();
+
+	const {data: buildResponseWithSearch} = useFetch<APIResponse<TestrayBuild>>(
+		`${testrayBuildImpl.resource}&filter=${searchFilter}`
 	);
 
-	const getBuildTemplate = useCallback(() => {
-		setState(data?.items as any);
-	}, []);
+	const {data: buildResponse} = useFetch<APIResponse<TestrayBuild>>(
+		`${testrayBuildImpl.resource}&filter=${totalFilter}&fields=id`
+	);
 
-	useEffect(() => {
-		getBuildTemplate();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const buildTemplates = buildResponseWithSearch?.items || [];
+	const templatesCount = buildResponse?.totalCount || 0;
 
-	const items: Dropdown = [
+	const dropDownItems: Dropdown = [
 		{
 			items: [
 				{
-					label: 'New Build',
+					label: i18n.translate('new-build'),
 					path: './create',
 				},
 				{
-					label: 'New Template',
-					path: `./create/template/${true}`,
+					label: i18n.sub('new-x', 'template'),
+					path: './create/template/true',
 				},
 			],
 
@@ -94,96 +102,80 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{items.map((section, index) => (
-					<div key={index}>
-						<ClayDropDown.Group header={section.title}>
-							{section.items.map(
-								({label, onClick, path}, itemIndex) => (
-									<React.Fragment key={itemIndex}>
-										<ClayDropDown.Item
-											onClick={() => {
-												if (onClick) {
-													setActive(false);
+				{dropDownItems.map((section, index) => (
+					<ClayDropDown.Group header={section.title} key={index}>
+						{section.items.map(({label, path}, itemIndex) => (
+							<React.Fragment key={itemIndex}>
+								<ClayDropDown.Item
+									onClick={() => {
+										setActive(false);
 
-													return onClick();
-												}
+										navigate(path as string);
+									}}
+								>
+									<div className="align-items-center d-flex testray-sidebar-item text-dark">
+										<span className="ml-1 testray-sidebar-text">
+											{label}
+										</span>
+									</div>
+								</ClayDropDown.Item>
+							</React.Fragment>
+						))}
 
-												if (!path) {
-													return;
-												}
+						{!!templatesCount && (
+							<>
+								<ClayDropDown.Divider />
 
-												const isHttpUrl = path.startsWith(
-													'http'
+								<ClayDropDown.Group
+									header={i18n.translate('templates')}
+								>
+									<ClayDropDown.Item>
+										<Form.Input
+											name="search-filter"
+											onChange={(event) => {
+												setSearchTemplate(
+													event.target.value
 												);
-
-												if (isHttpUrl) {
-													window.location.href = path;
-
-													return;
-												}
-
-												setActive(false);
-
-												navigate(path);
 											}}
-										>
-											<div className="align-items-center d-flex testray-sidebar-item text-dark">
-												<span className="ml-1 testray-sidebar-text">
-													{label}
-												</span>
-											</div>
-										</ClayDropDown.Item>
-									</React.Fragment>
-								)
-							)}
+											placeholder={i18n.sub(
+												'search-x',
+												'templates'
+											)}
+											value={searchTemplate}
+										/>
+									</ClayDropDown.Item>
 
-							{state?.length > 0 && (
-								<>
-									<ClayDropDown.Divider />
-
-									<ClayDropDown.Group
-										header={i18n.translate('templates')}
-									>
-										<ClayDropDown.Item>
-											<Form.Input
-												name="search-filter"
-												onChange={(event) => {
-													setValue(
-														event.target.value
-													);
-												}}
-												placeholder="Search Templates"
-												value={value}
-											/>
-										</ClayDropDown.Item>
-
-										{data?.items.length !== 0 && (
-											<div className="dropdown-scrollbar">
-												<ClayDropDown.ItemList>
-													{data?.items.map(
-														(build, index) => (
-															<ClayDropDown.Item
-																key={index}
+									{!!buildTemplates.length && (
+										<div className="dropdown-scrollbar">
+											<ClayDropDown.ItemList>
+												{buildTemplates.map(
+													(build, index) => (
+														<ClayDropDown.Item
+															key={index}
+															onClick={() =>
+																navigate(
+																	`./create/${build.id}`
+																)
+															}
+														>
+															<li
+																style={{
+																	listStyle:
+																		'none',
+																}}
 															>
-																<li
-																	style={{
-																		listStyle:
-																			'none',
-																	}}
-																>
-																	{build.name}
-																</li>
-															</ClayDropDown.Item>
-														)
-													)}
-												</ClayDropDown.ItemList>
-											</div>
-										)}
-									</ClayDropDown.Group>
-								</>
-							)}
-						</ClayDropDown.Group>
-					</div>
+																{build.name}
+															</li>
+														</ClayDropDown.Item>
+													)
+												)}
+											</ClayDropDown.ItemList>
+										</div>
+									)}
+								</ClayDropDown.Group>
+							</>
+						)}
+					</ClayDropDown.Group>
 				))}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>

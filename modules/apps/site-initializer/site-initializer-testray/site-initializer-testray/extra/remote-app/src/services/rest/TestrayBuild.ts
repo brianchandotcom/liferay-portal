@@ -44,6 +44,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				promoted,
 				routineId: r_routineToBuilds_c_routineId,
 				template,
+				templateTestrayBuildId,
 			}) => ({
 				active,
 				description,
@@ -54,8 +55,9 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				r_projectToBuilds_c_projectId,
 				r_routineToBuilds_c_routineId,
 				template,
+				templateTestrayBuildId,
 			}),
-			nestedFields: 'productVersion&nestedFieldsDepth=2',
+			nestedFields: 'productVersion',
 			transformData: (testrayBuild) => ({
 				...testrayBuild,
 				creator: testrayBuild?.creator || {},

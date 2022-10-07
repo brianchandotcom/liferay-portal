@@ -173,6 +173,16 @@ const TestrayRoute = () => (
 									/>
 
 									<Route
+										element={<BuildForm />}
+										path="create/:buildTemplateId"
+									/>
+
+									<Route
+										element={<BuildForm />}
+										path="create/template/:buildTemplate"
+									/>
+
+									<Route
 										element={<RoutineArchived />}
 										path="archived"
 									/>

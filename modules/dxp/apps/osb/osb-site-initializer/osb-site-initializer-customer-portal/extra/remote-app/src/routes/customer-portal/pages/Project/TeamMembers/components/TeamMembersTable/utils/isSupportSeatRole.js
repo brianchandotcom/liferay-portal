@@ -9,15 +9,10 @@
  * distribution rights of the Software.
  */
 
-import getAccountBriefByExternalReferenceCode from './getAccountBriefByExternalReferenceCode';
-import isSupportSeatRole from './isSupportSeatRole';
-
-export default function hasAccountSupportSeatRole(
-	accountBriefs,
-	externalReferenceCode
-) {
-	return getAccountBriefByExternalReferenceCode(
-		accountBriefs,
-		externalReferenceCode
-	)?.roleBriefs.some(({name}) => isSupportSeatRole(name));
+export default function isSupportSeatRole(name) {
+	return (
+		name === 'Account Administrator' ||
+		name === 'Partner Manager' ||
+		name === 'Requester'
+	);
 }

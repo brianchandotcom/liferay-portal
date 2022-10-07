@@ -11,12 +11,24 @@
 import {Button, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useMemo, useState} from 'react';
+import isSupportSeatRole from '../../../../../utils/isSupportSeatRole';
 
-const RolesDropdown = ({accountRoles, currentRoleBriefNames, onClick}) => {
+const RolesDropdown = ({
+	accountRoles,
+	availableSupportSeatsCount,
+	currentRoleBriefNames,
+	hasAccountSupportSeatRole,
+	onClick,
+	supportSeatsCount,
+}) => {
 	const [active, setActive] = useState(false);
 	const [items, setItems] = useState(
 		accountRoles.map((accountRole) => ({
 			active: currentRoleBriefNames.includes(accountRole.name),
+			disabled: hasAccountSupportSeatRole
+				? supportSeatsCount === 1
+				: isSupportSeatRole(accountRole.name) &&
+				  availableSupportSeatsCount <= 0,
 			label: accountRole.name,
 		}))
 	);
@@ -49,6 +61,7 @@ const RolesDropdown = ({accountRoles, currentRoleBriefNames, onClick}) => {
 		items.map((item, index) => (
 			<DropDown.Item
 				className="pr-6"
+				disabled={item.disabled}
 				key={`${item.label}-${index}`}
 				onClick={() => handleOnClick(index)}
 				symbolRight={item.active && 'check'}

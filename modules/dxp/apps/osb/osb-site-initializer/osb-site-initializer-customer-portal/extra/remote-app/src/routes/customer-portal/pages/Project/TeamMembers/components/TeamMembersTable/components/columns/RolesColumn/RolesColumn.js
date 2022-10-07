@@ -11,15 +11,27 @@
 
 import RolesDropdown from './components/RolesDropdown';
 
-const RolesColumn = ({accountRoles, currentRoleBriefNames, edit, onClick}) =>
-	edit ? (
+const RolesColumn = ({
+	accountRoles,
+	availableSupportSeatsCount,
+	currentRoleBriefNames,
+	edit,
+	hasAccountSupportSeatRole,
+	onClick,
+	supportSeatsCount,
+}) => {
+	return edit ? (
 		<RolesDropdown
 			accountRoles={accountRoles}
+			availableSupportSeatsCount={availableSupportSeatsCount}
 			currentRoleBriefNames={currentRoleBriefNames}
+			hasAccountSupportSeatRole={hasAccountSupportSeatRole}
 			onClick={onClick}
+			supportSeatsCount={supportSeatsCount}
 		/>
 	) : (
 		<p className="m-0 text-truncate">{currentRoleBriefNames.join(', ')}</p>
 	);
+};
 
 export default RolesColumn;

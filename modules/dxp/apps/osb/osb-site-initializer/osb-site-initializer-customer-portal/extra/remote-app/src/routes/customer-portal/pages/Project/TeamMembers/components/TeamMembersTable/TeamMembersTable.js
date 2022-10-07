@@ -72,7 +72,7 @@ const TeamMembersTable = ({
 	const availableAccountRoles =
 		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
 
-	const availableSupportSeats =
+	const availableSupportSeatsCount =
 		koroneikiAccount?.maxRequestors - supportSeatsCount;
 
 	const loading =
@@ -111,13 +111,21 @@ const TeamMembersTable = ({
 					role: (
 						<RolesColumn
 							accountRoles={availableAccountRoles}
+							availableSupportSeatsCount={
+								availableSupportSeatsCount
+							}
 							currentRoleBriefNames={getCurrentRoleBriefNames(
 								userAccount.accountBriefs
 							)}
 							edit={index === currentIndexEditing}
+							hasAccountSupportSeatRole={hasAccountSupportSeatRole(
+								userAccount?.accountBriefs,
+								koroneikiAccount?.accountKey
+							)}
 							onClick={(selectedAccountRoleNames) =>
 								selectedAccountRoleNames
 							}
+							supportSeatsCount={supportSeatsCount}
 						/>
 					),
 					status: (

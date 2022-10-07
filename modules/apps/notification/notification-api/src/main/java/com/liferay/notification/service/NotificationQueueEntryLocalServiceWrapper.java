@@ -44,12 +44,13 @@ public class NotificationQueueEntryLocalServiceWrapper
 				long userId, long notificationTemplateId, String bcc,
 				String body, String cc, String className, long classPK,
 				String from, String fromName, double priority, String subject,
-				String to, String toName, java.util.List<Long> fileEntryIds)
+				String to, String toName, String type,
+				java.util.List<Long> fileEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
 			userId, notificationTemplateId, bcc, body, cc, className, classPK,
-			from, fromName, priority, subject, to, toName, fileEntryIds);
+			from, fromName, priority, subject, to, toName, type, fileEntryIds);
 	}
 
 	/**

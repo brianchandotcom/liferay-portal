@@ -69,7 +69,7 @@ public class ResourceLocatorFactoryTest {
 			ResourceLocator resourceLocator = _resourceLocatorFactory.create(
 				httpServletRequest, user);
 
-			Object testResource = resourceLocator.locate("/test/v1.0/Test");
+			Object testResource = resourceLocator.locate("/test/v1.0", "Test");
 
 			Assert.assertSame(TestResourceImpl.class, testResource.getClass());
 

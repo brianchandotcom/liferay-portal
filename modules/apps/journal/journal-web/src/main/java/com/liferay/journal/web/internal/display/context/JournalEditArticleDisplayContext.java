@@ -452,6 +452,10 @@ public class JournalEditArticleDisplayContext {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				for (Group group : recentGroups) {
+					if (group.isCompany()) {
+						continue;
+					}
+
 					jsonArray.put(
 						JSONUtil.put(
 							"groupId", group.getGroupId()
@@ -472,11 +476,11 @@ public class JournalEditArticleDisplayContext {
 					GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
 
 				for (Group group : groups) {
-					if (max == 0) {
+					if (max < 0) {
 						break;
 					}
 
-					if (recentGroups.contains(group)) {
+					if (recentGroups.contains(group) || group.isCompany()) {
 						continue;
 					}
 

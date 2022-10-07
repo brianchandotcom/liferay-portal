@@ -113,7 +113,7 @@ function SXPElement({
 
 	const _isInactiveFromNonCompanyIndex = () =>
 		!isIndexCompany &&
-		sxpElement.id < 100 &&
+		sxpElement.readOnly &&
 		sxpElement.elementDefinition?.category !== 'custom';
 
 	const _handleDelete = () => {

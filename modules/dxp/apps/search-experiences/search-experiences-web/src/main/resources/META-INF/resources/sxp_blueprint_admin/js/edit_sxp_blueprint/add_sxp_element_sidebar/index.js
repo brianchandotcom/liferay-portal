@@ -69,7 +69,7 @@ const SXPElementList = ({
 
 	const _isElementInactiveFromNonCompanyIndex = (sxpElement) =>
 		!isIndexCompany &&
-		sxpElement.id < 100 &&
+		sxpElement.readOnly &&
 		sxpElement.elementDefinition?.category !== 'custom';
 
 	return (

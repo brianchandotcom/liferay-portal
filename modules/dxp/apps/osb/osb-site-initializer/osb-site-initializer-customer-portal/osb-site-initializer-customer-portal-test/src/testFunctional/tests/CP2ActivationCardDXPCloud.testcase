@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC - SM";
+	var testAccount = "Test Account LXC - SM";
 	var testproduct = "LXC - SM";
 
 	setUp {
@@ -26,7 +26,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -49,18 +49,20 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccounts}");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
 
-		task ("Go to CP2.0 and join a project") {
+		task ("Given I go to the test account") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
-		}
+            CustomerPortal.search(searchItem = "${testAccount}");
+
+            CustomerPortal.enterOnProject(title = "${testAccount}");
+        }
 
 		task ("Going through onboarding") {
 			CustomerPortal.fullOnboardingFlow();
@@ -85,7 +87,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Assert that the activation card link has changed") {
@@ -121,7 +123,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Go to the product activation page") {
@@ -134,7 +136,7 @@ definition {
 			CustomerPortal.viewActivationStatusCardValue(
 				dates = "Invalid Date - Invalid Date",
 				productIcon = "dxp_icon",
-				project = "${testAccounts}",
+				project = "${testAccount}",
 				status = "Not Activated",
 				subtitle = "Almost there! Setup LXC - SM by finishing the activation form");
 		}
@@ -146,7 +148,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccounts}");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -156,7 +158,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Going through onboarding") {
@@ -194,7 +196,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Go to the product activation page") {
@@ -216,7 +218,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Go to the product activation page") {
@@ -234,7 +236,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccounts}");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -246,7 +248,7 @@ definition {
 
 			Refresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Going through onboarding") {

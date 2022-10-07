@@ -123,6 +123,34 @@ definition {
 		}
 	}
 
+	@description = "Automation Ticket: LPS-151337 | Test Summary: Verify that after filling out all the fields the Next button is enabled."
+	@priority = "3"
+	test CanViewTheNextButtonEnabled {
+		task ("Given I assert that the Next button is desabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Next");
+		}
+
+		task ("Given I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "Portal");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "6.1 GA1");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+		}
+
+		task ("Then I should be able to see that the Next button is enabled") {
+			CustomerPortal.assertButtonIsActive(text = "Next");
+		}
+}
+
 	@description = "Automation Ticket: LPS-151335 | Test Summary: Verify that signatures without available keys are displayed as disabled options."
 	@priority = "3"
 	test SignaturesWithoutAvailableKeysWillBeDisabled {

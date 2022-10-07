@@ -35,6 +35,7 @@ create table NotificationQueueEntry (
 	subject VARCHAR(75) null,
 	to_ VARCHAR(75) null,
 	toName VARCHAR(75) null,
+	type_ VARCHAR(75) null,
 	status INTEGER
 );
 

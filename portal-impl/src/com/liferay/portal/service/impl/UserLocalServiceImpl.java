@@ -644,7 +644,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName,
-			long prefixListTypeId, long suffixId, boolean male,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
@@ -656,7 +656,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixListTypeId, suffixId, male,
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, new long[0],
 				new long[0], new long[0], new long[0], sendEmail,
 				serviceContext);
@@ -680,11 +680,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				screenName, emailAddress, hasPortrait, null,
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
 				user.getComments(), firstName, middleName, lastName,
-				prefixListTypeId, suffixId, male, birthdayMonth, birthdayDay,
-				birthdayYear, contact.getSmsSn(), contact.getFacebookSn(),
-				contact.getJabberSn(), contact.getSkypeSn(),
-				contact.getTwitterSn(), jobTitle, user.getGroupIds(),
-				user.getOrganizationIds(), user.getRoleIds(),
+				prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+				birthdayDay, birthdayYear, contact.getSmsSn(),
+				contact.getFacebookSn(), contact.getJabberSn(),
+				contact.getSkypeSn(), contact.getTwitterSn(), jobTitle,
+				user.getGroupIds(), user.getOrganizationIds(),
+				user.getRoleIds(),
 				_userGroupRoleLocalService.getUserGroupRoles(user.getUserId()),
 				user.getUserGroupIds(), serviceContext);
 		}

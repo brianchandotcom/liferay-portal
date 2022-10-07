@@ -21,19 +21,15 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.constants.CSDiagramFDSNames;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.util.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageConfiguration;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
-import com.liferay.commerce.shop.by.diagram.type.CSDiagramTypeRegistry;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -204,25 +200,13 @@ public class DefaultCSDiagramType implements CSDiagramType {
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference
 	private CPFriendlyURL _cpFriendlyURL;
 
 	private volatile CSDiagramSettingImageConfiguration
 		_csDiagramSettingImageConfiguration;
 
 	@Reference
-	private CSDiagramSettingService _csDiagramSettingService;
-
-	@Reference
-	private CSDiagramTypeRegistry _csDiagramTypeRegistry;
-
-	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

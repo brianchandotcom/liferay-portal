@@ -94,7 +94,7 @@ export default function ObjectFieldFormBase({
 	const [picklistDefaultValueQuery, setPicklistDefaultValueQuery] = useState<
 		string
 	>('');
-	const [pickLists, setPickLists] = useState<PickList[]>([]);
+	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
 		TObjectRelationship

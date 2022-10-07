@@ -66,6 +66,7 @@ interface PickListItem {
 
 interface PickList {
 	actions: Actions;
+	externalReferenceCode?: string;
 	id: number;
 	listTypeEntries: PickListItem[];
 	name: string;
@@ -250,10 +251,14 @@ export async function getRelationship<T>(objectRelationshipId: number) {
 	);
 }
 
-export async function updatePickList({id, name_i18n}: Partial<PickListItem>) {
+export async function updatePickList({
+	externalReferenceCode,
+	id,
+	name_i18n,
+}: Partial<PickList>) {
 	return await save(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
-		{name_i18n},
+		{externalReferenceCode, name_i18n},
 		'PUT'
 	);
 }

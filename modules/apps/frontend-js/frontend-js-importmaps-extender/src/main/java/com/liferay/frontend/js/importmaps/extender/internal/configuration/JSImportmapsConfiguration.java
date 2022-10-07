@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Iván Zaera Avellón
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
 @Meta.OCD(
 	description = "frontend-js-importmaps-description",
 	id = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration",
@@ -34,7 +34,7 @@ public interface JSImportmapsConfiguration {
 	public boolean enableImportmaps();
 
 	@Meta.AD(
-		deflt = "true", description = "enable-es-module-shims-help",
+		deflt = "false", description = "enable-es-module-shims-help",
 		name = "enable-es-module-shims", required = false
 	)
 	public boolean enableESModuleShims();

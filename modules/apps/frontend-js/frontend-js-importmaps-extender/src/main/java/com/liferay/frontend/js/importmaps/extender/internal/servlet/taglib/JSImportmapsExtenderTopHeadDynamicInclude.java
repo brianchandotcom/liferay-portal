@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -154,8 +155,16 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
+
+		// Ignore configuration for now as per LPS-165021
+
 		_jsImportmapsConfiguration = ConfigurableUtil.createConfigurable(
-			JSImportmapsConfiguration.class, properties);
+			JSImportmapsConfiguration.class,
+			HashMapBuilder.put(
+				"enable-es-module-shims", false
+			).put(
+				"enable-importmaps", true
+			).build());
 
 		ImportMapsShimUtil.setModuleType(
 			_jsImportmapsConfiguration.enableESModuleShims() ? "module-shim" :

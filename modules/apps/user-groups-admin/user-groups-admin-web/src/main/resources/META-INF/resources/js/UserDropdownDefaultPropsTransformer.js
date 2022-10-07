@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+const ACTIONS = {
+	deleteUserGroupAssignments(itemData) {
+		submitForm(document.hrefFm, itemData.deleteUserGroupAssignmentsURL);
+	},
+};
 
-<%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+export default function propsTransformer({items, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
 
-User user2 = (User)row.getObject();
+					if (action) {
+						event.preventDefault();
 
-UserActionDropdownItems userActionDropdownItems = new UserActionDropdownItems(renderRequest, renderResponse, user2);
-%>
-
-<clay:dropdown-actions
-	dropdownItems="<%= userActionDropdownItems.getActionDropdownItems() %>"
-	propsTransformer="js/UserDropdownDefaultPropsTransformer"
-/>
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
+}

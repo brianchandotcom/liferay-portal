@@ -71,6 +71,7 @@ export type TestrayBuild = {
 	r_routineToBuilds_c_routine?: TestrayRoutine;
 	routine?: TestrayRoutine;
 	template: boolean;
+	templateTestrayBuildId: string;
 };
 
 export type TestrayCase = {

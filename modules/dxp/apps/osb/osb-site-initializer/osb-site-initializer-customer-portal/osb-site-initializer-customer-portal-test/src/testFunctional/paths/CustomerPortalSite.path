@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_INFO_MESSAGE</td>
+	<td>//*[contains(@class, 'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBTITLE_SUPPORT</td>
 	<td>//p[contains(@class, 'text-paragraph-sm')]</td>
 	<td></td>

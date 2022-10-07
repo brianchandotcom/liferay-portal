@@ -10,6 +10,7 @@
  */
 
 import {Liferay} from '../..';
+import isSupportSeatRole from '../../../../utils/isSupportSeatRole';
 
 export const userAccountsTypePolicy = {
 	AccountBrief: {
@@ -45,6 +46,39 @@ export const userAccountsTypePolicy = {
 						(roleBrief) =>
 							readField('name', roleBrief) === 'Provisioning'
 					);
+				},
+			},
+			selectedAccountSummary: {
+				read(_, {readField, variables: {externalReferenceCode}}) {
+					const accountBriefRef = readField('accountBriefs')?.find(
+						(accountBrief) =>
+							readField('externalReferenceCode', accountBrief) ===
+							externalReferenceCode
+					);
+
+					const roleBriefs = readField(
+						'roleBriefs',
+						accountBriefRef
+					).map((roleBrief) => ({
+						id: readField('id', roleBrief),
+						name: readField('name', roleBrief),
+					}));
+
+					const hasAdministratorRole = roleBriefs.some(
+						({name}) =>
+							name === 'Account Administrator' ||
+							name === 'Partner Manager'
+					);
+
+					const hasSupportSeatRole = roleBriefs.some(({name}) =>
+						isSupportSeatRole(name)
+					);
+
+					return {
+						hasAdministratorRole,
+						hasSupportSeatRole,
+						roleBriefs,
+					};
 				},
 			},
 		},

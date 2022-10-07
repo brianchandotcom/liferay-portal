@@ -28,6 +28,11 @@ const GET_USER_ACCOUNTS_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`
 			) {
 			items @type(name: "UserAccount") {
 				...CoreUserAccountFields
+				selectedAccountSummary @client {
+					hasAdministratorRole
+					hasSupportSeatRole
+					roleBriefs
+				}
 			}
 			page
 			pageSize

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import isAccountAdministratorRole from '../../../../../../../../common/utils/isAccountAdministratorRole';
 import getAccountBriefByExternalReferenceCode from './getAccountBriefByExternalReferenceCode';
 
 export default function hasAccountAdministratorRole(
@@ -18,8 +19,5 @@ export default function hasAccountAdministratorRole(
 	return getAccountBriefByExternalReferenceCode(
 		accountBriefs,
 		externalReferenceCode
-	)?.roleBriefs.some(
-		({name}) =>
-			name === 'Account Administrator' || name === 'Partner Manager'
-	);
+	)?.roleBriefs.some(({name}) => isAccountAdministratorRole(name));
 }

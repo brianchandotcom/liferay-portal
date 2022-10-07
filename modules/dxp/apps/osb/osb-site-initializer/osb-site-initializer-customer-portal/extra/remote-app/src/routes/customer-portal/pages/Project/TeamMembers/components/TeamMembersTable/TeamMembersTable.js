@@ -23,7 +23,6 @@ import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAcc
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
 import getAccountBriefByExternalReferenceCode from './utils/getAccountBriefByExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
-import hasAccountSupportSeatRole from './utils/hasAccountSupportSeatRole';
 
 const TeamMembersTable = ({
 	koroneikiAccount,
@@ -57,15 +56,6 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
-	const getCurrentRoleBriefNames = useCallback(
-		(accountBriefs) =>
-			getAccountBriefByExternalReferenceCode(
-				accountBriefs,
-				koroneikiAccount?.accountKey
-			).roleBriefs.map((roleBrief) => roleBrief.name),
-		[koroneikiAccount?.accountKey]
-	);
-
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
 
@@ -77,6 +67,15 @@ const TeamMembersTable = ({
 
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
+
+	const getCurrentRoleBriefNames = useCallback(
+		(accountBriefs) =>
+			getAccountBriefByExternalReferenceCode(
+				accountBriefs,
+				koroneikiAccount?.accountKey
+			).roleBriefs.map((roleBrief) => roleBrief.name),
+		[koroneikiAccount?.accountKey]
+	);
 
 	return (
 		<div className="cp-team-members-table-wrapper overflow-auto">
@@ -118,10 +117,10 @@ const TeamMembersTable = ({
 								userAccount.accountBriefs
 							)}
 							edit={index === currentIndexEditing}
-							hasAccountSupportSeatRole={hasAccountSupportSeatRole(
-								userAccount?.accountBriefs,
-								koroneikiAccount?.accountKey
-							)}
+							hasAccountSupportSeatRole={
+								userAccount.selectedAccountSummary
+									.hasSupportSeatRole
+							}
 							onClick={(selectedAccountRoleNames) =>
 								selectedAccountRoleNames
 							}
@@ -137,10 +136,8 @@ const TeamMembersTable = ({
 							}
 						/>
 					),
-					supportSeat: hasAccountSupportSeatRole(
-						userAccount?.accountBriefs,
-						koroneikiAccount?.accountKey
-					) && (
+					supportSeat: userAccount.selectedAccountSummary
+						.hasSupportSeatRole && (
 						<ClayIcon
 							className="cp-team-members-support-seat-icon"
 							symbol="check-circle-full"

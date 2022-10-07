@@ -11,7 +11,7 @@
 import {Button, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useMemo, useState} from 'react';
-import isSupportSeatRole from '../../../../../utils/isSupportSeatRole';
+import isSupportSeatRole from '../../../../../../../../../../../../common/utils/isSupportSeatRole';
 
 const RolesDropdown = ({
 	accountRoles,

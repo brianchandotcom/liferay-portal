@@ -11,7 +11,6 @@
 
 import {useMemo} from 'react';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
-import hasAccountSupportSeatRole from '../utils/hasAccountSupportSeatRole';
 
 export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
@@ -27,16 +26,9 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	const supportSeatsCount = useMemo(
 		() =>
 			data?.accountUserAccountsByExternalReferenceCode.items.filter(
-				(item) =>
-					hasAccountSupportSeatRole(
-						item.accountBriefs,
-						externalReferenceCode
-					)
+				(item) => item.selectedAccountSummary.hasSupportSeatRole
 			).length,
-		[
-			data?.accountUserAccountsByExternalReferenceCode.items,
-			externalReferenceCode,
-		]
+		[data?.accountUserAccountsByExternalReferenceCode.items]
 	);
 
 	return [

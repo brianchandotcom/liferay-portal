@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -127,6 +129,9 @@ public class ListTypeDefinitionPersistenceTest {
 
 		newListTypeDefinition.setUuid(RandomTestUtil.randomString());
 
+		newListTypeDefinition.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newListTypeDefinition.setCompanyId(RandomTestUtil.nextLong());
 
 		newListTypeDefinition.setUserId(RandomTestUtil.nextLong());
@@ -151,6 +156,9 @@ public class ListTypeDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingListTypeDefinition.getUuid(),
 			newListTypeDefinition.getUuid());
+		Assert.assertEquals(
+			existingListTypeDefinition.getExternalReferenceCode(),
+			newListTypeDefinition.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingListTypeDefinition.getListTypeDefinitionId(),
 			newListTypeDefinition.getListTypeDefinitionId());
@@ -194,6 +202,15 @@ public class ListTypeDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ListTypeDefinition newListTypeDefinition = addListTypeDefinition();
 
@@ -220,9 +237,9 @@ public class ListTypeDefinitionPersistenceTest {
 	protected OrderByComparator<ListTypeDefinition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"ListTypeDefinition", "mvccVersion", true, "uuid", true,
-			"listTypeDefinitionId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true);
+			"externalReferenceCode", true, "listTypeDefinitionId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true);
 	}
 
 	@Test
@@ -448,6 +465,71 @@ public class ListTypeDefinitionPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		ListTypeDefinition newListTypeDefinition = addListTypeDefinition();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newListTypeDefinition.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ListTypeDefinition newListTypeDefinition = addListTypeDefinition();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ListTypeDefinition.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"listTypeDefinitionId",
+				newListTypeDefinition.getListTypeDefinitionId()));
+
+		List<ListTypeDefinition> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ListTypeDefinition listTypeDefinition) {
+		Assert.assertEquals(
+			Long.valueOf(listTypeDefinition.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				listTypeDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			listTypeDefinition.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				listTypeDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+	}
+
 	protected ListTypeDefinition addListTypeDefinition() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -456,6 +538,9 @@ public class ListTypeDefinitionPersistenceTest {
 		listTypeDefinition.setMvccVersion(RandomTestUtil.nextLong());
 
 		listTypeDefinition.setUuid(RandomTestUtil.randomString());
+
+		listTypeDefinition.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		listTypeDefinition.setCompanyId(RandomTestUtil.nextLong());
 

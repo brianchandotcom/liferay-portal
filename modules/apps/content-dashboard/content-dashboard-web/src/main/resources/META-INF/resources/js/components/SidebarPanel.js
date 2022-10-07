@@ -226,7 +226,14 @@ const SidebarPanel = React.forwardRef(
 						</ClayAlert>
 					</>
 				) : (
-					state?.data && <CurrentViewRef.current {...state.data} />
+					state?.data && (
+						<CurrentViewRef.current
+							{...state.data}
+							singlePageApplicationEnabled={
+								singlePageApplicationEnabled
+							}
+						/>
+					)
 				)}
 			</Sidebar>
 		);

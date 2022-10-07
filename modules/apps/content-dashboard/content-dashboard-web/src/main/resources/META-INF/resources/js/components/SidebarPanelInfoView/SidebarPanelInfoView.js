@@ -33,19 +33,23 @@ import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
 import VersionsContent from './VersionsContent';
 
-const useInitialActiveTabState = () => {
-	const [activeTab, setActiveTab] = useState(DEFAULT_ACTIVE_PANEL_TAB);
+const useInitialActiveTabState = (singlePageApplicationEnabled) => {
+	const [activeTab, setActiveTab] = useState(
+		singlePageApplicationEnabled ? null : DEFAULT_ACTIVE_PANEL_TAB
+	);
 
 	useLayoutEffect(() => {
-		getSessionValue(TABS_STATE_SESSION_KEY).then((value) => {
-			const parsedValue = parseInt(value, 10);
-			const safeValue = isNaN(parsedValue)
-				? DEFAULT_ACTIVE_PANEL_TAB
-				: parsedValue;
+		if (singlePageApplicationEnabled) {
+			getSessionValue(TABS_STATE_SESSION_KEY).then((value) => {
+				const parsedValue = parseInt(value, 10);
+				const safeValue = isNaN(parsedValue)
+					? DEFAULT_ACTIVE_PANEL_TAB
+					: parsedValue;
 
-			setActiveTab(safeValue);
-		});
-	}, []);
+				setActiveTab(safeValue);
+			});
+		}
+	}, [singlePageApplicationEnabled]);
 
 	return [activeTab, setActiveTab];
 };
@@ -68,14 +72,14 @@ const SidebarPanelInfoView = ({
 	preview,
 	fetchSharingButtonURL,
 	fetchSharingCollaboratorsURL,
+	singlePageApplicationEnabled,
 	user,
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const [
-		activeTabKeyValue,
-		setActiveTabKeyValue,
-	] = useInitialActiveTabState();
+	const [activeTabKeyValue, setActiveTabKeyValue] = useInitialActiveTabState(
+		singlePageApplicationEnabled
+	);
 
 	const showTabs = !!getItemVersionsURL;
 
@@ -89,7 +93,10 @@ const SidebarPanelInfoView = ({
 
 	const handleTabClick = (tab) => {
 		setActiveTabKeyValue(tab);
-		Liferay.Util.Session.set(TABS_STATE_SESSION_KEY, tab);
+
+		if (singlePageApplicationEnabled) {
+			Liferay.Util.Session.set(TABS_STATE_SESSION_KEY, tab);
+		}
 	};
 
 	return (
@@ -260,6 +267,7 @@ SidebarPanelInfoView.propTypes = {
 	latestVersions: PropTypes.array.isRequired,
 	modifiedDate: PropTypes.string.isRequired,
 	preview: PropTypes.object,
+	singlePageApplicationEnabled: PropTypes.bool.isRequired,
 	specificFields: PropTypes.object.isRequired,
 	subType: PropTypes.string.isRequired,
 	tags: PropTypes.array,

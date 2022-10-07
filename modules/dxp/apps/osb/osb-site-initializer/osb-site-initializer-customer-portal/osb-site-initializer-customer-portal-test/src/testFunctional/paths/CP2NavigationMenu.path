@@ -72,11 +72,11 @@
 </tr>
 <tr>
 	<td>STATUS_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-toggle') and contains(text(), '${title}')]</td>
+	<td>//div/button[contains(@class, 'dropdown-toggle') and contains(text(), '${title}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_STATUS_OVERVIEW</td>
+	<td>STATUS_OPTIONS</td>
 	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${status}')]</td>
 	<td></td>
 </tr>

@@ -23,19 +23,19 @@ export const userAccountsTypePolicy = {
 	},
 	UserAccount: {
 		fields: {
-			isCurrentUser: {
-				read(_, {readField}) {
-					return (
-						readField('id') === +Liferay.ThemeDisplay.getUserId()
-					);
-				},
-			},
 			isLiferayStaff: {
 				read(_, {readField}) {
 					return !!readField('organizationBriefs').some(
 						(organizationBrief) =>
 							readField('name', organizationBrief) ===
 							'Liferay Staff'
+					);
+				},
+			},
+			isLoggedUser: {
+				read(_, {readField}) {
+					return (
+						readField('id') === +Liferay.ThemeDisplay.getUserId()
 					);
 				},
 			},

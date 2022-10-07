@@ -24,8 +24,8 @@ export const CORE_USER_ACCOUNT_FIELDS = gql`
 		}
 		emailAddress
 		id
-		isCurrentUser @client
 		isLiferayStaff @client
+		isLoggedUser @client
 		isProvisioning @client
 		lastLoginDate
 		name

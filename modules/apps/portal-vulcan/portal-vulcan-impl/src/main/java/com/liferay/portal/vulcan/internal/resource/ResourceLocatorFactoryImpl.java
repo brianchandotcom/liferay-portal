@@ -35,6 +35,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Shuyang Zhou
+ * @author Alejandro Tardín
  */
 @Component(service = ResourceLocatorFactory.class)
 public class ResourceLocatorFactoryImpl implements ResourceLocatorFactory {
@@ -46,11 +47,12 @@ public class ResourceLocatorFactoryImpl implements ResourceLocatorFactory {
 		return new ResourceLocator() {
 
 			@Override
-			public Object locate(String resourceName) {
+			public Object locate(String resourceLocatorKey) {
 				ServiceTrackerMap<String, Builder> serviceTrackerMap =
 					_getServiceTrackerMap();
 
-				Builder builder = serviceTrackerMap.getService(resourceName);
+				Builder builder = serviceTrackerMap.getService(
+					resourceLocatorKey);
 
 				if (builder == null) {
 					return null;
@@ -91,44 +93,7 @@ public class ResourceLocatorFactoryImpl implements ResourceLocatorFactory {
 			}
 
 			serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, null, "(component.name=*)",
-				(serviceReference, emitter) -> {
-					String componentName = (String)serviceReference.getProperty(
-						"component.name");
-
-					if (!componentName.endsWith("ResourceFactoryImpl")) {
-						return;
-					}
-
-					Object service = _bundleContext.getService(
-						serviceReference);
-
-					try {
-						Class<?> clazz = service.getClass();
-
-						Class<?>[] interfaces = clazz.getInterfaces();
-
-						if (interfaces.length != 1) {
-							return;
-						}
-
-						Class<?> interfaceClazz = interfaces[0];
-
-						String interfaceName = interfaceClazz.getName();
-
-						if (!interfaceName.endsWith("Resource$Factory")) {
-							return;
-						}
-
-						Class<?> resourceInterface =
-							interfaceClazz.getEnclosingClass();
-
-						emitter.emit(resourceInterface.getName());
-					}
-					finally {
-						_bundleContext.ungetService(serviceReference);
-					}
-				},
+				_bundleContext, null, "resource.locator.key",
 				new ServiceTrackerCustomizer<Object, Builder>() {
 
 					@Override

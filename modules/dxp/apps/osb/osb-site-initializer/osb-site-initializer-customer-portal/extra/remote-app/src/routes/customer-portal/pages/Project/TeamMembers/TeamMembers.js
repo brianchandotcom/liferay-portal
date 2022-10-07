@@ -14,6 +14,7 @@ import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
 import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKoroneikiAccount';
 import ManageProductUsers from './components/ManageProductUsers/ManageProductUsers';
+import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
 
 const TeamMembers = () => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
@@ -37,13 +38,12 @@ const TeamMembers = () => {
 				</p>
 			</div>
 
-			{/* <div className="mt-4">
+			<div className="mt-4">
 				<TeamMembersTable
-					project={project}
-					provisioningServerAPI={provisioningServerAPI}
-					sessionId={sessionId}
+					koroneikiAccount={koroneikiAccount}
+					loading={loading}
 				/>
-			</div> */}
+			</div>
 
 			<ManageProductUsers
 				koroneikiAccount={koroneikiAccount}

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,320 +10,109 @@
  * distribution rights of the Software.
  */
 
-import ClayAlert from '@clayui/alert';
-import {useEffect, useMemo, useState} from 'react';
-import {Table} from '../../../../../../../common/components';
+import ClayIcon from '@clayui/icon';
+import {useState} from 'react';
+import StatusTag from '../../../../../../../common/components/StatusTag';
+import Table from '../../../../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
-import {Liferay} from '../../../../../../../common/services/liferay';
-import {
-	associateUserAccountWithAccountAndAccountRole,
-	deleteAccountUserAccount,
-} from '../../../../../../../common/services/liferay/graphql/queries';
-import {
-	associateContactRoleNameByEmailByProject,
-	deleteContactRoleNameByEmailByProject,
-} from '../../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
-import RemoveUserModal from './components/RemoveUserModal/RemoveUserModal';
-import TeamMembersTableHeader from './components/TeamMembersTableHeader';
-import useAccountRoles from './hooks/useAccountRoles';
-import useFilters from './hooks/useFilters';
-import useGetAccountUserAccount from './hooks/useGetAccountUserAccounts';
-import {
-	STATUS_ACTION_TYPES,
-	STATUS_NAME_TYPES,
-	TEAM_MEMBERS_ACTION_TYPES,
-} from './utils/constants';
-import {
-	NameColumnType,
-	OptionsColumnType,
-	RoleColumnType,
-	StatusColumnType,
-	SupportSeatColumnType,
-} from './utils/constants/columns-definitions';
-import {deleteAllPreviousUserRoles} from './utils/deleteAllPreviousUserRoles';
-import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
+import {STATUS_TAG_TYPES} from '../../../../../utils/constants/statusTag';
+import NameColumn from './components/columns/NameColumn';
+import OptionsColumn from './components/columns/OptionsColumn';
+import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
+import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAccountByAccountExternalReferenceCode';
+import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
+import {getColumns} from './utils/getColumns';
+import hasAccountSupportSeatRole from './utils/hasAccountSupportSeatRole';
 
-const ROLE_FILTER_NAME = 'contactRoleNames';
-const ALERT_TIMEOUT = 3000;
+const TeamMembersTable = ({
+	koroneikiAccount,
+	loading: koroneikiAccountLoading,
+}) => {
+	const {articleAccountSupportURL, gravatarAPI} = useAppPropertiesContext();
 
-const TeamMembersTable = ({project, provisioningServerAPI, sessionId}) => {
-	const {accountRoles} = useAccountRoles(project);
-	const {client} = useAppPropertiesContext();
-	const {importDate} = useAppPropertiesContext();
+	const [currentIndexEditing, setCurrentIndexEditing] = useState();
+
+	const [
+		hasAccountAdministratorRole,
+		{loading: myUserAccountLoading},
+	] = useMyUserAccountByAccountExternalReferenceCode(
+		koroneikiAccount?.accountKey,
+		koroneikiAccountLoading
+	);
+
+	const [
+		accountAdministratorsCount,
+		{data: userAccountsData, loading: userAccountsLoading},
+	] = useUserAccountsByAccountExternalReferenceCode(
+		koroneikiAccount?.accountKey,
+		koroneikiAccountLoading
+	);
 
 	const {
-		isLoadingUserAccounts,
-		setFilterTerm,
-		userAccountsState: [userAccounts, setUserAccounts],
-	} = useGetAccountUserAccount(project);
+		data: accountRolesData,
+		loading: accountRolesLoading,
+	} = useAccountRolesByAccountExternalReferenceCode(
+		koroneikiAccount,
+		koroneikiAccountLoading
+	);
 
-	const [administratorsAvailable, setAdministratorsAvailable] = useState();
-	const [filters, setFilters] = useFilters(setFilterTerm);
+	const userAccounts =
+		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
+	const loading =
+		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
 
-	const [userAction, setUserAction] = useState();
-	const [selectedRole, setSelectedRole] = useState();
-	const [userActionStatus, setUserActionStatus] = useState();
-	const [accountRolesOptions, setAccountRolesOptions] = useState([]);
-
-	const hasOnlyOneAdminOrPartnerManager = useMemo(() => {
-		return (
-			userAccounts.filter(
-				(user) =>
-					user?.roles[0] === ROLE_TYPES.admin.key ||
-					user?.roles[0] === ROLE_TYPES.partnerManager.key ||
-					user?.roles[0] === ROLE_TYPES.requester.key
-			).length === 1
-		);
-	}, [userAccounts]);
-
-	useEffect(() => {
-		if (accountRoles.length) {
-			const currentSelectedUser = userAccounts?.find(
-				({id}) => id === userAction?.userId
-			);
-
-			if (currentSelectedUser) {
-				const isSupportSeatRole = currentSelectedUser?.roles?.some(
-					(role) =>
-						role === ROLE_TYPES.admin.key ||
-						role === ROLE_TYPES.requester.key ||
-						role === ROLE_TYPES.partnerManager.key
-				);
-				const filteredRoles = accountRoles.map((role) => {
-					const isAdministratorOrRequestor =
-						role.key === ROLE_TYPES.admin.key ||
-						role.key === ROLE_TYPES.requester.key;
-
-					return {
-						...role,
-						disabled:
-							(!isSupportSeatRole &&
-								isAdministratorOrRequestor &&
-								administratorsAvailable === 0) ||
-							(hasOnlyOneAdminOrPartnerManager &&
-								isSupportSeatRole),
-					};
-				});
-				setAccountRolesOptions(filteredRoles);
-			}
-		}
-	}, [
-		accountRoles,
-		administratorsAvailable,
-		hasOnlyOneAdminOrPartnerManager,
-		userAccounts,
-		userAction?.userId,
-	]);
-
-	const handleChangeUserRole = async (userAccount) => {
-		if (selectedRole) {
-			const currentRole = accountRolesOptions?.find(
-				(role) => role?.name === selectedRole
-			);
-
-			deleteAllPreviousUserRoles(
-				client,
-				project.accountKey,
-				userAccount,
-				accountRolesOptions
-			);
-
-			client.mutate({
-				mutation: associateUserAccountWithAccountAndAccountRole,
-				variables: {
-					accountKey: project.accountKey,
-					accountRoleId: currentRole.id,
-					emailAddress: userAccount?.emailAddress,
-				},
-			});
-
-			associateContactRoleNameByEmailByProject(
-				project.accountKey,
-				provisioningServerAPI,
-				sessionId,
-				encodeURI(userAccount?.emailAddress),
-				currentRole?.raysourceName
-			);
-
-			setUserAccounts((previousUserAccounts) => {
-				const newUserAcconts = [...previousUserAccounts];
-				const accountIndexToUpdate = newUserAcconts.findIndex(
-					(userType) => userType?.id === userAccount?.id
-				);
-
-				if (accountIndexToUpdate !== -1) {
-					newUserAcconts[accountIndexToUpdate] = {
-						...newUserAcconts[accountIndexToUpdate],
-						roles: [currentRole?.key],
-					};
-				}
-
-				return newUserAcconts;
-			});
-			setUserActionStatus(STATUS_NAME_TYPES.onEditSuccess);
-			setSelectedRole();
-		}
-		setUserAction(TEAM_MEMBERS_ACTION_TYPES.close);
-	};
-
-	const handleRemoveUser = async () => {
-		const userToBeRemoved = userAccounts.find(
-			(userAccount) => userAccount.id === userAction?.userId
-		);
-
-		if (userToBeRemoved) {
-			await client.mutate({
-				context: {
-					displaySuccess: false,
-				},
-				mutation: deleteAccountUserAccount,
-				variables: {
-					accountKey: project.accountKey,
-					emailAddress: userToBeRemoved?.emailAddress,
-				},
-			});
-
-			const rolesToBeRemoved = userToBeRemoved.roles.reduce(
-				(rolesAccumulator, role, index) => {
-					const raysourceRole = accountRolesOptions.find(
-						(roleType) => roleType.name === role
-					);
-
-					return `${rolesAccumulator}${
-						index > 0
-							? `&${ROLE_FILTER_NAME}=${raysourceRole?.raysourceName}`
-							: `${ROLE_FILTER_NAME}=${raysourceRole?.raysourceName}`
-					}`;
-				},
-				''
-			);
-
-			deleteContactRoleNameByEmailByProject(
-				project.accountKey,
-				provisioningServerAPI,
-				sessionId,
-				encodeURI(userToBeRemoved?.emailAddress),
-				rolesToBeRemoved
-			);
-
-			setUserAccounts((previousUserAccounts) =>
-				previousUserAccounts.filter(
-					(userAccount) => userAccount.id !== userAction.userId
-				)
-			);
-
-			setUserActionStatus(STATUS_NAME_TYPES.onRemoveSuccess);
-		}
-	};
-
-	const hasAdminAccess = useMemo(() => {
-		const currentUser = userAccounts?.find(
-			({id}) => id === +Liferay.ThemeDisplay.getUserId()
-		);
-
-		if (currentUser) {
-			const hasAdminRoles = currentUser?.roles?.some(
-				(role) =>
-					role === ROLE_TYPES.admin.key ||
-					role === ROLE_TYPES.partnerManager.key
-			);
-
-			return hasAdminRoles;
-		}
-	}, [userAccounts]);
-
-	const columnsByUserAccess = getColumnsByUserAccess(hasAdminAccess);
+	console.log(accountAdministratorsCount, accountRolesData);
 
 	return (
-		<div className="pt-2">
-			<RemoveUserModal
-				onRemoveTeamMember={handleRemoveUser}
-				setUserAction={setUserAction}
-				userAction={userAction}
-			/>
-
-			<TeamMembersTableHeader
-				administratorsAvailable={administratorsAvailable}
-				filterState={[filters, setFilters]}
-				hasAdminAccess={hasAdminAccess}
-				loading={isLoadingUserAccounts}
-				project={project}
-				sessionId={sessionId}
-				setAdministratorsAvailable={setAdministratorsAvailable}
-				setUserAccounts={setUserAccounts}
-				userAccounts={userAccounts}
-			/>
-
-			{!!userAccounts.length && (
-				<div className="cp-team-members-table-wrapper overflow-auto">
-					<Table
-						className="border-0 cp-team-members-table"
-						columns={columnsByUserAccess}
-						isLoading={isLoadingUserAccounts}
-						rows={userAccounts?.map((userAccount) => ({
-							email: (
-								<p className="m-0 text-truncate">
-									{userAccount?.emailAddress}
-								</p>
-							),
-							name: <NameColumnType userAccount={userAccount} />,
-							options: (
-								<OptionsColumnType
-									confirmChanges={handleChangeUserRole}
-									setSelectedRole={setSelectedRole}
-									setUserAction={setUserAction}
-									userAccount={userAccount}
-									userAction={userAction}
-								/>
-							),
-							role: (
-								<RoleColumnType
-									accountRoles={accountRolesOptions}
-									selectedRole={selectedRole}
-									setSelectedRole={setSelectedRole}
-									userAccount={userAccount}
-									userAction={userAction}
-								/>
-							),
-							status: (
-								<StatusColumnType
-									createDate={userAccount?.dateCreated}
-									importDate={importDate}
-									lastLoginDate={userAccount?.lastLoginDate}
-								/>
-							),
-							supportSeat: (
-								<SupportSeatColumnType
-									roles={userAccount?.roles}
-								/>
-							),
-						}))}
-					/>
-				</div>
-			)}
-
-			{!userAccounts.length &&
-				(filters.searchTerm || filters.hasValue) && (
-					<div className="d-flex justify-content-center py-4">
-						No team members found with this search criteria.
-					</div>
+		<div className="cp-team-members-table-wrapper overflow-auto">
+			<Table
+				className="border-0 cp-team-members-table"
+				columns={getColumns(
+					hasAccountAdministratorRole,
+					articleAccountSupportURL
 				)}
-
-			{userActionStatus && (
-				<ClayAlert.ToastContainer>
-					<ClayAlert
-						autoClose={ALERT_TIMEOUT}
-						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
-						displayType={
-							STATUS_ACTION_TYPES[userActionStatus]?.type
-						}
-						onClose={() => setUserActionStatus('')}
-					>
-						{STATUS_ACTION_TYPES[userActionStatus]?.message}
-					</ClayAlert>
-				</ClayAlert.ToastContainer>
-			)}
+				isLoading={loading}
+				rows={userAccounts?.map((userAccount, index) => ({
+					email: (
+						<p className="m-0 text-truncate">
+							{userAccount.emailAddress}
+						</p>
+					),
+					name: (
+						<NameColumn
+							gravatarAPI={gravatarAPI}
+							userAccount={userAccount}
+						/>
+					),
+					options: (
+						<OptionsColumn
+							edit={index === currentIndexEditing}
+							onCancel={() => setCurrentIndexEditing()}
+							onEdit={() => setCurrentIndexEditing(index)}
+							onRemove={() => console.log('Remove it')}
+							onSave={() => console.log('Save it')}
+						/>
+					),
+					status: (
+						<StatusTag
+							currentStatus={
+								userAccount?.lastLoginDate
+									? STATUS_TAG_TYPES.active
+									: STATUS_TAG_TYPES.invited
+							}
+						/>
+					),
+					supportSeat: hasAccountSupportSeatRole(
+						userAccount?.accountBriefs,
+						koroneikiAccount?.accountKey
+					) && (
+						<ClayIcon
+							className="cp-team-members-support-seat-icon"
+							symbol="check-circle-full"
+						/>
+					),
+				}))}
+			/>
 		</div>
 	);
 };

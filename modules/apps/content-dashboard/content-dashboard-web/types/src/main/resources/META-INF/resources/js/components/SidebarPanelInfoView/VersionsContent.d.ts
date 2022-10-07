@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 declare const VersionsContent: ({
 	getItemVersionsURL,
 	languageTag,

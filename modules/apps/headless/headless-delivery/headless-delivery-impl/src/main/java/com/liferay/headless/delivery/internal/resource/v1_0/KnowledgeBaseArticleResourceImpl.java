@@ -159,9 +159,8 @@ public class KnowledgeBaseArticleResourceImpl
 				"createBatch",
 				addAction(
 					KBActionKeys.ADD_KB_ARTICLE,
-					"postKnowledgeBaseFolderKnowledgeBaseArticleBatch",
-					KBConstants.RESOURCE_NAME_ADMIN,
-					parentKnowledgeBaseArticleId)
+					"postSiteKnowledgeBaseArticleBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, kbArticle.getGroupId())
 			).put(
 				"get",
 				addAction(

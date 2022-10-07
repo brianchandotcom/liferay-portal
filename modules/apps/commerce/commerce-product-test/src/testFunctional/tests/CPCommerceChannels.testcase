@@ -2362,15 +2362,8 @@ definition {
 				newAddressCity = "Test City",
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code");
-
-			AssertElementNotPresent(
-				key_radioOption = "Standard",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			AssertElementPresent(
-				key_radioOption = "Expedited",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
+				newAddressZipCode = "Test Zip Code",
+				shippingOption = "Expedited");
 		}
 
 		task ("When the user goes to checkout for the Test Order Type 1 order") {

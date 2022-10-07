@@ -89,7 +89,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			String title, String urlTitle, String content, String description,
 			String sourceURL, String[] sections, String[] selectedFileNames,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkKBArticlePermissions(portletId, serviceContext);
@@ -97,7 +97,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return kbArticleLocalService.addKBArticle(
 			externalReferenceCode, getUserId(), parentResourceClassNameId,
 			parentResourcePrimKey, title, urlTitle, content, description,
-			sourceURL, sections, selectedFileNames, null, null, serviceContext);
+			sourceURL, sections, selectedFileNames, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	@Override
@@ -777,7 +778,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			long resourcePrimKey, String title, String content,
 			String description, String sourceURL, String[] sections,
 			String[] selectedFileNames, long[] removeFileEntryIds,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		_kbArticleModelResourcePermission.check(
@@ -785,8 +786,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		return kbArticleLocalService.updateKBArticle(
 			getUserId(), resourcePrimKey, title, content, description,
-			sourceURL, sections, selectedFileNames, removeFileEntryIds, null,
-			null, serviceContext);
+			sourceURL, sections, selectedFileNames, removeFileEntryIds,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override

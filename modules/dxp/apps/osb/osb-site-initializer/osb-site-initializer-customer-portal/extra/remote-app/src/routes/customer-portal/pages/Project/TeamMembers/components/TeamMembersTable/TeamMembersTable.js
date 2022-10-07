@@ -18,9 +18,11 @@ import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppP
 import {STATUS_TAG_TYPES} from '../../../../../utils/constants/statusTag';
 import NameColumn from './components/columns/NameColumn';
 import OptionsColumn from './components/columns/OptionsColumn';
+import RolesColumn from './components/columns/RolesColumn/RolesColumn';
 import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
 import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAccountByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
+import getAccountBriefByExternalReferenceCode from './utils/getAccountBriefByExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
 import hasAccountSupportSeatRole from './utils/hasAccountSupportSeatRole';
 
@@ -58,10 +60,14 @@ const TeamMembersTable = ({
 
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
+
+	const availableAccountRoles =
+		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
+
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
 
-	console.log(accountAdministratorsCount, accountRolesData);
+	console.log(accountAdministratorsCount);
 
 	return (
 		<div className="cp-team-members-table-wrapper overflow-auto">
@@ -91,6 +97,18 @@ const TeamMembersTable = ({
 							onEdit={() => setCurrentIndexEditing(index)}
 							onRemove={() => console.log('Remove it')}
 							onSave={() => console.log('Save it')}
+						/>
+					),
+					role: (
+						<RolesColumn
+							accountRoles={availableAccountRoles}
+							currentRoleBriefs={
+								getAccountBriefByExternalReferenceCode(
+									userAccount.accountBriefs,
+									koroneikiAccount?.accountKey
+								).roleBriefs
+							}
+							edit={index === currentIndexEditing}
 						/>
 					),
 					status: (

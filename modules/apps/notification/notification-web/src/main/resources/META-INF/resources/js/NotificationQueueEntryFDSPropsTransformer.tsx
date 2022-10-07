@@ -12,13 +12,17 @@
  * details.
  */
 
-import {NotificationQueueEntryStatusDataRenderer} from './NotificationQueueEntryStatusDataRenderer';
+import {
+	NotificationQueueEntryStatusDataRenderer,
+	NotificationQueueEntryToDataRenderer,
+} from './NotificationQueueEntryStatusDataRenderer';
 
 export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
 			notificationQueueEntryStatusDataRenderer: NotificationQueueEntryStatusDataRenderer,
+			notificationQueueEntryToDataRenderer: NotificationQueueEntryToDataRenderer,
 		},
 	};
 }

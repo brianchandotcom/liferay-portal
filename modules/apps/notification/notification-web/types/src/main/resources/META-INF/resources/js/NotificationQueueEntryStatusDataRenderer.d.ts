@@ -14,10 +14,15 @@
 
 /// <reference types="react" />
 
+export declare function NotificationQueueEntryToDataRenderer({
+	value,
+}: {
+	value: string;
+}): JSX.Element;
 export declare function NotificationQueueEntryStatusDataRenderer({
 	value,
 }: IProps): JSX.Element;
 interface IProps {
-	value: boolean | number;
+	value: boolean | number | string;
 }
 export {};

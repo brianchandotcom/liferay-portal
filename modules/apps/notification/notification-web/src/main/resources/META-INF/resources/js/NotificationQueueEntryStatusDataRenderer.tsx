@@ -12,8 +12,52 @@
  * details.
  */
 
+import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
+
+const getToTooltipText = (value: string) => {
+	const toArray = value.split(',');
+	const lastItem = toArray.length > 1 ? toArray.pop() : null;
+
+	return toArray.length > 1
+		? toArray.join(',') +
+				' ' +
+				Liferay.Language.get('and').toLowerCase() +
+				lastItem +
+				'.'
+		: value;
+};
+
+export function NotificationQueueEntryToDataRenderer({value}: {value: string}) {
+	const [isPopoverVisible, setPopoverVisible] = useState(false);
+
+	const POPOVER_MAX_WIDTH = 256;
+
+	return (
+		<ClayPopover
+			data-testid="clayPopover"
+			disableScroll
+			header={Liferay.Language.get('to')}
+			onShowChange={setPopoverVisible}
+			show={isPopoverVisible}
+			style={{width: POPOVER_MAX_WIDTH}}
+			trigger={
+				<span
+					className="ddm-tooltip"
+					onMouseOut={() => setPopoverVisible(false)}
+					onMouseOver={() => setPopoverVisible(true)}
+				>
+					{value.length > 25
+						? value.slice(0, 25).trim() + '...'
+						: value}
+				</span>
+			}
+		>
+			{getToTooltipText(value)}
+		</ClayPopover>
+	);
+}
 
 export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
 	const getStatusInfo = (status: number) => {
@@ -59,5 +103,5 @@ export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
 }
 
 interface IProps {
-	value: boolean | number;
+	value: boolean | number | string;
 }

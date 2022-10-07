@@ -101,14 +101,14 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 				</ClayButton.Group>
 			</BasePage.Footer>
 
+			{/* TODO: Remove this to implement on the right place (property list) */}
+
 			{open && (
 				<AssignModal
 					observer={observer}
 					onCloseModal={() => onOpenChange(false)}
 				/>
 			)}
-
-			{/* TODO: Remove this button to implement on the right place */}
 
 			<ClayButton onClick={() => onOpenChange(true)}>
 				Open modal

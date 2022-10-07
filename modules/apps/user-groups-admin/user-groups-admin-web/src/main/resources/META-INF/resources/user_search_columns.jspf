@@ -40,14 +40,9 @@
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:user-vertical-card
-				actionJsp='<%= showActions ? "/user_action.jsp" : StringPool.BLANK %>'
-				actionJspServletContext="<%= application %>"
-				resultRow="<%= row %>"
-				rowChecker="<%= userSearchContainer.getRowChecker() %>"
-				subtitle="<%= user2.getScreenName() %>"
-				title="<%= user2.getFullName() %>"
-				userId="<%= user2.getUserId() %>"
+			<clay:user-card
+				propsTransformer="js/UserDropdownDefaultPropsTransformer"
+				userCard="<%= new UserVerticalCard(renderRequest, renderResponse, userSearchContainer.getRowChecker(), showActions, user2) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

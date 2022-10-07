@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.NUMERIC,
 	service = {
 		DDMFormFieldValueAccessor.class, NumericDDMFormFieldValueAccessor.class

@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.check.csrf.token=false",
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/dynamic-data-mapping-form-context-provider/*",

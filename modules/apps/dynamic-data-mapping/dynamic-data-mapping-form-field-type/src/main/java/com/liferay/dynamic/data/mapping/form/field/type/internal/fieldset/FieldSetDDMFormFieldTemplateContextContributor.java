@@ -51,7 +51,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Lancha
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.FIELDSET,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,

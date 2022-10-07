@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Pedro Queiroz
  */
-@Component(immediate = true, service = DDMFormFieldFreeMarkerRendererUtil.class)
+@Component(service = DDMFormFieldFreeMarkerRendererUtil.class)
 public class DDMFormFieldFreeMarkerRendererUtil {
 
 	public static Editor getEditor(HttpServletRequest httpServletRequest) {

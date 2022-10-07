@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = DDMTemplateHelper.class)
+@Component(service = DDMTemplateHelper.class)
 public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 	@Override

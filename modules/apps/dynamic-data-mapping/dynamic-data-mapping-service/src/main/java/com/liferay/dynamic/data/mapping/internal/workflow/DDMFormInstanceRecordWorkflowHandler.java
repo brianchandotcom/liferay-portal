@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = WorkflowHandler.class)
+@Component(service = WorkflowHandler.class)
 public class DDMFormInstanceRecordWorkflowHandler
 	extends BaseWorkflowHandler<DDMFormInstanceRecord> {
 

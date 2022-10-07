@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.instance.record.writer.type=csv",
+	property = "ddm.form.instance.record.writer.type=csv",
 	service = DDMFormInstanceRecordWriter.class
 )
 public class DDMFormInstanceRecordCSVWriter

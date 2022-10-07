@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Carvalho
  */
-@Component(immediate = true, service = DDMFormFieldRendererRegistry.class)
+@Component(service = DDMFormFieldRendererRegistry.class)
 public class DDMFormFieldRendererRegistryImpl
 	implements DDMFormFieldRendererRegistry {
 

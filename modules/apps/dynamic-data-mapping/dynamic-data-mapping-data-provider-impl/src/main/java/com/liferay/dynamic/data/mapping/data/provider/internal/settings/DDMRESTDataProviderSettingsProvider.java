@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jonathan McCann
  */
 @Component(
-	immediate = true, property = "ddm.data.provider.type=rest",
+	property = "ddm.data.provider.type=rest",
 	service = DDMDataProviderSettingsProvider.class
 )
 public class DDMRESTDataProviderSettingsProvider

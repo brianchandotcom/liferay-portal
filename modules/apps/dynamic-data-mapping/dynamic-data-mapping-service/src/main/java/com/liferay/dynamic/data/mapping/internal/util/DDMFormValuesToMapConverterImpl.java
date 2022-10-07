@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMFormValuesToMapConverter.class)
+@Component(service = DDMFormValuesToMapConverter.class)
 public class DDMFormValuesToMapConverterImpl
 	implements DDMFormValuesToMapConverter {
 

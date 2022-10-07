@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=geolocation",
 		"ddm.form.field.type.description=geolocation-field-type-description",

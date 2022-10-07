@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=date",
 		"ddm.form.field.type.description=date-field-type-description",

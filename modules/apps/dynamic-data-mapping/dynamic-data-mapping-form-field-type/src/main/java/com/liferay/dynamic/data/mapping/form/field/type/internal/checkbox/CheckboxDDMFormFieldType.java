@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=boolean",
 		"ddm.form.field.type.description=checkbox-field-type-description",

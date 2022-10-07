@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matheus Almeida
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
 		"mvc.command.name=/dynamic_data_mapping_form/validate_csrf_token"

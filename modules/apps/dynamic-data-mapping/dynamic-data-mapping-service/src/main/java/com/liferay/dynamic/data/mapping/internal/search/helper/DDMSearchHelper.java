@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDMSearchHelper.class)
+@Component(service = DDMSearchHelper.class)
 public class DDMSearchHelper {
 
 	public SearchContext buildStructureLayoutSearchContext(

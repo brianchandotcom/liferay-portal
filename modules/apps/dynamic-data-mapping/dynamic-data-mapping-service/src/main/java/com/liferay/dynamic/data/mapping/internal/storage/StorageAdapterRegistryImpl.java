@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = StorageAdapterRegistry.class)
+@Component(service = StorageAdapterRegistry.class)
 public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 
 	@Override

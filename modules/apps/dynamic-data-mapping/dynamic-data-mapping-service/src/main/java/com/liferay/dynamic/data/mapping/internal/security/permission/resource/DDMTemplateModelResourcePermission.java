@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate",
 	service = ModelResourcePermission.class
 )

@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = DDMDataDefinitionConverter.class)
+@Component(service = DDMDataDefinitionConverter.class)
 public class DDMDataDefinitionConverterImpl
 	implements DDMDataDefinitionConverter {
 

@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Carolina Barbosa
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.LOCALIZABLE_TEXT,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )

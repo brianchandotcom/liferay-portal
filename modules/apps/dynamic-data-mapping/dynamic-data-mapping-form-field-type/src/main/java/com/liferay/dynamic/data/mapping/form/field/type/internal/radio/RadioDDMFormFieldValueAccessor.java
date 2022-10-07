@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RADIO,
 	service = {
 		DDMFormFieldValueAccessor.class, RadioDDMFormFieldValueAccessor.class

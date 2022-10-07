@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=number",
 		"ddm.form.field.type.description=it-accepts-only-numbers",

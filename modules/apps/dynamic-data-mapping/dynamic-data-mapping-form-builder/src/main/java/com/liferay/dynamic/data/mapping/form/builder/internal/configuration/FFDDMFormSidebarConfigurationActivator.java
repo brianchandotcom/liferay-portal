@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfiguration",
-	immediate = true, service = FFDDMFormSidebarConfigurationActivator.class
+	service = FFDDMFormSidebarConfigurationActivator.class
 )
 public class FFDDMFormSidebarConfigurationActivator {
 

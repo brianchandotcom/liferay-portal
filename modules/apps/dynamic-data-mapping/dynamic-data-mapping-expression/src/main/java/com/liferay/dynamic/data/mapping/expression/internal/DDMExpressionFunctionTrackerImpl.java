@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMExpressionFunctionTracker.class)
+@Component(service = DDMExpressionFunctionTracker.class)
 public class DDMExpressionFunctionTrackerImpl
 	implements DDMExpressionFunctionTracker {
 

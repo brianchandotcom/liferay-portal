@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDMPermissionSupport.class)
+@Component(service = DDMPermissionSupport.class)
 public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 	@Override

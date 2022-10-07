@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Mateus Melo
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.HELP_TEXT,
 		"ddm.form.field.type.system=true"

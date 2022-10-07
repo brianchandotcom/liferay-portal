@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carolina Barbosa
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.validation.data.type=date", "ddm.validation.ranking:Float=1"
 	},

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Bruno Oliveira
  * @author Carolina Barbosa
  */
-@Component(immediate = true, service = DDMFormPageChangeTracker.class)
+@Component(service = DDMFormPageChangeTracker.class)
 public class DDMFormPageChangeTrackerImpl implements DDMFormPageChangeTracker {
 
 	@Override

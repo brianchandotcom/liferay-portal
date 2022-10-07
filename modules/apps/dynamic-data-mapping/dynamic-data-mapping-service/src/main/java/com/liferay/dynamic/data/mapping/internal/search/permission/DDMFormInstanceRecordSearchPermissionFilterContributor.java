@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lino Alves
  */
-@Component(immediate = true, service = SearchPermissionFilterContributor.class)
+@Component(service = SearchPermissionFilterContributor.class)
 public class DDMFormInstanceRecordSearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = DDMDisplayRegistry.class)
+@Component(service = DDMDisplayRegistry.class)
 public class DDMDisplayRegistry {
 
 	public DDMDisplay getDDMDisplay(String portletId) {

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = SPIDDMFormRuleConverter.class)
+@Component(service = SPIDDMFormRuleConverter.class)
 public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
 	@Override

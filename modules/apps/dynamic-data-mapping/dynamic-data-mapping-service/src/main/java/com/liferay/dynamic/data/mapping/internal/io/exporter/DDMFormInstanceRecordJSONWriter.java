@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.form.instance.record.writer.type=json",
+	property = "ddm.form.instance.record.writer.type=json",
 	service = DDMFormInstanceRecordWriter.class
 )
 public class DDMFormInstanceRecordJSONWriter

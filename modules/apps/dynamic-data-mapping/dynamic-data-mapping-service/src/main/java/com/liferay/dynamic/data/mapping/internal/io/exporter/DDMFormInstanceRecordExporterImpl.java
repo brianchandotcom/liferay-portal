@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMFormInstanceRecordExporter.class)
+@Component(service = DDMFormInstanceRecordExporter.class)
 public class DDMFormInstanceRecordExporterImpl
 	implements DDMFormInstanceRecordExporter {
 

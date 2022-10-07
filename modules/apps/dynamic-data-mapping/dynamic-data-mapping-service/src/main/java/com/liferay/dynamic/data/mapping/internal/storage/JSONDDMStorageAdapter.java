@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true, property = "ddm.storage.adapter.type=json",
+	property = "ddm.storage.adapter.type=json",
 	service = DDMStorageAdapter.class
 )
 public class JSONDDMStorageAdapter implements DDMStorageAdapter {

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=checkbox",
+	property = "ddm.form.field.type.name=checkbox",
 	service = DDMFormFieldTypeReportProcessor.class
 )
 public class CheckboxDDMFormFieldTypeReportProcessor

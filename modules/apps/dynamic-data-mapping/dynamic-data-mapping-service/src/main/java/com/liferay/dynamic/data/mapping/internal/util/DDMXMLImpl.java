@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = DDMXML.class)
+@Component(service = DDMXML.class)
 public class DDMXMLImpl implements DDMXML {
 
 	@Override

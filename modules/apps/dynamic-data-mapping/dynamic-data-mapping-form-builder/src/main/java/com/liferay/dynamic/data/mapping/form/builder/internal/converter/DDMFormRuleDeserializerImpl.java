@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDMFormRuleDeserializer.class)
+@Component(service = DDMFormRuleDeserializer.class)
 public class DDMFormRuleDeserializerImpl implements DDMFormRuleDeserializer {
 
 	@Override

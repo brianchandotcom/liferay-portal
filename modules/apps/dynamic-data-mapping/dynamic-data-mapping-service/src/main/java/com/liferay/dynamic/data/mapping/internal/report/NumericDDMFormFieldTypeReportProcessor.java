@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcos Martins
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=numeric",
+	property = "ddm.form.field.type.name=numeric",
 	service = DDMFormFieldTypeReportProcessor.class
 )
 public class NumericDDMFormFieldTypeReportProcessor

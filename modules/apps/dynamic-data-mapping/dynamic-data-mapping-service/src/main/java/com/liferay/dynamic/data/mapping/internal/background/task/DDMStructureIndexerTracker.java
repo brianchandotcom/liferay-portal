@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Igor Fabiano Nazar
  * @author Lucas Marques de Paula
  */
-@Component(immediate = true, service = DDMStructureIndexerTracker.class)
+@Component(service = DDMStructureIndexerTracker.class)
 public class DDMStructureIndexerTracker {
 
 	public DDMStructureIndexer getDDMStructureIndexer(String className)

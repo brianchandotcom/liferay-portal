@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.REDIRECT_BUTTON,
 		"ddm.form.field.type.system=true"

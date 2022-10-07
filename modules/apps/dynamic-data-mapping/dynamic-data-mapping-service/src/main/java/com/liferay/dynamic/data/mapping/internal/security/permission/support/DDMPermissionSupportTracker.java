@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMPermissionSupportTracker.class)
+@Component(service = DDMPermissionSupportTracker.class)
 public class DDMPermissionSupportTracker {
 
 	public ServiceWrapper<DDMStructurePermissionSupport>

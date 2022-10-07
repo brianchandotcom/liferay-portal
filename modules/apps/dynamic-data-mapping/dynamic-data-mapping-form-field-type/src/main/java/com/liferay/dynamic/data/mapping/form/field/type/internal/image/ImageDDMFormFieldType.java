@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Lancha
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=image",
 		"ddm.form.field.type.description=image-field-type-description",

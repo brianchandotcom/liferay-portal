@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormFieldValueRendererRegistry.class)
+@Component(service = DDMFormFieldValueRendererRegistry.class)
 public class DDMFormFieldValueRendererRegistryImpl
 	implements DDMFormFieldValueRendererRegistry {
 

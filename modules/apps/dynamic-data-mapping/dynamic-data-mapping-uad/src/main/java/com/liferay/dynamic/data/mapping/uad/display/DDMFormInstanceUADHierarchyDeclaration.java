@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcos Martins
  */
-@Component(immediate = true, service = UADHierarchyDeclaration.class)
+@Component(service = UADHierarchyDeclaration.class)
 public class DDMFormInstanceUADHierarchyDeclaration
 	implements UADHierarchyDeclaration {
 

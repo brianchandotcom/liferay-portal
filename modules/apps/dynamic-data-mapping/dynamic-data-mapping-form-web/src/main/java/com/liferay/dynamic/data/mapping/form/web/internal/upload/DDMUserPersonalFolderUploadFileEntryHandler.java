@@ -53,10 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	service = DDMUserPersonalFolderUploadFileEntryHandler.class
-)
+@Component(service = DDMUserPersonalFolderUploadFileEntryHandler.class)
 public class DDMUserPersonalFolderUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 

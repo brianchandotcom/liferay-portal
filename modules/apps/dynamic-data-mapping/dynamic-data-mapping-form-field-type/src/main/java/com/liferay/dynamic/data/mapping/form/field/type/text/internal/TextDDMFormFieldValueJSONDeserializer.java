@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=text",
+	property = "ddm.form.field.type.name=text",
 	service = DDMFormFieldValueJSONSerializer.class
 )
 public class TextDDMFormFieldValueJSONDeserializer

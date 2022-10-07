@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Lundgren
  */
-@Component(immediate = true, service = StorageEngine.class)
+@Component(service = StorageEngine.class)
 public class StorageEngineImpl implements StorageEngine {
 
 	@Override

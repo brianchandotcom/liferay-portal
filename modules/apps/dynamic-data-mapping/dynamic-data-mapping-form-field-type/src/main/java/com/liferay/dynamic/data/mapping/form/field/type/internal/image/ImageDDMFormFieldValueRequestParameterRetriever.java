@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.IMAGE,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )

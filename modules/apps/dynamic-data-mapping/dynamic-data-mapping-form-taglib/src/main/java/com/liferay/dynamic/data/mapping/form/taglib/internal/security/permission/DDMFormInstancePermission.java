@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pedro Queiroz
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DDMFormInstancePermission {
 
 	public static boolean contains(

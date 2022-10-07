@@ -68,7 +68,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.autopropagated-parameters=currentTab",
 		"com.liferay.portlet.css-class-wrapper=portlet-forms-admin",

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = DDMFormValuesMerger.class)
+@Component(service = DDMFormValuesMerger.class)
 public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 
 	@Override

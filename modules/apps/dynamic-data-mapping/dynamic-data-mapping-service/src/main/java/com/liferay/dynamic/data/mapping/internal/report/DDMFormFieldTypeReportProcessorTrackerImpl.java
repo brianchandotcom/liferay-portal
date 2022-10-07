@@ -27,9 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcos Martins
  */
-@Component(
-	immediate = true, service = DDMFormFieldTypeReportProcessorTracker.class
-)
+@Component(service = DDMFormFieldTypeReportProcessorTracker.class)
 public class DDMFormFieldTypeReportProcessorTrackerImpl
 	implements DDMFormFieldTypeReportProcessorTracker {
 

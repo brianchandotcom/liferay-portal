@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

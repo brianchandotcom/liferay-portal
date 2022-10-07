@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Captcha",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-captcha",

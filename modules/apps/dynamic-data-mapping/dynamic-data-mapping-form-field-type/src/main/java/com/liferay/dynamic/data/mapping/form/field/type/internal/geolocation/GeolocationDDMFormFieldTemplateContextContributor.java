@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.GEOLOCATION,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,

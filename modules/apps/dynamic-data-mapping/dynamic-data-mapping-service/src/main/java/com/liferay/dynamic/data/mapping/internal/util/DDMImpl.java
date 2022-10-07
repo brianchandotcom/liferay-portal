@@ -114,7 +114,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDM.class)
+@Component(service = DDM.class)
 public class DDMImpl implements DDM {
 
 	@Override

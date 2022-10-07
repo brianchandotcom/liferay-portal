@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.IMAGE,
 	service = {
 		DDMFormFieldValueAccessor.class, ImageDDMFormFieldValueAccessor.class

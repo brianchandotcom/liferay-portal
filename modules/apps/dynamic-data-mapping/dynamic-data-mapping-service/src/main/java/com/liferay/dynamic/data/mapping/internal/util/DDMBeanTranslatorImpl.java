@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMBeanTranslator.class)
+@Component(service = DDMBeanTranslator.class)
 public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 	@Override

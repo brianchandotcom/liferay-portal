@@ -84,8 +84,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration",
-	immediate = true, property = "ddm.data.provider.type=rest",
-	service = DDMDataProvider.class
+	property = "ddm.data.provider.type=rest", service = DDMDataProvider.class
 )
 public class DDMRESTDataProvider implements DDMDataProvider {
 

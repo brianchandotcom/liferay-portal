@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.description=localizable-text-field-type-description",
 		"ddm.form.field.type.display.order:Integer=1",

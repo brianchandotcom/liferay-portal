@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMTemplateManager.class)
+@Component(service = DDMTemplateManager.class)
 public class DDMTemplateManagerImpl implements DDMTemplateManager {
 
 	@Override

@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormValuesFactory.class)
+@Component(service = DDMFormValuesFactory.class)
 public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 	@Override

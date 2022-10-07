@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Options",
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.OPTIONS,

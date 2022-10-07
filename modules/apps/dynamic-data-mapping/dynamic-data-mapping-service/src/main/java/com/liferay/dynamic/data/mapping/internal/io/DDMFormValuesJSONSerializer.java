@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.form.values.serializer.type=json",
+	property = "ddm.form.values.serializer.type=json",
 	service = DDMFormValuesSerializer.class
 )
 public class DDMFormValuesJSONSerializer implements DDMFormValuesSerializer {

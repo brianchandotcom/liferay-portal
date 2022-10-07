@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author David Truong
  */
-@Component(immediate = true, service = CTDisplayRenderer.class)
+@Component(service = CTDisplayRenderer.class)
 public class DDMTemplateCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDMTemplate> {
 

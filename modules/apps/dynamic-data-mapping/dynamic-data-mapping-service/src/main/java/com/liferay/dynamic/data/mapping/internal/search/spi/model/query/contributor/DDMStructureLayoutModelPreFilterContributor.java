@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcelo Mello
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.dynamic.data.mapping.model.DDMStructureLayout",
 	service = ModelPreFilterContributor.class
 )

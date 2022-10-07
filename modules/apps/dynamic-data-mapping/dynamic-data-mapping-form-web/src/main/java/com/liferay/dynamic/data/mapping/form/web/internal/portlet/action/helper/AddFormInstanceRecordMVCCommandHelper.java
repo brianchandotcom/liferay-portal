@@ -65,9 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(
-	immediate = true, service = AddFormInstanceRecordMVCCommandHelper.class
-)
+@Component(service = AddFormInstanceRecordMVCCommandHelper.class)
 public class AddFormInstanceRecordMVCCommandHelper {
 
 	public void updateNonevaluableDDMFormFields(

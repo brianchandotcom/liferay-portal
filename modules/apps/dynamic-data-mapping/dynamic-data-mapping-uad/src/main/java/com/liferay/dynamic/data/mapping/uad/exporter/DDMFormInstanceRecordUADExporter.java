@@ -40,7 +40,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UADExporter.class)
+@Component(service = UADExporter.class)
 public class DDMFormInstanceRecordUADExporter
 	extends BaseDDMFormInstanceRecordUADExporter {
 

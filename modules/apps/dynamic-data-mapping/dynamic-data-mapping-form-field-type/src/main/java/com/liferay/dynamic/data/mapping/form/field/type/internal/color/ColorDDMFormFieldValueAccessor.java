@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
 	service = {
 		ColorDDMFormFieldValueAccessor.class, DDMFormFieldValueAccessor.class

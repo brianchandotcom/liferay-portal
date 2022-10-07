@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcos Martins
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE,

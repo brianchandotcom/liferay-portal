@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration",
-	immediate = true, service = DDMIndexer.class
+	service = DDMIndexer.class
 )
 public class DDMIndexerImpl implements DDMIndexer {
 

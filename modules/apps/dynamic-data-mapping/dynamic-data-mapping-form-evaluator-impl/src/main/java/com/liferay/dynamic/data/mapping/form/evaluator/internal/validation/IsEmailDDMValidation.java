@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.validation.data.type=string", "ddm.validation.ranking:Float=4"
 	},

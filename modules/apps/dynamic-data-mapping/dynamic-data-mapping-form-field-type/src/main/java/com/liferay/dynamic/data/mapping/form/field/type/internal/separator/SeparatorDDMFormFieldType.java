@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=separator",
 		"ddm.form.field.type.description=separator-field-type-description",

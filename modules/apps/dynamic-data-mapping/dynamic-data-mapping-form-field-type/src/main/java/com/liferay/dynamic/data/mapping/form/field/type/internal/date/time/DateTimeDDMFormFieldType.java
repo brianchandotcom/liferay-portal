@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true,
 	property = {
 		"ddm.form.field.type.description=date-time-field-type-description",
 		"ddm.form.field.type.display.order:Double=6.1",

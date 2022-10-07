@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMDataProviderInstanceSettings.class)
+@Component(service = DDMDataProviderInstanceSettings.class)
 public class DDMDataProviderInstanceSettingsImpl
 	implements DDMDataProviderInstanceSettings {
 

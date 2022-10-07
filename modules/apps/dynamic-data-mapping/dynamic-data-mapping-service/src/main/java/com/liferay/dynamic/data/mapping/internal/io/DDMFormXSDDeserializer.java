@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pablo Carvalho
  */
 @Component(
-	immediate = true, property = "ddm.form.deserializer.type=xsd",
+	property = "ddm.form.deserializer.type=xsd",
 	service = DDMFormDeserializer.class
 )
 public class DDMFormXSDDeserializer implements DDMFormDeserializer {

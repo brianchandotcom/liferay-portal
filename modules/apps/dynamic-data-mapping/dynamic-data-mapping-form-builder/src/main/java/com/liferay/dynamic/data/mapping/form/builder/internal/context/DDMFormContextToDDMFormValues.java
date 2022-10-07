@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true,
 	property = "dynamic.data.mapping.form.builder.context.deserializer.type=formValues",
 	service = DDMFormContextDeserializer.class
 )

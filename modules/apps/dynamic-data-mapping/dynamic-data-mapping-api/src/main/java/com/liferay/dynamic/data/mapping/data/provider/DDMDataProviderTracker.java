@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMDataProviderTracker.class)
+@Component(service = DDMDataProviderTracker.class)
 public class DDMDataProviderTracker {
 
 	public DDMDataProvider getDDMDataProvider(String type) {

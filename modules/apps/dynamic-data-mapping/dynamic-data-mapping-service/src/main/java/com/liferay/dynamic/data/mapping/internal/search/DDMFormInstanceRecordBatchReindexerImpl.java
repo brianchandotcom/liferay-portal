@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	immediate = true, service = DDMFormInstanceRecordBatchReindexer.class
-)
+@Component(service = DDMFormInstanceRecordBatchReindexer.class)
 public class DDMFormInstanceRecordBatchReindexerImpl
 	implements DDMFormInstanceRecordBatchReindexer {
 

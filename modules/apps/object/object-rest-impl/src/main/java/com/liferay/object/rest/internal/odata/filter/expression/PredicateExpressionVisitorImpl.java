@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
@@ -52,10 +54,12 @@ public class PredicateExpressionVisitorImpl
 	implements ExpressionVisitor<Object> {
 
 	public PredicateExpressionVisitorImpl(
-		long objectDefinitionId,
+		EntityModel entityModel, long objectDefinitionId,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		this(new HashMap<>(), objectDefinitionId, objectFieldLocalService);
+		this(
+			entityModel, new HashMap<>(), objectDefinitionId,
+			objectFieldLocalService);
 	}
 
 	@Override
@@ -81,6 +85,7 @@ public class PredicateExpressionVisitorImpl
 
 		return (Predicate)lambdaFunctionExpression.accept(
 			new PredicateExpressionVisitorImpl(
+				_entityModel,
 				Collections.singletonMap(
 					lambdaFunctionExpression.getVariableName(),
 					collectionPropertyExpression.getName()),
@@ -232,10 +237,12 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private PredicateExpressionVisitorImpl(
+		EntityModel entityModel,
 		Map<String, String> lambdaVariableExpressionFieldNames,
 		long objectDefinitionId,
 		ObjectFieldLocalService objectFieldLocalService) {
 
+		_entityModel = entityModel;
 		_lambdaVariableExpressionFieldNames =
 			lambdaVariableExpressionFieldNames;
 		_objectDefinitionId = objectDefinitionId;
@@ -266,9 +273,15 @@ public class PredicateExpressionVisitorImpl
 			return Optional.of(predicate);
 		}
 
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get(
+			GetterUtil.getString(left));
+
 		Column<?, Object> column =
 			(Column<?, Object>)_objectFieldLocalService.getColumn(
-				_objectDefinitionId, GetterUtil.getString(left));
+				_objectDefinitionId, entityField.getFilterableName(null));
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
 			predicate = column.eq(right);
@@ -302,6 +315,7 @@ public class PredicateExpressionVisitorImpl
 		return column.like(fieldValue + StringPool.PERCENT);
 	}
 
+	private final EntityModel _entityModel;
 	private Map<String, String> _lambdaVariableExpressionFieldNames;
 	private final long _objectDefinitionId;
 	private final ObjectFieldLocalService _objectFieldLocalService;

@@ -22,6 +22,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
@@ -44,10 +45,11 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 		}
 
 		try {
+			EntityModel entityModel = new ObjectEntryEntityModel(
+				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+
 			FilterParser filterParser = _filterParserProvider.provide(
-				new ObjectEntryEntityModel(
-					_objectFieldLocalService.getObjectFields(
-						objectDefinitionId)));
+				entityModel);
 
 			Filter oDataFilter = new Filter(filterParser.parse(filterString));
 
@@ -55,7 +57,7 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 
 			return (Predicate)expression.accept(
 				new PredicateExpressionVisitorImpl(
-					objectDefinitionId, _objectFieldLocalService));
+					entityModel, objectDefinitionId, _objectFieldLocalService));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

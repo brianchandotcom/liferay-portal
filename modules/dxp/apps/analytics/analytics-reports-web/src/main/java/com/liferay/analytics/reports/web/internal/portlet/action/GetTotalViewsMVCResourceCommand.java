@@ -18,7 +18,6 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -96,9 +95,6 @@ public class GetTotalViewsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

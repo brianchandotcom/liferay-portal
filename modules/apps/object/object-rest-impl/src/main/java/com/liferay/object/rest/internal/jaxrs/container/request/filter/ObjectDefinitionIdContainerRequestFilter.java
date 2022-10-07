@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.jaxrs.container.request.filter;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.deployer.ObjectDefinitionDeployerUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -57,8 +58,8 @@ public class ObjectDefinitionIdContainerRequestFilter
 
 		uriBuilder.queryParam(
 			"taskItemDelegateName",
-			_objectDefinition.getShortName() +
-				_objectDefinition.getCompanyId());
+			ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
+				_objectDefinition.getCompanyId(), _objectDefinition.getName()));
 
 		containerRequestContext.setRequestUri(uriBuilder.build());
 	}

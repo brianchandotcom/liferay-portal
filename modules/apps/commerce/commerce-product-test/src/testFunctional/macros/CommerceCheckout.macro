@@ -294,6 +294,7 @@ definition {
 			productName = "${productName}",
 			productPrice = "${productUnitPrice}",
 			productQuantity = "${productQuantity}",
+			shippingOption = "${shippingOption}",
 			subtotalValue = "${subtotal}",
 			totalValue = "${total}",
 			viewBillingAddressPermission = "${viewBillingAddressPermission}");
@@ -511,6 +512,13 @@ definition {
 			AssertElementPresent(
 				key_discountPercentage = "${deliveryDiscountPercentage}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_PERCENTAGE");
+		}
+
+		if (isSet(shippingOption)) {
+			AssertTextEquals.assertPartialText(
+				key_shippingOption = "${shippingOption}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_OPTION",
+				value1 = "${shippingOption}");
 		}
 
 		if (isSet(taxValue)) {

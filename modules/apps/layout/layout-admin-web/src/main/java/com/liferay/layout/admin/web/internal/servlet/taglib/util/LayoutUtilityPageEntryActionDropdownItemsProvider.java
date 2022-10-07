@@ -153,7 +153,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
-					"/layout_admin/mark_as_default_layout_utility_page_entry"
+					"/layout_admin/update_default_layout_utility_page_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(

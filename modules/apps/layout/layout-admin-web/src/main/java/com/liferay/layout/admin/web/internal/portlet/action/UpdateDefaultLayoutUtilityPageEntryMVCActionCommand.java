@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout_admin/mark_as_default_layout_utility_page_entry"
+		"mvc.command.name=/layout_admin/update_default_layout_utility_page_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class MarkAsDefaultLayoutUtilityPageEntryMVCActionCommand
+public class UpdateDefaultLayoutUtilityPageEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

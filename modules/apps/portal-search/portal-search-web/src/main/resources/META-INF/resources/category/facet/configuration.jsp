@@ -25,9 +25,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences" %><%@
@@ -87,22 +85,27 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 
 				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= categoryFacetPortletPreferences.isFrequenciesVisible() %>" />
 
-				<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156503")) %>'>
-					<div id="<portlet:namespace />selectVocabularies">
-						<react:component
-							module="js/components/SelectVocabularies"
-							props='<%=
-								HashMapBuilder.<String, Object>put(
-									"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
-								).put(
-									"namespace", liferayPortletResponse.getNamespace()
-								).put(
-									"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
-								).build()
-							%>'
-						/>
-					</div>
-				</c:if>
+				<c:choose>
+					<c:when test="<%= !assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected() %>">
+						<div id="<portlet:namespace />selectVocabularies">
+							<react:component
+								module="js/components/SelectVocabularies"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
+									).put(
+										"namespace", liferayPortletResponse.getNamespace()
+									).put(
+										"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
+									).build()
+								%>'
+							/>
+						</div>
+					</c:when>
+					<c:otherwise>
+						render the selector "disabled" and add help text/"Learn more" link: To enable this configuration follow the steps in the documentation. Learn More
+					</c:otherwise>
+				</c:choose>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

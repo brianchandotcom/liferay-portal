@@ -181,8 +181,7 @@ public class ObjectEntryEntityModelTest {
 	private static final Map<String, EntityField> _expectedEntityFieldsMap =
 		HashMapBuilder.create(
 			HashMapBuilder.<String, EntityField>put(
-				"creator",
-				new StringEntityField("creator", locale -> Field.USER_NAME)
+				"creator", new StringEntityField("creator", locale -> "creator")
 			).put(
 				"creatorId",
 				new IntegerEntityField("creatorId", locale -> Field.USER_ID)

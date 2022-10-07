@@ -1899,7 +1899,7 @@
 												"classPKReferences": {
 													"en_US": {
 														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos.svg$]"
+														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logos.svg#]"
 													}
 												},
 												"fragmentImageConfiguration": {
@@ -2075,7 +2075,7 @@
 							"collectionConfig": {
 								"collectionReference": {
 									"className": "com.liferay.asset.list.model.AssetListEntry",
-									"classPK": "[$ASSET_LIST_ENTRY_ID:TEACHERS$]"
+									"classPK": "[#ASSET_LIST_ENTRY_ID:TEACHERS#]"
 								},
 								"collectionType": "Collection"
 							},

@@ -279,8 +279,8 @@ public class OIDCUserInfoProcessor {
 		String password2 = null;
 		String screenName = _getClaimString(
 			"screenName", userMapperJSONObject, userInfoJSONObject);
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 
 		JSONObject contactMapperJSONObject =
 			userInfoMapperJSONObject.getJSONObject("contact");
@@ -309,7 +309,7 @@ public class OIDCUserInfoProcessor {
 			firstName,
 			_getClaimString(
 				"middleName", userMapperJSONObject, userInfoJSONObject),
-			lastName, prefixId, suffixId,
+			lastName, prefixListTypeId, suffixListTypeId,
 			_isMale(contactMapperJSONObject, userInfoJSONObject), birthday[1],
 			birthday[2], birthday[0],
 			_getClaimString(

@@ -1051,99 +1051,6 @@ public class JournalFolderLocalServiceImpl
 			folderId, parentFolderId);
 	}
 
-	private JournalFolder _updateFolder(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, long[] ddmStructureIds, int restrictionType,
-			boolean mergeWithParentFolder, ServiceContext serviceContext)
-		throws PortalException {
-
-		// Merge folders
-
-		if ((restrictionType !=
-				JournalFolderConstants.
-					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) &&
-			(parentFolderId !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			JournalFolder restrictedAncestorFolder =
-				_getRestrictedAncestorFolder(getFolder(parentFolderId));
-
-			if (restrictedAncestorFolder != null) {
-				List<DDMStructureLink> ancestorDDMStructureLinks =
-					_ddmStructureLinkLocalService.getStructureLinks(
-						_classNameLocalService.getClassNameId(
-							JournalFolder.class),
-						restrictedAncestorFolder.getFolderId());
-
-				Stream<DDMStructureLink> ancestorDDMStructureLinksStream =
-					ancestorDDMStructureLinks.stream();
-
-				long[] ancestorDDMStructureIds =
-					ancestorDDMStructureLinksStream.mapToLong(
-						DDMStructureLink::getStructureId
-					).toArray();
-
-				_validateArticleDDMStructures(
-					folderId, ancestorDDMStructureIds);
-			}
-		}
-
-		_validateArticleDDMStructures(folderId, ddmStructureIds);
-
-		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
-			folderId);
-
-		parentFolderId = _getParentFolderId(folder, parentFolderId);
-
-		if (mergeWithParentFolder && (folderId != parentFolderId)) {
-			_mergeFolders(folder, parentFolderId);
-
-			return folder;
-		}
-
-		// Folder
-
-		_validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
-
-		long oldParentFolderId = folder.getParentFolderId();
-
-		if (oldParentFolderId != parentFolderId) {
-			folder.setParentFolderId(parentFolderId);
-			folder.setTreePath(folder.buildTreePath());
-		}
-
-		folder.setName(name);
-		folder.setDescription(description);
-		folder.setRestrictionType(restrictionType);
-		folder.setExpandoBridgeAttributes(serviceContext);
-
-		folder = journalFolderPersistence.update(folder);
-
-		// Asset
-
-		updateAsset(
-			userId, folder, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds(),
-			serviceContext.getAssetPriority());
-
-		// Dynamic data mapping
-
-		if (ddmStructureIds != null) {
-			updateFolderDDMStructures(folder, ddmStructureIds);
-		}
-
-		if (oldParentFolderId != parentFolderId) {
-			rebuildTree(
-				folder.getCompanyId(), folderId, folder.getTreePath(), true);
-
-			folder = journalFolderPersistence.findByPrimaryKey(
-				folder.getPrimaryKey());
-		}
-
-		return folder;
-	}
-
 	private Set<Long> _getDDMStructureIds(
 		List<DDMStructureLink> ddmStructureLinks) {
 
@@ -1499,6 +1406,99 @@ public class JournalFolderLocalServiceImpl
 				indexer.reindex(folder);
 			}
 		}
+	}
+
+	private JournalFolder _updateFolder(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long[] ddmStructureIds, int restrictionType,
+			boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Merge folders
+
+		if ((restrictionType !=
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) &&
+			(parentFolderId !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			JournalFolder restrictedAncestorFolder =
+				_getRestrictedAncestorFolder(getFolder(parentFolderId));
+
+			if (restrictedAncestorFolder != null) {
+				List<DDMStructureLink> ancestorDDMStructureLinks =
+					_ddmStructureLinkLocalService.getStructureLinks(
+						_classNameLocalService.getClassNameId(
+							JournalFolder.class),
+						restrictedAncestorFolder.getFolderId());
+
+				Stream<DDMStructureLink> ancestorDDMStructureLinksStream =
+					ancestorDDMStructureLinks.stream();
+
+				long[] ancestorDDMStructureIds =
+					ancestorDDMStructureLinksStream.mapToLong(
+						DDMStructureLink::getStructureId
+					).toArray();
+
+				_validateArticleDDMStructures(
+					folderId, ancestorDDMStructureIds);
+			}
+		}
+
+		_validateArticleDDMStructures(folderId, ddmStructureIds);
+
+		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
+			folderId);
+
+		parentFolderId = _getParentFolderId(folder, parentFolderId);
+
+		if (mergeWithParentFolder && (folderId != parentFolderId)) {
+			_mergeFolders(folder, parentFolderId);
+
+			return folder;
+		}
+
+		// Folder
+
+		_validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
+
+		long oldParentFolderId = folder.getParentFolderId();
+
+		if (oldParentFolderId != parentFolderId) {
+			folder.setParentFolderId(parentFolderId);
+			folder.setTreePath(folder.buildTreePath());
+		}
+
+		folder.setName(name);
+		folder.setDescription(description);
+		folder.setRestrictionType(restrictionType);
+		folder.setExpandoBridgeAttributes(serviceContext);
+
+		folder = journalFolderPersistence.update(folder);
+
+		// Asset
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
+
+		// Dynamic data mapping
+
+		if (ddmStructureIds != null) {
+			updateFolderDDMStructures(folder, ddmStructureIds);
+		}
+
+		if (oldParentFolderId != parentFolderId) {
+			rebuildTree(
+				folder.getCompanyId(), folderId, folder.getTreePath(), true);
+
+			folder = journalFolderPersistence.findByPrimaryKey(
+				folder.getPrimaryKey());
+		}
+
+		return folder;
 	}
 
 	private void _validateArticleDDMStructures(

@@ -25,10 +25,14 @@ import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.document.library.internal.upgrade.v3_2_1.DDMStructureLinkUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_2.DLFileEntryUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_4.UpgradeDLSizeLimitConfiguration;
+import com.liferay.document.library.internal.upgrade.v3_2_5.SyncDLFileEntryTypesDDMStructurePermissions;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
@@ -120,6 +124,13 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register(
 			"3.2.3", "3.2.4",
 			new UpgradeDLSizeLimitConfiguration(_configurationAdmin));
+
+		registry.register(
+			"3.2.4", "3.2.5",
+			new SyncDLFileEntryTypesDDMStructurePermissions(
+                                _ddmPermissionSupport,
+                                _resourceActionLocalService,
+                                _resourcePermissionLocalService));
 	}
 
 	@Reference
@@ -128,12 +139,21 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
+        @Reference
+        private DDMPermissionSupport _ddmPermissionSupport;
+
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper
 		_prefsPropsToConfigurationUpgradeHelper;
 
 	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+        @Reference
 	private ResourceLocalService _resourceLocalService;
+
+        @Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference(target = "(dl.store.impl.enabled=true)")
 	private StoreFactory _storeFactory;

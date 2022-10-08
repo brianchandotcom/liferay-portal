@@ -295,7 +295,7 @@ public class MemberRequestLocalServiceImpl
 
 	private String _getCreateAccountURL(
 			MemberRequest memberRequest, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		String createAccountURL = (String)serviceContext.getAttribute(
 			"createAccountURL");

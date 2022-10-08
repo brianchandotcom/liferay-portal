@@ -1441,10 +1441,6 @@ public class PropsValues {
 	public static final String MODULE_FRAMEWORK_PORTAL_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_PORTAL_DIR);
 
-	public static final String[] MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES =
-		PropsUtil.getArray(
-			PropsKeys.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES);
-
 	public static final String MODULE_FRAMEWORK_STATE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_STATE_DIR);
 

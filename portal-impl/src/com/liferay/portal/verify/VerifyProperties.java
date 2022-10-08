@@ -329,6 +329,10 @@ public class VerifyProperties {
 			"module.framework.runtime.start.level"
 		},
 		{
+			"module.framework.services.ignored.interfaces",
+			"module.framework.services.ignored.interfaces"
+		},
+		{
 			"module.framework.system.packages.extra",
 			"module.framework.system.packages.extra"
 		},

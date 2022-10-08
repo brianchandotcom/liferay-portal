@@ -40,6 +40,10 @@ public class ModuleFrameworkPropsValues {
 		GetterUtil.getInteger(
 			SystemProperties.get("module.framework.runtime.start.level"));
 
+	public static final String[] MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES =
+		SystemProperties.getArray(
+			"module.framework.services.ignored.interfaces");
+
 	public static final String[] MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA =
 		SystemProperties.getArray("module.framework.system.packages.extra");
 

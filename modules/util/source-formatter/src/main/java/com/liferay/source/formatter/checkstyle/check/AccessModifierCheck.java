@@ -34,7 +34,8 @@ public class AccessModifierCheck extends BaseCheck {
 		String absolutePath = getAbsolutePath();
 
 		if (!absolutePath.matches(
-				".+-service/.+/service/impl/.+ServiceImpl.java")) {
+				".+-service/.+/service/impl/.+ServiceImpl.java") ||
+			absolutePath.contains("/modules/apps/archived")) {
 
 			return;
 		}

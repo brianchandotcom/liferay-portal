@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -287,7 +287,7 @@ public class MemberRequestLocalServiceImpl
 			url, "p_p_id", false);
 
 		if (Validator.isNotNull(portletId)) {
-			name = PortalUtil.getPortletNamespace(portletId) + name;
+			name = _portal.getPortletNamespace(portletId) + name;
 		}
 
 		return HttpComponentsUtil.addParameter(url, name, value);
@@ -487,6 +487,9 @@ public class MemberRequestLocalServiceImpl
 
 	@Reference
 	private MailService _mailService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortalUUID _portalUUID;

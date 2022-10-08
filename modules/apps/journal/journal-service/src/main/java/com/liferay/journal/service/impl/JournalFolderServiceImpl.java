@@ -452,7 +452,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			serviceContext);
 	}
 
-	private List<DDMStructure>_filterStructures(
+	private List<DDMStructure> _filterStructures(
 			List<DDMStructure> ddmStructures)
 		throws PortalException {
 

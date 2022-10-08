@@ -899,7 +899,7 @@ public class JournalFolderLocalServiceImpl
 					_classNameLocalService.getClassNameId(JournalFolder.class),
 					folderId));
 
-			folder = _doUpdateFolder(
+			folder = _updateFolder(
 				userId, folderId, parentFolderId, name, description,
 				ddmStructureIds, restrictionType, mergeWithParentFolder,
 				serviceContext);
@@ -1051,7 +1051,7 @@ public class JournalFolderLocalServiceImpl
 			folderId, parentFolderId);
 	}
 
-	private JournalFolder _doUpdateFolder(
+	private JournalFolder _updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, long[] ddmStructureIds, int restrictionType,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)

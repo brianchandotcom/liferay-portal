@@ -1110,6 +1110,7 @@ public class AccountEntryLocalServiceTest {
 			_accountEntryLocalService);
 
 		long mvccVersion = accountEntry.getMvccVersion();
+
 		boolean expectedRestrictMembership =
 			!accountEntry.isRestrictMembership();
 

@@ -44,6 +44,9 @@ public class ModuleFrameworkPropsValues {
 		SystemProperties.getArray(
 			"module.framework.services.ignored.interfaces");
 
+	public static final String[] MODULE_FRAMEWORK_STATIC_JARS =
+		SystemProperties.getArray("module.framework.static.jars");
+
 	public static final String[] MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA =
 		SystemProperties.getArray("module.framework.system.packages.extra");
 

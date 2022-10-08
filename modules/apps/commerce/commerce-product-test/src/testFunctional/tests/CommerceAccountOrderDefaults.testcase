@@ -1095,6 +1095,166 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9732. As a sales manager, I want to set a default account shipping address per channel when the buyer users are placing orders"
+	@priority = "3"
+	test CanSetDefaultShippingAddressPerChannel {
+		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+				Accounts.addAddressViaSetDefaultAddress(
+					addressCity = "Diamond Bar",
+					addressCountry = "United States",
+					addressName = "${typeList} Address Entry 1",
+					addressPostalCode = "91765",
+					addressRegion = "California",
+					addressStreet1 = "1400 Montefino Ave",
+					addressType = "${typeList}",
+					phoneNumber = "+1-877-543-3729");
+			}
+		}
+
+		task ("And two more channels("Test Channel 1" and "Test Channel 2")") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("When admin wants to set a default shipping address for the account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Click(
+				key_termType = "Shipping",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+		}
+
+		task ("Then the options All Channels, Minium Portal Channel, Test Channel 1 and Test Channel 2 are listed") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var channelEntries : list "All Channels,Minium Portal,Test Channel 1,Test Channel 2") {
+				AssertTextPresent(
+					key_fieldLabel = "Channel",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+					row = "1",
+					value1 = "${channelEntries}");
+			}
+		}
+
+		task ("And only addresses flagged as "Shipping" and "Shipping and Billing" are listed") {
+			for (var addressEntries : list "Shipping Address Entry 1,Billing and Shipping Address Entry 1") {
+				AssertTextPresent(
+					key_fieldLabel = "Address",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+					row = "1",
+					value1 = "${addressEntries}");
+			}
+
+			AssertTextNotEquals(
+				key_fieldLabel = "Address",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "Billing Address Entry 1");
+		}
+
+		task ("When a default shipping address is selected for Minium Portal Channel and the account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.addDefaultCommerceAddressEntry(
+				addressEntry = "Shipping Address Entry 1",
+				addressType = "Shipping",
+				channelEntry = "Minium Portal");
+		}
+
+		task ("And admin clicks back to the default address") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Click(
+				key_termType = "Shipping",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+		}
+
+		task ("Then only All Other Channels, Test Channel 1 and Test Channel 2 are visible (not All Channels)") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var channelEntries : list "All Other Channels,Test Channel 1,Test Channel 2") {
+				AssertTextPresent(
+					key_fieldLabel = "Channel",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+					row = "1",
+					value1 = "${channelEntries}");
+			}
+
+			AssertTextNotEquals(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "All Channels");
+		}
+
+		task ("When buyer adds an order and starts the checkout process after setting a default shipping address for Minium Portal Channel and account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+		}
+
+		task ("And arrives in the shipping address section, the default shipping address is pre-selected") {
+			AssertElementPresent(
+				key_fieldLabel = "Choose Shipping Address",
+				key_value = "Shipping Address Entry 1",
+				locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
+
+			for (var fieldNames : list "Name,Address,Zip,City") {
+				AssertElementPresent(
+					key_fieldName = "${fieldNames}",
+					locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+			}
+		}
+
+		task ("Then after completing the checkout, the default shipping address is visible in the Order Summary") {
+			Check.checkToggleSwitch(
+				checkboxName = "Use shipping address as billing address",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "1400 Montefino Ave",
+				addressCity = "Diamond Bar",
+				addressCountry = "United States",
+				addressName = "Shipping Address Entry 1",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "COMMERCE-9782. Default delivery set to override should be default regardless of other eligibility criteria."
 	@priority = "4"
 	test DefaultDeliveryTermCanOverrideOtherEligibilities {

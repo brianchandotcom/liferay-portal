@@ -326,6 +326,10 @@ public class VerifyProperties {
 			"module.framework.concurrent.startup.enabled"
 		},
 		{
+			"module.framework.configuration.bundle.symbolic.names",
+			"module.framework.configuration.bundle.symbolic.names"
+		},
+		{
 			"module.framework.runtime.start.level",
 			"module.framework.runtime.start.level"
 		},

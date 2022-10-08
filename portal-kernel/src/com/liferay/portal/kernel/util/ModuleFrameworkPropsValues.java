@@ -28,6 +28,11 @@ public class ModuleFrameworkPropsValues {
 			SystemProperties.get(
 				"module.framework.concurrent.startup.enabled"));
 
+	public static final String[]
+		MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES =
+			SystemProperties.getArray(
+				"module.framework.configuration.bundle.symbolic.names");
+
 	public static final int MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL =
 		GetterUtil.getInteger(
 			SystemProperties.get(

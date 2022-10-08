@@ -135,8 +135,8 @@
 					<@treeview_item
 						cssClassTreeItem="tree-item-vocabulary"
 						frequencyVisible=false
-						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
 						id=vocabularyName + vocabularyName?index
+						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
 						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts(vocabularyName)
 					/>
 				</#list>

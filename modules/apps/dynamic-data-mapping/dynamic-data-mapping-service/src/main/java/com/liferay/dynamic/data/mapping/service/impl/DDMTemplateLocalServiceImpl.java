@@ -1821,8 +1821,7 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	private void _validate(
-			Locale locale, Map<Locale, String> nameMap,
-			String script)
+			Locale locale, Map<Locale, String> nameMap, String script)
 		throws PortalException {
 
 		_validateName(locale, nameMap);
@@ -1904,8 +1903,7 @@ public class DDMTemplateLocalServiceImpl
 			smallImageFile, smallImageBytes);
 	}
 
-	private void _validateName(
-			Locale locale, Map<Locale, String> nameMap)
+	private void _validateName(Locale locale, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		String name = nameMap.get(locale);

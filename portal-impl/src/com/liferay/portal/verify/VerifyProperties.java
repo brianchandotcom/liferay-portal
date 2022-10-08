@@ -328,6 +328,10 @@ public class VerifyProperties {
 			"module.framework.runtime.start.level",
 			"module.framework.runtime.start.level"
 		},
+		{
+			"module.framework.system.packages.extra",
+			"module.framework.system.packages.extra"
+		},
 		{"module.framework.web.start.level", "module.framework.web.start.level"}
 	};
 

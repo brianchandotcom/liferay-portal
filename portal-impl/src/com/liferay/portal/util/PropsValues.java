@@ -1455,9 +1455,6 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT));
 
-	public static final String[] MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA =
-		PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA);
-
 	public static final String MODULE_FRAMEWORK_WAR_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_WAR_DIR);
 

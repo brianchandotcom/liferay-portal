@@ -1774,9 +1774,6 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT =
 		"module.framework.stop.wait.timeout";
 
-	public static final String MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA =
-		"module.framework.system.packages.extra";
-
 	public static final String MODULE_FRAMEWORK_WAR_DIR =
 		"module.framework.war.dir";
 

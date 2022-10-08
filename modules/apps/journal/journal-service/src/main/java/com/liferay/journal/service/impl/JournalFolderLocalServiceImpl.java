@@ -1083,7 +1083,8 @@ public class JournalFolderLocalServiceImpl
 						DDMStructureLink::getStructureId
 					).toArray();
 
-				_validateArticleDDMStructures(folderId, ancestorDDMStructureIds);
+				_validateArticleDDMStructures(
+					folderId, ancestorDDMStructureIds);
 			}
 		}
 
@@ -1155,9 +1156,14 @@ public class JournalFolderLocalServiceImpl
 		return ddmStructureIds;
 	}
 
-	private long _getParentFolderId(
-		JournalFolder folder, long parentFolderId) {
+	private JournalFolderModelValidator _getJournalFolderModelValidator() {
+		ModelValidator<JournalFolder> modelValidator =
+			ModelValidatorRegistryUtil.getModelValidator(JournalFolder.class);
 
+		return (JournalFolderModelValidator)modelValidator;
+	}
+
+	private long _getParentFolderId(JournalFolder folder, long parentFolderId) {
 		if (parentFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
@@ -1201,6 +1207,23 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		return parentFolderId;
+	}
+
+	private JournalFolder _getRestrictedAncestorFolder(JournalFolder folder)
+		throws PortalException {
+
+		if (folder.getRestrictionType() ==
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+			return folder;
+		}
+
+		if (folder.isRoot()) {
+			return null;
+		}
+
+		return _getRestrictedAncestorFolder(folder.getParentFolder());
 	}
 
 	private void _mergeFolders(JournalFolder fromFolder, long toFolderId)
@@ -1489,6 +1512,25 @@ public class JournalFolderLocalServiceImpl
 			folderId, ddmStructureIds);
 	}
 
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		JournalFolder journalFolder = journalFolderPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (journalFolder != null) {
+			throw new DuplicateFolderExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate journal folder external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
+	}
+
 	private void _validateFolder(
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException {
@@ -1509,49 +1551,6 @@ public class JournalFolderLocalServiceImpl
 
 		journalFolderModelValidator.validateParentFolder(
 			folder, parentFolderId);
-	}
-
-	private JournalFolderModelValidator _getJournalFolderModelValidator() {
-		ModelValidator<JournalFolder> modelValidator =
-			ModelValidatorRegistryUtil.getModelValidator(JournalFolder.class);
-
-		return (JournalFolderModelValidator)modelValidator;
-	}
-
-	private JournalFolder _getRestrictedAncestorFolder(JournalFolder folder)
-		throws PortalException {
-
-		if (folder.getRestrictionType() ==
-				JournalFolderConstants.
-					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
-
-			return folder;
-		}
-
-		if (folder.isRoot()) {
-			return null;
-		}
-
-		return _getRestrictedAncestorFolder(folder.getParentFolder());
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		JournalFolder journalFolder = journalFolderPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
-
-		if (journalFolder != null) {
-			throw new DuplicateFolderExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate journal folder external reference code ",
-					externalReferenceCode, " in group ", groupId));
-		}
 	}
 
 	@Reference

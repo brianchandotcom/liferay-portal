@@ -57,7 +57,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,12 +77,14 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Provides the local service for accessing, adding, cascading, deleting, and
@@ -91,6 +95,9 @@ import java.util.Set;
  */
 public class DLFileEntryTypeLocalServiceImpl
 	extends DLFileEntryTypeLocalServiceBaseImpl {
+
+        private static final String DDM_FILE_ENTRY_METADATA =
+                "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure";
 
 	@Override
 	public void addDDMStructureLinks(
@@ -731,6 +738,21 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryType.getUserId(), DLFileEntryType.class.getName(),
 			dlFileEntryType.getFileEntryTypeId(), false, addGroupPermissions,
 			addGuestPermissions);
+
+                // Each DLFileEntryType is tied to a DDM structure, that holds
+                // the metadata definitions defined in the document type itself.
+                // The upload forms (and most probably other code) checks the
+                // permissions on the DDM structure to determine if the fields
+                // may be viewed/entered by a user. So the permissions on the
+                // structure need to be sychronized with the DLFilEntryType.
+                // This covers the creation case. Updating is handled in
+                // com.liferay.document.library.internal.security.permission.DLFileEntryTypePermissionUpdateHandler
+
+                _resourceLocalService.addResources(
+                        dlFileEntryType.getCompanyId(), dlFileEntryType.getGroupId(),
+                        dlFileEntryType.getUserId(), DDM_FILE_ENTRY_METADATA,
+                        dlFileEntryType.getDataDefinitionId(), false, addGroupPermissions,
+                        addGuestPermissions);
 	}
 
 	protected void addFileEntryTypeResources(
@@ -741,6 +763,37 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryType.getCompanyId(), dlFileEntryType.getGroupId(),
 			dlFileEntryType.getUserId(), DLFileEntryType.class.getName(),
 			dlFileEntryType.getFileEntryTypeId(), modelPermissions);
+
+                // Each DLFileEntryType is tied to a DDM structure, that holds
+                // the metadata definitions defined in the document type itself.
+                // The upload forms (and most probably other code) checks the
+                // permissions on the DDM structure to determine if the fields
+                // may be viewed/entered by a user. So the permissions on the
+                // structure need to be sychronized with the DLFilEntryType.
+                // This covers the creation case. Updating is handled in
+                // com.liferay.document.library.internal.security.permission.DLFileEntryTypePermissionUpdateHandler
+
+                ModelPermissions structurePermissions = ModelPermissionsFactory.create(DDM_FILE_ENTRY_METADATA);
+
+                Set<String> fileEntryMetadataActions = _resourceActionLocalService
+                        .getResourceActions(DDM_FILE_ENTRY_METADATA)
+                        .stream()
+                        .map(ra -> ra.getActionId())
+                        .collect(Collectors.toSet());
+
+                for(String role: modelPermissions.getRoleNames()) {
+                    String[] structureActionIds = Arrays
+                            .stream(modelPermissions.getActionIds(role))
+                            .filter(actionId -> fileEntryMetadataActions.contains(actionId))
+                            .collect(Collectors.toList())
+                            .toArray(new String[0]);
+                    structurePermissions.addRolePermissions(role, structureActionIds);
+                }
+
+		_resourceLocalService.addModelResources(
+			dlFileEntryType.getCompanyId(), dlFileEntryType.getGroupId(),
+			dlFileEntryType.getUserId(), DDM_FILE_ENTRY_METADATA,
+			dlFileEntryType.getDataDefinitionId(), structurePermissions);
 	}
 
 	protected void cascadeFileEntryTypes(
@@ -1059,6 +1112,9 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@BeanReference(type = DLFolderPersistence.class)
 	private DLFolderPersistence _dlFolderPersistence;
+
+        @BeanReference(type = ResourceActionLocalService.class)
+        private ResourceActionLocalService _resourceActionLocalService;
 
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;

@@ -100,8 +100,8 @@
 						<@treeview_item
 							cssClassTreeItem="tree-item-category"
 							frequency=termDisplayContext.getFrequency()
-							id=termDisplayContext.getAssetCategoryId()
 							frequencyVisible=termDisplayContext.isFrequencyVisible()
+							id=termDisplayContext.getAssetCategoryId()
 							name=htmlUtil.escape(termDisplayContext.getDisplayName())
 							selectable=true
 							selected=termDisplayContext.isSelected()
@@ -134,9 +134,9 @@
 				<#list vocabularyNames as vocabularyName>
 					<@treeview_item
 						cssClassTreeItem="tree-item-vocabulary"
-						id=vocabularyName + vocabularyName?index
 						frequencyVisible=false
 						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
+						id=vocabularyName + vocabularyName?index
 						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts(vocabularyName)
 					/>
 				</#list>

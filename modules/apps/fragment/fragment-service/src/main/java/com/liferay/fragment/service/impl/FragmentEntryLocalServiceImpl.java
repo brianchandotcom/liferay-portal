@@ -702,48 +702,6 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
-	private void _validate(String name) throws PortalException {
-		if (Validator.isNull(name)) {
-			throw new FragmentEntryNameException("Name must not be null");
-		}
-
-		if (name.contains(StringPool.PERIOD) ||
-			name.contains(StringPool.SLASH)) {
-
-			throw new FragmentEntryNameException(
-				"Name contains invalid characters");
-		}
-
-		int nameMaxLength = ModelHintsUtil.getMaxLength(
-			FragmentEntry.class.getName(), "name");
-
-		if (name.length() > nameMaxLength) {
-			throw new FragmentEntryNameException(
-				"Maximum length of name exceeded");
-		}
-	}
-
-	private void _validateContent(String html, String configuration)
-		throws PortalException {
-
-		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-			html, configuration);
-	}
-
-	private void _validateFragmentEntryKey(
-			long groupId, String fragmentEntryKey)
-		throws PortalException {
-
-		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
-
-		FragmentEntry fragmentEntry = fetchFragmentEntry(
-			groupId, fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			throw new DuplicateFragmentEntryKeyException();
-		}
-	}
-
 	private void _copyFragmentEntryPreviewFileEntry(
 			long userId, long groupId, FragmentEntry fragmentEntry,
 			FragmentEntry copyFragmentEntry)
@@ -893,6 +851,48 @@ public class FragmentEntryLocalServiceImpl
 					fragmentEntryLink.getFragmentEntryLinkId()));
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private void _validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new FragmentEntryNameException("Name must not be null");
+		}
+
+		if (name.contains(StringPool.PERIOD) ||
+			name.contains(StringPool.SLASH)) {
+
+			throw new FragmentEntryNameException(
+				"Name contains invalid characters");
+		}
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			FragmentEntry.class.getName(), "name");
+
+		if (name.length() > nameMaxLength) {
+			throw new FragmentEntryNameException(
+				"Maximum length of name exceeded");
+		}
+	}
+
+	private void _validateContent(String html, String configuration)
+		throws PortalException {
+
+		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+			html, configuration);
+	}
+
+	private void _validateFragmentEntryKey(
+			long groupId, String fragmentEntryKey)
+		throws PortalException {
+
+		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+
+		FragmentEntry fragmentEntry = fetchFragmentEntry(
+			groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			throw new DuplicateFragmentEntryKeyException();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

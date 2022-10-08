@@ -330,6 +330,16 @@ public class FragmentCompositionLocalServiceImpl
 		return fragmentCompositionPersistence.update(fragmentComposition);
 	}
 
+	private String _getFragmentCompositionKey(String fragmentCompositionKey) {
+		if (fragmentCompositionKey != null) {
+			fragmentCompositionKey = fragmentCompositionKey.trim();
+
+			return StringUtil.toLowerCase(fragmentCompositionKey);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private void _validateDescription(String description)
 		throws PortalException {
 
@@ -381,16 +391,6 @@ public class FragmentCompositionLocalServiceImpl
 			throw new FragmentCompositionNameException(
 				"Maximum length of name exceeded");
 		}
-	}
-
-	private String _getFragmentCompositionKey(String fragmentCompositionKey) {
-		if (fragmentCompositionKey != null) {
-			fragmentCompositionKey = fragmentCompositionKey.trim();
-
-			return StringUtil.toLowerCase(fragmentCompositionKey);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Reference

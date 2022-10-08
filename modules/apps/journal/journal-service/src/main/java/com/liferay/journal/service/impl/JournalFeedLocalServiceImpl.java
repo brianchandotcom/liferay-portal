@@ -83,7 +83,7 @@ public class JournalFeedLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 		feedId = StringUtil.toUpperCase(StringUtil.trim(feedId));
 
-		validate(
+		_validate(
 			user.getCompanyId(), groupId, feedId, autoFeedId, name,
 			ddmStructureKey, targetLayoutFriendlyUrl, contentField);
 
@@ -316,7 +316,7 @@ public class JournalFeedLocalServiceImpl
 
 		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
 
-		validate(
+		_validate(
 			feed.getCompanyId(), groupId, name, ddmStructureKey,
 			targetLayoutFriendlyUrl, contentField);
 
@@ -366,7 +366,7 @@ public class JournalFeedLocalServiceImpl
 		return feed;
 	}
 
-	protected boolean isValidStructureOptionValue(
+	private boolean _isValidStructureOptionValue(
 		Map<String, DDMFormField> ddmFormFieldsMap, String contentField) {
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
@@ -394,7 +394,7 @@ public class JournalFeedLocalServiceImpl
 		return false;
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long groupId, String feedId, boolean autoFeedId,
 			String name, String ddmStructureKey, String targetLayoutFriendlyUrl,
 			String contentField)
@@ -418,12 +418,12 @@ public class JournalFeedLocalServiceImpl
 			}
 		}
 
-		validate(
+		_validate(
 			companyId, groupId, name, ddmStructureKey, targetLayoutFriendlyUrl,
 			contentField);
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long groupId, String name, String ddmStructureKey,
 			String targetLayoutFriendlyUrl, String contentField)
 		throws PortalException {
@@ -462,7 +462,7 @@ public class JournalFeedLocalServiceImpl
 			return;
 		}
 
-		if (!isValidStructureOptionValue(ddmFormFieldsMap, contentField)) {
+		if (!_isValidStructureOptionValue(ddmFormFieldsMap, contentField)) {
 			throw new FeedContentFieldException(
 				"Invalid content field " + contentField);
 		}

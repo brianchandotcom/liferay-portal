@@ -113,9 +113,9 @@ public class JournalFolderLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		parentFolderId = getParentFolderId(groupId, parentFolderId);
+		parentFolderId = _getParentFolderId(groupId, parentFolderId);
 
-		validateFolder(0, groupId, parentFolderId, name);
+		_validateFolder(0, groupId, parentFolderId, name);
 
 		long folderId = counterLocalService.increment();
 
@@ -595,9 +595,9 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		validateParentFolder(folder, parentFolderId);
+		_validateParentFolder(folder, parentFolderId);
 
-		parentFolderId = getParentFolderId(folder, parentFolderId);
+		parentFolderId = _getParentFolderId(folder, parentFolderId);
 
 		if (folder.getParentFolderId() == parentFolderId) {
 			return folder;
@@ -605,7 +605,7 @@ public class JournalFolderLocalServiceImpl
 
 		validateFolderDDMStructures(folder.getFolderId(), parentFolderId);
 
-		validateFolder(
+		_validateFolder(
 			folder.getFolderId(), folder.getGroupId(), parentFolderId,
 			folder.getName());
 
@@ -661,7 +661,7 @@ public class JournalFolderLocalServiceImpl
 
 			// Folders and articles
 
-			restoreDependentsFromTrash(
+			_restoreDependentsFromTrash(
 				journalFolderLocalService.getFoldersAndArticles(
 					folder.getGroupId(), folder.getFolderId(),
 					WorkflowConstants.STATUS_IN_TRASH));
@@ -706,7 +706,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Folders and articles
 
-		moveDependentsToTrash(
+		_moveDependentsToTrash(
 			journalFolderLocalService.getFoldersAndArticles(
 				folder.getGroupId(), folder.getFolderId()),
 			trashEntry.getEntryId());
@@ -770,7 +770,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Folders and articles
 
-		restoreDependentsFromTrash(
+		_restoreDependentsFromTrash(
 			journalFolderLocalService.getFoldersAndArticles(
 				folder.getGroupId(), folder.getFolderId(),
 				WorkflowConstants.STATUS_IN_TRASH));
@@ -894,12 +894,12 @@ public class JournalFolderLocalServiceImpl
 		Set<Long> originalDDMStructureIds = new HashSet<>();
 
 		if (folderId > JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			originalDDMStructureIds = getDDMStructureIds(
+			originalDDMStructureIds = _getDDMStructureIds(
 				_ddmStructureLinkLocalService.getStructureLinks(
 					_classNameLocalService.getClassNameId(JournalFolder.class),
 					folderId));
 
-			folder = doUpdateFolder(
+			folder = _doUpdateFolder(
 				userId, folderId, parentFolderId, name, description,
 				ddmStructureIds, restrictionType, mergeWithParentFolder,
 				serviceContext);
@@ -979,7 +979,7 @@ public class JournalFolderLocalServiceImpl
 				_classNameLocalService.getClassNameId(JournalFolder.class),
 				folder.getFolderId());
 
-		Set<Long> originalDDMStructureIds = getDDMStructureIds(
+		Set<Long> originalDDMStructureIds = _getDDMStructureIds(
 			ddmStructureLinks);
 
 		if (ddmStructureIds.equals(originalDDMStructureIds)) {
@@ -1051,7 +1051,7 @@ public class JournalFolderLocalServiceImpl
 			folderId, parentFolderId);
 	}
 
-	protected JournalFolder doUpdateFolder(
+	private JournalFolder _doUpdateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, long[] ddmStructureIds, int restrictionType,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
@@ -1083,26 +1083,26 @@ public class JournalFolderLocalServiceImpl
 						DDMStructureLink::getStructureId
 					).toArray();
 
-				validateArticleDDMStructures(folderId, ancestorDDMStructureIds);
+				_validateArticleDDMStructures(folderId, ancestorDDMStructureIds);
 			}
 		}
 
-		validateArticleDDMStructures(folderId, ddmStructureIds);
+		_validateArticleDDMStructures(folderId, ddmStructureIds);
 
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		parentFolderId = getParentFolderId(folder, parentFolderId);
+		parentFolderId = _getParentFolderId(folder, parentFolderId);
 
 		if (mergeWithParentFolder && (folderId != parentFolderId)) {
-			mergeFolders(folder, parentFolderId);
+			_mergeFolders(folder, parentFolderId);
 
 			return folder;
 		}
 
 		// Folder
 
-		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
+		_validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
 
 		long oldParentFolderId = folder.getParentFolderId();
 
@@ -1143,7 +1143,7 @@ public class JournalFolderLocalServiceImpl
 		return folder;
 	}
 
-	protected Set<Long> getDDMStructureIds(
+	private Set<Long> _getDDMStructureIds(
 		List<DDMStructureLink> ddmStructureLinks) {
 
 		Set<Long> ddmStructureIds = new HashSet<>();
@@ -1155,7 +1155,7 @@ public class JournalFolderLocalServiceImpl
 		return ddmStructureIds;
 	}
 
-	protected long getParentFolderId(
+	private long _getParentFolderId(
 		JournalFolder folder, long parentFolderId) {
 
 		if (parentFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -1187,7 +1187,7 @@ public class JournalFolderLocalServiceImpl
 		return parentFolderId;
 	}
 
-	protected long getParentFolderId(long groupId, long parentFolderId) {
+	private long _getParentFolderId(long groupId, long parentFolderId) {
 		if (parentFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder parentFolder =
 				journalFolderPersistence.fetchByPrimaryKey(parentFolderId);
@@ -1203,14 +1203,14 @@ public class JournalFolderLocalServiceImpl
 		return parentFolderId;
 	}
 
-	protected void mergeFolders(JournalFolder fromFolder, long toFolderId)
+	private void _mergeFolders(JournalFolder fromFolder, long toFolderId)
 		throws PortalException {
 
 		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
 			fromFolder.getGroupId(), fromFolder.getFolderId());
 
 		for (JournalFolder folder : folders) {
-			mergeFolders(folder, toFolderId);
+			_mergeFolders(folder, toFolderId);
 		}
 
 		List<JournalArticle> articles = _journalArticlePersistence.findByG_F(
@@ -1231,7 +1231,7 @@ public class JournalFolderLocalServiceImpl
 		journalFolderLocalService.deleteFolder(fromFolder);
 	}
 
-	protected void moveDependentsToTrash(
+	private void _moveDependentsToTrash(
 			List<Object> foldersAndArticles, long trashEntryId)
 		throws PortalException {
 
@@ -1337,7 +1337,7 @@ public class JournalFolderLocalServiceImpl
 				List<Object> curFoldersAndArticles = getFoldersAndArticles(
 					folder.getGroupId(), folder.getFolderId());
 
-				moveDependentsToTrash(curFoldersAndArticles, trashEntryId);
+				_moveDependentsToTrash(curFoldersAndArticles, trashEntryId);
 
 				// Asset
 
@@ -1354,7 +1354,7 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
-	protected void restoreDependentsFromTrash(List<Object> foldersAndArticles)
+	private void _restoreDependentsFromTrash(List<Object> foldersAndArticles)
 		throws PortalException {
 
 		for (Object object : foldersAndArticles) {
@@ -1455,7 +1455,7 @@ public class JournalFolderLocalServiceImpl
 					folder.getGroupId(), folder.getFolderId(),
 					WorkflowConstants.STATUS_IN_TRASH);
 
-				restoreDependentsFromTrash(curFoldersAndArticles);
+				_restoreDependentsFromTrash(curFoldersAndArticles);
 
 				// Trash
 
@@ -1478,7 +1478,7 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
-	protected void validateArticleDDMStructures(
+	private void _validateArticleDDMStructures(
 			long folderId, long[] ddmStructureIds)
 		throws PortalException {
 
@@ -1489,7 +1489,7 @@ public class JournalFolderLocalServiceImpl
 			folderId, ddmStructureIds);
 	}
 
-	protected void validateFolder(
+	private void _validateFolder(
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException {
 
@@ -1500,7 +1500,7 @@ public class JournalFolderLocalServiceImpl
 			folderId, groupId, parentFolderId, name);
 	}
 
-	protected void validateParentFolder(
+	private void _validateParentFolder(
 			JournalFolder folder, long parentFolderId)
 		throws PortalException {
 

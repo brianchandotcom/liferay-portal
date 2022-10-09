@@ -254,39 +254,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public String getSearchEngineId() {
-		if (_searchEngineId != null) {
-			return _searchEngineId;
-		}
-
-		Class<?> clazz = getClass();
-
-		String searchEngineId = GetterUtil.getString(
-			PropsUtil.get(
-				PropsKeys.INDEX_SEARCH_ENGINE_ID,
-				new com.liferay.portal.kernel.configuration.Filter(
-					clazz.getName())));
-
-		if (Validator.isNotNull(searchEngineId)) {
-			SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine(
-				searchEngineId);
-
-			if (searchEngine != null) {
-				_searchEngineId = searchEngineId;
-			}
-		}
-
-		if (_searchEngineId == null) {
-			_searchEngineId = SearchEngineHelper.SYSTEM_ENGINE_ID;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Search engine ID for ", clazz.getName(), " is ",
-					searchEngineId));
-		}
-
-		return _searchEngineId;
+		return SearchEngineHelper.SYSTEM_ENGINE_ID;
 	}
 
 	/**
@@ -1630,7 +1598,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private IndexerPostProcessor[] _indexerPostProcessors =
 		new IndexerPostProcessor[0];
 	private boolean _permissionAware;
-	private String _searchEngineId;
 	private boolean _selectAllLocales;
 	private boolean _stagingAware = true;
 

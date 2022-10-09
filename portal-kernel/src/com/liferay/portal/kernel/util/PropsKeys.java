@@ -1137,9 +1137,6 @@ public interface PropsKeys {
 		INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD =
 			"index.search.collated.spell.check.result.scores.threshold";
 
-	public static final String INDEX_SEARCH_ENGINE_ID =
-		"index.search.engine.id";
-
 	public static final String INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE =
 		"index.search.highlight.fragment.size";
 

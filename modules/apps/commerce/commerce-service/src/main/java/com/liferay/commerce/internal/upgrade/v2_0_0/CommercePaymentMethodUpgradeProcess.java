@@ -17,6 +17,8 @@ package com.liferay.commerce.internal.upgrade.v2_0_0;
 import com.liferay.commerce.model.impl.CommerceOrderImpl;
 import com.liferay.commerce.model.impl.CommerceOrderPaymentImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -26,8 +28,6 @@ public class CommercePaymentMethodUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("CommerceOrder", "transactionId", "VARCHAR(75)");
-
 		if (hasColumn(
 				CommerceOrderImpl.TABLE_NAME, "commercePaymentMethodId")) {
 
@@ -68,6 +68,14 @@ public class CommercePaymentMethodUpgradeProcess extends UpgradeProcess {
 
 			runSQLTemplateString(template, false);
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrder", "transactionId VARCHAR(75)")
+		};
 	}
 
 }

@@ -20,6 +20,8 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.wish.list.model.impl.CommerceWishListItemModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,10 +43,6 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"CommerceWishListItem", "CPInstanceUuid", "VARCHAR(75)");
-		alterTableAddColumn("CommerceWishListItem", "CProductId", "LONG");
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CommerceWishListItem set CProductId = ?," +
 					"CPInstanceUuid = ? where CPInstanceId = ?");
@@ -75,6 +73,15 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 			CommerceWishListItemModelImpl.TABLE_NAME, "CPDefinitionId");
 		alterTableDropColumn(
 			CommerceWishListItemModelImpl.TABLE_NAME, "CPInstanceId");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceWishListItem", "CPInstanceUuid VARCHAR(75)",
+				"CProductId LONG")
+		};
 	}
 
 	private final CPDefinitionLocalService _cpDefinitionLocalService;

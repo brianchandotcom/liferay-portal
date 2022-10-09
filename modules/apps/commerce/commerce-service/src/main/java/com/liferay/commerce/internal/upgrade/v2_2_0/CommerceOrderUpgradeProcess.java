@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,8 +48,6 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("CommerceOrder", "commerceAccountId", "LONG");
-
 		if (hasColumn(CommerceOrderModelImpl.TABLE_NAME, "siteGroupId")) {
 			runSQL("update CommerceOrder set groupId = siteGroupId");
 
@@ -132,6 +132,14 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 		alterTableDropColumn(
 			CommerceOrderModelImpl.TABLE_NAME, "orderOrganizationId");
 		alterTableDropColumn(CommerceOrderModelImpl.TABLE_NAME, "orderUserId");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrder", "commerceAccountId LONG")
+		};
 	}
 
 	private long _getCommerceAccountId(long organizationId)

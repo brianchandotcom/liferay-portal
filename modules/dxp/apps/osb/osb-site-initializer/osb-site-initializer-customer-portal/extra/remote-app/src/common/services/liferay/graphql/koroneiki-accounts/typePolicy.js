@@ -20,8 +20,9 @@ export const koroneikiAccountsTypePolicy = {
 					const slaCurrent = readField('slaCurrent');
 
 					return (
-						slaCurrent?.includes(SLA_TYPES.gold) ||
-						slaCurrent?.includes(SLA_TYPES.platinum)
+						slaCurrent &&
+						(slaCurrent.includes(SLA_TYPES.gold) ||
+							slaCurrent.includes(SLA_TYPES.platinum))
 					);
 				},
 			},

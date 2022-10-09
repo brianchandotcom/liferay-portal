@@ -21,7 +21,6 @@ import RolesColumn from './components/columns/RolesColumn/RolesColumn';
 import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
 import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAccountByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
-import getAccountBriefByExternalReferenceCode from './utils/getAccountBriefByExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
 
 const TeamMembersTable = ({
@@ -68,13 +67,10 @@ const TeamMembersTable = ({
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
 
-	const getCurrentRoleBriefNames = useCallback(
-		(accountBriefs) =>
-			getAccountBriefByExternalReferenceCode(
-				accountBriefs,
-				koroneikiAccount?.accountKey
-			).roleBriefs.map((roleBrief) => roleBrief.name),
-		[koroneikiAccount?.accountKey]
+	const getCurrentRoleBriefName = useCallback(
+		(accountBrief) =>
+			accountBrief.roleBriefs.map((roleBrief) => roleBrief.name)[0],
+		[]
 	);
 
 	return (
@@ -113,16 +109,16 @@ const TeamMembersTable = ({
 							availableSupportSeatsCount={
 								availableSupportSeatsCount
 							}
-							currentRoleBriefNames={getCurrentRoleBriefNames(
-								userAccount.accountBriefs
+							currentRoleBriefName={getCurrentRoleBriefName(
+								userAccount.selectedAccountSummary
 							)}
 							edit={index === currentIndexEditing}
 							hasAccountSupportSeatRole={
 								userAccount.selectedAccountSummary
 									.hasSupportSeatRole
 							}
-							onClick={(selectedAccountRoleNames) =>
-								selectedAccountRoleNames
+							onClick={(selectedAccountRoleName) =>
+								selectedAccountRoleName
 							}
 							supportSeatsCount={supportSeatsCount}
 						/>

@@ -10,51 +10,47 @@
  */
 import {Button, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {useCallback, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import isSupportSeatRole from '../../../../../../../../../../../../common/utils/isSupportSeatRole';
 
 const RolesDropdown = ({
 	accountRoles,
 	availableSupportSeatsCount,
-	currentRoleBriefNames,
+	currentRoleBriefName,
 	hasAccountSupportSeatRole,
 	onClick,
 	supportSeatsCount,
 }) => {
 	const [active, setActive] = useState(false);
-	const [items, setItems] = useState(
-		accountRoles.map((accountRole) => ({
-			active: currentRoleBriefNames.includes(accountRole.name),
-			disabled: hasAccountSupportSeatRole
-				? supportSeatsCount === 1
-				: isSupportSeatRole(accountRole.name) &&
-				  availableSupportSeatsCount <= 0,
-			label: accountRole.name,
-		}))
+
+	const [selectedAccountRoleName, setSelectedAccountRoleName] = useState(
+		currentRoleBriefName
 	);
 
-	const activeItems = useMemo(() => items.filter((item) => item.active), [
-		items,
-	]);
-
-	const getTriggerLabel = useCallback(
-		() => (
-			<div className="text-truncate">
-				{!activeItems.length
-					? '(Empty role selection)'
-					: activeItems.map((item) => item.label).join(', ')}
-			</div>
-		),
-		[activeItems]
+	const items = useMemo(
+		() =>
+			accountRoles.map((accountRole) => ({
+				active: accountRole.name === selectedAccountRoleName,
+				disabled: hasAccountSupportSeatRole
+					? supportSeatsCount === 1
+					: isSupportSeatRole(accountRole.name) &&
+					  availableSupportSeatsCount <= 0,
+				label: accountRole.name,
+			})),
+		[
+			accountRoles,
+			availableSupportSeatsCount,
+			hasAccountSupportSeatRole,
+			selectedAccountRoleName,
+			supportSeatsCount,
+		]
 	);
 
-	const handleOnClick = (index) => {
-		items[index].active = !items[index].active;
-		const currentActiveItems = items.filter((item) => item.active);
-
-		onClick(currentActiveItems.map((item) => item.label));
-
-		setItems([...items]);
+	const handleOnClick = (accountRoleName) => {
+		if (accountRoleName !== selectedAccountRoleName) {
+			onClick(accountRoleName);
+			setSelectedAccountRoleName(accountRoleName);
+		}
 	};
 
 	const getDropdownItems = () =>
@@ -63,7 +59,7 @@ const RolesDropdown = ({
 				className="pr-6"
 				disabled={item.disabled}
 				key={`${item.label}-${index}`}
-				onClick={() => handleOnClick(index)}
+				onClick={() => handleOnClick(item.label)}
 				symbolRight={item.active && 'check'}
 			>
 				{item.label}
@@ -83,7 +79,9 @@ const RolesDropdown = ({
 					outline
 					small
 				>
-					{getTriggerLabel()}
+					<div className="text-truncate">
+						{selectedAccountRoleName}
+					</div>
 
 					<span className="inline-item inline-item-after mt-1">
 						<ClayIcon symbol="caret-bottom" />

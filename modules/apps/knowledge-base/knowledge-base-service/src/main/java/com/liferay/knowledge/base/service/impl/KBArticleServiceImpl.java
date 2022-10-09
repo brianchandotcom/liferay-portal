@@ -802,6 +802,28 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			resourcePrimKeyToPriorityMap);
 	}
 
+	private void _checkAttachmentPermissions(
+			long groupId, String portletId, long resourcePrimKey)
+		throws PortalException {
+
+		if ((resourcePrimKey <= 0) &&
+			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+
+			_adminPortletResourcePermission.check(
+				getPermissionChecker(), groupId, KBActionKeys.ADD_KB_ARTICLE);
+		}
+		else if ((resourcePrimKey <= 0) &&
+				 portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
+			_displayPortletResourcePermission.check(
+				getPermissionChecker(), groupId, KBActionKeys.ADD_KB_ARTICLE);
+		}
+		else {
+			_kbArticleModelResourcePermission.check(
+				getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
+		}
+	}
+
 	private long _checkGroupId(long groupId, long resourcePrimKey)
 		throws PortalException {
 
@@ -848,6 +870,22 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		}
 
 		return kbFolder.getGroupId();
+	}
+
+	private void _checkKBArticlePermissions(
+			String portletId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			_adminPortletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				KBActionKeys.ADD_KB_ARTICLE);
+		}
+		else if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+			_displayPortletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				KBActionKeys.ADD_KB_ARTICLE);
+		}
 	}
 
 	private String _exportToRSS(
@@ -936,68 +974,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return _rssExporter.export(syndFeed);
 	}
 
-	private List<KBArticle> _getAllDescendantKBArticles(
-			long groupId, long resourcePrimKey, int status,
-			OrderByComparator<KBArticle> orderByComparator,
-			boolean includeParentArticle)
-		throws PortalException {
-
-		List<KBArticle> kbArticles = null;
-
-		if (includeParentArticle) {
-			kbArticles = getKBArticles(
-				groupId, new long[] {resourcePrimKey}, status, null);
-
-			kbArticles = ListUtil.copy(kbArticles);
-		}
-		else {
-			kbArticles = new ArrayList<>();
-		}
-
-		_getAllDescendantKBArticles(
-			kbArticles, groupId, resourcePrimKey, status, orderByComparator);
-
-		return Collections.unmodifiableList(kbArticles);
-	}
-
-	private void _checkAttachmentPermissions(
-			long groupId, String portletId, long resourcePrimKey)
-		throws PortalException {
-
-		if ((resourcePrimKey <= 0) &&
-			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
-
-			_adminPortletResourcePermission.check(
-				getPermissionChecker(), groupId, KBActionKeys.ADD_KB_ARTICLE);
-		}
-		else if ((resourcePrimKey <= 0) &&
-				 portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
-
-			_displayPortletResourcePermission.check(
-				getPermissionChecker(), groupId, KBActionKeys.ADD_KB_ARTICLE);
-		}
-		else {
-			_kbArticleModelResourcePermission.check(
-				getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
-		}
-	}
-
-	private void _checkKBArticlePermissions(
-			String portletId, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
-			_adminPortletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				KBActionKeys.ADD_KB_ARTICLE);
-		}
-		else if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
-			_displayPortletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				KBActionKeys.ADD_KB_ARTICLE);
-		}
-	}
-
 	private void _getAllDescendantKBArticles(
 		List<KBArticle> kbArticles, long groupId, long resourcePrimKey,
 		int status, OrderByComparator<KBArticle> orderByComparator) {
@@ -1027,6 +1003,30 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				kbArticles, groupId, curKBArticle.getResourcePrimKey(), status,
 				orderByComparator);
 		}
+	}
+
+	private List<KBArticle> _getAllDescendantKBArticles(
+			long groupId, long resourcePrimKey, int status,
+			OrderByComparator<KBArticle> orderByComparator,
+			boolean includeParentArticle)
+		throws PortalException {
+
+		List<KBArticle> kbArticles = null;
+
+		if (includeParentArticle) {
+			kbArticles = getKBArticles(
+				groupId, new long[] {resourcePrimKey}, status, null);
+
+			kbArticles = ListUtil.copy(kbArticles);
+		}
+		else {
+			kbArticles = new ArrayList<>();
+		}
+
+		_getAllDescendantKBArticles(
+			kbArticles, groupId, resourcePrimKey, status, orderByComparator);
+
+		return Collections.unmodifiableList(kbArticles);
 	}
 
 	private static final int _INTERVAL = 200;

@@ -345,8 +345,26 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		return uniqueUrlTitle;
 	}
 
-	private void _validateName(
-			long groupId, long parentKBFolderId, String name)
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		KBFolder kbFolder = kbFolderPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (kbFolder != null) {
+			throw new DuplicateKBFolderExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate knowledge base folder external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
+	}
+
+	private void _validateName(long groupId, long parentKBFolderId, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -408,25 +426,6 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 				String.format(
 					"No KB folder found with KB folder ID %",
 					parentResourcePrimKey));
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		KBFolder kbFolder = kbFolderPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
-
-		if (kbFolder != null) {
-			throw new DuplicateKBFolderExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate knowledge base folder external reference code ",
-					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

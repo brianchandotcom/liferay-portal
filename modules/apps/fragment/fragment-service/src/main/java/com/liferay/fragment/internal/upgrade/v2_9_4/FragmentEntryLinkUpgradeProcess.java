@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -33,9 +35,15 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("FragmentEntryLink", "type_", "INTEGER");
-
 		_updateFragmentEntryType();
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"FragmentEntryLink", "type_ INTEGER")
+		};
 	}
 
 	private int _getFragmentEntryType(long fragmentEntryId) throws Exception {

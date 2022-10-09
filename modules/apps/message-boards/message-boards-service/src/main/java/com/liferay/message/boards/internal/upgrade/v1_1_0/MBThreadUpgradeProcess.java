@@ -28,8 +28,6 @@ public class MBThreadUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("MBThread", "title", "STRING null");
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select MBThread.threadId, MBMessage.subject from ",
@@ -56,6 +54,13 @@ public class MBThreadUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement2.executeBatch();
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns("MBThread", "title STRING null")
+		};
 	}
 
 }

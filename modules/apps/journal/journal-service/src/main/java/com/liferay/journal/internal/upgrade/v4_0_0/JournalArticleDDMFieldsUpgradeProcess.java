@@ -80,8 +80,13 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 					ddmStructure.getStructureId(), id, ddmFormValues);
 			},
 			null);
+	}
 
-		alterTableDropColumn("JournalArticle", "content");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns("JournalArticle", "content")
+		};
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

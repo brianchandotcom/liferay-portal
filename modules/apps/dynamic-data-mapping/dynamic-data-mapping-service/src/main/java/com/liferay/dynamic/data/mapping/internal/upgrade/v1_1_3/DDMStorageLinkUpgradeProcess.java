@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_3;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,8 +30,6 @@ public class DDMStorageLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("DDMStorageLink", "structureVersionId", "LONG");
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select distinct DDMStorageLink.structureId, ",
@@ -60,6 +60,14 @@ public class DDMStorageLinkUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement2.executeBatch();
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"DDMStorageLink", "structureVersionId LONG")
+		};
 	}
 
 }

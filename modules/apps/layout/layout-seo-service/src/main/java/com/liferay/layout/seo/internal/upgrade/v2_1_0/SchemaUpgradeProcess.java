@@ -15,6 +15,8 @@
 package com.liferay.layout.seo.internal.upgrade.v2_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -24,15 +26,20 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("LayoutSEOEntry", "DDMStorageId", "LONG");
-		alterTableAddColumn(
-			"LayoutSEOEntry", "openGraphImageAlt", "STRING null");
-
 		String template = StringUtil.read(
 			SchemaUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false);
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"LayoutSEOEntry", "DDMStorageId LONG",
+				"openGraphImageAlt STRING null")
+		};
 	}
 
 }

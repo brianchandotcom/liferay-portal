@@ -15,6 +15,8 @@
 package com.liferay.dispatch.internal.upgrade.v4_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Matija Petanjek
@@ -23,10 +25,15 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"DispatchTrigger", "timeZoneId", "VARCHAR(75) null");
-
 		runSQL("update DispatchTrigger set timeZoneId = 'UTC'");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"DispatchTrigger", "timeZoneId VARCHAR(75) null")
+		};
 	}
 
 }

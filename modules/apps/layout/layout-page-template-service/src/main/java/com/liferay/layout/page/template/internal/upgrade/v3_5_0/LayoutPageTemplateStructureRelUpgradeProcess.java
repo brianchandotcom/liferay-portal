@@ -15,6 +15,8 @@
 package com.liferay.layout.page.template.internal.upgrade.v3_5_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Eudaldo Alonso
@@ -24,23 +26,29 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"LayoutPageTemplateStructureRel", "lastPublishDate", "DATE");
-
 		if (!hasColumn("LayoutPageTemplateStructureRel", "status")) {
 			alterTableAddColumn(
 				"LayoutPageTemplateStructureRel", "status", "INTEGER");
 
 			runSQL("update LayoutPageTemplateStructureRel set status = 0");
 		}
+	}
 
-		alterTableAddColumn(
-			"LayoutPageTemplateStructureRel", "statusByUserId", "LONG");
-		alterTableAddColumn(
-			"LayoutPageTemplateStructureRel", "statusByUserName",
-			"VARCHAR(75)");
-		alterTableAddColumn(
-			"LayoutPageTemplateStructureRel", "statusDate", "DATE");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"LayoutPageTemplateStructureRel", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE")
+		};
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"LayoutPageTemplateStructureRel", "lastPublishDate DATE")
+		};
 	}
 
 }

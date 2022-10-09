@@ -81,7 +81,7 @@ const TeamMembersTable = ({
 
 	return (
 		<>
-			{open && currentIndexRemoving && (
+			{open && currentIndexRemoving !== undefined && (
 				<RemoveUserModal
 					observer={observer}
 					onClose={() => onOpenChange(false)}
@@ -114,7 +114,10 @@ const TeamMembersTable = ({
 								edit={index === currentIndexEditing}
 								onCancel={() => setCurrentIndexEditing()}
 								onEdit={() => setCurrentIndexEditing(index)}
-								onRemove={() => setCurrentIndexRemoving(index)}
+								onRemove={() => {
+									setCurrentIndexRemoving(index);
+									onOpenChange(true);
+								}}
 								onSave={() => {}}
 							/>
 						),

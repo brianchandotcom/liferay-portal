@@ -128,12 +128,6 @@ public class SchemaBuilder {
 			return new SchemaInfo(schemaName);
 		}
 
-		if (!Objects.equals(operation, OASConstants.OPERATION_PATCH) &&
-			!Objects.equals(operation, OASConstants.OPERATION_POST)) {
-
-			return null;
-		}
-
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.
 				LOCATOR_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,

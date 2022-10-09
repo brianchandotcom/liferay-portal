@@ -396,6 +396,14 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		}
 	}
 
+	private String _getFormattedKBCommentCreateDate(
+		KBComment kbComment, Locale locale) {
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getDate(locale);
+
+		return dateFormat.format(kbComment.getCreateDate());
+	}
+
 	private KBGroupServiceConfiguration _getKBGroupServiceConfiguration(
 			long groupId)
 		throws ConfigurationException {
@@ -551,14 +559,6 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		if (Validator.isNull(content)) {
 			throw new KBCommentContentException();
 		}
-	}
-
-	private String _getFormattedKBCommentCreateDate(
-		KBComment kbComment, Locale locale) {
-
-		DateFormat dateFormat = DateFormatFactoryUtil.getDate(locale);
-
-		return dateFormat.format(kbComment.getCreateDate());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

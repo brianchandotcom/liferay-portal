@@ -8,7 +8,7 @@
 		"@babel/core": "^7.0.0",
 		"@babel/preset-env": "^7.0.0",
 		"@babel/preset-react": "^7.0.0",
-		"liferay-npm-bundler": "2.18.2"
+		"liferay-npm-bundler": "2.30.0"
 	},
 	"main": "lib/index.es.js",
 	"name": "${artifactId}",

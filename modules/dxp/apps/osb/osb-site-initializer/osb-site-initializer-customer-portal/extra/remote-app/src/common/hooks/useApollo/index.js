@@ -11,6 +11,7 @@
 
 import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {BatchHttpLink} from '@apollo/client/link/batch-http';
+import {setContext} from '@apollo/client/link/context';
 import {RestLink} from 'apollo-link-rest';
 import {SessionStorageWrapper, persistCache} from 'apollo3-cache-persist';
 import {useEffect, useState} from 'react';
@@ -22,6 +23,21 @@ import {networkIndicator} from './networkIndicator';
 const LiferayURI = `${Liferay.ThemeDisplay.getPortalURL()}/o`;
 const {link, useApolloNetworkStatusReducer} = createNetworkStatusNotifier();
 const {initialState, reducer} = networkIndicator;
+
+const liferaBatchLink = new BatchHttpLink({
+	uri: `${LiferayURI}/graphql`,
+});
+
+const liferayRestLink = new RestLink({
+	uri: LiferayURI,
+});
+
+const liferayAuthLink = setContext((_, {headers}) => ({
+	headers: {
+		...headers,
+		'x-csrf-token': Liferay.authToken,
+	},
+}));
 
 export default function useApollo() {
 	const [client, setClient] = useState();
@@ -40,20 +56,6 @@ export default function useApollo() {
 				storage: new SessionStorageWrapper(window.sessionStorage),
 			});
 
-			const liferaBatchLink = new BatchHttpLink({
-				headers: {
-					'x-csrf-token': Liferay.authToken,
-				},
-				uri: `${LiferayURI}/graphql`,
-			});
-
-			const liferayRestLink = new RestLink({
-				headers: {
-					'x-csrf-token': Liferay.authToken,
-				},
-				uri: LiferayURI,
-			});
-
 			const apolloClient = new ApolloClient({
 				cache,
 				defaultOptions: {
@@ -61,11 +63,13 @@ export default function useApollo() {
 						fetchPolicy: 'network-only',
 					},
 				},
-				link: link.split(
-					(operation) =>
-						operation.getContext().type === 'liferay-rest',
-					liferayRestLink,
-					liferaBatchLink
+				link: liferayAuthLink.concat(
+					link.split(
+						(operation) =>
+							operation.getContext().type === 'liferay-rest',
+						liferayRestLink,
+						liferaBatchLink
+					)
 				),
 			});
 

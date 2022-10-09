@@ -28,9 +28,14 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 	useEffect(() => {
 		const {error: errorStatus, success} = networkStatus;
 
+		if (errorStatus?.networkError) {
+			Liferay.Util.openToast(DEFAULT_ERROR);
+		}
+
 		if (errorStatus?.response) {
 			const displayErrors = errorStatus.operation.getContext()
 				.displayErrors;
+
 			const errors = errorStatus.response.map((error) => {
 				if (displayErrors && displayErrors[error.exception.errno]) {
 					const displayError = displayErrors[error.exception.errno];
@@ -47,13 +52,10 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 			errors.forEach((error) => Liferay.Util.openToast(error));
 		}
 
-		if (errorStatus?.networkError) {
-			Liferay.Util.openToast(DEFAULT_ERROR);
-		}
-
 		if (success) {
 			const displaySuccess = success.operation.getContext()
 				.displaySuccess;
+
 			const isValidMutation =
 				isOperationType(success.operation, 'mutation') &&
 				displaySuccess !== false;

@@ -20,6 +20,21 @@ export const userAccountsTypePolicy = {
 		keyFields: false,
 	},
 	RoleBrief: {
+		fields: {
+			name: {
+				read(name) {
+					if (name === 'Account Member') {
+						return 'User';
+					}
+
+					if (name === 'Account Administrator') {
+						return 'Administrator';
+					}
+
+					return name;
+				},
+			},
+		},
 		keyFields: ['id'],
 	},
 	UserAccount: {
@@ -66,7 +81,7 @@ export const userAccountsTypePolicy = {
 
 					const hasAdministratorRole = roleBriefs.some(
 						({name}) =>
-							name === 'Account Administrator' ||
+							name === 'Administrator' ||
 							name === 'Partner Manager'
 					);
 

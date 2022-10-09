@@ -16,18 +16,29 @@ const GET_USER_ACCOUNTS_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`
 	${CORE_USER_ACCOUNT_FIELDS}
 	query getUserAccountsByAccountExternalReferenceCode(
 		$externalReferenceCode: String!
+		$filter: String
 		$pageSize: Int
 	) {
 		accountUserAccountsByExternalReferenceCode(
 			externalReferenceCode: $externalReferenceCode
+			filter: $filter
 			pageSize: $pageSize
 		)
 			@rest(
 				type: "UserAccountPage"
-				path: "/headless-admin-user/v1.0/accounts/by-external-reference-code/{args.externalReferenceCode}/user-accounts?pageSize={args.pageSize}"
+				path: "/headless-admin-user/v1.0/accounts/by-external-reference-code/{args.externalReferenceCode}/user-accounts?pageSize={args.pageSize}&filter={args.filter}"
 			) {
 			items @type(name: "UserAccount") {
 				...CoreUserAccountFields
+				accountBriefs @type(name: "AccountBrief") {
+					externalReferenceCode
+					id
+					name
+					roleBriefs @type(name: "RoleBrief") {
+						id
+						name
+					}
+				}
 				selectedAccountSummary @client {
 					hasAdministratorRole
 					hasSupportSeatRole

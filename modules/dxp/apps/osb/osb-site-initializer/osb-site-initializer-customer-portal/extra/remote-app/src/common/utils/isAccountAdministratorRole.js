@@ -10,5 +10,5 @@
  */
 
 export default function isAccountAdministratorRole(name) {
-	return name === 'Account Administrator' || name === 'Partner Manager';
+	return name === 'Administrator' || name === 'Partner Manager';
 }

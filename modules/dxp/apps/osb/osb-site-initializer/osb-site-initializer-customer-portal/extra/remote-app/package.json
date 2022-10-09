@@ -17,7 +17,7 @@
 		]
 	},
 	"dependencies": {
-		"@apollo/client": "^3.6.9",
+		"@apollo/client": "^3.6.10",
 		"@clayui/alert": "^3.40.0",
 		"@clayui/card": "^3.36.0",
 		"@clayui/core": "3.45.1",
@@ -33,9 +33,9 @@
 		"@clayui/pagination-bar": "^3.41.0",
 		"@clayui/popover": "^3.47.0",
 		"@clayui/tooltip": "^3.40.0",
-		"apollo-link-rest": "^0.9.0-rc.1",
-		"apollo3-cache-persist": "^0.14.0",
-		"classnames": "2.3.1",
+		"apollo-link-rest": "^0.8.0",
+		"apollo3-cache-persist": "^0.14.1",
+		"classnames": "^2.3.1",
 		"dompurify": "^2.3.4",
 		"formik": "^2.2.9",
 		"graphql": "^16.5.0",

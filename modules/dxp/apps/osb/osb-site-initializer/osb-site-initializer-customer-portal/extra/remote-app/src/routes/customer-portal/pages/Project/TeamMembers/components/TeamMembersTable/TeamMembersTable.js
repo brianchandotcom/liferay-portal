@@ -69,7 +69,9 @@ const TeamMembersTable = ({
 
 	const getCurrentRoleBriefName = useCallback(
 		(accountBrief) =>
-			accountBrief.roleBriefs.map((roleBrief) => roleBrief.name)[0],
+			accountBrief.roleBriefs.filter(
+				(roleBrief) => roleBrief.name !== 'User'
+			)[0]?.name || 'User',
 		[]
 	);
 

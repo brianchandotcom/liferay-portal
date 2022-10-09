@@ -13,12 +13,12 @@ import i18n from '../../I18n';
 
 export const ROLE_TYPES = {
 	admin: {
-		key: 'Account Administrator',
+		key: 'Administrator',
 		name: i18n.translate('administrator'),
 		raysourceName: 'Support Administrator',
 	},
 	member: {
-		key: 'Account Member',
+		key: 'User',
 		name: i18n.translate('user'),
 		raysourceName: 'Support User',
 	},

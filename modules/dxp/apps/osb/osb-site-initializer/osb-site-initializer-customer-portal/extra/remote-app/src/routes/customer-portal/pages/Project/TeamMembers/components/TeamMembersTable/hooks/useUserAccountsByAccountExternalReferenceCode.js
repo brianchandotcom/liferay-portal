@@ -19,6 +19,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	const {data, loading} = useGetUserAccountsByAccountExternalReferenceCode(
 		externalReferenceCode,
 		{
+			filter: "not (userGroupRoleNames/any(s:s eq 'Provisioning'))",
 			skip: koroneikiAccountLoading,
 		}
 	);

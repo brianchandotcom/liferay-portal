@@ -11,6 +11,8 @@
 import {Button, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useMemo, useState} from 'react';
+import i18n from '../../../../../../../../../../../../common/I18n';
+import getKebabCase from '../../../../../../../../../../../../common/utils/getKebabCase';
 import isSupportSeatRole from '../../../../../../../../../../../../common/utils/isSupportSeatRole';
 
 const RolesDropdown = ({
@@ -62,7 +64,7 @@ const RolesDropdown = ({
 				onClick={() => handleOnClick(item.label)}
 				symbolRight={item.active && 'check'}
 			>
-				{item.label}
+				{i18n.translate(getKebabCase(item.label))}
 			</DropDown.Item>
 		));
 
@@ -80,7 +82,7 @@ const RolesDropdown = ({
 					small
 				>
 					<div className="text-truncate">
-						{selectedAccountRoleName}
+						{i18n.translate(getKebabCase(selectedAccountRoleName))}
 					</div>
 
 					<span className="inline-item inline-item-after mt-1">

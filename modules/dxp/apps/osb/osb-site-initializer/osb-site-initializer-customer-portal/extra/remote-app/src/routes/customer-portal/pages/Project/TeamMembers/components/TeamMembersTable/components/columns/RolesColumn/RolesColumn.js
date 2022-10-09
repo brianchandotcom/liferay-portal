@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../../../../../../common/I18n';
+import getKebabCase from '../../../../../../../../../../common/utils/getKebabCase';
 import RolesDropdown from './components/RolesDropdown';
 
 const RolesColumn = ({
@@ -30,7 +32,9 @@ const RolesColumn = ({
 			supportSeatsCount={supportSeatsCount}
 		/>
 	) : (
-		<p className="m-0 text-truncate">{currentRoleBriefName}</p>
+		<p className="m-0 text-truncate">
+			{i18n.translate(getKebabCase(currentRoleBriefName))}
+		</p>
 	);
 };
 

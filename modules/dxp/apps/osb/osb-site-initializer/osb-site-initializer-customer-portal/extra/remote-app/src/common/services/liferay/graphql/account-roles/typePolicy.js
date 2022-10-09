@@ -11,6 +11,21 @@
 
 export const accountRolesTypePolicy = {
 	AccountRole: {
+		fields: {
+			name: {
+				read(name) {
+					if (name === 'Account Member') {
+						return 'User';
+					}
+
+					if (name === 'Account Administrator') {
+						return 'Administrator';
+					}
+
+					return name;
+				},
+			},
+		},
 		keyFields: ['id'],
 	},
 };

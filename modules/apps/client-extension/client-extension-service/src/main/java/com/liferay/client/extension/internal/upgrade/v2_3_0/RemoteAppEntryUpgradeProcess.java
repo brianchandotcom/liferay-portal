@@ -15,6 +15,8 @@
 package com.liferay.client.extension.internal.upgrade.v2_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Javier de Arcos
@@ -23,9 +25,6 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("RemoteAppEntry", "description", "TEXT null");
-		alterTableAddColumn("RemoteAppEntry", "sourceCodeURL", "STRING null");
-
 		if (!hasColumn("RemoteAppEntry", "status")) {
 			alterTableAddColumn("RemoteAppEntry", "status", "INTEGER");
 
@@ -57,6 +56,15 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 				"update RemoteAppEntry set statusDate = modifiedDate where " +
 					"statusDate is null");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"RemoteAppEntry", "description TEXT null",
+				"sourceCodeURL STRING null")
+		};
 	}
 
 }

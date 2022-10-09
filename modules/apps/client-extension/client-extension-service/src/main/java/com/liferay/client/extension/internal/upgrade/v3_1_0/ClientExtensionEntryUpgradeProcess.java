@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.sql.PreparedStatement;
@@ -81,16 +83,17 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
 
-		alterTableDropColumn("ClientExtensionEntry", "customElementCSSURLs");
-		alterTableDropColumn(
-			"ClientExtensionEntry", "customElementHTMLElementName");
-		alterTableDropColumn("ClientExtensionEntry", "customElementURLs");
-		alterTableDropColumn("ClientExtensionEntry", "customElementUseESM");
-		alterTableDropColumn("ClientExtensionEntry", "friendlyURLMapping");
-		alterTableDropColumn("ClientExtensionEntry", "iFrameURL");
-		alterTableDropColumn("ClientExtensionEntry", "instanceable");
-		alterTableDropColumn("ClientExtensionEntry", "portletCategoryName");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				"ClientExtensionEntry", "customElementCSSURLs",
+				"customElementHTMLElementName", "customElementURLs",
+				"customElementUseESM", "friendlyURLMapping", "iFrameURL",
+				"instanceable", "portletCategoryName")
+		};
 	}
 
 	private String _getTypeSettings(ResultSet resultSet, String type)

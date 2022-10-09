@@ -15,6 +15,8 @@
 package com.liferay.client.extension.internal.upgrade.v3_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Brian Wing Shun Chan
@@ -23,10 +25,6 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnName(
-			"RemoteAppEntry", "remoteAppEntryId",
-			"clientExtensionEntryId LONG not null");
-
 		if (hasTable("RemoteAppEntry")) {
 			dropTable("ClientExtensionEntry");
 
@@ -35,6 +33,15 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 
 		runSQL(
 			"delete from ServiceComponent where buildNamespace = 'RemoteApp'");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.alterColumnName(
+				"RemoteAppEntry", "remoteAppEntryId",
+				"clientExtensionEntryId LONG not null")
+		};
 	}
 
 }

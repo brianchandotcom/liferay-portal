@@ -17,6 +17,8 @@ package com.liferay.client.extension.internal.upgrade.v2_0_0;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Iván Zaera Avellón
@@ -25,14 +27,6 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("RemoteAppEntry", "customElementCSSURLs", "TEXT");
-		alterTableAddColumn(
-			"RemoteAppEntry", "customElementHTMLElementName", "VARCHAR(255)");
-		alterTableAddColumn("RemoteAppEntry", "customElementURLs", "TEXT");
-
-		alterColumnName(
-			"RemoteAppEntry", "url", "iFrameURL VARCHAR(1024) null");
-
 		if (!hasColumn("RemoteAppEntry", "instanceable")) {
 			alterTableAddColumn("RemoteAppEntry", "instanceable", "BOOLEAN");
 
@@ -58,6 +52,18 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 					"update RemoteAppEntry set type_ = '",
 					ClientExtensionEntryConstants.TYPE_IFRAME, "'"));
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"RemoteAppEntry", "customElementCSSURLs TEXT",
+				"customElementHTMLElementName VARCHAR(255)",
+				"customElementURLs TEXT"),
+			UpgradeProcessFactory.alterColumnName(
+				"RemoteAppEntry", "url", "iFrameURL VARCHAR(1024) null")
+		};
 	}
 
 }

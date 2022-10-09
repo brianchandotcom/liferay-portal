@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.sql.DatabaseMetaData;
@@ -49,10 +51,6 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"CommercePriceEntry", "CPInstanceUuid", "VARCHAR(75)");
-		alterTableAddColumn("CommercePriceEntry", "CProductId", "LONG");
-
 		_addIndexes(CommercePriceEntryModelImpl.TABLE_NAME);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -82,6 +80,15 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		alterTableDropColumn("CommercePriceEntry", "CPInstanceId");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommercePriceEntry", "CPInstanceUuid VARCHAR(75)",
+				"CProductId LONG")
+		};
 	}
 
 	private void _addIndexes(String tableName) throws Exception {

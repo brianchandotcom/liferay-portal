@@ -16,6 +16,8 @@ package com.liferay.commerce.inventory.internal.upgrade.v2_0_0;
 
 import com.liferay.commerce.inventory.internal.upgrade.v2_0_0.util.CommerceInventoryAuditTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Alessio Antonio Rendina
@@ -24,14 +26,19 @@ public class CommerceInventoryAuditUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("CIAudit", "logType", "VARCHAR(75)");
-		alterTableAddColumn("CIAudit", "logTypeSettings", "TEXT");
-
 		if (hasColumn(CommerceInventoryAuditTable.TABLE_NAME, "description")) {
 			runSQL("delete from CIAudit");
 
 			alterTableDropColumn("CIAudit", "description");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CIAudit", "logType VARCHAR(75)", "logTypeSettings TEXT")
+		};
 	}
 
 }

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -37,11 +39,6 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("AccountGroupRel", "userId", "LONG");
-		alterTableAddColumn("AccountGroupRel", "userName", "VARCHAR(75) null");
-		alterTableAddColumn("AccountGroupRel", "createDate", "DATE null");
-		alterTableAddColumn("AccountGroupRel", "modifiedDate", "DATE null");
-
 		_companyLocalService.forEachCompany(
 			company -> {
 				try {
@@ -51,6 +48,15 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 					_log.error(exception);
 				}
 			});
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"AccountGroupRel", "userId LONG", "userName VARCHAR(75) null",
+				"createDate DATE null", "modifiedDate DATE null")
+		};
 	}
 
 	private void _updateDefaultValues(Company company) throws Exception {

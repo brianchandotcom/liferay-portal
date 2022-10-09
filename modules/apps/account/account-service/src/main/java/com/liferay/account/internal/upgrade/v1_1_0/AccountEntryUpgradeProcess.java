@@ -17,6 +17,8 @@ package com.liferay.account.internal.upgrade.v1_1_0;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -26,10 +28,6 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"AccountEntry", "externalReferenceCode", "VARCHAR(75)");
-		alterTableAddColumn("AccountEntry", "taxIdNumber", "VARCHAR(75)");
-
 		if (!hasColumn("AccountEntry", "type_")) {
 			alterTableAddColumn("AccountEntry", "type_", "VARCHAR(75)");
 
@@ -39,6 +37,15 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 
 			runSQL("update AccountEntry set type_ = " + defaultType);
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"AccountEntry", "externalReferenceCode VARCHAR(75)",
+				"taxIdNumber VARCHAR(75)")
+		};
 	}
 
 }

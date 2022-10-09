@@ -9,73 +9,57 @@
  * distribution rights of the Software.
  */
 
-import {useModal} from '@clayui/core';
+import {Button} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import {memo, useState} from 'react';
+import {memo} from 'react';
 import i18n from '../../../../../../../../../common/I18n';
-import {Button} from '../../../../../../../../../common/components';
-import ConfirmationModalLayout from '../../../../../../../layouts/ConfirmationModalLayout';
-import {TEAM_MEMBERS_ACTION_TYPES} from '../../utils/constants';
 
-const RemoveUserModal = ({onRemoveTeamMember, setUserAction, userAction}) => {
-	const [isRemovingUser, setIsRemovingUser] = useState(false);
+const RemoveUserModal = ({observer, onClose, onRemove, removing}) => (
+	<ClayModal center className="modal-danger" observer={observer}>
+		<ClayModal.Header>
+			<span className="modal-title-indicator">
+				<ClayIcon symbol="exclamation-full" />
+			</span>
 
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			setUserAction(TEAM_MEMBERS_ACTION_TYPES.close);
-		},
-	});
+			{i18n.translate('remove-user')}
+		</ClayModal.Header>
 
-	const handleOnRemovingUser = async () => {
-		setIsRemovingUser(true);
-		await onRemoveTeamMember();
-		setIsRemovingUser(false);
-		setUserAction(TEAM_MEMBERS_ACTION_TYPES.close);
-	};
+		<ClayModal.Body>
+			<p className="my-5 text-neutral-10">
+				{i18n.translate(
+					'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
+				)}
+			</p>
+		</ClayModal.Body>
 
-	return (
-		<>
-			{userAction?.type === TEAM_MEMBERS_ACTION_TYPES.remove && (
-				<ConfirmationModalLayout
-					footerProps={{
-						cancelButton: (
-							<Button displayType="secondary" onClick={onClose}>
-								{i18n.translate('cancel')}
-							</Button>
-						),
-						confirmationButton: (
-							<Button
-								className={classNames('bg-danger d-flex ml-3', {
-									'cp-deactivate-loading': isRemovingUser,
-								})}
-								onClick={handleOnRemovingUser}
-							>
-								{isRemovingUser ? (
-									<>
-										<span className="cp-spinner mr-2 mt-1 spinner-border spinner-border-sm"></span>
-										{i18n.translate('removing')}...
-									</>
-								) : (
-									`${i18n.translate('remove')}`
-								)}
-							</Button>
-						),
-					}}
-					observer={observer}
-					onClose={onClose}
-					title={i18n.translate('remove-user')}
+		<ClayModal.Footer
+			first={
+				<Button displayType="secondary" onClick={onClose}>
+					{i18n.translate('cancel')}
+				</Button>
+			}
+			last={
+				<Button
+					className={classNames('bg-danger d-flex ml-3', {
+						'cp-deactivate-loading': removing,
+					})}
+					disabled={removing}
+					onClick={onRemove}
 				>
-					<div className="align-items-center d-flex justify-content-center">
-						<p className="mb-6 mt-5 text-neutral-10">
-							{i18n.translate(
-								'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
-							)}
-						</p>
-					</div>
-				</ConfirmationModalLayout>
-			)}
-		</>
-	);
-};
+					{removing ? (
+						<>
+							<span className="cp-spinner mr-2 mt-1 spinner-border spinner-border-sm" />
+							{i18n.translate('removing')}
+						</>
+					) : (
+						`${i18n.translate('remove')}`
+					)}
+				</Button>
+			}
+		/>
+	</ClayModal>
+);
 
 export default memo(RemoveUserModal);

@@ -82,7 +82,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 		long groupId = serviceContext.getScopeGroupId();
 		Date date = new Date();
 
-		validate(title, content);
+		_validate(title, content);
 
 		long kbTemplateId = counterLocalService.increment();
 
@@ -210,7 +210,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 		Date endDate, boolean andOperator, int start, int end,
 		OrderByComparator<KBTemplate> orderByComparator) {
 
-		DynamicQuery dynamicQuery = buildDynamicQuery(
+		DynamicQuery dynamicQuery = _buildDynamicQuery(
 			groupId, title, content, startDate, endDate, andOperator);
 
 		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
@@ -224,7 +224,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 
 		// KB template
 
-		validate(title, content);
+		_validate(title, content);
 
 		KBTemplate kbTemplate = kbTemplatePersistence.findByPrimaryKey(
 			kbTemplateId);
@@ -261,7 +261,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 			groupPermissions, guestPermissions);
 	}
 
-	protected DynamicQuery buildDynamicQuery(
+	private DynamicQuery _buildDynamicQuery(
 		long groupId, String title, String content, Date startDate,
 		Date endDate, boolean andOperator) {
 
@@ -331,7 +331,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
-	protected void validate(String title, String content)
+	private void _validate(String title, String content)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {

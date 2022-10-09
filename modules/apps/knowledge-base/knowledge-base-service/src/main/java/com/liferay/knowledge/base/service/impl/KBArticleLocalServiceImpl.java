@@ -1934,10 +1934,63 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
 	}
 
+	private void _validate(
+			Date expirationDate, String content, Date reviewDate,
+			String sourceURL, String title)
+		throws PortalException {
+
+		if (Validator.isNull(title)) {
+			throw new KBArticleTitleException("Title is null");
+		}
+
+		if (Validator.isNull(content)) {
+			throw new KBArticleContentException("Content is null");
+		}
+
+		_validateExpirationReviewDate(expirationDate, reviewDate);
+		_validateSourceURL(sourceURL);
+	}
+
 	private void _validate(double priority) throws PortalException {
 		if (priority <= 0) {
 			throw new KBArticlePriorityException(
 				"Invalid priority " + priority);
+		}
+	}
+
+	private void _validateExpirationReviewDate(
+			Date expirationDate, Date reviewDate)
+		throws PortalException {
+
+		if ((expirationDate != null) &&
+			expirationDate.before(DateUtil.newDate())) {
+
+			throw new KBArticleExpirationDateException(
+				"Expiration date is in the past");
+		}
+
+		if ((reviewDate != null) && reviewDate.before(DateUtil.newDate())) {
+			throw new KBArticleReviewDateException(
+				"Review date is in the past");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		KBArticle kbArticle = fetchLatestKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
+
+		if (kbArticle != null) {
+			throw new DuplicateKBArticleExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate knowledge base article external reference code ",
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 
@@ -1971,8 +2024,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	private void _validateParent(
-			long resourceClassNameId, long resourcePrimKey)
+	private void _validateParent(long resourceClassNameId, long resourcePrimKey)
 		throws PortalException {
 
 		long kbArticleClassNameId = _classNameLocalService.getClassNameId(
@@ -2013,6 +2065,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
+	private void _validateSourceURL(String sourceURL) throws PortalException {
+		if (Validator.isNull(sourceURL)) {
+			return;
+		}
+
+		if (!Validator.isUrl(sourceURL)) {
+			throw new KBArticleSourceURLException(sourceURL);
+		}
+	}
+
 	private void _validateUrlTitle(
 			long groupId, long kbFolderId, String urlTitle)
 		throws PortalException {
@@ -2039,69 +2101,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (!kbArticles.isEmpty()) {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
-		}
-	}
-
-	private void _validate(
-			Date expirationDate, String content, Date reviewDate,
-			String sourceURL, String title)
-		throws PortalException {
-
-		if (Validator.isNull(title)) {
-			throw new KBArticleTitleException("Title is null");
-		}
-
-		if (Validator.isNull(content)) {
-			throw new KBArticleContentException("Content is null");
-		}
-
-		_validateExpirationReviewDate(expirationDate, reviewDate);
-		_validateSourceURL(sourceURL);
-	}
-
-	private void _validateExpirationReviewDate(
-			Date expirationDate, Date reviewDate)
-		throws PortalException {
-
-		if ((expirationDate != null) &&
-			expirationDate.before(DateUtil.newDate())) {
-
-			throw new KBArticleExpirationDateException(
-				"Expiration date is in the past");
-		}
-
-		if ((reviewDate != null) && reviewDate.before(DateUtil.newDate())) {
-			throw new KBArticleReviewDateException(
-				"Review date is in the past");
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		KBArticle kbArticle = fetchLatestKBArticleByExternalReferenceCode(
-			groupId, externalReferenceCode);
-
-		if (kbArticle != null) {
-			throw new DuplicateKBArticleExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate knowledge base article external reference code ",
-					externalReferenceCode, " in group ", groupId));
-		}
-	}
-
-	private void _validateSourceURL(String sourceURL) throws PortalException {
-		if (Validator.isNull(sourceURL)) {
-			return;
-		}
-
-		if (!Validator.isUrl(sourceURL)) {
-			throw new KBArticleSourceURLException(sourceURL);
 		}
 	}
 

@@ -17,6 +17,8 @@ package com.liferay.message.boards.internal.upgrade.v1_1_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -30,8 +30,6 @@ public interface ModelSearchSettings {
 
 	public String[] getSearchClassNames();
 
-	public String getSearchEngineId();
-
 	public boolean isCommitImmediately();
 
 	public boolean isSearchResultPermissionFilterSuppressed();

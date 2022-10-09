@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 /**
@@ -46,11 +45,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	@Override
 	public String[] getSearchClassNames() {
 		return _searchClassNames;
-	}
-
-	@Override
-	public String getSearchEngineId() {
-		return SearchEngineHelper.SYSTEM_ENGINE_ID;
 	}
 
 	@Override

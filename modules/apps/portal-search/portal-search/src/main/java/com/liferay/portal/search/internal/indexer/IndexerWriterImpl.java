@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -82,7 +83,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 		try {
 			_indexWriterHelper.deleteDocument(
-				_modelSearchSettings.getSearchEngineId(), companyId, uid,
+				SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid,
 				_modelSearchSettings.isCommitImmediately());
 		}
 		catch (SearchException searchException) {
@@ -112,7 +113,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			_batchIndexingHelper.getBulkSize(
 				_modelSearchSettings.getClassName()));
 		batchIndexingActionable.setSearchEngineId(
-			_modelSearchSettings.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		return batchIndexingActionable;
 	}
@@ -223,7 +224,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			Document document = _indexerDocumentBuilder.getDocument(baseModel);
 
 			_updateDocumentIndexWriter.updateDocument(
-				_modelSearchSettings.getSearchEngineId(),
+				SearchEngineHelper.SYSTEM_ENGINE_ID,
 				_modelIndexerWriterContributor.getCompanyId(baseModel),
 				document, _modelSearchSettings.isCommitImmediately());
 		}
@@ -248,7 +249,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 	public void updatePermissionFields(T baseModel) {
 		_searchPermissionIndexWriter.updatePermissionFields(
 			baseModel, _modelIndexerWriterContributor.getCompanyId(baseModel),
-			_modelSearchSettings.getSearchEngineId(),
+			SearchEngineHelper.SYSTEM_ENGINE_ID,
 			_modelSearchSettings.isCommitImmediately());
 	}
 

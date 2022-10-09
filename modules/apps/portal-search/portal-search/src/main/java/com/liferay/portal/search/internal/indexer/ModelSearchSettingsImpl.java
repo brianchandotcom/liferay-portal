@@ -50,7 +50,7 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 
 	@Override
 	public String getSearchEngineId() {
-		return _searchEngineId;
+		return SearchEngineHelper.SYSTEM_ENGINE_ID;
 	}
 
 	@Override
@@ -94,10 +94,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 		_searchClassNames = searchClassNames;
 	}
 
-	public void setSearchEngineId(String searchEngineId) {
-		_searchEngineId = searchEngineId;
-	}
-
 	public void setSearchResultPermissionFilterSuppressed(
 		boolean searchResultPermissionFilterSuppressed) {
 
@@ -118,7 +114,6 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private String[] _searchClassNames;
-	private String _searchEngineId = SearchEngineHelper.SYSTEM_ENGINE_ID;
 	private boolean _searchResultPermissionFilterSuppressed;
 	private boolean _selectAllLocales;
 	private boolean _stagingAware = true;

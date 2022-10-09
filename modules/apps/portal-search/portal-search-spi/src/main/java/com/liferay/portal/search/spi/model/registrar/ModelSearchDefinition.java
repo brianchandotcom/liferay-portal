@@ -41,8 +41,6 @@ public interface ModelSearchDefinition {
 	public void setModelVisibilityContributor(
 		ModelVisibilityContributor modelVisibilityContributor);
 
-	public void setSearchEngineId(String searchEngineId);
-
 	public void setSearchResultPermissionFilterSuppressed(
 		boolean searchResultPermissionFilterSuppressed);
 

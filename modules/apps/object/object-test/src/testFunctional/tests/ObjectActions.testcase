@@ -718,6 +718,59 @@ definition {
 			actionName = "Update Action Name");
 	}
 
+	@description = "LPS-156346 - Verify that the expression works with Groovy Script."
+	@priority = "5"
+	test CanUseExpressionWithGroovyScript {
+		property portal.acceptance = "true";
+
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 198",
+				objectName = "CustomObject198",
+				pluralLabelName = "Custom Objects 198");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject198");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject198");
+		}
+
+		task ("When an action is created with an Expression using Groovy Script") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 198");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Action Name",
+				active = "true",
+				inputExpression = "customInteger == 5",
+				scriptValidation = "println 'Success'",
+				thenAction = "Groovy Script",
+				whenAction = "On After Add");
+		}
+
+		task ("Then the action will resolve when the condition is met") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customInteger",
+				objectName = "CustomObject198",
+				value = "5");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Action Name",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-156347 - Verify that the expression works with Webhooks"
 	@priority = "3"
 	test CanUseExpressionWithWebhook {

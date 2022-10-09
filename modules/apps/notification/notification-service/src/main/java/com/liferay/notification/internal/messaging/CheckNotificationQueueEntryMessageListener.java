@@ -14,7 +14,10 @@
 
 package com.liferay.notification.internal.messaging;
 
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -66,7 +69,11 @@ public class CheckNotificationQueueEntryMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_notificationQueueEntryLocalService.sendNotificationQueueEntries();
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(
+				NotificationConstants.TYPE_EMAIL);
+
+		notificationType.sendUnsentNotifications();
 
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
 			new Date(System.currentTimeMillis() - (43200 * Time.MINUTE)));
@@ -78,6 +85,9 @@ public class CheckNotificationQueueEntryMessageListener
 	@Reference
 	private NotificationQueueEntryLocalService
 		_notificationQueueEntryLocalService;
+
+	@Reference
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

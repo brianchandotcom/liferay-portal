@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -76,8 +78,13 @@ public class CommercePricingClassUpgradeProcess extends UpgradeProcess {
 					commercePricingClassId, modelPermissions);
 			}
 		}
+	}
 
-		alterTableDropColumn("CommercePricingClass", "groupId");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns("CommercePricingClass", "groupId")
+		};
 	}
 
 	private static final String[] _OWNER_PERMISSIONS = {

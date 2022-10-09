@@ -16,6 +16,8 @@ package com.liferay.commerce.product.type.grouped.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,9 +31,6 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"CPDefinitionGroupedEntry", "entryCProductId", "LONG");
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDefinitionGroupedEntry set entryCProductId = ? " +
 					"where entryCPDefinitionId = ?");
@@ -54,6 +53,14 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 		alterTableDropColumn(
 			CPDefinitionGroupedEntryModelImpl.TABLE_NAME,
 			"entryCPDefinitionId");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionGroupedEntry", "entryCProductId LONG")
+		};
 	}
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {

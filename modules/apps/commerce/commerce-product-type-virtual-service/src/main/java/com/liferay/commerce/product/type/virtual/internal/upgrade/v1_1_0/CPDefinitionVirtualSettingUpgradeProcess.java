@@ -18,6 +18,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.virtual.model.impl.CPDefinitionVirtualSettingImpl;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -27,14 +29,6 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn(
-			"CPDefinitionVirtualSetting", "classNameId", "LONG");
-		alterTableAddColumn(
-			"CPDefinitionVirtualSetting", "override", "BOOLEAN");
-
-		alterColumnName(
-			"CPDefinitionVirtualSetting", "CPDefinitionId", "classPK LONG");
-
 		if (hasColumn(
 				CPDefinitionVirtualSettingImpl.TABLE_NAME, "classNameId")) {
 
@@ -51,6 +45,17 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 
 			runSQLTemplateString(template, false);
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionVirtualSetting", "classNameId LONG",
+				"override BOOLEAN"),
+			UpgradeProcessFactory.alterColumnName(
+				"CPDefinitionVirtualSetting", "CPDefinitionId", "classPK LONG")
+		};
 	}
 
 }

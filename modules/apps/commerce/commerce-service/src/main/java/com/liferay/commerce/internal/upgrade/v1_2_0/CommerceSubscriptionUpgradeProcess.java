@@ -16,6 +16,8 @@ package com.liferay.commerce.internal.upgrade.v1_2_0;
 
 import com.liferay.commerce.model.impl.CommerceSubscriptionEntryImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -32,8 +34,14 @@ public class CommerceSubscriptionUpgradeProcess extends UpgradeProcess {
 
 			runSQLTemplateString(template, false);
 		}
+	}
 
-		alterTableAddColumn("CommerceOrderItem", "subscription", "BOOLEAN");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "subscription BOOLEAN")
+		};
 	}
 
 }

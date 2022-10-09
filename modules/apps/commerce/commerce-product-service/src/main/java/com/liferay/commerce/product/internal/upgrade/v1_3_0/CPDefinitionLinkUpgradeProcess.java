@@ -16,6 +16,8 @@ package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,11 +30,6 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("CPDefinitionLink", "CProductId", "LONG");
-
-		alterColumnName(
-			"CPDefinitionLink", "CPDefinitionId1", "CPDefinitionId LONG");
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDefinitionLink set CProductId = ? where " +
 					"CPDefinitionId2 = ?");
@@ -52,6 +49,16 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 
 		alterTableDropColumn(
 			CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId2");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionLink", "CProductId LONG"),
+			UpgradeProcessFactory.alterColumnName(
+				"CPDefinitionLink", "CPDefinitionId1", "CPDefinitionId LONG")
+		};
 	}
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {

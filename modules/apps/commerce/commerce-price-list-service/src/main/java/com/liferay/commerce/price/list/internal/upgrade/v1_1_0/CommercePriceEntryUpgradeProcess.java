@@ -78,8 +78,14 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 				preparedStatement.execute();
 			}
 		}
+	}
 
-		alterTableDropColumn("CommercePriceEntry", "CPInstanceId");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				"CommercePriceEntry", "CPInstanceId")
+		};
 	}
 
 	@Override

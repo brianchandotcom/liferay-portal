@@ -17,6 +17,8 @@ package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.Date;
@@ -32,9 +34,6 @@ public class CProductUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("CPDefinition", "CProductId", "LONG");
-		alterTableAddColumn("CPDefinition", "version", "INTEGER");
-
 		String insertCProductSQL = StringBundler.concat(
 			"insert into CProduct (uuid_, CProductId, groupId, companyId, ",
 			"userId, userName, createDate, modifiedDate, ",
@@ -90,6 +89,14 @@ public class CProductUpgradeProcess extends UpgradeProcess {
 			preparedStatement1.executeBatch();
 			preparedStatement2.executeBatch();
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "CProductId LONG", "version INTEGER")
+		};
 	}
 
 }

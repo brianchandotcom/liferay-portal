@@ -17,6 +17,8 @@ package com.liferay.commerce.product.internal.upgrade.v1_5_0;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CProductImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -27,8 +29,6 @@ public class CProductExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("CProduct", "externalReferenceCode", "VARCHAR(75)");
-
 		if (hasColumn(CProductImpl.TABLE_NAME, "externalReferenceCode")) {
 			Class<CProductExternalReferenceCodeUpgradeProcess> clazz =
 				CProductExternalReferenceCodeUpgradeProcess.class;
@@ -43,6 +43,14 @@ public class CProductExternalReferenceCodeUpgradeProcess
 			alterTableDropColumn(
 				CPDefinitionImpl.TABLE_NAME, "externalReferenceCode");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"CProduct", "externalReferenceCode VARCHAR(75)")
+		};
 	}
 
 }

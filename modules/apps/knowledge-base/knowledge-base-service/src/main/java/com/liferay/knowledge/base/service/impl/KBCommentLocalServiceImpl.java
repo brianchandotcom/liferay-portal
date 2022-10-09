@@ -85,7 +85,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		long groupId = serviceContext.getScopeGroupId();
 		Date date = new Date();
 
-		validate(content);
+		_validate(content);
 
 		long kbCommentId = counterLocalService.increment();
 
@@ -110,7 +110,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = _jSONFactory.createJSONObject();
 
-		putTitle(extraDataJSONObject, kbComment);
+		_putTitle(extraDataJSONObject, kbComment);
 
 		_socialActivityLocalService.addActivity(
 			userId, kbComment.getGroupId(), KBComment.class.getName(),
@@ -119,7 +119,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		// Subscriptions
 
-		notifySubscribers(userId, kbComment, serviceContext);
+		_notifySubscribers(userId, kbComment, serviceContext);
 
 		return kbComment;
 	}
@@ -132,7 +132,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		return addKBComment(
 			userId, classNameId, classPK, content,
-			getUserRating(userId, classNameId, classPK), serviceContext);
+			_getUserRating(userId, classNameId, classPK), serviceContext);
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		// KB comment
 
-		validate(content);
+		_validate(content);
 
 		KBComment kbComment = kbCommentPersistence.findByPrimaryKey(
 			kbCommentId);
@@ -311,7 +311,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = _jSONFactory.createJSONObject();
 
-		putTitle(extraDataJSONObject, kbComment);
+		_putTitle(extraDataJSONObject, kbComment);
 
 		_socialActivityLocalService.addActivity(
 			kbComment.getUserId(), kbComment.getGroupId(),
@@ -349,12 +349,12 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		kbComment = kbCommentPersistence.update(kbComment);
 
-		notifySubscribers(userId, kbComment, serviceContext);
+		_notifySubscribers(userId, kbComment, serviceContext);
 
 		return kbComment;
 	}
 
-	protected String getEmailKBArticleSuggestionNotificationBody(
+	private String _getEmailKBArticleSuggestionNotificationBody(
 		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
@@ -375,7 +375,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		}
 	}
 
-	protected String getEmailKBArticleSuggestionNotificationSubject(
+	private String _getEmailKBArticleSuggestionNotificationSubject(
 		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
@@ -396,7 +396,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		}
 	}
 
-	protected KBGroupServiceConfiguration getKBGroupServiceConfiguration(
+	private KBGroupServiceConfiguration _getKBGroupServiceConfiguration(
 			long groupId)
 		throws ConfigurationException {
 
@@ -405,7 +405,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
 	}
 
-	protected int getUserRating(long userId, long classNameId, long classPK)
+	private int _getUserRating(long userId, long classNameId, long classPK)
 		throws PortalException {
 
 		ClassName className = _classNameLocalService.getClassName(classNameId);
@@ -424,7 +424,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		return KBCommentConstants.USER_RATING_DISLIKE;
 	}
 
-	protected boolean isSuggestionStatusChangeNotificationEnabled(
+	private boolean _isSuggestionStatusChangeNotificationEnabled(
 		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
@@ -443,14 +443,14 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		return false;
 	}
 
-	protected void notifySubscribers(
+	private void _notifySubscribers(
 			long userId, KBComment kbComment, ServiceContext serviceContext)
 		throws PortalException {
 
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
-			getKBGroupServiceConfiguration(kbComment.getGroupId());
+			_getKBGroupServiceConfiguration(kbComment.getGroupId());
 
-		if (!isSuggestionStatusChangeNotificationEnabled(
+		if (!_isSuggestionStatusChangeNotificationEnabled(
 				kbComment.getStatus(), kbGroupServiceConfiguration)) {
 
 			return;
@@ -477,9 +477,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		String fromName = kbGroupServiceConfiguration.emailFromName();
 		String fromAddress = kbGroupServiceConfiguration.emailFromAddress();
 
-		String subject = getEmailKBArticleSuggestionNotificationSubject(
+		String subject = _getEmailKBArticleSuggestionNotificationSubject(
 			kbComment.getStatus(), kbGroupServiceConfiguration);
-		String body = getEmailKBArticleSuggestionNotificationBody(
+		String body = _getEmailKBArticleSuggestionNotificationBody(
 			kbComment.getStatus(), kbGroupServiceConfiguration);
 
 		String kbArticleContent = StringUtil.replace(
@@ -522,7 +522,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected void putTitle(JSONObject jsonObject, KBComment kbComment) {
+	private void _putTitle(JSONObject jsonObject, KBComment kbComment) {
 		KBArticle kbArticle = null;
 		KBTemplate kbTemplate = null;
 
@@ -547,7 +547,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String content) throws PortalException {
+	private void _validate(String content) throws PortalException {
 		if (Validator.isNull(content)) {
 			throw new KBCommentContentException();
 		}

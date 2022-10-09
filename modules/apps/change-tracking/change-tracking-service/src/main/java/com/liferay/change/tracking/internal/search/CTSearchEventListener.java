@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -120,7 +121,7 @@ public class CTSearchEventListener implements CTEventListener {
 						}
 
 						_indexWriterHelper.deleteDocuments(
-							indexer.getSearchEngineId(),
+							SearchEngineHelper.SYSTEM_ENGINE_ID,
 							ctCollection.getCompanyId(), uids,
 							indexer.isCommitImmediately());
 
@@ -173,8 +174,9 @@ public class CTSearchEventListener implements CTEventListener {
 
 			try {
 				_indexWriterHelper.deleteDocuments(
-					indexer.getSearchEngineId(), ctCollection.getCompanyId(),
-					uids, indexer.isCommitImmediately());
+					SearchEngineHelper.SYSTEM_ENGINE_ID,
+					ctCollection.getCompanyId(), uids,
+					indexer.isCommitImmediately());
 			}
 			catch (SearchException searchException) {
 				throw new CTEventException(searchException);

@@ -96,7 +96,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			IndexWriterHelperUtil.deleteDocument(
-				getSearchEngineId(), companyId, uid, _commitImmediately);
+				SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid,
+				_commitImmediately);
 		}
 		catch (SearchException searchException) {
 			throw searchException;
@@ -196,7 +197,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		throws SearchException {
 
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
+			searchContext.setSearchEngineId(
+				SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 			resetFullQuery(searchContext);
 
@@ -250,11 +252,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	@Override
 	public String[] getSearchClassNames() {
 		return new String[] {getClassName()};
-	}
-
-	@Override
-	public String getSearchEngineId() {
-		return SearchEngineHelper.SYSTEM_ENGINE_ID;
 	}
 
 	/**
@@ -577,7 +574,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		queryConfig.setQueryIndexingEnabled(false);
 		queryConfig.setQuerySuggestionEnabled(false);
 
-		searchContext.setSearchEngineId(getSearchEngineId());
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		BooleanQuery fullQuery = getFullQuery(searchContext);
 
@@ -1090,7 +1087,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		IndexWriterHelperUtil.deleteDocument(
-			getSearchEngineId(), companyId, uid, _commitImmediately);
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid,
+			_commitImmediately);
 	}
 
 	protected void deleteDocument(long companyId, String field1, String field2)
@@ -1101,8 +1099,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		document.addUID(getClassName(), field1, field2);
 
 		IndexWriterHelperUtil.deleteDocument(
-			getSearchEngineId(), companyId, document.get(Field.UID),
-			_commitImmediately);
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId,
+			document.get(Field.UID), _commitImmediately);
 	}
 
 	protected abstract void doDelete(T object) throws Exception;
@@ -1147,7 +1145,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
 
-		searchContext.setSearchEngineId(getSearchEngineId());
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		Query fullQuery = getFullQuery(searchContext);
 
@@ -1506,7 +1504,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
 			if ((indexer == null) ||
-				!searchEngineId.equals(indexer.getSearchEngineId())) {
+				!searchEngineId.equals(SearchEngineHelper.SYSTEM_ENGINE_ID)) {
 
 				continue;
 			}

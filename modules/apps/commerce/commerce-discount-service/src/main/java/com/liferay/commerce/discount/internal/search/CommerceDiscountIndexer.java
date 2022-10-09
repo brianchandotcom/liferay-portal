@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -462,8 +463,9 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), commerceDiscount.getCompanyId(),
-			getDocument(commerceDiscount), isCommitImmediately());
+			SearchEngineHelper.SYSTEM_ENGINE_ID,
+			commerceDiscount.getCompanyId(), getDocument(commerceDiscount),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -534,7 +536,8 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

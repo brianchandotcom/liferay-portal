@@ -150,7 +150,7 @@ public class UserGroupIndexerReindexTest {
 
 	private void _deleteDocument(long companyId, String uid) throws Exception {
 		indexWriterHelper.deleteDocument(
-			indexer.getSearchEngineId(), companyId, uid, true);
+			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid, true);
 	}
 
 	private void _reindexAllIndexerModels() throws Exception {

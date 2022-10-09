@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
@@ -586,7 +587,7 @@ public class DLAppHelperLocalServiceImpl
 						indexableActionableDynamicQuery.addDocuments(
 							indexer.getDocument(dlFileEntry)));
 				indexableActionableDynamicQuery.setSearchEngineId(
-					indexer.getSearchEngineId());
+					SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 				indexableActionableDynamicQuery.performActions();
 

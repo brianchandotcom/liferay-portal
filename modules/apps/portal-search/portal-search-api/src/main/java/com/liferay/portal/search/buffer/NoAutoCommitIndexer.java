@@ -92,11 +92,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public String getSearchEngineId() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getSortField(String orderByCol) {
 		throw new UnsupportedOperationException();
 	}

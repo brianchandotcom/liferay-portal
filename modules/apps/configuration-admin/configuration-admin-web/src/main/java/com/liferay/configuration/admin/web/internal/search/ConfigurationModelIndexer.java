@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -169,7 +170,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			}
 
 			_indexWriterHelper.updateDocuments(
-				getSearchEngineId(), CompanyConstants.SYSTEM, documents, false);
+				SearchEngineHelper.SYSTEM_ENGINE_ID, CompanyConstants.SYSTEM,
+				documents, false);
 		}
 		catch (SearchException searchException) {
 			_log.error(
@@ -255,7 +257,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		throws Exception {
 
 		_indexWriterHelper.deleteDocument(
-			getSearchEngineId(), CompanyConstants.SYSTEM,
+			SearchEngineHelper.SYSTEM_ENGINE_ID, CompanyConstants.SYSTEM,
 			_getUID(configurationModel), isCommitImmediately());
 	}
 
@@ -361,7 +363,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), CompanyConstants.SYSTEM,
+			SearchEngineHelper.SYSTEM_ENGINE_ID, CompanyConstants.SYSTEM,
 			getDocument(configurationModel), isCommitImmediately());
 	}
 
@@ -405,7 +407,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 	private void _commit() {
 		try {
-			_indexWriterHelper.commit(getSearchEngineId());
+			_indexWriterHelper.commit(SearchEngineHelper.SYSTEM_ENGINE_ID);
 		}
 		catch (SearchException searchException) {
 			if (_log.isWarnEnabled()) {

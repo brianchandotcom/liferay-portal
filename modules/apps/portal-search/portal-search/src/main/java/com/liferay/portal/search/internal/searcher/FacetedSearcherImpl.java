@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -145,7 +146,8 @@ public class FacetedSearcherImpl
 		}
 
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
+			searchContext.setSearchEngineId(
+				SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 			BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -227,7 +229,7 @@ public class FacetedSearcherImpl
 			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
 			if ((indexer == null) ||
-				!searchEngineId.equals(indexer.getSearchEngineId())) {
+				!searchEngineId.equals(SearchEngineHelper.SYSTEM_ENGINE_ID)) {
 
 				continue;
 			}

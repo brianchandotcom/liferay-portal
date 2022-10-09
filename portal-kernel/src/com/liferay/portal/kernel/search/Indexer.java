@@ -51,8 +51,6 @@ public interface Indexer<T> {
 
 	public String[] getSearchClassNames();
 
-	public String getSearchEngineId();
-
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.portal.sort.SortFieldBuilder}

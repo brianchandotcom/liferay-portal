@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -347,8 +348,8 @@ public class WikiPageIndexer
 		}
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), wikiPage.getCompanyId(), getDocument(wikiPage),
-			isCommitImmediately());
+			SearchEngineHelper.SYSTEM_ENGINE_ID, wikiPage.getCompanyId(),
+			getDocument(wikiPage), isCommitImmediately());
 
 		_reindexAttachments(wikiPage);
 	}
@@ -359,7 +360,7 @@ public class WikiPageIndexer
 	private void _deleteDocument(WikiPage wikiPage) {
 		try {
 			_indexWriterHelper.deleteDocument(
-				getSearchEngineId(), wikiPage.getCompanyId(),
+				SearchEngineHelper.SYSTEM_ENGINE_ID, wikiPage.getCompanyId(),
 				uidFactory.getUID(wikiPage), isCommitImmediately());
 		}
 		catch (SearchException searchException) {
@@ -446,7 +447,8 @@ public class WikiPageIndexer
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

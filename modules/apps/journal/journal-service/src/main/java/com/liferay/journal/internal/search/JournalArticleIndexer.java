@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -387,7 +388,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}
@@ -430,8 +432,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			}
 
 			_indexWriterHelper.updateDocuments(
-				getSearchEngineId(), article.getCompanyId(), documents,
-				isCommitImmediately());
+				SearchEngineHelper.SYSTEM_ENGINE_ID, article.getCompanyId(),
+				documents, isCommitImmediately());
 		}
 		else {
 			JournalArticle latestIndexableArticle =
@@ -440,8 +442,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			for (JournalArticle journalArticle : journalArticles) {
 				if (journalArticle.getId() == latestIndexableArticle.getId()) {
 					_indexWriterHelper.updateDocument(
-						getSearchEngineId(), article.getCompanyId(),
-						getDocument(journalArticle), isCommitImmediately());
+						SearchEngineHelper.SYSTEM_ENGINE_ID,
+						article.getCompanyId(), getDocument(journalArticle),
+						isCommitImmediately());
 				}
 				else {
 					_deleteDocument(journalArticle);

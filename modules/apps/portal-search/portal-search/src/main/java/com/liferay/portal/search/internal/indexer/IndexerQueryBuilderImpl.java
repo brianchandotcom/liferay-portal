@@ -307,7 +307,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
 			if ((indexer == null) ||
-				!searchEngineId.equals(indexer.getSearchEngineId())) {
+				!searchEngineId.equals(SearchEngineHelper.SYSTEM_ENGINE_ID)) {
 
 				continue;
 			}

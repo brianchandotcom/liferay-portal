@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -178,7 +179,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	@Override
 	protected void doReindex(KBArticle kbArticle) throws Exception {
 		indexWriterHelper.updateDocument(
-			getSearchEngineId(), kbArticle.getCompanyId(),
+			SearchEngineHelper.SYSTEM_ENGINE_ID, kbArticle.getCompanyId(),
 			getDocument(kbArticle), isCommitImmediately());
 
 		_reindexAttachments(kbArticle);
@@ -260,8 +261,8 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		}
 
 		indexWriterHelper.updateDocuments(
-			getSearchEngineId(), kbArticle.getCompanyId(), documents,
-			isCommitImmediately());
+			SearchEngineHelper.SYSTEM_ENGINE_ID, kbArticle.getCompanyId(),
+			documents, isCommitImmediately());
 	}
 
 	private void _reindexKBArticles(long companyId) throws Exception {
@@ -291,7 +292,8 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

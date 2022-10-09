@@ -76,11 +76,6 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public String getSearchEngineId() {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public String getSortField(String orderByCol) {
 		return StringPool.BLANK;
 	}

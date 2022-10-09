@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -133,8 +134,8 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		}
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), wikiNode.getCompanyId(), document,
-			isCommitImmediately());
+			SearchEngineHelper.SYSTEM_ENGINE_ID, wikiNode.getCompanyId(),
+			document, isCommitImmediately());
 	}
 
 	@Reference
@@ -142,7 +143,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	private void _deleteDocument(WikiNode wikiNode) throws Exception {
 		_indexWriterHelper.deleteDocument(
-			getSearchEngineId(), wikiNode.getCompanyId(),
+			SearchEngineHelper.SYSTEM_ENGINE_ID, wikiNode.getCompanyId(),
 			uidFactory.getUID(wikiNode), isCommitImmediately());
 	}
 
@@ -172,7 +173,8 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

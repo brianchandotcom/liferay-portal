@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -196,8 +197,9 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), commerceOrderItem.getCompanyId(),
-			getDocument(commerceOrderItem), isCommitImmediately());
+			SearchEngineHelper.SYSTEM_ENGINE_ID,
+			commerceOrderItem.getCompanyId(), getDocument(commerceOrderItem),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -238,7 +240,8 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

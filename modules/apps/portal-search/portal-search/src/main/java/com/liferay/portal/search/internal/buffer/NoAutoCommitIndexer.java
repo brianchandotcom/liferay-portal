@@ -103,11 +103,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public String getSearchEngineId() {
-		return _indexer.getSearchEngineId();
-	}
-
-	@Override
 	public String getSortField(String orderByCol) {
 		return _indexer.getSortField(orderByCol);
 	}

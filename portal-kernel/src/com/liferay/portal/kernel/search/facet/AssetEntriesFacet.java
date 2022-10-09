@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -79,7 +80,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 
 			String searchEngineId = searchContext.getSearchEngineId();
 
-			if (!searchEngineId.equals(indexer.getSearchEngineId())) {
+			if (!searchEngineId.equals(SearchEngineHelper.SYSTEM_ENGINE_ID)) {
 				continue;
 			}
 

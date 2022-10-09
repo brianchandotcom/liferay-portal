@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
@@ -867,7 +868,7 @@ public class LiferayRepository
 			indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
 		}
 
-		searchContext.setSearchEngineId(indexer.getSearchEngineId());
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		return indexer.search(searchContext);
 	}

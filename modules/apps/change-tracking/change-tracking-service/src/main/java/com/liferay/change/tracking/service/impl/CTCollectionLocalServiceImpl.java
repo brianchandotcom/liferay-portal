@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -1137,7 +1138,7 @@ public class CTCollectionLocalServiceImpl
 					}
 
 					_indexWriterHelper.deleteDocuments(
-						indexer.getSearchEngineId(),
+						SearchEngineHelper.SYSTEM_ENGINE_ID,
 						ctCollection.getCompanyId(), uids,
 						indexer.isCommitImmediately());
 

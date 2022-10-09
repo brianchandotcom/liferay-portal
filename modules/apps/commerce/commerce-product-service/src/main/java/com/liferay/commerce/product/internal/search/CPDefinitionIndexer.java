@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -884,7 +885,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	@Override
 	protected void doReindex(CPDefinition cpDefinition) throws Exception {
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), cpDefinition.getCompanyId(),
+			SearchEngineHelper.SYSTEM_ENGINE_ID, cpDefinition.getCompanyId(),
 			getDocument(cpDefinition), isCommitImmediately());
 	}
 
@@ -965,7 +966,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

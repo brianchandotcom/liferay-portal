@@ -189,7 +189,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 			CommerceChannel commerceChannel = _createChannel(
 				commerceCatalog, serviceContext);
 
-			_configureB2CSite(commerceChannel.getGroupId(), serviceContext);
+			_configureB2CSite(commerceChannel.getGroup(), serviceContext);
 
 			_speedwellLayoutsInitializer.initialize(serviceContext);
 
@@ -293,10 +293,8 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 		_cpDefinitions = null;
 	}
 
-	private void _configureB2CSite(long groupId, ServiceContext serviceContext)
+	private void _configureB2CSite(Group group, ServiceContext serviceContext)
 		throws Exception {
-
-		Group group = _groupLocalService.getGroup(groupId);
 
 		group.setType(GroupConstants.TYPE_SITE_OPEN);
 		group.setManualMembership(true);
@@ -312,7 +310,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
-				groupId, CommerceAccountConstants.SERVICE_NAME));
+				group.getGroupId(), CommerceAccountConstants.SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
@@ -324,7 +322,8 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 		modifiableSettings.store();
 
 		_accountEntryGroupSettings.setAllowedTypes(
-			serviceContext.getScopeGroupId(), _getAllowedTypes(groupId));
+			serviceContext.getScopeGroupId(),
+			_getAllowedTypes(group.getGroupId()));
 	}
 
 	private CommerceCatalog _createCatalog(ServiceContext serviceContext)

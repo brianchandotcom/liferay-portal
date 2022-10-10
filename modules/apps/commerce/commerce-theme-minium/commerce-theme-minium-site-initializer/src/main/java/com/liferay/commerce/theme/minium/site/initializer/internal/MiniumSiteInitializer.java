@@ -202,7 +202,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			_createRoles(
 				serviceContext, commerceChannel.getCommerceChannelId());
 
-			_configureB2BSite(commerceChannel.getGroupId(), serviceContext);
+			_configureB2BSite(commerceChannel.getGroup(), serviceContext);
 
 			_miniumLayoutsInitializer.initialize(serviceContext);
 
@@ -304,10 +304,8 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		_cpDefinitions = null;
 	}
 
-	private void _configureB2BSite(long groupId, ServiceContext serviceContext)
+	private void _configureB2BSite(Group group, ServiceContext serviceContext)
 		throws Exception {
-
-		Group group = _groupLocalService.getGroup(groupId);
 
 		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
 		group.setManualMembership(true);
@@ -323,7 +321,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
-				groupId, CommerceAccountConstants.SERVICE_NAME));
+				group.getGroupId(), CommerceAccountConstants.SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
@@ -335,7 +333,8 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		modifiableSettings.store();
 
 		_accountEntryGroupSettings.setAllowedTypes(
-			serviceContext.getScopeGroupId(), _getAllowedTypes(groupId));
+			serviceContext.getScopeGroupId(),
+			_getAllowedTypes(group.getGroupId()));
 	}
 
 	private CommerceCatalog _createCatalog(ServiceContext serviceContext)

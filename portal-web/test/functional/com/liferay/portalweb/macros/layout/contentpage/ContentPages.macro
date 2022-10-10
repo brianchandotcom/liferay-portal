@@ -367,8 +367,8 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 
 	macro viewCurrentExperience {
 		AssertVisible(
-			key_text = "${experienceName}",
-			locator1 = "Button#ANY");
+			key_title = "${experienceName}",
+			locator1 = "Button#ANY_TITLE");
 	}
 
 	macro viewExperienceOrder {

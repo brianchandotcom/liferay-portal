@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
 	"name": "asset-publisher-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

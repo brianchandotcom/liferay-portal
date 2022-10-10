@@ -1,5 +1,16 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.70.1",
+		"@clayui/button": "3.73.0",
+		"@clayui/form": "3.74.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/layout": "3.65.1",
+		"@clayui/progress-bar": "3.65.0",
+		"@liferay/frontend-js-react-web": "*",
+		"formik": "2.1.4",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "adaptive-media-web",
 	"scripts": {

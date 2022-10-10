@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*"
 	},
 	"name": "dynamic-data-mapping-web",
 	"scripts": {

@@ -1,6 +1,8 @@
 {
 	"dependencies": {
-		"alloyeditor": "2.14.8"
+		"alloyeditor": "2.14.8",
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {

@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"webpack": "5.70.0"
+	},
 	"main": "index.js",
 	"name": "frontend-js-svg4everybody-web",
 	"private": true,

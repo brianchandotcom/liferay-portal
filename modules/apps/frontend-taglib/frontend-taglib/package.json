@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@liferay/frontend-data-set-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/frontend-taglib",
 	"scripts": {

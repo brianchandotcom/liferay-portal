@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
 	"name": "layout-set-prototype-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

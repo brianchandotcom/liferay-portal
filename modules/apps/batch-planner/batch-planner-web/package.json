@@ -1,5 +1,9 @@
 {
 	"dependencies": {
+		"@liferay/frontend-js-react-web": "*",
+		"fetch-mock": "^5.13.1",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"jest": {
 		"setupFiles": [

@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-web": "*"
 	},
 	"name": "asset-categories-item-selector-web",
 	"scripts": {

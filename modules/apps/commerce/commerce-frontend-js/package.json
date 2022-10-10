@@ -1,5 +1,13 @@
 {
 	"dependencies": {
+		"@clayui/loading-indicator": "3.60.0",
+		"@liferay/frontend-data-set-web": "*",
+		"@liferay/frontend-js-react-web": "*",
+		"@liferay/frontend-js-state-web": "*",
+		"frontend-js-web": "*",
+		"html-webpack-plugin": "5.5.0",
+		"react": "16.12.0",
+		"webpack": "5.70.0"
 	},
 	"devDependencies": {
 		"clay-css": "^2.16.2",

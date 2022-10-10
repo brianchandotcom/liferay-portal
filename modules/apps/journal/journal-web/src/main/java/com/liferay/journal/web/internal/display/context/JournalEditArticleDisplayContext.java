@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -437,7 +437,7 @@ public class JournalEditArticleDisplayContext {
 			"sites", Collections.emptyList()
 		).put(
 			"sitesCount",
-			() -> GroupLocalServiceUtil.getGroupsCount(
+			() -> GroupServiceUtil.getGroupsCount(
 				_themeDisplay.getCompanyId(), 0, Boolean.TRUE)
 		).build();
 	}

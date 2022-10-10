@@ -376,7 +376,6 @@ definition {
 	@priority = "5"
 	test CanEnableAndDisableCondition {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add object, field, and publish then") {
 			ObjectAdmin.addObjectViaAPI(
@@ -412,9 +411,9 @@ definition {
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Add");
 
-			ObjectAdmin.assertObjectActions(actionActive = "Custom Action");
-
-			ObjectAdmin.assertObjectActions(actionActive = "Yes");
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Custom Action");
 		}
 
 		task ("Add entry and assert that condition it's works") {
@@ -441,9 +440,9 @@ definition {
 
 			ObjectAdmin.disableCondition();
 
-			ObjectAdmin.assertObjectActions(actionActive = "Custom Action");
-
-			ObjectAdmin.assertObjectActions(actionActive = "Yes");
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Custom Action");
 		}
 	}
 

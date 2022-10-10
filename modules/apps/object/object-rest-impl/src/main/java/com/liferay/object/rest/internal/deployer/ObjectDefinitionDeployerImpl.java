@@ -110,7 +110,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
-		_objectDefinitionInstanceKey =
+		String objectDefinitionInstanceKey =
 			ObjectDefinitionDeployerUtil.createObjectDefinitionInstanceKey(
 				objectDefinition.getCompanyId(),
 				objectDefinition.getRESTContextPath());
@@ -120,13 +120,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition.getScope());
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(_objectDefinitionInstanceKey);
+			_objectDefinitionsMap.get(objectDefinitionInstanceKey);
 
 		if (objectDefinitions == null) {
 			objectDefinitions = new HashMap<>();
 
 			_objectDefinitionsMap.put(
-				_objectDefinitionInstanceKey, objectDefinitions);
+				objectDefinitionInstanceKey, objectDefinitions);
 
 			_excludeScopedMethods(objectDefinition, objectScopeProvider);
 
@@ -136,7 +136,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition.getName());
 
 			_componentInstancesMap.put(
-				_objectDefinitionInstanceKey,
+				objectDefinitionInstanceKey,
 				Arrays.asList(
 					_objectEntryApplicationComponentFactory.newInstance(
 						HashMapDictionaryBuilder.<String, Object>put(
@@ -152,7 +152,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						).build())));
 
 			_serviceRegistrationsMap.put(
-				_objectDefinitionInstanceKey,
+				objectDefinitionInstanceKey,
 				Arrays.asList(
 					_bundleContext.registerService(
 						ContextProvider.class,
@@ -321,23 +321,28 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
+		String objectDefinitionInstanceKey =
+			ObjectDefinitionDeployerUtil.createObjectDefinitionInstanceKey(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getRESTContextPath());
+
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(_objectDefinitionInstanceKey);
+			_objectDefinitionsMap.get(objectDefinitionInstanceKey);
 
 		if (objectDefinitions != null) {
 			objectDefinitions.remove(objectDefinition.getCompanyId());
 
 			if (objectDefinitions.isEmpty()) {
-				_objectDefinitionsMap.remove(_objectDefinitionInstanceKey);
+				_objectDefinitionsMap.remove(objectDefinitionInstanceKey);
 			}
 		}
 
-		if (_objectDefinitionsMap.containsKey(_objectDefinitionInstanceKey)) {
+		if (_objectDefinitionsMap.containsKey(objectDefinitionInstanceKey)) {
 			return;
 		}
 
 		List<ComponentInstance> componentInstances =
-			_componentInstancesMap.remove(_objectDefinitionInstanceKey);
+			_componentInstancesMap.remove(objectDefinitionInstanceKey);
 
 		if (componentInstances != null) {
 			for (ComponentInstance componentInstance : componentInstances) {
@@ -346,7 +351,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrationsMap.remove(_objectDefinitionInstanceKey);
+			_serviceRegistrationsMap.remove(objectDefinitionInstanceKey);
 
 		if (serviceRegistrations != null) {
 			for (ServiceRegistration<?> serviceRegistration :
@@ -425,8 +430,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;
-
-	private String _objectDefinitionInstanceKey;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

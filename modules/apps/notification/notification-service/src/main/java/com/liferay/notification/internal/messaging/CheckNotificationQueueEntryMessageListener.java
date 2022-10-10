@@ -76,7 +76,7 @@ public class CheckNotificationQueueEntryMessageListener
 		notificationType.sendUnsentNotifications();
 
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			new Date(System.currentTimeMillis() - (43200 * Time.MINUTE)));
+			new Date(System.currentTimeMillis() - Time.MONTH));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)

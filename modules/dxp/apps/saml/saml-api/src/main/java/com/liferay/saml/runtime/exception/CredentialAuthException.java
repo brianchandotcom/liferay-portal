@@ -31,17 +31,6 @@ public class CredentialAuthException extends SecurityException {
 			generalSecurityException);
 	}
 
-	public static class InvalidKeyStore
-		extends CredentialAuthException {
-
-		public InvalidKeyStore(
-			String message, GeneralSecurityException generalSecurityException) {
-
-			super(message, generalSecurityException);
-		}
-
-	}
-
 	public static class InvalidCredentialPassword
 		extends CredentialAuthException {
 
@@ -50,6 +39,16 @@ public class CredentialAuthException extends SecurityException {
 			UnrecoverableKeyException unrecoverableKeyException) {
 
 			super(message, unrecoverableKeyException);
+		}
+
+	}
+
+	public static class InvalidKeyStore extends CredentialAuthException {
+
+		public InvalidKeyStore(
+			String message, GeneralSecurityException generalSecurityException) {
+
+			super(message, generalSecurityException);
 		}
 
 	}

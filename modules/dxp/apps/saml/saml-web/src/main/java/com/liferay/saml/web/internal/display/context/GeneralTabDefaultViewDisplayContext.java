@@ -100,7 +100,7 @@ public class GeneralTabDefaultViewDisplayContext {
 				null, X509CertificateStatus.Status.UNBOUND);
 		}
 		catch (CredentialAuthException.InvalidCredentialPassword
-			credentialAuthException) {
+					credentialAuthException) {
 
 			return _buildX509CertificateStatus(
 				credentialAuthException,
@@ -108,7 +108,7 @@ public class GeneralTabDefaultViewDisplayContext {
 				false);
 		}
 		catch (CredentialAuthException.InvalidKeyStore
-			credentialAuthException) {
+					credentialAuthException) {
 
 			return _buildX509CertificateStatus(
 				credentialAuthException,

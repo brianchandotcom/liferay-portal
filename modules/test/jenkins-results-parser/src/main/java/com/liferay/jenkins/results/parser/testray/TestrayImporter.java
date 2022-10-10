@@ -491,19 +491,8 @@ public class TestrayImporter {
 	public synchronized TestrayProductVersion getTestrayProductVersion(
 		File testBaseDir) {
 
-		PortalRelease portalRelease = getPortalRelease();
-
 		TestrayProductVersion testrayProductVersion =
 			_testrayProductVersions.get(testBaseDir);
-
-		TestrayProject testrayProject = getTestrayProject(testBaseDir);
-
-		if (portalRelease != null) {
-			String portalReleaseVersion = portalRelease.getPortalVersion();
-
-			testrayProductVersion = testrayProject.createTestrayProductVersion(
-				_replaceEnvVars(portalReleaseVersion));
-		}
 
 		if (testrayProductVersion != null) {
 			return testrayProductVersion;
@@ -512,6 +501,8 @@ public class TestrayImporter {
 		long start = System.currentTimeMillis();
 
 		try {
+			TestrayProject testrayProject = getTestrayProject(testBaseDir);
+
 			String testrayProductVersionID = System.getenv(
 				"TESTRAY_PRODUCT_VERSION_ID");
 
@@ -583,7 +574,8 @@ public class TestrayImporter {
 				 jobName.equals("test-qa-websites-functional-weekly"))) {
 
 				testrayProductVersion =
-					testrayProject.createTestrayProductVersion("1.x");
+					testrayProject.createTestrayProductVersion(
+						_replaceEnvVars("1.x"));
 			}
 
 			if (testrayProductVersion == null) {
@@ -595,6 +587,16 @@ public class TestrayImporter {
 						_replaceEnvVars(
 							portalGitWorkingDirectory.getMajorPortalVersion() +
 								".x"));
+			}
+
+			PortalRelease portalRelease = getPortalRelease();
+
+			if (portalRelease != null) {
+				String portalReleaseVersion = portalRelease.getPortalVersion();
+
+				testrayProductVersion =
+					testrayProject.createTestrayProductVersion(
+						_replaceEnvVars(portalReleaseVersion));
 			}
 		}
 		finally {

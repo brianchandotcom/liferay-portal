@@ -1072,7 +1072,7 @@ definition {
 
 		CreateObject.viewObject(labelName = "Picklist Item");
 
-		Picklist.assertDisabledPicklistItem();
+		Picklist.assertDisabledPicklistItem(keyName = "ItemTest");
 
 		Picklist.assertDisabledSaveButton();
 	}

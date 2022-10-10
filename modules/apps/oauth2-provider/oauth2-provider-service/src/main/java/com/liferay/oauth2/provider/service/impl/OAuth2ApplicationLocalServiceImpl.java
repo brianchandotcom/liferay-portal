@@ -645,8 +645,8 @@ public class OAuth2ApplicationLocalServiceImpl
 		_validate(
 			oAuth2Application.getCompanyId(), oAuth2ApplicationId,
 			allowedGrantTypesList, clientAuthenticationMethod, clientId,
-			clientSecret, homePageURL, jwks, name,
-			privacyPolicyURL, redirectURIsList);
+			clientSecret, homePageURL, jwks, name, privacyPolicyURL,
+			redirectURIsList);
 
 		User user = _userLocalService.getUser(clientCredentialUserId);
 
@@ -758,17 +758,16 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		_validate(
 			companyId, 0, allowedGrantTypesList, clientAuthenticationMethod,
-			clientId, clientSecret, homePageURL, jwks, name,
-			privacyPolicyURL, redirectURIsList);
+			clientId, clientSecret, homePageURL, jwks, name, privacyPolicyURL,
+			redirectURIsList);
 	}
 
 	private void _validate(
 			long companyId, long oAuth2ApplicationId,
 			List<GrantType> allowedGrantTypesList,
 			String clientAuthenticationMethod, String clientId,
-			String clientSecret, String homePageURL,
-			String jwks, String name, String privacyPolicyURL,
-			List<String> redirectURIsList)
+			String clientSecret, String homePageURL, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList)
 		throws PortalException {
 
 		if (clientAuthenticationMethod.equals(

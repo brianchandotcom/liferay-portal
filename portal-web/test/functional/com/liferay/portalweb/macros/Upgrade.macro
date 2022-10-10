@@ -670,7 +670,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.deleteCP(orgName = "Sub-organization2");
+		Organization.delete(orgName = "Sub-organization2");
 
 		Navigator.openURL();
 
@@ -681,7 +681,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.deleteCP(orgName = "Organization2");
+		Organization.delete(orgName = "Organization2");
 
 		Navigator.openURL();
 
@@ -705,7 +705,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.deleteCP(orgName = "Sub-organization1 Edit");
+		Organization.delete(orgName = "Sub-organization1 Edit");
 
 		Navigator.openURL();
 
@@ -3949,7 +3949,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.deleteCP(orgName = "Organization1");
+		Organization.delete(orgName = "Organization1");
 	}
 
 	macro viewAssetPublisher {

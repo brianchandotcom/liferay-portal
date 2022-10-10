@@ -921,7 +921,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.deleteCP(orgName = "Organization Name");
+		Organization.delete(orgName = "Organization Name");
 	}
 
 	@description = "This sets Order By Name and asserts descending and ascending order"
@@ -1053,7 +1053,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.deleteCP(orgName = "Organization Name");
+		Organization.delete(orgName = "Organization Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

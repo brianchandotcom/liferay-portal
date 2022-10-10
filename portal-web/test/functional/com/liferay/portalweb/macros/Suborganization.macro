@@ -33,11 +33,9 @@ definition {
 	}
 
 	macro viewCP {
-		Organization.viewSubOrganizationCP(
-			orgName = "${orgName}",
-			orgType = "${orgType}",
-			suborgName = "${suborgName}",
-			suborgType = "${suborgType}");
+		Organization.viewCP(
+			orgName = "${suborgName}",
+			orgType = "${suborgType}");
 
 		var key_suborgName = "${suborgName}";
 

@@ -61,6 +61,10 @@ public class AMImageValidatorImpl implements AMImageValidator {
 	public <T> boolean isProcessingRequired(
 		AdaptiveMedia<T> adaptiveMedia, FileVersion fileVersion) {
 
+		if (!isProcessingSupported(fileVersion)) {
+			return false;
+		}
+
 		Optional<String> configurationUuidOptional =
 			adaptiveMedia.getValueOptional(
 				AMAttribute.getConfigurationUuidAMAttribute());

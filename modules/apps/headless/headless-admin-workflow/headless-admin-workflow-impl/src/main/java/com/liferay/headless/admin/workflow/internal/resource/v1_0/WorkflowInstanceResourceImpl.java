@@ -20,7 +20,6 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -189,9 +188,6 @@ public class WorkflowInstanceResourceImpl
 			}
 		};
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;

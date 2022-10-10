@@ -206,6 +206,13 @@ public class OIDCUserInfoProcessor {
 		JSONObject userInfoJSONObject = _jsonFactory.createJSONObject(
 			userInfoJSON);
 
+		String phoneClaimString = _getClaimString(
+			"phone", phoneMapperJSONObject, userInfoJSONObject);
+
+		if (Validator.isNull(phoneClaimString)) {
+			return;
+		}
+
 		ListType listType = _listTypeLocalService.getListType(
 			_getClaimString(
 				"phoneType", phoneMapperJSONObject, userInfoJSONObject),
@@ -220,8 +227,8 @@ public class OIDCUserInfoProcessor {
 
 		_phoneLocalService.addPhone(
 			user.getUserId(), Contact.class.getName(), user.getContactId(),
-			_getClaimString("phone", phoneMapperJSONObject, userInfoJSONObject),
-			null, listType.getListTypeId(), false, serviceContext);
+			phoneClaimString, null, listType.getListTypeId(), false,
+			serviceContext);
 	}
 
 	private User _addUser(
@@ -390,7 +397,9 @@ public class OIDCUserInfoProcessor {
 		for (int i = 1; i < valueParts.length; ++i) {
 			JSONObject claimJSONObject = (JSONObject)claimObject;
 
-			claimObject = claimJSONObject.get(valueParts[i]);
+			if (claimJSONObject != null) {
+				claimObject = claimJSONObject.get(valueParts[i]);
+			}
 		}
 
 		return claimObject;
@@ -439,6 +448,10 @@ public class OIDCUserInfoProcessor {
 
 		JSONArray rolesJSONArray = _getClaimJSONArray(
 			"roles", usersRolesMapperJSONObject, userInfoJSONObject);
+
+		if (rolesJSONArray == null) {
+			return null;
+		}
 
 		long[] roleIds = new long[rolesJSONArray.length()];
 

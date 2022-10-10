@@ -246,10 +246,10 @@ definition {
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
 
-		PortletEntry.changeLocale(locale = "${language}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
 
 		AssertTextEquals(
-			locator1 = "Picklist#EDIT_ITEM_NAME",
+			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
 			value1 = "${nameItem}");
 	}
 

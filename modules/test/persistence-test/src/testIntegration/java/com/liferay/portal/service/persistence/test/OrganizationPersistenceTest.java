@@ -155,7 +155,7 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setCountryId(RandomTestUtil.nextLong());
 
-		newOrganization.setStatusId(RandomTestUtil.nextLong());
+		newOrganization.setStatusListTypeId(RandomTestUtil.nextLong());
 
 		newOrganization.setComments(RandomTestUtil.randomString());
 
@@ -211,7 +211,8 @@ public class OrganizationPersistenceTest {
 			existingOrganization.getCountryId(),
 			newOrganization.getCountryId());
 		Assert.assertEquals(
-			existingOrganization.getStatusId(), newOrganization.getStatusId());
+			existingOrganization.getStatusListTypeId(),
+			newOrganization.getStatusListTypeId());
 		Assert.assertEquals(
 			existingOrganization.getComments(), newOrganization.getComments());
 		Assert.assertEquals(
@@ -343,8 +344,8 @@ public class OrganizationPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "parentOrganizationId", true,
 			"treePath", true, "name", true, "type", true, "recursable", true,
-			"regionId", true, "countryId", true, "statusId", true, "comments",
-			true, "logoId", true);
+			"regionId", true, "countryId", true, "statusListTypeId", true,
+			"comments", true, "logoId", true);
 	}
 
 	@Test
@@ -671,7 +672,7 @@ public class OrganizationPersistenceTest {
 
 		organization.setCountryId(RandomTestUtil.nextLong());
 
-		organization.setStatusId(RandomTestUtil.nextLong());
+		organization.setStatusListTypeId(RandomTestUtil.nextLong());
 
 		organization.setComments(RandomTestUtil.randomString());
 

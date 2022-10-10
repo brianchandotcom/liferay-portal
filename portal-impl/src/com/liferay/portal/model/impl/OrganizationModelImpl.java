@@ -81,7 +81,7 @@ public class OrganizationModelImpl
 		{"parentOrganizationId", Types.BIGINT}, {"treePath", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR},
 		{"recursable", Types.BOOLEAN}, {"regionId", Types.BIGINT},
-		{"countryId", Types.BIGINT}, {"statusId", Types.BIGINT},
+		{"countryId", Types.BIGINT}, {"statusListTypeId", Types.BIGINT},
 		{"comments", Types.VARCHAR}, {"logoId", Types.BIGINT}
 	};
 
@@ -106,13 +106,13 @@ public class OrganizationModelImpl
 		TABLE_COLUMNS_MAP.put("recursable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusListTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Organization_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG,primary key (organizationId, ctCollectionId))";
+		"create table Organization_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusListTypeId LONG,comments STRING null,logoId LONG,primary key (organizationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 
@@ -392,10 +392,11 @@ public class OrganizationModelImpl
 		attributeSetterBiConsumers.put(
 			"countryId",
 			(BiConsumer<Organization, Long>)Organization::setCountryId);
-		attributeGetterFunctions.put("statusId", Organization::getStatusId);
+		attributeGetterFunctions.put(
+			"statusListTypeId", Organization::getStatusListTypeId);
 		attributeSetterBiConsumers.put(
-			"statusId",
-			(BiConsumer<Organization, Long>)Organization::setStatusId);
+			"statusListTypeId",
+			(BiConsumer<Organization, Long>)Organization::setStatusListTypeId);
 		attributeGetterFunctions.put("comments", Organization::getComments);
 		attributeSetterBiConsumers.put(
 			"comments",
@@ -791,17 +792,17 @@ public class OrganizationModelImpl
 
 	@JSON
 	@Override
-	public long getStatusId() {
-		return _statusId;
+	public long getStatusListTypeId() {
+		return _statusListTypeId;
 	}
 
 	@Override
-	public void setStatusId(long statusId) {
+	public void setStatusListTypeId(long statusListTypeId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_statusId = statusId;
+		_statusListTypeId = statusListTypeId;
 	}
 
 	@JSON
@@ -918,7 +919,7 @@ public class OrganizationModelImpl
 		organizationImpl.setRecursable(isRecursable());
 		organizationImpl.setRegionId(getRegionId());
 		organizationImpl.setCountryId(getCountryId());
-		organizationImpl.setStatusId(getStatusId());
+		organizationImpl.setStatusListTypeId(getStatusListTypeId());
 		organizationImpl.setComments(getComments());
 		organizationImpl.setLogoId(getLogoId());
 
@@ -961,8 +962,8 @@ public class OrganizationModelImpl
 			this.<Long>getColumnOriginalValue("regionId"));
 		organizationImpl.setCountryId(
 			this.<Long>getColumnOriginalValue("countryId"));
-		organizationImpl.setStatusId(
-			this.<Long>getColumnOriginalValue("statusId"));
+		organizationImpl.setStatusListTypeId(
+			this.<Long>getColumnOriginalValue("statusListTypeId"));
 		organizationImpl.setComments(
 			this.<String>getColumnOriginalValue("comments"));
 		organizationImpl.setLogoId(this.<Long>getColumnOriginalValue("logoId"));
@@ -1130,7 +1131,7 @@ public class OrganizationModelImpl
 
 		organizationCacheModel.countryId = getCountryId();
 
-		organizationCacheModel.statusId = getStatusId();
+		organizationCacheModel.statusListTypeId = getStatusListTypeId();
 
 		organizationCacheModel.comments = getComments();
 
@@ -1221,7 +1222,7 @@ public class OrganizationModelImpl
 	private boolean _recursable;
 	private long _regionId;
 	private long _countryId;
-	private long _statusId;
+	private long _statusListTypeId;
 	private String _comments;
 	private long _logoId;
 
@@ -1273,7 +1274,7 @@ public class OrganizationModelImpl
 		_columnOriginalValues.put("recursable", _recursable);
 		_columnOriginalValues.put("regionId", _regionId);
 		_columnOriginalValues.put("countryId", _countryId);
-		_columnOriginalValues.put("statusId", _statusId);
+		_columnOriginalValues.put("statusListTypeId", _statusListTypeId);
 		_columnOriginalValues.put("comments", _comments);
 		_columnOriginalValues.put("logoId", _logoId);
 	}
@@ -1335,7 +1336,7 @@ public class OrganizationModelImpl
 
 		columnBitmasks.put("countryId", 65536L);
 
-		columnBitmasks.put("statusId", 131072L);
+		columnBitmasks.put("statusListTypeId", 131072L);
 
 		columnBitmasks.put("comments", 262144L);
 

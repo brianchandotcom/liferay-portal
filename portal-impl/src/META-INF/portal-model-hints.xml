@@ -1015,7 +1015,7 @@
 		<field name="recursable" type="boolean" />
 		<field name="regionId" type="long" />
 		<field name="countryId" type="long" />
-		<field name="statusId" type="long" />
+		<field name="statusListTypeId" type="long" />
 		<field name="comments" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">400</hint>

@@ -61,7 +61,7 @@ public class OrganizationWrapper
 		attributes.put("recursable", isRecursable());
 		attributes.put("regionId", getRegionId());
 		attributes.put("countryId", getCountryId());
-		attributes.put("statusId", getStatusId());
+		attributes.put("statusListTypeId", getStatusListTypeId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
 
@@ -174,10 +174,10 @@ public class OrganizationWrapper
 			setCountryId(countryId);
 		}
 
-		Long statusId = (Long)attributes.get("statusId");
+		Long statusListTypeId = (Long)attributes.get("statusListTypeId");
 
-		if (statusId != null) {
-			setStatusId(statusId);
+		if (statusListTypeId != null) {
+			setStatusListTypeId(statusListTypeId);
 		}
 
 		String comments = (String)attributes.get("comments");
@@ -444,13 +444,13 @@ public class OrganizationWrapper
 	}
 
 	/**
-	 * Returns the status ID of this organization.
+	 * Returns the status list type ID of this organization.
 	 *
-	 * @return the status ID of this organization
+	 * @return the status list type ID of this organization
 	 */
 	@Override
-	public long getStatusId() {
-		return model.getStatusId();
+	public long getStatusListTypeId() {
+		return model.getStatusListTypeId();
 	}
 
 	@Override
@@ -719,13 +719,13 @@ public class OrganizationWrapper
 	}
 
 	/**
-	 * Sets the status ID of this organization.
+	 * Sets the status list type ID of this organization.
 	 *
-	 * @param statusId the status ID of this organization
+	 * @param statusListTypeId the status list type ID of this organization
 	 */
 	@Override
-	public void setStatusId(long statusId) {
-		model.setStatusId(statusId);
+	public void setStatusListTypeId(long statusListTypeId) {
+		model.setStatusListTypeId(statusListTypeId);
 	}
 
 	/**

@@ -14,17 +14,17 @@
 
 import memoize from '../../../src/main/resources/META-INF/resources/liferay/util/memoize';
 
+const mockFn = jest.fn((object, number, array, string) => [
+	object,
+	number,
+	array,
+	string,
+]);
+
+const memoizedMockFn = memoize(mockFn);
+
 describe('memoize', () => {
 	it('invokes the provided function with the provided arguments', () => {
-		const mockFn = jest.fn((object, number, array, string) => [
-			object,
-			number,
-			array,
-			string,
-		]);
-
-		const memoizedMockFn = memoize(mockFn);
-
 		expect(memoizedMockFn({3: 4}, 4, ['foo', 'bar'], 'baz')).toEqual([
 			{3: 4},
 			4,
@@ -33,19 +33,38 @@ describe('memoize', () => {
 		]);
 	});
 
-	it("caches the argument if it isn't already cached", () => {
-		const mockFn = jest.fn((object, number, array, string) => [
-			object,
-			number,
-			array,
-			string,
-		]);
+	it('calls the provided function once, even if the memo is invoked twice', () => {
+		memoizedMockFn({3: 4}, 4, ['foo', 'bar'], 'baz');
+		memoizedMockFn({3: 4}, 4, ['foo', 'bar'], 'baz');
+
+		expect(mockFn).toHaveBeenCalledTimes(1);
+	});
+
+	it('returns a cached value if a function is invoked with same inputs', () => {
+		const mockObject = {
+			12: 24,
+			array: [1, 2, '3'],
+			foo: 'bar',
+		};
+
+		const mockObjectTwo = {
+			array: [4, '5', 6],
+			bar: 'foo',
+			memo: 'ize',
+		};
+
+		const mockFn = jest.fn((object) => object);
 
 		const memoizedMockFn = memoize(mockFn);
 
-		memoizedMockFn({3: 4}, 4, ['foo', 'bar'], 'baz');
+		memoizedMockFn(mockObject);
+		memoizedMockFn(mockObjectTwo);
+		memoizedMockFn(mockObject);
 
-		expect(memoizedMockFn.getCache().size).toBe(1);
+		expect(memoizedMockFn(mockObject)).toEqual(memoizedMockFn(mockObject));
+		expect(memoizedMockFn(mockObject)).not.toEqual(
+			memoizedMockFn(mockObjectTwo)
+		);
 	});
 
 	it("throws an error if the provided argument isn't a function", () => {

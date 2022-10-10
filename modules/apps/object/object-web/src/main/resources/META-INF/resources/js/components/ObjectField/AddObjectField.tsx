@@ -52,28 +52,31 @@ function ModalAddObjectField({
 		indexed: true,
 		indexedAsKeyword: false,
 		indexedLanguageId: null,
+		listTypeDefinitionExternalReferenceCode: '',
 		listTypeDefinitionId: 0,
 		required: false,
 	};
 
-	const onSubmit = async (field: ObjectField) => {
-		try {
-			await API.save(
-				apiURL,
-				{
-					...field,
-					name:
-						field.name ||
-						toCamelCase(field.label[defaultLanguageId] as string),
-				},
-				'POST'
-			);
+	const onSubmit = async (field: Partial<ObjectField>) => {
+		if (field.label) {
+			field = {
+				...field,
+				name:
+					field.name ||
+					toCamelCase(field.label[defaultLanguageId] as string),
+			};
 
-			onClose();
-			window.location.reload();
-		}
-		catch (error) {
-			setError((error as Error).message);
+			delete field.listTypeDefinitionId;
+
+			try {
+				await API.save(apiURL, field, 'POST');
+
+				onClose();
+				window.location.reload();
+			}
+			catch (error) {
+				setError((error as Error).message);
+			}
 		}
 	};
 

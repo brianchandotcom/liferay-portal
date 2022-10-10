@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.Time;
 
@@ -52,14 +50,13 @@ public class CheckNotificationQueueEntryMessageListener
 
 		String className = clazz.getName();
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 15, TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
 		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
+			this,
+			new SchedulerEntryImpl(
+				className,
+				_triggerFactory.createTrigger(
+					className, className, null, null, 15, TimeUnit.MINUTE)),
+			DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate

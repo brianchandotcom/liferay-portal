@@ -240,18 +240,35 @@ public class CompositePasswordEncryptorTest {
 			PasswordEncryptor.TYPE_UFC_CRYPT);
 	}
 
+	protected String getAlgorithmType(String algorithm) {
+		int index = algorithm.indexOf(StringPool.SLASH);
+
+		if (index == -1) {
+			return algorithm;
+		}
+
+		return algorithm.substring(0, index);
+	}
+
 	protected void runTests(
 			String algorithm, String plainPassword, String encryptedPassword,
 			String prependedAlgorithm)
 		throws Exception {
 
+		String algorithmType = getAlgorithmType(algorithm);
+		String encryptedPasswordWithPrependedAlgorithm = StringBundler.concat(
+			CharPool.OPEN_CURLY_BRACE, prependedAlgorithm,
+			CharPool.CLOSE_CURLY_BRACE, encryptedPassword);
+
 		testEncrypt(algorithm);
 
-		testEncrypt(
-			plainPassword,
-			StringBundler.concat(
-				CharPool.OPEN_CURLY_BRACE, prependedAlgorithm,
-				CharPool.CLOSE_CURLY_BRACE, encryptedPassword));
+		testEncrypt(plainPassword, encryptedPasswordWithPrependedAlgorithm);
+
+		testGetPasswordAlgorithmType(
+			encryptedPasswordWithPrependedAlgorithm, algorithmType);
+
+		testGetPasswordAlgorithmTypeUsesLegacyAlgorithmForUnprependedPassword(
+			encryptedPassword, algorithmType);
 
 		testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
 	}
@@ -283,6 +300,37 @@ public class CompositePasswordEncryptorTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
+		}
+	}
+
+	protected void testGetPasswordAlgorithmType(
+			String password, String expectedAlgorithmType)
+		throws Exception {
+
+		Assert.assertEquals(
+			expectedAlgorithmType,
+			PasswordEncryptorUtil.getPasswordAlgorithmType(password));
+	}
+
+	protected void
+			testGetPasswordAlgorithmTypeUsesLegacyAlgorithmForUnprependedPassword(
+				String password, String expectedAlgorithmType)
+		throws Exception {
+
+		String originalLegacyAlgorithm =
+			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY;
+
+		try {
+			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY =
+				expectedAlgorithmType;
+
+			Assert.assertEquals(
+				expectedAlgorithmType,
+				PasswordEncryptorUtil.getPasswordAlgorithmType(password));
+		}
+		finally {
+			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY =
+				originalLegacyAlgorithm;
 		}
 	}
 

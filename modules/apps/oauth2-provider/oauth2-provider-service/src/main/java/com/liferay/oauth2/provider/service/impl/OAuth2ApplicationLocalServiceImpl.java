@@ -713,6 +713,41 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 	}
 
+	private long _getOAuth2ApplicationScopeAliasesId(
+			long companyId, long userId, String userName,
+			long oAuth2ApplicationId, List<String> scopeAliasesList)
+		throws PortalException {
+
+		if (ListUtil.isEmpty(scopeAliasesList)) {
+			return 0;
+		}
+
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
+			_oAuth2ApplicationScopeAliasesLocalService.
+				fetchOAuth2ApplicationScopeAliases(
+					oAuth2ApplicationId, scopeAliasesList);
+
+		if (oAuth2ApplicationScopeAliases != null) {
+			oAuth2ApplicationScopeAliases.setUserId(userId);
+			oAuth2ApplicationScopeAliases.setUserName(userName);
+
+			oAuth2ApplicationScopeAliases =
+				_oAuth2ApplicationScopeAliasesLocalService.
+					updateOAuth2ApplicationScopeAliases(
+						oAuth2ApplicationScopeAliases);
+		}
+		else {
+			oAuth2ApplicationScopeAliases =
+				_oAuth2ApplicationScopeAliasesLocalService.
+					addOAuth2ApplicationScopeAliases(
+						companyId, userId, userName, oAuth2ApplicationId,
+						scopeAliasesList);
+		}
+
+		return oAuth2ApplicationScopeAliases.
+			getOAuth2ApplicationScopeAliasesId();
+	}
+
 	private void _validate(
 			long companyId, List<GrantType> allowedGrantTypesList,
 			String clientAuthenticationMethod, String clientId,
@@ -877,41 +912,6 @@ public class OAuth2ApplicationLocalServiceImpl
 					redirectURI, uriSyntaxException);
 			}
 		}
-	}
-
-	private long _getOAuth2ApplicationScopeAliasesId(
-			long companyId, long userId, String userName,
-			long oAuth2ApplicationId, List<String> scopeAliasesList)
-		throws PortalException {
-
-		if (ListUtil.isEmpty(scopeAliasesList)) {
-			return 0;
-		}
-
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			_oAuth2ApplicationScopeAliasesLocalService.
-				fetchOAuth2ApplicationScopeAliases(
-					oAuth2ApplicationId, scopeAliasesList);
-
-		if (oAuth2ApplicationScopeAliases != null) {
-			oAuth2ApplicationScopeAliases.setUserId(userId);
-			oAuth2ApplicationScopeAliases.setUserName(userName);
-
-			oAuth2ApplicationScopeAliases =
-				_oAuth2ApplicationScopeAliasesLocalService.
-					updateOAuth2ApplicationScopeAliases(
-						oAuth2ApplicationScopeAliases);
-		}
-		else {
-			oAuth2ApplicationScopeAliases =
-				_oAuth2ApplicationScopeAliasesLocalService.
-					addOAuth2ApplicationScopeAliases(
-						companyId, userId, userName, oAuth2ApplicationId,
-						scopeAliasesList);
-		}
-
-		return oAuth2ApplicationScopeAliases.
-			getOAuth2ApplicationScopeAliasesId();
 	}
 
 	private void _validateExternalReferenceCode(

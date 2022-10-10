@@ -134,10 +134,11 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		Organization.addCommentCP(
-			orgComment = "This is a test comment!",
-			orgName = "Organization Name",
-			orgType = "Organization");
+		Organization.addComment(orgComment = "This is a test comment!");
+
+		AssertTextEquals(
+			locator1 = "TextArea#COMMENTS",
+			value1 = "${orgComment}");
 	}
 
 	@priority = "3"
@@ -1578,9 +1579,11 @@ definition {
 
 		Organization.editOrganizationCP(orgName = "Organization Name");
 
-		Organization.addCommentCP(
-			orgComment = "This is a test organization.",
-			orgName = "Organization Name");
+		Organization.addComment(orgComment = "This is a test organization.");
+
+		AssertTextEquals(
+			locator1 = "TextArea#COMMENTS",
+			value1 = "${orgComment}");
 
 		Navigator.gotoNavNested(navNested = "Security Questions");
 

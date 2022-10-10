@@ -72,7 +72,7 @@
 	</tr>
 	<tr>
 		<td>ADD_PICKLIST_ITEM_KEY</td>
-		<td>//input[@id='listTypeEntryKey']</td>
+		<td>//input[(@name='name' and @class='form-control' and @type='text')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -25,7 +25,6 @@ definition {
 	@priority = "5"
 	test CanActivateOrDeactivateAction {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add an object, field, action, and check if an action is active") {
 			ObjectAdmin.addObjectViaAPI(
@@ -58,7 +57,9 @@ definition {
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Add");
 
-			ObjectAdmin.assertObjectActions(actionActive = "Yes");
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Custom Action");
 		}
 
 		task ("Add an Entry and check if the action is works") {

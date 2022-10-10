@@ -33,7 +33,6 @@ import java.io.PrintWriter;
 
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -168,10 +167,5 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.js.loader.modules.extender)"
-	)
-	private ServletContext _servletContext;
 
 }

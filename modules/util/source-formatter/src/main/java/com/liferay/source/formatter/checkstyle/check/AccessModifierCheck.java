@@ -52,10 +52,6 @@ public class AccessModifierCheck extends BaseCheck {
 		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
 
-		if (methodDefinitionDetailASTList.isEmpty()) {
-			return;
-		}
-
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
 

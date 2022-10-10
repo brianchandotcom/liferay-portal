@@ -905,9 +905,9 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.gotoActionsCmd(orgName = "Organization Name");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "Organization Name");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -986,18 +986,11 @@ definition {
 
 		Search.clearSearchResult();
 
-		Navigator.openURL();
+		Organization.openOrganizationsAdmin();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.gotoActionsCmd(orgName = "Organization Name");
-
-		MenuItem.click(menuItem = "Assign Organization Roles");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Assign Organization Roles",
+			rowEntry = "Organization Name");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1013,18 +1006,11 @@ definition {
 
 		Search.clearSearchResult();
 
-		Navigator.openURL();
+		Organization.openOrganizationsAdmin();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.gotoActionsCmd(orgName = "Organization Name");
-
-		MenuItem.click(menuItem = "Assign Users");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Assign Users",
+			rowEntry = "Organization Name");
 
 		AssertElementPresent.assertVisible(locator1 = "Button#DONE");
 

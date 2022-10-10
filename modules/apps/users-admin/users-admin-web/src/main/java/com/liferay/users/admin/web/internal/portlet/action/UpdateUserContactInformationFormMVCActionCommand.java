@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermission;
@@ -147,9 +146,6 @@ public class UpdateUserContactInformationFormMVCActionCommand
 
 		_contactLocalService.updateContact(contact);
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ContactLocalService _contactLocalService;

@@ -52,8 +52,7 @@ public class UpdateDocumentIndexWriterImpl
 
 	@Override
 	public void updateDocument(
-		String searchEngineId, long companyId, Document document,
-		boolean commitImmediately) {
+		long companyId, Document document, boolean commitImmediately) {
 
 		if (indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
@@ -64,7 +63,7 @@ public class UpdateDocumentIndexWriterImpl
 		}
 
 		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineId);
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -74,7 +73,7 @@ public class UpdateDocumentIndexWriterImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(
 			searchContext,
@@ -90,8 +89,7 @@ public class UpdateDocumentIndexWriterImpl
 
 	@Override
 	public void updateDocumentPartially(
-		String searchEngineId, long companyId, Document document,
-		boolean commitImmediately) {
+		long companyId, Document document, boolean commitImmediately) {
 
 		if (indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
@@ -102,14 +100,14 @@ public class UpdateDocumentIndexWriterImpl
 		}
 
 		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineId);
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -123,7 +121,7 @@ public class UpdateDocumentIndexWriterImpl
 
 	@Override
 	public void updateDocuments(
-		String searchEngineId, long companyId, Collection<Document> documents,
+		long companyId, Collection<Document> documents,
 		boolean commitImmediately) {
 
 		if (indexStatusManager.isIndexReadOnly() || (documents == null) ||
@@ -133,7 +131,7 @@ public class UpdateDocumentIndexWriterImpl
 		}
 
 		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineId);
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -149,7 +147,7 @@ public class UpdateDocumentIndexWriterImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -163,7 +161,7 @@ public class UpdateDocumentIndexWriterImpl
 
 	@Override
 	public void updateDocumentsPartially(
-		String searchEngineId, long companyId, Collection<Document> documents,
+		long companyId, Collection<Document> documents,
 		boolean commitImmediately) {
 
 		if (indexStatusManager.isIndexReadOnly() || (documents == null) ||
@@ -173,14 +171,14 @@ public class UpdateDocumentIndexWriterImpl
 		}
 
 		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineId);
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 

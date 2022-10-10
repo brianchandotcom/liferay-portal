@@ -27,19 +27,17 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface UpdateDocumentIndexWriter {
 
 	public void updateDocument(
-		String searchEngineId, long companyId, Document document,
-		boolean commitImmediately);
+		long companyId, Document document, boolean commitImmediately);
 
 	public void updateDocumentPartially(
-		String searchEngineId, long companyId, Document document,
-		boolean commitImmediately);
+		long companyId, Document document, boolean commitImmediately);
 
 	public void updateDocuments(
-		String searchEngineId, long companyId, Collection<Document> documents,
+		long companyId, Collection<Document> documents,
 		boolean commitImmediately);
 
 	public void updateDocumentsPartially(
-		String searchEngineId, long companyId, Collection<Document> documents,
+		long companyId, Collection<Document> documents,
 		boolean commitImmediately);
 
 }

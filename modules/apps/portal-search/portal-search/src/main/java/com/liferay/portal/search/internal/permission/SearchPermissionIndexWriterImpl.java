@@ -33,8 +33,7 @@ public class SearchPermissionIndexWriterImpl
 
 	@Override
 	public void updatePermissionFields(
-		BaseModel<?> baseModel, long companyId, String searchEngineId,
-		boolean commitImmediately) {
+		BaseModel<?> baseModel, long companyId, boolean commitImmediately) {
 
 		Document document = baseModelDocumentFactory.createDocument(baseModel);
 
@@ -42,7 +41,7 @@ public class SearchPermissionIndexWriterImpl
 			companyId, document);
 
 		updateDocumentIndexWriter.updateDocumentPartially(
-			searchEngineId, companyId, document, commitImmediately);
+			companyId, document, commitImmediately);
 	}
 
 	@Reference

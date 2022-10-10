@@ -132,7 +132,8 @@ definition {
 
 			AssertClick(
 				key_text = "Select This Folder",
-				locator1 = "Button#ANY");
+				locator1 = "Button#ANY",
+				value1 = "Select This Folder");
 		}
 		else {
 			Click(

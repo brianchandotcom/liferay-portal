@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -75,13 +77,17 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Pavel Savinov
  */
 public class LayoutsTreeDisplayContext {
 
 	public LayoutsTreeDisplayContext(
-		GroupProvider groupProvider, RenderRequest renderRequest,
+		GroupProvider groupProvider, HttpServletRequest httpServletRequest,
+		Language language, LayoutService layoutService,
+		RenderRequest renderRequest,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
@@ -89,6 +95,9 @@ public class LayoutsTreeDisplayContext {
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			renderRequest);
 
+		_httpServletRequest = httpServletRequest;
+		_language = language;
+		_layoutService = layoutService;
 		_renderRequest = renderRequest;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
@@ -918,6 +927,9 @@ public class LayoutsTreeDisplayContext {
 	private String _backURL;
 	private Long _groupId;
 	private final GroupProvider _groupProvider;
+	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final LayoutService _layoutService;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final String _namespace;
 	private Boolean _pageHierarchySelectedOption;

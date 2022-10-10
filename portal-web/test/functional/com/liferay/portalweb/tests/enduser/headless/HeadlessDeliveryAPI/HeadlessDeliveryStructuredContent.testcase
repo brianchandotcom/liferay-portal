@@ -1,4 +1,4 @@
-@component-name = "portal-headless-frontend-infrastructure"
+@component-name = "portal-headless"
 definition {
 
 	property portal.release = "true";

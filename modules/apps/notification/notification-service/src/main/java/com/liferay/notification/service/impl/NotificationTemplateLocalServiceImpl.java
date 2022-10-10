@@ -19,11 +19,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationTermContributorConstants;
-import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
-import com.liferay.notification.exception.NotificationTemplateFromException;
-import com.liferay.notification.exception.NotificationTemplateNameException;
-import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
-import com.liferay.notification.exception.NotificationTemplateTypeException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateAttachment;
@@ -35,9 +30,10 @@ import com.liferay.notification.service.persistence.NotificationTemplateAttachme
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
 import com.liferay.notification.type.LegacyNotificationType;
+import com.liferay.notification.type.NotificationContext;
+import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.notification.util.LegacyNotificationTypeRegistry;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -63,13 +59,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
-import com.liferay.portal.util.PropsUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -571,50 +569,26 @@ public class NotificationTemplateLocalServiceImpl
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
-		if (objectDefinitionId > 0) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectDefinitionId);
-
-			if (objectDefinition == null) {
-				throw new NotificationTemplateObjectDefinitionIdException();
-			}
-		}
-
-		if (!Objects.equals(
-				NotificationConstants.TYPE_USER_NOTIFICATION, type) &&
-			Validator.isNull(from)) {
-
-			throw new NotificationTemplateFromException("From is null");
-		}
-
-		if (Validator.isNull(name)) {
-			throw new NotificationTemplateNameException("Name is null");
-		}
-
 		if (type == null) {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-162133"))) {
-
-				throw new NotificationTemplateTypeException();
-			}
-
 			type = NotificationConstants.TYPE_EMAIL;
 		}
 
-		for (long attachmentObjectFieldId : attachmentObjectFieldIds) {
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				attachmentObjectFieldId);
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(type);
 
-			if ((objectField == null) ||
-				!Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-				!Objects.equals(
-					objectField.getObjectDefinitionId(), objectDefinitionId)) {
+		if (notificationType != null) {
+			NotificationContext notificationContext = new NotificationContext();
 
-				throw new NotificationTemplateAttachmentObjectFieldIdException();
-			}
+			notificationContext.setObjectDefinitionId(objectDefinitionId);
+			notificationContext.setAttachmentObjectFieldIds(
+				attachmentObjectFieldIds);
+			notificationContext.setAttributes(
+				HashMapBuilder.<String, Serializable>put(
+					"from", from
+				).build());
+			notificationContext.setNotificationTemplateName(name);
+
+			notificationType.validateNotificationTemplate(notificationContext);
 		}
 	}
 
@@ -655,6 +629,9 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Reference
 	private LegacyNotificationTypeRegistry _notificationTypeRegistry;
+
+	@Reference
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

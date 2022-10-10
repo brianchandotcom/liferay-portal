@@ -107,7 +107,7 @@ definition {
 	}
 
 	macro assertDisabledPicklistItem {
-		Picklist.assertDisableKey();
+		Picklist.assertDisableKey(keyName = "${keyName}");
 
 		AssertElementPresent(locator1 = "Picklist#DISABLED_PICKLIST_NAME");
 	}

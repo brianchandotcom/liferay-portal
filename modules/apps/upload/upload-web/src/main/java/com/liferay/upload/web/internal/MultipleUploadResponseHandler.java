@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -171,9 +170,6 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 	}
 
 	private volatile DLConfiguration _dlConfiguration;
-
-	@Reference
-	private DLValidator _dlValidator;
 
 	@Reference
 	private Language _language;

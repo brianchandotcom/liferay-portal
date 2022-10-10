@@ -265,24 +265,8 @@ public class ObjectEntryLocalServiceImpl
 		insertIntoOrUpdateExtensionTable(
 			objectDefinition.getObjectDefinitionId(), primaryKey, values);
 
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
-			_getExtensionDynamicObjectDefinitionTable(
-				objectDefinition.getObjectDefinitionId());
-
-		DSLQuery dslQuery = _getExtensionDynamicObjectDefinitionTableDSLQuery(
-			extensionDynamicObjectDefinitionTable, primaryKey,
-			_getSelectExpressions(extensionDynamicObjectDefinitionTable));
-
-		StringBundler sb = new StringBundler();
-
-		dslQuery.toSQL(sb::append, new DefaultASTNodeListener());
-
-		FinderCacheUtil.removeResult(
-			new FinderPath(
-				FinderPath.encodeDSLQueryCacheName(
-					new String[] {objectDefinition.getExtensionDBTableName()}),
-				"dslQuery", sb.getStrings(), new String[0], false),
-			new Long[] {primaryKey});
+		_clearExtensionDynamicObjectDefinitionTableCache(
+			objectDefinition.getObjectDefinitionId(), primaryKey);
 	}
 
 	@Override
@@ -348,6 +332,9 @@ public class ObjectEntryLocalServiceImpl
 		_deleteFileEntries(
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			extensionDynamicObjectDefinitionTableValues);
+
+		_clearExtensionDynamicObjectDefinitionTableCache(
+			objectDefinition.getObjectDefinitionId(), primaryKey);
 	}
 
 	@Override
@@ -526,7 +513,7 @@ public class ObjectEntryLocalServiceImpl
 			extensionDynamicObjectDefinitionTable);
 
 		List<Object[]> rows = _list(
-			_getExtensionDynamicObjectDefinitionTableDSLQuery(
+			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
 				extensionDynamicObjectDefinitionTable, primaryKey,
 				selectExpressions),
 			selectExpressions);
@@ -958,16 +945,9 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
 
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
-
 		int count = objectEntryPersistence.dslQueryCount(
-			DSLQueryFactoryUtil.count(
-			).from(
-				dynamicObjectDefinitionTable
-			).where(
-				primaryKeyColumn.eq(primaryKey)
-			));
+			_getExtensionDynamicObjectDefinitionTableCountDSLQuery(
+				dynamicObjectDefinitionTable, primaryKey));
 
 		if (count > 0) {
 			_updateTable(dynamicObjectDefinitionTable, primaryKey, values);
@@ -1260,6 +1240,27 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _clearExtensionDynamicObjectDefinitionTableCache(
+			long objectDefinitionId, long primaryKey)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+
+		String tableName = extensionDynamicObjectDefinitionTable.getTableName();
+
+		_finderCacheRemoveResult(
+			_getExtensionDynamicObjectDefinitionTableCountDSLQuery(
+				extensionDynamicObjectDefinitionTable, primaryKey),
+			primaryKey, tableName);
+
+		_finderCacheRemoveResult(
+			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
+				extensionDynamicObjectDefinitionTable, primaryKey,
+				_getSelectExpressions(extensionDynamicObjectDefinitionTable)),
+			primaryKey, tableName);
+	}
+
 	private void _deleteFileEntries(
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
@@ -1405,6 +1406,20 @@ public class ObjectEntryLocalServiceImpl
 		return predicate.and(searchPredicate.withParentheses());
 	}
 
+	private void _finderCacheRemoveResult(
+		DSLQuery dslQuery, long primaryKey, String tableName) {
+
+		StringBundler sb = new StringBundler();
+
+		dslQuery.toSQL(sb::append, new DefaultASTNodeListener());
+
+		FinderCacheUtil.removeResult(
+			new FinderPath(
+				FinderPath.encodeDSLQueryCacheName(new String[] {tableName}),
+				"dslQuery", sb.getStrings(), new String[0], false),
+			new Long[] {primaryKey});
+	}
+
 	private DLFolder _getDLFolder(
 		long companyId, long groupId, String portletId,
 		ServiceContext serviceContext, boolean showFilesInDocumentsAndMedia,
@@ -1462,7 +1477,22 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getExtensionDBTableName());
 	}
 
-	private DSLQuery _getExtensionDynamicObjectDefinitionTableDSLQuery(
+	private DSLQuery _getExtensionDynamicObjectDefinitionTableCountDSLQuery(
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
+		long primaryKey) {
+
+		return DSLQueryFactoryUtil.count(
+		).from(
+			extensionDynamicObjectDefinitionTable
+		).where(
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				primaryKey
+			)
+		);
+	}
+
+	private DSLQuery _getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
 		long primaryKey, Expression<?>[] selectExpressions) {
 

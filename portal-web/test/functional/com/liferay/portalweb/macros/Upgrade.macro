@@ -692,9 +692,9 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.removeMemberCP(
-			orgName = "Sub-organization1 Edit",
-			userFullName = "user2 user2");
+		LexiconEntry.gotoEntry(rowEntry = "Sub-organization1 Edit");
+
+		Organization.removeAssignee(userFullName = "user2 user2");
 
 		Navigator.openURL();
 

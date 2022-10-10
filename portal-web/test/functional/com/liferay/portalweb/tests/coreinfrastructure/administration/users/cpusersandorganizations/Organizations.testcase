@@ -1634,9 +1634,9 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.removeMemberCP(
-			orgName = "Organization Name",
-			userFullName = "userfn userln");
+		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+		Organization.removeAssignee(userFullName = "userfn userln");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

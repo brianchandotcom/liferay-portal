@@ -11,7 +11,7 @@
 
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
@@ -21,7 +21,6 @@ import NameColumn from './components/columns/NameColumn';
 import OptionsColumn from './components/columns/OptionsColumn';
 import RolesColumn from './components/columns/RolesColumn/RolesColumn';
 import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
-import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAccountByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
 
@@ -34,14 +33,6 @@ const TeamMembersTable = ({
 
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
 	const [currentIndexRemoving, setCurrentIndexRemoving] = useState();
-
-	const [
-		hasAccountAdministrator,
-		{loading: myUserAccountLoading},
-	] = useMyUserAccountByAccountExternalReferenceCode(
-		koroneikiAccount?.accountKey,
-		koroneikiAccountLoading
-	);
 
 	const [
 		supportSeatsCount,
@@ -68,14 +59,18 @@ const TeamMembersTable = ({
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
 
+	const loggedUserAccount = useMemo(
+		() => userAccounts?.find((userAccount) => userAccount.isLoggedUser),
+		[userAccounts]
+	);
+
 	const availableAccountRoles =
 		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
 
 	const availableSupportSeatsCount =
 		koroneikiAccount?.maxRequestors - supportSeatsCount;
 
-	const loading =
-		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
+	const loading = userAccountsLoading || accountRolesLoading;
 
 	useEffect(() => {
 		if (removeCalled && !removing) {
@@ -108,7 +103,8 @@ const TeamMembersTable = ({
 				<Table
 					className="border-0 cp-team-members-table"
 					columns={getColumns(
-						hasAccountAdministrator,
+						loggedUserAccount?.selectedAccountSummary
+							.hasAdministratorRole,
 						articleAccountSupportURL
 					)}
 					isLoading={loading}

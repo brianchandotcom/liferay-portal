@@ -141,7 +141,7 @@ export default function ObjectFieldFormBase({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.businessType, values.listTypeDefinitionId]);
 
-	const filteredPicklistItens = useMemo(() => {
+	const filteredPicklistItems = useMemo(() => {
 		return pickListItems.filter(({name}) => {
 			return name
 				.toLowerCase()
@@ -354,7 +354,7 @@ export default function ObjectFieldFormBase({
 				<AutoComplete
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.defaultValue}
-					items={filteredPicklistItens}
+					items={filteredPicklistItems}
 					label={Liferay.Language.get('default-value')}
 					onChangeQuery={setPicklistDefaultValueQuery}
 					onSelectItem={(item) => {

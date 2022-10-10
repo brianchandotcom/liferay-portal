@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TITLE</td>
 	<td>//h1[text()='${key_title}']</td>
 	<td></td>

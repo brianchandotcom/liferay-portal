@@ -14,7 +14,8 @@
 
 package com.liferay.object.internal.action.executor;
 
-import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.type.NotificationContext;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
@@ -51,9 +52,14 @@ public class NotificationTemplateObjectActionExecutorImpl
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
+		NotificationTemplate notificationTemplate =
+			_notificationTemplateLocalService.getNotificationTemplate(
+				GetterUtil.getLong(
+					parametersUnicodeProperties.get("notificationTemplateId")));
+
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(
-				NotificationConstants.TYPE_EMAIL);
+				notificationTemplate.getType());
 
 		NotificationContext notificationContext = new NotificationContext();
 
@@ -67,8 +73,7 @@ public class NotificationTemplateObjectActionExecutorImpl
 			GetterUtil.getLong(termValues.get("id")));
 
 		notificationContext.setNotificationTemplateId(
-			GetterUtil.getLong(
-				parametersUnicodeProperties.get("notificationTemplateId")));
+			notificationTemplate.getNotificationTemplateId());
 		notificationContext.setTermValues(termValues);
 		notificationContext.setUserId(userId);
 
@@ -82,6 +87,9 @@ public class NotificationTemplateObjectActionExecutorImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;

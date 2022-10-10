@@ -62,8 +62,7 @@ public class UpdateDocumentIndexWriterImpl
 			_log.debug("Document " + document.toString());
 		}
 
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -98,8 +97,7 @@ public class UpdateDocumentIndexWriterImpl
 			_log.debug("Document " + document.toString());
 		}
 
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -128,8 +126,7 @@ public class UpdateDocumentIndexWriterImpl
 			return;
 		}
 
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -167,8 +164,7 @@ public class UpdateDocumentIndexWriterImpl
 			return;
 		}
 
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 

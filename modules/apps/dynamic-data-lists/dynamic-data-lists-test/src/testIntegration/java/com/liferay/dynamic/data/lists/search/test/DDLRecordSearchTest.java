@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -486,8 +485,7 @@ public class DDLRecordSearchTest {
 	}
 
 	protected boolean isExactPhraseQueryImplementedForSearchEngine() {
-		SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine();
 
 		String vendor = searchEngine.getVendor();
 

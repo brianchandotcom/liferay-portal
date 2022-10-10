@@ -19,11 +19,7 @@ package com.liferay.portal.kernel.search;
  */
 public interface IndexAdminHelper {
 
-	public void backup(long companyId, String backupName)
-		throws SearchException;
-
-	public String backup(
-			long companyId, String searchEngineId, String backupName)
+	public String backup(long companyId, String backupName)
 		throws SearchException;
 
 	public void backup(String backupName) throws SearchException;

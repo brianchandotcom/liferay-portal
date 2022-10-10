@@ -77,16 +77,14 @@ public class ElasticsearchEngineConfigurator
 			new SearchEngineProxyWrapper(
 				_searchEngine, _indexSearcher, _indexWriter);
 
-		_searchEngineHelper.setSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, searchEngineProxyWrapper);
+		_searchEngineHelper.setSearchEngine(searchEngineProxyWrapper);
 
 		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_searchEngineHelper.removeSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		_searchEngineHelper.removeSearchEngine();
 
 		for (ServiceRegistration<?> serviceRegistration :
 				_destinationServiceRegistrations) {

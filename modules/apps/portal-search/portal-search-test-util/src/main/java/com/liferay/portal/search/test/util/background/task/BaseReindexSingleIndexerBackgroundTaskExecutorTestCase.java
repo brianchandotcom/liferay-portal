@@ -91,7 +91,7 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 			searchEngineHelper, "_companyLocalService", companyLocalService);
 
 		searchEngineHelper.setSearchEngine(
-			"test", searchEngineFixture.getSearchEngine());
+			searchEngineFixture.getSearchEngine());
 
 		_companyId = companyId;
 		_searchEngineFixture = searchEngineFixture;

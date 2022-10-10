@@ -81,8 +81,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			_log.debug("Add document " + document.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -111,8 +110,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -142,8 +140,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	@Override
 	public void commit(long companyId) throws SearchException {
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -163,8 +160,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -188,8 +184,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -211,8 +206,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		if (searchEngine == null) {
 			return;
@@ -248,8 +242,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			String keywordType, Locale locale)
 		throws SearchException {
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -266,8 +259,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexQuerySuggestionDictionaries(long companyId)
 		throws SearchException {
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -282,8 +274,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexQuerySuggestionDictionary(long companyId, Locale locale)
 		throws SearchException {
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -299,8 +290,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexSpellCheckerDictionaries(long companyId)
 		throws SearchException {
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -315,8 +305,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void indexSpellCheckerDictionary(long companyId, Locale locale)
 		throws SearchException {
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -363,8 +352,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			_log.debug("Document " + document.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -393,8 +381,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -510,8 +497,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			_log.debug("Document " + document.toString());
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -542,8 +528,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			return;
 		}
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 

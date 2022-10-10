@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import java.util.Set;
-
 /**
  * @author Michael C. Han
  */
@@ -31,16 +29,12 @@ public class SearchEngineHelperUtil {
 		return _searchEngineHelper.getEntryClassNames();
 	}
 
-	public static SearchEngine getSearchEngine(String searchEngineId) {
-		return _searchEngineHelper.getSearchEngine(searchEngineId);
+	public static SearchEngine getSearchEngine() {
+		return _searchEngineHelper.getSearchEngine();
 	}
 
 	public static SearchEngineHelper getSearchEngineHelper() {
 		return _searchEngineHelper;
-	}
-
-	public static Set<String> getSearchEngineIds() {
-		return _searchEngineHelper.getSearchEngineIds();
 	}
 
 	public static String getSearchReaderDestinationName(String searchEngineId) {
@@ -61,14 +55,12 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.removeCompany(companyId);
 	}
 
-	public static SearchEngine removeSearchEngine(String searchEngineId) {
-		return _searchEngineHelper.removeSearchEngine(searchEngineId);
+	public static void removeSearchEngine() {
+		_searchEngineHelper.removeSearchEngine();
 	}
 
-	public static void setSearchEngine(
-		String searchEngineId, SearchEngine searchEngine) {
-
-		_searchEngineHelper.setSearchEngine(searchEngineId, searchEngine);
+	public static void setSearchEngine(SearchEngine searchEngine) {
+		_searchEngineHelper.setSearchEngine(searchEngine);
 
 		searchEngine.initialize(CompanyConstants.SYSTEM);
 	}

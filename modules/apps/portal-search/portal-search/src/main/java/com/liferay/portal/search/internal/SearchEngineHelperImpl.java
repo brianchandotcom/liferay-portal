@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -61,44 +59,28 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public SearchEngine getSearchEngine(String searchEngineId) {
-		return _searchEngines.get(searchEngineId);
-	}
-
-	@Override
-	public Set<String> getSearchEngineIds() {
-		return _searchEngines.keySet();
-	}
-
-	@Override
-	public Collection<SearchEngine> getSearchEngines() {
-		return Collections.unmodifiableCollection(_searchEngines.values());
+	public SearchEngine getSearchEngine() {
+		return _searchEngine;
 	}
 
 	@Override
 	public synchronized void initialize(long companyId) {
-		for (SearchEngine searchEngine : _searchEngines.values()) {
-			searchEngine.initialize(companyId);
-		}
+		_searchEngine.initialize(companyId);
 	}
 
 	@Override
 	public synchronized void removeCompany(long companyId) {
-		for (SearchEngine searchEngine : _searchEngines.values()) {
-			searchEngine.removeCompany(companyId);
-		}
+		_searchEngine.removeCompany(companyId);
 	}
 
 	@Override
-	public SearchEngine removeSearchEngine(String searchEngineId) {
-		return _searchEngines.remove(searchEngineId);
+	public void removeSearchEngine() {
+		_searchEngine = null;
 	}
 
 	@Override
-	public void setSearchEngine(
-		String searchEngineId, SearchEngine searchEngine) {
-
-		_searchEngines.put(searchEngineId, searchEngine);
+	public void setSearchEngine(SearchEngine searchEngine) {
+		_searchEngine = searchEngine;
 
 		for (Company company : _companyLocalService.getCompanies()) {
 			searchEngine.initialize(company.getCompanyId());
@@ -125,7 +107,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	private CompanyLocalService _companyLocalService;
 
 	private final Set<String> _excludedEntryClassNames = new HashSet<>();
-	private final Map<String, SearchEngine> _searchEngines =
-		new ConcurrentHashMap<>();
+	private volatile SearchEngine _searchEngine;
 
 }

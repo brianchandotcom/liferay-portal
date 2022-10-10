@@ -99,7 +99,7 @@ public class GeneralTabDefaultViewDisplayContext {
 			return new X509CertificateStatus(
 				null, X509CertificateStatus.Status.UNBOUND);
 		}
-		catch (CredentialAuthException.KeyStorePasswordIncorrect
+		catch (CredentialAuthException.InvalidKeyStorePassword
 					credentialAuthException) {
 
 			return _buildX509CertificateStatus(
@@ -107,14 +107,14 @@ public class GeneralTabDefaultViewDisplayContext {
 				X509CertificateStatus.Status.SAML_KEYSTORE_PASSWORD_INCORRECT,
 				true);
 		}
-		catch (CredentialAuthException.CannotLoadKeyStore
+		catch (CredentialAuthException.InvalidKeyStore
 					credentialAuthException) {
 
 			return _buildX509CertificateStatus(
 				credentialAuthException,
 				X509CertificateStatus.Status.SAML_KEYSTORE_EXCEPTION, true);
 		}
-		catch (CredentialAuthException.CredentialPasswordIncorrect
+		catch (CredentialAuthException.InvalidCredentialPassword
 					credentialAuthException) {
 
 			return _buildX509CertificateStatus(

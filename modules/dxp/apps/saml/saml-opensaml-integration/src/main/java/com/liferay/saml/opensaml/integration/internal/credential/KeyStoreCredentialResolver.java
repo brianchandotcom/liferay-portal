@@ -337,7 +337,7 @@ public class KeyStoreCredentialResolver
 						UnrecoverableKeyException.class);
 
 				if (unrecoverableKeyException != null) {
-					throw new CredentialAuthException.KeyStorePasswordIncorrect(
+					throw new CredentialAuthException.InvalidKeyStorePassword(
 						String.format(
 							"Company %s used an incorrect password to access " +
 								"the KeyStore provided by %s",
@@ -345,7 +345,7 @@ public class KeyStoreCredentialResolver
 						unrecoverableKeyException);
 				}
 
-				throw new CredentialAuthException.CannotLoadKeyStore(
+				throw new CredentialAuthException.InvalidKeyStore(
 					String.format(
 						"Company %s could not load the SAML KeyStore " +
 							"provided by %s",
@@ -354,7 +354,7 @@ public class KeyStoreCredentialResolver
 			}
 
 			if (generalSecurityException instanceof UnrecoverableKeyException) {
-				throw new CredentialAuthException.CredentialPasswordIncorrect(
+				throw new CredentialAuthException.InvalidCredentialPassword(
 					String.format(
 						"Company %s used an incorrect key credential " +
 							"password to an entry in the SAML KeyStore " +

@@ -459,16 +459,6 @@ definition {
 		Breadcrumb.viewActiveEntry(breadcrumbName = "${orgName}");
 	}
 
-	macro gotoMemberActionsCmd {
-		Organization.gotoCP(
-			orgName = "${orgName}",
-			searchToken = "${orgName}");
-
-		Search.searchCP(searchTerm = "${memberName}");
-
-		LexiconEntry.openEntryMenu(rowEntry = "${memberName}");
-	}
-
 	macro openOrganizationsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

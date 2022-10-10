@@ -40,8 +40,8 @@ String emailAddress = BeanParamUtil.getString(selUser, request, "emailAddress");
 String firstName = BeanParamUtil.getString(selUser, request, "firstName");
 String middleName = BeanParamUtil.getString(selUser, request, "middleName");
 String lastName = BeanParamUtil.getString(selUser, request, "lastName");
-int prefixId = BeanParamUtil.getInteger(selContact, request, "prefixId");
-int suffixId = BeanParamUtil.getInteger(selContact, request, "suffixId");
+int prefixListTypeId = BeanParamUtil.getInteger(selContact, request, "prefixListTypeId");
+int suffixListTypeId = BeanParamUtil.getInteger(selContact, request, "suffixListTypeId");
 
 Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
 
@@ -79,8 +79,8 @@ boolean male = BeanParamUtil.getBoolean(selUser, request, "male", true);
 		<aui:input name="firstName" type="hidden" value="<%= firstName %>" />
 		<aui:input name="middleName" type="hidden" value="<%= middleName %>" />
 		<aui:input name="lastName" type="hidden" value="<%= lastName %>" />
-		<aui:input name="prefixId" type="hidden" value="<%= String.valueOf(prefixId) %>" />
-		<aui:input name="suffixId" type="hidden" value="<%= String.valueOf(suffixId) %>" />
+		<aui:input name="prefixListTypeId" type="hidden" value="<%= String.valueOf(prefixListTypeId) %>" />
+		<aui:input name="suffixListTypeId" type="hidden" value="<%= String.valueOf(suffixListTypeId) %>" />
 		<aui:input name="male" type="hidden" value="<%= String.valueOf(male) %>" />
 		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.DAY_OF_MONTH)) %>" />
 		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.MONTH)) %>" />

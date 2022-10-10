@@ -133,8 +133,10 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
+		long prefixListTypeId = ParamUtil.getInteger(
+			actionRequest, "prefixListTypeId");
+		long suffixListTypeId = ParamUtil.getInteger(
+			actionRequest, "suffixListTypeId");
 		boolean male = ParamUtil.getBoolean(actionRequest, "male", true);
 		int birthdayMonth = ParamUtil.getInteger(
 			actionRequest, "birthdayMonth");
@@ -161,9 +163,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			company.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId,
 			StringPool.BLANK, LocaleUtil.fromLanguageId(languageId), firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		// Session messages
 
@@ -397,8 +399,10 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
+		long prefixListTypeId = ParamUtil.getInteger(
+			actionRequest, "prefixListTypeId");
+		long suffixListTypeId = ParamUtil.getInteger(
+			actionRequest, "suffixListTypeId");
 		boolean male = ParamUtil.getBoolean(actionRequest, "male", true);
 		int birthdayMonth = ParamUtil.getInteger(
 			actionRequest, "birthdayMonth");
@@ -420,9 +424,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId,
 			StringPool.BLANK, themeDisplay.getLocale(), firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, updateUserInformation, sendEmail,
-			serviceContext);
+			lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
+			sendEmail, serviceContext);
 
 		if (facebookId > 0) {
 			httpSession.removeAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID);
@@ -520,15 +524,17 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
 			actionRequest);
 
-		long prefixId = _getListTypeId(
+		long prefixListTypeId = _getListTypeId(
 			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
 
-		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
+		dynamicActionRequest.setParameter(
+			"prefixListTypeId", String.valueOf(prefixListTypeId));
 
-		long suffixId = _getListTypeId(
+		long suffixListTypeId = _getListTypeId(
 			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
 
-		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
+		dynamicActionRequest.setParameter(
+			"suffixListTypeId", String.valueOf(suffixListTypeId));
 
 		return dynamicActionRequest;
 	}

@@ -233,8 +233,8 @@ public class CreateAnonymousAccountMVCActionCommand
 		String firstName = null;
 		String middleName = null;
 		String lastName = null;
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = 0;
 		int birthdayDay = 1;
@@ -246,9 +246,10 @@ public class CreateAnonymousAccountMVCActionCommand
 		User user = _userService.updateIncompleteUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			themeDisplay.getLocale(), firstName, middleName, lastName, prefixId,
-			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			updateUserInformation, sendEmail, serviceContext);
+			themeDisplay.getLocale(), firstName, middleName, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
+			sendEmail, serviceContext);
 
 		return JSONUtil.put(
 			"userStatus",
@@ -281,8 +282,8 @@ public class CreateAnonymousAccountMVCActionCommand
 		String openId = StringPool.BLANK;
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = 0;
 		int birthdayDay = 1;
@@ -310,10 +311,10 @@ public class CreateAnonymousAccountMVCActionCommand
 		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			themeDisplay.getLocale(), firstName, null, lastName, prefixId,
-			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-			serviceContext);
+			themeDisplay.getLocale(), firstName, null, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		_userLocalService.updateStatus(
 			user.getUserId(), WorkflowConstants.STATUS_INCOMPLETE,

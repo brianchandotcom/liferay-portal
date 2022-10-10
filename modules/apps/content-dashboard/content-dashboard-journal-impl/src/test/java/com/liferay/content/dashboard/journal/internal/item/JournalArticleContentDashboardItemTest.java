@@ -19,17 +19,25 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionAction;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
+import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageImpl;
@@ -171,6 +179,111 @@ public class JournalArticleContentDashboardItemTest {
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
 			journalArticleContentDashboardItem.getAssetTags());
+	}
+
+	@Test
+	public void testGetContentDashboardItemVersionActions() throws Exception {
+		JournalArticle journalArticle = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		ContentDashboardItemVersionAction contentDashboardItemVersionAction1 =
+			_getContentDashboardItemVersionAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		ContentDashboardItemVersionAction contentDashboardItemVersionAction2 =
+			_getContentDashboardItemVersionAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null,
+				_getContentDashboardItemVersionActionProviderTracker(
+					_getContentDashboardItemVersionActionProvider(
+						contentDashboardItemVersionAction1, true),
+					_getContentDashboardItemVersionActionProvider(
+						contentDashboardItemVersionAction2, true)),
+				null, null, null, journalArticle,
+				_getJournalArticleService(_getJournalArticle()), _getLanguage(),
+				null, null);
+
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			journalArticleContentDashboardItem.
+				getAllContentDashboardItemVersions(
+					_getHttpServletRequest(RandomTestUtil.randomLong()));
+
+		Assert.assertEquals(
+			contentDashboardItemVersions.toString(), 1,
+			contentDashboardItemVersions.size());
+
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			contentDashboardItemVersions.get(0);
+
+		List<ContentDashboardItemVersionAction>
+			contentDashboardItemVersionActions =
+				contentDashboardItemVersion.
+					getContentDashboardItemVersionActions();
+
+		Assert.assertNotNull(contentDashboardItemVersionActions);
+
+		Assert.assertEquals(
+			contentDashboardItemVersionActions.toString(), 2,
+			contentDashboardItemVersionActions.size());
+
+		Assert.assertEquals(
+			contentDashboardItemVersionAction1,
+			contentDashboardItemVersionActions.get(0));
+		Assert.assertEquals(
+			contentDashboardItemVersionAction2,
+			contentDashboardItemVersionActions.get(1));
+	}
+
+	@Test
+	public void testGetContentDashboardItemVersionsWithNoActions()
+		throws Exception {
+
+		JournalArticle journalArticle = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null,
+				_getContentDashboardItemVersionActionProviderTracker(), null,
+				null, null, journalArticle,
+				_getJournalArticleService(_getJournalArticle()), _getLanguage(),
+				null, null);
+
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			journalArticleContentDashboardItem.
+				getAllContentDashboardItemVersions(
+					_getHttpServletRequest(RandomTestUtil.randomLong()));
+
+		Assert.assertEquals(
+			contentDashboardItemVersions.toString(), 1,
+			contentDashboardItemVersions.size());
+
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			contentDashboardItemVersions.get(0);
+
+		List<ContentDashboardItemVersionAction>
+			contentDashboardItemVersionActions =
+				contentDashboardItemVersion.
+					getContentDashboardItemVersionActions();
+
+		Assert.assertEquals(
+			contentDashboardItemVersionActions.toString(), 0,
+			contentDashboardItemVersionActions.size());
 	}
 
 	@Test
@@ -629,6 +742,63 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetVisibleContentDashboardItemVersionActions()
+		throws Exception {
+
+		JournalArticle journalArticle = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
+			_getContentDashboardItemVersionAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null,
+				_getContentDashboardItemVersionActionProviderTracker(
+					_getContentDashboardItemVersionActionProvider(null, false),
+					_getContentDashboardItemVersionActionProvider(
+						contentDashboardItemVersionAction, true),
+					_getContentDashboardItemVersionActionProvider(null, false)),
+				null, null, null, journalArticle,
+				_getJournalArticleService(_getJournalArticle()), _getLanguage(),
+				null, null);
+
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			journalArticleContentDashboardItem.
+				getAllContentDashboardItemVersions(
+					_getHttpServletRequest(RandomTestUtil.randomLong()));
+
+		Assert.assertEquals(
+			contentDashboardItemVersions.toString(), 1,
+			contentDashboardItemVersions.size());
+
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			contentDashboardItemVersions.get(0);
+
+		List<ContentDashboardItemVersionAction>
+			contentDashboardItemVersionActions =
+				contentDashboardItemVersion.
+					getContentDashboardItemVersionActions();
+
+		Assert.assertNotNull(contentDashboardItemVersionActions);
+
+		Assert.assertEquals(
+			contentDashboardItemVersionActions.toString(), 1,
+			contentDashboardItemVersionActions.size());
+
+		Assert.assertEquals(
+			contentDashboardItemVersionAction,
+			contentDashboardItemVersionActions.get(0));
+	}
+
+	@Test
 	public void testIsViewable() throws Exception {
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -741,6 +911,104 @@ public class JournalArticleContentDashboardItemTest {
 		return contentDashboardItemActionProviderTracker;
 	}
 
+	private ContentDashboardItemVersionAction
+		_getContentDashboardItemVersionAction(
+			String icon, String label, String name, String url) {
+
+		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
+			Mockito.mock(ContentDashboardItemVersionAction.class);
+
+		Mockito.when(
+			contentDashboardItemVersionAction.getIcon()
+		).thenReturn(
+			icon
+		);
+
+		Mockito.when(
+			contentDashboardItemVersionAction.getLabel(
+				Mockito.any(Locale.class))
+		).thenReturn(
+			label
+		);
+
+		Mockito.when(
+			contentDashboardItemVersionAction.getName()
+		).thenReturn(
+			name
+		);
+
+		Mockito.when(
+			contentDashboardItemVersionAction.getURL()
+		).thenReturn(
+			url
+		);
+
+		return contentDashboardItemVersionAction;
+	}
+
+	private ContentDashboardItemVersionActionProvider
+			_getContentDashboardItemVersionActionProvider(
+				ContentDashboardItemVersionAction
+					contentDashboardItemVersionAction,
+				boolean showContentDashboardItemVersionActionProvider)
+		throws Exception {
+
+		ContentDashboardItemVersionActionProvider
+			contentDashboardItemVersionActionProvider = Mockito.mock(
+				ContentDashboardItemVersionActionProvider.class);
+
+		Mockito.when(
+			contentDashboardItemVersionActionProvider.
+				getContentDashboardItemVersionAction(
+					Mockito.any(JournalArticle.class),
+					Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			contentDashboardItemVersionAction
+		);
+
+		Mockito.when(
+			contentDashboardItemVersionActionProvider.isShow(
+				Mockito.any(JournalArticle.class),
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			showContentDashboardItemVersionActionProvider
+		);
+
+		return contentDashboardItemVersionActionProvider;
+	}
+
+	private ContentDashboardItemVersionActionProviderTracker
+		_getContentDashboardItemVersionActionProviderTracker(
+			ContentDashboardItemVersionActionProvider...
+				contentDashboardItemVersionActionProviders) {
+
+		ContentDashboardItemVersionActionProviderTracker
+			contentDashboardItemVersionActionProviderTracker = Mockito.mock(
+				ContentDashboardItemVersionActionProviderTracker.class);
+
+		if (contentDashboardItemVersionActionProviders == null) {
+			Mockito.when(
+				contentDashboardItemVersionActionProviderTracker.
+					getContentDashboardItemVersionActionProviders(
+						Mockito.anyString())
+			).thenReturn(
+				null
+			);
+
+			return contentDashboardItemVersionActionProviderTracker;
+		}
+
+		Mockito.when(
+			contentDashboardItemVersionActionProviderTracker.
+				getContentDashboardItemVersionActionProviders(
+					JournalArticle.class.getName())
+		).thenReturn(
+			ListUtil.fromArray(contentDashboardItemVersionActionProviders)
+		);
+
+		return contentDashboardItemVersionActionProviderTracker;
+	}
+
 	private HttpServletRequest _getHttpServletRequest(long userId)
 		throws Exception {
 
@@ -748,6 +1016,24 @@ public class JournalArticleContentDashboardItemTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, userId);
+
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.when(
+			permissionChecker.isContentReviewer(
+				Mockito.anyLong(), Mockito.anyLong())
+		).thenReturn(
+			true
+		);
+
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			user.getUserId()
+		).thenReturn(
+			userId
+		);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -761,6 +1047,18 @@ public class JournalArticleContentDashboardItemTest {
 			themeDisplay.getLocale()
 		).thenReturn(
 			LocaleUtil.US
+		);
+
+		Mockito.when(
+			themeDisplay.getPermissionChecker()
+		).thenReturn(
+			permissionChecker
+		);
+
+		Mockito.when(
+			themeDisplay.getUser()
+		).thenReturn(
+			user
 		);
 
 		mockHttpServletRequest.setAttribute(
@@ -809,6 +1107,24 @@ public class JournalArticleContentDashboardItemTest {
 		);
 
 		return journalArticle;
+	}
+
+	private JournalArticleService _getJournalArticleService(
+		JournalArticle... journalArticles) {
+
+		JournalArticleService journalArticleService = Mockito.mock(
+			JournalArticleService.class);
+
+		Mockito.when(
+			journalArticleService.getArticlesByArticleId(
+				Mockito.anyLong(), Mockito.any(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.any(OrderByComparator.class))
+		).thenReturn(
+			ListUtil.fromArray(journalArticles)
+		);
+
+		return journalArticleService;
 	}
 
 	private Language _getLanguage() {

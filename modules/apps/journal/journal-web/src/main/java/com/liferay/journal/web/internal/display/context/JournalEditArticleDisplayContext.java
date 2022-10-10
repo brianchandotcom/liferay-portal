@@ -1000,7 +1000,7 @@ public class JournalEditArticleDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditArticleDisplayContext.class);
 
-	private JournalArticle _article;
+	private final JournalArticle _article;
 	private Set<Locale> _availableLocales;
 	private Boolean _changeStructure;
 	private Long _classNameId;

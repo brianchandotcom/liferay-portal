@@ -31,9 +31,10 @@ public class CredentialAuthException extends SecurityException {
 			generalSecurityException);
 	}
 
-	public static class CannotLoadKeyStore extends CredentialAuthException {
+	public static class InvalidKeyStore
+		extends CredentialAuthException {
 
-		public CannotLoadKeyStore(
+		public InvalidKeyStore(
 			String message, GeneralSecurityException generalSecurityException) {
 
 			super(message, generalSecurityException);
@@ -41,10 +42,10 @@ public class CredentialAuthException extends SecurityException {
 
 	}
 
-	public static class CredentialPasswordIncorrect
+	public static class InvalidCredentialPassword
 		extends CredentialAuthException {
 
-		public CredentialPasswordIncorrect(
+		public InvalidCredentialPassword(
 			String message,
 			UnrecoverableKeyException unrecoverableKeyException) {
 
@@ -53,10 +54,10 @@ public class CredentialAuthException extends SecurityException {
 
 	}
 
-	public static class KeyStorePasswordIncorrect
+	public static class InvalidKeyStorePassword
 		extends CredentialAuthException {
 
-		public KeyStorePasswordIncorrect(
+		public InvalidKeyStorePassword(
 			String message,
 			UnrecoverableKeyException unrecoverableKeyException) {
 

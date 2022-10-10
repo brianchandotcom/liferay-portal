@@ -60,7 +60,7 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 	@Path("/{currentObjectEntryId}/{objectRelationshipName}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(@Tag(name = "ObjectEntry"))
-	public abstract Page<ObjectEntry>
+	public abstract Page<Object>
 			getCurrentObjectEntriesObjectRelationshipNamePage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("currentObjectEntryId")

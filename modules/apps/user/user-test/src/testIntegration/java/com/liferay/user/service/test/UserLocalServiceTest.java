@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -589,6 +592,49 @@ public class UserLocalServiceTest {
 		Date passwordModifiedDate = user.getPasswordModifiedDate();
 
 		Assert.assertTrue(passwordModifiedDate.after(oldPasswordModifiedDate));
+	}
+
+	@Test
+	public void testUpdatePasswordWithChangedAlgorithm() throws Exception {
+		PasswordEncryptor passwordEncryptor = ReflectionTestUtil.getFieldValue(
+			PasswordEncryptorUtil.class, "_passwordEncryptor");
+
+		String oldPasswordsEncryptionAlgorithmFieldValue =
+			ReflectionTestUtil.getFieldValue(
+				passwordEncryptor.getClass(),
+				"_PASSWORDS_ENCRYPTION_ALGORITHM");
+
+		try {
+			ReflectionTestUtil.setFieldValue(
+				passwordEncryptor.getClass(), "_PASSWORDS_ENCRYPTION_ALGORITHM",
+				"PBKDF2WithHmacSHA1/160/720000");
+
+			User user = UserTestUtil.addUser();
+
+			String encryptedPassword = user.getPassword();
+
+			Assert.assertTrue(
+				encryptedPassword.startsWith("{PBKDF2WithHmacSHA1}"));
+
+			ReflectionTestUtil.setFieldValue(
+				passwordEncryptor.getClass(), "_PASSWORDS_ENCRYPTION_ALGORITHM",
+				"MD5");
+
+			String password = RandomTestUtil.randomString(
+				UniqueStringRandomizerBumper.INSTANCE);
+
+			user = _userLocalService.updatePassword(
+				user.getUserId(), password, password, false, true);
+
+			encryptedPassword = user.getPassword();
+
+			Assert.assertTrue(encryptedPassword.startsWith("{MD5}"));
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				passwordEncryptor.getClass(), "_PASSWORDS_ENCRYPTION_ALGORITHM",
+				oldPasswordsEncryptionAlgorithmFieldValue);
+		}
 	}
 
 	@Test

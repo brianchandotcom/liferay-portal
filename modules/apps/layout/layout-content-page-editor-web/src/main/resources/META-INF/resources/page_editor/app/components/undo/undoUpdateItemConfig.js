@@ -14,23 +14,17 @@
 
 import updateItemConfig from '../../actions/updateItemConfig';
 import LayoutService from '../../services/LayoutService';
+import {setIn} from '../../utils/setIn';
 
 function undoAction({action, store}) {
 	const {config, itemId, pageContents} = action;
 	const {layoutData} = store;
 
-	const item = layoutData.items[itemId];
-
-	const nextLayoutData = {
-		...layoutData,
-		items: {
-			...layoutData.items,
-			[itemId]: {
-				...item,
-				config,
-			},
-		},
-	};
+	const nextLayoutData = setIn(
+		layoutData,
+		['items', itemId, 'config'],
+		config
+	);
 
 	return (dispatch) => {
 		return LayoutService.updateLayoutData({

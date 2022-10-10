@@ -395,16 +395,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editOrganizationCP {
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.gotoActionsCmd(orgName = "${orgName}");
-
-		var key_orgName = "${orgName}";
-
-		MenuItem.click(menuItem = "Edit");
-	}
-
 	macro editSiteCP {
 		Organization.gotoActionsCmd(orgName = "${orgName}");
 
@@ -457,6 +447,12 @@ definition {
 			value1 = "${orgName}");
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "${orgName}");
+	}
+
+	macro gotoEdit {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${orgName}");
 	}
 
 	macro openOrganizationsAdmin {

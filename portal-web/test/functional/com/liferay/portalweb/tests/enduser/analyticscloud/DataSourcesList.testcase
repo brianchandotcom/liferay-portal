@@ -25,8 +25,8 @@ definition {
 	@description = "Automation ID: LRAC-8129 | Test Summary: Show data source lists"
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
-		property portal.acceptance = "true";
-		property portal.release = "true";
+		property portal.acceptance = "false";
+		property portal.release = "false";
 
 		var dataSourceList = "";
 

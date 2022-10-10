@@ -307,11 +307,6 @@ public interface NotificationTemplateLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void sendNotificationTemplate(
-			long userId, long notificationTemplateId,
-			String notificationTypeKey, Object object)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate updateNotificationTemplate(
 			long notificationTemplateId, long objectDefinitionId, String bcc,

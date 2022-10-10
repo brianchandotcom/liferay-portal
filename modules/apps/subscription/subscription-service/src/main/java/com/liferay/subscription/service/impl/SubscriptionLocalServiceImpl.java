@@ -160,11 +160,14 @@ public class SubscriptionLocalServiceImpl
 					extraDataJSONObject.toString(), 0);
 			}
 		}
-		if(className.equals(AssetTag.class.getName())){
+
+		if (className.equals(AssetTag.class.getName())) {
 			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(classPK);
-			if(assetTag == null){
+
+			if (assetTag == null) {
 				return subscription;
 			}
+
 			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				AssetTag.class);
 
@@ -175,6 +178,7 @@ public class SubscriptionLocalServiceImpl
 				throw new RuntimeException(searchException);
 			}
 		}
+
 		return subscription;
 	}
 
@@ -222,14 +226,15 @@ public class SubscriptionLocalServiceImpl
 			deleteSubscription(subscription);
 		}
 
-		if(className.equals(AssetTag.class.getName())){
+		if (className.equals(AssetTag.class.getName())) {
 			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(classPK);
-			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				AssetTag.class);
 
-			if(assetTag == null){
+			if (assetTag == null) {
 				return;
 			}
+
+			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				AssetTag.class);
 
 			try {
 				indexer.reindex(assetTag);

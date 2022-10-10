@@ -14,7 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Locale;
 
@@ -27,6 +31,12 @@ public interface DefaultDDMStructureHelper {
 			long userId, long groupId, long classNameId,
 			ClassLoader classLoader, String fileName,
 			ServiceContext serviceContext)
+		throws Exception;
+
+	public void addOrUpdateDDMStructures(
+		long userId, long groupId, long classNameId,
+		ClassLoader classLoader, String fileName,
+		ServiceContext serviceContext)
 		throws Exception;
 
 	public String getDynamicDDMStructureDefinition(

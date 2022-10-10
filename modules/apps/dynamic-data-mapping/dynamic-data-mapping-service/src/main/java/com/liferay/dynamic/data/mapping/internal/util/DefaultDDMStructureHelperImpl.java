@@ -403,12 +403,10 @@ public class DefaultDDMStructureHelperImpl
 		DDMFormLayout ddmFormLayout = _getDDMFormLayout(
 			structureElement, ddmForm);
 
-		DDMStructure structure = _ddmStructureLocalService.updateStructure(
+		return _ddmStructureLocalService.updateStructure(
 			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			classNameId, name, nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			serviceContext);
-
-		return structure;
 	}
 
 	@Reference

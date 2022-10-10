@@ -39,6 +39,4 @@ public interface BatchIndexingActionable {
 
 	public <T> void setPerformActionMethod(Consumer<T> consumer);
 
-	public void setSearchEngineId(String searchEngineId);
-
 }

@@ -292,8 +292,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

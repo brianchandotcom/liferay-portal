@@ -180,8 +180,6 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

@@ -241,8 +241,6 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

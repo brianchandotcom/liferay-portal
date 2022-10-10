@@ -447,8 +447,6 @@ public class WikiPageIndexer
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

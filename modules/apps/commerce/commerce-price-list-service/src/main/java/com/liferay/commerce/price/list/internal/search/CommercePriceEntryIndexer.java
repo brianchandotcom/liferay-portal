@@ -218,8 +218,6 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

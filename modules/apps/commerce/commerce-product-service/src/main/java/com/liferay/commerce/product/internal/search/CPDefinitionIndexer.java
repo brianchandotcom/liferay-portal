@@ -966,8 +966,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

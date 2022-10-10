@@ -240,8 +240,6 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

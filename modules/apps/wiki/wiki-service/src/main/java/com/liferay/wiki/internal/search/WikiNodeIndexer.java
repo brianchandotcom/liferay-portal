@@ -173,8 +173,6 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

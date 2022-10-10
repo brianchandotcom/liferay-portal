@@ -265,8 +265,6 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

@@ -389,8 +389,6 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

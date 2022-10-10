@@ -173,8 +173,6 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

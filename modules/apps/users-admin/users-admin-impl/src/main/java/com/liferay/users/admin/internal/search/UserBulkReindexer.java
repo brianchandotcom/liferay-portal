@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 
@@ -65,8 +64,6 @@ public class UserBulkReindexer implements BulkReindexer {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		try {
 			indexableActionableDynamicQuery.performActions();

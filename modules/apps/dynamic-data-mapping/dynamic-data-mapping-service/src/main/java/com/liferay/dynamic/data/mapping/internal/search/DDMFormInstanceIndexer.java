@@ -129,8 +129,6 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

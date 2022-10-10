@@ -154,7 +154,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -7254,11 +7253,6 @@ public class JournalArticleLocalServiceImpl
 						indexer.getDocument(article));
 				}
 			});
-
-		if (indexer != null) {
-			indexableActionableDynamicQuery.setSearchEngineId(
-				SearchEngineHelper.SYSTEM_ENGINE_ID);
-		}
 
 		indexableActionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);

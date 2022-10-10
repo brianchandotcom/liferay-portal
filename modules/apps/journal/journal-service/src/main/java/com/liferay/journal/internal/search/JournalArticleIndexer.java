@@ -388,8 +388,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

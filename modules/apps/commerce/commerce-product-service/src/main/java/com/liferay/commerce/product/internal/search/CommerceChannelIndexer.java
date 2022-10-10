@@ -186,8 +186,6 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

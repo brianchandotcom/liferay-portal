@@ -536,8 +536,6 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

@@ -337,8 +337,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setSearchEngineId(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexableActionableDynamicQuery.performActions();
 	}

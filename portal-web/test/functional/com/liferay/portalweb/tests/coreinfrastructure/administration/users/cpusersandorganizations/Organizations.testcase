@@ -1695,9 +1695,14 @@ definition {
 
 		Organization.editOrganizationCP(orgName = "Organization Name 1");
 
-		Organization.addCategorizationCP(
-			orgName = "Organization Name 1",
-			tagName = "alpha");
+		AssetCategorization.addTag(tagName = "alpha");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			key_tagName = "alpha",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "alpha");
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
@@ -1708,9 +1713,14 @@ definition {
 
 		Organization.editOrganizationCP(orgName = "Organization Name 2");
 
-		Organization.addCategorizationCP(
-			orgName = "Organization Name 2",
-			tagName = "bravo");
+		AssetCategorization.addTag(tagName = "bravo");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			key_tagName = "bravo",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "bravo");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

@@ -91,7 +91,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 		Date date = new Date();
 
-		validate(type, parentMicroblogsEntryId);
+		_validate(type, parentMicroblogsEntryId);
 
 		long microblogsEntryId = counterLocalService.increment();
 
@@ -142,7 +142,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 		Date date = new Date();
 
-		validate(type, parentMicroblogsEntryId);
+		_validate(type, parentMicroblogsEntryId);
 
 		long microblogsEntryId = counterLocalService.increment();
 
@@ -202,9 +202,9 @@ public class MicroblogsEntryLocalServiceImpl
 
 		// Notification
 
-		subscribeUsers(microblogsEntry, serviceContext);
+		_subscribeUsers(microblogsEntry, serviceContext);
 
-		sendNotificationEvent(microblogsEntry, serviceContext);
+		_sendNotificationEvent(microblogsEntry, serviceContext);
 
 		return microblogsEntry;
 	}
@@ -468,7 +468,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntry;
 	}
 
-	protected long getSubscriptionId(
+	private long _getSubscriptionId(
 		long userId, MicroblogsEntry microblogsEntry) {
 
 		try {
@@ -489,7 +489,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return 0;
 	}
 
-	protected void sendNotificationEvent(
+	private void _sendNotificationEvent(
 			final MicroblogsEntry microblogsEntry,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -555,7 +555,7 @@ public class MicroblogsEntryLocalServiceImpl
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
-	protected void subscribeUsers(
+	private void _subscribeUsers(
 			MicroblogsEntry microblogsEntry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -579,7 +579,7 @@ public class MicroblogsEntryLocalServiceImpl
 		}
 	}
 
-	protected void validate(int type, long parentMicroblogsEntryId)
+	private void _validate(int type, long parentMicroblogsEntryId)
 		throws PortalException {
 
 		if (parentMicroblogsEntryId == 0) {
@@ -703,7 +703,7 @@ public class MicroblogsEntryLocalServiceImpl
 				for (int j = start; j < end; j++) {
 					notificationEventJSONObject.put(
 						"subscriptionId",
-						getSubscriptionId(
+						_getSubscriptionId(
 							receiverUserIds.get(j), microblogsEntry));
 
 					int notificationType = MicroblogsUtil.getNotificationType(

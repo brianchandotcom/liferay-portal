@@ -1134,6 +1134,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	@Reference
+	protected ExpandoRowLocalService expandoRowLocalService;
+
 	private void _moveAttachmentsFolders(
 			MBMessage message, long oldAttachmentsFolderId, MBThread oldThread,
 			MBThread newThread, ServiceContext serviceContext)
@@ -1180,9 +1183,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			_moveChildrenMessages(message, category, oldThreadId);
 		}
 	}
-
-	@Reference
-	protected ExpandoRowLocalService expandoRowLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

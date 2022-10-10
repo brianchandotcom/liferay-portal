@@ -1030,6 +1030,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 	}
 
+	private <T> void _reindex(Class<T> clazz, T model) throws PortalException {
+		Indexer<T> indexer = IndexerRegistryUtil.nullSafeGetIndexer(clazz);
+
+		indexer.reindex(model);
+	}
+
 	private void _restoreDependentsFromTrash(
 			User user, List<Object> categoriesAndThreads)
 		throws PortalException {
@@ -1134,12 +1140,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if (Validator.isNull(name)) {
 			throw new CategoryNameException("Name is null");
 		}
-	}
-
-	private <T> void _reindex(Class<T> clazz, T model) throws PortalException {
-		Indexer<T> indexer = IndexerRegistryUtil.nullSafeGetIndexer(clazz);
-
-		indexer.reindex(model);
 	}
 
 	@Reference

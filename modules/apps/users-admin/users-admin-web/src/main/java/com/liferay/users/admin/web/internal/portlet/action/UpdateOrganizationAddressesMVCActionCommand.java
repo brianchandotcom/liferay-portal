@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -122,9 +121,6 @@ public class UpdateOrganizationAddressesMVCActionCommand
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UsersAdmin _usersAdmin;

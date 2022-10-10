@@ -97,7 +97,7 @@
 	</tr>
 	<tr>
 		<td>IFRAME_PICKLIST_ITEM_MODAL</td>
-		<td>xpath=(//iframe[contains(@src,'ListTypeDefinitions')])[2]</td>
+		<td>//div[contains(@class,'modal-content')]</td>
 		<td></td>
 	</tr>
 	<tr>

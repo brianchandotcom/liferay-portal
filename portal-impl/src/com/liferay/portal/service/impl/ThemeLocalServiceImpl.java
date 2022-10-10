@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.PluginSetting;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletDecorator;
 import com.liferay.portal.kernel.model.Theme;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
 import com.liferay.portal.kernel.service.PluginSettingLocalService;
+import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.PortletDecoratorFactoryUtil;
@@ -40,6 +43,8 @@ import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
@@ -50,6 +55,8 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.plugin.PluginUtil;
 import com.liferay.portal.service.base.ThemeLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContextReplace;
 
 import java.util.ArrayList;
@@ -209,6 +216,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		}
 
 		ThemeImpl themeImpl = (ThemeImpl)theme;
+
+		_updateDefaultPortletDecorateId(companyId);
 
 		return themeImpl.getDefaultPortletDecorator();
 	}
@@ -860,6 +869,29 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return themes;
 	}
 
+	private void _updateDefaultPortletDecorateId(long companyId) {
+		PortalPreferences portalPreferences =
+			_portalPreferencesLocalService.fetchPortalPreferences(
+				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		com.liferay.portal.kernel.portlet.PortalPreferences
+			newPortalPreferences =
+				_portalPreferenceValueLocalService.getPortalPreferences(
+					portalPreferences, false);
+
+		String defaultPortletDecoratorId = newPortalPreferences.getValue(
+			null, "defaultPortletDecoratorId");
+
+		if (defaultPortletDecoratorId != null) {
+			PropsUtil.set(
+				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID,
+				defaultPortletDecoratorId);
+
+			PropsValues.DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(
+				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeLocalServiceImpl.class);
 
@@ -872,5 +904,12 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 	@BeanReference(type = PluginSettingLocalService.class)
 	private PluginSettingLocalService _pluginSettingLocalService;
+
+	@BeanReference(type = PortalPreferencesLocalService.class)
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@BeanReference(type = PortalPreferenceValueLocalService.class)
+	private PortalPreferenceValueLocalService
+		_portalPreferenceValueLocalService;
 
 }

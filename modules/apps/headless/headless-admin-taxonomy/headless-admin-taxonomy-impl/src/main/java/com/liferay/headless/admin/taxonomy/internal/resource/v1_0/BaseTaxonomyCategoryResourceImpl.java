@@ -1227,24 +1227,18 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		if (Validator.isNotNull(roleNames)) {
 			return Page.of(
 				actions,
-				transform(
-					PermissionUtil.getRoles(
-						contextCompany, roleLocalService,
-						StringUtil.split(roleNames)),
-					role -> PermissionUtil.toPermission(
-						contextCompany.getCompanyId(), id, resourceActions,
-						resourceName, resourcePermissionLocalService, role)));
+				PermissionUtil.getResourcePermissionsByResourceName(
+					contextCompany.getCompanyId(), resourceActions, id,
+					resourceName, resourcePermissionLocalService,
+					roleLocalService, StringUtil.split(roleNames)));
 		}
 
 		return Page.of(
 			actions,
-			transform(
-				PermissionUtil.getResourcePermissions(
-					contextCompany.getCompanyId(), id, resourceName,
-					resourcePermissionLocalService),
-				resourcePermission -> PermissionUtil.toPermission(
-					resourceActions, resourcePermission,
-					roleLocalService.getRole(resourcePermission.getRoleId()))));
+			PermissionUtil.getResourcePermissionsByResourceName(
+				contextCompany.getCompanyId(), resourceActions, id,
+				resourceName, resourcePermissionLocalService, roleLocalService,
+				null));
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

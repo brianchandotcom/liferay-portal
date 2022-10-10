@@ -233,7 +233,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		MBMessage parentMessage = mbMessagePersistence.findByPrimaryKey(
 			parentMessageId);
 
-		checkReplyToPermission(
+		_checkReplyToPermission(
 			parentMessage.getGroupId(), parentMessage.getCategoryId(),
 			parentMessageId);
 
@@ -483,7 +483,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
 	}
@@ -561,7 +561,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
 	}
@@ -617,7 +617,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
 	}
@@ -664,7 +664,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
 	}
@@ -776,7 +776,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		return exportToRSS(
+		return _exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
 	}
@@ -867,7 +867,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			_messageModelResourcePermission.contains(
 				getPermissionChecker(), message, ActionKeys.UPDATE)) {
 
-			checkReplyToPermission(
+			_checkReplyToPermission(
 				message.getGroupId(), message.getCategoryId(),
 				message.getParentMessageId());
 		}
@@ -910,7 +910,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
-	protected void checkReplyToPermission(
+	private void _checkReplyToPermission(
 			long groupId, long categoryId, long parentMessageId)
 		throws PortalException {
 
@@ -940,7 +940,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		}
 	}
 
-	protected String exportToRSS(
+	private String _exportToRSS(
 		String name, String description, String type, double version,
 		String displayStyle, String feedURL, String entryURL,
 		List<MBMessage> messages, ThemeDisplay themeDisplay) {

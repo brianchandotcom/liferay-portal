@@ -79,7 +79,7 @@ public class MBMailingListLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(
+		_validate(
 			emailAddress, inServerName, inUserName, outEmailAddress, outCustom,
 			outServerName, outUserName, active);
 
@@ -117,7 +117,7 @@ public class MBMailingListLocalServiceImpl
 		// Scheduler
 
 		if (active) {
-			scheduleMailingList(mailingList);
+			_scheduleMailingList(mailingList);
 		}
 
 		return mailingList;
@@ -146,7 +146,7 @@ public class MBMailingListLocalServiceImpl
 	public void deleteMailingList(MBMailingList mailingList)
 		throws PortalException {
 
-		unscheduleMailingList(mailingList);
+		_unscheduleMailingList(mailingList);
 
 		mbMailingListPersistence.remove(mailingList);
 	}
@@ -178,7 +178,7 @@ public class MBMailingListLocalServiceImpl
 
 		// Message boards mailing list
 
-		validate(
+		_validate(
 			emailAddress, inServerName, inUserName, outEmailAddress, outCustom,
 			outServerName, outUserName, active);
 
@@ -211,13 +211,13 @@ public class MBMailingListLocalServiceImpl
 			try (SafeCloseable safeCloseable =
 					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
 
-				unscheduleMailingList(mailingList);
+				_unscheduleMailingList(mailingList);
 
-				scheduleMailingList(mailingList);
+				_scheduleMailingList(mailingList);
 			}
 		}
 		else {
-			unscheduleMailingList(mailingList);
+			_unscheduleMailingList(mailingList);
 		}
 
 		return mailingList;
@@ -242,16 +242,16 @@ public class MBMailingListLocalServiceImpl
 		}
 	}
 
-	protected String getSchedulerGroupName(MBMailingList mailingList) {
+	private String _getSchedulerGroupName(MBMailingList mailingList) {
 		return StringBundler.concat(
 			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, StringPool.SLASH,
 			mailingList.getMailingListId());
 	}
 
-	protected void scheduleMailingList(MBMailingList mailingList)
+	private void _scheduleMailingList(MBMailingList mailingList)
 		throws PortalException {
 
-		String groupName = getSchedulerGroupName(mailingList);
+		String groupName = _getSchedulerGroupName(mailingList);
 
 		Calendar startDate = CalendarFactoryUtil.getCalendar();
 
@@ -284,15 +284,15 @@ public class MBMailingListLocalServiceImpl
 			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, message, 0);
 	}
 
-	protected void unscheduleMailingList(MBMailingList mailingList)
+	private void _unscheduleMailingList(MBMailingList mailingList)
 		throws PortalException {
 
-		String groupName = getSchedulerGroupName(mailingList);
+		String groupName = _getSchedulerGroupName(mailingList);
 
 		SchedulerEngineHelperUtil.delete(groupName, StorageType.PERSISTED);
 	}
 
-	protected void validate(
+	private void _validate(
 			String emailAddress, String inServerName, String inUserName,
 			String outEmailAddress, boolean outCustom, String outServerName,
 			String outUserName, boolean active)

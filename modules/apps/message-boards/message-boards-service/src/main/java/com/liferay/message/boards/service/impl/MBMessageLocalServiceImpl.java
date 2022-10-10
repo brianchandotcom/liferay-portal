@@ -228,10 +228,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		validateDiscussionMaxComments(className, classPK);
+		_validateDiscussionMaxComments(className, classPK);
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
-		subject = getDiscussionMessageSubject(subject, body);
+		subject = _getDiscussionMessageSubject(subject, body);
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 		boolean anonymous = false;
@@ -436,9 +436,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
-		subject = getSubject(subject, body);
+		subject = _getSubject(subject, body);
 
-		body = getBody(subject, body, format);
+		body = _getBody(subject, body, format);
 
 		body = SanitizerUtil.sanitize(
 			user.getCompanyId(), groupId, userId, MBMessage.class.getName(),
@@ -456,7 +456,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			).build());
 
-		validate(subject, body);
+		_validate(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -478,7 +478,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		message.setSubject(subject);
-		message.setUrlSubject(getUniqueUrlSubject(groupId, messageId, subject));
+		message.setUrlSubject(_getUniqueUrlSubject(groupId, messageId, subject));
 		message.setAllowPingbacks(allowPingbacks);
 		message.setStatus(WorkflowConstants.STATUS_DRAFT);
 		message.setStatusByUserId(user.getUserId());
@@ -521,7 +521,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			_mbThreadLocalService.updateMBThread(thread);
 
-			updatePriorities(thread.getThreadId(), priority);
+			_updatePriorities(thread.getThreadId(), priority);
 		}
 
 		// Message
@@ -587,7 +587,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Asset
 
-		updateAsset(
+		_updateAsset(
 			userId, message, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
@@ -595,7 +595,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		return startWorkflowInstance(userId, message, serviceContext);
+		return _startWorkflowInstance(userId, message, serviceContext);
 	}
 
 	@Override
@@ -1708,7 +1708,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException {
 
-		updateAsset(
+		_updateAsset(
 			userId, message, assetCategoryIds, assetTagNames, assetLinkEntryIds,
 			true);
 	}
@@ -1719,7 +1719,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		subject = getDiscussionMessageSubject(subject, body);
+		subject = _getDiscussionMessageSubject(subject, body);
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
 		double priority = 0.0;
 		boolean allowPingbacks = false;
@@ -1802,7 +1802,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBThread thread = _mbThreadPersistence.findByPrimaryKey(
 			message.getThreadId());
 
-		updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
+		_updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
 
 		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
@@ -1847,7 +1847,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Subscriptions
 
-			notifySubscribers(
+			_notifySubscribers(
 				notifySubscribersUserId, (MBMessage)message.clone(),
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 				serviceContext);
@@ -1858,7 +1858,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Ping
 
-			pingPingback(message, serviceContext);
+			_pingPingback(message, serviceContext);
 		}
 		else if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 
@@ -1906,7 +1906,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected String getBody(String subject, String body, String format) {
+	private String _getBody(String subject, String body, String format) {
 		if (!Validator.isBlank(body)) {
 			return body;
 		}
@@ -1918,7 +1918,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subject;
 	}
 
-	protected String getDiscussionMessageSubject(String subject, String body)
+	private String _getDiscussionMessageSubject(String subject, String body)
 		throws MessageBodyException {
 
 		if (Validator.isNotNull(subject)) {
@@ -1941,7 +1941,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subjectSubstring + StringPool.TRIPLE_PERIOD;
 	}
 
-	protected String getMessageURL(
+	private String _getMessageURL(
 			MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1998,7 +1998,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		).buildString();
 	}
 
-	protected String getSubject(String subject, String body) {
+	private String _getSubject(String subject, String body) {
 		if (Validator.isNull(subject)) {
 			return StringUtil.shorten(body);
 		}
@@ -2006,7 +2006,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subject;
 	}
 
-	protected MBSubscriptionSender getSubscriptionSender(
+	private MBSubscriptionSender _getSubscriptionSender(
 			long userId, MBCategory category, MBMessage message,
 			String messageURL, String entryTitle, boolean htmlFormat,
 			String messageBody, String messageSubject,
@@ -2100,7 +2100,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subscriptionSender;
 	}
 
-	protected String getUniqueUrlSubject(
+	private String _getUniqueUrlSubject(
 		long groupId, long mbMessageId, String subject) {
 
 		String urlSubject = _getUrlSubject(mbMessageId, subject);
@@ -2120,7 +2120,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return uniqueUrlSubject;
 	}
 
-	protected void notifyDiscussionSubscribers(
+	private void _notifyDiscussionSubscribers(
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2226,7 +2226,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected void notifySubscribers(
+	private void _notifySubscribers(
 			long userId, MBMessage message, String messageURL,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -2241,7 +2241,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 
 			try {
-				notifyDiscussionSubscribers(userId, message, serviceContext);
+				_notifyDiscussionSubscribers(userId, message, serviceContext);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -2373,7 +2373,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		SubscriptionSender subscriptionSender = getSubscriptionSender(
+		SubscriptionSender subscriptionSender = _getSubscriptionSender(
 			userId, category, message, messageURL, entryTitle, htmlFormat,
 			messageBody, messageSubject, messageSubjectPrefix, inReplyTo,
 			fromName, fromAddress, replyToAddress, emailAddress, fullName,
@@ -2399,7 +2399,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (!MailingListThreadLocal.isSourceMailingList()) {
 			for (long categoryId : categoryIds) {
 				MBSubscriptionSender sourceMailingListSubscriptionSender =
-					getSubscriptionSender(
+					_getSubscriptionSender(
 						userId, category, message, messageURL, entryTitle,
 						htmlFormat, messageBody, messageSubject,
 						messageSubjectPrefix, inReplyTo, fromName, fromAddress,
@@ -2417,7 +2417,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void pingPingback(
+	private void _pingPingback(
 		MBMessage message, ServiceContext serviceContext) {
 
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED ||
@@ -2455,14 +2455,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected MBMessage startWorkflowInstance(
+	private MBMessage _startWorkflowInstance(
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<String, Serializable> workflowContext =
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_URL,
-				getMessageURL(message, serviceContext)
+				_getMessageURL(message, serviceContext)
 			).build();
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -2471,7 +2471,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			serviceContext, workflowContext);
 	}
 
-	protected void updateAsset(
+	private void _updateAsset(
 			long userId, MBMessage message, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds,
 			boolean assetEntryVisible)
@@ -2501,7 +2501,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	protected void updatePriorities(long threadId, double priority) {
+	private void _updatePriorities(long threadId, double priority) {
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
 			threadId);
 
@@ -2514,7 +2514,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected MBThread updateThreadStatus(
+	private MBThread _updateThreadStatus(
 			MBThread thread, MBMessage message, User user, int oldStatus,
 			Date modifiedDate)
 		throws PortalException {
@@ -2558,7 +2558,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return thread;
 	}
 
-	protected void validate(String subject, String body)
+	private void _validate(String subject, String body)
 		throws PortalException {
 
 		if (Validator.isNull(subject) && Validator.isNull(body)) {
@@ -2566,7 +2566,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateDiscussionMaxComments(String className, long classPK)
+	private void _validateDiscussionMaxComments(String className, long classPK)
 		throws PortalException {
 
 		if (PropsValues.DISCUSSION_MAX_COMMENTS <= 0) {
@@ -2735,9 +2735,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
-		subject = getSubject(subject, body);
+		subject = _getSubject(subject, body);
 
-		body = getBody(subject, body, message.getFormat());
+		body = _getBody(subject, body, message.getFormat());
 
 		body = SanitizerUtil.sanitize(
 			message.getCompanyId(), message.getGroupId(), userId,
@@ -2747,7 +2747,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"discussion", message.isDiscussion()
 			).build());
 
-		validate(subject, body);
+		_validate(subject, body);
 
 		message.setModifiedDate(modifiedDate);
 		message.setSubject(subject);
@@ -2769,7 +2769,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			thread = updateThreadStatus(
+			thread = _updateThreadStatus(
 				thread, message, _userLocalService.getUser(userId), oldStatus,
 				modifiedDate);
 
@@ -2802,7 +2802,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread = _mbThreadLocalService.updateMBThread(thread);
 
-			updatePriorities(thread.getThreadId(), priority);
+			_updatePriorities(thread.getThreadId(), priority);
 		}
 
 		if (message.isRoot()) {
@@ -2822,7 +2822,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		return startWorkflowInstance(userId, message, serviceContext);
+		return _startWorkflowInstance(userId, message, serviceContext);
 	}
 
 	private void _updateSocialActivity(

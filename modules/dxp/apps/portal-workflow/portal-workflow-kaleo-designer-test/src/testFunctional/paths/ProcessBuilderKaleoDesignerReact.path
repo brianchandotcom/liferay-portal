@@ -527,14 +527,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_FIELD</td>
-    <td>//input[contains(@class,'form-control-inset')]</td>
-    <td></td>
+	<td>NOTIFICATION_FIELD</td>
+	<td>//input[contains(@class,'form-control-inset')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_LABEL</td>
-    <td>//span[contains(@class,'label-item label-item-expand')and contains(.,'${key_notificationTypeOption}')]</td>
-    <td></td>
+	<td>NOTIFICATION_LABEL</td>
+	<td>//span[contains(@class,'label-item label-item-expand')and contains(.,'${key_notificationTypeOption}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

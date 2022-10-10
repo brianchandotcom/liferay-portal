@@ -1653,8 +1653,6 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editNotification(description = "Notification Description Edited");
 
-
-
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
@@ -1690,8 +1688,6 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editNotification(name = "Liferay Notification Edited");
 
-
-
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "Liferay Notification Edited");
@@ -1723,10 +1719,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateValue = "Notification Template");
 
 		ProcessBuilderKaleoDesignerReact.editNotification(
-		notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''',
-		templateLanguageOption = "FreeMarker");
-
-		
+			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''',
+			templateLanguageOption = "FreeMarker");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2831,7 +2825,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
-		
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeName = "Email");
 	}
@@ -3158,7 +3151,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
-		
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeName = "User Notification");
 	}

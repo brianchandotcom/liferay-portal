@@ -2971,11 +2971,6 @@ ansi-escapes@^1.1.0:
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
   integrity sha1-06ioOzGapneTZisT52HHkRQiMG4=
 
-ansi-escapes@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-3.2.0.tgz#8780b98ff9dbf5638152d1f1fe5c1d7b4442976b"
-  integrity sha512-cBhpre4ma+U0T1oM5fXg7Dy1Jw7zzwv7lt/GoCpr+hDQJoYnKVPLL4dCvSEFMmQurOQvSrwT7SL/DAlhBI97RQ==
-
 ansi-escapes@^4.2.1:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-4.3.0.tgz#a4ce2b33d6b214b7950d8595c212f12ac9cc569d"
@@ -3537,12 +3532,27 @@ babel-plugin-add-module-metadata@2.24.2:
     liferay-npm-build-tools-common "2.24.2"
     read-json-sync "^2.0.1"
 
+babel-plugin-add-module-metadata@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-add-module-metadata/-/babel-plugin-add-module-metadata-2.29.0.tgz#9382252dcc9e6676e08830497187d96fe4724336"
+  integrity sha512-FVV71XLNQ/SNlj0QXua2L58+rD+Iy+RIv8sfSDIrI/BPY0I1PT+vbAho/tVoBvCedqoVWO2qjQNfOLTINzYflQ==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
+    read-json-sync "^2.0.1"
+
 babel-plugin-alias-modules@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-alias-modules/-/babel-plugin-alias-modules-2.24.2.tgz#745ecab09170061b4f087ca832cd95ee50f26dd3"
   integrity sha512-lthJ0ZnN0Va1KolpIVvZdG0MOxDjgIQhdyGvOBYPKunOQzVKo6kacqvvSSyjPXEI4qjF5U5G/3sgrd4Qt6GGlQ==
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
+
+babel-plugin-alias-modules@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-alias-modules/-/babel-plugin-alias-modules-2.29.0.tgz#1d2b7c63360af5bdb30292f263ee82af729d0e58"
+  integrity sha512-TNhpdLkgpaLKjNcucNm+JORG7eYXmGVgKBilrBw4mdeV468JxnyqDtiYJ6ASz8bywDwtdEFksMyUU2kPk6H2Zw==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
 
 babel-plugin-dynamic-import-node@^2.3.0:
   version "2.3.0"
@@ -3594,12 +3604,26 @@ babel-plugin-name-amd-modules@2.24.2:
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
 
+babel-plugin-name-amd-modules@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-name-amd-modules/-/babel-plugin-name-amd-modules-2.29.0.tgz#3fbacaad6272d589c9f4b6ff0758d001652fb589"
+  integrity sha512-EwumN/wnDAiRFQQem8evN5d0ZpGfdop2TLtFs6j1nPfUKAViXJaaTGBEVuPBT/q7S7lrhGPSBFrfI0QABV5a9g==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
+
 babel-plugin-namespace-amd-define@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-namespace-amd-define/-/babel-plugin-namespace-amd-define-2.24.2.tgz#056ad80794888c05169576af18418e0495532458"
   integrity sha512-+ACN242u+6l5KvbvgPo2XWRd94lZVjCEc4GvZr1ittPdOa58MZFFWOwWUzgXncjM3wv2Ojs7jh/rujrBj5TgiQ==
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
+
+babel-plugin-namespace-amd-define@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-namespace-amd-define/-/babel-plugin-namespace-amd-define-2.29.0.tgz#db9d200c097a5039712dd6ddd0df43ecae20b2b1"
+  integrity sha512-iWULZ/RtZiBBajss/NlDypGJ35cYLxe/Elns+APW2t2UUO0v/q05uWU3oUNF5yBg6CJBrW18l4QDq0S5At0CMQ==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
 
 babel-plugin-namespace-modules@2.24.2:
   version "2.24.2"
@@ -3608,6 +3632,13 @@ babel-plugin-namespace-modules@2.24.2:
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
 
+babel-plugin-namespace-modules@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-namespace-modules/-/babel-plugin-namespace-modules-2.29.0.tgz#7e7c7a84cbc30bb535d9b5de05d61835c62664ef"
+  integrity sha512-ZjI32N0O5mSoEjlEcMI3cW02/S1UVmPwY3wuCqtgBocfgjrhNJCU8dUTmODjQnfrY5kSHGg7oC1NeExln13A7A==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
+
 babel-plugin-normalize-requires@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-normalize-requires/-/babel-plugin-normalize-requires-2.24.2.tgz#44b0ac42ff2e788e7f0156ec12487b6ae1905438"
@@ -3615,15 +3646,35 @@ babel-plugin-normalize-requires@2.24.2:
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
 
+babel-plugin-normalize-requires@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-normalize-requires/-/babel-plugin-normalize-requires-2.29.0.tgz#6b53253e57e7e9f301f5d9fd5445d691622cc5a1"
+  integrity sha512-HdRmkFnBotbz7l/WIehLGlDoohOGGLRAjpj55CvVIyfAOKVl9jQywANmYV5vpU4vz+5W02iMiY8kKyf9OP3bnw==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
+
 babel-plugin-syntax-jsx@^6.8.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
   integrity sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=
 
+babel-plugin-syntax-object-rest-spread@^6.8.0:
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-object-rest-spread/-/babel-plugin-syntax-object-rest-spread-6.13.0.tgz#fd6536f2bce13836ffa3a5458c4903a597bb3bf5"
+  integrity sha512-C4Aq+GaAj83pRQ0EFgTvw5YO6T3Qz2KGrNRwIj9mSoNHVvdZY4KO2uA6HNtNXCw993iSZnckY1aLW8nOi8i4+w==
+
 babel-plugin-transform-node-env-inline@0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-node-env-inline/-/babel-plugin-transform-node-env-inline-0.4.3.tgz#8c84cd74d58f17b0fdf76144a3589f610c3c2497"
   integrity sha1-jITNdNWPF7D992FEo1ifYQw8JJc=
+
+babel-plugin-transform-object-rest-spread@6.26.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
+  integrity sha512-ocgA9VJvyxwt+qJB0ncxV8kb/CjfTcECUY4tQ5VT7nP6Aohzobm8CDFaQ5FHdvZQzLmf0sgDxB8iRXZXxwZcyA==
+  dependencies:
+    babel-plugin-syntax-object-rest-spread "^6.8.0"
+    babel-runtime "^6.26.0"
 
 babel-plugin-transform-react-remove-prop-types@0.4.24:
   version "0.4.24"
@@ -3637,6 +3688,15 @@ babel-plugin-wrap-modules-amd@2.24.2:
   dependencies:
     babel-template "^6.26.0"
     liferay-npm-build-tools-common "2.24.2"
+    read-json-sync "^2.0.1"
+
+babel-plugin-wrap-modules-amd@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-wrap-modules-amd/-/babel-plugin-wrap-modules-amd-2.29.0.tgz#2a485a53cead167e1096e9bb77cf72cfb8f57d97"
+  integrity sha512-cZCFnC++FteZeQAskytcEu5fHZucZW46j8oyEMTP4evmr10w++07EWbjhUpZS3iDA74z2Gw71FhwrASHJ3mAEQ==
+  dependencies:
+    babel-template "^6.26.0"
+    liferay-npm-build-tools-common "2.29.0"
     read-json-sync "^2.0.1"
 
 babel-preset-jest@^25.1.0:
@@ -3662,6 +3722,22 @@ babel-preset-liferay-standard@2.24.2:
     babel-plugin-normalize-requires "2.24.2"
     babel-plugin-transform-node-env-inline "0.4.3"
     babel-plugin-wrap-modules-amd "2.24.2"
+
+babel-preset-liferay-standard@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-liferay-standard/-/babel-preset-liferay-standard-2.29.0.tgz#0ded67279416d9c41c51e10c6306b5cfc1c4bb9a"
+  integrity sha512-7dFMgHa4tdzm4nZ7hfUPAWNzKC7WtDxgszRbcuIU6poyd2Sv1kRN960B6BPBH8jnDIoGT9Q/tDOrG7LjHJ0Z0w==
+  dependencies:
+    babel-plugin-add-module-metadata "2.29.0"
+    babel-plugin-alias-modules "2.29.0"
+    babel-plugin-minify-dead-code-elimination "0.5.1"
+    babel-plugin-name-amd-modules "2.29.0"
+    babel-plugin-namespace-amd-define "2.29.0"
+    babel-plugin-namespace-modules "2.29.0"
+    babel-plugin-normalize-requires "2.29.0"
+    babel-plugin-transform-node-env-inline "0.4.3"
+    babel-plugin-transform-object-rest-spread "6.26.0"
+    babel-plugin-wrap-modules-amd "2.29.0"
 
 babel-register@^6.26.0:
   version "6.26.0"
@@ -4199,11 +4275,6 @@ character-reference-invalid@^1.0.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/character-reference-invalid/-/character-reference-invalid-1.1.3.tgz#1647f4f726638d3ea4a750cf5d1975c1c7919a85"
   integrity sha512-VOq6PRzQBam/8Jm6XBGk2fNEnHXAdGd6go0rtd4weAGECBamHDwwCQSOT12TACIYUZegUXnV6xBXqUssijtxIg==
-
-chardet@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
-  integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
 "chokidar@>=2.0.0 <4.0.0":
   version "3.5.0"
@@ -4761,13 +4832,6 @@ cli-cursor@^1.0.1:
   dependencies:
     restore-cursor "^1.0.1"
 
-cli-cursor@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
-  integrity sha1-s12sN2R5+sw+lHR9QdDQ9SOP/LU=
-  dependencies:
-    restore-cursor "^2.0.0"
-
 cli-width@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/cli-width/-/cli-width-2.2.0.tgz#ff19ede8a9a5e579324147b0c11f0fbcbabed639"
@@ -5051,17 +5115,6 @@ concat-stream@^1.4.7, concat-stream@^1.6.0:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
-
-conf@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/conf/-/conf-1.4.0.tgz#1ea66c9d7a9b601674a5bb9d2b8dc3c726625e67"
-  integrity sha512-bzlVWS2THbMetHqXKB8ypsXN4DQ/1qopGwNJi1eYbpwesJcd86FBjFciCQX/YwAhp9bM7NVnPFqZ5LpV7gP0Dg==
-  dependencies:
-    dot-prop "^4.1.0"
-    env-paths "^1.0.0"
-    make-dir "^1.0.0"
-    pkg-up "^2.0.0"
-    write-file-atomic "^2.3.0"
 
 config-chain@^1.1.12:
   version "1.1.12"
@@ -6446,13 +6499,6 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dot-prop@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
-  integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
-  dependencies:
-    is-obj "^1.0.0"
-
 dot-prop@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-5.1.0.tgz#bdd8c986a77b83e3fca524e53786df916cabbd8a"
@@ -6605,11 +6651,6 @@ entities@^2.0.0, entities@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
   integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
-
-env-paths@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-1.0.0.tgz#4168133b42bb05c38a35b1ae4397c8298ab369e0"
-  integrity sha1-QWgTO0K7BcOKNbGuQ5fIKYqzaeA=
 
 envinfo@^7.7.3:
   version "7.7.3"
@@ -7175,15 +7216,6 @@ extend@^3.0.0, extend@~3.0.2:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
-external-editor@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/external-editor/-/external-editor-3.0.3.tgz#5866db29a97826dbe4bf3afd24070ead9ea43a27"
-  integrity sha512-bn71H9+qWoOQKyZDo25mOMVpSmXROAsTJVVVYzrrtol3d4y+AsKjf4Iwl2Q+IuT0kFSQ1qo166UuIwqYq7mGnA==
-  dependencies:
-    chardet "^0.7.0"
-    iconv-lite "^0.4.24"
-    tmp "^0.0.33"
-
 extglob@^0.3.1:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/extglob/-/extglob-0.3.2.tgz#2e18ff3d2f49ab2765cec9023f011daa8d8349a1"
@@ -7332,13 +7364,6 @@ figures@^1.3.5:
     escape-string-regexp "^1.0.5"
     object-assign "^4.1.0"
 
-figures@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/figures/-/figures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
-  integrity sha1-OrGi0qYsi/tDGgyUy3l6L84nyWI=
-  dependencies:
-    escape-string-regexp "^1.0.5"
-
 file-entry-cache@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-5.0.1.tgz#ca0f6efa6dd3d561333fb14515065c2fafdf439c"
@@ -7428,7 +7453,7 @@ find-up@^1.0.0:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
-find-up@^2.0.0, find-up@^2.1.0:
+find-up@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   integrity sha1-RdG35QbHF93UgndaK3eSCjwMV6c=
@@ -8819,7 +8844,7 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-iconv-lite@0.4, iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
+iconv-lite@0.4, iconv-lite@0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
@@ -8993,40 +9018,6 @@ inquirer@^0.12.0:
     string-width "^1.0.1"
     strip-ansi "^3.0.0"
     through "^2.3.6"
-
-inquirer@^6.3.1:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.2.tgz#ad50942375d036d327ff528c08bd5fab089928ca"
-  integrity sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ==
-  dependencies:
-    ansi-escapes "^3.2.0"
-    chalk "^2.4.2"
-    cli-cursor "^2.1.0"
-    cli-width "^2.0.0"
-    external-editor "^3.0.3"
-    figures "^2.0.0"
-    lodash "^4.17.12"
-    mute-stream "0.0.7"
-    run-async "^2.2.0"
-    rxjs "^6.4.0"
-    string-width "^2.1.0"
-    strip-ansi "^5.1.0"
-    through "^2.3.6"
-
-insight@0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/insight/-/insight-0.10.3.tgz#e7fa6593fd11323d227154cc8ce5f8bff638bf02"
-  integrity sha512-YOncxSN6Omh+1Oqxt+OJAvJVMDKw7l6IEG0wT2cTMGxjsTcroOGW4IR926QDzxg/uZHcFZ2cZbckDWdZhc2pZw==
-  dependencies:
-    async "^2.6.2"
-    chalk "^2.4.2"
-    conf "^1.4.0"
-    inquirer "^6.3.1"
-    lodash.debounce "^4.0.8"
-    os-name "^3.1.0"
-    request "^2.88.0"
-    tough-cookie "^3.0.1"
-    uuid "^3.3.2"
 
 internal-ip@^4.3.0:
   version "4.3.0"
@@ -9383,11 +9374,6 @@ is-number@^7.0.0:
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
 
-is-obj@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
-  integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
-
 is-obj@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-2.0.0.tgz#473fb05d973705e3fd9620545018ca8e22ef4982"
@@ -9443,11 +9429,6 @@ is-primitive@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-primitive/-/is-primitive-2.0.0.tgz#207bab91638499c07b2adf240a41a87210034575"
   integrity sha1-IHurkWOEmcB7Kt8kCkGochADRXU=
-
-is-promise@^2.1.0:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.2.2.tgz#39ab959ccbf9a774cf079f7b40c7a26f763135f1"
-  integrity sha512-+lP4/6lKUBfQjZ2pdxThZvLUAafmZb8OAxFb8XXtiQmS35INgr85hdOGoEs124ez1FCnZJt6jau/T+alh58QFQ==
 
 is-regex@^1.1.2:
   version "1.1.2"
@@ -10524,19 +10505,20 @@ liferay-npm-bridge-generator@2.24.2:
     read-json-sync "^2.0.1"
     yargs "^14.0.0"
 
-liferay-npm-build-tools-common@2.24.2, liferay-npm-build-tools-common@^2.17.1:
-  version "2.24.2"
-  resolved "https://registry.yarnpkg.com/liferay-npm-build-tools-common/-/liferay-npm-build-tools-common-2.24.2.tgz#1bc54bfe08de9d14d7b54a0b5b2c4bd5fc17febb"
-  integrity sha512-2Gbv6yulnJ02WdQQTSmB+pS99zGMTO6lBAwWe+2XjlURQtSY7bj/EiTWr1IbB7+wMk1rOoXLWP6RA/2ItSrhqg==
+liferay-npm-build-tools-common@2.24.2, liferay-npm-build-tools-common@2.29.0, liferay-npm-build-tools-common@^2.17.1:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-build-tools-common/-/liferay-npm-build-tools-common-2.29.0.tgz#185459e0999312901a81fb07caa32565f6d40620"
+  integrity sha512-rBZWVWFRZXnJhuQDyVBAqsDkjVMizJ6Lp0QaTHQoEaAQixg7xIG7srfnxP+SUM0zslUNYGMgDriMMRUwjR6N5w==
   dependencies:
     chalk "^2.4.2"
     dot-prop "^5.0.1"
     escape-string-regexp "^2.0.0"
-    liferay-npm-bundler-preset-standard "2.24.2"
-    merge "^1.2.1"
+    liferay-npm-bundler-preset-standard "2.29.0"
+    merge "^2.1.1"
     properties "^1.2.1"
     read-json-sync "^2.0.1"
     resolve "^1.8.1"
+    semver "^6.3.0"
 
 liferay-npm-bundler-loader-css-loader@2.24.2:
   version "2.24.2"
@@ -10560,12 +10542,26 @@ liferay-npm-bundler-plugin-exclude-imports@2.24.2:
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
 
+liferay-npm-bundler-plugin-exclude-imports@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-exclude-imports/-/liferay-npm-bundler-plugin-exclude-imports-2.29.0.tgz#61d3f6eb0a156e9ea926a884c83211f2d3932381"
+  integrity sha512-kOle0GcAnZ83YLYYC5SxSCQJ+YY1Ju3+7pBGBMMCBFvdYsvX8a4kfrWDgjXpX9HSOaOa7Wgrnn0EV4o2Gw9ybQ==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
+
 liferay-npm-bundler-plugin-inject-imports-dependencies@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-imports-dependencies/-/liferay-npm-bundler-plugin-inject-imports-dependencies-2.24.2.tgz#591b10edd1a234912b8d4a2699000091ad16a0b9"
   integrity sha512-S8vEK5y+3dmD2IDk5aNxF5cAxQLQRrkC3Jr0WVMXWyp/c7+JmB+nS+0R+J4SWokdIXviHVgwdcrbqJz1iaUBfw==
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
+
+liferay-npm-bundler-plugin-inject-imports-dependencies@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-imports-dependencies/-/liferay-npm-bundler-plugin-inject-imports-dependencies-2.29.0.tgz#5d8a29642ea3126aef7e0d9c687899a1a7c7aafb"
+  integrity sha512-gw4H7nk8DILa6/OArEqWL8aZEOieLyAOPmwiST9AAM2ZUZL2m7hjiKolwW8cvY4Zunz4EEOc5ehicpyJYdlUlw==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
 
 liferay-npm-bundler-plugin-inject-peer-dependencies@2.24.2:
   version "2.24.2"
@@ -10577,12 +10573,29 @@ liferay-npm-bundler-plugin-inject-peer-dependencies@2.24.2:
     read-json-sync "^2.0.1"
     resolve "^1.8.1"
 
+liferay-npm-bundler-plugin-inject-peer-dependencies@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-inject-peer-dependencies/-/liferay-npm-bundler-plugin-inject-peer-dependencies-2.29.0.tgz#4f31bcd1ca258647839468e2bf4ab2c24d0d1a7f"
+  integrity sha512-nQWFkdk1hOrpT+sjHkbFajqqsbB8fksSvlh8OE06APzRn7fvdv23qetBLuXfQG1C7hmc2nfr1QIYR9al+hhXww==
+  dependencies:
+    globby "^10.0.1"
+    liferay-npm-build-tools-common "2.29.0"
+    read-json-sync "^2.0.1"
+    resolve "^1.8.1"
+
 liferay-npm-bundler-plugin-namespace-packages@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-namespace-packages/-/liferay-npm-bundler-plugin-namespace-packages-2.24.2.tgz#7acd4394859aaf827c8f68785d3e423678c9caed"
   integrity sha512-9BAiX/i/9ER6S23y1Oe4rJ7NQzrm+mN2Bq1zpVVasCQK0j74H+u0zoRAdI93chRpkG7vqqdMt25wSD5boM2jTg==
   dependencies:
     liferay-npm-build-tools-common "2.24.2"
+
+liferay-npm-bundler-plugin-namespace-packages@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-namespace-packages/-/liferay-npm-bundler-plugin-namespace-packages-2.29.0.tgz#435aa924750b66661c3fb97a4d68d36713726141"
+  integrity sha512-5ou5JLGm7gipqcZoijMLbLDuJOAS5G+uReCgbvBpBuMqy0RjMIsT+t6wze7d3ZaSEACZj6tLg/E6XIX4r6Nc+g==
+  dependencies:
+    liferay-npm-build-tools-common "2.29.0"
 
 liferay-npm-bundler-plugin-replace-browser-modules@2.24.2:
   version "2.24.2"
@@ -10593,6 +10606,15 @@ liferay-npm-bundler-plugin-replace-browser-modules@2.24.2:
     fs-extra "^8.1.0"
     liferay-npm-build-tools-common "2.24.2"
 
+liferay-npm-bundler-plugin-replace-browser-modules@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-replace-browser-modules/-/liferay-npm-bundler-plugin-replace-browser-modules-2.29.0.tgz#3818122038798b375dc6a0cca4f10de88d65b6b7"
+  integrity sha512-gl85HeT6yoV15HFj5VoLEGYtCQ4MBTWOd+t/prq8eeTsKQ8uYREI8otDrl9AkBbKo1Th+QIcn65d2Q34dyH3SQ==
+  dependencies:
+    dot-prop "^5.0.1"
+    fs-extra "^8.1.0"
+    liferay-npm-build-tools-common "2.29.0"
+
 liferay-npm-bundler-plugin-resolve-linked-dependencies@2.24.2:
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-resolve-linked-dependencies/-/liferay-npm-bundler-plugin-resolve-linked-dependencies-2.24.2.tgz#8674ff34be7151b6509222d92b3ec48f3f3bd5d5"
@@ -10602,23 +10624,32 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.24.2:
     read-json-sync "^2.0.1"
     semver "^6.3.0"
 
-liferay-npm-bundler-preset-standard@2.24.2:
-  version "2.24.2"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-standard/-/liferay-npm-bundler-preset-standard-2.24.2.tgz#bda63e29d5ea62bf03401c31f1bdc2c8ee39b618"
-  integrity sha512-OohnMiPtLa7aclkXZmV97Lx3wIgwY/usjgKQE06kARAtFF4mBlMndNuK+HEosgNrihimmd61Sh7BkSs+JYIR/g==
+liferay-npm-bundler-plugin-resolve-linked-dependencies@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-plugin-resolve-linked-dependencies/-/liferay-npm-bundler-plugin-resolve-linked-dependencies-2.29.0.tgz#70185a5075624a3079bbb7f2744728bfb702e75f"
+  integrity sha512-hIq2wq6/v0hrUreZndNW2PEllDTzUtmPLPmYDh308zRvW5R3RjnkNWhzt7rQoX5oapavMqrbIr7/RxOhDjXjfA==
   dependencies:
-    babel-preset-liferay-standard "2.24.2"
-    liferay-npm-bundler-plugin-exclude-imports "2.24.2"
-    liferay-npm-bundler-plugin-inject-imports-dependencies "2.24.2"
-    liferay-npm-bundler-plugin-inject-peer-dependencies "2.24.2"
-    liferay-npm-bundler-plugin-namespace-packages "2.24.2"
-    liferay-npm-bundler-plugin-replace-browser-modules "2.24.2"
-    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.24.2"
+    liferay-npm-build-tools-common "2.29.0"
+    read-json-sync "^2.0.1"
+    semver "^6.3.0"
 
-liferay-npm-bundler@2.24.2:
-  version "2.24.2"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler/-/liferay-npm-bundler-2.24.2.tgz#d95016bc88b4e845af184b3df94dd92dcd339533"
-  integrity sha512-YN6Y8QDY4SJPksfplMscxUPGd29GxlX4kETaZxT1DVpCAKMyd8C6Ms4HxBeE/KFHZfvKsOmgOsC3yKDycE0QWQ==
+liferay-npm-bundler-preset-standard@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-standard/-/liferay-npm-bundler-preset-standard-2.29.0.tgz#f8187e6c4ba2afa4f994cf0595c46ea61cb884ad"
+  integrity sha512-f0xcg/hGC90i8YgnNvPPeJc/8BE1U1owmF0iiYw0kulMIZXbzVJq/WHPkpvnMMcZMOEX0szhYaSyh/p/qfcjFA==
+  dependencies:
+    babel-preset-liferay-standard "2.29.0"
+    liferay-npm-bundler-plugin-exclude-imports "2.29.0"
+    liferay-npm-bundler-plugin-inject-imports-dependencies "2.29.0"
+    liferay-npm-bundler-plugin-inject-peer-dependencies "2.29.0"
+    liferay-npm-bundler-plugin-namespace-packages "2.29.0"
+    liferay-npm-bundler-plugin-replace-browser-modules "2.29.0"
+    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.29.0"
+
+liferay-npm-bundler@2.24.2, liferay-npm-bundler@2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler/-/liferay-npm-bundler-2.29.0.tgz#9331283f40af6f330415e7de5d7f79fb0c524acd"
+  integrity sha512-C6NKKXRAjcgPPAIspK3SvtpEK/ZaegvKZb/T91iPhOCYHMiggtirRuLgTOwPQ9pLBc98twyi6SQBc+qaxx09YQ==
   dependencies:
     babel-core "^6.26.3"
     clone "^2.1.2"
@@ -10626,11 +10657,10 @@ liferay-npm-bundler@2.24.2:
     dot-prop "^5.0.1"
     fs-extra "^8.1.0"
     globby "^10.0.1"
-    insight "0.10.3"
     jszip "^3.1.5"
-    liferay-npm-build-tools-common "2.24.2"
-    liferay-npm-bundler-preset-standard "2.24.2"
-    merge "^1.2.1"
+    liferay-npm-build-tools-common "2.29.0"
+    liferay-npm-bundler-preset-standard "2.29.0"
+    merge "^2.1.1"
     pretty-time "^1.1.0"
     read-json-sync "^2.0.1"
     resolve "^1.8.1"
@@ -10998,7 +11028,7 @@ lodash.unescape@4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
-lodash@4.17.21, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.4:
+lodash@4.17.21, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -11090,18 +11120,6 @@ lz-string@^1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
-
-macos-release@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/macos-release/-/macos-release-2.3.0.tgz#eb1930b036c0800adebccd5f17bc4c12de8bb71f"
-  integrity sha512-OHhSbtcviqMPt7yfw5ef5aghS2jzFVKEFyCJndQt2YpSQ9qRVSEv2axSJI1paVThEu+FFGs584h/1YhxjVqajA==
-
-make-dir@^1.0.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
-  integrity sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==
-  dependencies:
-    pify "^3.0.0"
 
 make-dir@^2.0.0:
   version "2.1.0"
@@ -11315,10 +11333,15 @@ merge2@^1.2.3, merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.3.0.tgz#5b366ee83b2f1582c48f87e47cf1a9352103ca81"
   integrity sha512-2j4DAdlBOkiSZIsaXk4mTE3sRS02yBHAtfy127xRV3bQUFqXkjHCHLW6Scv7DwNRbIWNHH8zpnz9zMaKXIdvYw==
 
-merge@^1.2.0, merge@^1.2.1:
+merge@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
   integrity sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
+
+merge@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/merge/-/merge-2.1.1.tgz#59ef4bf7e0b3e879186436e8481c06a6c162ca98"
+  integrity sha512-jz+Cfrg9GWOZbQAnDQ4hlVnQky+341Yk5ru8bZSe6sIDTCIg8n9i/u7hSQGSVOF3C7lH6mGtqjkiT9G4wFLL0w==
 
 meros@^1.1.4:
   version "1.2.0"
@@ -11884,11 +11907,6 @@ mute-stream@0.0.5:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
   integrity sha1-j7+rsKmKJT0xhDMfno3rc3L6xsA=
 
-mute-stream@0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
-  integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
-
 nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
@@ -12339,13 +12357,6 @@ onetime@^1.0.0:
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
   integrity sha1-ofeDj4MUxRbwXs78vEzP4EtO14k=
 
-onetime@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
-  integrity sha1-BnQoIw/WdEOyeUsiu6UotoZ5YtQ=
-  dependencies:
-    mimic-fn "^1.0.0"
-
 onetime@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-5.1.0.tgz#fff0f3c91617fe62bb50189636e99ac8a6df7be5"
@@ -12432,20 +12443,12 @@ os-locale@^2.0.0:
     lcid "^1.0.0"
     mem "^1.1.0"
 
-os-name@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/os-name/-/os-name-3.1.0.tgz#dec19d966296e1cd62d701a5a66ee1ddeae70801"
-  integrity sha512-h8L+8aNjNcMpo/mAIBPn5PXCM16iyPGjHNWo6U1YO8sJTMHtEtyczI6QJnLoplswm6goopQkqc7OAnjhWcugVg==
-  dependencies:
-    macos-release "^2.2.0"
-    windows-release "^3.1.0"
-
 os-shim@^0.1.2:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/os-shim/-/os-shim-0.1.3.tgz#6b62c3791cf7909ea35ed46e17658bb417cb3917"
   integrity sha1-a2LDeRz3kJ6jXtRuF2WLtBfLORc=
 
-os-tmpdir@^1.0.0, os-tmpdir@^1.0.1, os-tmpdir@~1.0.2:
+os-tmpdir@^1.0.0, os-tmpdir@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
@@ -12889,13 +12892,6 @@ pkg-dir@^4.2.0:
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
   dependencies:
     find-up "^4.0.0"
-
-pkg-up@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/pkg-up/-/pkg-up-2.0.0.tgz#c819ac728059a461cab1c3889a2be3c49a004d7f"
-  integrity sha1-yBmscoBZpGHKscOImivjxJoATX8=
-  dependencies:
-    find-up "^2.1.0"
 
 plugin-error@1.0.1, plugin-error@^1.0.1:
   version "1.0.1"
@@ -14368,14 +14364,6 @@ restore-cursor@^1.0.1:
     exit-hook "^1.0.0"
     onetime "^1.0.0"
 
-restore-cursor@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
-  integrity sha1-n37ih/gv0ybU/RYpI9YhKe7g368=
-  dependencies:
-    onetime "^2.0.0"
-    signal-exit "^3.0.2"
-
 ret@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.2.2.tgz#b6861782a1f4762dce43402a71eb7a283f44573c"
@@ -14434,13 +14422,6 @@ run-async@^0.1.0:
   dependencies:
     once "^1.3.0"
 
-run-async@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.3.0.tgz#0371ab4ae0bdd720d4166d7dfda64ff7a445a6c0"
-  integrity sha1-A3GrSuC91yDUFm19/aZP96RFpsA=
-  dependencies:
-    is-promise "^2.1.0"
-
 run-parallel@^1.1.9:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.1.9.tgz#c9dd3a7cf9f4b2c4b6244e173a6ed866e61dd679"
@@ -14455,13 +14436,6 @@ rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
   integrity sha1-Gc5QLKVyZl87ZHsQk5+X/RYV8QI=
-
-rxjs@^6.4.0:
-  version "6.5.4"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz#e0777fe0d184cec7872df147f303572d414e211c"
-  integrity sha512-naMQXcgEo3csAEGvw/NydRA0fuS2nDZJiw1YUWFKU7aPPAPGZEsD4Iimit96qwCieH6y614MCLYwdkrWx7z/7Q==
-  dependencies:
-    tslib "^1.9.0"
 
 safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
@@ -15202,7 +15176,7 @@ string-width@^1.0.1, string-width@^1.0.2:
     is-fullwidth-code-point "^1.0.0"
     strip-ansi "^3.0.0"
 
-"string-width@^1.0.2 || 2", string-width@^2.0.0, string-width@^2.1.0:
+"string-width@^1.0.2 || 2", string-width@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-2.1.1.tgz#ab93f27a8dc13d28cac815c462143a6d9012ae9e"
   integrity sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==
@@ -15898,13 +15872,6 @@ tinycolor2@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
-
-tmp@^0.0.33:
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
-  integrity sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==
-  dependencies:
-    os-tmpdir "~1.0.2"
 
 tmpl@1.0.x:
   version "1.0.4"
@@ -16999,13 +16966,6 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-windows-release@^3.1.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/windows-release/-/windows-release-3.2.0.tgz#8122dad5afc303d833422380680a79cdfa91785f"
-  integrity sha512-QTlz2hKLrdqukrsapKsINzqMgOUpQW268eJ0OaOpJN32h272waxR9fkB9VoWRtK7uKHG5EHJcTXQBD8XZVJkFA==
-  dependencies:
-    execa "^1.0.0"
-
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
@@ -17049,15 +17009,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-
-write-file-atomic@^2.3.0:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/write-file-atomic/-/write-file-atomic-2.4.2.tgz#a7181706dfba17855d221140a9c06e15fcdd87b9"
-  integrity sha512-s0b6vB3xIVRLWywa6X9TOMA7k9zio0TMOsl9ZnDkliA/cfJlpHXAscj0gbHVJiTdIuAYpIyqS5GW91fqm6gG5g==
-  dependencies:
-    graceful-fs "^4.1.11"
-    imurmurhash "^0.1.4"
-    signal-exit "^3.0.2"
 
 write-file-atomic@^3.0.0, write-file-atomic@^3.0.1:
   version "3.0.1"

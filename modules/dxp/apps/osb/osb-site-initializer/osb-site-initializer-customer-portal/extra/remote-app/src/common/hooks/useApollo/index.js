@@ -55,6 +55,7 @@ const raySourceErrorLink = onError(({forward, networkError, operation}) => {
 		return forward(operation);
 	}
 });
+
 const getRaysourceAuthLink = (oktaSessionAPI) =>
 	setContext(async (_, {headers, sessionOperation, ...context}) => {
 		let sessionId = sessionStorage.getItem('okta-session-id');

@@ -359,16 +359,20 @@ public class ObjectActionLocalServiceTest {
 		Object[] arguments = _argumentsList.poll();
 
 		Assert.assertEquals(
-			HashMapBuilder.putAll(
-				objectEntry.getModelAttributes()
+			HashMapBuilder.<String, Object>put(
+				"createDate", objectEntry.getCreateDate()
 			).put(
-				"creator", objectEntry.getUserName()
+				"creator", String.valueOf(TestPropsValues.getUserId())
 			).put(
-				"currentUserId", TestPropsValues.getUserId()
+				"externalReferenceCode", objectEntry.getExternalReferenceCode()
 			).put(
 				"firstName", "João"
 			).put(
 				"id", objectEntry.getObjectEntryId()
+			).put(
+				"modifiedDate", objectEntry.getModifiedDate()
+			).put(
+				"status", objectEntry.getStatus()
 			).build(),
 			arguments[0]);
 		Assert.assertEquals(Collections.emptySet(), arguments[1]);

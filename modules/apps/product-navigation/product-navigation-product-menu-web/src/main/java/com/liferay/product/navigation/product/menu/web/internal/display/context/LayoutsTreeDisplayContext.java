@@ -56,8 +56,12 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.SessionTreeJSClicks;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -305,6 +309,47 @@ public class LayoutsTreeDisplayContext {
 
 	public String getNamespace() {
 		return _namespace;
+	}
+
+	public Map<String, Object> getPagesTreeData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"config",
+			HashMapBuilder.<String, Object>put(
+				"getAddChildCollectionURLTemplate",
+				getAddChildCollectionURLTemplate()
+			).put(
+				"getAddChildURLTemplate", getAddChildURLTemplate()
+			).put(
+				"getConfigureLayoutURLTemplate", getConfigureLayoutURLTemplate()
+			).put(
+				"loadMoreItemsURL",
+				() -> {
+					LiferayPortletURL getLayoutsURL =
+						PortletURLFactoryUtil.create(
+							_liferayPortletRequest,
+							ProductNavigationProductMenuPortletKeys.
+								PRODUCT_NAVIGATION_PRODUCT_MENU,
+							PortletRequest.RESOURCE_PHASE);
+
+					getLayoutsURL.setResourceID(
+						"/product_navigation_product_menu/get_layouts");
+
+					return getLayoutsURL.toString();
+				}
+			).put(
+				"maxPageSize",
+				GetterUtil.getInteger(
+					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN, 20)
+			).put(
+				"namespace", getNamespace()
+			).build()
+		).put(
+			"items", _getLayoutsJSONArray()
+		).put(
+			"privateLayout", isPrivateLayout()
+		).put(
+			"selectedLayoutId", getSelPlid()
+		).build();
 	}
 
 	public String getPagesTreeURL() throws WindowStateException {
@@ -575,6 +620,50 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		return childSiteNavigationMenuItemsJSONArray;
+	}
+
+	private JSONArray _getLayoutsJSONArray() throws Exception {
+		JSONArray layoutsJSONArray = null;
+
+		_httpServletRequest.setAttribute("returnLayoutsAsArray", Boolean.TRUE);
+
+		boolean privateLayout = isPrivateLayout();
+
+		String treeId = "productMenuPagesTree";
+
+		long[] openNodes = StringUtil.split(
+			SessionTreeJSClicks.getOpenNodes(_httpServletRequest, treeId), 0L);
+
+		String layoutsJSON = LayoutsTreeUtil.getLayoutsJSON(
+			_httpServletRequest, _groupId, privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId,
+			null);
+
+		if (layoutsJSON.startsWith(StringPool.OPEN_BRACKET)) {
+			layoutsJSONArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
+		}
+		else {
+			layoutsJSONArray = JSONFactoryUtil.createJSONArray();
+		}
+
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"children", layoutsJSONArray
+			).put(
+				"id", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID
+			).put(
+				"name", _language.get(_themeDisplay.getLocale(), "pages")
+			).put(
+				"paginated",
+				() -> {
+					int layoutsCount = _layoutService.getLayoutsCount(
+						_groupId, privateLayout,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					return layoutsCount >
+						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
+				}
+			));
 	}
 
 	private JSONObject _getOptionGroupJSONObject(

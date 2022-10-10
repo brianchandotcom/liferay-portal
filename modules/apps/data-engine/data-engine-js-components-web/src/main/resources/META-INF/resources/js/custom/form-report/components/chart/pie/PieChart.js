@@ -87,11 +87,10 @@ export default function PieChart({data, height, totalEntries, width}) {
 
 	return (
 		<div
-			className="lfr-de-recharts"
+			className="lfr-de-recharts pie-chart"
 			style={{
 				display: 'flex',
 				height: '100%',
-				minHeight: '500px',
 				width: '100%',
 			}}
 		>
@@ -108,13 +107,13 @@ export default function PieChart({data, height, totalEntries, width}) {
 						data={data}
 						dataKey="count"
 						endAngle={-270}
-						innerRadius="30%"
+						innerRadius="60%"
 						isAnimationActive={isAnimationActive}
 						label={Label}
 						labelLine={false}
 						nameKey="label"
 						onMouseOver={(_, index) => handleOnMouseOver(index)}
-						outerRadius="60%"
+						outerRadius="100%"
 						paddingAngle={0}
 						startAngle={90}
 					>

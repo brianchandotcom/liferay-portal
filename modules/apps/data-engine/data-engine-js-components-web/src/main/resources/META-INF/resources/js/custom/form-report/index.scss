@@ -26,6 +26,10 @@
 }
 
 .col-md-4 {
+	.lfr-de__form-report .pie-chart .recharts-responsive-container {
+		min-height: 250px;
+	}
+
 	.recharts-pie {
 		font-size: 10px;
 	}
@@ -435,6 +439,7 @@
 
 	.lfr-de-recharts {
 		flex-wrap: wrap;
+		padding: 10px 0 0;
 	}
 
 	.loading-wrapper {

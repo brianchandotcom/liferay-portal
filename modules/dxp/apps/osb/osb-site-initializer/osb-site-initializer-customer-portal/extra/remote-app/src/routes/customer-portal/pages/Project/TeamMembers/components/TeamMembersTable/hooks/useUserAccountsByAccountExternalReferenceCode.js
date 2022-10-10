@@ -11,6 +11,8 @@
 
 import {useMemo} from 'react';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
+import getRaysourceContactRoleNames from '../utils/getRaysourceContactRoleNames';
+import useDeleteUserAccount from './useDeleteUserAccount';
 
 export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
@@ -24,6 +26,12 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		}
 	);
 
+	const {
+		deleteCalled: removeCalled,
+		deleteContactRoles,
+		deleting: removing,
+	} = useDeleteUserAccount();
+
 	const supportSeatsCount = useMemo(
 		() =>
 			data?.accountUserAccountsByExternalReferenceCode.items.filter(
@@ -32,8 +40,28 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		[data?.accountUserAccountsByExternalReferenceCode.items]
 	);
 
+	const remove = (userAccount) => {
+		const contactRoleNames = getRaysourceContactRoleNames(
+			userAccount.selectedAccountSummary.roleBriefs
+		);
+
+		deleteContactRoles({
+			variables: {
+				contactEmail: userAccount.emailAddress,
+				contactRoleNames: contactRoleNames.join('&'),
+				externalReferenceCode,
+			},
+		});
+	};
+
 	return [
 		supportSeatsCount,
-		{data, loading: koroneikiAccountLoading || loading},
+		{
+			data,
+			loading: koroneikiAccountLoading || loading,
+			remove,
+			removeCalled,
+			removing,
+		},
 	];
 }

@@ -11,7 +11,7 @@
 
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
@@ -45,7 +45,13 @@ const TeamMembersTable = ({
 
 	const [
 		supportSeatsCount,
-		{data: userAccountsData, loading: userAccountsLoading},
+		{
+			data: userAccountsData,
+			loading: userAccountsLoading,
+			remove,
+			removeCalled,
+			removing,
+		},
 	] = useUserAccountsByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey,
 		koroneikiAccountLoading
@@ -71,6 +77,14 @@ const TeamMembersTable = ({
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
 
+	useEffect(() => {
+		if (removeCalled && !removing) {
+			onOpenChange(false);
+
+			setCurrentIndexRemoving();
+		}
+	}, [onOpenChange, removeCalled, removing]);
+
 	const getCurrentRoleBriefName = useCallback(
 		(accountBrief) =>
 			accountBrief.roleBriefs.filter(
@@ -85,7 +99,8 @@ const TeamMembersTable = ({
 				<RemoveUserModal
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onRemove={() => {}}
+					onRemove={() => remove(userAccounts[currentIndexRemoving])}
+					removing={removing}
 				/>
 			)}
 

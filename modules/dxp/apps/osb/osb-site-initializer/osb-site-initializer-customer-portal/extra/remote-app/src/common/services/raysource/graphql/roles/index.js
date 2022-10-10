@@ -9,7 +9,4 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetUserAccount';
-export * from './queries/useGetMyUserAccount';
-export * from './queries/useGetUserAccountsByAccountExternalReferenceCode';
-export * from './mutations/useDeleteUserAccountByEmailAddress';
+export * from './mutations/useDeleteRolesByContactEmailAddress';

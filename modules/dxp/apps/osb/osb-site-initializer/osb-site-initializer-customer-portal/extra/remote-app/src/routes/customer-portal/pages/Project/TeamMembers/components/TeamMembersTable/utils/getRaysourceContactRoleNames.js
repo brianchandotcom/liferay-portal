@@ -9,7 +9,17 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetUserAccount';
-export * from './queries/useGetMyUserAccount';
-export * from './queries/useGetUserAccountsByAccountExternalReferenceCode';
-export * from './mutations/useDeleteUserAccountByEmailAddress';
+const RAYSOURCE_ROLE_NAMES = {
+	Administrator: 'Support Administrator',
+	Requester: 'Support Requester',
+	User: 'Support User',
+};
+
+export default function getRaysourceContactRoleNames(roleBriefs) {
+	return roleBriefs?.map((roleBrief) => {
+		const raySourceRoleName =
+			RAYSOURCE_ROLE_NAMES[roleBrief.name] || roleBrief.name;
+
+		return `contactRoleNames=${raySourceRoleName}`;
+	});
+}

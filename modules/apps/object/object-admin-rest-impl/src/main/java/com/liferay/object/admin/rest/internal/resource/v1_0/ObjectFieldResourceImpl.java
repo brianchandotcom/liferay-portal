@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectFieldDTOConverter;
@@ -147,8 +148,10 @@ public class ObjectFieldResourceImpl
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
-				objectField.getListTypeDefinitionId(), objectDefinitionId,
-				objectField.getBusinessTypeAsString(),
+				ObjectFieldUtil.getListTypeDefinitionId(
+					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
+					objectField),
+				objectDefinitionId, objectField.getBusinessTypeAsString(),
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
 					objectField.getTypeAsString()),
@@ -175,7 +178,9 @@ public class ObjectFieldResourceImpl
 		return _toObjectField(
 			_objectFieldService.updateObjectField(
 				objectField.getExternalReferenceCode(), objectFieldId,
-				objectField.getListTypeDefinitionId(),
+				ObjectFieldUtil.getListTypeDefinitionId(
+					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
+					objectField),
 				objectField.getBusinessTypeAsString(),
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
@@ -264,6 +269,9 @@ public class ObjectFieldResourceImpl
 
 	private static final EntityModel _entityModel =
 		new ObjectFieldEntityModel();
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

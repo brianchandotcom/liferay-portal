@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
@@ -234,7 +235,8 @@ public class ObjectDefinitionResourceImpl
 					transformToList(
 						objectDefinition.getObjectFields(),
 						objectField -> ObjectFieldUtil.toObjectField(
-							objectField, _objectFieldLocalService,
+							_listTypeDefinitionLocalService, objectField,
+							_objectFieldLocalService,
 							_objectFieldSettingLocalService,
 							_objectFilterLocalService)));
 
@@ -337,7 +339,9 @@ public class ObjectDefinitionResourceImpl
 			_objectFieldLocalService.updateObjectField(
 				objectField.getExternalReferenceCode(), contextUser.getUserId(),
 				objectDefinitionId, GetterUtil.getLong(objectField.getId()),
-				GetterUtil.getLong(objectField.getListTypeDefinitionId()),
+				ObjectFieldUtil.getListTypeDefinitionId(
+					serviceBuilderObjectDefinition.getCompanyId(),
+					_listTypeDefinitionLocalService, objectField),
 				objectField.getBusinessTypeAsString(), null, null,
 				objectField.getDBTypeAsString(), objectField.getDefaultValue(),
 				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
@@ -693,6 +697,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

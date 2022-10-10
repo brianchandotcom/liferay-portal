@@ -123,8 +123,12 @@ public class SiteNavigationMenuEditPortletToolbarContributor
 				_portal.getHttpServletRequest(portletRequest), "edit"));
 
 		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.getSiteNavigationMenu(
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
 				siteNavigationMenuId);
+
+		if (siteNavigationMenu == null) {
+			return null;
+		}
 
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(

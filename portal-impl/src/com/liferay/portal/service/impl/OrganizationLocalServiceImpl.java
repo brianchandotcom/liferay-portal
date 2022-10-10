@@ -246,7 +246,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  type the organization's type
 	 * @param  regionId the primary key of the organization's region
 	 * @param  countryId the primary key of the organization's country
-	 * @param  statusId the organization's workflow status
+	 * @param  statusListTypeId the organization's workflow status
 	 * @param  comments the comments about the organization
 	 * @param  site whether the organization is to be associated with a main
 	 *         site
@@ -258,8 +258,8 @@ public class OrganizationLocalServiceImpl
 	@Override
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, String type,
-			long regionId, long countryId, long statusId, String comments,
-			boolean site, ServiceContext serviceContext)
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Organization
@@ -271,7 +271,7 @@ public class OrganizationLocalServiceImpl
 
 		validate(
 			user.getCompanyId(), parentOrganizationId, name, type, countryId,
-			statusId);
+			statusListTypeId);
 
 		long organizationId = counterLocalService.increment();
 
@@ -292,7 +292,7 @@ public class OrganizationLocalServiceImpl
 		organization.setRecursable(true);
 		organization.setRegionId(regionId);
 		organization.setCountryId(countryId);
-		organization.setStatusId(statusId);
+		organization.setStatusListTypeId(statusListTypeId);
 		organization.setComments(comments);
 		organization.setExpandoBridgeAttributes(serviceContext);
 
@@ -413,8 +413,9 @@ public class OrganizationLocalServiceImpl
 	public Organization addOrUpdateOrganization(
 			String externalReferenceCode, long userId,
 			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusId, String comments, boolean hasLogo,
-			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+			long countryId, long statusListTypeId, String comments,
+			boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -425,7 +426,7 @@ public class OrganizationLocalServiceImpl
 		if (organization == null) {
 			organization = addOrganization(
 				userId, parentOrganizationId, name, type, regionId, countryId,
-				statusId, comments, site, serviceContext);
+				statusListTypeId, comments, site, serviceContext);
 
 			organization.setExternalReferenceCode(externalReferenceCode);
 
@@ -440,8 +441,9 @@ public class OrganizationLocalServiceImpl
 		else {
 			organization = updateOrganization(
 				user.getCompanyId(), organization.getOrganizationId(),
-				parentOrganizationId, name, type, regionId, countryId, statusId,
-				comments, hasLogo, logoBytes, site, serviceContext);
+				parentOrganizationId, name, type, regionId, countryId,
+				statusListTypeId, comments, hasLogo, logoBytes, site,
+				serviceContext);
 		}
 
 		return organization;
@@ -2000,7 +2002,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  type the organization's type
 	 * @param  regionId the primary key of the organization's region
 	 * @param  countryId the primary key of the organization's country
-	 * @param  statusId the organization's workflow status
+	 * @param  statusListTypeId the organization's workflow status
 	 * @param  comments the comments about the organization
 	 * @param  hasLogo if the organization has a custom logo
 	 * @param  logoBytes the new logo image data
@@ -2016,8 +2018,8 @@ public class OrganizationLocalServiceImpl
 	public Organization updateOrganization(
 			long companyId, long organizationId, long parentOrganizationId,
 			String name, String type, long regionId, long countryId,
-			long statusId, String comments, boolean hasLogo, byte[] logoBytes,
-			boolean site, ServiceContext serviceContext)
+			long statusListTypeId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Organization
@@ -2027,7 +2029,7 @@ public class OrganizationLocalServiceImpl
 
 		validate(
 			companyId, organizationId, parentOrganizationId, name, type,
-			countryId, statusId);
+			countryId, statusListTypeId);
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
@@ -2042,7 +2044,7 @@ public class OrganizationLocalServiceImpl
 		organization.setRecursable(true);
 		organization.setRegionId(regionId);
 		organization.setCountryId(countryId);
-		organization.setStatusId(statusId);
+		organization.setStatusListTypeId(statusListTypeId);
 		organization.setComments(comments);
 
 		PortalUtil.updateImageId(
@@ -2488,7 +2490,7 @@ public class OrganizationLocalServiceImpl
 
 	protected void validate(
 			long companyId, long organizationId, long parentOrganizationId,
-			String name, String type, long countryId, long statusId)
+			String name, String type, long countryId, long statusListTypeId)
 		throws PortalException {
 
 		if (!ArrayUtil.contains(getTypes(), type)) {
@@ -2566,17 +2568,17 @@ public class OrganizationLocalServiceImpl
 		}
 
 		_listTypeLocalService.validate(
-			statusId, ListTypeConstants.ORGANIZATION_STATUS);
+			statusListTypeId, ListTypeConstants.ORGANIZATION_STATUS);
 	}
 
 	protected void validate(
 			long companyId, long parentOrganizationId, String name, String type,
-			long countryId, long statusId)
+			long countryId, long statusListTypeId)
 		throws PortalException {
 
 		validate(
 			companyId, 0, parentOrganizationId, name, type, countryId,
-			statusId);
+			statusListTypeId);
 	}
 
 	private Sort[] _getSorts(Sort sort) {

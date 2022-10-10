@@ -19,8 +19,6 @@ package com.liferay.portal.kernel.search;
  */
 public interface SearchEngineHelper {
 
-	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
-
 	public String[] getEntryClassNames();
 
 	public SearchEngine getSearchEngine();

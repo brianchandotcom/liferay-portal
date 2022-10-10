@@ -4,6 +4,7 @@ Bundle-Version: 6.0.0
 Export-Package:\
 	com.liferay.notification.constants,\
 	com.liferay.notification.exception,\
+	com.liferay.notification.handler,\
 	com.liferay.notification.model,\
 	com.liferay.notification.service,\
 	com.liferay.notification.service.persistence,\

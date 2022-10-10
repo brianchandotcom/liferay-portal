@@ -115,7 +115,7 @@
 			iframeContent.style.marginBottom = iframeFooter.offsetHeight + 'px';
 		}
 
-		var debouncedAdjustBottomSpace = debounce.default(adjustBottomSpace, 300);
+		var debouncedAdjustBottomSpace = debounce(adjustBottomSpace, 300);
 
 		adjustBottomSpace();
 

@@ -289,8 +289,8 @@ public class EditWorkspaceConnectionMVCActionCommand
 					"employeeStatusId", "facebookSn", "firstName",
 					"hoursOfOperation", "jabberSn", "jobClass", "jobTitle",
 					"lastName", "male", "middleName", "modifiedDate",
-					"parentContactId", "prefixId", "skypeSn", "smsSn",
-					"suffixId", "twitterSn", "userId", "userName"
+					"parentContactId", "prefixListTypeId", "skypeSn", "smsSn",
+					"suffixListTypeId", "twitterSn", "userId", "userName"
 				});
 			configurationProperties.put(
 				"syncedUserFieldNames",

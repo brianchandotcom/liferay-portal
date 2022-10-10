@@ -312,13 +312,13 @@ public class FieldDisplayContext {
 		).put(
 			"parentContactId", "Long"
 		).put(
-			"prefixId", "Long"
+			"prefixListTypeId", "Long"
 		).put(
 			"skypeSn", "String"
 		).put(
 			"smsSn", "String"
 		).put(
-			"suffixId", "Long"
+			"suffixListTypeId", "Long"
 		).put(
 			"twitterSn", "String"
 		).build();

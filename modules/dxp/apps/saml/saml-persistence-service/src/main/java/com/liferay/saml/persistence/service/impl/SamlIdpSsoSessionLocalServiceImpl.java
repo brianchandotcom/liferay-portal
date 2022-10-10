@@ -28,7 +28,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.util.Date;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -116,9 +115,6 @@ public class SamlIdpSsoSessionLocalServiceImpl
 
 		return samlIdpSsoSessionPersistence.update(samlIdpSsoSession);
 	}
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private SamlIdpSpSessionPersistence _samlIdpSpSessionPersistence;

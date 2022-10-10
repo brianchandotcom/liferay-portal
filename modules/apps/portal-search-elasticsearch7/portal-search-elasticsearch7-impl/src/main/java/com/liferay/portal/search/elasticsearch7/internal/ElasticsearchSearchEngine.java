@@ -77,8 +77,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
-	service = {ElasticsearchSearchEngine.class, SearchEngine.class}
+	property = "search.engine.impl=Elasticsearch", service = SearchEngine.class
 )
 public class ElasticsearchSearchEngine implements SearchEngine {
 

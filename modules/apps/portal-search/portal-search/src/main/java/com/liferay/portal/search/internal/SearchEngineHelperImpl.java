@@ -15,12 +15,10 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
 import java.util.Collections;
@@ -29,18 +27,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.SearchEngineHelperConfiguration",
-	immediate = true, service = SearchEngineHelper.class
+	service = SearchEngineHelper.class
 )
 public class SearchEngineHelperImpl implements SearchEngineHelper {
 
@@ -74,25 +73,9 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		_searchEngine.removeCompany(companyId);
 	}
 
-	@Override
-	public void removeSearchEngine() {
-		_searchEngine = null;
-	}
-
-	@Override
-	public void setSearchEngine(SearchEngine searchEngine) {
-		_searchEngine = searchEngine;
-
-		for (Company company : _companyLocalService.getCompanies()) {
-			searchEngine.initialize(company.getCompanyId());
-		}
-	}
-
 	@Activate
 	@Modified
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(Map<String, Object> properties) {
 		SearchEngineHelperConfiguration searchEngineHelperConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SearchEngineHelperConfiguration.class, properties);
@@ -104,11 +87,13 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 			searchEngineHelperConfiguration.excludedEntryClassNames());
 	}
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	private final Set<String> _excludedEntryClassNames =
 		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private volatile SearchEngine _searchEngine;
 
 }

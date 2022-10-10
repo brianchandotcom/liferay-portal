@@ -22,15 +22,16 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchEngineProxyWrapper;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchWriterMessageListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -67,14 +68,14 @@ public class ElasticsearchEngineConfigurator {
 			new SearchEngineProxyWrapper(
 				searchEngine, _indexSearcher, _indexWriter);
 
-		_searchEngineHelper.setSearchEngine(searchEngineProxyWrapper);
+		for (Company company : _companyLocalService.getCompanies()) {
+			searchEngineProxyWrapper.initialize(company.getCompanyId());
+		}
 
 		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
 	}
 
 	public void unconfigure() {
-		_searchEngineHelper.removeSearchEngine();
-
 		for (ServiceRegistration<?> serviceRegistration :
 				_destinationServiceRegistrations) {
 
@@ -210,6 +211,9 @@ public class ElasticsearchEngineConfigurator {
 	private BundleContext _bundleContext;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private DestinationFactory _destinationFactory;
 
 	private final List<ServiceRegistration<?>>
@@ -223,8 +227,5 @@ public class ElasticsearchEngineConfigurator {
 
 	@Reference
 	private MessageBus _messageBus;
-
-	@Reference
-	private SearchEngineHelper _searchEngineHelper;
 
 }

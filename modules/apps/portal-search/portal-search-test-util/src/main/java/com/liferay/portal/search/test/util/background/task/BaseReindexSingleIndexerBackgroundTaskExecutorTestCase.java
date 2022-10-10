@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.SearchEngineHelperImpl;
 import com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor;
@@ -36,8 +34,6 @@ import com.liferay.portal.search.test.util.search.engine.SearchEngineFixture;
 import com.liferay.portal.util.PropsImpl;
 
 import java.io.Serializable;
-
-import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.Before;
@@ -70,27 +66,8 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 
 		SearchEngineHelper searchEngineHelper = new SearchEngineHelperImpl();
 
-		CompanyLocalService companyLocalService = Mockito.mock(
-			CompanyLocalService.class);
-
-		Mockito.when(
-			companyLocalService.getCompanies()
-		).thenReturn(
-			Arrays.asList(
-				new CompanyImpl() {
-
-					@Override
-					public long getCompanyId() {
-						return companyId;
-					}
-
-				})
-		);
-
 		ReflectionTestUtil.setFieldValue(
-			searchEngineHelper, "_companyLocalService", companyLocalService);
-
-		searchEngineHelper.setSearchEngine(
+			searchEngineHelper, "_searchEngine",
 			searchEngineFixture.getSearchEngine());
 
 		_companyId = companyId;

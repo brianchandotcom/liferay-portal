@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -40,16 +39,6 @@ public class SearchEngineHelperUtil {
 
 	public static void removeCompany(long companyId) {
 		_searchEngineHelper.removeCompany(companyId);
-	}
-
-	public static void removeSearchEngine() {
-		_searchEngineHelper.removeSearchEngine();
-	}
-
-	public static void setSearchEngine(SearchEngine searchEngine) {
-		_searchEngineHelper.setSearchEngine(searchEngine);
-
-		searchEngine.initialize(CompanyConstants.SYSTEM);
 	}
 
 	private static volatile SearchEngineHelper _searchEngineHelper =

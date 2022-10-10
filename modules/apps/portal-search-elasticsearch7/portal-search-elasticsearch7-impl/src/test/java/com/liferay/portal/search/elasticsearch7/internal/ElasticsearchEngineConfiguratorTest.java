@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -86,12 +86,12 @@ public class ElasticsearchEngineConfiguratorTest {
 		return new ElasticsearchEngineConfigurator() {
 			{
 				ReflectionTestUtil.setFieldValue(
+					this, "_companyLocalService",
+					Mockito.mock(CompanyLocalService.class));
+				ReflectionTestUtil.setFieldValue(
 					this, "_destinationFactory", destinationFactory);
 				ReflectionTestUtil.setFieldValue(
 					this, "_messageBus", Mockito.mock(MessageBus.class));
-				ReflectionTestUtil.setFieldValue(
-					this, "_searchEngineHelper",
-					Mockito.mock(SearchEngineHelper.class));
 			}
 		};
 	}

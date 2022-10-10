@@ -27,8 +27,4 @@ public interface SearchEngineHelper {
 
 	public void removeCompany(long companyId);
 
-	public void removeSearchEngine();
-
-	public void setSearchEngine(SearchEngine searchEngine);
-
 }

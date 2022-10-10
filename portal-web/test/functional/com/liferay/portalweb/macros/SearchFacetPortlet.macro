@@ -305,4 +305,24 @@ definition {
         }      
     }
 
+	macro configureFolderFacet {
+
+		Portlet.gotoPortletOptions(
+			portletName = "Folder Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Select( 
+			key_fieldLabel = "Order Terms By", 
+			locator1 = "Select#GENERIC_SELECT_FIELD", 
+			value1 = "${sortOption}");
+		
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+	}
+
 }

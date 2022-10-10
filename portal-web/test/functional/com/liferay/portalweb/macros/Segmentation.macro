@@ -51,7 +51,7 @@ definition {
 		var key_criterionInputOption = "${criterionInputOption}";
 
 		Select(
-			locator1 = "Segmentation#CRITERION_INPUT_ANY",
+			locator1 = "Segmentation#CRITERION_OPERATOR",
 			value1 = "${criterionInputOption}");
 	}
 
@@ -242,7 +242,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			LexiconTable.checkTableCheckbox(tableEntry = "${selectCheckbox}");
+			Check(
+				key_checkboxName = "${selectCheckbox}",
+				locator1 = "Checkbox#ENABLE_CHECKBOX");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -434,6 +436,8 @@ definition {
 			selectOption = "${vocabularyName}");
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro updateSegmentsInterval {

@@ -659,7 +659,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-			Segmentation.fillProperty(propertyField = "organization Name");
+			Segmentation.fillProperty(criterionValue = "organization Name");
 
 			Button.clickSave();
 		}
@@ -751,7 +751,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-			Segmentation.fillProperty(propertyField = "organization Name");
+			Segmentation.fillProperty(criterionValue = "organization Name");
 
 			Button.clickSave();
 		}
@@ -1276,7 +1276,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "t");
+			Segmentation.fillProperty(criterionValue = "t");
 
 			Button.clickSave();
 		}
@@ -1835,7 +1835,7 @@ definition {
 
 			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
 
-			Segmentation.fillProperty(propertyField = "www.able.com");
+			Segmentation.fillProperty(criterionValue = "www.able.com");
 
 			Button.clickSave();
 		}

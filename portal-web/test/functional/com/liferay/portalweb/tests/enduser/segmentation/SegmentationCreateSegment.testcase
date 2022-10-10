@@ -95,7 +95,7 @@ definition {
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "Spain");
+				value1 = "spain");
 		}
 	}
 
@@ -429,7 +429,7 @@ definition {
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "Madrid");
+				value1 = "madrid");
 		}
 	}
 
@@ -1398,7 +1398,7 @@ definition {
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_OPERATOR",
-				value1 = "equals");
+				value1 = "eq");
 		}
 	}
 
@@ -1425,7 +1425,7 @@ definition {
 		}
 
 		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressEquals Test");
+			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressNotContains Test");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
@@ -1433,7 +1433,7 @@ definition {
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_OPERATOR",
-				value1 = "not contains");
+				value1 = "not-contains");
 		}
 	}
 
@@ -1460,7 +1460,7 @@ definition {
 		}
 
 		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressEquals Test");
+			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressNotEquals Test");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
@@ -1468,7 +1468,7 @@ definition {
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_OPERATOR",
-				value1 = "not equals");
+				value1 = "not-eq");
 		}
 	}
 
@@ -2630,10 +2630,12 @@ definition {
 			Segmentation.fillProperty(optionsValue = "Audience Category 1");
 
 			Button.clickSave();
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Checks if the second segmentation is edited correctly") {
-			Segmentation.editSegment(entry = "Second Test");
+			Segmentation.editSegment(entry = "Segment Test");
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
@@ -3164,7 +3166,7 @@ definition {
 
 		task ("Add team using JSONWS") {
 			JSONTeam.addTeam(
-				siteName = "Site Team Name",
+				siteName = "Test Site Name",
 				teamDescription = "Site Team Description",
 				teamName = "Test Site Name");
 		}
@@ -3174,7 +3176,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Team");
 
-			Segmentation.fillProperty(selectLink = "Site Team Name");
+			Segmentation.fillProperty(selectLink = "Test Site Name");
 
 			Segmentation.fillTitle(titleField = "Validade Team Segment");
 
@@ -3188,7 +3190,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "Segmentation#CRITERION_VIEW_MODE",
-				propertyValue = "Site Team Name");
+				propertyValue = "Test Site Name");
 		}
 	}
 
@@ -3299,8 +3301,8 @@ definition {
 
 		task ("Open Vocabulary Name dropdown") {
 			Click(
-				locator1 = "FormFields#SELECT_FIELD",
-				value1 = "Vocabulary Name");
+				key_fieldName = "Vocabulary Name",
+				locator1 = "FormFields#SELECT_FIELD");
 		}
 
 		task ("Check if Vocabularies Created are being displayed") {

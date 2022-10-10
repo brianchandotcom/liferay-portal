@@ -196,7 +196,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "URL");
 
-			Segmentation.fillProperty(propertyField = "http://localhost:8080");
+			Segmentation.fillProperty(criterionValue = "http://localhost:8080");
 
 			Button.clickSave();
 		}
@@ -278,7 +278,7 @@ definition {
 			Segmentation.editSegment(entry = "EditSegmentUserEmailAddressContainsToEquals Test");
 
 			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				locator1 = "Segmentation#CRITERION_OPERATOR",
 				value1 = "eq");
 		}
 	}

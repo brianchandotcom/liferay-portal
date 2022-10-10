@@ -117,7 +117,7 @@
 	</tr>
 	<tr>
 		<td>DISABLE_PICKLIST_KEY</td>
-		<td>//input[@class='field disabled form-control lfr-input-text']</td>
+		<td>//input[contains(@class,'form-control') and contains(@value,'${key_keyName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

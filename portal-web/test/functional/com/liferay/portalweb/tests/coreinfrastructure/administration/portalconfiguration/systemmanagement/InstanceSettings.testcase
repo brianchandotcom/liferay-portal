@@ -690,12 +690,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 

@@ -195,7 +195,7 @@ definition {
 	}
 
 	macro addSiteCP {
-		Organization.editOrganizationCP(orgName = "${orgName}");
+		Organization.gotoEdit(orgName = "${orgName}");
 
 		UsersAndOrganizationsNavigator.gotoMenuBarOrganizationSite();
 
@@ -396,11 +396,7 @@ definition {
 	}
 
 	macro editSiteCP {
-		Organization.gotoActionsCmd(orgName = "${orgName}");
-
-		var key_orgName = "${orgName}";
-
-		MenuItem.click(menuItem = "Edit");
+		Organization.gotoEdit(orgName = "${orgName}");
 
 		Type(
 			locator1 = "TextInput#NAME",
@@ -603,11 +599,7 @@ definition {
 	}
 
 	macro viewParentOrganizationCP {
-		Organization.gotoActionsCmd(orgName = "${orgName}");
-
-		var key_orgName = "${orgName}";
-
-		MenuItem.click(menuItem = "Edit");
+		Organization.gotoEdit(orgName = "${orgName}");
 
 		if (isSet(parentOrgName)) {
 			var key_orgName = "${subOrgName}";

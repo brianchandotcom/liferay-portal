@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Add an organization site") {
-			User.openUsersAdmin();
+			Organization.openOrganizationsAdmin();
 
 			Organization.addSiteCP(orgName = "College of Agricultural Science");
 		}
@@ -211,9 +211,7 @@ definition {
 		task ("Add an organization site") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
-			User.openUsersAdmin();
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.openOrganizationsAdmin();
 
 			Organization.addSiteCP(
 				orgName = "Organization Name 1",
@@ -240,9 +238,7 @@ definition {
 		task ("Add another organization site") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
-			User.openUsersAdmin();
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.openOrganizationsAdmin();
 
 			Organization.addSiteCP(
 				orgName = "Organization Name 2",

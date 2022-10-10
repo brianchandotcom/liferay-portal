@@ -296,12 +296,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -345,12 +340,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -386,12 +376,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -535,14 +520,7 @@ definition {
 			uploadFrom = "dependencies");
 
 		for (var suborgName : list "Accounting,Business Administration,College of Agricultural Science,College of Business,College of Engineering") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.openOrganizationsAdmin();
 
 			Organization.addSiteCP(
 				orgName = "${suborgName}",
@@ -799,7 +777,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.editOrganizationCP(orgName = "Organization Name");
+		Organization.gotoEdit(orgName = "Organization Name");
 
 		Click(
 			key_vocabularyName = "Vocabulary Name 1",
@@ -811,7 +789,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.editOrganizationCP(orgName = "Organization Name");
+		Organization.gotoEdit(orgName = "Organization Name");
 
 		AssetCategorization.viewCategory(categoryName = "Category Name 1");
 
@@ -1066,12 +1044,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		AOrganization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -1107,12 +1080,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -1175,12 +1143,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -1477,12 +1440,7 @@ definition {
 			orgName = "Organization Site Bravo",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Site Bravo");
 
@@ -1562,12 +1520,9 @@ definition {
 			mondayClose = "18:00",
 			mondayOpen = "08:00");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
-		Organization.editOrganizationCP(orgName = "Organization Name");
+		Organization.gotoEdit(orgName = "Organization Name");
 
 		Organization.addComment(orgComment = "This is a test organization.");
 
@@ -1681,12 +1636,9 @@ definition {
 			orgName = "Organization Name 1",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
-		Organization.editOrganizationCP(orgName = "Organization Name 1");
+		Organization.gotoEdit(orgName = "Organization Name 1");
 
 		AssetCategorization.addTag(tagName = "alpha");
 
@@ -1699,12 +1651,9 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
-		Organization.editOrganizationCP(orgName = "Organization Name 2");
+		Organization.gotoEdit(orgName = "Organization Name 2");
 
 		AssetCategorization.addTag(tagName = "bravo");
 
@@ -1891,23 +1840,13 @@ definition {
 			organizationName = "Canada",
 			organizationType = "Location");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(
 			orgName = "United States",
 			siteTemplateName = "Site Template Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(
 			orgName = "Canada",
@@ -2022,12 +1961,7 @@ definition {
 			orgName = "Organization Name 1",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name 1");
 

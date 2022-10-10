@@ -1130,12 +1130,9 @@ definition {
 		}
 
 		task ("Add a tag for created organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			Organization.openOrganizationsAdmin();
 
-			Organization.editOrganizationCP(orgName = "organization Name");
+			Organization.gotoEdit(orgName = "organization Name");
 
 			AssetCategorization.addTag(tagName = "tagName");
 

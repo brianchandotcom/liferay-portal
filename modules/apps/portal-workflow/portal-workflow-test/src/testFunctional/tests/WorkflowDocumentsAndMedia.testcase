@@ -113,12 +113,7 @@ definition {
 			orgName = "Space Program Academy of Continuing Education",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Space Program Academy of Continuing Education");
 

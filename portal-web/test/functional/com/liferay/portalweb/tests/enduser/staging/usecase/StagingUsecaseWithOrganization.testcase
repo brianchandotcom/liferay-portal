@@ -44,9 +44,7 @@ definition {
 				orgName = "Staging Organization Name",
 				orgType = "Organization");
 
-			User.openUsersAdmin();
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
+			Organization.openOrganizationsAdmin();
 
 			Organization.addSiteCP(orgName = "Staging Organization Name");
 

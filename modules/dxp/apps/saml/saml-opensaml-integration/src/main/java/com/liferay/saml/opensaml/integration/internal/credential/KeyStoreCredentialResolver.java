@@ -363,7 +363,7 @@ public class KeyStoreCredentialResolver
 					(UnrecoverableKeyException)generalSecurityException);
 			}
 
-			throw new CredentialAuthException(
+			throw new CredentialAuthException.GeneralCredentialAuthException(
 				String.format(
 					"Unknown Exception occurred for company %s using %s",
 					companyId, clazz.getSimpleName()),

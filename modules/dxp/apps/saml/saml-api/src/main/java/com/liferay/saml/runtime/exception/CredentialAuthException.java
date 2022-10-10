@@ -22,7 +22,7 @@ import java.security.UnrecoverableKeyException;
  */
 public class CredentialAuthException extends SecurityException {
 
-	public CredentialAuthException(
+	private CredentialAuthException(
 		String message, GeneralSecurityException generalSecurityException) {
 
 		super(
@@ -61,6 +61,18 @@ public class CredentialAuthException extends SecurityException {
 			UnrecoverableKeyException unrecoverableKeyException) {
 
 			super(message, unrecoverableKeyException);
+		}
+
+	}
+
+	public static class GeneralCredentialAuthException
+		extends CredentialAuthException {
+
+		public GeneralCredentialAuthException(
+			String message,
+			GeneralSecurityException generalSecurityException) {
+
+			super(message, generalSecurityException);
 		}
 
 	}

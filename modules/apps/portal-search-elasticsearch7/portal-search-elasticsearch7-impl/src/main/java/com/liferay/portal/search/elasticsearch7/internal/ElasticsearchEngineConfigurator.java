@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexSearcher;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineProxyWrapper;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
@@ -155,16 +155,12 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	private Destination _getSearchReaderDestination() {
-		String searchReaderDestinationName =
-			SearchEngineHelperUtil.getSearchReaderDestinationName(
-				SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 		Destination searchReaderDestination = _messageBus.getDestination(
-			searchReaderDestinationName);
+			DestinationNames.SEARCH_READER);
 
 		if (searchReaderDestination == null) {
 			searchReaderDestination = _createSearchReaderDestination(
-				searchReaderDestinationName);
+				DestinationNames.SEARCH_READER);
 
 			_destinationServiceRegistrations.add(
 				_bundleContext.registerService(
@@ -178,16 +174,12 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	private Destination _getSearchWriterDestination() {
-		String searchWriterDestinationName =
-			SearchEngineHelperUtil.getSearchWriterDestinationName(
-				SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 		Destination searchWriterDestination = _messageBus.getDestination(
-			searchWriterDestinationName);
+			DestinationNames.SEARCH_WRITER);
 
 		if (searchWriterDestination == null) {
 			searchWriterDestination = _createSearchWriterDestination(
-				searchWriterDestinationName);
+				DestinationNames.SEARCH_WRITER);
 
 			_destinationServiceRegistrations.add(
 				_bundleContext.registerService(

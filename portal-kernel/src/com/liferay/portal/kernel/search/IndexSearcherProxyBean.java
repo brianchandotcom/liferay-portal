@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.proxy.BaseMultiDestinationProxyBean;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
@@ -31,8 +32,7 @@ public class IndexSearcherProxyBean
 
 	@Override
 	public String getDestinationName() {
-		return SearchEngineHelperUtil.getSearchReaderDestinationName(
-			SearchEngineHelper.SYSTEM_ENGINE_ID);
+		return DestinationNames.SEARCH_READER;
 	}
 
 	@Override

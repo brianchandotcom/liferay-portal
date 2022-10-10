@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -218,12 +216,8 @@ public class SynchronousDestinationTestRule
 				}
 			}
 
-			replaceDestination(
-				SearchEngineHelperUtil.getSearchReaderDestinationName(
-					SearchEngineHelper.SYSTEM_ENGINE_ID));
-			replaceDestination(
-				SearchEngineHelperUtil.getSearchWriterDestinationName(
-					SearchEngineHelper.SYSTEM_ENGINE_ID));
+			replaceDestination(DestinationNames.SEARCH_READER);
+			replaceDestination(DestinationNames.SEARCH_WRITER);
 
 			Destination schedulerDestination = _destinations.get(
 				DestinationNames.SCHEDULER_DISPATCH);

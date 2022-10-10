@@ -546,8 +546,8 @@ definition {
 			itemName = "Item Test");
 
 		Picklist.assertPicklistItemByLanguage(
-			language = "pt-BR",
-			nameItem = "Teste na lista");
+			nameItem = "Teste na lista",
+			newLanguage = "pt_BR");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for a Picklist name"

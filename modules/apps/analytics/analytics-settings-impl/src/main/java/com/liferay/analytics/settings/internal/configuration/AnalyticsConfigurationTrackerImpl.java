@@ -794,7 +794,7 @@ public class AnalyticsConfigurationTrackerImpl
 		).put(
 			"portraitId", "Integer"
 		).put(
-			"prefixId", "Integer"
+			"prefixListTypeId", "Integer"
 		).put(
 			"screenName", "Text"
 		).put(
@@ -804,7 +804,7 @@ public class AnalyticsConfigurationTrackerImpl
 		).put(
 			"status", "Integer"
 		).put(
-			"suffixId", "Integer"
+			"suffixListTypeId", "Integer"
 		).put(
 			"timeZoneId", "Text"
 		).put(

@@ -430,7 +430,22 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				"icon", layout.getIcon()
 			).put(
 				"name", layoutName
-			).put(
+			);
+
+			List<LayoutTreeNode> layoutTreeNodesList =
+				childLayoutTreeNodes.getLayoutTreeNodesList();
+
+			if (GetterUtil.getBoolean(
+					httpServletRequest.getAttribute("returnLayoutsAsArray")) &&
+				GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162954")) &&
+				(childLayoutTreeNodes.getTotal() !=
+					layoutTreeNodesList.size())) {
+
+				jsonObject.put("paginated", true);
+			}
+
+			jsonObject.put(
 				"parentable",
 				LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,

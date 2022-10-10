@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -772,6 +773,13 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		JSONArray jsonArray = _toJSONArray(
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+
+		if (GetterUtil.getBoolean(
+				httpServletRequest.getAttribute("returnLayoutsAsArray")) &&
+			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162954"))) {
+
+			return jsonArray;
+		}
 
 		return JSONUtil.put(
 			"layouts", jsonArray

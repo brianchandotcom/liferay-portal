@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var testAccount = "Test Account DXP";
 	var testProduct = "DXP";
 
 	setUp {
@@ -92,10 +92,9 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150804 | Test Summary: Verify if the Cluster Nodes field is required"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyClusterNodesField {
-		property portal.upstream = "quarantine";
-
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -140,10 +139,9 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150803 | Test Summary: Verify if the Environment Name field is required"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyEnvironmentNameField {
-		property portal.upstream = "quarantine";
-
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -182,7 +180,7 @@ definition {
 				value = "");
 
 			KeyPress(
-				locator1 = "//body",
+				locator1 = "CustomerPortalSite#BODY",
 				value1 = "\ESCAPE");
 
 			Alert.viewErrorMessage(errorMessage = "This field is required.");

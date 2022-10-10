@@ -251,9 +251,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		sb.append(html);
 		sb.append("</div>");
 
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
 		if (Validator.isNotNull(css)) {
-			String outputKey =
-				fragmentRendererContext.getFragmentElementId() + "_CSS";
+			String outputKey = fragmentEntryLink.getFragmentEntryId() + "_CSS";
 
 			OutputData outputData = (OutputData)httpServletRequest.getAttribute(
 				WebKeys.OUTPUT_DATA);
@@ -294,9 +296,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					WebKeys.OUTPUT_DATA, outputData);
 			}
 		}
-
-		FragmentEntryLink fragmentEntryLink =
-			fragmentRendererContext.getFragmentEntryLink();
 
 		if (Validator.isNotNull(fragmentEntryLink.getJs())) {
 			sb.append("<script>(function() {");

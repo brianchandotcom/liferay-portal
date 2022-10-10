@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
@@ -34,10 +33,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -383,9 +380,6 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	private static final EntityModel _entityModel = new KeywordEntityModel();
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
@@ -396,11 +390,5 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Reference
 	private KeywordDTOConverter _keywordDTOConverter;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

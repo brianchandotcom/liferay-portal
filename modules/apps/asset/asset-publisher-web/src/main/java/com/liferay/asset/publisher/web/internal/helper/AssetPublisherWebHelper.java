@@ -680,7 +680,7 @@ public class AssetPublisherWebHelper {
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
-	private ServiceTrackerList<AssetEntryQueryProcessor>
+	private volatile ServiceTrackerList<AssetEntryQueryProcessor>
 		_serviceTrackerList;
 
 	@Reference

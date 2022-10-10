@@ -16,10 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleConfigurationDisplayContext" %>
+
 <%
 KBArticlePortletInstanceConfiguration kbArticlePortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBArticlePortletInstanceConfiguration.class);
-
-String portletResource = ParamUtil.getString(request, "portletResource");
 
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 

@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -1158,6 +1159,13 @@ public class ObjectEntryLocalServiceTest {
 	public void testGetExtensionDynamicObjectDefinitionTableValues()
 		throws Exception {
 
+		ThreadLocal<Boolean> filterInvoked = ReflectionTestUtil.getFieldValue(
+			ThreadLocalFilterThreadLocal.class, "_filterInvoked");
+
+		boolean originalFilterInvoked = filterInvoked.get();
+
+		filterInvoked.set(true);
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), User.class.getName());
@@ -1248,6 +1256,8 @@ public class ObjectEntryLocalServiceTest {
 				_objectEntryLocalService.
 					getExtensionDynamicObjectDefinitionTableValues(
 						objectDefinition, user.getUserId())));
+
+		filterInvoked.set(originalFilterInvoked);
 	}
 
 	@Test

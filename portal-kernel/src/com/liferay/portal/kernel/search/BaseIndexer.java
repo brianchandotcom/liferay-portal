@@ -196,9 +196,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		throws SearchException {
 
 		try {
-			searchContext.setSearchEngineId(
-				SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 			resetFullQuery(searchContext);
 
 			String[] fullQueryEntryClassNames =
@@ -224,9 +221,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 			_addPreFilters(
 				fullQueryBooleanFilter,
-				_getEntryClassNameIndexerMap(
-					entryClassNames, searchContext.getSearchEngineId()),
-				searchContext);
+				_getEntryClassNameIndexerMap(entryClassNames), searchContext);
 
 			BooleanQuery fullQuery = createFullQuery(
 				fullQueryBooleanFilter, searchContext);
@@ -572,8 +567,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		queryConfig.setScoreEnabled(false);
 		queryConfig.setQueryIndexingEnabled(false);
 		queryConfig.setQuerySuggestionEnabled(false);
-
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		BooleanQuery fullQuery = getFullQuery(searchContext);
 
@@ -1142,8 +1135,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
 
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 		Query fullQuery = getFullQuery(searchContext);
 
 		fullQuery.setQueryConfig(searchContext.getQueryConfig());
@@ -1492,7 +1483,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	private Map<String, Indexer<?>> _getEntryClassNameIndexerMap(
-		String[] entryClassNames, String searchEngineId) {
+		String[] entryClassNames) {
 
 		Map<String, Indexer<?>> entryClassNameIndexerMap =
 			new LinkedHashMap<>();
@@ -1500,9 +1491,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		for (String entryClassName : entryClassNames) {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
-			if ((indexer == null) ||
-				!searchEngineId.equals(SearchEngineHelper.SYSTEM_ENGINE_ID)) {
-
+			if (indexer == null) {
 				continue;
 			}
 

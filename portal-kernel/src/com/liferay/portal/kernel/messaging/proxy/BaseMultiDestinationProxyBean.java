@@ -28,11 +28,11 @@ public abstract class BaseMultiDestinationProxyBean {
 	public void afterPropertiesSet() {
 	}
 
-	public abstract String getDestinationName(ProxyRequest proxyRequest);
+	public abstract String getDestinationName();
 
 	public void send(ProxyRequest proxyRequest) {
 		MessageBusUtil.sendMessage(
-			getDestinationName(proxyRequest), buildMessage(proxyRequest));
+			getDestinationName(), buildMessage(proxyRequest));
 	}
 
 	public void setSynchronousMessageSenderMode(
@@ -51,7 +51,7 @@ public abstract class BaseMultiDestinationProxyBean {
 
 		ProxyResponse proxyResponse =
 			(ProxyResponse)synchronousMessageSender.send(
-				getDestinationName(proxyRequest), message);
+				getDestinationName(), message);
 
 		if (proxyResponse == null) {
 			return proxyRequest.execute(this);

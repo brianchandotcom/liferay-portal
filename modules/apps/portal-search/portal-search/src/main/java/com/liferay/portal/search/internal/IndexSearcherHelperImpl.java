@@ -42,7 +42,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 	@Override
 	public String getQueryString(SearchContext searchContext, Query query) {
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			searchContext.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -63,7 +63,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		throws SearchException {
 
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			searchContext.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -75,7 +75,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		throws SearchException {
 
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			searchContext.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -91,7 +91,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		}
 
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			searchContext.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -108,7 +108,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		}
 
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			searchContext.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 
@@ -125,7 +125,7 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		}
 
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			searchContext.getSearchEngineId());
+			SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
 

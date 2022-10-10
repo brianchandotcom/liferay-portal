@@ -73,7 +73,6 @@ public class UpdateDocumentIndexWriterImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(
 			searchContext,
@@ -107,7 +106,6 @@ public class UpdateDocumentIndexWriterImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -147,7 +145,6 @@ public class UpdateDocumentIndexWriterImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -178,7 +175,6 @@ public class UpdateDocumentIndexWriterImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 

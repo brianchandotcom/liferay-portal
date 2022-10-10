@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
@@ -125,8 +124,6 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		queryConfig.setQueryIndexingEnabled(false);
 		queryConfig.setQuerySuggestionEnabled(false);
 
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 		BooleanQuery fullQuery = _indexerQueryBuilder.getQuery(searchContext);
 
 		fullQuery.setQueryConfig(queryConfig);
@@ -135,8 +132,6 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 	}
 
 	private Hits _doSearch(SearchContext searchContext) {
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 		Query fullQuery = _indexerQueryBuilder.getQuery(searchContext);
 
 		fullQuery.setQueryConfig(searchContext.getQueryConfig());

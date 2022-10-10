@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -91,8 +90,7 @@ public class FacetedSearcherImpl
 			_getEntryClassNameIndexerMap(
 				_getEntryClassNames(
 					_getSearchRequest(searchContext),
-					searchContext.getCompanyId()),
-				searchContext.getSearchEngineId());
+					searchContext.getCompanyId()));
 
 		_addSearchKeywords(
 			searchQuery, entryClassNameIndexerMap.keySet(), searchContext);
@@ -146,9 +144,6 @@ public class FacetedSearcherImpl
 		}
 
 		try {
-			searchContext.setSearchEngineId(
-				SearchEngineHelper.SYSTEM_ENGINE_ID);
-
 			BooleanFilter booleanFilter = new BooleanFilter();
 
 			booleanFilter.addRequiredTerm(
@@ -220,7 +215,7 @@ public class FacetedSearcherImpl
 	}
 
 	private Map<String, Indexer<?>> _getEntryClassNameIndexerMap(
-		List<String> entryClassNames, String searchEngineId) {
+		List<String> entryClassNames) {
 
 		Map<String, Indexer<?>> entryClassNameIndexerMap =
 			new LinkedHashMap<>();
@@ -228,9 +223,7 @@ public class FacetedSearcherImpl
 		for (String entryClassName : entryClassNames) {
 			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
-			if ((indexer == null) ||
-				!searchEngineId.equals(SearchEngineHelper.SYSTEM_ENGINE_ID)) {
-
+			if (indexer == null) {
 				continue;
 			}
 

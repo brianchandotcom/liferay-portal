@@ -91,7 +91,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -128,7 +127,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -152,7 +150,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexWriter.commit(searchContext);
 	}
@@ -174,7 +171,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -200,7 +196,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -228,7 +223,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -264,7 +258,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		searchContext.setCompanyId(companyId);
 		searchContext.setKeywords(querySuggestion);
 		searchContext.setLocale(locale);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexWriter.indexKeyword(searchContext, weight, keywordType);
 	}
@@ -281,7 +274,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexWriter.indexQuerySuggestionDictionaries(searchContext);
 	}
@@ -299,7 +291,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setLocale(locale);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexWriter.indexQuerySuggestionDictionary(searchContext);
 	}
@@ -316,7 +307,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexWriter.indexSpellCheckerDictionaries(searchContext);
 	}
@@ -334,7 +324,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setLocale(locale);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		indexWriter.indexSpellCheckerDictionary(searchContext);
 	}
@@ -384,7 +373,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -421,7 +409,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 
@@ -533,7 +520,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(
 			searchContext,
@@ -572,7 +558,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setSearchEngineId(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		_setCommitImmediately(searchContext, commitImmediately);
 

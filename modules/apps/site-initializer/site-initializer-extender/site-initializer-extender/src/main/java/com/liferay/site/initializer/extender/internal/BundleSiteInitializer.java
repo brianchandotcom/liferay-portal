@@ -3966,14 +3966,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		aggregatedStringUtilReplaceValues.putAll(
 			_releaseInfoStringUtilReplaceValues);
 
-		String x = StringUtil.replace(
-			s, "[$", "$]", aggregatedStringUtilReplaceValues);
-
-		StringUtil.replace(
-			x, "\"[#", "#]\"", aggregatedStringUtilReplaceValues);
-
 		return StringUtil.replace(
-			x, "\"[#", "#]\"", aggregatedStringUtilReplaceValues);
+			StringUtil.replace(
+				s, "[$", "$]", aggregatedStringUtilReplaceValues),
+			"\"[#", "#]\"", aggregatedStringUtilReplaceValues);
 	}
 
 	private String _replace(String s, String oldSub, String newSub) {

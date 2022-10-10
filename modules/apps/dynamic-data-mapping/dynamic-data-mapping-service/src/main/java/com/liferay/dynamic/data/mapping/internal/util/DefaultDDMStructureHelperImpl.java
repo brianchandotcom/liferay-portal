@@ -109,9 +109,9 @@ public class DefaultDDMStructureHelperImpl
 
 	@Override
 	public void addOrUpdateDDMStructures(
-		long userId, long groupId, long classNameId,
-		ClassLoader classLoader, String fileName,
-		ServiceContext serviceContext)
+			long userId, long groupId, long classNameId,
+			ClassLoader classLoader, String fileName,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Locale locale = _portal.getSiteDefaultLocale(groupId);
@@ -140,8 +140,8 @@ public class DefaultDDMStructureHelperImpl
 			}
 			else {
 				_updateStructure(
-					userId, groupId, classNameId, structureElement,
-					locale, serviceContext);
+					userId, groupId, classNameId, structureElement, locale,
+					serviceContext);
 			}
 		}
 	}
@@ -177,43 +177,6 @@ public class DefaultDDMStructureHelperImpl
 
 		return null;
 	}
-	private DDMStructure _updateStructure(
-		long userId, long groupId, long classNameId,
-		Element structureElement,Locale locale,
-		ServiceContext serviceContext)
-		throws Exception {
-
-		String description = structureElement.elementText("description");
-		String name = structureElement.elementText("name");
-
-			Map<Locale, String> nameMap = new HashMap<>();
-			Map<Locale, String> descriptionMap = new HashMap<>();
-
-			for (Locale curLocale : _language.getAvailableLocales(groupId)) {
-				ResourceBundle resourceBundle =
-					ResourceBundleUtil.getModuleAndPortalResourceBundle(
-						curLocale, getClass());
-
-				nameMap.put(
-					curLocale, _language.get(resourceBundle, name));
-				descriptionMap.put(
-					curLocale, _language.get(resourceBundle, description));
-			}
-
-			DDMForm ddmForm = getDDMForm(groupId, locale, structureElement);
-
-			DDMFormLayout ddmFormLayout = _getDDMFormLayout(
-				structureElement, ddmForm);
-
-			DDMStructure ddmStructure = _ddmStructureLocalService.updateStructure(
-				userId, groupId,
-				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-				name, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-				serviceContext);
-
-			return ddmStructure;
-	}
-
 
 	protected DDMForm deserialize(
 		String content, DDMFormDeserializer ddmFormDeserializer) {
@@ -290,13 +253,12 @@ public class DefaultDDMStructureHelperImpl
 		Element templateElement = element.element("template");
 
 		if (templateElement != null) {
-
 			String templateFileName = templateElement.elementText("file-name");
 
 			String script = StringUtil.read(
 				classLoader,
 				FileUtil.getPath(fileName) + StringPool.SLASH +
-				templateFileName);
+					templateFileName);
 
 			boolean cacheable = GetterUtil.getBoolean(
 				templateElement.elementText("cacheable"));
@@ -412,6 +374,41 @@ public class DefaultDDMStructureHelperImpl
 		}
 
 		return localizedValue;
+	}
+
+	private DDMStructure _updateStructure(
+			long userId, long groupId, long classNameId,
+			Element structureElement, Locale locale,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String description = structureElement.elementText("description");
+		String name = structureElement.elementText("name");
+
+		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		for (Locale curLocale : _language.getAvailableLocales(groupId)) {
+			ResourceBundle resourceBundle =
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					curLocale, getClass());
+
+			nameMap.put(curLocale, _language.get(resourceBundle, name));
+			descriptionMap.put(
+				curLocale, _language.get(resourceBundle, description));
+		}
+
+		DDMForm ddmForm = getDDMForm(groupId, locale, structureElement);
+
+		DDMFormLayout ddmFormLayout = _getDDMFormLayout(
+			structureElement, ddmForm);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.updateStructure(
+			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			classNameId, name, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			serviceContext);
+
+		return ddmStructure;
 	}
 
 	@Reference

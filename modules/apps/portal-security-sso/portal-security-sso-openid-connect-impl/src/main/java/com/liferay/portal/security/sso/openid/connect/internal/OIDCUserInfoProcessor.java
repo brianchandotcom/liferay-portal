@@ -115,6 +115,10 @@ public class OIDCUserInfoProcessor {
 		String streetClaimString = _getClaimString(
 			"street", addressMapperJSONObject, userInfoJSONObject);
 
+		if (Validator.isNull(streetClaimString)) {
+			return;
+		}
+
 		String[] streetClaimStringParts = streetClaimString.split("\n");
 
 		Region region = null;
@@ -374,6 +378,10 @@ public class OIDCUserInfoProcessor {
 		JSONObject userInfoJSONObject) {
 
 		String value = mapperJSONObject.getString(key);
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
 
 		String[] valueParts = value.split("->");
 

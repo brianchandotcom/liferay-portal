@@ -122,7 +122,7 @@ public class LinkToPageLayoutTypeController
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_v_l_s_g_id=${liferay:pvlsgid}&" +
 			"groupId=${liferay:groupId}&privateLayout=${privateLayout}&" +
-				"layoutId=${linkToLayoutId}";
+				"layoutId=${linkToLayoutId}&p_l_id=0";
 
 	@Reference
 	private ItemSelector _itemSelector;

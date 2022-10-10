@@ -187,7 +187,9 @@ definition {
 	}
 
 	macro assertPicklistItem {
-		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+		if (IsElementPresent(locator1 = "Picklist#IFRAME_PICKLIST_MODAL")) {
+			SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+		}
 
 		var key_picklistItemName = "${picklistItemName}";
 		var key_picklistItemKey = "${picklistItemKey}";

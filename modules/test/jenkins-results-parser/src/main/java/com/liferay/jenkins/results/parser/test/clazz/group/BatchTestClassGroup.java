@@ -87,7 +87,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return _averageTestOverheadDurations.get(testName);
 		}
 
-		long averageTestOverheadDuration = _getDefaultTestDuration();
+		long averageTestOverheadDuration = _getDefaultTestOverheadDuration();
 
 		BatchHistory batchHistory = HistoryUtil.getBatchHistory(
 			batchName, getJob());
@@ -837,6 +837,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private long _getDefaultTestDuration() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.default.test.duration");
+
+		if (jobProperty == null) {
+			return 0L;
+		}
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return 0L;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return Long.valueOf(jobPropertyValue);
+	}
+
+	private long _getDefaultTestOverheadDuration() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.default.test.overhead.duration");
 
 		if (jobProperty == null) {
 			return 0L;

@@ -191,4 +191,12 @@ definition {
 		return "${productMediaId}";
 	}
 
+	macro getProductMediaSrc {
+		var image = "${imagePath}";
+
+		var image_src = selenium.getAttribute("${image}@src");
+
+		return "${image_src}";
+	}
+
 }

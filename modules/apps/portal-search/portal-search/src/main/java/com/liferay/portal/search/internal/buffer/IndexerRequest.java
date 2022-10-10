@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -100,10 +99,6 @@ public class IndexerRequest {
 				_method.invoke(_indexer, _modelClassName, _modelPrimaryKey);
 			}
 		}
-	}
-
-	public String getSearchEngineId() {
-		return SearchEngineHelper.SYSTEM_ENGINE_ID;
 	}
 
 	@Override

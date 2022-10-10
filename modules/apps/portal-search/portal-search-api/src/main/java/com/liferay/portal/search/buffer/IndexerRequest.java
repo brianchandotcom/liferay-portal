@@ -48,10 +48,6 @@ public class IndexerRequest {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getSearchEngineId() {
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public int hashCode() {
 		throw new UnsupportedOperationException();

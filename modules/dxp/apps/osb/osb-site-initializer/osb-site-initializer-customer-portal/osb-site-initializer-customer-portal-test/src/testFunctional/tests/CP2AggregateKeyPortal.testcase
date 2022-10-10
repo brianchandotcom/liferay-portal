@@ -128,10 +128,10 @@ definition {
 				licenseType = "activation-key-multiple-products",
 				version = "7.4");
 		}
+
 		task ("And I assert that the Activation Key was downloaded") {
 			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
 		}
-
 	}
 
 	@description = "Automation ID: LPS-150698 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"

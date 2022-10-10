@@ -20,6 +20,7 @@
 	cssClass="<%= cssClass %>"
 	href='<%= "#" + sidenavId %>'
 	icon="<%= icon %>"
+	id="<%= StringUtil.randomId() %>"
 	label="<%= label %>"
 	type="button"
 />

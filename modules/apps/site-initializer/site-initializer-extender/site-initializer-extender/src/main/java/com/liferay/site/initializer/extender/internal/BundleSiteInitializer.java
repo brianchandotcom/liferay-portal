@@ -973,13 +973,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String urlPath = url.getPath();
 
-			String json = StringUtil.read(url.openStream());
+			if (StringUtil.endsWith(urlPath, "page-definition.json") ||
+				StringUtil.endsWith(urlPath, "display-page-template.json")) {
 
-			if (StringUtil.endsWith(urlPath, "page-definition.json")) {
+				String json = StringUtil.read(url.openStream());
+
 				json = _replace(
 					json, assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
-					taxonomyCategoryIdsStringUtilReplaceValues);
+					taxonomyCategoryIdsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
 
 				Group group = serviceContext.getScopeGroup();
 
@@ -1020,14 +1023,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					json);
 			}
 			else {
-				json = _replace(
-					json,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
-
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
 						urlPath, "/site-initializer/layout-page-templates"),
-					json);
+					url.openStream());
 			}
 		}
 

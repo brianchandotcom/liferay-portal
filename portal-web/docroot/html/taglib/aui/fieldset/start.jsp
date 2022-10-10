@@ -51,13 +51,9 @@ if (Validator.isNull(panelHeaderLinkCssClass)) {
 
 			<c:choose>
 				<c:when test="<%= collapsible %>">
-					<legend class="sr-only">
-						<%= header %>
-					</legend>
-
 					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= panelHeaderLinkCssClass %> <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
 						<span class="c-inner" tabindex="-1">
-							<span aria-hidden="true">
+							<span>
 								<%= header %>
 							</span>
 

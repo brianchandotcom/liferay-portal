@@ -25,15 +25,21 @@ export default function _PortletConfiguration({
 			.addEventListener('click', () => {
 				Liferay.Util.openSelectionModal({
 					onSelect: (event) => {
-						Liferay.Util.selectFolder(
-							{
-								idString: 'resourcePrimKey',
-								idValue: event.resourceprimkey,
-								nameString: 'configurationKBObject',
-								nameValue: event.title,
-							},
-							namespace
-						);
+						if (event) {
+							const item = JSON.parse(event.value);
+
+							const resourcePrimKey = document.getElementById(
+								`${namespace}resourcePrimKey`
+							);
+
+							resourcePrimKey.value = item.classPK;
+
+							const configurationKBObject = document.getElementById(
+								`${namespace}configurationKBObject`
+							);
+
+							configurationKBObject.value = item.title;
+						}
 					},
 					selectEventName: eventName,
 					title: Liferay.Language.get('select-article'),

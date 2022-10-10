@@ -400,7 +400,7 @@ definition {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaAPI(
-			itemKey = "PicklistItemKeyTest",
+			itemKey = "itemKeyName",
 			itemName = "Picklist Item Name Test",
 			picklistName = "Picklist Test");
 
@@ -411,10 +411,10 @@ definition {
 			picklistOption = "View");
 
 		Picklist.optionsPicklistItem(
-			itemKey = "PicklistItemKeyTest",
+			itemKey = "itemKeyName",
 			picklistItemOption = "View");
 
-		Picklist.assertDisableKey();
+		Picklist.assertDisableKey(keyName = "itemKeyName");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to search for a Picklist"

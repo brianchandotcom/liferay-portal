@@ -13,7 +13,7 @@
  */
 
 /// <reference types="react" />
-/// <reference types="src/main/resources/META-INF/resources/ts_modules/object-js-components-web" />
+/// <reference types="src/main/resources/meta-inf/resources/ts_modules/object-js-components-web" />
 
 interface IUseObjectFieldForm {
 	forbiddenChars?: string[];

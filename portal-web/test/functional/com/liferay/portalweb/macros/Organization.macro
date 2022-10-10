@@ -3,17 +3,11 @@ definition {
 	var orgName = "Organization Name";
 
 	macro addCommentCP {
-		AssertElementPresent(locator1 = "TextArea#COMMENTS");
-
 		Type(
 			locator1 = "TextArea#COMMENTS",
 			value1 = "${orgComment}");
 
 		PortletEntry.save();
-
-		AssertTextEquals(
-			locator1 = "TextArea#COMMENTS",
-			value1 = "${orgComment}");
 	}
 
 	macro addContactInformation {

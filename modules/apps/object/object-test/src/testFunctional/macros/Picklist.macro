@@ -202,9 +202,11 @@ definition {
 	macro assertPicklistItemByLanguage {
 		SelectFrameTop();
 
-		IFrame.selectModalFrame();
+		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
+			IFrame.selectModalFrame();
+		}
 
-		PortletEntry.changeLocale(locale = "${language}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
 
 		AssertTextEquals(
 			locator1 = "Picklist#EDIT_ITEM_NAME",

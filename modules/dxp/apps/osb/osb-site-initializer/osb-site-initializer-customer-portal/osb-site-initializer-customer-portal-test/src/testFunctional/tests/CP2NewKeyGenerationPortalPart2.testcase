@@ -1,0 +1,92 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-151788 | Test Summary: Verify if when user fill the mandatory field and at least one detail from Activation Key Server Details, button 'Generate 1 Key' is already enable"
+	@priority = "4"
+	test IfGenerate1KeyIsEnable {
+
+        // TODO LPS-151788 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-151797 | Test Summary: Verify if '+ Add Activation Key' button is disabled when the user reaches the maximum number of activation keys allowed"
+	@priority = "4"
+	test IfAddActivationIsDisabledWithMaximumNumber {
+        
+        // TODO LPS-151797 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-151798 | Test Summary: Verify if the user can enter more than one IP addresses"
+	@priority = "3"
+	test IfUserCanAddMoreIPAddresses {
+        
+        // TODO LPS-151798 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-151802 | Test Summary: Verify if the user can enter more than one MAC addresses"
+	@priority = "3"
+	test IfUserCanAddMoreMACAddresses {
+        
+        // TODO LPS-151802 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-151804 | Test Summary: Verify if '- Remove Activation Key' is working if there are at least 2 sets of Server Details on the form"
+	@priority = "4"
+	test IfRemoveActivationKeyIsWorking {
+        
+		// TODO LPS-151804 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-151805 | Test Summary: Verify if 'Generate X Keys' is disabled if any of the server details have an unexpected format. (ex. invalid IP address)"
+	@priority = "3"
+	test IfGenerateXKeysIsDisabled {
+		
+		// TODO LPS-151805 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+    }
+}

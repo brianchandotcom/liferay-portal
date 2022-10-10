@@ -146,6 +146,9 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			"folderId",
 			_ddmUserPersonalFolderItemSelectorCriterion.getFolderId()
 		).setParameter(
+			"objectFieldId",
+			_ddmUserPersonalFolderItemSelectorCriterion.getObjectFieldId()
+		).setParameter(
 			"repositoryId",
 			_ddmUserPersonalFolderItemSelectorCriterion.getRepositoryId()
 		).buildPortletURL();

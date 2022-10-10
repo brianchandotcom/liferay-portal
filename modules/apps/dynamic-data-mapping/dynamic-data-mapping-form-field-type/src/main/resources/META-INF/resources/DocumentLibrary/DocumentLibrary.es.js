@@ -273,6 +273,7 @@ const Main = ({
 	maximumSubmissionLimitReached,
 	message,
 	name,
+	objectFieldAcceptedFileExtensions,
 	onBlur,
 	onChange,
 	onFocus,
@@ -294,7 +295,11 @@ const Main = ({
 
 	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
 
-	const getErrorMessages = (errorMessage, isSignedIn) => {
+	const getErrorMessages = (
+		errorMessage,
+		isSignedIn,
+		objectFieldInvalidExtension
+	) => {
 		const errorMessages = [errorMessage];
 
 		if (!allowGuestUsers && !isSignedIn) {
@@ -318,6 +323,16 @@ const Main = ({
 				)
 			);
 		}
+		else if (objectFieldInvalidExtension) {
+			errorMessages.push(
+				Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-extension-x'
+					),
+					objectFieldAcceptedFileExtensions
+				)
+			);
+		}
 
 		return errorMessages.join(' ');
 	};
@@ -335,10 +350,22 @@ const Main = ({
 	}, [allowGuestUsers, isSignedIn, showUploadPermissionMessage]);
 
 	useEffect(() => {
-		setCurrentValue(value);
-		setDisplayErrors(initialDisplayErrors);
-		setErrorMessage(getErrorMessages(initialErrorMessage, isSignedIn));
-		setValid(initialValid);
+		const objectFieldInvalidExtension = isObjectFieldInvalidExtension(
+			value
+		);
+
+		setCurrentValue(objectFieldInvalidExtension ? null : value);
+		setDisplayErrors(
+			objectFieldInvalidExtension ? true : initialDisplayErrors
+		);
+		setErrorMessage(
+			getErrorMessages(
+				initialErrorMessage,
+				objectFieldInvalidExtension,
+				isSignedIn
+			)
+		);
+		setValid(objectFieldInvalidExtension ? false : initialValid);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialDisplayErrors, initialErrorMessage, initialValid, value]);
@@ -425,6 +452,32 @@ const Main = ({
 		);
 
 		handleGuestUploadFileChanged(errorMessage, {}, null);
+
+		return true;
+	};
+
+	const isObjectFieldInvalidExtension = (value) => {
+		if (!value || !objectFieldAcceptedFileExtensions) {
+			return false;
+		}
+
+		const fileEntryJSON = JSON.parse(value);
+
+		const fileExtension = fileEntryJSON.mimeType
+			? fileEntryJSON.mimeType.split('/')[1]
+			: fileEntryJSON.extension;
+
+		if (!fileExtension) {
+			return false;
+		}
+
+		const supportedExtensions = objectFieldAcceptedFileExtensions.split(
+			', '
+		);
+
+		if (supportedExtensions.includes(fileExtension)) {
+			return false;
+		}
 
 		return true;
 	};

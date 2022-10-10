@@ -18,6 +18,9 @@ import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -67,6 +71,13 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 			String fileName = uploadPortletRequest.getFileName("file");
 
 			_ddmFormUploadValidator.validateFileSize(file, fileName);
+
+			long objectFieldId = ParamUtil.getLong(
+				uploadPortletRequest, "objectFieldId");
+
+			if (objectFieldId > 0) {
+				_validateAttachmentObjectField(fileName, objectFieldId);
+			}
 
 			_ddmFormUploadValidator.validateFileExtension(fileName);
 
@@ -121,11 +132,33 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 				StringPool.AT, company.getMx()));
 	}
 
+	private void _validateAttachmentObjectField(
+			String fileName, long objectFieldId)
+		throws PortalException {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId, "acceptedFileExtensions");
+
+		String value = objectFieldSetting.getValue();
+
+		if (!ArrayUtil.contains(
+				value.split("\\s*,\\s*"), FileUtil.getExtension(fileName),
+				true)) {
+
+			throw new ObjectEntryValuesException.InvalidFileExtension(
+				FileUtil.getExtension(fileName), fileName);
+		}
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DDMFormUploadValidator _ddmFormUploadValidator;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -20,6 +20,9 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,6 +36,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,6 +80,13 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		_dlValidator.validateFileSize(
 			themeDisplay.getScopeGroupId(), fileName,
 			uploadPortletRequest.getContentType(_PARAMETER_NAME), size);
+
+		long objectFieldId = ParamUtil.getLong(
+			uploadPortletRequest, "objectFieldId");
+
+		if (objectFieldId > 0) {
+			_validateAttachmentObjectField(fileName, objectFieldId);
+		}
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				_PARAMETER_NAME)) {
@@ -173,6 +185,25 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		return serviceContext;
 	}
 
+	private void _validateAttachmentObjectField(
+			String fileName, long objectFieldId)
+		throws PortalException {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId, "acceptedFileExtensions");
+
+		String value = objectFieldSetting.getValue();
+
+		if (!ArrayUtil.contains(
+				value.split("\\s*,\\s*"), FileUtil.getExtension(fileName),
+				true)) {
+
+			throw new ObjectEntryValuesException.InvalidFileExtension(
+				FileUtil.getExtension(fileName), fileName);
+		}
+	}
+
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -191,6 +222,9 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
 	private ModelResourcePermission<Folder> _folderModelResourcePermission;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

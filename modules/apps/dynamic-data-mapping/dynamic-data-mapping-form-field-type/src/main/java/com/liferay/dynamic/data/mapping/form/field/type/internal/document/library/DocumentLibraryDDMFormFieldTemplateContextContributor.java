@@ -122,6 +122,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getLocale(),
 				ddmFormFieldRenderingContext.getValue())
 		).put(
+			"objectFieldAcceptedFileExtensions",
+			GetterUtil.getString(
+				ddmFormField.getProperty("objectFieldAcceptedFileExtensions"))
+		).put(
 			"value",
 			() -> {
 				String value = ddmFormFieldRenderingContext.getValue();
@@ -395,6 +399,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	private String _getGuestUploadURL(
+		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		long folderId, HttpServletRequest httpServletRequest) {
 
@@ -418,10 +423,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					ddmFormFieldRenderingContext.getDDMFormInstanceId()))
 		).setParameter(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId")
+		).setParameter(
+			"objectFieldId",
+			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId"))
 		).buildString();
 	}
 
 	private String _getItemSelectorURL(
+		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		long folderId, long repositoryId, ThemeDisplay themeDisplay) {
 
@@ -448,6 +457,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		ddmUserPersonalFolderItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType());
+		ddmUserPersonalFolderItemSelectorCriterion.setObjectFieldId(
+			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
 		ddmUserPersonalFolderItemSelectorCriterion.setRepositoryId(
 			repositoryId);
 
@@ -621,8 +632,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					}
 
 					return _getGuestUploadURL(
-						ddmFormFieldRenderingContext, ddmFormFolderId,
-						httpServletRequest);
+						ddmFormField, ddmFormFieldRenderingContext,
+						ddmFormFolderId, httpServletRequest);
 				}
 			).build();
 		}
@@ -653,8 +664,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				}
 
 				return _getItemSelectorURL(
-					ddmFormFieldRenderingContext, privateUserFolderId,
-					repository.getRepositoryId(), themeDisplay);
+					ddmFormField, ddmFormFieldRenderingContext,
+					privateUserFolderId, repository.getRepositoryId(),
+					themeDisplay);
 			}
 		).build();
 	}

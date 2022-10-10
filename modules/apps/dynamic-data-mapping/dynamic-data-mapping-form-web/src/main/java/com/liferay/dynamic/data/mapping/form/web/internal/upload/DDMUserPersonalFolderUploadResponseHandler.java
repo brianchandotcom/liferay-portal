@@ -16,15 +16,21 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
+import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadResponseHandler;
@@ -48,6 +54,29 @@ public class DDMUserPersonalFolderUploadResponseHandler
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(portalException);
+		}
+
+		if (portalException instanceof
+				ObjectEntryValuesException.InvalidFileExtension) {
+
+			return JSONUtil.put(
+				"error",
+				() -> {
+					ObjectFieldSetting objectFieldSetting =
+						_objectFieldSettingLocalService.fetchObjectFieldSetting(
+							ParamUtil.getLong(portletRequest, "objectFieldId"),
+							"acceptedFileExtensions");
+
+					return JSONUtil.put(
+						"errorType",
+						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION
+					).put(
+						"message", objectFieldSetting.getValue()
+					);
+				}
+			).put(
+				"success", Boolean.FALSE
+			);
 		}
 
 		return _itemSelectorUploadResponseHandler.onFailure(
@@ -110,6 +139,9 @@ public class DDMUserPersonalFolderUploadResponseHandler
 	@Reference
 	private ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private Portal _portal;

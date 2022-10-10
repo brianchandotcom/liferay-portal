@@ -50,8 +50,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -129,6 +131,7 @@ public class DDMFormDisplayContext {
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		NPMResolver npmResolver,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse, RoleLocalService roleLocalService,
@@ -152,6 +155,7 @@ public class DDMFormDisplayContext {
 		_jsonFactory = jsonFactory;
 		_npmResolver = npmResolver;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -240,6 +244,26 @@ public class DDMFormDisplayContext {
 						"maximumRepetitions",
 						_ddmFormWebConfiguration.
 							maximumRepetitionsForUploadFields());
+				}
+
+				if (Objects.equals(
+						ddmFormInstance.getStorageType(), "object")) {
+
+					DDMFormInstanceSettings ddmFormInstanceSettings =
+						ddmFormInstance.getSettingsModel();
+
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							GetterUtil.getLong(
+								ddmFormInstanceSettings.objectDefinitionId()),
+							_getObjectFieldName(ddmFormField));
+
+					long objectFieldId = objectField.getObjectFieldId();
+
+					ddmFormField.setProperty(
+						"objectFieldAcceptedFileExtensions",
+						_getObjectFieldAcceptedFileExtensions(objectFieldId));
+					ddmFormField.setProperty("objectFieldId", objectFieldId);
 				}
 			}
 			else if (Objects.equals(
@@ -1051,6 +1075,14 @@ public class DDMFormDisplayContext {
 		return objectRelationship.getObjectDefinitionId1();
 	}
 
+	private String _getObjectFieldAcceptedFileExtensions(long objectFieldId) {
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId, "acceptedFileExtensions");
+
+		return objectFieldSetting.getValue();
+	}
+
 	private String _getObjectFieldName(DDMFormField ddmFormField) {
 		try {
 			JSONArray jsonArray = _jsonFactory.createJSONArray(
@@ -1135,6 +1167,8 @@ public class DDMFormDisplayContext {
 	private DDMFormInstanceVersion _latestDDMFormInstanceVersion;
 	private final NPMResolver _npmResolver;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectFieldSettingLocalService
+		_objectFieldSettingLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final Portal _portal;

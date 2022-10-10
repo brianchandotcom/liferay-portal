@@ -94,16 +94,6 @@ public interface ObjectEntryResource {
 			ObjectEntry objectEntry)
 		throws Exception;
 
-	public Page<ObjectEntry> getCurrentObjectEntriesObjectRelationshipNamePage(
-			Long currentObjectEntryId, String objectRelationshipName,
-			Pagination pagination)
-		throws Exception;
-
-	public ObjectEntry putCurrentObjectEntry(
-			Long currentObjectEntryId, String objectRelationshipName,
-			Long relatedObjectEntryId)
-		throws Exception;
-
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;
 
 	public Response deleteObjectEntryBatch(String callbackURL, Object object)

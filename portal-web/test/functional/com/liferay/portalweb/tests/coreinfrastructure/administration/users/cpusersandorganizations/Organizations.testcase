@@ -480,6 +480,8 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
+		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
 		Suborganization.viewCP(
 			orgName = "Organization Name",
 			orgType = "Organization",

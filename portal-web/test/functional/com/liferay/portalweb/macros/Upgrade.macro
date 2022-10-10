@@ -621,11 +621,11 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.viewSubOrganizationCP(
-			orgName = "Organization1",
-			orgType = "Organization",
-			suborgName = "Sub-organization-Pre",
-			suborgType = "Organization");
+		LexiconEntry.gotoEntry(rowEntry = "Organization1");
+
+		Organization.viewCP(
+			orgName = "Sub-organization-Pre1",
+			orgType = "Organization");
 
 		Organization.gotoCP(
 			orgName = "Sub-organization-Pre",

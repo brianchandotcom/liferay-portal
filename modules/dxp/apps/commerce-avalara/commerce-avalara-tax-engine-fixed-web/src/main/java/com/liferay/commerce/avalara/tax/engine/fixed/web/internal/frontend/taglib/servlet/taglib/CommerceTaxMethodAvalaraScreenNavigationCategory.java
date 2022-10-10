@@ -26,6 +26,8 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -166,6 +168,7 @@ public class CommerceTaxMethodAvalaraScreenNavigationCategory
 			companies = _commerceAvalaraConnector.getCompanyCodes();
 		}
 		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		httpServletRequest.setAttribute("avalaraCompanies", companies);
@@ -215,9 +218,14 @@ public class CommerceTaxMethodAvalaraScreenNavigationCategory
 			return true;
 		}
 		catch (Exception exception) {
-			return false;
+			_log.error(exception);
 		}
+
+		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceTaxMethodAvalaraScreenNavigationCategory.class);
 
 	@Reference
 	private CommerceAvalaraConnector _commerceAvalaraConnector;

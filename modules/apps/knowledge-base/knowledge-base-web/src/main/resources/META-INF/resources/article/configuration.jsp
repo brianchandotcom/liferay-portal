@@ -102,43 +102,34 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<script>
-	var <portlet:namespace />form = document.getElementById(
-		'<portlet:namespace />fm'
-	);
-
-	if (<portlet:namespace />form) {
-		document
-			.getElementById('<portlet:namespace />selectKBArticleButton')
-			.addEventListener('click', (event) => {
-				Liferay.Util.openSelectionModal({
-					onSelect: function (event) {
-						var kbArticleData = {
-							idString: 'resourcePrimKey',
-							idValue: event.resourceprimkey,
-							nameString: 'configurationKBObject',
-							nameValue: event.title,
-						};
-
-						Liferay.Util.selectFolder(
-							kbArticleData,
-							'<portlet:namespace />'
-						);
-					},
-					selectEventName: '<portlet:namespace />selectKBObject',
-					title: '<liferay-ui:message key="select-article" />',
-
-					<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/admin/common/select_parent.jsp" />
-						<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>' />
-						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />
-						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticlePortletInstanceConfiguration.resourcePrimKey()) %>" />
-						<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(kbArticlePortletInstanceConfiguration.resourcePrimKey()) %>" />
-						<portlet:param name="selectableClassNameIds" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />
-					</liferay-portlet:renderURL>
-
-					url: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
-				});
-			});
-	}
-</script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "PortletConfigurationComponent" %>'
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"eventName", liferayPortletResponse.getNamespace() + "selectKBObject"
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"selectKBObjectURL",
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse, portletResource
+			).setMVCPath(
+				"/admin/common/select_parent.jsp"
+			).setParameter(
+				"eventName", liferayPortletResponse.getNamespace() + "selectKBObject"
+			).setParameter(
+				"originalParentResourcePrimKey", kbArticlePortletInstanceConfiguration.resourcePrimKey()
+			).setParameter(
+				"parentResourceClassNameId", PortalUtil.getClassNameId(KBArticleConstants.getClassName())
+			).setParameter(
+				"parentResourcePrimKey", kbArticlePortletInstanceConfiguration.resourcePrimKey()
+			).setParameter(
+				"selectableClassNameIds", PortalUtil.getClassNameId(KBArticleConstants.getClassName())
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
+		).build()
+	%>'
+	module="article/js/PortletConfiguration"
+	servletContext="<%= application %>"
+/>

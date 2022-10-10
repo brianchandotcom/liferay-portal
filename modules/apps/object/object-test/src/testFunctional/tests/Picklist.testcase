@@ -1073,7 +1073,7 @@ definition {
 
 		Picklist.addLanguageOnPicklist(
 			itemName = "Teste na lista",
-			newlanguage = "pt-BR");
+			newLanguage = "pt_BR");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "PicklistItemKeyTest",
@@ -1081,7 +1081,7 @@ definition {
 
 		Picklist.addLanguageOnPicklistItem(
 			itemName = "Teste de entrada",
-			newlanguage = "pt-BR");
+			newLanguage = "pt_BR");
 
 		Button.clickSave();
 

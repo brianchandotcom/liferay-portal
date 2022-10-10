@@ -5313,11 +5313,9 @@ definition {
 			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
-	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many will allow to delete only the entry with relation but not its relations"
+	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many will allow to delete the entry with relation and its relations to be deleted"
 	@priority = "4"
 	test CascadeDeletionManyToManyWillAllowDelete {
-		property portal.upstream = "quarantine";
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 122",
@@ -5414,7 +5412,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB122");
 
-		ObjectPortlet.viewEntry(entry = "Entry B");
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 	}
 
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted but not its relation"

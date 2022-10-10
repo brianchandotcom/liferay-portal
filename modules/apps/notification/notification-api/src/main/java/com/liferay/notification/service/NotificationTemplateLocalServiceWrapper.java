@@ -396,16 +396,6 @@ public class NotificationTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public void sendNotificationTemplate(
-			long userId, long notificationTemplateId,
-			String notificationTypeKey, Object object)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_notificationTemplateLocalService.sendNotificationTemplate(
-			userId, notificationTemplateId, notificationTypeKey, object);
-	}
-
-	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
 				long notificationTemplateId, long objectDefinitionId,

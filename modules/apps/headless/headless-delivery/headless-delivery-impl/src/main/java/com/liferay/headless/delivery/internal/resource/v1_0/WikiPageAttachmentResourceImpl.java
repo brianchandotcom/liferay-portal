@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageService;
 
 import java.util.Optional;
@@ -179,9 +178,6 @@ public class WikiPageAttachmentResourceImpl
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;

@@ -17,9 +17,11 @@ definition {
 	macro addLanguageOnPicklistItem {
 		SelectFrameTop();
 
-		IFrame.selectModalFrame();
+		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
+			IFrame.selectModalFrame();
+		}
 
-		PortletEntry.changeLocale(locale = "${newlanguage}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
 
 		Type(
 			locator1 = "Picklist#EDIT_ITEM_NAME",

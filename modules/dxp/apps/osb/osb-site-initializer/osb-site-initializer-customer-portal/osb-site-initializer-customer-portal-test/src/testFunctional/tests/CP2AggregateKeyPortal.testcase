@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Avangrid Portals";
+	var testAccount = "Test Account Portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -25,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -75,9 +75,9 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheDownloadSuccessfulMessage {
-		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
@@ -86,7 +86,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("Given I go to the test account") {
@@ -121,16 +121,16 @@ definition {
 			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
 		}
 
-		//task ("And I get the expected downloaded file name") {
-		//	var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-		//		fileType = "xml",
-		//		licenseName = "${testAccount}",
-		//		licenseType = "activation-key-multiple-products",
-		//		version = "7.4");
-		//}
-		//task ("And I assert that the Activation Key was downloaded") {
-		//	CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
-		//}
+		task ("And I get the expected downloaded file name") {
+			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				fileType = "xml",
+				licenseName = "${testAccount}",
+				licenseType = "activation-key-multiple-products",
+				version = "7.4");
+		}
+		task ("And I assert that the Activation Key was downloaded") {
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
+		}
 
 	}
 

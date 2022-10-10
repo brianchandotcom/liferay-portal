@@ -1,0 +1,71 @@
+definition {
+
+	macro _curlDocumentFolders {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "${groupName}",
+				site = "true");
+
+			var api = "sites/${siteId}";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api}/document-folders \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+		''';
+
+		return "${curl}";
+	}
+
+	macro assertProperBatchInActionBlock {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		for (var batchAction : list "${batchActions}") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			var expectedHref = "${portalURL}/o/headless-delivery/v1.0/document-folders/batch";
+
+			if ("${batchAction}" == "updateBatch") {
+				var actualHref = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.updateBatch[?(@.method == 'PUT')].href");
+			}
+			else if ("${batchAction}" == "deleteBatch") {
+				var actualHref = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.deleteBatch[?(@.method == 'DELETE')].href");
+			}
+			else {
+				var actualHref = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.createBatch[?(@.method == 'POST')].href");
+
+				if (isSet(assetLibraryId)) {
+					var expectedHref = "${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/document-folders/batch";
+				}
+				else {
+					var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+						groupName = "${groupName}",
+						site = "true");
+
+					var expectedHref = "${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/document-folders/batch";
+				}
+			}
+
+			TestUtils.assertEquals(
+				actual = "${actualHref}",
+				expected = "${expectedHref}");
+		}
+	}
+
+	macro getDocumentFolders {
+		var curl = DocumentFolderAPI._curlDocumentFolders(
+			assetLibraryId = "${assetLibraryId}",
+			groupName = "${groupName}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+}

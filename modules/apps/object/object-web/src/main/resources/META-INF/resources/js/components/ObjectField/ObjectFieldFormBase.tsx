@@ -365,7 +365,11 @@ export default function ObjectFieldFormBase({
 					placeholder={Liferay.Language.get('choose-an-option')}
 					query={picklistDefaultValueQuery}
 					required
-					value={values.defaultValue}
+					value={
+						filteredPicklistItems.find(
+							({key}) => key === values.defaultValue
+						)?.name
+					}
 				>
 					{({name}) => (
 						<div className="d-flex justify-content-between">

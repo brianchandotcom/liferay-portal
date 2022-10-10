@@ -1651,9 +1651,9 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationDescription = "Notification Description");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			description = "Notification Description Edited",
-			singleAction = "true");
+		ProcessBuilderKaleoDesignerReact.editNotification(description = "Notification Description Edited");
+
+
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1688,13 +1688,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationName = "Liferay Notification");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			name = "Workflow Notifications",
-			singleAction = "true");
+		ProcessBuilderKaleoDesignerReact.editNotification(name = "Liferay Notification Edited");
+
+
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "Workflow Notifications");
+		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "Liferay Notification Edited");
 	}
 
 	@description = "Verify that the user can edit a Template for Notification"
@@ -1722,10 +1722,11 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateValue = "Notification Template");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''',
-			singleAction = "true",
-			templateLanguageOption = "FreeMarker");
+		ProcessBuilderKaleoDesignerReact.editNotification(
+		notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''',
+		templateLanguageOption = "FreeMarker");
+
+		
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2830,8 +2831,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+		
 
-		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "Email");
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeName = "Email");
 	}
 
 	@description = "Verify that the user can select each node in Diagram"
@@ -3122,21 +3124,17 @@ definition {
 			notificationTypeOption = "Email",
 			singleAction = "true");
 
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			notificationTypeOption = "User Notification",
-			singleAction = "true");
+		Check.checkNotVisibleNoErrors(
+			key_checkboxValue = "User Notification",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
 
-		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "Email");
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeName = "Email");
 
-		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "User Notification");
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeName = "User Notification");
 	}
 
 	@description = "Verify that the user can select User Notification as Notification type"
@@ -3160,8 +3158,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+		
 
-		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "User Notification");
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeName = "User Notification");
 	}
 
 	@description = "Verify that the user can set the Priority for the Action"

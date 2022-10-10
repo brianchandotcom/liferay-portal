@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
@@ -54,10 +51,6 @@ public class SearchEngineInitializer implements Runnable {
 		_bundleContext = bundleContext;
 		_companyId = companyId;
 		_portalExecutorManager = portalExecutorManager;
-	}
-
-	public Set<String> getUsedSearchEngineIds() {
-		return _usedSearchEngineIds;
 	}
 
 	public void halt() {
@@ -92,8 +85,6 @@ public class SearchEngineInitializer implements Runnable {
 		}
 
 		indexer.reindex(new String[] {String.valueOf(_companyId)});
-
-		_usedSearchEngineIds.add(SearchEngineHelper.SYSTEM_ENGINE_ID);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -211,6 +202,5 @@ public class SearchEngineInitializer implements Runnable {
 	private boolean _finished;
 	private ServiceTrackerList<Indexer<?>> _indexers;
 	private final PortalExecutorManager _portalExecutorManager;
-	private final Set<String> _usedSearchEngineIds = new HashSet<>();
 
 }

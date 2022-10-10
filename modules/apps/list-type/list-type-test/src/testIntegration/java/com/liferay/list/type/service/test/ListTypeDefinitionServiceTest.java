@@ -241,6 +241,7 @@ public class ListTypeDefinitionServiceTest {
 
 			listTypeDefinition =
 				_listTypeDefinitionService.updateListTypeDefinition(
+					listTypeDefinition.getExternalReferenceCode(),
 					listTypeDefinition.getListTypeDefinitionId(),
 					Collections.singletonMap(
 						LocaleUtil.getDefault(),

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleConfigurationDisplayContext;
@@ -56,7 +57,7 @@ public class ArticleConfigurationAction extends DefaultConfigurationAction {
 		httpServletRequest.setAttribute(
 			KBArticleConfigurationDisplayContext.class.getName(),
 			new KBArticleConfigurationDisplayContext(
-				httpServletRequest, _kbArticleService,
+				httpServletRequest, _itemSelector, _kbArticleService,
 				_portal.getLiferayPortletResponse(
 					(PortletResponse)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE)),
@@ -73,6 +74,9 @@ public class ArticleConfigurationAction extends DefaultConfigurationAction {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private KBArticleService _kbArticleService;

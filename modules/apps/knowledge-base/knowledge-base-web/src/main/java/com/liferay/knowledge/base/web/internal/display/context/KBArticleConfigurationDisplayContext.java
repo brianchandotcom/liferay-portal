@@ -14,7 +14,9 @@
 
 package com.liferay.knowledge.base.web.internal.display.context;
 
-import com.liferay.knowledge.base.constants.KBArticleConstants;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.configuration.KBArticlePortletInstanceConfiguration;
@@ -25,12 +27,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -49,11 +49,12 @@ import javax.servlet.http.HttpServletRequest;
 public class KBArticleConfigurationDisplayContext {
 
 	public KBArticleConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		KBArticleService kbArticleService,
 		LiferayPortletResponse liferayPortletResponse, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
 		_kbArticleService = kbArticleService;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portal = portal;
@@ -63,33 +64,11 @@ public class KBArticleConfigurationDisplayContext {
 		throws ConfigurationException {
 
 		return HashMapBuilder.<String, Object>put(
-			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectKBObject"
+			"eventName", _getItemSelectedEventName()
 		).put(
 			"namespace", _liferayPortletResponse.getNamespace()
 		).put(
-			"selectKBObjectURL",
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse,
-				ParamUtil.getString(_httpServletRequest, "portletResource")
-			).setMVCPath(
-				"/admin/common/select_parent.jsp"
-			).setParameter(
-				"eventName",
-				_liferayPortletResponse.getNamespace() + "selectKBObject"
-			).setParameter(
-				"originalParentResourcePrimKey", getResourcePrimKey()
-			).setParameter(
-				"parentResourceClassNameId",
-				_portal.getClassNameId(KBArticleConstants.getClassName())
-			).setParameter(
-				"parentResourcePrimKey", getResourcePrimKey()
-			).setParameter(
-				"selectableClassNameIds",
-				_portal.getClassNameId(KBArticleConstants.getClassName())
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			"selectKBObjectURL", _getSelectKBObjectURL()
 		).build();
 	}
 
@@ -232,6 +211,10 @@ public class KBArticleConfigurationDisplayContext {
 		return kbArticlePortletInstanceConfiguration.showKBArticleAttachments();
 	}
 
+	private String _getItemSelectedEventName() {
+		return _liferayPortletResponse.getNamespace() + "selectKBObject";
+	}
+
 	private KBArticlePortletInstanceConfiguration
 			_getKBArticlePortletInstanceConfiguration()
 		throws ConfigurationException {
@@ -256,7 +239,24 @@ public class KBArticleConfigurationDisplayContext {
 		return _kbArticlePortletInstanceConfiguration;
 	}
 
+	private String _getSelectKBObjectURL() throws ConfigurationException {
+		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		infoItemItemSelectorCriterion.setItemType(KBArticle.class.getName());
+		infoItemItemSelectorCriterion.setMultiSelection(false);
+		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+
+		PortletURL portletURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+			_getItemSelectedEventName(), infoItemItemSelectorCriterion);
+
+		return portletURL.toString();
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private KBArticlePortletInstanceConfiguration
 		_kbArticlePortletInstanceConfiguration;
 	private final KBArticleService _kbArticleService;

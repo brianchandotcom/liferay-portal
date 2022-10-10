@@ -17,10 +17,12 @@ package com.liferay.object.internal.instance.lifecycle;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.type.LegacyNotificationType;
 import com.liferay.object.constants.ObjectSAPConstants;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
+import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermContributor;
 import com.liferay.object.internal.notification.type.ObjectDefinitionNotificationType;
 import com.liferay.object.internal.persistence.ObjectDefinitionTableArgumentsResolver;
@@ -235,6 +237,12 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				new ObjectDefinitionNotificationType(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"notification.type.key", objectDefinition.getClassName()
+				).build());
+			_bundleContext.registerService(
+				NotificationHandler.class,
+				new ObjectDefinitionNotificationHandler(objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"class.name", objectDefinition.getClassName()
 				).build());
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,

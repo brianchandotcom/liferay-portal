@@ -178,7 +178,7 @@ definition {
 
 		task ("Map custom field to editable field of Heading") {
 			PageEditorMapping.mapEditableTextToField(
-				field = "short description",
+				field = "Short Description",
 				fragmentName = "Heading",
 				id = "element-text");
 

@@ -321,12 +321,17 @@ public class ContentLayoutTestUtil {
 		mockLiferayPortletActionRequest.addParameter(
 			"itemId", jsonObject.getString("addedItemId"));
 
+		JSONObject responseJSONObject = (JSONObject)ReflectionTestUtil.invoke(
+			mvcActionCommand, "_updateItemConfig",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
 		jsonObject.put(
-			"layoutData",
-			(JSONObject)ReflectionTestUtil.invoke(
-				mvcActionCommand, "_updateItemConfig",
-				new Class<?>[] {ActionRequest.class},
-				mockLiferayPortletActionRequest));
+			"layoutData", responseJSONObject.getJSONObject("layoutData")
+		).put(
+			"pageContents", responseJSONObject.getJSONObject("pageContents")
+		);
 
 		return jsonObject;
 	}

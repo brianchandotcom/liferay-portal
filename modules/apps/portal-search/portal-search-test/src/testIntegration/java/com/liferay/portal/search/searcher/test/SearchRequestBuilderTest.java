@@ -475,7 +475,7 @@ public class SearchRequestBuilderTest {
 	@Inject
 	private RescoreBuilderFactory _rescoreBuilderFactory;
 
-	@Inject(filter = "search.engine.id=SYSTEM_ENGINE")
+	@Inject
 	private SearchEngine _searchEngine;
 
 	@Inject

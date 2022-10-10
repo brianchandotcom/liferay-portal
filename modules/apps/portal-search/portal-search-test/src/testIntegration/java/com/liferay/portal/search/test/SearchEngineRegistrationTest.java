@@ -50,7 +50,7 @@ public class SearchEngineRegistrationTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	@Inject(filter = "search.engine.id=SYSTEM_ENGINE")
+	@Inject
 	private SearchEngine _searchEngine;
 
 }

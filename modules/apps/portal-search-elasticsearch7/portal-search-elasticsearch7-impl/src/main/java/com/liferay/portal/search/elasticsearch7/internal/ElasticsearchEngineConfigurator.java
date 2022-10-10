@@ -230,9 +230,7 @@ public class ElasticsearchEngineConfigurator
 	@Reference
 	private MessageBus _messageBus;
 
-	@Reference(
-		target = "(&(search.engine.id=SYSTEM_ENGINE)(search.engine.impl=Elasticsearch))"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchEngine _searchEngine;
 
 	@Reference

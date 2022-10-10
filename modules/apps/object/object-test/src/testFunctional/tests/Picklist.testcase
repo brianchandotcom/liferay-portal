@@ -491,7 +491,7 @@ definition {
 
 		Picklist.addLanguageOnPicklistItem(
 			itemName = "Teste de entrada",
-			newlanguage = "pt-BR");
+			newLanguage = "pt_BR");
 
 		Button.clickSave();
 
@@ -506,8 +506,8 @@ definition {
 			picklistItemOption = "View");
 
 		Picklist.assertPicklistItemByLanguage(
-			language = "pt-BR",
-			nameItem = "Teste de entrada");
+			nameItem = "Teste de entrada",
+			newLanguage = "pt_BR");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name when updating it"

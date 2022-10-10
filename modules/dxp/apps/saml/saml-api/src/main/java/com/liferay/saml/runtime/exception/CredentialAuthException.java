@@ -22,13 +22,24 @@ import java.security.UnrecoverableKeyException;
  */
 public class CredentialAuthException extends SecurityException {
 
-	public CredentialAuthException(
+	private CredentialAuthException(
 		String message, GeneralSecurityException generalSecurityException) {
 
 		super(
 			String.format(
 				"%s. %s", message, generalSecurityException.getMessage()),
 			generalSecurityException);
+	}
+
+	public static class GeneralCredentialAuthException
+		extends CredentialAuthException {
+
+		public GeneralCredentialAuthException(
+			String message, GeneralSecurityException generalSecurityException) {
+
+			super(message, generalSecurityException);
+		}
+
 	}
 
 	public static class InvalidCredentialPassword

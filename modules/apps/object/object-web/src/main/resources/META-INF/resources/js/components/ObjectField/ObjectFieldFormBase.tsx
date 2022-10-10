@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayToggle} from '@clayui/form';
 import {
 	API,
@@ -91,9 +90,6 @@ export default function ObjectFieldFormBase({
 		return businessTypeMap;
 	}, [objectFieldTypes]);
 
-	const [picklistDefaultValue, setPicklistDefaultValue] = useState<
-		ObjectState
-	>();
 	const [picklistDefaultValueQuery, setPicklistDefaultValueQuery] = useState<
 		string
 	>('');
@@ -116,8 +112,6 @@ export default function ObjectFieldFormBase({
 			if (!defaultPicklistValue && defaultValue) {
 				setValues({defaultValue: undefined});
 			}
-
-			setPicklistDefaultValue(defaultPicklistValue);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.defaultValue]);
@@ -378,20 +372,6 @@ export default function ObjectFieldFormBase({
 					)}
 				</AutoComplete>
 			)}
-
-			{values.businessType === 'Picklist' &&
-				values.state &&
-				!picklistDefaultValue && (
-					<div className="c-mt-1">
-						<ClayAlert
-							displayType="danger"
-							title={Liferay.Language.get(
-								'missing-picklist-default-value'
-							)}
-							variant="feedback"
-						/>
-					</div>
-				)}
 		</>
 	);
 }

@@ -63,6 +63,14 @@ public class AMImageValidatorImplTest {
 			true
 		);
 
+		Mockito.doReturn(
+			true
+		).when(
+			_amImageValidatorImpl
+		).isValid(
+			Mockito.any(FileVersion.class)
+		);
+
 		Assert.assertFalse(
 			_amImageValidatorImpl.isProcessingRequired(
 				_adaptiveMedia, Mockito.mock(FileVersion.class)));
@@ -77,6 +85,13 @@ public class AMImageValidatorImplTest {
 				Mockito.anyString(), Mockito.any(FileVersion.class))
 		).thenReturn(
 			false
+		);
+		Mockito.doReturn(
+			true
+		).when(
+			_amImageValidatorImpl
+		).isValid(
+			Mockito.any(FileVersion.class)
 		);
 
 		Assert.assertTrue(
@@ -98,7 +113,7 @@ public class AMImageValidatorImplTest {
 		AdaptiveMedia.class);
 	private final AMImageEntryLocalService _amImageEntryLocalService =
 		Mockito.mock(AMImageEntryLocalService.class);
-	private final AMImageValidatorImpl _amImageValidatorImpl =
-		new AMImageValidatorImpl();
+	private final AMImageValidatorImpl _amImageValidatorImpl = Mockito.spy(
+		new AMImageValidatorImpl());
 
 }

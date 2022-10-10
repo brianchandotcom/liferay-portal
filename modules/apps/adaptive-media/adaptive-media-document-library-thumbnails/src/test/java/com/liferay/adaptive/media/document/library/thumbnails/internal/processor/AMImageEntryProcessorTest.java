@@ -192,43 +192,6 @@ public class AMImageEntryProcessorTest {
 	}
 
 	@Test
-	public void testGetPreviewAsStreamTriggersAMProcessorWhenNoAMImageContentExists()
-		throws Exception {
-
-		Mockito.when(
-			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
-		).thenAnswer(
-			invocation -> Stream.of(_adaptiveMedia)
-		);
-
-		Mockito.when(
-			_amImageMimeTypeProvider.isMimeTypeSupported(Mockito.anyString())
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			_amImageValidator.isProcessingRequired(_adaptiveMedia, _fileVersion)
-		).thenReturn(
-			true
-		);
-
-		_amImageEntryProcessor.getPreviewAsStream(_fileVersion);
-
-		Mockito.verify(
-			_amAsyncProcessor
-		).triggerProcess(
-			Mockito.any(FileVersion.class), Mockito.anyString()
-		);
-	}
-
-	@Test
 	public void testGetPreviewAsStreamTriggersAMProcessorWhenNoAMImageExists()
 		throws Exception {
 

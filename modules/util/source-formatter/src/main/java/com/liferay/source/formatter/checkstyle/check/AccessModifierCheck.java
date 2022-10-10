@@ -58,6 +58,14 @@ public class AccessModifierCheck extends BaseCheck {
 			DetailAST modifiersDetailAST =
 				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
 
+			String methodName = getName(methodDefinitionDetailAST);
+
+			if (methodName.startsWith("remove") ||
+				methodName.startsWith("un")) {
+
+				continue;
+			}
+
 			if (!modifiersDetailAST.branchContains(TokenTypes.ANNOTATION) &&
 				modifiersDetailAST.branchContains(
 					TokenTypes.LITERAL_PROTECTED)) {

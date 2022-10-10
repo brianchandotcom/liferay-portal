@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -64,12 +65,12 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public synchronized void initialize(long companyId) {
+	public void initialize(long companyId) {
 		_searchEngine.initialize(companyId);
 	}
 
 	@Override
-	public synchronized void removeCompany(long companyId) {
+	public void removeCompany(long companyId) {
 		_searchEngine.removeCompany(companyId);
 	}
 
@@ -89,7 +90,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 	@Activate
 	@Modified
-	protected synchronized void activate(
+	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		SearchEngineHelperConfiguration searchEngineHelperConfiguration =
@@ -106,7 +107,8 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Set<String> _excludedEntryClassNames = new HashSet<>();
+	private final Set<String> _excludedEntryClassNames =
+		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
 	private volatile SearchEngine _searchEngine;
 
 }

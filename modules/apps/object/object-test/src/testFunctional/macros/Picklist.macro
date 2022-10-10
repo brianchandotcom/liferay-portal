@@ -273,10 +273,6 @@ definition {
 		Click(locator1 = "Picklist#CANCEL_PICKLIST");
 	}
 
-	macro cancelUpdatePicklist {
-		Click.javaScriptClick(locator1 = "Picklist#CANCEL_UPDATE_PICKLIST");
-	}
-
 	macro clickSaveButton {
 		Click.javaScriptClick(locator1 = "Picklist#SAVE_BUTTON");
 	}

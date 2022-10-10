@@ -142,7 +142,7 @@
 	</tr>
 	<tr>
 		<td>DISABLED_PICKLIST_NAME</td>
-		<td>//input[(@id='_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_name') and (@disabled)]</td>
+		<td>//input[(@class='form-control') and contains(disabled,'')]</td>
 		<td></td>
 	</tr>
 	<tr>

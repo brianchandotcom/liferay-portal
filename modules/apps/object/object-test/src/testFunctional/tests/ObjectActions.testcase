@@ -659,8 +659,6 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to search for an Action"
 	@priority = "4"
 	test CanSearchAction {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 191",
 			objectName = "CustomObject191",

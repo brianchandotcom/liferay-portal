@@ -320,25 +320,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assignOrgRoleCP {
-		Organization.gotoActionsCmd(orgName = "${orgName}");
-
-		Pause(locator1 = "3000");
-
-		MenuItem.click(menuItem = "Assign Organization Roles");
+	macro assignOrgRole {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Organization Roles",
+			rowEntry = "${orgName}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconTable.clickTableEntryTitle(tableEntry = "${roleTitle}");
 
 		Navigator.gotoNavItem(navItem = "Available");
-
-		Search.searchCP(searchTerm = "${userScreenName}");
-
-		AssertTextEquals(
-			key_userScreenName = "${userScreenName}",
-			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
 
 		Check(
 			key_userScreenName = "${userScreenName}",

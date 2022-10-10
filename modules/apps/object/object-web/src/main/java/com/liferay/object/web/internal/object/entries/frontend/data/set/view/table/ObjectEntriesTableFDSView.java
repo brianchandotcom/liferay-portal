@@ -201,7 +201,9 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField.setContentRenderer(contentRenderer);
 		}
 
-		if (!Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BLOB) &&
+		if (!Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
+			!Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BLOB) &&
 			sortable) {
 
 			fdsTableSchemaField.setSortable(true);

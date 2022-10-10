@@ -120,11 +120,19 @@ public class ObjectEntryEntityModel implements EntityModel {
 	private Optional<EntityField> _getEntityField(ObjectField objectField) {
 		if (Objects.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-			Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_CLOB) ||
-			Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_STRING)) {
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			return Optional.empty();
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_CLOB) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			return Optional.of(
 				new StringEntityField(

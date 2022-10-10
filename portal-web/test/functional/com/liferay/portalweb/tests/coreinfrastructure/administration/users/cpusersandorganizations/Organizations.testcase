@@ -1062,7 +1062,9 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.viewNoOrganizationsFoundCP();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No organizations were found.");
 	}
 
 	@priority = "4"
@@ -1804,7 +1806,9 @@ definition {
 
 		User.searchCP(searchTerm = "test");
 
-		Organization.viewMembersNotFoundCP();
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
 	}
 
 	@priority = "3"

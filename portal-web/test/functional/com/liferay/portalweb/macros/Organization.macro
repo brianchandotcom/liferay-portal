@@ -616,18 +616,6 @@ definition {
 			value1 = "${countryName}");
 	}
 
-	macro viewMembersNotFoundCP {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No results were found.");
-	}
-
-	macro viewNoOrganizationsFoundCP {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No organizations were found.");
-	}
-
 	macro viewParentOrganizationCP {
 		Organization.gotoActionsCmd(orgName = "${orgName}");
 

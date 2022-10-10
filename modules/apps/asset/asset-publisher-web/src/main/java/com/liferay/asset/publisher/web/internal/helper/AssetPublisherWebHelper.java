@@ -29,6 +29,8 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -81,18 +83,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -517,7 +517,7 @@ public class AssetPublisherWebHelper {
 		throws Exception {
 
 		for (AssetEntryQueryProcessor assetEntryQueryProcessor :
-				_assetEntryQueryProcessors) {
+				_serviceTrackerList) {
 
 			assetEntryQueryProcessor.processAssetEntryQuery(
 				user, portletPreferences, assetEntryQuery);
@@ -555,29 +555,21 @@ public class AssetPublisherWebHelper {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties)
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws ConfigurationException {
 
 		_assetPublisherPortletInstanceConfiguration =
 			_configurationProvider.getSystemConfiguration(
 				AssetPublisherPortletInstanceConfiguration.class);
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, AssetEntryQueryProcessor.class);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setAssetEntryQueryProcessor(
-		AssetEntryQueryProcessor assetEntryQueryProcessor) {
-
-		_assetEntryQueryProcessors.add(assetEntryQueryProcessor);
-	}
-
-	protected void unsetAssetEntryQueryProcessor(
-		AssetEntryQueryProcessor assetEntryQueryProcessor) {
-
-		_assetEntryQueryProcessors.remove(assetEntryQueryProcessor);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	private String _getAssetEntryXml(
@@ -648,9 +640,6 @@ public class AssetPublisherWebHelper {
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	private final List<AssetEntryQueryProcessor> _assetEntryQueryProcessors =
-		new CopyOnWriteArrayList<>();
-
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
@@ -690,6 +679,9 @@ public class AssetPublisherWebHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	private ServiceTrackerList<AssetEntryQueryProcessor>
+		_serviceTrackerList;
 
 	@Reference
 	private Sites _sites;

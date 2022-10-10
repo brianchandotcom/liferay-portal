@@ -2,19 +2,6 @@ definition {
 
 	var orgName = "Organization Name";
 
-	macro addCategorizationCP {
-		AssetCategorization.addTag(tagName = "${tagName}");
-
-		PortletEntry.save();
-
-		UsersAndOrganizationsNavigator.gotoMenuBarInformation();
-
-		AssertTextEquals(
-			key_tagName = "${tagName}",
-			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
-	}
-
 	macro addCommentCP {
 		AssertElementPresent(locator1 = "TextArea#COMMENTS");
 

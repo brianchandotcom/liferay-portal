@@ -31,6 +31,8 @@ import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -116,6 +118,23 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testClasses;
+	}
+
+	public static class TestClassDurationComparator
+		implements Comparator<TestClass> {
+
+		@Override
+		public int compare(TestClass testClass1, TestClass testClass2) {
+			Long duration1 =
+				testClass1.getAverageDuration() +
+					testClass1.getAverageOverheadDuration();
+			Long duration2 =
+				testClass2.getAverageDuration() +
+					testClass2.getAverageOverheadDuration();
+
+			return duration2.compareTo(duration1);
+		}
+
 	}
 
 	protected FunctionalBatchTestClassGroup(
@@ -265,38 +284,60 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				}
 
 				if (targetAxisDuration > 0) {
-					AxisTestClassGroup axisTestClassGroup =
-						TestClassGroupFactory.newAxisTestClassGroup(
-							this, testBaseDir);
-
-					axisTestClassGroups.add(axisTestClassGroup);
+					List<TestClass> batchTestClasses = new ArrayList<>();
 
 					for (String testClassMethodName : poshiTestClassGroup) {
-						TestClass testClass = TestClassFactory.newTestClass(
-							this, testClassMethodName);
+						batchTestClasses.add(
+							TestClassFactory.newTestClass(
+								this, testClassMethodName));
+					}
 
-						if (!axisTestClassGroup.hasTestClasses()) {
-							axisTestClassGroup.addTestClass(testClass);
+					Collections.sort(
+						batchTestClasses, new TestClassDurationComparator());
 
-							continue;
+					while (!batchTestClasses.isEmpty()) {
+						List<TestClass> axisTestClasses = new ArrayList<>();
+
+						for (TestClass batchTestClass : batchTestClasses) {
+							if (axisTestClasses.isEmpty()) {
+								axisTestClasses.add(batchTestClass);
+
+								continue;
+							}
+
+							long duration = 0L;
+							long totalOverheadDuration = 0L;
+
+							for (TestClass axisTestClass : axisTestClasses) {
+								duration += axisTestClass.getAverageDuration();
+								totalOverheadDuration +=
+									axisTestClass.getAverageOverheadDuration();
+							}
+
+							duration += batchTestClass.getAverageDuration();
+							totalOverheadDuration +=
+								batchTestClass.getAverageOverheadDuration();
+
+							duration +=
+								totalOverheadDuration /
+									(axisTestClasses.size() + 1);
+
+							if (duration >= targetAxisDuration) {
+								continue;
+							}
+
+							axisTestClasses.add(batchTestClass);
 						}
 
-						long estimatedAxisDuration =
-							axisTestClassGroup.getAverageDuration() +
-								testClass.getAverageDuration() +
-									testClass.getAverageOverheadDuration();
+						batchTestClasses.removeAll(axisTestClasses);
 
-						if (estimatedAxisDuration < targetAxisDuration) {
-							axisTestClassGroup.addTestClass(testClass);
-
-							continue;
-						}
-
-						axisTestClassGroup =
+						AxisTestClassGroup axisTestClassGroup =
 							TestClassGroupFactory.newAxisTestClassGroup(
 								this, testBaseDir);
 
-						axisTestClassGroup.addTestClass(testClass);
+						for (TestClass axisTestClass : axisTestClasses) {
+							axisTestClassGroup.addTestClass(axisTestClass);
+						}
 
 						axisTestClassGroups.add(axisTestClassGroup);
 					}

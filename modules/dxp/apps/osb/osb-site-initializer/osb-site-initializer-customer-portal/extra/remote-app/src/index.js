@@ -31,7 +31,10 @@ const AppRoutes = {
 };
 
 const CustomerPortalApp = ({apis, route, ...properties}) => {
-	const {client, networkStatus} = useApollo();
+	const {client, networkStatus} = useApollo(
+		apis.provisioningServerAPI,
+		apis.oktaSessionAPI
+	);
 	useGlobalNetworkIndicator(networkStatus);
 
 	if (!client) {

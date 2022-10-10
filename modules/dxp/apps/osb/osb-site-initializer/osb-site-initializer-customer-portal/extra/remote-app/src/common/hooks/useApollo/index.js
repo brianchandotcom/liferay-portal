@@ -18,6 +18,7 @@ import {useEffect, useState} from 'react';
 import {createNetworkStatusNotifier} from 'react-apollo-network-status';
 import {Liferay} from '../../services/liferay';
 import {liferayTypePolicies} from '../../services/liferay/graphql/typePolicies';
+import {getCurrentSession} from '../../services/okta/rest/getCurrentSession';
 import {networkIndicator} from './networkIndicator';
 
 const LiferayURI = `${Liferay.ThemeDisplay.getPortalURL()}/o`;
@@ -39,7 +40,31 @@ const liferayAuthLink = setContext((_, {headers}) => ({
 	},
 }));
 
-export default function useApollo() {
+const getRaysourceAuthLink = (oktaSessionAPI) =>
+	setContext(async (_, {headers}) => {
+		let sessionId = sessionStorage.getItem('okta-session-id');
+
+		if (!sessionId) {
+			const session = await getCurrentSession(oktaSessionAPI);
+
+			sessionId = session.id;
+			sessionStorage.setItem('okta-session-id', sessionId);
+		}
+
+		return {
+			headers: {
+				...headers,
+				'Okta-Session-ID': sessionId,
+			},
+		};
+	});
+
+const getRaysourceRestLink = (uri) =>
+	new RestLink({
+		uri,
+	});
+
+export default function useApollo(provisioningServerAPI, oktaSessionAPI) {
 	const [client, setClient] = useState();
 	const networkStatus = useApolloNetworkStatusReducer(reducer, initialState);
 
@@ -63,8 +88,13 @@ export default function useApollo() {
 						fetchPolicy: 'network-only',
 					},
 				},
-				link: liferayAuthLink.concat(
-					link.split(
+				link: link.split(
+					(operation) =>
+						operation.getContext().type === 'raysource-rest',
+					getRaysourceAuthLink(oktaSessionAPI).concat(
+						getRaysourceRestLink(provisioningServerAPI)
+					),
+					liferayAuthLink.split(
 						(operation) =>
 							operation.getContext().type === 'liferay-rest',
 						liferayRestLink,
@@ -77,7 +107,7 @@ export default function useApollo() {
 		};
 
 		init();
-	}, []);
+	}, [provisioningServerAPI, oktaSessionAPI]);
 
 	return {client, networkStatus};
 }

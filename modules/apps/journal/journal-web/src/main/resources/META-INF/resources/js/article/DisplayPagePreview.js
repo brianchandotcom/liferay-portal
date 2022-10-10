@@ -263,6 +263,12 @@ function DisplayPageSelector({
 								});
 							}
 							else {
+								const formDateInput = document.getElementById(
+									`${namespace}formDate`
+								);
+
+								formDateInput.value = Date.now().toString();
+
 								openModal({
 									title: Liferay.Language.get('preview'),
 									url: createPortletURL(previewURL, {

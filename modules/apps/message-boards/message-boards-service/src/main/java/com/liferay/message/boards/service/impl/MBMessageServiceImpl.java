@@ -670,6 +670,21 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage getMBMessageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		MBMessage mbMessage =
+			mbMessageLocalService.getMBMessageByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		_messageModelResourcePermission.check(
+			getPermissionChecker(), mbMessage, ActionKeys.VIEW);
+
+		return mbMessage;
+	}
+
+	@Override
 	public MBMessage getMessage(long messageId) throws PortalException {
 		_messageModelResourcePermission.check(
 			getPermissionChecker(), messageId, ActionKeys.VIEW);

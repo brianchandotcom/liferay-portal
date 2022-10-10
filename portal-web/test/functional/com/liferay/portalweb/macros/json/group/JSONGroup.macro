@@ -54,6 +54,34 @@ definition {
 			userId = "${userId}");
 	}
 
+	macro assignGroupRoleToUserGroup {
+		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
+
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}");
+		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
+		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "${userGroupName}");
+
+		JSONGroupAPI._assignGroupRoleToUserGroup(
+			groupId = "${groupId}",
+			roleId = "${roleId}",
+			userGroupId = "${userGroupId}");
+	}
+
+	macro assignOrganizationToGroup {
+		Variables.assertDefined(parameterList = "${groupName},${organizationName}");
+
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}");
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
+
+		JSONGroupAPI._assignOrganizationToGroup(
+			groupId = "${groupId}",
+			organizationId = "${organizationId}");
+	}
+
 	macro assignUserGroupToGroup {
 		Variables.assertDefined(parameterList = "${groupName},${userGroupName}");
 

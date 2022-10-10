@@ -44,6 +44,39 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Directly calls the JSON WS API to assign a user group a site role"
+	macro _assignGroupRoleToUserGroup {
+		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
+				-u test@liferay.com:test \
+				-d roleId=${roleId} \
+				-d groupId=${groupId} \
+				-d userGroupIds=${userGroupId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a organization to a group"
+	macro _assignOrganizationToGroup {
+		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-group-organizations \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d organizationIds=${organizationId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Directly calls the JSON WS API to add a user to a group"
 	macro _assignUserGroupToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");

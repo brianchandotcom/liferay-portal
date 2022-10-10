@@ -267,8 +267,6 @@ definition {
 	@description = "LPS-145665 - Verify that you can edit the Action name"
 	@priority = "4"
 	test CanEditActionName {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145",
 			objectName = "CustomObject145",
@@ -287,18 +285,18 @@ definition {
 			urlAction = "www.liferay.com",
 			whenAction = "On After Add");
 
-		ObjectAdmin.assertObjectActions(actionActive = "Custom Action");
-
-		ObjectAdmin.assertObjectActions(actionActive = "Yes");
+		ObjectAdmin.assertObjectActions(
+			actionActive = "Yes",
+			actionName = "Custom Action");
 
 		ObjectAdmin.editObjectAction(
 			actionName = "New Action Update",
 			active = "false",
 			viewEntry = "Custom Action");
 
-		ObjectAdmin.assertObjectActions(actionActive = "No");
-
-		ObjectAdmin.assertObjectActions(actionActive = "New Action Update");
+		ObjectAdmin.assertObjectActions(
+			actionActive = "No",
+			actionName = "New Action Update");
 	}
 
 	@description = "LPS-145665 - Verify that the user can edit a previously saved expression"

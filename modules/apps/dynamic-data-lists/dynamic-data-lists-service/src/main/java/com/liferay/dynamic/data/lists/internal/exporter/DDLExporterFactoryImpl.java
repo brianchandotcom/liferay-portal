@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Marcellus Tavares
  * @see    DDLExporter
  */
-@Component(immediate = true, service = DDLExporterFactory.class)
+@Component(service = DDLExporterFactory.class)
 public class DDLExporterFactoryImpl implements DDLExporterFactory {
 
 	/**

@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jeyvison Nascimento
  */
 @Component(
-	immediate = true,
 	service = {
 		DEServiceUpgradeStepRegistrator.class, UpgradeStepRegistrator.class
 	}

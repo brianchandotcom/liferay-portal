@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
 	service = ModelPreFilterContributor.class
 )

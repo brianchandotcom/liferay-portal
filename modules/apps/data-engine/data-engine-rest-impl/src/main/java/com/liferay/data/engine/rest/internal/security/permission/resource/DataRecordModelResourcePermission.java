@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
 	service = DataRecordModelResourcePermission.class
 )

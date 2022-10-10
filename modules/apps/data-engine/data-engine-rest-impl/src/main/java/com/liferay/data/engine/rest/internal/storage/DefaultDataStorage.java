@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = {"data.storage.type=default", "service.ranking:Integer=100"},
 	service = DataStorage.class
 )

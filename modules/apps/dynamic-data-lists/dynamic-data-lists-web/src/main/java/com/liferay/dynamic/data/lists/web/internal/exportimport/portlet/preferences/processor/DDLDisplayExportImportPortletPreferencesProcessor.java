@@ -52,7 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 	service = ExportImportPortletPreferencesProcessor.class
 )

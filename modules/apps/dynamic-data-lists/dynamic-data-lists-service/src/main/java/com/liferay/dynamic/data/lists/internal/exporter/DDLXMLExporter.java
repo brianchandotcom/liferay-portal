@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = DDLExporter.class)
+@Component(service = DDLExporter.class)
 public class DDLXMLExporter extends BaseDDLExporter {
 
 	@Override

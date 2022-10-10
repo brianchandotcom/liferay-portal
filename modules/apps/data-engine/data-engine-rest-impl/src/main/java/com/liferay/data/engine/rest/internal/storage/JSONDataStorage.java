@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  * @author Leonardo Barros
  */
-@Component(
-	immediate = true, property = "data.storage.type=json",
-	service = DataStorage.class
-)
+@Component(property = "data.storage.type=json", service = DataStorage.class)
 public class JSONDataStorage implements DataStorage {
 
 	@Override

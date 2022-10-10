@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.dynamic.data.lists.internal.configuration.DDLServiceConfiguration",
-	immediate = true, service = PortalInstanceLifecycleListener.class
+	service = PortalInstanceLifecycleListener.class
 )
 public class AddDefaultDDLStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {

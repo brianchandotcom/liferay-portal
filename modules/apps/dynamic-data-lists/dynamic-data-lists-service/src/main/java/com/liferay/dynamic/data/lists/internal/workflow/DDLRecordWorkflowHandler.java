@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = WorkflowHandler.class)
+@Component(service = WorkflowHandler.class)
 public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 
 	@Override

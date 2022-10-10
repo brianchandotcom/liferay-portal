@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcela Cunha
  */
-@Component(immediate = true, service = DataLayoutRenderer.class)
+@Component(service = DataLayoutRenderer.class)
 public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 	@Override

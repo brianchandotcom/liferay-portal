@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true, property = "content.type=default",
-	service = DataDefinitionContentType.class
+	property = "content.type=default", service = DataDefinitionContentType.class
 )
 public class DefaultDataDefinitionContentType
 	implements DataDefinitionContentType {

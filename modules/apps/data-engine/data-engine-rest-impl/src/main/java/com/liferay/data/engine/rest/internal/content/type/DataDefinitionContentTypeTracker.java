@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DataDefinitionContentTypeTracker.class)
+@Component(service = DataDefinitionContentTypeTracker.class)
 public class DataDefinitionContentTypeTracker {
 
 	public Long getClassNameId(String contentType) {

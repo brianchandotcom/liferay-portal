@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
 	service = PortletConfigurationIcon.class
 )

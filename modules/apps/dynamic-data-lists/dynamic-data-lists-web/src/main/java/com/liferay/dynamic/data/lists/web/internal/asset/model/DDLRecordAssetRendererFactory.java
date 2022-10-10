@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
 	service = AssetRendererFactory.class
 )

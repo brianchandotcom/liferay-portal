@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcela Cunha
  */
-@Component(immediate = true, service = DDLRecordBatchReindexer.class)
+@Component(service = DDLRecordBatchReindexer.class)
 public class DDLRecordBatchReindexerImpl implements DDLRecordBatchReindexer {
 
 	@Override

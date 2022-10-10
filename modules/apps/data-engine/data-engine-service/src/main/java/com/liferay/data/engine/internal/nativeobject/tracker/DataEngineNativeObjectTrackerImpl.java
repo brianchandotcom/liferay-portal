@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(immediate = true, service = DataEngineNativeObjectTracker.class)
+@Component(service = DataEngineNativeObjectTracker.class)
 public class DataEngineNativeObjectTrackerImpl
 	implements DataEngineNativeObjectTracker {
 

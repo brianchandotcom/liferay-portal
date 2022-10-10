@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DEDataListViewSearchRegistrar {
 
 	@Activate

@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
-@Component(immediate = true, service = DDL.class)
+@Component(service = DDL.class)
 public class DDLImpl implements DDL {
 
 	@Override

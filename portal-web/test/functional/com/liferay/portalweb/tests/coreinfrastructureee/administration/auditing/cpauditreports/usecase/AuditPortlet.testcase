@@ -402,7 +402,7 @@ definition {
 			portlet = "Audit");
 
 		Audit.viewAuditDetails(
-			additionalInformation = "None",
+			additionalInformation = "",
 			clientIp = "127.0.0.1",
 			key_resourceAction = "LOGIN",
 			key_resourceName = "User",
@@ -418,7 +418,7 @@ definition {
 			portlet = "Audit");
 
 		Audit.viewAuditDetails(
-			additionalInformation = "None",
+			additionalInformation = "",
 			clientIp = "127.0.0.1",
 			key_resourceAction = "VIEW",
 			key_resourceName = "Layout",
@@ -438,7 +438,7 @@ definition {
 			portlet = "Audit");
 
 		Audit.viewAuditDetails(
-			additionalInformation = "None",
+			additionalInformation = "",
 			clientIp = "127.0.0.1",
 			key_resourceAction = "LOGOUT",
 			key_resourceName = "User",

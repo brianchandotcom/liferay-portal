@@ -814,7 +814,7 @@ definition {
 
 		task ("Assert audit details") {
 			Audit.viewAuditDetails(
-				additionalInformation = "None",
+				additionalInformation = "",
 				clientIp = "127.0.0.1",
 				resourceAction = "MFA_IP_OTP_VERIFICATION_SUCCESS",
 				resourceName = "IPAddressHeadlessMFAChecker",

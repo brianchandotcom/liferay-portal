@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -34,7 +33,6 @@ import com.liferay.segments.demo.data.creator.SegmentsEntryDemoDataCreator;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
-import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
 import java.io.IOException;
 
@@ -187,17 +185,10 @@ public class SegmentsEntryDemoDataCreatorImpl
 	private final AtomicInteger _atomicInteger = new AtomicInteger(0);
 	private final List<Integer> _availableIndexes =
 		new CopyOnWriteArrayList<>();
-
-	@Reference
-	private Portal _portal;
-
 	private final List<Long> _segmentsEntryIds = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
-	@Reference
-	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

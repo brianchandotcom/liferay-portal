@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -144,8 +143,8 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 	@Override
 	protected void doReindex(CommerceCatalog commerceCatalog) throws Exception {
 		_indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, commerceCatalog.getCompanyId(),
-			getDocument(commerceCatalog), isCommitImmediately());
+			commerceCatalog.getCompanyId(), getDocument(commerceCatalog),
+			isCommitImmediately());
 	}
 
 	@Override

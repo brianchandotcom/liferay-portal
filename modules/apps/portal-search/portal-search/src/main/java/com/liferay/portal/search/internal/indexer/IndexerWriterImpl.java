@@ -83,8 +83,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 		try {
 			_indexWriterHelper.deleteDocument(
-				SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid,
-				_modelSearchSettings.isCommitImmediately());
+				companyId, uid, _modelSearchSettings.isCommitImmediately());
 		}
 		catch (SearchException searchException) {
 			throw new RuntimeException(searchException);

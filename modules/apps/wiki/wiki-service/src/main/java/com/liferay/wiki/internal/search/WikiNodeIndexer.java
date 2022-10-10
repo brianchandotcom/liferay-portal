@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -134,8 +133,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		}
 
 		_indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, wikiNode.getCompanyId(),
-			document, isCommitImmediately());
+			wikiNode.getCompanyId(), document, isCommitImmediately());
 	}
 
 	@Reference
@@ -143,8 +141,8 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	private void _deleteDocument(WikiNode wikiNode) throws Exception {
 		_indexWriterHelper.deleteDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, wikiNode.getCompanyId(),
-			uidFactory.getUID(wikiNode), isCommitImmediately());
+			wikiNode.getCompanyId(), uidFactory.getUID(wikiNode),
+			isCommitImmediately());
 	}
 
 	private void _reindexEntries(long companyId) throws Exception {

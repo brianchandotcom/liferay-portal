@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -231,7 +230,6 @@ public class DDMFormInstanceRecordIndexer
 		throws Exception {
 
 		indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID,
 			ddmFormInstanceRecord.getCompanyId(),
 			getDocument(ddmFormInstanceRecord), isCommitImmediately());
 	}

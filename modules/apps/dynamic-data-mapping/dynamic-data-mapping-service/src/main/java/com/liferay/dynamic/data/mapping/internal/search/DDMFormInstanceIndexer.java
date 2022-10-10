@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -81,8 +80,8 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 	@Override
 	protected void doReindex(DDMFormInstance ddmFormInstance) throws Exception {
 		indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, ddmFormInstance.getCompanyId(),
-			getDocument(ddmFormInstance), isCommitImmediately());
+			ddmFormInstance.getCompanyId(), getDocument(ddmFormInstance),
+			isCommitImmediately());
 
 		_reindexRecords(ddmFormInstance);
 	}

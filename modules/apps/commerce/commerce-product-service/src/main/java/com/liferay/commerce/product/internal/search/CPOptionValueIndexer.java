@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -137,8 +136,8 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	@Override
 	protected void doReindex(CPOptionValue cpOptionValue) throws Exception {
 		_indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, cpOptionValue.getCompanyId(),
-			getDocument(cpOptionValue), isCommitImmediately());
+			cpOptionValue.getCompanyId(), getDocument(cpOptionValue),
+			isCommitImmediately());
 	}
 
 	@Override

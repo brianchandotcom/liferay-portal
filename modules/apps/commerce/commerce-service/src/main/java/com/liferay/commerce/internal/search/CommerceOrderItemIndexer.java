@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -197,7 +196,6 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID,
 			commerceOrderItem.getCompanyId(), getDocument(commerceOrderItem),
 			isCommitImmediately());
 	}

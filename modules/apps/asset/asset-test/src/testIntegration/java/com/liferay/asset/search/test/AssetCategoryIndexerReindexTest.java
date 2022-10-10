@@ -144,8 +144,7 @@ public class AssetCategoryIndexerReindexTest {
 	}
 
 	protected void deleteDocument(long companyId, String uid) throws Exception {
-		indexWriterHelper.deleteDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid, true);
+		indexWriterHelper.deleteDocument(companyId, uid, true);
 	}
 
 	protected void reindexAllIndexerModels() throws Exception {

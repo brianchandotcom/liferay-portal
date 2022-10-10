@@ -134,8 +134,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				}
 
 				indexWriterHelper.deleteEntityDocuments(
-					SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, className,
-					true);
+					companyId, className, true);
 
 				indexer.reindex(new String[] {String.valueOf(companyId)});
 			}

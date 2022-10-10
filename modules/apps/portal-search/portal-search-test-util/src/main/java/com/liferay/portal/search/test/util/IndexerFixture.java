@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -55,7 +54,6 @@ public class IndexerFixture<T> {
 	public void deleteDocument(Document document) {
 		try {
 			IndexWriterHelperUtil.deleteDocument(
-				SearchEngineHelper.SYSTEM_ENGINE_ID,
 				TestPropsValues.getCompanyId(), document.getUID(), true);
 		}
 		catch (PortalException portalException) {
@@ -68,7 +66,6 @@ public class IndexerFixture<T> {
 			Stream<Document> stream = Arrays.stream(docs);
 
 			IndexWriterHelperUtil.deleteDocuments(
-				SearchEngineHelper.SYSTEM_ENGINE_ID,
 				TestPropsValues.getCompanyId(),
 				stream.map(
 					document -> document.getUID()

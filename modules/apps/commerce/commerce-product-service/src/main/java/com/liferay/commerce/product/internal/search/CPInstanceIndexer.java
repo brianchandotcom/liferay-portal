@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -301,8 +300,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	@Override
 	protected void doReindex(CPInstance cpInstance) throws Exception {
 		_indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, cpInstance.getCompanyId(),
-			getDocument(cpInstance), isCommitImmediately());
+			cpInstance.getCompanyId(), getDocument(cpInstance),
+			isCommitImmediately());
 	}
 
 	@Override

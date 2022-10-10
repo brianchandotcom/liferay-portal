@@ -96,8 +96,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			IndexWriterHelperUtil.deleteDocument(
-				SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid,
-				_commitImmediately);
+				companyId, uid, _commitImmediately);
 		}
 		catch (SearchException searchException) {
 			throw searchException;
@@ -1087,8 +1086,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		IndexWriterHelperUtil.deleteDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid,
-			_commitImmediately);
+			companyId, uid, _commitImmediately);
 	}
 
 	protected void deleteDocument(long companyId, String field1, String field2)
@@ -1099,8 +1097,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		document.addUID(getClassName(), field1, field2);
 
 		IndexWriterHelperUtil.deleteDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId,
-			document.get(Field.UID), _commitImmediately);
+			companyId, document.get(Field.UID), _commitImmediately);
 	}
 
 	protected abstract void doDelete(T object) throws Exception;

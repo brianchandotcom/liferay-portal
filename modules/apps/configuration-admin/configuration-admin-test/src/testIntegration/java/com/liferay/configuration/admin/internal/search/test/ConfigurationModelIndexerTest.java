@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -93,8 +92,7 @@ public class ConfigurationModelIndexerTest {
 	public void tearDown() throws SearchException {
 		for (Document document : _documents) {
 			_indexWriterHelper.deleteDocument(
-				SearchEngineHelper.SYSTEM_ENGINE_ID, CompanyConstants.SYSTEM,
-				document.getUID(), true);
+				CompanyConstants.SYSTEM, document.getUID(), true);
 		}
 
 		_documents.clear();
@@ -174,9 +172,7 @@ public class ConfigurationModelIndexerTest {
 
 		_documents.add(document);
 
-		_indexWriterHelper.addDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, CompanyConstants.SYSTEM,
-			document, true);
+		_indexWriterHelper.addDocument(CompanyConstants.SYSTEM, document, true);
 
 		return configuration;
 	}

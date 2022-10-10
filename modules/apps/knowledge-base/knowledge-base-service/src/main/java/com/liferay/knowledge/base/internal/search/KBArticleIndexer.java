@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -179,8 +178,8 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	@Override
 	protected void doReindex(KBArticle kbArticle) throws Exception {
 		indexWriterHelper.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, kbArticle.getCompanyId(),
-			getDocument(kbArticle), isCommitImmediately());
+			kbArticle.getCompanyId(), getDocument(kbArticle),
+			isCommitImmediately());
 
 		_reindexAttachments(kbArticle);
 	}
@@ -261,8 +260,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		}
 
 		indexWriterHelper.updateDocuments(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, kbArticle.getCompanyId(),
-			documents, isCommitImmediately());
+			kbArticle.getCompanyId(), documents, isCommitImmediately());
 	}
 
 	private void _reindexKBArticles(long companyId) throws Exception {

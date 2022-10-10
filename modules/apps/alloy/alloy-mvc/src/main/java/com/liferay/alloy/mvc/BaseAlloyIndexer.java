@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -75,8 +74,7 @@ public abstract class BaseAlloyIndexer extends BaseIndexer<BaseModel<?>> {
 		AuditedModel auditedModel = (AuditedModel)baseModel;
 
 		IndexWriterHelperUtil.updateDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, auditedModel.getCompanyId(),
-			document, isCommitImmediately());
+			auditedModel.getCompanyId(), document, isCommitImmediately());
 	}
 
 	@Override
@@ -139,8 +137,7 @@ public abstract class BaseAlloyIndexer extends BaseIndexer<BaseModel<?>> {
 		}
 
 		IndexWriterHelperUtil.updateDocuments(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, documents,
-			isCommitImmediately());
+			companyId, documents, isCommitImmediately());
 	}
 
 	protected void setAlloyServiceInvoker(

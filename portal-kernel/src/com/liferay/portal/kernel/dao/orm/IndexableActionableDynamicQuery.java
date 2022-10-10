@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -89,8 +88,7 @@ public class IndexableActionableDynamicQuery
 
 	@Override
 	protected void actionsCompleted() throws PortalException {
-		_indexWriterHelper.commit(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, getCompanyId());
+		_indexWriterHelper.commit(getCompanyId());
 	}
 
 	@Override
@@ -111,8 +109,7 @@ public class IndexableActionableDynamicQuery
 		}
 
 		_indexWriterHelper.updateDocuments(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, getCompanyId(),
-			new ArrayList<>(_documents), false);
+			getCompanyId(), new ArrayList<>(_documents), false);
 
 		_count += _documents.size();
 

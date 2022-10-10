@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -118,8 +117,7 @@ public class BlogsEntryIndexerReindexTest {
 	}
 
 	protected void deleteDocument(long companyId, String uid) throws Exception {
-		indexWriterHelper.deleteDocument(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, companyId, uid, true);
+		indexWriterHelper.deleteDocument(companyId, uid, true);
 	}
 
 	protected void reindexAllIndexerModels() throws Exception {

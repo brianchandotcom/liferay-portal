@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -44,8 +42,6 @@ public class DefaultIndexerRequestBufferExecutor
 	@Override
 	public void execute(
 		IndexerRequestBuffer indexerRequestBuffer, int numRequests) {
-
-		Set<String> searchEngineIds = new HashSet<>();
 
 		Collection<IndexerRequest> completedIndexerRequests = new ArrayList<>();
 
@@ -71,7 +67,7 @@ public class DefaultIndexerRequestBufferExecutor
 						indexerRequest));
 			}
 
-			executeIndexerRequest(searchEngineIds, indexerRequest);
+			executeIndexerRequest(indexerRequest);
 
 			completedIndexerRequests.add(indexerRequest);
 
@@ -85,7 +81,7 @@ public class DefaultIndexerRequestBufferExecutor
 		}
 
 		if (!BufferOverflowThreadLocal.isOverflowMode()) {
-			commit(searchEngineIds);
+			commit();
 		}
 	}
 

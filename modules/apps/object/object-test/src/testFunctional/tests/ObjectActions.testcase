@@ -148,6 +148,8 @@ definition {
 
 		ObjectAdmin.viewDetails();
 
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
 		ObjectAdmin.fillObjectAction(
 			actionName = "Update Action Name",
 			click = "cancel");

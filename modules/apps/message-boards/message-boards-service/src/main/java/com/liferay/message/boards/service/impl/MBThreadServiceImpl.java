@@ -152,7 +152,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws PortalException {
 
 		if (!_inlineSQLHelper.isEnabled(groupId)) {
-			return _doGetGroupThreads(
+			return _getGroupThreads(
 				groupId, userId, status, subscribed, includeAnonymous, start,
 				end);
 		}
@@ -278,7 +278,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		boolean includeAnonymous) {
 
 		if (!_inlineSQLHelper.isEnabled(groupId)) {
-			return _doGetGroupThreadsCount(
+			return _getGroupThreadsCount(
 				groupId, userId, status, subscribed, includeAnonymous);
 		}
 
@@ -517,7 +517,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 					"MBThread"));
 	}
 
-	private List<MBThread> _doGetGroupThreads(
+	private List<MBThread> _getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous, int start, int end) {
 
@@ -543,7 +543,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			groupId, userId, false, queryDefinition);
 	}
 
-	private int _doGetGroupThreadsCount(
+	private int _getGroupThreadsCount(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous) {
 

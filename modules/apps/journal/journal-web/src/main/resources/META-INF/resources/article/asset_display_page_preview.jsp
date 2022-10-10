@@ -28,7 +28,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
 	<react:component
-		data="<%= journalEditArticleDisplayContext.getDisplayPagePreviewContext() %>"
-		module="js/article/DisplayPagePreview"
+		data="<%= journalEditArticleDisplayContext.getAssetDisplayPagePreviewContext() %>"
+		module="js/article/AssetDisplayPagePreview"
 	/>
 </div>

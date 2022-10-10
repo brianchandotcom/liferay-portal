@@ -80,7 +80,7 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/article/display_page.jsp";
+		return "/article/asset_display_page.jsp";
 	}
 
 	private Group _getGroup(JournalArticle article) {

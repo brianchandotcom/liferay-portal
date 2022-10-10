@@ -26,13 +26,13 @@ import {
 } from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
-export default function DisplayPagePreview({
+export default function AssetDisplayPagePreview({
 	newArticle,
 	portletNamespace: namespace,
 	previewURL,
 	saveAsDraftURL,
-	selectDisplayPageEventName,
-	selectDisplayPageURL,
+	selectAssetDisplayPageEventName,
+	selectAssetDisplayPageURL,
 	selectSiteEventName,
 	siteItemSelectorURL,
 	sites,
@@ -40,7 +40,7 @@ export default function DisplayPagePreview({
 }) {
 	const [selectedSite, setSelectedSite] = useState();
 	const [active, setActive] = useState(false);
-	const [displayPageSelected, setDisplayPageSelected] = useState();
+	const [assetDisplayPageSelected, setAssetDisplayPageSelected] = useState();
 
 	const siteInputId = `${namespace}siteInput`;
 
@@ -128,36 +128,38 @@ export default function DisplayPagePreview({
 				)}
 			</ClayDropDown>
 
-			<DisplayPageSelector
-				displayPageSelected={displayPageSelected}
+			<AssetDisplayPageSelector
+				assetDisplayPageSelected={assetDisplayPageSelected}
 				namespace={namespace}
 				newArticle={newArticle}
 				previewURL={previewURL}
 				saveAsDraftURL={saveAsDraftURL}
-				selectDisplayPageEventName={selectDisplayPageEventName}
-				selectDisplayPageURL={selectDisplayPageURL}
+				selectAssetDisplayPageEventName={
+					selectAssetDisplayPageEventName
+				}
+				selectAssetDisplayPageURL={selectAssetDisplayPageURL}
 				selectedSite={selectedSite}
-				setDisplayPageSelected={setDisplayPageSelected}
+				setAssetDisplayPageSelected={setAssetDisplayPageSelected}
 			/>
 		</>
 	);
 }
 
-function DisplayPageSelector({
-	displayPageSelected,
+function AssetDisplayPageSelector({
+	assetDisplayPageSelected,
 	namespace,
 	newArticle,
 	previewURL,
 	saveAsDraftURL,
-	selectDisplayPageEventName,
-	selectDisplayPageURL,
+	selectAssetDisplayPageEventName,
+	selectAssetDisplayPageURL,
 	selectedSite,
-	setDisplayPageSelected,
+	setAssetDisplayPageSelected,
 }) {
-	const displayPageId = `${namespace}displayPageId`;
+	const assetDisplayPageId = `${namespace}assetDisplayPageId`;
 
-	const openDisplayPageSelector = () => {
-		const url = new URL(selectDisplayPageURL);
+	const openAssetDisplayPageSelector = () => {
+		const url = new URL(selectAssetDisplayPageURL);
 
 		url.searchParams.set(
 			`${getPortletNamespace(Liferay.PortletKeys.ITEM_SELECTOR)}groupId`,
@@ -169,12 +171,12 @@ function DisplayPageSelector({
 				className: 'cadmin',
 			},
 			onSelect(selectedItem) {
-				setDisplayPageSelected({
+				setAssetDisplayPageSelected({
 					name: selectedItem.name,
 					plid: selectedItem.plid,
 				});
 			},
-			selectEventName: selectDisplayPageEventName,
+			selectEventName: selectAssetDisplayPageEventName,
 			title: sub(
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('display-page')
@@ -186,7 +188,7 @@ function DisplayPageSelector({
 	return (
 		<div className="mb-3 mt-2">
 			<ClayForm.Group className="mb-2">
-				<label className="sr-only" htmlFor={displayPageId}>
+				<label className="sr-only" htmlFor={assetDisplayPageId}>
 					{Liferay.Language.get('display-page')}
 				</label>
 
@@ -194,14 +196,14 @@ function DisplayPageSelector({
 					<ClayInput.GroupItem>
 						<ClayInput
 							disabled={!selectedSite?.groupId}
-							onClick={() => openDisplayPageSelector()}
+							onClick={() => openAssetDisplayPageSelector()}
 							placeholder={sub(
 								Liferay.Language.get('select-x'),
 								Liferay.Language.get('display-page')
 							)}
 							readOnly
 							sizing="sm"
-							value={displayPageSelected?.name ?? ''}
+							value={assetDisplayPageSelected?.name ?? ''}
 						/>
 					</ClayInput.GroupItem>
 
@@ -210,10 +212,10 @@ function DisplayPageSelector({
 							disabled={!selectedSite?.groupId}
 							displayType="secondary"
 							monospaced
-							onClick={() => openDisplayPageSelector()}
+							onClick={() => openAssetDisplayPageSelector()}
 							small
 							title={sub(
-								displayPageSelected
+								assetDisplayPageSelected
 									? Liferay.Language.get('change-x')
 									: Liferay.Language.get('select-x'),
 								Liferay.Language.get('display-page')
@@ -221,7 +223,9 @@ function DisplayPageSelector({
 						>
 							<ClayIcon
 								className="mt-0"
-								symbol={displayPageSelected ? 'change' : 'plus'}
+								symbol={
+									assetDisplayPageSelected ? 'change' : 'plus'
+								}
 							/>
 						</ClayButton>
 					</ClayInput.GroupItem>
@@ -229,7 +233,7 @@ function DisplayPageSelector({
 			</ClayForm.Group>
 
 			<ClayButton
-				disabled={!displayPageSelected}
+				disabled={!assetDisplayPageSelected}
 				displayType="secondary"
 				onClick={() => {
 					const formDateInput = document.getElementById(
@@ -273,7 +277,8 @@ function DisplayPageSelector({
 									title: Liferay.Language.get('preview'),
 									url: createPortletURL(previewURL, {
 										classPK,
-										selPlid: displayPageSelected?.plid,
+
+										selPlid: assetDisplayPageSelected?.plid,
 										version,
 									}).toString(),
 								});

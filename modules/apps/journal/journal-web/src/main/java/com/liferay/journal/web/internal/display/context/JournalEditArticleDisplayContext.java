@@ -130,6 +130,158 @@ public class JournalEditArticleDisplayContext {
 		return _article.getArticleId();
 	}
 
+	public Map<String, Object> getAssetDisplayPagePreviewContext() {
+		String selectAssetDisplayPageEventName =
+			_liferayPortletResponse.getNamespace() + "selectAssetDisplayPage";
+		String selectSiteEventName =
+			_liferayPortletResponse.getNamespace() + "selectSite";
+
+		return HashMapBuilder.<String, Object>put(
+			"newArticle", _article == null
+		).put(
+			"previewURL",
+			() -> {
+				LiferayPortletURL getPagePreviewURL =
+					PortletURLFactoryUtil.create(
+						_httpServletRequest,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						_themeDisplay.getLayout(),
+						PortletRequest.RESOURCE_PHASE);
+
+				getPagePreviewURL.setResourceID(
+					"/layout_content_page_editor/get_page_preview");
+
+				getPagePreviewURL.setParameter(
+					"className", JournalArticle.class.getName());
+
+				if (_article != null) {
+					getPagePreviewURL.setParameter(
+						"classPK",
+						String.valueOf(_article.getResourcePrimKey()));
+
+					getPagePreviewURL.setParameter(
+						"version", String.valueOf(_article.getVersion()));
+				}
+
+				return HttpComponentsUtil.addParameter(
+					getPagePreviewURL.toString(), "p_l_mode",
+					Constants.PREVIEW);
+			}
+		).put(
+			"saveAsDraftURL",
+			PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/journal/save_as_draft_article"
+			).buildString()
+		).put(
+			"selectAssetDisplayPageEventName", selectAssetDisplayPageEventName
+		).put(
+			"selectAssetDisplayPageURL",
+			() -> {
+				AssetDisplayPageSelectorCriterion
+					assetDisplayPageSelectorCriterion =
+						new AssetDisplayPageSelectorCriterion();
+
+				assetDisplayPageSelectorCriterion.setClassNameId(
+					PortalUtil.getClassNameId(JournalArticle.class));
+				assetDisplayPageSelectorCriterion.setClassTypeId(
+					getDDMStructureId());
+				assetDisplayPageSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new UUIDItemSelectorReturnType());
+
+				return PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						selectAssetDisplayPageEventName,
+						assetDisplayPageSelectorCriterion)
+				).buildString();
+			}
+		).put(
+			"selectSiteEventName", selectSiteEventName
+		).put(
+			"siteItemSelectorURL",
+			() -> {
+				SiteItemSelectorCriterion siteItemSelectorCriterion =
+					new SiteItemSelectorCriterion();
+
+				siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new URLItemSelectorReturnType());
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						selectSiteEventName, siteItemSelectorCriterion));
+			}
+		).put(
+			"sites",
+			() -> {
+				RecentGroupManager recentGroupManager =
+					RecentGroupManagerUtil.getRecentGroupManager();
+
+				List<Group> recentGroups = ListUtil.subList(
+					recentGroupManager.getRecentGroups(_httpServletRequest), 0,
+					_MAX_SITES);
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (Group group : recentGroups) {
+					if (group.isCompany()) {
+						continue;
+					}
+
+					jsonArray.put(
+						JSONUtil.put(
+							"groupId", group.getGroupId()
+						).put(
+							"name",
+							group.getDescriptiveName(_themeDisplay.getLocale())
+						));
+				}
+
+				if (recentGroups.size() == _MAX_SITES) {
+					return jsonArray;
+				}
+
+				int max = _MAX_SITES - recentGroups.size();
+
+				List<Group> groups = GroupServiceUtil.getGroups(
+					_themeDisplay.getCompanyId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
+
+				for (Group group : groups) {
+					if (max < 0) {
+						break;
+					}
+
+					if (recentGroups.contains(group) || group.isCompany()) {
+						continue;
+					}
+
+					max -= 1;
+
+					jsonArray.put(
+						JSONUtil.put(
+							"groupId", group.getGroupId()
+						).put(
+							"name",
+							group.getDescriptiveName(_themeDisplay.getLocale())
+						));
+				}
+
+				return jsonArray;
+			}
+		).put(
+			"sitesCount",
+			() -> GroupServiceUtil.getGroupsCount(
+				_themeDisplay.getCompanyId(), 0, Boolean.TRUE)
+		).build();
+	}
+
 	public Set<Locale> getAvailableLocales() {
 		if (_availableLocales != null) {
 			return _availableLocales;
@@ -428,158 +580,6 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return _defaultArticleLanguageId;
-	}
-
-	public Map<String, Object> getDisplayPagePreviewContext() {
-		String selectDisplayPageEventName =
-			_liferayPortletResponse.getNamespace() + "selectDisplayPage";
-		String selectSiteEventName =
-			_liferayPortletResponse.getNamespace() + "selectSite";
-
-		return HashMapBuilder.<String, Object>put(
-			"newArticle", _article == null
-		).put(
-			"previewURL",
-			() -> {
-				LiferayPortletURL getPagePreviewURL =
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						ContentPageEditorPortletKeys.
-							CONTENT_PAGE_EDITOR_PORTLET,
-						_themeDisplay.getLayout(),
-						PortletRequest.RESOURCE_PHASE);
-
-				getPagePreviewURL.setResourceID(
-					"/layout_content_page_editor/get_page_preview");
-
-				getPagePreviewURL.setParameter(
-					"className", JournalArticle.class.getName());
-
-				if (_article != null) {
-					getPagePreviewURL.setParameter(
-						"classPK",
-						String.valueOf(_article.getResourcePrimKey()));
-
-					getPagePreviewURL.setParameter(
-						"version", String.valueOf(_article.getVersion()));
-				}
-
-				return HttpComponentsUtil.addParameter(
-					getPagePreviewURL.toString(), "p_l_mode",
-					Constants.PREVIEW);
-			}
-		).put(
-			"saveAsDraftURL",
-			PortletURLBuilder.createActionURL(
-				_liferayPortletResponse
-			).setActionName(
-				"/journal/save_as_draft_article"
-			).buildString()
-		).put(
-			"selectDisplayPageEventName", selectDisplayPageEventName
-		).put(
-			"selectDisplayPageURL",
-			() -> {
-				AssetDisplayPageSelectorCriterion
-					assetDisplayPageSelectorCriterion =
-						new AssetDisplayPageSelectorCriterion();
-
-				assetDisplayPageSelectorCriterion.setClassNameId(
-					PortalUtil.getClassNameId(JournalArticle.class));
-				assetDisplayPageSelectorCriterion.setClassTypeId(
-					getDDMStructureId());
-				assetDisplayPageSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new UUIDItemSelectorReturnType());
-
-				return PortletURLBuilder.create(
-					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest),
-						selectDisplayPageEventName,
-						assetDisplayPageSelectorCriterion)
-				).buildString();
-			}
-		).put(
-			"selectSiteEventName", selectSiteEventName
-		).put(
-			"siteItemSelectorURL",
-			() -> {
-				SiteItemSelectorCriterion siteItemSelectorCriterion =
-					new SiteItemSelectorCriterion();
-
-				siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-					new URLItemSelectorReturnType());
-
-				return String.valueOf(
-					_itemSelector.getItemSelectorURL(
-						RequestBackedPortletURLFactoryUtil.create(
-							_httpServletRequest),
-						selectSiteEventName, siteItemSelectorCriterion));
-			}
-		).put(
-			"sites",
-			() -> {
-				RecentGroupManager recentGroupManager =
-					RecentGroupManagerUtil.getRecentGroupManager();
-
-				List<Group> recentGroups = ListUtil.subList(
-					recentGroupManager.getRecentGroups(_httpServletRequest), 0,
-					_MAX_SITES);
-
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-				for (Group group : recentGroups) {
-					if (group.isCompany()) {
-						continue;
-					}
-
-					jsonArray.put(
-						JSONUtil.put(
-							"groupId", group.getGroupId()
-						).put(
-							"name",
-							group.getDescriptiveName(_themeDisplay.getLocale())
-						));
-				}
-
-				if (recentGroups.size() == _MAX_SITES) {
-					return jsonArray;
-				}
-
-				int max = _MAX_SITES - recentGroups.size();
-
-				List<Group> groups = GroupServiceUtil.getGroups(
-					_themeDisplay.getCompanyId(),
-					GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
-
-				for (Group group : groups) {
-					if (max < 0) {
-						break;
-					}
-
-					if (recentGroups.contains(group) || group.isCompany()) {
-						continue;
-					}
-
-					max -= 1;
-
-					jsonArray.put(
-						JSONUtil.put(
-							"groupId", group.getGroupId()
-						).put(
-							"name",
-							group.getDescriptiveName(_themeDisplay.getLocale())
-						));
-				}
-
-				return jsonArray;
-			}
-		).put(
-			"sitesCount",
-			() -> GroupServiceUtil.getGroupsCount(
-				_themeDisplay.getCompanyId(), 0, Boolean.TRUE)
-		).build();
 	}
 
 	public String getEditArticleURL() {

@@ -1647,9 +1647,9 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.viewRemoveMemberCP(
-			orgName = "Organization Name",
-			userFirstName = "userfn");
+		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+		LexiconTable.viewTableEntryNotPresent(tableEntry = "userfn");
 	}
 
 	@priority = "3"

@@ -29,13 +29,13 @@
 		"@clayui/tooltip": "^3.65.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
 		"@types/google.maps": "^3.49.2",
-		"classnames": "^2.3.1",
+		"classnames": "2.3.1",
 		"clay-charts-react": "^2.4.1",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"react-router-dom": "^6.2.1",
+		"react": "16.12.0",
+		"react-dom": "16.12.0",
+		"react-router-dom": "5.0.1",
 		"react-scripts": "4.0.3",
-		"sass": "^1.49.0"
+		"sass": "1.52.1"
 	},
 	"description": "Site Initializer Raylife Agent Portal",
 	"devDependencies": {

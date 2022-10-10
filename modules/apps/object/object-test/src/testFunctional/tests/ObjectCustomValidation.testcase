@@ -2305,8 +2305,6 @@ definition {
 	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating Actions"
 	@priority = "4"
 	test CanValidateGroovyAction {
-		property portal.upstream = "quarantine";
-
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 161912",
@@ -2345,7 +2343,7 @@ definition {
 		task ("Assert that there is Custom Action") {
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "Action Name",
+				actionName = "Custom Action",
 				status = "Never Ran");
 		}
 
@@ -2372,7 +2370,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "Action Name",
+				actionName = "Custom Action",
 				status = "Success");
 		}
 	}

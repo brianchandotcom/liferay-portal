@@ -1536,7 +1536,7 @@ definition {
 	}
 
 	macro viewInfoPanel {
-		DMDocument.expandInfo();
+		Click(locator1 = "Button#OPEN");
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseArticle#INFO_TITLE",

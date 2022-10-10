@@ -581,6 +581,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN</td>
+	<td>//a[*[name()='svg'][contains(@class,'circle-open')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PALETTE_ITEM</td>
 	<td>//li[contains(@class,'palette-item')]//button[contains(@class,'bg-${key_paletteItem}')]</td>
 	<td></td>

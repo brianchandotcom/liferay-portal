@@ -72,7 +72,7 @@ definition {
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist Test");
 
-		Picklist.cancelUpdatePicklist();
+		Button.clickCancel();
 
 		Picklist.assertPicklistNotPresent(picklistName = "Update Picklist Test");
 	}

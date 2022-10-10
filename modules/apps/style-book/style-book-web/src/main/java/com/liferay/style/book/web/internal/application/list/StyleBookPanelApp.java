@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,8 +63,5 @@ public class StyleBookPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
-
-	@Reference
-	private StagingGroupHelper _stagingGroupHelper;
 
 }

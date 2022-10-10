@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.layout.admin.web.internal.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutUtilityPageEntryActionDropdownItemsProvider;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -42,9 +43,10 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	public LayoutUtilityPageEntryVerticalCard(
 		LayoutUtilityPageEntry layoutUtilityPageEntry,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		RowChecker rowChecker) {
 
-		super(null, renderRequest, null);
+		super(layoutUtilityPageEntry, renderRequest, rowChecker);
 
 		_layoutUtilityPageEntry = layoutUtilityPageEntry;
 		_renderRequest = renderRequest;

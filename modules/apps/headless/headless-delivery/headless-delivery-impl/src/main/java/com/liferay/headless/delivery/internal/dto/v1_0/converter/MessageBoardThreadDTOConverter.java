@@ -30,7 +30,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBrie
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
@@ -203,9 +202,6 @@ public class MessageBoardThreadDTOConverter
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private MBMessageService _mbMessageService;
 
 	@Reference
 	private MBStatsUserLocalService _mbStatsUserLocalService;

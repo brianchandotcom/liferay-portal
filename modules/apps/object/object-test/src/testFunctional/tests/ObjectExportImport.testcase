@@ -91,9 +91,28 @@ definition {
 	@description = "LPS-142175 - Verify it's possible to export an object with Actions"
 	@priority = "4"
 	test CanExportObjectWithAction {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 184",
+			objectName = "CustomObject184",
+			pluralLabelName = "Custom Objects 184");
 
-		// TODO LPS-142175 CanExportObjectWithAction pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 184");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Action Name",
+			thenAction = "Webhook",
+			urlAction = "http://localhost:8080",
+			whenAction = "On After Add");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectExportImport.exportObject(
+			objectLabel = "Custom Object 184",
+			objectName = "CustomObject184");
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"

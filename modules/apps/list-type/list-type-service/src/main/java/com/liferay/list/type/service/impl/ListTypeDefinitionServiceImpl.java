@@ -105,14 +105,15 @@ public class ListTypeDefinitionServiceImpl
 
 	@Override
 	public ListTypeDefinition updateListTypeDefinition(
-			long listTypeDefinitionId, Map<Locale, String> nameMap)
+			String externalReferenceCode, long listTypeDefinitionId,
+			Map<Locale, String> nameMap)
 		throws PortalException {
 
 		_listTypeDefinitionModelResourcePermission.check(
 			getPermissionChecker(), listTypeDefinitionId, ActionKeys.UPDATE);
 
 		return listTypeDefinitionLocalService.updateListTypeDefinition(
-			listTypeDefinitionId, nameMap);
+			externalReferenceCode, listTypeDefinitionId, nameMap);
 	}
 
 	@Reference(

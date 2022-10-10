@@ -123,11 +123,11 @@ definition {
 	}
 
 	macro assertDisableKey {
-		IFrame.selectTopFrame();
-
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
 
-		AssertElementPresent(locator1 = "Picklist#DISABLE_PICKLIST_KEY");
+		AssertElementPresent(
+			key_keyName = "${keyName}",
+			locator1 = "Picklist#DISABLE_PICKLIST_KEY");
 	}
 
 	macro assertEmptyStateMessageDisplayed {

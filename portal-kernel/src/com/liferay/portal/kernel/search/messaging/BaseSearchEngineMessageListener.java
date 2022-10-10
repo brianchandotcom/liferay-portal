@@ -27,11 +27,6 @@ public abstract class BaseSearchEngineMessageListener
 		this.searchEngine = searchEngine;
 	}
 
-	public void setSearchEngineId(String searchEngineId) {
-		this.searchEngineId = searchEngineId;
-	}
-
 	protected SearchEngine searchEngine;
-	protected String searchEngineId;
 
 }

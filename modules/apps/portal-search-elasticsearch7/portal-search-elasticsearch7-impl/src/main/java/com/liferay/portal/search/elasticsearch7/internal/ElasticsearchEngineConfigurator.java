@@ -65,14 +65,13 @@ public class ElasticsearchEngineConfigurator
 		_bundleContext = bundleContext;
 
 		_registerSearchEngineMessageListener(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, _searchEngine,
-			_getSearchReaderDestination(), new SearchReaderMessageListener(),
+			_searchEngine, _getSearchReaderDestination(),
+			new SearchReaderMessageListener(),
 			_searchEngine.getIndexSearcher());
 
 		_registerSearchEngineMessageListener(
-			SearchEngineHelper.SYSTEM_ENGINE_ID, _searchEngine,
-			_getSearchWriterDestination(), new SearchWriterMessageListener(),
-			_searchEngine.getIndexWriter());
+			_searchEngine, _getSearchWriterDestination(),
+			new SearchWriterMessageListener(), _searchEngine.getIndexWriter());
 
 		SearchEngineProxyWrapper searchEngineProxyWrapper =
 			new SearchEngineProxyWrapper(
@@ -204,15 +203,13 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	private void _registerSearchEngineMessageListener(
-		String searchEngineId, SearchEngine searchEngine,
-		Destination destination,
+		SearchEngine searchEngine, Destination destination,
 		BaseSearchEngineMessageListener baseSearchEngineMessageListener,
 		Object manager) {
 
 		baseSearchEngineMessageListener.setManager(manager);
 		baseSearchEngineMessageListener.setMessageBus(_messageBus);
 		baseSearchEngineMessageListener.setSearchEngine(searchEngine);
-		baseSearchEngineMessageListener.setSearchEngineId(searchEngineId);
 
 		destination.register(
 			baseSearchEngineMessageListener,

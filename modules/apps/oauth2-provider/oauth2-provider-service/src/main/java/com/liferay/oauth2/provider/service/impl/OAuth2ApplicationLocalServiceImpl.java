@@ -143,7 +143,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			redirectURIsList = new ArrayList<>();
 		}
 
-		validate(
+		_validate(
 			companyId, allowedGrantTypesList, clientAuthenticationMethod,
 			clientId, clientProfile, clientSecret, homePageURL, jwks, name,
 			privacyPolicyURL, redirectURIsList);
@@ -241,7 +241,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			scopeAliasesList = new ArrayList<>();
 		}
 
-		validate(
+		_validate(
 			companyId, allowedGrantTypesList, clientAuthenticationMethod,
 			clientId, clientProfile, clientSecret, homePageURL, jwks, name,
 			privacyPolicyURL, redirectURIsList);
@@ -642,7 +642,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			redirectURIsList = new ArrayList<>();
 		}
 
-		validate(
+		_validate(
 			oAuth2Application.getCompanyId(), oAuth2ApplicationId,
 			allowedGrantTypesList, clientAuthenticationMethod, clientId,
 			clientProfile, clientSecret, homePageURL, jwks, name,
@@ -713,7 +713,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, List<GrantType> allowedGrantTypesList,
 			String clientAuthenticationMethod, String clientId,
 			int clientProfile, String clientSecret, String homePageURL,
@@ -721,13 +721,13 @@ public class OAuth2ApplicationLocalServiceImpl
 			List<String> redirectURIsList)
 		throws PortalException {
 
-		validate(
+		_validate(
 			companyId, 0, allowedGrantTypesList, clientAuthenticationMethod,
 			clientId, clientProfile, clientSecret, homePageURL, jwks, name,
 			privacyPolicyURL, redirectURIsList);
 	}
 
-	protected void validate(
+	private void _validate(
 			long companyId, long oAuth2ApplicationId,
 			List<GrantType> allowedGrantTypesList,
 			String clientAuthenticationMethod, String clientId,

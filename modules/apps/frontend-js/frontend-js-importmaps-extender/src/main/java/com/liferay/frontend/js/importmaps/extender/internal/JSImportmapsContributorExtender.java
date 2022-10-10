@@ -17,7 +17,6 @@ package com.liferay.frontend.js.importmaps.extender.internal;
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
 import com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JSImportmapsExtenderTopHeadDynamicInclude;
 import com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib.JSImportmapsRegistration;
-import com.liferay.portal.kernel.json.JSONFactory;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -59,9 +58,6 @@ public class JSImportmapsContributorExtender {
 	@Reference
 	private JSImportmapsExtenderTopHeadDynamicInclude
 		_jsImportmapsExtenderTopHeadDynamicInclude;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	private ServiceTracker<JSImportmapsContributor, JSImportmapsRegistration>
 		_serviceTracker;

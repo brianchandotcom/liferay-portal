@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -466,9 +465,6 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 	@Reference
 	private Sorts _sorts;
-
-	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
-	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 	@Reference
 	private WikiNodeService _wikiNodeService;

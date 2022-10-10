@@ -95,6 +95,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test VerifyClusterNodesField {
+
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -142,6 +143,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test VerifyEnvironmentNameField {
+
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {

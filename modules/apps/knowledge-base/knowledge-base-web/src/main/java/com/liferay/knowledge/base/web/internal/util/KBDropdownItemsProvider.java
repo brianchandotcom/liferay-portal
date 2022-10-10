@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
@@ -206,7 +207,27 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/delete_kb_article"
 					).setRedirect(
-						_currentURL
+						() -> {
+							String mvcRenderCommandName = ParamUtil.getString(
+								_liferayPortletRequest, "mvcRenderCommandName");
+
+							if (mvcRenderCommandName.equals(
+									"/knowledge_base/view_article")) {
+
+								KBArticle parentKBArticle =
+									kbArticle.getParentKBArticle();
+
+								if (parentKBArticle != null) {
+									return _createKbArticleRenderURL(
+										parentKBArticle);
+								}
+
+								return _createKbFolderRenderURL(
+									kbArticle.getKbFolderId());
+							}
+
+							return _currentURL;
+						}
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildString());
@@ -522,6 +543,35 @@ public class KBDropdownItemsProvider {
 						"delete"));
 			}
 		).build();
+	}
+
+	private String _createKbArticleRenderURL(KBArticle kbArticle) {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/admin/view_kb_article.jsp"
+		).setParameter(
+			"resourceClassNameId", kbArticle.getClassNameId()
+		).setParameter(
+			"resourcePrimKey", kbArticle.getResourcePrimKey()
+		).setParameter(
+			"selectedItemId", kbArticle.getKbArticleId()
+		).buildString();
+	}
+
+	private String _createKbFolderRenderURL(long kbFolderId) {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/admin/view_kb_folders.jsp"
+		).setParameter(
+			"parentResourceClassNameId",
+			PortalUtil.getClassNameId(KBFolderConstants.getClassName())
+		).setParameter(
+			"parentResourcePrimKey", kbFolderId
+		).setParameter(
+			"selectedItemId", kbFolderId
+		).buildString();
 	}
 
 	private String _getPermissionsURL(KBFolder kbFolder) throws Exception {

@@ -69,6 +69,7 @@ import org.elasticsearch.common.Strings;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -242,6 +243,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				removeCompany(companyId);
 			}
 		}
+
+		_elasticsearchEngineConfigurator.configure(this);
 	}
 
 	protected void createBackupRepository() {
@@ -254,6 +257,11 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				_BACKUP_REPOSITORY_NAME, "es_backup");
 
 		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_elasticsearchEngineConfigurator.unconfigure();
 	}
 
 	protected boolean meetsMinimumVersionRequirement(
@@ -465,6 +473,10 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	private volatile ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+
+	@Reference
+	private ElasticsearchEngineConfigurator _elasticsearchEngineConfigurator;
+
 	private IndexFactory _indexFactory;
 	private IndexNameBuilder _indexNameBuilder;
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchEngineProxyWrapper;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
@@ -47,43 +46,33 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
-	service = SearchEngineConfigurator.class
-)
-public class ElasticsearchEngineConfigurator
-	implements SearchEngineConfigurator {
+@Component(service = ElasticsearchEngineConfigurator.class)
+public class ElasticsearchEngineConfigurator {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	public void configure(SearchEngine searchEngine) {
+		_registerSearchEngineMessageListener(
+			searchEngine, _getSearchReaderDestination(),
+			new SearchReaderMessageListener(), searchEngine.getIndexSearcher());
 
 		_registerSearchEngineMessageListener(
-			_searchEngine, _getSearchReaderDestination(),
-			new SearchReaderMessageListener(),
-			_searchEngine.getIndexSearcher());
-
-		_registerSearchEngineMessageListener(
-			_searchEngine, _getSearchWriterDestination(),
-			new SearchWriterMessageListener(), _searchEngine.getIndexWriter());
+			searchEngine, _getSearchWriterDestination(),
+			new SearchWriterMessageListener(), searchEngine.getIndexWriter());
 
 		SearchEngineProxyWrapper searchEngineProxyWrapper =
 			new SearchEngineProxyWrapper(
-				_searchEngine, _indexSearcher, _indexWriter);
+				searchEngine, _indexSearcher, _indexWriter);
 
 		_searchEngineHelper.setSearchEngine(searchEngineProxyWrapper);
 
 		searchEngineProxyWrapper.initialize(CompanyConstants.SYSTEM);
 	}
 
-	@Deactivate
-	protected void deactivate() {
+	public void unconfigure() {
 		_searchEngineHelper.removeSearchEngine();
 
 		for (ServiceRegistration<?> serviceRegistration :
@@ -93,6 +82,11 @@ public class ElasticsearchEngineConfigurator
 		}
 
 		_destinationServiceRegistrations.clear();
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
 	private Destination _createSearchReaderDestination(
@@ -229,9 +223,6 @@ public class ElasticsearchEngineConfigurator
 
 	@Reference
 	private MessageBus _messageBus;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private SearchEngine _searchEngine;
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;

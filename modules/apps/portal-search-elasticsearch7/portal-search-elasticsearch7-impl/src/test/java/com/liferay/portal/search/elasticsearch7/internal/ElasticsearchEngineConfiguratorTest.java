@@ -67,7 +67,10 @@ public class ElasticsearchEngineConfiguratorTest {
 		elasticsearchEngineConfigurator.activate(
 			SystemBundleUtil.getBundleContext());
 
-		elasticsearchEngineConfigurator.deactivate();
+		elasticsearchEngineConfigurator.configure(
+			Mockito.mock(SearchEngine.class));
+
+		elasticsearchEngineConfigurator.unconfigure();
 
 		Mockito.verify(
 			destinationFactory, Mockito.times(2)
@@ -86,8 +89,6 @@ public class ElasticsearchEngineConfiguratorTest {
 					this, "_destinationFactory", destinationFactory);
 				ReflectionTestUtil.setFieldValue(
 					this, "_messageBus", Mockito.mock(MessageBus.class));
-				ReflectionTestUtil.setFieldValue(
-					this, "_searchEngine", Mockito.mock(SearchEngine.class));
 				ReflectionTestUtil.setFieldValue(
 					this, "_searchEngineHelper",
 					Mockito.mock(SearchEngineHelper.class));

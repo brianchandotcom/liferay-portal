@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@liferay/frontend-js-react-web": "*",
 		"commerce-frontend-js": "*",
-		"d3": "7.6.1",
+		"d3": "5.9.3",
 		"frontend-js-web": "*",
 		"html-webpack-plugin": "5.5.0",
 		"react": "16.12.0",

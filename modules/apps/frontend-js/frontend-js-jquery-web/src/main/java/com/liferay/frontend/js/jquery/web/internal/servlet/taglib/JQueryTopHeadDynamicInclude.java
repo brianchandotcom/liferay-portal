@@ -20,7 +20,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -141,8 +140,5 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 	private volatile BundleContext _bundleContext;
 	private volatile JSJQueryConfiguration _jsJQueryConfiguration;
 	private volatile long _lastModified;
-
-	@Reference
-	private Portal _portal;
 
 }

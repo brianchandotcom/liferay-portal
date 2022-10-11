@@ -216,6 +216,9 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 			element.attributeValue(
 				"layout-classed-model-container-class-name"));
 
+		importedLayoutClassedModelUsage.setContainerType(
+			containerTypeClassNameId);
+
 		if (containerTypeClassNameId == _portal.getClassNameId(
 				FragmentEntryLink.class)) {
 
@@ -232,9 +235,6 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 				importedLayoutClassedModelUsage.setContainerKey(
 					String.valueOf(containerKey));
-
-				importedLayoutClassedModelUsage.setContainerType(
-					_portal.getClassNameId(FragmentEntryLink.class));
 			}
 		}
 

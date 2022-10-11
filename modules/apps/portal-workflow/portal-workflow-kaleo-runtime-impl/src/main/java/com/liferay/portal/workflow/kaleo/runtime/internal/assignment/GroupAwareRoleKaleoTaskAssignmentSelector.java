@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -34,11 +36,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -65,21 +67,15 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 				kaleoTaskAssignment.getAssigneeClassPK()));
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addGroupAwareRoleValidator(
-		GroupAwareRoleValidator groupAwareRoleValidator) {
-
-		_groupAwareRoleValidators.add(groupAwareRoleValidator);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, GroupAwareRoleValidator.class);
 	}
 
-	protected void removeGroupAwareRoleValidator(
-		GroupAwareRoleValidator groupAwareRoleValidator) {
-
-		_groupAwareRoleValidators.remove(groupAwareRoleValidator);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	private List<KaleoTaskAssignment> _createKaleoTaskAssigments(
@@ -193,7 +189,7 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		}
 
 		for (GroupAwareRoleValidator groupAwareRoleValidator :
-				_groupAwareRoleValidators) {
+				_serviceTrackerList) {
 
 			if (groupAwareRoleValidator.isValidGroup(group, role)) {
 				return true;
@@ -202,9 +198,6 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 
 		return false;
 	}
-
-	private final List<GroupAwareRoleValidator> _groupAwareRoleValidators =
-		new ArrayList<>();
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -217,5 +210,7 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private ServiceTrackerList<GroupAwareRoleValidator> _serviceTrackerList;
 
 }

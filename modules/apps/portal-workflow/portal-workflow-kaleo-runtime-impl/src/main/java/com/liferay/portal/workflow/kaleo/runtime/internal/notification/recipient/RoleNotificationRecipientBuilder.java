@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -44,11 +46,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -93,15 +95,10 @@ public class RoleNotificationRecipientBuilder
 			notificationReceptionType, executionContext);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addGroupAwareRoleValidator(
-		GroupAwareRoleValidator groupAwareRoleValidator) {
-
-		_groupAwareRoleValidators.add(groupAwareRoleValidator);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, GroupAwareRoleValidator.class);
 	}
 
 	protected void addRoleRecipientAddresses(
@@ -122,10 +119,9 @@ public class RoleNotificationRecipientBuilder
 		}
 	}
 
-	protected void removeGroupAwareRoleValidator(
-		GroupAwareRoleValidator groupAwareRoleValidator) {
-
-		_groupAwareRoleValidators.remove(groupAwareRoleValidator);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	private List<Long> _getAncestorGroupIds(Group group, Role role)
@@ -263,7 +259,7 @@ public class RoleNotificationRecipientBuilder
 		}
 
 		for (GroupAwareRoleValidator groupAwareRoleValidator :
-				_groupAwareRoleValidators) {
+				_serviceTrackerList) {
 
 			if (groupAwareRoleValidator.isValidGroup(group, role)) {
 				return true;
@@ -273,9 +269,6 @@ public class RoleNotificationRecipientBuilder
 		return false;
 	}
 
-	private final List<GroupAwareRoleValidator> _groupAwareRoleValidators =
-		new ArrayList<>();
-
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -284,6 +277,8 @@ public class RoleNotificationRecipientBuilder
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private ServiceTrackerList<GroupAwareRoleValidator> _serviceTrackerList;
 
 	@Reference
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;

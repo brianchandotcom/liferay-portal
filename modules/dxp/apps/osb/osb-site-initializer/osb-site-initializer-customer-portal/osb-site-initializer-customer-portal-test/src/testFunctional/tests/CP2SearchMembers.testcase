@@ -24,11 +24,11 @@ definition {
 
 		task ("Adding a user to the project") {
 			CustomerPortal.createUserForCP(
+				accountName = "Test Account Portal",
 				userFirstName = "User",
 				userLastName = "2",
-				userScreenName = "Testing",
-				accountName = "Test Account Portal",
-				userName = "User 2");
+				userName = "User 2",
+				userScreenName = "Testing");
 		}
 
 		task ("Add test user access to all Accounts") {
@@ -57,6 +57,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheErrorMessageWhenNoResultsAreFound {
+
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -96,6 +97,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSearchFiltersByEmail {
+
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -135,6 +137,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test VerifyTheSearchFiltersByFirstAndLastName {
+
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {

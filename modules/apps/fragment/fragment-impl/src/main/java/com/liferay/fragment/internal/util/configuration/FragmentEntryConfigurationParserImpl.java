@@ -132,8 +132,7 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public JSONObject getConfigurationJSONObject(
-			String configuration, Object displayObject, String editableValues,
-			Locale locale)
+			String configuration, String editableValues, Locale locale)
 		throws JSONException {
 
 		JSONObject configurationDefaultValuesJSONObject =

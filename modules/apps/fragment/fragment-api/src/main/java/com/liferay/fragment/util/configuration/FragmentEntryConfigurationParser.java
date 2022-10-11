@@ -39,8 +39,7 @@ public interface FragmentEntryConfigurationParser {
 		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType);
 
 	public JSONObject getConfigurationJSONObject(
-			String configuration, Object displayObject, String editableValues,
-			Locale locale)
+			String configuration, String editableValues, Locale locale)
 		throws JSONException;
 
 	public Map<String, Object> getContextObjects(

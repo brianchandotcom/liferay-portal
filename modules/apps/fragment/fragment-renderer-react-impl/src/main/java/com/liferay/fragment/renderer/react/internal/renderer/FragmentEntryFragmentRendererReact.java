@@ -46,7 +46,6 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,14 +105,10 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 				JSONFactoryUtil.createJSONObject();
 
 			if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
-				Optional<Object> displayObjectOptional =
-					fragmentRendererContext.getDisplayObjectOptional();
-
 				configurationJSONObject =
 					_fragmentEntryConfigurationParser.
 						getConfigurationJSONObject(
 							fragmentEntryLink.getConfiguration(),
-							displayObjectOptional.orElse(null),
 							fragmentEntryLink.getEditableValues(),
 							LocaleUtil.getMostRelevantLocale());
 			}

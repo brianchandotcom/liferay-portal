@@ -129,16 +129,16 @@ public class FreeMarkerFragmentEntryProcessor
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);
 
+		JSONObject configurationValuesJSONObject =
+			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				fragmentEntryProcessorContext.getLocale());
+
 		Optional<Object> displayObjectOptional =
 			fragmentEntryProcessorContext.getDisplayObjectOptional();
 
 		Object displayObject = displayObjectOptional.orElse(null);
-
-		JSONObject configurationValuesJSONObject =
-			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
-				fragmentEntryLink.getConfiguration(), displayObject,
-				fragmentEntryLink.getEditableValues(),
-				fragmentEntryProcessorContext.getLocale());
 
 		template.putAll(
 			HashMapBuilder.<String, Object>put(

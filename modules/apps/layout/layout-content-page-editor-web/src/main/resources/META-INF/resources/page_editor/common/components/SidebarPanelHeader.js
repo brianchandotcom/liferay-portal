@@ -24,7 +24,7 @@ export default function SidebarPanelHeader({children}) {
 	const dispatch = useDispatch();
 
 	return (
-		<div
+		<header
 			className={classNames(
 				'align-items-center d-flex justify-content-between my-3 pl-3 pr-2 page-editor__sidebar__panel-header'
 			)}
@@ -40,7 +40,7 @@ export default function SidebarPanelHeader({children}) {
 				symbol="times"
 				title={Liferay.Language.get('close')}
 			/>
-		</div>
+		</header>
 	);
 }
 

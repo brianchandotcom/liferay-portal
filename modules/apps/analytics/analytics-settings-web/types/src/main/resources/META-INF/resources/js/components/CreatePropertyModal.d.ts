@@ -16,5 +16,5 @@ import React from 'react';
 interface IModalProps {
 	observer: any;
 }
-declare const Modal: React.FC<IModalProps>;
-export default Modal;
+declare const CreatePropertyModal: React.FC<IModalProps>;
+export default CreatePropertyModal;

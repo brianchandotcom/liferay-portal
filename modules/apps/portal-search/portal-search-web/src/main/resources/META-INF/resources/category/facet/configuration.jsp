@@ -34,7 +34,6 @@ page import="com.liferay.portal.search.web.internal.category.facet.configuration
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
 
 <portlet:defineObjects />
@@ -67,7 +66,7 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 			>
 				<div class="display-template">
 					<liferay-template:template-selector
-						className="<%= AssetCategoriesSearchFacetTermDisplayContext.class.getName() %>"
+						className="<%= AssetCategoriesSearchFacetDisplayContext.class.getName() %>"
 						displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"

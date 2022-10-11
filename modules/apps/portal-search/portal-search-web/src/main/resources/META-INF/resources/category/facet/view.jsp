@@ -53,7 +53,7 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= AssetCategoriesSearchFacetTermDisplayContext.class.getName() %>"
+				className="<%= AssetCategoriesSearchFacetDisplayContext.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"assetCategoriesSearchFacetDisplayContext", assetCategoriesSearchFacetDisplayContext

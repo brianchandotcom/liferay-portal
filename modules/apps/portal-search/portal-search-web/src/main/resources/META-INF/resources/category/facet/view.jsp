@@ -85,7 +85,7 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext assetCategoriesSearchFacetTermDisplayContext : assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts()) {
 									i++;
 								%>
 
@@ -93,10 +93,9 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 										<div class="custom-checkbox custom-control">
 											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
 												<input
-													autocomplete="off"
-													<%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+													<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 													class="custom-control-input facet-term"
-													data-term-id="<%= assetCategoriesSearchFacetTermDisplayContext.getFilterValue() %>"
+													data-term-id="<%= bucketDisplayContext.getFilterValue() %>"
 													disabled
 													id="<portlet:namespace />term_<%= i %>"
 													name="<portlet:namespace />term_<%= i %>"
@@ -104,13 +103,13 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 													type="checkbox"
 												/>
 
-												<span class="custom-control-label term-name <%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-													<span class="custom-control-label-text"><%= HtmlUtil.escape(assetCategoriesSearchFacetTermDisplayContext.getBucketText()) %></span>
+												<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+													<span class="custom-control-label-text"><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></span>
 												</span>
 
-												<c:if test="<%= assetCategoriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+												<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
 													<small class="term-count">
-														(<%= assetCategoriesSearchFacetTermDisplayContext.getFrequency() %>)
+														(<%= bucketDisplayContext.getFrequency() %>)
 													</small>
 												</c:if>
 											</label>

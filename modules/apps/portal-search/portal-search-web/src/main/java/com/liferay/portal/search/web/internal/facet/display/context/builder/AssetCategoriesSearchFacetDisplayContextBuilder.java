@@ -172,20 +172,20 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			int popularity) {
 
 		BucketDisplayContext
-			assetCategoriesSearchFacetTermDisplayContext =
+			bucketDisplayContext =
 				new BucketDisplayContext();
 
-		assetCategoriesSearchFacetTermDisplayContext.setBucketText(
+		bucketDisplayContext.setBucketText(
 			assetCategory.getTitle(_locale));
-		assetCategoriesSearchFacetTermDisplayContext.setFilterValue(
+		bucketDisplayContext.setFilterValue(
 			String.valueOf(assetCategory.getCategoryId()));
-		assetCategoriesSearchFacetTermDisplayContext.setFrequency(frequency);
-		assetCategoriesSearchFacetTermDisplayContext.setFrequencyVisible(
+		bucketDisplayContext.setFrequency(frequency);
+		bucketDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
-		assetCategoriesSearchFacetTermDisplayContext.setPopularity(popularity);
-		assetCategoriesSearchFacetTermDisplayContext.setSelected(selected);
+		bucketDisplayContext.setPopularity(popularity);
+		bucketDisplayContext.setSelected(selected);
 
-		return assetCategoriesSearchFacetTermDisplayContext;
+		return bucketDisplayContext;
 	}
 
 	protected List<BucketDisplayContext>
@@ -268,7 +268,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		_removeExcludedGroup();
 
 		List<BucketDisplayContext>
-			assetCategoriesSearchFacetTermDisplayContexts = new ArrayList<>(
+			bucketDisplayContexts = new ArrayList<>(
 				_buckets.size());
 
 		int maxCount = 1;
@@ -307,7 +307,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		}
 
 		Map<String, List<BucketDisplayContext>>
-			assetCategoriesSearchFacetTermDisplayContextMap = new HashMap<>();
+			bucketDisplayContextMap = new HashMap<>();
 		Set<String> vocabularyNames = new HashSet<>();
 
 		for (int i = 0, j = 0; i < _buckets.size(); i++, j++) {
@@ -343,12 +343,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 					assetCategory, frequency,
 					isSelected(assetCategory.getCategoryId()), popularity);
 
-			assetCategoriesSearchFacetTermDisplayContexts.add(
+			bucketDisplayContexts.add(
 				termDisplayContext);
 
 			List<BucketDisplayContext>
 				vocabularyTermDisplayContexts =
-					assetCategoriesSearchFacetTermDisplayContextMap.get(
+					bucketDisplayContextMap.get(
 						vocabularyName);
 
 			if (vocabularyTermDisplayContexts == null) {
@@ -357,14 +357,14 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 			vocabularyTermDisplayContexts.add(termDisplayContext);
 
-			assetCategoriesSearchFacetTermDisplayContextMap.put(
+			bucketDisplayContextMap.put(
 				vocabularyName, vocabularyTermDisplayContexts);
 		}
 
 		assetCategoriesSearchFacetDisplayContext.setTermDisplayContexts(
-			assetCategoriesSearchFacetTermDisplayContexts);
+			bucketDisplayContexts);
 		assetCategoriesSearchFacetDisplayContext.setTermDisplayContextsMap(
-			assetCategoriesSearchFacetTermDisplayContextMap);
+			bucketDisplayContextMap);
 		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(
 			_sortVocabularyNames(vocabularyNames));
 	}

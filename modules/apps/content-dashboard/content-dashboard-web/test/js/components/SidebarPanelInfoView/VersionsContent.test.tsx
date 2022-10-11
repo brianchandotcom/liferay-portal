@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render, waitFor} from '@testing-library/react';
+import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
@@ -25,6 +25,14 @@ jest.mock('frontend-js-web', () => ({
 		json: jest.fn().mockReturnValue({
 			versions: [
 				{
+					actions: [
+						{
+							icon: 'time',
+							label: 'Expire',
+							name: 'expire',
+							url: 'http://localhost:8080/expire-url',
+						},
+					],
 					createDate: 'Thu Sep 29 11:22:34 GMT 2022',
 					statusLabel: 'Approved',
 					statusStyle: 'success',
@@ -32,12 +40,45 @@ jest.mock('frontend-js-web', () => ({
 					version: '2.1',
 				},
 				{
+					actions: [
+						{
+							icon: 'time',
+							label: 'Expire',
+							name: 'expire',
+							url: 'http://localhost:8080/expire-url',
+						},
+					],
 					changeLog: 'Log text',
 					createDate: 'Thu Sep 30 11:22:34 GMT 2022',
 					statusLabel: 'Approved',
 					statusStyle: 'success',
 					userName: 'Test Test',
 					version: '2.2',
+				},
+				{
+					actions: [],
+					changeLog: 'Another log text',
+					createDate: 'Thu Sep 30 12:22:34 GMT 2022',
+					statusLabel: 'Expired',
+					statusStyle: 'danger',
+					userName: 'Test Test',
+					version: '2.3',
+				},
+				{
+					actions: [
+						{
+							icon: 'view',
+							label: 'View',
+							name: 'view',
+							url: 'http://localhost:8080/view-url',
+						},
+					],
+					changeLog: 'Another log text',
+					createDate: 'Thu Sep 30 14:22:34 GMT 2022',
+					statusLabel: 'Approved',
+					statusStyle: 'success',
+					userName: 'Test Test',
+					version: '2.4',
 				},
 			],
 			viewVersionsURL: 'http://localhost:8080/view-more-versions',
@@ -47,8 +88,20 @@ jest.mock('frontend-js-web', () => ({
 	sub: jest.fn(),
 }));
 
+window.submitForm = jest.fn();
+
 const fetchItemVersionsURL =
 	'http://localhost:8080/fetch-manage-collaborators-button-url';
+
+const _getComponent = () => {
+	return (
+		<VersionsContent
+			getItemVersionsURL={fetchItemVersionsURL}
+			languageTag="en"
+			onError={() => {}}
+		/>
+	);
+};
 
 describe('Versions Content component', () => {
 	afterEach(() => {
@@ -57,25 +110,13 @@ describe('Versions Content component', () => {
 	});
 
 	it('does not call the endpoint on first render and calls it in the following render', async () => {
-		const {rerender} = render(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		const {rerender} = render(_getComponent());
 
 		await waitFor(() => {
 			expect(fetch).not.toHaveBeenCalledWith(fetchItemVersionsURL);
 		});
 
-		rerender(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		rerender(_getComponent());
 
 		await waitFor(() => {
 			expect(fetch).toHaveBeenCalledWith(fetchItemVersionsURL);
@@ -83,20 +124,8 @@ describe('Versions Content component', () => {
 	});
 
 	it('displays the versions list', async () => {
-		const {getByText, rerender} = render(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
-		rerender(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		const {getByText, rerender} = render(_getComponent());
+		rerender(_getComponent());
 
 		await waitFor(() => {
 			expect(getByText('2.1', {exact: false})).toBeInTheDocument();
@@ -107,21 +136,9 @@ describe('Versions Content component', () => {
 	});
 
 	it('displays View more link if viewVersionsURL is provided', async () => {
-		const {container, rerender} = render(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		const {container, rerender} = render(_getComponent());
 
-		rerender(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		rerender(_getComponent());
 
 		await waitFor(() => {
 			const link = container.querySelector(
@@ -141,25 +158,50 @@ describe('Versions Content component', () => {
 			sub: jest.fn(),
 		}));
 
-		const {container, rerender} = render(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		const {container, rerender} = render(_getComponent());
 
-		rerender(
-			<VersionsContent
-				getItemVersionsURL={fetchItemVersionsURL}
-				languageTag="en"
-				onError={() => {}}
-			/>
-		);
+		rerender(_getComponent());
 
 		await waitFor(() => {
 			const link = container.querySelectorAll('a.btn-secondary');
 			expect(link.length).toBe(0);
+		});
+	});
+});
+
+describe('Versions actions', () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+		cleanup();
+	});
+
+	it('are rendered within each version', async () => {
+		const {getAllByText, getAllByTitle, rerender} = render(_getComponent());
+		rerender(_getComponent());
+
+		await waitFor(() => {
+			const expireActionButtons: HTMLElement[] = getAllByText('Expire');
+
+			expect(getAllByTitle('actions').length).toBe(3);
+			expect(expireActionButtons.length).toBe(2);
+			expect(getAllByText('View').length).toBe(1);
+
+			const firstExpireButton: HTMLButtonElement = expireActionButtons[0].closest(
+				'button'
+			)!;
+
+			fireEvent(
+				firstExpireButton,
+				new MouseEvent('click', {
+					bubbles: true,
+					cancelable: true,
+				})
+			);
+
+			expect(window.submitForm).toHaveBeenCalledWith(
+				undefined,
+				'http://localhost:8080/expire-url'
+			);
 		});
 	});
 });

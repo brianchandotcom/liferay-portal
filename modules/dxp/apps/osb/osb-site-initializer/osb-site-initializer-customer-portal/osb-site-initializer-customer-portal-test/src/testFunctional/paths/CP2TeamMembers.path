@@ -41,11 +41,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(text(), 'No team members found with this search criteria.')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLE_DISABLED</td>
 	<td>//select[contains(@name, 'invites[${key_index}]')]//option[contains(text(), '${role}')][@disabled]</td>
 	<td></td>

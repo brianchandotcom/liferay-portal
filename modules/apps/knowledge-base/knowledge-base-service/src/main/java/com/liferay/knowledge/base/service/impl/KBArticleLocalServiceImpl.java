@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -1644,6 +1645,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
 	}
 
+	private int _getNotificationType(ServiceContext serviceContext) {
+		if (serviceContext.isCommandAdd()) {
+			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+		}
+
+		return UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
+	}
+
 	private double _getPriority(long groupId, long parentResourcePrimKey)
 		throws PortalException {
 
@@ -1854,9 +1863,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("kb_article", kbArticle.getKbArticleId());
+		subscriptionSender.setNotificationType(
+			_getNotificationType(serviceContext));
 		subscriptionSender.setPortletId(serviceContext.getPortletId());
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(kbArticle.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 
 		subscriptionSender.addAssetEntryPersistedSubscribers(

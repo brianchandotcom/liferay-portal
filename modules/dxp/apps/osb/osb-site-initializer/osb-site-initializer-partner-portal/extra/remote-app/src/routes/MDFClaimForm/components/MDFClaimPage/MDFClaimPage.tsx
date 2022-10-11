@@ -88,7 +88,6 @@ const MDFClaimPage = ({
 						setFieldValue('reimbursementInvoice', value)
 					}
 					outline
-					required
 					small
 				/>
 

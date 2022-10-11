@@ -151,7 +151,6 @@ const ActivityClaimPanel = ({
 								)
 							}
 							outline
-							required={activity.selected}
 							small
 						/>
 

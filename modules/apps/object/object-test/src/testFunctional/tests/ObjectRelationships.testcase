@@ -551,21 +551,11 @@ definition {
 				userLastName = "userln_1",
 				userScreenName = "usersn1");
 
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-
 			JSONUser.addUser(
 				userEmailAddress = "user2@liferay.com",
 				userFirstName = "userfn_2",
 				userLastName = "userln_2",
 				userScreenName = "usersn2");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user2@liferay.com");
 		}
 
 		task ("Add a custom object, a field, and create a one-to-many relationship with the User object") {

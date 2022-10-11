@@ -18,7 +18,11 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
-import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
+import {
+	ReactPortal,
+	useEventListener,
+	useIsMounted,
+} from '@liferay/frontend-js-react-web';
 import {navigate, openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -183,6 +187,17 @@ const ExperienceSelector = ({
 
 		experiences.length,
 	]);
+
+	useEventListener(
+		'keydown',
+		(event) => {
+			if (event.key === 'Escape' && open) {
+				debouncedSetOpen(false);
+			}
+		},
+		true,
+		window
+	);
 
 	const handleExperienceCreation = ({
 		name,

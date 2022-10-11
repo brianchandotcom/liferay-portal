@@ -380,11 +380,89 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinitionVersion);
 	}
 
+	private FilterAggregation _createNodeIdAggregation(
+		String aggregationName, Set<String> nodeIds) {
+
+		TermsQuery termsQuery = _queries.terms("nodeId");
+
+		termsQuery.addValues(nodeIds.toArray());
+
+		FilterAggregation filterAggregation = _aggregations.filter(
+			aggregationName, termsQuery);
+
+		filterAggregation.addChildAggregation(
+			_aggregations.terms("nodeId", "nodeId"));
+
+		return filterAggregation;
+	}
+
+	private String _getLatestProcessVersion(long companyId, long processId) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(
+			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", companyId),
+			_queries.term("processId", processId));
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		searchSearchRequest.setSelectedFieldNames("version");
+
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).findFirst(
+		).map(
+			document -> document.getString("version")
+		).orElseGet(
+			() -> StringPool.BLANK
+		);
+	}
+
 	private String _getNextVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return StringBundler.concat(
 			++versionParts[0], StringPool.PERIOD, versionParts[1]);
+	}
+
+	private Set<String> _getNodeIds(String[] nodeKeys) {
+		if (nodeKeys == null) {
+			return Collections.emptySet();
+		}
+
+		return Stream.of(
+			nodeKeys
+		).map(
+			nodeKey -> StringUtil.split(nodeKey, CharPool.COLON)
+		).map(
+			nodeKeyParts -> nodeKeyParts[0]
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
+	private long _getNodeIdsCount(
+		FilterAggregationResult filterAggregationResult) {
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)
+				filterAggregationResult.getChildAggregationResult("nodeId");
+
+		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+
+		return buckets.size();
 	}
 
 	private void _validate(
@@ -508,84 +586,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			throw new WorkflowMetricsSLADefinitionTimeframeException(
 				fieldNames);
 		}
-	}
-
-	private FilterAggregation _createNodeIdAggregation(
-		String aggregationName, Set<String> nodeIds) {
-
-		TermsQuery termsQuery = _queries.terms("nodeId");
-
-		termsQuery.addValues(nodeIds.toArray());
-
-		FilterAggregation filterAggregation = _aggregations.filter(
-			aggregationName, termsQuery);
-
-		filterAggregation.addChildAggregation(
-			_aggregations.terms("nodeId", "nodeId"));
-
-		return filterAggregation;
-	}
-
-	private String _getLatestProcessVersion(long companyId, long processId) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", companyId),
-			_queries.term("processId", processId));
-
-		searchSearchRequest.setQuery(booleanQuery);
-
-		searchSearchRequest.setSelectedFieldNames("version");
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).findFirst(
-		).map(
-			document -> document.getString("version")
-		).orElseGet(
-			() -> StringPool.BLANK
-		);
-	}
-
-	private Set<String> _getNodeIds(String[] nodeKeys) {
-		if (nodeKeys == null) {
-			return Collections.emptySet();
-		}
-
-		return Stream.of(
-			nodeKeys
-		).map(
-			nodeKey -> StringUtil.split(nodeKey, CharPool.COLON)
-		).map(
-			nodeKeyParts -> nodeKeyParts[0]
-		).collect(
-			Collectors.toSet()
-		);
-	}
-
-	private long _getNodeIdsCount(
-		FilterAggregationResult filterAggregationResult) {
-
-		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)
-				filterAggregationResult.getChildAggregationResult("nodeId");
-
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-		return buckets.size();
 	}
 
 	private static final String _VERSION_DEFAULT = "1.0";

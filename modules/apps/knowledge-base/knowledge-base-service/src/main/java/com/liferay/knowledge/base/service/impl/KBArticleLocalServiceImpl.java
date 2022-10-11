@@ -263,9 +263,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Workflow
 
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, KBArticle.class.getName(),
-			resourcePrimKey, kbArticle, serviceContext, Collections.emptyMap());
+		_startWorkflowInstance(userId, kbArticle, serviceContext);
+
+		return kbArticle;
 	}
 
 	@Override
@@ -1228,10 +1228,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), kbArticle.getGroupId(), userId,
-			KBArticle.class.getName(), resourcePrimKey, kbArticle,
-			serviceContext);
+		_startWorkflowInstance(userId, kbArticle, serviceContext);
 
 		return kbArticle;
 	}
@@ -1934,6 +1931,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		for (long removeFileEntryId : removeFileEntryIds) {
 			_portletFileRepository.deletePortletFileEntry(removeFileEntryId);
 		}
+	}
+
+	private void _startWorkflowInstance(
+			long userId, KBArticle kbArticle, ServiceContext serviceContext)
+		throws PortalException {
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			kbArticle.getCompanyId(), kbArticle.getGroupId(), userId,
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
+			kbArticle, serviceContext, Collections.emptyMap());
 	}
 
 	private void _updatePermissionFields(

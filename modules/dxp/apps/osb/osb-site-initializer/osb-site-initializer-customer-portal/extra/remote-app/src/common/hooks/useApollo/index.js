@@ -116,7 +116,6 @@ export default function useApollo(provisioningServerAPI, oktaSessionAPI) {
 				link: link.split(
 					(operation) =>
 						operation.getContext().type === 'raysource-rest',
-
 					raySourceErrorLink.concat(
 						getRaysourceAuthLink(oktaSessionAPI).concat(
 							getRaysourceRestLink(provisioningServerAPI)

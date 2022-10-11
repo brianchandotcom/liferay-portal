@@ -13,7 +13,8 @@ import {useGetAccountRolesByAccountExternalReferenceCode} from '../../../../../.
 
 export default function useAccountRolesByAccountExternalReferenceCode(
 	koroneikiAccount,
-	loading
+	loading,
+	skip
 ) {
 	const getFilter = () => {
 		const filters = ["name ne 'Provisioning'"];
@@ -33,7 +34,7 @@ export default function useAccountRolesByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey,
 		{
 			filter: getFilter(),
-			skip: loading,
+			skip: loading || skip,
 		}
 	);
 }

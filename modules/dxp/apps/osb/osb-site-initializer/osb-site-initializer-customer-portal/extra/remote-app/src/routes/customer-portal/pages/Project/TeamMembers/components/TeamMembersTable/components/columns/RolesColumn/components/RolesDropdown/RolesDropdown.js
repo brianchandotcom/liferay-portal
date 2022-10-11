@@ -38,6 +38,7 @@ const RolesDropdown = ({
 					: isSupportSeatRole(accountRole.name) &&
 					  availableSupportSeatsCount <= 0,
 				label: accountRole.name,
+				value: accountRole.id,
 			})),
 		[
 			accountRoles,
@@ -48,10 +49,10 @@ const RolesDropdown = ({
 		]
 	);
 
-	const handleOnClick = (accountRoleName) => {
-		if (accountRoleName !== selectedAccountRoleName) {
-			onClick(accountRoleName);
-			setSelectedAccountRoleName(accountRoleName);
+	const handleOnClick = (accountRoleItem) => {
+		if (accountRoleItem.label !== selectedAccountRoleName) {
+			onClick(accountRoleItem.value);
+			setSelectedAccountRoleName(accountRoleItem.label);
 		}
 	};
 
@@ -61,7 +62,7 @@ const RolesDropdown = ({
 				className="pr-6"
 				disabled={item.disabled}
 				key={`${item.label}-${index}`}
-				onClick={() => handleOnClick(item.label)}
+				onClick={() => handleOnClick(item)}
 				symbolRight={item.active && 'check'}
 			>
 				{i18n.translate(getKebabCase(item.label))}

@@ -29,7 +29,6 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -664,8 +663,5 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

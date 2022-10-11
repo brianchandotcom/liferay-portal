@@ -616,7 +616,7 @@ definition {
 		task ("Go to Blog Entry and Edit the Layout and Maximum Number of Itens") {
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 
-			WaitForPageLoad();
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",

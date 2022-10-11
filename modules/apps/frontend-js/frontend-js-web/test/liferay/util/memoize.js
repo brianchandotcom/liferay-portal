@@ -33,47 +33,31 @@ describe('memoize', () => {
 
 		const memoizedMockFn = memoize(mockFn);
 
-		memoizedMockFn({3: 4}, 4, ['foo', 'bar'], 'baz');
-		memoizedMockFn({3: 4}, 4, ['foo', 'bar'], 'baz');
+		memoizedMockFn({foo: 'bar'});
+		memoizedMockFn({foo: 'bar'});
 
 		expect(mockFn).toHaveBeenCalledTimes(1);
 	});
 
 	it('returns the same value if invoked with same arguments', () => {
-		const mockObject = {
-			12: 24,
-			array: [1, 2, '3'],
-			foo: 'bar',
-		};
-
 		const mockFn = jest.fn((object) => object);
 
 		const memoizedMockFn = memoize(mockFn);
 
-		expect(memoizedMockFn(mockObject)).toEqual(memoizedMockFn(mockObject));
-	});
-
-	it("doesn't reuse a stale argument", () => {
-		const mockFn = jest.fn((object) => object);
-
-		const memoizedMockFn = memoize(mockFn);
-
-		expect(
-			memoizedMockFn({
-				12: 24,
-				array: [1, 2, '3'],
-				foo: 'bar',
-			})
-		).not.toBe(
-			mockFn({
-				12: 24,
-				array: [1, 2, '3'],
-				foo: 'bar',
-			})
+		expect(memoizedMockFn({foo: 'bar'})).toEqual(
+			memoizedMockFn({foo: 'bar'})
 		);
 	});
 
+	it("doesn't reference the non-memoized object", () => {
+		const mockFn = jest.fn((object) => object);
+
+		const memoizedMockFn = memoize(mockFn);
+
+		expect(memoizedMockFn({foo: 'bar'})).not.toBe(mockFn({foo: 'bar'}));
+	});
+
 	it("throws an error if the provided argument isn't a function", () => {
-		expect(() => memoize({foo: 42})).toThrow(TypeError);
+		expect(() => memoize({foo: 'baar'})).toThrow(TypeError);
 	});
 });

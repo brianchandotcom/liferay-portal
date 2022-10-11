@@ -300,9 +300,9 @@ definition {
 	macro createUserForCP {
 		JSONUser.addUser(
 			userEmailAddress = "test.user@liferay.com",
-			userFirstName = "User",
-			userLastName = "2",
-			userScreenName = "Testing");
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
@@ -311,11 +311,11 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Test Account Portal");
+		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
 		Accounts.assignUsers(
-			accountName = "Test Account Portal",
-			assigneeName = "User 2");
+			accountName = "${accountName}",
+			assigneeName = "${userName}");
 	}
 
 	macro customerPortalApisTearDown {

@@ -17,7 +17,6 @@ import ClayEmptyState from '@clayui/empty-state';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import AssignModal from '../../components/AssignModal';
 import BasePage from '../../components/BasePage';
 import CreatePropertyModal from '../../components/CreatePropertyModal';
 import PropertiesTable from '../../components/PropertiesTable';
@@ -28,6 +27,7 @@ interface IStepProps extends TGenericComponent {}
 
 const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 	const [properties, setProperties] = useState([]);
+	const {observer, onOpenChange, open} = useModal();
 
 	useEffect(() => {
 		const request = async () => {
@@ -36,7 +36,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 		};
 		request();
 	}, []);
-	const {observer, onOpenChange, open} = useModal();
 
 	return (
 		<BasePage
@@ -97,17 +96,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					</ClayButton>
 				</ClayButton.Group>
 			</BasePage.Footer>
-
-			{open && (
-				<AssignModal
-					observer={observer}
-					onCloseModal={() => onOpenChange(false)}
-				/>
-			)}
-
-			<ClayButton onClick={() => onOpenChange(true)}>
-				Open modal
-			</ClayButton>
 		</BasePage>
 	);
 };

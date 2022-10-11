@@ -16,11 +16,13 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ReactDOMServer} from '@liferay/frontend-js-react-web';
 import React, {useMemo} from 'react';
 
+import {useId} from '../../core/hooks/useId';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 
 export default function HideSidebarButton() {
 	const dispatch = useDispatch();
+	const id = useId();
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 
 	const buttonTitle = useMemo(() => {
@@ -30,24 +32,29 @@ export default function HideSidebarButton() {
 	}, []);
 
 	return (
-		<ClayButtonWithIcon
-			className="btn btn-secondary"
-			data-title-set-as-html
-			displayType="secondary"
-			onClick={() =>
-				dispatch(
-					switchSidebarPanel({
-						hidden: !sidebarHidden,
-					})
-				)
-			}
-			small
-			symbol={sidebarHidden ? 'hidden' : 'view'}
-			title={ReactDOMServer.renderToString(buttonTitle)}
-			type="button"
-		>
-			{Liferay.Language.get('preview')}
-		</ClayButtonWithIcon>
+		<>
+			<ClayButtonWithIcon
+				aria-labelledby={id}
+				className="btn btn-secondary"
+				data-title={ReactDOMServer.renderToString(buttonTitle)}
+				data-title-set-as-html
+				displayType="secondary"
+				onClick={() =>
+					dispatch(
+						switchSidebarPanel({
+							hidden: !sidebarHidden,
+						})
+					)
+				}
+				size="sm"
+				symbol={sidebarHidden ? 'hidden' : 'view'}
+				type="button"
+			/>
+
+			<p className="sr-only" id={id}>
+				{buttonTitle}
+			</p>
+		</>
 	);
 }
 

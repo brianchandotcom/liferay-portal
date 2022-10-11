@@ -77,9 +77,14 @@ definition {
 		}
 
 		task ("Assert if only one asset is displayed") {
-			LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title 1");
+			AssertTextEquals(
+				key_tableEntry = "Web Content Title 1",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+				value1 = "Web Content Title 1");
 
-			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 2");
+			AssertElementNotPresent(
+				key_tableEntry = "Web Content Title 2",
+				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 	}
 
@@ -250,15 +255,20 @@ definition {
 		}
 
 		task ("Assert if filter was applied") {
-			AssertElementPresent(
+			AssertVisible(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 		}
 
 		task ("Assert if only one asset is displayed") {
-			LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title 1");
+			AssertTextEquals(
+				key_tableEntry = "Web Content Title 1",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+				value1 = "Web Content Title 1");
 
-			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 2");
+			AssertElementNotPresent(
+				key_tableEntry = "Web Content Title 2",
+				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 	}
 
@@ -304,7 +314,7 @@ definition {
 		}
 
 		task ("Check if flip axes button is disabaled") {
-			AssertElementPresent(locator1 = "ContentDashboard#FLIP_AXES_BUTTON_DISABLED");
+			AssertVisible(locator1 = "Icon#FLIP_DISABLED")
 		}
 	}
 
@@ -517,21 +527,21 @@ definition {
 		}
 
 		task ("Check bars display") {
-			AssertElementPresent(
+			AssertVisible(
 				fillColor = "4B9FFF",
 				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
-			AssertElementPresent(
+			AssertVisible(
 				fillColor = "FFB46E",
 				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertElementPresent(
+			AssertVisible(
 				fillColor = "4B9FFF",
 				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
-			AssertElementPresent(
+			AssertVisible(
 				fillColor = "FFB46E",
 				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 		}
@@ -754,11 +764,11 @@ definition {
 
 			ContentDashboard.openAuditGraphConfiguration();
 
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
 				vocabularyName = "Vocabulary Name 1");
 
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
 				vocabularyName = "Vocabulary Name 2");
 		}

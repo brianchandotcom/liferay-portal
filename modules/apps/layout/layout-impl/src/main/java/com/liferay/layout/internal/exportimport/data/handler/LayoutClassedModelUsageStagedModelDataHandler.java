@@ -194,7 +194,7 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 		importedLayoutClassedModelUsage.setPlid(plid);
 
 		importedLayoutClassedModelUsage.setClassNameId(
-			_portal.getClassNameId(layoutClassedModelUsage.getClassName()));
+			layoutClassedModelUsage.getClassNameId());
 
 		Map<Long, Long> classPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

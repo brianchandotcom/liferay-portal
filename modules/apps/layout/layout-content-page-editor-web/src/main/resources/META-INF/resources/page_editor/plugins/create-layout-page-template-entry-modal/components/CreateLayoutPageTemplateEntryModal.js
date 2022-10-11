@@ -169,6 +169,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 						name={Liferay.Language.get('name')}
 					>
 						<input
+							aria-required="true"
 							className="form-control"
 							id={`${config.portletNamespace}name`}
 							onChange={() => setError({...error, name: null})}
@@ -185,6 +186,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 							name={Liferay.Language.get('page-template-set')}
 						>
 							<select
+								aria-required="true"
 								className="form-control"
 								id={`${config.portletNamespace}layoutPageTemplateCollectionId`}
 								ref={layoutPageTemplateCollectionInputRef}

@@ -41,35 +41,50 @@ public abstract class PortletManager
 
 	@Override
 	public long getAverageTime() throws MonitoringException {
-		return _portletSummaryStatistics.getAverageTime();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getAverageTime();
 	}
 
 	@Override
 	public long getAverageTimeByCompany(long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getAverageTimeByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getAverageTimeByCompany(companyId);
 	}
 
 	@Override
 	public long getAverageTimeByCompany(String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getAverageTimeByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getAverageTimeByCompany(webId);
 	}
 
 	@Override
 	public long getAverageTimeByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getAverageTimeByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getAverageTimeByPortlet(portletId);
 	}
 
 	@Override
 	public long getAverageTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getAverageTimeByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getAverageTimeByPortlet(
 			portletId, companyId);
 	}
 
@@ -77,7 +92,10 @@ public abstract class PortletManager
 	public long getAverageTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getAverageTimeByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getAverageTimeByPortlet(
 			portletId, webId);
 	}
 
@@ -90,35 +108,50 @@ public abstract class PortletManager
 
 	@Override
 	public long getErrorCount() throws MonitoringException {
-		return _portletSummaryStatistics.getErrorCount();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getErrorCount();
 	}
 
 	@Override
 	public long getErrorCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getErrorCountByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getErrorCountByCompany(companyId);
 	}
 
 	@Override
 	public long getErrorCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getErrorCountByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getErrorCountByCompany(webId);
 	}
 
 	@Override
 	public long getErrorCountByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getErrorCountByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getErrorCountByPortlet(portletId);
 	}
 
 	@Override
 	public long getErrorCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getErrorCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getErrorCountByPortlet(
 			portletId, companyId);
 	}
 
@@ -126,37 +159,55 @@ public abstract class PortletManager
 	public long getErrorCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getErrorCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getErrorCountByPortlet(
 			portletId, webId);
 	}
 
 	@Override
 	public long getMaxTime() throws MonitoringException {
-		return _portletSummaryStatistics.getMaxTime();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMaxTime();
 	}
 
 	@Override
 	public long getMaxTimeByCompany(long companyId) throws MonitoringException {
-		return _portletSummaryStatistics.getMaxTimeByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMaxTimeByCompany(companyId);
 	}
 
 	@Override
 	public long getMaxTimeByCompany(String webId) throws MonitoringException {
-		return _portletSummaryStatistics.getMaxTimeByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMaxTimeByCompany(webId);
 	}
 
 	@Override
 	public long getMaxTimeByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getMaxTimeByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMaxTimeByPortlet(portletId);
 	}
 
 	@Override
 	public long getMaxTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getMaxTimeByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMaxTimeByPortlet(
 			portletId, companyId);
 	}
 
@@ -164,36 +215,54 @@ public abstract class PortletManager
 	public long getMaxTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getMaxTimeByPortlet(portletId, webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMaxTimeByPortlet(portletId, webId);
 	}
 
 	@Override
 	public long getMinTime() throws MonitoringException {
-		return _portletSummaryStatistics.getMinTime();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMinTime();
 	}
 
 	@Override
 	public long getMinTimeByCompany(long companyId) throws MonitoringException {
-		return _portletSummaryStatistics.getMinTimeByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMinTimeByCompany(companyId);
 	}
 
 	@Override
 	public long getMinTimeByCompany(String webId) throws MonitoringException {
-		return _portletSummaryStatistics.getMinTimeByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMinTimeByCompany(webId);
 	}
 
 	@Override
 	public long getMinTimeByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getMinTimeByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMinTimeByPortlet(portletId);
 	}
 
 	@Override
 	public long getMinTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getMinTimeByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMinTimeByPortlet(
 			portletId, companyId);
 	}
 
@@ -201,7 +270,10 @@ public abstract class PortletManager
 	public long getMinTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getMinTimeByPortlet(portletId, webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getMinTimeByPortlet(portletId, webId);
 	}
 
 	@Override
@@ -213,35 +285,50 @@ public abstract class PortletManager
 
 	@Override
 	public long getRequestCount() throws MonitoringException {
-		return _portletSummaryStatistics.getRequestCount();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getRequestCount();
 	}
 
 	@Override
 	public long getRequestCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getRequestCountByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getRequestCountByCompany(companyId);
 	}
 
 	@Override
 	public long getRequestCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getRequestCountByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getRequestCountByCompany(webId);
 	}
 
 	@Override
 	public long getRequestCountByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getRequestCountByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getRequestCountByPortlet(portletId);
 	}
 
 	@Override
 	public long getRequestCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getRequestCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getRequestCountByPortlet(
 			portletId, companyId);
 	}
 
@@ -249,41 +336,59 @@ public abstract class PortletManager
 	public long getRequestCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getRequestCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getRequestCountByPortlet(
 			portletId, webId);
 	}
 
 	@Override
 	public long getSuccessCount() throws MonitoringException {
-		return _portletSummaryStatistics.getSuccessCount();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getSuccessCount();
 	}
 
 	@Override
 	public long getSuccessCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getSuccessCountByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getSuccessCountByCompany(companyId);
 	}
 
 	@Override
 	public long getSuccessCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getSuccessCountByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getSuccessCountByCompany(webId);
 	}
 
 	@Override
 	public long getSuccessCountByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getSuccessCountByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getSuccessCountByPortlet(portletId);
 	}
 
 	@Override
 	public long getSuccessCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getSuccessCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getSuccessCountByPortlet(
 			portletId, companyId);
 	}
 
@@ -291,41 +396,59 @@ public abstract class PortletManager
 	public long getSuccessCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getSuccessCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getSuccessCountByPortlet(
 			portletId, webId);
 	}
 
 	@Override
 	public long getTimeoutCount() throws MonitoringException {
-		return _portletSummaryStatistics.getTimeoutCount();
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getTimeoutCount();
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getTimeoutCountByCompany(companyId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getTimeoutCountByCompany(companyId);
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getTimeoutCountByCompany(webId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getTimeoutCountByCompany(webId);
 	}
 
 	@Override
 	public long getTimeoutCountByPortlet(String portletId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getTimeoutCountByPortlet(portletId);
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getTimeoutCountByPortlet(portletId);
 	}
 
 	@Override
 	public long getTimeoutCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getTimeoutCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getTimeoutCountByPortlet(
 			portletId, companyId);
 	}
 
@@ -333,7 +456,10 @@ public abstract class PortletManager
 	public long getTimeoutCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
-		return _portletSummaryStatistics.getTimeoutCountByPortlet(
+		PortletSummaryStatistics portletSummaryStatistics =
+			getPortletSummaryStatistics();
+
+		return portletSummaryStatistics.getTimeoutCountByPortlet(
 			portletId, webId);
 	}
 

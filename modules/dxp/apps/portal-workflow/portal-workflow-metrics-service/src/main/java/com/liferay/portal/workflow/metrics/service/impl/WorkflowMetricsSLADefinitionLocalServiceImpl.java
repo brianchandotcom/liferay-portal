@@ -91,7 +91,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		String latestProcessVersion = _getLatestProcessVersion(
 			serviceContext.getCompanyId(), processId);
 
-		validate(
+		_validate(
 			0, serviceContext.getCompanyId(), processId, latestProcessVersion,
 			name, duration, pauseNodeKeys, startNodeKeys, stopNodeKeys);
 
@@ -136,7 +136,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinitionPersistence.update(
 				workflowMetricsSLADefinition);
 
-		addWorkflowMetricsSLADefinitionVersion(
+		_addWorkflowMetricsSLADefinitionVersion(
 			user, workflowMetricsSLADefinition);
 
 		return workflowMetricsSLADefinition;
@@ -153,13 +153,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		workflowMetricsSLADefinition.setActive(false);
 		workflowMetricsSLADefinition.setVersion(
-			getNextVersion(workflowMetricsSLADefinition.getVersion()));
+			_getNextVersion(workflowMetricsSLADefinition.getVersion()));
 
 		workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.update(
 				workflowMetricsSLADefinition);
 
-		addWorkflowMetricsSLADefinitionVersion(
+		_addWorkflowMetricsSLADefinitionVersion(
 			_userLocalService.getUser(serviceContext.getGuestOrUserId()),
 			workflowMetricsSLADefinition);
 
@@ -253,7 +253,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinition.getProcessId());
 
 		if (Objects.equals(WorkflowConstants.STATUS_APPROVED, status)) {
-			validate(
+			_validate(
 				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId(),
 				workflowMetricsSLADefinition.getCompanyId(),
@@ -279,7 +279,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setStopNodeKeys(
 			StringUtil.merge(stopNodeKeys));
 		workflowMetricsSLADefinition.setVersion(
-			getNextVersion(workflowMetricsSLADefinition.getVersion()));
+			_getNextVersion(workflowMetricsSLADefinition.getVersion()));
 		workflowMetricsSLADefinition.setStatus(status);
 
 		User user = _userLocalService.getUser(
@@ -295,7 +295,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinitionPersistence.update(
 				workflowMetricsSLADefinition);
 
-		addWorkflowMetricsSLADefinitionVersion(
+		_addWorkflowMetricsSLADefinitionVersion(
 			user, workflowMetricsSLADefinition);
 
 		long companyId = workflowMetricsSLADefinition.getCompanyId();
@@ -319,8 +319,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		return workflowMetricsSLADefinition;
 	}
 
-	protected WorkflowMetricsSLADefinitionVersion
-		addWorkflowMetricsSLADefinitionVersion(
+	private WorkflowMetricsSLADefinitionVersion
+		_addWorkflowMetricsSLADefinitionVersion(
 			User user,
 			WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
@@ -380,14 +380,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinitionVersion);
 	}
 
-	protected String getNextVersion(String version) {
+	private String _getNextVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return StringBundler.concat(
 			++versionParts[0], StringPool.PERIOD, versionParts[1]);
 	}
 
-	protected void validate(
+	private void _validate(
 			long workflowMetricsSLADefinitionId, long companyId, long processId,
 			String processVersion, String name, long duration,
 			String[] pauseNodeKeys, String[] startNodeKeys,
@@ -428,12 +428,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			throw new WorkflowMetricsSLADefinitionDuplicateNameException();
 		}
 
-		validateTimeframe(
+		_validateTimeframe(
 			companyId, pauseNodeKeys, processId, processVersion, startNodeKeys,
 			stopNodeKeys);
 	}
 
-	protected void validateTimeframe(
+	private void _validateTimeframe(
 			long companyId, String[] pauseNodeKeys, long processId,
 			String processVersion, String[] startNodeKeys,
 			String[] stopNodeKeys)

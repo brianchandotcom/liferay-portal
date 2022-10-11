@@ -100,7 +100,7 @@ public class KaleoProcessLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
-		validate(ddmTemplateId);
+		_validate(ddmTemplateId);
 
 		long kaleoProcessId = counterLocalService.increment();
 
@@ -114,7 +114,7 @@ public class KaleoProcessLocalServiceImpl
 		kaleoProcess.setCreateDate(serviceContext.getCreateDate(date));
 		kaleoProcess.setModifiedDate(serviceContext.getModifiedDate(date));
 
-		DDLRecordSet ddlRecordSet = addDDLRecordSet(
+		DDLRecordSet ddlRecordSet = _addDDLRecordSet(
 			userId, groupId, ddmStructureId, nameMap, descriptionMap,
 			serviceContext);
 
@@ -132,7 +132,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Kaleo process links
 
-		updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
+		_updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
 
 		// Dynamic data mapping template link
 
@@ -166,7 +166,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Kaleo process data
 
-		deleteKaleoProcessData(kaleoProcess);
+		_deleteKaleoProcessData(kaleoProcess);
 
 		// Dynamic data mapping template link
 
@@ -316,11 +316,11 @@ public class KaleoProcessLocalServiceImpl
 		KaleoProcess kaleoProcess = kaleoProcessPersistence.findByPrimaryKey(
 			kaleoProcessId);
 
-		boolean kaleoProcessDataStale = isKaleoProcessDataStale(
+		boolean kaleoProcessDataStale = _isKaleoProcessDataStale(
 			kaleoProcess, ddmStructureId,
 			workflowDefinitionName + "@" + workflowDefinitionVersion);
 
-		validate(ddmTemplateId);
+		_validate(ddmTemplateId);
 
 		kaleoProcess.setModifiedDate(serviceContext.getModifiedDate(null));
 		kaleoProcess.setDDMTemplateId(ddmTemplateId);
@@ -333,12 +333,12 @@ public class KaleoProcessLocalServiceImpl
 
 		_kaleoProcessLinkLocalService.deleteKaleoProcessLinks(kaleoProcessId);
 
-		updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
+		_updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
 
 		// Kaleo process data
 
 		if (kaleoProcessDataStale) {
-			deleteKaleoProcessData(kaleoProcess);
+			_deleteKaleoProcessData(kaleoProcess);
 		}
 
 		// Dynamic data mapping template link
@@ -349,7 +349,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Dynamic data lists record set
 
-		updateDDLRecordSet(
+		_updateDDLRecordSet(
 			kaleoProcess.getDDLRecordSetId(), ddmStructureId, nameMap,
 			descriptionMap, serviceContext);
 
@@ -369,7 +369,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @return the DDL record set
 	 * @throws PortalException if a portal exception occurred
 	 */
-	protected DDLRecordSet addDDLRecordSet(
+	private DDLRecordSet _addDDLRecordSet(
 			long userId, long groupId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)
@@ -389,7 +389,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  kaleoProcess the Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
-	protected void deleteKaleoProcessData(KaleoProcess kaleoProcess)
+	private void _deleteKaleoProcessData(KaleoProcess kaleoProcess)
 		throws PortalException {
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
@@ -420,7 +420,7 @@ public class KaleoProcessLocalServiceImpl
 	 *         <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
 	 */
-	protected boolean isKaleoProcessDataStale(
+	private boolean _isKaleoProcessDataStale(
 			KaleoProcess kaleoProcess, long newDDMStructureId,
 			String newWorkflowDefinition)
 		throws PortalException {
@@ -450,7 +450,7 @@ public class KaleoProcessLocalServiceImpl
 	 *         the record set modified date.
 	 * @throws PortalException if a portal exception occurred
 	 */
-	protected void updateDDLRecordSet(
+	private void _updateDDLRecordSet(
 			long ddlRecordSetId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)
@@ -469,7 +469,7 @@ public class KaleoProcessLocalServiceImpl
 	 *        information, see the <code>portal.workflow.kaleo.forms.api</code>
 	 *        module's <code>KaleoTaskFormPairs</code> class.
 	 */
-	protected void updateKaleoProcessLinks(
+	private void _updateKaleoProcessLinks(
 		long kaleoProcessId, KaleoTaskFormPairs kaleoTaskFormPairs) {
 
 		for (KaleoTaskFormPair kaleoTaskFormPair : kaleoTaskFormPairs) {
@@ -488,7 +488,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @throws PortalException if the primary key of the DDM template is
 	 *         <code>null</code>
 	 */
-	protected void validate(long ddmTemplateId) throws PortalException {
+	private void _validate(long ddmTemplateId) throws PortalException {
 		if (ddmTemplateId == 0) {
 			throw new KaleoProcessDDMTemplateIdException();
 		}

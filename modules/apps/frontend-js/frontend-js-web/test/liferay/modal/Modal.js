@@ -12,6 +12,7 @@
  * details.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
@@ -140,6 +141,22 @@ describe('Modal', () => {
 		});
 
 		expect(document.getElementById(sampleId)).toBeTruthy();
+	});
+
+	it('when providing "autoFocus: true" inside a button configuration, it will make this button focused', () => {
+		render(
+			<Modal
+				buttons={[
+					{autoFocus: true, id: 'modal-button-ok', label: 'ok'},
+				]}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(document.getElementById('modal-button-ok')).toHaveFocus();
 	});
 
 	describe('openAlertModal', () => {

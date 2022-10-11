@@ -5,6 +5,9 @@ html#{$cadmin-selector} {
 		.page-editor__item-selector__content {
 			&-input {
 				cursor: pointer;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 		}
 	}

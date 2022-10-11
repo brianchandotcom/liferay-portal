@@ -214,6 +214,7 @@ export default function ItemSelector({
 						)}
 						readOnly
 						sizing="sm"
+						title={selectedItemTitle}
 						type="text"
 						value={selectedItemTitle}
 					/>

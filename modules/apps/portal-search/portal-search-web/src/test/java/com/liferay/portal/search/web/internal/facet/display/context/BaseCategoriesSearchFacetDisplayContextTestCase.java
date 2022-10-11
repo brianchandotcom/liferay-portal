@@ -71,7 +71,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();
@@ -101,7 +101,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();
@@ -110,7 +110,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetTermDisplayContexts.toString(), 1,
 			assetCategoriesSearchFacetTermDisplayContexts.size());
 
-		AssetCategoriesSearchFacetTermDisplayContext
+		BucketDisplayContext
 			assetCategoriesSearchFacetTermDisplayContext =
 				assetCategoriesSearchFacetTermDisplayContexts.get(0);
 
@@ -160,7 +160,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();
@@ -188,7 +188,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();
@@ -197,7 +197,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetTermDisplayContexts.toString(), 1,
 			assetCategoriesSearchFacetTermDisplayContexts.size());
 
-		AssetCategoriesSearchFacetTermDisplayContext
+		BucketDisplayContext
 			assetCategoriesSearchFacetTermDisplayContext =
 				assetCategoriesSearchFacetTermDisplayContexts.get(0);
 
@@ -238,7 +238,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				String.valueOf(assetCategoryId));
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();
@@ -247,7 +247,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetTermDisplayContexts.toString(), 1,
 			assetCategoriesSearchFacetTermDisplayContexts.size());
 
-		AssetCategoriesSearchFacetTermDisplayContext
+		BucketDisplayContext
 			assetCategoriesSearchFacetTermDisplayContext =
 				assetCategoriesSearchFacetTermDisplayContexts.get(0);
 
@@ -291,7 +291,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();
@@ -321,7 +321,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
 					getTermDisplayContexts();

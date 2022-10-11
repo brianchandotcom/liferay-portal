@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 
 import java.io.Serializable;
 
@@ -166,14 +166,14 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		_portal = portal;
 	}
 
-	protected AssetCategoriesSearchFacetTermDisplayContext
+	protected BucketDisplayContext
 		buildTermDisplayContext(
 			AssetCategory assetCategory, int frequency, boolean selected,
 			int popularity) {
 
-		AssetCategoriesSearchFacetTermDisplayContext
+		BucketDisplayContext
 			assetCategoriesSearchFacetTermDisplayContext =
-				new AssetCategoriesSearchFacetTermDisplayContext();
+				new BucketDisplayContext();
 
 		assetCategoriesSearchFacetTermDisplayContext.setBucketText(
 			assetCategory.getTitle(_locale));
@@ -188,7 +188,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return assetCategoriesSearchFacetTermDisplayContext;
 	}
 
-	protected List<AssetCategoriesSearchFacetTermDisplayContext>
+	protected List<BucketDisplayContext>
 		getEmptyTermDisplayContexts() {
 
 		Stream<Long> categoryIdsStream = _selectedCategoryIds.stream();
@@ -267,7 +267,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 		_removeExcludedGroup();
 
-		List<AssetCategoriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetCategoriesSearchFacetTermDisplayContexts = new ArrayList<>(
 				_buckets.size());
 
@@ -306,7 +306,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			multiplier = (double)5 / (maxCount - minCount);
 		}
 
-		Map<String, List<AssetCategoriesSearchFacetTermDisplayContext>>
+		Map<String, List<BucketDisplayContext>>
 			assetCategoriesSearchFacetTermDisplayContextMap = new HashMap<>();
 		Set<String> vocabularyNames = new HashSet<>();
 
@@ -338,7 +338,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 			vocabularyNames.add(vocabularyName);
 
-			AssetCategoriesSearchFacetTermDisplayContext termDisplayContext =
+			BucketDisplayContext termDisplayContext =
 				buildTermDisplayContext(
 					assetCategory, frequency,
 					isSelected(assetCategory.getCategoryId()), popularity);
@@ -346,7 +346,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetTermDisplayContexts.add(
 				termDisplayContext);
 
-			List<AssetCategoriesSearchFacetTermDisplayContext>
+			List<BucketDisplayContext>
 				vocabularyTermDisplayContexts =
 					assetCategoriesSearchFacetTermDisplayContextMap.get(
 						vocabularyName);
@@ -432,7 +432,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return null;
 	}
 
-	private Optional<AssetCategoriesSearchFacetTermDisplayContext>
+	private Optional<BucketDisplayContext>
 		_getEmptyTermDisplayContext(long assetCategoryId) {
 
 		return Optional.ofNullable(

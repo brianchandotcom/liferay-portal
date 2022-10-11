@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -90,7 +90,7 @@ public class CategoryFacetPortletDisplayTemplateHandler
 			"getBucketText()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"term", AssetCategoriesSearchFacetTermDisplayContext.class,
+			"term", BucketDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getBucketText()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =

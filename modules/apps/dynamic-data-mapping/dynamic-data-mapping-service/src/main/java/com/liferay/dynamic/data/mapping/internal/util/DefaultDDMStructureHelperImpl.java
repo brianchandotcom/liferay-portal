@@ -139,8 +139,31 @@ public class DefaultDDMStructureHelperImpl
 					fileName, locale, serviceContext);
 			}
 			else {
-				_updateStructure(
-					userId, groupId, classNameId, structureElement, locale,
+				Map<Locale, String> descriptionMap = new HashMap<>();
+				Map<Locale, String> nameMap = new HashMap<>();
+
+				for (Locale curLocale :
+						_language.getAvailableLocales(groupId)) {
+
+					ResourceBundle resourceBundle =
+						ResourceBundleUtil.getModuleAndPortalResourceBundle(
+							curLocale, getClass());
+
+					descriptionMap.put(
+						curLocale,
+						_language.get(
+							resourceBundle,
+							structureElement.elementText("description")));
+					nameMap.put(curLocale, _language.get(resourceBundle, name));
+				}
+
+				DDMForm ddmForm = getDDMForm(groupId, locale, structureElement);
+
+				_ddmStructureLocalService.updateStructure(
+					userId, groupId,
+					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+					classNameId, name, nameMap, descriptionMap, ddmForm,
+					_getDDMFormLayout(structureElement, ddmForm),
 					serviceContext);
 			}
 		}
@@ -374,39 +397,6 @@ public class DefaultDDMStructureHelperImpl
 		}
 
 		return localizedValue;
-	}
-
-	private DDMStructure _updateStructure(
-			long userId, long groupId, long classNameId,
-			Element structureElement, Locale locale,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String description = structureElement.elementText("description");
-		String name = structureElement.elementText("name");
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		for (Locale curLocale : _language.getAvailableLocales(groupId)) {
-			ResourceBundle resourceBundle =
-				ResourceBundleUtil.getModuleAndPortalResourceBundle(
-					curLocale, getClass());
-
-			descriptionMap.put(
-				curLocale, _language.get(resourceBundle, description));
-			nameMap.put(curLocale, _language.get(resourceBundle, name));
-		}
-
-		DDMForm ddmForm = getDDMForm(groupId, locale, structureElement);
-
-		DDMFormLayout ddmFormLayout = _getDDMFormLayout(
-			structureElement, ddmForm);
-
-		return _ddmStructureLocalService.updateStructure(
-			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			classNameId, name, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			serviceContext);
 	}
 
 	@Reference

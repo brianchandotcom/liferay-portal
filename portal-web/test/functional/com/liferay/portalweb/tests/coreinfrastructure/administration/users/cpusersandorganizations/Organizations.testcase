@@ -138,7 +138,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextArea#COMMENTS",
-			value1 = "${orgComment}");
+			value1 = "This is a test comment!");
 	}
 
 	@priority = "3"
@@ -1532,7 +1532,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextArea#COMMENTS",
-			value1 = "${orgComment}");
+			value1 = "This is a test organization.");
 
 		Navigator.gotoNavNested(navNested = "Security Questions");
 

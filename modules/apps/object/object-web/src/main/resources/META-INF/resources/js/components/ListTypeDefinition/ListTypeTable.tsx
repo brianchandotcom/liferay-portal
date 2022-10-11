@@ -25,6 +25,7 @@ import {IModalState} from './ListTypeEntriesModal';
 
 interface IProps {
 	pickListId: number;
+	readOnly: boolean;
 }
 
 interface ItemData {
@@ -33,13 +34,14 @@ interface ItemData {
 	name: {props: {id: number}};
 	name_i18n: LocalizedValue<string>;
 }
+
 interface fdsItem {
 	action: {id: string};
 	itemData: ItemData;
 	value: string;
 }
 
-export default function ListTypeTable({pickListId}: IProps) {
+export default function ListTypeTable({pickListId, readOnly}: IProps) {
 	const [dataSetProps, setDataSetProps] = useState<IFrontendDataSetProps>();
 
 	useEffect(() => {
@@ -64,12 +66,12 @@ export default function ListTypeTable({pickListId}: IProps) {
 
 		Liferay.on('handleAddItems', handleAddItems);
 
-		setDataSetProps(getDataSetProps(fireModal, pickListId!));
+		setDataSetProps(getDataSetProps(fireModal, pickListId!, readOnly));
 
 		return () => {
 			Liferay.detach('handleAddItems');
 		};
-	}, [pickListId]);
+	}, [pickListId, readOnly]);
 
 	return dataSetProps && Object.keys(dataSetProps).length ? (
 		<FrontendDataSet {...dataSetProps} />
@@ -78,7 +80,8 @@ export default function ListTypeTable({pickListId}: IProps) {
 
 function getDataSetProps(
 	fireModal: (modalProps: IModalState) => void,
-	pickListId: number
+	pickListId: number,
+	readOnly: boolean
 ): IFrontendDataSetProps {
 	const onActionDropdownItemClick = ({action, itemData}: fdsItem) => {
 		if (action.id === 'addListTypeEntry') {
@@ -107,18 +110,20 @@ function getDataSetProps(
 		);
 	}
 
+	const addButton = {
+		href: 'handleAddItems',
+		label: Liferay.Language.get('add-item'),
+		target: 'event',
+		type: 'item',
+	};
+
+	const addItemMenu = readOnly ? [] : [addButton];
+
 	return {
 		actionParameterName: '',
 		apiURL: `/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}/list-type-entries`,
 		creationMenu: {
-			primaryItems: [
-				{
-					href: 'handleAddItems',
-					label: Liferay.Language.get('add-item'),
-					target: 'event',
-					type: 'item',
-				},
-			],
+			primaryItems: addItemMenu,
 		},
 		currentURL: window.location.pathname + window.location.search,
 		customDataRenderers: {

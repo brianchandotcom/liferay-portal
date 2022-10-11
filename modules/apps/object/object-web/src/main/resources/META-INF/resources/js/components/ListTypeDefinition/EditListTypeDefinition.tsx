@@ -74,6 +74,7 @@ export default function EditListTypeDefinition({
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
+			readOnly={readOnly}
 			title={Liferay.Language.get('picklist')}
 		>
 			{Object.keys(values).length !== 0 && (
@@ -120,7 +121,12 @@ export default function EditListTypeDefinition({
 							</ClayAlert>
 						</div>
 
-						{values.id && <ListTypeTable pickListId={values.id} />}
+						{values.id && (
+							<ListTypeTable
+								pickListId={values.id}
+								readOnly={readOnly}
+							/>
+						)}
 					</Card>
 				</>
 			)}

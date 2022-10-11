@@ -16,6 +16,10 @@
 
 interface IProps {
 	pickListId: number;
+	readOnly: boolean;
 }
-export default function ListTypeTable({pickListId}: IProps): JSX.Element | null;
+export default function ListTypeTable({
+	pickListId,
+	readOnly,
+}: IProps): JSX.Element | null;
 export {};

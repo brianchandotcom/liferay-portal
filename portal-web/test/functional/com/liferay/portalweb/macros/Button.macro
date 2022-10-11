@@ -134,6 +134,8 @@ definition {
 
 	macro clickSubmitForPublication {
 		Button.click(button = "Submit for Publication");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro clickTrash {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EventEmitter, buildFragment} from 'frontend-js-web';
+import {EventEmitter, buildFragment, getGeolocation} from 'frontend-js-web';
 
 import GeoJSONBase from './GeoJSONBase';
 import MarkerBase from './MarkerBase';
@@ -180,7 +180,7 @@ class MapBase extends EventEmitter {
 				: {};
 
 		if (!currentGeolocation.lat && !currentGeolocation.lng) {
-			Liferay.Util.getGeolocation(
+			getGeolocation(
 				(lat, lng) => {
 					this._initializeLocation({lat, lng});
 				},

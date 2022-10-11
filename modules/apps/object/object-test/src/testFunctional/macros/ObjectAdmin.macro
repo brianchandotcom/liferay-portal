@@ -1212,6 +1212,8 @@ definition {
 	}
 
 	macro selectCategoryInObjectEntry {
+		SelectFrameTop();
+
 		Click(
 			key_fieldLabel = "${vocabularyName}",
 			key_text = "Select",

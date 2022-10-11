@@ -15,11 +15,17 @@
 package com.liferay.commerce.payment.util.comparator;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.text.Collator;
+
+import java.util.Locale;
+
 /**
  * @author Andrea Sbarra
+ * @author Crescenzo Rega
  */
 public class CommercePaymentMethodGroupRelNameOrderByComparator
 	extends OrderByComparator<CommercePaymentMethodGroupRel> {
@@ -32,13 +38,16 @@ public class CommercePaymentMethodGroupRelNameOrderByComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommercePaymentMethodGroupRelNameOrderByComparator() {
-		this(false);
+	public CommercePaymentMethodGroupRelNameOrderByComparator(Locale locale) {
+		_locale = locale;
+
+		_ascending = true;
 	}
 
 	public CommercePaymentMethodGroupRelNameOrderByComparator(
-		boolean ascending) {
+		Locale locale, boolean ascending) {
 
+		_locale = locale;
 		_ascending = ascending;
 	}
 
@@ -47,12 +56,14 @@ public class CommercePaymentMethodGroupRelNameOrderByComparator
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel1,
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel2) {
 
-		String name1 = StringUtil.toLowerCase(
-			commercePaymentMethodGroupRel1.getName());
-		String name2 = StringUtil.toLowerCase(
-			commercePaymentMethodGroupRel2.getName());
+		Collator collator = CollatorUtil.getInstance(_locale);
 
-		int value = name1.compareTo(name2);
+		String name1 = StringUtil.toLowerCase(
+			commercePaymentMethodGroupRel1.getName(_locale));
+		String name2 = StringUtil.toLowerCase(
+			commercePaymentMethodGroupRel2.getName(_locale));
+
+		int value = collator.compare(name1, name2);
 
 		if (_ascending) {
 			return value;
@@ -81,5 +92,6 @@ public class CommercePaymentMethodGroupRelNameOrderByComparator
 	}
 
 	private final boolean _ascending;
+	private final Locale _locale;
 
 }

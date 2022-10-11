@@ -375,6 +375,13 @@ definition {
 		Click(locator1 = "PagesFinder#VIEW_IN_PAGE_ADMINISTRATION");
 	}
 
+	macro viewPageIconInPagesFinder {
+		AssertElementPresent(
+			key_pageName = "${pageName}",
+			key_text = "${icon}",
+			locator1 = "PagesFinder#PAGE_ICON");
+	}
+
 	macro viewPageNameInPagesFinder {
 		AssertElementPresent(
 			key_pageName = "${pageName}",

@@ -10,8 +10,8 @@
  */
 
 import {FormikHelpers} from 'formik';
-import {MDFClaimTypeFile} from '../../../common/enums/mdfClaimTypeFile';
 
+import {MDFClaimTypeFile} from '../../../common/enums/mdfClaimTypeFile';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
 import {Liferay} from '../../../common/services/liferay';

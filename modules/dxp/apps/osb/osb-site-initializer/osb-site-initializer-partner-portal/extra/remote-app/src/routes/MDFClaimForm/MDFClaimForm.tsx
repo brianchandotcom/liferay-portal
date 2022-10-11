@@ -24,7 +24,6 @@ import claimSchema from './components/MDFClaimPage/schema/yup';
 import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';
 import submitForm from './utils/submitForm';
 
-
 const getInitialFormValues = (
 	mdfRequestId:number,
 	activitiesDTO?: MDFRequestActivityDTO[],

@@ -172,6 +172,11 @@
 		<td>//label[contains(.,'Field')]//..//div[contains(@aria-controls,'clay-dropdown-menu')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>LABEL_DEFAULT_VALUE</td>
+		<td>//label[contains(.,'Default Value')]//..//div[contains(@aria-controls,'clay-dropdown-menu')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -14,10 +14,8 @@
 
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
-import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import AssignModal from '../../components/AssignModal';
 import BasePage from '../../components/BasePage';
 import PropertiesTable from '../../components/PropertiesTable';
 import {fetchProperties} from '../../utils/api';
@@ -35,7 +33,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 		};
 		request();
 	}, []);
-	const {observer, onOpenChange, open} = useModal();
 
 	return (
 		<BasePage
@@ -100,19 +97,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					</ClayButton>
 				</ClayButton.Group>
 			</BasePage.Footer>
-
-			{/* TODO: Remove this to implement on the right place (property list) */}
-
-			{open && (
-				<AssignModal
-					observer={observer}
-					onCloseModal={() => onOpenChange(false)}
-				/>
-			)}
-
-			<ClayButton onClick={() => onOpenChange(true)}>
-				Open modal
-			</ClayButton>
 		</BasePage>
 	);
 };

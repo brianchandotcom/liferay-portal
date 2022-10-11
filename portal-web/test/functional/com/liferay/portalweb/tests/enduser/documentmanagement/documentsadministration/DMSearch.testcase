@@ -187,7 +187,7 @@ definition {
 
 		Search.searchCP(searchTerm = "DM SubFolder Name");
 
-		Search.clearSearchResult();
+		Click(locator1 = "Link#CLEAR");
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "DM Folder Name");
 	}

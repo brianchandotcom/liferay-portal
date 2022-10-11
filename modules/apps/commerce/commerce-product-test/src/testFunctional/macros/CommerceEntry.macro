@@ -789,6 +789,25 @@ definition {
 		}
 	}
 
+	macro checkProductsEntryFields {
+		WaitForElementPresent(
+			key_title = "${productName}",
+			locator1 = "Header#H3_TITLE");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${productCatalog}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${productName}");
+	}
+
 	macro clickButtonWithName {
 		Click.javaScriptClick(
 			key_buttonName = "${buttonName}",

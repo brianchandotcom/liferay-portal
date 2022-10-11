@@ -263,7 +263,7 @@ public class KaleoInstanceLocalServiceImpl
 		throws PortalException {
 
 		return _toKaleoInstances(
-			_doSearch(
+			_search(
 				userId, null, null, null, null, null, null,
 				_getClassNames(assetClassName), assetClassPK, completed, false,
 				start, end, orderByComparator, serviceContext));
@@ -277,7 +277,7 @@ public class KaleoInstanceLocalServiceImpl
 		throws PortalException {
 
 		return _toKaleoInstances(
-			_doSearch(
+			_search(
 				userId, null, null, null, null, null, null, assetClassNames,
 				null, completed, false, start, end, orderByComparator,
 				serviceContext));
@@ -292,7 +292,7 @@ public class KaleoInstanceLocalServiceImpl
 		throws PortalException {
 
 		return _toKaleoInstances(
-			_doSearch(
+			_search(
 				null, null, null, null, null, kaleoDefinitionName,
 				kaleoDefinitionVersion, null, null, completed, false, start,
 				end, orderByComparator, serviceContext));
@@ -311,7 +311,7 @@ public class KaleoInstanceLocalServiceImpl
 		Long userId, String assetClassName, Long assetClassPK,
 		Boolean completed, ServiceContext serviceContext) {
 
-		return _doSearchCount(
+		return _searchCount(
 			userId, null, null, null, null, null, null,
 			_getClassNames(assetClassName), assetClassPK, completed, false,
 			serviceContext);
@@ -322,7 +322,7 @@ public class KaleoInstanceLocalServiceImpl
 		Long userId, String[] assetClassNames, Boolean completed,
 		ServiceContext serviceContext) {
 
-		return _doSearchCount(
+		return _searchCount(
 			userId, null, null, null, null, null, null, assetClassNames, null,
 			completed, false, serviceContext);
 	}
@@ -332,7 +332,7 @@ public class KaleoInstanceLocalServiceImpl
 		String kaleoDefinitionName, int kaleoDefinitionVersion,
 		boolean completed, ServiceContext serviceContext) {
 
-		return _doSearchCount(
+		return _searchCount(
 			null, null, null, null, null, kaleoDefinitionName,
 			kaleoDefinitionVersion, null, null, completed, false,
 			serviceContext);
@@ -370,7 +370,7 @@ public class KaleoInstanceLocalServiceImpl
 		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, ServiceContext serviceContext) {
 
-		return _doSearchCount(
+		return _searchCount(
 			userId, active, assetTitle, assetDescription, nodeName,
 			kaleoDefinitionName, null, _getClassNames(assetClassName), null,
 			completed, false, serviceContext);
@@ -386,7 +386,7 @@ public class KaleoInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Hits hits = _doSearch(
+		Hits hits = _search(
 			userId, active, assetTitle, assetDescription, nodeName,
 			kaleoDefinitionName, null, _getClassNames(assetClassName), null,
 			completed, searchByActiveWorkflowHandlers, start, end,
@@ -480,7 +480,7 @@ public class KaleoInstanceLocalServiceImpl
 		return searchContext;
 	}
 
-	private Hits _doSearch(
+	private Hits _search(
 			Long userId, Boolean active, String assetTitle,
 			String assetDescription, String currentKaleoNodeName,
 			String kaleoDefinitionName, Integer kaleoDefinitionVersion,
@@ -517,7 +517,7 @@ public class KaleoInstanceLocalServiceImpl
 				start, end, orderByComparator, serviceContext));
 	}
 
-	private int _doSearchCount(
+	private int _searchCount(
 		Long userId, Boolean active, String assetTitle, String assetDescription,
 		String currentKaleoNodeName, String kaleoDefinitionName,
 		Integer kaleoDefinitionVersion, String[] classNames, Long classPK,

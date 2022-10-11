@@ -54,7 +54,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
-import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
@@ -80,7 +79,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -4080,9 +4078,6 @@ public class StagingImpl implements Staging {
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	@Reference
-	private LockManager _lockManager;
-
-	@Reference
 	private Portal _portal;
 
 	@Reference
@@ -4103,9 +4098,6 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
-
-	@Reference
-	private StagingLocalService _stagingLocalService;
 
 	@Reference
 	private StagingURLHelper _stagingURLHelper;

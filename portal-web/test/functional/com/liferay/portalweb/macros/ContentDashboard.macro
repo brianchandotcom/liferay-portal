@@ -274,14 +274,14 @@ definition {
 
 				Click(
 					ariaLabel = "Transfer Item Right to Left",
-					locator1 = "Button#ANY_WITH_ARIA_LABEL")
+					locator1 = "Button#ANY_WITH_ARIA_LABEL");
 			}
 			else if (IsElementPresent(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE")) {
 				Click.clickNoMouseOver(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
 
 				Click(
 					ariaLabel = "Transfer Item Left to Right",
-					locator1 = "Button#ANY_WITH_ARIA_LABEL")
+					locator1 = "Button#ANY_WITH_ARIA_LABEL");
 			}
 
 			AssertClick(
@@ -289,7 +289,7 @@ definition {
 				value1 = "Save");
 		}
 
-		if ((isSet(warningMessage))) {
+		if (isSet(warningMessage)) {
 			Alert.viewWarningSpecific(warningMessage = "${warningMessage}");
 		}
 		else {
@@ -371,7 +371,7 @@ definition {
 
 		Click(
 			ariaLabel = "Reorder Up",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL")
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		AssertClick(
 			locator1 = "Button#SAVE",
@@ -387,7 +387,7 @@ definition {
 
 		Click(
 			ariaLabel = "Reorder Up",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL")
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		AssertClick(
 			locator1 = "Button#SAVE",

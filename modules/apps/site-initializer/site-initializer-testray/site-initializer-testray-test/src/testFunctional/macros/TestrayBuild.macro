@@ -84,7 +84,7 @@ definition {
 				key_environmentFactors = "${listboxItem}",
 				locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+			Click(locator1 = "Testray#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
 		}
 
 		Button.click(button = "Next");

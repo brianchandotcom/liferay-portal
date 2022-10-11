@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE</td>
-	<td>//select[contains(@id, 'currentAssetVocabularyIds')] //option[contains(text(), 'Audience')]</td>
+	<td>//select[contains(@id, 'currentAssetVocabularyIds')] //option[contains(text(), '${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>

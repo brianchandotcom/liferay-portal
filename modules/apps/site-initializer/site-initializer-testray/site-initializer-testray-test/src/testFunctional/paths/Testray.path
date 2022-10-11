@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'transfer-button-ltr')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEMS_PER_PAGE_BUTTON</td>
 	<td>//h5[contains(., '')]//ancestor::div//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'${key_numberItems}')]</td>
 	<td></td>

@@ -314,7 +314,7 @@ definition {
 		}
 
 		task ("Check if flip axes button is disabaled") {
-			AssertVisible(locator1 = "Icon#FLIP_DISABLED")
+			AssertVisible(locator1 = "Icon#FLIP_DISABLED");
 		}
 	}
 
@@ -765,12 +765,12 @@ definition {
 			ContentDashboard.openAuditGraphConfiguration();
 
 			AssertVisible(
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
-				vocabularyName = "Vocabulary Name 1");
+				key_vocabularyName = "Vocabulary Name 1",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
 
 			AssertVisible(
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
-				vocabularyName = "Vocabulary Name 2");
+				key_vocabularyName = "Vocabulary Name 2",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
 		}
 
 		task ("Delete the vocabularies created") {
@@ -907,9 +907,7 @@ definition {
 		}
 
 		task ("Open Configure Chart") {
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			ContentDashboard.openAuditGraphConfiguration();
 		}
 
 		task ("Move vocabulary from In Use to Available using") {
@@ -919,13 +917,19 @@ definition {
 
 			Click(
 				ariaLabel = "Transfer Item Right to Left",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL")
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 		}
 
 		task ("Check that Vocabulary was moved") {
 			AssertVisible(
 				key_vocabularyName = "Audience",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
+		}
+
+		task ("Open Configure Chart") {
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
 		}
 
 		task ("Move vocabulary from Available to In Use using") {
@@ -935,7 +939,7 @@ definition {
 
 			Click(
 				ariaLabel = "Transfer Item Left to Right",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL")
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 		}
 
 		task ("Check that Vocabulary was moved") {
@@ -961,9 +965,11 @@ definition {
 		}
 
 		task ("Move all vocabularies from In Use and check warning message") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+
 			ContentDashboard.moveVocabularyDisplayConfiguration(
-				warningMessage = "You have not selected any vocabularies",
-				vocabularyName = "Audience,Stage");
+				vocabularyName = "Stage",
+				warningMessage = "You have not selected any vocabularies");
 		}
 	}
 

@@ -434,7 +434,7 @@ definition {
 	}
 
 	macro removeAssignee {
-		LexiconEntry.gotoEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Remove",
 			rowEntry = "${userFullName}");
 

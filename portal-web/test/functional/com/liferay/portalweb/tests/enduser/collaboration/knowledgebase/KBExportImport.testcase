@@ -111,6 +111,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewImportedKBArticleWithImagesAsKBAttachments {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

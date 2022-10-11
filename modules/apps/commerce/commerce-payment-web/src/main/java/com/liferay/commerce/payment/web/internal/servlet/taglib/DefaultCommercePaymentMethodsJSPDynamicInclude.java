@@ -14,12 +14,18 @@
 
 package com.liferay.commerce.payment.web.internal.servlet.taglib;
 
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.web.internal.display.context.CommerceChannelAccountEntryRelDisplayContext;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
+import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -32,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
+ * @author Crescenzo Rega
  */
 @Component(immediate = true, service = DynamicInclude.class)
 public class DefaultCommercePaymentMethodsJSPDynamicInclude
@@ -48,9 +55,22 @@ public class DefaultCommercePaymentMethodsJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		httpServletRequest.setAttribute(
-			CommerceWebKeys.COMMERCE_PAYMENT_METHOD_REGISTRY,
-			_commercePaymentMethodRegistry);
+		try {
+			CommerceChannelAccountEntryRelDisplayContext
+				commerceChannelAccountEntryRelDisplayContext =
+					new CommerceChannelAccountEntryRelDisplayContext(
+						_accountEntryService, _commerceChannelService,
+						_commerceChannelAccountEntryRelService,
+						_commercePaymentMethodGroupRelService,
+						httpServletRequest, _portal);
+
+			httpServletRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceChannelAccountEntryRelDisplayContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}
@@ -76,7 +96,21 @@ public class DefaultCommercePaymentMethodsJSPDynamicInclude
 		DefaultCommercePaymentMethodsJSPDynamicInclude.class);
 
 	@Reference
-	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
+	private AccountEntryService _accountEntryService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelService
+		_commerceChannelAccountEntryRelService;
+
+	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommercePaymentMethodGroupRelService
+		_commercePaymentMethodGroupRelService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.web)"

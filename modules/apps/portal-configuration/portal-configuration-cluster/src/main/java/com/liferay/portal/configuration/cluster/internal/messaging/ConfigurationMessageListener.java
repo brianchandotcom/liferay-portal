@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
 import java.util.Dictionary;
+import java.util.Set;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
@@ -68,6 +69,18 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 			}
 
 			for (Configuration configuration : configurations) {
+				Set<Configuration.ConfigurationAttribute>
+					configurationAttributes = configuration.getAttributes();
+				boolean readOnly = false;
+
+				if (configurationAttributes.contains(
+						Configuration.ConfigurationAttribute.READ_ONLY)) {
+
+					configuration.removeAttributes(
+						Configuration.ConfigurationAttribute.READ_ONLY);
+					readOnly = true;
+				}
+
 				if (type == ConfigurationEvent.CM_DELETED) {
 					configuration.delete();
 				}
@@ -77,6 +90,11 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 					}
 					else {
 						configuration.update(dictionary);
+					}
+
+					if (readOnly) {
+						configuration.addAttributes(
+							Configuration.ConfigurationAttribute.READ_ONLY);
 					}
 				}
 			}

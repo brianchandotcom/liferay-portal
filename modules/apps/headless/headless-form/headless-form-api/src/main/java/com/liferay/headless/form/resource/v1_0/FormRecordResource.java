@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FormRecordResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public FormRecord getFormRecord(Long formRecordId) throws Exception;
 
 	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
@@ -130,12 +126,6 @@ public interface FormRecordResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

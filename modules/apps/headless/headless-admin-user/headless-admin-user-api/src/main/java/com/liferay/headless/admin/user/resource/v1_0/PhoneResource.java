@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PhoneResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<Phone> getOrganizationPhonesPage(String organizationId)
 		throws Exception;
 
@@ -114,12 +110,6 @@ public interface PhoneResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

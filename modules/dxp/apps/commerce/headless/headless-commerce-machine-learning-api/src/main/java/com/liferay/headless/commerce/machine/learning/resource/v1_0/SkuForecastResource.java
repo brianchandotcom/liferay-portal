@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SkuForecastResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<SkuForecast> getSkuForecastsByMonthlyRevenuePage(
 			Integer forecastLength, Date forecastStartDate,
 			Integer historyLength, String[] skus, Pagination pagination)
@@ -113,12 +109,6 @@ public interface SkuForecastResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

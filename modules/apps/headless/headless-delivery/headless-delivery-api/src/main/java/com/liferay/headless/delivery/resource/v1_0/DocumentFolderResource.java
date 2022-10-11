@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentFolderResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<DocumentFolder> getAssetLibraryDocumentFoldersPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -204,12 +200,6 @@ public interface DocumentFolderResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

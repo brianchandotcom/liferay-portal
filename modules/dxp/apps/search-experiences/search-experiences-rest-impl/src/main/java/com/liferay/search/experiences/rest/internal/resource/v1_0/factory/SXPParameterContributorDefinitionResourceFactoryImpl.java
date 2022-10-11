@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,6 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true,
 	property = "resource.locator.key=/search-experiences-rest/v1.0/SXPParameterContributorDefinition",
 	service = SXPParameterContributorDefinitionResource.Factory.class
 )
@@ -141,16 +138,6 @@ public class SXPParameterContributorDefinitionResourceFactoryImpl
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		SXPParameterContributorDefinitionResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		SXPParameterContributorDefinitionResource.FactoryHolder.factory = null;
 	}
 
 	private static Function

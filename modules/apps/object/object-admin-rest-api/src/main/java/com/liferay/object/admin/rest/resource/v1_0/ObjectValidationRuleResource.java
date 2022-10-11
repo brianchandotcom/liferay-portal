@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectValidationRuleResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<ObjectValidationRule>
 			getObjectDefinitionObjectValidationRulesPage(
 				Long objectDefinitionId, String search, Pagination pagination)
@@ -146,12 +142,6 @@ public interface ObjectValidationRuleResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

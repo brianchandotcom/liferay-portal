@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectFieldResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
 			Long objectDefinitionId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -140,12 +136,6 @@ public interface ObjectFieldResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

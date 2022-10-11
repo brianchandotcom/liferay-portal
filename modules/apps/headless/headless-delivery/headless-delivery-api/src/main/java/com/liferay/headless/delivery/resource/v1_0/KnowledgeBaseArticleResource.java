@@ -56,10 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface KnowledgeBaseArticleResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception;
 
@@ -241,12 +237,6 @@ public interface KnowledgeBaseArticleResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

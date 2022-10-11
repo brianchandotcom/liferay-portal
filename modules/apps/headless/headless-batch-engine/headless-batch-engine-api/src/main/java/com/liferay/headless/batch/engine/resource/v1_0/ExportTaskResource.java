@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ExportTaskResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public ExportTask getExportTaskByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -119,12 +115,6 @@ public interface ExportTaskResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

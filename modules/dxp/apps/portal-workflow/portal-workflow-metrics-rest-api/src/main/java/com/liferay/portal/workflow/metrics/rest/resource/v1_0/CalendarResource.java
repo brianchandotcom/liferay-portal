@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CalendarResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<Calendar> getCalendarsPage() throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -108,12 +104,6 @@ public interface CalendarResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "resource.locator.key=/headless-commerce-admin-site-setting/v1.0/Warehouse",
 	service = WarehouseResource.Factory.class
 )
@@ -137,16 +135,6 @@ public class WarehouseResourceFactoryImpl implements WarehouseResource.Factory {
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		WarehouseResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		WarehouseResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, WarehouseResource>

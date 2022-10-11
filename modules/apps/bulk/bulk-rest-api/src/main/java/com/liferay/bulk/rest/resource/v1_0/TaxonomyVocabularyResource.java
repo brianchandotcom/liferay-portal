@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaxonomyVocabularyResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<TaxonomyVocabulary> postSiteTaxonomyVocabulariesCommonPage(
 			Long siteId, DocumentBulkSelection documentBulkSelection)
 		throws Exception;
@@ -106,12 +102,6 @@ public interface TaxonomyVocabularyResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

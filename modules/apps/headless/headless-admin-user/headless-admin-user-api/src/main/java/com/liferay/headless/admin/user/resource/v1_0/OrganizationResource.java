@@ -56,10 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrganizationResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<Organization>
 			getAccountByExternalReferenceCodeOrganizationsPage(
 				String externalReferenceCode, String search, Filter filter,
@@ -206,12 +202,6 @@ public interface OrganizationResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

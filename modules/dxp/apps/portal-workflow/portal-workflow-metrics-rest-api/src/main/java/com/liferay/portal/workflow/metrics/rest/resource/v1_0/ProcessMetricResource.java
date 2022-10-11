@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProcessMetricResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<ProcessMetric> getProcessMetricsPage(
 			String title, Pagination pagination, Sort[] sorts)
 		throws Exception;
@@ -117,12 +113,6 @@ public interface ProcessMetricResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

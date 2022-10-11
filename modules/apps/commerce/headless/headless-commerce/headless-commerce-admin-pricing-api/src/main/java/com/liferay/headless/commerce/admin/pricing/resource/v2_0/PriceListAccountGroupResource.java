@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PriceListAccountGroupResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deletePriceListAccountGroup(Long priceListAccountGroupId)
 		throws Exception;
 
@@ -140,12 +136,6 @@ public interface PriceListAccountGroupResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

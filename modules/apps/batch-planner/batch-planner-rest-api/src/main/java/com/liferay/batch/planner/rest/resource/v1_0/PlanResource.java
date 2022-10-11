@@ -53,10 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlanResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<Plan> getPlansPage(Pagination pagination) throws Exception;
 
 	public Plan postPlan(Plan plan) throws Exception;
@@ -115,12 +111,6 @@ public interface PlanResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

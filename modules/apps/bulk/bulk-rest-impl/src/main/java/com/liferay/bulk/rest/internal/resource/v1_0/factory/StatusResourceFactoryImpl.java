@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, property = "resource.locator.key=/bulk/v1.0/Status",
+	property = "resource.locator.key=/bulk/v1.0/Status",
 	service = StatusResource.Factory.class
 )
 @Generated("")
@@ -136,16 +134,6 @@ public class StatusResourceFactoryImpl implements StatusResource.Factory {
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		StatusResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		StatusResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, StatusResource>

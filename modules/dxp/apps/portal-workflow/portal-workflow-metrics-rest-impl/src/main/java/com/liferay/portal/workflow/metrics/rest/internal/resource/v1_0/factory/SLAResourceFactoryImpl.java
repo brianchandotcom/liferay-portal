@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,6 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true,
 	property = "resource.locator.key=/portal-workflow-metrics/v1.0/SLA",
 	service = SLAResource.Factory.class
 )
@@ -135,16 +132,6 @@ public class SLAResourceFactoryImpl implements SLAResource.Factory {
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		SLAResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		SLAResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, SLAResource>

@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BillingAddressResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public BillingAddress getOrderByExternalReferenceCodeBillingAddress(
 			String externalReferenceCode)
 		throws Exception;
@@ -115,12 +111,6 @@ public interface BillingAddressResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MLModelResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<MLModel> getMLModelsPage(
 			Integer limit, String pipelineTag, String query, String tag)
 		throws Exception;
@@ -110,12 +106,6 @@ public interface MLModelResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

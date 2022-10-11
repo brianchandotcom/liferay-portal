@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductConfigurationResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(
 			String externalReferenceCode)
 		throws Exception;
@@ -117,12 +113,6 @@ public interface ProductConfigurationResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

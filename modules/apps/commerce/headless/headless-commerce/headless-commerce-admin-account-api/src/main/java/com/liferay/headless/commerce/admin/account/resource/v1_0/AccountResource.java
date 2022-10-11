@@ -57,10 +57,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Response postAccountGroupByExternalReferenceCodeAccount(
 			String externalReferenceCode, Account account)
 		throws Exception;
@@ -157,12 +153,6 @@ public interface AccountResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

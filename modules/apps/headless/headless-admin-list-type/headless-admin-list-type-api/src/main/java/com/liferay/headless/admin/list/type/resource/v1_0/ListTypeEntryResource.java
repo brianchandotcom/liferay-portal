@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ListTypeEntryResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
 			Long listTypeDefinitionId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -138,12 +134,6 @@ public interface ListTypeEntryResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MappedProductResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<MappedProduct> getChannelProductMappedProductsPage(
 			Long channelId, Long productId, Long accountId, String search,
 			Pagination pagination, Sort[] sorts)
@@ -113,12 +109,6 @@ public interface MappedProductResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

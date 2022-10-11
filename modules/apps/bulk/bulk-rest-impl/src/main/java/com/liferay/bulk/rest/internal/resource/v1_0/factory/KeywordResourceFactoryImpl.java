@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true, property = "resource.locator.key=/bulk/v1.0/Keyword",
+	property = "resource.locator.key=/bulk/v1.0/Keyword",
 	service = KeywordResource.Factory.class
 )
 @Generated("")
@@ -136,16 +134,6 @@ public class KeywordResourceFactoryImpl implements KeywordResource.Factory {
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		KeywordResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		KeywordResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, KeywordResource>

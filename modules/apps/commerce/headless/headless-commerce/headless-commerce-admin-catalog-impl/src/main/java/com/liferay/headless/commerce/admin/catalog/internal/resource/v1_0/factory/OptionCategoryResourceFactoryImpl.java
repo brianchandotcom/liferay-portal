@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "resource.locator.key=/headless-commerce-admin-catalog/v1.0/OptionCategory",
 	service = OptionCategoryResource.Factory.class
 )
@@ -138,16 +136,6 @@ public class OptionCategoryResourceFactoryImpl
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		OptionCategoryResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		OptionCategoryResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, OptionCategoryResource>

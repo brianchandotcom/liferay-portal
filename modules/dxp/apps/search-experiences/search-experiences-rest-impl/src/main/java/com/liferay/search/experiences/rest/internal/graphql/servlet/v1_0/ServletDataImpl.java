@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(immediate = true, service = ServletData.class)
+@Component(service = ServletData.class)
 @Generated("")
 public class ServletDataImpl implements ServletData {
 

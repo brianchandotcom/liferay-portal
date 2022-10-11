@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface HistogramMetricResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public HistogramMetric getProcessHistogramMetric(
 			Long processId, Date dateEnd, Date dateStart, String unit)
 		throws Exception;
@@ -105,12 +101,6 @@ public interface HistogramMetricResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

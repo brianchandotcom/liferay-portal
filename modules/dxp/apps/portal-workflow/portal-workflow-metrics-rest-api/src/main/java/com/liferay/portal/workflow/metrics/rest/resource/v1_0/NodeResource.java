@@ -53,10 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NodeResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<Node> getProcessNodesPage(Long processId) throws Exception;
 
 	public Node postProcessNode(Long processId, Node node) throws Exception;
@@ -117,12 +113,6 @@ public interface NodeResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

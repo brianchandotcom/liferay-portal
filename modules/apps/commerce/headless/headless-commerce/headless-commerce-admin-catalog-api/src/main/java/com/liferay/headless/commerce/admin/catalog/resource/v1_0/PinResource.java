@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PinResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deletePin(Long pinId) throws Exception;
 
 	public Response deletePinBatch(String callbackURL, Object object)
@@ -131,12 +127,6 @@ public interface PinResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

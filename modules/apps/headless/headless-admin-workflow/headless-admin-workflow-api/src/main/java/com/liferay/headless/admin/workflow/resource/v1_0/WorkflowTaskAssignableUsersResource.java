@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowTaskAssignableUsersResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
 			WorkflowTaskIds workflowTaskIds)
 		throws Exception;
@@ -105,12 +101,6 @@ public interface WorkflowTaskAssignableUsersResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

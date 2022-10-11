@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NotificationTemplateResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<NotificationTemplate> getNotificationTemplatesPage(
 			String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -148,12 +144,6 @@ public interface NotificationTemplateResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

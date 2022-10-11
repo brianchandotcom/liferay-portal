@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderItemResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<OrderItem> getOrderItemsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
@@ -166,12 +162,6 @@ public interface OrderItemResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

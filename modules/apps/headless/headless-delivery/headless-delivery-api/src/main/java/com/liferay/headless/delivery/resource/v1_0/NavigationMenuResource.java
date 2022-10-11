@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NavigationMenuResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deleteNavigationMenu(Long navigationMenuId) throws Exception;
 
 	public Response deleteNavigationMenuBatch(String callbackURL, Object object)
@@ -156,12 +152,6 @@ public interface NavigationMenuResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

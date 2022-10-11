@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,6 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	immediate = true,
 	property = "resource.locator.key=/data-engine/v2.0/DataDefinitionFieldLink",
 	service = DataDefinitionFieldLinkResource.Factory.class
 )
@@ -139,16 +136,6 @@ public class DataDefinitionFieldLinkResourceFactoryImpl
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		DataDefinitionFieldLinkResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		DataDefinitionFieldLinkResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, DataDefinitionFieldLinkResource>

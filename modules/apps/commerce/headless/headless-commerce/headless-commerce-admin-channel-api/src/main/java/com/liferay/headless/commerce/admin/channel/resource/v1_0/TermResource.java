@@ -50,10 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TermResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Term getPaymentMethodGroupRelTermTerm(
 			Long paymentMethodGroupRelTermId)
 		throws Exception;
@@ -107,12 +103,6 @@ public interface TermResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

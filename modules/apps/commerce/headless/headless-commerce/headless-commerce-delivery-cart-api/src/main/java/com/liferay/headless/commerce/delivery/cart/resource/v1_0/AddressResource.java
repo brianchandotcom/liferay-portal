@@ -50,10 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AddressResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Address getCartBillingAddres(Long cartId) throws Exception;
 
 	public Address getCartShippingAddres(Long cartId) throws Exception;
@@ -104,12 +100,6 @@ public interface AddressResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

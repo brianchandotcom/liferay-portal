@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NodeMetricResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<NodeMetric> getProcessNodeMetricsPage(
 			Long processId, Boolean completed, Date dateEnd, Date dateStart,
 			String key, String processVersion, Pagination pagination,
@@ -115,12 +111,6 @@ public interface NodeMetricResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

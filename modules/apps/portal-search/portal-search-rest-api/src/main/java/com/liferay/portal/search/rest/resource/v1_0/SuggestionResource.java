@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SuggestionResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<SuggestionsContributorResults> postSuggestionsPage(
 			String currentURL, String destinationFriendlyURL, Long groupId,
 			Long plid, String scope, String search,
@@ -109,12 +105,6 @@ public interface SuggestionResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

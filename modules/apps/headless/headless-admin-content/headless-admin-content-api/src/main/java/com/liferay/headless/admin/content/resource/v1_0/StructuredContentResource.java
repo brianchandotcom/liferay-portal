@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
 			getSiteStructuredContentsPage(
 				Long siteId, Boolean flatten, String search,
@@ -129,12 +125,6 @@ public interface StructuredContentResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataRecordCollectionResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public DataRecordCollection getDataDefinitionDataRecordCollection(
 			Long dataDefinitionId)
 		throws Exception;
@@ -165,12 +161,6 @@ public interface DataRecordCollectionResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

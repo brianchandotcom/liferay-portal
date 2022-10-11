@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssigneeResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<Assignee> getWorkflowTaskAssignableUsersPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception;
@@ -106,12 +102,6 @@ public interface AssigneeResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

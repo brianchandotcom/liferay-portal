@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountOrganizationResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<AccountOrganization>
 			getAccountByExternalReferenceCodeAccountOrganizationsPage(
 				String externalReferenceCode, Pagination pagination)
@@ -149,12 +145,6 @@ public interface AccountOrganizationResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

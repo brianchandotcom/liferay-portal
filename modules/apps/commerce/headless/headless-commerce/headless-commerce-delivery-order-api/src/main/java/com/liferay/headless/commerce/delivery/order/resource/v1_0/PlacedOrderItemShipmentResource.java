@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlacedOrderItemShipmentResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<PlacedOrderItemShipment>
 			getPlacedOrderItemPlacedOrderItemShipmentsPage(
 				Long placedOrderItemId)
@@ -111,12 +107,6 @@ public interface PlacedOrderItemShipmentResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

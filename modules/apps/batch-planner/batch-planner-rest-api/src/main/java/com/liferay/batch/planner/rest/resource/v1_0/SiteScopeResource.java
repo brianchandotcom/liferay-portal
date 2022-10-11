@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SiteScopeResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<SiteScope> getPlanInternalClassNameSiteScopesPage(
 			String internalClassName, Boolean export)
 		throws Exception;
@@ -105,12 +101,6 @@ public interface SiteScopeResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

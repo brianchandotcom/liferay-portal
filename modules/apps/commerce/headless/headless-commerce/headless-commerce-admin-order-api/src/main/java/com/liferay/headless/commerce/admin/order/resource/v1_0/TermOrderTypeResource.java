@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TermOrderTypeResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deleteTermOrderType(Long termOrderTypeId) throws Exception;
 
 	public Response deleteTermOrderTypeBatch(String callbackURL, Object object)
@@ -133,12 +129,6 @@ public interface TermOrderTypeResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

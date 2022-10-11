@@ -56,10 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<StructuredContent> getAssetLibraryStructuredContentsPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -278,12 +274,6 @@ public interface StructuredContentResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

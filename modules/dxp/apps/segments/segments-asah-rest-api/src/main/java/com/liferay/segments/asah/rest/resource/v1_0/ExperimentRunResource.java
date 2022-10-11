@@ -50,10 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ExperimentRunResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public ExperimentRun postExperimentRun(
 			Long experimentId, ExperimentRun experimentRun)
 		throws Exception;
@@ -104,12 +100,6 @@ public interface ExperimentRunResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -53,10 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RelatedProductResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<RelatedProduct> getChannelProductRelatedProductsPage(
 			Long channelId, Long productId, String type, Pagination pagination)
 		throws Exception;
@@ -111,12 +107,6 @@ public interface RelatedProductResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

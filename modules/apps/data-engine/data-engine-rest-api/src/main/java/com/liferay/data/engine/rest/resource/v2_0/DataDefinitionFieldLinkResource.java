@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataDefinitionFieldLinkResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<DataDefinitionFieldLink>
 			getDataDefinitionDataDefinitionFieldLinksPage(
 				Long dataDefinitionId, String fieldName)
@@ -111,12 +107,6 @@ public interface DataDefinitionFieldLinkResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

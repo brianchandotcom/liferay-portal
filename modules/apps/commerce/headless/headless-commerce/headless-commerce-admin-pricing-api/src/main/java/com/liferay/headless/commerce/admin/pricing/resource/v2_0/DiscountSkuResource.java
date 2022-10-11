@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DiscountSkuResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deleteDiscountSku(Long discountSkuId) throws Exception;
 
 	public Response deleteDiscountSkuBatch(String callbackURL, Object object)
@@ -135,12 +131,6 @@ public interface DiscountSkuResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

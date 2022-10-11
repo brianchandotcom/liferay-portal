@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CartItemResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Response deleteCartItem(Long cartItemId) throws Exception;
 
 	public Response deleteCartItemBatch(String callbackURL, Object object)
@@ -131,12 +127,6 @@ public interface CartItemResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

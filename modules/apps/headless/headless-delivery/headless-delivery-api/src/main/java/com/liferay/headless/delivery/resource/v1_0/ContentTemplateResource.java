@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ContentTemplateResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<ContentTemplate> getAssetLibraryContentTemplatesPage(
 			Long assetLibraryId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -124,12 +120,6 @@ public interface ContentTemplateResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

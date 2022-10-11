@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssigneeMetricResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<AssigneeMetric> postProcessAssigneeMetricsPage(
 			Long processId, Pagination pagination, Sort[] sorts,
 			AssigneeMetricBulkSelection assigneeMetricBulkSelection)
@@ -114,12 +110,6 @@ public interface AssigneeMetricResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

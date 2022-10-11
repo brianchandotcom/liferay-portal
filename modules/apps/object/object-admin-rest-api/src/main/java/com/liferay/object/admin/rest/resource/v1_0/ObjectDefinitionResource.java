@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectDefinitionResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<ObjectDefinition> getObjectDefinitionsPage(
 			String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -154,12 +150,6 @@ public interface ObjectDefinitionResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

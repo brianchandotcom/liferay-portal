@@ -52,10 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SamlProviderResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public SamlProvider getSamlProvider() throws Exception;
 
 	public SamlProvider patchSamlProvider(SamlProvider samlProvider)
@@ -117,12 +113,6 @@ public interface SamlProviderResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

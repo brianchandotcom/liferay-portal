@@ -52,9 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +61,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "resource.locator.key=/headless-commerce-admin-channel/v1.0/PaymentMethodGroupRelTerm",
 	service = PaymentMethodGroupRelTermResource.Factory.class
 )
@@ -139,16 +137,6 @@ public class PaymentMethodGroupRelTermResourceFactoryImpl
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		PaymentMethodGroupRelTermResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		PaymentMethodGroupRelTermResource.FactoryHolder.factory = null;
 	}
 
 	private static Function

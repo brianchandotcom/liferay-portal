@@ -50,10 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ChannelResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Channel getDiscountChannelChannel(Long discountChannelId)
 		throws Exception;
 
@@ -106,12 +102,6 @@ public interface ChannelResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

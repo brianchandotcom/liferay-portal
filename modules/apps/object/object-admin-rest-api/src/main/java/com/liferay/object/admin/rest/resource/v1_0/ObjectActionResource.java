@@ -54,10 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectActionResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public void deleteObjectAction(Long objectActionId) throws Exception;
 
 	public Response deleteObjectActionBatch(String callbackURL, Object object)
@@ -138,12 +134,6 @@ public interface ObjectActionResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -50,10 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlacedOrderAddressResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddres(
 			Long placedOrderId)
 		throws Exception;
@@ -108,12 +104,6 @@ public interface PlacedOrderAddressResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

@@ -51,10 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowTaskTransitionsResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public WorkflowTaskTransitions postWorkflowTaskTransition(
 			WorkflowTaskIds workflowTaskIds)
 		throws Exception;
@@ -105,12 +101,6 @@ public interface WorkflowTaskTransitionsResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

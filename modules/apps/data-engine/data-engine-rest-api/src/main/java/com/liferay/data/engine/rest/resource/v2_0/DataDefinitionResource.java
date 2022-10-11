@@ -55,10 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataDefinitionResource {
 
-	public static Builder builder() {
-		return FactoryHolder.factory.create();
-	}
-
 	public Page<DataDefinition> getDataDefinitionByContentTypeContentTypePage(
 			String contentType, String keywords, Pagination pagination,
 			Sort[] sorts)
@@ -165,12 +161,6 @@ public interface DataDefinitionResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
-	}
-
-	public static class FactoryHolder {
-
-		public static volatile Factory factory;
-
 	}
 
 	@ProviderType

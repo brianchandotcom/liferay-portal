@@ -331,8 +331,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
 			objectEntryManager.addObjectRelationshipMappingTableValues(
-				_getDTOConverterContext(primaryKey1), _objectDefinition,
-				objectRelationshipName, primaryKey1, primaryKey2));
+				_getDTOConverterContext(primaryKey1), objectRelationship,
+				primaryKey1, primaryKey2));
 	}
 
 	@Override

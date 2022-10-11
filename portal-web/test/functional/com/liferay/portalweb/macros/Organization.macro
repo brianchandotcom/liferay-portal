@@ -395,7 +395,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editSiteCP {
+	macro edit {
 		Organization.gotoEdit(orgName = "${orgName}");
 
 		Type(
@@ -403,10 +403,6 @@ definition {
 			value1 = "${orgNameEdit}");
 
 		PortletEntry.save();
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "${orgNameEdit}");
 	}
 
 	macro gotoContact {

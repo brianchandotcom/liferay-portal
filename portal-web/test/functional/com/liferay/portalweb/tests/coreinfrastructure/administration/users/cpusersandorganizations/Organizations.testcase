@@ -1101,9 +1101,13 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.editSiteCP(
+		Organization.edit(
 			orgName = "Organization Name",
 			orgNameEdit = "Organization Name Edit");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Organization Name Edit");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

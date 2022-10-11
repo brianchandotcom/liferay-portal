@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -59,22 +60,6 @@ public class SystemPropertiesTest {
 	}
 
 	@Test
-	public void testGetProperties() {
-		Properties properties1 = SystemProperties.getProperties();
-
-		Assert.assertNull(properties1.getProperty(_TEST_KEY));
-
-		SystemProperties.set(_TEST_KEY, _TEST_VALUE);
-
-		Properties properties2 = SystemProperties.getProperties();
-
-		Assert.assertEquals(properties1.size() + 1, properties2.size());
-
-		Assert.assertNull(properties1.getProperty(_TEST_KEY));
-		Assert.assertEquals(_TEST_VALUE, properties2.get(_TEST_KEY));
-	}
-
-	@Test
 	public void testGetPropertiesWithPrefix() {
 		Map<String, String> propertiesWithPrefix =
 			SystemProperties.getProperties(_PREFIX, false);
@@ -90,6 +75,19 @@ public class SystemPropertiesTest {
 		Assert.assertEquals(
 			Collections.singletonMap(_TEST_KEY, _TEST_VALUE),
 			SystemProperties.getProperties(_PREFIX, false));
+	}
+
+	@Test
+	public void testGetPropertyNames() {
+		Set<String> propertyNames = SystemProperties.getPropertyNames();
+
+		Assert.assertFalse(propertyNames.contains(_TEST_KEY));
+
+		SystemProperties.set(_TEST_KEY, _TEST_VALUE);
+
+		propertyNames = SystemProperties.getPropertyNames();
+
+		Assert.assertTrue(propertyNames.contains(_TEST_KEY));
 	}
 
 	@Test

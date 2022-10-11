@@ -43,7 +43,7 @@ const DeactivateKeysModal = ({
 
 					<p className="mb-6 mt-5 text-neutral-10">
 						{i18n.translate(
-							'i-certify-that-the-instance-s-activated-with-the-selected-activation-keys-has-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-keys'
+							'i-certify-that-the-instance-s-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-keys'
 						)}
 					</p>
 				</div>

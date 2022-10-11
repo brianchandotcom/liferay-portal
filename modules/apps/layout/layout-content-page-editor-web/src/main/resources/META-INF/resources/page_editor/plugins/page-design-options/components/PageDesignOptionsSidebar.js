@@ -135,7 +135,7 @@ export default function PageDesignOptionsSidebar() {
 						displayType="secondary"
 						href={config.lookAndFeelURL}
 						monospaced
-						title={Liferay.Language.get('more')}
+						title={Liferay.Language.get('more-page-design-options')}
 					>
 						<ClayIcon symbol="cog" />
 					</ClayLink>

@@ -3948,6 +3948,35 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			value1 = "${contentType}");
 	}
 
+	macro markFavorite {
+		if (isSet(displayStyle)) {
+			var displayStyle = "list";
+		}
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+			value1 = "${fragmentName}");
+
+		if ("${displayStyle}" == "card") {
+			Click.clickAtNotVisible(
+				ariaLabel = "Mark Favorite",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+		}
+		else {
+			Click.clickAtNotVisible(
+				ariaLabel = "Mark Favorite",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+		}
+
+		PageEditor.waitForAutoSave();
+
+		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
+	}
+
 	macro openExperienceMenu {
 		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_MENU")) {
 			Click(locator1 = "PageEditor#EXPERIENCE_MENU_BUTTON");
@@ -4252,6 +4281,29 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		Navigator.gotoNavTab(navTab = "General");
 
 		PageEditor.configureFragment(hideFragment = "false");
+	}
+
+	macro unmarkFavorite {
+		if (isSet(displayStyle)) {
+			var displayStyle = "list";
+		}
+
+		if ("${displayStyle}" == "card") {
+			Click.clickAtNotVisible(
+				ariaLabel = "Unmark Favorite",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+		}
+		else {
+			Click.clickAtNotVisible(
+				ariaLabel = "Unmark Favorite",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+		}
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro viewCannotAddFragmentToOutsideOfDropZone {

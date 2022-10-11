@@ -763,7 +763,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskInstanceTokenQuery.setSearchByUserRoles(searchByUserRoles);
 		kaleoTaskInstanceTokenQuery.setTaskNames(taskNames);
 
-		return _doSearchCount(
+		return _searchCount(
 			HashMapBuilder.<String, Serializable>put(
 				"kaleoTaskInstanceTokenQuery", kaleoTaskInstanceTokenQuery
 			).build(),
@@ -784,7 +784,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				ServiceContext serviceContext)
 		throws PortalException {
 
-		Hits hits = _doSearch(
+		Hits hits = _search(
 			HashMapBuilder.<String, Serializable>put(
 				"kaleoTaskInstanceTokenQuery",
 				() -> {
@@ -939,7 +939,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		return searchContext;
 	}
 
-	private Hits _doSearch(
+	private Hits _search(
 			Map<String, Serializable> searchAttributes, int start, int end,
 			OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 			ServiceContext serviceContext)
@@ -955,7 +955,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				serviceContext));
 	}
 
-	private int _doSearchCount(
+	private int _searchCount(
 		Map<String, Serializable> searchAttributes,
 		ServiceContext serviceContext) {
 

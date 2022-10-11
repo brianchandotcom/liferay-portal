@@ -456,7 +456,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		long companyId, long kaleoInstanceId, List<Integer> logTypes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {
 
-		return _doSearch(
+		return _search(
 			companyId,
 			HashMapBuilder.<String, Serializable>put(
 				"kaleoInstanceId", kaleoInstanceId
@@ -470,7 +470,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	public int getKaleoInstanceKaleoLogsCount(
 		long companyId, long kaleoInstanceId, List<Integer> logTypes) {
 
-		return _doSearchCount(
+		return _searchCount(
 			companyId,
 			HashMapBuilder.put(
 				"kaleoInstanceId", (Serializable)kaleoInstanceId
@@ -484,7 +484,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		long companyId, long kaleoTaskInstanceTokenId, List<Integer> logTypes,
 		int start, int end, OrderByComparator<KaleoLog> orderByComparator) {
 
-		return _doSearch(
+		return _search(
 			companyId,
 			HashMapBuilder.put(
 				"kaleoTaskInstanceTokenId",
@@ -499,7 +499,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	public int getKaleoTaskInstanceTokenKaleoLogsCount(
 		long companyId, long kaleoTaskInstanceTokenId, List<Integer> logTypes) {
 
-		return _doSearchCount(
+		return _searchCount(
 			companyId,
 			HashMapBuilder.put(
 				"kaleoTaskInstanceTokenId",
@@ -583,7 +583,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
-	private List<KaleoLog> _doSearch(
+	private List<KaleoLog> _search(
 		long companyId, Map<String, Serializable> searchAttributes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {
 
@@ -618,7 +618,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return Collections.emptyList();
 	}
 
-	private int _doSearchCount(
+	private int _searchCount(
 		long companyId, Map<String, Serializable> searchAttributes) {
 
 		try {

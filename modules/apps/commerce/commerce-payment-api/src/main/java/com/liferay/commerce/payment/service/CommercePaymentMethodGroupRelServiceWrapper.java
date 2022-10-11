@@ -109,6 +109,16 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
+			fetchCommercePaymentMethodGroupRel(
+				long commercePaymentMethodGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentMethodGroupRelService.
+			fetchCommercePaymentMethodGroupRel(commercePaymentMethodGroupRelId);
+	}
+
+	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 			fetchCommercePaymentMethodGroupRel(long groupId, String engineKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

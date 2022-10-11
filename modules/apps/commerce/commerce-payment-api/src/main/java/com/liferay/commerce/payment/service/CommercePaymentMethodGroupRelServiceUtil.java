@@ -101,6 +101,15 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	}
 
 	public static CommercePaymentMethodGroupRel
+			fetchCommercePaymentMethodGroupRel(
+				long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		return getService().fetchCommercePaymentMethodGroupRel(
+			commercePaymentMethodGroupRelId);
+	}
+
+	public static CommercePaymentMethodGroupRel
 			fetchCommercePaymentMethodGroupRel(long groupId, String engineKey)
 		throws PortalException {
 

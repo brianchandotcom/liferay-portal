@@ -90,6 +90,11 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePaymentMethodGroupRel fetchCommercePaymentMethodGroupRel(
+			long commercePaymentMethodGroupRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentMethodGroupRel fetchCommercePaymentMethodGroupRel(
 			long groupId, String engineKey)
 		throws PortalException;
 

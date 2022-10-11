@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function _PortletConfiguration({
+export default function PortletConfiguration({
 	eventName,
 	namespace,
 	selectKBObjectURL,

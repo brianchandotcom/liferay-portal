@@ -39,7 +39,6 @@ const AssignModal: React.FC<IAssignModal> = ({observer, onCloseModal}) => {
 		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header>
 				{/* TODO: Replace "Property Name" for property name from backend  */}
-
 				{Liferay.Language.get('assign-to')} Propertie Name
 			</ClayModal.Header>
 

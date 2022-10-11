@@ -36,6 +36,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164437. The JSON URL can be saved."
+	@priority = "3"
+	test CanBeSaved {
+		property portal.acceptance = "true";
+
+		task ("Given Remote Application > Custom Elements create page") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("And Given required fields are filled out") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test App");
+
+			Type(
+				key_text = "HTML Element Name",
+				locator1 = "TextInput#ANY",
+				value1 = "html-element-name");
+		}
+
+		task ("When click repeatable button for JS URL and a new JS URL field is added") {
+			RemoteAppsEntry.addURLRow();
+		}
+
+		task ("And When input valid value for JS URL 1 and JS URL 2") {
+			Type(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "1",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				value1 = "https://www.liferay.com/");
+
+			Type(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "2",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
+				value1 = "https://www.liferay.com/company/our-story");
+		}
+
+		task ("And When submit the remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then the values for JS URLs are saved") {
+			Click(locator1 = "//div[(@class='table-list-title')]");
+
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "1",
+				key_text = "https://www.liferay.com/",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+
+			AssertElementPresent(
+				key_id = "ClientExtensionAdminPortlet_url",
+				key_index = "2",
+				key_text = "https://www.liferay.com/company/our-story",
+				locator1 = "RemoteAppsEntry#URL_ROW_INDEX");
+		}
+	}
+
 	@description = "This is a test for LPS-164433. The JSON URL can be can be repeatably clicked."
 	@priority = "3"
 	test JSURLCanBeRepeated {

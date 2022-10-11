@@ -906,18 +906,45 @@ definition {
 	@priority = "3"
 	test MoveVocabulariesAcrossConfiguration {
 		task ("Navigate Content Dashboard > Audic Graph configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Move vocabulary from in use to available") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+		task ("Open Configure Chart") {
+			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 
-		task ("Move vocabulary from available to in use") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Topic");
+		task ("Move vocabulary from In Use to Available using") {
+			Click.clickNoMouseOver(
+				key_vocabularyName = "Audience",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
+
+			Click(
+				ariaLabel = "Transfer Item Right to Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL")
+		}
+
+		task ("Check that Vocabulary was moved") {
+			AssertVisible(
+				key_vocabularyName = "Audience",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
+		}
+
+		task ("Move vocabulary from Available to In Use using") {
+			Click.clickNoMouseOver(
+				key_vocabularyName = "Topic",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
+
+			Click(
+				ariaLabel = "Transfer Item Left to Right",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL")
+		}
+
+		task ("Check that Vocabulary was moved") {
+			AssertVisible(
+				key_vocabularyName = "Topic",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
 		}
 	}
 

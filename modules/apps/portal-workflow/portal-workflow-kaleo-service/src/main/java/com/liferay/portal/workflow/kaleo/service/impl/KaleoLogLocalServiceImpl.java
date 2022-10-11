@@ -534,37 +534,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		dynamicQuery.add(junction);
 	}
 
-	private DynamicQuery _buildKaleoInstanceDynamicQuery(
-		long kaleoInstanceId, List<Integer> logTypes) {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoLog.class, getClassLoader());
-
-		Property property = PropertyFactoryUtil.forName("kaleoInstanceId");
-
-		dynamicQuery.add(property.eq(kaleoInstanceId));
-
-		_addLogTypesJunction(dynamicQuery, logTypes);
-
-		return dynamicQuery;
-	}
-
-	private DynamicQuery _buildKaleoTaskInstanceTokenDynamicQuery(
-		long kaleoTaskId, List<Integer> logTypes) {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoLog.class, getClassLoader());
-
-		Property property = PropertyFactoryUtil.forName(
-			"kaleoTaskInstanceTokenId");
-
-		dynamicQuery.add(property.eq(kaleoTaskId));
-
-		_addLogTypesJunction(dynamicQuery, logTypes);
-
-		return dynamicQuery;
-	}
-
 	private SearchContext _buildSearchContext(
 		long companyId, Map<String, Serializable> searchAttributes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {

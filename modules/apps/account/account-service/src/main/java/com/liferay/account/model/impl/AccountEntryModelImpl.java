@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -86,7 +87,9 @@ public class AccountEntryModelImpl
 		{"logoId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"restrictMembership", Types.BOOLEAN},
 		{"taxExemptionCode", Types.VARCHAR}, {"taxIdNumber", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"status", Types.INTEGER}
+		{"type_", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -116,10 +119,13 @@ public class AccountEntryModelImpl
 		TABLE_COLUMNS_MAP.put("taxIdNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultBillingAddressId LONG,defaultCPaymentMethodKey VARCHAR(75) null,defaultShippingAddressId LONG,parentAccountEntryId LONG,description STRING null,domains STRING null,emailAddress VARCHAR(254) null,logoId LONG,name VARCHAR(100) null,restrictMembership BOOLEAN,taxExemptionCode VARCHAR(75) null,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultBillingAddressId LONG,defaultCPaymentMethodKey VARCHAR(75) null,defaultShippingAddressId LONG,parentAccountEntryId LONG,description STRING null,domains STRING null,emailAddress VARCHAR(254) null,logoId LONG,name VARCHAR(100) null,restrictMembership BOOLEAN,taxExemptionCode VARCHAR(75) null,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -397,6 +403,21 @@ public class AccountEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"status",
 			(BiConsumer<AccountEntry, Integer>)AccountEntry::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId", AccountEntry::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<AccountEntry, Long>)AccountEntry::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", AccountEntry::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<AccountEntry, String>)
+				AccountEntry::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", AccountEntry::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<AccountEntry, Date>)AccountEntry::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -888,10 +909,156 @@ public class AccountEntryModelImpl
 			this.<Integer>getColumnOriginalValue("status"));
 	}
 
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(AccountEntry.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -976,6 +1143,9 @@ public class AccountEntryModelImpl
 		accountEntryImpl.setTaxIdNumber(getTaxIdNumber());
 		accountEntryImpl.setType(getType());
 		accountEntryImpl.setStatus(getStatus());
+		accountEntryImpl.setStatusByUserId(getStatusByUserId());
+		accountEntryImpl.setStatusByUserName(getStatusByUserName());
+		accountEntryImpl.setStatusDate(getStatusDate());
 
 		accountEntryImpl.resetOriginalValues();
 
@@ -1027,6 +1197,12 @@ public class AccountEntryModelImpl
 		accountEntryImpl.setType(this.<String>getColumnOriginalValue("type_"));
 		accountEntryImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
+		accountEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		accountEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		accountEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
 
 		return accountEntryImpl;
 	}
@@ -1239,6 +1415,25 @@ public class AccountEntryModelImpl
 
 		accountEntryCacheModel.status = getStatus();
 
+		accountEntryCacheModel.statusByUserId = getStatusByUserId();
+
+		accountEntryCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = accountEntryCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			accountEntryCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			accountEntryCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			accountEntryCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return accountEntryCacheModel;
 	}
 
@@ -1324,6 +1519,9 @@ public class AccountEntryModelImpl
 	private String _taxIdNumber;
 	private String _type;
 	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1382,6 +1580,9 @@ public class AccountEntryModelImpl
 		_columnOriginalValues.put("taxIdNumber", _taxIdNumber);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1451,6 +1652,12 @@ public class AccountEntryModelImpl
 		columnBitmasks.put("type_", 2097152L);
 
 		columnBitmasks.put("status", 4194304L);
+
+		columnBitmasks.put("statusByUserId", 8388608L);
+
+		columnBitmasks.put("statusByUserName", 16777216L);
+
+		columnBitmasks.put("statusDate", 33554432L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

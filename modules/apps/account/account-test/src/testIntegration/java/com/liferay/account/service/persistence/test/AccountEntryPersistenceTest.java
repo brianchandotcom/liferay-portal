@@ -169,6 +169,12 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setStatus(RandomTestUtil.nextInt());
 
+		newAccountEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newAccountEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		newAccountEntry.setStatusDate(RandomTestUtil.nextDate());
+
 		_accountEntries.add(_persistence.update(newAccountEntry));
 
 		AccountEntry existingAccountEntry = _persistence.findByPrimaryKey(
@@ -235,6 +241,15 @@ public class AccountEntryPersistenceTest {
 			existingAccountEntry.getType(), newAccountEntry.getType());
 		Assert.assertEquals(
 			existingAccountEntry.getStatus(), newAccountEntry.getStatus());
+		Assert.assertEquals(
+			existingAccountEntry.getStatusByUserId(),
+			newAccountEntry.getStatusByUserId());
+		Assert.assertEquals(
+			existingAccountEntry.getStatusByUserName(),
+			newAccountEntry.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingAccountEntry.getStatusDate()),
+			Time.getShortTimestamp(newAccountEntry.getStatusDate()));
 	}
 
 	@Test
@@ -321,7 +336,8 @@ public class AccountEntryPersistenceTest {
 			"parentAccountEntryId", true, "description", true, "domains", true,
 			"emailAddress", true, "logoId", true, "name", true,
 			"restrictMembership", true, "taxExemptionCode", true, "taxIdNumber",
-			true, "type", true, "status", true);
+			true, "type", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -648,6 +664,12 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setType(RandomTestUtil.randomString());
 
 		accountEntry.setStatus(RandomTestUtil.nextInt());
+
+		accountEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		accountEntry.setStatusByUserName(RandomTestUtil.randomString());
+
+		accountEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_accountEntries.add(_persistence.update(accountEntry));
 

@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
@@ -25,6 +26,7 @@ import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {liferayUserAccountsRest} from '../../../services/rest';
+import {liferayUserRolesRest} from '../../../services/rest/TestrayRolesUser';
 import {RoleTypes} from '../../../util/constants';
 
 type UserFormDefault = {
@@ -36,13 +38,14 @@ type UserFormDefault = {
 	password?: string;
 	repassword?: string;
 	roleBriefs?: any;
-	roles?: number[];
+	roles: number[];
 	testrayUser: boolean;
 };
 
 const UserForm = () => {
-	const {data} = useFetch(`/roles?types=${RoleTypes.REGULAR}&fields=id,name`);
+	const {data} = useFetch(`/roles?types=${RoleTypes.REGULAR}`);
 	const navigate = useNavigate();
+
 	const {pathname} = useLocation();
 	const isCreateForm = pathname.includes('create');
 
@@ -56,8 +59,10 @@ const UserForm = () => {
 		formState: {errors},
 		handleSubmit,
 		register,
+		setValue,
+		watch,
 	} = useForm<UserFormDefault>({
-		defaultValues: userAccount,
+		defaultValues: {...userAccount, roles: []},
 		resolver: yupResolver(yupSchema.user),
 	});
 
@@ -71,14 +76,49 @@ const UserForm = () => {
 					liferayUserAccountsRest.update(...params),
 			}
 		)
+			.then((response) =>
+				liferayUserRolesRest.rolesToUser(
+					form.roles,
+					form.roleBriefs,
+					response
+				)
+			)
 			.then(mutateUser)
 			.then(() => onSave())
 			.catch(onError);
 	};
-
-	const userRoles =
-		userAccount?.roleBriefs.map(({id}: {id: number}) => id) || [];
 	const roles = data?.items || [];
+
+	const checkPermissionRoles = roles.map((role: any) => {
+		return role.actions['create-role-user-account-association']
+			? true
+			: false;
+	});
+
+	const rolesWatch = watch('roles') as number[];
+
+	const userRoles = useMemo(
+		() => (userAccount?.roleBriefs || []).map(({id}: {id: number}) => id),
+		[userAccount?.roleBriefs]
+	);
+
+	const setRolesUser = useCallback(() => {
+		setValue('roles', userRoles);
+	}, [setValue, userRoles]);
+
+	useEffect(() => {
+		setRolesUser();
+	}, [setRolesUser]);
+
+	const onClickRoles = (event: any) => {
+		const value = Number(event.target.value);
+
+		const rolesFiltered = rolesWatch.includes(value)
+			? rolesWatch.filter((rolesId) => rolesId !== value)
+			: [...rolesWatch, value];
+
+		setValue('roles', rolesFiltered);
+	};
 
 	const inputProps = {
 		errors,
@@ -191,16 +231,27 @@ const UserForm = () => {
 					</ClayLayout.Col>
 
 					<ClayLayout.Col size={12} sm={12} xl={9}>
-						{roles.map(({id, name}: {id: number; name: string}) => (
-							<div className="mt-2" key={id}>
-								<ClayCheckbox
-									checked={userRoles.includes(id)}
-									disabled={!userRoles.includes(id)}
-									label={name}
-									onChange={() => null}
-								/>
-							</div>
-						))}
+						{roles.map(
+							(
+								{id, name}: {id: number; name: string},
+								index: number
+							) => (
+								<div className="mt-2" key={id}>
+									<ClayCheckbox
+										checked={rolesWatch.includes(id)}
+										disabled={
+											checkPermissionRoles[index]
+												? false
+												: true
+										}
+										label={name}
+										name={name}
+										onChange={onClickRoles}
+										value={id}
+									/>
+								</div>
+							)
+						)}
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 

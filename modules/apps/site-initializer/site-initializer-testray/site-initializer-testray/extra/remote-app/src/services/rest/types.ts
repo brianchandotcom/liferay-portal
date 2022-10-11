@@ -52,6 +52,12 @@ export type UserAccount = {
 	uuid: number;
 };
 
+export type UserRole = {
+	roles: number;
+	rolesBriefs: Role[];
+	userId: number;
+};
+
 export type TestrayBuild = {
 	active: boolean;
 	creator: {

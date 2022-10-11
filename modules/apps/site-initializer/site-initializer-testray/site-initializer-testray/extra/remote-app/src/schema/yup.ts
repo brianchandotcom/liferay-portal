@@ -28,6 +28,7 @@ const userSchema = yup.object({
 		.required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 	familyName: yup.string().required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 	givenName: yup.string().required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
+	rolesUser: yup.mixed(),
 });
 
 const passwordStructure = {
@@ -163,6 +164,11 @@ const yupSchema = {
 		linkTitle: yup.string().required(),
 		linkURL: yup.string().required(),
 		summary: yup.string().required(),
+	}),
+	role: yup.object({
+		role: yup.number(),
+		rolesBrief: yup.mixed(),
+		userId: yup.number(),
 	}),
 	routine: yup.object({
 		autoanalyze: yup.boolean().required(),

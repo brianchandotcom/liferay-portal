@@ -33,6 +33,9 @@
 		<column name="taxIdNumber" type="String" />
 		<column name="type" type="String" />
 		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 

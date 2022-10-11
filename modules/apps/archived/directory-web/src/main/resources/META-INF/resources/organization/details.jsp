@@ -40,7 +40,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 				<liferay-ui:message key="status" />
 			</dt>
 			<dd>
-				<liferay-ui:message key="<%= ListTypeServiceUtil.getListType(organization.getStatusId()).getName() %>" />
+				<liferay-ui:message key="<%= ListTypeServiceUtil.getListType(organization.getStatusListTypeId()).getName() %>" />
 			</dd>
 		</c:if>
 

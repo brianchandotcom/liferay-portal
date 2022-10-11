@@ -145,6 +145,8 @@ definition {
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"
 	@priority = "4"
 	test CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153560",
 			objectName = "CustomObject153560",
@@ -1952,6 +1954,8 @@ definition {
 	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
 	@priority = "4"
 	test CanUpdateWhenPassesForAllValidations {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153558",
 			objectName = "CustomObject153558",

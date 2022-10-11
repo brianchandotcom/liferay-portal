@@ -702,7 +702,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Cache
 
-		_clearPageCache(page);
+		_clearPageCache();
 
 		// Version pages
 
@@ -2226,7 +2226,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Cache
 
-			_clearPageCache(page);
+			_clearPageCache();
 		}
 		else {
 			page = _updatePageStatus(user, page, status);
@@ -2309,7 +2309,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_portalCache.removeAll();
 	}
 
-	private void _clearPageCache(WikiPage page) {
+	private void _clearPageCache() {
 		if (!WikiCacheThreadLocal.isClearCache()) {
 			return;
 		}

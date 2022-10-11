@@ -939,45 +939,6 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		return searchContext;
 	}
 
-	private Hits _search(
-			Map<String, Serializable> searchAttributes, int start, int end,
-			OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		Indexer<KaleoTaskInstanceToken> indexer =
-			IndexerRegistryUtil.getIndexer(
-				KaleoTaskInstanceToken.class.getName());
-
-		return indexer.search(
-			_buildSearchContext(
-				searchAttributes, start, end, orderByComparator,
-				serviceContext));
-	}
-
-	private int _searchCount(
-		Map<String, Serializable> searchAttributes,
-		ServiceContext serviceContext) {
-
-		try {
-			Indexer<KaleoTaskInstanceToken> indexer =
-				IndexerRegistryUtil.getIndexer(
-					KaleoTaskInstanceToken.class.getName());
-
-			return (int)indexer.searchCount(
-				_buildSearchContext(
-					searchAttributes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null, serviceContext));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return 0;
-	}
-
 	private String[] _getAssetTypes(String assetType) {
 		if (Validator.isNull(assetType)) {
 			return null;
@@ -1041,6 +1002,45 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		}
 
 		return new String[] {taskName};
+	}
+
+	private Hits _search(
+			Map<String, Serializable> searchAttributes, int start, int end,
+			OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Indexer<KaleoTaskInstanceToken> indexer =
+			IndexerRegistryUtil.getIndexer(
+				KaleoTaskInstanceToken.class.getName());
+
+		return indexer.search(
+			_buildSearchContext(
+				searchAttributes, start, end, orderByComparator,
+				serviceContext));
+	}
+
+	private int _searchCount(
+		Map<String, Serializable> searchAttributes,
+		ServiceContext serviceContext) {
+
+		try {
+			Indexer<KaleoTaskInstanceToken> indexer =
+				IndexerRegistryUtil.getIndexer(
+					KaleoTaskInstanceToken.class.getName());
+
+			return (int)indexer.searchCount(
+				_buildSearchContext(
+					searchAttributes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null, serviceContext));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

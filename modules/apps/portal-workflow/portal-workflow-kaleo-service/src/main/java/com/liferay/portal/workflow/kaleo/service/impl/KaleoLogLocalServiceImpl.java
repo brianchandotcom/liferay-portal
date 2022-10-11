@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -583,6 +582,54 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLog;
 	}
 
+	private KaleoLog _getPreviousLog(
+			long kaleoInstanceTokenId, long kaleoNodeId, LogType logType)
+		throws PortalException {
+
+		List<KaleoLog> kaleoLogEntries = null;
+
+		if (kaleoNodeId > 0) {
+			kaleoLogEntries = kaleoLogPersistence.findByKCN_KCPK_KITI_T(
+				KaleoNode.class.getName(), kaleoNodeId, kaleoInstanceTokenId,
+				logType.name());
+		}
+		else {
+			kaleoLogEntries = kaleoLogPersistence.findByKITI_T(
+				kaleoInstanceTokenId, logType.name());
+		}
+
+		if (!kaleoLogEntries.isEmpty()) {
+			return kaleoLogEntries.get(0);
+		}
+
+		throw new NoSuchLogException();
+	}
+
+	private Sort[] _getSortsFromComparator(
+		OrderByComparator<KaleoLog> orderByComparator) {
+
+		if (orderByComparator == null) {
+			return null;
+		}
+
+		return Stream.of(
+			orderByComparator.getOrderByFields()
+		).map(
+			orderByFieldName -> {
+				String fieldName = _fieldNameOrderByCols.getOrDefault(
+					orderByFieldName, orderByFieldName);
+
+				return new Sort(
+					fieldName,
+					_fieldNameSortTypes.getOrDefault(
+						fieldName, Sort.STRING_TYPE),
+					!orderByComparator.isAscending());
+			}
+		).toArray(
+			Sort[]::new
+		);
+	}
+
 	private List<KaleoLog> _search(
 		long companyId, Map<String, Serializable> searchAttributes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {
@@ -637,54 +684,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 
 		return 0;
-	}
-
-	private KaleoLog _getPreviousLog(
-			long kaleoInstanceTokenId, long kaleoNodeId, LogType logType)
-		throws PortalException {
-
-		List<KaleoLog> kaleoLogEntries = null;
-
-		if (kaleoNodeId > 0) {
-			kaleoLogEntries = kaleoLogPersistence.findByKCN_KCPK_KITI_T(
-				KaleoNode.class.getName(), kaleoNodeId, kaleoInstanceTokenId,
-				logType.name());
-		}
-		else {
-			kaleoLogEntries = kaleoLogPersistence.findByKITI_T(
-				kaleoInstanceTokenId, logType.name());
-		}
-
-		if (!kaleoLogEntries.isEmpty()) {
-			return kaleoLogEntries.get(0);
-		}
-
-		throw new NoSuchLogException();
-	}
-
-	private Sort[] _getSortsFromComparator(
-		OrderByComparator<KaleoLog> orderByComparator) {
-
-		if (orderByComparator == null) {
-			return null;
-		}
-
-		return Stream.of(
-			orderByComparator.getOrderByFields()
-		).map(
-			orderByFieldName -> {
-				String fieldName = _fieldNameOrderByCols.getOrDefault(
-					orderByFieldName, orderByFieldName);
-
-				return new Sort(
-					fieldName,
-					_fieldNameSortTypes.getOrDefault(
-						fieldName, Sort.STRING_TYPE),
-					!orderByComparator.isAscending());
-			}
-		).toArray(
-			Sort[]::new
-		);
 	}
 
 	private BaseMapBuilder.UnsafeSupplier<Serializable, Exception>

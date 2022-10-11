@@ -385,17 +385,17 @@ public class DefaultDDMStructureHelperImpl
 		String description = structureElement.elementText("description");
 		String name = structureElement.elementText("name");
 
-		Map<Locale, String> nameMap = new HashMap<>();
 		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		for (Locale curLocale : _language.getAvailableLocales(groupId)) {
 			ResourceBundle resourceBundle =
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
 					curLocale, getClass());
 
-			nameMap.put(curLocale, _language.get(resourceBundle, name));
 			descriptionMap.put(
 				curLocale, _language.get(resourceBundle, description));
+			nameMap.put(curLocale, _language.get(resourceBundle, name));
 		}
 
 		DDMForm ddmForm = getDDMForm(groupId, locale, structureElement);

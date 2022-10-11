@@ -480,6 +480,46 @@ public class KaleoInstanceLocalServiceImpl
 		return searchContext;
 	}
 
+	private String[] _getClassNames(String className) {
+		if (Validator.isNull(className)) {
+			return null;
+		}
+
+		return new String[] {className};
+	}
+
+	private Sort[] _getSortsFromComparator(
+		OrderByComparator<KaleoInstance> orderByComparator) {
+
+		if (orderByComparator == null) {
+			return null;
+		}
+
+		return Stream.of(
+			orderByComparator.getOrderByFields()
+		).map(
+			orderByFieldName -> {
+				String fieldName = _fieldNameOrderByCols.getOrDefault(
+					orderByFieldName, orderByFieldName);
+
+				int sortType = _fieldNameSortTypes.getOrDefault(
+					fieldName, Sort.STRING_TYPE);
+
+				boolean ascending = orderByComparator.isAscending();
+
+				if (Objects.equals(
+						orderByFieldName, KaleoInstanceTokenField.COMPLETED)) {
+
+					ascending = true;
+				}
+
+				return new Sort(fieldName, sortType, !ascending);
+			}
+		).toArray(
+			Sort[]::new
+		);
+	}
+
 	private Hits _search(
 			Long userId, Boolean active, String assetTitle,
 			String assetDescription, String currentKaleoNodeName,
@@ -559,46 +599,6 @@ public class KaleoInstanceLocalServiceImpl
 		}
 
 		return 0;
-	}
-
-	private String[] _getClassNames(String className) {
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		return new String[] {className};
-	}
-
-	private Sort[] _getSortsFromComparator(
-		OrderByComparator<KaleoInstance> orderByComparator) {
-
-		if (orderByComparator == null) {
-			return null;
-		}
-
-		return Stream.of(
-			orderByComparator.getOrderByFields()
-		).map(
-			orderByFieldName -> {
-				String fieldName = _fieldNameOrderByCols.getOrDefault(
-					orderByFieldName, orderByFieldName);
-
-				int sortType = _fieldNameSortTypes.getOrDefault(
-					fieldName, Sort.STRING_TYPE);
-
-				boolean ascending = orderByComparator.isAscending();
-
-				if (Objects.equals(
-						orderByFieldName, KaleoInstanceTokenField.COMPLETED)) {
-
-					ascending = true;
-				}
-
-				return new Sort(fieldName, sortType, !ascending);
-			}
-		).toArray(
-			Sort[]::new
-		);
 	}
 
 	private List<KaleoInstance> _toKaleoInstances(Hits hits) {

@@ -40,9 +40,9 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 	</ul>
 
 	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() > 0 %>">
-		<h6 class="sheet-subtitle">
+		<h3 class="sheet-subtitle">
 			<liferay-ui:message key="other" />
-		</h6>
+		</h3>
 
 		<ul class="card-page card-page-equal-height">
 

@@ -698,8 +698,6 @@ definition {
 	Then the document is counted as an asset in the graph"
 	@priority = "4"
 	test BlogWithOneCategory {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Create 2 new vocabularies") {
@@ -751,6 +749,8 @@ definition {
 	@description = "LPS-133797 When the user selects the option Available, the modal lists all the existing Global Vocabularies"
 	@priority = "5"
 	test CheckAvailableVocabulariesDisplayed {
+		property portal.acceptance = "true";
+
 		task ("Create 2 new vocabularies") {
 			for (var vocabularyNumber : list "1,2") {
 				JSONCategory.addVocabulary(
@@ -853,8 +853,6 @@ definition {
 	@description = "LPS-119966 Given a document with no categories in any of the vocabularies featured in the graph then the document is NOT counted as an asset in the graph"
 	@priority = "4"
 	test DocumentWithNoCategories {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Create a new Document") {
@@ -878,8 +876,6 @@ definition {
 	@description = "LPS-119966 Given a document with at least one category in one of the vocabularies featured in the graph then the document is counted as an asset in the graph"
 	@priority = "4"
 	test DocumentWithOneCategory {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Create a new Document") {
@@ -904,6 +900,7 @@ definition {
 
 	@description = "LPS-133797 When clicks on the left or right arrows within Configuration and selects one or more vocabularies, the vocabularies go from Available to In use and vice versa"
 	@priority = "3"
+	@uitest
 	test MoveVocabulariesAcrossConfiguration {
 		task ("Navigate Content Dashboard > Audic Graph configuration") {
 			ContentDashboard.goToContentDashboard();

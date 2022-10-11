@@ -94,9 +94,6 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 			layoutClassedModelUsage);
 
 		element.addAttribute(
-			"layout-classed-model-class-name",
-			_portal.getClassName(layoutClassedModelUsage.getClassNameId()));
-		element.addAttribute(
 			"layout-classed-model-container-class-name",
 			_portal.getClassName(layoutClassedModelUsage.getContainerType()));
 
@@ -240,9 +237,8 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		LayoutClassedModelUsage existingLayoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				_portal.getClassNameId(
-					element.attributeValue("layout-classed-model-class-name")),
-				classPK, importedLayoutClassedModelUsage.getContainerKey(),
+				importedLayoutClassedModelUsage.getClassNameId(), classPK,
+				importedLayoutClassedModelUsage.getContainerKey(),
 				containerTypeClassNameId, plid);
 
 		if (existingLayoutClassedModelUsage == null) {

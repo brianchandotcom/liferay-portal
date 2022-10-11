@@ -323,7 +323,7 @@ public class KBAdminNavigationDisplayContext {
 						kbArticle,
 						PortalUtil.getCurrentURL(_httpServletRequest))
 				).put(
-					"id", kbArticle.getKbArticleId()
+					"id", kbArticle.getResourcePrimKey()
 				).put(
 					"name", kbArticle.getTitle()
 				).put(
@@ -416,7 +416,7 @@ public class KBAdminNavigationDisplayContext {
 						kbArticle,
 						PortalUtil.getCurrentURL(_httpServletRequest))
 				).put(
-					"id", kbArticle.getKbArticleId()
+					"id", kbArticle.getResourcePrimKey()
 				).put(
 					"name", kbArticle.getTitle()
 				).put(

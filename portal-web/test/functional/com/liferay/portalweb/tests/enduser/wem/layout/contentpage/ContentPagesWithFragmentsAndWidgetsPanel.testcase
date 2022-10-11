@@ -518,6 +518,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161732. When the page creator customizes the order of widgets section on page editor, the same order should be shown on Add panel widget pages."
+	@priority = "4"
+	test PropogateCustomizedOrderOfWidgetCategoriesToAddPanel {
+		property osgi.modules.includes = "portal-reports-engine-console";
+
+		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator customizes the order of widget categories") {
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Widgets",
+				setName = "Commerce");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			AssertVisible(
+				index = "4",
+				key_panel = "Commerce",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+
+		task ("Then the page creator sees the customized order of widget categories on Add panel") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			AssertVisible(
+				index = "4",
+				key_panel = "Commerce",
+				locator1 = "Panel#PANEL_BY_INDEX");
+		}
+	}
+
 	@description = "This is a test for LPS-130964. View visual feedback when drag items in Fragments and Widgets panel."
 	@priority = "4"
 	test ViewVisualFeedbackWhenDragItems {

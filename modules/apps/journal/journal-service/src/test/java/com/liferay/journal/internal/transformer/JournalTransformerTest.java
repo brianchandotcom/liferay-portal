@@ -72,6 +72,26 @@ public class JournalTransformerTest {
 	}
 
 	@Test
+	public void testIncludeBackwardsCompatibilityTemplateNodesNestedImageFieldSet() {
+		JournalTransformer journalTransformer = new JournalTransformer();
+
+		List<TemplateNode> nestedFieldGroupTemplateNode =
+			_getInitNestedImageFieldSetTemplateNode();
+
+		List<TemplateNode> backwardsCompatibilityTemplateNodes =
+			journalTransformer.includeBackwardsCompatibilityTemplateNodes(
+				nestedFieldGroupTemplateNode, 0);
+
+		TemplateNode templateNode = backwardsCompatibilityTemplateNodes.get(0);
+
+		List<TemplateNode> children = templateNode.getChildren();
+
+		TemplateNode firstChild = children.get(0);
+
+		Assert.assertEquals(firstChild.get("data"), _IMAGE_FIELD_DATA);
+	}
+
+	@Test
 	public void testIncludeBackwardsCompatibilityTemplateNodesParentStructureWithFieldSet() {
 		JournalTransformer journalTransformer = new JournalTransformer();
 
@@ -323,6 +343,40 @@ public class JournalTransformerTest {
 		textTemplateNode1.appendSibling(textTemplateNode2);
 
 		return ListUtil.fromArray(repeatableTextTemplateNode1);
+	}
+
+	private List<TemplateNode> _getInitNestedImageFieldSetTemplateNode() {
+		List<TemplateNode> templateNodes = new ArrayList<>();
+
+		TemplateNode logoTitleFieldSet = _createTemplateNode(
+			"logoTitleFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+
+		TemplateNode logoTitleText = _createTemplateNode(
+			"logoTitleText", DDMFormFieldTypeConstants.TEXT);
+
+		TemplateNode logoFieldSet = _createTemplateNode(
+			"logoFieldSet", DDMFormFieldTypeConstants.FIELDSET);
+
+		TemplateNode logoField = _createTemplateNode(
+			"logoField", DDMFormFieldTypeConstants.IMAGE);
+
+		logoField.put("data", _IMAGE_FIELD_DATA);
+
+		TemplateNode linkLogoField = _createTemplateNode(
+			"linkLogoField", DDMFormFieldTypeConstants.TEXT);
+
+		logoFieldSet.appendChild(logoField);
+		logoFieldSet.appendChild(linkLogoField);
+		logoField.appendSibling(linkLogoField);
+
+		logoTitleText.appendSibling(logoFieldSet);
+
+		logoTitleFieldSet.appendChild(logoTitleText);
+		logoTitleFieldSet.appendChild(logoFieldSet);
+
+		templateNodes.add(logoTitleFieldSet);
+
+		return templateNodes;
 	}
 
 	private List<TemplateNode> _getInitNestedRepeatableFieldsTemplateNode() {
@@ -592,6 +646,9 @@ public class JournalTransformerTest {
 
 		return templateNodes;
 	}
+
+	private static final String _IMAGE_FIELD_DATA =
+		"{\"url\": \"/documents/d/site/logo-jpg?download=true\"}";
 
 	private static final String _REPEATABLE_TEXT_FIELD_NAME =
 		"RepeatableTextField";

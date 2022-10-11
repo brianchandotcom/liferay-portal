@@ -381,6 +381,8 @@ definition {
 	@description = "This test ensures that the information related to the KB entry can be viewed."
 	@priority = "4"
 	test CanViewEntryInfo {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

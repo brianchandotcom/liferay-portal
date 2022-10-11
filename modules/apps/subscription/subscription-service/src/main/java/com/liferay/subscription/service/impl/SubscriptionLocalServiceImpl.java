@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
@@ -171,12 +170,7 @@ public class SubscriptionLocalServiceImpl
 			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				AssetTag.class);
 
-			try {
-				indexer.reindex(assetTag);
-			}
-			catch (SearchException searchException) {
-				throw new RuntimeException(searchException);
-			}
+			indexer.reindex(assetTag);
 		}
 
 		return subscription;
@@ -236,12 +230,7 @@ public class SubscriptionLocalServiceImpl
 			Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				AssetTag.class);
 
-			try {
-				indexer.reindex(assetTag);
-			}
-			catch (SearchException searchException) {
-				throw new RuntimeException(searchException);
-			}
+			indexer.reindex(assetTag);
 		}
 	}
 

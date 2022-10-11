@@ -1,0 +1,22 @@
+.menu-item-wrapper {
+	border-radius: var(--border-radius-sm);
+
+	&:hover {
+		color: var(--color-action-primary-default);
+		background: var(--color-action-primary-hover-lighten);
+	}
+
+	.menu-item-icon {
+		height: 14px;
+		width: 14px;
+
+		svg,
+		img {
+			height: 100%;
+			max-width: 100%;
+		}
+	}
+	.menu-item-text {
+		color: var(--color-neutral-10);
+	}
+}

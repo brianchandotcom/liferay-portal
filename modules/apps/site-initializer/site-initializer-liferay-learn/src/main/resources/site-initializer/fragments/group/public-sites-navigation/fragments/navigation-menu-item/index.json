@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "HTML Icon",
+					"label": "HTML Icon",
+					"name": "htmlIcon",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

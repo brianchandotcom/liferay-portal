@@ -416,7 +416,8 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setSource(_getSource(criteria, segmentsEntry.getSource()));
+		segmentsEntry.setSource(
+			_getSource(criteria, segmentsEntry.getSource()));
 
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
 
@@ -531,39 +532,6 @@ public class SegmentsEntryLocalServiceImpl
 		return source;
 	}
 
-	private void _reindexSegmentsEntryRels1(SegmentsEntry segmentsEntry)
-		throws PortalException {
-
-		_reindexSegmentsEntryRels2(segmentsEntry);
-
-		_reindexReferredSegmentsEntryRels(segmentsEntry);
-	}
-
-	private void _validateKey(
-			long segmentsEntryId, long groupId, String segmentsEntryKey)
-		throws PortalException {
-
-		SegmentsEntry segmentsEntry = fetchSegmentsEntry(
-			groupId, segmentsEntryKey, true);
-
-		if ((segmentsEntry != null) &&
-			(segmentsEntry.getSegmentsEntryId() != segmentsEntryId)) {
-
-			throw new SegmentsEntryKeyException();
-		}
-	}
-
-	private void _validateName(long groupId, Map<Locale, String> nameMap)
-		throws PortalException {
-
-		Locale defaultLocale = _portal.getSiteDefaultLocale(groupId);
-
-		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
-			throw new SegmentsEntryNameException(
-				"Name is null for locale " + defaultLocale.getDisplayName());
-		}
-	}
-
 	private void _reindexReferredSegmentsEntryRels(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
@@ -590,6 +558,14 @@ public class SegmentsEntryLocalServiceImpl
 		}
 	}
 
+	private void _reindexSegmentsEntryRels1(SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		_reindexSegmentsEntryRels2(segmentsEntry);
+
+		_reindexReferredSegmentsEntryRels(segmentsEntry);
+	}
+
 	private void _reindexSegmentsEntryRels2(SegmentsEntry segmentsEntry) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -605,6 +581,31 @@ public class SegmentsEntryLocalServiceImpl
 
 				return null;
 			});
+	}
+
+	private void _validateKey(
+			long segmentsEntryId, long groupId, String segmentsEntryKey)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = fetchSegmentsEntry(
+			groupId, segmentsEntryKey, true);
+
+		if ((segmentsEntry != null) &&
+			(segmentsEntry.getSegmentsEntryId() != segmentsEntryId)) {
+
+			throw new SegmentsEntryKeyException();
+		}
+	}
+
+	private void _validateName(long groupId, Map<Locale, String> nameMap)
+		throws PortalException {
+
+		Locale defaultLocale = _portal.getSiteDefaultLocale(groupId);
+
+		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
+			throw new SegmentsEntryNameException(
+				"Name is null for locale " + defaultLocale.getDisplayName());
+		}
 	}
 
 	@Reference

@@ -973,16 +973,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String urlPath = url.getPath();
 
-			if (StringUtil.endsWith(urlPath, "page-definition.json") ||
-				StringUtil.endsWith(urlPath, "display-page-template.json")) {
+			if (StringUtil.endsWith(urlPath, "display-page-template.json") ||
+				StringUtil.endsWith(urlPath, "page-definition.json")) {
 
 				String json = StringUtil.read(url.openStream());
 
 				json = _replace(
 					json, assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
-					taxonomyCategoryIdsStringUtilReplaceValues,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					taxonomyCategoryIdsStringUtilReplaceValues);
 
 				Group group = serviceContext.getScopeGroup();
 

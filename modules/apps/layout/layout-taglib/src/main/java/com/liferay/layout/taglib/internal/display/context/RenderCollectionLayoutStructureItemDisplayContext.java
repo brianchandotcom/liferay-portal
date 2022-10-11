@@ -366,8 +366,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			));
 		defaultLayoutListRetrieverContext.setInfoFilters(
 			_getInfoFilters(layoutListRetriever, listObjectReference));
-		defaultLayoutListRetrieverContext.setHttpServletRequest(
-			_httpServletRequest);
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 			_getSegmentsEntryIds());
 

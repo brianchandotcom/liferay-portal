@@ -2299,20 +2299,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiFileUploadConfiguration.class, properties);
 	}
 
-	private void _clearPageCache(WikiPage page) {
-		if (!WikiCacheThreadLocal.isClearCache()) {
-			return;
-		}
-
-		_portalCache.removeAll();
-	}
-
 	@Deactivate
 	@Override
 	protected void deactivate() {
 		super.deactivate();
 
 		_serviceTrackerMap.close();
+
+		_portalCache.removeAll();
+	}
+
+	private void _clearPageCache(WikiPage page) {
+		if (!WikiCacheThreadLocal.isClearCache()) {
+			return;
+		}
 
 		_portalCache.removeAll();
 	}

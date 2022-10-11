@@ -456,27 +456,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	private Date _getMaxAge(Group group) throws PortalException {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(new Date());
-
-		int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
-			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
-			PropsValues.TRASH_ENTRIES_MAX_AGE);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			group.getParentLiveGroupTypeSettingsProperties();
-
-		calendar.add(
-			Calendar.MINUTE,
-			-GetterUtil.getInteger(
-				typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
-				trashEntriesMaxAge));
-
-		return calendar.getTime();
-	}
-
 	private List<TrashEntry> _getEntries(Hits hits) {
 		List<TrashEntry> entries = new ArrayList<>();
 
@@ -540,6 +519,27 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		}
 
 		return entries;
+	}
+
+	private Date _getMaxAge(Group group) throws PortalException {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(new Date());
+
+		int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
+			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
+			PropsValues.TRASH_ENTRIES_MAX_AGE);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getParentLiveGroupTypeSettingsProperties();
+
+		calendar.add(
+			Calendar.MINUTE,
+			-GetterUtil.getInteger(
+				typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
+				trashEntriesMaxAge));
+
+		return calendar.getTime();
 	}
 
 	private boolean _isTrashEnabled(Group group) {

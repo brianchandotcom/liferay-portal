@@ -323,7 +323,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		long companyId, String keywords, int status, int start, int end,
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator) {
 
-		List<Long> kaleoDefinitionVersionIds = getKaleoDefinitionVersionIds(
+		List<Long> kaleoDefinitionVersionIds = _getKaleoDefinitionVersionIds(
 			companyId, keywords, status);
 
 		if (kaleoDefinitionVersionIds.isEmpty()) {
@@ -345,13 +345,13 @@ public class KaleoDefinitionVersionLocalServiceImpl
 	public int getLatestKaleoDefinitionVersionsCount(
 		long companyId, String keywords, int status) {
 
-		List<Long> kaleoDefinitionVersionIds = getKaleoDefinitionVersionIds(
+		List<Long> kaleoDefinitionVersionIds = _getKaleoDefinitionVersionIds(
 			companyId, keywords, status);
 
 		return kaleoDefinitionVersionIds.size();
 	}
 
-	protected void addKeywordsCriterion(
+	private void _addKeywordsCriterion(
 		DynamicQuery dynamicQuery, String keywords) {
 
 		if (Validator.isNull(keywords)) {
@@ -369,7 +369,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		dynamicQuery.add(junction);
 	}
 
-	protected void addStatusCriterion(DynamicQuery dynamicQuery, int status) {
+	private void _addStatusCriterion(DynamicQuery dynamicQuery, int status) {
 		if (status != WorkflowConstants.STATUS_ANY) {
 			Junction junction = RestrictionsFactoryUtil.disjunction();
 
@@ -379,7 +379,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		}
 	}
 
-	protected List<Long> getKaleoDefinitionVersionIds(
+	private List<Long> _getKaleoDefinitionVersionIds(
 		long companyId, String keywords, int status) {
 
 		List<Long> kaleoDefinitionVersionIds = new ArrayList<>();
@@ -391,9 +391,9 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		dynamicQuery.add(companyIdProperty.eq(companyId));
 
-		addKeywordsCriterion(dynamicQuery, keywords);
+		_addKeywordsCriterion(dynamicQuery, keywords);
 
-		addStatusCriterion(dynamicQuery, status);
+		_addStatusCriterion(dynamicQuery, status);
 
 		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
 

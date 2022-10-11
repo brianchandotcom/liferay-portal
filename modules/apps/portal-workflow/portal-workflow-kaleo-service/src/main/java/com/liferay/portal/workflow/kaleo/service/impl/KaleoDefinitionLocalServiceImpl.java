@@ -149,7 +149,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
 			kaleoDefinitionId, name, title, description, content,
-			getVersion(version), serviceContext);
+			_getVersion(version), serviceContext);
 
 		return kaleoDefinition;
 	}
@@ -368,12 +368,12 @@ public class KaleoDefinitionLocalServiceImpl
 
 		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
 			kaleoDefinitionId, kaleoDefinition.getName(), title, description,
-			content, getVersion(nextVersion), serviceContext);
+			content, _getVersion(nextVersion), serviceContext);
 
 		return kaleoDefinition;
 	}
 
-	protected String getVersion(int version) {
+	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
 

@@ -518,6 +518,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161732. When the page creator customizes the favorited widgets and order of widgets section on page editor, it should not be propagated to another user session."
+	@priority = "4"
+	test PropogateCustomizedOrderOfWidgetCategoriesAndFavoriteWidgetsToAddPanelByEachUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.modules.includes = "portal-reports-engine-console";
+
+		task ("Given a page creator customizes the order of widget categories and mark the Blogs as favorite in the Fragments and Widgets panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Widgets",
+				setName = "Commerce");
+
+			PageEditor.markFavorite(
+				collectionName = "Collaboration",
+				fragmentName = "Blogs");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When a site administrator navigates to the Add panel") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+		}
+
+		task ("Then the site administrator sees the default order of widget categories and default favorite widgets on Add panel") {
+			AssertVisible(
+				index = "5",
+				key_panel = "Commerce",
+				locator1 = "Panel#PANEL_BY_INDEX");
+
+			AssertElementNotPresent(
+				key_categoryName = "Highlighted",
+				key_portletName = "Blogs",
+				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK_BY_CATEGORY");
+		}
+	}
+
 	@description = "This is a test for LPS-161732. When the page creator customizes the order of widgets section on page editor, the same order should be shown on Add panel widget pages."
 	@priority = "4"
 	test PropogateCustomizedOrderOfWidgetCategoriesToAddPanel {

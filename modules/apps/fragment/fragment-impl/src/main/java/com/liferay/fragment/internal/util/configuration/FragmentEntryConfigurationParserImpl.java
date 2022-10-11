@@ -234,7 +234,7 @@ public class FragmentEntryConfigurationParserImpl
 		FragmentConfigurationField fragmentConfigurationField, Locale locale,
 		String value) {
 
-		return _getFieldValue(null, fragmentConfigurationField, locale, value);
+		return _getFieldValue(fragmentConfigurationField, locale, value);
 	}
 
 	@Override
@@ -452,63 +452,6 @@ public class FragmentEntryConfigurationParserImpl
 	}
 
 	private Object _getFieldValue(
-		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType,
-		String value) {
-
-		if (fragmentConfigurationFieldDataType ==
-				FragmentConfigurationFieldDataType.ARRAY) {
-
-			try {
-				return JSONFactoryUtil.createJSONArray(value);
-			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse configuration JSON: " + value,
-						jsonException);
-				}
-			}
-		}
-		else if (fragmentConfigurationFieldDataType ==
-					FragmentConfigurationFieldDataType.BOOLEAN) {
-
-			return GetterUtil.getBoolean(value);
-		}
-		else if (fragmentConfigurationFieldDataType ==
-					FragmentConfigurationFieldDataType.DOUBLE) {
-
-			return GetterUtil.getDouble(value);
-		}
-		else if (fragmentConfigurationFieldDataType ==
-					FragmentConfigurationFieldDataType.INTEGER) {
-
-			return GetterUtil.getInteger(value);
-		}
-		else if (fragmentConfigurationFieldDataType ==
-					FragmentConfigurationFieldDataType.OBJECT) {
-
-			try {
-				return JSONFactoryUtil.createJSONObject(value);
-			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse configuration JSON: " + value,
-						jsonException);
-				}
-			}
-		}
-		else if (fragmentConfigurationFieldDataType ==
-					FragmentConfigurationFieldDataType.STRING) {
-
-			return value;
-		}
-
-		return null;
-	}
-
-	private Object _getFieldValue(
-		Object displayObject,
 		FragmentConfigurationField fragmentConfigurationField, Locale locale,
 		String value) {
 
@@ -571,8 +514,7 @@ public class FragmentEntryConfigurationParserImpl
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "itemSelector")) {
 
-			return _getInfoDisplayObjectEntryJSONObject(
-				displayObject, parsedValue);
+			return _getInfoDisplayObjectEntryJSONObject(parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "length") ||
@@ -602,6 +544,62 @@ public class FragmentEntryConfigurationParserImpl
 
 		return _getFieldValue(
 			FragmentConfigurationFieldDataType.STRING, parsedValue);
+	}
+
+	private Object _getFieldValue(
+		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType,
+		String value) {
+
+		if (fragmentConfigurationFieldDataType ==
+				FragmentConfigurationFieldDataType.ARRAY) {
+
+			try {
+				return JSONFactoryUtil.createJSONArray(value);
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse configuration JSON: " + value,
+						jsonException);
+				}
+			}
+		}
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.BOOLEAN) {
+
+			return GetterUtil.getBoolean(value);
+		}
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.DOUBLE) {
+
+			return GetterUtil.getDouble(value);
+		}
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.INTEGER) {
+
+			return GetterUtil.getInteger(value);
+		}
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.OBJECT) {
+
+			try {
+				return JSONFactoryUtil.createJSONObject(value);
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse configuration JSON: " + value,
+						jsonException);
+				}
+			}
+		}
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.STRING) {
+
+			return value;
+		}
+
+		return null;
 	}
 
 	private Object _getInfoDisplayObjectEntry(String value) {
@@ -637,16 +635,8 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
-	private JSONObject _getInfoDisplayObjectEntryJSONObject(
-		Object displayObject, String value) {
-
+	private JSONObject _getInfoDisplayObjectEntryJSONObject(String value) {
 		try {
-			if (displayObject != null) {
-				return JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.looseSerialize(
-						_getInfoDisplayObjectEntry(value)));
-			}
-
 			if (Validator.isNull(value) ||
 				Objects.equals(value, JSONFactoryUtil.getNullJSON())) {
 

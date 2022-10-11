@@ -439,6 +439,8 @@ definition {
 	macro viewEntry {
 		WaitForSPARefresh();
 
+		SelectFrameTop();
+
 		AssertElementPresent(
 			key_entry = "${entry}",
 			locator1 = "ObjectPortlet#ENTRY_VALUE");

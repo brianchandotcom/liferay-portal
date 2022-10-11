@@ -20,9 +20,9 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
-		Button.clickAdd();
+		Button.click(button = "Add");
 
-		SelectFrame.selectFrameTop();
+		SelectFrameTop();
 
 		if ("${sitePageType}" == "Embedded") {
 			Type(

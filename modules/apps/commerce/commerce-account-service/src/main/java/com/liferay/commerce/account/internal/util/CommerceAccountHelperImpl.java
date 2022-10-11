@@ -32,7 +32,6 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -140,14 +139,21 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
 
+		long userId = _portal.getUserId(httpServletRequest);
+
 		CommerceAccount commerceAccount = CommerceAccountImpl.fromAccountEntry(
 			_currentAccountEntryManager.getCurrentAccountEntry(
-				commerceChannel.getSiteGroupId(),
-				_portal.getUserId(httpServletRequest)));
+				commerceChannel.getSiteGroupId(), userId));
 
 		if ((commerceAccount == null) || !commerceAccount.isActive()) {
-			commerceAccount = _getSingleCommerceAccount(
-				commerceChannelGroupId, httpServletRequest);
+			int commerceSiteType = _getCommerceSiteType(commerceChannelGroupId);
+
+			if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) ||
+				(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X)) {
+
+				commerceAccount =
+					_commerceAccountService.getPersonalCommerceAccount(userId);
+			}
 
 			if (commerceAccount == null) {
 				setCurrentCommerceAccount(
@@ -247,39 +253,6 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 						CommerceAccountConstants.SERVICE_NAME));
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
-	}
-
-	private CommerceAccount _getSingleCommerceAccount(
-			long commerceChannelGroupId, HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		User user = _portal.getUser(httpServletRequest);
-
-		if ((user == null) || user.isDefaultUser()) {
-			return _commerceAccountLocalService.getGuestCommerceAccount(
-				_portal.getCompanyId(httpServletRequest));
-		}
-
-		int commerceSiteType = _getCommerceSiteType(commerceChannelGroupId);
-
-		if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) ||
-			(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X)) {
-
-			return _commerceAccountService.getPersonalCommerceAccount(
-				user.getUserId());
-		}
-
-		List<CommerceAccount> userCommerceAccounts =
-			_commerceAccountService.getUserCommerceAccounts(
-				user.getUserId(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				commerceSiteType, StringPool.BLANK, true, 0, 1);
-
-		if (userCommerceAccounts.size() == 1) {
-			return userCommerceAccounts.get(0);
-		}
-
-		return null;
 	}
 
 	@Reference

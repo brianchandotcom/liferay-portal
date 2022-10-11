@@ -602,12 +602,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Move vocabulary from available to in use") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
-		}
-
-		task ("Move vocabulary from available to in use") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary Name 1");
+		task ("Move vocabularies between In Use and Available") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience,Vocabulary Name 1");
 		}
 
 		task ("Assert the site vocabularies in the graph") {
@@ -666,20 +662,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Move vocabulary from In use to Available") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
-		}
-
-		task ("Move vocabulary from available to in use") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary Name 1");
-		}
-
-		task ("Move vocabulary from In use to Available") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
-		}
-
-		task ("Move vocabulary from available to in use") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary Name 2");
+		task ("Move vocabularies between In Use and Available") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience,Vocabulary Name 1,Stage,Vocabulary Name 2");
 		}
 
 		task ("Assert the site vocabularies in the graph") {
@@ -744,14 +728,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Configure the audit graph with the previous created categories") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
-
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary 1");
-
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
-
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary 2");
+		task ("Move vocabularies between In Use and Available") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience,Vocabulary Name 1,Stage,Vocabulary Name 2");
 		}
 
 		task ("Assert the blog is counted as an asset") {
@@ -951,13 +929,9 @@ definition {
 		}
 
 		task ("Move all vocabularies from In Use and check warning message") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
-
 			ContentDashboard.moveVocabularyDisplayConfiguration(
-				notCloseFrame = "true",
-				vocabularyName = "Stage");
-
-			Alert.viewWarningSpecific(warningMessage = "You have not selected any vocabularies");
+				warningMessage = "You have not selected any vocabularies",
+				vocabularyName = "Audience,Stage");
 		}
 	}
 

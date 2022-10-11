@@ -264,34 +264,37 @@ definition {
 	}
 
 	macro moveVocabularyDisplayConfiguration {
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+		ContentDashboard.openAuditGraphConfiguration();
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		for (var key_vocabularyName : list "${vocabularyName}") {
+			if (IsElementPresent(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE")) {
+				Click.clickNoMouseOver(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
 
-		if (IsElementPresent(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE")) {
-			var key_vocabularyName = "${vocabularyName}";
+				Click(
+					ariaLabel = "Transfer Item Right to Left",
+					locator1 = "Button#ANY_WITH_ARIA_LABEL")
+			}
+			else if (IsElementPresent(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE")) {
+				Click.clickNoMouseOver(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
 
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
+				Click(
+					ariaLabel = "Transfer Item Left to Right",
+					locator1 = "Button#ANY_WITH_ARIA_LABEL")
+			}
 
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON");
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
 		}
-		else if (IsElementPresent(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE")) {
-			var key_vocabularyName = "${vocabularyName}";
 
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE");
-
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+		if ((isSet(warningMessage))) {
+			Alert.viewWarningSpecific(warningMessage = "${warningMessage}");
 		}
-
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		if (!(isSet(notCloseFrame))) {
+		else {
 			Alert.viewSuccessMessage();
-
-			IFrame.closeFrame();
 		}
+
+		IFrame.closeFrame();
 	}
 
 	macro openAuditGraphConfiguration {

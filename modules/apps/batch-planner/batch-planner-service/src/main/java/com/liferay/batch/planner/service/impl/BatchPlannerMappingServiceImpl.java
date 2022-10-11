@@ -42,17 +42,18 @@ public class BatchPlannerMappingServiceImpl
 
 	@Override
 	public BatchPlannerMapping addBatchPlannerMapping(
-			long batchPlannerPlanId, String externalFieldName,
-			String externalFieldType, String internalFieldName,
-			String internalFieldType, String script)
+			String externalReferenceCode, long batchPlannerPlanId,
+			String externalFieldName, String externalFieldType,
+			String internalFieldName, String internalFieldType, String script)
 		throws PortalException {
 
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.UPDATE);
 
 		return batchPlannerMappingLocalService.addBatchPlannerMapping(
-			getUserId(), batchPlannerPlanId, externalFieldName,
-			externalFieldType, internalFieldName, internalFieldType, script);
+			externalReferenceCode, getUserId(), batchPlannerPlanId,
+			externalFieldName, externalFieldType, internalFieldName,
+			internalFieldType, script);
 	}
 
 	@Override

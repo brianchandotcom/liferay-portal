@@ -42,14 +42,16 @@ public class BatchPlannerPolicyServiceImpl
 
 	@Override
 	public BatchPlannerPolicy addBatchPlannerPolicy(
-			long batchPlannerPlanId, String name, String value)
+			String externalReferenceCode, long batchPlannerPlanId, String name,
+			String value)
 		throws PortalException {
 
 		_batchPlannerPlanModelResourcePermission.check(
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.UPDATE);
 
 		return batchPlannerPolicyLocalService.addBatchPlannerPolicy(
-			getUserId(), batchPlannerPlanId, name, value);
+			externalReferenceCode, getUserId(), batchPlannerPlanId, name,
+			value);
 	}
 
 	@Override

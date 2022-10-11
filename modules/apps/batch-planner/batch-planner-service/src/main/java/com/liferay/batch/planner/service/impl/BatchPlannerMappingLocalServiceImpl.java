@@ -46,9 +46,9 @@ public class BatchPlannerMappingLocalServiceImpl
 
 	@Override
 	public BatchPlannerMapping addBatchPlannerMapping(
-			long userId, long batchPlannerPlanId, String externalFieldName,
-			String externalFieldType, String internalFieldName,
-			String internalFieldType, String script)
+			String externalReferenceCode, long userId, long batchPlannerPlanId,
+			String externalFieldName, String externalFieldType,
+			String internalFieldName, String internalFieldType, String script)
 		throws PortalException {
 
 		BatchPlannerMapping batchPlannerMapping =

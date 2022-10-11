@@ -43,7 +43,8 @@ public class BatchPlannerPolicyLocalServiceImpl
 
 	@Override
 	public BatchPlannerPolicy addBatchPlannerPolicy(
-			long userId, long batchPlannerPlanId, String name, String value)
+			String externalReferenceCode, long userId, long batchPlannerPlanId,
+			String name, String value)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {

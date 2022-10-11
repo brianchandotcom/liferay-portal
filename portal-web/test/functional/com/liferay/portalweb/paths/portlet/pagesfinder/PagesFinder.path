@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_ICON</td>
+	<td>//div[contains(@class,'pages-tree')]//*[contains(@class,'tree-node')]//a[normalize-space()='${key_pageName}']//span[contains(@class,'page-icon')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_NAME</td>
 	<td>//div[contains(@class,'pages-tree')]//*[contains(@class,'tree-node')]//a[normalize-space()='${key_pageName}']</td>
 	<td></td>

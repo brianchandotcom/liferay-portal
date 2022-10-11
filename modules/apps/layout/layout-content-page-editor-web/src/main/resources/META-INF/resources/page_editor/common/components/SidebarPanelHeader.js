@@ -14,7 +14,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import {switchSidebarPanel} from '../../app/actions/index';
@@ -43,7 +42,3 @@ export default function SidebarPanelHeader({children}) {
 		</header>
 	);
 }
-
-SidebarPanelHeader.propTypes = {
-	padded: PropTypes.bool,
-};

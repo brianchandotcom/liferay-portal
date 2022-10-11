@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.search;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;

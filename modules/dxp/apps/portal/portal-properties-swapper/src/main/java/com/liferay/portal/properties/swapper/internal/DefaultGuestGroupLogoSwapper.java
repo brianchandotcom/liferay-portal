@@ -14,7 +14,6 @@
 
 package com.liferay.portal.properties.swapper.internal;
 
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -42,12 +41,8 @@ public class DefaultGuestGroupLogoSwapper {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		long companyId = _portal.getDefaultCompanyId();
-
-		Company company = _companyLocalService.getCompany(companyId);
-
 		Group group = _groupLocalService.getGroup(
-			company.getCompanyId(), GroupConstants.GUEST);
+			_portal.getDefaultCompanyId(), GroupConstants.GUEST);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);

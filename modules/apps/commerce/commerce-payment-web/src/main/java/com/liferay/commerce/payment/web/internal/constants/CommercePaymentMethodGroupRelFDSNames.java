@@ -21,6 +21,9 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
  */
 public class CommercePaymentMethodGroupRelFDSNames {
 
+	public static final String ACCOUNT_ENTRY_DEFAULT_PAYMENTS =
+		CPPortletKeys.COMMERCE_PAYMENT_METHODS + "-payments";
+
 	public static final String ORDER_TYPES =
 		CPPortletKeys.COMMERCE_PAYMENT_METHODS + "-orderTypes";
 

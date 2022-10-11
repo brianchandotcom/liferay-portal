@@ -67,12 +67,6 @@ describe('MapBase', () => {
 	const GeoJSONImpl = jest.fn().mockImplementation(() => geoJSONImpl);
 
 	beforeEach(() => {
-		window.Liferay = {
-			Util: {
-				getGeolocation: jest.fn(),
-			},
-		};
-
 		MapImpl.MarkerImpl = MarkerImpl;
 		MapImpl.DialogImpl = DialogImpl;
 		MapImpl.GeocoderImpl = GeocoderImpl;
@@ -127,12 +121,6 @@ describe('MapBase', () => {
 
 	describe('constructor()', () => {
 		it('calls _initializeMap as a fallback', () => {
-			window.Liferay = {
-				Util: {
-					getGeolocation: jest.fn((success, fallback) => fallback()),
-				},
-			};
-
 			jest.spyOn(MapImpl.prototype, '_initializeMap');
 
 			const mapImpl = new MapImpl();
@@ -161,6 +149,8 @@ describe('MapBase', () => {
 
 		it('disposes existing search custom control', () => {
 			const control = {dispose: jest.fn()};
+
+			mapImpl._geoJSONLayer = {dispose: jest.fn()};
 
 			mapImpl._customControls = {[MapImpl.CONTROLS.SEARCH]: control};
 
@@ -288,6 +278,8 @@ describe('MapBase', () => {
 	describe('_getGeoCoder()', () => {
 		it('does nothing if there is no MapBase.GeocoderImpl', () => {
 			MapImpl.GeocoderImpl = null;
+
+			mapImpl = new MapImpl();
 
 			expect(mapImpl._getGeocoder()).toBe(null);
 		});

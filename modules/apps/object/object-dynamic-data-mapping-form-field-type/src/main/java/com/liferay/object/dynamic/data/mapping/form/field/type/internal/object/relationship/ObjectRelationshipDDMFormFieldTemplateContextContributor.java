@@ -27,7 +27,6 @@ import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -247,17 +245,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private Portal _portal;

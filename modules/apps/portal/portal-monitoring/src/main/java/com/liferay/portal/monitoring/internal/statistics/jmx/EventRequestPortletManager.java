@@ -15,6 +15,7 @@
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.monitoring.internal.statistics.portlet.EventRequestSummaryStatistics;
+import com.liferay.portal.monitoring.internal.statistics.portlet.PortletSummaryStatistics;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
@@ -39,11 +40,19 @@ public class EventRequestPortletManager extends PortletManager {
 		super(PortletManagerMBean.class);
 	}
 
+	@Override
+	protected PortletSummaryStatistics getPortletSummaryStatistics() {
+		return _eventRequestSummaryStatistics;
+	}
+
 	@Reference(unbind = "-")
 	protected void setEventRequestSummaryStatistics(
 		EventRequestSummaryStatistics eventRequestSummaryStatistics) {
 
 		super.setPortletSummaryStatistics(eventRequestSummaryStatistics);
 	}
+
+	@Reference
+	private EventRequestSummaryStatistics _eventRequestSummaryStatistics;
 
 }

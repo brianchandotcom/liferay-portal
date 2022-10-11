@@ -1378,10 +1378,6 @@ public class ObjectDefinitionLocalServiceImpl
 			return;
 		}
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158473"))) {
-			throw new UnsupportedOperationException();
-		}
-
 		if (system) {
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
 				"Enable object entry history is not allowed for system " +

@@ -23,7 +23,12 @@ definition {
 		}
 
 		task ("Adding a user to the project") {
-			CustomerPortal.createUserForCP();
+			CustomerPortal.createUserForCP(
+				userFirstName = "User",
+				userLastName = "2",
+				userScreenName = "Testing",
+				accountName = "Test Account Portal",
+				userName = "User 2");
 		}
 
 		task ("Add test user access to all Accounts") {
@@ -49,70 +54,64 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150835 | Test Summary: Verify if no results are found show an error message"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheErrorMessageWhenNoResultsAreFound {
-		property portal.upstream = "quarantine";
-
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
-		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-		}
-
-		task ("Login in Okta") {
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			Navigator.openURL();
 
-			Refresh();
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("Get into the project") {
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
 			CustomerPortal.enterOnProject(
 				status = "Future",
-				title = "Test Account Portal");
+				title = "${testAccount}");
 		}
 
 		task ("Go to the team members page") {
 			CP2NavigationMenu.goToTeamMembers();
 		}
 
-		task ("Search for the user's first name and affirm that the search worked") {
+		task ("Search for the user's first name") {
 			CP2TeamMembers.searchCP(search = "abcd");
 
 			KeyPress(
 				locator1 = "CP2TeamMembers#SEARCH_TM",
 				value1 = "\ENTER");
+		}
 
-			AssertTextEquals(
-				locator1 = "CP2TeamMembers#ERROR_MESSAGE",
-				value1 = "No team members found with this search criteria.");
+		task ("Then I should see the alert with the text No team members found with this search criteria.") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "No team members found with this search criteria.");
 		}
 	}
 
 	@description = "Automation ID: LPS-150834 | Test Summary: Verify if in the text box search it filters by email"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSearchFiltersByEmail {
-		property portal.upstream = "quarantine";
-
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
-		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-		}
-
-		task ("Login in Okta") {
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			Navigator.openURL();
 
-			Refresh();
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("Get into the project") {
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
 			CustomerPortal.enterOnProject(
 				status = "Future",
-				title = "Test Account Portal");
+				title = "${testAccount}");
 		}
 
 		task ("Go to the team members page") {
@@ -133,28 +132,25 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150832 | Test Summary: Verify if the text box search filters by first and last name"
+	@ignore = "true"
 	@priority = "5"
 	test VerifyTheSearchFiltersByFirstAndLastName {
-		property portal.upstream = "quarantine";
-
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
-		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-		}
-
-		task ("Login in Okta") {
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			Navigator.openURL();
 
-			Refresh();
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("Get into the project") {
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
 			CustomerPortal.enterOnProject(
 				status = "Future",
-				title = "Test Account Portal");
+				title = "${testAccount}");
 		}
 
 		task ("Go to the team members page") {

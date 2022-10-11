@@ -24,6 +24,8 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActi
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
+import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -486,6 +488,28 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	@Test
+	public void testIsShowContentDashboardItemVersions() throws Exception {
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			_getFileEntryContentDashboardItemWithDLDisplayContext(true);
+
+		Assert.assertTrue(
+			fileEntryContentDashboardItem.isShowContentDashboardItemVersions(
+				Mockito.mock(HttpServletRequest.class)));
+	}
+
+	@Test
+	public void testIsShowContentDashboardItemVersionsForUnsupportedFileEntry()
+		throws Exception {
+
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			_getFileEntryContentDashboardItemWithDLDisplayContext(false);
+
+		Assert.assertFalse(
+			fileEntryContentDashboardItem.isShowContentDashboardItemVersions(
+				Mockito.mock(HttpServletRequest.class)));
+	}
+
+	@Test
 	public void testIsViewable() throws Exception {
 		FileEntry fileEntry = _getFileEntry();
 
@@ -759,6 +783,37 @@ public class FileEntryContentDashboardItemTest {
 		);
 
 		return fileEntry;
+	}
+
+	private FileEntryContentDashboardItem
+			_getFileEntryContentDashboardItemWithDLDisplayContext(
+				boolean showVersionInfoVisible)
+		throws Exception {
+
+		FileEntry fileEntry = _getFileEntry();
+
+		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
+			Mockito.mock(DLEditFileEntryDisplayContext.class);
+
+		Mockito.when(
+			dlEditFileEntryDisplayContext.isVersionInfoVisible()
+		).thenReturn(
+			showVersionInfoVisible
+		);
+
+		DLDisplayContextProvider dlDisplayContextProvider = Mockito.mock(
+			DLDisplayContextProvider.class);
+
+		Mockito.when(
+			dlDisplayContextProvider.getDLEditFileEntryDisplayContext(
+				Mockito.any(), Mockito.any(), Mockito.any(FileEntry.class))
+		).thenReturn(
+			dlEditFileEntryDisplayContext
+		);
+
+		return new FileEntryContentDashboardItem(
+			null, null, null, null, null, dlDisplayContextProvider, null,
+			fileEntry, null, null, null, null);
 	}
 
 	private HttpServletRequest _getHttpServletRequest(long userId)

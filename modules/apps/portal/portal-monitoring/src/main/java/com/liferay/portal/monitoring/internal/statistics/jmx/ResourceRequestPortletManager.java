@@ -45,13 +45,6 @@ public class ResourceRequestPortletManager extends PortletManager {
 		return _resourceRequestSummaryStatistics;
 	}
 
-	@Reference(unbind = "-")
-	protected void setResourceRequestSummaryStatistics(
-		ResourceRequestSummaryStatistics resourceRequestSummaryStatistics) {
-
-		super.setPortletSummaryStatistics(resourceRequestSummaryStatistics);
-	}
-
 	@Reference
 	private ResourceRequestSummaryStatistics _resourceRequestSummaryStatistics;
 

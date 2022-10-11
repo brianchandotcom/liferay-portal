@@ -45,13 +45,6 @@ public class EventRequestPortletManager extends PortletManager {
 		return _eventRequestSummaryStatistics;
 	}
 
-	@Reference(unbind = "-")
-	protected void setEventRequestSummaryStatistics(
-		EventRequestSummaryStatistics eventRequestSummaryStatistics) {
-
-		super.setPortletSummaryStatistics(eventRequestSummaryStatistics);
-	}
-
 	@Reference
 	private EventRequestSummaryStatistics _eventRequestSummaryStatistics;
 

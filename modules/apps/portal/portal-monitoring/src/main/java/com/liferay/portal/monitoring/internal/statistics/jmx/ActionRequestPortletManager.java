@@ -45,13 +45,6 @@ public class ActionRequestPortletManager extends PortletManager {
 		return _actionRequestSummaryStatistics;
 	}
 
-	@Reference(unbind = "-")
-	protected void setActionRequestSummaryStatistics(
-		ActionRequestSummaryStatistics actionRequestSummaryStatistics) {
-
-		super.setPortletSummaryStatistics(actionRequestSummaryStatistics);
-	}
-
 	@Reference
 	private ActionRequestSummaryStatistics _actionRequestSummaryStatistics;
 

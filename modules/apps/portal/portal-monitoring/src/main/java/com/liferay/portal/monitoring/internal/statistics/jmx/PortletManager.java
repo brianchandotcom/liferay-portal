@@ -487,14 +487,6 @@ public abstract class PortletManager
 
 	protected abstract PortletSummaryStatistics getPortletSummaryStatistics();
 
-	protected void setPortletSummaryStatistics(
-		PortletSummaryStatistics portletSummaryStatistics) {
-
-		_portletSummaryStatistics = portletSummaryStatistics;
-	}
-
-	private PortletSummaryStatistics _portletSummaryStatistics;
-
 	@Reference
 	private ServerStatistics _serverStatistics;
 

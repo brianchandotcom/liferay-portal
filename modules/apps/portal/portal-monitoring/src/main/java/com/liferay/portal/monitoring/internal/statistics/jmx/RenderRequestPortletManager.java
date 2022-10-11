@@ -45,13 +45,6 @@ public class RenderRequestPortletManager extends PortletManager {
 		return _renderRequestSummaryStatistics;
 	}
 
-	@Reference(unbind = "-")
-	protected void setRenderRequestSummaryStatistics(
-		RenderRequestSummaryStatistics renderRequestSummaryStatistics) {
-
-		super.setPortletSummaryStatistics(renderRequestSummaryStatistics);
-	}
-
 	@Reference
 	private RenderRequestSummaryStatistics _renderRequestSummaryStatistics;
 

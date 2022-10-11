@@ -4178,6 +4178,32 @@ paths:
                                     $ref: "#/components/schemas/PostalAddress"
                                 type: array
             tags: ["PostalAddress"]
+    "/user-accounts/{userAccountId}/user-groups":
+        get:
+            description:
+                Retrieves the user's user groups.
+            operationId: getUserUserGroups
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserGroup"
+                                type: array
+            tags: ["UserGroup"]
     "/user-accounts/{userAccountId}/web-urls":
         get:
             description:

@@ -47,6 +47,67 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164104. View fragment with fragmentEntryLinkNamespace variable to JavaScript on content page."
+	@priority = "4"
+	test AddFragmentWithFragmentEntryLinkNamespaceInJavaScriptToContentPage {
+		task ("Given a page creator has a fragment with fragmentEntryLinkNamespace in JavaScript") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+    <div id="fragment-${fragmentEntryLinkNamespace}"></div>
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			var jsSnippet = '''
+const element = document.getElementById(`fragment-${fragmentEntryLinkNamespace}`);
+element.textContent = 'Fragment Example';''';
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+
+			FragmentsEditor.publish();
+		}
+
+		task ("When the page creator adds the new fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the page creator sees the content of new fragment") {
+			AssertTextEquals(
+				index = "1",
+				key_fragmentName = "Fragment Name",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
+				value1 = "Fragment Example");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creators sees the content of new fragment") {
+			AssertTextEquals(
+				fragmentName = "fragment-name",
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Fragment Example");
+		}
+	}
+
 	@description = "This is a test for LPS-158328. The user can change default resource image on content page after propagation."
 	@priority = "4"
 	test ChangeResourceImageAfterPropagation {

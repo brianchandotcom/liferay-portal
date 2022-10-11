@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
@@ -218,6 +219,7 @@ public class TaskResourceFactoryImpl implements TaskResource.Factory {
 		taskResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		taskResource.setRoleLocalService(_roleLocalService);
+		taskResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(taskResource, arguments);
@@ -265,6 +267,9 @@ public class TaskResourceFactoryImpl implements TaskResource.Factory {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

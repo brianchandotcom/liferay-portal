@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -102,6 +103,8 @@ public interface DisplayPageTemplateResource {
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
+	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
 	public default Filter toFilter(String filterString) {
 		return toFilter(
 			filterString, Collections.<String, List<String>>emptyMap());
@@ -111,6 +114,10 @@ public interface DisplayPageTemplateResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
+	}
+
+	public default Sort[] toSorts(String sortsString) {
+		return new Sort[] {};
 	}
 
 	public static class FactoryHolder {

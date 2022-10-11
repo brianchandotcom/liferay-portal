@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -220,6 +221,7 @@ public class OrderNoteResourceFactoryImpl implements OrderNoteResource.Factory {
 		orderNoteResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		orderNoteResource.setRoleLocalService(_roleLocalService);
+		orderNoteResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(orderNoteResource, arguments);
@@ -267,6 +269,9 @@ public class OrderNoteResourceFactoryImpl implements OrderNoteResource.Factory {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

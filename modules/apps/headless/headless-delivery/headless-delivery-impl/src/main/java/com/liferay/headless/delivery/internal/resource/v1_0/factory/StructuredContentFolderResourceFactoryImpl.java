@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -228,6 +229,8 @@ public class StructuredContentFolderResourceFactoryImpl
 		structuredContentFolderResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		structuredContentFolderResource.setRoleLocalService(_roleLocalService);
+		structuredContentFolderResource.setSortParserProvider(
+			_sortParserProvider);
 
 		try {
 			return method.invoke(structuredContentFolderResource, arguments);
@@ -279,6 +282,9 @@ public class StructuredContentFolderResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessVersionResource;
@@ -223,6 +224,7 @@ public class ProcessVersionResourceFactoryImpl
 		processVersionResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		processVersionResource.setRoleLocalService(_roleLocalService);
+		processVersionResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(processVersionResource, arguments);
@@ -272,6 +274,9 @@ public class ProcessVersionResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

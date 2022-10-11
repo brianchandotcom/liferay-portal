@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
@@ -112,6 +114,8 @@ public interface ProcessResource {
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
+	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
 	public void setVulcanBatchEngineImportTaskResource(
 		VulcanBatchEngineImportTaskResource
 			vulcanBatchEngineImportTaskResource);
@@ -125,6 +129,10 @@ public interface ProcessResource {
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
+	}
+
+	public default Sort[] toSorts(String sortsString) {
+		return new Sort[] {};
 	}
 
 	public static class FactoryHolder {

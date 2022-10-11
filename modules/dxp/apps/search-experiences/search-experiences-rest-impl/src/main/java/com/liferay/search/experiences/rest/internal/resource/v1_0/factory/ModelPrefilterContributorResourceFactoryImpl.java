@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorResource;
@@ -230,6 +231,8 @@ public class ModelPrefilterContributorResourceFactoryImpl
 			_resourcePermissionLocalService);
 		modelPrefilterContributorResource.setRoleLocalService(
 			_roleLocalService);
+		modelPrefilterContributorResource.setSortParserProvider(
+			_sortParserProvider);
 
 		try {
 			return method.invoke(modelPrefilterContributorResource, arguments);
@@ -281,6 +284,9 @@ public class ModelPrefilterContributorResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

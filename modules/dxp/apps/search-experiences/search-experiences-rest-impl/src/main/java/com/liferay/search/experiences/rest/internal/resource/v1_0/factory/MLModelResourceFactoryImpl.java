@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
@@ -219,6 +220,7 @@ public class MLModelResourceFactoryImpl implements MLModelResource.Factory {
 		mlModelResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		mlModelResource.setRoleLocalService(_roleLocalService);
+		mlModelResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(mlModelResource, arguments);
@@ -266,6 +268,9 @@ public class MLModelResourceFactoryImpl implements MLModelResource.Factory {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

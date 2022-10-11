@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -218,6 +219,7 @@ public class PlanResourceFactoryImpl implements PlanResource.Factory {
 		planResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		planResource.setRoleLocalService(_roleLocalService);
+		planResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(planResource, arguments);
@@ -265,6 +267,9 @@ public class PlanResourceFactoryImpl implements PlanResource.Factory {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

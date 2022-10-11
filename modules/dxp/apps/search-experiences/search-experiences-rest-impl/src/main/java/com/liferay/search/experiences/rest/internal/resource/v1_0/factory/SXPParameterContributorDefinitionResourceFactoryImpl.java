@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributorDefinitionResource;
@@ -233,6 +234,8 @@ public class SXPParameterContributorDefinitionResourceFactoryImpl
 			setResourcePermissionLocalService(_resourcePermissionLocalService);
 		sxpParameterContributorDefinitionResource.setRoleLocalService(
 			_roleLocalService);
+		sxpParameterContributorDefinitionResource.setSortParserProvider(
+			_sortParserProvider);
 
 		try {
 			return method.invoke(
@@ -285,6 +288,9 @@ public class SXPParameterContributorDefinitionResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

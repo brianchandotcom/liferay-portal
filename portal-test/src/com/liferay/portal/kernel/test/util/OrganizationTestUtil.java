@@ -140,7 +140,7 @@ public class OrganizationTestUtil {
 			organization.getCompanyId(), organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
 			organization.getType(), organization.getRegionId(),
-			organization.getCountryId(), organization.getStatusId(),
+			organization.getCountryId(), organization.getStatusListTypeId(),
 			organization.getComments(), false, null, true, null);
 	}
 

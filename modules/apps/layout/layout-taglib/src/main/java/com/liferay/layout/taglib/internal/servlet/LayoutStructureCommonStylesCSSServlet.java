@@ -374,11 +374,18 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		if (styleName.startsWith("margin") || styleName.startsWith("padding")) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("var(--spacer-");
-			sb.append(value);
-			sb.append(StringPool.COMMA);
-			sb.append(_spacings.get(value));
-			sb.append("rem)");
+			String spacingValue = _spacings.get(value);
+
+			if (Validator.isNotNull(spacingValue)) {
+				sb.append("var(--spacer-");
+				sb.append(value);
+				sb.append(StringPool.COMMA);
+				sb.append(spacingValue);
+				sb.append("rem)");
+			}
+			else {
+				sb.append(value);
+			}
 
 			return sb.toString();
 		}

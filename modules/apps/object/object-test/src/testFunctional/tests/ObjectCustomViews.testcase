@@ -841,6 +841,8 @@ definition {
 
 			DropdownMenuItem.click(menuItem = "Edit");
 
+			Click(locator1 = "ObjectCustomViews#CLEAR_FILTER");
+
 			Click(
 				key_filterLabel = "Value",
 				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");

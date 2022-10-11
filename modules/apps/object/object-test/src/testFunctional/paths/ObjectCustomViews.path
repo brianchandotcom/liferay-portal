@@ -250,6 +250,11 @@
 		<td>//div[contains(@class, 'portlet-body') and contains(., 'Custom View')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CLEAR_FILTER</td>
+		<td>//button[contains(@type, 'button') and contains(@title, 'Clear All')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

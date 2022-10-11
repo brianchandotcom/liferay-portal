@@ -29,7 +29,10 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 		if (invalidateRequired(label)) {
 			errors.name_i18n = REQUIRED_MSG;
 		}
-		if (invalidateRequired(picklist.externalReferenceCode)) {
+		if (
+			Liferay.FeatureFlags['LPS-164278'] &&
+			invalidateRequired(picklist.externalReferenceCode)
+		) {
 			errors.externalReferenceCode = REQUIRED_MSG;
 		}
 

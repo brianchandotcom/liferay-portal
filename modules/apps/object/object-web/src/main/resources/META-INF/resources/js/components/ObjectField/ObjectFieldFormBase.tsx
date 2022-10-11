@@ -296,10 +296,12 @@ export default function ObjectFieldFormBase({
 					label={Liferay.Language.get('picklist')}
 					onChange={({target: {value}}) => {
 						setValues({
+							...(Liferay.FeatureFlags['LPS-164278'] && {
+								listTypeDefinitionExternalReferenceCode: pickLists.find(
+									({name}) => name === value
+								)?.externalReferenceCode,
+							}),
 							defaultValue: '',
-							listTypeDefinitionExternalReferenceCode: pickLists.find(
-								({name}) => name === value
-							)?.externalReferenceCode,
 							listTypeDefinitionId: Number(
 								pickLists.find(({name}) => name === value)?.id
 							),

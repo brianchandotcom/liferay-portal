@@ -66,7 +66,12 @@ function ModalAddObjectField({
 					toCamelCase(field.label[defaultLanguageId] as string),
 			};
 
-			delete field.listTypeDefinitionId;
+			if (Liferay.FeatureFlags['LPS-164278']) {
+				delete field.listTypeDefinitionId;
+			}
+			else {
+				delete field.listTypeDefinitionExternalReferenceCode;
+			}
 
 			try {
 				await API.save(apiURL, field, 'POST');
@@ -168,7 +173,7 @@ export default function AddObjectField({
 					apiURL={apiURL}
 					objectDefinitionId={objectDefinitionId}
 					objectFieldTypes={
-						!Liferay.FeatureFlags['LPS-149625']
+						!Liferay.FeatureFlags['LPS-164278']
 							? objectFieldTypes.filter(
 									(filterType) =>
 										filterType.businessType !==

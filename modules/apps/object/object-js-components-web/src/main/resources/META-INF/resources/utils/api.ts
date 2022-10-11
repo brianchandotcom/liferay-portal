@@ -253,7 +253,10 @@ export async function updatePickList({
 }: Partial<PickList>) {
 	return await save(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
-		{externalReferenceCode, name_i18n},
+		{
+			...(Liferay.FeatureFlags['LPS-164278'] && {externalReferenceCode}),
+			name_i18n,
+		},
 		'PUT'
 	);
 }

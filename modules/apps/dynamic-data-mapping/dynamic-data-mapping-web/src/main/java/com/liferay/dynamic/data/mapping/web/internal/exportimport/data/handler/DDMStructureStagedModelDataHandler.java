@@ -18,7 +18,6 @@ import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -884,9 +883,6 @@ public class DDMStructureStagedModelDataHandler
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference(target = "(ddm.form.deserializer.type=json)")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
 	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;

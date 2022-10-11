@@ -3906,6 +3906,74 @@ definition {
 			value1 = "${currentDate}");
 	}
 
+	test ViewElementTitleAndDescriptionLocalization {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Title in English");
+
+		PortletEntry.inputDescription(description = "Description in English");
+
+		Button.click(button = "Create");
+
+		Click(
+			ariaLabel = "Edit Title",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
+
+		Blueprints.setTitleAndDescriptionLocalization(
+			currentLocale = "en-US",
+			description = "Descripción en Español",
+			locale = "es-ES",
+			title = "Título en Español");
+
+		Button.clickDone();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "&quot;es_ES&quot;: &quot;Título en Español&quot;");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "&quot;es_ES&quot;: &quot;Descripción en Español&quot;");
+
+		PortletEntry.save();
+
+		Blueprints.openBlueprintsAdmin(locale = "es");
+
+		Navigator.gotoNavItem(navItem = "Elementos");
+
+		AssertTextEquals(
+			cellPosition = "2",
+			entryTitle = "Título en Español",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Título en Español");
+
+		AssertTextEquals(
+			cellPosition = "3",
+			entryTitle = "Título en Español",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Descripción en Español");
+
+		Blueprints.openBlueprintsAdmin(locale = "en");
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		AssertTextEquals(
+			cellPosition = "2",
+			entryTitle = "Title in English",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Title in English");
+
+		AssertTextEquals(
+			cellPosition = "3",
+			entryTitle = "Title in English",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Description in English");
+	}
+
 	test ViewExpandedAndCollapsedBlueprintsPreviewResult {
 		JSONWebcontent.addWebContent(
 			content = "",

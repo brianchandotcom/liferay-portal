@@ -509,6 +509,11 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			).build());
 	}
 
+	private static String _getSortableFieldName(String name, String type) {
+		return Field.getSortableFieldName(
+			StringBundler.concat(name, StringPool.UNDERLINE, type));
+	}
+
 	private void _addLogTypesJunction(
 		DynamicQuery dynamicQuery, List<Integer> logTypes) {
 
@@ -711,11 +716,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		).toArray(
 			Sort[]::new
 		);
-	}
-
-	private static String _getSortableFieldName(String name, String type) {
-		return Field.getSortableFieldName(
-			StringBundler.concat(name, StringPool.UNDERLINE, type));
 	}
 
 	private BaseMapBuilder.UnsafeSupplier<Serializable, Exception>

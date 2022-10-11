@@ -864,6 +864,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			kaleoTaskInstanceToken);
 	}
 
+	private static String _getSortableFieldName(String name, String type) {
+		return Field.getSortableFieldName(
+			StringBundler.concat(name, StringPool.UNDERLINE, type));
+	}
+
 	private void _addCompletedCriterion(
 		DynamicQuery dynamicQuery, Boolean completed) {
 
@@ -1036,11 +1041,6 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		}
 
 		return new String[] {taskName};
-	}
-
-	private static String _getSortableFieldName(String name, String type) {
-		return Field.getSortableFieldName(
-			StringBundler.concat(name, StringPool.UNDERLINE, type));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

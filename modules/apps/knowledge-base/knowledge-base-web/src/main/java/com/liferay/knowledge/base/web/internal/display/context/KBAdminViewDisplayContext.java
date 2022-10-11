@@ -91,6 +91,8 @@ public class KBAdminViewDisplayContext {
 					"parentResourceClassNameId", parentResourceClassNameId
 				).setParameter(
 					"parentResourcePrimKey", parentResourcePrimKey
+				).setParameter(
+					"selectedItemId", parentResourcePrimKey
 				).buildString());
 		}
 		else {
@@ -109,6 +111,8 @@ public class KBAdminViewDisplayContext {
 					"parentResourceClassNameId", parentResourceClassNameId
 				).setParameter(
 					"parentResourcePrimKey", parentResourcePrimKey
+				).setParameter(
+					"selectedItemId", parentResourcePrimKey
 				).buildString());
 		}
 	}

@@ -37,7 +37,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
-import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -547,9 +546,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

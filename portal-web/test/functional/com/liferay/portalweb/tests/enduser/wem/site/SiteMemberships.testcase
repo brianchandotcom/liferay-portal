@@ -453,6 +453,383 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test RolesSitesPermissionsInheritance {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		for (var userNumber : list "1,2,3") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+		}
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name 1");
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name 2");
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "MB Page",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "MB Page",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		Portlet.addPG(
+			defaultURL = "false",
+			portletName = "Message Boards");
+
+		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addSiteCP(
+			orgName = "Organization Name 2",
+			siteTemplateName = "Site Template Name");
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name 3");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name 1",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name 2",
+			userEmailAddress = "userea2@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.assignOrgRoleCP(
+			orgName = "Organization Name 2",
+			roleTitle = "Organization Administrator",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name 3",
+			userEmailAddress = "userea3@liferay.com");
+
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup1 Description",
+			userGroupName = "UG UserGroup1 Name");
+
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup2 Description",
+			userGroupName = "UG UserGroup2 Name");
+
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup3 Description",
+			userGroupName = "UG UserGroup3 Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups");
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup1 Name",
+			userScreenName = "usersn1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups");
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup2 Name",
+			userScreenName = "usersn2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups");
+
+		UserGroup.assignMemberCP(
+			userGroupName = "UG UserGroup3 Name",
+			userScreenName = "usersn3");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page");
+
+		JSONRole.addSiteRole(
+			roleKey = "Movie Blogger Name",
+			roleTitle = "Movie Blogger Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
+			roleTitle = "Movie Blogger Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Movie Blogger Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+				roleTitle = "Movie Blogger Name",
+				roleType = "site");
+		}
+
+		JSONRole.addSiteRole(
+			roleKey = "Music Fan Name",
+			roleTitle = "Music Fan Name");
+
+		for (var resourceActionIndex : list "VIEW,ADD_CATEGORY,ADD_MESSAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.message.boards",
+				roleTitle = "Music Fan Name",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "VIEW,ADD_MESSAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.message.boards.kernel.model.MBCategory",
+				roleTitle = "Music Fan Name",
+				roleType = "site");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards.kernel.model.MBMessage",
+			roleTitle = "Music Fan Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+				roleTitle = "Music Fan Name",
+				roleType = "site");
+		}
+
+		JSONRole.addSiteRole(
+			roleKey = "Sports Journalist Name",
+			roleTitle = "Sports Journalist Name");
+
+		for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "Sports Journalist Name",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Sports Journalist Name",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+				roleTitle = "Sports Journalist Name",
+				roleType = "site");
+		}
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup3 Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn1 userln1",
+			roleTitle = "Music Fan Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn2 userln2",
+			roleTitle = "Movie Blogger Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Memberships");
+
+		Navigator.gotoNavItem(navItem = "User Groups");
+
+		Site.assignSiteRoleToUserGroup(
+			roleName = "Sports Journalist Name",
+			userGroupName = "UG UserGroup3 Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		AssertTextEquals(
+			key_portletTitleName = "Message Boards",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards");
+
+		AssertTextEquals(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher");
+
+		MessageboardsThread.addPG(
+			threadBody = "This is a thread by usersn1",
+			threadSubject = "Music Thread 1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		AssertTextEquals(
+			key_portletTitleName = "Message Boards",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards");
+
+		AssertTextEquals(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertElementNotPresent(locator1 = "MessageBoards#ADD_CATEGORY_BUTTON");
+
+		Blogs.addViaAP(
+			entryContent = "This is a movie blog by usersn2",
+			entryTitle = "Movie Blog");
+
+		Navigator.gotoSitePage(
+			pageName = "MB Page",
+			siteName = "Organization Name 2");
+
+		AssertTextEquals(
+			key_portletTitleName = "Message Boards",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards");
+
+		AssertTextEquals(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
+
+		AssertTextEquals(
+			locator1 = "Button#NEW_THREAD",
+			value1 = "New Thread");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea3@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		AssertTextEquals(
+			key_portletTitleName = "Message Boards",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Message Boards");
+
+		AssertTextEquals(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertElementNotPresent(locator1 = "Button#ADD_CATEGORY");
+
+		WebContent.addPGViaAP(
+			webContentContent = "This article is by usersn3, a member of user group 3 but not site name 1",
+			webContentTitle = "User Group Article");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+
 	@description = "Assert could search organization memebership in site memberships admin."
 	@priority = "3"
 	test SiteMembershipSearchOrganization {

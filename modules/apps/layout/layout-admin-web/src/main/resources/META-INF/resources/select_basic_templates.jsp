@@ -53,6 +53,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 				<li class="card-page-item card-page-item-directory">
 					<clay:navigation-card
 						navigationCard="<%= new SelectBasicTemplatesNavigationCard(type, renderRequest, renderResponse) %>"
+						role="button"
 					/>
 				</li>
 

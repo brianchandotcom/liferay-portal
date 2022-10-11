@@ -235,9 +235,7 @@ public class SystemObjectRelatedObjectsTest {
 
 		Assert.assertEquals(
 			HttpStatus.BAD_REQUEST.value(),
-			_invokePost(
-				jsonObject.toString(),
-				_userSystemObjectDefinitionMetadata.getRESTContextPath()));
+			_invokePost(jsonObject.toString(), _getLocation()));
 	}
 
 	private ObjectEntry _addObjectEntry(String objectFieldValue)
@@ -307,11 +305,15 @@ public class SystemObjectRelatedObjectsTest {
 		return options;
 	}
 
+	private String _getLocation() {
+		return "http://localhost:8080/o/" +
+			_userSystemObjectDefinitionMetadata.getRESTContextPath();
+	}
+
 	private String _getLocation(String name) {
 		return StringBundler.concat(
-			"http://localhost:8080/o/",
-			_userSystemObjectDefinitionMetadata.getRESTContextPath(),
-			StringPool.SLASH, _user.getUserId(), "?nestedFields=", name);
+			_getLocation(), StringPool.SLASH, _user.getUserId(),
+			"?nestedFields=", name);
 	}
 
 	private String _invokeGet(String location) throws Exception {

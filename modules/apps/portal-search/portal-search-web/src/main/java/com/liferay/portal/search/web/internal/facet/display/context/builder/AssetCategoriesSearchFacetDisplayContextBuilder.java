@@ -167,7 +167,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	protected BucketDisplayContext
-		buildTermDisplayContext(
+		buildBucketDisplayContext(
 			AssetCategory assetCategory, int frequency, boolean selected,
 			int popularity) {
 
@@ -189,12 +189,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	protected List<BucketDisplayContext>
-		getEmptyTermDisplayContexts() {
+		getEmptyBucketDisplayContexts() {
 
 		Stream<Long> categoryIdsStream = _selectedCategoryIds.stream();
 
 		return categoryIdsStream.map(
-			this::_getEmptyTermDisplayContext
+			this::_getEmptyBucketDisplayContext
 		).filter(
 			Optional::isPresent
 		).map(
@@ -259,8 +259,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetDisplayContext) {
 
 		if (_buckets.isEmpty()) {
-			assetCategoriesSearchFacetDisplayContext.setTermDisplayContexts(
-				getEmptyTermDisplayContexts());
+			assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
+				getEmptyBucketDisplayContexts());
 
 			return;
 		}
@@ -307,7 +307,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		}
 
 		Map<String, List<BucketDisplayContext>>
-			bucketDisplayContextMap = new HashMap<>();
+			bucketDisplayContextsMap = new HashMap<>();
 		Set<String> vocabularyNames = new HashSet<>();
 
 		for (int i = 0, j = 0; i < _buckets.size(); i++, j++) {
@@ -338,33 +338,33 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 			vocabularyNames.add(vocabularyName);
 
-			BucketDisplayContext termDisplayContext =
-				buildTermDisplayContext(
+			BucketDisplayContext bucketDisplayContext =
+				buildBucketDisplayContext(
 					assetCategory, frequency,
 					isSelected(assetCategory.getCategoryId()), popularity);
 
 			bucketDisplayContexts.add(
-				termDisplayContext);
+				bucketDisplayContext);
 
 			List<BucketDisplayContext>
-				vocabularyTermDisplayContexts =
-					bucketDisplayContextMap.get(
+				vocabularyBucketDisplayContexts =
+					bucketDisplayContextsMap.get(
 						vocabularyName);
 
-			if (vocabularyTermDisplayContexts == null) {
-				vocabularyTermDisplayContexts = new ArrayList<>();
+			if (vocabularyBucketDisplayContexts == null) {
+				vocabularyBucketDisplayContexts = new ArrayList<>();
 			}
 
-			vocabularyTermDisplayContexts.add(termDisplayContext);
+			vocabularyBucketDisplayContexts.add(bucketDisplayContext);
 
-			bucketDisplayContextMap.put(
-				vocabularyName, vocabularyTermDisplayContexts);
+			bucketDisplayContextsMap.put(
+				vocabularyName, vocabularyBucketDisplayContexts);
 		}
 
-		assetCategoriesSearchFacetDisplayContext.setTermDisplayContexts(
+		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
 			bucketDisplayContexts);
-		assetCategoriesSearchFacetDisplayContext.setTermDisplayContextsMap(
-			bucketDisplayContextMap);
+		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContextsMap(
+			bucketDisplayContextsMap);
 		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(
 			_sortVocabularyNames(vocabularyNames));
 	}
@@ -433,12 +433,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	private Optional<BucketDisplayContext>
-		_getEmptyTermDisplayContext(long assetCategoryId) {
+		_getEmptyBucketDisplayContext(long assetCategoryId) {
 
 		return Optional.ofNullable(
 			_fetchAssetCategory(assetCategoryId)
 		).map(
-			assetCategory -> buildTermDisplayContext(assetCategory, 0, true, 1)
+			assetCategory -> buildBucketDisplayContext(assetCategory, 0, true, 1)
 		);
 	}
 

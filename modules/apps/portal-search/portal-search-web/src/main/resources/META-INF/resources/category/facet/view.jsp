@@ -63,7 +63,7 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 				%>'
 				displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-				entries="<%= assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts() %>"
+				entries="<%= assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
 				<liferay-ui:panel-container
 					extended="<%= true %>"
@@ -85,7 +85,7 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts()) {
 									i++;
 								%>
 

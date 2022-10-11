@@ -56,7 +56,7 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 						</li>
 
 						<%
-						for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts()) {
+						for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts()) {
 						%>
 
 							<li class="facet-value tag-popularity-<%= bucketDisplayContext.getPopularity() %>">

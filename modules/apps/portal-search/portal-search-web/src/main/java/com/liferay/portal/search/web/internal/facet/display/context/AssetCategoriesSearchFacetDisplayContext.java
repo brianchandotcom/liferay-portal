@@ -99,16 +99,14 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 		return _parameterValues;
 	}
 
-	public List<BucketDisplayContext>
-		getTermDisplayContexts() {
-
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;
 	}
 
-	public List<BucketDisplayContext>
-		getTermDisplayContexts(String vocabularyName) {
+	public List<BucketDisplayContext> getBucketDisplayContexts(
+		String vocabularyName) {
 
-		return _bucketDisplayContextMap.get(
+		return _bucketDisplayContextsMap.get(
 			vocabularyName);
 	}
 
@@ -162,7 +160,7 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 		_renderNothing = renderNothing;
 	}
 
-	public void setTermDisplayContexts(
+	public void setBucketDisplayContexts(
 		List<BucketDisplayContext>
 			bucketDisplayContexts) {
 
@@ -170,12 +168,12 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 			bucketDisplayContexts;
 	}
 
-	public void setTermDisplayContextsMap(
+	public void setBucketDisplayContextsMap(
 		Map<String, List<BucketDisplayContext>>
-			bucketDisplayContextMap) {
+			bucketDisplayContextsMap) {
 
-		_bucketDisplayContextMap =
-			bucketDisplayContextMap;
+		_bucketDisplayContextsMap =
+			bucketDisplayContextsMap;
 	}
 
 	public void setVocabularyNames(List<String> vocabularyNames) {
@@ -191,7 +189,7 @@ public class AssetCategoriesSearchFacetDisplayContext implements Serializable {
 	}
 
 	private Map<String, List<BucketDisplayContext>>
-		_bucketDisplayContextMap;
+		_bucketDisplayContextsMap;
 	private List<BucketDisplayContext>
 		_bucketDisplayContexts;
 	private final CategoryFacetPortletInstanceConfiguration

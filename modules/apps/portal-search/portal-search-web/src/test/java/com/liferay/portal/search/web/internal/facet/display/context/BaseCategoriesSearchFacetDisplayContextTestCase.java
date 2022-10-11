@@ -74,7 +74,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0,
@@ -104,7 +104,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1,
@@ -163,7 +163,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0,
@@ -191,7 +191,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1,
@@ -241,7 +241,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1,
@@ -294,7 +294,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0,
@@ -324,7 +324,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
 				assetCategoriesSearchFacetDisplayContext.
-					getTermDisplayContexts();
+					getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0,

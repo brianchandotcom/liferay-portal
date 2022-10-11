@@ -359,6 +359,8 @@ public abstract class PortletManager
 		_serverStatistics.reset(webId);
 	}
 
+	protected abstract PortletSummaryStatistics getPortletSummaryStatistics();
+
 	protected void setPortletSummaryStatistics(
 		PortletSummaryStatistics portletSummaryStatistics) {
 

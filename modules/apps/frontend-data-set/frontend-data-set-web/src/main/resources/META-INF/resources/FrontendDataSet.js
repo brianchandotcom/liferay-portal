@@ -177,6 +177,7 @@ const FrontendDataSet = ({
 				visibleFieldNames: initialVisibleFieldNames,
 			},
 			filters,
+			modifiedFields: {},
 			paginationDelta,
 			sorting: sortingProp,
 			views,

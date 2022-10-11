@@ -20,6 +20,7 @@ export default React.createContext({
 	customViews: {},
 	customViewsEnabled: false,
 	filters: [],
+	modifiedFields: {},
 	paginationDelta: null,
 	sorting: [],
 	views: [],

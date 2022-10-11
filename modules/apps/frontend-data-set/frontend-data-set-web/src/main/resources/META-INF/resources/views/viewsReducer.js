@@ -20,6 +20,7 @@ export const VIEWS_ACTION_TYPES = {
 	RESET_TO_DEFAULT_VIEW: 'RESET_TO_DEFAULT_VIEW',
 	UPDATE_ACTIVE_CUSTOM_VIEW: 'UPDATE_ACTIVE_CUSTOM_VIEW',
 	UPDATE_ACTIVE_VIEW: 'UPDATE_ACTIVE_VIEW',
+	UPDATE_FIELD: 'UPDATE_FIELD',
 	UPDATE_FILTERS: 'UPDATE_FILTERS',
 	UPDATE_PAGINATION_DELTA: 'UPDATE_PAGINATION_DELTA',
 	UPDATE_SORTING: 'UPDATE_SORTING',
@@ -28,7 +29,7 @@ export const VIEWS_ACTION_TYPES = {
 };
 
 export function viewsReducer(state, {type, value}) {
-	const {activeView, customViews, defaultView, views} = state;
+	const {activeView, customViews, defaultView, modifiedFields, views} = state;
 
 	if (type === VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW) {
 		const {id, viewState} = value;
@@ -105,6 +106,19 @@ export function viewsReducer(state, {type, value}) {
 			viewUpdated: true,
 		};
 	}
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_FIELD) {
+		const {name} = value;
+
+		const fieldAttributes = modifiedFields[name] ?? {};
+
+		return {
+			...state,
+			modifiedFields: {
+				...modifiedFields,
+				[name]: {...fieldAttributes, ...value},
+			},
+		};
+	}
 	else if (type === VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA) {
 		return {
 			...state,
@@ -142,8 +156,22 @@ export function viewsReducer(state, {type, value}) {
 		};
 	}
 	else if (type === VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES) {
+		const fieldNames = Object.keys(value);
+
+		const fields = {};
+
+		fieldNames.forEach((fieldName) => {
+			const fieldAttributes = modifiedFields[fieldName] ?? {};
+
+			fieldAttributes.visible = value[fieldName];
+			fieldAttributes.width = null;
+
+			fields[fieldName] = fieldAttributes;
+		});
+
 		return {
 			...state,
+			modifiedFields: fields,
 			viewUpdated: true,
 			visibleFieldNames: value,
 		};

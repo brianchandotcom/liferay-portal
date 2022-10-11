@@ -17,44 +17,38 @@ import {throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useLayoutEffect, useMemo, useRef} from 'react';
 
+import ViewsContext from '../../ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import Context from './TableContext';
 
 function Cell({children, className, columnName, expand, heading, resizable}) {
-	const cellRef = useRef();
-	const clientXRef = useRef({current: null});
+	const [{modifiedFields}, viewsDispatch] = useContext(ViewsContext);
 	const {
-		columnDefinitions,
 		draggingAllowed,
 		draggingColumnName,
 		isFixed,
-		registerColumn,
 		resizeColumn,
 		updateDraggingAllowed,
 		updateDraggingColumnName,
 	} = useContext(Context);
 
-	const intersectionObserverRef = useRef(
-		new IntersectionObserver(
-			(entries) => {
-				const cellWidth = entries[0].boundingClientRect.width;
-
-				if (cellWidth) {
-					registerColumn(columnName, cellWidth, resizable);
-					intersectionObserverRef.current.disconnect();
-				}
-			},
-			{
-				root: null,
-				threshold: 1,
-			}
-		)
-	);
+	const cellRef = useRef();
+	const clientXRef = useRef({current: null});
 
 	useLayoutEffect(() => {
 		if (columnName && heading && !isFixed) {
-			intersectionObserverRef.current.observe(cellRef.current);
+			const boundingClientRect = cellRef.current.getBoundingClientRect();
+
+			viewsDispatch({
+				type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+				value: {
+					name: columnName,
+					resizable,
+					width: boundingClientRect.width,
+				},
+			});
 		}
-	}, [columnName, isFixed, heading]);
+	}, [columnName, isFixed, heading, resizable, viewsDispatch]);
 
 	const handleDrag = useMemo(() => {
 		return throttle((event) => {
@@ -69,9 +63,9 @@ function Cell({children, className, columnName, expand, heading, resizable}) {
 			const {x: headerCellX} = cellRef.current.getClientRects()[0];
 			const newWidth = event.clientX - headerCellX;
 
-			resizeColumn(columnName, newWidth, resizable);
+			resizeColumn(columnName, newWidth);
 		}, 20);
-	}, [columnName, resizable, resizeColumn, updateDraggingColumnName]);
+	}, [columnName, resizeColumn, updateDraggingColumnName]);
 
 	function initializeDrag() {
 		window.addEventListener('mousemove', handleDrag);
@@ -87,10 +81,10 @@ function Cell({children, className, columnName, expand, heading, resizable}) {
 	}
 
 	const width = useMemo(() => {
-		const columnDetails = columnDefinitions.get(columnName);
+		const columnDetails = modifiedFields[columnName];
 
 		return columnDetails && isFixed && columnDetails.width;
-	}, [isFixed, columnDefinitions, columnName]);
+	}, [isFixed, modifiedFields, columnName]);
 
 	return (
 		<div

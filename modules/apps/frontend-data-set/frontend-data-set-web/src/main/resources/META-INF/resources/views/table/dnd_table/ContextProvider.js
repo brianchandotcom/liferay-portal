@@ -13,101 +13,87 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
+import ViewsContext from '../../ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import Context from './TableContext';
 
 function ContextProvider({children, columnNames}) {
+	const [{modifiedFields}, viewsDispatch] = useContext(ViewsContext);
+
 	const [tableWidth, setTableWidth] = useState(null);
-	const [columnDefinitions, setColumnDefinitions] = useState(new Map());
 	const [draggingColumnName, setDraggingColumnName] = useState(null);
 	const [draggingAllowed, setDraggingAllowed] = useState(true);
 
-	const registerColumn = (name, width, resizable) => {
-		setColumnDefinitions((definitions) => {
-			const updatedDefinitions = new Map(definitions);
-
-			updatedDefinitions.set(name, {
-				resizable,
-				width,
-			});
-
-			return updatedDefinitions;
-		});
-	};
-
 	const isFixed = useMemo(() => {
-		const allRegistered = columnNames.every((name) =>
-			columnDefinitions.has(name)
+		const allRegistered = columnNames.every(
+			(name) => !!modifiedFields[name]
 		);
 
 		return allRegistered;
-	}, [columnDefinitions, columnNames]);
+	}, [modifiedFields, columnNames]);
 
-	const resizeColumn = useCallback(
-		(name, width) => {
-			if (isFixed) {
-				setColumnDefinitions((definitions) => {
-					const resizedColumn = definitions.get(name);
+	const resizeColumn = (name, width) => {
+		if (!isFixed) {
+			return;
+		}
 
-					const isColumnReducing = resizedColumn.width > width;
+		const resizedColumn = modifiedFields[name];
 
-					let totalWidth = 0;
+		const isColumnReducing = resizedColumn.width > width;
 
-					definitions.forEach((definition) => {
-						totalWidth += definition.width;
-					});
+		let totalWidth = 0;
 
-					const nextColumnName =
-						columnNames[columnNames.indexOf(name) + 1];
-					const nextColumn = definitions.get(nextColumnName);
-					const columnsAreShorterThanContainer =
-						totalWidth < tableWidth;
+		Object.values(modifiedFields).forEach((fieldAttributes) => {
+			totalWidth += fieldAttributes.width;
+		});
 
-					if (
-						(isColumnReducing &&
-							columnsAreShorterThanContainer &&
-							!nextColumn?.resizable) ||
-						width < 40
-					) {
-						setDraggingAllowed(false);
+		const nextColumnName = columnNames[columnNames.indexOf(name) + 1];
 
-						return definitions;
-					}
+		const nextColumn = modifiedFields[nextColumnName];
 
-					setDraggingAllowed(true);
+		const columnsAreShorterThanContainer = totalWidth < tableWidth;
 
-					const newDefinitions = new Map(definitions);
+		if (
+			(isColumnReducing &&
+				columnsAreShorterThanContainer &&
+				!nextColumn?.resizable) ||
+			width < 40
+		) {
+			setDraggingAllowed(false);
 
-					if (isColumnReducing && columnsAreShorterThanContainer) {
-						newDefinitions.set(nextColumnName, {
-							...nextColumn,
-							width:
-								nextColumn.width + resizedColumn.width - width,
-						});
-					}
+			return;
+		}
 
-					newDefinitions.set(name, {
-						...resizedColumn,
-						width,
-					});
+		setDraggingAllowed(true);
 
-					return newDefinitions;
-				});
-			}
-		},
-		[columnNames, tableWidth, isFixed]
-	);
+		if (isColumnReducing && columnsAreShorterThanContainer) {
+			viewsDispatch({
+				type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+				value: {
+					name: nextColumnName,
+					width: nextColumn.width + resizedColumn.width - width,
+				},
+			});
+		}
+
+		viewsDispatch({
+			type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+			value: {
+				name,
+				width,
+			},
+		});
+	};
 
 	return (
 		<Context.Provider
 			value={{
-				columnDefinitions,
 				columnNames,
 				draggingAllowed,
 				draggingColumnName,
 				isFixed,
-				registerColumn,
 				resizeColumn,
 				tableWidth,
 				updateDraggingAllowed: setDraggingAllowed,

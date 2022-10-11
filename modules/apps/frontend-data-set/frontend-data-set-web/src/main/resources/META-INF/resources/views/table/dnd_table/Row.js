@@ -16,23 +16,25 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 
+import ViewsContext from '../../ViewsContext';
 import Cell from './Cell';
 import TableContext from './TableContext';
 
 function Row({children, className, paddingLeftCells}) {
-	const {columnDefinitions, columnNames, isFixed} = useContext(TableContext);
+	const [{modifiedFields}] = useContext(ViewsContext);
+	const {columnNames, isFixed} = useContext(TableContext);
 
 	const marginLeft = useMemo(() => {
 		let margin = 0;
 
 		if (isFixed) {
 			for (let i = 0; i < paddingLeftCells; i++) {
-				margin += columnDefinitions.get(columnNames[i]).width;
+				margin += modifiedFields[columnNames[i]].width;
 			}
 		}
 
 		return margin;
-	}, [columnDefinitions, columnNames, isFixed, paddingLeftCells]);
+	}, [columnNames, isFixed, modifiedFields, paddingLeftCells]);
 
 	const style = marginLeft
 		? {

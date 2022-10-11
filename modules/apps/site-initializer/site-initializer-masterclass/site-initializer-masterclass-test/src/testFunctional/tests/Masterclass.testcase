@@ -603,17 +603,9 @@ definition {
 	test ChangetheNumberofBlogsinBlogsListatDPT {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
-		task ("Go to Display Page Templates") {
-			ProductMenu.gotoPortlet(
-				category = "Design",
-				portlet = "Page Templates");
-
-			NavItem.gotoPageTemplates();
-
-			Navigator.gotoNavTab(navTab = "Display Page Templates");
-		}
-
 		task ("Go to Blog Entry and Edit the Layout and Maximum Number of Itens") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-masterclass-name");
+
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 
 			PageEditor.assertFragmentSidebarLoaded();

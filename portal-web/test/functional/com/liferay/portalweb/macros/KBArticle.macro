@@ -839,6 +839,25 @@ definition {
 			value1 = "${kbGrandchildArticleTitle}");
 	}
 
+	macro gotoMenuItemViaNavigationPane {
+		MouseOver(
+			key_itemName = "${kbArticleTitle}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+
+		Click.waitForMenuToggleJSClick(
+			key_itemName = "${kbArticleTitle}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if ("${menuItem}" == "Delete") {
+			MenuItem.clickNoError(menuItem = "${menuItem}");
+		}
+		else {
+			MenuItem.click(menuItem = "${menuItem}");
+		}
+	}
+
 	macro gotoNextArticlePG {
 		AssertClick(
 			locator1 = "KnowledgeBaseArticle#NEXT",

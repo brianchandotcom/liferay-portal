@@ -40,6 +40,14 @@
 		}
 
 		.toggler-header-collapsed {
+			.collapse-icon-closed {
+				display: inline-block;
+			}
+
+			.collapse-icon-open {
+				display: none;
+			}
+
 			.icon-caret-down {
 				display: none;
 			}

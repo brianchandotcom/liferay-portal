@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openConfirmModal, openSimpleInputModal} from 'frontend-js-web';
+import {
+	openConfirmModal,
+	openModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
@@ -27,6 +31,13 @@ const ACTIONS = {
 				send(deleteLayoutUtilityPageEntryURL);
 			},
 			title: Liferay.Language.get('utility-pages'),
+		});
+	},
+
+	permissionsLayoutUtilityPageEntry({permissionsLayoutUtilityPageEntryURL}) {
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: permissionsLayoutUtilityPageEntryURL,
 		});
 	},
 

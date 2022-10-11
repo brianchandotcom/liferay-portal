@@ -22,6 +22,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 
@@ -83,6 +85,14 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 						_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_getPermissionsLayoutUtilityPageEntryActionUnsafeConsumer()
+					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
@@ -208,6 +218,28 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			}
 
 			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getPermissionsLayoutUtilityPageEntryActionUnsafeConsumer()
+		throws Exception {
+
+		String permissionsLayoutUtilityPageEntryURL = PermissionsURLTag.doTag(
+			StringPool.BLANK, LayoutUtilityPageEntry.class.getName(),
+			_layoutUtilityPageEntry.getName(), null,
+			String.valueOf(
+				_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()),
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissionsLayoutUtilityPageEntry");
+			dropdownItem.putData(
+				"permissionsLayoutUtilityPageEntryURL",
+				permissionsLayoutUtilityPageEntryURL);
+			dropdownItem.setIcon("password-policies");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 

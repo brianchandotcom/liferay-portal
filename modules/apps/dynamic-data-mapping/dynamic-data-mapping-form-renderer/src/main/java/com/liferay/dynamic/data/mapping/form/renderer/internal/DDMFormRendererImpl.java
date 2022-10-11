@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -135,9 +134,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	@Reference
 	private DDM _ddm;
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;

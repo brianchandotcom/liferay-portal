@@ -555,7 +555,9 @@ definition {
 		}
 
 		task ("Uncheck categories checkboxes and assert message") {
-			ContentDashboard.uncheckCheckbox(auditGraphCheckboxName = "Stage 1");
+			Click.javaScriptClick(
+				checkboxName = "Stage 1",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
@@ -690,16 +692,12 @@ definition {
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add a vocabulary for Test Site Name") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary 1");
-		}
-
-		task ("Add a vocabulary for Test Site Name") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary 2");
+		task ("Create 2 new vocabularies") {
+			for (var vocabularyNumber : list "1,2") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary ${vocabularyNumber}");
+			}
 		}
 
 		task ("Create a category for Vocabulary 1") {

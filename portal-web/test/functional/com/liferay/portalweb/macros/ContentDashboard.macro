@@ -365,13 +365,13 @@ definition {
 	}
 
 	macro setVocabularyInUseSecondPosition {
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		ContentDashboard.openAuditGraphConfiguration();
 
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
 
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_DOWN_ARROW_BUTTON");
+		Click(
+			ariaLabel = "Reorder Up",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL")
 
 		AssertClick(
 			locator1 = "Button#SAVE",

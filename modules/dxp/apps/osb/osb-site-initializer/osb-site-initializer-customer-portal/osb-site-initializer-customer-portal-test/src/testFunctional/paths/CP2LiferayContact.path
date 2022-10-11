@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>FIND_A_PROJECT</td>
-	<td>//input[contains(@placeholder, 'Find a project')]</td>
+	<td>//*[contains(@placeholder, 'Find a project')]</td>
 	<td></td>
 </tr>
 </tbody>

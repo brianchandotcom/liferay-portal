@@ -227,7 +227,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADING</td>
-	<td>//div[contains(@id, 'welcome-user') and contains(.,'${key_title}')]</td>
+	<td>///*[contains(@class, 'customer-portal-welcome-banner') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>

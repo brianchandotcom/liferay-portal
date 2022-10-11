@@ -1248,16 +1248,29 @@ public class ObjectEntryLocalServiceImpl
 
 		String tableName = extensionDynamicObjectDefinitionTable.getTableName();
 
-		_finderCacheRemoveResult(
+		_clearFinderCache(
 			_getExtensionDynamicObjectDefinitionTableCountDSLQuery(
 				extensionDynamicObjectDefinitionTable, primaryKey),
 			primaryKey, tableName);
-
-		_finderCacheRemoveResult(
+		_clearFinderCache(
 			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
 				extensionDynamicObjectDefinitionTable, primaryKey,
 				_getSelectExpressions(extensionDynamicObjectDefinitionTable)),
 			primaryKey, tableName);
+	}
+
+	private void _clearFinderCache(
+		DSLQuery dslQuery, long primaryKey, String tableName) {
+
+		StringBundler sb = new StringBundler();
+
+		dslQuery.toSQL(sb::append, new DefaultASTNodeListener());
+
+		FinderCacheUtil.removeResult(
+			new FinderPath(
+				FinderPath.encodeDSLQueryCacheName(new String[] {tableName}),
+				"dslQuery", sb.getStrings(), new String[0], false),
+			new Long[] {primaryKey});
 	}
 
 	private void _deleteFileEntries(
@@ -1403,20 +1416,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return predicate.and(searchPredicate.withParentheses());
-	}
-
-	private void _finderCacheRemoveResult(
-		DSLQuery dslQuery, long primaryKey, String tableName) {
-
-		StringBundler sb = new StringBundler();
-
-		dslQuery.toSQL(sb::append, new DefaultASTNodeListener());
-
-		FinderCacheUtil.removeResult(
-			new FinderPath(
-				FinderPath.encodeDSLQueryCacheName(new String[] {tableName}),
-				"dslQuery", sb.getStrings(), new String[0], false),
-			new Long[] {primaryKey});
 	}
 
 	private DLFolder _getDLFolder(

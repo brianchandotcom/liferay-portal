@@ -175,12 +175,10 @@ public class VelocityPortlet extends GenericPortlet {
 
 		prepareTemplate(template, portletRequest, portletResponse);
 
-		mergeTemplate(templateId, template, portletRequest, portletResponse);
+		mergeTemplate(template, portletResponse);
 	}
 
-	protected void mergeTemplate(
-			String templateId, Template template, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+	protected void mergeTemplate(Template template, PortletResponse portletResponse)
 		throws Exception {
 
 		Writer writer = null;

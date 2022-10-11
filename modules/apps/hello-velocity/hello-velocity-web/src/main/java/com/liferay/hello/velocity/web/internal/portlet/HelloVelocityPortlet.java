@@ -80,7 +80,7 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 
 		prepareTemplate(template, portletRequest, portletResponse);
 
-		mergeTemplate(templateId, template, portletRequest, portletResponse);
+		mergeTemplate(template, portletResponse);
 	}
 
 	private TemplateResource _getTemplateResource(String templateId) {

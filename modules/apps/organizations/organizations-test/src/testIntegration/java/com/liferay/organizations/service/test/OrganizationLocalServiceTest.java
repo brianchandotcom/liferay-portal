@@ -562,7 +562,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
-			organizationAA.getCountryId(), organizationAA.getStatusId(),
+			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
@@ -599,7 +599,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
-			organizationAA.getCountryId(), organizationAA.getStatusId(),
+			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
@@ -636,7 +636,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
-			organizationAA.getCountryId(), organizationAA.getStatusId(),
+			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
@@ -673,7 +673,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
-			organizationAA.getCountryId(), organizationAA.getStatusId(),
+			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
@@ -1056,7 +1056,7 @@ public class OrganizationLocalServiceTest {
 			organization.getCompanyId(), organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
 			organization.getType(), organization.getRegionId(),
-			organization.getCountryId(), organization.getStatusId(),
+			organization.getCountryId(), organization.getStatusListTypeId(),
 			organization.getComments(), false, null, organizationGroup.isSite(),
 			null);
 	}

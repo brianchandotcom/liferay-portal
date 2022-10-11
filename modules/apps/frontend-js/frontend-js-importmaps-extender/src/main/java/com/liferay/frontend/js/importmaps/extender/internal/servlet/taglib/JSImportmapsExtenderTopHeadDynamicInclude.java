@@ -67,27 +67,23 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 		if (_jsImportmapsConfiguration.enableImportmaps() &&
 			(!_globalImportmaps.isEmpty() || !_scopedImportmaps.isEmpty())) {
 
-			String type = "importmap";
+			printWriter.print("<script type=\"");
 
 			if (_jsImportmapsConfiguration.enableESModuleShims()) {
-				type = "importmap-shim";
+				printWriter.print("importmap-shim");
+			}
+			else {
+				printWriter.print("importmap");				
 			}
 
-			printWriter.print("<script type=\"");
-			printWriter.print(type);
-			printWriter.println("\">");
-			printWriter.println(_importmaps.get());
-			printWriter.println("</script>");
+			printWriter.print("\">");
+			printWriter.print(_importmaps.get());
+			printWriter.print("</script>");
 		}
 
 		if (_jsImportmapsConfiguration.enableESModuleShims()) {
-			printWriter.println("<script type=\"esms-options\">");
-			printWriter.println("{");
-			printWriter.println("  \"shimMode\": true");
-			printWriter.println("}");
-			printWriter.println("</script>");
-
-			printWriter.print("<script src=\"");
+			printWriter.print("<script type=\"esms-options\">{"\"shimMode\": ");
+			printWriter.print("true}</script><script src=\"");
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
@@ -99,7 +95,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 					"/es-module-shims/es-module-shims.js"
 				).build());
 
-			printWriter.println("\"></script>\n");
+			printWriter.print("\"></script>\n");
 		}
 	}
 
@@ -156,7 +152,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 
-		// Ignore configuration for now as per LPS-165021
+		// See LPS-165021
 
 		_jsImportmapsConfiguration = ConfigurableUtil.createConfigurable(
 			JSImportmapsConfiguration.class,

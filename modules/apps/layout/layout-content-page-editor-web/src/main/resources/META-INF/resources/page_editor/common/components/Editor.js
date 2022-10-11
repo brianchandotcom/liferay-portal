@@ -23,6 +23,7 @@ export default function Editor({
 	configurationName,
 	id,
 	initialValue,
+	label,
 	onChange,
 	placeholder,
 }) {
@@ -73,7 +74,7 @@ export default function Editor({
 			...editorConfig,
 			enterMode: 1,
 			startupFocus: autoFocus,
-			title: false,
+			title: label,
 		});
 
 		let ready = false;
@@ -82,6 +83,8 @@ export default function Editor({
 			.get('nativeEditor')
 			.once('instanceReady', () => {
 				ready = true;
+
+				wrapperRef.current.removeAttribute('title');
 
 				setEditor(newEditor);
 			});
@@ -106,19 +109,16 @@ export default function Editor({
 
 			}
 		};
-	}, [autoFocus, editorConfig]);
+	}, [autoFocus, editorConfig, label]);
 
 	return (
-		<div
-			className="alloy-editor-container"
-			id={`${config.portletNamespace}${id}`}
-		>
+		<div className="alloy-editor-container">
 			<div
 				className="alloy-editor form-control form-control-sm page-editor__editor page-editor__editor-placeholder"
 				contentEditable={false}
 				data-placeholder={placeholder}
 				data-required={false}
-				id={`${config.portletNamespace}${id}`}
+				id={id}
 				name={id}
 				ref={wrapperRef}
 			/>

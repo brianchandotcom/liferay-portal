@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.batch.planner.model.BatchPlannerMapping">
 		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="batchPlannerMappingId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -57,8 +58,10 @@
 	</model>
 	<model name="com.liferay.batch.planner.model.BatchPlannerPolicy">
 		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="batchPlannerPolicyId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />

@@ -40,14 +40,15 @@ public class BatchPlannerMappingServiceWrapper
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerMapping
 			addBatchPlannerMapping(
-				long batchPlannerPlanId, String externalFieldName,
-				String externalFieldType, String internalFieldName,
-				String internalFieldType, String script)
+				String externalReferenceCode, long batchPlannerPlanId,
+				String externalFieldName, String externalFieldType,
+				String internalFieldName, String internalFieldType,
+				String script)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerMappingService.addBatchPlannerMapping(
-			batchPlannerPlanId, externalFieldName, externalFieldType,
-			internalFieldName, internalFieldType, script);
+			externalReferenceCode, batchPlannerPlanId, externalFieldName,
+			externalFieldType, internalFieldName, internalFieldType, script);
 	}
 
 	@Override

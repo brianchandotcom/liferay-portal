@@ -62,14 +62,15 @@ public class BatchPlannerMappingLocalServiceUtil {
 	}
 
 	public static BatchPlannerMapping addBatchPlannerMapping(
-			long userId, long batchPlannerPlanId, String externalFieldName,
-			String externalFieldType, String internalFieldName,
-			String internalFieldType, String script)
+			String externalReferenceCode, long userId, long batchPlannerPlanId,
+			String externalFieldName, String externalFieldType,
+			String internalFieldName, String internalFieldType, String script)
 		throws PortalException {
 
 		return getService().addBatchPlannerMapping(
-			userId, batchPlannerPlanId, externalFieldName, externalFieldType,
-			internalFieldName, internalFieldType, script);
+			externalReferenceCode, userId, batchPlannerPlanId,
+			externalFieldName, externalFieldType, internalFieldName,
+			internalFieldType, script);
 	}
 
 	/**
@@ -242,6 +243,32 @@ public class BatchPlannerMappingLocalServiceUtil {
 		return getService().fetchBatchPlannerMapping(batchPlannerMappingId);
 	}
 
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	public static BatchPlannerMapping
+		fetchBatchPlannerMappingByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().fetchBatchPlannerMappingByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerMappingByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static BatchPlannerMapping fetchBatchPlannerMappingByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchBatchPlannerMappingByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -260,6 +287,23 @@ public class BatchPlannerMappingLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getBatchPlannerMapping(batchPlannerMappingId);
+	}
+
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping
+	 * @throws PortalException if a matching batch planner mapping could not be found
+	 */
+	public static BatchPlannerMapping
+			getBatchPlannerMappingByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getBatchPlannerMappingByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

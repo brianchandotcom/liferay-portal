@@ -39,11 +39,12 @@ public class BatchPlannerPolicyServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerPolicyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static BatchPlannerPolicy addBatchPlannerPolicy(
-			long batchPlannerPlanId, String name, String value)
+			String externalReferenceCode, long batchPlannerPlanId, String name,
+			String value)
 		throws PortalException {
 
 		return getService().addBatchPlannerPolicy(
-			batchPlannerPlanId, name, value);
+			externalReferenceCode, batchPlannerPlanId, name, value);
 	}
 
 	public static BatchPlannerPolicy deleteBatchPlannerPolicy(

@@ -52,10 +52,10 @@ public class BatchPlannerMappingServiceHttp {
 
 	public static com.liferay.batch.planner.model.BatchPlannerMapping
 			addBatchPlannerMapping(
-				HttpPrincipal httpPrincipal, long batchPlannerPlanId,
-				String externalFieldName, String externalFieldType,
-				String internalFieldName, String internalFieldType,
-				String script)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long batchPlannerPlanId, String externalFieldName,
+				String externalFieldType, String internalFieldName,
+				String internalFieldType, String script)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -64,9 +64,9 @@ public class BatchPlannerMappingServiceHttp {
 				_addBatchPlannerMappingParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, batchPlannerPlanId, externalFieldName,
-				externalFieldType, internalFieldName, internalFieldType,
-				script);
+				methodKey, externalReferenceCode, batchPlannerPlanId,
+				externalFieldName, externalFieldType, internalFieldName,
+				internalFieldType, script);
 
 			Object returnObj = null;
 
@@ -273,8 +273,8 @@ public class BatchPlannerMappingServiceHttp {
 
 	private static final Class<?>[] _addBatchPlannerMappingParameterTypes0 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class
+			String.class, long.class, String.class, String.class, String.class,
+			String.class, String.class
 		};
 	private static final Class<?>[] _deleteBatchPlannerMappingParameterTypes1 =
 		new Class[] {long.class, String.class, String.class};

@@ -128,6 +128,9 @@ public class BatchPlannerMappingPersistenceTest {
 
 		newBatchPlannerMapping.setMvccVersion(RandomTestUtil.nextLong());
 
+		newBatchPlannerMapping.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newBatchPlannerMapping.setCompanyId(RandomTestUtil.nextLong());
 
 		newBatchPlannerMapping.setUserId(RandomTestUtil.nextLong());
@@ -163,6 +166,9 @@ public class BatchPlannerMappingPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerMapping.getMvccVersion(),
 			newBatchPlannerMapping.getMvccVersion());
+		Assert.assertEquals(
+			existingBatchPlannerMapping.getExternalReferenceCode(),
+			newBatchPlannerMapping.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingBatchPlannerMapping.getBatchPlannerMappingId(),
 			newBatchPlannerMapping.getBatchPlannerMappingId());
@@ -219,6 +225,15 @@ public class BatchPlannerMappingPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BatchPlannerMapping newBatchPlannerMapping = addBatchPlannerMapping();
 
@@ -245,11 +260,12 @@ public class BatchPlannerMappingPersistenceTest {
 
 	protected OrderByComparator<BatchPlannerMapping> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BatchPlannerMapping", "mvccVersion", true, "batchPlannerMappingId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "batchPlannerPlanId",
-			true, "externalFieldName", true, "externalFieldType", true,
-			"internalFieldName", true, "internalFieldType", true);
+			"BatchPlannerMapping", "mvccVersion", true, "externalReferenceCode",
+			true, "batchPlannerMappingId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"batchPlannerPlanId", true, "externalFieldName", true,
+			"externalFieldType", true, "internalFieldName", true,
+			"internalFieldType", true);
 	}
 
 	@Test
@@ -547,6 +563,17 @@ public class BatchPlannerMappingPersistenceTest {
 			ReflectionTestUtil.invoke(
 				batchPlannerMapping, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "internalFieldName"));
+
+		Assert.assertEquals(
+			Long.valueOf(batchPlannerMapping.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				batchPlannerMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			batchPlannerMapping.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				batchPlannerMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected BatchPlannerMapping addBatchPlannerMapping() throws Exception {
@@ -555,6 +582,9 @@ public class BatchPlannerMappingPersistenceTest {
 		BatchPlannerMapping batchPlannerMapping = _persistence.create(pk);
 
 		batchPlannerMapping.setMvccVersion(RandomTestUtil.nextLong());
+
+		batchPlannerMapping.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		batchPlannerMapping.setCompanyId(RandomTestUtil.nextLong());
 

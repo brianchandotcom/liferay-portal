@@ -37,12 +37,18 @@ public class BatchPlannerPolicyTable
 	public final Column<BatchPlannerPolicyTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<BatchPlannerPolicyTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPolicyTable, Long> batchPlannerPolicyId =
 		createColumn(
 			"batchPlannerPolicyId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
 	public final Column<BatchPlannerPolicyTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerPolicyTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPolicyTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPolicyTable, String> userName =

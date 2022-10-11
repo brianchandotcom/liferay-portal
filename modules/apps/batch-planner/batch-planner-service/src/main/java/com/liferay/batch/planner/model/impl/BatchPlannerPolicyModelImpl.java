@@ -73,8 +73,9 @@ public class BatchPlannerPolicyModelImpl
 	public static final String TABLE_NAME = "BatchPlannerPolicy";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"batchPlannerPolicyId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"batchPlannerPolicyId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"batchPlannerPlanId", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"value", Types.VARCHAR}
@@ -85,8 +86,10 @@ public class BatchPlannerPolicyModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("batchPlannerPolicyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -97,7 +100,7 @@ public class BatchPlannerPolicyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPolicy (mvccVersion LONG default 0 not null,batchPlannerPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,name VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table BatchPlannerPolicy (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,batchPlannerPolicyId LONG not null primary key,companyId LONG,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,name VARCHAR(75) null,value VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPolicy";
 
@@ -123,14 +126,26 @@ public class BatchPlannerPolicyModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -252,6 +267,13 @@ public class BatchPlannerPolicyModelImpl
 			(BiConsumer<BatchPlannerPolicy, Long>)
 				BatchPlannerPolicy::setMvccVersion);
 		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			BatchPlannerPolicy::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<BatchPlannerPolicy, String>)
+				BatchPlannerPolicy::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"batchPlannerPolicyId",
 			BatchPlannerPolicy::getBatchPlannerPolicyId);
 		attributeSetterBiConsumers.put(
@@ -264,6 +286,11 @@ public class BatchPlannerPolicyModelImpl
 			"companyId",
 			(BiConsumer<BatchPlannerPolicy, Long>)
 				BatchPlannerPolicy::setCompanyId);
+		attributeGetterFunctions.put("groupId", BatchPlannerPolicy::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<BatchPlannerPolicy, Long>)
+				BatchPlannerPolicy::setGroupId);
 		attributeGetterFunctions.put("userId", BatchPlannerPolicy::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
@@ -327,6 +354,35 @@ public class BatchPlannerPolicyModelImpl
 
 	@JSON
 	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
+	}
+
+	@JSON
+	@Override
 	public long getBatchPlannerPolicyId() {
 		return _batchPlannerPolicyId;
 	}
@@ -353,6 +409,30 @@ public class BatchPlannerPolicyModelImpl
 		}
 
 		_companyId = companyId;
+	}
+
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -575,9 +655,12 @@ public class BatchPlannerPolicyModelImpl
 			new BatchPlannerPolicyImpl();
 
 		batchPlannerPolicyImpl.setMvccVersion(getMvccVersion());
+		batchPlannerPolicyImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		batchPlannerPolicyImpl.setBatchPlannerPolicyId(
 			getBatchPlannerPolicyId());
 		batchPlannerPolicyImpl.setCompanyId(getCompanyId());
+		batchPlannerPolicyImpl.setGroupId(getGroupId());
 		batchPlannerPolicyImpl.setUserId(getUserId());
 		batchPlannerPolicyImpl.setUserName(getUserName());
 		batchPlannerPolicyImpl.setCreateDate(getCreateDate());
@@ -598,10 +681,14 @@ public class BatchPlannerPolicyModelImpl
 
 		batchPlannerPolicyImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerPolicyImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		batchPlannerPolicyImpl.setBatchPlannerPolicyId(
 			this.<Long>getColumnOriginalValue("batchPlannerPolicyId"));
 		batchPlannerPolicyImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
+		batchPlannerPolicyImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
 		batchPlannerPolicyImpl.setUserId(
 			this.<Long>getColumnOriginalValue("userId"));
 		batchPlannerPolicyImpl.setUserName(
@@ -697,10 +784,24 @@ public class BatchPlannerPolicyModelImpl
 
 		batchPlannerPolicyCacheModel.mvccVersion = getMvccVersion();
 
+		batchPlannerPolicyCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			batchPlannerPolicyCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			batchPlannerPolicyCacheModel.externalReferenceCode = null;
+		}
+
 		batchPlannerPolicyCacheModel.batchPlannerPolicyId =
 			getBatchPlannerPolicyId();
 
 		batchPlannerPolicyCacheModel.companyId = getCompanyId();
+
+		batchPlannerPolicyCacheModel.groupId = getGroupId();
 
 		batchPlannerPolicyCacheModel.userId = getUserId();
 
@@ -843,8 +944,10 @@ public class BatchPlannerPolicyModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _externalReferenceCode;
 	private long _batchPlannerPolicyId;
 	private long _companyId;
+	private long _groupId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -883,8 +986,11 @@ public class BatchPlannerPolicyModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"batchPlannerPolicyId", _batchPlannerPolicyId);
 		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
@@ -907,23 +1013,27 @@ public class BatchPlannerPolicyModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("batchPlannerPolicyId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("batchPlannerPolicyId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("batchPlannerPlanId", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("value", 512L);
+		columnBitmasks.put("batchPlannerPlanId", 512L);
+
+		columnBitmasks.put("name", 1024L);
+
+		columnBitmasks.put("value", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

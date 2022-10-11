@@ -259,6 +259,50 @@ public abstract class BatchPlannerPolicyLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	@Override
+	public BatchPlannerPolicy fetchBatchPlannerPolicyByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return batchPlannerPolicyPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerPolicyByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public BatchPlannerPolicy fetchBatchPlannerPolicyByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return fetchBatchPlannerPolicyByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy
+	 * @throws PortalException if a matching batch planner policy could not be found
+	 */
+	@Override
+	public BatchPlannerPolicy getBatchPlannerPolicyByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return batchPlannerPolicyPersistence.findByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the batch planner policy with the primary key.
 	 *
 	 * @param batchPlannerPolicyId the primary key of the batch planner policy

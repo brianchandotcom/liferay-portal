@@ -43,8 +43,10 @@ public class BatchPlannerPolicyWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("batchPlannerPolicyId", getBatchPlannerPolicyId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -64,6 +66,13 @@ public class BatchPlannerPolicyWrapper
 			setMvccVersion(mvccVersion);
 		}
 
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
+		}
+
 		Long batchPlannerPolicyId = (Long)attributes.get(
 			"batchPlannerPolicyId");
 
@@ -75,6 +84,12 @@ public class BatchPlannerPolicyWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -163,6 +178,26 @@ public class BatchPlannerPolicyWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the external reference code of this batch planner policy.
+	 *
+	 * @return the external reference code of this batch planner policy
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
+	}
+
+	/**
+	 * Returns the group ID of this batch planner policy.
+	 *
+	 * @return the group ID of this batch planner policy
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
 	}
 
 	/**
@@ -288,6 +323,26 @@ public class BatchPlannerPolicyWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the external reference code of this batch planner policy.
+	 *
+	 * @param externalReferenceCode the external reference code of this batch planner policy
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	 * Sets the group ID of this batch planner policy.
+	 *
+	 * @param groupId the group ID of this batch planner policy
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**

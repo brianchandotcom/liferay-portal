@@ -40,11 +40,12 @@ public class BatchPlannerPolicyServiceWrapper
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPolicy
 			addBatchPlannerPolicy(
-				long batchPlannerPlanId, String name, String value)
+				String externalReferenceCode, long batchPlannerPlanId,
+				String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPolicyService.addBatchPlannerPolicy(
-			batchPlannerPlanId, name, value);
+			externalReferenceCode, batchPlannerPlanId, name, value);
 	}
 
 	@Override

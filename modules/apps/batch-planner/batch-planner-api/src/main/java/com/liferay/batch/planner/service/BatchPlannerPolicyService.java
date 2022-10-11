@@ -52,7 +52,8 @@ public interface BatchPlannerPolicyService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerPolicyServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch planner policy remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchPlannerPolicyServiceUtil} if injection and service tracking are not available.
 	 */
 	public BatchPlannerPolicy addBatchPlannerPolicy(
-			long batchPlannerPlanId, String name, String value)
+			String externalReferenceCode, long batchPlannerPlanId, String name,
+			String value)
 		throws PortalException;
 
 	public BatchPlannerPolicy deleteBatchPlannerPolicy(

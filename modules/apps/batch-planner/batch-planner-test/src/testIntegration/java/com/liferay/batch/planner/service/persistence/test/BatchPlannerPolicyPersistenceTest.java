@@ -128,7 +128,12 @@ public class BatchPlannerPolicyPersistenceTest {
 
 		newBatchPlannerPolicy.setMvccVersion(RandomTestUtil.nextLong());
 
+		newBatchPlannerPolicy.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newBatchPlannerPolicy.setCompanyId(RandomTestUtil.nextLong());
+
+		newBatchPlannerPolicy.setGroupId(RandomTestUtil.nextLong());
 
 		newBatchPlannerPolicy.setUserId(RandomTestUtil.nextLong());
 
@@ -154,11 +159,17 @@ public class BatchPlannerPolicyPersistenceTest {
 			existingBatchPlannerPolicy.getMvccVersion(),
 			newBatchPlannerPolicy.getMvccVersion());
 		Assert.assertEquals(
+			existingBatchPlannerPolicy.getExternalReferenceCode(),
+			newBatchPlannerPolicy.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingBatchPlannerPolicy.getBatchPlannerPolicyId(),
 			newBatchPlannerPolicy.getBatchPlannerPolicyId());
 		Assert.assertEquals(
 			existingBatchPlannerPolicy.getCompanyId(),
 			newBatchPlannerPolicy.getCompanyId());
+		Assert.assertEquals(
+			existingBatchPlannerPolicy.getGroupId(),
+			newBatchPlannerPolicy.getGroupId());
 		Assert.assertEquals(
 			existingBatchPlannerPolicy.getUserId(),
 			newBatchPlannerPolicy.getUserId());
@@ -200,6 +211,15 @@ public class BatchPlannerPolicyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BatchPlannerPolicy newBatchPlannerPolicy = addBatchPlannerPolicy();
 
@@ -225,10 +245,11 @@ public class BatchPlannerPolicyPersistenceTest {
 
 	protected OrderByComparator<BatchPlannerPolicy> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BatchPlannerPolicy", "mvccVersion", true, "batchPlannerPolicyId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "batchPlannerPlanId",
-			true, "name", true, "value", true);
+			"BatchPlannerPolicy", "mvccVersion", true, "externalReferenceCode",
+			true, "batchPlannerPolicyId", true, "companyId", true, "groupId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "batchPlannerPlanId", true, "name", true,
+			"value", true);
 	}
 
 	@Test
@@ -517,6 +538,17 @@ public class BatchPlannerPolicyPersistenceTest {
 			ReflectionTestUtil.invoke(
 				batchPlannerPolicy, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "name"));
+
+		Assert.assertEquals(
+			Long.valueOf(batchPlannerPolicy.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				batchPlannerPolicy, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			batchPlannerPolicy.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				batchPlannerPolicy, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected BatchPlannerPolicy addBatchPlannerPolicy() throws Exception {
@@ -526,7 +558,12 @@ public class BatchPlannerPolicyPersistenceTest {
 
 		batchPlannerPolicy.setMvccVersion(RandomTestUtil.nextLong());
 
+		batchPlannerPolicy.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		batchPlannerPolicy.setCompanyId(RandomTestUtil.nextLong());
+
+		batchPlannerPolicy.setGroupId(RandomTestUtil.nextLong());
 
 		batchPlannerPolicy.setUserId(RandomTestUtil.nextLong());
 

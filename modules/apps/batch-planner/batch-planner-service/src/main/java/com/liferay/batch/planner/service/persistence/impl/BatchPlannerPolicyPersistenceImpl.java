@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -865,6 +866,261 @@ public class BatchPlannerPolicyPersistenceImpl
 	private static final String _FINDER_COLUMN_BPPI_N_NAME_3 =
 		"(batchPlannerPolicy.name IS NULL OR batchPlannerPolicy.name = '')";
 
+	private FinderPath _finderPathFetchByG_ERC;
+	private FinderPath _finderPathCountByG_ERC;
+
+	/**
+	 * Returns the batch planner policy where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchPolicyException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching batch planner policy
+	 * @throws NoSuchPolicyException if a matching batch planner policy could not be found
+	 */
+	@Override
+	public BatchPlannerPolicy findByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws NoSuchPolicyException {
+
+		BatchPlannerPolicy batchPlannerPolicy = fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (batchPlannerPolicy == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchPolicyException(sb.toString());
+		}
+
+		return batchPlannerPolicy;
+	}
+
+	/**
+	 * Returns the batch planner policy where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	@Override
+	public BatchPlannerPolicy fetchByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return fetchByG_ERC(groupId, externalReferenceCode, true);
+	}
+
+	/**
+	 * Returns the batch planner policy where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	@Override
+	public BatchPlannerPolicy fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, externalReferenceCode};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(_finderPathFetchByG_ERC, finderArgs);
+		}
+
+		if (result instanceof BatchPlannerPolicy) {
+			BatchPlannerPolicy batchPlannerPolicy = (BatchPlannerPolicy)result;
+
+			if ((groupId != batchPlannerPolicy.getGroupId()) ||
+				!Objects.equals(
+					externalReferenceCode,
+					batchPlannerPolicy.getExternalReferenceCode())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_BATCHPLANNERPOLICY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				List<BatchPlannerPolicy> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_ERC, finderArgs, list);
+					}
+				}
+				else {
+					BatchPlannerPolicy batchPlannerPolicy = list.get(0);
+
+					result = batchPlannerPolicy;
+
+					cacheResult(batchPlannerPolicy);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (BatchPlannerPolicy)result;
+		}
+	}
+
+	/**
+	 * Removes the batch planner policy where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the batch planner policy that was removed
+	 */
+	@Override
+	public BatchPlannerPolicy removeByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws NoSuchPolicyException {
+
+		BatchPlannerPolicy batchPlannerPolicy = findByG_ERC(
+			groupId, externalReferenceCode);
+
+		return remove(batchPlannerPolicy);
+	}
+
+	/**
+	 * Returns the number of batch planner policies where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching batch planner policies
+	 */
+	@Override
+	public int countByG_ERC(long groupId, String externalReferenceCode) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByG_ERC;
+
+		Object[] finderArgs = new Object[] {groupId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_BATCHPLANNERPOLICY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
+		"batchPlannerPolicy.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
+		"batchPlannerPolicy.externalReferenceCode = ?";
+
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
+		"(batchPlannerPolicy.externalReferenceCode IS NULL OR batchPlannerPolicy.externalReferenceCode = '')";
+
 	public BatchPlannerPolicyPersistenceImpl() {
 		setModelClass(BatchPlannerPolicy.class);
 
@@ -890,6 +1146,14 @@ public class BatchPlannerPolicyPersistenceImpl
 			new Object[] {
 				batchPlannerPolicy.getBatchPlannerPlanId(),
 				batchPlannerPolicy.getName()
+			},
+			batchPlannerPolicy);
+
+		finderCache.putResult(
+			_finderPathFetchByG_ERC,
+			new Object[] {
+				batchPlannerPolicy.getGroupId(),
+				batchPlannerPolicy.getExternalReferenceCode()
 			},
 			batchPlannerPolicy);
 	}
@@ -976,6 +1240,15 @@ public class BatchPlannerPolicyPersistenceImpl
 		finderCache.putResult(_finderPathCountByBPPI_N, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByBPPI_N, args, batchPlannerPolicyModelImpl);
+
+		args = new Object[] {
+			batchPlannerPolicyModelImpl.getGroupId(),
+			batchPlannerPolicyModelImpl.getExternalReferenceCode()
+		};
+
+		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByG_ERC, args, batchPlannerPolicyModelImpl);
 	}
 
 	/**
@@ -1110,6 +1383,11 @@ public class BatchPlannerPolicyPersistenceImpl
 
 		BatchPlannerPolicyModelImpl batchPlannerPolicyModelImpl =
 			(BatchPlannerPolicyModelImpl)batchPlannerPolicy;
+
+		if (Validator.isNull(batchPlannerPolicy.getExternalReferenceCode())) {
+			batchPlannerPolicy.setExternalReferenceCode(
+				String.valueOf(batchPlannerPolicy.getPrimaryKey()));
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1470,6 +1748,16 @@ public class BatchPlannerPolicyPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"batchPlannerPlanId", "name"}, false);
+
+		_finderPathFetchByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "externalReferenceCode"}, true);
+
+		_finderPathCountByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "externalReferenceCode"}, false);
 
 		_setBatchPlannerPolicyUtilPersistence(this);
 	}

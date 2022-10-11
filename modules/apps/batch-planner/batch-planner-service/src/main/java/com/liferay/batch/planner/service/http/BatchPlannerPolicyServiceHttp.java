@@ -52,8 +52,8 @@ public class BatchPlannerPolicyServiceHttp {
 
 	public static com.liferay.batch.planner.model.BatchPlannerPolicy
 			addBatchPlannerPolicy(
-				HttpPrincipal httpPrincipal, long batchPlannerPlanId,
-				String name, String value)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long batchPlannerPlanId, String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -62,7 +62,8 @@ public class BatchPlannerPolicyServiceHttp {
 				_addBatchPlannerPolicyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, batchPlannerPlanId, name, value);
+				methodKey, externalReferenceCode, batchPlannerPlanId, name,
+				value);
 
 			Object returnObj = null;
 
@@ -309,7 +310,7 @@ public class BatchPlannerPolicyServiceHttp {
 		BatchPlannerPolicyServiceHttp.class);
 
 	private static final Class<?>[] _addBatchPlannerPolicyParameterTypes0 =
-		new Class[] {long.class, String.class, String.class};
+		new Class[] {String.class, long.class, String.class, String.class};
 	private static final Class<?>[] _deleteBatchPlannerPolicyParameterTypes1 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _getBatchPlannerPoliciesParameterTypes2 =

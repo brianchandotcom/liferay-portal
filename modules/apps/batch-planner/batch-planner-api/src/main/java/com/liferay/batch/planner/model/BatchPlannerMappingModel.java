@@ -77,6 +77,21 @@ public interface BatchPlannerMappingModel
 	public void setMvccVersion(long mvccVersion);
 
 	/**
+	 * Returns the external reference code of this batch planner mapping.
+	 *
+	 * @return the external reference code of this batch planner mapping
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this batch planner mapping.
+	 *
+	 * @param externalReferenceCode the external reference code of this batch planner mapping
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the batch planner mapping ID of this batch planner mapping.
 	 *
 	 * @return the batch planner mapping ID of this batch planner mapping

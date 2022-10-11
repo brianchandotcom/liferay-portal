@@ -60,14 +60,16 @@ public class BatchPlannerMappingLocalServiceWrapper
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerMapping
 			addBatchPlannerMapping(
-				long userId, long batchPlannerPlanId, String externalFieldName,
+				String externalReferenceCode, long userId,
+				long batchPlannerPlanId, String externalFieldName,
 				String externalFieldType, String internalFieldName,
 				String internalFieldType, String script)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerMappingLocalService.addBatchPlannerMapping(
-			userId, batchPlannerPlanId, externalFieldName, externalFieldType,
-			internalFieldName, internalFieldType, script);
+			externalReferenceCode, userId, batchPlannerPlanId,
+			externalFieldName, externalFieldType, internalFieldName,
+			internalFieldType, script);
 	}
 
 	/**
@@ -276,6 +278,37 @@ public class BatchPlannerMappingLocalServiceWrapper
 			batchPlannerMappingId);
 	}
 
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+		fetchBatchPlannerMappingByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _batchPlannerMappingLocalService.
+			fetchBatchPlannerMappingByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerMappingByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+		fetchBatchPlannerMappingByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _batchPlannerMappingLocalService.
+			fetchBatchPlannerMappingByReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -297,6 +330,25 @@ public class BatchPlannerMappingLocalServiceWrapper
 
 		return _batchPlannerMappingLocalService.getBatchPlannerMapping(
 			batchPlannerMappingId);
+	}
+
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping
+	 * @throws PortalException if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+			getBatchPlannerMappingByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerMappingLocalService.
+			getBatchPlannerMappingByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

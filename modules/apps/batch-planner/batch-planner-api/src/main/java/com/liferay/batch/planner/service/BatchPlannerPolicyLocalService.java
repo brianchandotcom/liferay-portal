@@ -77,7 +77,8 @@ public interface BatchPlannerPolicyLocalService
 		BatchPlannerPolicy batchPlannerPolicy);
 
 	public BatchPlannerPolicy addBatchPlannerPolicy(
-			long userId, long batchPlannerPlanId, String name, String value)
+			String externalReferenceCode, long userId, long batchPlannerPlanId,
+			String name, String value)
 		throws PortalException;
 
 	/**
@@ -217,6 +218,25 @@ public interface BatchPlannerPolicyLocalService
 	public BatchPlannerPolicy fetchBatchPlannerPolicy(
 		long batchPlannerPlanId, String name);
 
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerPolicy fetchBatchPlannerPolicyByExternalReferenceCode(
+		long groupId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerPolicyByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerPolicy fetchBatchPlannerPolicyByReferenceCode(
+		long groupId, String externalReferenceCode);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -260,6 +280,19 @@ public interface BatchPlannerPolicyLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchPlannerPolicy getBatchPlannerPolicy(
 			long batchPlannerPlanId, String name)
+		throws PortalException;
+
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy
+	 * @throws PortalException if a matching batch planner policy could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerPolicy getBatchPlannerPolicyByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

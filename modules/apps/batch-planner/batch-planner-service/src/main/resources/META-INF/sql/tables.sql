@@ -1,5 +1,6 @@
 create table BatchPlannerMapping (
 	mvccVersion LONG default 0 not null,
+	externalReferenceCode VARCHAR(75) null,
 	batchPlannerMappingId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -37,8 +38,10 @@ create table BatchPlannerPlan (
 
 create table BatchPlannerPolicy (
 	mvccVersion LONG default 0 not null,
+	externalReferenceCode VARCHAR(75) null,
 	batchPlannerPolicyId LONG not null primary key,
 	companyId LONG,
+	groupId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

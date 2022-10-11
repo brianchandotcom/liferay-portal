@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -937,6 +938,262 @@ public class BatchPlannerMappingPersistenceImpl
 		_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_3 =
 			"(batchPlannerMapping.internalFieldName IS NULL OR batchPlannerMapping.internalFieldName = '')";
 
+	private FinderPath _finderPathFetchByC_ERC;
+	private FinderPath _finderPathCountByC_ERC;
+
+	/**
+	 * Returns the batch planner mapping where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching batch planner mapping
+	 * @throws NoSuchMappingException if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping findByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchMappingException {
+
+		BatchPlannerMapping batchPlannerMapping = fetchByC_ERC(
+			companyId, externalReferenceCode);
+
+		if (batchPlannerMapping == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchMappingException(sb.toString());
+		}
+
+		return batchPlannerMapping;
+	}
+
+	/**
+	 * Returns the batch planner mapping where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping fetchByC_ERC(
+		long companyId, String externalReferenceCode) {
+
+		return fetchByC_ERC(companyId, externalReferenceCode, true);
+	}
+
+	/**
+	 * Returns the batch planner mapping where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, externalReferenceCode};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+		}
+
+		if (result instanceof BatchPlannerMapping) {
+			BatchPlannerMapping batchPlannerMapping =
+				(BatchPlannerMapping)result;
+
+			if ((companyId != batchPlannerMapping.getCompanyId()) ||
+				!Objects.equals(
+					externalReferenceCode,
+					batchPlannerMapping.getExternalReferenceCode())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_BATCHPLANNERMAPPING_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				List<BatchPlannerMapping> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_ERC, finderArgs, list);
+					}
+				}
+				else {
+					BatchPlannerMapping batchPlannerMapping = list.get(0);
+
+					result = batchPlannerMapping;
+
+					cacheResult(batchPlannerMapping);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (BatchPlannerMapping)result;
+		}
+	}
+
+	/**
+	 * Removes the batch planner mapping where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the batch planner mapping that was removed
+	 */
+	@Override
+	public BatchPlannerMapping removeByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchMappingException {
+
+		BatchPlannerMapping batchPlannerMapping = findByC_ERC(
+			companyId, externalReferenceCode);
+
+		return remove(batchPlannerMapping);
+	}
+
+	/**
+	 * Returns the number of batch planner mappings where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching batch planner mappings
+	 */
+	@Override
+	public int countByC_ERC(long companyId, String externalReferenceCode) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByC_ERC;
+
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_BATCHPLANNERMAPPING_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
+		"batchPlannerMapping.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
+		"batchPlannerMapping.externalReferenceCode = ?";
+
+	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
+		"(batchPlannerMapping.externalReferenceCode IS NULL OR batchPlannerMapping.externalReferenceCode = '')";
+
 	public BatchPlannerMappingPersistenceImpl() {
 		setModelClass(BatchPlannerMapping.class);
 
@@ -963,6 +1220,14 @@ public class BatchPlannerMappingPersistenceImpl
 				batchPlannerMapping.getBatchPlannerPlanId(),
 				batchPlannerMapping.getExternalFieldName(),
 				batchPlannerMapping.getInternalFieldName()
+			},
+			batchPlannerMapping);
+
+		finderCache.putResult(
+			_finderPathFetchByC_ERC,
+			new Object[] {
+				batchPlannerMapping.getCompanyId(),
+				batchPlannerMapping.getExternalReferenceCode()
 			},
 			batchPlannerMapping);
 	}
@@ -1051,6 +1316,15 @@ public class BatchPlannerMappingPersistenceImpl
 			_finderPathCountByBPPI_EFN_IFN, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByBPPI_EFN_IFN, args, batchPlannerMappingModelImpl);
+
+		args = new Object[] {
+			batchPlannerMappingModelImpl.getCompanyId(),
+			batchPlannerMappingModelImpl.getExternalReferenceCode()
+		};
+
+		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByC_ERC, args, batchPlannerMappingModelImpl);
 	}
 
 	/**
@@ -1185,6 +1459,11 @@ public class BatchPlannerMappingPersistenceImpl
 
 		BatchPlannerMappingModelImpl batchPlannerMappingModelImpl =
 			(BatchPlannerMappingModelImpl)batchPlannerMapping;
+
+		if (Validator.isNull(batchPlannerMapping.getExternalReferenceCode())) {
+			batchPlannerMapping.setExternalReferenceCode(
+				String.valueOf(batchPlannerMapping.getPrimaryKey()));
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1557,6 +1836,16 @@ public class BatchPlannerMappingPersistenceImpl
 				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
 			},
 			false);
+
+		_finderPathFetchByC_ERC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "externalReferenceCode"}, true);
+
+		_finderPathCountByC_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "externalReferenceCode"}, false);
 
 		_setBatchPlannerMappingUtilPersistence(this);
 	}

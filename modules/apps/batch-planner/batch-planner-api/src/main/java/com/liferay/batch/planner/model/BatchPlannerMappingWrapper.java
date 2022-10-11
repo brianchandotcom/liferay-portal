@@ -43,6 +43,7 @@ public class BatchPlannerMappingWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("batchPlannerMappingId", getBatchPlannerMappingId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -65,6 +66,13 @@ public class BatchPlannerMappingWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long batchPlannerMappingId = (Long)attributes.get(
@@ -204,6 +212,16 @@ public class BatchPlannerMappingWrapper
 	@Override
 	public String getExternalFieldType() {
 		return model.getExternalFieldType();
+	}
+
+	/**
+	 * Returns the external reference code of this batch planner mapping.
+	 *
+	 * @return the external reference code of this batch planner mapping
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -359,6 +377,16 @@ public class BatchPlannerMappingWrapper
 	@Override
 	public void setExternalFieldType(String externalFieldType) {
 		model.setExternalFieldType(externalFieldType);
+	}
+
+	/**
+	 * Sets the external reference code of this batch planner mapping.
+	 *
+	 * @param externalReferenceCode the external reference code of this batch planner mapping
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

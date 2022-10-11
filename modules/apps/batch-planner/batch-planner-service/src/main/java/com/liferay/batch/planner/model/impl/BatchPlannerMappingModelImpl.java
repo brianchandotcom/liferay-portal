@@ -73,10 +73,11 @@ public class BatchPlannerMappingModelImpl
 	public static final String TABLE_NAME = "BatchPlannerMapping";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"batchPlannerMappingId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"batchPlannerPlanId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"batchPlannerMappingId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"batchPlannerPlanId", Types.BIGINT},
 		{"externalFieldName", Types.VARCHAR},
 		{"externalFieldType", Types.VARCHAR},
 		{"internalFieldName", Types.VARCHAR},
@@ -88,6 +89,7 @@ public class BatchPlannerMappingModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("batchPlannerMappingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -103,7 +105,7 @@ public class BatchPlannerMappingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerMapping (mvccVersion LONG default 0 not null,batchPlannerMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,externalFieldName VARCHAR(75) null,externalFieldType VARCHAR(75) null,internalFieldName VARCHAR(75) null,internalFieldType VARCHAR(75) null,script TEXT null)";
+		"create table BatchPlannerMapping (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,batchPlannerMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,externalFieldName VARCHAR(75) null,externalFieldType VARCHAR(75) null,internalFieldName VARCHAR(75) null,internalFieldType VARCHAR(75) null,script TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchPlannerMapping";
@@ -130,20 +132,32 @@ public class BatchPlannerMappingModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALFIELDNAME_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long INTERNALFIELDNAME_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALFIELDNAME_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long INTERNALFIELDNAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -265,6 +279,13 @@ public class BatchPlannerMappingModelImpl
 			(BiConsumer<BatchPlannerMapping, Long>)
 				BatchPlannerMapping::setMvccVersion);
 		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			BatchPlannerMapping::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<BatchPlannerMapping, String>)
+				BatchPlannerMapping::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"batchPlannerMappingId",
 			BatchPlannerMapping::getBatchPlannerMappingId);
 		attributeSetterBiConsumers.put(
@@ -359,6 +380,35 @@ public class BatchPlannerMappingModelImpl
 
 	@JSON
 	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
+	}
+
+	@JSON
+	@Override
 	public long getBatchPlannerMappingId() {
 		return _batchPlannerMappingId;
 	}
@@ -385,6 +435,16 @@ public class BatchPlannerMappingModelImpl
 		}
 
 		_companyId = companyId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -676,6 +736,8 @@ public class BatchPlannerMappingModelImpl
 			new BatchPlannerMappingImpl();
 
 		batchPlannerMappingImpl.setMvccVersion(getMvccVersion());
+		batchPlannerMappingImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		batchPlannerMappingImpl.setBatchPlannerMappingId(
 			getBatchPlannerMappingId());
 		batchPlannerMappingImpl.setCompanyId(getCompanyId());
@@ -702,6 +764,8 @@ public class BatchPlannerMappingModelImpl
 
 		batchPlannerMappingImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerMappingImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		batchPlannerMappingImpl.setBatchPlannerMappingId(
 			this.<Long>getColumnOriginalValue("batchPlannerMappingId"));
 		batchPlannerMappingImpl.setCompanyId(
@@ -806,6 +870,18 @@ public class BatchPlannerMappingModelImpl
 			new BatchPlannerMappingCacheModel();
 
 		batchPlannerMappingCacheModel.mvccVersion = getMvccVersion();
+
+		batchPlannerMappingCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			batchPlannerMappingCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			batchPlannerMappingCacheModel.externalReferenceCode = null;
+		}
 
 		batchPlannerMappingCacheModel.batchPlannerMappingId =
 			getBatchPlannerMappingId();
@@ -985,6 +1061,7 @@ public class BatchPlannerMappingModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _externalReferenceCode;
 	private long _batchPlannerMappingId;
 	private long _companyId;
 	private long _userId;
@@ -1028,6 +1105,8 @@ public class BatchPlannerMappingModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"batchPlannerMappingId", _batchPlannerMappingId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1055,29 +1134,31 @@ public class BatchPlannerMappingModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("batchPlannerMappingId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("batchPlannerMappingId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("batchPlannerPlanId", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("externalFieldName", 256L);
+		columnBitmasks.put("batchPlannerPlanId", 256L);
 
-		columnBitmasks.put("externalFieldType", 512L);
+		columnBitmasks.put("externalFieldName", 512L);
 
-		columnBitmasks.put("internalFieldName", 1024L);
+		columnBitmasks.put("externalFieldType", 1024L);
 
-		columnBitmasks.put("internalFieldType", 2048L);
+		columnBitmasks.put("internalFieldName", 2048L);
 
-		columnBitmasks.put("script", 4096L);
+		columnBitmasks.put("internalFieldType", 4096L);
+
+		columnBitmasks.put("script", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

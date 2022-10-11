@@ -39,14 +39,14 @@ public class BatchPlannerMappingServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerMappingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static BatchPlannerMapping addBatchPlannerMapping(
-			long batchPlannerPlanId, String externalFieldName,
-			String externalFieldType, String internalFieldName,
-			String internalFieldType, String script)
+			String externalReferenceCode, long batchPlannerPlanId,
+			String externalFieldName, String externalFieldType,
+			String internalFieldName, String internalFieldType, String script)
 		throws PortalException {
 
 		return getService().addBatchPlannerMapping(
-			batchPlannerPlanId, externalFieldName, externalFieldType,
-			internalFieldName, internalFieldType, script);
+			externalReferenceCode, batchPlannerPlanId, externalFieldName,
+			externalFieldType, internalFieldName, internalFieldType, script);
 	}
 
 	public static BatchPlannerMapping deleteBatchPlannerMapping(

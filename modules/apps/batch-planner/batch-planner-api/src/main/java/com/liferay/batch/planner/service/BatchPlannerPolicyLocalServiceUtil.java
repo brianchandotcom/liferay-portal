@@ -62,11 +62,12 @@ public class BatchPlannerPolicyLocalServiceUtil {
 	}
 
 	public static BatchPlannerPolicy addBatchPlannerPolicy(
-			long userId, long batchPlannerPlanId, String name, String value)
+			String externalReferenceCode, long userId, long batchPlannerPlanId,
+			String name, String value)
 		throws PortalException {
 
 		return getService().addBatchPlannerPolicy(
-			userId, batchPlannerPlanId, name, value);
+			externalReferenceCode, userId, batchPlannerPlanId, name, value);
 	}
 
 	/**
@@ -239,6 +240,32 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		return getService().fetchBatchPlannerPolicy(batchPlannerPlanId, name);
 	}
 
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	public static BatchPlannerPolicy
+		fetchBatchPlannerPolicyByExternalReferenceCode(
+			long groupId, String externalReferenceCode) {
+
+		return getService().fetchBatchPlannerPolicyByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerPolicyByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static BatchPlannerPolicy fetchBatchPlannerPolicyByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchBatchPlannerPolicyByReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -296,6 +323,23 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getBatchPlannerPolicy(batchPlannerPlanId, name);
+	}
+
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy
+	 * @throws PortalException if a matching batch planner policy could not be found
+	 */
+	public static BatchPlannerPolicy
+			getBatchPlannerPolicyByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getBatchPlannerPolicyByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	public static

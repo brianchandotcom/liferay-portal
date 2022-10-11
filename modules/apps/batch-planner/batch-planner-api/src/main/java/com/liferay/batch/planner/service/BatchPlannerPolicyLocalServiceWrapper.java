@@ -60,11 +60,12 @@ public class BatchPlannerPolicyLocalServiceWrapper
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPolicy
 			addBatchPlannerPolicy(
-				long userId, long batchPlannerPlanId, String name, String value)
+				String externalReferenceCode, long userId,
+				long batchPlannerPlanId, String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPolicyLocalService.addBatchPlannerPolicy(
-			userId, batchPlannerPlanId, name, value);
+			externalReferenceCode, userId, batchPlannerPlanId, name, value);
 	}
 
 	/**
@@ -273,6 +274,37 @@ public class BatchPlannerPolicyLocalServiceWrapper
 			batchPlannerPlanId, name);
 	}
 
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+		fetchBatchPlannerPolicyByExternalReferenceCode(
+			long groupId, String externalReferenceCode) {
+
+		return _batchPlannerPolicyLocalService.
+			fetchBatchPlannerPolicyByExternalReferenceCode(
+				groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerPolicyByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+		fetchBatchPlannerPolicyByReferenceCode(
+			long groupId, String externalReferenceCode) {
+
+		return _batchPlannerPolicyLocalService.
+			fetchBatchPlannerPolicyByReferenceCode(
+				groupId, externalReferenceCode);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -340,6 +372,25 @@ public class BatchPlannerPolicyLocalServiceWrapper
 
 		return _batchPlannerPolicyLocalService.getBatchPlannerPolicy(
 			batchPlannerPlanId, name);
+	}
+
+	/**
+	 * Returns the batch planner policy with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the batch planner policy's external reference code
+	 * @return the matching batch planner policy
+	 * @throws PortalException if a matching batch planner policy could not be found
+	 */
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			getBatchPlannerPolicyByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyLocalService.
+			getBatchPlannerPolicyByExternalReferenceCode(
+				groupId, externalReferenceCode);
 	}
 
 	@Override

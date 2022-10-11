@@ -77,9 +77,9 @@ public interface BatchPlannerMappingLocalService
 		BatchPlannerMapping batchPlannerMapping);
 
 	public BatchPlannerMapping addBatchPlannerMapping(
-			long userId, long batchPlannerPlanId, String externalFieldName,
-			String externalFieldType, String internalFieldName,
-			String internalFieldType, String script)
+			String externalReferenceCode, long userId, long batchPlannerPlanId,
+			String externalFieldName, String externalFieldType,
+			String internalFieldName, String internalFieldType, String script)
 		throws PortalException;
 
 	/**
@@ -218,6 +218,25 @@ public interface BatchPlannerMappingLocalService
 	public BatchPlannerMapping fetchBatchPlannerMapping(
 		long batchPlannerMappingId);
 
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerMapping fetchBatchPlannerMappingByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerMappingByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerMapping fetchBatchPlannerMappingByReferenceCode(
+		long companyId, String externalReferenceCode);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -231,6 +250,19 @@ public interface BatchPlannerMappingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchPlannerMapping getBatchPlannerMapping(
 			long batchPlannerMappingId)
+		throws PortalException;
+
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping
+	 * @throws PortalException if a matching batch planner mapping could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerMapping getBatchPlannerMappingByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

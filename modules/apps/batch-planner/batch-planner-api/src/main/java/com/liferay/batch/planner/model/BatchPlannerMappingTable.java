@@ -38,6 +38,10 @@ public class BatchPlannerMappingTable
 	public final Column<BatchPlannerMappingTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<BatchPlannerMappingTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerMappingTable, Long> batchPlannerMappingId =
 		createColumn(
 			"batchPlannerMappingId", Long.class, Types.BIGINT,

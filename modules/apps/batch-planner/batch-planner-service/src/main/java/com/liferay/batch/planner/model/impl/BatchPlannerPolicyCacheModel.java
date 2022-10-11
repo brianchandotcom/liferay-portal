@@ -78,14 +78,18 @@ public class BatchPlannerPolicyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", batchPlannerPolicyId=");
 		sb.append(batchPlannerPolicyId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -111,8 +115,18 @@ public class BatchPlannerPolicyCacheModel
 			new BatchPlannerPolicyImpl();
 
 		batchPlannerPolicyImpl.setMvccVersion(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			batchPlannerPolicyImpl.setExternalReferenceCode("");
+		}
+		else {
+			batchPlannerPolicyImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		batchPlannerPolicyImpl.setBatchPlannerPolicyId(batchPlannerPolicyId);
 		batchPlannerPolicyImpl.setCompanyId(companyId);
+		batchPlannerPolicyImpl.setGroupId(groupId);
 		batchPlannerPolicyImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -160,10 +174,13 @@ public class BatchPlannerPolicyCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		batchPlannerPolicyId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
 
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
@@ -179,9 +196,18 @@ public class BatchPlannerPolicyCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(batchPlannerPolicyId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(userId);
 
@@ -213,8 +239,10 @@ public class BatchPlannerPolicyCacheModel
 	}
 
 	public long mvccVersion;
+	public String externalReferenceCode;
 	public long batchPlannerPolicyId;
 	public long companyId;
+	public long groupId;
 	public long userId;
 	public String userName;
 	public long createDate;

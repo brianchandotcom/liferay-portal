@@ -78,10 +78,12 @@ public class BatchPlannerMappingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", batchPlannerMappingId=");
 		sb.append(batchPlannerMappingId);
 		sb.append(", companyId=");
@@ -117,6 +119,15 @@ public class BatchPlannerMappingCacheModel
 			new BatchPlannerMappingImpl();
 
 		batchPlannerMappingImpl.setMvccVersion(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			batchPlannerMappingImpl.setExternalReferenceCode("");
+		}
+		else {
+			batchPlannerMappingImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		batchPlannerMappingImpl.setBatchPlannerMappingId(batchPlannerMappingId);
 		batchPlannerMappingImpl.setCompanyId(companyId);
 		batchPlannerMappingImpl.setUserId(userId);
@@ -189,6 +200,7 @@ public class BatchPlannerMappingCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		batchPlannerMappingId = objectInput.readLong();
 
@@ -210,6 +222,13 @@ public class BatchPlannerMappingCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(batchPlannerMappingId);
 
@@ -266,6 +285,7 @@ public class BatchPlannerMappingCacheModel
 	}
 
 	public long mvccVersion;
+	public String externalReferenceCode;
 	public long batchPlannerMappingId;
 	public long companyId;
 	public long userId;

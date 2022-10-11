@@ -260,6 +260,50 @@ public abstract class BatchPlannerMappingLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping fetchBatchPlannerMappingByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return batchPlannerMappingPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchPlannerMappingByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public BatchPlannerMapping fetchBatchPlannerMappingByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchBatchPlannerMappingByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the batch planner mapping with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the batch planner mapping's external reference code
+	 * @return the matching batch planner mapping
+	 * @throws PortalException if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping getBatchPlannerMappingByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return batchPlannerMappingPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the batch planner mapping with the primary key.
 	 *
 	 * @param batchPlannerMappingId the primary key of the batch planner mapping

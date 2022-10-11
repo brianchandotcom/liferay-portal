@@ -51,7 +51,7 @@ const RolesDropdown = ({
 
 	const handleOnClick = (accountRoleItem) => {
 		if (accountRoleItem.label !== selectedAccountRoleName) {
-			onClick(accountRoleItem.value);
+			onClick(accountRoleItem);
 			setSelectedAccountRoleName(accountRoleItem.label);
 		}
 	};

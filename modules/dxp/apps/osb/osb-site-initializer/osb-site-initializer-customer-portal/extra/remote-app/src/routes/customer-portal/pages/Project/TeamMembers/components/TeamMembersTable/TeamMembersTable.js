@@ -33,6 +33,7 @@ const TeamMembersTable = ({
 
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
 	const [currentIndexRemoving, setCurrentIndexRemoving] = useState();
+	const [, setSelectedAccountRoleItem] = useState();
 
 	const [
 		supportSeatsCount,
@@ -48,20 +49,21 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
-	const {
-		data: accountRolesData,
-		loading: accountRolesLoading,
-	} = useAccountRolesByAccountExternalReferenceCode(
-		koroneikiAccount,
-		koroneikiAccountLoading
-	);
-
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
 
 	const loggedUserAccount = useMemo(
 		() => userAccounts?.find((userAccount) => userAccount.isLoggedUser),
 		[userAccounts]
+	);
+
+	const {
+		data: accountRolesData,
+		loading: accountRolesLoading,
+	} = useAccountRolesByAccountExternalReferenceCode(
+		koroneikiAccount,
+		koroneikiAccountLoading,
+		!loggedUserAccount?.selectedAccountSummary.hasAdministratorRole
 	);
 
 	const availableAccountRoles =
@@ -79,6 +81,12 @@ const TeamMembersTable = ({
 			setCurrentIndexRemoving();
 		}
 	}, [onOpenChange, removeCalled, removing]);
+
+	useEffect(() => {
+		if (currentIndexEditing) {
+			setSelectedAccountRoleItem();
+		}
+	}, [currentIndexEditing]);
 
 	const getCurrentRoleBriefName = useCallback(
 		(accountBrief) =>
@@ -123,7 +131,10 @@ const TeamMembersTable = ({
 						options: (
 							<OptionsColumn
 								edit={index === currentIndexEditing}
-								onCancel={() => setCurrentIndexEditing()}
+								onCancel={() => {
+									setCurrentIndexEditing();
+									setSelectedAccountRoleItem();
+								}}
 								onEdit={() => setCurrentIndexEditing(index)}
 								onRemove={() => {
 									setCurrentIndexRemoving(index);
@@ -146,8 +157,10 @@ const TeamMembersTable = ({
 									userAccount.selectedAccountSummary
 										.hasSupportSeatRole
 								}
-								onClick={(selectedAccountRoleName) =>
-									selectedAccountRoleName
+								onClick={(selectedAccountRoleItem) =>
+									setSelectedAccountRoleItem(
+										selectedAccountRoleItem
+									)
 								}
 								supportSeatsCount={supportSeatsCount}
 							/>

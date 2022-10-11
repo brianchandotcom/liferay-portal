@@ -41,7 +41,6 @@ import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.item.provider.filter.OptionalPropertyInfoItemServiceFilter;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.info.item.translator.InfoItemIdentifierTranslator;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.list.renderer.InfoListRenderer;
@@ -437,10 +436,9 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemIdentifierTranslator.class, InfoItemLanguagesProvider.class,
 			InfoItemObjectProvider.class, InfoItemObjectVariationProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
-			InfoItemSelector.class, InfoItemWorkflowProvider.class,
-			InfoListRenderer.class, InfoPermissionProvider.class,
-			InfoRequestItemProvider.class, InfoTextFormatter.class,
-			RelatedInfoItemCollectionProvider.class));
+			InfoItemWorkflowProvider.class, InfoListRenderer.class,
+			InfoPermissionProvider.class, InfoRequestItemProvider.class,
+			InfoTextFormatter.class, RelatedInfoItemCollectionProvider.class));
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, InfoItemCapability>

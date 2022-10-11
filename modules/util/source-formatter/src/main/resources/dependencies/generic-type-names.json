@@ -346,10 +346,6 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.info.item.selector.InfoItemSelector"
-		},
-		{
-			"genericTypeCount": 1,
 			"name": "com.liferay.info.list.provider.InfoListProvider"
 		},
 		{

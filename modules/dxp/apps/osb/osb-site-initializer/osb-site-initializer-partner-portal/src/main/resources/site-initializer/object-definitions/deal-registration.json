@@ -158,7 +158,7 @@
 			"label": {
 				"en_US": "Project Need"
 			},
-			"name": "projecttNeed",
+			"name": "projectNeed",
 			"required": false,
 			"type": "Clob"
 		},

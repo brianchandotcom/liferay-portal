@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.background.task.api
 Bundle-Version: 7.0.2
 Export-Package:\
 	com.liferay.portal.background.task.constants,\
+	com.liferay.portal.background.task.display,\
 	com.liferay.portal.background.task.exception,\
 	com.liferay.portal.background.task.model,\
 	com.liferay.portal.background.task.service,\

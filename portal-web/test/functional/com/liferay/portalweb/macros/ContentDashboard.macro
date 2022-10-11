@@ -400,34 +400,6 @@ definition {
 		Click(locator1 = "ContentDashboard#SWAP_VOCABULARIES_BUTTON");
 	}
 
-	macro tearDown {
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Navigator.gotoNavNested(navNested = "Audience");
-
-		var key_categoryName = "Audience 1";
-
-		if (IsElementPresent(locator1 = "Categories#VOCABULARY_CATEGORY")) {
-			Category.deleteCategoriesCP(vocabularyName = "Audience");
-		}
-
-		Navigator.gotoNavNested(navNested = "Stage");
-
-		var key_categoryName = "Stage 1";
-
-		if (IsElementPresent(locator1 = "Categories#VOCABULARY_CATEGORY")) {
-			Category.deleteCategoriesCP(vocabularyName = "Stage");
-		}
-	}
-
-	macro uncheckCheckbox {
-		var checkboxLabel = "${auditGraphCheckboxName}";
-
-		Click.javaScriptClick(
-			checkboxName = "Stage 1",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-	}
-
 	macro useTreeviewFilter {
 		Portlet.expandTree();
 

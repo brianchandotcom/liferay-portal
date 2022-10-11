@@ -26,6 +26,55 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-161024."
+	@priority = "3"
+	test CanUseCapitalizedVirtualHostName {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,liferay-lower:virtual.hosts.valid.hosts=localhost,127.0.0.1,LIFERAY-UPPER";
+		property test.name.skip.portal.instance = "FriendlyURL#CanUseCapitalizedVirtualHostName";
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.addVirtualHostsURLCP(
+			pageVirtualHosts = "true",
+			pageVirtualHostURL = "LIFERAY-UPPER");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Upper");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Upper",
+			widgetName = "Asset Publisher");
+
+		Navigator.openSpecificURL(url = "http://LIFERAY-UPPER:8080");
+
+		AssertElementPresent(
+			key_pageName = "Test Page Upper",
+			locator1 = "Home#PAGE");
+
+		JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-2");
+
+		Click(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Navigator.gotoNavTab(navTab = "Site URL");
+
+		Type(
+			key_text = "Virtual Host",
+			locator1 = "TextInput#ANY",
+			value1 = "liferay-upper");
+
+		Click(
+			key_text = "Save",
+			locator1 = "Button#ANY");
+
+		Alert.viewErrorMessage(errorMessage = "Error: Please enter a unique virtual host. Virtual hosts must be valid domain names.");
+	}
+
 	@description = "If virtual.hosts.strict.access=true is set, do not redirect to a default instance if there is no associated company"
 	@priority = "4"
 	test DoNotRedirectToDefaultInstanceWithNoCompany {

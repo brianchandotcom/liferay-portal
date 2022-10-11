@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Activity"
+	},
+	"name": "activityToDealRegistrations",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Activity$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:DealRegistration$]",
+	"objectDefinitionName2": "DealRegistration",
+	"type": "oneToMany"
+}

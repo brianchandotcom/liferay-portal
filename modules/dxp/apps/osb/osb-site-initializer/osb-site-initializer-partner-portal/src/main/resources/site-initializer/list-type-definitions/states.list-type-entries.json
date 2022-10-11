@@ -1,0 +1,418 @@
+[
+	{
+		"key": "alabama",
+		"name": "Alabama",
+		"name_i18n": {
+			"en-US": "Alabama"
+		},
+		"type": "string"
+	},
+	{
+		"key": "alaska",
+		"name": "Alaska",
+		"name_i18n": {
+			"en-US": "Alaska"
+		},
+		"type": "string"
+	},
+	{
+		"key": "arizona",
+		"name": "Arizona",
+		"name_i18n": {
+			"en-US": "Arizona"
+		},
+		"type": "string"
+	},
+	{
+		"key": "arkansas",
+		"name": "Arkansas",
+		"name_i18n": {
+			"en-US": "Arkansas"
+		},
+		"type": "string"
+	},
+	{
+		"key": "california",
+		"name": "California",
+		"name_i18n": {
+			"en-US": "California"
+		},
+		"type": "string"
+	},
+	{
+		"key": "colorado",
+		"name": "Colorado",
+		"name_i18n": {
+			"en-US": "Colorado"
+		},
+		"type": "string"
+	},
+	{
+		"key": "connecticut",
+		"name": "Connecticut",
+		"name_i18n": {
+			"en-US": "Connecticut"
+		},
+		"type": "string"
+	},
+	{
+		"key": "delaware",
+		"name": "Delaware",
+		"name_i18n": {
+			"en-US": "Delaware"
+		},
+		"type": "string"
+	},
+	{
+		"key": "districtOfColumbia",
+		"name": "District of Columbia",
+		"name_i18n": {
+			"en-US": "District of Columbia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "florida",
+		"name": "Florida",
+		"name_i18n": {
+			"en-US": "Florida"
+		},
+		"type": "string"
+	},
+	{
+		"key": "africa",
+		"name": "Africa",
+		"name_i18n": {
+			"en-US": "Africa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "georgia",
+		"name": "Georgia",
+		"name_i18n": {
+			"en-US": "Georgia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "hawaii",
+		"name": "Hawaii",
+		"name_i18n": {
+			"en-US": "Hawaii"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dach",
+		"name": "DACH",
+		"name_i18n": {
+			"en-US": "DACH"
+		},
+		"type": "string"
+	},
+	{
+		"key": "idaho",
+		"name": "Idaho",
+		"name_i18n": {
+			"en-US": "Idaho"
+		},
+		"type": "string"
+	},
+	{
+		"key": "illinois",
+		"name": "Illinois",
+		"name_i18n": {
+			"en-US": "Illinois"
+		},
+		"type": "string"
+	},
+	{
+		"key": "indiana",
+		"name": "Indiana",
+		"name_i18n": {
+			"en-US": "Indiana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "iowa",
+		"name": "Iowa",
+		"name_i18n": {
+			"en-US": "Iowa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "kansas",
+		"name": "Kansas",
+		"name_i18n": {
+			"en-US": "Kansas"
+		},
+		"type": "string"
+	},
+	{
+		"key": "kentucky",
+		"name": "Kentucky",
+		"name_i18n": {
+			"en-US": "Kentucky"
+		},
+		"type": "string"
+	},
+	{
+		"key": "louisiana",
+		"name": "Louisiana",
+		"name_i18n": {
+			"en-US": "Louisiana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "maine",
+		"name": "Maine",
+		"name_i18n": {
+			"en-US": "Maine"
+		},
+		"type": "string"
+	},
+	{
+		"key": "maryland",
+		"name": "Maryland",
+		"name_i18n": {
+			"en-US": "Maryland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "massachusetts",
+		"name": "Massachusetts",
+		"name_i18n": {
+			"en-US": "Massachusetts"
+		},
+		"type": "string"
+	},
+	{
+		"key": "michigan",
+		"name": "Michigan",
+		"name_i18n": {
+			"en-US": "Michigan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "minnesota",
+		"name": "Minnesota",
+		"name_i18n": {
+			"en-US": "Minnesota"
+		},
+		"type": "string"
+	},
+	{
+		"key": "mississippi",
+		"name": "Mississippi",
+		"name_i18n": {
+			"en-US": "Mississippi"
+		},
+		"type": "string"
+	},
+	{
+		"key": "missouri",
+		"name": "Missouri",
+		"name_i18n": {
+			"en-US": "Missouri"
+		},
+		"type": "string"
+	},
+	{
+		"key": "montana",
+		"name": "Montana",
+		"name_i18n": {
+			"en-US": "Montana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "nebraska",
+		"name": "Nebraska",
+		"name_i18n": {
+			"en-US": "Nebraska"
+		},
+		"type": "string"
+	},
+	{
+		"key": "nevada",
+		"name": "Nevada",
+		"name_i18n": {
+			"en-US": "Nevada"
+		},
+		"type": "string"
+	},
+	{
+		"key": "newHampshire",
+		"name": "New Hampshire",
+		"name_i18n": {
+			"en-US": "New Hampshire"
+		},
+		"type": "string"
+	},
+	{
+		"key": "newJersey",
+		"name": "New Jersey",
+		"name_i18n": {
+			"en-US": "New Jersey"
+		},
+		"type": "string"
+	},
+	{
+		"key": "newMexico",
+		"name": "New Mexico",
+		"name_i18n": {
+			"en-US": "New Mexico"
+		},
+		"type": "string"
+	},
+	{
+		"key": "newYork",
+		"name": "New York",
+		"name_i18n": {
+			"en-US": "New York"
+		},
+		"type": "string"
+	},
+	{
+		"key": "northCarolina",
+		"name": "North Carolina",
+		"name_i18n": {
+			"en-US": "North Carolina"
+		},
+		"type": "string"
+	},
+	{
+		"key": "northDakota",
+		"name": "North Dakota",
+		"name_i18n": {
+			"en-US": "North Dakota"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ohio",
+		"name": "Ohio",
+		"name_i18n": {
+			"en-US": "Ohio"
+		},
+		"type": "string"
+	},
+	{
+		"key": "oklahoma",
+		"name": "Oklahoma",
+		"name_i18n": {
+			"en-US": "Oklahoma"
+		},
+		"type": "string"
+	},
+	{
+		"key": "oregon",
+		"name": "Oregon",
+		"name_i18n": {
+			"en-US": "Oregon"
+		},
+		"type": "string"
+	},
+	{
+		"key": "pennsylvania",
+		"name": "Pennsylvania",
+		"name_i18n": {
+			"en-US": "Pennsylvania"
+		},
+		"type": "string"
+	},
+	{
+		"key": "puertoRico",
+		"name": "Puerto Rico",
+		"name_i18n": {
+			"en-US": "Puerto Rico"
+		},
+		"type": "string"
+	},
+	{
+		"key": "rhodeIsland",
+		"name": "Rhode Island",
+		"name_i18n": {
+			"en-US": "Rhode Island"
+		},
+		"type": "string"
+	},
+	{
+		"key": "southCarolina",
+		"name": "South Carolina",
+		"name_i18n": {
+			"en-US": "South Carolina"
+		},
+		"type": "string"
+	},
+	{
+		"key": "southDakota",
+		"name": "South Dakota",
+		"name_i18n": {
+			"en-US": "South Dakota"
+		},
+		"type": "string"
+	},
+	{
+		"key": "tennessee",
+		"name": "Tennessee",
+		"name_i18n": {
+			"en-US": "Tennessee"
+		},
+		"type": "string"
+	},
+	{
+		"key": "texas",
+		"name": "Texas",
+		"name_i18n": {
+			"en-US": "Texas"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utah",
+		"name": "Utah",
+		"name_i18n": {
+			"en-US": "Utah"
+		},
+		"type": "string"
+	},
+	{
+		"key": "vermont",
+		"name": "Vermont",
+		"name_i18n": {
+			"en-US": "Vermont"
+		},
+		"type": "string"
+	},
+	{
+		"key": "virginia",
+		"name": "Virginia",
+		"name_i18n": {
+			"en-US": "Virginia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "washington",
+		"name": "Washington",
+		"name_i18n": {
+			"en-US": "Washington"
+		},
+		"type": "string"
+	},
+	{
+		"key": "westVirginia",
+		"name": "West Virginia",
+		"name_i18n": {
+			"en-US": "West Virginia"
+		},
+		"type": "string"
+	}
+]

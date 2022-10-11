@@ -1,0 +1,281 @@
+{
+	"label": {
+		"en_US": "Deal Registration"
+	},
+	"name": "DealRegistration",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Information About The Opportunity"
+			},
+			"name": "additionalInformationAboutTheOpportunity",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Contact Email Address"
+			},
+			"name": "additionalContactEmailAddress",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Contact First Name"
+			},
+			"name": "additionalContactFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Contact Last Name"
+			},
+			"name": "additionalContactLastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Timeline"
+			},
+			"name": "projectTimeline",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Business Unit"
+			},
+			"name": "businessUnit",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Department"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Departments$]",
+			"name": "department",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Email Address"
+			},
+			"name": "primaryProspectEmailAddress",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect First Name"
+			},
+			"name": "primaryProspectFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Job Role"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Deal Registration Job Roles$]",
+			"name": "primaryProspectJobRole",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Last Name"
+			},
+			"name": "primaryProspectLastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Phone"
+			},
+			"name": "primaryProspectPhone",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Need"
+			},
+			"name": "projecttNeed",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Solution Categories"
+			},
+			"name": "projectSolutionCategories",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account Name"
+			},
+			"name": "accountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Address"
+			},
+			"name": "address",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "City"
+			},
+			"name": "city",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
+			"name": "country",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Industry"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Deal Registration Industries$]",
+			"name": "industry",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Postal Code"
+			},
+			"name": "postalCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "State"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:States$]",
+			"name": "state",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Registration Status"
+			},
+			"name": "registrationStatus",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Deal Registrations"
+	},
+	"scope": "company"
+}

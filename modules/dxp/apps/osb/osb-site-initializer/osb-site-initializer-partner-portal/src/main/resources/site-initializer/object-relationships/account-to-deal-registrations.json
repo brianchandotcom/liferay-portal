@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Company"
+	},
+	"name": "accountToDealRegistrations",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:DealRegistration$]",
+	"objectDefinitionName2": "DealRegistration",
+	"type": "oneToMany"
+}

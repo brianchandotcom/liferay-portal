@@ -1,0 +1,74 @@
+[
+	{
+		"key": "customerPortal",
+		"name": "Customer Portal",
+		"name_i18n": {
+			"en-US": "Customer Portal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "elearningPlataform",
+		"name": "E-Learnig Plataform",
+		"name_i18n": {
+			"en-US": "E-Learnig Plataform"
+		},
+		"type": "string"
+	},
+	{
+		"key": "govpublicAdminPortal",
+		"name": "Gov/Public Admin Portal",
+		"name_i18n": {
+			"en-US": "Gov/Public Admin Portal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "headlessPlataform",
+		"name": "Headless Plataform",
+		"name_i18n": {
+			"en-US": "Headless Plataform"
+		},
+		"type": "string"
+	},
+	{
+		"key": "intranet",
+		"name": "Intranet",
+		"name_i18n": {
+			"en-US": "Intranet"
+		},
+		"type": "string"
+	},
+	{
+		"key": "publicWebsite",
+		"name": "Public Website",
+		"name_i18n": {
+			"en-US": "Public Website"
+		},
+		"type": "string"
+	},
+	{
+		"key": "resellerDistributorDealerPortal",
+		"name": "Reseller/Distributor/Dealer Portal",
+		"name_i18n": {
+			"en-US": "Reseller/Distributor/Dealer Portal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "studnetCapusPortal",
+		"name": "Studant/Campus Portal",
+		"name_i18n": {
+			"en-US": "Studant/Campus Portal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "vendorSupplierPortal",
+		"name": "Vendor/Suplier Portal",
+		"name_i18n": {
+			"en-US": "Vendor/Suplier Portal"
+		},
+		"type": "string"
+	}
+]

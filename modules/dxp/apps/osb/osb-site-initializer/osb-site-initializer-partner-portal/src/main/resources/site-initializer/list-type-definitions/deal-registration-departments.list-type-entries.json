@@ -1,0 +1,74 @@
+[
+	{
+		"key": "businessFinance",
+		"name": "Business - Finance",
+		"name_i18n": {
+			"en-US": "Business - Finance"
+		},
+		"type": "string"
+	},
+	{
+		"key": "businessHR",
+		"name": "Business - HR",
+		"name_i18n": {
+			"en-US": "Business - HR"
+		},
+		"type": "string"
+	},
+	{
+		"key": "businessLegalProcurement",
+		"name": "Business - Legal/Procurement",
+		"name_i18n": {
+			"en-US": "Business - Legal/Procurement"
+		},
+		"type": "string"
+	},
+	{
+		"key": "businessMarketing",
+		"name": "Business - Marketing",
+		"name_i18n": {
+			"en-US": "Business - Marketing"
+		},
+		"type": "string"
+	},
+	{
+		"key": "businessOperations",
+		"name": "Business - Operations",
+		"name_i18n": {
+			"en-US": "Business - Operations"
+		},
+		"type": "string"
+	},
+	{
+		"key": "businessSales",
+		"name": "Business - Sales",
+		"name_i18n": {
+			"en-US": "Business - Sales"
+		},
+		"type": "string"
+	},
+	{
+		"key": "other",
+		"name": "Other",
+		"name_i18n": {
+			"en-US": "Other"
+		},
+		"type": "string"
+	},
+	{
+		"key": "technicalDevelopmentEngineering",
+		"name": "Technical - Development/Engineering",
+		"name_i18n": {
+			"en-US": "Technical - Development/Engineering"
+		},
+		"type": "string"
+	},
+	{
+		"key": "technicalITSupport",
+		"name": "Technical - IT/Support",
+		"name_i18n": {
+			"en-US": "Technical - IT/Support"
+		},
+		"type": "string"
+	}
+]

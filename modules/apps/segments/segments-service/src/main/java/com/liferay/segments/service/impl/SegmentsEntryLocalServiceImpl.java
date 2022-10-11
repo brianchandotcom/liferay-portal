@@ -116,8 +116,8 @@ public class SegmentsEntryLocalServiceImpl
 			segmentsEntryKey = StringUtil.toUpperCase(segmentsEntryKey.trim());
 		}
 
-		validateKey(0, groupId, segmentsEntryKey);
-		validateName(groupId, nameMap);
+		_validateKey(0, groupId, segmentsEntryKey);
+		_validateName(groupId, nameMap);
 
 		long segmentsEntryId = counterLocalService.increment();
 
@@ -137,7 +137,7 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setSource(getSource(criteria, source));
+		segmentsEntry.setSource(_getSource(criteria, source));
 		segmentsEntry.setType(type);
 
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
@@ -148,7 +148,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Indexer
 
-		reindexSegmentsEntryRels(segmentsEntry);
+		_reindexSegmentsEntryRels1(segmentsEntry);
 
 		return segmentsEntry;
 	}
@@ -170,7 +170,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
 
-		reindexSegmentsEntryRels(segmentsEntry);
+		_reindexSegmentsEntryRels1(segmentsEntry);
 	}
 
 	@Override
@@ -246,7 +246,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Indexer
 
-		reindexSegmentsEntryRels(segmentsEntry);
+		_reindexSegmentsEntryRels1(segmentsEntry);
 
 		return segmentsEntry;
 	}
@@ -266,7 +266,7 @@ public class SegmentsEntryLocalServiceImpl
 
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
 
-		reindexSegmentsEntryRels(segmentsEntry);
+		_reindexSegmentsEntryRels1(segmentsEntry);
 	}
 
 	@Override
@@ -359,7 +359,7 @@ public class SegmentsEntryLocalServiceImpl
 			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, keywords, includeAncestorSegmentsEntries,
 			params, start, end, sort);
 
@@ -377,7 +377,7 @@ public class SegmentsEntryLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
 
-			List<SegmentsEntry> segmentsEntries = getSegmentsEntries(hits);
+			List<SegmentsEntry> segmentsEntries = _getSegmentsEntries(hits);
 
 			if (segmentsEntries != null) {
 				return new BaseModelSearchResult<>(
@@ -404,10 +404,10 @@ public class SegmentsEntryLocalServiceImpl
 
 		segmentsEntryKey = StringUtil.toUpperCase(segmentsEntryKey.trim());
 
-		validateKey(
+		_validateKey(
 			segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
 
-		validateName(segmentsEntry.getGroupId(), nameMap);
+		_validateName(segmentsEntry.getGroupId(), nameMap);
 
 		segmentsEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
@@ -416,18 +416,18 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
-		segmentsEntry.setSource(getSource(criteria, segmentsEntry.getSource()));
+		segmentsEntry.setSource(_getSource(criteria, segmentsEntry.getSource()));
 
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
 
 		// Indexer
 
-		reindexSegmentsEntryRels(segmentsEntry);
+		_reindexSegmentsEntryRels1(segmentsEntry);
 
 		return segmentsEntry;
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long groupId, String keywords,
 		boolean includeAncestorSegmentsEntries,
 		LinkedHashMap<String, Object> params, int start, int end, Sort sort) {
@@ -475,7 +475,7 @@ public class SegmentsEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<SegmentsEntry> getSegmentsEntries(Hits hits)
+	private List<SegmentsEntry> _getSegmentsEntries(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -507,7 +507,7 @@ public class SegmentsEntryLocalServiceImpl
 		return segmentsEntries;
 	}
 
-	protected String getSource(String criteria, String source) {
+	private String _getSource(String criteria, String source) {
 		if (Validator.isNotNull(criteria)) {
 			Criteria criteriaObj = CriteriaSerializer.deserialize(criteria);
 
@@ -531,15 +531,15 @@ public class SegmentsEntryLocalServiceImpl
 		return source;
 	}
 
-	protected void reindexSegmentsEntryRels(SegmentsEntry segmentsEntry)
+	private void _reindexSegmentsEntryRels1(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
-		_reindexSegmentsEntryRels(segmentsEntry);
+		_reindexSegmentsEntryRels2(segmentsEntry);
 
 		_reindexReferredSegmentsEntryRels(segmentsEntry);
 	}
 
-	protected void validateKey(
+	private void _validateKey(
 			long segmentsEntryId, long groupId, String segmentsEntryKey)
 		throws PortalException {
 
@@ -553,7 +553,7 @@ public class SegmentsEntryLocalServiceImpl
 		}
 	}
 
-	protected void validateName(long groupId, Map<Locale, String> nameMap)
+	private void _validateName(long groupId, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		Locale defaultLocale = _portal.getSiteDefaultLocale(groupId);
@@ -584,13 +584,13 @@ public class SegmentsEntryLocalServiceImpl
 					filterString.contains(
 						String.valueOf(segmentsEntry.getSegmentsEntryId()))) {
 
-					_reindexSegmentsEntryRels(referredSegmentsEntry);
+					_reindexSegmentsEntryRels2(referredSegmentsEntry);
 				}
 			}
 		}
 	}
 
-	private void _reindexSegmentsEntryRels(SegmentsEntry segmentsEntry) {
+	private void _reindexSegmentsEntryRels2(SegmentsEntry segmentsEntry) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				Message message = new Message();

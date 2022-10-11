@@ -93,6 +93,9 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 			}
 		}
 
+		data.put("role", "button");
+		data.put("tabIndex", "0");
+
 		return data;
 	}
 

@@ -561,6 +561,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161732. When the page creator favorites a widget on page editor, the highlighted widget should be shown on Add panel of widget page."
+	@priority = "4"
+	test PropogateFavoriteWidgetsToAddPanel {
+		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator removes all favorite widgets") {
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			for (var widgetName : list "Asset Publisher,Documents and Media,Menu Display,Web Content Display") {
+				PageEditor.unmarkFavorite(
+					collectionName = "Highlighted",
+					fragmentName = "${widgetName}");
+			}
+
+			AssertElementNotPresent(
+				key_panel = "Highlighted",
+				locator1 = "Panel#PANEL");
+		}
+
+		task ("Then the page creator cannot see the favorite widget category on Add panel") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			AssertElementNotPresent(
+				key_panel = "Highlighted",
+				locator1 = "Panel#PANEL");
+		}
+
+		task ("When the page creator add favorite widgets via Fragments and Widgets panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			for (var widgetName : list "Asset Publisher,Documents and Media,Menu Display,Web Content Display") {
+				PageEditor.markFavorite(
+					collectionName = "Content Management",
+					fragmentName = "${widgetName}");
+			}
+
+			PageEditor.markFavorite(
+				collectionName = "Collaboration",
+				fragmentName = "Blogs");
+
+			AssertVisible(
+				key_panel = "Highlighted",
+				locator1 = "Panel#PANEL");
+		}
+
+		task ("Then the page creator sees the favorite widget category on Add panel") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			AssertVisible(
+				key_panel = "Highlighted",
+				locator1 = "Panel#PANEL");
+		}
+	}
+
 	@description = "This is a test for LPS-130964. View visual feedback when drag items in Fragments and Widgets panel."
 	@priority = "4"
 	test ViewVisualFeedbackWhenDragItems {

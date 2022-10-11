@@ -227,6 +227,7 @@ export default {
 	'password-may-contain-letters-and-numbers':
 		'Password may contain letters and numbers.',
 	'passwords-do-not-match': 'Passwords do not match.',
+	'please-select-one-or-more-roles': 'Please select one or more roles',
 	'priority': 'Priority',
 	'product-version': 'Product Version',
 	'progress': 'Progress',

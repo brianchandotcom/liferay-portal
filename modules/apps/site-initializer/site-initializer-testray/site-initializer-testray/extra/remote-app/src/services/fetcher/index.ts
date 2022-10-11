@@ -60,7 +60,7 @@ const fetcher = async <T = any>(
 		throw error;
 	}
 
-	if (options?.method !== 'DELETE') {
+	if (options?.method !== 'DELETE' && response.status !== 204) {
 		return response.json();
 	}
 };
@@ -70,21 +70,21 @@ fetcher.delete = (resource: RequestInfo) =>
 		method: 'DELETE',
 	});
 
-fetcher.patch = (resource: RequestInfo, data: any, options?: RequestInit) =>
+fetcher.patch = (resource: RequestInfo, data: unknown, options?: RequestInit) =>
 	fetcher(resource, {
 		...options,
 		body: JSON.stringify(data),
 		method: 'PATCH',
 	});
 
-fetcher.post = (resource: RequestInfo, data: any, options?: RequestInit) =>
+fetcher.post = (resource: RequestInfo, data?: unknown, options?: RequestInit) =>
 	fetcher(resource, {
 		...options,
-		body: JSON.stringify(data),
+		body: data ? JSON.stringify(data) : null,
 		method: 'POST',
 	});
 
-fetcher.put = (resource: RequestInfo, data: any, options?: RequestInit) =>
+fetcher.put = (resource: RequestInfo, data: unknown, options?: RequestInit) =>
 	fetcher(resource, {
 		...options,
 		body: JSON.stringify(data),

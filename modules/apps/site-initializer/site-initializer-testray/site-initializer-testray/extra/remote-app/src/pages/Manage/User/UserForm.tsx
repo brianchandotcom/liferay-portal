@@ -25,6 +25,7 @@ import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {Liferay} from '../../../services/liferay';
 import {liferayUserAccountsRest} from '../../../services/rest';
 import {liferayUserRolesRest} from '../../../services/rest/TestrayRolesUser';
 import {RoleTypes} from '../../../util/constants';
@@ -40,6 +41,17 @@ type UserFormDefault = {
 	roleBriefs?: any;
 	roles: number[];
 	testrayUser: boolean;
+};
+
+interface Action {
+	href: string;
+	method: string;
+}
+
+type ActionsType = {
+	actions: {
+		[key: string]: Action;
+	};
 };
 
 const UserForm = () => {
@@ -66,7 +78,16 @@ const UserForm = () => {
 		resolver: yupResolver(yupSchema.user),
 	});
 
+	const rolesWatch = watch('roles') as number[];
+
 	const _onSubmit = (form: UserFormDefault) => {
+		if (!rolesWatch?.length) {
+			return Liferay.Util.openToast({
+				message: i18n.translate('please-select-one-or-more-roles'),
+				type: 'danger',
+			});
+		}
+
 		onSubmit(
 			{...form, userId: userAccount?.id},
 			{
@@ -89,13 +110,9 @@ const UserForm = () => {
 	};
 	const roles = data?.items || [];
 
-	const checkPermissionRoles = roles.map((role: any) => {
-		return role.actions['create-role-user-account-association']
-			? true
-			: false;
+	const checkPermissionRoles = roles.map((role: ActionsType) => {
+		return !!role.actions['create-role-user-account-association'];
 	});
-
-	const rolesWatch = watch('roles') as number[];
 
 	const userRoles = useMemo(
 		() => (userAccount?.roleBriefs || []).map(({id}: {id: number}) => id),
@@ -110,8 +127,8 @@ const UserForm = () => {
 		setRolesUser();
 	}, [setRolesUser]);
 
-	const onClickRoles = (event: any) => {
-		const value = Number(event.target.value);
+	const onClickRoles = (event: React.FormEvent<HTMLInputElement>) => {
+		const value = Number(event.currentTarget.value);
 
 		const rolesFiltered = rolesWatch.includes(value)
 			? rolesWatch.filter((rolesId) => rolesId !== value)
@@ -239,11 +256,7 @@ const UserForm = () => {
 								<div className="mt-2" key={id}>
 									<ClayCheckbox
 										checked={rolesWatch.includes(id)}
-										disabled={
-											checkPermissionRoles[index]
-												? false
-												: true
-										}
+										disabled={!checkPermissionRoles[index]}
 										label={name}
 										name={name}
 										onChange={onClickRoles}

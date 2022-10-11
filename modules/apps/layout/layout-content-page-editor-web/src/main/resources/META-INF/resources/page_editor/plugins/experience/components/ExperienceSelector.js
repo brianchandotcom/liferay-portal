@@ -387,6 +387,46 @@ const ExperienceSelector = ({
 						id={experienceSelectorContentId}
 						onBlur={handleDropdownBlur}
 						onFocus={handleDropdownFocus}
+						onKeyDown={(event) => {
+							if (event.key === 'Escape') {
+								buttonRef.current?.focus();
+							}
+							else if (event.key === 'Tab') {
+								const focusableElements = getKeyboardFocusableElements(
+									selectorRef.current
+								);
+
+								if (
+									event.shiftKey &&
+									focusableElements.indexOf(event.target) ===
+										0
+								) {
+									event.preventDefault();
+
+									buttonRef.current?.focus();
+
+									return;
+								}
+
+								if (
+									focusableElements.indexOf(event.target) ===
+									focusableElements.length - 1
+								) {
+									event.preventDefault();
+
+									const allFocusableElements = getKeyboardFocusableElements(
+										document
+									);
+
+									const index = allFocusableElements.indexOf(
+										buttonRef.current
+									);
+
+									allFocusableElements[index + 1]?.focus();
+								}
+							}
+						}}
+						ref={selectorRef}
 						style={{
 							left: buttonBoundingClientRect.left,
 							top: buttonBoundingClientRect.bottom,

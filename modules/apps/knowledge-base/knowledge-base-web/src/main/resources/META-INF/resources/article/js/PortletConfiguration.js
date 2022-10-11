@@ -20,31 +20,47 @@ export default function _PortletConfiguration({
 	const form = document.getElementById(`${namespace}fm`);
 
 	if (form) {
-		document
-			.getElementById(`${namespace}selectKBArticleButton`)
-			.addEventListener('click', () => {
-				Liferay.Util.openSelectionModal({
-					onSelect: (event) => {
-						if (event) {
-							const item = JSON.parse(event.value);
+		const selectKBArticleButton = document.getElementById(
+			`${namespace}selectKBArticleButton`
+		);
 
-							const resourcePrimKey = document.getElementById(
-								`${namespace}resourcePrimKey`
-							);
+		const selectKBArticleButtonClick = () => {
+			Liferay.Util.openSelectionModal({
+				onSelect: (event) => {
+					if (event) {
+						const item = JSON.parse(event.value);
 
-							resourcePrimKey.value = item.classPK;
+						const resourcePrimKey = document.getElementById(
+							`${namespace}resourcePrimKey`
+						);
 
-							const configurationKBObject = document.getElementById(
-								`${namespace}configurationKBObject`
-							);
+						resourcePrimKey.value = item.classPK;
 
-							configurationKBObject.value = item.title;
-						}
-					},
-					selectEventName: eventName,
-					title: Liferay.Language.get('select-article'),
-					url: selectKBObjectURL,
-				});
+						const configurationKBObject = document.getElementById(
+							`${namespace}configurationKBObject`
+						);
+
+						configurationKBObject.value = item.title;
+					}
+				},
+				selectEventName: eventName,
+				title: Liferay.Language.get('select-article'),
+				url: selectKBObjectURL,
 			});
+		};
+
+		selectKBArticleButton.addEventListener(
+			'click',
+			selectKBArticleButtonClick
+		);
+
+		return {
+			dispose() {
+				selectKBArticleButton.removeEventListener(
+					'click',
+					selectKBArticleButtonClick
+				);
+			},
+		};
 	}
 }

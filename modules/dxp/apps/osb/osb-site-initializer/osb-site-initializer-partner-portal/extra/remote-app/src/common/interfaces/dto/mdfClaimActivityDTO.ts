@@ -9,9 +9,16 @@
  * distribution rights of the Software.
  */
 
-export enum PRMPageRoute {
-	CREATE_MDF_REQUEST = 'marketing/mdf-requests/new',
-	MDF_REQUESTS_LISTING = 'marketing/mdf-requests',
-	CREATE_DEAL_REGISTRATION = 'sales/deal-registration/new',
-	MDF_CLAIM_LISTING = 'marketing/mdf-claim',
+import MDFClaimActivity from '../mdfClaimActivity';
+
+export default interface MDFClaimActivityDTO
+	extends Omit<
+		MDFClaimActivity,
+		'metrics' | 'name' | 'selected' | 'totalCost'
+	> {
+	totalCost?: number;
+	name?: string;
+	metrics?: string;
+	r_mdfClaimToMdfClaimActivities_c_mdfClaimId?: number;
+	r_activityToMDFClaimActivities_c_activityId?: number;
 }

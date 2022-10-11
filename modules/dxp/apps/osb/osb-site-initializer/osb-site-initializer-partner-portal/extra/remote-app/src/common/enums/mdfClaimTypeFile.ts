@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-export enum PRMPageRoute {
-	CREATE_MDF_REQUEST = 'marketing/mdf-requests/new',
-	MDF_REQUESTS_LISTING = 'marketing/mdf-requests',
-	CREATE_DEAL_REGISTRATION = 'sales/deal-registration/new',
-	MDF_CLAIM_LISTING = 'marketing/mdf-claim',
+export enum MDFClaimTypeFile {
+	REIMBURSEMENT_INVOICE = 'Reimbursement Invoice',
+	LIST_OF_QUALIFIED_LEADS = 'List of Qualified Leads',
+	ALL_CONTENTS = 'All Contents',
+	THIRD_PARTY_INVOICES = 'Third Party Invoices',
 }

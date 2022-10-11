@@ -39,7 +39,7 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 	@Override
 	public void deleteDataSource() throws Exception {
 		try {
-			_analyticsCloudClient.disconnectDataSource(
+			_analyticsCloudClient.disconnectAnalyticsDataSource(
 				contextCompany.getCompanyId());
 		}
 		catch (Exception exception) {
@@ -57,7 +57,7 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 		throws Exception {
 
 		Map<String, Object> properties =
-			_analyticsCloudClient.connectDataSource(
+			_analyticsCloudClient.connectAnalyticsDataSource(
 				contextUser.getCompanyId(), dataSourceToken.getToken());
 
 		properties.put("token", dataSourceToken.getToken());

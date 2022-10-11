@@ -6904,9 +6904,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-browser-property property.name="browser.docker.image" />
 			<get-browser-property property.name="browser.docker.run.options" />
 			<get-browser-property property.name="browser.host" />
+			<get-ip-address />
 
 			<start-docker-container image="${browser.docker.image}" name="${browser.host}" options="${browser.docker.browser.options}">\
 				${browser.docker.run.options} \
+				--add-host ${env.HOSTNAME}:${ip.address} \
+				--add-host www.able.com:${ip.address} \
+				--add-host www.baker.com:${ip.address} \
+				--add-host www.charlie.com:${ip.address} \
+				--add-host www.dog.com:${ip.address} \
+				--add-host www.easy.com:${ip.address} \
+				--add-host www.fox.com:${ip.address} \
 			</start-docker-container>
 
 			<echo>Waiting for ${browser.host}:4444 to load</echo>
@@ -6914,6 +6922,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<waitfor maxwait="300" maxwaitunit="second">
 				<socket port="4444" server="${browser.host}" />
 			</waitfor>
+
+			<docker-copy dest.path="${browser.host}:/root/.ssh" src.path="/root/.ssh/." />
+
+			<docker-execute container="${browser.host}">
+				ssh -fN -4 -L 8080:${ip.address}:8080 ${browser.host}
+				ssh -fN -4 -L 8282:${ip.address}:8282 ${browser.host}
+				ssh -fN -4 -L 8443:${ip.address}:8443 ${browser.host}
+				ssh -fN -4 -L 9080:${ip.address}:9080 ${browser.host}
+				ssh -fN -4 -L 9200:${ip.address}:9200 ${browser.host}
+				ssh -fN -4 -L 9201:${ip.address}:9201 ${browser.host}
+				ssh -fN -4 -L 9202:${ip.address}:9202 ${browser.host}
+				ssh -fN -4 -L 10080:${ip.address}:10080 ${browser.host}
+				ssh -fN -4 -L 12080:${ip.address}:12080 ${browser.host}
+			</docker-execute>
 		</sequential>
 	</macrodef>
 

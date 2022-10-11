@@ -315,6 +315,8 @@ definition {
 	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
 	@priority = "4"
 	test CanSetAHostedVideoURL {
+		property test.name.skip.portal.instance = "TeamExtranet#CanSetAHostedVideoURL";
+
 		task ("Create a new Page by Json") {
 			JSONLayout.addPublicLayout(
 				groupName = "${testSiteName}",

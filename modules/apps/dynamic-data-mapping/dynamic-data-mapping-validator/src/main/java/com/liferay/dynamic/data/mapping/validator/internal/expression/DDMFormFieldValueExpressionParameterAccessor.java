@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.validator.internal.expression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 
 import java.util.Locale;
 
@@ -29,8 +29,9 @@ public class DDMFormFieldValueExpressionParameterAccessor
 	implements DDMExpressionParameterAccessor {
 
 	public DDMFormFieldValueExpressionParameterAccessor(
-		Locale locale, String timeZoneId) {
+		JSONFactory jsonFactory, Locale locale, String timeZoneId) {
 
+		_jsonFactory = jsonFactory;
 		_locale = locale;
 		_timeZoneId = timeZoneId;
 	}
@@ -57,7 +58,7 @@ public class DDMFormFieldValueExpressionParameterAccessor
 
 	@Override
 	public JSONArray getObjectFieldsJSONArray() {
-		return JSONFactoryUtil.createJSONArray();
+		return _jsonFactory.createJSONArray();
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class DDMFormFieldValueExpressionParameterAccessor
 		return 0L;
 	}
 
+	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final String _timeZoneId;
 

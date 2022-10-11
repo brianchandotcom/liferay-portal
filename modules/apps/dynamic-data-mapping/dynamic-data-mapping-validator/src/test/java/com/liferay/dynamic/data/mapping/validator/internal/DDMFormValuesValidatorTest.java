@@ -956,9 +956,8 @@ public class DDMFormValuesValidatorTest {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl,
 			"_ddmFormFieldValueExpressionParameterAccessor",
-			new DDMFormFieldValueExpressionParameterAccessor(null, null));
-		ReflectionTestUtil.setFieldValue(
-			_ddmFormValuesValidatorImpl, "_jsonFactory", new JSONFactoryImpl());
+			new DDMFormFieldValueExpressionParameterAccessor(
+				new JSONFactoryImpl(), null, null));
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl, "_serviceTrackerMap",
 			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));

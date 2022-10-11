@@ -84,7 +84,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 		_ddmFormFieldValueExpressionParameterAccessor =
 			new DDMFormFieldValueExpressionParameterAccessor(
-				ddmFormValues.getDefaultLocale(), timeZoneId);
+				_jsonFactory, ddmFormValues.getDefaultLocale(), timeZoneId);
 
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
 

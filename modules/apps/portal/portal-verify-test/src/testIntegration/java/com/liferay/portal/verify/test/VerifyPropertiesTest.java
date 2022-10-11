@@ -319,9 +319,7 @@ public class VerifyPropertiesTest {
 	}
 
 	protected String getFirstSystemPropertyKey() {
-		Properties systemProperties = SystemProperties.getProperties();
-
-		Set<String> propertyNames = systemProperties.stringPropertyNames();
+		Set<String> propertyNames = SystemProperties.getPropertyNames();
 
 		Assert.assertFalse(propertyNames.toString(), propertyNames.isEmpty());
 

@@ -125,6 +125,16 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	@Override
+	public Object addSystemObjectRelationshipMappingTableValues(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long primaryKey2)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
 	public void deleteObjectEntry(
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {

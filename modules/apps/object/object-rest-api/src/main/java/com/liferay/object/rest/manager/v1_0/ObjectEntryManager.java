@@ -51,6 +51,12 @@ public interface ObjectEntryManager {
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception;
 
+	public Object addSystemObjectRelationshipMappingTableValues(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long primaryKey2)
+		throws Exception;
+
 	public void deleteObjectEntry(
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;

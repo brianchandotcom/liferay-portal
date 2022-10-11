@@ -146,6 +146,23 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 	@Override
 	public CommercePaymentMethodGroupRel fetchCommercePaymentMethodGroupRel(
+			long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			commercePaymentMethodGroupRelLocalService.
+				fetchCommercePaymentMethodGroupRel(
+					commercePaymentMethodGroupRelId);
+
+		if (commercePaymentMethodGroupRel != null) {
+			_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
+		}
+
+		return commercePaymentMethodGroupRel;
+	}
+
+	@Override
+	public CommercePaymentMethodGroupRel fetchCommercePaymentMethodGroupRel(
 			long groupId, String engineKey)
 		throws PortalException {
 

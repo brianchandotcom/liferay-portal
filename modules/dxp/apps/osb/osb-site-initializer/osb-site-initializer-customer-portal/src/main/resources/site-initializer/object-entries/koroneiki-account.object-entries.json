@@ -99,8 +99,8 @@
 			"name": "Test Account Portal",
 			"partner": false,
 			"region": "India",
-			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
-			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
+			"slaCurrentEndDate": "2025-08-24 00:00:00.0",
+            "slaFutureStartDate": "2024-08-24 00:00:00.0",
 			"slaFuture": "Gold Subscription"
 		},
 		{

@@ -18,7 +18,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -243,9 +242,6 @@ public class EventRemotePropagatorExportImportLifecycleListener
 	private GroupLocalService _groupLocalService;
 
 	private final Set<Integer> _propagatedEventTypes = new HashSet<>();
-
-	@Reference
-	private Staging _staging;
 
 	@Reference
 	private StagingURLHelper _stagingURLHelper;

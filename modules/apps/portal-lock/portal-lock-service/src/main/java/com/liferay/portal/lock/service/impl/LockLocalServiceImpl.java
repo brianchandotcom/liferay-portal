@@ -83,7 +83,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		Lock lock = lockPersistence.fetchByC_K(className, key);
 
 		if ((lock != null) && lock.isExpired()) {
-			expireLock(lock);
+			_expireLock(lock);
 
 			lock = null;
 		}
@@ -108,7 +108,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		Lock lock = lockPersistence.findByC_K(className, key);
 
 		if (lock.isExpired()) {
-			expireLock(lock);
+			_expireLock(lock);
 
 			throw new ExpiredLockException();
 		}
@@ -190,7 +190,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		if (lock != null) {
 			if (lock.isExpired()) {
-				expireLock(lock);
+				_expireLock(lock);
 
 				lock = null;
 			}
@@ -430,7 +430,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
-	protected void expireLock(Lock lock) {
+	private void _expireLock(Lock lock) {
 		LockListener lockListener = _getLockListener(lock.getClassName());
 
 		String key = lock.getKey();

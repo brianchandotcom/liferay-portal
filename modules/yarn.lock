@@ -953,10 +953,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/core@3.75.2":
-  version "3.75.2"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.75.2.tgz#9f864638bbdba0d95b613a392268e88669e7cdc3"
-  integrity sha512-0I+DJqqDJI8eFkuTq6LXP/es8Dm9beqQ9ylo3uSTRE0hBipB/UvZFGv2GUKEs06d3b5EupfeMPiAZnH1j0rOHQ==
+"@clayui/core@3.76.0":
+  version "3.76.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.76.0.tgz#b5a1663fc2b70fba06ecca84f77b9016ac23d3c5"
+  integrity sha512-Z2jIGcChGq5EwMlOT56FjdZY1xzHdfoJDoPbJD7vWcFY8jPS1DAfiqTiteVXteVbqqUI8fGdKprvJCZ80nRsDg==
   dependencies:
     "@clayui/button" "^3.73.0"
     "@clayui/drop-down" "^3.75.2"
@@ -972,10 +972,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.75.0":
-  version "3.75.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.75.0.tgz#a72fa5a09445a2dba5f06e923d85ff3535e8bcb6"
-  integrity sha512-6/AYcpf4dpIFKyLOoFxNUgwXFeE3G7o4ENhAQlOh//IRMy5s2smfSC2bHpX4qMXX59fU2hm7GQZpSJehKcDrAg==
+"@clayui/css@3.76.0":
+  version "3.76.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.76.0.tgz#554a8f843c1dfdbe78927ef7352acef00bccfb69"
+  integrity sha512-cd1LPKaAbtbUZedBCB8PZs8jylgwEoCH7lRlK/UvHAd/TI+XI9M3rCpwKqvffd9E64EzAF6gAMVfCN3cObX+4g==
 
 "@clayui/data-provider@3.75.2":
   version "3.75.2"

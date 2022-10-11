@@ -945,4 +945,52 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-157252."
+	@priority = "3"
+	test VirtualHostLanguageCanBeChangedWithUserDefaultLanguage {
+		property test.name.skip.portal.instance = "Locale#VirtualHostLanguageCanBeChangedWithUserDefaultLanguage";
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),Spanish (Spain)",
+			defaultSiteLanguage = "Spanish (Spain)");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.addVirtualHostsURLCP(
+			pageVirtualHosts = "true",
+			pageVirtualHostURL = "www.able.com");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.editVirtualHostLanguageCP(languageVirtualHost = "Spanish (Spain)");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		User.firstLoginUI(specificURL = "http://www.able.com:8080");
+
+		Click(
+			key_tagName = "languageId=en_US",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES",
+			value1 = "Display the page in English (United States)");
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		AssertElementPresent(
+			key_panel = "Control Panel",
+			locator1 = "ApplicationsMenu#PANEL");
+	}
+
 }

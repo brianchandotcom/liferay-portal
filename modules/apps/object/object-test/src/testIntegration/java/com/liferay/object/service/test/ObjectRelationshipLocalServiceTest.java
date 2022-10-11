@@ -81,31 +81,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_systemObjectDefinition1 =
-			_objectDefinitionLocalService.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			ObjectRelationshipLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		bundleContext.registerService(
-			SystemObjectDefinitionMetadata.class,
-			new TestSystemObjectDefinitionMetadata(
-				_systemObjectDefinition1.getModelClass(),
-				_systemObjectDefinition1.getName()),
-			new HashMapDictionary<>());
+		_systemObjectDefinition1 = _addSystemObjectDefinition(
+			"/o/test-endpoint/rel/{relId}/entries");
 	}
 
 	@AfterClass
@@ -142,19 +119,8 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
 
-		_systemObjectDefinition2 =
-			_objectDefinitionLocalService.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
+		_systemObjectDefinition2 = _addSystemObjectDefinition(
+			"/o/test-endpoint/entries");
 	}
 
 	@Test
@@ -413,6 +379,39 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship2.getObjectFieldId2());
 
 		Assert.assertFalse(objectField.isRequired());
+	}
+
+	private static ObjectDefinition _addSystemObjectDefinition(
+			String restContextPath)
+		throws Exception {
+
+		ObjectDefinition systemObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectRelationshipLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		bundleContext.registerService(
+			SystemObjectDefinitionMetadata.class,
+			new TestSystemObjectDefinitionMetadata(
+				systemObjectDefinition.getModelClass(),
+				systemObjectDefinition.getName(), restContextPath),
+			new HashMapDictionary<>());
+
+		return systemObjectDefinition;
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

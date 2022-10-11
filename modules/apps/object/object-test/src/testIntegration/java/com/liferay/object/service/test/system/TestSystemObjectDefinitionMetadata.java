@@ -36,10 +36,11 @@ public class TestSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	public TestSystemObjectDefinitionMetadata(
-		Class<?> modelClass, String name) {
+		Class<?> modelClass, String name, String restContextPath) {
 
 		_modelClass = modelClass;
 		_name = name;
+		_restContextPath = restContextPath;
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class TestSystemObjectDefinitionMetadata
 
 	@Override
 	public String getRESTContextPath() {
-		return "/o/test-endpoint/rel/{relId}/entries";
+		return _restContextPath;
 	}
 
 	@Override
@@ -106,5 +107,6 @@ public class TestSystemObjectDefinitionMetadata
 
 	private final Class<?> _modelClass;
 	private final String _name;
+	private final String _restContextPath;
 
 }

@@ -44,10 +44,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -453,16 +455,34 @@ public class OIDCUserInfoProcessor {
 			return null;
 		}
 
-		long[] roleIds = new long[rolesJSONArray.length()];
+		List<Long> roleIds = new ArrayList<>();
 
 		for (int i = 0; i < rolesJSONArray.length(); ++i) {
 			Role role = _roleLocalService.fetchRole(
-				companyId, (String)rolesJSONArray.get(i));
+				companyId, rolesJSONArray.getString(i));
 
-			roleIds[i] = role.getRoleId();
+			if (role == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No such role with role name: " +
+							rolesJSONArray.getString(i));
+				}
+
+				continue;
+			}
+
+			roleIds.add(role.getRoleId());
 		}
 
-		return roleIds;
+		if (roleIds.isEmpty()) {
+			return null;
+		}
+
+		Stream<Long> stream = roleIds.stream();
+
+		return stream.mapToLong(
+			roleId -> roleId.longValue()
+		).toArray();
 	}
 
 	private long[] _getRoleIds(long companyId, String issuer) {

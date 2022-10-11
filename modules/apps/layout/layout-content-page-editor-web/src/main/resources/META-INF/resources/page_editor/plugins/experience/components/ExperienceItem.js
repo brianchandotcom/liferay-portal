@@ -122,12 +122,21 @@ const ExperienceItem = ({
 											<ExperienceLockIcon />
 										)}
 
-										{experience.active && (
+										{experience.active ? (
 											<ClayLabel
 												className="inline-item-after"
 												displayType="success"
 											>
 												{Liferay.Language.get('active')}
+											</ClayLabel>
+										) : (
+											<ClayLabel
+												className="inline-item-after"
+												displayType="secondary"
+											>
+												{Liferay.Language.get(
+													'inactive'
+												)}
 											</ClayLabel>
 										)}
 									</span>

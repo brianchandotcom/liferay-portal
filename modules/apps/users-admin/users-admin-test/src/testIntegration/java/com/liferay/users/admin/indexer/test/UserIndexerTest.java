@@ -835,7 +835,7 @@ public class UserIndexerTest {
 			organization.getCompanyId(), organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
 			organization.getType(), organization.getRegionId(),
-			organization.getCountryId(), organization.getStatusId(),
+			organization.getCountryId(), organization.getStatusListTypeId(),
 			organization.getComments(), false, null, site, null);
 	}
 

@@ -36,6 +36,10 @@ export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';
 
 export {default as delegate} from './liferay/delegate/delegate.es';
 
+// DynamicInlineScroll
+
+export {default as DynamicInlineScroll} from './liferay/DynamicInlineScroll.es';
+
 // Form API
 
 export {default as objectToFormData} from './liferay/util/form/object_to_form_data.es';

@@ -179,7 +179,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 				Date createDate = trashEntry.getCreateDate();
 
-				Date date = getMaxAge(group);
+				Date date = _getMaxAge(group);
 
 				if (createDate.before(date) || !_isTrashEnabled(group)) {
 					TrashHandler trashHandler =
@@ -397,7 +397,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			Indexer<TrashEntry> indexer = _indexerRegistry.nullSafeGetIndexer(
 				TrashEntry.class);
 
-			SearchContext searchContext = buildSearchContext(
+			SearchContext searchContext = _buildSearchContext(
 				companyId, groupId, userId, keywords, start, end, sort);
 
 			return indexer.search(searchContext);
@@ -416,7 +416,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			Indexer<TrashEntry> indexer = _indexerRegistry.nullSafeGetIndexer(
 				TrashEntry.class);
 
-			SearchContext searchContext = buildSearchContext(
+			SearchContext searchContext = _buildSearchContext(
 				companyId, groupId, userId, keywords, start, end, sort);
 
 			Hits hits = indexer.search(searchContext);
@@ -430,7 +430,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		long companyId, long groupId, long userId, String keywords, int start,
 		int end, Sort sort) {
 
@@ -456,7 +456,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected Date getMaxAge(Group group) throws PortalException {
+	private Date _getMaxAge(Group group) throws PortalException {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(new Date());

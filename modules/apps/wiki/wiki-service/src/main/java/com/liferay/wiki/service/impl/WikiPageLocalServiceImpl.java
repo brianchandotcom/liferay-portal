@@ -702,7 +702,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Cache
 
-		clearPageCache(page);
+		_clearPageCache(page);
 
 		// Version pages
 
@@ -2226,7 +2226,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Cache
 
-			clearPageCache(page);
+			_clearPageCache(page);
 		}
 		else {
 			page = _updatePageStatus(user, page, status);
@@ -2299,7 +2299,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiFileUploadConfiguration.class, properties);
 	}
 
-	protected void clearPageCache(WikiPage page) {
+	private void _clearPageCache(WikiPage page) {
 		if (!WikiCacheThreadLocal.isClearCache()) {
 			return;
 		}

@@ -463,7 +463,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		List<WikiPage> pages = getNodePages(nodeId, max);
 
-		return exportToRSS(
+		return _exportToRSS(
 			node.getName(), node.getDescription(), type, version, displayStyle,
 			feedURL, entryURL, attachmentURLPrefix, pages, false, null);
 	}
@@ -671,7 +671,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		List<WikiPage> pages = wikiPageLocalService.getPages(
 			nodeId, title, 0, max, new PageCreateDateComparator(true));
 
-		return exportToRSS(
+		return _exportToRSS(
 			title, title, type, version, displayStyle, feedURL, entryURL,
 			attachmentURLPrefix, pages, true, locale);
 	}
@@ -870,7 +870,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			format, parentTitle, redirectTitle, serviceContext);
 	}
 
-	protected String exportToRSS(
+	private String _exportToRSS(
 			String name, String description, String type, double version,
 			String displayStyle, String feedURL, String entryURL,
 			String attachmentURLPrefix, List<WikiPage> pages, boolean diff,

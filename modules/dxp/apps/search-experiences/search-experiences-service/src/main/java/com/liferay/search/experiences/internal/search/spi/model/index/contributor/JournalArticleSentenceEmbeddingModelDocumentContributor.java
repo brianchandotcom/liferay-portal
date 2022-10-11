@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -36,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -103,10 +103,12 @@ public class JournalArticleSentenceEmbeddingModelDocumentContributor
 			Node contentNode = document.selectSingleNode(
 				"/root/dynamic-element[@name='content']/dynamic-content");
 
-			return contentNode.getText();
+			if (!Objects.equals(contentNode, null)) {
+				return contentNode.getText();
+			}
 		}
-		catch (DocumentException documentException) {
-			_log.error(documentException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return StringPool.BLANK;

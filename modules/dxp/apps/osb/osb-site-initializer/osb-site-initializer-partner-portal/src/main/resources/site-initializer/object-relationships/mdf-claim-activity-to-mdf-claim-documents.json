@@ -3,7 +3,7 @@
 	"label": {
 		"en-US": "MDF Claim Activity to MDF Claim Documents"
 	},
-	"name": "mdfClaimToMdfClaimDocuments",
+	"name": "mdfClaimActivityToMdfClaimDocuments",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaimDocument$]",
 	"objectDefinitionName2": "MDFClaimDocument",

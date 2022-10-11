@@ -172,13 +172,13 @@ const AppContextProvider = ({children}) => {
 				);
 
 				if (isValid) {
-					const isStaff = user?.organizationBriefs?.some(
-						(organization) => organization.name === 'Liferay Staff'
+					let accountBrief = user.accountBriefs?.find(
+						(accountBrief) =>
+							accountBrief.externalReferenceCode ===
+							projectExternalReferenceCode
 					);
 
-					let accountBrief;
-
-					if (isStaff) {
+					if (!accountBrief) {
 						const {data: dataAccount} = await client.query({
 							query: getAccountByExternalReferenceCode,
 							variables: {
@@ -190,13 +190,6 @@ const AppContextProvider = ({children}) => {
 							accountBrief =
 								dataAccount?.accountByExternalReferenceCode;
 						}
-					}
-					else {
-						accountBrief = user.accountBriefs?.find(
-							(accountBrief) =>
-								accountBrief.externalReferenceCode ===
-								projectExternalReferenceCode
-						);
 					}
 
 					getProject(projectExternalReferenceCode, accountBrief);

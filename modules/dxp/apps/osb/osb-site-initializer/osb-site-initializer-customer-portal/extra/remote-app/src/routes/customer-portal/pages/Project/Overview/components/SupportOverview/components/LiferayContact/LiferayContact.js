@@ -26,16 +26,16 @@ const LiferayContact = ({koroneikiAccount, loading}) => (
 			<Skeleton height={24} width={125} />
 		) : (
 			<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
-				{koroneikiAccount.liferayContactName}
+				{koroneikiAccount?.liferayContactName}
 			</div>
 		)}
 
 		{loading ? (
 			<Skeleton className="mt-1" height={24} width={100} />
 		) : (
-			koroneikiAccount.liferayContactRole && (
+			koroneikiAccount?.liferayContactRole && (
 				<div className="mt-1 rounded-sm text-neutral-10 text-paragraph">
-					{koroneikiAccount.liferayContactRole}
+					{koroneikiAccount?.liferayContactRole}
 				</div>
 			)
 		)}
@@ -44,7 +44,7 @@ const LiferayContact = ({koroneikiAccount, loading}) => (
 			<Skeleton className="mt-1" height={20} width={150} />
 		) : (
 			<div className="rounded-sm text-neutral-10 text-paragraph-sm">
-				{koroneikiAccount.liferayContactEmailAddress}
+				{koroneikiAccount?.liferayContactEmailAddress}
 			</div>
 		)}
 	</div>

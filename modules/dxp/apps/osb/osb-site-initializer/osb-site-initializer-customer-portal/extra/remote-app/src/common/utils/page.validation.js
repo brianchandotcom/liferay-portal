@@ -30,18 +30,6 @@ const isValidPage = async (
 	externalReferenceCode,
 	pageKey
 ) => {
-	const validateExternalReferenceCode = (
-		accountBriefs,
-		externalReferenceCode
-	) => {
-		const hasAccountBrief = !!accountBriefs.find(
-			(accountBrief) =>
-				accountBrief.externalReferenceCode === externalReferenceCode
-		);
-
-		return hasAccountBrief;
-	};
-
 	const {data} = await client.query({
 		fetchPolicy: 'network-only',
 		query: getAccountFlags,
@@ -51,29 +39,15 @@ const isValidPage = async (
 	});
 
 	if (data) {
-		const isValidExternalReferenceCode = validateExternalReferenceCode(
-			userAccount.accountBriefs,
-			externalReferenceCode
-		);
 		const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
 		const isAccountAdministrator = userAccount.isAdmin;
 		const isStaff = userAccount.isStaff;
 
 		if (pageKey === ROUTE_TYPES.onboarding) {
-			if (
-				!(
-					isValidExternalReferenceCode &&
-					isAccountAdministrator &&
-					!hasAccountFlags
-				)
-			) {
+			if (!(isAccountAdministrator && !hasAccountFlags)) {
 				window.location.href =
 					userAccount.accountBriefs.length === 1
-						? getOverviewLocation(
-								isValidExternalReferenceCode
-									? externalReferenceCode
-									: userAccount.accountBriefs[0]
-						  )
+						? getOverviewLocation(externalReferenceCode)
 						: getHomeLocation();
 
 				return false;
@@ -83,12 +57,7 @@ const isValidPage = async (
 		}
 
 		if (pageKey === ROUTE_TYPES.project) {
-			if (!isValidExternalReferenceCode && !isStaff) {
-				window.location.href = getHomeLocation();
-
-				return false;
-			}
-			else if (!hasAccountFlags && isAccountAdministrator) {
+			if ((isStaff || isAccountAdministrator) && !hasAccountFlags) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

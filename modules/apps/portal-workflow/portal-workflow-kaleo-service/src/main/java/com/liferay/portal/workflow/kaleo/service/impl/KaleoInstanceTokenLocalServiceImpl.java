@@ -94,7 +94,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 			parentKaleoInstanceTokenId);
 
 		if (currentKaleoNodeId > 0) {
-			setCurrentKaleoNode(kaleoInstanceToken, currentKaleoNodeId);
+			_setCurrentKaleoNode(kaleoInstanceToken, currentKaleoNodeId);
 		}
 
 		kaleoInstanceToken.setClassName(
@@ -294,7 +294,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 				IndexerRegistryUtil.nullSafeGetIndexer(
 					KaleoInstanceToken.class);
 
-			SearchContext searchContext = buildSearchContext(
+			SearchContext searchContext = _buildSearchContext(
 				kaleoInstanceTokenQuery, start, end, sorts, serviceContext);
 
 			return indexer.search(searchContext);
@@ -329,7 +329,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 				IndexerRegistryUtil.nullSafeGetIndexer(
 					KaleoInstanceToken.class);
 
-			SearchContext searchContext = buildSearchContext(
+			SearchContext searchContext = _buildSearchContext(
 				kaleoInstanceTokenQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null, serviceContext);
 
@@ -350,12 +350,12 @@ public class KaleoInstanceTokenLocalServiceImpl
 			kaleoInstanceTokenPersistence.findByPrimaryKey(
 				kaleoInstanceTokenId);
 
-		setCurrentKaleoNode(kaleoInstanceToken, currentKaleoNodeId);
+		_setCurrentKaleoNode(kaleoInstanceToken, currentKaleoNodeId);
 
 		return kaleoInstanceTokenPersistence.update(kaleoInstanceToken);
 	}
 
-	protected SearchContext buildSearchContext(
+	private SearchContext _buildSearchContext(
 		KaleoInstanceTokenQuery kaleoInstanceTokenQuery, int start, int end,
 		Sort[] sorts, ServiceContext serviceContext) {
 
@@ -377,7 +377,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 		return searchContext;
 	}
 
-	protected void setCurrentKaleoNode(
+	private void _setCurrentKaleoNode(
 			KaleoInstanceToken kaleoInstanceToken, long currentKaleoNodeId)
 		throws PortalException {
 

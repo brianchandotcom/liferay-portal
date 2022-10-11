@@ -80,7 +80,7 @@ public class KaleoTaskAssignmentLocalServiceImpl
 		kaleoTaskAssignment.setKaleoNodeId(
 			kaleoTaskAssignment.getKaleoNodeId());
 
-		setAssignee(kaleoTaskAssignment, assignment, serviceContext);
+		_setAssignee(kaleoTaskAssignment, assignment, serviceContext);
 
 		return kaleoTaskAssignmentPersistence.update(kaleoTaskAssignment);
 	}
@@ -134,7 +134,7 @@ public class KaleoTaskAssignmentLocalServiceImpl
 			KaleoTask.class.getName(), kaleoTaskId, assigneeClassName);
 	}
 
-	protected void setAssignee(
+	private void _setAssignee(
 			KaleoTaskAssignment kaleoTaskAssignment, Assignment assignment,
 			ServiceContext serviceContext)
 		throws PortalException {

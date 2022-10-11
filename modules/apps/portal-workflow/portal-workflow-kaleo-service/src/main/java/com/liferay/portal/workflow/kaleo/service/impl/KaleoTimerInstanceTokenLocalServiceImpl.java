@@ -118,7 +118,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 		kaleoTimerInstanceToken = kaleoTimerInstanceTokenPersistence.update(
 			kaleoTimerInstanceToken);
 
-		scheduleTimer(kaleoTimerInstanceToken, kaleoTimer);
+		_scheduleTimer(kaleoTimerInstanceToken, kaleoTimer);
 
 		return kaleoTimerInstanceToken;
 	}
@@ -175,7 +175,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 		kaleoTimerInstanceToken = kaleoTimerInstanceTokenPersistence.update(
 			kaleoTimerInstanceToken);
 
-		deleteScheduledTimer(kaleoTimerInstanceToken);
+		_deleteScheduledTimer(kaleoTimerInstanceToken);
 
 		return kaleoTimerInstanceToken;
 	}
@@ -216,7 +216,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 		KaleoTimerInstanceToken kaleoTimerInstanceToken =
 			getKaleoTimerInstanceToken(kaleoInstanceTokenId, kaleoTimerId);
 
-		deleteScheduledTimer(kaleoTimerInstanceToken);
+		_deleteScheduledTimer(kaleoTimerInstanceToken);
 
 		kaleoTimerInstanceTokenPersistence.remove(kaleoTimerInstanceToken);
 	}
@@ -235,7 +235,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			}
 
 			try {
-				deleteScheduledTimer(kaleoTimerInstanceToken);
+				_deleteScheduledTimer(kaleoTimerInstanceToken);
 			}
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
@@ -276,30 +276,30 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			kaleoInstanceTokenId, blocking, completed);
 	}
 
-	protected void deleteScheduledTimer(
+	private void _deleteScheduledTimer(
 			KaleoTimerInstanceToken kaleoTimerInstanceToken)
 		throws PortalException {
 
-		String groupName = getSchedulerGroupName(kaleoTimerInstanceToken);
+		String groupName = _getSchedulerGroupName(kaleoTimerInstanceToken);
 
 		_schedulerEngineHelper.delete(groupName, StorageType.PERSISTED);
 	}
 
-	protected String getSchedulerGroupName(
+	private String _getSchedulerGroupName(
 		KaleoTimerInstanceToken kaleoTimerInstanceToken) {
 
 		return SchedulerUtil.getGroupName(
 			kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId());
 	}
 
-	protected void scheduleTimer(
+	private void _scheduleTimer(
 			KaleoTimerInstanceToken kaleoTimerInstanceToken,
 			KaleoTimer kaleoTimer)
 		throws PortalException {
 
-		deleteScheduledTimer(kaleoTimerInstanceToken);
+		_deleteScheduledTimer(kaleoTimerInstanceToken);
 
-		String groupName = getSchedulerGroupName(kaleoTimerInstanceToken);
+		String groupName = _getSchedulerGroupName(kaleoTimerInstanceToken);
 
 		DelayDuration delayDuration = new DelayDuration(
 			kaleoTimer.getDuration(),

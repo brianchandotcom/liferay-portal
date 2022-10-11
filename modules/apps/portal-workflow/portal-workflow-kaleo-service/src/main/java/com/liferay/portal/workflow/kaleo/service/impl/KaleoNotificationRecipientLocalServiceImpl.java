@@ -83,7 +83,7 @@ public class KaleoNotificationRecipientLocalServiceImpl
 		kaleoNotificationRecipient.setNotificationReceptionType(
 			notificationReceptionType.getValue());
 
-		setRecipient(kaleoNotificationRecipient, recipient, serviceContext);
+		_setRecipient(kaleoNotificationRecipient, recipient, serviceContext);
 
 		return kaleoNotificationRecipientPersistence.update(
 			kaleoNotificationRecipient);
@@ -110,7 +110,7 @@ public class KaleoNotificationRecipientLocalServiceImpl
 			kaleoNotificationId);
 	}
 
-	protected void setRecipient(
+	private void _setRecipient(
 			KaleoNotificationRecipient kaleoNotificationRecipient,
 			Recipient recipient, ServiceContext serviceContext)
 		throws PortalException {

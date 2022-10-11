@@ -17,54 +17,34 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMethodRegistry)request.getAttribute(CommerceWebKeys.COMMERCE_PAYMENT_METHOD_REGISTRY);
-
-SearchContainer<CommercePaymentMethodDisplay> accountEntryCommercePaymentMethodDisplaySearchContainer = AccountEntryCommercePaymentMethodDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse, commercePaymentMethodRegistry);
-
-accountEntryCommercePaymentMethodDisplaySearchContainer.setRowChecker(null);
+CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDisplayContext = (CommerceChannelAccountEntryRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<clay:container-fluid
-	id='<%= liferayPortletResponse.getNamespace() + "selectDefaultCommercePaymentMethod" %>'
+<commerce-ui:modal-content
+	submitButtonLabel='<%= LanguageUtil.get(request, "save") %>'
+	title='<%= LanguageUtil.get(request, "edit-payment-method") %>'
 >
-	<liferay-ui:search-container
-		searchContainer="<%= accountEntryCommercePaymentMethodDisplaySearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.payment.web.internal.display.CommercePaymentMethodDisplay"
-			keyProperty="commercePaymentMethodKey"
-			modelVar="commercePaymentMethodDisplay"
-		>
+	<portlet:actionURL name="/commerce_payment/edit_account_entry_default_commerce_payment_method" var="editAccountEntryPaymentActionURL" />
 
-			<%
-			CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
-			%>
+	<aui:form action="<%= editAccountEntryPaymentActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="accountEntryId" type="hidden" value="<%= commerceChannelAccountEntryRelDisplayContext.getAccountEntryId() %>" />
+		<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelAccountEntryRelDisplayContext.getCommerceChannelId() %>" />
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-small table-cell-minw-150"
-				name="name"
-				value="<%= commercePaymentMethodDisplay.getName() %>"
-			/>
+		<aui:model-context bean="<%= commerceChannelAccountEntryRelDisplayContext.getCommercePaymentMethodGroupRel() %>" model="<%= CommercePaymentMethodGroupRel.class %>" />
 
-			<%
-			String commercePaymentMethodKey = commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey();
-			%>
+		<aui:input checked="<%= commerceChannelAccountEntryRelDisplayContext.isCommercePaymentChecked(StringPool.BLANK) %>" label='<%= LanguageUtil.get(request, "use-priority-settings") %>' name="commercePaymentMethodGroupRelId" type="radio" value="0" />
 
-			<liferay-ui:search-container-column-text>
-				<clay:radio
-					checked="<%= commercePaymentMethodKey.equals(commercePaymentMethodDisplay.getCommercePaymentMethodKey()) %>"
-					cssClass="selector-button"
-					data-entityid="<%= commercePaymentMethodDisplay.getCommercePaymentMethodKey() %>"
-					label="<%= commercePaymentMethodDisplay.getName() %>"
-					name='<%= liferayPortletResponse.getNamespace() + "selectCommercePaymentMethod" %>'
-					showLabel="<%= false %>"
-					value="<%= commercePaymentMethodDisplay.getCommercePaymentMethodKey() %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+		<%
+		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel : commerceChannelAccountEntryRelDisplayContext.getCommercePaymentMethodGroupRels()) {
+		%>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+			<aui:input checked="<%= commerceChannelAccountEntryRelDisplayContext.isCommercePaymentChecked(commercePaymentMethodGroupRel.getEngineKey()) %>" label="<%= commercePaymentMethodGroupRel.getName(locale) %>" name="commercePaymentMethodGroupRelId" type="radio" value="<%= commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId() %>" />
+
+		<%
+		}
+		%>
+
+	</aui:form>
+</commerce-ui:modal-content>

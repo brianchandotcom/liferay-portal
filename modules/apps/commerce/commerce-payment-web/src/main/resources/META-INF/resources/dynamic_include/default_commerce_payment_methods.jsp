@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
-
-CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMethodRegistry)request.getAttribute(CommerceWebKeys.COMMERCE_PAYMENT_METHOD_REGISTRY);
+CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDisplayContext = (CommerceChannelAccountEntryRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <clay:sheet-section
@@ -40,79 +38,17 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 	<div class="form-group-autofit">
 		<div class="form-group-item">
 			<div class="sheet-text">
-				<liferay-ui:message key="payment-method" />
-
-				<clay:icon
-					symbol="credit-card"
+				<frontend-data-set:classic-display
+					contextParams='<%=
+						HashMapBuilder.<String, String>put(
+							"accountEntryId", String.valueOf(commerceChannelAccountEntryRelDisplayContext.getAccountEntryId())
+						).build()
+					%>'
+					dataProviderKey="<%= CommercePaymentMethodGroupRelFDSNames.ACCOUNT_ENTRY_DEFAULT_PAYMENTS %>"
+					id="<%= CommercePaymentMethodGroupRelFDSNames.ACCOUNT_ENTRY_DEFAULT_PAYMENTS %>"
+					itemsPerPage="<%= 10 %>"
 				/>
-			</div>
-
-			<c:choose>
-				<c:when test="<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) || (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) == null) %>">
-					<span style="margin-bottom: 1rem;"><liferay-ui:message key="use-priority-settings" /></span>
-				</c:when>
-				<c:otherwise>
-
-					<%
-					CommercePaymentMethod commercePaymentMethod = commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey());
-					%>
-
-					<h4 style="margin-bottom: 1rem;"><%= commercePaymentMethod.getName(themeDisplay.getLocale()) %>
-					</h4>
-				</c:otherwise>
-			</c:choose>
-
-			<div class="btn-group button-holder">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message='<%= (Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) || (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) == null)) ? "set-default-commerce-payment-method" : "change" %>'
-					method="get"
-					url="javascript:void(0);"
-				/>
-
-				<c:if test="<%= Validator.isNotNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) && (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) != null) %>">
-					<portlet:actionURL name="/commerce_payment/edit_account_entry_default_commerce_payment_method" var="removeDefaultCommercePaymentMethodURL">
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />
-						<portlet:param name="commercePaymentMethodKey" value="" />
-					</portlet:actionURL>
-
-					<liferay-ui:icon
-						cssClass="btn-two c-ml-sm-3 c-mt-3 c-mt-sm-0"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="remove"
-						method="get"
-						url="<%= removeDefaultCommercePaymentMethodURL %>"
-					/>
-				</c:if>
 			</div>
 		</div>
 	</div>
 </clay:sheet-section>
-
-<portlet:renderURL var="selectDefaultCommercePaymentMethodURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_payment/edit_account_entry_default_commerce_payment_method" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />
-</portlet:renderURL>
-
-<portlet:actionURL name="/commerce_payment/edit_account_entry_default_commerce_payment_method" var="updateAccountEntryDefaultCommercePaymentMethodURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />
-</portlet:actionURL>
-
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"baseSelectDefaultCommercePaymentMethodURL", selectDefaultCommercePaymentMethodURL
-		).put(
-			"baseUpdateAccountEntryDefaultCommercePaymentMethodURL", updateAccountEntryDefaultCommercePaymentMethodURL.toString()
-		).put(
-			"defaultCommercePaymentMethodContainerId", liferayPortletResponse.getNamespace() + "defaultCommercePaymentMethod"
-		).build()
-	%>'
-	module="js/DefaultCommercePaymentMethod"
-/>

@@ -59,6 +59,7 @@ import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.util.CommerceOrderThreadLocal;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -473,6 +474,10 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder)
 		throws PortalException {
 
+		boolean deleteInProcess = CommerceOrderThreadLocal.isDeleteInProcess();
+
+		CommerceOrderThreadLocal.setDeleteInProcess(true);
+
 		// Commerce order items
 
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(
@@ -497,6 +502,8 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order
 
 		commerceOrderPersistence.remove(commerceOrder);
+
+		CommerceOrderThreadLocal.setDeleteInProcess(deleteInProcess);
 
 		// Expando
 

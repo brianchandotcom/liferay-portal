@@ -121,6 +121,29 @@ public class ObjectEntryDTOConverter
 			objectEntry);
 	}
 
+	private void _addNestedFields(
+		String nestedFields, Map<String, Object> map, Object object,
+		String objectFieldName, ObjectRelationship objectRelationship) {
+
+		String[] nestedFieldsList = nestedFields.split(",");
+
+		String objectFieldNameNestedField = StringUtil.replaceLast(
+			objectFieldName.substring(
+				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
+			"Id", "");
+
+		for (String nestedField : nestedFieldsList) {
+			if (nestedField.contains(objectFieldNameNestedField)) {
+				map.put(
+					StringUtil.replaceLast(objectFieldName, "Id", ""), object);
+			}
+
+			if (nestedField.equals(objectRelationship.getName())) {
+				map.put(nestedField, object);
+			}
+		}
+	}
+
 	private DTOConverterContext _getDTOConverterContext(
 		DTOConverterContext dtoConverterContext, long objectEntryId) {
 
@@ -395,6 +418,11 @@ public class ObjectEntryDTOConverter
 
 				long objectEntryId = 0;
 
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectFieldId2(
+							objectField.getObjectFieldId());
+
 				if (serializable != null) {
 					if (GetterUtil.getLong(serializable) > 0) {
 						objectEntryId = (long)serializable;
@@ -403,55 +431,44 @@ public class ObjectEntryDTOConverter
 					Optional<UriInfo> uriInfoOptional =
 						dtoConverterContext.getUriInfoOptional();
 
-					int underlineLastIndex = objectFieldName.lastIndexOf(
-						StringPool.UNDERLINE);
+					Optional<String> nestedFieldsOptional = uriInfoOptional.map(
+						UriInfo::getQueryParameters
+					).map(
+						queryParameters -> queryParameters.getFirst(
+							"nestedFields")
+					);
 
 					if ((objectEntryId != 0) &&
-						uriInfoOptional.map(
-							UriInfo::getQueryParameters
-						).map(
-							queryParameters -> queryParameters.getFirst(
-								"nestedFields")
-						).map(
-							nestedFields -> nestedFields.contains(
-								StringUtil.replaceLast(
-									objectFieldName.substring(
-										underlineLastIndex + 1),
-									"Id", ""))
-						).orElse(
-							false
-						)) {
-
-						ObjectRelationship objectRelationship =
-							_objectRelationshipLocalService.
-								fetchObjectRelationshipByObjectFieldId2(
-									objectField.getObjectFieldId());
+						nestedFieldsOptional.isPresent()) {
 
 						ObjectDefinition relatedObjectDefinition =
 							_objectDefinitionLocalService.getObjectDefinition(
 								objectRelationship.getObjectDefinitionId1());
 
 						if (relatedObjectDefinition.isSystem()) {
-							map.put(
-								StringUtil.replaceLast(
-									objectFieldName, "Id", ""),
+							_addNestedFields(
+								nestedFieldsOptional.get(), map,
 								_objectEntryLocalService.
 									getSystemModelAttributes(
-										relatedObjectDefinition,
-										objectEntryId));
+										relatedObjectDefinition, objectEntryId),
+								objectFieldName, objectRelationship);
 						}
 						else {
-							map.put(
-								StringUtil.replaceLast(
-									objectFieldName, "Id", ""),
+							_addNestedFields(
+								nestedFieldsOptional.get(), map,
 								_toDTO(
 									_getDTOConverterContext(
 										dtoConverterContext, objectEntryId),
 									nestedFieldsDepth - 1,
 									_objectEntryLocalService.getObjectEntry(
-										objectEntryId)));
+										objectEntryId)),
+								objectFieldName, objectRelationship);
 						}
 					}
+				}
+
+				if (map.get(objectRelationship.getName()) == null) {
+					map.put(objectRelationship.getName() + "Id", objectEntryId);
 				}
 
 				map.put(objectFieldName, objectEntryId);

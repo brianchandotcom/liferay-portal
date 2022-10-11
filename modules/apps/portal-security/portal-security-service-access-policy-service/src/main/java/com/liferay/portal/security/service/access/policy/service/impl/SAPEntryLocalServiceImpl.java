@@ -77,12 +77,12 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		// Service access policy entry
 
 		User user = _userLocalService.getUser(userId);
-		allowedServiceSignatures = normalizeServiceSignatures(
+		allowedServiceSignatures = _normalizeServiceSignatures(
 			allowedServiceSignatures);
 
 		name = StringUtil.trim(name);
 
-		validate(name, titleMap);
+		_validate(name, titleMap);
 
 		if (sapEntryPersistence.fetchByC_N(user.getCompanyId(), name) != null) {
 			throw new DuplicateSAPEntryNameException();
@@ -250,7 +250,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			throw new DuplicateSAPEntryNameException();
 		}
 
-		allowedServiceSignatures = normalizeServiceSignatures(
+		allowedServiceSignatures = _normalizeServiceSignatures(
 			allowedServiceSignatures);
 
 		if (sapEntry.isSystem()) {
@@ -260,7 +260,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 		name = StringUtil.trim(name);
 
-		validate(name, titleMap);
+		_validate(name, titleMap);
 
 		sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
 		sapEntry.setDefaultSAPEntry(defaultSAPEntry);
@@ -278,7 +278,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			SAPConfiguration.class, properties);
 	}
 
-	protected String normalizeServiceSignatures(String serviceSignatures) {
+	private String _normalizeServiceSignatures(String serviceSignatures) {
 		String[] serviceSignaturesArray = serviceSignatures.split(
 			StringPool.NEW_LINE);
 
@@ -327,7 +327,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		return sb.toString();
 	}
 
-	protected void validate(String name, Map<Locale, String> titleMap)
+	private void _validate(String name, Map<Locale, String> titleMap)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {

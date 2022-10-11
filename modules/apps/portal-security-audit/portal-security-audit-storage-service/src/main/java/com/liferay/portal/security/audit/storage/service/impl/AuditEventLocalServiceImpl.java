@@ -112,7 +112,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		String sessionID, boolean andSearch, int start, int end,
 		OrderByComparator<AuditEvent> orderByComparator) {
 
-		DynamicQuery dynamicQuery = buildDynamicQuery(
+		DynamicQuery dynamicQuery = _buildDynamicQuery(
 			companyId, userId, userName, createDateGT, createDateLT, eventType,
 			className, classPK, clientHost, clientIP, serverName, serverPort,
 			sessionID, andSearch);
@@ -132,7 +132,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		String clientHost, String clientIP, String serverName, int serverPort,
 		String sessionID, boolean andSearch) {
 
-		DynamicQuery dynamicQuery = buildDynamicQuery(
+		DynamicQuery dynamicQuery = _buildDynamicQuery(
 			companyId, userId, userName, createDateGT, createDateLT, eventType,
 			className, classPK, clientHost, clientIP, serverName, serverPort,
 			sessionID, andSearch);
@@ -140,7 +140,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
-	protected DynamicQuery buildDynamicQuery(
+	private DynamicQuery _buildDynamicQuery(
 		long companyId, long userId, String userName, Date createDateGT,
 		Date createDateLT, String eventType, String className, String classPK,
 		String clientHost, String clientIP, String serverName, int serverPort,

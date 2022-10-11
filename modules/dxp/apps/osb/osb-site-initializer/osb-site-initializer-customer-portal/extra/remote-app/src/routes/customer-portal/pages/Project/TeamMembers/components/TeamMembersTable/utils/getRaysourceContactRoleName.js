@@ -15,11 +15,8 @@ const RAYSOURCE_ROLE_NAMES = {
 	User: 'Support User',
 };
 
-export default function getRaysourceContactRoleNames(roleBriefs) {
-	return roleBriefs?.map((roleBrief) => {
-		const raySourceRoleName =
-			RAYSOURCE_ROLE_NAMES[roleBrief.name] || roleBrief.name;
+export default function getRaysourceContactRoleName(roleName) {
+	const raySourceRoleName = RAYSOURCE_ROLE_NAMES[roleName] || roleName;
 
-		return `contactRoleNames=${raySourceRoleName}`;
-	});
+	return `contactRoleNames=${raySourceRoleName}`;
 }

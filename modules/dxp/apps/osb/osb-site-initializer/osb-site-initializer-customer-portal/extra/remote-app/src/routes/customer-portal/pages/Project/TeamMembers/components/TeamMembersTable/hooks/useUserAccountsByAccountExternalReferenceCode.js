@@ -11,7 +11,7 @@
 
 import {useMemo} from 'react';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
-import getRaysourceContactRoleNames from '../utils/getRaysourceContactRoleNames';
+import getRaysourceContactRoleName from '../utils/getRaysourceContactRoleName';
 import useDeleteUserAccount from './useDeleteUserAccount';
 
 export default function useUserAccountsByAccountExternalReferenceCode(
@@ -41,8 +41,8 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	);
 
 	const remove = (userAccount) => {
-		const contactRoleNames = getRaysourceContactRoleNames(
-			userAccount.selectedAccountSummary.roleBriefs
+		const contactRoleNames = userAccount.selectedAccountSummary.roleBriefs?.map(
+			(roleBrief) => getRaysourceContactRoleName(roleBrief.name)
 		);
 
 		deleteContactRoles({

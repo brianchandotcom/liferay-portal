@@ -48,6 +48,7 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -577,11 +578,11 @@ public class ObjectDefinitionLocalServiceImpl
 				_assetVocabularyLocalService, _bundleContext,
 				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
 				_listTypeEntryLocalService, _modelSearchRegistrarHelper, this,
-				_objectEntryLocalService, _objectFieldLocalService,
-				_objectLayoutLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, _objectViewLocalService,
-				_persistedModelLocalServiceRegistry, _portletLocalService,
-				_resourceActions, _userLocalService,
+				_objectEntryLocalService, _objectEntryManagerTracker,
+				_objectFieldLocalService, _objectLayoutLocalService,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_objectViewLocalService, _persistedModelLocalServiceRegistry,
+				_portletLocalService, _resourceActions, _userLocalService,
 				_workflowStatusModelPreFilterContributor));
 
 		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(
@@ -1604,6 +1605,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryManagerTracker _objectEntryManagerTracker;
 
 	@Reference
 	private ObjectEntryPersistence _objectEntryPersistence;

@@ -23,6 +23,7 @@ import com.liferay.notification.constants.NotificationTermContributorConstants;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.internal.info.collection.provider.ExternalObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermContributor;
@@ -43,6 +44,7 @@ import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -62,10 +64,12 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -104,6 +108,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManagerTracker objectEntryManagerTracker,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -125,6 +130,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManagerTracker = objectEntryManagerTracker;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -311,6 +317,23 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"item.class.name", objectDefinition.getClassName()
 				).build());
 		}
+		else if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-135430"))) {
+
+			_bundleContext.registerService(
+				InfoCollectionProvider.class,
+				new ExternalObjectEntrySingleFormVariationInfoCollectionProvider(
+					_assetCategoryLocalService, _assetTagLocalService,
+					_assetVocabularyLocalService, _groupLocalService,
+					_listTypeEntryLocalService, objectDefinition,
+					_objectEntryLocalService, _objectEntryManagerTracker,
+					_objectFieldLocalService, _objectLayoutLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build());
+		}
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			serviceRegistrations.add(
@@ -394,6 +417,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectRelationshipLocalService

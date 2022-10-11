@@ -453,6 +453,11 @@ public class KaleoInstanceLocalServiceImpl
 		return kaleoInstancePersistence.update(kaleoInstance);
 	}
 
+	private static String _getSortableFieldName(String name, String type) {
+		return Field.getSortableFieldName(
+			StringBundler.concat(name, StringPool.UNDERLINE, type));
+	}
+
 	private SearchContext _buildSearchContext(
 		Map<String, Serializable> searchAttributes, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator,
@@ -564,7 +569,7 @@ public class KaleoInstanceLocalServiceImpl
 		return new String[] {className};
 	}
 
-	private Sort[]_getSortsFromComparator(
+	private Sort[] _getSortsFromComparator(
 		OrderByComparator<KaleoInstance> orderByComparator) {
 
 		if (orderByComparator == null) {
@@ -594,11 +599,6 @@ public class KaleoInstanceLocalServiceImpl
 		).toArray(
 			Sort[]::new
 		);
-	}
-
-	private static String _getSortableFieldName(String name, String type) {
-		return Field.getSortableFieldName(
-			StringBundler.concat(name, StringPool.UNDERLINE, type));
 	}
 
 	private List<KaleoInstance> _toKaleoInstances(Hits hits) {

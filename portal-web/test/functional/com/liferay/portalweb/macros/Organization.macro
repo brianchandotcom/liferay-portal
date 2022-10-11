@@ -405,10 +405,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoContact {
-		Navigator.gotoNavTab(navTab = "Contact");
-	}
-
 	macro gotoCP {
 		Search.searchCP(searchTerm = "${searchToken}");
 

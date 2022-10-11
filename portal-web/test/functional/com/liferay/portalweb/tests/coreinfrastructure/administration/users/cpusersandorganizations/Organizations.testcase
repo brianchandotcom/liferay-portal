@@ -1492,7 +1492,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		Organization.gotoContact();
+		Navigator.gotoNavTab(navTab = "Contact");
 
 		Organization.addContactInformation(
 			addressType = "Billing",

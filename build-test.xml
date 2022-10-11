@@ -6482,11 +6482,16 @@ go</echo>
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.3.21" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u1" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u33" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u44" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u45" />
 					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="9.0.56" />
 					</then>
 				</elseif>
+				<else>
+					<var name="app.server.tomcat.version" value="9.0.65" />
+				</else>
 			</if>
 
 			<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}" />
@@ -12937,7 +12942,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall target="prepare-osgi-module-configurations" />
 		<antcall target="prepare-portal-properties" />
-		<antcall target="prepare-portal-ext-properties" />
+		<antcall inheritAll="false" target="prepare-portal-ext-properties">
+			<param name="app.server.tomcat.version" value="${app.server.tomcat.version}" />
+		</antcall>
 		<antcall target="prepare-portlet-ext-properties" />
 		<antcall target="prepare-system-ext-properties" />
 	</target>

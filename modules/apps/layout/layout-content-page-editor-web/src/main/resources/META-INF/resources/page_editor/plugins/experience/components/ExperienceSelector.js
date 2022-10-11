@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
@@ -119,6 +120,11 @@ const ExperienceSelector = ({
 	);
 	const modalExperienceStateRef = useRef(modalExperienceState);
 	modalExperienceStateRef.current = modalExperienceState;
+
+	const isSelectedExperienceActive = experiences.find(
+		({segmentsExperienceId}) =>
+			segmentsExperienceId === selectedExperience.segmentsExperienceId
+	)?.active;
 
 	const {observer: modalObserver, onClose: onModalClose} = useModal({
 		onClose: () => {
@@ -446,6 +452,20 @@ const ExperienceSelector = ({
 							{selectedExperience.name}
 						</span>
 					</ClayLayout.ContentCol>
+
+					{experiences.length > 1 && (
+						<ClayLayout.ContentCol>
+							{isSelectedExperienceActive ? (
+								<ClayLabel displayType="success">
+									{Liferay.Language.get('active')}
+								</ClayLabel>
+							) : (
+								<ClayLabel displayType="secondary">
+									{Liferay.Language.get('inactive')}
+								</ClayLabel>
+							)}
+						</ClayLayout.ContentCol>
+					)}
 
 					<ClayLayout.ContentCol>
 						{selectedExperience.hasLockedSegmentsExperiment && (

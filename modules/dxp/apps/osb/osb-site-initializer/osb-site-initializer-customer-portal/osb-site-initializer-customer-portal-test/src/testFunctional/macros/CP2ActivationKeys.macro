@@ -234,6 +234,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro environmentDetails {
+		var key_environmentDetails = "${environmentDetails}";
+
+		Type(
+			locator1 = "CP2ActivationKeys#ENVIRONMENT_DETAILS",
+			value1 = "${value}");
+	}
+
 	macro exportAllKeyDetails {
 		Click(
 			key_text = "Actions",
@@ -246,36 +254,6 @@ definition {
 		Alert.viewSuccessMessage();
 
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
-	}
-
-	macro environmentDetails {
-		var key_environmentDetails = "${environmentDetails}";
-
-		Type(
-			locator1 =  "CP2ActivationKeys#ENVIRONMENT_DETAILS",
-			value1 = "${value}");
-	}
-
-	macro typeEnvironmentDetailsFields {
-		CP2ActivationKeys.environmentDetails(
-			environmentDetails = "name",
-			value = "Liferay Test");
-
-		CP2ActivationKeys.environmentDetails(
-			environmentDetails = "description",
-			value = "Liferay Dev Environmet");
-
-		CP2ActivationKeys.environmentDetails(
-			environmentDetails = "host",
-			value = "Host Name");
-
-		CP2ActivationKeys.environmentDetails(
-			environmentDetails = "ipAddresses",
-			value = "1.1.1.1");
-
-		CP2ActivationKeys.environmentDetails(
-			environmentDetails = "macAddresses",
-			value = "20-20-20-20-20-20");
 	}
 
 	macro filterKeyTable {
@@ -461,6 +439,12 @@ definition {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_ALL");
 	}
 
+	macro selectClusterNodes {
+		Select(
+			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
+			value1 = "${key_option}");
+	}
+
 	macro selectFistActiveSubscriptionInput {
 		var key_index = "1";
 
@@ -477,12 +461,6 @@ definition {
 		Select(
 			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
 			value1 = "${option}");
-	}
-
-	macro selectClusterNodes {
-		Select(
-			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
-			value1 = "${key_option}");
 	}
 
 	macro selectKeyCheckboxByEnvironmentName {
@@ -516,6 +494,28 @@ definition {
 		Click(
 			key_position = "${position}",
 			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
+	}
+
+	macro typeEnvironmentDetailsFields {
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "name",
+			value = "Liferay Test");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "description",
+			value = "Liferay Dev Environmet");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "host",
+			value = "Host Name");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "ipAddresses",
+			value = "1.1.1.1");
+
+		CP2ActivationKeys.environmentDetails(
+			environmentDetails = "macAddresses",
+			value = "20-20-20-20-20-20");
 	}
 
 	macro typeEnvironmentDetailsFields {

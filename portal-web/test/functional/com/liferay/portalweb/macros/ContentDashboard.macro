@@ -244,8 +244,10 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro flipAxesButtonClick {
-		Click(locator1 = "ContentDashboard#FLIP_AXES_BUTTON");
+	macro flipGraphAxes {
+		Click(
+			key_text = "change",
+			locator1 = "Icon#ANY");
 	}
 
 	macro goToContentDashboard {

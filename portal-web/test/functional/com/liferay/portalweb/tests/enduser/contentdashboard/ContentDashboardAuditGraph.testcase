@@ -285,7 +285,7 @@ definition {
 				value1 = "WC Title",
 				xAxisCtegoryName = "Stage 1");
 
-			ContentDashboard.flipAxesButtonClick();
+			ContentDashboard.flipGraphAxes();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
@@ -525,7 +525,7 @@ definition {
 				fillColor = "FFB46E",
 				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 
-			ContentDashboard.flipAxesButtonClick();
+			ContentDashboard.flipGraphAxes();
 
 			AssertElementPresent(
 				fillColor = "4B9FFF",
@@ -612,7 +612,7 @@ definition {
 				value1 = "WC Title",
 				xAxisCtegoryName = "Stage 2");
 
-			ContentDashboard.flipAxesButtonClick();
+			ContentDashboard.flipGraphAxes();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
@@ -672,7 +672,7 @@ definition {
 				value1 = "WC Title",
 				xAxisCtegoryName = "Category 1");
 
-			ContentDashboard.flipAxesButtonClick();
+			ContentDashboard.flipGraphAxes();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",

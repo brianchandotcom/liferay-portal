@@ -31,38 +31,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'transfer-button-rtl')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'transfer-button-ltr')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_STAGE_VOCABULARY</td>
-	<td>//option[contains(text(),'Stage')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE</td>
-	<td>//select[contains(@id, 'currentAssetVocabularyIds')] //option[contains(text(), '${vocabularyName}')]</td>
+	<td>//select[contains(@id, 'currentAssetVocabularyIds')] //option[contains(text(), 'Audience')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE</td>
-	<td>//select[contains(@id, 'availableAssetVocabularyIds')] //option[contains(text(), '${vocabularyName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_UP_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'reorder-button-up')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_DOWN_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'reorder-button-down')]</td>
+	<td>//select[contains(@id, 'availableAssetVocabularyIds')] //option[contains(text(), '${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,16 +148,6 @@
 <tr>
 	<td>FIRST_ELEMENT_LISTED_MODIFIED_DATE</td>
 	<td>(//*[contains(@class, 'lfr-modified-date-column')] //*[contains(@class, 'lfr-portal-tooltip')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FLIP_AXES_BUTTON</td>
-	<td>//button[contains(@class, 'btn-outline-borderless') and contains(@type,'submit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FLIP_AXES_BUTTON_DISABLED</td>
-	<td>//button[contains(@class, 'btn-outline-borderless') and contains(@disabled,'disabled')]</td>
 	<td></td>
 </tr>
 <tr>

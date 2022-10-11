@@ -256,6 +256,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLIP_DISABLED</td>
+	<td>//button[contains(@class,'btn') and .//*[contains(@class,'lexicon-icon-change')]][@disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//a[contains(@class,'btn')][normalize-space()='Info'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //button//*[name()='svg'][contains(@class,'lexicon-icon-info')]</td>
 	<td></td>

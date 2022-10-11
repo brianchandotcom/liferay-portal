@@ -77,14 +77,16 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103104 and LPS-140253. Can add pages of different types via page tree panel. View no private page in page tree."
-	@priority = "3"
-	test AddAllTypesOfPagesFF {
-		task ("Add different types of pages via page tree") {
+	@description = "This is a test for LPS-103104, LPS-140253, and LPS-164377. The page creator can add pages of different types via page tree panel when the private page is disabled. The page creator could identify the page type according to icon in page tree."
+	@priority = "5"
+	test AddAllTypesOfPagesWithoutPrivatePage {
+		task ("Given a page creator navigates to the Page Tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 			PagesFinder.goToPagesFinder();
+		}
 
+		task ("When the page creator adds pages of different pages via Page Tree") {
 			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
 				PagesFinder.addPage(
 					pageName = "Test ${pageType}",
@@ -101,16 +103,43 @@ definition {
 			PagesFinder.addContentPage(pageName = "Test Content Page");
 
 			PageEditor.publish();
+
+			ContentPages.addCollectionPage(
+				collectionName = "Highest Rated Assets",
+				pageName = "Test Collection Page",
+				tabName = "Collection Providers");
+
+			PageEditor.publish();
 		}
 
-		task ("View public page names in page tree") {
+		task ("Then the page creator could see new pages and identify the page type according to icon in Page Tree") {
 			PagesFinder.goToPagesFinder();
 
 			PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
-			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application,Embedded,Link to URL,Content Page") {
+			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application,Embedded,Link to URL,Content Page,Collection Page") {
 				PagesFinder.viewPageNameInPagesFinder(pageName = "Test ${pageType}");
 			}
+
+			for (var pageType : list "Widget Page,Panel,Page Set,Full Page Application,Embedded") {
+				PagesFinder.viewPageIconInPagesFinder(
+					icon = "page-template",
+					pageName = "Test ${pageType}");
+			}
+
+			for (var pageType : list "Link to a Page of This Site,Link to URL") {
+				PagesFinder.viewPageIconInPagesFinder(
+					icon = "link",
+					pageName = "Test ${pageType}");
+			}
+
+			PagesFinder.viewPageIconInPagesFinder(
+				icon = "list",
+				pageName = "Test Collection Page");
+
+			PagesFinder.viewPageIconInPagesFinder(
+				icon = "page",
+				pageName = "Test Content Page");
 		}
 	}
 

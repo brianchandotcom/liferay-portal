@@ -599,10 +599,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Move vocabulary from available to in use") {
@@ -666,10 +663,7 @@ definition {
 		}
 
 		task ("Navigate to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Move vocabulary from In use to Available") {
@@ -780,10 +774,7 @@ definition {
 		}
 
 		task ("Check if vocabularies are avalible") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.openAuditGraphConfiguration();
 
@@ -888,10 +879,7 @@ definition {
 		}
 
 		task ("Navigate Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert the are no info in the Audit Graph") {

@@ -23,7 +23,6 @@ import com.liferay.notification.constants.NotificationTermContributorConstants;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.internal.info.collection.provider.ExternalObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermContributor;
@@ -64,12 +63,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -302,38 +299,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectEntryModelSummaryContributor);
 				}));
 
-		if (objectDefinition.isDefaultStorageType()) {
-			_bundleContext.registerService(
-				InfoCollectionProvider.class,
-				new ObjectEntrySingleFormVariationInfoCollectionProvider(
-					_assetCategoryLocalService, _assetTagLocalService,
-					_assetVocabularyLocalService, _groupLocalService,
-					_listTypeEntryLocalService, objectDefinition,
-					_objectEntryLocalService, _objectFieldLocalService,
-					_objectLayoutLocalService, _objectScopeProviderRegistry),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"company.id", objectDefinition.getCompanyId()
-				).put(
-					"item.class.name", objectDefinition.getClassName()
-				).build());
-		}
-		else if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-135430"))) {
-
-			_bundleContext.registerService(
-				InfoCollectionProvider.class,
-				new ExternalObjectEntrySingleFormVariationInfoCollectionProvider(
-					_assetCategoryLocalService, _assetTagLocalService,
-					_assetVocabularyLocalService, _groupLocalService,
-					_listTypeEntryLocalService, objectDefinition,
-					_objectEntryLocalService, _objectEntryManagerTracker,
-					_objectFieldLocalService, _objectLayoutLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"company.id", objectDefinition.getCompanyId()
-				).put(
-					"item.class.name", objectDefinition.getClassName()
-				).build());
-		}
+		_bundleContext.registerService(
+			InfoCollectionProvider.class,
+			new ObjectEntrySingleFormVariationInfoCollectionProvider(
+				_assetCategoryLocalService, _assetTagLocalService,
+				_assetVocabularyLocalService, _groupLocalService,
+				_listTypeEntryLocalService, objectDefinition,
+				_objectEntryLocalService, _objectEntryManagerTracker,
+				_objectFieldLocalService, _objectLayoutLocalService,
+				_objectScopeProviderRegistry),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"company.id", objectDefinition.getCompanyId()
+			).put(
+				"item.class.name", objectDefinition.getClassName()
+			).build());
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			serviceRegistrations.add(

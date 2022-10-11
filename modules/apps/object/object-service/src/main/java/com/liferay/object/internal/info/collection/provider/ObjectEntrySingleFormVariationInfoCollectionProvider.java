@@ -48,6 +48,8 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -71,6 +73,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
@@ -78,6 +81,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -85,6 +89,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
@@ -114,6 +120,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManagerTracker objectEntryManagerTracker,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
@@ -125,6 +132,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManagerTracker = objectEntryManagerTracker;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
@@ -135,6 +143,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
+			if (!_objectDefinition.isDefaultStorageType()) {
+				return _getCollectionInfoPageByObjectEntryManager(
+					collectionQuery);
+			}
+
 			Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
 				_objectDefinition.getClassName());
 
@@ -408,6 +421,54 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		};
 	}
 
+	private InfoPage<ObjectEntry> _getCollectionInfoPageByObjectEntryManager(
+		CollectionQuery collectionQuery) {
+
+		try {
+			ObjectEntryManager objectEntryManager =
+				_objectEntryManagerTracker.getObjectEntryManager(
+					_objectDefinition.getStorageType());
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			Pagination pagination = collectionQuery.getPagination();
+
+			Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
+				objectEntriesPage = objectEntryManager.getObjectEntries(
+					themeDisplay.getCompanyId(), _objectDefinition,
+					scopeGroup.getGroupKey(), null,
+					new DefaultDTOConverterContext(
+						false, null, null, null, null, themeDisplay.getLocale(),
+						null, themeDisplay.getUser()),
+					(Filter)null,
+					com.liferay.portal.vulcan.pagination.Pagination.of(
+						1, pagination.getEnd()),
+					null, null);
+
+			List<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntries =
+				new ArrayList<>(objectEntriesPage.getItems());
+
+			return InfoPage.of(
+				TransformUtil.transform(
+					objectEntries,
+					objectEntry -> _toObjectEntry(
+						_objectDefinition.getObjectDefinitionId(),
+						objectEntry)),
+				collectionQuery.getPagination(), objectEntries.size());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to get object entries for object definition " +
+					_objectDefinition.getObjectDefinitionId(),
+				exception);
+		}
+	}
+
 	private String _getFieldName(ObjectField objectField) {
 		if (Objects.equals(
 				objectField.getDBType(),
@@ -643,6 +704,20 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return false;
 	}
 
+	private ObjectEntry _toObjectEntry(
+		long objectDefinitionId,
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
+
+		ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.createObjectEntry(0L);
+
+		serviceBuilderObjectEntry.setExternalReferenceCode(
+			objectEntry.getExternalReferenceCode());
+		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
+
+		return serviceBuilderObjectEntry;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntrySingleFormVariationInfoCollectionProvider.class);
 
@@ -653,6 +728,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

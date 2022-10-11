@@ -168,11 +168,7 @@ StructureTreeNodeContent.propTypes = {
 
 const MemoizedStructureTreeNodeContent = React.memo(
 	StructureTreeNodeContent,
-	(prevProps, nextProps) =>
-		deepEqual(
-			{...prevProps, node: {...prevProps.node, children: []}},
-			{...nextProps, node: {...nextProps.node, children: []}}
-		)
+	(prevProps, nextProps) => deepEqual(prevProps, nextProps)
 );
 
 function StructureTreeNodeContent({

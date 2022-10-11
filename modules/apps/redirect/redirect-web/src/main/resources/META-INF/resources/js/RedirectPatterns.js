@@ -121,7 +121,7 @@ const RedirectPattern = ({
 
 	const [patterns, setPatterns] = useState(
 		initialPatternsList && !!initialPatternsList.length
-			? initialPatternsList
+			? initialPatternsList.map((item) => ({...item, id: uuidv4()}))
 			: [emptyRow()]
 	);
 

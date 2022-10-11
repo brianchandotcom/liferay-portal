@@ -19,6 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public interface JenkinsNode<T> extends Comparable<T> {
 
+	public JenkinsCohort getJenkinsCohort();
+
 	public JenkinsMaster getJenkinsMaster();
 
 	public String getName();

@@ -110,6 +110,11 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	}
 
 	@Override
+	public JenkinsCohort getJenkinsCohort() {
+		return _jenkinsMaster.getJenkinsCohort();
+	}
+
+	@Override
 	public JenkinsMaster getJenkinsMaster() {
 		return _jenkinsMaster;
 	}

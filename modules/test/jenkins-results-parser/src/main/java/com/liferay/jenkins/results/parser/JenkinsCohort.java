@@ -37,6 +37,14 @@ import org.json.JSONObject;
  */
 public class JenkinsCohort {
 
+	public static synchronized JenkinsCohort getInstance(String cohortName) {
+		if (!_jenkinsCohorts.containsKey(cohortName)) {
+			_jenkinsCohorts.put(cohortName, new JenkinsCohort(cohortName));
+		}
+
+		return _jenkinsCohorts.get(cohortName);
+	}
+
 	public JenkinsCohort(String name) {
 		_name = name;
 
@@ -51,6 +59,10 @@ public class JenkinsCohort {
 		}
 
 		return idleJenkinsSlaveCount;
+	}
+
+	public List<JenkinsMaster> getJenkinsMasters() {
+		return new ArrayList<>(_jenkinsMastersMap.values());
 	}
 
 	public String getName() {
@@ -480,6 +492,8 @@ public class JenkinsCohort {
 
 	private static final Pattern _buildNumberPattern = Pattern.compile(
 		".*\\/([0-9]+)");
+	private static final Map<String, JenkinsCohort> _jenkinsCohorts =
+		new HashMap<>();
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"https?:.*job\\/(.*?)\\/");
 

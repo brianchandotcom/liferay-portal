@@ -26,6 +26,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -174,6 +176,25 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		return idleSlavesCount;
+	}
+
+	@Override
+	public JenkinsCohort getJenkinsCohort() {
+		if (_jenkinsCohort != null) {
+			return _jenkinsCohort;
+		}
+
+		Matcher matcher = _masterNamePattern.matcher(getName());
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String cohortName = matcher.group("cohortName");
+
+		_jenkinsCohort = JenkinsCohort.getInstance(cohortName);
+
+		return _jenkinsCohort;
 	}
 
 	@Override
@@ -754,6 +775,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());
 	private static final List<String> _jenkinsMastersBlacklist =
 		new ArrayList<>();
+	private static final Pattern _masterNamePattern = Pattern.compile(
+		"(?<cohortName>test-\\d+)-\\d+");
 
 	static {
 		try {
@@ -774,6 +797,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private boolean _blacklisted;
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
+	private JenkinsCohort _jenkinsCohort;
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());
 	private final String _masterName;

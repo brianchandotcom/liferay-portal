@@ -125,6 +125,7 @@ export default function ManagementToolbar({
 						<ClayButton.Group key={1} spaced>
 							<ClayButton
 								displayType="unstyled"
+								id={`${portletNamespace}cancel`}
 								name="cancel"
 								onClick={() => navigate(backURL)}
 							>
@@ -134,6 +135,7 @@ export default function ManagementToolbar({
 							<ClayButton
 								disabled={!hasUpdateObjectDefinitionPermission}
 								displayType="secondary"
+								id={`${portletNamespace}save`}
 								name="save"
 								onClick={() => submitObjectDefinition(true)}
 							>
@@ -143,6 +145,7 @@ export default function ManagementToolbar({
 							{!isApproved && (
 								<ClayButton
 									disabled={!hasPublishObjectPermission}
+									id={`${portletNamespace}publish`}
 									name="publish"
 									onClick={() =>
 										submitObjectDefinition(false)

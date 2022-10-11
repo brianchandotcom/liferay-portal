@@ -413,7 +413,7 @@ public class SegmentsExperimentLocalServiceImpl
 			winnerSegmentsExperienceId, status);
 	}
 
-	protected void sendNotificationEvent(SegmentsExperiment segmentsExperiment)
+	private void _sendNotificationEvent(SegmentsExperiment segmentsExperiment)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -530,7 +530,7 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment = segmentsExperimentPersistence.update(
 			segmentsExperiment);
 
-		sendNotificationEvent(segmentsExperiment);
+		_sendNotificationEvent(segmentsExperiment);
 
 		return segmentsExperiment;
 	}

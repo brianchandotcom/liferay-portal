@@ -61,7 +61,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu
 
-		validate(groupId, name);
+		_validate(groupId, name);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -292,7 +292,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		validate(siteNavigationMenu.getGroupId(), name);
+		_validate(siteNavigationMenu.getGroupId(), name);
 
 		siteNavigationMenu.setUserId(userId);
 		siteNavigationMenu.setUserName(user.getFullName());
@@ -303,7 +303,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);
 	}
 
-	protected void validate(long groupId, String name) throws PortalException {
+	private void _validate(long groupId, String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SiteNavigationMenuNameException();
 		}

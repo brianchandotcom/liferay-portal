@@ -42,18 +42,20 @@ export default function FragmentComments({fragmentEntryLink}) {
 	return (
 		<>
 			<div className="flex-shrink-0">
-				<SidebarPanelHeader>
-					<ClayButton
-						borderless
-						className="mr-3 p-0 text-dark"
-						displayType="secondary"
-						onClick={() => selectItem(null)}
-						small
-					>
-						<ClayIcon symbol="angle-left" />
-					</ClayButton>
-
-					<span>{name}</span>
+				<SidebarPanelHeader
+					iconLeft={
+						<ClayButton
+							borderless
+							className="mr-3 p-0 text-dark"
+							displayType="secondary"
+							onClick={() => selectItem(null)}
+							small
+						>
+							<ClayIcon symbol="angle-left" />
+						</ClayButton>
+					}
+				>
+					{name}
 				</SidebarPanelHeader>
 
 				<ResolvedCommentsToggle />

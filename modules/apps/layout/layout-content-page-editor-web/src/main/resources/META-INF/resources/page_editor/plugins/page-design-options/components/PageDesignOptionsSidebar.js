@@ -129,10 +129,8 @@ export default function PageDesignOptionsSidebar() {
 
 	return (
 		<>
-			<SidebarPanelHeader>
-				<span className="align-items-center d-flex justify-content-between">
-					{Liferay.Language.get('page-design-options')}
-
+			<SidebarPanelHeader
+				iconRight={
 					<ClayLink
 						displayType="secondary"
 						href={config.lookAndFeelURL}
@@ -141,7 +139,9 @@ export default function PageDesignOptionsSidebar() {
 					>
 						<ClayIcon symbol="cog" />
 					</ClayLink>
-				</span>
+				}
+			>
+				{Liferay.Language.get('page-design-options')}
 			</SidebarPanelHeader>
 
 			<ClayTabs className="flex-shrink-0 page-editor__sidebar__page-design-options__tabs px-3">

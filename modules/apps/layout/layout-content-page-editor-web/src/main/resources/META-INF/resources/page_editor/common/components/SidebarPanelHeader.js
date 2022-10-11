@@ -19,7 +19,11 @@ import React from 'react';
 import {switchSidebarPanel} from '../../app/actions/index';
 import {useDispatch} from '../../app/contexts/StoreContext';
 
-export default function SidebarPanelHeader({children}) {
+export default function SidebarPanelHeader({
+	children,
+	iconLeft = null,
+	iconRight = null,
+}) {
 	const dispatch = useDispatch();
 
 	return (
@@ -28,7 +32,11 @@ export default function SidebarPanelHeader({children}) {
 				'align-items-center d-flex justify-content-between my-3 pl-3 pr-2 page-editor__sidebar__panel-header'
 			)}
 		>
+			{iconLeft}
+
 			<h1 className="flex-grow-1 mb-0 mr-1 text-3">{children}</h1>
+
+			{iconRight}
 
 			<ClayButtonWithIcon
 				displayType="unstyled"

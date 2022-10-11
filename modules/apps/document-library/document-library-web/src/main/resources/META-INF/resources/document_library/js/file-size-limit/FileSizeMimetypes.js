@@ -147,7 +147,7 @@ const FileSizePerMimeType = ({
 
 	const [sizesList, setSizesList] = useState(
 		initialSizeList && !!initialSizeList.length
-			? initialSizeList
+			? initialSizeList.map((item) => ({...item, id: uuidv4()}))
 			: [emptyRow()]
 	);
 

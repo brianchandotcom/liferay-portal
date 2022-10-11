@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -114,7 +113,7 @@ public class ViewFileVersionContentDashboardItemVersionActionProviderTest {
 
 		String url = contentDashboardItemVersionAction.getURL();
 
-		Assert.assertTrue(Validator.isNotNull(url));
+		Assert.assertNotNull(url);
 
 		Assert.assertTrue(
 			url.contains("fileEntryId=" + _fileEntry.getFileEntryId()));

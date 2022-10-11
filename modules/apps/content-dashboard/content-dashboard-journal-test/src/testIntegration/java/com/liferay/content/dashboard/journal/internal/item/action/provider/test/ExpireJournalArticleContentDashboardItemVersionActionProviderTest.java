@@ -105,6 +105,8 @@ public class ExpireJournalArticleContentDashboardItemVersionActionProviderTest {
 
 		String url = contentDashboardItemVersionAction.getURL();
 
+		Assert.assertNotNull(url);
+
 		Assert.assertTrue(
 			url.contains(
 				"action=" + HtmlUtil.escapeURL("/journal/expire_articles")));

@@ -100,6 +100,8 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 
 		String url = contentDashboardItemAction.getURL();
 
+		Assert.assertNotNull(url);
+
 		Assert.assertTrue(
 			url.contains("articleId=" + journalArticle.getArticleId()));
 		Assert.assertTrue(

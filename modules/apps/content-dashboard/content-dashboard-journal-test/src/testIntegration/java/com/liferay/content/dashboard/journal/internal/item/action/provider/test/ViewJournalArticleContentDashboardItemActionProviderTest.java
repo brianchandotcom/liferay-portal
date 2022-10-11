@@ -142,6 +142,8 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			String url = contentDashboardItemAction.getURL();
 
+			Assert.assertNotNull(url);
+
 			Assert.assertTrue(
 				url.contains(
 					StringUtil.toLowerCase(
@@ -242,6 +244,8 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			String spainUrl = contentDashboardItemAction.getURL(
 				LocaleUtil.SPAIN);
+
+			Assert.assertNotNull(spainUrl);
 
 			Assert.assertTrue(
 				spainUrl.contains(

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,7 +101,7 @@ public class
 
 		String url = contentDashboardItemAction.getURL();
 
-		Assert.assertTrue(Validator.isNotNull(url));
+		Assert.assertNotNull(url);
 
 		Assert.assertTrue(
 			url.contains("param_classPK=" + _fileEntryId.getFileEntryId()));

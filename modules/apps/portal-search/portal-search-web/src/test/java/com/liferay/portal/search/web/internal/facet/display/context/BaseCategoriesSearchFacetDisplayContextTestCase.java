@@ -116,10 +116,10 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
-			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
+			assetCategoriesSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
-			assetCategoriesSearchFacetTermDisplayContext.getBucketText());
+			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertEquals(
 			0, assetCategoriesSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(
@@ -203,10 +203,10 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
-			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
+			assetCategoriesSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
-			assetCategoriesSearchFacetTermDisplayContext.getBucketText());
+			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertEquals(
 			frequency,
 			assetCategoriesSearchFacetTermDisplayContext.getFrequency());
@@ -253,10 +253,10 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
-			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
+			assetCategoriesSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
-			assetCategoriesSearchFacetTermDisplayContext.getBucketText());
+			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertEquals(
 			frequency,
 			assetCategoriesSearchFacetTermDisplayContext.getFrequency());

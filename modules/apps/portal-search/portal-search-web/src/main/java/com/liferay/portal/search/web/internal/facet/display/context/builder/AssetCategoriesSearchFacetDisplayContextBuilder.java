@@ -175,6 +175,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetTermDisplayContext =
 				new AssetCategoriesSearchFacetTermDisplayContext();
 
+		assetCategoriesSearchFacetTermDisplayContext.setBucketText(
+			assetCategory.getTitle(_locale));
 		assetCategoriesSearchFacetTermDisplayContext.setFilterValue(
 			String.valueOf(assetCategory.getCategoryId()));
 		assetCategoriesSearchFacetTermDisplayContext.setFrequency(frequency);
@@ -182,8 +184,6 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			_frequenciesVisible);
 		assetCategoriesSearchFacetTermDisplayContext.setPopularity(popularity);
 		assetCategoriesSearchFacetTermDisplayContext.setSelected(selected);
-		assetCategoriesSearchFacetTermDisplayContext.setBucketText(
-			assetCategory.getTitle(_locale));
 
 		return assetCategoriesSearchFacetTermDisplayContext;
 	}

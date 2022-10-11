@@ -196,6 +196,31 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public Object addSystemObjectRelationshipMappingTableValues(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long primaryKey2)
+		throws Exception {
+
+		_objectRelationshipService.addObjectRelationshipMappingTableValues(
+			objectRelationship.getObjectRelationshipId(), primaryKey1,
+			primaryKey2, new ServiceContext());
+
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+			_systemObjectDefinitionMetadataTracker.
+				getSystemObjectDefinitionMetadata(objectDefinition.getName());
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				systemObjectDefinitionMetadata.getModelClassName());
+
+		return _toDTO(
+			(BaseModel<?>)persistedModelLocalService.getPersistedModel(
+				primaryKey2),
+			_objectEntryService.getObjectEntry(primaryKey1));
+	}
+
+	@Override
 	public void deleteObjectEntry(
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {

@@ -1713,7 +1713,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-browser-property property.name="browser.docker.image" />
 			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 			<get-testcase-property property.name="testcase.url" />
@@ -1752,10 +1751,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</then>
 				</elseif>
 				<elseif>
-					<or>
-						<contains string="${test.class}" substring="," />
-						<isset property="browser.docker.image" />
-					</or>
+					<contains string="${test.class}" substring="," />
 					<then>
 						<if>
 							<os family="unix" />
@@ -12088,28 +12084,18 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-selenium-site-initializer-raylife-d2c-paypal-properties />
 		<prepare-selenium-testcase-properties />
 
-		<get-browser-property property.name="browser.docker.image" />
 		<get-operating-system-property property.name="operating.system.docker.image" />
 
 		<if>
-			<isset property="browser.docker.image" />
+			<isset property="operating.system.docker.image" />
 			<then>
+				<get-operating-system-property property.name="operating.system.host.alias" />
+
 				<echo append="true" file="${test.ext.properties.file}">
-					default.portal.url=${test.url}
-					portal.hostname=${env.HOSTNAME}
+					default.portal.url=${operating.system.host.alias}:8080
+					portal.hostname=${operating.system.host.alias}
 				</echo>
 			</then>
-			<elseif>
-				<isset property="operating.system.docker.image" />
-				<then>
-					<get-operating-system-property property.name="operating.system.host.alias" />
-
-					<echo append="true" file="${test.ext.properties.file}">
-						default.portal.url=${operating.system.host.alias}:8080
-						portal.hostname=${operating.system.host.alias}
-					</echo>
-				</then>
-			</elseif>
 			<else>
 				<echo append="true" file="${test.ext.properties.file}">
 					default.portal.url=http://localhost:8080

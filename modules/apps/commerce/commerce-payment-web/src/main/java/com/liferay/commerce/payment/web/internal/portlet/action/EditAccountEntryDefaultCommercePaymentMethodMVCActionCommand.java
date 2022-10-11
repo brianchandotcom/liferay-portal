@@ -15,10 +15,18 @@
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.payment.exception.NoSuchPaymentMethodGroupRelException;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -30,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
+ * @author Crescenzo Rega
  */
 @Component(
 	immediate = true,
@@ -48,18 +57,30 @@ public class EditAccountEntryDefaultCommercePaymentMethodMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
-			accountEntryId);
+		try {
+			if (cmd.equals(Constants.UPDATE)) {
+				_updateCommerceChannelAccountEntryRel(actionRequest);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
-		String commercePaymentMethodKey = ParamUtil.getString(
-			actionRequest, "commercePaymentMethodKey");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (exception instanceof
+						NoSuchPaymentMethodGroupRelException) {
 
-		accountEntry.setDefaultCPaymentMethodKey(commercePaymentMethodKey);
+				SessionErrors.add(actionRequest, exception.getClass());
 
-		_accountEntryService.updateAccountEntry(accountEntry);
+				hideDefaultErrorMessage(actionRequest);
+			}
+			else {
+				throw exception;
+			}
+		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -68,7 +89,61 @@ public class EditAccountEntryDefaultCommercePaymentMethodMVCActionCommand
 		}
 	}
 
+	private CommerceChannelAccountEntryRel
+			_updateCommerceChannelAccountEntryRel(ActionRequest actionRequest)
+		throws PortalException {
+
+		long accountEntryId = ParamUtil.getLong(
+			actionRequest, "accountEntryId");
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+		long commercePaymentMethodGroupRelId = ParamUtil.getLong(
+			actionRequest, "commercePaymentMethodGroupRelId");
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_commerceChannelAccountEntryRelService.
+				fetchCommerceChannelAccountEntryRel(
+					accountEntryId, commerceChannelId,
+					CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT);
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelService.
+				fetchCommercePaymentMethodGroupRel(
+					commercePaymentMethodGroupRelId);
+
+		if (commercePaymentMethodGroupRel == null) {
+			if (commerceChannelAccountEntryRel != null) {
+				_commerceChannelAccountEntryRelService.
+					deleteCommerceChannelAccountEntryRel(
+						commerceChannelAccountEntryRel.
+							getCommerceChannelAccountEntryRelId());
+			}
+
+			return null;
+		}
+
+		if (commerceChannelAccountEntryRel == null) {
+			return _commerceChannelAccountEntryRelService.
+				addCommerceChannelAccountEntryRel(
+					accountEntryId,
+					CommercePaymentMethodGroupRel.class.getName(),
+					commercePaymentMethodGroupRelId, commerceChannelId, false,
+					0, CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT);
+		}
+
+		return _commerceChannelAccountEntryRelService.
+			updateCommerceChannelAccountEntryRel(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId(),
+				commerceChannelId, commercePaymentMethodGroupRelId, false, 0);
+	}
+
 	@Reference
-	private AccountEntryService _accountEntryService;
+	private CommerceChannelAccountEntryRelService
+		_commerceChannelAccountEntryRelService;
+
+	@Reference
+	private CommercePaymentMethodGroupRelService
+		_commercePaymentMethodGroupRelService;
 
 }

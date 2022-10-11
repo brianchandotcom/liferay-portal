@@ -1079,10 +1079,10 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals(
 			ObjectFieldConstants.DB_TYPE_STRING, objectField.getDBType());
-		Assert.assertTrue(objectField.isIndexed());
-		Assert.assertFalse(objectField.isIndexedAsKeyword());
+		Assert.assertFalse(objectField.isIndexed());
+		Assert.assertTrue(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			indexedLanguageId, objectField.getIndexedLanguageId());
+			StringPool.BLANK, objectField.getIndexedLanguageId());
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("charlie"));

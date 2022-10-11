@@ -92,7 +92,7 @@ public class ModifiedFacetBuilder {
 	private FacetConfiguration _buildFacetConfiguration(Facet facet) {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setDataJSONObject(_jsonFactory.createJSONObject());
+		facetConfiguration.setDataJSONObject(_getDataJSONObject());
 
 		facetConfiguration.setFieldName(facet.getFieldName());
 		facetConfiguration.setLabel("any-time");
@@ -100,13 +100,14 @@ public class ModifiedFacetBuilder {
 		facetConfiguration.setStatic(false);
 		facetConfiguration.setWeight(1.0);
 
-		ModifiedFacetConfiguration modifiedFacetConfiguration =
-			new ModifiedFacetConfigurationImpl(facetConfiguration);
-
-		modifiedFacetConfiguration.setRangesJSONArray(
-			getRangesJSONArray(_calendarFactory.getCalendar()));
-
 		return facetConfiguration;
+	}
+
+	private JSONObject _getDataJSONObject() {
+		return _jsonFactory.createJSONObject(
+		).put(
+			"ranges", getRangesJSONArray(_calendarFactory.getCalendar())
+		);
 	}
 
 	private JSONArray _getDefaultRangesJSONArray(Calendar calendar) {

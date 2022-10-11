@@ -32,8 +32,6 @@ import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
-import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetConfiguration;
-import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetConfigurationImpl;
 
 import javax.portlet.ActionRequest;
 
@@ -94,11 +92,18 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	public Facet getFacet() {
 		Facet facet = super.getFacet();
 
-		ModifiedFacetConfiguration modifiedFacetConfiguration =
-			new ModifiedFacetConfigurationImpl(facet.getFacetConfiguration());
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		modifiedFacetConfiguration.setRangesJSONArray(
-			_replaceAliases(modifiedFacetConfiguration.getRangesJSONArray()));
+		JSONObject jsonObject = facetConfiguration.getData();
+
+		JSONArray rangesJSONArray = _replaceAliases(
+			jsonObject.getJSONArray("rangesJSONArray"));
+
+		facetConfiguration.setDataJSONObject(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				"ranges", rangesJSONArray
+			));
 
 		return facet;
 	}

@@ -36,7 +36,6 @@ import com.liferay.portal.json.web.service.client.JSONWebServiceClientFactory;
 import com.liferay.portal.json.web.service.client.JSONWebServiceException;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -637,9 +636,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Reference(target = "(ddm.data.provider.type=rest)")
 	private DDMDataProviderSettingsProvider _ddmDataProviderSettingsProvider;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private JSONWebServiceClientFactory _jsonWebServiceClientFactory;

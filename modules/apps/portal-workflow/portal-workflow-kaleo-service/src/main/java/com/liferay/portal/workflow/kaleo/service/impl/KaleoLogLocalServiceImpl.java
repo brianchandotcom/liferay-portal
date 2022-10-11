@@ -513,26 +513,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			StringBundler.concat(name, StringPool.UNDERLINE, type));
 	}
 
-	private void _addLogTypesJunction(
-		DynamicQuery dynamicQuery, List<Integer> logTypes) {
-
-		Junction junction = RestrictionsFactoryUtil.disjunction();
-
-		for (Integer logType : logTypes) {
-			String logTypeString = KaleoLogUtil.convert(logType);
-
-			if (Validator.isNull(logTypeString)) {
-				continue;
-			}
-
-			Property property = PropertyFactoryUtil.forName("type");
-
-			junction.add(property.eq(logTypeString));
-		}
-
-		dynamicQuery.add(junction);
-	}
-
 	private SearchContext _buildSearchContext(
 		long companyId, Map<String, Serializable> searchAttributes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {

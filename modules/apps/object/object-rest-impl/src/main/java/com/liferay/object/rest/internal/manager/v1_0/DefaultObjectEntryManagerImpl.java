@@ -154,14 +154,9 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry addObjectRelationshipMappingTableValues(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, String objectRelationshipName,
-			long primaryKey1, long primaryKey2)
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long primaryKey2)
 		throws Exception {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
-				objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
 
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(), primaryKey1,

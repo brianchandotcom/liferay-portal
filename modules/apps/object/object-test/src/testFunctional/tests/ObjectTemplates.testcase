@@ -375,6 +375,8 @@ definition {
 	@description = "LPS-148544 - Verify it's possible to map a Long text field for a template on the content page and view the entries"
 	@priority = "4"
 	test CanMapAndViewLongField {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 149244",
 			objectName = "CustomObject149244",

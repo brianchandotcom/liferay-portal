@@ -7298,6 +7298,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Site Menu when reactivated"
 	@priority = "4"
 	test ObjectPortletReappearsSiteMenuWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 154",
 			objectName = "CustomObject154",
@@ -7346,6 +7348,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Collection Providers when reactivated"
 	@priority = "4"
 	test ObjectReappearsCollectionProvidersWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 155",
 			objectName = "CustomObject155",
@@ -7387,6 +7391,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Form's storage type when reactivated"
 	@priority = "4"
 	test ObjectReappearsFormStorageTypeWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 156",
 			objectName = "CustomObject156",
@@ -7436,6 +7442,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"
 	@priority = "4"
 	test ObjectReappearsPageItemSelectorWhenReactivated {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 157",
 			objectName = "CustomObject157",
@@ -8858,6 +8866,8 @@ definition {
 	@description = "LPS-151877 - Verify that, when adding a new Object with Account Restriction, the Account Restriction field turns into a mandatory field for the created Object"
 	@priority = "4"
 	test VerifyAccountRestrictionFieldTurnsIntoMandatoryField {
+		property portal.upstream = "quarantine";
+
 		task ("Add Custom Object with Relationship related to System Object Account (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156823",

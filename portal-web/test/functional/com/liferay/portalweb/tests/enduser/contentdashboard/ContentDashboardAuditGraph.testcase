@@ -345,7 +345,7 @@ definition {
 		}
 
 		task ("Prioritize stage vocabulary") {
-			ContentDashboard.stageFirstVocabularyConfiguration();
+			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
@@ -434,7 +434,7 @@ definition {
 		}
 
 		task ("Prioritize stage vocabulary") {
-			ContentDashboard.stageFirstVocabularyConfiguration();
+			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",

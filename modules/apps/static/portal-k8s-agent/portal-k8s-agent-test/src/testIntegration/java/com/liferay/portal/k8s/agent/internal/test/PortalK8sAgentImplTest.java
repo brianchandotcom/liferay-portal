@@ -345,6 +345,24 @@ public class PortalK8sAgentImplTest {
 		}
 	}
 
+	@Test
+	public void testNoOPOnEmptyConfiguration() throws Exception {
+		String serviceId = RandomTestUtil.randomString();
+
+		String configMapName = StringBundler.concat(
+			serviceId, StringPool.DASH, TestPropsValues.COMPANY_WEB_ID,
+			"-lxc-ext-init-metadata");
+
+		PortalK8sConfigMapModifier.Result result =
+			_portalK8sConfigMapModifier.modifyConfigMap(
+				configMapModel -> {
+				},
+				configMapName);
+
+		Assert.assertEquals(
+			PortalK8sConfigMapModifier.Result.UNCHANGED, result);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalK8sAgentImplTest.class);
 

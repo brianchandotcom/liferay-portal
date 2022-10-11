@@ -150,7 +150,7 @@ public class VulcanFeature implements Feature {
 				_configurationAdmin, _expressionConvert, _filterParserProvider,
 				_groupLocalService, _language, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _getScopeChecker(),
+				_roleLocalService, _getScopeChecker(), _sortParserProvider,
 				_vulcanBatchEngineImportTaskResource));
 		featureContext.register(
 			new EntityExtensionHandlerContextResolver(

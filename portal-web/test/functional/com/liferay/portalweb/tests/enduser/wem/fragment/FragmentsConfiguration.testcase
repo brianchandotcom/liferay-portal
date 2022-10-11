@@ -1117,6 +1117,115 @@ main();
 		}
 	}
 
+	@description = "This is a test for LPS-164242. The fragment developer could map to web contents in Collection Display using itemSelector configuration."
+	@priority = "5"
+	test MapToWebContentsInCollectionDisplayViaItemSelectorConfiguration {
+		task ("Given a fragment developer has a new fragment with itemSelector configuration") {
+			var newLine = '''
+''';
+			var htmlSnippet = '''
+<div class="fragment-name">
+    [#if itemSelectorObject??]
+        ${itemSelectorObject.getUrlTitle()}
+    [/#if]
+</div>''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var jsonSnippet = '''
+{
+    "fieldSets": [
+        {
+            "fields" : [
+                {
+                    "label": "itemSelector",
+                    "type": "itemSelector",
+                    "name": "itemSelector"
+                }
+            ]
+        }
+    ]
+}''';
+
+			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+		}
+
+		task ("When the fragment developer adds the new fragment into a Collection Display") {
+			for (var title : list "SpaceX,Tesla,Twitter") {
+				JSONWebcontent.addWebContent(
+					content = "${title} Introduction",
+					groupName = "Test Site Name",
+					title = "${title}");
+			}
+
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Collection Name",
+				entryTitle = "SpaceX",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the fragment developer sees the each new fragment displays the title of associated web content") {
+			var n = "1";
+
+			for (var title : list "twitter,tesla,spacex") {
+				AssertTextEquals(
+					index = "${n}",
+					key_fragmentName = "Fragment Name",
+					locator1 = "Fragment#FRAGMENT_CONTENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			PageEditor.publish();
+		}
+
+		task ("When the fragment developer navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the fragment developer sees the Collection Display displays the title of associated web content") {
+			var n = "1";
+
+			for (var title : list "twitter,tesla,spacex") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-100751. View placeholder in fragment configuration without default value."
 	@priority = "5"
 	@uitest

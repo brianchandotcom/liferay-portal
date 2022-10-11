@@ -2123,6 +2123,14 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
+		ProcessBuilderKaleoDesignerReact.editConnector(
+			connectorLabel = "APPROVE",
+			newConnectorLabel = "Approve");
+
+		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
+			connectorLabel = "APPROVE",
+			nodeId = "Approve");
+
 		PortletEntry.publish();
 
 		Workflow.openWorkflowListView();
@@ -2208,19 +2216,19 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process Predefined",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process Predefined",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewCompletedTask(
 			workflowAssetTitle = "Kaleo Forms Process Predefined",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		Workflow.gotoCompletedTaskAssignedToMePreview(workflowAssetTitle = "Kaleo Forms Process Predefined");
 
@@ -3211,6 +3219,14 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
+		ProcessBuilderKaleoDesignerReact.editConnector(
+			connectorLabel = "APPROVE",
+			newConnectorLabel = "Approve");
+
+		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
+			connectorLabel = "APPROVE",
+			nodeId = "Approve");
+
 		PortletEntry.publish();
 
 		Workflow.openWorkflowListView();
@@ -3352,19 +3368,19 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewCompletedTask(
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		Workflow.gotoCompletedTaskAssignedToMePreview(workflowAssetTitle = "Kaleo Forms Process");
 

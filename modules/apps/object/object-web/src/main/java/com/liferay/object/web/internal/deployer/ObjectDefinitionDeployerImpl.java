@@ -54,7 +54,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.asset.model.ObjectEntryAssetRendererFactory;
 import com.liferay.object.web.internal.info.item.creator.ObjectEntryInfoItemCreator;
-import com.liferay.object.web.internal.info.item.provider.ExternalObjectEntryInfoItemFieldValuesProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemCapabilitiesProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemDetailsProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemFieldValuesProvider;
@@ -87,12 +86,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.upload.UploadHandler;
@@ -344,40 +341,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"mvc.command.name", "/object_entries/edit_object_entry"
 				).build()));
 
-		if (objectDefinition.isDefaultStorageType()) {
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					InfoItemFieldValuesProvider.class,
-					new ObjectEntryInfoItemFieldValuesProvider(
-						_assetDisplayPageFriendlyURLProvider,
-						_infoItemFieldReaderFieldSetProvider, _jsonFactory,
-						_listTypeEntryLocalService, _objectEntryLocalService,
-						_objectFieldLocalService,
-						_templateInfoItemFieldSetProvider, _userLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"company.id", objectDefinition.getCompanyId()
-					).put(
-						"item.class.name", objectDefinition.getClassName()
-					).build()));
-		}
-		else if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-135430"))) {
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					InfoItemFieldValuesProvider.class,
-					new ExternalObjectEntryInfoItemFieldValuesProvider(
-						_assetDisplayPageFriendlyURLProvider,
-						_infoItemFieldReaderFieldSetProvider, _jsonFactory,
-						_listTypeEntryLocalService, _objectEntryManagerTracker,
-						_objectEntryLocalService, _objectFieldLocalService,
-						_templateInfoItemFieldSetProvider),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"company.id", objectDefinition.getCompanyId()
-					).put(
-						"item.class.name", objectDefinition.getClassName()
-					).build()));
-		}
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				InfoItemFieldValuesProvider.class,
+				new ObjectEntryInfoItemFieldValuesProvider(
+					_assetDisplayPageFriendlyURLProvider,
+					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
+					_listTypeEntryLocalService, objectDefinition,
+					_objectEntryLocalService, _objectEntryManagerTracker,
+					_objectFieldLocalService, _templateInfoItemFieldSetProvider,
+					_userLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()));
 
 		// Register ObjectEntriesPanelApp after ObjectEntriesPortlet. See
 		// LPS-140379.

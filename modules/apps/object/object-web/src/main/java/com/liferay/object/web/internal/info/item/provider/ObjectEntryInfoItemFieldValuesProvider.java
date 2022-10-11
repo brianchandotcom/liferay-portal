@@ -27,8 +27,11 @@ import com.liferay.info.type.WebImage;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
@@ -46,6 +49,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
@@ -70,7 +74,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService,
+		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManagerTracker objectEntryManagerTracker,
 		ObjectFieldLocalService objectFieldLocalService,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider,
 		UserLocalService userLocalService) {
@@ -81,7 +87,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			infoItemFieldReaderFieldSetProvider;
 		_jsonFactory = jsonFactory;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
+		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManagerTracker = objectEntryManagerTracker;
 		_objectFieldLocalService = objectFieldLocalService;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
 		_userLocalService = userLocalService;
@@ -117,6 +125,11 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ObjectEntry objectEntry) {
 
 		try {
+			if (!_objectDefinition.isDefaultStorageType()) {
+				return _getObjectEntryInfoFieldValuesByObjectEntryManager(
+					objectEntry);
+			}
+
 			List<InfoFieldValue<Object>> objectEntryFieldValues =
 				new ArrayList<>();
 
@@ -179,6 +192,78 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		}
 	}
 
+	private List<InfoFieldValue<Object>>
+		_getObjectEntryInfoFieldValuesByObjectEntryManager(
+			ObjectEntry serviceBuilderObjectEntry) {
+
+		try {
+			ThemeDisplay themeDisplay = _getThemeDisplay();
+
+			ObjectEntryManager objectEntryManager =
+				_objectEntryManagerTracker.getObjectEntryManager(
+					_objectDefinition.getStorageType());
+
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+				objectEntryManager.getObjectEntry(
+					new DefaultDTOConverterContext(
+						false, null, null, null, null, themeDisplay.getLocale(),
+						null, themeDisplay.getUser()),
+					serviceBuilderObjectEntry.getExternalReferenceCode(),
+					themeDisplay.getCompanyId(), _objectDefinition, null);
+
+			List<InfoFieldValue<Object>> objectEntryFieldValues =
+				new ArrayList<>();
+
+			objectEntryFieldValues.add(
+				new InfoFieldValue<>(
+					ObjectEntryInfoItemFields.createDateInfoField,
+					objectEntry.getDateCreated()));
+			objectEntryFieldValues.add(
+				new InfoFieldValue<>(
+					ObjectEntryInfoItemFields.modifiedDateInfoField,
+					objectEntry.getDateModified()));
+			objectEntryFieldValues.add(
+				new InfoFieldValue<>(
+					ObjectEntryInfoItemFields.publishDateInfoField,
+					objectEntry.getDateModified()));
+
+			if (themeDisplay != null) {
+				objectEntryFieldValues.add(
+					new InfoFieldValue<>(
+						ObjectEntryInfoItemFields.displayPageURLInfoField,
+						_getDisplayPageURL(
+							serviceBuilderObjectEntry, themeDisplay)));
+			}
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			objectEntryFieldValues.addAll(
+				TransformUtil.transform(
+					_objectFieldLocalService.getObjectFields(
+						serviceBuilderObjectEntry.getObjectDefinitionId()),
+					objectField -> new InfoFieldValue<>(
+						InfoField.builder(
+						).infoFieldType(
+							ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
+						).namespace(
+							ObjectField.class.getSimpleName()
+						).name(
+							objectField.getName()
+						).labelInfoLocalizedValue(
+							InfoLocalizedValue.<String>builder(
+							).values(
+								objectField.getLabelMap()
+							).build()
+						).build(),
+						_getValue(objectField, properties))));
+
+			return objectEntryFieldValues;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	private ThemeDisplay _getThemeDisplay() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -191,7 +276,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private Object _getValue(
-			ObjectField objectField, Map<String, Serializable> values)
+			ObjectField objectField, Map<String, ? extends Object> values)
 		throws Exception {
 
 		Object value = values.get(objectField.getName());
@@ -244,7 +329,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			Format dateFormat = FastDateFormatFactoryUtil.getDate(
 				serviceContext.getLocale());
 
-			Serializable dateValue = values.get(objectField.getName());
+			Object dateValue = values.get(objectField.getName());
 
 			Date date = DateUtil.parseDate(
 				"yyyy-MM-dd", dateValue.toString(), serviceContext.getLocale());
@@ -281,7 +366,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_infoItemFieldReaderFieldSetProvider;
 	private final JSONFactory _jsonFactory;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final TemplateInfoItemFieldSetProvider
 		_templateInfoItemFieldSetProvider;

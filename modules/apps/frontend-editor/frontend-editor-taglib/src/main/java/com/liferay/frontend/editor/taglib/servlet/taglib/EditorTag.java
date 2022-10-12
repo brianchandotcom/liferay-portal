@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -439,12 +440,8 @@ public class EditorTag extends BaseValidatorTagSupport {
 	private Map<String, Object> _getData() {
 		HttpServletRequest httpServletRequest = getRequest();
 
-		String portletId = (String)httpServletRequest.getAttribute(
-			WebKeys.PORTLET_ID);
-
-		if (portletId == null) {
-			return _data;
-		}
+		String portletId = GetterUtil.getString(
+			(String)httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
 
 		Map<String, Object> attributes = new HashMap<>();
 

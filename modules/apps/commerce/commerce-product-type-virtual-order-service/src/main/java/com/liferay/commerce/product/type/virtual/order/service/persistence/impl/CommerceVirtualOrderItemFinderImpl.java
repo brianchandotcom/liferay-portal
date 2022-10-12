@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceVirtualOrderItemFinder.class)
+@Component(service = CommerceVirtualOrderItemFinder.class)
 public class CommerceVirtualOrderItemFinderImpl
 	extends CommerceVirtualOrderItemFinderBaseImpl
 	implements CommerceVirtualOrderItemFinder {

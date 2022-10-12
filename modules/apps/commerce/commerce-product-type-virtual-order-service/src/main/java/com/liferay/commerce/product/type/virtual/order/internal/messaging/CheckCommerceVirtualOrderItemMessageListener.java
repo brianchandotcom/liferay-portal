@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.type.virtual.order.internal.configuration.CommerceVirtualOrderItemConfiguration",
-	enabled = false, immediate = true,
+	immediate = true,
 	service = CheckCommerceVirtualOrderItemMessageListener.class
 )
 public class CheckCommerceVirtualOrderItemMessageListener

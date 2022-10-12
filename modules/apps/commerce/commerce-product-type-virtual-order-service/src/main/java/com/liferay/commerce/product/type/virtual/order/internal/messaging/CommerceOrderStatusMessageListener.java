@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "destination.name=" + DestinationNames.COMMERCE_ORDER_STATUS,
 	service = MessageListener.class
 )

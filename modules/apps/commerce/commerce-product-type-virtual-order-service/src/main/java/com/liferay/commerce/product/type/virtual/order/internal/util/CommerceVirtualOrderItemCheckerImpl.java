@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommerceVirtualOrderItemChecker.class
-)
+@Component(immediate = true, service = CommerceVirtualOrderItemChecker.class)
 public class CommerceVirtualOrderItemCheckerImpl
 	implements CommerceVirtualOrderItemChecker {
 

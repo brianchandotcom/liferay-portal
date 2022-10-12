@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true, service = VirtualCPTypeHelper.class
-)
+@Component(immediate = true, service = VirtualCPTypeHelper.class)
 public class VirtualCPTypeHelperImpl implements VirtualCPTypeHelper {
 
 	@Override

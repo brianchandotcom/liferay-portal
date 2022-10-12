@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	property = "resource.name=" + CommerceVirtualOrderConstants.RESOURCE_NAME,
 	service = PortletResourcePermission.class
 )

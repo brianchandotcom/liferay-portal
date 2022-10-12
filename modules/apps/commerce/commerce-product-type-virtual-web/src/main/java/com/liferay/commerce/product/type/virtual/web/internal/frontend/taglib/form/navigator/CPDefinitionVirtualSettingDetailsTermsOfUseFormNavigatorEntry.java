@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, property = "form.navigator.entry.order:Integer=70",
+	property = "form.navigator.entry.order:Integer=70",
 	service = FormNavigatorEntry.class
 )
 public class CPDefinitionVirtualSettingDetailsTermsOfUseFormNavigatorEntry

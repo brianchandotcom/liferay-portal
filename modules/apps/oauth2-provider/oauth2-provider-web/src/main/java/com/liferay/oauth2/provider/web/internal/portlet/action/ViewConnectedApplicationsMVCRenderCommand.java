@@ -20,7 +20,6 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.scope.liferay.spi.ApplicationDescriptorLocator;
 import com.liferay.oauth2.provider.scope.liferay.spi.ScopeDescriptorLocator;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
@@ -162,10 +161,6 @@ public class ViewConnectedApplicationsMVCRenderCommand
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private OAuth2ApplicationScopeAliasesLocalService
-		_oAuth2ApplicationScopeAliasesLocalService;
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;

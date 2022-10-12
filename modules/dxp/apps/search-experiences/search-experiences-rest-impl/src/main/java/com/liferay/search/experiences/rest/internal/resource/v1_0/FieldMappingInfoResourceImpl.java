@@ -60,7 +60,8 @@ public class FieldMappingInfoResourceImpl
 	public List<FieldMappingInfo> getFieldMappings(String query) {
 		JSONObject jsonObject = FieldMappingsWebCacheItem.get(
 			_indexInformation,
-			_indexNameBuilder.getIndexName(contextCompany.getCompanyId()));
+			_indexNameBuilder.getIndexName(contextCompany.getCompanyId()),
+			_jsonFactory);
 
 		if (jsonObject.length() == 0) {
 			return Collections.<FieldMappingInfo>emptyList();

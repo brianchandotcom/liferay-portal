@@ -16,7 +16,7 @@ package com.liferay.search.experiences.rest.internal.web.cache;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,26 +32,30 @@ import com.liferay.portal.search.index.IndexInformation;
 public class FieldMappingsWebCacheItem implements WebCacheItem {
 
 	public static JSONObject get(
-		IndexInformation indexInformation, String indexName) {
+		IndexInformation indexInformation, String indexName,
+		JSONFactory jsonFactory) {
 
 		return (JSONObject)WebCachePoolUtil.get(
 			FieldMappingsWebCacheItem.class.getName() + StringPool.POUND +
 				indexName,
-			new FieldMappingsWebCacheItem(indexInformation, indexName));
+			new FieldMappingsWebCacheItem(
+				indexInformation, indexName, jsonFactory));
 	}
 
 	public FieldMappingsWebCacheItem(
-		IndexInformation indexInformation, String indexName) {
+		IndexInformation indexInformation, String indexName,
+		JSONFactory jsonFactory) {
 
 		_indexInformation = indexInformation;
 		_indexName = indexName;
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
 	public JSONObject convert(String key) {
 		try {
 			return JSONUtil.getValueAsJSONObject(
-				JSONFactoryUtil.createJSONObject(
+				_jsonFactory.createJSONObject(
 					_indexInformation.getFieldMappings(_indexName)),
 				"JSONObject/" + _indexName, "JSONObject/mappings",
 				"JSONObject/properties");
@@ -60,7 +64,7 @@ public class FieldMappingsWebCacheItem implements WebCacheItem {
 			_log.error(jsonException);
 		}
 
-		return JSONFactoryUtil.createJSONObject();
+		return _jsonFactory.createJSONObject();
 	}
 
 	@Override
@@ -75,5 +79,6 @@ public class FieldMappingsWebCacheItem implements WebCacheItem {
 
 	private final IndexInformation _indexInformation;
 	private final String _indexName;
+	private final JSONFactory _jsonFactory;
 
 }

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	enabled = false, property = "javax.portlet.name=" + CPPortletKeys.CP_SORT,
+	property = "javax.portlet.name=" + CPPortletKeys.CP_SORT,
 	service = PortletSharedSearchContributor.class
 )
 public class CPSortPortletSharedSearchContributor

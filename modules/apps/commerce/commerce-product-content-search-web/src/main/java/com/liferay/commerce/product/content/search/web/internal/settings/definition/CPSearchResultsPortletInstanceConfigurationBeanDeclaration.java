@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = ConfigurationBeanDeclaration.class)
+@Component(service = ConfigurationBeanDeclaration.class)
 public class CPSearchResultsPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

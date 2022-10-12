@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "model.class.name=" + CPPortletKeys.CP_SEARCH_RESULTS,
 	service = ViewPortletProvider.class
 )

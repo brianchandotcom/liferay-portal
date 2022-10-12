@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS,
 	service = ConfigurationAction.class
 )

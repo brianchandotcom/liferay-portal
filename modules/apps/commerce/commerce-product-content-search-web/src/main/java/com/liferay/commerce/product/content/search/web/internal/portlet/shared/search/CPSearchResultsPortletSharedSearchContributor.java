@@ -54,7 +54,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	enabled = false,
 	property = "javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS,
 	service = PortletSharedSearchContributor.class
 )

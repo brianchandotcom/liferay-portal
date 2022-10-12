@@ -282,19 +282,18 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		ObjectEntry objectDefinition1ObjectEntry1 =
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectEntry objectDefinition2ObjectEntry1 = new ObjectEntry() {
+		ObjectEntry childObjectEntry1 = new ObjectEntry() {
 			{
 				properties = HashMapBuilder.<String, Object>put(
 					"attachmentObjectFieldName",
@@ -313,7 +312,7 @@ public class DefaultObjectEntryManagerImplTest {
 				).put(
 					"r_oneToManyRelationshipName_" +
 						_objectDefinition1.getPKObjectFieldName(),
-					objectDefinition1ObjectEntry1.getId()
+					parentObjectEntry1.getId()
 				).put(
 					"richTextObjectFieldName",
 					StringBundler.concat(
@@ -325,10 +324,9 @@ public class DefaultObjectEntryManagerImplTest {
 		};
 
 		_assertEquals(
-			objectDefinition2ObjectEntry1,
+			childObjectEntry1,
 			_objectEntryManager.addObjectEntry(
-				_dtoConverterContext, _objectDefinition2,
-				objectDefinition2ObjectEntry1,
+				_dtoConverterContext, _objectDefinition2, childObjectEntry1,
 				ObjectDefinitionConstants.SCOPE_COMPANY));
 
 		_assertEquals(
@@ -348,14 +346,14 @@ public class DefaultObjectEntryManagerImplTest {
 					).put(
 						"textObjectFieldName",
 						MapUtil.getString(
-							objectDefinition1ObjectEntry1.getProperties(),
+							parentObjectEntry1.getProperties(),
 							"textObjectFieldName")
 					).build();
 				}
 			},
 			_objectEntryManager.getObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
-				objectDefinition1ObjectEntry1.getId()));
+				parentObjectEntry1.getId()));
 
 		_objectEntryManager.addObjectEntry(
 			_dtoConverterContext, _objectDefinition2,
@@ -366,7 +364,7 @@ public class DefaultObjectEntryManagerImplTest {
 					).put(
 						"r_oneToManyRelationshipName_" +
 							_objectDefinition1.getPKObjectFieldName(),
-						objectDefinition1ObjectEntry1.getId()
+						parentObjectEntry1.getId()
 					).put(
 						"integerObjectFieldName", 15
 					).put(
@@ -397,14 +395,14 @@ public class DefaultObjectEntryManagerImplTest {
 					).put(
 						"textObjectFieldName",
 						MapUtil.getString(
-							objectDefinition1ObjectEntry1.getProperties(),
+							parentObjectEntry1.getProperties(),
 							"textObjectFieldName")
 					).build();
 				}
 			},
 			_objectEntryManager.getObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
-				objectDefinition1ObjectEntry1.getId()));
+				parentObjectEntry1.getId()));
 	}
 
 	@Test
@@ -416,118 +414,114 @@ public class DefaultObjectEntryManagerImplTest {
 				_objectDefinition1.getPKObjectFieldName();
 		String picklistObjectFieldValue1 = _addListTypeEntry();
 
-		ObjectEntry objectDefinition1ObjectEntry1 =
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectEntry objectDefinition2ObjectEntry1 =
-			_objectEntryManager.addObjectEntry(
-				_dtoConverterContext, _objectDefinition2,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							oneToManyRelationshipFieldName,
-							objectDefinition1ObjectEntry1.getId()
-						).put(
-							"picklistObjectFieldName", picklistObjectFieldValue1
-						).put(
-							"textObjectFieldName", "aaa"
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry childObjectEntry1 = _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						oneToManyRelationshipFieldName,
+						parentObjectEntry1.getId()
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue1
+					).put(
+						"textObjectFieldName", "aaa"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectEntry objectDefinition1ObjectEntry2 =
-			_objectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry parentObjectEntry2 = _objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		String picklistObjectFieldValue2 = _addListTypeEntry();
 
-		ObjectEntry objectDefinition2ObjectEntry2 =
-			_objectEntryManager.addObjectEntry(
-				_dtoConverterContext, _objectDefinition2,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							oneToManyRelationshipFieldName,
-							objectDefinition1ObjectEntry2.getId()
-						).put(
-							"picklistObjectFieldName", picklistObjectFieldValue2
-						).put(
-							"textObjectFieldName", "aab"
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry childObjectEntry2 = _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						oneToManyRelationshipFieldName,
+						parentObjectEntry2.getId()
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue2
+					).put(
+						"textObjectFieldName", "aab"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildRangeExpression(
-					objectDefinition2ObjectEntry1.getDateCreated(), new Date(),
+					childObjectEntry1.getDateCreated(), new Date(),
 					"dateCreated")
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildRangeExpression(
-					objectDefinition2ObjectEntry1.getDateModified(), new Date(),
+					childObjectEntry1.getDateModified(), new Date(),
 					"dateModified")
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
-					"id", true, objectDefinition2ObjectEntry1.getId())
+					"id", true, childObjectEntry1.getId())
 			).build(),
-			objectDefinition2ObjectEntry1);
+			childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
-					"id", false, objectDefinition2ObjectEntry1.getId())
+					"id", false, childObjectEntry1.getId())
 			).build(),
-			objectDefinition2ObjectEntry2);
+			childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
 					"picklistObjectFieldName", true, picklistObjectFieldValue1)
 			).build(),
-			objectDefinition2ObjectEntry1);
+			childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
 					"picklistObjectFieldName", false, picklistObjectFieldValue1)
 			).build(),
-			objectDefinition2ObjectEntry2);
+			childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildLambdaExpressionFilterString(
 					"status", true, WorkflowConstants.STATUS_APPROVED)
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
@@ -540,18 +534,18 @@ public class DefaultObjectEntryManagerImplTest {
 				_buildInExpressionFilterString(
 					oneToManyRelationshipFieldName.substring(
 						oneToManyRelationshipFieldName.lastIndexOf("_") + 1),
-					true, objectDefinition1ObjectEntry1.getId())
+					true, parentObjectEntry1.getId())
 			).build(),
-			objectDefinition2ObjectEntry1);
+			childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
 					oneToManyRelationshipFieldName.substring(
 						oneToManyRelationshipFieldName.lastIndexOf("_") + 1),
-					false, objectDefinition1ObjectEntry1.getId())
+					false, parentObjectEntry1.getId())
 			).build(),
-			objectDefinition2ObjectEntry2);
+			childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
@@ -560,7 +554,7 @@ public class DefaultObjectEntryManagerImplTest {
 			).put(
 				"search", "aa"
 			).build(),
-			objectDefinition2ObjectEntry1);
+			childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
@@ -569,62 +563,62 @@ public class DefaultObjectEntryManagerImplTest {
 			).put(
 				"search", "aa"
 			).build(),
-			objectDefinition2ObjectEntry2);
+			childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
-				"search", String.valueOf(objectDefinition2ObjectEntry1.getId())
+				"search", String.valueOf(childObjectEntry1.getId())
 			).build(),
-			objectDefinition2ObjectEntry1);
+			childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
-				"search", String.valueOf(objectDefinition2ObjectEntry2.getId())
+				"search", String.valueOf(childObjectEntry2.getId())
 			).build(),
-			objectDefinition2ObjectEntry2);
+			childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", picklistObjectFieldValue1
 			).build(),
-			objectDefinition2ObjectEntry1);
+			childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", picklistObjectFieldValue2
 			).build(),
-			objectDefinition2ObjectEntry2);
+			childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", "aa"
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "createDate:asc"
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "createDate:desc"
 			).build(),
-			objectDefinition2ObjectEntry2, objectDefinition2ObjectEntry1);
+			childObjectEntry2, childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "id:asc"
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "id:desc"
 			).build(),
-			objectDefinition2ObjectEntry2, objectDefinition2ObjectEntry1);
+			childObjectEntry2, childObjectEntry1);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "textObjectFieldName:asc"
 			).build(),
-			objectDefinition2ObjectEntry1, objectDefinition2ObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "textObjectFieldName:desc"
 			).build(),
-			objectDefinition2ObjectEntry2, objectDefinition2ObjectEntry1);
+			childObjectEntry2, childObjectEntry1);
 	}
 
 	private void _addAggregationObjectField(

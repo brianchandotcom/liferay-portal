@@ -374,6 +374,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162848. The page creator with view permission for custom object can see Form Components in page editor."
+	@priority = "4"
+	test ViewFormComponentsInPageEditorAsUserWithViewPermissionForCustomObject {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a page creator has view permission for custom object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Regular Role Name");
+
+			Role.openRolesAdmin();
+
+			Role.definePermissionCmdCP(
+				navItem = "Control Panel",
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_VIEW_CHECKBOX",
+				roleTitle = "Regular Role Name",
+				subItem = "Purchase Orders");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When the page creator navigates to the content page at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator cannot see the Form Components in Fragments and Widgets panel") {
+			AssertVisible(
+				key_collectionName = "Form Components",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+
+			JSONRole.deleteRole(roleTitle = "Regular Role Name");
+		}
+	}
+
 	@description = "This is a test for LPS-151157. The fragment admin could see the supported field types in read-only mode."
 	@priority = "4"
 	test ViewSupportedFieldTypesInReadOnlyMode {

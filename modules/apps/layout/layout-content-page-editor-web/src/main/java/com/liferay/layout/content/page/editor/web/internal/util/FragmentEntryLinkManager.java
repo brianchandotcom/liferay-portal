@@ -34,7 +34,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -488,10 +487,6 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private LayoutClassedModelUsageLocalService
-		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private Portal _portal;

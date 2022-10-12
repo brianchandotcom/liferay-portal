@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.product.subscription.type.name=" + CPConstants.WEEKLY_SUBSCRIPTION_TYPE,
 		"commerce.product.subscription.type.order:Integer=20"

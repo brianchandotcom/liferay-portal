@@ -41,6 +41,7 @@ import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelCons
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -396,21 +397,49 @@ public class DefaultCommerceCheckoutStepHttpHelper
 				if (Validator.isNull(
 						commerceOrder.getCommercePaymentMethodKey())) {
 
-					Stream<CommercePaymentMethod> commercePaymentMethodsStream =
-						commercePaymentMethods.stream();
+					CommerceChannelAccountEntryRel
+						commerceChannelAccountEntryRel =
+							_commerceChannelAccountEntryRelService.
+								fetchCommerceChannelAccountEntryRel(
+									accountEntry.getAccountEntryId(),
+									commerceContext.getCommerceChannelId(),
+									CommerceChannelAccountEntryRelConstants.
+										TYPE_PAYMENT);
 
 					CommercePaymentMethod commercePaymentMethod =
-						commercePaymentMethodsStream.filter(
-							curCommercePaymentMethod -> {
-								String key = curCommercePaymentMethod.getKey();
+						commercePaymentMethods.get(0);
 
-								return key.equals(
-									accountEntry.getDefaultCPaymentMethodKey());
-							}
-						).findFirst(
-						).orElse(
-							commercePaymentMethods.get(0)
-						);
+					if (commerceChannelAccountEntryRel != null) {
+						CommercePaymentMethodGroupRel
+							commercePaymentMethodGroupRel =
+								_commercePaymentMethodGroupRelLocalService.
+									fetchCommercePaymentMethodGroupRel(
+										commerceChannelAccountEntryRel.
+											getClassPK());
+
+						if ((commercePaymentMethodGroupRel != null) &&
+							commercePaymentMethodGroupRel.isActive()) {
+
+							Stream<CommercePaymentMethod>
+								commercePaymentMethodsStream =
+									commercePaymentMethods.stream();
+
+							commercePaymentMethod =
+								commercePaymentMethodsStream.filter(
+									curCommercePaymentMethod -> {
+										String key =
+											curCommercePaymentMethod.getKey();
+
+										return key.equals(
+											commercePaymentMethodGroupRel.
+												getEngineKey());
+									}
+								).findFirst(
+								).orElse(
+									commercePaymentMethods.get(0)
+								);
+						}
+					}
 
 					_updateCommerceOrder(
 						commerceOrder, commercePaymentMethod.getKey(),
@@ -882,6 +911,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelService
+		_commerceChannelAccountEntryRelService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

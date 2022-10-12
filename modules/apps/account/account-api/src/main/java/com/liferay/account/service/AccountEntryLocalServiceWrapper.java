@@ -46,7 +46,8 @@ public class AccountEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountEntry activateAccountEntry(
-		com.liferay.account.model.AccountEntry accountEntry) {
+			com.liferay.account.model.AccountEntry accountEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.activateAccountEntry(accountEntry);
 	}
@@ -137,7 +138,8 @@ public class AccountEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountEntry deactivateAccountEntry(
-		com.liferay.account.model.AccountEntry accountEntry) {
+			com.liferay.account.model.AccountEntry accountEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.deactivateAccountEntry(accountEntry);
 	}
@@ -683,7 +685,8 @@ public class AccountEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountEntry updateStatus(
-		com.liferay.account.model.AccountEntry accountEntry, int status) {
+			com.liferay.account.model.AccountEntry accountEntry, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.updateStatus(accountEntry, status);
 	}
@@ -694,6 +697,17 @@ public class AccountEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.updateStatus(accountEntryId, status);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updateStatus(
+			long userId, long accountEntryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			java.util.Map<String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateStatus(
+			userId, accountEntryId, status, serviceContext, workflowContext);
 	}
 
 	@Override

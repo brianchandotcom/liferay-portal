@@ -42,6 +42,7 @@ import java.io.Serializable;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,7 +72,8 @@ public interface AccountEntryLocalService
 	public void activateAccountEntries(long[] accountEntryIds)
 		throws PortalException;
 
-	public AccountEntry activateAccountEntry(AccountEntry accountEntry);
+	public AccountEntry activateAccountEntry(AccountEntry accountEntry)
+		throws PortalException;
 
 	public AccountEntry activateAccountEntry(long accountEntryId)
 		throws PortalException;
@@ -122,7 +124,8 @@ public interface AccountEntryLocalService
 	public void deactivateAccountEntries(long[] accountEntryIds)
 		throws PortalException;
 
-	public AccountEntry deactivateAccountEntry(AccountEntry accountEntry);
+	public AccountEntry deactivateAccountEntry(AccountEntry accountEntry)
+		throws PortalException;
 
 	public AccountEntry deactivateAccountEntry(long accountEntryId)
 		throws PortalException;
@@ -462,10 +465,18 @@ public interface AccountEntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public AccountEntry updateStatus(AccountEntry accountEntry, int status);
+	public AccountEntry updateStatus(AccountEntry accountEntry, int status)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateStatus(long accountEntryId, int status)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountEntry updateStatus(
+			long userId, long accountEntryId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for AccountEntry. This utility wraps
@@ -50,7 +51,9 @@ public class AccountEntryLocalServiceUtil {
 		getService().activateAccountEntries(accountEntryIds);
 	}
 
-	public static AccountEntry activateAccountEntry(AccountEntry accountEntry) {
+	public static AccountEntry activateAccountEntry(AccountEntry accountEntry)
+		throws PortalException {
+
 		return getService().activateAccountEntry(accountEntry);
 	}
 
@@ -126,8 +129,8 @@ public class AccountEntryLocalServiceUtil {
 		getService().deactivateAccountEntries(accountEntryIds);
 	}
 
-	public static AccountEntry deactivateAccountEntry(
-		AccountEntry accountEntry) {
+	public static AccountEntry deactivateAccountEntry(AccountEntry accountEntry)
+		throws PortalException {
 
 		return getService().deactivateAccountEntry(accountEntry);
 	}
@@ -588,7 +591,8 @@ public class AccountEntryLocalServiceUtil {
 	}
 
 	public static AccountEntry updateStatus(
-		AccountEntry accountEntry, int status) {
+			AccountEntry accountEntry, int status)
+		throws PortalException {
 
 		return getService().updateStatus(accountEntry, status);
 	}
@@ -597,6 +601,16 @@ public class AccountEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateStatus(accountEntryId, status);
+	}
+
+	public static AccountEntry updateStatus(
+			long userId, long accountEntryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		return getService().updateStatus(
+			userId, accountEntryId, status, serviceContext, workflowContext);
 	}
 
 	public static AccountEntryLocalService getService() {

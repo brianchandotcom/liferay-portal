@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "javax.portlet.name=" + CommerceDashboardPortletKeys.COMMERCE_DASHBOARD_FORECASTS_CHART,
 	service = ConfigurationAction.class
 )

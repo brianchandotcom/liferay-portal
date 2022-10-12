@@ -85,7 +85,9 @@ const ACTIONS = {
 		unmarkAsDefaultLayoutUtilityPageEntryURL,
 	}) {
 		openConfirmModal({
-			message: Liferay.Language.get('unmark-default-confirmation'),
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-unmark-this'
+			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					send(unmarkAsDefaultLayoutUtilityPageEntryURL);

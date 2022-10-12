@@ -88,7 +88,7 @@ definition {
 		}
 
 		if ("${exportPermissions}" == "true") {
-			Check(locator1 = "Checkbox#PERMISSIONS");
+			Check.checkNotVisible(locator1 = "Checkbox#PERMISSIONS");
 		}
 
 		AssertClick(

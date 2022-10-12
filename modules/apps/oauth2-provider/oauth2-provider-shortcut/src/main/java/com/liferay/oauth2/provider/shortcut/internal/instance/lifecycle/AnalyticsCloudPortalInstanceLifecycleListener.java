@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -316,9 +315,6 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

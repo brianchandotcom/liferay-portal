@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = CSDiagramSettingImageUploadResponseHandler.class
 )
 public class CSDiagramSettingImageUploadResponseHandler

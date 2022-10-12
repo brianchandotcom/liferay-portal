@@ -23,7 +23,6 @@
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Duration\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-impl/src/com/liferay/portal/action/JSONServiceAction\.java" />
-		<suppress checks="JSONNamingCheck" files="portal-kernel/src/com/liferay/portal/kernel/backgroundtask/display/BaseBackgroundTaskDisplay\.java" />
 		<suppress checks="JSONUtilCheck" files="portal-impl/test/unit/com/liferay/portal/json/JSONUtilTest\.java" />
 		<suppress checks="ListUtilCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 		<suppress checks="MapBuilderCheck" files="portal-impl/src/com/liferay/portal/service/impl/LayoutLocalServiceImpl\.java" />

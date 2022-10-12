@@ -93,7 +93,9 @@ definition {
 			menuItem = "Delete",
 			navigationPane = "true");
 
-		KBArticle.viewDefaultCP(featureFlag = "true");
+		KBArticle.viewDefaultCP(
+			defaultHome = "true",
+			featureFlag = "true");
 	}
 
 	@priority = "4"

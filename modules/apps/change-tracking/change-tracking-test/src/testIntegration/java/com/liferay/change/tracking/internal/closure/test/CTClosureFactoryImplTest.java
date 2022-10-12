@@ -194,7 +194,8 @@ public class CTClosureFactoryImplTest {
 					"CTCollectionLocalServiceImpl",
 				LoggerTestUtil.WARN)) {
 
-			_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+			_ctCollectionLocalService.deleteCTCollection(
+				_ctCollection.getCtCollectionId());
 		}
 
 		_db.runSQL("drop table GrandParentTable");

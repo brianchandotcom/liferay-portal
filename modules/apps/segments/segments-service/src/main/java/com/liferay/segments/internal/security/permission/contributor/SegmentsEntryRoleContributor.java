@@ -36,7 +36,6 @@ import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsEntryRole;
-import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
 import java.util.HashMap;
@@ -148,9 +147,6 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 
 	@Reference
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
-
-	@Reference
-	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;

@@ -309,6 +309,8 @@ definition {
 	@description = "This is a use case for LPS-124190."
 	@priority = "3"
 	test ExportRoleWithSiteAssignee {
+		property portal.acceptance = "melody";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONRole.addRegularRole(

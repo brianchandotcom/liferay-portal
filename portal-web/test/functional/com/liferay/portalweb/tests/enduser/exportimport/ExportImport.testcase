@@ -2290,6 +2290,8 @@ definition {
 	@description = "This is a use case for LPS-84290. Verify is possible export Home Folder Permissions."
 	@priority = "3"
 	test ImportSiteHomeFolderPermissions {
+		property portal.acceptance = "melody";
+
 		task ("Given: User adds a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 		}

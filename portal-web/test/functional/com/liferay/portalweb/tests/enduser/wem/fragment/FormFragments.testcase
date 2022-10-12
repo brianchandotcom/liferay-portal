@@ -286,6 +286,94 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162848. The Form Components should be available to Fragments admin and style book by default."
+	@priority = "4"
+	test ViewFormComponentsInFragmentsAdminAndStyleBook {
+		task ("Given a site designer doesn't have any custom object") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("When the site designer navigates to the Fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the site designer can see the Form Components fragment set") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
+
+			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Numeric Input,Select from List,Submit Button,Text Input") {
+				FragmentsAdmin.viewEntryPresent(entry = "${fragmentName}");
+			}
+		}
+
+		task ("When the site designer navigates to a style book editor") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.gotoStyleBookEllipsisItem(
+				item = "Edit",
+				styleBookName = "Test Style Book Name");
+		}
+
+		task ("Then the site designer can preview the Form Components in preview window") {
+			StyleBooks.selectPreviewItem(previewItem = "Form Components");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "submit-button-text",
+				text = "Submit");
+
+			ScrollBy(value1 = "0, 500");
+
+			AssertVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_CAPTCHA_BODY");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "date");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(locator1 = "Button#SELECT_FILE");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "numeric-input");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "text-input");
+		}
+	}
+
 	@description = "This is a test for LPS-151157. The fragment admin could see the supported field types in read-only mode."
 	@priority = "4"
 	test ViewSupportedFieldTypesInReadOnlyMode {

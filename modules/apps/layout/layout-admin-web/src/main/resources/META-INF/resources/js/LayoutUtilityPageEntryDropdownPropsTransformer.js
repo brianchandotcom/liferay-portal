@@ -34,13 +34,6 @@ const ACTIONS = {
 		});
 	},
 
-	permissionsLayoutUtilityPageEntry({permissionsLayoutUtilityPageEntryURL}) {
-		openModal({
-			title: Liferay.Language.get('permissions'),
-			url: permissionsLayoutUtilityPageEntryURL,
-		});
-	},
-
 	markAsDefaultLayoutUtilityPageEntry({
 		markAsDefaultLayoutUtilityPageEntryURL,
 		message,
@@ -58,6 +51,13 @@ const ACTIONS = {
 		else {
 			send(markAsDefaultLayoutUtilityPageEntryURL);
 		}
+	},
+
+	permissionsLayoutUtilityPageEntry({permissionsLayoutUtilityPageEntryURL}) {
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: permissionsLayoutUtilityPageEntryURL,
+		});
 	},
 
 	renameLayoutUtilityPageEntry(

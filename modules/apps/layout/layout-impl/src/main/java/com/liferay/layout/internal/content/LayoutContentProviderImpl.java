@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -71,72 +72,85 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			return StringPool.BLANK;
 		}
 
-		if (_isUseLayoutCrawler(layout)) {
-			String content = StringPool.BLANK;
-
-			try {
-				content = _layoutCrawler.getLayoutContent(layout, locale);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get layout content", exception);
-				}
-			}
-
-			content = _getWrapper(content);
-
-			if (Validator.isNotNull(content)) {
-				return content;
-			}
-		}
-
-		httpServletRequest = DynamicServletRequest.addQueryString(
-			httpServletRequest, "p_l_id=" + layout.getPlid(), false);
-
-		Layout originalRequestLayout = (Layout)httpServletRequest.getAttribute(
-			WebKeys.LAYOUT);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout originalThemeDisplayLayout = themeDisplay.getLayout();
-		long originalThemeDisplayPlid = themeDisplay.getPlid();
+		boolean originalRenderLayoutContent =
+			RenderLayoutContentThreadLocal.isRenderLayoutContent();
 
 		try {
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+			RenderLayoutContentThreadLocal.setRenderLayoutContent(true);
 
-			themeDisplay.setLayout(layout);
-			themeDisplay.setPlid(layout.getPlid());
+			if (_isUseLayoutCrawler(layout)) {
+				String content = StringPool.BLANK;
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid());
+				try {
+					content = _layoutCrawler.getLayoutContent(layout, locale);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to get layout content", exception);
+					}
+				}
 
-			String content = StringPool.BLANK;
+				content = _getWrapper(content);
 
-			try {
-				content =
-					LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
-						_fragmentRendererController, httpServletRequest,
-						httpServletResponse, layoutPageTemplateStructure,
-						FragmentEntryLinkConstants.VIEW, locale,
-						segmentsExperienceId);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get layout content", exception);
+				if (Validator.isNotNull(content)) {
+					return content;
 				}
 			}
 
-			return _html.stripHtml(content);
+			httpServletRequest = DynamicServletRequest.addQueryString(
+				httpServletRequest, "p_l_id=" + layout.getPlid(), false);
+
+			Layout originalRequestLayout =
+				(Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout originalThemeDisplayLayout = themeDisplay.getLayout();
+			long originalThemeDisplayPlid = themeDisplay.getPlid();
+
+			try {
+				httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+				themeDisplay.setLayout(layout);
+				themeDisplay.setPlid(layout.getPlid());
+
+				long segmentsExperienceId =
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(layout.getPlid());
+
+				String content = StringPool.BLANK;
+
+				try {
+					content =
+						LayoutPageTemplateStructureRenderUtil.
+							renderLayoutContent(
+								_fragmentRendererController, httpServletRequest,
+								httpServletResponse,
+								layoutPageTemplateStructure,
+								FragmentEntryLinkConstants.VIEW, locale,
+								segmentsExperienceId);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to get layout content", exception);
+					}
+				}
+
+				return _html.stripHtml(content);
+			}
+			finally {
+				httpServletRequest.setAttribute(
+					WebKeys.LAYOUT, originalRequestLayout);
+
+				themeDisplay.setLayout(originalThemeDisplayLayout);
+				themeDisplay.setPlid(originalThemeDisplayPlid);
+			}
 		}
 		finally {
-			httpServletRequest.setAttribute(
-				WebKeys.LAYOUT, originalRequestLayout);
-
-			themeDisplay.setLayout(originalThemeDisplayLayout);
-			themeDisplay.setPlid(originalThemeDisplayPlid);
+			RenderLayoutContentThreadLocal.setRenderLayoutContent(
+				originalRenderLayoutContent);
 		}
 	}
 

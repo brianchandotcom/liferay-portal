@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
@@ -437,6 +438,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public void incrementViewCounter(long userId, AssetEntry assetEntry)
 		throws PortalException {
+
+		if (RenderLayoutContentThreadLocal.isRenderLayoutContent()) {
+			return;
+		}
 
 		User user = _userLocalService.getUser(userId);
 

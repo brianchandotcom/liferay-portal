@@ -25,6 +25,120 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "This is a test for LPS-162848. The page creator cannot see Form Components in page editor when no approved custom objects exist."
+	@priority = "5"
+	test CannotSeeFormComponentsInPageEditorWhenNoApprovedCustomObjectExist {
+		task ("Given a page creator only has a draft custom object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+		}
+
+		task ("When the page creator navigates to the content page at edit mode") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator cannot see the Form Components in Fragments and Widgets panel") {
+			AssertElementNotPresent(
+				key_collectionName = "Form Components",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+		}
+
+		task ("When the page creator navigates to the display page template at edit mode") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the page creator cannot see the Form Components in Fragments and Widgets panel") {
+			AssertElementNotPresent(
+				key_collectionName = "Form Components",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+		}
+
+		task ("When the page creator navigates to the master page at edit mode") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Master Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
+		}
+
+		task ("Then the page creator cannot see the Form Components in Fragments and Widgets panel") {
+			AssertElementNotPresent(
+				key_collectionName = "Form Components",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+		}
+
+		task ("When the page creator navigates to the content page template at edit mode") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Then the page creator cannot see the Form Components in Fragments and Widgets panel") {
+			AssertElementNotPresent(
+				key_collectionName = "Form Components",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+		}
+
+		task ("When the page creator navigates to the collection page at edit mode") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addCollectionPage(
+				collectionName = "Most Viewed Assets",
+				pageName = "Collection Page Name",
+				tabName = "Collection Providers");
+		}
+
+		task ("Then the page creator cannot see the Form Components in Fragments and Widgets panel") {
+			AssertElementNotPresent(
+				key_collectionName = "Form Components",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
 		}
 	}
 

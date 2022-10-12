@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class GroupedCPTypeJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

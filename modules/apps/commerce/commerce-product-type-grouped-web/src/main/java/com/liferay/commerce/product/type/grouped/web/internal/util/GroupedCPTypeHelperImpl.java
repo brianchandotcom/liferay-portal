@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true, service = GroupedCPTypeHelper.class
-)
+@Component(immediate = true, service = GroupedCPTypeHelper.class)
 public class GroupedCPTypeHelperImpl implements GroupedCPTypeHelper {
 
 	@Override

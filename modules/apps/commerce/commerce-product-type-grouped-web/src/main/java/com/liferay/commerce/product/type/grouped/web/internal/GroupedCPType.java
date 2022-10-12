@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=10",
 		"commerce.product.type.name=" + GroupedCPTypeConstants.NAME

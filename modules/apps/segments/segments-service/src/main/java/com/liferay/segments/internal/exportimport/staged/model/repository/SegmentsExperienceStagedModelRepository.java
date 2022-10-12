@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
@@ -148,9 +147,6 @@ public class SegmentsExperienceStagedModelRepository
 		return _segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperience);
 	}
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

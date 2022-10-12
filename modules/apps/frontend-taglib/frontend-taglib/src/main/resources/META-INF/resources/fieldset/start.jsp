@@ -43,6 +43,10 @@ else if (collapsible) {
 
 			<c:choose>
 				<c:when test="<%= collapsible %>">
+					<legend class="sr-only">
+						<%= header %>
+					</legend>
+
 					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
 						<span>
 							<%= header %>

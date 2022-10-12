@@ -457,12 +457,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.JavaUpgradeProcessCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Simply registry parameter when it's a simple add column." />
+			<message key="delete.class" value="Delete this class and replace it by inline calls to the UpgradeProcessFactory class in the registry class." />
 			<message key="replace.method" value="Drop {0} to {1} line and make that operation from the ''{2}'' method by using the UpgradeProcessFactory class." />
-		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.JavaUpgradeRegistryParameterCheck">
-			<property name="category" value="Performance" />
-			<property name="description" value="Simply registry parameter when it's a simple add column." />
-			<message key="parameter.can.simply" value="Parameter ''{0}'' can be replaced by 'UpgradeProcessFactory' " />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.JSONNamingCheck">
 			<property name="category" value="Naming Conventions" />

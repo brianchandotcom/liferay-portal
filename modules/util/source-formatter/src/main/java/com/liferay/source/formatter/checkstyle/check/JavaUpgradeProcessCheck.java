@@ -14,11 +14,14 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -29,11 +32,17 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.METHOD_DEF};
+		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+			_checkIfDeleted(detailAST);
+
+			return;
+		}
+
 		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		if (!StringUtil.equals(identDetailAST.getText(), "doUpgrade") ||
@@ -77,8 +86,15 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _checkExtends(DetailAST detailAST) {
-		DetailAST classDefDetailAST = getParentWithTokenType(
-			detailAST, TokenTypes.CLASS_DEF);
+		DetailAST classDefDetailAST;
+
+		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+			classDefDetailAST = detailAST;
+		}
+		else {
+			classDefDetailAST = getParentWithTokenType(
+				detailAST, TokenTypes.CLASS_DEF);
+		}
 
 		DetailAST extendsDetailAST = classDefDetailAST.findFirstToken(
 			TokenTypes.EXTENDS_CLAUSE);
@@ -94,6 +110,112 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 		return extendsDetailASTsStream.anyMatch(
 			e -> StringUtil.equals(e.getText(), "UpgradeProcess"));
+	}
+
+	private void _checkIfDeleted(DetailAST detailAST) {
+		if (!_checkExtends(detailAST)) {
+			return;
+		}
+
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.contains(
+				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade")) {
+
+			return;
+		}
+
+		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_DEF);
+
+		if (ListUtil.isEmpty(methodDefDetailASTs) ||
+			(methodDefDetailASTs.size() > 1)) {
+
+			return;
+		}
+
+		DetailAST methodDefDetailAST = methodDefDetailASTs.get(0);
+
+		DetailAST identDetailAST = methodDefDetailAST.findFirstToken(
+			TokenTypes.IDENT);
+
+		if (!StringUtil.equals("doUpgrade", identDetailAST.getText())) {
+			return;
+		}
+
+		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
+			TokenTypes.SLIST);
+
+		DetailAST childDetailAST = sListDetailAST.getFirstChild();
+
+		String currentMethodName = null;
+		String parameter1 = null;
+
+		int methodCount = 0;
+
+		while (childDetailAST != null) {
+			int tokenType = childDetailAST.getType();
+
+			if ((tokenType != TokenTypes.EXPR) &&
+				(tokenType != TokenTypes.SEMI) &&
+				(tokenType != TokenTypes.RCURLY)) {
+
+				return;
+			}
+
+			if ((tokenType == TokenTypes.SEMI) ||
+				(tokenType == TokenTypes.RCURLY)) {
+
+				childDetailAST = childDetailAST.getNextSibling();
+
+				continue;
+			}
+
+			methodCount++;
+
+			DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				return;
+			}
+
+			String methodName = getMethodName(firstChildDetailAST);
+
+			if (!StringUtil.equals(methodName, "alterColumnName") &&
+				!StringUtil.equals(methodName, "alterColumnType") &&
+				!StringUtil.equals(methodName, "alterTableAddColumn") &&
+				!StringUtil.equals(methodName, "alterTableDropColumn")) {
+
+				return;
+			}
+
+			List<String> parameters = _getParameterList(firstChildDetailAST);
+
+			if (ListUtil.isEmpty(parameters)) {
+				return;
+			}
+
+			if (Validator.isNull(currentMethodName)) {
+				currentMethodName = methodName;
+
+				parameter1 = parameters.get(0);
+			}
+			else {
+				if (StringUtil.equals(currentMethodName, "alterColumnName") ||
+					StringUtil.equals(currentMethodName, "alterColumnType") ||
+					!StringUtil.equals(currentMethodName, methodName) ||
+					!StringUtil.equals(parameters.get(0), parameter1)) {
+
+					return;
+				}
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+
+		if (methodCount != 0) {
+			log(detailAST, _MSG_DELETE_CLASS);
+		}
 	}
 
 	private DetailAST _checkMethod(DetailAST detailAST, boolean lastLine) {
@@ -186,35 +308,9 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _checkParameters(DetailAST detailAST) {
-		DetailAST eListDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
+		List<String> parameters = _getParameterList(detailAST);
 
-		DetailAST firstChildDetailAST = eListDetailAST.getFirstChild();
-
-		if (firstChildDetailAST == null) {
-			return false;
-		}
-
-		while (firstChildDetailAST != null) {
-			int tokenType = firstChildDetailAST.getType();
-
-			if ((tokenType != TokenTypes.EXPR) &&
-				(tokenType != TokenTypes.COMMA)) {
-
-				return false;
-			}
-
-			if (tokenType == TokenTypes.EXPR) {
-				DetailAST childDetailAST = firstChildDetailAST.getFirstChild();
-
-				if (childDetailAST.getType() != TokenTypes.STRING_LITERAL) {
-					return false;
-				}
-			}
-
-			firstChildDetailAST = firstChildDetailAST.getNextSibling();
-		}
-
-		return true;
+		return ListUtil.isNotEmpty(parameters);
 	}
 
 	private DetailAST _getDetailAST(DetailAST detailAST, boolean lastLine) {
@@ -224,6 +320,40 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 		return detailAST.getNextSibling();
 	}
+
+	private List<String> _getParameterList(DetailAST detailAST) {
+		DetailAST eListDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
+
+		DetailAST firstChildDetailAST = eListDetailAST.getFirstChild();
+
+		List<String> parameters = new ArrayList<>();
+
+		while (firstChildDetailAST != null) {
+			int tokenType = firstChildDetailAST.getType();
+
+			if ((tokenType != TokenTypes.EXPR) &&
+				(tokenType != TokenTypes.COMMA)) {
+
+				return null;
+			}
+
+			if (tokenType == TokenTypes.EXPR) {
+				DetailAST childDetailAST = firstChildDetailAST.getFirstChild();
+
+				if (childDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+					return null;
+				}
+
+				parameters.add(childDetailAST.getText());
+			}
+
+			firstChildDetailAST = firstChildDetailAST.getNextSibling();
+		}
+
+		return parameters;
+	}
+
+	private static final String _MSG_DELETE_CLASS = "delete.class";
 
 	private static final String _MSG_REPLACE_METHOD = "replace.method";
 

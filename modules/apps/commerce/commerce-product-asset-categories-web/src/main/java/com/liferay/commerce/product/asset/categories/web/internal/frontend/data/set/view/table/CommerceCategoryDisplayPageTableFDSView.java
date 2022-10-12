@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceProductAssetCategoriesFDSNames.CATEGORY_DISPLAY_PAGES,
 		"frontend.data.set.name=" + CommerceProductAssetCategoriesFDSNames.CATEGORY_DISPLAY_PAGES

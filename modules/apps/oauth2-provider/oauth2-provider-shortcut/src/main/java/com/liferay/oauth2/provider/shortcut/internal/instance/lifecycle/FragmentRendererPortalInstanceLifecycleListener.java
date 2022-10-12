@@ -18,8 +18,6 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -98,13 +96,6 @@ public class FragmentRendererPortalInstanceLifecycleListener
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Reference
-	private OAuth2ApplicationScopeAliasesLocalService
-		_oAuth2ApplicationScopeAliasesLocalService;
-
-	@Reference
-	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

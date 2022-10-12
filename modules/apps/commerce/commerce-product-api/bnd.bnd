@@ -26,7 +26,6 @@ Export-Package:\
 	com.liferay.commerce.product.url,\
 	com.liferay.commerce.product.util,\
 	com.liferay.commerce.product.util.comparator
-Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Require-Capability:\
 	osgi.extender;\
 		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"

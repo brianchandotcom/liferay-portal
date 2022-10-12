@@ -72,9 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true, service = CPDefinitionHelper.class
-)
+@Component(immediate = true, service = CPDefinitionHelper.class)
 public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Override

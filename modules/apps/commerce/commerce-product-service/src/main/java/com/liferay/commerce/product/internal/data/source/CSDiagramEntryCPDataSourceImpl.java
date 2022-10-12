@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.product.data.source.name=" + CSDiagramEntryCPDataSourceImpl.NAME,
 	service = CPDataSource.class
 )

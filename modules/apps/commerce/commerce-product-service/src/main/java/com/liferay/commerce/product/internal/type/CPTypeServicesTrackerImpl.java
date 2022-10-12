@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(
-	enabled = false, immediate = true, service = CPTypeServicesTracker.class
-)
+@Component(immediate = true, service = CPTypeServicesTracker.class)
 public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 
 	@Override

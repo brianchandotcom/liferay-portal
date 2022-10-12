@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cheryl Tang
  */
-@Component(enabled = false, service = TableReferenceDefinition.class)
+@Component(service = TableReferenceDefinition.class)
 public class CommerceChannelTableReferenceDefinition
 	implements TableReferenceDefinition<CommerceChannelTable> {
 

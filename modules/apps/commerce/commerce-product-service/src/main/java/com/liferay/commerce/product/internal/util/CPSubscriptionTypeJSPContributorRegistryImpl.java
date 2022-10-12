@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
-	service = CPSubscriptionTypeJSPContributorRegistry.class
+	immediate = true, service = CPSubscriptionTypeJSPContributorRegistry.class
 )
 public class CPSubscriptionTypeJSPContributorRegistryImpl
 	implements CPSubscriptionTypeJSPContributorRegistry {

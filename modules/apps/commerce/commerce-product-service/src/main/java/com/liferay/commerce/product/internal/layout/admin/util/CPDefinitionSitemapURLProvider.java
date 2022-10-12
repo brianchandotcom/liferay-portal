@@ -53,9 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(
-	enabled = false, immediate = true, service = SitemapURLProvider.class
-)
+@Component(immediate = true, service = SitemapURLProvider.class)
 public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 
 	@Override

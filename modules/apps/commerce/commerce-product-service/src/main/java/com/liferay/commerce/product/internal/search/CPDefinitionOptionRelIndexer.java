@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, immediate = true, service = Indexer.class)
+@Component(immediate = true, service = Indexer.class)
 public class CPDefinitionOptionRelIndexer
 	extends BaseIndexer<CPDefinitionOptionRel> {
 

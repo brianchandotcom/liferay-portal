@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ivica Cardic
  */
-@Component(enabled = false, immediate = true, service = CPFriendlyURL.class)
+@Component(immediate = true, service = CPFriendlyURL.class)
 public class CPFriendlyURLImpl implements CPFriendlyURL {
 
 	@Override

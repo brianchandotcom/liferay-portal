@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration",
-	enabled = false, immediate = true, service = CPDefinitionLinkType.class
+	immediate = true, service = CPDefinitionLinkType.class
 )
 public class CPDefinitionLinkTypeImpl implements CPDefinitionLinkType {
 

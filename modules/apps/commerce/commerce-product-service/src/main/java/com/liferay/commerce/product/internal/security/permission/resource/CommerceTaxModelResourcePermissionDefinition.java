@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false, immediate = true,
-	service = PortletResourcePermissionDefinition.class
+	immediate = true, service = PortletResourcePermissionDefinition.class
 )
 public class CommerceTaxModelResourcePermissionDefinition
 	implements PortletResourcePermissionDefinition {

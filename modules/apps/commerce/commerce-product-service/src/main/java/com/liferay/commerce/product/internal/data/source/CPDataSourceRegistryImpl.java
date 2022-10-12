@@ -36,9 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(
-	enabled = false, immediate = true, service = CPDataSourceRegistry.class
-)
+@Component(immediate = true, service = CPDataSourceRegistry.class)
 public class CPDataSourceRegistryImpl implements CPDataSourceRegistry {
 
 	@Override

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(immediate = true, service = ModelListener.class)
 public class AssetCategoryModelListener
 	extends BaseModelListener<AssetCategory> {
 

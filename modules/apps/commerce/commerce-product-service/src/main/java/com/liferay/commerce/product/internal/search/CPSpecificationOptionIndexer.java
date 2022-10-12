@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, immediate = true, service = Indexer.class)
+@Component(immediate = true, service = Indexer.class)
 public class CPSpecificationOptionIndexer
 	extends BaseIndexer<CPSpecificationOption> {
 

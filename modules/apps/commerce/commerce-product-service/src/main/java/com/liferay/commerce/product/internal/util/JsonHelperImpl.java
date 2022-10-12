@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Igor Beslic
  */
-@Component(enabled = false, immediate = true, service = JsonHelper.class)
+@Component(immediate = true, service = JsonHelper.class)
 public class JsonHelperImpl implements JsonHelper {
 
 	@Override

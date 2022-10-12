@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = TableReferenceDefinition.class)
+@Component(service = TableReferenceDefinition.class)
 public class CommerceChannelAccountEntryRelTableReferenceDefinition
 	implements TableReferenceDefinition<CommerceChannelAccountEntryRelTable> {
 

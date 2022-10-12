@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Ivica Cardic
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "configurationPid=com.liferay.commerce.product.configuration.CPFriendlyURLConfiguration",
 	service = ConfigurationDDMFormDeclaration.class
 )

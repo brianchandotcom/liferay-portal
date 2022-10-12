@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
-	immediate = true, service = CPDefinitionLinkTypeConfigurationWrapper.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = CPDefinitionLinkTypeConfigurationWrapper.class
 )
 public class CPDefinitionLinkTypeConfigurationWrapper {
 

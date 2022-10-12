@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
-	immediate = true, service = CPDisplayLayoutConfigurationWrapper.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = CPDisplayLayoutConfigurationWrapper.class
 )
 public class CPDisplayLayoutConfigurationWrapper {
 

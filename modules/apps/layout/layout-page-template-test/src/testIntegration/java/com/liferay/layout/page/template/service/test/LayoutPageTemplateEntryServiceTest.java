@@ -328,20 +328,27 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
-
-		String updatedName = RandomTestUtil.randomString();
-
-		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			updatedName);
+					getLayoutPageTemplateCollectionId(),
+				"tiger");
 
 		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
-			updatedName, persistedLayoutPageTemplateEntry.getName());
+			"tiger", persistedLayoutPageTemplateEntry.getName());
+		Assert.assertEquals(
+			"tiger",
+			persistedLayoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), "leopard");
+
+		Assert.assertEquals(
+			"leopard", persistedLayoutPageTemplateEntry.getName());
+		Assert.assertEquals(
+			"leopard",
+			persistedLayoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 	}
 
 	@Test

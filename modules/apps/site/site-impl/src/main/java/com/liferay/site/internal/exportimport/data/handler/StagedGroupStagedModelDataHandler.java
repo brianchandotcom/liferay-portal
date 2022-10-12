@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -675,9 +674,6 @@ public class StagedGroupStagedModelDataHandler
 
 	@Reference
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

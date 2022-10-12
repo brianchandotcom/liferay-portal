@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
@@ -140,9 +139,6 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRoleContributor.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;

@@ -258,7 +258,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	}
 
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery)
-		throws PortalException {
+		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
 

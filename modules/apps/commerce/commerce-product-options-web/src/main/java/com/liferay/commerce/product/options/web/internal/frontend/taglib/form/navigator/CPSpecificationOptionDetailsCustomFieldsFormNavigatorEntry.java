@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, property = "form.navigator.entry.order:Integer=10",
+	property = "form.navigator.entry.order:Integer=10",
 	service = FormNavigatorEntry.class
 )
 public class CPSpecificationOptionDetailsCustomFieldsFormNavigatorEntry

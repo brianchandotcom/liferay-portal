@@ -2893,6 +2893,25 @@ definition {
 		}
 	}
 
+	macro editKBArticleNavigationMaxNestingLevel {
+		var key_fragmentName = "Knowledge Base Article Navigation";
+
+		PageEditor.clickConfigurableField(fragmentName = "Knowledge Base Article Navigation");
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		Type(
+			key_fieldLabel = "Maximum Nesting Level",
+			locator1 = "GENERIC_NUMBER_INPUT",
+			value1 = "2");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro editLayoutContainer {
 		if (isSet(position)) {
 			var index = "${position}";

@@ -484,7 +484,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return "";
 	}
 
-	private long _getGroupId() throws PortalException {
+	private long _getGroupId() throws Exception {
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				_objectDefinition.getScope());

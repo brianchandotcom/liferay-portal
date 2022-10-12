@@ -26,7 +26,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.NoSuchFormVariationException;
@@ -474,9 +473,6 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private FragmentEntryLinkHelper _fragmentEntryLinkHelper;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

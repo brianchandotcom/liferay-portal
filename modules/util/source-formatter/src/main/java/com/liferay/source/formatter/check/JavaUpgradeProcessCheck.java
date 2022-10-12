@@ -179,7 +179,7 @@ public class JavaUpgradeProcessCheck extends BaseJavaTermCheck {
 
 	private static final Pattern _ifBodyPattern = Pattern.compile(
 		"(alterTableAddColumn|alterTableDropColumn|alterColumnType|" +
-			"alterColumnName)\\([^;]+");
+			"alterColumnName)\\([^;]+;");
 	private static final Pattern _ifPattern = Pattern.compile(
 		"if \\(hasColumn(Type)?\\(");
 

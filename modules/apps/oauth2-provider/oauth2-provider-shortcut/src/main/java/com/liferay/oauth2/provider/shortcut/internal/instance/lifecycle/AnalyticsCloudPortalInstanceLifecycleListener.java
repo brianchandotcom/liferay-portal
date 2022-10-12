@@ -14,7 +14,6 @@
 
 package com.liferay.oauth2.provider.shortcut.internal.instance.lifecycle;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.ContactService;
@@ -307,11 +305,6 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 	private static final String[] _SEGMENTS_ASAH_DEFAULT_OAUTH2_SCOPE_GRANTS = {
 		"DELETE", "GET", "POST"
 	};
-
-	@Reference(
-		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
-	)
-	private Indexer<DLFileEntry> _indexer;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

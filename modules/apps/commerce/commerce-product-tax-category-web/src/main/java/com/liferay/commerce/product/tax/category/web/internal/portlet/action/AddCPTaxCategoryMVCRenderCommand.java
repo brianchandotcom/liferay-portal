@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Danny Situ
  */
 @Component(
-	enabled = false,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_TAX_CATEGORY,
 		"mvc.command.name=/cp_tax_category/add_cp_tax_category"

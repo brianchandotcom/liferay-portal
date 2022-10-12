@@ -71,14 +71,11 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		Assert.assertEquals(
 			facetParam,
@@ -101,18 +98,14 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
 
-		BucketDisplayContext
-			bucketDisplayContext =
-				bucketDisplayContexts.get(0);
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
 
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
@@ -120,12 +113,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
 			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(
-			0, bucketDisplayContext.getFrequency());
-		Assert.assertTrue(
-			bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(
-			bucketDisplayContext.isSelected());
+		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
 			facetParam,
@@ -160,14 +150,11 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		_excludedGroupId = 0;
 	}
@@ -188,18 +175,14 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
 
-		BucketDisplayContext
-			bucketDisplayContext =
-				bucketDisplayContexts.get(0);
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
 
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
@@ -207,13 +190,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
 			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(
-			frequency,
-			bucketDisplayContext.getFrequency());
-		Assert.assertTrue(
-			bucketDisplayContext.isFrequencyVisible());
-		Assert.assertFalse(
-			bucketDisplayContext.isSelected());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertFalse(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
 			facetParam,
@@ -238,18 +217,14 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				String.valueOf(assetCategoryId));
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
 
-		BucketDisplayContext
-			bucketDisplayContext =
-				bucketDisplayContexts.get(0);
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
 
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
@@ -257,13 +232,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
 			bucketDisplayContext.getFilterValue());
-		Assert.assertEquals(
-			frequency,
-			bucketDisplayContext.getFrequency());
-		Assert.assertTrue(
-			bucketDisplayContext.isFrequencyVisible());
-		Assert.assertTrue(
-			bucketDisplayContext.isSelected());
+		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
 
 		Assert.assertEquals(
 			assetCategoryId,
@@ -291,14 +262,11 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		Assert.assertEquals(
 			facetParam,
@@ -321,14 +289,11 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				facetParam);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				assetCategoriesSearchFacetDisplayContext.
-					getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		Assert.assertEquals(
 			facetParam,

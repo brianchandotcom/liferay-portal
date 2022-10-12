@@ -166,31 +166,24 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		_portal = portal;
 	}
 
-	protected BucketDisplayContext
-		buildBucketDisplayContext(
-			AssetCategory assetCategory, int frequency, boolean selected,
-			int popularity) {
+	protected BucketDisplayContext buildBucketDisplayContext(
+		AssetCategory assetCategory, int frequency, boolean selected,
+		int popularity) {
 
-		BucketDisplayContext
-			bucketDisplayContext =
-				new BucketDisplayContext();
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		bucketDisplayContext.setBucketText(
-			assetCategory.getTitle(_locale));
+		bucketDisplayContext.setBucketText(assetCategory.getTitle(_locale));
 		bucketDisplayContext.setFilterValue(
 			String.valueOf(assetCategory.getCategoryId()));
 		bucketDisplayContext.setFrequency(frequency);
-		bucketDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		bucketDisplayContext.setPopularity(popularity);
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;
 	}
 
-	protected List<BucketDisplayContext>
-		getEmptyBucketDisplayContexts() {
-
+	protected List<BucketDisplayContext> getEmptyBucketDisplayContexts() {
 		Stream<Long> categoryIdsStream = _selectedCategoryIds.stream();
 
 		return categoryIdsStream.map(
@@ -267,9 +260,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 		_removeExcludedGroup();
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts = new ArrayList<>(
-				_buckets.size());
+		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
+			_buckets.size());
 
 		int maxCount = 1;
 		int minCount = 1;
@@ -306,8 +298,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			multiplier = (double)5 / (maxCount - minCount);
 		}
 
-		Map<String, List<BucketDisplayContext>>
-			bucketDisplayContextsMap = new HashMap<>();
+		Map<String, List<BucketDisplayContext>> bucketDisplayContextsMap =
+			new HashMap<>();
 		Set<String> vocabularyNames = new HashSet<>();
 
 		for (int i = 0, j = 0; i < _buckets.size(); i++, j++) {
@@ -343,13 +335,10 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 					assetCategory, frequency,
 					isSelected(assetCategory.getCategoryId()), popularity);
 
-			bucketDisplayContexts.add(
-				bucketDisplayContext);
+			bucketDisplayContexts.add(bucketDisplayContext);
 
-			List<BucketDisplayContext>
-				vocabularyBucketDisplayContexts =
-					bucketDisplayContextsMap.get(
-						vocabularyName);
+			List<BucketDisplayContext> vocabularyBucketDisplayContexts =
+				bucketDisplayContextsMap.get(vocabularyName);
 
 			if (vocabularyBucketDisplayContexts == null) {
 				vocabularyBucketDisplayContexts = new ArrayList<>();
@@ -432,13 +421,14 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return null;
 	}
 
-	private Optional<BucketDisplayContext>
-		_getEmptyBucketDisplayContext(long assetCategoryId) {
+	private Optional<BucketDisplayContext> _getEmptyBucketDisplayContext(
+		long assetCategoryId) {
 
 		return Optional.ofNullable(
 			_fetchAssetCategory(assetCategoryId)
 		).map(
-			assetCategory -> buildBucketDisplayContext(assetCategory, 0, true, 1)
+			assetCategory -> buildBucketDisplayContext(
+				assetCategory, 0, true, 1)
 		);
 	}
 

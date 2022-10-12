@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jaclyn Ong
  */
 @Component(
-	enabled = false, immediate = true, property = "service.ranking:Integer=100",
+	immediate = true, property = "service.ranking:Integer=100",
 	service = PunchOutReturnService.class
 )
 public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {

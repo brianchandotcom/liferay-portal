@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Commerce Punch Out Web
 Bundle-SymbolicName: com.liferay.commerce.punchout.web
 Bundle-Version: 4.0.13
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Web-ContextPath: /commerce-punchout-web

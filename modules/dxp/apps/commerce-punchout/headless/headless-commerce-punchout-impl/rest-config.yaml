@@ -7,4 +7,3 @@ application:
 author: "Jaclyn Ong"
 forcePredictableSchemaPropertyName: false
 generateGraphQL: false
-liferayEnterpriseApp: true

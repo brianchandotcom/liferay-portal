@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jaclyn Ong
  */
 @Component(
-	enabled = false, immediate = true, property = "key=login.events.post",
+	immediate = true, property = "key=login.events.post",
 	service = LifecycleAction.class
 )
 public class PunchOutLoginPostAction extends Action {

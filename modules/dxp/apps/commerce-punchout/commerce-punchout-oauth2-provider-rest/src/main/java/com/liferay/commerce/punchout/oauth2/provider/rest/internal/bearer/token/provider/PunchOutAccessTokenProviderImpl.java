@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.punchout.oauth2.provider.rest.internal.bearer.token.provider.configuration.PunchOutAccessTokenProviderConfiguration",
-	enabled = false, property = "timeout:Integer=15",
-	service = PunchOutAccessTokenProvider.class
+	property = "timeout:Integer=15", service = PunchOutAccessTokenProvider.class
 )
 public class PunchOutAccessTokenProviderImpl
 	implements PunchOutAccessTokenProvider {

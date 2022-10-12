@@ -22,10 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jaclyn Ong
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommercePunchOutThemeHttpHelper.class
-)
+@Component(immediate = true, service = CommercePunchOutThemeHttpHelper.class)
 public class CommercePunchOutThemeHttpHelper {
 
 	public boolean punchOutSession(HttpServletRequest httpServletRequest) {

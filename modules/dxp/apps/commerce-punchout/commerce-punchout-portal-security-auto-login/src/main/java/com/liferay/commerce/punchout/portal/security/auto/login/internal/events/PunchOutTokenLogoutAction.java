@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jaclyn Ong
  */
 @Component(
-	enabled = false, immediate = true, property = "key=logout.events.pre",
+	immediate = true, property = "key=logout.events.pre",
 	service = LifecycleAction.class
 )
 public class PunchOutTokenLogoutAction extends Action {

@@ -58,21 +58,23 @@ public class MVCCSynchronizerPostUpdateEventListener
 
 			Serializable primaryKeyObj = baseModel.getPrimaryKeyObj();
 
-			MVCCModel localCacheMVCCModel =
-				(MVCCModel)EntityCacheUtil.getLocalCacheResult(
-					modelClass, primaryKeyObj);
+			Serializable localCacheResult = EntityCacheUtil.getLocalCacheResult(
+				modelClass, primaryKeyObj);
 
-			if (localCacheMVCCModel != null) {
+			if (localCacheResult instanceof MVCCModel) {
+				MVCCModel localCacheMVCCModel = (MVCCModel)localCacheResult;
+
 				localCacheMVCCModel.setMvccVersion(mvccVersion);
 			}
 
 			PortalCache<Serializable, Serializable> portalCache =
 				EntityCacheUtil.getPortalCache(modelClass);
 
-			MVCCModel entityCacheMVCCModel = (MVCCModel)portalCache.get(
-				primaryKeyObj);
+			Serializable entityCacheResult = portalCache.get(primaryKeyObj);
 
-			if (entityCacheMVCCModel != null) {
+			if (entityCacheResult instanceof MVCCModel) {
+				MVCCModel entityCacheMVCCModel = (MVCCModel)entityCacheResult;
+
 				entityCacheMVCCModel.setMvccVersion(mvccVersion);
 			}
 		}

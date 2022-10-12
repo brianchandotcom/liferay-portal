@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
@@ -466,9 +465,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
 
 	@Reference
 	private UserGroupGroupRoleService _userGroupGroupRoleService;

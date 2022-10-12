@@ -34,6 +34,8 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.internal.filter.parser.ObjectFilterParser;
+import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceTracker;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
@@ -120,7 +122,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -138,7 +139,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.IOException;
@@ -166,7 +166,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1694,55 +1693,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private List<String> _getODataFilterStrings(
-		List<ObjectFilter> objectFilters) {
-
-		// TODO Create filter parser classes for each one of the filter types
-		// and use a tracker or registry
-
-		if (ListUtil.isEmpty(objectFilters)) {
-			return Collections.emptyList();
-		}
-
-		List<String> oDataFilterStrings = new ArrayList<>();
-
-		for (ObjectFilter objectFilter : objectFilters) {
-			Map<String, Object> map = ObjectMapperUtil.readValue(
-				Map.class, objectFilter.getJSON());
-
-			if (map == null) {
-				continue;
-			}
-
-			Set<String> operators = map.keySet();
-
-			for (String operator : operators) {
-				Object object = map.get(operator);
-
-				if (object instanceof Object[]) {
-					String[] values = TransformUtil.transform(
-						(Object[])object,
-						value -> StringBundler.concat(
-							StringPool.APOSTROPHE, value,
-							StringPool.APOSTROPHE),
-						String.class);
-
-					object = StringBundler.concat(
-						StringPool.OPEN_PARENTHESIS,
-						ArrayUtil.toString(values, StringPool.BLANK),
-						StringPool.CLOSE_PARENTHESIS);
-				}
-
-				oDataFilterStrings.add(
-					StringBundler.concat(
-						objectFilter.getFilterBy(), StringPool.SPACE, operator,
-						StringPool.SPACE, object));
-			}
-		}
-
-		return oDataFilterStrings;
-	}
-
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, FromStep fromStep)
@@ -2031,8 +1981,15 @@ public class ObjectEntryLocalServiceImpl
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 			}
 
-			List<String> oDataFilterStrings = _getODataFilterStrings(
-				(List<ObjectFilter>)objectFieldSettingsValues.get("filters"));
+			List<String> oDataFilterStrings = TransformUtil.transform(
+				(List<ObjectFilter>)objectFieldSettingsValues.get("filters"),
+				objectFilter -> {
+					ObjectFilterParser objectFilterParser =
+						_objectFilterParserServiceTracker.getObjectFilterParser(
+							objectFilter.getFilterType());
+
+					return objectFilterParser.parse(objectFilter);
+				});
 
 			for (String oDataFilterString : oDataFilterStrings) {
 				predicate = predicate.and(
@@ -3084,6 +3041,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectFieldSettingPersistence _objectFieldSettingPersistence;
+
+	@Reference
+	private ObjectFilterParserServiceTracker _objectFilterParserServiceTracker;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

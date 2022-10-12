@@ -9966,6 +9966,69 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
+	<target name="execute-groovy-script-from-gogo-shell">
+		<set-app-server-properties
+			app.server.bundle.index="${bundle.index}"
+		/>
+
+		<delete file="${test.app.server.liferay.home}/execute-gogo-command.expect" />
+		<delete file="${test.app.server.liferay.home}/gogo-output.txt" />
+		<delete file="${test.app.server.liferay.home}/gogo-command.sh" />
+		<delete file="${test.app.server.liferay.home}/portal-script.groovy" />
+
+		<math
+			datatype="int"
+			operand1="${bundle.index}"
+			operand2="11312"
+			operation="+"
+			result="osgi.console.port"
+		/>
+
+		<loadfile
+			property="groovy.script"
+			srcfile="${script.file.path}"
+		/>
+
+		<echo file="${test.app.server.liferay.home}/portal-script.groovy">${groovy.script}</echo>
+
+		<replaceregexp
+			file="${test.app.server.liferay.home}/portal-script.groovy"
+			flags="g"
+			match="[^System\.]out\.println"
+			replace="System.out.println"
+		/>
+
+		<replaceregexp
+			file="${test.app.server.liferay.home}/portal-script.groovy"
+			flags="g"
+			match="&quot;"
+			replace="&apos;"
+		/>
+
+		<echo file="${test.app.server.liferay.home}/gogo-command.sh">
+script = ($.context getService (($.context getServiceReferences com.liferay.portal.kernel.util.File null) 0)) read ${test.app.server.liferay.home}/portal-script.groovy;
+($.context getService ($.context getServiceReference com.liferay.server.admin.web.internal.scripting.ServerScripting)) execute null "groovy" "$script";</echo>
+
+		<echo file="${test.app.server.liferay.home}/execute-gogo-command.expect"><![CDATA[#!/usr/bin/expect -f
+log_user 0
+spawn telnet localhost ${osgi.console.port}
+expect "g!"
+
+send "sh ${test.app.server.liferay.home}/gogo-command.sh\n"
+
+expect "g!"
+send_user $expect_out(buffer)]]></echo>
+
+		<chmod
+			file="${test.app.server.liferay.home}/execute-gogo-command.expect"
+			perm="a+x"
+		/>
+
+		<exec executable="${test.app.server.liferay.home}/execute-gogo-command.expect" failonerror="true" logError="true" output="${test.app.server.liferay.home}/gogo-output.txt" />
+
+		<print-file file.name="${test.app.server.liferay.home}/gogo-output.txt" />
+	</target>
+
 	<target name="execute-mysql">
 		<get-test-app-server-lib-portal-dir />
 

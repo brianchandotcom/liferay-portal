@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.File;
@@ -265,10 +266,15 @@ public class AttachmentUtil {
 
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
+		ServiceContext cloneServiceContext =
+			(ServiceContext)serviceContext.clone();
+
+		cloneServiceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
 		long fileEntryId = 0;
 
 		FileEntry fileEntry = addFileEntry(
-			attachment, uniqueFileNameProvider, serviceContext);
+			attachment, uniqueFileNameProvider, cloneServiceContext);
 
 		if (fileEntry != null) {
 			fileEntryId = fileEntry.getFileEntryId();
@@ -288,7 +294,7 @@ public class AttachmentUtil {
 			getTitleMap(null, attachment.getTitle()),
 			GetterUtil.getString(attachment.getOptions()),
 			GetterUtil.getDouble(attachment.getPriority()), type,
-			serviceContext);
+			cloneServiceContext);
 	}
 
 	public static Map<Locale, String> getTitleMap(

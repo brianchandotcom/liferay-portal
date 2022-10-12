@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -273,15 +271,6 @@ public class DataGuardTestRuleUtil {
 				}
 
 				for (BaseModel<?> leftoverBaseModel : leftoverBaseModels) {
-					if (className.equals(ResourcePermission.class.getName())) {
-						ResourcePermission resourcePermission =
-							(ResourcePermission)leftoverBaseModel;
-
-						if (resourcePermission.getPrimKeyId() != 0) {
-							continue;
-						}
-					}
-
 					_smartDelete(
 						persistedModelLocalService, modelClass,
 						(PersistedModel)leftoverBaseModel);
@@ -567,9 +556,6 @@ public class DataGuardTestRuleUtil {
 			}
 		}
 		catch (Throwable throwable1) {
-			ResourcePermissionTestUtil.deleteResourcePermissions(
-				persistedModel);
-
 			BasePersistence<?> basePersistence = _getBasePersistence(
 				persistedModelLocalService);
 

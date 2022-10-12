@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Commerce Theme Minium Full Site Initializer
 Bundle-SymbolicName: com.liferay.commerce.theme.minium.full.site.initializer
 Bundle-Version: 4.0.16
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Web-ContextPath: /commerce-theme-minium-full-site-initializer

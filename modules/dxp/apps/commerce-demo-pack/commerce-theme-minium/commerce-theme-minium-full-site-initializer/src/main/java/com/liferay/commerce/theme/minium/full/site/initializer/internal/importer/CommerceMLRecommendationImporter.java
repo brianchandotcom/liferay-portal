@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, service = CommerceMLRecommendationImporter.class)
+@Component(service = CommerceMLRecommendationImporter.class)
 public class CommerceMLRecommendationImporter {
 
 	public void importCommerceMLRecommendations(

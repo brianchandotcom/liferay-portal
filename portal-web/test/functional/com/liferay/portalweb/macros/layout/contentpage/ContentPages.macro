@@ -27,6 +27,8 @@ definition {
 			key_pageName = "${parentPageName}",
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
+		DropdownMenuItem.click(menuItem = "Add Page");
+
 		ContentPages._selectCard(
 			basicTemplate = "${basicTemplate}",
 			collectionName = "${collectionName}",

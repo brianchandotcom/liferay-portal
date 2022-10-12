@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_MEASUREMENT_UNIT,
 		"mvc.command.name=/cp_measurement_unit/edit_cp_measurement_unit"

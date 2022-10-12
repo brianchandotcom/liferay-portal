@@ -47,7 +47,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
-import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
@@ -861,9 +860,6 @@ public class CommerceSiteInitializer {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private OptionResource.Factory _optionResourceFactory;
 
 	@Reference
 	private PortletSettingsImporter _portletSettingsImporter;

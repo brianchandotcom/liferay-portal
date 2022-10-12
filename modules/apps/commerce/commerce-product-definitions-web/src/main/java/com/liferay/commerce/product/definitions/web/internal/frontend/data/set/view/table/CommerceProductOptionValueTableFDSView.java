@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_OPTION_VALUES,
 	service = FDSView.class
 )

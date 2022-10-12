@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.configuration.AttachmentsConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = {
 		"screen.navigation.category.order:Integer=70",
 		"screen.navigation.entry.order:Integer=10"

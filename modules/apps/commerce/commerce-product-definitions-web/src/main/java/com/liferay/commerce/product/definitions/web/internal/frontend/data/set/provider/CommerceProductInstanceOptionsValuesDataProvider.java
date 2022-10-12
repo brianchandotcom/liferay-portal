@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "ddm.data.provider.instance.id=getCPInstanceOptionsValues",
 	service = DDMDataProvider.class
 )

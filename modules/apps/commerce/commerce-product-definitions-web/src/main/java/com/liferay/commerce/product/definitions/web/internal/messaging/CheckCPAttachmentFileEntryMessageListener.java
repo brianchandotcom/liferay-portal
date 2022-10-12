@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.CPAttachmentFileEntryConfiguration",
-	enabled = false, immediate = true,
-	service = CheckCPAttachmentFileEntryMessageListener.class
+	immediate = true, service = CheckCPAttachmentFileEntryMessageListener.class
 )
 public class CheckCPAttachmentFileEntryMessageListener
 	extends BaseMessageListener {

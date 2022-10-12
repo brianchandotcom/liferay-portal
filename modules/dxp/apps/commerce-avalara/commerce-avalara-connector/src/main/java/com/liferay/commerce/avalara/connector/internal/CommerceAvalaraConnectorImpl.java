@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Calvin Keum
  */
-@Component(
-	enabled = false, immediate = true, service = CommerceAvalaraConnector.class
-)
+@Component(immediate = true, service = CommerceAvalaraConnector.class)
 public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 
 	@Override

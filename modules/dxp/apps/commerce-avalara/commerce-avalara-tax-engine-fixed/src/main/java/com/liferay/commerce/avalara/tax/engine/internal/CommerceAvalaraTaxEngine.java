@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Calvin Keum
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.tax.engine.key=" + CommerceAvalaraTaxEngine.KEY,
 	service = CommerceTaxEngine.class
 )

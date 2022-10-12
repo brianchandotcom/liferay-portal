@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.checkout.step.name=" + CommerceAvalaraTaxEngineCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=" + Integer.MIN_VALUE

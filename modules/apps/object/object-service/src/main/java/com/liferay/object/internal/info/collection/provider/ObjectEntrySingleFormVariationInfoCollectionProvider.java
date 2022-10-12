@@ -355,7 +355,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	}
 
 	private BooleanClause[] _getBooleanClauses(CollectionQuery collectionQuery)
-		throws ParseException {
+		throws Exception {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 

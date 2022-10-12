@@ -1304,13 +1304,7 @@ public class PoshiRunnerExecutor {
 	}
 
 	private String _getWarningFromThrowable(Throwable throwable) {
-		Class<?> clazz = PoshiRunnerWarningException.class;
-
-		String classCanonicalName = clazz.getCanonicalName();
-
-		String throwableString = throwable.toString();
-
-		if (throwableString.contains(classCanonicalName)) {
+		if (throwable instanceof PoshiRunnerWarningException) {
 			return throwable.getMessage();
 		}
 

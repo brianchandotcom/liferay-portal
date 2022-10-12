@@ -70,6 +70,7 @@ definition {
 		Role.editPermissionCmdCP(
 			assetLibrariesScope = "${assetLibrariesScope}",
 			define = "true",
+			navItem = "${navItem}",
 			permissionDefinitionKey = "${permissionDefinitionKey}",
 			permissionDefinitionKeyChange = "${permissionDefinitionKeyChange}",
 			permissionDefinitionKeys = "${permissionDefinitionKeys}",
@@ -82,7 +83,8 @@ definition {
 			roleTitleEdit = "${roleTitleEdit}",
 			roleType = "${roleType}",
 			roleUser = "${roleUser}",
-			siteNameScope = "${siteNameScope}");
+			siteNameScope = "${siteNameScope}",
+			subItem = "${subItem}");
 	}
 
 	macro definePermissionCP {
@@ -308,17 +310,35 @@ definition {
 			}
 
 			if (!(IsElementPresent(locator1 = "RolesPermissions#${permissionDefinitionKey}"))) {
-				Type(
-					locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
-					value1 = "${permissionNavigationValue}");
+				if (isSet(navItem)) {
+					Type(
+						locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+						value1 = "${subItem}");
 
-				AssertClick(
-					locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}",
-					value1 = "${permissionNavigationValue}");
+					AssertClick(
+						key_navItem = "${navItem}",
+						key_subItem = "${subItem}",
+						locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM",
+						value1 = "${subItem}");
 
-				AssertTextEquals(
-					locator1 = "RolesPermissions#PERMISSION_HEADER",
-					value1 = "${permissionNavigationValue}");
+					AssertTextEquals(
+						key_title = "${subItem}",
+						locator1 = "Header#H3_TITLE",
+						value1 = "${subItem}");
+				}
+				else {
+					Type(
+						locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+						value1 = "${permissionNavigationValue}");
+
+					AssertClick(
+						locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}",
+						value1 = "${permissionNavigationValue}");
+
+					AssertTextEquals(
+						locator1 = "RolesPermissions#PERMISSION_HEADER",
+						value1 = "${permissionNavigationValue}");
+				}
 			}
 
 			if ("${define}" == "true") {

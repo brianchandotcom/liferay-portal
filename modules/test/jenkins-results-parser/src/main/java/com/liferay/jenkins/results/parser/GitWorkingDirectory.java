@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1290,7 +1291,7 @@ public class GitWorkingDirectory {
 			List<File> javaFiles = JenkinsResultsParserUtil.findFiles(
 				getWorkingDirectory(), ".*\\.java");
 
-			_javaDirPaths = new HashSet<>();
+			_javaDirPaths = ConcurrentHashMap.newKeySet();
 
 			for (File javaFile : javaFiles) {
 				File parentFile = javaFile.getParentFile();
@@ -2807,27 +2808,30 @@ public class GitWorkingDirectory {
 	private static final Pattern _badRefPattern = Pattern.compile(
 		"fatal: bad object (?<badRef>.+/HEAD)");
 	private static final Map<String, List<File>> _deletedFilesMap =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<commitTime>\\d+) (?<email>[^\\s]*) " +
 			"(?<message>.*)");
 	private static final Map<String, List<File>> _modifiedFilesMap =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private static final MultiPattern _poshiFileNamesMultiPattern =
 		new MultiPattern(
 			".*\\.function", ".*\\.macro", ".*\\.path", ".*\\.prose",
 			".*\\.testcase");
 	private static final List<String> _privateOnlyGitRepositoryNames =
-		_getBuildPropertyAsList(
-			"git.working.directory.private.only.repository.names");
+		Collections.synchronizedList(
+			_getBuildPropertyAsList(
+				"git.working.directory.private.only.repository.names"));
 	private static final List<String> _publicOnlyGitRepositoryNames =
-		_getBuildPropertyAsList(
-			"git.working.directory.public.only.repository.names");
+		Collections.synchronizedList(
+			_getBuildPropertyAsList(
+				"git.working.directory.public.only.repository.names"));
 
 	private File _gitDirectory;
-	private final Map<String, GitRemote> _gitRemotes = new HashMap<>();
+	private final Map<String, GitRemote> _gitRemotes =
+		new ConcurrentHashMap<>();
 	private final String _gitRepositoryName;
 	private final String _gitRepositoryUsername;
 	private Set<String> _javaDirPaths;

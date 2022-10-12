@@ -107,10 +107,12 @@ function SXPElement({
 		return isDefined(enabled) ? enabled : true;
 	};
 
-	// All system elements that are not 'Custom JSON Element' or
-	// 'Paste Any Elasticsearch Query Element' are inactive when
-	// search index is not the company index.
-
+	/**
+	 * All system elements that are not 'Custom JSON Element' or 'Paste Any
+	 * Elasticsearch Query Element' are inactive when search index is not the
+	 * company index.
+	 * @returns {boolean}
+	 */
 	const _isInactiveFromNonCompanyIndex = () =>
 		!isIndexCompany &&
 		sxpElement.readOnly &&

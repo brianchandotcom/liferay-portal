@@ -63,10 +63,13 @@ const SXPElementList = ({
 		onAddSXPElement(sxpElement);
 	};
 
-	// All system elements that are not 'Custom JSON Element' or
-	// 'Paste Any Elasticsearch Query Element' cannot be added to
-	// query builder when search index is not the company index.
-
+	/**
+	 * All system elements that are not 'Custom JSON Element' or 'Paste Any
+	 * Elasticsearch Query Element' cannot be added to query builder when search
+	 * index is not the company index.
+	 * @param {object} sxpElement
+	 * @returns {boolean}
+	 */
 	const _isElementInactiveFromNonCompanyIndex = (sxpElement) =>
 		!isIndexCompany &&
 		sxpElement.readOnly &&

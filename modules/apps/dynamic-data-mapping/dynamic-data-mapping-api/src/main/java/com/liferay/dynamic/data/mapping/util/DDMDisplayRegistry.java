@@ -34,15 +34,17 @@ import org.osgi.service.component.annotations.Deactivate;
 public class DDMDisplayRegistry {
 
 	public DDMDisplay getDDMDisplay(String portletId) {
-		return _getDDMDisplay(portletId);
+		return _serviceTrackerMap.getService(portletId);
 	}
 
 	public List<DDMDisplay> getDDMDisplays() {
-		return _getDDMDisplays();
+		return ListUtil.fromCollection(_serviceTrackerMap.values());
 	}
 
 	public String[] getPortletIds() {
-		return _getPortletIds();
+		Set<String> portletIds = _serviceTrackerMap.keySet();
+
+		return portletIds.toArray(new String[0]);
 	}
 
 	@Activate
@@ -58,20 +60,6 @@ public class DDMDisplayRegistry {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	private DDMDisplay _getDDMDisplay(String portletId) {
-		return _serviceTrackerMap.getService(portletId);
-	}
-
-	private List<DDMDisplay> _getDDMDisplays() {
-		return ListUtil.fromCollection(_serviceTrackerMap.values());
-	}
-
-	private String[] _getPortletIds() {
-		Set<String> portletIds = _serviceTrackerMap.keySet();
-
-		return portletIds.toArray(new String[0]);
 	}
 
 	private ServiceTrackerMap<String, DDMDisplay> _serviceTrackerMap;

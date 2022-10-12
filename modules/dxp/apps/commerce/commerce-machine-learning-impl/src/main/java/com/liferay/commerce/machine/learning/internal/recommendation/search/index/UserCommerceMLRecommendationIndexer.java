@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, service = CommerceMLIndexer.class)
+@Component(service = CommerceMLIndexer.class)
 public class UserCommerceMLRecommendationIndexer implements CommerceMLIndexer {
 
 	@Override

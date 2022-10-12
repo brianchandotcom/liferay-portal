@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.commerce.machine.learning.forecast.alert.model,\
 	com.liferay.commerce.machine.learning.forecast.alert.service,\
 	com.liferay.commerce.machine.learning.forecast.alert.service.persistence
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

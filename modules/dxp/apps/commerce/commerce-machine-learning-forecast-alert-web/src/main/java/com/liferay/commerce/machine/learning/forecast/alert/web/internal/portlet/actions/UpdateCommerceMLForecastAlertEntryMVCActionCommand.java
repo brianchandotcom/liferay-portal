@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceMLForecastAlertPortletKeys.COMMERCE_ML_FORECAST_ALERT,
 		"mvc.command.name=/commerce_ml_forecast_alert/update_commerce_ml_forecast_alert_entry"

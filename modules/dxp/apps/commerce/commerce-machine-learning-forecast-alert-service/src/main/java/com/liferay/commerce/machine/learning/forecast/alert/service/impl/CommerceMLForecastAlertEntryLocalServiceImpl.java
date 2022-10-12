@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false,
 	property = "model.class.name=com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry",
 	service = AopService.class
 )

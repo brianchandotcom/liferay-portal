@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false,
 	property = {
 		"json.web.service.context.name=commerce",
 		"json.web.service.context.path=CommerceMLForecastAlertEntry"

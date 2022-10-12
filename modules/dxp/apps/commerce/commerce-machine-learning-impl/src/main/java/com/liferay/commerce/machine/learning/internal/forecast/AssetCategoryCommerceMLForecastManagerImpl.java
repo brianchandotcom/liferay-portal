@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false, immediate = true,
-	service = AssetCategoryCommerceMLForecastManager.class
+	immediate = true, service = AssetCategoryCommerceMLForecastManager.class
 )
 public class AssetCategoryCommerceMLForecastManagerImpl
 	extends BaseCommerceMLForecastServiceImpl<AssetCategoryCommerceMLForecast>

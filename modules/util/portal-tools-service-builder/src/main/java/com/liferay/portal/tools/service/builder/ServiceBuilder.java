@@ -3344,19 +3344,33 @@ public class ServiceBuilder {
 	}
 
 	private void _createPersistenceConstants() throws Exception {
-		if (!_dependencyInjectorDS) {
-			return;
-		}
-
 		File file = new File(
 			StringBundler.concat(
 				_outputPath, "/service/persistence/impl/constants/",
 				_portletShortName, "PersistenceConstants.java"));
 
-		String content = _processTemplate(
-			_TPL_PERSISTENCE_CONSTANTS, _getContext());
+		if (_dependencyInjectorDS) {
+			String content = _processTemplate(
+				_TPL_PERSISTENCE_CONSTANTS, _getContext());
 
-		_write(file, content, _modifiedFileNames);
+			_write(file, content, _modifiedFileNames);
+		}
+		else if (file.exists()) {
+			System.out.println("Removing " + file);
+
+			file.delete();
+		}
+
+		File folder = file.getParentFile();
+
+		File[] oldFiles = folder.listFiles(
+			(dir, name) -> !Objects.equals(name, file.getName()));
+
+		if (oldFiles != null) {
+			for (File oldFile : oldFiles) {
+				oldFile.delete();
+			}
+		}
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {

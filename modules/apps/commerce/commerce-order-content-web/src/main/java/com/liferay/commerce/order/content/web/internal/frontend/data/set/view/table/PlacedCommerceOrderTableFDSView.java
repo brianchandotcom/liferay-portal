@@ -51,7 +51,11 @@ public class PlacedCommerceOrderTableFDSView extends BaseTableFDSView {
 		).add(
 			"purchaseOrderNumber", "purchase-order-number"
 		).add(
-			"date", "order-date"
+			"date", "order-date",
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setContentRenderer("dateTime");
+				fdsTableSchemaField.setSortable(true);
+			}
 		).add(
 			"accountName", "account"
 		).add(

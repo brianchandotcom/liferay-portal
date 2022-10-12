@@ -1135,15 +1135,12 @@ definition {
 
 	@priority = "4"
 	test ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole {
-		Role.openRolesAdmin();
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_REPOSITORY",
+			resourceName = "com.liferay.document.library",
+			roleTitle = "Site Member");
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX",
-			permissionDefinitionValue = "Add Repository",
-			permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA",
-			permissionNavigationValue = "Documents and Media",
-			roleTitle = "Site Member",
-			roleType = "Site");
+		Role.openRolesAdmin();
 
 		AssertTextNotPresent(value1 = "action.ADD_REPOSITORY");
 

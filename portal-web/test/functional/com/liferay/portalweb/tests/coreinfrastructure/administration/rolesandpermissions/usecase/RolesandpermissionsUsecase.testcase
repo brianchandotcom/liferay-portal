@@ -1142,6 +1142,12 @@ definition {
 
 		Role.openRolesAdmin();
 
+		RoleNavigator.gotoDefineRolePermissions(
+			permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA",
+			portlet = "Documents and Media",
+			roleTitle = "Site Member",
+			roleType = "Site");
+
 		AssertTextNotPresent(value1 = "action.ADD_REPOSITORY");
 
 		Role.openRolesAdmin();

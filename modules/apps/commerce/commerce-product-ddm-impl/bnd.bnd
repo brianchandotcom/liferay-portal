@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Commerce Product DDM Implementation
 Bundle-SymbolicName: com.liferay.commerce.product.ddm.impl
 Bundle-Version: 4.0.16
-Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

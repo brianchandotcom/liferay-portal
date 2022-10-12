@@ -854,7 +854,7 @@ public class StructuredContent implements Serializable {
 	@GraphQLField(
 		description = "The ID of the folder where structured content is stored."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long structuredContentFolderId;
 
 	@Schema(

@@ -99,9 +99,11 @@ definition {
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 		if ((IsElementNotPresent(key_menuItem = "${previewItem}", locator1 = "MenuItem#ANY_MENU_ITEM")) && (IsElementPresent(key_text = "More", locator1 = "Button#ANY"))) {
-			AssertElementPresent(
-				key_caption = "${caption}",
-				locator1 = "Dropdown#CAPTION");
+			if (isSet(caption)) {
+				AssertElementPresent(
+					key_caption = "${caption}",
+					locator1 = "Dropdown#CAPTION");
+			}
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 

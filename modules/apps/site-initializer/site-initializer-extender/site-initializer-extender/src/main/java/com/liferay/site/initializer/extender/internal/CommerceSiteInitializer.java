@@ -37,7 +37,6 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -836,9 +835,6 @@ public class CommerceSiteInitializer {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
-	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

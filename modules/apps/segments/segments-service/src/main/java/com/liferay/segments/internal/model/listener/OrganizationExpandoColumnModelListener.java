@@ -49,7 +49,6 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.segments.internal.odata.entity.OrganizationEntityModel;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -347,10 +346,6 @@ public class OrganizationExpandoColumnModelListener
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 	private Map<Long, EntityField> _organizationEntityFields = new HashMap<>();
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
 	private ServiceRegistration<EntityModel> _serviceRegistration;
 
 }

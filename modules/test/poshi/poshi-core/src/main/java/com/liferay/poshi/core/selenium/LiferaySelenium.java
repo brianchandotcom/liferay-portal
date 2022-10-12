@@ -494,8 +494,6 @@ public interface LiferaySelenium {
 
 	public void typeAlert(String value);
 
-	public void typeAlloyEditor(String locator, String value);
-
 	public void typeCKEditor(String locator, String value);
 
 	public void typeCodeMirrorEditor(String locator, String value)

@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true,
-	service = RelatedInfoItemCollectionProvider.class
-)
+@Component(immediate = true, service = RelatedInfoItemCollectionProvider.class)
 public class CPAttachmentFileEntriesRelatedInfoItemCollectionProvider
 	implements RelatedInfoItemCollectionProvider
 		<CPDefinition, CPAttachmentFileEntry> {

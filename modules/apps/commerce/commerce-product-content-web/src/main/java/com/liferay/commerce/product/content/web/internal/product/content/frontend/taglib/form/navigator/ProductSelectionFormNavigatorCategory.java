@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, property = "form.navigator.category.order:Integer=30",
+	property = "form.navigator.category.order:Integer=30",
 	service = FormNavigatorCategory.class
 )
 public class ProductSelectionFormNavigatorCategory

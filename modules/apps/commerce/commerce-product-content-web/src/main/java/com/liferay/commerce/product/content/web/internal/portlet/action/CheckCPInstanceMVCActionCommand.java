@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_CONTENT_WEB,
 		"mvc.command.name=/cp_content_web/check_cp_instance"

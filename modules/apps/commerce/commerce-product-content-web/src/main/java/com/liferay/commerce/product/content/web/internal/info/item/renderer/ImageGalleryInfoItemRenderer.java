@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false,
 	service = {ImageGalleryInfoItemRenderer.class, InfoItemRenderer.class}
 )
 public class ImageGalleryInfoItemRenderer

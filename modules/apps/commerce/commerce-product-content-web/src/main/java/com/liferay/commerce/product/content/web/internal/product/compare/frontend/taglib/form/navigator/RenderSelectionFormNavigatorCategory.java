@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, property = "form.navigator.category.order:Integer=100",
+	property = "form.navigator.category.order:Integer=100",
 	service = FormNavigatorCategory.class
 )
 public class RenderSelectionFormNavigatorCategory

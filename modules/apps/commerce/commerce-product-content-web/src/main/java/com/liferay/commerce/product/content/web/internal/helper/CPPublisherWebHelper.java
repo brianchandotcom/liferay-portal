@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = CPPublisherWebHelper.class)
+@Component(service = CPPublisherWebHelper.class)
 public class CPPublisherWebHelper {
 
 	public List<CPCatalogEntry> getCPCatalogEntries(

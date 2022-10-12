@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Alec Sloan
  */
-@Component(enabled = false, service = InfoItemCapabilitiesProvider.class)
+@Component(service = InfoItemCapabilitiesProvider.class)
 public class CPDefinitionInfoItemCapabilitiesProvider
 	implements InfoItemCapabilitiesProvider<CPDefinition> {
 

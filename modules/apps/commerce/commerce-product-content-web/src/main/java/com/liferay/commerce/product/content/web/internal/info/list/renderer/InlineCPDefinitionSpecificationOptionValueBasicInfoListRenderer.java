@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, immediate = true, service = InfoListRenderer.class)
+@Component(immediate = true, service = InfoListRenderer.class)
 public class InlineCPDefinitionSpecificationOptionValueBasicInfoListRenderer
 	extends BaseCPDefinitionSpecificationOptionValueBasicInfoListRenderer
 	implements InlineBasicInfoListRenderer

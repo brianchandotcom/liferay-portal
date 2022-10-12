@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false, immediate = true,
-	property = Constants.SERVICE_RANKING + ":Integer=10",
+	immediate = true, property = Constants.SERVICE_RANKING + ":Integer=10",
 	service = InfoItemDetailsProvider.class
 )
 public class CPDefinitionInfoItemDetailsProvider

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.product.content.list.renderer.key=" + CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB,
 		"commerce.product.content.list.renderer.order=" + Integer.MIN_VALUE,

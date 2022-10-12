@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  * @author Ivica Cardic
  */
-@Component(enabled = false, service = FriendlyURLResolver.class)
+@Component(service = FriendlyURLResolver.class)
 public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 

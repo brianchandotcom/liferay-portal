@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, property = "form.navigator.entry.order:Integer=200",
+	property = "form.navigator.entry.order:Integer=200",
 	service = FormNavigatorEntry.class
 )
 public class OrderingFormNavigatorEntry

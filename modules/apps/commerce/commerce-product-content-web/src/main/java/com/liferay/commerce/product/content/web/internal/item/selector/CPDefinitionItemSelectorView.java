@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	enabled = false, property = "item.selector.view.order:Integer=600",
+	property = "item.selector.view.order:Integer=600",
 	service = ItemSelectorView.class
 )
 public class CPDefinitionItemSelectorView

@@ -69,9 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true, service = CPCompareContentHelper.class
-)
+@Component(immediate = true, service = CPCompareContentHelper.class)
 public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 	@Override

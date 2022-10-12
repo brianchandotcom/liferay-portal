@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true,
-	service = InfoItemFieldValuesProvider.class
-)
+@Component(immediate = true, service = InfoItemFieldValuesProvider.class)
 public class CPDefinitionSpecificationOptionValueInfoItemFieldValuesProvider
 	implements InfoItemFieldValuesProvider
 		<CPDefinitionSpecificationOptionValue> {

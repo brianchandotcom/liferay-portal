@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false, property = "fragment.collection.key=COMMERCE",
+	property = "fragment.collection.key=COMMERCE",
 	service = FragmentCollectionContributor.class
 )
 public class CommerceFragmentCollectionContributor

@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CPContentListEntryRendererRegistry.class
-)
+@Component(immediate = true, service = CPContentListEntryRendererRegistry.class)
 public class CPContentListEntryRendererRegistryImpl
 	implements CPContentListEntryRendererRegistry {
 

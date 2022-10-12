@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = InfoItemPermissionProvider.class)
+@Component(service = InfoItemPermissionProvider.class)
 public class CPDefinitionSpecificationOptionValueInfoItemPermissionProvider
 	implements InfoItemPermissionProvider
 		<CPDefinitionSpecificationOptionValue> {

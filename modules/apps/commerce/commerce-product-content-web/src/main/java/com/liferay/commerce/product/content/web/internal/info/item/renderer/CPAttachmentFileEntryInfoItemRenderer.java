@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	service = {
 		CPAttachmentFileEntryInfoItemRenderer.class, InfoItemRenderer.class
 	}

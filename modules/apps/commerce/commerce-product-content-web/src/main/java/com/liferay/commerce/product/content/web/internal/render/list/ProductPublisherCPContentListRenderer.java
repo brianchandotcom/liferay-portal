@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.product.content.list.renderer.key=" + ProductPublisherCPContentListRenderer.KEY,
 		"commerce.product.content.list.renderer.order=" + Integer.MIN_VALUE,

@@ -244,9 +244,8 @@ public class DeleteAfterTestRunMethodTestRule extends MethodTestRule<Void> {
 						continue;
 					}
 
-					DataGuardTestRuleUtil.smartDelete(
-						persistedModelLocalService, fieldClass,
-						(PersistedModel)persistedModel);
+					persistedModelLocalService.deletePersistedModel(
+						persistedModel);
 				}
 			}
 			else if (Collection.class.isAssignableFrom(objectClass)) {
@@ -254,14 +253,12 @@ public class DeleteAfterTestRunMethodTestRule extends MethodTestRule<Void> {
 					(Collection<? extends PersistedModel>)object;
 
 				for (PersistedModel persistedModel : collection) {
-					DataGuardTestRuleUtil.smartDelete(
-						persistedModelLocalService, fieldClass,
-						(PersistedModel)persistedModel);
+					persistedModelLocalService.deletePersistedModel(
+						persistedModel);
 				}
 			}
 			else {
-				DataGuardTestRuleUtil.smartDelete(
-					persistedModelLocalService, fieldClass,
+				persistedModelLocalService.deletePersistedModel(
 					(PersistedModel)object);
 			}
 

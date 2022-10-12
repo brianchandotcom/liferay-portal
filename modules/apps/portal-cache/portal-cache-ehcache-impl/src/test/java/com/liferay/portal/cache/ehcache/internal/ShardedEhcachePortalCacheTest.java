@@ -97,7 +97,8 @@ public class ShardedEhcachePortalCacheTest {
 			}
 		);
 
-		_ehcachePortalCacheManager = new EhcachePortalCacheManager();
+		_ehcachePortalCacheManager = new EhcachePortalCacheManager() {
+		};
 
 		ReflectionTestUtil.setFieldValue(
 			_ehcachePortalCacheManager, "_cacheManager", _cacheManager);

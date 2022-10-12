@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.uad.display;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.uad.util.DDMUADUtil;
 import com.liferay.petra.string.StringBundler;
@@ -263,9 +262,6 @@ public class DDMFormInstanceRecordUADDisplay
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordUADDisplay.class);
-
-	@Reference
-	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	private final Map<Long, DDMFormInstanceRecordUADUserCache>
 		_ddmFormInstanceRecordUADUserCacheMap = new HashMap<>();

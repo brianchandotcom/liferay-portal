@@ -17,7 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -188,9 +187,6 @@ public class GetFragmentEntryLinkMVCResourceCommand
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
-
-	@Reference
-	private FragmentEntryService _fragmentEntryService;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

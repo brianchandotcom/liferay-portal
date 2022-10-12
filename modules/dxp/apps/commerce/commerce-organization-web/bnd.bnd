@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Commerce Organization Web
 Bundle-SymbolicName: com.liferay.commerce.organization.web
 Bundle-Version: 5.0.39
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
 Liferay-JS-Submodules-Bridge: commerce-organization-web
 Web-ContextPath: /commerce-organization-web

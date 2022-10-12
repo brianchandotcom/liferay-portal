@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.model.Organization",
 	service = ManagePortletProvider.class
 )

@@ -7,5 +7,4 @@ application:
 author: "Riccardo Ferrari"
 clientDir: "../headless-commerce-machine-learning-client/src/main/java"
 forcePredictableSchemaPropertyName: true
-liferayEnterpriseApp: true
 testDir: "../headless-commerce-machine-learning-test/src/testIntegration/java"

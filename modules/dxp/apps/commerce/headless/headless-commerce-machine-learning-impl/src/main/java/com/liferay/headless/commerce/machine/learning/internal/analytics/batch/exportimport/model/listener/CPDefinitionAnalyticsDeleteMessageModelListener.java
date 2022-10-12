@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class CPDefinitionAnalyticsDeleteMessageModelListener
 	extends BaseAnalyticsDXPEntityModelListener<CPDefinition> {
 }

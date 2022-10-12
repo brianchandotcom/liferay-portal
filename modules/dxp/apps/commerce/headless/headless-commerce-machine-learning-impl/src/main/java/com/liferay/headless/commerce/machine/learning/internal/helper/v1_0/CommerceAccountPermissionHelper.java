@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, service = CommerceAccountPermissionHelper.class)
+@Component(service = CommerceAccountPermissionHelper.class)
 public class CommerceAccountPermissionHelper {
 
 	public List<Long> filterCommerceAccountIds(List<Long> accountIds) {

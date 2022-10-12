@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false,
 	property = {
 		"dispatch.task.executor.name=" + AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor.KEY,
 		"dispatch.task.executor.type=" + AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor.KEY

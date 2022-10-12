@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false,
 	property = {
 		"dispatch.task.executor.name=" + AnalyticsUploadProductDispatchTaskExecutor.KEY,
 		"dispatch.task.executor.type=" + AnalyticsUploadProductDispatchTaskExecutor.KEY

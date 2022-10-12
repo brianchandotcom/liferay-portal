@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/account-category-forecast.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = AccountCategoryForecastResource.class

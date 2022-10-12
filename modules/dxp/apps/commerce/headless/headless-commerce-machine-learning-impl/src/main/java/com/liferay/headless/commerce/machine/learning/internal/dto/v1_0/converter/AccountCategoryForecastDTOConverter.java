@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	enabled = false,
 	property = "model.class.name=com.liferay.commerce.machine.learning.forecast.model.AssetCategoryCommerceMLForecast",
 	service = {AccountCategoryForecastDTOConverter.class, DTOConverter.class}
 )

@@ -60,7 +60,7 @@ FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = folderSearchFa
 						%>
 
 							<li class="facet-value">
-								<a class="<%= folderSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= folderSearchFacetTermDisplayContext.getFolderId() %>" href="javascript:void(0);">
+								<a class="<%= folderSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= folderSearchFacetTermDisplayContext.getFilterValue() %>" href="javascript:void(0);">
 									<%= HtmlUtil.escape(folderSearchFacetTermDisplayContext.getDisplayName()) %>
 
 									<c:if test="<%= folderSearchFacetTermDisplayContext.isFrequencyVisible() %>">

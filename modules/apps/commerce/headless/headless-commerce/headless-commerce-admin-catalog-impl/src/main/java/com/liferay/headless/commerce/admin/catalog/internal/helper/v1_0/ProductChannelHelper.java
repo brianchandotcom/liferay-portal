@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(
-	enabled = false, immediate = true, service = ProductChannelHelper.class
-)
+@Component(immediate = true, service = ProductChannelHelper.class)
 public class ProductChannelHelper {
 
 	public Page<ProductChannel> getProductChannelsPage(

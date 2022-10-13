@@ -8,5 +8,4 @@ author: "Zoltán Takács"
 clientDir: "../headless-commerce-admin-catalog-client/src/main/java"
 forcePredictableOperationId: false
 forcePredictableSchemaPropertyName: false
-liferayEnterpriseApp: true
 testDir: "../headless-commerce-admin-catalog-test/src/testIntegration/java"

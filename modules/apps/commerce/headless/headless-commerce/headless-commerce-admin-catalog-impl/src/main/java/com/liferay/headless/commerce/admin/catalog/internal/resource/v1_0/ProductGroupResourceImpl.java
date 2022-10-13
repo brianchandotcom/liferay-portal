@@ -55,7 +55,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/product-group.properties",
 	scope = ServiceScope.PROTOTYPE, service = ProductGroupResource.class
 )

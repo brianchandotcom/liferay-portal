@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, property = "dto.class.name=ProductShippingConfiguration",
+	property = "dto.class.name=ProductShippingConfiguration",
 	service = {
 		DTOConverter.class, ProductShippingConfigurationDTOConverter.class
 	}

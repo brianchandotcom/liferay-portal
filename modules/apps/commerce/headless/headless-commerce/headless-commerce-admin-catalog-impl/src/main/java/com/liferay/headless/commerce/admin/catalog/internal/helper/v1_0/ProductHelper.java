@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, immediate = true, service = ProductHelper.class)
+@Component(immediate = true, service = ProductHelper.class)
 public class ProductHelper {
 
 	public Page<Product> getProductsPage(

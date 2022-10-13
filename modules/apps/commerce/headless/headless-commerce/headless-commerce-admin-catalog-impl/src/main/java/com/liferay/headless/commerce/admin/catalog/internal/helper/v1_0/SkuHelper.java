@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, immediate = true, service = SkuHelper.class)
+@Component(immediate = true, service = SkuHelper.class)
 public class SkuHelper {
 
 	public Page<Sku> getSkusPage(long id, Locale locale, Pagination pagination)

@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Igor Beslic
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/option-category.properties",
 	scope = ServiceScope.PROTOTYPE, service = OptionCategoryResource.class
 )

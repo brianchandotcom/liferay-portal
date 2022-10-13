@@ -14,9 +14,6 @@
 
 package com.liferay.object.rest.deployer;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
-
 /**
  * @author Luis Miguel Barcos
  */
@@ -26,20 +23,6 @@ public class ObjectDefinitionDeployerUtil {
 		long companyId, String restContextPath) {
 
 		return restContextPath + String.valueOf(companyId);
-	}
-
-	public static String createOSGIJAXRsName(
-		long companyId, String objectDefinitionName) {
-
-		return createOSGIJAXRsName(
-			StringPool.BLANK, companyId, objectDefinitionName);
-	}
-
-	public static String createOSGIJAXRsName(
-		String className, long companyId, String objectDefinitionName) {
-
-		return StringBundler.concat(
-			objectDefinitionName, className, String.valueOf(companyId));
 	}
 
 }

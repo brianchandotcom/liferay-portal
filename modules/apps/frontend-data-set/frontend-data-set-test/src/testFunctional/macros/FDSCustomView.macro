@@ -34,106 +34,107 @@ definition {
 			value1 = "${key_itemName}");
 	}
 
+	macro assertCustomView {
+		AssertTextEquals(
+			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+			value1 = "${key_nameCustomView}");
+	}
 
+	macro assertFilterSummaryLabel {
+		AssertElementPresent(
+			key_filter = "${key_filter}",
+			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+	}
 
-    macro createNewView {
-        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+	macro changeCustomView {
+		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-        Click(
-            locator1 = "FrontendDataSet#SELECT_OPTION",
-            key_optionName = "Save View As");
-        
-        Type(
-            locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
-            value1 = "${key_nameView}");
+		Click(
+			key_optionName = "${key_optionName}",
+			locator1 = "FrontendDataSet#SELECT_OPTION");
+	}
 
-        Click(
-            key_name = "Save",
-            locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-    }
+	macro compareValue {
+		var dataSetId1 = FDSCustomView.getIdByPosition(
+			column = "${key_column}",
+			index = "${key_index1}");
+		var dataSetId2 = FDSCustomView.getIdByPosition(
+			column = "${key_column}",
+			index = "${key_index2}");
 
-    macro selectColumn {
-        Click(
-            ariaLabel = "Open Fields Menu",
+		TestUtils.isGreaterThan(
+			actual = "${dataSetId1}",
+			expected = "${dataSetId2}");
+	}
+
+	macro createNewView {
+		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+		Click(
+			key_optionName = "Save View As",
+			locator1 = "FrontendDataSet#SELECT_OPTION");
+
+		Type(
+			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
+			value1 = "${key_nameView}");
+
+		Click(
+			key_name = "Save",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+	}
+
+	macro getIdByPosition {
+		var key_column = "${column}";
+		var key_index = "${index}";
+		var dataSetId = selenium.getText("FrontendDataSet#TABLE_CELL");
+
+		return "${dataSetId}";
+	}
+
+	macro saveCustomView {
+		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+		Click(
+			key_optionName = "Save View",
+			locator1 = "FrontendDataSet#SELECT_OPTION");
+	}
+
+	macro saveViewAs {
+		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+		Click(
+			key_optionName = "Save View As",
+			locator1 = "FrontendDataSet#SELECT_OPTION");
+
+		Type(
+			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
+			value1 = "${key_nameView}");
+
+		Click(
+			key_name = "Save",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+	}
+
+	macro selectColumn {
+		Click(
+			ariaLabel = "Open Fields Menu",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Click(
-            locator1 = "FrontendDataSet#SELECT_OPTION",
-			key_optionName = "${key_optionName}");	
-    }
+			key_optionName = "${key_optionName}",
+			locator1 = "FrontendDataSet#SELECT_OPTION");
+	}
 
-    macro getIdByPosition {
-        var key_column = "${column}";
-        var key_index = "${index}";
-
-        var dataSetId = selenium.getText("FrontendDataSet#TABLE_CELL");
-
-        return "${dataSetId}";
-    }
-
-    macro compareValue {
-        var dataSetId1 = FDSCustomView.getIdByPosition(index = "${key_index1}", column = "${key_column}");
-
-		var dataSetId2 = FDSCustomView.getIdByPosition(index = "${key_index2}", column = "${key_column}");
-
-		TestUtils.isGreaterThan(
-            actual = "${dataSetId1}",
-            expected = "${dataSetId2}");
-    }
-
-    macro changeCustomView {
-        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-
-		Click(
-			locator1 = "FrontendDataSet#SELECT_OPTION",
-			key_optionName = "${key_optionName}");
-    }
-
-    macro saveViewAs {
-        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-
-        Click(
-            locator1 = "FrontendDataSet#SELECT_OPTION",
-            key_optionName = "Save View As");
-
-        Type(
-            locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
-            value1 = "${key_nameView}");
-
-        Click(
-            key_name = "Save",
-            locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-    }
-
-    macro saveCustomView {
-        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-
-        Click(
-            locator1 = "FrontendDataSet#SELECT_OPTION",
-            key_optionName = "Save View");
-    }
-
-    macro assertCustomView {
-        AssertTextEquals(
-            locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-            value1 = "${key_nameCustomView}");
-    }
-
-    macro viewColumn {
-        AssertElementPresent(
+	macro viewColumn {
+		AssertElementPresent(
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
-    }
+	}
 
-    macro viewNoColumn {
-        AssertElementNotPresent(
+	macro viewNoColumn {
+		AssertElementNotPresent(
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
-    }
+	}
 
-    macro assertFilterSummaryLabel {
-        AssertElementPresent(
-			key_filter = "${key_filter}",
-			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
-    }
 }

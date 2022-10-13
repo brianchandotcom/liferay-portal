@@ -13,22 +13,22 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page");
 
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page",
-				widgetName = "Frontend Data Set Sample");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Frontend Data Set Test Page");
 
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Frontend Data Set Test Page",
-				layoutTemplate = "1 Column");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Frontend Data Set Test Page",
+			widgetName = "Frontend Data Set Sample");
 
-			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Frontend Data Set Test Page",
+			layoutTemplate = "1 Column");
 
+		Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 	}
 
 	tearDown {
@@ -106,15 +106,18 @@ definition {
 		}
 
 		task ("When Make some changes to dataset display (filter, sorting, page size or visible columns if data display in table)") {
-			FDSFilters.editFilters(key_filter = "Color", key_disableFilters = "Blue,Green,Yellow", key_enableFilters = "Red");
+			FDSFilters.editFilters(
+				key_disableFilters = "Blue,Green,Yellow",
+				key_enableFilters = "Red",
+				key_filter = "Color");
 
 			Click(
-				locator1 = "Icon#ANY",
-				key_text = "order-arrow-down");
+				key_text = "order-arrow-down",
+				locator1 = "Icon#ANY");
 
 			Click(
-				locator1 = "Icon#ANY",
-				key_text = "order-arrow-down");
+				key_text = "order-arrow-down",
+				locator1 = "Icon#ANY");
 
 			FDSCustomView.selectColumn(key_optionName = "Description");
 
@@ -142,7 +145,11 @@ definition {
 
 			FDSCustomView.viewNoColumn(key_field = "Description");
 
-			FDSCustomView.compareValue(key_index1 = "1", key_index2 = "2", key_column = "2");
+			FDSCustomView.compareValue(
+				key_column = "2",
+				key_index1 = "1",
+				key_index2 = "2");
 		}
 	}
+
 }

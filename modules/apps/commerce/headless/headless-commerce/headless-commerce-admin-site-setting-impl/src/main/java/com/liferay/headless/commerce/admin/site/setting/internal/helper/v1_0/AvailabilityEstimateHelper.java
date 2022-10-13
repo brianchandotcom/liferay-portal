@@ -39,10 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
-@Component(
-	enabled = false, immediate = true,
-	service = AvailabilityEstimateHelper.class
-)
+@Component(immediate = true, service = AvailabilityEstimateHelper.class)
 public class AvailabilityEstimateHelper {
 
 	public AvailabilityEstimate addOrUpdateAvailabilityEstimate(

@@ -56,7 +56,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/measurement-unit.properties",
 	scope = ServiceScope.PROTOTYPE, service = MeasurementUnitResource.class
 )

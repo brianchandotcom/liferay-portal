@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Zoltán Takács
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/availability-estimate.properties",
 	scope = ServiceScope.PROTOTYPE, service = AvailabilityEstimateResource.class
 )

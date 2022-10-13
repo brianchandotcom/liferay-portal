@@ -24,7 +24,7 @@ import {
 	useIsMounted,
 } from '@liferay/frontend-js-react-web';
 import {navigate, openToast} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
@@ -41,6 +41,24 @@ import updateExperiencePriority from '../thunks/updateExperiencePriority';
 import {useDebounceCallback} from '../utils';
 import ExperienceModal from './ExperienceModal';
 import ExperiencesList from './ExperiencesList';
+
+const useOnClickOutside = (ref, handler) => {
+	useEffect(() => {
+		const listener = (event) => {
+			if (!ref.current || ref.current.contains(event.target)) {
+				return;
+			}
+			handler(event);
+		};
+		document.addEventListener('mousedown', listener);
+		document.addEventListener('touchstart', listener);
+
+		return () => {
+			document.removeEventListener('mousedown', listener);
+			document.removeEventListener('touchstart', listener);
+		};
+	}, [ref, handler]);
+};
 
 /**
  * It produces an object with a target and subtarget keys indicating what experiences
@@ -106,6 +124,7 @@ const ExperienceSelector = ({
 		onClose: () => {
 			setOpenModal(false);
 			setEditingExperience({});
+			debouncedSetOpen(true);
 		},
 	});
 
@@ -121,10 +140,11 @@ const ExperienceSelector = ({
 
 	const experienceSelectorContentId = useId();
 
-	const handleDropdownButtonClick = () => debouncedSetOpen(!open);
-	const handleDropdownButtonBlur = () => debouncedSetOpen(false);
-	const handleDropdownBlur = () => debouncedSetOpen(false);
-	const handleDropdownFocus = () => debouncedSetOpen(true);
+	const memoizedDebouncedSetOpen = useCallback(
+		() => debouncedSetOpen(false),
+		[debouncedSetOpen]
+	);
+	useOnClickOutside(selectorRef, memoizedDebouncedSetOpen);
 
 	const handleNewSegmentClick = ({
 		experienceId,
@@ -270,12 +290,16 @@ const ExperienceSelector = ({
 		}
 	};
 
-	const handleOnNewExperiecneClick = () => setOpenModal(true);
+	const handleOnNewExperienceClick = () => {
+		setOpenModal(true);
+		debouncedSetOpen(false);
+	};
 
 	const handleEditExperienceClick = (experienceData) => {
 		const {name, segmentsEntryId, segmentsExperienceId} = experienceData;
 
 		setOpenModal(true);
+		debouncedSetOpen(false);
 
 		setEditingExperience({
 			name,
@@ -363,8 +387,7 @@ const ExperienceSelector = ({
 				disabled={!canUpdateExperiences}
 				displayType="secondary"
 				id={selectId}
-				onBlur={handleDropdownButtonBlur}
-				onClick={handleDropdownButtonClick}
+				onClick={() => debouncedSetOpen(!open)}
 				onKeyDown={(event) => {
 					if (event.key === 'Tab' && !event.shiftKey && open) {
 						event.preventDefault();
@@ -400,8 +423,6 @@ const ExperienceSelector = ({
 					<div
 						className="dropdown-menu p-4 page-editor__toolbar-experience__dropdown-menu toggled"
 						id={experienceSelectorContentId}
-						onBlur={handleDropdownBlur}
-						onFocus={handleDropdownFocus}
 						onKeyDown={(event) => {
 							if (event.key === 'Escape') {
 								buttonRef.current?.focus();
@@ -450,7 +471,7 @@ const ExperienceSelector = ({
 					>
 						<ExperiencesSelectorHeader
 							canCreateExperiences={canUpdateExperiences}
-							onNewExperience={handleOnNewExperiecneClick}
+							onNewExperience={handleOnNewExperienceClick}
 							showEmptyStateMessage={experiences.length <= 1}
 						/>
 

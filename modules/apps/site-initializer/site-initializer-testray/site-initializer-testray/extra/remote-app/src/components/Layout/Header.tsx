@@ -84,7 +84,7 @@ const Header = () => {
 					)}
 				</div>
 
-				<BreadcrumbFinder />
+				<BreadcrumbFinder heading={heading} />
 
 				<div className="d-flex flex-row justify-content-between w-100">
 					<div className="d-flex flex-1 flex-wrap">

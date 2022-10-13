@@ -13,12 +13,19 @@
  */
 
 import classNames from 'classnames';
-import {Fragment} from 'react';
+import {Fragment, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 
+import {HeaderTitle} from '../../context/HeaderContext';
+import {defaultEntities} from '../../hooks/useBreadcrumb';
 import i18n from '../../i18n';
 import useBreadcrumbFinder from './useBreadcrumbFinder';
 
-const BreadcrumbFinder = () => {
+type BreadcrumbFinderProps = {
+	heading: HeaderTitle[];
+};
+
+const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 	const {
 		active,
 		breadCrumb,
@@ -27,10 +34,40 @@ const BreadcrumbFinder = () => {
 		items,
 		onBackscape,
 		onClickRow,
+		onInputKeyPress,
 		search,
+		setActive,
+		setBreadCrumb,
 		setSearch,
 		tabDisabled,
+		tabRefs,
+		ulRef,
 	} = useBreadcrumbFinder();
+
+	const params = useParams();
+
+	useEffect(() => {
+		if (heading.length) {
+			const {buildId, caseResultId, projectId, routineId} = params;
+
+			const projectFlowIds = [
+				projectId,
+				routineId,
+				buildId,
+				caseResultId,
+			];
+
+			if (projectId) {
+				setBreadCrumb(
+					heading.map(({title}, index) => ({
+						entity: defaultEntities[index],
+						label: title,
+						value: Number(projectFlowIds[index] ?? 0),
+					}))
+				);
+			}
+		}
+	}, [heading, params, setBreadCrumb]);
 
 	if (!active) {
 		return null;
@@ -41,14 +78,17 @@ const BreadcrumbFinder = () => {
 			className="breadcrumb-finder-container breadcrumb-finder-navigator"
 			id="breadcrumbFinderContainer"
 		>
-			<div className="breadcrumb-finder-overlay"></div>
+			<div
+				className="breadcrumb-finder-overlay overlay"
+				onClick={() => setActive((previus) => !previus)}
+			></div>
 
 			<div
 				className="breadcrumb-finder-content"
 				id="breadcrumbFinderContent"
 			>
-				<div className="d-flex flex-column w-100">
-					<div>
+				<div className="d-flex flex-column flex-nowrap w-100">
+					<div className="d-flex flex-nowrap flex-row w-100">
 						<span
 							className="selected-container"
 							id="selectedContainer"
@@ -70,9 +110,9 @@ const BreadcrumbFinder = () => {
 							))}
 						</span>
 
-						<div className="breadcrumb-input-edit-wrapper">
+						<div className="breadcrumb-input-edit-wrapper d-flex flex-nowrap flex-row w-100">
 							<input
-								className="breadcrumb-input-edit"
+								className="breadcrumb-input-edit d-flex w-100"
 								name="breadcrumbInputEdit"
 								onChange={({target: {value}}) =>
 									setSearch(value)
@@ -81,6 +121,7 @@ const BreadcrumbFinder = () => {
 									if (key === 'Backspace' && search === '') {
 										onBackscape();
 									}
+									onInputKeyPress(key);
 								}}
 								ref={inputRef}
 								tabIndex={-1}
@@ -90,17 +131,19 @@ const BreadcrumbFinder = () => {
 						</div>
 					</div>
 
-					<hr></hr>
+					<hr />
 
-					<ul className="list-unstyled">
+					<ul className="list-unstyled" ref={ulRef}>
 						{items.map((item, itemIndex) => (
 							<li
 								className={classNames(
 									'breadcrumb-finder-item cursor-pointer',
 									{active: itemIndex === index}
 								)}
+								id={item.label}
 								key={itemIndex}
 								onClick={() => onClickRow(itemIndex)}
+								ref={tabRefs[itemIndex]}
 							>
 								<div
 									className={classNames(

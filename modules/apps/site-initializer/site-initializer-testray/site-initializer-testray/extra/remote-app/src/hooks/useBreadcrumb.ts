@@ -24,12 +24,6 @@ import {searchUtil} from '../util/search';
 import useDebounce from './useDebounce';
 import {useFetch} from './useFetch';
 
-type Resource =
-	| 'TestrayProject'
-	| 'TestrayRoutine'
-	| 'TestrayBuild'
-	| 'TestrayCaseResult';
-
 export type Entity = {
 	entity: string;
 	getPage?: (ids: number[]) => string;
@@ -39,7 +33,7 @@ export type Entity = {
 };
 
 type BreadCrumb = {
-	entity: Resource;
+	entity: Entity;
 	label: string;
 	value: number;
 };
@@ -67,7 +61,7 @@ const useBreadcrumb = (entities: Entity[]) => {
 	const [breadCrumb, setBreadCrumb] = useState<BreadCrumb[]>([]);
 	const [search, setSearch] = useState('');
 
-	const debouncedSearch = useDebounce(search, 1000);
+	const debouncedSearch = useDebounce(search, 500);
 
 	const currentEntity = entities[breadCrumb.length];
 	const ids = breadCrumb.map(({value}) => value);
@@ -108,6 +102,7 @@ const useBreadcrumb = (entities: Entity[]) => {
 
 	return {
 		breadCrumb,
+		currentEntity,
 		entities,
 		inputRef,
 		items,
@@ -122,6 +117,7 @@ const useBreadcrumb = (entities: Entity[]) => {
 const defaultEntities: Entity[] = [
 	{
 		entity: 'projects',
+		getPage: ([projectId]) => `/project/${projectId}/routines`,
 		getResource: (_, search) =>
 			`/projects?filter=${searchUtil.contains(
 				'name',
@@ -131,7 +127,8 @@ const defaultEntities: Entity[] = [
 	},
 	{
 		entity: 'routines',
-		getPage: ([projectId]) => `/project/${projectId}/routines`,
+		getPage: ([projectId, routineId]) =>
+			`/project/${projectId}/routines/${routineId}`,
 		getResource: ([projectId], search) =>
 			`/routines?filter=${searchUtil.eq(
 				'projectId',
@@ -141,6 +138,8 @@ const defaultEntities: Entity[] = [
 	},
 	{
 		entity: 'builds',
+		getPage: ([projectId, routineId, buildId]) =>
+			`/project/${projectId}/routines/${routineId}/build/${buildId}`,
 		getResource: ([, routineId], search) =>
 			`/builds?filter=${searchUtil.eq(
 				'routineId',
@@ -150,11 +149,13 @@ const defaultEntities: Entity[] = [
 	},
 	{
 		entity: 'caseresults',
+		getPage: ([projectId, routineId, buildId, caseResultsId]) =>
+			`/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultsId}`,
 		getResource: ([, , buildId]) =>
 			`/caseresults?filter=${searchUtil.eq(
 				'buildId',
 				buildId
-			)}&nestedFields=case&pageSize=1000`,
+			)}&nestedFields=case,r_runToCaseResult_c_runId&pageSize=1000`,
 		name: i18n.translate('case-result'),
 		transformer: (response: APIResponse<TestrayCaseResult>) => {
 			const transformedResponse = testrayCaseResultRest.transformDataFromList(
@@ -166,6 +167,8 @@ const defaultEntities: Entity[] = [
 				items: transformedResponse.items.map((caseResult) => ({
 					...caseResult,
 					label: caseResult.case?.name,
+					run: caseResult.r_runToCaseResult_c_run?.id,
+					value: caseResult.id,
 				})),
 			};
 		},

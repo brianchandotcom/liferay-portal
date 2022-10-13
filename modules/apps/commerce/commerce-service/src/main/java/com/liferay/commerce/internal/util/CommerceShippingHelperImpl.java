@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true, service = CommerceShippingHelper.class
-)
+@Component(immediate = true, service = CommerceShippingHelper.class)
 public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 
 	@Override

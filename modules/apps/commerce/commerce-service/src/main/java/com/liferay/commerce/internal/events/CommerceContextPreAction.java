@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, property = "key=servlet.service.events.pre",
-	service = LifecycleAction.class
+	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class CommerceContextPreAction extends Action {
 

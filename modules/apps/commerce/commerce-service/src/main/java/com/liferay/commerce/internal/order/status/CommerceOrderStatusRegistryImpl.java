@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alec Sloan
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommerceOrderStatusRegistry.class
-)
+@Component(immediate = true, service = CommerceOrderStatusRegistry.class)
 public class CommerceOrderStatusRegistryImpl
 	implements CommerceOrderStatusRegistry {
 

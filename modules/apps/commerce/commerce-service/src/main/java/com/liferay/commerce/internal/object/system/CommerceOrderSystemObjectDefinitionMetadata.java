@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(
-	enabled = false, immediate = true,
-	service = SystemObjectDefinitionMetadata.class
-)
+@Component(immediate = true, service = SystemObjectDefinitionMetadata.class)
 public class CommerceOrderSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 

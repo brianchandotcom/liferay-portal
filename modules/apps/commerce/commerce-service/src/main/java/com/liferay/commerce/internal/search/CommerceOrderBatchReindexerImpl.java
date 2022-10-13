@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Danny Situ
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommerceOrderBatchReindexer.class
-)
+@Component(immediate = true, service = CommerceOrderBatchReindexer.class)
 public class CommerceOrderBatchReindexerImpl
 	implements CommerceOrderBatchReindexer {
 

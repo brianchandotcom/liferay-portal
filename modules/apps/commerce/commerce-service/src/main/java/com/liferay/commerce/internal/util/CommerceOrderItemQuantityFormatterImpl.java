@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfiguration",
-	enabled = false, immediate = true,
-	service = CommerceOrderItemQuantityFormatter.class
+	immediate = true, service = CommerceOrderItemQuantityFormatter.class
 )
 public class CommerceOrderItemQuantityFormatterImpl
 	implements CommerceOrderItemQuantityFormatter {

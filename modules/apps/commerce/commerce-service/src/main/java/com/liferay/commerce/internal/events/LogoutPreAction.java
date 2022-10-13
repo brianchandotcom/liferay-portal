@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true, property = "key=logout.events.pre",
+	immediate = true, property = "key=logout.events.pre",
 	service = LifecycleAction.class
 )
 public class LogoutPreAction extends Action {

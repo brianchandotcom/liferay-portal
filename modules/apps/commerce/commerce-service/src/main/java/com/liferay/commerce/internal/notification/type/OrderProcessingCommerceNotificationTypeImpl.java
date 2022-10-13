@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_PROCESSING,
 		"commerce.notification.type.order:Integer=40"

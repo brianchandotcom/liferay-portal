@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	property = "configuration.pid=com.liferay.account.internal.configuration.AccountEntryGroupConfiguration",
 	service = ConfigurationVisibilityController.class
 )

@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	property = "model.class.name=com.liferay.commerce.model.CommerceOrderType",
 	service = WorkflowHandler.class
 )

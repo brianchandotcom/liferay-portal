@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"json.web.service.context.name=commerce",
 		"json.web.service.context.path=CommerceCountryManager"

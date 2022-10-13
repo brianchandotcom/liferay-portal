@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.STOCK_QUANTITY_NAME,
 	service = CPContentContributor.class
 )

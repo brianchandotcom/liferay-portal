@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false,
 	property = "resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_AVAILABILITY,
 	service = PortletResourcePermission.class
 )

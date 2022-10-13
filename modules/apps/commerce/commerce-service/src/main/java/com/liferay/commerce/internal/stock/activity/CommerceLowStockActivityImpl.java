@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.low.stock.activity.key=" + CommerceLowStockActivityImpl.KEY,
 		"commerce.low.stock.activity.priority:Integer=10"

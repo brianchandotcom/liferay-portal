@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(enabled = false, service = ConfigurationPidMapping.class)
+@Component(service = ConfigurationPidMapping.class)
 public class CommerceShippingGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

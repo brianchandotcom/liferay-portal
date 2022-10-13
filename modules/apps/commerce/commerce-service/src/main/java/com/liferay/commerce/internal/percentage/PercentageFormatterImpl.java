@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alec Sloan
  */
-@Component(
-	enabled = false, immediate = true, service = PercentageFormatter.class
-)
+@Component(immediate = true, service = PercentageFormatter.class)
 public class PercentageFormatterImpl implements PercentageFormatter {
 
 	@Override

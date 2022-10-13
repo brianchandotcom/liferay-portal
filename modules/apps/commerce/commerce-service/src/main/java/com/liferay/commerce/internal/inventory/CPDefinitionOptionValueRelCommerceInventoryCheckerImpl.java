@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Beslic
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.inventory.checker.target=CPDefinitionOptionValueRel",
 	service = CommerceInventoryChecker.class
 )

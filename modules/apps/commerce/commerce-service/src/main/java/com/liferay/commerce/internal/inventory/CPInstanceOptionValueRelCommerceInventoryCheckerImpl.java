@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.inventory.checker.target=CPInstanceOptionValueRel",
 	service = CommerceInventoryChecker.class
 )

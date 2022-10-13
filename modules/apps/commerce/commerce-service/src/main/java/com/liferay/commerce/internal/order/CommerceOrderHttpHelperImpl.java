@@ -87,9 +87,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Andrea Di Giorgi
  */
-@Component(
-	enabled = false, immediate = true, service = CommerceOrderHttpHelper.class
-)
+@Component(immediate = true, service = CommerceOrderHttpHelper.class)
 public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	@Override

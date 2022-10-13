@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Danny Situ
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(immediate = true, service = {})
 public class CommerceOrderSearchRegistrar {
 
 	@Activate

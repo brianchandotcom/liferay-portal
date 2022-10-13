@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(immediate = true, service = ModelListener.class)
 public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 
 	@Override

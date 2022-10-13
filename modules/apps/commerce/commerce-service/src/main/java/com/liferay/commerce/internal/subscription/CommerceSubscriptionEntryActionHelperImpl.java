@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
-	service = CommerceSubscriptionEntryActionHelper.class
+	immediate = true, service = CommerceSubscriptionEntryActionHelper.class
 )
 public class CommerceSubscriptionEntryActionHelperImpl
 	implements CommerceSubscriptionEntryActionHelper {

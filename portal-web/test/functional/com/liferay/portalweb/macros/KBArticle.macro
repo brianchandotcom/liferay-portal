@@ -966,6 +966,8 @@ definition {
 			if (IsElementNotPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
 			}
+
+			WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
 		}
 
 		if ("${section}" == "Templates") {
@@ -976,6 +978,8 @@ definition {
 			if (IsElementNotPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
 			}
+
+			WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
 		}
 
 		if ("${section}" == "Suggestions") {
@@ -987,8 +991,6 @@ definition {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
 			}
 		}
-
-		WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
 	}
 
 	macro openToAddKBArticle {

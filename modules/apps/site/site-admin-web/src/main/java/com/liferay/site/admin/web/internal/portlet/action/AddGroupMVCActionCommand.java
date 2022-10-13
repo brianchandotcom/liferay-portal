@@ -305,6 +305,10 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
+		typeSettingsUnicodeProperties.setProperty(
+			"siteInitializerKey",
+			ParamUtil.getString(actionRequest, "siteInitializerKey"));
+
 		boolean trashEnabled = ParamUtil.getBoolean(
 			actionRequest, "trashEnabled",
 			GetterUtil.getBoolean(

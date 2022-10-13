@@ -50,7 +50,7 @@ public class MultiVMEhcachePortalCacheManager
 		this.bundleContext = bundleContext;
 
 		setClusterAware(true);
-		setConfigFile(props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
+		setConfigFile(_props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setPortalCacheManagerName(PortalCacheManagerNames.MULTI_VM);
 
@@ -73,6 +73,11 @@ public class MultiVMEhcachePortalCacheManager
 		return _multiVMEhcachePortalCacheManagerConfigurator;
 	}
 
+	@Override
+	protected Props getProps() {
+		return _props;
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortalCacheListenerFactory(
 		PortalCacheListenerFactory portalCacheListenerFactory) {
@@ -89,11 +94,6 @@ public class MultiVMEhcachePortalCacheManager
 			portalCacheManagerListenerFactory;
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
-	}
-
 	private static final String _DEFAULT_CONFIG_FILE_NAME =
 		"/ehcache/liferay-multi-vm.xml";
 
@@ -103,5 +103,8 @@ public class MultiVMEhcachePortalCacheManager
 	@Reference
 	private MultiVMEhcachePortalCacheManagerConfigurator
 		_multiVMEhcachePortalCacheManagerConfigurator;
+
+	@Reference
+	private volatile Props _props;
 
 }

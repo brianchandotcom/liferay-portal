@@ -177,8 +177,12 @@ public abstract class EhcachePortalCacheManager<K extends Serializable, V>
 		return _portalCacheManagerConfiguration;
 	}
 
+	protected abstract Props getProps();
+
 	@Override
 	protected void initPortalCacheManager() {
+		Props props = getProps();
+
 		setTransactionalPortalCacheEnabled(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED)));
@@ -332,7 +336,6 @@ public abstract class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	protected BundleContext bundleContext;
-	protected volatile Props props;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);

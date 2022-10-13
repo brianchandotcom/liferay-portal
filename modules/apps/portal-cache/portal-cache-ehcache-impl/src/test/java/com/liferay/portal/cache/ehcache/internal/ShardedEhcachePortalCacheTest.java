@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -103,6 +104,10 @@ public class ShardedEhcachePortalCacheTest {
 			protected BaseEhcachePortalCacheManagerConfigurator
 				getBaseEhcachePortalCacheManagerConfigurator() {
 
+				return null;
+			}
+
+			protected Props getProps() {
 				return null;
 			}
 

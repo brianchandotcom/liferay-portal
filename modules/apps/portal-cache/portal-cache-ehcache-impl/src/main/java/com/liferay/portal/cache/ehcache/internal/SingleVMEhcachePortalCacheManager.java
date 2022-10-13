@@ -48,7 +48,7 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 	protected void activate(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 
-		setConfigFile(props.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
+		setConfigFile(_props.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setPortalCacheManagerName(PortalCacheManagerNames.SINGLE_VM);
 
@@ -71,6 +71,11 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		return _singleVMEhcachePortalCacheManagerConfigurator;
 	}
 
+	@Override
+	protected Props getProps() {
+		return _props;
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortalCacheListenerFactory(
 		PortalCacheListenerFactory portalCacheListenerFactory) {
@@ -87,16 +92,14 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 			portalCacheManagerListenerFactory;
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
-	}
-
 	private static final String _DEFAULT_CONFIG_FILE_NAME =
 		"/ehcache/liferay-single-vm.xml";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleVMEhcachePortalCacheManager.class);
+
+	@Reference
+	private volatile Props _props;
 
 	@Reference
 	private SingleVMEhcachePortalCacheManagerConfigurator

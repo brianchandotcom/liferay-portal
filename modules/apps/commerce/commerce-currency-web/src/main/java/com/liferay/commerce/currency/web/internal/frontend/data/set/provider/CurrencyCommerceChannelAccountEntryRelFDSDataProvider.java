@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "fds.data.provider.key=" + CommerceCurrencyFDSNames.ACCOUNT_ENTRY_CURRENCIES,
 	service = FDSDataProvider.class
 )

@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.currency.internal.configuration.ECBExchangeRateProviderConfiguration",
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.exchange.provider.key=european-central-bank",
 	service = ExchangeRateProvider.class
 )

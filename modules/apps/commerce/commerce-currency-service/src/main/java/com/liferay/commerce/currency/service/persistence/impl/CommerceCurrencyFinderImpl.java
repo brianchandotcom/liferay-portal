@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceCurrencyFinder.class)
+@Component(service = CommerceCurrencyFinder.class)
 public class CommerceCurrencyFinderImpl
 	extends CommerceCurrencyFinderBaseImpl implements CommerceCurrencyFinder {
 

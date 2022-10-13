@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, service = CommerceShippingFixedOptionRelFinder.class
-)
+@Component(service = CommerceShippingFixedOptionRelFinder.class)
 public class CommerceShippingFixedOptionRelFinderImpl
 	extends CommerceShippingFixedOptionRelFinderBaseImpl
 	implements CommerceShippingFixedOptionRelFinder {

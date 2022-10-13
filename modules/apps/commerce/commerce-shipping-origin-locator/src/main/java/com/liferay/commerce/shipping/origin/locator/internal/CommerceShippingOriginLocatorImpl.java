@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Ethan Bustad
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommerceShippingOriginLocator.class
-)
+@Component(immediate = true, service = CommerceShippingOriginLocator.class)
 public class CommerceShippingOriginLocatorImpl
 	implements CommerceShippingOriginLocator {
 

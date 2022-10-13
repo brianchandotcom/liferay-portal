@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceShipmentFDSNames.INVENTORY_WAREHOUSE_ITEM,
 	service = FDSView.class
 )

@@ -9,4 +9,3 @@ Export-Package:\
 	com.liferay.commerce.shipping.engine.fixed.service.persistence,\
 	com.liferay.commerce.shipping.engine.fixed.util,\
 	com.liferay.commerce.shipping.engine.fixed.util.comparator
-Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPMENT,
 		"mvc.command.name=/commerce_shipment/edit_commerce_shipment_external_reference_code"

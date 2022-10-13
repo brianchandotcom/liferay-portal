@@ -91,10 +91,11 @@ public class SearchRequestContributorsHolderImpl
 		Collection<String> ids) {
 
 		for (String id : ids) {
-			Object searchRequestContributor = _serviceTrackerMap.getService(id);
+			List<SearchRequestContributor> searchRequestContributors =
+				_serviceTrackerMap.getService(id);
 
-			if (Objects.nonNull(searchRequestContributor)) {
-				collection.remove(searchRequestContributor);
+			if (Objects.nonNull(searchRequestContributors)) {
+				collection.removeAll(searchRequestContributors);
 			}
 		}
 	}

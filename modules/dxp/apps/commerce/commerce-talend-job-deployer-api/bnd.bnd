@@ -2,4 +2,3 @@ Bundle-Name: Liferay Commerce Talend Job Deployer API
 Bundle-SymbolicName: com.liferay.commerce.talend.job.deployer.api
 Bundle-Version: 4.0.7
 Export-Package: com.liferay.commerce.talend.job.deployer
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

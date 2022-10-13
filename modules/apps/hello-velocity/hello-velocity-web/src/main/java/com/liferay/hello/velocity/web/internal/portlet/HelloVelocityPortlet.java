@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.VelocityPortlet;
 
 import java.io.IOException;
 import java.io.Writer;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
 import javax.portlet.MimeResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class HelloVelocityPortlet extends VelocityPortlet {
+public class HelloVelocityPortlet extends GenericPortlet {
 
 	@Override
 	public void doEdit(

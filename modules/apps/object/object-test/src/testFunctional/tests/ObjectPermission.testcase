@@ -2291,7 +2291,7 @@ definition {
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "Add Object Entry" activated can add new object entries and view its own entries"
 	@priority = "5"
 	test GuestCanAddObjectEntriesWithAddPermission {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectPermission#GuestCanAddObjectEntriesWithAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2339,6 +2339,15 @@ definition {
 		Portlet.addPG(
 			pageName = "Object Page",
 			portletName = "Custom Objects");
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Custom Objects");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			permissionFlagged = "true",
+			roleTitle = "Guest");
 
 		Navigator.openURL();
 

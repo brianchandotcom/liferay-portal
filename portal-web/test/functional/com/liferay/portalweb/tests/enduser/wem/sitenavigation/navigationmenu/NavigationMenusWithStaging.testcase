@@ -1450,4 +1450,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164269. The navigation menu creator could view a tooltip with the page URL on selection modal on staging site."
+	@priority = "4"
+	test ViewPageURLOnTooltipWhenSelectPageItem {
+		task ("Given a navigation menu opens the select pages modal in staging site") {
+			task ("Add a Navigation menu") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+
+			task ("Add a widget page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name (Staging)",
+					layoutName = "Test Page Name",
+					site = "false");
+			}
+
+			task ("Navigate to select pages modal of Navigation menu") {
+				NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
+
+				NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+				Click(locator1 = "Button#PLUS");
+
+				MenuItem.click(menuItem = "Page");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Portlet.expandTree();
+			}
+		}
+
+		task ("When the navigation menu creator hovers on the content page item") {
+			MouseOver(
+				key_nodeName = "Test Page Name",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+
+		task ("Then the navigation menu creator could view a tooltip with the page url") {
+			AssertVisible(
+				key_content = "/web/test-site-name-staging/test-page-name",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 }

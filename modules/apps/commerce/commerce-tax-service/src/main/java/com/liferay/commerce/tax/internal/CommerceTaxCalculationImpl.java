@@ -226,12 +226,12 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 		commerceTaxCalculateRequest.setCommerceBillingAddressId(
 			commerceBillingAddressId);
+		commerceTaxCalculateRequest.setCommerceChannelGroupId(groupId);
 		commerceTaxCalculateRequest.setCommerceShippingAddressId(
 			commerceShippingAddressId);
 		commerceTaxCalculateRequest.setPrice(amount);
 		commerceTaxCalculateRequest.setIncludeTax(includeTax);
 		commerceTaxCalculateRequest.setShipping(shipping);
-		commerceTaxCalculateRequest.setCommerceChannelGroupId(groupId);
 		commerceTaxCalculateRequest.setTaxCategoryId(taxCategoryId);
 
 		List<CommerceTaxMethod> commerceTaxMethods =

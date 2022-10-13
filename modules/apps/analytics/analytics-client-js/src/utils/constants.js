@@ -50,6 +50,8 @@ export const QUEUE_PRIORITY_IDENTITY = 10;
 
 // Local Storage keys
 
+export const STORAGE_KEY_CHANNEL_ID = 'ac_client_channel_id';
+
 export const STORAGE_KEY_CONTEXTS = 'ac_client_context';
 
 export const STORAGE_KEY_EVENTS = 'ac_client_batch';

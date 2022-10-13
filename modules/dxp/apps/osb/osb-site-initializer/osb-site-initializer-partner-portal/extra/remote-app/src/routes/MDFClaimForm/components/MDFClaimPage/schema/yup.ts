@@ -12,6 +12,7 @@
 import {array, mixed, number, object, string} from 'yup';
 
 const permitedDocument = {
+	maxSize: 100000,
 	types: [
 		'image/jpg',
 		'image/jpeg',
@@ -19,31 +20,9 @@ const permitedDocument = {
 		'image/png',
 		'application/pdf',
 	],
-	maxSize: 100000,
 };
 
 const claimSchema = object({
-	totalClaimAmount: number()
-		.moreThan(0, 'Need be bigger than 0')
-		.required('Required')
-		.test(
-			'is-greater-than-the-requested-amount',
-			'Total Claim Amount cannot be greater than Total MDF Requested Amount',
-			(totalClaimAmount, testContext) =>
-				Number(totalClaimAmount) <=
-				Number(testContext.parent.totalrequestedAmount)
-		),
-	reimbursementInvoice: mixed()
-		.required('Required')
-		.test(
-			'fileSize',
-			'File Size is too large',
-			(reimbursementInvoice) =>
-				reimbursementInvoice?.size <= permitedDocument.maxSize
-		)
-		.test('fileType', 'Unsupported File Format', (reimbursementInvoice) =>
-			permitedDocument.types.includes(reimbursementInvoice?.type)
-		),
 	activities: array()
 		.test(
 			'needAtLeatOneSelectedActivity',
@@ -95,6 +74,27 @@ const claimSchema = object({
 					then: (schema) => schema.required('Required'),
 				}),
 			})
+		),
+	reimbursementInvoice: mixed()
+		.required('Required')
+		.test(
+			'fileSize',
+			'File Size is too large',
+			(reimbursementInvoice) =>
+				reimbursementInvoice?.size <= permitedDocument.maxSize
+		)
+		.test('fileType', 'Unsupported File Format', (reimbursementInvoice) =>
+			permitedDocument.types.includes(reimbursementInvoice?.type)
+		),
+	totalClaimAmount: number()
+		.moreThan(0, 'Need be bigger than 0')
+		.required('Required')
+		.test(
+			'is-greater-than-the-requested-amount',
+			'Total Claim Amount cannot be greater than Total MDF Requested Amount',
+			(totalClaimAmount, testContext) =>
+				Number(totalClaimAmount) <=
+				Number(testContext.parent.totalrequestedAmount)
 		),
 });
 

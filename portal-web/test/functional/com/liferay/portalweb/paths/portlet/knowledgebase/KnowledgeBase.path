@@ -280,6 +280,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_ITEM_HIGHLIGHT</td>
+	<td>//li[contains(@class,'treeview-item')]//div[contains(@class,'knowledge-base-navigation-item-active')]//div[normalize-space(text())='${key_itemName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_ITEM_LINK</td>
 	<td>//li[contains(@class,'treeview-item')]//a[contains(@class,'link-secondary')][normalize-space(text())='${key_itemLinkName}']</td>
 	<td></td>

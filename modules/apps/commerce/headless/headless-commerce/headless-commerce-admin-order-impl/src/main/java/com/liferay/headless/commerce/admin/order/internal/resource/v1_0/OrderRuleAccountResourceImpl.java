@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Marco Leo
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/order-rule-account.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, OrderRuleAccountResource.class}

@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/billing-address.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = {BillingAddressResource.class, NestedFieldSupport.class}

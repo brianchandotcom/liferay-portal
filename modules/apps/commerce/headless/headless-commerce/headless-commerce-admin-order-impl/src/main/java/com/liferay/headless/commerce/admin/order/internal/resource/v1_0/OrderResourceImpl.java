@@ -96,7 +96,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/order.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/order.properties",
 	scope = ServiceScope.PROTOTYPE, service = OrderResource.class
 )
 public class OrderResourceImpl extends BaseOrderResourceImpl {

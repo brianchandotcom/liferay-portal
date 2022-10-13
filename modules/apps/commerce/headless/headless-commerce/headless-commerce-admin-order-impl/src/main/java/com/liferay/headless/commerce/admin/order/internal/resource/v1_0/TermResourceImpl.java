@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/term.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/term.properties",
 	scope = ServiceScope.PROTOTYPE, service = TermResource.class
 )
 public class TermResourceImpl extends BaseTermResourceImpl {

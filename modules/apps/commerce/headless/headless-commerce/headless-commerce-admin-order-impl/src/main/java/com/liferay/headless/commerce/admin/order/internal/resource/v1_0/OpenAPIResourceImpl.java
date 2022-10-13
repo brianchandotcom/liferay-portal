@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/openapi.properties",
 	service = OpenAPIResourceImpl.class
 )

@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/order-note.properties",
 	scope = ServiceScope.PROTOTYPE, service = OrderNoteResource.class
 )

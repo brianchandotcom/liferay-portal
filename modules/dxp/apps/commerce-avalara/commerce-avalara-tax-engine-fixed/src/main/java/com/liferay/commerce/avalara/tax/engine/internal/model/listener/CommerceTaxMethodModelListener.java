@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.avalara.tax.engine.internal.model.listener;
 
-import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.helper.CommerceAvalaraConnectorHelper;
 import com.liferay.commerce.avalara.connector.helper.CommerceAvalaraDispatchTriggerHelper;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
@@ -35,7 +34,7 @@ public class CommerceTaxMethodModelListener
 	public void onAfterCreate(CommerceTaxMethod commerceTaxMethod) {
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(CommerceAvalaraConstants.KEY)) {
+		if (engineKey.equals("avalara")) {
 			_commerceAvalaraDispatchTriggerHelper.createDispatchTrigger(
 				commerceTaxMethod);
 		}
@@ -48,7 +47,7 @@ public class CommerceTaxMethodModelListener
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(CommerceAvalaraConstants.KEY)) {
+		if (engineKey.equals("avalara")) {
 			_commerceAvalaraDispatchTriggerHelper.updateDispatchTrigger(
 				commerceTaxMethod);
 		}
@@ -58,7 +57,7 @@ public class CommerceTaxMethodModelListener
 	public void onBeforeRemove(CommerceTaxMethod commerceTaxMethod) {
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(CommerceAvalaraConstants.KEY)) {
+		if (engineKey.equals("avalara")) {
 			_commerceAvalaraDispatchTriggerHelper.deleteDispatchTrigger(
 				commerceTaxMethod);
 

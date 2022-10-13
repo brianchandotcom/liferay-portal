@@ -95,7 +95,7 @@ public class CommerceAvalaraConnectorHelperImpl
 
 		CommerceTaxMethod commerceTaxMethod =
 			_commerceTaxMethodLocalService.fetchCommerceTaxMethod(
-				groupId, CommerceAvalaraConstants.KEY);
+				groupId, "avalara");
 
 		if (commerceTaxMethod == null) {
 			return;
@@ -117,7 +117,8 @@ public class CommerceAvalaraConnectorHelperImpl
 			_cpTaxCategoryLocalService.
 				fetchCPTaxCategoryByExternalReferenceCode(
 					commerceTaxMethod.getCompanyId(),
-					CommerceAvalaraConstants.CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY);
+					CommerceAvalaraConstants.
+						CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY);
 
 		if (tangiblePersonalPropertyCPTaxCategory != null) {
 			cpTaxCategoryId =

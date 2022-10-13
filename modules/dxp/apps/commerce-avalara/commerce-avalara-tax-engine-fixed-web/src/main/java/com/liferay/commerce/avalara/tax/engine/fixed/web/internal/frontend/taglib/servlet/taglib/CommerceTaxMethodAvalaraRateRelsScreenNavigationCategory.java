@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.avalara.tax.engine.fixed.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.tax.engine.fixed.web.internal.display.context.CommerceAvalaraTaxRateRelsDisplayContext;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -99,7 +98,7 @@ public class CommerceTaxMethodAvalaraRateRelsScreenNavigationCategory
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(CommerceAvalaraConstants.KEY)) {
+		if (engineKey.equals("avalara")) {
 			return true;
 		}
 

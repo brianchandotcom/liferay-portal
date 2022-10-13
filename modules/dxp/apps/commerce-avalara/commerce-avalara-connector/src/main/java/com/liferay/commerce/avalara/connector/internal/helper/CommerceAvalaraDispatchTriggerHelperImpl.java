@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.avalara.connector.internal.helper;
 
-import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.helper.CommerceAvalaraDispatchTriggerHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -24,7 +23,6 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -204,10 +202,9 @@ public class CommerceAvalaraDispatchTriggerHelperImpl
 		CommerceChannel commerceChannel = _getAssociatedCommerceChannel(
 			commerceTaxMethod);
 
-		StringBundler triggerNameSB = new StringBundler(3);
+		StringBundler triggerNameSB = new StringBundler(2);
 
-		triggerNameSB.append(CommerceAvalaraConstants.KEY);
-		triggerNameSB.append(StringPool.DASH);
+		triggerNameSB.append("avalara-");
 		triggerNameSB.append(commerceChannel.getCommerceChannelId());
 
 		return triggerNameSB.toString();

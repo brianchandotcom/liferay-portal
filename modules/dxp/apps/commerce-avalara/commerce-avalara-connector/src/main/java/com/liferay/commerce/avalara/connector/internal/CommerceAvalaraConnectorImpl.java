@@ -16,7 +16,6 @@ package com.liferay.commerce.avalara.connector.internal;
 
 import com.liferay.commerce.avalara.connector.CommerceAvalaraConnector;
 import com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration;
-import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.exception.CommerceAvalaraConnectionException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -138,9 +137,7 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 		String accountNumber, String licenseKey, String serviceURL) {
 
 		AvaTaxClient avaTaxClient = new AvaTaxClient(
-			CommerceAvalaraConstants.APP_MACHINE,
-			CommerceAvalaraConstants.APP_VERSION,
-			CommerceAvalaraConstants.MACHINE_NAME, serviceURL);
+			"LiferayCommerceAvalaraConnector", "1.0", "Liferay", serviceURL);
 
 		String securityHeader = StringBundler.concat(
 			accountNumber, StringPool.COLON, licenseKey);

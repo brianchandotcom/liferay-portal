@@ -17,7 +17,6 @@ package com.liferay.commerce.avalara.tax.engine.fixed.web.internal.frontend.tagl
 import com.liferay.commerce.avalara.connector.CommerceAvalaraConnector;
 import com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorChannelConfiguration;
 import com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration;
-import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.helper.CommerceAvalaraDispatchTriggerHelper;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
@@ -101,7 +100,7 @@ public class CommerceTaxMethodAvalaraScreenNavigationCategory
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(CommerceAvalaraConstants.KEY)) {
+		if (engineKey.equals("avalara")) {
 			return true;
 		}
 

@@ -76,6 +76,15 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "LPS-165487 - Verify if the user can create structures with different Global language."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanBeCreatedWithDifferentGlobalLanguage {
+
+		// TODO LPS-165487 CanBeCreatedWithDifferentGlobalLanguage pending implementation
+
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that is possible to create Fields Group on the Fieldset modal."
 	@priority = "5"
 	test CanCreateFieldsGroup {

@@ -28,6 +28,45 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that the user display name of My Profile can wrap when over-bounded in the special simulation."
+	@priority = "3"
+	test CheckUserDisplayNameOfMyProfileInSpecialSimulation {
+		task ("Given the last name of admin user is changed to a long text") {
+			JSONUser.updateUser(
+				screenNameUpdate = "test",
+				userEmailAddress = "test@liferay.com",
+				userEmailAddressUpdate = "test@liferay.com",
+				userFirstName = "Test",
+				userLastName = "Test with a long lastname in the Liferay Profile Widget");
+		}
+
+		task ("When go to the My Prfile page and switch the Mobile Simulation") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Then the user display name wraps to the next line") {
+			AssertCssValue(
+				locator1 = "UsersAndOrganizations#MY_PROFILE_DISPLAY_NAME",
+				locator2 = "white-space",
+				value1 = "normal");
+		}
+
+		task ("When refresh the page and switch the Tablet Simulation") {
+			Refresh();
+
+			MobileDevice.previewPG(deviceType = "tablet");
+		}
+
+		task ("Then the user display name wraps to the next line") {
+			AssertCssValue(
+				locator1 = "UsersAndOrganizations#MY_PROFILE_DISPLAY_NAME",
+				locator2 = "white-space",
+				value1 = "normal");
+		}
+	}
+
 	@priority = "4"
 	test ConfigureLookAndFeelCurrentSiteAndMyDashboard {
 		PortalSettings.gotoConfiguration(

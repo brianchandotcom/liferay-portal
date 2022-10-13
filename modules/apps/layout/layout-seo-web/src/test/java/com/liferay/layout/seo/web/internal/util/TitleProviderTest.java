@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListMergeable;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -51,6 +53,8 @@ public class TitleProviderTest {
 
 	@Before
 	public void setUp() {
+		_setUpPortalUtil();
+
 		_titleProvider = new TitleProvider(
 			new LayoutSEOLinkManager() {
 
@@ -99,6 +103,20 @@ public class TitleProviderTest {
 
 		Assert.assertEquals(
 			"htmlTitle", _titleProvider.getTitle(mockHttpServletRequest));
+	}
+
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		Mockito.when(
+			portal.getOriginalServletRequest(Mockito.any())
+		).thenReturn(
+			new MockHttpServletRequest()
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	private TitleProvider _titleProvider;

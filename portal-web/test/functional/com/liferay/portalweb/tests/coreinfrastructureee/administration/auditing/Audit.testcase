@@ -17,7 +17,6 @@ definition {
 	@description = "LPS-133646 and LPS-133653 TC-1: Verify that information is present in the logs after enabling log context & Incoming X-Request-ID."
 	@priority = "5"
 	test AssertAuditConsoleInformationIsPresentAfterEnabledLog {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertAuditConsoleInformationIsPresentAfterEnabledLog";
 
 		var companyId = JSONCompany.getCompanyId();
@@ -49,7 +48,6 @@ definition {
 	@description = "This is a use case for LPS-155728. TC-1: Assert the email address is present in the audit log context in a human-readable format."
 	@priority = "2"
 	test AssertEmailAddressIsPresentInReadable {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertEmailAddressIsPresentInReadable";
 
 		task ("Given: Enable log context and Incoming X-Request-ID") {

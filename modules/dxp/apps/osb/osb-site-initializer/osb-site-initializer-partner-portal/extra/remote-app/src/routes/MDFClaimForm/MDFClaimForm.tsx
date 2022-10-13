@@ -18,6 +18,7 @@ import MDFClaim from '../../common/interfaces/mdfClaim';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
 import MDFClaimPage from './components/MDFClaimPage';
 import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';
+import claimSchema from './components/MDFClaimPage/schema/yup';
 
 const getInitialFormValues = (
 	totalrequestedAmount?: number,
@@ -65,6 +66,7 @@ const MDFClaimForm = () => {
 				onSaveAsDraft={(values, formikHelpers) =>
 					console.log(values, formikHelpers)
 				}
+				validationSchema={claimSchema}
 			/>
 		</PRMFormik>
 	);

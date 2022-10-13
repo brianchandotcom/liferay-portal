@@ -70,7 +70,7 @@ const BudgetModal = ({
 						component={PRMForm.InputFile}
 						displayType="secondary"
 						label="Third Party Invoice"
-						name={`${name}.document`}
+						name={`${name}.invoice`}
 						onAccept={(value: File) => {
 							if (value) {
 								setCurrentInvoiceFile(value);

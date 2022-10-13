@@ -104,6 +104,8 @@ if (kbArticle != null) {
 				tempFolderName: '<%= KBWebKeys.TEMP_FOLDER_NAME %>',
 			},
 		},
+		strings.dropFilesText:
+			'<liferay-ui:message key="drag-and-drop-to-upload" />',
 		uploadFile:
 			'<liferay-portlet:actionURL name="/knowledge_base/add_temp_attachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>',
 	});

@@ -196,5 +196,26 @@ $toolbarZIndex: 971;
 				}
 			}
 		}
+
+		.kb-attachments {
+			margin-top: 0;
+
+			.lfr-dynamic-uploader .upload-target {
+				border-color: $gray-400;
+				background-color: $gray-200;
+				border-width: 2px;
+
+				.drop-file-text {
+					font-size: 0.875rem;
+					font-weight: 600;
+
+					.small {
+						display: inline;
+						font-weight: 600;
+						margin-left: 3px;
+					}
+				}
+			}
+		}
 	}
 }

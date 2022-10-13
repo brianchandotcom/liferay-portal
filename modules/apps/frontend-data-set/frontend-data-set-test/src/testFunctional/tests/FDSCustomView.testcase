@@ -50,24 +50,62 @@ definition {
 	@priority = "4"
 	test CanBeEditted {
 
-		// To-do CanBeEditted Autom. test
-
 	}
 
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
 	@priority = "4"
 	test CanBeSaved {
+        task("When Make some changes to dataset display"){
 
-		// To-do CanBeSaved Autom. test
+			FDSFilters.editFilters(
+				key_filter = "Color",
+				key_disableFilters = "Blue,Green,Yellow",
+				key_enableFilters = "Red");
 
-	}
+            Click(
+                locator1 = "FrontendDataSet#SORT_FIELD",
+                key_field = "ID");
+
+			Pagination.changePagination(itemsPerPage = "4 items");
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 25");
+			 
+			Click(
+             locator1 = "FrontendDataSet#SELECT_FIELD");
+
+            Click(
+                locator1 = "FrontendDataSet#SELECT_OPTION",
+                key_itemName = "Description");
+			
+        }
+        task("And When Save As the custom view"){
+
+			FDSCustomView.createNewView(key_nameView = "TEST");
+
+			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+			Click(locator1 = "FrontendDataSet#SELECT_OPTION",
+			key_itemName = "Save View");
+
+        }
+        task("Then A new custom view is created and selected as current view"){
+
+			FDSCustomView.selectView(key_itemName = "Default View");
+
+			AssertElementPresent(locator1="FrontendDataSet#COLUMN_NAME",
+			columnName = "Description");
+
+			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+			FDSCustomView.selectView(key_itemName = "TEST");
+
+			ObjectCustomViews.assertColumnNotPresent(columnName = "Description");
+        }
+    }
 
 	@description = "LPS-164618. Assert that it's possible can edit a new instance was previously created"
 	@priority = "4"
 	test CanCreateMultiple {
 
-		// To-do CanBeSaved Autom. test
-
 	}
-
 }

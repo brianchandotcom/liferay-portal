@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.inventory.audit.type.key=" + CommerceInventoryConstants.AUDIT_TYPE_UPDATE_WAREHOUSE_ITEM,
 	service = CommerceInventoryAuditType.class
 )

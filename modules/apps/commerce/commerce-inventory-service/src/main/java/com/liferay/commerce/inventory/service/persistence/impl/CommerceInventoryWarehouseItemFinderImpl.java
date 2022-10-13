@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, service = CommerceInventoryWarehouseItemFinder.class
-)
+@Component(service = CommerceInventoryWarehouseItemFinder.class)
 public class CommerceInventoryWarehouseItemFinderImpl
 	extends CommerceInventoryWarehouseItemFinderBaseImpl
 	implements CommerceInventoryWarehouseItemFinder {

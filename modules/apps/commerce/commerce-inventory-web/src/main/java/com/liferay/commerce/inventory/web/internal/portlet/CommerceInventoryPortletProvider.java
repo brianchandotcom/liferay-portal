@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem",
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,

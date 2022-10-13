@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.inventory.audit.type.key=" + CommerceInventoryConstants.AUDIT_TYPE_CONSUME_QUANTITY,
 	service = CommerceInventoryAuditType.class
 )

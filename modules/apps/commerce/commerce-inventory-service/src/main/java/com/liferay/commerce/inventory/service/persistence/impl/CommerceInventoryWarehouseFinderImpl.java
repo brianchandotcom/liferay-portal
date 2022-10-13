@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceInventoryWarehouseFinder.class)
+@Component(service = CommerceInventoryWarehouseFinder.class)
 public class CommerceInventoryWarehouseFinderImpl
 	extends CommerceInventoryWarehouseFinderBaseImpl
 	implements CommerceInventoryWarehouseFinder {

@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	property = {
 		"json.web.service.context.name=commerce",
 		"json.web.service.context.path=CommerceInventoryWarehouse"

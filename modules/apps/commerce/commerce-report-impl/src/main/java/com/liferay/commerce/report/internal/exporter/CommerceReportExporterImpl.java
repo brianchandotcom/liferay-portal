@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(enabled = false, service = CommerceReportExporter.class)
+@Component(service = CommerceReportExporter.class)
 public class CommerceReportExporterImpl implements CommerceReportExporter {
 
 	@Override

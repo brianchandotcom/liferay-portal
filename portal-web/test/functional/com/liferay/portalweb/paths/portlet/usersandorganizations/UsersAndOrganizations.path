@@ -42,6 +42,14 @@
 	<td></td>
 </tr>
 
+<!--MY_PROFILE-->
+
+<tr>
+	<td>MY_PROFILE_DISPLAY_NAME</td>
+	<td>//div[@class='lfr-contact-name']/a</td>
+	<td></td>
+</tr>
+
 <!--ORGANIZATION_TABLE-->
 
 <tr>

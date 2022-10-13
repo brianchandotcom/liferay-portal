@@ -31,16 +31,18 @@
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 %>
 
-<div class="kb-entity-header">
-	<div class="kb-title">
-		<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
+<div class="container-fluid container-fluid-max-xl container-form-lg">
+	<div class="kb-article sheet">
+		<div class="kb-entity-body">
+			<div class="kb-article-title">
+				<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
+			</div>
+
+			<%= kbTemplate.getContent() %>
+
+			<liferay-util:include page="/admin/kb_template_comments.jsp" servletContext="<%= application %>" />
+		</div>
 	</div>
-</div>
-
-<div class="kb-entity-body">
-	<%= kbTemplate.getContent() %>
-
-	<liferay-util:include page="/admin/kb_template_comments.jsp" servletContext="<%= application %>" />
 </div>
 
 <c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>

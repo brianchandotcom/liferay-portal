@@ -218,6 +218,9 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
 
+	protected abstract PortalCacheManagerListenerFactory
+		<PortalCacheManager<K, V>> getPortalCacheManagerListenerFactory();
+
 	protected void initialize() {
 		if (_portalCacheManagerConfiguration != null) {
 			return;
@@ -231,6 +234,10 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		initPortalCacheManager();
 
 		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
+
+		PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+			portalCacheManagerListenerFactory =
+				getPortalCacheManagerListenerFactory();
 
 		for (Properties properties :
 				_portalCacheManagerConfiguration.
@@ -291,8 +298,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
-	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-		portalCacheManagerListenerFactory;
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,

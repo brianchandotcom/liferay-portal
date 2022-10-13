@@ -15,12 +15,14 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.PortalCacheListenerFactory;
+import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -102,6 +104,14 @@ public class EhcachePortalCacheTest {
 				@Override
 				protected PortalCacheListenerFactory
 					getPortalCacheListenerFactory() {
+
+					return null;
+				}
+
+				@Override
+				protected PortalCacheManagerListenerFactory
+					<PortalCacheManager<?, ?>>
+						getPortalCacheManagerListenerFactory() {
 
 					return null;
 				}
@@ -643,6 +653,14 @@ public class EhcachePortalCacheTest {
 				@Override
 				protected PortalCacheListenerFactory
 					getPortalCacheListenerFactory() {
+
+					return null;
+				}
+
+				@Override
+				protected PortalCacheManagerListenerFactory
+					<PortalCacheManager<?, ?>>
+						getPortalCacheManagerListenerFactory() {
 
 					return null;
 				}

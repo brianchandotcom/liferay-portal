@@ -79,17 +79,15 @@ public class MultiVMEhcachePortalCacheManager
 	}
 
 	@Override
-	protected Props getProps() {
-		return _props;
+	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		getPortalCacheManagerListenerFactory() {
+
+		return _portalCacheManagerListenerFactory;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalCacheManagerListenerFactory(
-		PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-			portalCacheManagerListenerFactory) {
-
-		this.portalCacheManagerListenerFactory =
-			portalCacheManagerListenerFactory;
+	@Override
+	protected Props getProps() {
+		return _props;
 	}
 
 	private static final String _DEFAULT_CONFIG_FILE_NAME =
@@ -104,6 +102,10 @@ public class MultiVMEhcachePortalCacheManager
 
 	@Reference
 	private PortalCacheListenerFactory _portalCacheListenerFactory;
+
+	@Reference
+	private PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		_portalCacheManagerListenerFactory;
 
 	@Reference
 	private volatile Props _props;

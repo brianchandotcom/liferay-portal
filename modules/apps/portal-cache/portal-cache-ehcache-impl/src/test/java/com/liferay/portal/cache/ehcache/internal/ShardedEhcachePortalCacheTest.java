@@ -16,10 +16,12 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
+import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -111,6 +113,14 @@ public class ShardedEhcachePortalCacheTest {
 			@Override
 			protected PortalCacheListenerFactory
 				getPortalCacheListenerFactory() {
+
+				return null;
+			}
+
+			@Override
+			protected PortalCacheManagerListenerFactory
+				<PortalCacheManager<?, ?>>
+					getPortalCacheManagerListenerFactory() {
 
 				return null;
 			}

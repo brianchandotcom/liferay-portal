@@ -16,9 +16,11 @@ package com.liferay.portal.cache.test.util;
 
 import com.liferay.portal.cache.BasePortalCacheManager;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
+import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
 
@@ -138,6 +140,13 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			new PortalCacheConfiguration(
 				PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT, null),
 			null);
+	}
+
+	@Override
+	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		getPortalCacheManagerListenerFactory() {
+
+		return null;
 	}
 
 	@Override

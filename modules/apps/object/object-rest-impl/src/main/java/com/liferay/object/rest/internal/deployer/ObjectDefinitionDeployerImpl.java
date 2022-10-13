@@ -367,6 +367,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 	}
 
+	private String _createObjectDefinitionInstanceKey(
+		long companyId, String restContextPath) {
+
+		return restContextPath + companyId;
+	}
+
 	private void _excludeScopedMethods(
 		ObjectDefinition objectDefinition,
 		ObjectScopeProvider objectScopeProvider) {

@@ -122,6 +122,17 @@ definition {
 			var urlTitle = "";
 		}
 
+		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
+			var displayDateYear = DateUtil.getCurrentYear();
+
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		}
+
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
 		var curl = '''
@@ -138,6 +149,8 @@ definition {
 				-d sourceURL= \
 				-d sections= \
 				-d selectedFileNames= \
+				-d expirationDate=${expirationDate} \
+				-d reviewDate=${reviewDate} \
 				-d serviceContext=${serviceContext}
 		''';
 

@@ -26,7 +26,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -239,7 +238,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 					for (int i = 0; i < size; i++) {
 						jsonObjects.put(
 							new URL(deserializer.readString()),
-							JSONFactoryUtil.createJSONObject(
+							_jsonFactory.createJSONObject(
 								deserializer.readString()));
 					}
 

@@ -21,7 +21,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -36,6 +36,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Chema Balsas
@@ -89,8 +90,7 @@ public class AlloyEditorEmbedConfigContributor
 		).put(
 			"urlSchemes",
 			() -> {
-				JSONArray urlSchemesJSONArray =
-					JSONFactoryUtil.createJSONArray();
+				JSONArray urlSchemesJSONArray = _jsonFactory.createJSONArray();
 
 				String[] urlSchemes = editorEmbedProvider.getURLSchemes();
 
@@ -104,7 +104,7 @@ public class AlloyEditorEmbedConfigContributor
 	}
 
 	private JSONArray _getEditorEmbedProvidersJSONArray() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		Set<String> editorEmbedProviderTypes = _serviceTrackerMap.keySet();
 
@@ -121,6 +121,9 @@ public class AlloyEditorEmbedConfigContributor
 
 		return jsonArray;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private ServiceTrackerMap<String, List<EditorEmbedProvider>>
 		_serviceTrackerMap;

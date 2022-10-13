@@ -41,7 +41,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -356,7 +356,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		}
 
 		try {
-			JSONObject typeOptionsJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject typeOptionsJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntry.getTypeOptions());
 
 			JSONArray fieldTypesJSONArray = typeOptionsJSONObject.getJSONArray(
@@ -422,6 +422,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 	private volatile InfoRequestFieldValuesProviderHelper
 		_infoRequestFieldValuesProviderHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

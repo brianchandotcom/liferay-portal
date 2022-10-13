@@ -21,7 +21,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -121,7 +121,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 	private JSONObject _addDisplayPage(
 		ActionRequest actionRequest, ServiceContext serviceContext) {
 
-		JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject errorJSONObject = _jsonFactory.createJSONObject();
 
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
@@ -176,6 +176,9 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 		return JSONUtil.put("error", errorJSONObject);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

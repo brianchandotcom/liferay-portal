@@ -19,7 +19,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +79,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			LayoutPageTemplateEntry.class.getName(), actionRequest);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -167,6 +167,9 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateLayoutPageTemplateEntryMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

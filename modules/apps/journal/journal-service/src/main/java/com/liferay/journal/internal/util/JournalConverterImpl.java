@@ -33,7 +33,7 @@ import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -487,7 +487,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	private String _getSelectValue(Element dynamicContentElement) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<Element> optionElements = dynamicContentElement.elements("option");
 
@@ -560,7 +560,7 @@ public class JournalConverterImpl implements JournalConverter {
 					return;
 				}
 
-				JSONArray fieldValueJSONArray = JSONFactoryUtil.createJSONArray(
+				JSONArray fieldValueJSONArray = _jsonFactory.createJSONArray(
 					fieldValue);
 
 				if (fieldValueJSONArray.length() == 1) {
@@ -587,7 +587,7 @@ public class JournalConverterImpl implements JournalConverter {
 			JSONArray jsonArray = null;
 
 			try {
-				jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
+				jsonArray = _jsonFactory.createJSONArray(fieldValue);
 			}
 			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {
@@ -694,6 +694,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

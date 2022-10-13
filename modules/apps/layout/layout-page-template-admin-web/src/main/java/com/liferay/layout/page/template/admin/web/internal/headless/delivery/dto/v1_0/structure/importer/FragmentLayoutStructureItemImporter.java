@@ -43,7 +43,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -283,7 +283,7 @@ public class FragmentLayoutStructureItemImporter
 		int type = FragmentConstants.TYPE_COMPONENT;
 
 		JSONObject defaultEditableValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		if (fragmentEntry != null) {
 			html = fragmentEntry.getHtml();
@@ -385,7 +385,7 @@ public class FragmentLayoutStructureItemImporter
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
 		Map<String, Object> map) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (map == null) {
 			return jsonObject;
@@ -435,7 +435,7 @@ public class FragmentLayoutStructureItemImporter
 	private JSONObject _createFragmentConfigJSONObject(
 		Map<String, Object> fragmentImageMap) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (fragmentImageMap == null) {
 			return jsonObject;
@@ -462,7 +462,7 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		JSONObject localizedDescriptionJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		for (Map.Entry<String, Object> entry :
 				localizedDescriptionMap.entrySet()) {
@@ -480,7 +480,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, Object> fragmentLinkMap,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (fragmentLinkMap == null) {
 			return jsonObject;
@@ -533,7 +533,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, Object> fragmentLinkValueMap,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (fragmentLinkValueMap == null) {
 			return jsonObject;
@@ -602,7 +602,7 @@ public class FragmentLayoutStructureItemImporter
 	private JSONObject _createImageJSONObject(
 		Map<String, Object> classPKReferencesMap) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (classPKReferencesMap == null) {
 			return jsonObject;
@@ -652,14 +652,14 @@ public class FragmentLayoutStructureItemImporter
 		throws Exception {
 
 		if (jsonObject1 == null) {
-			return JSONFactoryUtil.createJSONObject(jsonObject2.toString());
+			return _jsonFactory.createJSONObject(jsonObject2.toString());
 		}
 
 		if (jsonObject2 == null) {
-			return JSONFactoryUtil.createJSONObject(jsonObject1.toString());
+			return _jsonFactory.createJSONObject(jsonObject1.toString());
 		}
 
-		JSONObject jsonObject3 = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject3 = _jsonFactory.createJSONObject(
 			jsonObject1.toString());
 
 		Iterator<String> iterator = jsonObject2.keys();
@@ -697,7 +697,7 @@ public class FragmentLayoutStructureItemImporter
 
 		Map<String, String> configurationTypes = new HashMap<>();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(configuration);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(configuration);
 
 		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
 
@@ -884,7 +884,7 @@ public class FragmentLayoutStructureItemImporter
 		List<Object> fragmentFields) {
 
 		JSONObject backgroundImageFragmentEntryProcessorValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		for (Object fragmentField : fragmentFields) {
 			Map<String, Object> fragmentFieldMap =
@@ -935,7 +935,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, String> editableTypes, List<Object> fragmentFields,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (fragmentFields == null) {
 			return jsonObject;
@@ -943,7 +943,7 @@ public class FragmentLayoutStructureItemImporter
 
 		for (Object fragmentField : fragmentFields) {
 			JSONObject fragmentFieldJSONObject =
-				JSONFactoryUtil.createJSONObject();
+				_jsonFactory.createJSONObject();
 
 			Map<String, Object> fragmentFieldMap =
 				(Map<String, Object>)fragmentField;
@@ -982,8 +982,7 @@ public class FragmentLayoutStructureItemImporter
 				Map<String, Object> fragmentImageMap =
 					(Map<String, Object>)valueMap.get("fragmentImage");
 
-				baseFragmentFieldJSONObject =
-					JSONFactoryUtil.createJSONObject();
+				baseFragmentFieldJSONObject = _jsonFactory.createJSONObject();
 
 				if (fragmentImageMap != null) {
 					if (fragmentImageMap.containsKey("url")) {
@@ -1012,7 +1011,7 @@ public class FragmentLayoutStructureItemImporter
 									"fragmentImageConfiguration");
 
 						JSONObject amImageConfigurationJSONObject =
-							JSONFactoryUtil.createJSONObject();
+							_jsonFactory.createJSONObject();
 
 						for (Map.Entry<String, String> entry :
 								fragmentImageConfigurationMap.entrySet()) {
@@ -1073,7 +1072,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, String> configurationTypes,
 		Map<String, Object> fragmentConfigMap) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (fragmentConfigMap == null) {
 			return jsonObject;
@@ -1136,6 +1135,9 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

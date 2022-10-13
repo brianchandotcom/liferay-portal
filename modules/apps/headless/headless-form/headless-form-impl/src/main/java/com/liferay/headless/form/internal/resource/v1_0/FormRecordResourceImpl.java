@@ -33,7 +33,7 @@ import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.util.FormRecordUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -234,7 +234,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			value.getString(contextAcceptLanguage.getPreferredLocale()));
 
 		long fileEntryId = jsonObject.getLong("fileEntryId");
@@ -290,6 +290,9 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

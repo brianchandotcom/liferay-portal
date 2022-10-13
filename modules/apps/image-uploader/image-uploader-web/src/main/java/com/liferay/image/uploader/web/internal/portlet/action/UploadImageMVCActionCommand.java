@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -338,7 +338,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "cropRegion");
 
 				if (Validator.isNotNull(cropRegionJSON)) {
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
 						cropRegionJSON);
 
 					int height = jsonObject.getInt("height");
@@ -412,6 +412,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ImageTool _imageTool;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

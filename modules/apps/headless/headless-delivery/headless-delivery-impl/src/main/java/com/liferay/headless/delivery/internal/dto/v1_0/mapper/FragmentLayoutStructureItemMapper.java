@@ -21,7 +21,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.PageWidgetInstanceDe
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,7 +62,7 @@ public class FragmentLayoutStructureItemMapper
 		JSONObject editableValuesJSONObject = null;
 
 		try {
-			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValuesJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 		}
 		catch (JSONException jsonException) {
@@ -122,6 +122,9 @@ public class FragmentLayoutStructureItemMapper
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private PageFragmentInstanceDefinitionMapper

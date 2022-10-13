@@ -24,7 +24,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -74,10 +74,9 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		JSONArray fragmentEntryLinksJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		JSONArray fragmentEntryLinksJSONArray = _jsonFactory.createJSONArray();
 
 		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>(
 			_fragmentEntryLinkLocalService.
@@ -99,9 +98,8 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
+			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
 
 			String configuration = editableValuesJSONObject.getString(
 				FragmentEntryProcessorConstants.
@@ -168,7 +166,7 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
 					themeDisplay.getPlid(),
 					curLayoutStructure -> curLayoutStructure.updateItemConfig(
-						JSONFactoryUtil.createJSONObject(itemConfig), itemId))
+						_jsonFactory.createJSONObject(itemConfig), itemId))
 			).put(
 				"pageContents",
 				ContentUtil.getPageContentsJSONArray(
@@ -209,6 +207,9 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

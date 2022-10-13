@@ -30,7 +30,7 @@ import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,6 +45,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -87,7 +88,7 @@ public class ContainerLayoutStructureItemImporter
 		}
 
 		if (backgroundFragmentImageMap != null) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			Map<String, Object> titleMap =
 				(Map<String, Object>)backgroundFragmentImageMap.get("title");
@@ -324,7 +325,7 @@ public class ContainerLayoutStructureItemImporter
 			(Map<String, Object>)definitionMap.get("fragmentLink");
 
 		if (fragmentLinkMap != null) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			Map<String, Object> hrefMap =
 				(Map<String, Object>)fragmentLinkMap.get("href");
@@ -403,5 +404,8 @@ public class ContainerLayoutStructureItemImporter
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.SECTION;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

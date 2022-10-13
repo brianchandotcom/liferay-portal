@@ -22,7 +22,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -71,7 +71,7 @@ public class GetExperienceDataMVCResourceCommand
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid());
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		portletPreferencesList.forEach(
 			portletPreferences -> jsonArray.put(
@@ -84,7 +84,7 @@ public class GetExperienceDataMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"fragmentEntryLinks", JSONFactoryUtil.createJSONObject()
+					"fragmentEntryLinks", _jsonFactory.createJSONObject()
 				).put(
 					"portletIds", jsonArray
 				));
@@ -92,7 +92,7 @@ public class GetExperienceDataMVCResourceCommand
 			return;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			resourceRequest, "segmentsExperienceId");
@@ -135,6 +135,9 @@ public class GetExperienceDataMVCResourceCommand
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

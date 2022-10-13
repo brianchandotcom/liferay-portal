@@ -27,7 +27,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -87,7 +87,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONArray());
+				_jsonFactory.createJSONArray());
 
 			return;
 		}
@@ -105,7 +105,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 		if (infoItemObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONArray());
+				_jsonFactory.createJSONArray());
 
 			return;
 		}
@@ -116,7 +116,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 		if (infoItemObject == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONArray());
+				_jsonFactory.createJSONArray());
 
 			return;
 		}
@@ -127,7 +127,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
 
 		JSONArray defaultFieldSetFieldsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+			_jsonFactory.createJSONArray();
 
 		JSONArray fieldSetsJSONArray = JSONUtil.put(
 			JSONUtil.put("fields", defaultFieldSetFieldsJSONArray));
@@ -158,7 +158,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				JSONArray fieldSetFieldsJSONArray =
-					JSONFactoryUtil.createJSONArray();
+					_jsonFactory.createJSONArray();
 
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
@@ -220,6 +220,9 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

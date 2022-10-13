@@ -24,7 +24,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,6 +39,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -225,7 +226,7 @@ public class FormLayoutStructureItemImporter
 	private JSONObject _getLocalizedValuesJSONObject(
 		String key, Map<String, Object> propertiesMap) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		Map<String, Object> map = (Map<String, Object>)propertiesMap.get(key);
 
@@ -279,5 +280,8 @@ public class FormLayoutStructureItemImporter
 
 		return null;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

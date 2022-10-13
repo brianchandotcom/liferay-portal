@@ -73,7 +73,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -180,7 +180,7 @@ public class LayoutStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject extraDataJSONObject = _jsonFactory.createJSONObject(
 			extraData);
 
 		boolean privateLayout = extraDataJSONObject.getBoolean("privateLayout");
@@ -2951,6 +2951,9 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutBranchLocalService _layoutBranchLocalService;

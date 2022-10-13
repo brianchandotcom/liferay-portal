@@ -27,7 +27,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -145,7 +145,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 		}
 
 		JSONObject fragmentEntryLinksJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		layoutStructure = LayoutStructureUtil.getLayoutStructure(
 			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
@@ -191,6 +191,9 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

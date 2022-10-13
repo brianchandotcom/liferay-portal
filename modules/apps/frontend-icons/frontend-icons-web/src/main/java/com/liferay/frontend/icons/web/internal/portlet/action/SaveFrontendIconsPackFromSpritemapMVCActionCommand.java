@@ -21,7 +21,7 @@ import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourceP
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.frontend.icons.web.internal.validator.FrontendIconsPackValidator;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -115,7 +115,7 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
 			companyId, frontendIconsResourcePack);
 
-		JSONArray iconsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray iconsJSONArray = _jsonFactory.createJSONArray();
 
 		for (FrontendIconsResource frontendIconsResource :
 				frontendIconsResourcePack.getFrontendIconsResources()) {
@@ -136,6 +136,9 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 	@Reference
 	private FrontendIconsResourcePackRepository
 		_frontendIconsResourcePackRepository;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

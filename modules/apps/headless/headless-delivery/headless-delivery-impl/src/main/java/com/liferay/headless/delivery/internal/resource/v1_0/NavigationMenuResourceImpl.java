@@ -21,7 +21,7 @@ import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -292,7 +292,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			LocaleUtil.getDefault());
 
 		if (useCustomName) {
-			JSONObject customNameJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject customNameJSONObject = _jsonFactory.createJSONObject(
 				unicodeProperties.getProperty("localizedNames"));
 
 			return customNameJSONObject.getString(defaultLanguageId);
@@ -735,6 +735,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

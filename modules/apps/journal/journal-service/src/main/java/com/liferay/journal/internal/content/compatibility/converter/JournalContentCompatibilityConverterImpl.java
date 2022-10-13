@@ -21,7 +21,7 @@ import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutD
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -236,7 +236,7 @@ public class JournalContentCompatibilityConverterImpl
 			return StringPool.BLANK;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactorys.createJSONObject();
 
 		long layoutId = GetterUtil.getLong(values[0]);
 		boolean privateLayout = !Objects.equals(values[1], "public");
@@ -350,6 +350,9 @@ public class JournalContentCompatibilityConverterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentCompatibilityConverterImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactorys;
 
 	@Reference(unbind = "-")
 	private LayoutLocalService _layoutLocalService;

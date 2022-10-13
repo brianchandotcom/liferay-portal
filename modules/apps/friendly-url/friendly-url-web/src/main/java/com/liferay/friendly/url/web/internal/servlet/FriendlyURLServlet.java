@@ -26,7 +26,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -247,7 +247,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		throws Exception {
 
 		JSONObject friendlyURLEntryLocalizationsJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -301,7 +301,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	private <T> JSONArray _getJSONArray(
 		List<T> list, Function<T, JSONSerializable> serialize) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		list.forEach(t -> jsonArray.put(serialize.apply(t)));
 
@@ -397,6 +397,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

@@ -28,7 +28,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ClassName;
@@ -115,7 +115,7 @@ public class FragmentEntryLinkModelListener
 			_portal.getClassNameId(FragmentEntryLink.class),
 			fragmentEntryLink.getFragmentEntryLinkId());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
 		Iterator<String> keysIterator = jsonObject.keys();
@@ -160,7 +160,7 @@ public class FragmentEntryLinkModelListener
 			fragmentEntryLink.getFragmentEntryLinkId());
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
 			Iterator<String> keysIterator = jsonObject.keys();
@@ -299,6 +299,9 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

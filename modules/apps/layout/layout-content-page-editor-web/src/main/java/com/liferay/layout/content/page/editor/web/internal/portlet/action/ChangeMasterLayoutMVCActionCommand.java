@@ -23,7 +23,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUt
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -99,7 +99,7 @@ public class ChangeMasterLayoutMVCActionCommand
 				themeDisplay.getScopeGroupId(), masterLayoutPlid);
 
 		JSONObject fragmentEntryLinksJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject fragmentEntryLinkJSONObject =
@@ -172,6 +172,9 @@ public class ChangeMasterLayoutMVCActionCommand
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

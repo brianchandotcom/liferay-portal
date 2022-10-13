@@ -25,7 +25,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -84,7 +84,7 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONObject());
+				_jsonFactory.createJSONObject());
 
 			return;
 		}
@@ -108,7 +108,7 @@ public class GetInfoItemFieldValueMVCResourceCommand
 		if (object == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONObject());
+				_jsonFactory.createJSONObject());
 
 			return;
 		}
@@ -196,6 +196,9 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

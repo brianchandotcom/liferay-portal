@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +72,7 @@ public class MoveFragmentEntryLinkMVCActionCommand
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			jsonObject = LayoutStructureUtil.updateLayoutPageTemplateData(
@@ -98,6 +98,9 @@ public class MoveFragmentEntryLinkMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MoveFragmentEntryLinkMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

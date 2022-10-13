@@ -20,7 +20,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -74,7 +74,7 @@ public class GetCollectionConfigurationMVCResourceCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONObject());
+				_jsonFactory.createJSONObject());
 
 			return;
 		}
@@ -93,5 +93,8 @@ public class GetCollectionConfigurationMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

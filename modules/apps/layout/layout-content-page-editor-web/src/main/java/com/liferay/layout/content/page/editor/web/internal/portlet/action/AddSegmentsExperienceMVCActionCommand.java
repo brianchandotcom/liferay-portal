@@ -26,7 +26,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -198,7 +198,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		throws PortalException {
 
 		JSONObject fragmentEntryLinksJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
@@ -230,7 +230,7 @@ public class AddSegmentsExperienceMVCActionCommand
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(groupId, classPK, true);
 
-		return JSONFactoryUtil.createJSONObject(
+		return _jsonFactory.createJSONObject(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 	}
 
@@ -296,6 +296,9 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

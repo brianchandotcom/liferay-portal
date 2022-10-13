@@ -22,7 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -396,9 +396,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			":Pagination");
 
 		String paginationJSON = SessionClicks.get(
-			httpSession, key, JSONFactoryUtil.getNullJSON());
+			httpSession, key, _jsonFactory.getNullJSON());
 
-		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
 			paginationJSON);
 
 		if (_log.isDebugEnabled()) {
@@ -570,7 +570,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		boolean hasManageLayoutsPermission = _groupPermission.contains(
 			themeDisplay.getPermissionChecker(), groupId,
@@ -771,6 +771,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutContentModelResourcePermission

@@ -25,7 +25,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -85,7 +85,7 @@ public class FragmentEntryLinkEditorConfigContributor
 		).put(
 			"skin", "moono-lisa"
 		).put(
-			"toolbars", JSONFactoryUtil.createJSONObject()
+			"toolbars", _jsonFactory.createJSONObject()
 		);
 	}
 
@@ -143,5 +143,8 @@ public class FragmentEntryLinkEditorConfigContributor
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

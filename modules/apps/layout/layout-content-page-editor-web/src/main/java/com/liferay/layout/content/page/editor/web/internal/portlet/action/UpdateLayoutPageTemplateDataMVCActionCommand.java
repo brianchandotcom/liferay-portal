@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,8 +60,11 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId, data);
 
-		return JSONFactoryUtil.createJSONObject();
+		return _jsonFactory.createJSONObject();
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutPageTemplateStructureService

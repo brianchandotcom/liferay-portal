@@ -10,4 +10,3 @@ Export-Package:\
 	com.liferay.commerce.qualifier.search.context,\
 	com.liferay.commerce.qualifier.service,\
 	com.liferay.commerce.qualifier.service.persistence
-Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.qualifier.configuration.CommerceShippingFixedOptionCommerceQualifierConfiguration",
-	enabled = false, immediate = true,
+	immediate = true,
 	service = {CommerceQualifierMetadata.class, ModelListener.class}
 )
 public class CommerceShippingFixedOptionCommerceQualifierMetadata

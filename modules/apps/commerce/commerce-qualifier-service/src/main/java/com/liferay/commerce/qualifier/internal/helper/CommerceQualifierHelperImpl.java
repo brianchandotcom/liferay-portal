@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(
-	enabled = false, immediate = true, service = CommerceQualifierHelper.class
-)
+@Component(immediate = true, service = CommerceQualifierHelper.class)
 public class CommerceQualifierHelperImpl implements CommerceQualifierHelper {
 
 	public CommerceQualifierEntryTable getAliasCommerceQualifierEntryTable(

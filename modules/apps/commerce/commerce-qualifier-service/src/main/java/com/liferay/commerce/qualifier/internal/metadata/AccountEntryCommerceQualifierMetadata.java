@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.qualifier.configuration.AccountEntryCommerceQualifierConfiguration",
-	enabled = false, immediate = true,
+	immediate = true,
 	service = {CommerceQualifierMetadata.class, ModelListener.class}
 )
 public class AccountEntryCommerceQualifierMetadata

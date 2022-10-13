@@ -29,10 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +52,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AvalaraTaxCodesCommerceHealthHttpStatus
 	implements CommerceHealthHttpStatus {
 
-	public final String KEY = "avalara.tax.codes.commerce.health.status.key";
+	public static final String KEY =
+		"avalara.tax.codes.commerce.health.status.key";
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -79,8 +78,7 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 	@Override
 	public String getDescription(Locale locale) {
 		return _language.get(
-			locale,
-			"avalara.tax.codes.commerce.health.status.description");
+			locale, "avalara.tax.codes.commerce.health.status.description");
 	}
 
 	@Override
@@ -107,7 +105,8 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 			_cpTaxCategoryLocalService.
 				fetchCPTaxCategoryByExternalReferenceCode(
 					companyId,
-					CommerceAvalaraConstants.CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY);
+					CommerceAvalaraConstants.
+						CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY);
 
 		if (cpTaxCategory == null) {
 			return false;

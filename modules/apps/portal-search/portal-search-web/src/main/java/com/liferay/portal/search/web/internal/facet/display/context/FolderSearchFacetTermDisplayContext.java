@@ -14,12 +14,10 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import java.io.Serializable;
-
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetTermDisplayContext implements Serializable {
+public class FolderSearchFacetTermDisplayContext extends BucketDisplayContext {
 
 	public String getDisplayName() {
 		return _displayName;
@@ -27,18 +25,6 @@ public class FolderSearchFacetTermDisplayContext implements Serializable {
 
 	public long getFolderId() {
 		return _folderId;
-	}
-
-	public int getFrequency() {
-		return _frequency;
-	}
-
-	public boolean isFrequencyVisible() {
-		return _frequencyVisible;
-	}
-
-	public boolean isSelected() {
-		return _selected;
 	}
 
 	public void setDisplayName(String displayName) {
@@ -49,22 +35,7 @@ public class FolderSearchFacetTermDisplayContext implements Serializable {
 		_folderId = folderId;
 	}
 
-	public void setFrequency(int frequency) {
-		_frequency = frequency;
-	}
-
-	public void setFrequencyVisible(boolean frequencyVisible) {
-		_frequencyVisible = frequencyVisible;
-	}
-
-	public void setSelected(boolean selected) {
-		_selected = selected;
-	}
-
 	private String _displayName;
 	private long _folderId;
-	private int _frequency;
-	private boolean _frequencyVisible;
-	private boolean _selected;
 
 }

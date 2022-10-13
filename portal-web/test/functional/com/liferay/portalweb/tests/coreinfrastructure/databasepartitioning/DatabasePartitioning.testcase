@@ -398,6 +398,61 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "LPS-163671 - Scenario to cover creation of Virtual Instances with case insensitive DB and DB partitioning enabled"
+	@priority = "3"
+	test NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase {
+		property database.lowercase.enabled = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "DatabasePartitioning#NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase";
+
+		task ("Set mysql command to verify if the lower_case_table_names is enabled") {
+			var variableQueryResult = SQL.executeMySQLStatement(mysqlStatement = "show variables where Variable_name='lower_case_table_names';");
+
+			if (!(contains("${variableQueryResult}", "lower_case_table_names,1"))) {
+				echo("${variableQueryResult}");
+
+				fail("lower_case_table_names variable set to 0, case insensitive not enabled.");
+			}
+		}
+
+		task ("Add new company") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Go to Control Panel > Virtual Instances and verify that the virtual instance is present in the UI") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.viewCP(virtualHost = "www.able.com");
+		}
+
+		task ("Access the Virtual Instance and verify that the host name is available") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			AssertConsoleTextNotPresent(value1 = "Invalid host name www.able.com");
+		}
+
+		task ("Restart server") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		task ("Access Virtual Instance and verify that is visible in the UI") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			Smoke.viewWelcomeContentPage();
+		}
+	}
+
 	@priority = "3"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";

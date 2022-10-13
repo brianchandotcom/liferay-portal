@@ -82,7 +82,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 		}
 
 		if (_jsImportmapsConfiguration.enableESModuleShims()) {
-			printWriter.print("<script type=\"esms-options\">{"\"shimMode\": ");
+			printWriter.print("<script type=\"esms-options\">{\"shimMode\": ");
 			printWriter.print("true}</script><script src=\"");
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =

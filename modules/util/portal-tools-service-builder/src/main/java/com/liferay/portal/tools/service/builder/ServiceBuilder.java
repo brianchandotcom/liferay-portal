@@ -2185,6 +2185,41 @@ public class ServiceBuilder {
 		return sb.toString();
 	}
 
+	public static class CharacterCounter {
+
+		public CharacterCounter(char character) {
+			_character = character;
+		}
+
+		public void count(String line) {
+			for (int i = 0; i < line.length(); i++) {
+				if (line.charAt(i) == _character) {
+					_count++;
+				}
+
+				for (CharacterCounter characterCounter : _characterCounters) {
+					if (line.charAt(i) == characterCounter._character) {
+						characterCounter._count++;
+					}
+				}
+			}
+		}
+
+		public CharacterCounter getLinkedCharacterCounter(char character) {
+			CharacterCounter characterCounter = new CharacterCounter(character);
+
+			_characterCounters.add(characterCounter);
+
+			return characterCounter;
+		}
+
+		private final char _character;
+		private final List<CharacterCounter> _characterCounters =
+			new ArrayList<>();
+		private int _count;
+
+	}
+
 	private static SAXReader _getSAXReader() {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
@@ -8012,6 +8047,59 @@ public class ServiceBuilder {
 		Files.createFile(file.toPath());
 	}
 
+	private String _updateBody(String line, Entity entity, Scanner scanner)
+		throws Exception {
+
+		StringBuilder stringBuilder = new StringBuilder(line);
+
+		String setExternalReferenceCode = ".setExternalReferenceCode(";
+		String entityVariableName = StringUtil.lowerCaseFirstLetter(
+			entity.getName());
+		boolean setExternalReferenceCodePresent = false;
+		int pos = -1;
+
+		CharacterCounter openCurlyBraceCharacterCounter = new CharacterCounter(
+			CharPool.OPEN_CURLY_BRACE);
+
+		CharacterCounter closeCurlyBraceCharacterCounter =
+			openCurlyBraceCharacterCounter.getLinkedCharacterCounter(
+				CharPool.CLOSE_CURLY_BRACE);
+
+		openCurlyBraceCharacterCounter.count(line);
+
+		while (closeCurlyBraceCharacterCounter._count <=
+					openCurlyBraceCharacterCounter._count) {
+
+			if (line.contains(setExternalReferenceCode)) {
+				setExternalReferenceCodePresent = true;
+			}
+
+			if ((pos < 0) && line.contains(entityVariableName + ".set")) {
+				pos = stringBuilder.length() - (line.length() + 1);
+			}
+
+			line = scanner.nextLine();
+
+			stringBuilder.append(line);
+
+			stringBuilder.append(StringPool.NEW_LINE);
+
+			openCurlyBraceCharacterCounter.count(line);
+		}
+
+		if (setExternalReferenceCodePresent || (pos < 0)) {
+			return stringBuilder.toString();
+		}
+
+		stringBuilder.insert(
+			pos,
+			StringBundler.concat(
+				StringPool.TAB, StringPool.TAB, entityVariableName,
+				setExternalReferenceCode, "externalReferenceCode);\n"));
+
+		return stringBuilder.toString();
+	}
+
 	private void _updateServiceImplMethodSignatureWithERC(
 			Entity entity, File file)
 		throws Exception {
@@ -8032,6 +8120,10 @@ public class ServiceBuilder {
 					})) {
 
 				line = _updateSignature(line, scanner);
+
+				byteArrayOutputStream.write(line.getBytes());
+
+				line = _updateBody(scanner.nextLine(), entity, scanner);
 			}
 
 			byteArrayOutputStream.write(line.getBytes());

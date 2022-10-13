@@ -350,6 +350,10 @@ public class IndividualController extends BaseFaroController {
 
 			FieldMapping fieldMapping = fieldMappingMap.get(entry.getKey());
 
+			if (fieldMapping == null) {
+				continue;
+			}
+
 			for (Field field : fields) {
 				field.setName(fieldMapping.getDisplayName());
 			}

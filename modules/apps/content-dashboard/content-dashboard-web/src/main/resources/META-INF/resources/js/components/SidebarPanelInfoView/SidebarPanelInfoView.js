@@ -236,13 +236,15 @@ const SidebarPanelInfoView = ({
 							/>
 						</ClayTabs.TabPane>
 
-						<ClayTabs.TabPane aria-labelledby="tab-2">
-							<VersionsContent
-								getItemVersionsURL={getItemVersionsURL}
-								languageTag={languageTag}
-								onError={handleError}
-							/>
-						</ClayTabs.TabPane>
+						{showTabs && (
+							<ClayTabs.TabPane aria-labelledby="tab-2">
+								<VersionsContent
+									getItemVersionsURL={getItemVersionsURL}
+									languageTag={languageTag}
+									onError={handleError}
+								/>
+							</ClayTabs.TabPane>
+						)}
 					</ClayTabs.Content>
 				</div>
 			</Sidebar.Body>

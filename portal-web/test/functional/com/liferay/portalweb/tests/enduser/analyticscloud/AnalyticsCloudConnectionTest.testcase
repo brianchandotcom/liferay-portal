@@ -300,9 +300,13 @@ definition {
 	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"
 	@priority = "3"
 	test CancelCreatingDxpDataSource {
-		task ("Access the data sources, select Liferay DXP and click the cancel button") {
-			ACUtils.launchAC();
+		task ("Create a new workspace") {
+			ACUtils.launchAC(
+				emailList = "acworkspace@liferay.com",
+				workspaceName = "New AC Workspace");
+		}
 
+		task ("Access the data sources, select Liferay DXP and click the cancel button") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();

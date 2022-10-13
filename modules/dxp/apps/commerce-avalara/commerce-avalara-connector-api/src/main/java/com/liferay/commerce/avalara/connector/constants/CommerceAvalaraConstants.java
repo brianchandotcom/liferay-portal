@@ -34,6 +34,7 @@ public class CommerceAvalaraConstants {
 
 	public static final String MACHINE_NAME = "Liferay";
 
-	public static final String TANGIBLE_PERSONAL_PROPERTY = "P0000000";
+	public static final String CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY =
+        "P0000000";
 
 }

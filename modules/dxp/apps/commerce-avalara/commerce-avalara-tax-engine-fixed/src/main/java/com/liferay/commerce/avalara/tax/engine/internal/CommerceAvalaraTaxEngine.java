@@ -81,7 +81,8 @@ public class CommerceAvalaraTaxEngine implements CommerceTaxEngine {
 			CPTaxCategory cpTaxCategory =
 				_cpTaxCategoryLocalService.fetchCPTaxCategoryByReferenceCode(
 					CompanyThreadLocal.getCompanyId(),
-					CommerceAvalaraConstants.TANGIBLE_PERSONAL_PROPERTY);
+					CommerceAvalaraConstants.
+						CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY);
 
 			if (cpTaxCategory == null) {
 				_tangiblePersonalPropertyTaxCategoryId = 0;

@@ -117,7 +117,7 @@ public class CommerceAvalaraConnectorHelperImpl
 			_cpTaxCategoryLocalService.
 				fetchCPTaxCategoryByExternalReferenceCode(
 					commerceTaxMethod.getCompanyId(),
-					CommerceAvalaraConstants.TANGIBLE_PERSONAL_PROPERTY);
+					CommerceAvalaraConstants.CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY);
 
 		if (tangiblePersonalPropertyCPTaxCategory != null) {
 			cpTaxCategoryId =

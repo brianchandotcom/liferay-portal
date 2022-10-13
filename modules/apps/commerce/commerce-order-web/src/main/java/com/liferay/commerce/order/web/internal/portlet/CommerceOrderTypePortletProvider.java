@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "model.class.name=com.liferay.commerce.model.CommerceOrderType",
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,

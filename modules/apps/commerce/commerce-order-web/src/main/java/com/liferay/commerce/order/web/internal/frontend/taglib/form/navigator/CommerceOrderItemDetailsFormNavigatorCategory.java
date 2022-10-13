@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, property = "form.navigator.category.order:Integer=10",
+	property = "form.navigator.category.order:Integer=10",
 	service = FormNavigatorCategory.class
 )
 public class CommerceOrderItemDetailsFormNavigatorCategory

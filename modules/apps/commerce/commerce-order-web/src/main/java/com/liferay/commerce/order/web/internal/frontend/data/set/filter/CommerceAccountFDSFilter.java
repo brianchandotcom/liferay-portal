@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
 	service = FDSFilter.class
 )

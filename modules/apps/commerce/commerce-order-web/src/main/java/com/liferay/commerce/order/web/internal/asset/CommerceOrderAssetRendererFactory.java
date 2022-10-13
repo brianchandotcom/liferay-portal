@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER,
 	service = AssetRendererFactory.class
 )

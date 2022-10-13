@@ -1880,11 +1880,13 @@ definition {
 		}
 
 		if (isSet(styleDisplay)) {
-			AssertElementPresent(
-				key_fieldLabel = "Style Display",
-				key_groupLabel = "Templates",
-				key_value = "${styleDisplay}",
-				locator1 = "Select#GROUPED_SELECT_VALUE");
+			if (("${styleDisplay}" != "Grid") && ("${styleDisplay}" != "Flex Row") && ("${styleDisplay}" != "Flex Column")) {
+				AssertElementPresent(
+					key_fieldLabel = "Style Display",
+					key_groupLabel = "Templates",
+					key_value = "${styleDisplay}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
 
 			Select(
 				key_fieldLabel = "Style Display",
@@ -1911,6 +1913,33 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${listItemStyle}");
 			}
+		}
+
+		if (isSet(flexWrap)) {
+			Select(
+				key_fieldLabel = "Flex Wrap",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${flexWrap}");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if (isSet(alignItems)) {
+			Select(
+				key_fieldLabel = "Align Items",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${alignItems}");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if (isSet(justifyContent)) {
+			Select(
+				key_fieldLabel = "Justify Content",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${justifyContent}");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(layout)) {
@@ -4348,6 +4377,27 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				key_position = "${position}",
 				key_rowNumber = "${rowNumer}",
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
+		}
+
+		if (isSet(alignItems)) {
+			AssertElementPresent(
+				key_alignItems = "${alignItems}",
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_ALIGN_ITEMS");
+		}
+
+		if (isSet(flexWrap)) {
+			AssertElementPresent(
+				key_flexWrap = "${flexWrap}",
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_FLEX_WRAP");
+		}
+
+		if (isSet(justifyContent)) {
+			AssertElementPresent(
+				key_justifyContent = "${justifyContent}",
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_JUSTIFY_CONTENT");
 		}
 
 		if (isSet(layout)) {

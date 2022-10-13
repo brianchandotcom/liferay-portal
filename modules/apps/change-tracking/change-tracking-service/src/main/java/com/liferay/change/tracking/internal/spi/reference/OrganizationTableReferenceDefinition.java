@@ -66,7 +66,7 @@ public class OrganizationTableReferenceDefinition
 				ListTypeTable.INSTANCE
 			).innerJoinON(
 				OrganizationTable.INSTANCE,
-				OrganizationTable.INSTANCE.statusId.eq(
+				OrganizationTable.INSTANCE.statusListTypeId.eq(
 					ListTypeTable.INSTANCE.listTypeId
 				).and(
 					ListTypeTable.INSTANCE.type.eq(

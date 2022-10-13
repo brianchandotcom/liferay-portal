@@ -311,6 +311,10 @@ definition {
 
 			ACSettings.goToDataSources();
 
+			if (IsElementPresent(key_textValue = "Welcome to Analytics Cloud", locator1 = "ACUtils#GENERIC_TEXT")) {
+				ACUtils.closeModal();
+			}
+
 			ACSettings.clickGenericAddOrConfirmationButton();
 
 			Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
@@ -320,6 +324,10 @@ definition {
 
 		task ("Assert the data source list if a new data source has not been created") {
 			ACSettings.goToDataSources();
+
+			if (IsElementPresent(key_textValue = "Welcome to Analytics Cloud", locator1 = "ACUtils#GENERIC_TEXT")) {
+				ACUtils.closeModal();
+			}
 
 			ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Add a data source to get started.,Access our documentation to learn more.");
 		}

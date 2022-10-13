@@ -57,6 +57,10 @@ public interface ObjectDefinition
 
 		};
 
+	public String createOSGIJAXRsName();
+
+	public String createOSGIJAXRsName(String className);
+
 	public String getDestinationName();
 
 	public String getExtensionDBTableName();

@@ -10,7 +10,6 @@
  */
 
 import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
-import {Liferay} from '../../liferay';
 
 export async function refreshCurrentSession(oktaSessionAPI) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -18,10 +17,6 @@ export async function refreshCurrentSession(oktaSessionAPI) {
 		credentials: 'include',
 		method: 'POST',
 	});
-
-	if (response.status >= 400) {
-		Liferay.Util.navigate('/c/portal/login');
-	}
 
 	const responseContentType = response.headers.get('content-type');
 

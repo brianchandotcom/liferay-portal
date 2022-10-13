@@ -108,11 +108,22 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "inviteAccountUsers");
 				dropdownItem.putData(
+					"inviteAccountUsersURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/account_admin/invite_account_users"
+					).buildString());
+				dropdownItem.putData(
 					"modalURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
 						"/account_entries_admin/invite_account_users.jsp"
+					).setRedirect(
+						currentURLObj
+					).setParameter(
+						"accountEntryId", _getAccountEntryId()
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());

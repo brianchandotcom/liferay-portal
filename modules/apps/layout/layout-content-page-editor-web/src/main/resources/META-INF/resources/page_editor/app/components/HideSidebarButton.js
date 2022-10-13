@@ -60,7 +60,10 @@ export default function HideSidebarButton() {
 
 const getOpenMenuTooltip = (keyLabel) => (
 	<>
-		<div>{Liferay.Language.get('toggle-sidebars')}</div>
+		<span className="d-block">
+			{Liferay.Language.get('toggle-sidebars')}
+		</span>
+
 		<kbd className="c-kbd c-kbd-dark">
 			<kbd className="c-kbd">{keyLabel}</kbd>
 

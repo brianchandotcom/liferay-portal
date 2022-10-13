@@ -226,7 +226,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 			folderSearchFacetTermDisplayContext =
 				new FolderSearchFacetTermDisplayContext();
 
-		folderSearchFacetTermDisplayContext.setDisplayName(displayName);
+		folderSearchFacetTermDisplayContext.setBucketText(displayName);
 		folderSearchFacetTermDisplayContext.setFilterValue(
 			String.valueOf(folderId));
 		folderSearchFacetTermDisplayContext.setFrequency(frequency);
@@ -354,8 +354,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 
 					if (result == 0) {
 						return _compareDisplayNames(
-							displayContext1.getDisplayName(),
-							displayContext2.getDisplayName());
+							displayContext1.getBucketText(),
+							displayContext2.getBucketText());
 					}
 
 					return result;
@@ -378,8 +378,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 
 					if (result == 0) {
 						return _compareDisplayNames(
-							displayContext1.getDisplayName(),
-							displayContext2.getDisplayName());
+							displayContext1.getBucketText(),
+							displayContext2.getBucketText());
 					}
 
 					return result;
@@ -397,8 +397,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 					FolderSearchFacetTermDisplayContext displayContext2) {
 
 					int result = _compareDisplayNames(
-						displayContext1.getDisplayName(),
-						displayContext2.getDisplayName());
+						displayContext1.getBucketText(),
+						displayContext2.getBucketText());
 
 					if (result == 0) {
 						return displayContext2.getFrequency() -
@@ -420,8 +420,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 					FolderSearchFacetTermDisplayContext displayContext2) {
 
 					int result = _compareDisplayNames(
-						displayContext2.getDisplayName(),
-						displayContext1.getDisplayName());
+						displayContext2.getBucketText(),
+						displayContext1.getBucketText());
 
 					if (result == 0) {
 						return displayContext2.getFrequency() -

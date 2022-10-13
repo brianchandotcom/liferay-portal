@@ -18,15 +18,4 @@ package com.liferay.portal.search.web.internal.facet.display.context;
  * @author Lino Alves
  */
 public class FolderSearchFacetTermDisplayContext extends BucketDisplayContext {
-
-	public String getDisplayName() {
-		return _displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		_displayName = displayName;
-	}
-
-	private String _displayName;
-
 }

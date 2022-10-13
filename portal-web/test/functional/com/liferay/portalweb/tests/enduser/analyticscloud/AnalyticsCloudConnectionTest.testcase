@@ -300,6 +300,8 @@ definition {
 	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"
 	@priority = "3"
 	test CancelCreatingDxpDataSource {
+		property test.name.skip.portal.instance = "AnalyticsCloudConnectionTest#CancelCreatingDxpDataSource";
+
 		task ("Create a new workspace") {
 			ACUtils.launchAC(
 				emailList = "acworkspace@liferay.com",

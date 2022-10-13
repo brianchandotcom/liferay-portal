@@ -1107,6 +1107,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9699 CanUpdateOrderItemCustomFieldValue"
+	@priority = "3"
+	test CanUpdateOrderItemCustomFieldValue {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with an account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a payment method is activated") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And a Commerce Order Item Custom field is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "test custom field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "Commerce Order Item",
+				startingValue = "TEST");	
+		}
+		
+		task ("When a new order is placed with a POST API call with an update of the Custom Field Value") {
+			var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItemsCustomFields = "test custom field:NEWVALUE;",
+				orderItems = "MIN55860:8",
+				orderStatus = "1",
+				paymentMethod = "Money Order",
+				paymentStatus = "0");
+		}
+
+		task ("Then the change of the value can be verified with a GET API call") {	
+			var orderItemCustomFieldValue = CommerceJSONOrdersAPI._getCommerceOrderItemCustomFieldValue(
+				customFieldName = "test custom field",
+				orderId = "${orderId}",
+				sku = "MIN55860");
+
+			TestUtils.assertEquals(
+				actual = "${orderItemCustomFieldValue}",
+				expected = "NEWVALUE");
+		}
+	}
+
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9345"
 	@priority = "3"
 	test CanReorderAFailedPayment {

@@ -17,8 +17,18 @@ import {AssetTagsSelector} from 'asset-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../AppContext.es';
+import langEs from '../utils/lang.es';
 
-export default function TagSelector({tagsChange, tagsLoaded, tags = []}) {
+const TAGS_LIMIT = 5;
+const noop = () => {};
+
+export default function TagSelector({
+	tagsLimit = TAGS_LIMIT,
+	tagsChange,
+	tagsLoaded = noop,
+	tags = [],
+	showSelectButton = true,
+}) {
 	const context = useContext(AppContext);
 
 	const [error, setError] = useState(false);
@@ -27,13 +37,13 @@ export default function TagSelector({tagsChange, tagsLoaded, tags = []}) {
 	useEffect(() => {
 		if (inputValue) {
 			tagsLoaded(false);
-		}
-		else {
+		} else {
 			tagsLoaded(true);
 		}
 	}, [inputValue, tagsLoaded]);
 
-	const maxTags = (tags) => tags.length > 5;
+	const maxTags = (tags) => tags.length > tagsLimit;
+
 	const duplicatedTags = (tags) =>
 		new Set(tags.map((tag) => tag.value)).size !== tags.length;
 
@@ -41,46 +51,46 @@ export default function TagSelector({tagsChange, tagsLoaded, tags = []}) {
 		if (!maxTags(tags) && !duplicatedTags(tags)) {
 			setError(false);
 			tagsChange(tags);
-		}
-		else {
+		} else {
 			setError(true);
 		}
 	};
 
 	return (
-		<>
-			<ClayForm.Group className="c-mt-4">
-				<div className="questions-tag-selector">
-					<AssetTagsSelector
-						eventName={`${context.portletNamespace}selectTag`}
-						groupIds={[context.siteKey]}
-						inputValue={inputValue}
-						onInputValueChange={setInputValue}
-						onSelectedItemsChange={filterItems}
-						portletURL={context.tagSelectorURL}
-						selectedItems={tags}
-						showSelectButton={true}
-					/>
-				</div>
+		<ClayForm.Group className="c-mt-4">
+			<div className="questions-tag-selector">
+				<AssetTagsSelector
+					eventName={`${context.portletNamespace}selectTag`}
+					groupIds={[context.siteKey]}
+					inputValue={inputValue}
+					onInputValueChange={setInputValue}
+					onSelectedItemsChange={filterItems}
+					portletURL={context.tagSelectorURL}
+					selectedItems={tags}
+					showSelectButton={showSelectButton}
+				/>
+			</div>
 
-				<ClayForm.FeedbackGroup className={error && 'has-error'}>
+			<ClayForm.FeedbackGroup className={error && 'has-error'}>
+				<ClayForm.FeedbackItem>
+					<span className="small text-secondary">
+						{langEs.sub(
+							Liferay.Language.get(
+								'add-up-to-x-tags-to-describe-what-your-question-is-about'
+							),
+							[tagsLimit]
+						)}
+					</span>
+				</ClayForm.FeedbackItem>
+
+				{error && (
 					<ClayForm.FeedbackItem>
-						<span className="small text-secondary">
-							{Liferay.Language.get(
-								'add-up-to-5-tags-to-describe-what-your-question-is-about'
-							)}
-						</span>
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+						{Liferay.Language.get('this-is-an-invalid-tag')}
 					</ClayForm.FeedbackItem>
-
-					{error && (
-						<ClayForm.FeedbackItem>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-							{Liferay.Language.get('this-is-an-invalid-tag')}
-						</ClayForm.FeedbackItem>
-					)}
-				</ClayForm.FeedbackGroup>
-			</ClayForm.Group>
-		</>
+				)}
+			</ClayForm.FeedbackGroup>
+		</ClayForm.Group>
 	);
 }

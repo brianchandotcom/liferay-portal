@@ -453,14 +453,20 @@ export const hasListPermissionsQuery = `
 
 export const getSectionThreadsQuery = `
 	query messageBoardSectionMessageBoardThreads(
+		$filter: String
 		$messageBoardSectionId: Long!
 		$page: Int!
 		$pageSize: Int!
+		$search: String
+		$sort: String
 	) {
 		messageBoardSectionMessageBoardThreads(
+			filter: $filter
 			messageBoardSectionId: $messageBoardSectionId
 			page: $page
 			pageSize: $pageSize
+			search: $search
+			sort: $sort
 		) {
 			items {
 				aggregateRating {

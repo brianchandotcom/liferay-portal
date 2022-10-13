@@ -25,7 +25,6 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -77,128 +76,135 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetContentDashboardItemVersions() throws Exception {
+	public void testGetContentDashboardItemVersions() {
 		int versionsCount = 15;
 
-		_withTestItemContentDashboardItemFactoryRegistered(
-			() -> {
-				MockLiferayResourceRequest mockLiferayResourceRequest =
-					_getMockLiferayPortletResourceRequest();
+		ServiceRegistration<ContentDashboardItemFactory> serviceRegistration =
+			_getServiceRegistration(versionsCount);
 
-				mockLiferayResourceRequest.setParameter(
-					"className", TestItem.class.getName());
-				mockLiferayResourceRequest.setParameter("classPK", "0");
+		try {
+			MockLiferayResourceRequest mockLiferayResourceRequest =
+				_getMockLiferayPortletResourceRequest();
 
-				JSONObject jsonObject = ReflectionTestUtil.invoke(
-					_mvcResourceCommand,
-					"_getContentDashboardItemVersionsJSONObject",
-					new Class<?>[] {ResourceRequest.class},
-					mockLiferayResourceRequest);
+			mockLiferayResourceRequest.setParameter(
+				"className", TestItem.class.getName());
+			mockLiferayResourceRequest.setParameter("classPK", "0");
 
-				Assert.assertNotNull(jsonObject);
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcResourceCommand,
+				"_getContentDashboardItemVersionsJSONObject",
+				new Class<?>[] {ResourceRequest.class},
+				mockLiferayResourceRequest);
 
-				String viewVersionsURL = jsonObject.getString(
-					"viewVersionsURL");
+			Assert.assertNotNull(jsonObject);
 
-				Assert.assertEquals(_VIEW_VERSIONS_URL, viewVersionsURL);
+			String viewVersionsURL = jsonObject.getString("viewVersionsURL");
 
-				_assertVersions(jsonObject, 10, versionsCount);
-			},
-			versionsCount);
+			Assert.assertEquals(_VIEW_VERSIONS_URL, viewVersionsURL);
+
+			_assertVersions(jsonObject, 10, versionsCount);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
-	public void testGetContentDashboardItemVersionsForInvalidClassName()
-		throws Exception {
+	public void testGetContentDashboardItemVersionsForInvalidClassName() {
+		ServiceRegistration<ContentDashboardItemFactory> serviceRegistration =
+			_getServiceRegistration(15);
 
-		_withTestItemContentDashboardItemFactoryRegistered(
-			() -> {
-				MockLiferayResourceRequest mockLiferayResourceRequest =
-					_getMockLiferayPortletResourceRequest();
+		try {
+			MockLiferayResourceRequest mockLiferayResourceRequest =
+				_getMockLiferayPortletResourceRequest();
 
-				mockLiferayResourceRequest.setParameter(
-					"className", RandomTestUtil.randomString());
+			mockLiferayResourceRequest.setParameter(
+				"className", RandomTestUtil.randomString());
 
-				JSONObject jsonObject = ReflectionTestUtil.invoke(
-					_mvcResourceCommand,
-					"_getContentDashboardItemVersionsJSONObject",
-					new Class<?>[] {ResourceRequest.class},
-					mockLiferayResourceRequest);
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcResourceCommand,
+				"_getContentDashboardItemVersionsJSONObject",
+				new Class<?>[] {ResourceRequest.class},
+				mockLiferayResourceRequest);
 
-				Assert.assertNotNull(jsonObject);
-				Assert.assertEquals(0, jsonObject.length());
-			},
-			15);
+			Assert.assertNotNull(jsonObject);
+			Assert.assertEquals(0, jsonObject.length());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
-	public void testGetContentDashboardItemVersionsWithLimit()
-		throws Exception {
-
+	public void testGetContentDashboardItemVersionsWithLimit() {
 		int versionsCount = 15;
 
-		_withTestItemContentDashboardItemFactoryRegistered(
-			() -> {
-				int maxDisplayVersions = 5;
+		ServiceRegistration<ContentDashboardItemFactory> serviceRegistration =
+			_getServiceRegistration(versionsCount);
 
-				MockLiferayResourceRequest mockLiferayResourceRequest =
-					_getMockLiferayPortletResourceRequest();
+		try {
+			int maxDisplayVersions = 5;
 
-				mockLiferayResourceRequest.setParameter(
-					"className", TestItem.class.getName());
-				mockLiferayResourceRequest.setParameter("classPK", "0");
-				mockLiferayResourceRequest.setParameter(
-					"maxDisplayVersions", String.valueOf(maxDisplayVersions));
+			MockLiferayResourceRequest mockLiferayResourceRequest =
+				_getMockLiferayPortletResourceRequest();
 
-				JSONObject jsonObject = ReflectionTestUtil.invoke(
-					_mvcResourceCommand,
-					"_getContentDashboardItemVersionsJSONObject",
-					new Class<?>[] {ResourceRequest.class},
-					mockLiferayResourceRequest);
+			mockLiferayResourceRequest.setParameter(
+				"className", TestItem.class.getName());
+			mockLiferayResourceRequest.setParameter("classPK", "0");
+			mockLiferayResourceRequest.setParameter(
+				"maxDisplayVersions", String.valueOf(maxDisplayVersions));
 
-				Assert.assertNotNull(jsonObject);
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcResourceCommand,
+				"_getContentDashboardItemVersionsJSONObject",
+				new Class<?>[] {ResourceRequest.class},
+				mockLiferayResourceRequest);
 
-				String viewVersionsURL = jsonObject.getString(
-					"viewVersionsURL");
+			Assert.assertNotNull(jsonObject);
 
-				Assert.assertEquals(_VIEW_VERSIONS_URL, viewVersionsURL);
+			String viewVersionsURL = jsonObject.getString("viewVersionsURL");
 
-				_assertVersions(jsonObject, maxDisplayVersions, versionsCount);
-			},
-			versionsCount);
+			Assert.assertEquals(_VIEW_VERSIONS_URL, viewVersionsURL);
+
+			_assertVersions(jsonObject, maxDisplayVersions, versionsCount);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
-	public void testGetContentDashboardItemVersionsWithoutViewVersionURL()
-		throws Exception {
-
+	public void testGetContentDashboardItemVersionsWithoutViewVersionURL() {
 		int versionsCount = 5;
 
-		_withTestItemContentDashboardItemFactoryRegistered(
-			() -> {
-				MockLiferayResourceRequest mockLiferayResourceRequest =
-					_getMockLiferayPortletResourceRequest();
+		ServiceRegistration<ContentDashboardItemFactory> serviceRegistration =
+			_getServiceRegistration(versionsCount);
 
-				mockLiferayResourceRequest.setParameter(
-					"className", TestItem.class.getName());
-				mockLiferayResourceRequest.setParameter("classPK", "0");
+		try {
+			MockLiferayResourceRequest mockLiferayResourceRequest =
+				_getMockLiferayPortletResourceRequest();
 
-				JSONObject jsonObject = ReflectionTestUtil.invoke(
-					_mvcResourceCommand,
-					"_getContentDashboardItemVersionsJSONObject",
-					new Class<?>[] {ResourceRequest.class},
-					mockLiferayResourceRequest);
+			mockLiferayResourceRequest.setParameter(
+				"className", TestItem.class.getName());
+			mockLiferayResourceRequest.setParameter("classPK", "0");
 
-				Assert.assertNotNull(jsonObject);
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcResourceCommand,
+				"_getContentDashboardItemVersionsJSONObject",
+				new Class<?>[] {ResourceRequest.class},
+				mockLiferayResourceRequest);
 
-				String viewVersionsURL = jsonObject.getString(
-					"viewVersionsURL");
+			Assert.assertNotNull(jsonObject);
 
-				Assert.assertEquals(StringPool.BLANK, viewVersionsURL);
+			String viewVersionsURL = jsonObject.getString("viewVersionsURL");
 
-				_assertVersions(jsonObject, versionsCount, versionsCount);
-			},
-			versionsCount);
+			Assert.assertEquals(StringPool.BLANK, viewVersionsURL);
+
+			_assertVersions(jsonObject, versionsCount, versionsCount);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private void _assertVersions(
@@ -231,26 +237,17 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 		return mockLiferayResourceRequest;
 	}
 
-	private void _withTestItemContentDashboardItemFactoryRegistered(
-			UnsafeRunnable<Exception> unsafeRunnable, int versionsCount)
-		throws Exception {
+	private ServiceRegistration<ContentDashboardItemFactory>
+		_getServiceRegistration(int versionsCount) {
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			GetContentDashboardItemVersionsResourceCommandTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceRegistration<ContentDashboardItemFactory> serviceRegistration =
-			bundleContext.registerService(
-				ContentDashboardItemFactory.class,
-				new TestItemContentDashboardItemFactory(versionsCount), null);
-
-		try {
-			unsafeRunnable.run();
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		return bundleContext.registerService(
+			ContentDashboardItemFactory.class,
+			new TestItemContentDashboardItemFactory(versionsCount), null);
 	}
 
 	private static final String _VIEW_VERSIONS_URL = "view_versions_url";

@@ -96,14 +96,8 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = facetConfiguration.getData();
 
-		JSONArray rangesJSONArray = _replaceAliases(
-			jsonObject.getJSONArray("rangesJSONArray"));
-
-		facetConfiguration.setDataJSONObject(
-			JSONFactoryUtil.createJSONObject(
-			).put(
-				"ranges", rangesJSONArray
-			));
+		jsonObject.put(
+			"ranges", _replaceAliases(jsonObject.getJSONArray("ranges")));
 
 		return facet;
 	}

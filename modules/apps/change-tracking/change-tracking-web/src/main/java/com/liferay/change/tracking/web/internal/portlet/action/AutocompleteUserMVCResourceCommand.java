@@ -20,7 +20,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -110,7 +110,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 	private JSONArray _getUsersJSONArray(ResourceRequest resourceRequest)
 		throws PortalException {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
@@ -166,6 +166,9 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private PortletPermission _portletPermission;

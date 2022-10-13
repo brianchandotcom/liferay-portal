@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tagnaouti Boubker
@@ -159,7 +160,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 		}
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(content);
 
 			String success = jsonObject.getString("success");
 
@@ -211,5 +212,8 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	private static final Log _log = LogFactoryUtil.getLog(ReCaptchaImpl.class);
 
 	private volatile CaptchaConfiguration _captchaConfiguration;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

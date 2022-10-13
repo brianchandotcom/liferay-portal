@@ -41,7 +41,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -175,7 +175,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			Serializable fieldValue = field.getValue(
 				themeDisplay.getLocale(), 0);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = jsonFactory.createJSONObject();
 
 			if (fieldValue != null) {
 				jsonObject.put("success", true);
@@ -458,6 +458,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected ItemSelector itemSelector;
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected Portal portal;

@@ -27,7 +27,7 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -98,7 +98,7 @@ public class CommerceUsersImporter {
 		while (jsonFactoryParser.nextToken() != JsonToken.END_ARRAY) {
 			TreeNode treeNode = jsonFactoryParser.readValueAsTree();
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				treeNode.toString());
 
 			if (_log.isDebugEnabled()) {
@@ -478,6 +478,9 @@ public class CommerceUsersImporter {
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

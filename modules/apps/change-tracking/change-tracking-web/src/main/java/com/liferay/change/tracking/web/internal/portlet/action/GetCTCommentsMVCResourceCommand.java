@@ -20,7 +20,7 @@ import com.liferay.change.tracking.model.CTCommentTable;
 import com.liferay.change.tracking.service.CTCommentLocalService;
 import com.liferay.change.tracking.web.internal.display.context.DisplayContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -73,7 +73,7 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 	protected JSONObject getCTCommentsJSONObject(
 		ResourceRequest resourceRequest) {
 
-		JSONArray commentsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray commentsJSONArray = jsonFactory.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -142,6 +142,9 @@ public class GetCTCommentsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	protected CTCommentLocalService ctCommentLocalService;
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected Language language;

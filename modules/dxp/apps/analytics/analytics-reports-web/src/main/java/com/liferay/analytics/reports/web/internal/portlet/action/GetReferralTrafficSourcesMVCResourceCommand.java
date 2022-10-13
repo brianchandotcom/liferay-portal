@@ -21,7 +21,7 @@ import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -158,7 +158,7 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 		List<ReferringURL> referringURLS) {
 
 		if (ListUtil.isEmpty(referringURLS)) {
-			return JSONFactoryUtil.createJSONArray();
+			return _jsonFactory.createJSONArray();
 		}
 
 		Stream<ReferringURL> stream = referringURLS.stream();
@@ -178,5 +178,8 @@ public class GetReferralTrafficSourcesMVCResourceCommand
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

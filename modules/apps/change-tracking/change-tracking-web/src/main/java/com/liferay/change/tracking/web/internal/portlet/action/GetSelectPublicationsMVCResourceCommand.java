@@ -26,7 +26,7 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.UserTable;
@@ -85,7 +85,7 @@ public class GetSelectPublicationsMVCResourceCommand
 		}
 
 		Set<Long> ctCollectionIds = new HashSet<>();
-		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray entriesJSONArray = _jsonFactory.createJSONArray();
 
 		List<CTCollection> ctCollections =
 			_ctCollectionService.getCTCollections(
@@ -164,6 +164,9 @@ public class GetSelectPublicationsMVCResourceCommand
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

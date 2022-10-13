@@ -15,7 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.search.index.helper;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,11 +54,11 @@ public class CommerceMLSearchEngineHelper {
 			createIndexRequest.setSource(
 				JSONUtil.put(
 					"mappings",
-					JSONFactoryUtil.createJSONObject(
+					_jsonFactory.createJSONObject(
 						StringUtil.read(getClass(), indexMappingFileName))
 				).put(
 					"settings",
-					JSONFactoryUtil.createJSONObject(
+					_jsonFactory.createJSONObject(
 						StringUtil.read(
 							getClass(), "/META-INF/search/settings.json"))
 				).toString());
@@ -110,5 +110,8 @@ public class CommerceMLSearchEngineHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLSearchEngineHelper.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

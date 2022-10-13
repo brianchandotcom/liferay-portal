@@ -26,7 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -140,7 +140,7 @@ public class BlogsContentEditorConfigContributor
 	private JSONObject _getStyleFormatJSONObject(
 		String styleFormatName, String element, String cssClass) {
 
-		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject styleJSONObject = _jsonFactory.createJSONObject();
 
 		if (Validator.isNotNull(cssClass)) {
 			JSONObject attributesJSONObject = JSONUtil.put("class", cssClass);
@@ -280,6 +280,9 @@ public class BlogsContentEditorConfigContributor
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

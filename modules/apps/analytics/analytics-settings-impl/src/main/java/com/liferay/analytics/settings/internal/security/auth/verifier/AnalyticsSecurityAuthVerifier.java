@@ -17,7 +17,7 @@ package com.liferay.analytics.settings.internal.security.auth.verifier;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,7 +102,7 @@ public class AnalyticsSecurityAuthVerifier implements AuthVerifier {
 			}
 
 			Set<String> hostsAllowed = JSONUtil.toStringSet(
-				JSONFactoryUtil.createJSONArray(
+				_jsonFactory.createJSONArray(
 					analyticsConfiguration.hostsAllowed()));
 
 			if (!hostsAllowed.isEmpty() &&
@@ -219,6 +219,9 @@ public class AnalyticsSecurityAuthVerifier implements AuthVerifier {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

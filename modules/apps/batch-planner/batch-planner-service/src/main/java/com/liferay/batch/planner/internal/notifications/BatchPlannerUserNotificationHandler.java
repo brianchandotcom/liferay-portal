@@ -18,7 +18,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
@@ -55,7 +55,7 @@ public class BatchPlannerUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
 		String className = jsonObject.getString("className");
@@ -89,7 +89,7 @@ public class BatchPlannerUserNotificationHandler
 		).setParameter(
 			"batchPlannerPlanId",
 			() -> {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					userNotificationEvent.getPayload());
 
 				return jsonObject.getLong("batchPlannerPlanId");
@@ -158,6 +158,9 @@ public class BatchPlannerUserNotificationHandler
 	private String _getSimpleClassNamePlural(String className) {
 		return TextFormatter.formatPlural(_getSimpleClassName(className));
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

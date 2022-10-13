@@ -22,7 +22,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -74,7 +74,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
-		JSONArray sourcesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray sourcesJSONArray = _jsonFactory.createJSONArray();
 
 		List<MediaQuery> mediaQueries = _mediaQueryProvider.getMediaQueries(
 			fileEntry);
@@ -101,7 +101,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 			"attributes",
 			() -> {
 				JSONObject attributesJSONObject =
-					JSONFactoryUtil.createJSONObject();
+					_jsonFactory.createJSONObject();
 
 				for (Condition condition : mediaQuery.getConditions()) {
 					attributesJSONObject.put(
@@ -117,6 +117,9 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MediaQueryProvider _mediaQueryProvider;

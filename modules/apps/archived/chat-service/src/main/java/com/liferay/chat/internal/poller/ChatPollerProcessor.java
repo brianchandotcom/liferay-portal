@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -120,7 +120,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		List<Object[]> buddies = _buddyFinder.getBuddies(
 			pollerRequest.getCompanyId(), pollerRequest.getUserId());
 
-		JSONArray buddiesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray buddiesJSONArray = _jsonFactory.createJSONArray();
 
 		for (Object[] buddy : buddies) {
 			long userId = (Long)buddy[8];
@@ -199,7 +199,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws Exception {
 
-		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray entriesJSONArray = _jsonFactory.createJSONArray();
 
 		boolean hasProcessedEntry = false;
 
@@ -322,6 +322,9 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 	private volatile ChatGroupServiceConfiguration
 		_chatGroupServiceConfiguration;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

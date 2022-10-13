@@ -17,7 +17,7 @@ package com.liferay.analytics.settings.web.internal.portlet.action;
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -167,7 +167,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 				throw new IllegalArgumentException();
 			}
 
-			return JSONFactoryUtil.createJSONObject(
+			return _jsonFactory.createJSONObject(
 				new String(Base64.decode(token)));
 		}
 		catch (Exception exception) {
@@ -248,7 +248,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			dataSourceConnectionJSON);
 
 		Iterator<String> iterator = jsonObject.keys();
@@ -305,7 +305,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 				});
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			dataSourceConnectionJSON);
 
 		Iterator<String> iterator = jsonObject.keys();
@@ -319,6 +319,9 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditWorkspaceConnectionMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

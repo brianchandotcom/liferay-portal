@@ -69,7 +69,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -219,7 +219,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 		String data = FileUtil.read(uploadPortletRequest.getFile("file"));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (Validator.isNotNull(data)) {
 			long calendarId = ParamUtil.getLong(
@@ -1300,7 +1300,7 @@ public class CalendarPortlet extends MVCPortlet {
 		long parentCalendarBookingId = ParamUtil.getLong(
 			resourceRequest, "parentCalendarBookingId");
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -1540,7 +1540,7 @@ public class CalendarPortlet extends MVCPortlet {
 			}
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Calendar calendar : calendarsSet) {
 			JSONObject jsonObject = CalendarUtil.toCalendarJSONObject(
@@ -1862,6 +1862,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Localization _localization;

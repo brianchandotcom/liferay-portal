@@ -41,7 +41,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -970,7 +969,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		throws Exception {
 
 		if (jsonArray == null) {
-			jsonArray = JSONFactoryUtil.createJSONArray(
+			jsonArray = _jsonFactory.createJSONArray(
 				"[{\"actionIds\": [\"VIEW\"], \"roleName\": \"Site Member\"," +
 					"\"scope\": 4}]");
 		}

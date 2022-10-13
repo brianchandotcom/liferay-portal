@@ -16,7 +16,7 @@ package com.liferay.analytics.message.sender.internal;
 
 import com.liferay.analytics.message.sender.client.AnalyticsBatchClient;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +46,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
@@ -90,11 +91,10 @@ public class AnalyticsBatchClientImpl
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-				JSONObject responseJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						EntityUtils.toString(
-							closeableHttpResponse.getEntity(),
-							Charset.defaultCharset()));
+				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+					EntityUtils.toString(
+						closeableHttpResponse.getEntity(),
+						Charset.defaultCharset()));
 
 				processInvalidTokenMessage(
 					companyId, false, responseJSONObject.getString("message"));
@@ -151,11 +151,10 @@ public class AnalyticsBatchClientImpl
 			int statusCode = statusLine.getStatusCode();
 
 			if (statusCode == HttpStatus.SC_FORBIDDEN) {
-				JSONObject responseJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						EntityUtils.toString(
-							closeableHttpResponse.getEntity(),
-							Charset.defaultCharset()));
+				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+					EntityUtils.toString(
+						closeableHttpResponse.getEntity(),
+						Charset.defaultCharset()));
 
 				processInvalidTokenMessage(
 					companyId, false, responseJSONObject.getString("message"));
@@ -201,5 +200,8 @@ public class AnalyticsBatchClientImpl
 	private static final Format _modifiedSinceHeaderDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz");
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

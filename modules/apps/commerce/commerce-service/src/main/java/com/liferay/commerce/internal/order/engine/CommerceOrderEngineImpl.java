@@ -58,7 +58,7 @@ import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelperUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -483,11 +483,10 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				_dtoConverterRegistry, commerceOrder.getCommerceOrderId(),
 				LocaleUtil.getSiteDefault(), null, null));
 
-		JSONObject commerceOrderJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject commerceOrderJSONObject = _jsonFactory.createJSONObject(
 			commerceOrderObject.toString());
 
-		JSONArray commerceOrderItemsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		JSONArray commerceOrderItemsJSONArray = _jsonFactory.createJSONArray();
 
 		DTOConverter<?, ?> commerceOrderItemDTOConverter =
 			_dtoConverterRegistry.getDTOConverter(
@@ -505,7 +504,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 						LocaleUtil.getSiteDefault(), null, null));
 
 			JSONObject commerceOrderItemJSONObject =
-				JSONFactoryUtil.createJSONObject(
+				_jsonFactory.createJSONObject(
 					commerceOrderItemObject.toString());
 
 			commerceOrderItemsJSONArray.put(commerceOrderItemJSONObject);
@@ -736,6 +735,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

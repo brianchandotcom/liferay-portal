@@ -23,7 +23,7 @@ import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
@@ -125,7 +125,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			   NoSuchMessageException | PrincipalException |
 			   RequiredMessageException exception) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.putException(exception);
 
@@ -302,6 +302,9 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -23,7 +23,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.Role;
@@ -79,7 +79,7 @@ public class DLImporter {
 		throws PortalException {
 
 		if (jsonArray == null) {
-			jsonArray = JSONFactoryUtil.createJSONArray(
+			jsonArray = _jsonFactory.createJSONArray(
 				"[{\"actionIds\": [\"VIEW\"], \"roleName\": \"Site Member\"," +
 					"\"scope\": 4}]");
 		}
@@ -236,6 +236,9 @@ public class DLImporter {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

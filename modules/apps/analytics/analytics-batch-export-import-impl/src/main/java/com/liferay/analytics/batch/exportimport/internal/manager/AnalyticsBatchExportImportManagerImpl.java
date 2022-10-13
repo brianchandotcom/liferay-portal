@@ -31,7 +31,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -267,9 +267,8 @@ public class AnalyticsBatchExportImportManagerImpl
 			if (response.getResponseCode() ==
 					HttpURLConnection.HTTP_FORBIDDEN) {
 
-				JSONObject responseJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						StringUtil.read(inputStream));
+				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+					StringUtil.read(inputStream));
 
 				_processInvalidTokenMessage(
 					companyId, responseJSONObject.getString("message"));
@@ -421,9 +420,8 @@ public class AnalyticsBatchExportImportManagerImpl
 			if (response.getResponseCode() ==
 					HttpURLConnection.HTTP_FORBIDDEN) {
 
-				JSONObject responseJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						StringUtil.read(inputStream));
+				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+					StringUtil.read(inputStream));
 
 				_processInvalidTokenMessage(
 					companyId, responseJSONObject.getString("message"));
@@ -481,5 +479,8 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

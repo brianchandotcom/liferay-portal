@@ -34,7 +34,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -226,7 +226,7 @@ public class CommerceCurrencyLocalServiceImpl
 		String countriesJSON = StringUtil.read(
 			clazz.getClassLoader(), currenciesPath, false);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(countriesJSON);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(countriesJSON);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -524,6 +524,9 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Reference
 	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private ServiceRegistration<?> _serviceRegistration;
 

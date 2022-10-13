@@ -16,7 +16,7 @@ package com.liferay.comment.editor.configuration.internal;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -26,6 +26,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -46,7 +47,7 @@ public class CommentEditorConfigContributor
 		jsonObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT
 		).put(
-			"toolbar", JSONFactoryUtil.createJSONObject()
+			"toolbar", _jsonFactory.createJSONObject()
 		);
 
 		if (PropsValues.DISCUSSION_COMMENTS_FORMAT.equals("bbcode")) {
@@ -62,5 +63,8 @@ public class CommentEditorConfigContributor
 			jsonObject.put("extraPlugins", extraPlugins);
 		}
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

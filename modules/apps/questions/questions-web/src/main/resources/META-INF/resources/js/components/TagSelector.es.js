@@ -37,7 +37,8 @@ export default function TagSelector({
 	useEffect(() => {
 		if (inputValue) {
 			tagsLoaded(false);
-		} else {
+		}
+		else {
 			tagsLoaded(true);
 		}
 	}, [inputValue, tagsLoaded]);
@@ -51,7 +52,8 @@ export default function TagSelector({
 		if (!maxTags(tags) && !duplicatedTags(tags)) {
 			setError(false);
 			tagsChange(tags);
-		} else {
+		}
+		else {
 			setError(true);
 		}
 	};

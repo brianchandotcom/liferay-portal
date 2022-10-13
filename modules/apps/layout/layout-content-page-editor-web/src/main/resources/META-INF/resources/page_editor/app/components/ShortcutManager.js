@@ -243,7 +243,7 @@ export default function ShortcutManager() {
 				!isEditableField(event.target) &&
 				!isInteractiveElement(event.target),
 			isKeyCombination: (event) => {
-				if (!activeLayoutDataItem) {
+				if (!activeLayoutDataItem || !event.altKey || !event.shiftKey) {
 					return false;
 				}
 

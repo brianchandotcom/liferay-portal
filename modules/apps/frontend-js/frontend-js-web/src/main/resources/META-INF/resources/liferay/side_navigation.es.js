@@ -1017,6 +1017,8 @@ SideNavigation.prototype = {
 					[openClass]: false,
 				});
 			});
+
+			instance._updateSkipLink();
 		}
 	},
 

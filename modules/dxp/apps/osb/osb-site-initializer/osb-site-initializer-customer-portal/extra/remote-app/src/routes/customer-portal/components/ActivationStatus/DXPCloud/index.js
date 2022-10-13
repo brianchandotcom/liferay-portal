@@ -29,6 +29,7 @@ import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {
 	AUTO_CLOSE_ALERT_TIME,
+	LIST_TYPES,
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../utils/constants';
@@ -68,8 +69,10 @@ const SetupDXPCloudModal = ({
 			) : (
 				<SetupDXPCloudForm
 					client={client}
+					dxpVersion={project.dxpVersion}
 					handlePage={onClose}
 					leftButton={i18n.translate('cancel')}
+					listType={LIST_TYPES.dxpVersion}
 					project={project}
 					setFormAlreadySubmitted={setFormAlreadySubmitted}
 					subscriptionGroupId={subscriptionGroupId}
@@ -235,6 +238,8 @@ const ActivationStatusDXPCloud = ({
 			{visibleSetup && (
 				<SetupDXPCloudModal
 					{...setupModalProps}
+					dxpVersion={project.dxpVersion}
+					listType={LIST_TYPES.dxpVersion}
 					onClose={onCloseSetupModal}
 					project={project}
 					subscriptionGroupId={

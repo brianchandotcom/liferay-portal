@@ -60,6 +60,8 @@ const DXPCloud = () => {
 		<div className="mr-4">
 			<ActivationStatus.DXPCloud
 				dxpCloudEnvironment={dxpCloudEnvironment}
+				dxpVersion={project.dxpVersion}
+				listType={LIST_TYPES.dxpVersion}
 				project={project}
 				subscriptionGroupDXPCloud={subscriptionGroups.find(
 					(subscriptionGroup) =>

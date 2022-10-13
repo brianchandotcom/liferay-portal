@@ -10,15 +10,17 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useMemo, useState} from 'react';
 
+import {useEffect, useMemo, useState} from 'react';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
 	getDXPCloudEnvironment,
 	getDXPCloudPageInfo,
+	getListTypeDefinitions,
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
@@ -35,9 +37,11 @@ const MAXIMUM_NUMBER_OF_CHARACTERS = 77;
 
 const SetupDXPCloudPage = ({
 	client,
+	dxpVersion,
 	errors,
 	handlePage,
 	leftButton,
+	listType,
 	project,
 	setFieldValue,
 	setFormAlreadySubmitted,
@@ -46,12 +50,37 @@ const SetupDXPCloudPage = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
-
+	const [dxpVersions, setDxpVersions] = useState([]);
+	const [selectedVersion, setSelectedVersion] = useState(dxpVersion || '');
 	const {data} = useQuery(getDXPCloudPageInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
 		},
 	});
+	useEffect(() => {
+		const fetchListTypeDefinitions = async () => {
+			const {data} = await client.query({
+				query: getListTypeDefinitions,
+				variables: {
+					filter: `name eq '${listType}'`,
+				},
+			});
+
+			const items = data?.listTypeDefinitions?.items[0]?.listTypeEntries;
+
+			if (items?.length) {
+				const sortedItems = [...items].sort();
+				setDxpVersions(sortedItems);
+
+				setSelectedVersion(
+					sortedItems.find((item) => item.name === dxpVersion)
+						?.name || sortedItems[0].name
+				);
+			}
+		};
+
+		fetchListTypeDefinitions();
+	}, [client, dxpVersion, listType]);
 
 	const dXPCDataCenterRegions = useMemo(
 		() =>
@@ -226,9 +255,28 @@ const SetupDXPCloudPage = ({
 									{i18n.translate('liferay-dxp-version')}
 								</label>
 
-								<p className="text-neutral-6 text-paragraph-lg">
-									<strong>{project.dxpVersion}</strong>
-								</p>
+								<div className="position-relative">
+									<ClayIcon
+										className="select-icon"
+										symbol="caret-bottom"
+									/>
+
+									<ClaySelect
+										className="bg-neutral-1 border-0 font-weight-bold mr-2 pr-6"
+										onChange={({target}) => {
+											setSelectedVersion(target.value);
+										}}
+										value={selectedVersion}
+									>
+										{dxpVersions.map((version) => (
+											<ClaySelect.Option
+												className="font-weight-bold options"
+												key={version.key}
+												label={version.name}
+											/>
+										))}
+									</ClaySelect>
+								</div>
 							</div>
 						</div>
 						<ClayForm.Group className="mb-0">

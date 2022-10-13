@@ -53,11 +53,10 @@ const claimSchema = object({
 							.test(
 								'fileSize',
 								'File Size is too large',
-								(listQualifiedLeads) => {
-									return permitedDocument.types.includes(
+								(listQualifiedLeads) =>
+									permitedDocument.types.includes(
 										listQualifiedLeads?.type
-									);
-								}
+									)
 							)
 							.test(
 								'fileType',

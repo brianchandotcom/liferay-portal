@@ -7041,6 +7041,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<property name="database.docker.run.options" value="" />
 
 			<get-testcase-property property.name="database.lowercase.enabled" />
+
 			<if>
 				<and>
 					<equals arg1="${database.lowercase.enabled}" arg2="true" />

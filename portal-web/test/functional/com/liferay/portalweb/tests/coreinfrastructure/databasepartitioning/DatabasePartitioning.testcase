@@ -405,13 +405,13 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase";
 
-		task ("Set mysql command to verify if the lower_case_table_names is enabled") {
+		task ("Verify if the lower_case_table_names is enabled") {
 			var variableQueryResult = SQL.executeMySQLStatement(mysqlStatement = "show variables where Variable_name='lower_case_table_names';");
 
 			if (!(contains("${variableQueryResult}", "lower_case_table_names,1"))) {
 				echo("${variableQueryResult}");
 
-				fail("lower_case_table_names variable set to 0, case insensitive not enabled.");
+				fail("lower_case_table_names variable not set to 1, case insensitive not enabled.");
 			}
 		}
 

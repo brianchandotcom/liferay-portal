@@ -364,11 +364,13 @@ definition {
 	@description = "Verify that, when a Web Content is moved to a Folder, it's Workflow changes"
 	@priority = "4"
 	test MoveWebContentToFolderChangeItsWorkflow {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowWebContent#MoveWebContentToFolderChangeItsWorkflow";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		Navigator.openURL();
+
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -452,6 +454,7 @@ definition {
 		AssertElementPresent(
 			key_workflowItemSubject = "Web Content Article: Web Content Title",
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
+			
 	}
 
 	@description = "Verify that the Subfolder can use the Workflow of the Parent Folder"

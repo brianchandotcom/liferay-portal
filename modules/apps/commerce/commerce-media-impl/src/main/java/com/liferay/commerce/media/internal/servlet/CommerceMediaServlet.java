@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/" + CommerceMediaConstants.SERVLET_PATH,
 		"osgi.http.whiteboard.servlet.name=com.liferay.commerce.media.servlet.CommerceMediaServlet",

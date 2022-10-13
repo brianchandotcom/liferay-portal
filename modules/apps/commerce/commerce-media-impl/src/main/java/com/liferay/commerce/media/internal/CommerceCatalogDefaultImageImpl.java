@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommerceCatalogDefaultImage.class
-)
+@Component(immediate = true, service = CommerceCatalogDefaultImage.class)
 public class CommerceCatalogDefaultImageImpl
 	implements CommerceCatalogDefaultImage {
 

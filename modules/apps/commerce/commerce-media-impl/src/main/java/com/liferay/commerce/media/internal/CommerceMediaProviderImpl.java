@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(enabled = false, service = CommerceMediaProvider.class)
+@Component(service = CommerceMediaProvider.class)
 public class CommerceMediaProviderImpl implements CommerceMediaProvider {
 
 	@Override

@@ -12,30 +12,32 @@
  * details.
  */
 
-package com.liferay.account.exception;
+package com.liferay.client.extension.exception;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateAccountGroupExternalReferenceCodeException
+public class DuplicateClientExtensionEntryRelExternalReferenceCodeException
 	extends SystemException {
 
-	public DuplicateAccountGroupExternalReferenceCodeException() {
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException() {
 	}
 
-	public DuplicateAccountGroupExternalReferenceCodeException(String msg) {
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateAccountGroupExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateAccountGroupExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
 		Throwable throwable) {
 
 		super(throwable);

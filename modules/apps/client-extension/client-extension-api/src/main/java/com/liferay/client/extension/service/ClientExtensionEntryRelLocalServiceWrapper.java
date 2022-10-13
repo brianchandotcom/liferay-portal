@@ -289,34 +289,14 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			fetchClientExtensionEntryRel(classNameId, classPK, type);
 	}
 
-	/**
-	 * Returns the client extension entry rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry rel's external reference code
-	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
 	@Override
 	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _clientExtensionEntryRelLocalService.
 			fetchClientExtensionEntryRelByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public ClientExtensionEntryRel fetchClientExtensionEntryRelByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return _clientExtensionEntryRelLocalService.
-			fetchClientExtensionEntryRelByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -357,23 +337,15 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			clientExtensionEntryRelId);
 	}
 
-	/**
-	 * Returns the client extension entry rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry rel's external reference code
-	 * @return the matching client extension entry rel
-	 * @throws PortalException if a matching client extension entry rel could not be found
-	 */
 	@Override
 	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.
 			getClientExtensionEntryRelByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

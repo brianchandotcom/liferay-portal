@@ -230,25 +230,10 @@ public interface ClientExtensionEntryRelLocalService
 	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
 		long classNameId, long classPK, String type);
 
-	/**
-	 * Returns the client extension entry rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry rel's external reference code
-	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntryRel fetchClientExtensionEntryRelByReferenceCode(
-		long companyId, String externalReferenceCode);
+			String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the client extension entry rel matching the UUID and group.
@@ -276,18 +261,10 @@ public interface ClientExtensionEntryRelLocalService
 			long clientExtensionEntryRelId)
 		throws PortalException;
 
-	/**
-	 * Returns the client extension entry rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry rel's external reference code
-	 * @return the matching client extension entry rel
-	 * @throws PortalException if a matching client extension entry rel could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

@@ -1128,57 +1128,57 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	public int filterCountByU_T(long userId, String type);
 
 	/**
-	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the account entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account entry
 	 * @throws NoSuchEntryException if a matching account entry could not be found
 	 */
-	public AccountEntry findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountEntry findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the account entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
 	 */
-	public AccountEntry fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public AccountEntry fetchByERC_C(
+		String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the account entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
 	 */
-	public AccountEntry fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public AccountEntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the account entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the account entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the account entry that was removed
 	 */
-	public AccountEntry removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountEntry removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the number of account entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of account entries where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching account entries
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the account entry in the entity cache if it is enabled.

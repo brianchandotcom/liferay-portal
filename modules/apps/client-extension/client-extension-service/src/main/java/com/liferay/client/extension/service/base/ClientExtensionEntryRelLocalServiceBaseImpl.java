@@ -288,50 +288,23 @@ public abstract class ClientExtensionEntryRelLocalServiceBaseImpl
 		return clientExtensionEntryRelPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the client extension entry rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry rel's external reference code
-	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
-	 */
 	@Override
 	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
-		return clientExtensionEntryRelPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return clientExtensionEntryRelPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public ClientExtensionEntryRel fetchClientExtensionEntryRelByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchClientExtensionEntryRelByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the client extension entry rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry rel's external reference code
-	 * @return the matching client extension entry rel
-	 * @throws PortalException if a matching client extension entry rel could not be found
-	 */
 	@Override
 	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return clientExtensionEntryRelPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return clientExtensionEntryRelPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

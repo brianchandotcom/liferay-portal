@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.persistence.impl;
 
+import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupTable;
@@ -5914,35 +5915,35 @@ public class AccountGroupPersistenceImpl
 	private static final String _FINDER_COLUMN_C_T_TYPE_3_SQL =
 		"(accountGroup.type_ IS NULL OR accountGroup.type_ = '')";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the account group where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account group
 	 * @throws NoSuchGroupException if a matching account group could not be found
 	 */
 	@Override
-	public AccountGroup findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountGroup findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchGroupException {
 
-		AccountGroup accountGroup = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		AccountGroup accountGroup = fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (accountGroup == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -5957,53 +5958,53 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the account group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	@Override
-	public AccountGroup fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public AccountGroup fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the account group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	@Override
-	public AccountGroup fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public AccountGroup fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof AccountGroup) {
 			AccountGroup accountGroup = (AccountGroup)result;
 
-			if ((companyId != accountGroup.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					accountGroup.getExternalReferenceCode())) {
+					accountGroup.getExternalReferenceCode()) ||
+				(companyId != accountGroup.getCompanyId())) {
 
 				result = null;
 			}
@@ -6014,18 +6015,18 @@ public class AccountGroupPersistenceImpl
 
 			sb.append(_SQL_SELECT_ACCOUNTGROUP_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -6038,18 +6039,18 @@ public class AccountGroupPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<AccountGroup> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -6077,37 +6078,37 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Removes the account group where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the account group where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the account group that was removed
 	 */
 	@Override
-	public AccountGroup removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountGroup removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchGroupException {
 
-		AccountGroup accountGroup = findByC_ERC(
-			companyId, externalReferenceCode);
+		AccountGroup accountGroup = findByERC_C(
+			externalReferenceCode, companyId);
 
 		return remove(accountGroup);
 	}
 
 	/**
-	 * Returns the number of account groups where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of account groups where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching account groups
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		FinderPath finderPath = _finderPathCountByERC_C;
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6116,18 +6117,18 @@ public class AccountGroupPersistenceImpl
 
 			sb.append(_SQL_COUNT_ACCOUNTGROUP_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -6140,11 +6141,11 @@ public class AccountGroupPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -6161,14 +6162,14 @@ public class AccountGroupPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"accountGroup.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"accountGroup.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"accountGroup.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(accountGroup.externalReferenceCode IS NULL OR accountGroup.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(accountGroup.externalReferenceCode IS NULL OR accountGroup.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"accountGroup.companyId = ?";
 
 	public AccountGroupPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -6197,10 +6198,10 @@ public class AccountGroupPersistenceImpl
 			AccountGroupImpl.class, accountGroup.getPrimaryKey(), accountGroup);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				accountGroup.getCompanyId(),
-				accountGroup.getExternalReferenceCode()
+				accountGroup.getExternalReferenceCode(),
+				accountGroup.getCompanyId()
 			},
 			accountGroup);
 	}
@@ -6277,13 +6278,13 @@ public class AccountGroupPersistenceImpl
 		AccountGroupModelImpl accountGroupModelImpl) {
 
 		Object[] args = new Object[] {
-			accountGroupModelImpl.getCompanyId(),
-			accountGroupModelImpl.getExternalReferenceCode()
+			accountGroupModelImpl.getExternalReferenceCode(),
+			accountGroupModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, accountGroupModelImpl);
+			_finderPathFetchByERC_C, args, accountGroupModelImpl);
 	}
 
 	/**
@@ -6425,6 +6426,25 @@ public class AccountGroupPersistenceImpl
 
 		if (Validator.isNull(accountGroup.getExternalReferenceCode())) {
 			accountGroup.setExternalReferenceCode(accountGroup.getUuid());
+		}
+		else {
+			AccountGroup ercAccountGroup = fetchByERC_C(
+				accountGroup.getExternalReferenceCode(),
+				accountGroup.getCompanyId());
+
+			if (isNew) {
+				if (ercAccountGroup != null) {
+					throw new DuplicateAccountGroupExternalReferenceCodeException();
+				}
+			}
+			else {
+				if ((ercAccountGroup != null) &&
+					(accountGroup.getAccountGroupId() !=
+						ercAccountGroup.getAccountGroupId())) {
+
+					throw new DuplicateAccountGroupExternalReferenceCodeException();
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -6874,15 +6894,15 @@ public class AccountGroupPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "type_"}, false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setAccountGroupUtilPersistence(this);
 	}

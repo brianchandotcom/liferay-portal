@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.persistence.impl;
 
+import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryTable;
@@ -4899,35 +4900,35 @@ public class AccountEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_U_T_TYPE_3_SQL =
 		"(accountEntry.type_ IS NULL OR accountEntry.type_ = '')";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the account entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account entry
 	 * @throws NoSuchEntryException if a matching account entry could not be found
 	 */
 	@Override
-	public AccountEntry findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountEntry findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		AccountEntry accountEntry = fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (accountEntry == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -4942,53 +4943,53 @@ public class AccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the account entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
 	 */
 	@Override
-	public AccountEntry fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public AccountEntry fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the account entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
 	 */
 	@Override
-	public AccountEntry fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public AccountEntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof AccountEntry) {
 			AccountEntry accountEntry = (AccountEntry)result;
 
-			if ((companyId != accountEntry.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					accountEntry.getExternalReferenceCode())) {
+					accountEntry.getExternalReferenceCode()) ||
+				(companyId != accountEntry.getCompanyId())) {
 
 				result = null;
 			}
@@ -4999,18 +5000,18 @@ public class AccountEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_ACCOUNTENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -5023,18 +5024,18 @@ public class AccountEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<AccountEntry> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -5062,37 +5063,37 @@ public class AccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the account entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the account entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the account entry that was removed
 	 */
 	@Override
-	public AccountEntry removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountEntry removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = findByC_ERC(
-			companyId, externalReferenceCode);
+		AccountEntry accountEntry = findByERC_C(
+			externalReferenceCode, companyId);
 
 		return remove(accountEntry);
 	}
 
 	/**
-	 * Returns the number of account entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of account entries where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching account entries
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		FinderPath finderPath = _finderPathCountByERC_C;
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -5101,18 +5102,18 @@ public class AccountEntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_ACCOUNTENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -5125,11 +5126,11 @@ public class AccountEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -5146,14 +5147,14 @@ public class AccountEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"accountEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"accountEntry.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"accountEntry.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(accountEntry.externalReferenceCode IS NULL OR accountEntry.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(accountEntry.externalReferenceCode IS NULL OR accountEntry.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"accountEntry.companyId = ?";
 
 	public AccountEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -5182,10 +5183,10 @@ public class AccountEntryPersistenceImpl
 			AccountEntryImpl.class, accountEntry.getPrimaryKey(), accountEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				accountEntry.getCompanyId(),
-				accountEntry.getExternalReferenceCode()
+				accountEntry.getExternalReferenceCode(),
+				accountEntry.getCompanyId()
 			},
 			accountEntry);
 	}
@@ -5262,13 +5263,13 @@ public class AccountEntryPersistenceImpl
 		AccountEntryModelImpl accountEntryModelImpl) {
 
 		Object[] args = new Object[] {
-			accountEntryModelImpl.getCompanyId(),
-			accountEntryModelImpl.getExternalReferenceCode()
+			accountEntryModelImpl.getExternalReferenceCode(),
+			accountEntryModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, accountEntryModelImpl);
+			_finderPathFetchByERC_C, args, accountEntryModelImpl);
 	}
 
 	/**
@@ -5410,6 +5411,25 @@ public class AccountEntryPersistenceImpl
 
 		if (Validator.isNull(accountEntry.getExternalReferenceCode())) {
 			accountEntry.setExternalReferenceCode(accountEntry.getUuid());
+		}
+		else {
+			AccountEntry ercAccountEntry = fetchByERC_C(
+				accountEntry.getExternalReferenceCode(),
+				accountEntry.getCompanyId());
+
+			if (isNew) {
+				if (ercAccountEntry != null) {
+					throw new DuplicateAccountEntryExternalReferenceCodeException();
+				}
+			}
+			else {
+				if ((ercAccountEntry != null) &&
+					(accountEntry.getAccountEntryId() !=
+						ercAccountEntry.getAccountEntryId())) {
+
+					throw new DuplicateAccountEntryExternalReferenceCodeException();
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -5836,15 +5856,15 @@ public class AccountEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "type_"}, false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setAccountEntryUtilPersistence(this);
 	}

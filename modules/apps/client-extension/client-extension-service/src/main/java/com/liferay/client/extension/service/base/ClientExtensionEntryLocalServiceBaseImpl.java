@@ -293,49 +293,22 @@ public abstract class ClientExtensionEntryLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
 	@Override
 	public ClientExtensionEntry
 		fetchClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
-		return clientExtensionEntryPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return clientExtensionEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public ClientExtensionEntry fetchClientExtensionEntryByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchClientExtensionEntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
 	@Override
 	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return clientExtensionEntryPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return clientExtensionEntryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

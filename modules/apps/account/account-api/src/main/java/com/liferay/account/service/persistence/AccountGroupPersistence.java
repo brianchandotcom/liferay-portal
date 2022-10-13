@@ -1432,57 +1432,57 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	public int filterCountByC_T(long companyId, String type);
 
 	/**
-	 * Returns the account group where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account group
 	 * @throws NoSuchGroupException if a matching account group could not be found
 	 */
-	public AccountGroup findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountGroup findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchGroupException;
 
 	/**
-	 * Returns the account group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
 	 */
-	public AccountGroup fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public AccountGroup fetchByERC_C(
+		String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the account group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
 	 */
-	public AccountGroup fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public AccountGroup fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the account group where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the account group where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the account group that was removed
 	 */
-	public AccountGroup removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AccountGroup removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchGroupException;
 
 	/**
-	 * Returns the number of account groups where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of account groups where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching account groups
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the account group in the entity cache if it is enabled.

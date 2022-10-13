@@ -282,34 +282,14 @@ public class ClientExtensionEntryLocalServiceWrapper
 			clientExtensionEntryId);
 	}
 
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
 	@Override
 	public ClientExtensionEntry
 		fetchClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _clientExtensionEntryLocalService.
 			fetchClientExtensionEntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public ClientExtensionEntry fetchClientExtensionEntryByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return _clientExtensionEntryLocalService.
-			fetchClientExtensionEntryByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -408,22 +388,14 @@ public class ClientExtensionEntryLocalServiceWrapper
 			clientExtensionEntryId);
 	}
 
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
 	@Override
 	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.
 			getClientExtensionEntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

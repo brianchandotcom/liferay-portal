@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.service.persistence.impl;
 
+import com.liferay.client.extension.exception.DuplicateClientExtensionEntryRelExternalReferenceCodeException;
 import com.liferay.client.extension.exception.NoSuchClientExtensionEntryRelException;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.model.ClientExtensionEntryRelTable;
@@ -3352,35 +3353,35 @@ public class ClientExtensionEntryRelPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_3 =
 		"(clientExtensionEntryRel.type IS NULL OR clientExtensionEntryRel.type = '')";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the client extension entry rel where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.
+	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching client extension entry rel
 	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public ClientExtensionEntryRel findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public ClientExtensionEntryRel findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchClientExtensionEntryRelException {
 
-		ClientExtensionEntryRel clientExtensionEntryRel = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		ClientExtensionEntryRel clientExtensionEntryRel = fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (clientExtensionEntryRel == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -3395,30 +3396,30 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the client extension entry rel where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public ClientExtensionEntryRel fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public ClientExtensionEntryRel fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the client extension entry rel where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public ClientExtensionEntryRel fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public ClientExtensionEntryRel fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
@@ -3428,24 +3429,24 @@ public class ClientExtensionEntryRelPersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof ClientExtensionEntryRel) {
 			ClientExtensionEntryRel clientExtensionEntryRel =
 				(ClientExtensionEntryRel)result;
 
-			if ((companyId != clientExtensionEntryRel.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					clientExtensionEntryRel.getExternalReferenceCode())) {
+					clientExtensionEntryRel.getExternalReferenceCode()) ||
+				(companyId != clientExtensionEntryRel.getCompanyId())) {
 
 				result = null;
 			}
@@ -3456,18 +3457,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 			sb.append(_SQL_SELECT_CLIENTEXTENSIONENTRYREL_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -3480,18 +3481,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<ClientExtensionEntryRel> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -3520,32 +3521,32 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Removes the client extension entry rel where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the client extension entry rel that was removed
 	 */
 	@Override
-	public ClientExtensionEntryRel removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public ClientExtensionEntryRel removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchClientExtensionEntryRelException {
 
-		ClientExtensionEntryRel clientExtensionEntryRel = findByC_ERC(
-			companyId, externalReferenceCode);
+		ClientExtensionEntryRel clientExtensionEntryRel = findByERC_C(
+			externalReferenceCode, companyId);
 
 		return remove(clientExtensionEntryRel);
 	}
 
 	/**
-	 * Returns the number of client extension entry rels where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of client extension entry rels where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching client extension entry rels
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -3557,9 +3558,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByC_ERC;
+			finderPath = _finderPathCountByERC_C;
 
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
@@ -3569,18 +3570,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 			sb.append(_SQL_COUNT_CLIENTEXTENSIONENTRYREL_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -3593,11 +3594,11 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -3616,14 +3617,14 @@ public class ClientExtensionEntryRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"clientExtensionEntryRel.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"clientExtensionEntryRel.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"clientExtensionEntryRel.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(clientExtensionEntryRel.externalReferenceCode IS NULL OR clientExtensionEntryRel.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(clientExtensionEntryRel.externalReferenceCode IS NULL OR clientExtensionEntryRel.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"clientExtensionEntryRel.companyId = ?";
 
 	public ClientExtensionEntryRelPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3665,10 +3666,10 @@ public class ClientExtensionEntryRelPersistenceImpl
 			clientExtensionEntryRel);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				clientExtensionEntryRel.getCompanyId(),
-				clientExtensionEntryRel.getExternalReferenceCode()
+				clientExtensionEntryRel.getExternalReferenceCode(),
+				clientExtensionEntryRel.getCompanyId()
 			},
 			clientExtensionEntryRel);
 	}
@@ -3770,13 +3771,13 @@ public class ClientExtensionEntryRelPersistenceImpl
 			_finderPathFetchByUUID_G, args, clientExtensionEntryRelModelImpl);
 
 		args = new Object[] {
-			clientExtensionEntryRelModelImpl.getCompanyId(),
-			clientExtensionEntryRelModelImpl.getExternalReferenceCode()
+			clientExtensionEntryRelModelImpl.getExternalReferenceCode(),
+			clientExtensionEntryRelModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, clientExtensionEntryRelModelImpl);
+			_finderPathFetchByERC_C, args, clientExtensionEntryRelModelImpl);
 	}
 
 	/**
@@ -3932,6 +3933,26 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 			clientExtensionEntryRel.setExternalReferenceCode(
 				clientExtensionEntryRel.getUuid());
+		}
+		else {
+			ClientExtensionEntryRel ercClientExtensionEntryRel = fetchByERC_C(
+				clientExtensionEntryRel.getExternalReferenceCode(),
+				clientExtensionEntryRel.getCompanyId());
+
+			if (isNew) {
+				if (ercClientExtensionEntryRel != null) {
+					throw new DuplicateClientExtensionEntryRelExternalReferenceCodeException();
+				}
+			}
+			else {
+				if ((ercClientExtensionEntryRel != null) &&
+					(clientExtensionEntryRel.getClientExtensionEntryRelId() !=
+						ercClientExtensionEntryRel.
+							getClientExtensionEntryRelId())) {
+
+					throw new DuplicateClientExtensionEntryRelExternalReferenceCodeException();
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -4487,7 +4508,7 @@ public class ClientExtensionEntryRelPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"companyId", "externalReferenceCode"});
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -4620,15 +4641,15 @@ public class ClientExtensionEntryRelPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "type_"}, false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setClientExtensionEntryRelUtilPersistence(this);
 	}

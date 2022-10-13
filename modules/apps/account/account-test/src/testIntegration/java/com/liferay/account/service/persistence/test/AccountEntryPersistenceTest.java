@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.persistence.test;
 
+import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
@@ -252,6 +253,26 @@ public class AccountEntryPersistenceTest {
 			Time.getShortTimestamp(newAccountEntry.getStatusDate()));
 	}
 
+	@Test(expected = DuplicateAccountEntryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		AccountEntry accountEntry = addAccountEntry();
+
+		AccountEntry newAccountEntry = addAccountEntry();
+
+		newAccountEntry.setCompanyId(accountEntry.getCompanyId());
+
+		newAccountEntry = _persistence.update(newAccountEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newAccountEntry);
+
+		newAccountEntry.setExternalReferenceCode(
+			accountEntry.getExternalReferenceCode());
+
+		_persistence.update(newAccountEntry);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -295,12 +316,12 @@ public class AccountEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -605,15 +626,15 @@ public class AccountEntryPersistenceTest {
 
 	private void _assertOriginalValues(AccountEntry accountEntry) {
 		Assert.assertEquals(
-			Long.valueOf(accountEntry.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				accountEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			accountEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				accountEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(accountEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				accountEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected AccountEntry addAccountEntry() throws Exception {

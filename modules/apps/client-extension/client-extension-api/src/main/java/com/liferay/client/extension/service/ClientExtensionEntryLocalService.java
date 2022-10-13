@@ -241,25 +241,10 @@ public interface ClientExtensionEntryLocalService
 	public ClientExtensionEntry fetchClientExtensionEntry(
 		long clientExtensionEntryId);
 
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntry
 		fetchClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry fetchClientExtensionEntryByReferenceCode(
-		long companyId, String externalReferenceCode);
+			String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the client extension entry with the matching UUID and company.
@@ -324,17 +309,9 @@ public interface ClientExtensionEntryLocalService
 			long clientExtensionEntryId)
 		throws PortalException;
 
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

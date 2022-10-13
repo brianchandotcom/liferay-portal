@@ -60,7 +60,7 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 						%>
 
 							<li class="facet-value tag-popularity-<%= assetCategoriesSearchFacetTermDisplayContext.getPopularity() %>">
-								<a class="<%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(String.valueOf(assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId())) %>" href="javascript:void(0);">
+								<a class="<%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetTermDisplayContext.getFilterValue()) %>" href="javascript:void(0);">
 									<%= HtmlUtil.escape(assetCategoriesSearchFacetTermDisplayContext.getDisplayName()) %>
 
 									<c:if test="<%= assetCategoriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">

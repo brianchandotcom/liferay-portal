@@ -115,8 +115,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 				assetCategoriesSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			assetCategoryId,
-			assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId());
+			String.valueOf(assetCategoryId),
+			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
 			assetCategoriesSearchFacetTermDisplayContext.getDisplayName());
@@ -202,8 +202,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 				assetCategoriesSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			assetCategoryId,
-			assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId());
+			String.valueOf(assetCategoryId),
+			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
 			assetCategoriesSearchFacetTermDisplayContext.getDisplayName());
@@ -252,8 +252,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 				assetCategoriesSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			assetCategoryId,
-			assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId());
+			String.valueOf(assetCategoryId),
+			assetCategoriesSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertEquals(
 			String.valueOf(assetCategoryId),
 			assetCategoriesSearchFacetTermDisplayContext.getDisplayName());

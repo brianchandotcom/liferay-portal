@@ -175,8 +175,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetTermDisplayContext =
 				new AssetCategoriesSearchFacetTermDisplayContext();
 
-		assetCategoriesSearchFacetTermDisplayContext.setAssetCategoryId(
-			assetCategory.getCategoryId());
+		assetCategoriesSearchFacetTermDisplayContext.setFilterValue(
+			String.valueOf(assetCategory.getCategoryId()));
 		assetCategoriesSearchFacetTermDisplayContext.setFrequency(frequency);
 		assetCategoriesSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);

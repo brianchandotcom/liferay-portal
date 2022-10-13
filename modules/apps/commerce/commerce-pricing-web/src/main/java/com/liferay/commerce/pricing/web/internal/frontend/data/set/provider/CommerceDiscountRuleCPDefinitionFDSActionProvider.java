@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "fds.data.provider.key=" + CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS,
 	service = FDSActionProvider.class
 )

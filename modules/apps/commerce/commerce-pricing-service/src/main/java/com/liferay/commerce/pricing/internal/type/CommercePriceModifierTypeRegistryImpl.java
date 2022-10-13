@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Riccardo Alberti
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommercePriceModifierTypeRegistry.class
-)
+@Component(immediate = true, service = CommercePriceModifierTypeRegistry.class)
 public class CommercePriceModifierTypeRegistryImpl
 	implements CommercePriceModifierTypeRegistry {
 

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(enabled = false, service = CommercePricingClassFinder.class)
+@Component(service = CommercePricingClassFinder.class)
 public class CommercePricingClassFinderImpl
 	extends CommercePricingClassFinderBaseImpl
 	implements CommercePricingClassFinder {

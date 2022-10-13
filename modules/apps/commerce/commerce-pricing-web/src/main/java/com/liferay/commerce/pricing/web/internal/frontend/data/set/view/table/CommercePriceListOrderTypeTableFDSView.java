@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ORDER_TYPES,
 	service = FDSView.class
 )

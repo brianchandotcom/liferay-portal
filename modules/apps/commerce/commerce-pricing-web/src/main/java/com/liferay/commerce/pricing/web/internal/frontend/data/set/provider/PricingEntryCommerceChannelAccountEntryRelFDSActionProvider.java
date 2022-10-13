@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommercePricingFDSNames.ACCOUNT_ENTRY_DISCOUNTS,
 		"fds.data.provider.key=" + CommercePricingFDSNames.ACCOUNT_ENTRY_PRICE_LISTS

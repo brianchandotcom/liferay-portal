@@ -53,7 +53,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	property = {
 		"screen.navigation.category.order:Integer=85",
 		"screen.navigation.entry.order:Integer=10"

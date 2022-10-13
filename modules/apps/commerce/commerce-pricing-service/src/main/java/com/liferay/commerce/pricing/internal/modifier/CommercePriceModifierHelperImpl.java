@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(enabled = false, service = CommercePriceModifierHelper.class)
+@Component(service = CommercePriceModifierHelper.class)
 public class CommercePriceModifierHelperImpl
 	implements CommercePriceModifierHelper {
 

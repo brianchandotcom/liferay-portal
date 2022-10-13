@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.web.internal.display.context;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.display.context.WikiDisplayContextFactory;
 import com.liferay.wiki.display.context.WikiEditPageDisplayContext;
@@ -24,17 +26,14 @@ import com.liferay.wiki.display.context.WikiViewPageDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -52,7 +51,7 @@ public class WikiDisplayContextProvider {
 				httpServletRequest, httpServletResponse, wikiPage);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_wikiDisplayContextFactories) {
+				_serviceTrackerList) {
 
 			wikiEditPageDisplayContext =
 				wikiDisplayContextFactory.getWikiEditPageDisplayContext(
@@ -73,7 +72,7 @@ public class WikiDisplayContextProvider {
 				_trashHelper);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_wikiDisplayContextFactories) {
+				_serviceTrackerList) {
 
 			wikiListPagesDisplayContext =
 				wikiDisplayContextFactory.getWikiListPagesDisplayContext(
@@ -93,7 +92,7 @@ public class WikiDisplayContextProvider {
 				httpServletRequest, httpServletResponse);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_wikiDisplayContextFactories) {
+				_serviceTrackerList) {
 
 			wikiNodeInfoPanelDisplayContext =
 				wikiDisplayContextFactory.getWikiNodeInfoPanelDisplayContext(
@@ -113,7 +112,7 @@ public class WikiDisplayContextProvider {
 				httpServletRequest, httpServletResponse);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_wikiDisplayContextFactories) {
+				_serviceTrackerList) {
 
 			wikiPageInfoPanelDisplayContext =
 				wikiDisplayContextFactory.getWikiPageInfoPanelDisplayContext(
@@ -133,7 +132,7 @@ public class WikiDisplayContextProvider {
 				httpServletRequest, httpServletResponse, wikiPage);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_wikiDisplayContextFactories) {
+				_serviceTrackerList) {
 
 			wikiViewPageDisplayContext =
 				wikiDisplayContextFactory.getWikiViewPageDisplayContext(
@@ -144,28 +143,20 @@ public class WikiDisplayContextProvider {
 		return wikiViewPageDisplayContext;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.RELUCTANT,
-		service = WikiDisplayContextFactory.class
-	)
-	protected void setWikiDisplayContextFactory(
-		WikiDisplayContextFactory wikiDisplayContextFactory) {
-
-		_wikiDisplayContextFactories.add(wikiDisplayContextFactory);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, WikiDisplayContextFactory.class);
 	}
 
-	protected void unsetWikiDisplayContextFactory(
-		WikiDisplayContextFactory wikiDisplayContextFactory) {
-
-		_wikiDisplayContextFactories.remove(wikiDisplayContextFactory);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
+
+	private ServiceTrackerList<WikiDisplayContextFactory> _serviceTrackerList;
 
 	@Reference
 	private TrashHelper _trashHelper;
-
-	private final List<WikiDisplayContextFactory> _wikiDisplayContextFactories =
-		new CopyOnWriteArrayList<>();
 
 }

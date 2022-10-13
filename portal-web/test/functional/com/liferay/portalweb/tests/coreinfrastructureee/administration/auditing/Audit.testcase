@@ -99,7 +99,7 @@ definition {
 	@description = "This is a use case for LPS-140258. TC-1: Assert that sessionId is not present in the audit log context."
 	@priority = "2"
 	test AssertSessionIdIsNotPresentInAuditLogContext {
-		property portal.acceptance = "ture";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogContext";
 
 		task ("Given: Enable log context and Incoming X-Request-ID") {
@@ -126,7 +126,7 @@ definition {
 	@description = "This is a use case for LPS-140258. TC-2: Assert that sessionId is not present in the Audit Log portlet's UI."
 	@priority = "2"
 	test AssertSessionIdIsNotPresentInAuditLogPortlet {
-		property portal.acceptance = "ture";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogPortlet";
 
 		task ("Given: Enable log context and Incoming X-Request-ID") {

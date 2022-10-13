@@ -1,0 +1,36 @@
+definition {
+    macro createNewView {
+
+        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+        Click(
+            locator1 = "FrontendDataSet#SELECT_OPTION",
+            key_itemName = "Save View As");
+        
+        Type(
+            locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
+            value1 = "${key_nameView}");
+
+        Click(
+            key_name = "Save",
+            locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+
+    }
+
+    macro addRemoveColumn {
+        Click(
+            ariaLabel = "Open Fields Menu",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		Click(
+            locator1 = "FrontendDataSet#SELECT_FIELD",
+			key_column = "${key_column}");	
+
+		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+    }
+
+    macro selectView {
+        Click(locator1 = "FrontendDataSet#SELECT_OPTION",
+		value1 ="${key_itemName}");
+    }
+}

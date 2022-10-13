@@ -23,10 +23,6 @@ public class CommerceAvalaraConstants {
 
 	public static final String APP_VERSION = "1.0";
 
-	public static final String
-		AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_DESCRIPTION =
-			"avalara.tax.codes.commerce.health.status.description";
-
 	public static final String AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_KEY =
 		"avalara.tax.codes.commerce.health.status.key";
 

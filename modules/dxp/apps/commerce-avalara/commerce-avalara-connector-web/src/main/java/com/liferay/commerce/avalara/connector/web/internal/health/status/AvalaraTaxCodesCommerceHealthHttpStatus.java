@@ -81,8 +81,7 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 
 		return _language.get(
 			resourceBundle,
-			CommerceAvalaraConstants.
-				AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_DESCRIPTION);
+			"avalara.tax.codes.commerce.health.status.description");
 	}
 
 	@Override

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"panel.category.key=" + CommercePanelCategoryKeys.COMMERCE,
 		"panel.category.order:Integer=100"

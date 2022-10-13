@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_AVAILABILITY_ESTIMATE,
 		"mvc.command.name=/commerce_availability_estimate/edit_commerce_availability_estimate"

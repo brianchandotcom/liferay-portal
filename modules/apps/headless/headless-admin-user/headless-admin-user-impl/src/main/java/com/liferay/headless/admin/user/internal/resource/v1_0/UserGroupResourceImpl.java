@@ -136,6 +136,16 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
+	public Page<UserGroup> getUserUserGroups(Long userAccountId)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_userGroupService.getUserUserGroups(userAccountId),
+				this::_toUserGroup));
+	}
+
+	@Override
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
 		return _toUserGroup(
 			_userGroupService.updateExternalReferenceCode(

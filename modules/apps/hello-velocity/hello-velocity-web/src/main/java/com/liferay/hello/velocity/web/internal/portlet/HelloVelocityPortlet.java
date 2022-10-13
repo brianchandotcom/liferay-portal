@@ -88,7 +88,7 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		}
 
 		try {
-			mergeTemplate(_editTemplateId, renderRequest, renderResponse);
+			_mergeTemplate(_editTemplateId, renderRequest, renderResponse);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -101,7 +101,7 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		throws PortletException {
 
 		try {
-			mergeTemplate(_helpTemplateId, renderRequest, renderResponse);
+			_mergeTemplate(_helpTemplateId, renderRequest, renderResponse);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -114,7 +114,7 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		throws PortletException {
 
 		try {
-			mergeTemplate(_viewTemplateId, renderRequest, renderResponse);
+			_mergeTemplate(_viewTemplateId, renderRequest, renderResponse);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -146,7 +146,7 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		}
 
 		try {
-			mergeTemplate(_actionTemplateId, actionRequest, actionResponse);
+			_mergeTemplate(_actionTemplateId, actionRequest, actionResponse);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -165,7 +165,7 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		}
 
 		try {
-			mergeTemplate(
+			_mergeTemplate(
 				_resourceTemplateId, resourceRequest, resourceResponse);
 		}
 		catch (Exception exception) {
@@ -173,7 +173,29 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		}
 	}
 
-	protected void mergeTemplate(
+	private TemplateResource _getTemplateResource(String templateId) {
+		if (templateId.indexOf(StringPool.SLASH) != 0) {
+			templateId = StringPool.SLASH.concat(templateId);
+		}
+
+		String content = null;
+
+		try {
+			content = StringUtil.read(
+				HelloVelocityPortlet.class.getClassLoader(),
+				"META-INF/resources" + templateId);
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for META-INF/resources" +
+					templateId,
+				ioException);
+		}
+
+		return new StringTemplateResource(templateId, content);
+	}
+
+	private void _mergeTemplate(
 			String templateId, PortletRequest portletRequest,
 			PortletResponse portletResponse)
 		throws Exception {
@@ -182,12 +204,12 @@ public class HelloVelocityPortlet extends GenericPortlet {
 			TemplateConstants.LANG_TYPE_VM, _getTemplateResource(templateId),
 			false);
 
-		prepareTemplate(template, portletRequest, portletResponse);
+		_prepareTemplate(template, portletRequest, portletResponse);
 
-		mergeTemplate(template, portletResponse);
+		_mergeTemplate(template, portletResponse);
 	}
 
-	protected void mergeTemplate(
+	private void _mergeTemplate(
 			Template template, PortletResponse portletResponse)
 		throws Exception {
 
@@ -205,7 +227,7 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		template.processTemplate(writer);
 	}
 
-	protected void prepareTemplate(
+	private void _prepareTemplate(
 		Template template, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
@@ -238,28 +260,6 @@ public class HelloVelocityPortlet extends GenericPortlet {
 		else {
 			template.put("resourceResponse", portletResponse);
 		}
-	}
-
-	private TemplateResource _getTemplateResource(String templateId) {
-		if (templateId.indexOf(StringPool.SLASH) != 0) {
-			templateId = StringPool.SLASH.concat(templateId);
-		}
-
-		String content = null;
-
-		try {
-			content = StringUtil.read(
-				HelloVelocityPortlet.class.getClassLoader(),
-				"META-INF/resources" + templateId);
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to read the content for META-INF/resources" +
-					templateId,
-				ioException);
-		}
-
-		return new StringTemplateResource(templateId, content);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

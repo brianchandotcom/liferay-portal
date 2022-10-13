@@ -35,11 +35,12 @@ const liferayRestLink = new RestLink({
 	uri: LiferayURI,
 });
 
-const liferayAuthLink = setContext((_, {headers}) => ({
+const liferayAuthLink = setContext((_, {headers, ...context}) => ({
 	headers: {
 		...headers,
 		'x-csrf-token': Liferay.authToken,
 	},
+	...context,
 }));
 
 const raySourceErrorLink = onError(({forward, networkError, operation}) => {

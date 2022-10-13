@@ -39,6 +39,7 @@ dependencies {
 	compileOnly project(":apps:trash:trash-taglib")
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":apps:wiki:wiki-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")

@@ -76,20 +76,24 @@ public class UnusedVariableCheck extends BaseCheck {
 				return;
 			}
 
-			List<String> dirNames = getAttributeValues(_DIR_NAMES_KEY);
+			List<String> checkUnusedReferenceVariableDirNames =
+				getAttributeValues(
+					_CHECK_UNUSED_REFERENCE_VARIABLE_DIR_NAMES_KEY);
 
-			if (!dirNames.isEmpty()) {
+			if (!checkUnusedReferenceVariableDirNames.isEmpty()) {
 				int i = 0;
 
-				while (i < dirNames.size()) {
-					if (modulePath.startsWith(dirNames.get(i))) {
+				while (i < checkUnusedReferenceVariableDirNames.size()) {
+					if (modulePath.startsWith(
+							checkUnusedReferenceVariableDirNames.get(i))) {
+
 						break;
 					}
 
 					i++;
 				}
 
-				if (i == dirNames.size()) {
+				if (i == checkUnusedReferenceVariableDirNames.size()) {
 					return;
 				}
 			}
@@ -197,10 +201,11 @@ public class UnusedVariableCheck extends BaseCheck {
 	private static final String _ALLOWED_UNUSED_VARIABLE_TYPE_NAMES_KEY =
 		"allowedUnusedVariableTypeNames";
 
+	private static final String _CHECK_UNUSED_REFERENCE_VARIABLE_DIR_NAMES_KEY =
+		"checkUnusedReferenceVariableDirNames";
+
 	private static final String _CHECK_UNUSED_REFERENCE_VARIABLE_KEY =
 		"checkUnusedReferenceVariable";
-
-	private static final String _DIR_NAMES_KEY = "dirNames";
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 

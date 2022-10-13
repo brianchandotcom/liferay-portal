@@ -7,7 +7,7 @@ configurations {
 
 task buildAlloyUI(type: Copy)
 
-String alloyUIVersion = "3.1.0-deprecated.104"
+String alloyUIVersion = "3.1.0-deprecated.106"
 
 File jsDestinationDir = file("tmp/META-INF/resources")
 

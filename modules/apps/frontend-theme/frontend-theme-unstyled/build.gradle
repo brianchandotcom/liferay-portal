@@ -15,7 +15,7 @@ task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String alloyUIVersion = "3.1.0-deprecated.103"
+String alloyUIVersion = "3.1.0-deprecated.106"
 
 String fontAwesomeVersion = "3.2.1"
 

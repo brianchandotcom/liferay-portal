@@ -128,7 +128,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "site.initializer.key=" + MiniumSiteInitializer.KEY,
 	service = SiteInitializer.class
 )

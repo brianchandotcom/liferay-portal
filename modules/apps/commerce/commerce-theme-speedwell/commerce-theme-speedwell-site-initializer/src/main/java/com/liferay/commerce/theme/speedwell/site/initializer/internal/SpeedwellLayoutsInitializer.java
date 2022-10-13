@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Gianmarco Brunialti Masera
  */
-@Component(enabled = false, service = SpeedwellLayoutsInitializer.class)
+@Component(service = SpeedwellLayoutsInitializer.class)
 public class SpeedwellLayoutsInitializer {
 
 	public void initialize(ServiceContext serviceContext) throws Exception {

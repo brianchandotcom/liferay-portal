@@ -103,7 +103,7 @@
 							frequency=termDisplayContext.getFrequency()
 							frequencyVisible=termDisplayContext.isFrequencyVisible()
 							id=termDisplayContext.getFilterValue()
-							name=htmlUtil.escape(termDisplayContext.getDisplayName())
+							name=htmlUtil.escape(termDisplayContext.getBucketText())
 							selectable=true
 							selected=termDisplayContext.isSelected()
 						/>

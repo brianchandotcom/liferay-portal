@@ -87,11 +87,11 @@ public class CategoryFacetPortletDisplayTemplateHandler
 			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
 		templateVariableGroup.addVariable(
 			"term-name", String.class, PortletDisplayTemplateConstants.ENTRY,
-			"getDisplayName()");
+			"getBucketText()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"term", AssetCategoriesSearchFacetTermDisplayContext.class,
-			PortletDisplayTemplateConstants.ENTRY, "getDisplayName()");
+			PortletDisplayTemplateConstants.ENTRY, "getBucketText()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

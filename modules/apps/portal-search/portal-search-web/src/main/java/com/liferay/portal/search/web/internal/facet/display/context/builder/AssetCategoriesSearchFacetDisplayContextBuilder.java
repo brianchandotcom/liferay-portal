@@ -182,7 +182,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			_frequenciesVisible);
 		assetCategoriesSearchFacetTermDisplayContext.setPopularity(popularity);
 		assetCategoriesSearchFacetTermDisplayContext.setSelected(selected);
-		assetCategoriesSearchFacetTermDisplayContext.setDisplayName(
+		assetCategoriesSearchFacetTermDisplayContext.setBucketText(
 			assetCategory.getTitle(_locale));
 
 		return assetCategoriesSearchFacetTermDisplayContext;

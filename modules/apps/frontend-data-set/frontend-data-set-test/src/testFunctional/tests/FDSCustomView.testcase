@@ -71,7 +71,7 @@ definition {
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25");
 
-			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
+			Click(locator1 = "FrontendDataSet#OPEN_SELECT_FIELD");
 
 			Click(
 				key_itemName = "Description",

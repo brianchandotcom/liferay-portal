@@ -7,7 +7,7 @@ definition {
 
 		Click(
 			key_column = "${key_column}",
-			locator1 = "FrontendDataSet#SELECT_FIELD");
+			locator1 = "FrontendDataSet#OPEN_SELECT_FIELD");
 
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 	}

@@ -169,12 +169,22 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ROW</td>
+	<td>//div[contains(@class, "dnd-tr")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ITEM_COLUMN</td>
+	<td>//div[(@class="dnd-tr")]/div[contains(@class,"dnd-th") and contains(string(), "${key_field}")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_FIELD</td>
 	<td>//button[contains(@class, "btn-sorting") and contains(text(), "${key_field}")]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_FIELD</td>
+	<td>OPEN_SELECT_FIELD</td>
 	<td>//button[contains(@aria-label, "Open Fields Menu")]</td>
 	<td></td>
 </tr>
@@ -185,7 +195,7 @@
 </tr>
 <tr>
 	<td>SELECT_OPTION</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(text(), '${key_itemName}')]</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(), '${key_optionName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,6 +206,11 @@
 <tr>
 	<td>COLUMN_NAME</td>
 	<td>//div[contains(text(),${columnName})]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_CELL</td>
+	<td>xpath=(//div[@class='dnd-td' and position()='${key_column}'])[${key_index}]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -30,8 +30,8 @@ public interface CommerceAvalaraConnectorChannelConfiguration {
 	public String companyCode();
 
 	@Meta.AD(
-		deflt = "false", name = "disabled-document-recording", required = false
+		deflt = "false", name = "disable-document-recording", required = false
 	)
-	public boolean disabledDocumentRecording();
+	public boolean disableDocumentRecording();
 
 }

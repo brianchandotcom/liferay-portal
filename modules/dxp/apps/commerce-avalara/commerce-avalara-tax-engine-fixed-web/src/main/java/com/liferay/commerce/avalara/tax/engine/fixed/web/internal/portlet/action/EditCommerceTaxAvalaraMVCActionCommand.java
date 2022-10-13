@@ -92,12 +92,12 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 
 		modifiableSettings.setValue("companyCode", companyCode);
 
-		Boolean disabledDocumentRecording = ParamUtil.getBoolean(
-			actionRequest, "disabledDocumentRecording");
+		Boolean disableDocumentRecording = ParamUtil.getBoolean(
+			actionRequest, "disableDocumentRecording");
 
 		modifiableSettings.setValue(
-			"disabledDocumentRecording",
-			String.valueOf(disabledDocumentRecording));
+			"disableDocumentRecording",
+			String.valueOf(disableDocumentRecording));
 
 		modifiableSettings.store();
 	}

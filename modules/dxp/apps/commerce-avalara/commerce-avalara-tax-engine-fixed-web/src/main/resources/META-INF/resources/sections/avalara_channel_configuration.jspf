@@ -49,5 +49,5 @@ CommerceAvalaraConnectorChannelConfiguration commerceAvalaraConnectorChannelConf
 		</c:choose>
 	</aui:select>
 
-	<aui:input id="avalara-disabled-document-recording" label="disable-document-recording" name="disabledDocumentRecording" type="toggle-switch" value="<%= commerceAvalaraConnectorChannelConfiguration.disabledDocumentRecording() %>" />
+	<aui:input id="avalara-disabled-document-recording" label="disable-document-recording" name="disableDocumentRecording" type="toggle-switch" value="<%= commerceAvalaraConnectorChannelConfiguration.disableDocumentRecording() %>" />
 </liferay-frontend:fieldset>

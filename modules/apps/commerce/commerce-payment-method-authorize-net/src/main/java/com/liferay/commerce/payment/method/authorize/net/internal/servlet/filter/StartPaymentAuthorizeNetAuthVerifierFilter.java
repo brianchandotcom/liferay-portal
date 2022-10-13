@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + AuthorizeNetCommercePaymentMethodConstants.START_PAYMENT_SERVLET_PATH + "/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.commerce.payment.method.authorize.net.internal.servlet.filter.StartPaymentAuthorizeNetAuthVerifierFilter",

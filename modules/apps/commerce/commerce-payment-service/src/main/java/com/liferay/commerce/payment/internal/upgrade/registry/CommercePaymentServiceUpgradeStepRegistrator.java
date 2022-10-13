@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(
-	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class CommercePaymentServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

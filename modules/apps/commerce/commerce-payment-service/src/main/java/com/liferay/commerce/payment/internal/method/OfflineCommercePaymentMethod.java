@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.payment.internal.configuration.OfflineCommercePaymentMethodConfiguration",
-	enabled = false, immediate = true, service = CommercePaymentMethod.class
+	immediate = true, service = CommercePaymentMethod.class
 )
 public class OfflineCommercePaymentMethod implements CommercePaymentMethod {
 

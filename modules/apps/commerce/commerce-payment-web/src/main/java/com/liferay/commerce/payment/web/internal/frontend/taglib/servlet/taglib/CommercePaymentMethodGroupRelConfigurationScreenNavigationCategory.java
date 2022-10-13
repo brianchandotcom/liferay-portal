@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, property = "screen.navigation.category.order:Integer=20",
+	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )
 public class CommercePaymentMethodGroupRelConfigurationScreenNavigationCategory

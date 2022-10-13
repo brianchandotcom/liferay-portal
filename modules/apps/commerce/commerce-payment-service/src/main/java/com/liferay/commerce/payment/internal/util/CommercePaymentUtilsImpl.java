@@ -50,9 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luca Pellizzon
  */
-@Component(
-	enabled = false, immediate = true, service = CommercePaymentUtils.class
-)
+@Component(immediate = true, service = CommercePaymentUtils.class)
 public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 
 	@Override

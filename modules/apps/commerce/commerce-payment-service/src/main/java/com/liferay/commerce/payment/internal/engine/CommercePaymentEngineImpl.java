@@ -62,9 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luca Pellizzon
  */
-@Component(
-	enabled = false, immediate = true, service = CommercePaymentEngine.class
-)
+@Component(immediate = true, service = CommercePaymentEngine.class)
 public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 	@Override

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.payment.engine.method.key=" + CommercePaymentConstants.DEFAULT_PAYMENT_REQUEST_PROVIDER_KEY,
 	service = CommercePaymentRequestProvider.class
 )

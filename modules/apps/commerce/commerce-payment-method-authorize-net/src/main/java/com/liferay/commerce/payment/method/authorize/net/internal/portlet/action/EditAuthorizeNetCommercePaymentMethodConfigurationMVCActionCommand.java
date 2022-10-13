@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PAYMENT_METHODS,
 		"mvc.command.name=/commerce_payment_methods/edit_authorize_net_commerce_payment_method_configuration"

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + CommercePaymentConstants.SERVLET_PATH + "/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.commerce.payment.internal.servlet.filter.CommercePaymentAuthVerifierFilter",

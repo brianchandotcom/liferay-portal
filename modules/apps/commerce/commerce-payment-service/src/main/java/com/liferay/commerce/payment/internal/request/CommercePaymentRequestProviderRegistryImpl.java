@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Luca Pellizzon
  */
 @Component(
-	enabled = false, immediate = true,
-	service = CommercePaymentRequestProviderRegistry.class
+	immediate = true, service = CommercePaymentRequestProviderRegistry.class
 )
 public class CommercePaymentRequestProviderRegistryImpl
 	implements CommercePaymentRequestProviderRegistry {

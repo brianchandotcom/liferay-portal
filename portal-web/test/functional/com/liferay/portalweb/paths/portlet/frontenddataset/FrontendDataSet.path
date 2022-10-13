@@ -168,6 +168,41 @@
 	<td>//span[contains(@class,'label dropdown-toggle') and contains(.,'${key_filter}')]//button[@class='filter-resume-close close']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SORT_FIELD</td>
+	<td>//button[contains(@class, "btn-sorting") and contains(text(), "${key_field}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FIELD</td>
+	<td>//button[contains(@aria-label, "Open Fields Menu")]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>SELECT_CUSTOM_VIEW</td>
+    <td>//div[contains(@class,'custom-views-selection')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SELECT_OPTION</td>
+    <td>//button[contains(@class,'dropdown-item') and contains(text(), '${key_itemName}')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>INPUT_CUSTOM_VIEW_NAME</td>
+	<td>//input[contains(@id,'customViewLabelInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BTN</td>
+	<td>//*[@class="btn btn-primary"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLUMN_NAME</td>
+	<td>//div[contains(text(),${columnName})]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

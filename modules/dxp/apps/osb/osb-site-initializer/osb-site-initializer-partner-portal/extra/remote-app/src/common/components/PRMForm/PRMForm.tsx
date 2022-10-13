@@ -12,6 +12,7 @@
 import Checkbox from './components/fields/Checkbox';
 import CheckboxGroup from './components/fields/CheckboxGroup';
 import DatePicker from './components/fields/DatePicker';
+import DragAndDrop from './components/fields/DragAndDrop';
 import InputCurrency from './components/fields/InputCurrency';
 import InputFile from './components/fields/InputFile';
 import InputText from './components/fields/InputText';
@@ -55,9 +56,9 @@ const PRMForm = ({
 PRMForm.Footer = Footer;
 PRMForm.Group = Group;
 PRMForm.Section = Section;
-
 PRMForm.Checkbox = Checkbox;
 PRMForm.CheckboxGroup = CheckboxGroup;
+PRMForm.DragAndDrop = DragAndDrop;
 PRMForm.DatePicker = DatePicker;
 PRMForm.InputCurrency = InputCurrency;
 PRMForm.InputFile = InputFile;

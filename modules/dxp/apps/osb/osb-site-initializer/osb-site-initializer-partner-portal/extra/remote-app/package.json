@@ -16,6 +16,7 @@
 		"formik": "^2.2.9",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-dropzone": "^14.2.2",
 		"react-imask": "^6.4.2",
 		"react-transition-group": "^4.4.5",
 		"swr": "^1.3.0",

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/sku.properties",
+	properties = "OSGI-INF/liferay/rest/v1_0/sku.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, SkuResource.class}
 )

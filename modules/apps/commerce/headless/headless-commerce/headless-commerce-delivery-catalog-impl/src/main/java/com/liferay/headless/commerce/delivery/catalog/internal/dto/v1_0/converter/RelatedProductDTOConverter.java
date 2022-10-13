@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false, property = "dto.class.name=CPDefinitionLink",
+	property = "dto.class.name=CPDefinitionLink",
 	service = {DTOConverter.class, RelatedProductDTOConverter.class}
 )
 public class RelatedProductDTOConverter

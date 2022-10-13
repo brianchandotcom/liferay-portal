@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false, property = "dto.class.name=CPAttachmentFileEntry",
+	property = "dto.class.name=CPAttachmentFileEntry",
 	service = {AttachmentDTOConverter.class, DTOConverter.class}
 )
 public class AttachmentDTOConverter

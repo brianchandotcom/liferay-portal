@@ -66,6 +66,7 @@ export function ReorderSetsModal({onCloseModal}) {
 	return (
 		<ClayModal
 			className="page-editor__reorder-set-modal"
+			containerProps={{className: 'cadmin'}}
 			observer={observer}
 		>
 			<ClayModal.Header>

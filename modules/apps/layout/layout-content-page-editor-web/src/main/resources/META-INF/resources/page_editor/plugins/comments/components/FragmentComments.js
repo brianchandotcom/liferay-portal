@@ -45,6 +45,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 				<SidebarPanelHeader
 					iconLeft={
 						<ClayButton
+							aria-label={Liferay.Language.get('back')}
 							borderless
 							className="mr-3 p-0 text-dark"
 							displayType="secondary"

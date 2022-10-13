@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT,
 		"javax.portlet.name=" + CommerceWishListPortletKeys.MY_COMMERCE_WISH_LISTS,

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.health.status.display.order:Integer=20",
 		"commerce.health.status.key=" + WishListContentCommerceHealthHttpStatus.KEY

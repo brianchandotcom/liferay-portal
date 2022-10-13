@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(immediate = true, service = ModelListener.class)
 public class CPInstanceModelListener extends BaseModelListener<CPInstance> {
 
 	@Override

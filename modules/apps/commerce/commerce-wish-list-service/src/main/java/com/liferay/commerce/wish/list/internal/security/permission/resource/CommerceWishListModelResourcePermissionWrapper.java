@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false,
 	property = "model.class.name=com.liferay.commerce.wish.list.model.CommerceWishList",
 	service = ModelResourcePermission.class
 )

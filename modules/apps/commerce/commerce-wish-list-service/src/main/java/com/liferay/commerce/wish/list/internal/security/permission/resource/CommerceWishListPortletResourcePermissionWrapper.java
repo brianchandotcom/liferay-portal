@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false,
 	property = "resource.name=" + CommerceWishListConstants.RESOURCE_NAME,
 	service = PortletResourcePermission.class
 )

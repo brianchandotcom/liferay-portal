@@ -3125,26 +3125,33 @@ definition {
 					value1 = "${contentDisplay}");
 
 				PageEditor.waitForAutoSave();
+			}
 
-				if ("${contentDisplay}" != "Block") {
-					if (isSet(alignItems)) {
-						Select(
-							key_fieldLabel = "Align Items",
-							locator1 = "Select#GENERIC_SELECT_FIELD",
-							value1 = "${alignItems}");
+			if (isSet(flexWrap)) {
+				Select(
+					key_fieldLabel = "Flex Wrap",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${flexWrap}");
 
-						PageEditor.waitForAutoSave();
-					}
+				PageEditor.waitForAutoSave();
+			}
 
-					if (isSet(justifyContent)) {
-						Select(
-							key_fieldLabel = "Justify Content",
-							locator1 = "Select#GENERIC_SELECT_FIELD",
-							value1 = "${justifyContent}");
+			if (isSet(alignItems)) {
+				Select(
+					key_fieldLabel = "Align Items",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${alignItems}");
 
-						PageEditor.waitForAutoSave();
-					}
-				}
+				PageEditor.waitForAutoSave();
+			}
+
+			if (isSet(justifyContent)) {
+				Select(
+					key_fieldLabel = "Justify Content",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${justifyContent}");
+
+				PageEditor.waitForAutoSave();
 			}
 
 			if (isSet(height)) {
@@ -3153,6 +3160,20 @@ definition {
 					key_fieldLabel = "Height",
 					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
 					value1 = "${height}");
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
+			}
+
+			if (isSet(maxHeight)) {
+				Type(
+					key_borderBottom = "Frame",
+					key_fieldLabel = "Max Height",
+					locator1 = "TextInput#BORDER_BOTTOM_INPUT_FIELD",
+					value1 = "${maxHeight}");
 
 				Click(
 					key_sidebarButton = "Browser",
@@ -4603,6 +4624,13 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				key_contentDisplay = "${contentDisplay}",
 				key_position = "${position}",
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+		}
+
+		if (isSet(flexWrap)) {
+			AssertElementPresent(
+				key_flexWrap = "${flexWrap}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_FLEX_WRAP");
 		}
 
 		if (isSet(justifyContent)) {

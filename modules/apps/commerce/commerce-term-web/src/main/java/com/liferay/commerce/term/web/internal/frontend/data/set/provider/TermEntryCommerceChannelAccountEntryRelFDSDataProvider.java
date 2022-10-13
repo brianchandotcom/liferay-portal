@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceTermEntryFDSNames.ACCOUNT_ENTRY_DELIVERY_TERM_ENTRIES,
 		"fds.data.provider.key=" + CommerceTermEntryFDSNames.ACCOUNT_ENTRY_PAYMENT_TERM_ENTRIES

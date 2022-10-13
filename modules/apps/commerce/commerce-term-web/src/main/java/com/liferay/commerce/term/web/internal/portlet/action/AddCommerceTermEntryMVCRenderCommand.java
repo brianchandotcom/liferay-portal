@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY,
 		"mvc.command.name=/commerce_term_entry/add_commerce_term_entry"

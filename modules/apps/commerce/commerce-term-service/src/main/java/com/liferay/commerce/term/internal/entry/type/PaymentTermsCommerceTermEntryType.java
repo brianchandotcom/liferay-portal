@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.term.entry.type.key=" + CommerceTermEntryConstants.TYPE_PAYMENT_TERMS,
 	service = CommerceTermEntryType.class
 )

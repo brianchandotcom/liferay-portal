@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, immediate = true,
-	service = CommerceTermEntryTypeRegistry.class
-)
+@Component(immediate = true, service = CommerceTermEntryTypeRegistry.class)
 public class CommerceTermEntryTypeRegistryImpl
 	implements CommerceTermEntryTypeRegistry {
 

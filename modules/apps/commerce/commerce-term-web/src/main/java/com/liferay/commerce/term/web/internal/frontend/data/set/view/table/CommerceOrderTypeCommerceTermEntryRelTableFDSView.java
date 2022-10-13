@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceTermEntryFDSNames.TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES,
 	service = FDSView.class
 )

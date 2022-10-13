@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY,
 		"mvc.command.name=/commerce_term_entry/edit_commerce_term_entry_external_reference_code"

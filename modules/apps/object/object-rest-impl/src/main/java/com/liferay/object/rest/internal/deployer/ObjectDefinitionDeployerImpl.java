@@ -16,7 +16,6 @@ package com.liferay.object.rest.internal.deployer;
 
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.deployer.ObjectDefinitionDeployerUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
@@ -110,10 +109,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
-		String objectDefinitionInstanceKey =
-			ObjectDefinitionDeployerUtil.createObjectDefinitionInstanceKey(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getRESTContextPath());
+		String objectDefinitionInstanceKey = _createObjectDefinitionInstanceKey(
+			objectDefinition.getCompanyId(),
+			objectDefinition.getRESTContextPath());
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -130,10 +128,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			_excludeScopedMethods(objectDefinition, objectScopeProvider);
 
-			String osgiJAXRsName =
-				ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
-					objectDefinition.getCompanyId(),
-					objectDefinition.getName());
+			String osgiJAXRsName = objectDefinition.createOSGIJAXRsName();
 
 			_componentInstancesMap.put(
 				objectDefinitionInstanceKey,
@@ -166,10 +161,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
-							ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
-								"ObjectDefinitionContextProvider",
-								objectDefinition.getCompanyId(),
-								objectDefinition.getName())
+							objectDefinition.createOSGIJAXRsName(
+								"ObjectDefinitionContextProvider")
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -181,10 +174,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
-							ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
-								"ObjectEntryManagerHttpExceptionMapper",
-								objectDefinition.getCompanyId(),
-								objectDefinition.getName())
+							objectDefinition.createOSGIJAXRsName(
+								"ObjectEntryManagerHttpExceptionMapper")
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -196,10 +187,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
-							ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
-								"ObjectEntryValuesExceptionMapper",
-								objectDefinition.getCompanyId(),
-								objectDefinition.getName())
+							objectDefinition.createOSGIJAXRsName(
+								"ObjectEntryValuesExceptionMapper")
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -211,10 +200,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
-							ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
-								"ObjectValidationRuleEngineExceptionMapper",
-								objectDefinition.getCompanyId(),
-								objectDefinition.getName())
+							objectDefinition.createOSGIJAXRsName(
+								"ObjectValidationRuleEngineExceptionMapper")
 						).build()),
 					_bundleContext.registerService(
 						ExceptionMapper.class,
@@ -226,10 +213,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension", "true"
 						).put(
 							"osgi.jaxrs.name",
-							ObjectDefinitionDeployerUtil.createOSGIJAXRsName(
-								"RequiredObjectRelationshipExceptionMapper",
-								objectDefinition.getCompanyId(),
-								objectDefinition.getName())
+							objectDefinition.createOSGIJAXRsName(
+								"RequiredObjectRelationshipExceptionMapper")
 						).build()),
 					_bundleContext.registerService(
 						ObjectEntryResource.class,
@@ -309,8 +294,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		Map<Long, ObjectDefinition> objectDefinitions =
 			_objectDefinitionsMap.get(
-				ObjectDefinitionDeployerUtil.createObjectDefinitionInstanceKey(
-					companyId, restContextPath));
+				_createObjectDefinitionInstanceKey(companyId, restContextPath));
 
 		if (objectDefinitions != null) {
 			return objectDefinitions.get(companyId);
@@ -321,10 +305,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
-		String objectDefinitionInstanceKey =
-			ObjectDefinitionDeployerUtil.createObjectDefinitionInstanceKey(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getRESTContextPath());
+		String objectDefinitionInstanceKey = _createObjectDefinitionInstanceKey(
+			objectDefinition.getCompanyId(),
+			objectDefinition.getRESTContextPath());
 
 		Map<Long, ObjectDefinition> objectDefinitions =
 			_objectDefinitionsMap.get(objectDefinitionInstanceKey);

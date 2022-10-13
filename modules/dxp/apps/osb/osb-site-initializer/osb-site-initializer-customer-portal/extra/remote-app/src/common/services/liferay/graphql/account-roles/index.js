@@ -10,3 +10,4 @@
  */
 
 export * from './queries/useGetAccountRolesByAccountExternalReferenceCode';
+export * from './mutations/useReplaceAccountRoleByUserAccountEmailAddress';

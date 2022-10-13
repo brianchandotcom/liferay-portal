@@ -10,3 +10,4 @@
  */
 
 export * from './mutations/useDeleteRolesByContactEmailAddress';
+export * from './mutations/useUpdateRolesByContactEmailAddress';

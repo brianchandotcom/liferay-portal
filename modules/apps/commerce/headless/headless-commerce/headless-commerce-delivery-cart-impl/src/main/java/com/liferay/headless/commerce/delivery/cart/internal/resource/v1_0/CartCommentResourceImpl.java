@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/cart-comment.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = {CartCommentResource.class, NestedFieldSupport.class}

@@ -76,7 +76,7 @@ import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -511,7 +511,7 @@ public class StagingImpl implements Staging {
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
 
-		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray errorMessagesJSONArray = _jsonFactory.createJSONArray();
 
 		for (Map.Entry<String, MissingReference> missingReferenceEntry :
 				missingReferences.entrySet()) {
@@ -519,8 +519,7 @@ public class StagingImpl implements Staging {
 			MissingReference missingReference =
 				missingReferenceEntry.getValue();
 
-			JSONObject errorMessageJSONObject =
-				JSONFactoryUtil.createJSONObject();
+			JSONObject errorMessageJSONObject = _jsonFactory.createJSONObject();
 
 			String className = missingReference.getClassName();
 			Map<String, String> referrers = missingReference.getReferrers();
@@ -1254,7 +1253,7 @@ public class StagingImpl implements Staging {
 					"page-templates-or-site-templates-that-could-not-be-",
 					"found.-please-import-the-following-templates-manually"));
 
-			errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
+			errorMessagesJSONArray = _jsonFactory.createJSONArray();
 
 			List<Tuple> missingLayoutPrototypes =
 				layoutPrototypeException.getMissingLayoutPrototypes();
@@ -1987,7 +1986,7 @@ public class StagingImpl implements Staging {
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
 
-		JSONArray warningMessagesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray warningMessagesJSONArray = _jsonFactory.createJSONArray();
 
 		for (Map.Entry<String, MissingReference> entry :
 				missingReferences.entrySet()) {
@@ -4060,6 +4059,9 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

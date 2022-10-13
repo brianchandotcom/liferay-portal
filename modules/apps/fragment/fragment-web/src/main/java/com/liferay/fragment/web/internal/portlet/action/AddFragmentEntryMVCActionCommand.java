@@ -23,7 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -74,7 +74,7 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			String[] fieldTypes = ParamUtil.getStringValues(
 				actionRequest, "fieldTypes");
 
-			JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray(
+			JSONArray fieldTypesJSONArray = _jsonFactory.createJSONArray(
 				fieldTypes);
 
 			typeOptions = JSONUtil.put(
@@ -144,6 +144,9 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -38,7 +38,7 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -119,7 +119,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					zipFile, fragmentCollectionFolder.getFileName());
 
 				if (Validator.isNotNull(collectionJSON)) {
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
 						collectionJSON);
 
 					name = jsonObject.getString("name");
@@ -524,7 +524,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		else if (fileName.equals(
 					FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
 
-			JSONObject collectionJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject collectionJSONObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
 					zipFile.getInputStream(zipFile.getEntry(fileName))));
 
@@ -534,7 +534,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		else if (fileName.equals(
 					FragmentExportImportConstants.FILE_NAME_FRAGMENT)) {
 
-			JSONObject fragmentJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject fragmentJSONObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
 					zipFile.getInputStream(zipFile.getEntry(fileName))));
 
@@ -625,7 +625,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				compositionJSON);
 
 			String name = jsonObject.getString("name", entry.getKey());
@@ -707,7 +707,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String fragmentJSON = _getContent(zipFile, entry.getValue());
 
 			if (Validator.isNotNull(fragmentJSON)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					fragmentJSON);
 
 				name = jsonObject.getString("name");
@@ -748,7 +748,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 						fragmentEntry.getPreviewFileEntryId());
 				}
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					fragmentJSON);
 
 				String thumbnailPath = jsonObject.getString("thumbnailPath");
@@ -813,7 +813,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					String fragmentJSON = StringUtil.read(
 						zipFile.getInputStream(zipEntry));
 
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
 						fragmentJSON);
 
 					return Arrays.stream(
@@ -994,6 +994,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntryValidator _fragmentEntryValidator;
 
 	private List<FragmentsImporterResultEntry> _fragmentsImporterResultEntries;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

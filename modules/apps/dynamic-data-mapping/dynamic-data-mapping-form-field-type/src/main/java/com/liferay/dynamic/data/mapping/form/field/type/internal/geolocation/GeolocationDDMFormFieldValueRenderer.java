@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -55,7 +56,7 @@ public class GeolocationDDMFormFieldValueRenderer
 			JSONObject jsonObject = null;
 
 			try {
-				jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				jsonObject = _jsonFactory.createJSONObject(valueString);
 			}
 			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {
@@ -75,5 +76,8 @@ public class GeolocationDDMFormFieldValueRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GeolocationDDMFormFieldValueRenderer.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

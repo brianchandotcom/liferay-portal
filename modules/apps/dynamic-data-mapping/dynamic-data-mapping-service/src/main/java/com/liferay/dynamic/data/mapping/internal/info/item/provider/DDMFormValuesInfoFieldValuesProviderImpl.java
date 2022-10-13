@@ -36,7 +36,7 @@ import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -266,8 +266,7 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 						ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
 					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
 
-				return _getWebImage(
-					JSONFactoryUtil.createJSONObject(valueString));
+				return _getWebImage(_jsonFactory.createJSONObject(valueString));
 			}
 			else if (Objects.equals(
 						ddmFormFieldValue.getType(),
@@ -280,7 +279,7 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 				JSONArray optionReferencesJSONArray = null;
 
 				try {
-					optionReferencesJSONArray = JSONFactoryUtil.createJSONArray(
+					optionReferencesJSONArray = _jsonFactory.createJSONArray(
 						valueString);
 				}
 				catch (JSONException jsonException) {
@@ -299,7 +298,7 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					ddmFormField.getDDMFormFieldOptions();
 
 				JSONArray optionLabelsJSONArray =
-					JSONFactoryUtil.createJSONArray();
+					_jsonFactory.createJSONArray();
 
 				for (int i = 0; i < optionReferencesJSONArray.length(); i++) {
 					LocalizedValue localizedValue =
@@ -341,5 +340,8 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

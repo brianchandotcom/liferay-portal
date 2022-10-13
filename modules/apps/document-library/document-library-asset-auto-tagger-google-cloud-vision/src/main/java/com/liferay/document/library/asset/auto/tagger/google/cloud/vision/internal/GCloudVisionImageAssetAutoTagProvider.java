@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -139,7 +139,7 @@ public class GCloudVisionImageAssetAutoTagProvider
 					responseJSON));
 		}
 
-		return JSONFactoryUtil.createJSONObject(responseJSON);
+		return _jsonFactory.createJSONObject(responseJSON);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -154,5 +154,8 @@ public class GCloudVisionImageAssetAutoTagProvider
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

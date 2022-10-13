@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -211,7 +211,7 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 				return null;
 			}
 
-			return JSONFactoryUtil.createJSONObject(
+			return _jsonFactory.createJSONObject(
 				StringUtil.read(zipFile.getInputStream(zipEntry)));
 		}
 	}
@@ -298,6 +298,9 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;

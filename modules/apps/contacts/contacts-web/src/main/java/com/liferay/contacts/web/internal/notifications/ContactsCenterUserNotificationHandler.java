@@ -17,7 +17,7 @@ package com.liferay.contacts.web.internal.notifications;
 import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,7 +67,7 @@ public class ContactsCenterUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
 		long socialRequestId = jsonObject.getLong("classPK");
@@ -206,6 +206,9 @@ public class ContactsCenterUserNotificationHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContactsCenterUserNotificationHandler.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SocialRequestLocalService _socialRequestLocalService;

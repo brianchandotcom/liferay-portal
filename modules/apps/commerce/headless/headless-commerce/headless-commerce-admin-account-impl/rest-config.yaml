@@ -7,5 +7,4 @@ application:
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-account-client/src/main/java"
 forcePredictableOperationId: false
-liferayEnterpriseApp: true
 testDir: "../headless-commerce-admin-account-test/src/testIntegration/java"

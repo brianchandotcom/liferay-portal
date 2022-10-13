@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	property = "dto.class.name=com.liferay.portal.kernel.model.User",
 	service = {DTOConverter.class, UserDTOConverter.class}
 )

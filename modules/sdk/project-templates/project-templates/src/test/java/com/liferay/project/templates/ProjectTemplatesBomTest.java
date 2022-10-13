@@ -117,9 +117,9 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		template = "service-wrapper";
 
 		File serviceWrapperProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test", "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--product", product, "--liferay-version", _BOM_VERSION);
+			modulesDir, template, template + "test", "--liferay-version",
+			_BOM_VERSION, "--product", product, "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
 		testOutput(serviceWrapperProjectDir, template, workspaceDir);
 

@@ -159,8 +159,8 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, _name, "--package-name",
-			_packageName, "--liferay-version", _liferayVersion, "--product",
+			gradleWorkspaceModulesDir, template, _name, "--liferay-version",
+			_liferayVersion, "--package-name", _packageName, "--product",
 			_product);
 
 		if (_name.contains("sample")) {
@@ -260,8 +260,8 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, _name, "com.test",
-			mavenExecutor, "-Dpackage=" + _packageName,
-			"-DliferayVersion=" + _liferayVersion, "-DbuildType=maven",
+			mavenExecutor, "-DbuildType=maven",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + _packageName,
 			"-Dproduct=" + _product);
 
 		File projectDir = new File(mavenModulesDir, _name);

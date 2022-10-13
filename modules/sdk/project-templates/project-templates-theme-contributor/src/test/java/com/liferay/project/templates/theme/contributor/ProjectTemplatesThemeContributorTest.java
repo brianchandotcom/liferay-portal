@@ -86,8 +86,8 @@ public class ProjectTemplatesThemeContributorTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--contributor-type", "foo-bar");
+			gradleWorkspaceModulesDir, template, name, "--contributor-type",
+			"foo-bar", "--liferay-version", _liferayVersion);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd",
@@ -113,8 +113,8 @@ public class ProjectTemplatesThemeContributorTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DcontributorType=foo-bar",
-			"-Dpackage=my.contributor.custom",
-			"-DliferayVersion=" + _liferayVersion);
+			"-DliferayVersion=" + _liferayVersion,
+			"-Dpackage=my.contributor.custom");
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");

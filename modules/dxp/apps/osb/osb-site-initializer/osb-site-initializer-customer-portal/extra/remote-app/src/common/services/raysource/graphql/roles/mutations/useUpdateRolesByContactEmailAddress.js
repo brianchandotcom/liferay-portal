@@ -36,6 +36,7 @@ const UPDATE_ROLES_BY_CONTACT_EMAIL_ADDRESS = gql`
 export function useUpdateRolesByContactEmailAddress() {
 	return useMutation(UPDATE_ROLES_BY_CONTACT_EMAIL_ADDRESS, {
 		context: {
+			displayServerError: true,
 			displaySuccess: false,
 			type: 'raysource-rest',
 		},

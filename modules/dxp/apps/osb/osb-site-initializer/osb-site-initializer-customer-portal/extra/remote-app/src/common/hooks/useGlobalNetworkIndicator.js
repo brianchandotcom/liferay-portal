@@ -29,7 +29,19 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 		const {error: errorStatus, success} = networkStatus;
 
 		if (errorStatus?.networkError) {
-			Liferay.Util.openToast(DEFAULT_ERROR);
+			const displayServerError = errorStatus.operation.getContext()
+				.displayServerError;
+
+			if (displayServerError) {
+				Liferay.Util.openToast({
+					message:
+						errorStatus?.networkError.result?.title ||
+						DEFAULT_ERROR.message,
+					type: DEFAULT_ERROR.type,
+				});
+			} else {
+				Liferay.Util.openToast(DEFAULT_ERROR);
+			}
 		}
 
 		if (errorStatus?.response) {

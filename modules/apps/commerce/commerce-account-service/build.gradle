@@ -16,6 +16,7 @@ dependencies {
 	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-api")
+	compileOnly project(":apps:commerce:commerce-payment-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:commerce-term-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")

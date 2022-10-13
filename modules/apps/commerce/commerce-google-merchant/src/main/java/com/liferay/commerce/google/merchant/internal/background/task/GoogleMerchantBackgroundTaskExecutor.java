@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Thomas Stewart
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "background.task.executor.class.name=com.liferay.commerce.google.merchant.internal.background.task.GoogleMerchantBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )

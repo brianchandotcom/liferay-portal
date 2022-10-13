@@ -63,9 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * Implementation for generating XML for Google Merchant Center feed in
  * Atom 1.0 XML format
  */
-@Component(
-	enabled = false, immediate = true, service = ProductFeedXMLGenerator.class
-)
+@Component(immediate = true, service = ProductFeedXMLGenerator.class)
 public class ProductFeedXMLGenerator {
 
 	public String generateProductFeedXML(long commerceChannelId)

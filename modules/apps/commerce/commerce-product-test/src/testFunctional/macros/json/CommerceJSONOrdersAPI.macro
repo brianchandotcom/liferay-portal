@@ -26,17 +26,19 @@ definition {
 			if (!(isSet(orderItemCustomFields))) {
 				var orderItemCustomFields = "";
 			}
+
 			for (var orderItem : list "${orderItems}") {
 				var itemSku = StringUtil.extractFirst("${orderItem}", ":");
 				var itemQuantity = StringUtil.extractLast("${orderItem}", ":");
 				var itemSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${itemSku}");
 				var orderItemCustomFieldsList = "";
 
-				if("${orderItemsCustomFields}" != "") {
+				if ("${orderItemsCustomFields}" != "") {
 					var orderItemCustomFields = StringUtil.extractFirst("${orderItemsCustomFields}", ";");
+
 					var orderItemsCustomFields = StringUtil.replaceFirst("${orderItemsCustomFields}", "${orderItemCustomFields};", "");
 
-					for(var orderItemCustomField : list "${orderItemCustomFields}") {
+					for (var orderItemCustomField : list "${orderItemCustomFields}") {
 						var orderItemCustomFieldKey = StringUtil.extractFirst("${orderItemCustomField}", ":");
 						var orderItemCustomFieldValue = StringUtil.extractLast("${orderItemCustomField}", ":");
 
@@ -46,6 +48,7 @@ definition {
 						else {
 							var customFieldsComma = "";
 						}
+
 						var orderItemCustomFieldsList = '''
 							${orderItemCustomFieldsList}${customFieldsComma}
 							{
@@ -55,7 +58,7 @@ definition {
 								"name": "${orderItemCustomFieldKey}"
 							}
 						''';
-						
+
 						echo("Key: ${orderItemCustomFieldKey}");
 
 						echo("Value: ${orderItemCustomFieldValue}");
@@ -384,26 +387,6 @@ definition {
 		return "${orderIds}";
 	}
 
-	macro _getCommerceOrdersCount {
-		var baseURL = "${baseURL}";
-
-		if (!(isSet(baseURL))) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var ordersCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
-
-		echo("The Commerce orders count is: ${ordersCount}");
-
-		return "${ordersCount}";
-	}
-
 	macro _getCommerceOrderItemCustomFieldValue {
 		var baseURL = "${baseURL}";
 
@@ -424,6 +407,26 @@ definition {
 		echo("The Order Item Custom Field Value is: ${orderItemCustomFieldValue}");
 
 		return "${orderItemCustomFieldValue}";
+	}
+
+	macro _getCommerceOrdersCount {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var ordersCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+
+		echo("The Commerce orders count is: ${ordersCount}");
+
+		return "${ordersCount}";
 	}
 
 	macro _updateCommerceOrderERC {

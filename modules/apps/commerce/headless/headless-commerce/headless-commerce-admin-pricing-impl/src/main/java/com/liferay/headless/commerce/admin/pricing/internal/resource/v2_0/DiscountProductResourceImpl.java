@@ -52,7 +52,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Zoltán Takács
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v2_0/discount-product.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = {DiscountProductResource.class, NestedFieldSupport.class}

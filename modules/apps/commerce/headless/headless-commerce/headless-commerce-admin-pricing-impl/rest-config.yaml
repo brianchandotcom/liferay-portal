@@ -7,5 +7,4 @@ application:
 author: "Zoltán Takács"
 clientDir: "../headless-commerce-admin-pricing-client/src/main/java"
 forcePredictableSchemaPropertyName: false
-liferayEnterpriseApp: true
 testDir: "../headless-commerce-admin-pricing-test/src/testIntegration/java"

@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	property = "dto.class.name=com.liferay.asset.kernel.model.AssetCategory",
 	service = {CategoryDTOConverter.class, DTOConverter.class}
 )

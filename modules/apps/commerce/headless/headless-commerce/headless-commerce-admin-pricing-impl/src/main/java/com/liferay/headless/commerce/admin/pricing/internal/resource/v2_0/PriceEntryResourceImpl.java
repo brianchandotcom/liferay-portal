@@ -62,7 +62,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Zoltán Takács
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v2_0/price-entry.properties",
 	scope = ServiceScope.PROTOTYPE, service = PriceEntryResource.class
 )

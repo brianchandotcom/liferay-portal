@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/price-list-account-group.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = PriceListAccountGroupResource.class

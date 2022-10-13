@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Christian Chiappa
  */
 @Component(
-	enabled = false,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",

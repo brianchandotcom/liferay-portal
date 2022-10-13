@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceCatalogFDSNames.CATALOG_CHANNELS,
 	service = FDSView.class
 )

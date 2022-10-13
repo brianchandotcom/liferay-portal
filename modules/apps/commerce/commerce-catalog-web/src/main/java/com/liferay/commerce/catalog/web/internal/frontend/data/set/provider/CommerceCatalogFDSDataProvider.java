@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "fds.data.provider.key=" + CommerceCatalogFDSNames.CATALOGS,
 	service = FDSDataProvider.class
 )

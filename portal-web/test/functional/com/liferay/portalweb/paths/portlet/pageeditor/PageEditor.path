@@ -70,6 +70,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_DISPLAY_CONFIGURATION_ALIGN_ITEMS</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__collection')]/div[contains(@class,'d-flex')][not(contains(class,'pagination'))][contains(@class,'align-items-${key_alignItems}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLECTION_DISPLAY_CONFIGURATION_FLEX_WRAP</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__collection')]/div[contains(@class,'d-flex')][not(contains(class,'pagination'))][contains(@class,'flex-${key_flexWrap}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLECTION_DISPLAY_CONFIGURATION_JUSTIFY_CONTENT</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__collection')]/div[contains(@class,'d-flex')][not(contains(class,'pagination'))][contains(@class,'justify-content-${key_justifyContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_CELL</td>
 	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')] |//div[contains(@class,'collection__block') and contains(.,'${key_content}')]</td>
 	<td></td>

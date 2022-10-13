@@ -1358,15 +1358,6 @@ exports[`SidebarPanelInfoView renders 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              aria-labelledby="tab-2"
-              class="tab-pane fade"
-              role="tabpanel"
-            >
-              <ul
-                class="list-group sidebar-list-group"
-              />
-            </div>
           </div>
         </div>
       </div>

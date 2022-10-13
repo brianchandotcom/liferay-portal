@@ -19,10 +19,10 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.module.util.BundleUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.TransactionHandler;
-import com.liferay.portal.util.BundleUtil;
 
 import java.util.Arrays;
 import java.util.Dictionary;

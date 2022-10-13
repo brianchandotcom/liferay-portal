@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.BundleUtil;
+import com.liferay.portal.module.util.BundleUtil;
 import com.liferay.portal.util.PropsValues;
 
 import org.osgi.framework.Bundle;

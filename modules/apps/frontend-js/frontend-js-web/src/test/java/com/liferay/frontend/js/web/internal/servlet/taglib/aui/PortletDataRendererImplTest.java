@@ -250,6 +250,49 @@ public class PortletDataRendererImplTest {
 					"})();\n")));
 	}
 
+	@Test
+	public void testScriptTypeIsModuleWhenESMImportsArePresent()
+		throws Exception {
+
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				null, null, "content",
+				Arrays.asList(new ESImport("frontend-js-web", "openDialog"))));
+
+		Writer writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(code.contains("<script type=\"module\">"));
+	}
+
+	@Test
+	public void testScriptTypeIsTextJavascriptWhenESMImportsAreMissing()
+		throws Exception {
+
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(new JSFragment(null, null, "content", null));
+
+		Writer writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(code.contains("<script type=\"text/javascript\">"));
+	}
+
 	private void _assertAliases(String code, String... aliases) {
 		for (String alias : aliases) {
 			Assert.assertTrue(alias + " was not found", code.contains(alias));

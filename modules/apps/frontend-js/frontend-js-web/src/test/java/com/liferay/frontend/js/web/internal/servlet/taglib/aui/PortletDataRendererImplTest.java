@@ -224,8 +224,8 @@ public class PortletDataRendererImplTest {
 			"AMD requires are correctly rendered",
 			code.contains(
 				StringBundler.concat(
-					"Liferay.Loader.require(\n", "  'frontend-js-web',\n",
-					"  'react',\n", "function(frontendJsWeb, react0) {\n")));
+					"Liferay.Loader.require(\n", "'frontend-js-web',\n",
+					"'react',\n", "function(frontendJsWeb, react0) {\n")));
 
 		Assert.assertTrue(
 			"First JS fragment is correctly rendered",

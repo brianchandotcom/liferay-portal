@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration",
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"panel.app.order:Integer=150",
 		"panel.category.key=" + CommercePanelCategoryKeys.COMMERCE_ORDER_MANAGEMENT

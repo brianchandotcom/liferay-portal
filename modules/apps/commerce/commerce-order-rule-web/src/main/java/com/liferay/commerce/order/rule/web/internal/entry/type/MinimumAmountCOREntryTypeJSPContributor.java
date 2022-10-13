@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.order.rule.entry.type.jsp.contributor.key=" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT,
 	service = COREntryTypeJSPContributor.class
 )

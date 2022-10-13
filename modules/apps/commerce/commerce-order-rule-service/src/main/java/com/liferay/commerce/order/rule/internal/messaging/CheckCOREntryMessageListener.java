@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration",
-	enabled = false, immediate = true,
-	service = CheckCOREntryMessageListener.class
+	immediate = true, service = CheckCOREntryMessageListener.class
 )
 public class CheckCOREntryMessageListener extends BaseMessageListener {
 

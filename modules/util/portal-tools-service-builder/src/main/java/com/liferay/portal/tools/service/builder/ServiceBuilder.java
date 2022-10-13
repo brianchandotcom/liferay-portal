@@ -3363,6 +3363,10 @@ public class ServiceBuilder {
 
 		File dir = file.getParentFile();
 
+		if (!dir.exists() || !dir.isDirectory()) {
+			return;
+		}
+
 		for (File oldFile : dir.listFiles()) {
 			if (!Objects.equals(file.getName(), oldFile.getName())) {
 				oldFile.delete();

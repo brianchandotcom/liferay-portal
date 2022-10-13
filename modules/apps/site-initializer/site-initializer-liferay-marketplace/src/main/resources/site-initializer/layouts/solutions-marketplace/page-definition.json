@@ -594,15 +594,9 @@
 		"type": "Root"
 	},
 	"settings": {
-		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "marketplace"
-		},
-		"styleBook": {
-			"key": "marketplace",
-			"name": "Marketplace"
-		},
-		"themeName": "Dialect"
+		}
 	},
 	"version": 1.1
 }

@@ -990,7 +990,7 @@ public class ServicePreAction extends Action {
 				newPortalPreferences.getValue(null, "userPrivateLayout"))) {
 
 			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED =
-				Boolean.parseBoolean(
+				GetterUtil.getBoolean(
 					newPortalPreferences.getValue(null, "userPrivateLayout"));
 		}
 
@@ -999,7 +999,7 @@ public class ServicePreAction extends Action {
 					null, "userPrivateLayoutAutoCreate"))) {
 
 			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
-				Boolean.parseBoolean(
+				GetterUtil.getBoolean(
 					newPortalPreferences.getValue(
 						null, "userPrivateLayoutAutoCreate"));
 		}
@@ -1008,7 +1008,7 @@ public class ServicePreAction extends Action {
 				newPortalPreferences.getValue(null, "userPublicLayout"))) {
 
 			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED =
-				Boolean.parseBoolean(
+				GetterUtil.getBoolean(
 					newPortalPreferences.getValue(null, "userPublicLayout"));
 		}
 
@@ -1017,7 +1017,7 @@ public class ServicePreAction extends Action {
 					null, "userPublicLayoutAutoCreate"))) {
 
 			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE =
-				Boolean.parseBoolean(
+				GetterUtil.getBoolean(
 					newPortalPreferences.getValue(
 						null, "userPublicLayoutAutoCreate"));
 		}

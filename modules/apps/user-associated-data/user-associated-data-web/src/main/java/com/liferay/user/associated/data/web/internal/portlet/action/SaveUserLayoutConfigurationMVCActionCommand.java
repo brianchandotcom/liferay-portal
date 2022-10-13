@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -89,19 +90,19 @@ public class SaveUserLayoutConfigurationMVCActionCommand
 			PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE,
 			ParamUtil.getString(actionRequest, "userPublicLayoutAutoCreate"));
 
-		PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED = Boolean.parseBoolean(
+		PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED));
 
 		PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
-			Boolean.parseBoolean(
+			GetterUtil.getBoolean(
 				PropsUtil.get(
 					PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE));
 
-		PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED = Boolean.parseBoolean(
+		PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED));
 
 		PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE =
-			Boolean.parseBoolean(
+			GetterUtil.getBoolean(
 				PropsUtil.get(
 					PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE));
 

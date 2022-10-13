@@ -23,10 +23,44 @@ definition {
 		var orderItemsList = "";
 
 		if (isSet(orderItems)) {
+			if (!(isSet(orderItemCustomFields))) {
+				var orderItemCustomFields = "";
+			}
 			for (var orderItem : list "${orderItems}") {
 				var itemSku = StringUtil.extractFirst("${orderItem}", ":");
 				var itemQuantity = StringUtil.extractLast("${orderItem}", ":");
 				var itemSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${itemSku}");
+				var orderItemCustomFieldsList = "";
+
+				if("${orderItemsCustomFields}" != "") {
+					var orderItemCustomFields = StringUtil.extractFirst("${orderItemsCustomFields}", ";");
+					var orderItemsCustomFields = StringUtil.replaceFirst("${orderItemsCustomFields}", "${orderItemCustomFields};", "");
+
+					for(var orderItemCustomField : list "${orderItemCustomFields}") {
+						var orderItemCustomFieldKey = StringUtil.extractFirst("${orderItemCustomField}", ":");
+						var orderItemCustomFieldValue = StringUtil.extractLast("${orderItemCustomField}", ":");
+
+						if ("${orderItemCustomFieldsList}" != "") {
+							var customFieldsComma = ",";
+						}
+						else {
+							var customFieldsComma = "";
+						}
+						var orderItemCustomFieldsList = '''
+							${orderItemCustomFieldsList}${customFieldsComma}
+							{
+								"customValue": {
+								"data": "${orderItemCustomFieldValue}"
+								},
+								"name": "${orderItemCustomFieldKey}"
+							}
+						''';
+						
+						echo("Key: ${orderItemCustomFieldKey}");
+
+						echo("Value: ${orderItemCustomFieldValue}");
+					}
+				}
 
 				if ("${orderItemsList}" != "") {
 					var comma = ",";
@@ -38,6 +72,7 @@ definition {
 				var orderItemsList = '''
 						${orderItemsList}${comma}
 						{
+							"customFields": [${orderItemCustomFieldsList}],
 							"quantity": "${itemQuantity}",
       						"skuId": "${itemSkuId}"
 						}
@@ -115,7 +150,11 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var orderId = JSONCurlUtil.post("${curl}", "$..['id']");
+
+		echo("Order id: ${orderId}");
+
+		return "${orderId}";
 	}
 
 	macro _addCommerceOrderItem {
@@ -363,6 +402,28 @@ definition {
 		echo("The Commerce orders count is: ${ordersCount}");
 
 		return "${ordersCount}";
+	}
+
+	macro _getCommerceOrderItemCustomFieldValue {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderItems \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var orderItemCustomFieldValue = JSONCurlUtil.get("${curl}", "$..items[?(@['sku'] == '${sku}')].customFields[?(@['name'] == '${customFieldName}')].customValue.data");
+
+		echo("The Order Item Custom Field Value is: ${orderItemCustomFieldValue}");
+
+		return "${orderItemCustomFieldValue}";
 	}
 
 	macro _updateCommerceOrderERC {

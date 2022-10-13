@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	enabled = false, service = CommerceTaxFixedRateAddressRelFinder.class
-)
+@Component(service = CommerceTaxFixedRateAddressRelFinder.class)
 public class CommerceTaxFixedRateAddressRelFinderImpl
 	extends CommerceTaxFixedRateAddressRelFinderBaseImpl
 	implements CommerceTaxFixedRateAddressRelFinder {

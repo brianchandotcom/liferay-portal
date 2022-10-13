@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(immediate = true, service = ModelListener.class)
 public class CommerceTaxMethodModelListener
 	extends BaseModelListener<CommerceTaxMethod> {
 

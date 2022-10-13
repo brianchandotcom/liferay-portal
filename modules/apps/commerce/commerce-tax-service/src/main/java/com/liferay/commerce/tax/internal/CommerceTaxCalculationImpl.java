@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = CommerceTaxCalculation.class)
+@Component(service = CommerceTaxCalculation.class)
 public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 	@Override

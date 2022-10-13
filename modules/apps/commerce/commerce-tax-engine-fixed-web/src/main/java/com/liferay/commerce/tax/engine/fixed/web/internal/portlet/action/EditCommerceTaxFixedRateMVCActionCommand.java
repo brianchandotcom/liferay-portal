@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_TAX_METHODS,
 		"mvc.command.name=/commerce_tax_methods/edit_commerce_tax_fixed_rate"

@@ -22,9 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Cheryl Tang
  */
-@Component(
-	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class CommerceTaxServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

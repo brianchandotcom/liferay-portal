@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "fds.data.provider.key=" + CommerceTaxRateSettingFDSNames.TAX_RATE_SETTING,
 	service = FDSDataProvider.class
 )

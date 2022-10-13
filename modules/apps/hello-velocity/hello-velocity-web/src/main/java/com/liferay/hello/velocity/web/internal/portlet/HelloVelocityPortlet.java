@@ -64,11 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 public class HelloVelocityPortlet extends VelocityPortlet {
 
 	@Override
-	protected String getTemplateId(String name) {
-		return name;
-	}
-
-	@Override
 	protected void mergeTemplate(
 			String templateId, PortletRequest portletRequest,
 			PortletResponse portletResponse)

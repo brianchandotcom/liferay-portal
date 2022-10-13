@@ -101,12 +101,12 @@ public class VelocityPortlet extends GenericPortlet {
 
 		_portletContextName = portletContext.getPortletContextName();
 
-		_actionTemplateId = getTemplateId(getInitParameter("action-template"));
-		_editTemplateId = getTemplateId(getInitParameter("edit-template"));
-		_helpTemplateId = getTemplateId(getInitParameter("help-template"));
-		_resourceTemplateId = getTemplateId(
-			getInitParameter("resource-template"));
-		_viewTemplateId = getTemplateId(getInitParameter("view-template"));
+		_actionTemplateId = getInitParameter("action-template");
+		_editTemplateId = getInitParameter("edit-template");
+		_helpTemplateId = getInitParameter("help-template");
+		_resourceTemplateId =
+			getInitParameter("resource-template");
+		_viewTemplateId = getInitParameter("view-template");
 	}
 
 	@Override
@@ -144,16 +144,6 @@ public class VelocityPortlet extends GenericPortlet {
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-	}
-
-	protected String getTemplateId(String name) {
-		if (Validator.isNull(name)) {
-			return name;
-		}
-
-		return StringBundler.concat(
-			_portletContextName, TemplateConstants.SERVLET_SEPARATOR,
-			StrutsUtil.TEXT_HTML_DIR, name);
 	}
 
 	protected void mergeTemplate(

@@ -255,8 +255,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 	}
 
 	protected void setBaseRequestParameters(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		OAuthRequest oAuthRequest) {
+		PortletRequest portletRequest, OAuthRequest oAuthRequest) {
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(portletRequest);
@@ -402,7 +401,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		OAuthRequest oAuthRequest) {
 
-		setBaseRequestParameters(portletRequest, portletResponse, oAuthRequest);
+		setBaseRequestParameters(portletRequest, oAuthRequest);
 
 		Map<String, String[]> parameterMap = new HashMap<>();
 

@@ -171,7 +171,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		OAuthRequest oAuthRequest = new OAuthRequest(
 			Verb.POST, getServerPortletURL());
 
-		setBaseRequestParameters(actionRequest, actionResponse, oAuthRequest);
+		setBaseRequestParameters(actionRequest, oAuthRequest);
 
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
 		addOAuthParameter(
@@ -441,7 +441,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		OAuthRequest oAuthRequest = new OAuthRequest(
 			Verb.GET, getServerPortletURL());
 
-		setBaseRequestParameters(portletRequest, portletResponse, oAuthRequest);
+		setBaseRequestParameters(portletRequest, oAuthRequest);
 
 		String serverNamespace = getServerNamespace();
 

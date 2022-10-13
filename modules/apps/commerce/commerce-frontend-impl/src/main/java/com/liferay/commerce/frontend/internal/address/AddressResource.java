@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = AddressResource.class)
+@Component(service = AddressResource.class)
 public class AddressResource {
 
 	@GET

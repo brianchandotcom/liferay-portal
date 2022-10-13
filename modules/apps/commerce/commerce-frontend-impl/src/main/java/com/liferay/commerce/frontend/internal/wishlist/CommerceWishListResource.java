@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = CommerceWishListResource.class)
+@Component(service = CommerceWishListResource.class)
 public class CommerceWishListResource {
 
 	@Path("/wish-list-item")

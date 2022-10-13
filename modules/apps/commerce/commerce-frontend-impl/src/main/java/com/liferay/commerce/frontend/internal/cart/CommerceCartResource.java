@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceCartResource.class)
+@Component(service = CommerceCartResource.class)
 public class CommerceCartResource {
 
 	@Path("/order/{orderId}/coupon-code/{couponCode}")

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceSearchUtil.class)
+@Component(service = CommerceSearchUtil.class)
 public class CommerceSearchUtil {
 
 	public String getAccountManagementFriendlyURL(ThemeDisplay themeDisplay)

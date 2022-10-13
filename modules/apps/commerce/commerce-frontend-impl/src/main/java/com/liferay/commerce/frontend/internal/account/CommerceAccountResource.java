@@ -87,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceAccountResource.class)
+@Component(service = CommerceAccountResource.class)
 public class CommerceAccountResource {
 
 	public AccountList getAccountList(

@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CommerceCartResourceUtil.class)
+@Component(service = CommerceCartResourceUtil.class)
 public class CommerceCartResourceUtil {
 
 	public Cart getCart(

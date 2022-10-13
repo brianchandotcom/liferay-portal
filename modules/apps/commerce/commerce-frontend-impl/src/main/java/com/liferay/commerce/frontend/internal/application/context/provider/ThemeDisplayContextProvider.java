@@ -29,10 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(
-	enabled = false, immediate = true,
-	service = ThemeDisplayContextProvider.class
-)
+@Component(immediate = true, service = ThemeDisplayContextProvider.class)
 @Provider
 public class ThemeDisplayContextProvider
 	implements ContextProvider<ThemeDisplay> {

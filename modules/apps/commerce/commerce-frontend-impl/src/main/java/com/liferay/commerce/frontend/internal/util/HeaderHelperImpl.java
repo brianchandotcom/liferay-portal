@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(enabled = false, service = HeaderHelper.class)
+@Component(service = HeaderHelper.class)
 public class HeaderHelperImpl implements HeaderHelper {
 
 	@Override

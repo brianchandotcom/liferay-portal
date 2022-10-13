@@ -328,7 +328,7 @@ definition {
 	test CanViewObjectAfterRestart {
 		property portal.acceptance = "true";
 
-		task ("Create Custom Object and Custom Field (via API)") {
+		task ("Create Custom Object, Custom Field and publish (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 163066",
 				objectName = "CustomObject163066",
@@ -341,16 +341,18 @@ definition {
 				fieldType = "String",
 				isRequired = "false",
 				objectName = "CustomObject163066");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163066");
 		}
 
-		task ("Go to Custom Object, change the panel category key and publish") {
+		task ("Go to Custom Object and change the panel category key") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 163066");
 
 			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 
-			ObjectAdmin.publishObjectViaUI();
+			ObjectAdmin.saveCustomObject();
 		}
 
 		task ("Create an Entry (via API)") {
@@ -364,6 +366,10 @@ definition {
 			Portlet.shutdownServer();
 
 			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Login portal") {
+			User.firstLoginPG();
 		}
 
 		task ("Assert the Custom Object is present in Object Admin") {

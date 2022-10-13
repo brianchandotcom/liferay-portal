@@ -26,9 +26,11 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
@@ -47,8 +49,10 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
@@ -132,6 +136,8 @@ public class DefaultObjectEntryManagerImplTest {
 	public static void setUpClass() throws Exception {
 		_companyId = TestPropsValues.getCompanyId();
 		_group = GroupTestUtil.addGroup();
+		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		_simpleDTOConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, _user);
@@ -188,6 +194,15 @@ public class DefaultObjectEntryManagerImplTest {
 						_createObjectFieldSetting(
 							"fileSource", "documentsAndMedia"),
 						_createObjectFieldSetting("maximumFileSize", "100"))
+				).build(),
+				new DateObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"dateObjectFieldName"
+				).objectFieldSettings(
+					Collections.emptyList()
 				).build(),
 				new DecimalObjectFieldBuilder(
 				).labelMap(
@@ -293,11 +308,15 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		String listTypeEntryKey = _generateListTypeEntryKey();
+
 		ObjectEntry childObjectEntry1 = new ObjectEntry() {
 			{
 				properties = HashMapBuilder.<String, Object>put(
 					"attachmentObjectFieldName",
 					_getAttachmentObjectFieldValue()
+				).put(
+					"dateObjectFieldName", "2022-01-01"
 				).put(
 					"decimalObjectFieldName", 15.5
 				).put(
@@ -305,7 +324,7 @@ public class DefaultObjectEntryManagerImplTest {
 				).put(
 					"longIntegerObjectFieldName", 50000L
 				).put(
-					"picklistObjectFieldName", _addListTypeEntry()
+					"picklistObjectFieldName", listTypeEntryKey
 				).put(
 					"precisionDecimalObjectFieldName",
 					new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
@@ -360,6 +379,8 @@ public class DefaultObjectEntryManagerImplTest {
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
+						"dateObjectFieldName", "2020-01-02"
+					).put(
 						"decimalObjectFieldName", 15.7
 					).put(
 						"r_oneToManyRelationshipName_" +
@@ -403,6 +424,88 @@ public class DefaultObjectEntryManagerImplTest {
 			_objectEntryManager.getObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
 				parentObjectEntry1.getId()));
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			"countAggregationObjectFieldName");
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(),
+			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
+			"{\"eq\":\"15\"}");
+
+		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(),
+			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
+			"{\"ne\":\"15\"}");
+
+		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(),
+			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
+			"{\"in\":[\"" + listTypeEntryKey + "\"]}");
+
+		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(),
+			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
+			"{\"not\":{\"in\":[\"" + listTypeEntryKey + "\"]}}");
+
+		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(), "status",
+			ObjectFilterConstants.TYPE_INCLUDES,
+			"{\"in\":[" + WorkflowConstants.STATUS_APPROVED + "]}");
+
+		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(), "status",
+			ObjectFilterConstants.TYPE_EXCLUDES,
+			"{\"not\":{\"in\":[" + WorkflowConstants.STATUS_APPROVED + "]}}");
+
+		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField.getObjectFieldId());
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		String currentDateString = dateFormat.format(new Date());
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(), "createDate",
+			ObjectFilterConstants.TYPE_DATE_RANGE,
+			StringBundler.concat(
+				"{\"le\":\"", currentDateString, "\", \"ge\":\"",
+				currentDateString, "\"}"));
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(), "modifiedDate",
+			ObjectFilterConstants.TYPE_DATE_RANGE,
+			StringBundler.concat(
+				"{\"le\":\"", currentDateString, "\", \"ge\":\"",
+				currentDateString, "\"}"));
+
+		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
+
+		_objectFilterLocalService.addObjectFilter(
+			_user.getUserId(), objectField.getObjectFieldId(),
+			"dateObjectFieldName", ObjectFilterConstants.TYPE_DATE_RANGE,
+			"{\"le\":\"2020-01-02\", \"ge\":\"2020-01-02\"}");
+
+		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 	}
 
 	@Test
@@ -412,7 +515,7 @@ public class DefaultObjectEntryManagerImplTest {
 		String oneToManyRelationshipFieldName =
 			"r_oneToManyRelationshipName_" +
 				_objectDefinition1.getPKObjectFieldName();
-		String picklistObjectFieldValue1 = _addListTypeEntry();
+		String picklistObjectFieldValue1 = _generateListTypeEntryKey();
 
 		ObjectEntry parentObjectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
@@ -452,7 +555,7 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		String picklistObjectFieldValue2 = _addListTypeEntry();
+		String picklistObjectFieldValue2 = _generateListTypeEntryKey();
 
 		ObjectEntry childObjectEntry2 = _objectEntryManager.addObjectEntry(
 			_dtoConverterContext, _objectDefinition2,
@@ -667,16 +770,22 @@ public class DefaultObjectEntryManagerImplTest {
 			objectField.isState(), objectField.getObjectFieldSettings());
 	}
 
-	private String _addListTypeEntry() throws Exception {
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.addListTypeEntry(
-				_user.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(),
-				RandomTestUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+	private void _assertCountAggregationObjectFieldValue(
+			int expectedValue, ObjectEntry objectEntry)
+		throws Exception {
 
-		return listTypeEntry.getKey();
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"countAggregationObjectFieldName",
+						String.valueOf(expectedValue)
+					).build();
+				}
+			},
+			_objectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				objectEntry.getId()));
 	}
 
 	private void _assertEquals(
@@ -736,6 +845,23 @@ public class DefaultObjectEntryManagerImplTest {
 						repositoryFileEntry.getFileVersion(), null,
 						StringPool.BLANK),
 					link.getHref());
+			}
+			else if (Objects.equals(
+						expectedEntry.getKey(), "dateObjectFieldName")) {
+
+				if ((expectedEntry.getValue() == null) &&
+					(actualObjectEntryProperties.get(expectedEntry.getKey()) ==
+						null)) {
+
+					continue;
+				}
+
+				Assert.assertEquals(
+					expectedEntry.getKey(),
+					expectedEntry.getValue() + " 00:00:00.0",
+					String.valueOf(
+						actualObjectEntryProperties.get(
+							expectedEntry.getKey())));
 			}
 			else if (Objects.equals(
 						expectedEntry.getKey(), "picklistObjectFieldName")) {
@@ -842,12 +968,9 @@ public class DefaultObjectEntryManagerImplTest {
 	private String _buildRangeExpression(
 		Date date1, Date date2, String fieldName) {
 
-		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
 		return StringBundler.concat(
-			"( ", fieldName, " ge (", simpleDateFormat.format(date1),
-			") and ( ", fieldName, " le ", simpleDateFormat.format(date2),
+			"( ", fieldName, " ge (", _simpleDateFormat.format(date1),
+			") and ( ", fieldName, " le ", _simpleDateFormat.format(date2),
 			"))");
 	}
 
@@ -878,6 +1001,18 @@ public class DefaultObjectEntryManagerImplTest {
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
+	}
+
+	private String _generateListTypeEntryKey() throws Exception {
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				_user.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		return listTypeEntry.getKey();
 	}
 
 	private Long _getAttachmentObjectFieldValue() throws Exception {
@@ -974,6 +1109,7 @@ public class DefaultObjectEntryManagerImplTest {
 	@DeleteAfterTestRun
 	private static Group _group;
 
+	private static DateFormat _simpleDateFormat;
 	private static DTOConverterContext _simpleDTOConverterContext;
 	private static User _user;
 
@@ -1012,10 +1148,16 @@ public class DefaultObjectEntryManagerImplTest {
 	private ObjectEntryManager _objectEntryManager;
 
 	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
 	private ObjectFieldService _objectFieldService;
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
+	private ObjectFilterLocalService _objectFilterLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

@@ -41,7 +41,9 @@ describe('HideSidebarButton', () => {
 
 		renderComponent({dispatch: mockDispatch});
 
-		userEvent.click(screen.getByTitle('toggle-sidebars', {exact: false}));
+		userEvent.click(
+			screen.getByLabelText('toggle-sidebars', {exact: false})
+		);
 
 		expect(mockDispatch).toBeCalledWith(
 			expect.objectContaining({hidden: true, type: SWITCH_SIDEBAR_PANEL})
@@ -65,7 +67,9 @@ describe('HideSidebarButton', () => {
 			},
 		});
 
-		userEvent.click(screen.getByTitle('toggle-sidebars', {exact: false}));
+		userEvent.click(
+			screen.getByLabelText('toggle-sidebars', {exact: false})
+		);
 
 		expect(mockDispatch).toBeCalledWith(
 			expect.objectContaining({hidden: false, type: SWITCH_SIDEBAR_PANEL})

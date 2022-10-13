@@ -19,25 +19,25 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateClientExtensionEntryExternalReferenceCodeException
+public class DuplicateClientExtensionEntryRelExternalReferenceCodeException
 	extends SystemException {
 
-	public DuplicateClientExtensionEntryExternalReferenceCodeException() {
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException() {
 	}
 
-	public DuplicateClientExtensionEntryExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
 		String msg) {
 
 		super(msg);
 	}
 
-	public DuplicateClientExtensionEntryExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateClientExtensionEntryExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
 		Throwable throwable) {
 
 		super(throwable);

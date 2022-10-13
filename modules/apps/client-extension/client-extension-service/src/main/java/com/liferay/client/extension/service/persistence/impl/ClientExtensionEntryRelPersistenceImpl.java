@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.service.persistence.impl;
 
+import com.liferay.client.extension.exception.DuplicateClientExtensionEntryRelExternalReferenceCodeException;
 import com.liferay.client.extension.exception.NoSuchClientExtensionEntryRelException;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.model.ClientExtensionEntryRelTable;
@@ -3934,6 +3935,26 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 			clientExtensionEntryRel.setExternalReferenceCode(
 				clientExtensionEntryRel.getUuid());
+		}
+		else {
+			ClientExtensionEntryRel ercClientExtensionEntryRel = fetchByC_ERC(
+				clientExtensionEntryRel.getCompanyId(),
+				clientExtensionEntryRel.getExternalReferenceCode());
+
+			if (isNew) {
+				if (ercClientExtensionEntryRel != null) {
+					throw new DuplicateClientExtensionEntryRelExternalReferenceCodeException();
+				}
+			}
+			else {
+				if ((ercClientExtensionEntryRel != null) &&
+					(clientExtensionEntryRel.getClientExtensionEntryRelId() !=
+						ercClientExtensionEntryRel.
+							getClientExtensionEntryRelId())) {
+
+					throw new DuplicateClientExtensionEntryRelExternalReferenceCodeException();
+				}
+			}
 		}
 
 		ServiceContext serviceContext =

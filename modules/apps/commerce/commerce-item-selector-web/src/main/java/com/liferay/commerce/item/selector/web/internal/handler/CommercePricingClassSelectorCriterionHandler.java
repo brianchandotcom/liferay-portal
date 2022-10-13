@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Riccardo Alberti
  */
-@Component(enabled = false, service = ItemSelectorCriterionHandler.class)
+@Component(service = ItemSelectorCriterionHandler.class)
 public class CommercePricingClassSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
 		<CommercePricingClassItemSelectorCriterion> {

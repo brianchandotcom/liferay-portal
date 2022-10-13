@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.portlet.render;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.importmaps.ImportMapsShimUtil;
+import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Theme;
@@ -493,7 +493,7 @@ public class PortletRenderUtil {
 		if (javaScriptPath.startsWith("module:")) {
 			javaScriptPath = javaScriptPath.substring(7);
 
-			type = ImportMapsShimUtil.getModuleType();
+			type = FrontendESMUtil.getScriptType();
 		}
 
 		printWriter.print("<script src=\"");

@@ -16,7 +16,7 @@ package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.importmaps.ImportMapsShimUtil;
+import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -162,7 +162,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 				"enable-importmaps", true
 			).build());
 
-		ImportMapsShimUtil.setModuleType(
+		FrontendESMUtil.setScriptType(
 			_jsImportmapsConfiguration.enableESModuleShims() ? "module-shim" :
 				"module");
 	}

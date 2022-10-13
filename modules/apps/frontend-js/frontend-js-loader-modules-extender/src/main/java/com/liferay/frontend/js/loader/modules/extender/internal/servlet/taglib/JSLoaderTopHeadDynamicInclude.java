@@ -17,7 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.servlet.taglib;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.importmaps.ImportMapsShimUtil;
+import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -81,7 +81,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write(", logLevel: '");
 		printWriter.write(_details.logLevel());
 		printWriter.write("', moduleType: '");
-		printWriter.write(ImportMapsShimUtil.getModuleType());
+		printWriter.write(FrontendESMUtil.getScriptType());
 		printWriter.write("', namespace:'Liferay', ");
 		printWriter.write(
 			"reportMismatchedAnonymousModules: 'warn', resolvePath: '");

@@ -15,7 +15,7 @@
 package com.liferay.frontend.js.web.internal.servlet.taglib.aui;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.importmaps.ImportMapsShimUtil;
+import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.AMDRequire;
 import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
@@ -65,7 +65,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		}
 		else {
 			writer.write("<script type=\"");
-			writer.write(ImportMapsShimUtil.getModuleType());
+			writer.write(FrontendESMUtil.getScriptType());
 			writer.write("\">\n");
 		}
 

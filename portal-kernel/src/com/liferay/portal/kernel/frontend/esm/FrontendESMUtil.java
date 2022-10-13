@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.importmaps;
+package com.liferay.portal.kernel.frontend.esm;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class ImportMapsShimUtil {
+public class FrontendESMUtil {
 
-	public static String getModuleType() {
-		return _moduleType.get();
+	public static String getScriptType() {
+		return _scriptType.get();
 	}
 
-	public static void setModuleType(String moduleType) {
-		_moduleType.set(moduleType);
+	public static void setScriptType(String scriptType) {
+		_scriptType.set(scriptType);
 	}
 
-	private static final AtomicReference<String> _moduleType =
+	private static final AtomicReference<String> _scriptType =
 		new AtomicReference<>("module");
 
 }

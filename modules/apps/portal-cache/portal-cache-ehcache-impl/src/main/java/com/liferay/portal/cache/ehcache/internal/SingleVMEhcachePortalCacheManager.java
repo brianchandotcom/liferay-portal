@@ -72,15 +72,13 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected Props getProps() {
-		return _props;
+	protected PortalCacheListenerFactory getPortalCacheListenerFactory() {
+		return _portalCacheListenerFactory;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalCacheListenerFactory(
-		PortalCacheListenerFactory portalCacheListenerFactory) {
-
-		this.portalCacheListenerFactory = portalCacheListenerFactory;
+	@Override
+	protected Props getProps() {
+		return _props;
 	}
 
 	@Reference(unbind = "-")
@@ -97,6 +95,9 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleVMEhcachePortalCacheManager.class);
+
+	@Reference
+	private PortalCacheListenerFactory _portalCacheListenerFactory;
 
 	@Reference
 	private volatile Props _props;

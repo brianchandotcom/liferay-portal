@@ -212,6 +212,9 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected abstract void doRemoveShardedPortalCache(
 		long companyId, Set<PortalCache<K, V>> shardedPortalCaches);
 
+	protected abstract PortalCacheListenerFactory
+		getPortalCacheListenerFactory();
+
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
 
@@ -288,7 +291,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
-	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
 
@@ -299,6 +301,9 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		if (portalCacheConfiguration == null) {
 			return;
 		}
+
+		PortalCacheListenerFactory portalCacheListenerFactory =
+			getPortalCacheListenerFactory();
 
 		for (Properties properties :
 				portalCacheConfiguration.

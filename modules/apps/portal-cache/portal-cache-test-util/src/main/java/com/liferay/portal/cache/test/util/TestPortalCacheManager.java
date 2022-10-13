@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.test.util;
 
 import com.liferay.portal.cache.BasePortalCacheManager;
+import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -121,6 +122,11 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	@Override
 	protected void doRemoveShardedPortalCache(
 		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
+	}
+
+	@Override
+	protected PortalCacheListenerFactory getPortalCacheListenerFactory() {
+		return null;
 	}
 
 	@Override

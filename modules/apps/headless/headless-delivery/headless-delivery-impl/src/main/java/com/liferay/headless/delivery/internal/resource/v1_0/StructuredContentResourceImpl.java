@@ -123,6 +123,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -691,6 +692,15 @@ public class StructuredContentResourceImpl
 			Long parentStructuredContentFolderId,
 			StructuredContent structuredContent)
 		throws Exception {
+
+		if ((structuredContent.getStructuredContentFolderId() != null) &&
+			!Objects.equals(
+				parentStructuredContentFolderId,
+				structuredContent.getStructuredContentFolderId())) {
+
+			parentStructuredContentFolderId =
+				structuredContent.getStructuredContentFolderId();
+		}
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			structuredContent.getContentStructureId());

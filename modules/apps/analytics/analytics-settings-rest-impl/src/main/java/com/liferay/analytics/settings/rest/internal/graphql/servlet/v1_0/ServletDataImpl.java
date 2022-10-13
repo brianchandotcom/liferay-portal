@@ -17,7 +17,9 @@ package com.liferay.analytics.settings.rest.internal.graphql.servlet.v1_0;
 import com.liferay.analytics.settings.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.analytics.settings.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -46,6 +48,10 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
+		Query.setCommerceChannelResourceComponentServiceObjects(
+			_commerceChannelResourceComponentServiceObjects);
+		Query.setSiteResourceComponentServiceObjects(
+			_siteResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -70,5 +76,13 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataSourceResource>
 		_dataSourceResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CommerceChannelResource>
+		_commerceChannelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SiteResource>
+		_siteResourceComponentServiceObjects;
 
 }

@@ -210,6 +210,7 @@ public class UpdateConfigurationValuesMVCActionCommand
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	@Reference
 	private Portal _portal;
 
 }

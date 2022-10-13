@@ -374,6 +374,7 @@ public class DuplicateItemMVCActionCommand
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	@Reference
 	private Language _language;
 
 	@Reference

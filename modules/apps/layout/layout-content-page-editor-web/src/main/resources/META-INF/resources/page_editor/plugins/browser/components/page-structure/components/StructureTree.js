@@ -27,7 +27,10 @@ import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../app/config/index';
-import {useActiveItemId} from '../../../../../app/contexts/ControlsContext';
+import {
+	useActiveItemId,
+	useHoverItem,
+} from '../../../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
@@ -82,6 +85,7 @@ export default function PageStructureSidebar() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const pageContents = useSelector(selectPageContents);
+	const hoverItem = useHoverItem();
 
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const masterLayoutData = useSelector(
@@ -138,8 +142,21 @@ export default function PageStructureSidebar() {
 		]
 	);
 
+	const handleNodeFocus = () => {
+		const focusedItem = document.activeElement?.querySelector(
+			'[data-item-id]'
+		);
+
+		if (focusedItem) {
+			hoverItem(focusedItem.dataset.itemId);
+		}
+	};
+
 	return (
-		<div className="overflow-auto page-editor__page-structure__structure-tree pt-4">
+		<div
+			className="overflow-auto page-editor__page-structure__structure-tree pt-4"
+			onFocus={handleNodeFocus}
+		>
 			{!nodes.length && (
 				<ClayAlert
 					displayType="info"

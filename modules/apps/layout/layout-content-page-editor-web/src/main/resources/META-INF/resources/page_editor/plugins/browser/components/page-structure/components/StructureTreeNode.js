@@ -329,6 +329,7 @@ function StructureTreeNodeContent({
 			<div
 				aria-label={sub(Liferay.Language.get('select-x'), [node.name])}
 				className="lfr-portal-tooltip page-editor__page-structure__tree-node__mask"
+				data-item-id={node.id}
 				data-title={node.tooltipTitle}
 				data-tooltip-align="right"
 				onClick={() => {

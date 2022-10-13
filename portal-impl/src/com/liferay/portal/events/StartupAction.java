@@ -17,6 +17,7 @@ package com.liferay.portal.events;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.util.IndexUpdaterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

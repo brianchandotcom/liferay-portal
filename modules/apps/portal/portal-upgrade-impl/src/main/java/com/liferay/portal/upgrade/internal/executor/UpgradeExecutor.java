@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.internal.executor;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -33,7 +34,6 @@ import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorTracker;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
-import com.liferay.portal.util.IndexUpdaterUtil;
 
 import java.io.OutputStream;
 

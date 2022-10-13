@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.db.index;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;

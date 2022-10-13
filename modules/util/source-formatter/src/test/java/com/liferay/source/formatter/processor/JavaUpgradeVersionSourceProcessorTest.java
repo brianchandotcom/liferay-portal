@@ -24,34 +24,34 @@ public class JavaUpgradeVersionSourceProcessorTest
 
 	@Test
 	public void testMajorUpgradeByAlterColumnName() throws Exception {
-		test("MajorUpgradeByAlterColumnName.testjava", "2.0.0", 30);
+		test("MajorUpgradeByAlterColumnName.testjava", "2.0.0", 32);
 	}
 
 	@Test
 	public void testMajorUpgradeByAlterTableDropColumn() throws Exception {
-		test("MajorUpgradeByAlterTableDropColumn.testjava", "2.0.0", 31);
+		test("MajorUpgradeByAlterTableDropColumn.testjava", "2.0.0", 33);
 	}
 
 	@Test
 	public void testMajorUpgradeByAlterTableDropColumnClause()
 		throws Exception {
 
-		test("MajorUpgradeByAlterTableDropColumnClause.testjava", "2.0.0", 31);
+		test("MajorUpgradeByAlterTableDropColumnClause.testjava", "2.0.0", 33);
 	}
 
 	@Test
 	public void testMajorUpgradeByDropTable() throws Exception {
-		test("MajorUpgradeByDropTable.testjava", "2.0.0", 30);
+		test("MajorUpgradeByDropTable.testjava", "2.0.0", 32);
 	}
 
 	@Test
 	public void testMinorUpgradeByAlterTableAddColumn() throws Exception {
-		test("MinorUpgradeByAlterTableAddColumn.testjava", "1.1.0", 31);
+		test("MinorUpgradeByAlterTableAddColumn.testjava", "1.1.0", 33);
 	}
 
 	@Test
 	public void testMinorUpgradeByAlterTableAddColumnClause() throws Exception {
-		test("MinorUpgradeByAlterTableAddColumnClause.testjava", "1.1.0", 31);
+		test("MinorUpgradeByAlterTableAddColumnClause.testjava", "1.1.0", 33);
 	}
 
 	@Test

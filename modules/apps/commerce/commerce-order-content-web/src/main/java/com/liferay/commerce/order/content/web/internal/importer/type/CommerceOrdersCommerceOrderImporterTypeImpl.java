@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration",
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "commerce.order.importer.type.key=" + CommerceOrdersCommerceOrderImporterTypeImpl.KEY,
 	service = CommerceOrderImporterType.class
 )

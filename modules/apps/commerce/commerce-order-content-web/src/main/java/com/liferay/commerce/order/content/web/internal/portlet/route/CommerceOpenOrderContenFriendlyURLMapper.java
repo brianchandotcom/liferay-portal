@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/commerce-open-order-routes.xml",
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Danny Situ
  */
-@Component(enabled = false, service = InfoItemCapabilitiesProvider.class)
+@Component(service = InfoItemCapabilitiesProvider.class)
 public class CommerceOrderInfoItemCapabilitiesProvider
 	implements InfoItemCapabilitiesProvider<CommerceOrder> {
 

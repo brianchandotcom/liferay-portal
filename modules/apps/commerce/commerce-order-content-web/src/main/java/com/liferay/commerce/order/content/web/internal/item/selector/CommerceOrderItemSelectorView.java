@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	enabled = false, property = "item.selector.view.order:Integer=200",
+	property = "item.selector.view.order:Integer=200",
 	service = ItemSelectorView.class
 )
 public class CommerceOrderItemSelectorView

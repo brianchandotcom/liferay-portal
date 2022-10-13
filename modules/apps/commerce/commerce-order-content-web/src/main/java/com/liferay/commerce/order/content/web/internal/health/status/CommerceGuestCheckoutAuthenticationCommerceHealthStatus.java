@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.channel.health.status.display.order:Integer=40",
 		"commerce.channel.health.status.key=" + CommerceHealthStatusConstants.COMMERCE_GUEST_CHECKOUT_AUTHENTICATION_COMMERCE_HEALTH_STATUS_KEY

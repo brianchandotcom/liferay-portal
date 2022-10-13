@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Danny Situ
  */
-@Component(enabled = false, service = InfoItemPermissionProvider.class)
+@Component(service = InfoItemPermissionProvider.class)
 public class CommerceOrderInfoItemPermissionProvider
 	implements InfoItemPermissionProvider<CommerceOrder> {
 

@@ -44,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	enabled = false, immediate = true,
-	property = Constants.SERVICE_RANKING + ":Integer=10",
+	immediate = true, property = Constants.SERVICE_RANKING + ":Integer=10",
 	service = InfoItemFieldValuesProvider.class
 )
 public class CommerceOrderInfoItemFieldValuesProvider

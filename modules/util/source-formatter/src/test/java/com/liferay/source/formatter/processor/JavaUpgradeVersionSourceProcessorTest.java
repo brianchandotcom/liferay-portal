@@ -60,8 +60,8 @@ public class JavaUpgradeVersionSourceProcessorTest
 		test("MissingRegisterInitialization2.testjava");
 		test(
 			"MissingRegisterInitialization3.testjava",
-			"Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
-				"replaced by 'registry.registerInitialization()'");
+			"The upgrade process from version 0.0.0 should be replaced by " +
+			"'registry.registerInitialization()'");
 	}
 
 	@Override

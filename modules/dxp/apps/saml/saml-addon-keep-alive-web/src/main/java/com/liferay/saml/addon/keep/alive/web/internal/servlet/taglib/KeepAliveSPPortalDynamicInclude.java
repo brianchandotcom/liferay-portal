@@ -16,13 +16,13 @@ package com.liferay.saml.addon.keep.alive.web.internal.servlet.taglib;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -185,8 +185,8 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			SamlWebKeys.SAML_SP_SESSION_KEY);
 
 		if (Validator.isNull(samlSpSessionKey)) {
-			samlSpSessionKey = CookieKeys.getCookie(
-				httpServletRequest, SamlWebKeys.SAML_SP_SESSION_KEY);
+			samlSpSessionKey = CookiesManagerUtil.getCookieValue(
+				SamlWebKeys.SAML_SP_SESSION_KEY, httpServletRequest);
 		}
 
 		return samlSpSessionKey;

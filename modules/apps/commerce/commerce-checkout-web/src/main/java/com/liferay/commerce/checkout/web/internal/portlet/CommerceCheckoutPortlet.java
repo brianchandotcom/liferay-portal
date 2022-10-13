@@ -26,13 +26,14 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -118,9 +119,9 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 					_portal.getHttpServletResponse(renderResponse);
 
 				boolean continueAsGuest = GetterUtil.getBoolean(
-					CookieKeys.getCookie(
-						_portal.getHttpServletRequest(renderRequest),
-						CookieKeys.COMMERCE_CONTINUE_AS_GUEST));
+					CookiesManagerUtil.getCookieValue(
+						CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
+						_portal.getHttpServletRequest(renderRequest)));
 
 				if ((commerceOrder.getCommerceAccountId() ==
 						CommerceAccountConstants.ACCOUNT_ID_GUEST) &&
@@ -140,16 +141,16 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 				else if (!commerceOrder.isOpen() &&
 						 (continueAsGuest || commerceOrder.isGuestOrder())) {
 
-					CookieKeys.deleteCookies(
+					CookiesManagerUtil.deleteCookies(
+						CookiesManagerUtil.getDomain(httpServletRequest),
 						httpServletRequest, httpServletResponse,
-						CookieKeys.getDomain(httpServletRequest),
 						CommerceOrder.class.getName() + StringPool.POUND +
 							commerceOrder.getGroupId());
 
-					CookieKeys.deleteCookies(
+					CookiesManagerUtil.deleteCookies(
+						CookiesManagerUtil.getDomain(httpServletRequest),
 						httpServletRequest, httpServletResponse,
-						CookieKeys.getDomain(httpServletRequest),
-						CookieKeys.COMMERCE_CONTINUE_AS_GUEST);
+						CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST);
 				}
 
 				renderRequest.setAttribute(

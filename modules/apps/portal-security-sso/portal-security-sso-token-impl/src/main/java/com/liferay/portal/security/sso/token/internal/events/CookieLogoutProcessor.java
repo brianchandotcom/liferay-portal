@@ -15,6 +15,7 @@
 package com.liferay.portal.security.sso.token.internal.events;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.token.events.LogoutProcessor;
@@ -41,7 +42,7 @@ public class CookieLogoutProcessor implements LogoutProcessor {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String... parameters) {
 
-		String domain = CookieKeys.getDomain(httpServletRequest);
+		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
 		for (String parameter : parameters) {
 			Cookie cookie = new Cookie(parameter, StringPool.BLANK);

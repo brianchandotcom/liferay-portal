@@ -15,6 +15,8 @@
 package com.liferay.login.web.internal.portlet.util;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -24,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -125,8 +126,8 @@ public class LoginUtil {
 		String login = httpServletRequest.getParameter(paramName);
 
 		if ((login == null) || login.equals("null")) {
-			login = CookieKeys.getCookie(
-				httpServletRequest, CookieKeys.LOGIN, false);
+			login = CookiesManagerUtil.getCookieValue(
+				CookiesConstants.NAME_LOGIN, httpServletRequest, false);
 
 			if (PropsValues.COMPANY_LOGIN_PREPOPULATE_DOMAIN &&
 				Validator.isNull(login) &&

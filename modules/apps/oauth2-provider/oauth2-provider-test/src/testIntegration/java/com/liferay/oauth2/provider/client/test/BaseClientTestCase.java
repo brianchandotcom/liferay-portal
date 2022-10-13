@@ -16,11 +16,11 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -169,8 +169,8 @@ public abstract class BaseClientTestCase {
 		Map<String, NewCookie> newCookies = response.getCookies();
 
 		NewCookie cookieSupportNewCookie = newCookies.get(
-			CookieKeys.COOKIE_SUPPORT);
-		NewCookie jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
+			CookiesConstants.NAME_COOKIE_SUPPORT);
+		NewCookie jSessionIdNewCookie = newCookies.get(CookiesConstants.NAME_JSESSIONID);
 
 		invocationBuilder = getInvocationBuilder(hostname, getLoginWebTarget());
 
@@ -187,7 +187,7 @@ public abstract class BaseClientTestCase {
 
 		newCookies = response.getCookies();
 
-		jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
+		jSessionIdNewCookie = newCookies.get(CookiesConstants.NAME_JSESSIONID);
 
 		if (jSessionIdNewCookie == null) {
 			return null;

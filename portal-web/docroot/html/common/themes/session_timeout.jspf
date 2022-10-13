@@ -15,7 +15,7 @@
 --%>
 
 <%
-String rememberMe = CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
+String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, request);
 %>
 
 <c:if test="<%= !themeDisplay.isSignedIn() || Validator.isNull(rememberMe) %>">

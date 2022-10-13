@@ -16,6 +16,7 @@ package com.liferay.portal.security.sso.opensso.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -243,7 +243,7 @@ public class OpenSSOImpl implements OpenSSO {
 
 		String cookieName = getCookieNames(serviceURL)[0];
 
-		return CookieKeys.getCookie(httpServletRequest, cookieName);
+		return CookiesManagerUtil.getCookieValue(cookieName, httpServletRequest);
 	}
 
 	@Override
@@ -430,8 +430,8 @@ public class OpenSSOImpl implements OpenSSO {
 		StringBundler sb = new StringBundler(cookieNames.length * 6);
 
 		for (String cookieName : cookieNames) {
-			String cookieValue = CookieKeys.getCookie(
-				httpServletRequest, cookieName);
+			String cookieValue = CookiesManagerUtil.getCookieValue(
+				cookieName, httpServletRequest);
 
 			sb.append(cookieName);
 			sb.append(StringPool.EQUAL);
@@ -448,7 +448,7 @@ public class OpenSSOImpl implements OpenSSO {
 		HttpServletRequest httpServletRequest, String[] cookieNames) {
 
 		for (String cookieName : cookieNames) {
-			if (CookieKeys.getCookie(httpServletRequest, cookieName) != null) {
+			if (CookiesManagerUtil.getCookieValue(cookieName, httpServletRequest) != null) {
 				return true;
 			}
 		}

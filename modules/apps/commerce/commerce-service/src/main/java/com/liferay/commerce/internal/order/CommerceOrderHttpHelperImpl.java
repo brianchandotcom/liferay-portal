@@ -42,6 +42,8 @@ import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -327,16 +329,16 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					"continueAsGuest", Boolean.TRUE.toString());
 
 				Cookie cookie = new Cookie(
-					CookieKeys.COMMERCE_CONTINUE_AS_GUEST,
+					CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
 					Boolean.TRUE.toString());
 
-				String domain = CookieKeys.getDomain(httpServletRequest);
+				String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
 				if (Validator.isNotNull(domain)) {
 					cookie.setDomain(domain);
 				}
 
-				cookie.setMaxAge(CookieKeys.MAX_AGE);
+				cookie.setMaxAge(CookiesConstants.MAX_AGE);
 				cookie.setPath(StringPool.SLASH);
 
 				CookieKeys.addCookie(
@@ -567,8 +569,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		String commerceOrderUuid = (String)httpSession.getAttribute(cookieName);
 
 		if (Validator.isNull(commerceOrderUuid)) {
-			commerceOrderUuid = CookieKeys.getCookie(
-				httpServletRequest, cookieName, true);
+			commerceOrderUuid = CookiesManagerUtil.getCookieValue(
+				cookieName, httpServletRequest, true);
 		}
 
 		return commerceOrderUuid;
@@ -725,13 +727,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		Cookie cookie = new Cookie(
 			getCookieName(commerceChannelGroupId), commerceOrder.getUuid());
 
-		String domain = CookieKeys.getDomain(themeDisplay.getRequest());
+		String domain = CookiesManagerUtil.getDomain(themeDisplay.getRequest());
 
 		if (Validator.isNotNull(domain)) {
 			cookie.setDomain(domain);
 		}
 
-		cookie.setMaxAge(CookieKeys.MAX_AGE);
+		cookie.setMaxAge(CookiesConstants.MAX_AGE);
 		cookie.setPath(StringPool.SLASH);
 
 		CookieKeys.addCookie(

@@ -16,6 +16,8 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -371,26 +373,26 @@ public abstract class BaseProfile {
 			SamlWebKeys.SAML_SP_SESSION_KEY);
 
 		if (Validator.isNull(samlSpSessionKey)) {
-			samlSpSessionKey = CookieKeys.getCookie(
-				httpServletRequest, SamlWebKeys.SAML_SP_SESSION_KEY);
+			samlSpSessionKey = CookiesManagerUtil.getCookieValue(
+				SamlWebKeys.SAML_SP_SESSION_KEY, httpServletRequest);
 		}
 
 		return samlSpSessionKey;
 	}
 
 	public String getSamlSsoSessionId(HttpServletRequest httpServletRequest) {
-		return CookieKeys.getCookie(
-			httpServletRequest, SamlWebKeys.SAML_SSO_SESSION_ID);
+		return CookiesManagerUtil.getCookieValue(
+			SamlWebKeys.SAML_SSO_SESSION_ID, httpServletRequest);
 	}
 
 	public void logout(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		String domain = CookieKeys.getDomain(httpServletRequest);
+		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
 		Cookie companyIdCookie = new Cookie(
-			CookieKeys.COMPANY_ID, StringPool.BLANK);
+			CookiesConstants.NAME_COMPANY_ID, StringPool.BLANK);
 
 		if (Validator.isNotNull(domain)) {
 			companyIdCookie.setDomain(domain);
@@ -399,7 +401,7 @@ public abstract class BaseProfile {
 		companyIdCookie.setMaxAge(0);
 		companyIdCookie.setPath(StringPool.SLASH);
 
-		Cookie idCookie = new Cookie(CookieKeys.ID, StringPool.BLANK);
+		Cookie idCookie = new Cookie(CookiesConstants.NAME_ID, StringPool.BLANK);
 
 		if (Validator.isNotNull(domain)) {
 			idCookie.setDomain(domain);
@@ -409,7 +411,7 @@ public abstract class BaseProfile {
 		idCookie.setPath(StringPool.SLASH);
 
 		Cookie passwordCookie = new Cookie(
-			CookieKeys.PASSWORD, StringPool.BLANK);
+			CookiesConstants.NAME_PASSWORD, StringPool.BLANK);
 
 		if (Validator.isNotNull(domain)) {
 			passwordCookie.setDomain(domain);
@@ -419,10 +421,10 @@ public abstract class BaseProfile {
 		passwordCookie.setPath(StringPool.SLASH);
 
 		boolean rememberMe = GetterUtil.getBoolean(
-			CookieKeys.getCookie(httpServletRequest, CookieKeys.REMEMBER_ME));
+			CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, httpServletRequest));
 
 		if (!rememberMe) {
-			Cookie loginCookie = new Cookie(CookieKeys.LOGIN, StringPool.BLANK);
+			Cookie loginCookie = new Cookie(CookiesConstants.NAME_LOGIN, StringPool.BLANK);
 
 			if (Validator.isNotNull(domain)) {
 				loginCookie.setDomain(domain);
@@ -436,7 +438,7 @@ public abstract class BaseProfile {
 		}
 
 		Cookie rememberMeCookie = new Cookie(
-			CookieKeys.REMEMBER_ME, StringPool.BLANK);
+			CookiesConstants.NAME_REMEMBER_ME, StringPool.BLANK);
 
 		if (Validator.isNotNull(domain)) {
 			rememberMeCookie.setDomain(domain);

@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
@@ -79,7 +80,6 @@ import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -952,14 +952,14 @@ public class ServicePreAction extends Action {
 
 			// LEP-4069
 
-			CookieKeys.validateSupportCookie(httpServletRequest);
+			CookiesManagerUtil.validateSupportCookie(httpServletRequest);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			CookieKeys.addSupportCookie(
+			CookiesManagerUtil.addSupportCookie(
 				httpServletRequest, httpServletResponse);
 		}
 
@@ -1606,7 +1606,7 @@ public class ServicePreAction extends Action {
 		// Session
 
 		if (PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID &&
-			!CookieKeys.hasSessionId(httpServletRequest)) {
+			!CookiesManagerUtil.hasSessionId(httpServletRequest)) {
 
 			themeDisplay.setAddSessionIdToURL(true);
 			themeDisplay.setSessionId(httpSession.getId());

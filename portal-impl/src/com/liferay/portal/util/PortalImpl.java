@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -170,7 +172,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1098,7 +1099,7 @@ public class PortalImpl implements Portal {
 			url = portalURL.concat(url);
 		}
 
-		if (!CookieKeys.hasSessionId(httpServletRequest) &&
+		if (!CookiesManagerUtil.hasSessionId(httpServletRequest) &&
 			url.startsWith(portalURL)) {
 
 			HttpSession httpSession = httpServletRequest.getSession();
@@ -3459,8 +3460,8 @@ public class PortalImpl implements Portal {
 
 		// Get locale from the cookie
 
-		String languageId = CookieKeys.getCookie(
-			httpServletRequest, CookieKeys.GUEST_LANGUAGE_ID, false);
+		String languageId = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_GUEST_LANGUAGE_ID, httpServletRequest, false);
 
 		if (Validator.isNotNull(languageId)) {
 			Locale cookieLocale = getAvailableLocale(
@@ -5564,7 +5565,7 @@ public class PortalImpl implements Portal {
 				String cookieName = cookie.getName();
 
 				if (cookieName.startsWith(
-						CookieKeys.REMOTE_PREFERENCE_PREFIX)) {
+						CookiesConstants.NAME_REMOTE_PREFERENCE_PREFIX)) {
 
 					user.addRemotePreference(
 						new CookieRemotePreference(cookie));

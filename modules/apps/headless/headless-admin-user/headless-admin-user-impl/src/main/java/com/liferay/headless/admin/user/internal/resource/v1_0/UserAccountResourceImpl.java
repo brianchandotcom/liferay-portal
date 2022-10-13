@@ -42,6 +42,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
@@ -79,7 +80,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1189,8 +1189,8 @@ public class UserAccountResourceImpl
 			user.getUserId(), password, password,
 			_isPasswordResetRequired(user));
 
-		String cookie = CookieKeys.getCookie(
-			contextHttpServletRequest, CookiesConstants.NAME_JSESSIONID, false);
+		String cookie = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_JSESSIONID, contextHttpServletRequest,false);
 
 		if ((contextUser.getUserId() == user.getUserId()) && (cookie != null)) {
 			String login = null;

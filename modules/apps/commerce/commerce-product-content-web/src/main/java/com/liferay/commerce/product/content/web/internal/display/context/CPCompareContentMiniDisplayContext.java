@@ -32,10 +32,10 @@ import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -95,10 +95,10 @@ public class CPCompareContentMiniDisplayContext {
 				_cpCompareHelper.getCPDefinitionIds(
 					commerceContext.getCommerceChannelGroupId(),
 					commerceAccount.getCommerceAccountId(),
-					CookieKeys.getCookie(
-						originalHttpServletRequest,
+					CookiesManagerUtil.getCookieValue(
 						_cpCompareHelper.getCPDefinitionIdsCookieKey(
-							commerceContext.getCommerceChannelGroupId()))));
+							commerceContext.getCommerceChannelGroupId()),
+						originalHttpServletRequest)));
 		}
 		else {
 			_cpDefinitionIds = new ArrayList<>();

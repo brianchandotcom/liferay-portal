@@ -15,9 +15,9 @@
 package com.liferay.portal.remote.cors.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -127,8 +127,8 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 		Map<String, NewCookie> newCookies = response.getCookies();
 
 		NewCookie cookieSupportNewCookie = newCookies.get(
-			CookieKeys.COOKIE_SUPPORT);
-		NewCookie jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
+			CookiesConstants.NAME_COOKIE_SUPPORT);
+		NewCookie jSessionIdNewCookie = newCookies.get(CookiesConstants.NAME_JSESSIONID);
 
 		invocationBuilder = _getWebTarget(
 			"c", "portal", "login"
@@ -147,7 +147,7 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 		newCookies = response.getCookies();
 
-		jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
+		jSessionIdNewCookie = newCookies.get(CookiesConstants.NAME_JSESSIONID);
 
 		if (jSessionIdNewCookie == null) {
 			return null;

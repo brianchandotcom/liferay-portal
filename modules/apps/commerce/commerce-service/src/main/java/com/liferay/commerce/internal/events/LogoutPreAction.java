@@ -16,11 +16,11 @@ package com.liferay.commerce.internal.events;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class LogoutPreAction extends Action {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			String domain = CookieKeys.getDomain(httpServletRequest);
+			String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
 			Cookie[] cookies = httpServletRequest.getCookies();
 
@@ -53,8 +53,8 @@ public class LogoutPreAction extends Action {
 				if (name.startsWith(
 						CommerceOrder.class.getName() + StringPool.POUND)) {
 
-					CookieKeys.deleteCookies(
-						httpServletRequest, httpServletResponse, domain, name);
+					CookiesManagerUtil.deleteCookies(
+						domain, httpServletRequest, httpServletResponse, name);
 
 					break;
 				}

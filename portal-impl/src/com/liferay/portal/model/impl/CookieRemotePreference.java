@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.util.RemotePreference;
 
 import javax.servlet.http.Cookie;
@@ -30,7 +30,7 @@ public class CookieRemotePreference implements RemotePreference {
 		String cookieName = cookie.getName();
 
 		_name = cookieName.substring(
-			CookieKeys.REMOTE_PREFERENCE_PREFIX.length());
+			CookiesConstants.NAME_REMOTE_PREFERENCE_PREFIX.length());
 	}
 
 	public Cookie getCookie() {

@@ -20,6 +20,8 @@ import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
 import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -89,7 +91,7 @@ public class CommerceWishListHttpHelperImpl
 
 		String cookieName = _getCookieName(groupId);
 
-		String guestUuid = CookieKeys.getCookie(httpServletRequest, cookieName);
+		String guestUuid = CookiesManagerUtil.getCookieValue(cookieName, httpServletRequest);
 
 		CommerceWishList commerceWishList =
 			_commerceWishListLocalService.getDefaultCommerceWishList(
@@ -104,7 +106,7 @@ public class CommerceWishListHttpHelperImpl
 				Cookie cookie = new Cookie(
 					cookieName, commerceWishList.getUuid());
 
-				cookie.setMaxAge(CookieKeys.MAX_AGE);
+				cookie.setMaxAge(CookiesConstants.MAX_AGE);
 				cookie.setPath(StringPool.SLASH);
 
 				CookieKeys.addCookie(
@@ -113,9 +115,9 @@ public class CommerceWishListHttpHelperImpl
 		}
 		else {
 			if (Validator.isNotNull(guestUuid)) {
-				CookieKeys.deleteCookies(
-					httpServletRequest, httpServletResponse,
-					CookieKeys.getDomain(httpServletRequest), cookieName);
+				CookiesManagerUtil.deleteCookies(
+					CookiesManagerUtil.getDomain(httpServletRequest),
+					httpServletRequest, httpServletResponse, cookieName);
 			}
 		}
 

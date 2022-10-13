@@ -31,10 +31,10 @@ import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -86,10 +86,10 @@ public class CPCompareContentDisplayContext {
 			_cpDefinitionIds = cpCompareHelper.getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(),
 				CommerceUtil.getCommerceAccountId(commerceContext),
-				CookieKeys.getCookie(
-					httpServletRequest,
+				CookiesManagerUtil.getCookieValue(
 					cpCompareHelper.getCPDefinitionIdsCookieKey(
-						commerceContext.getCommerceChannelGroupId())));
+						commerceContext.getCommerceChannelGroupId()),
+					httpServletRequest));
 		}
 		else {
 			_cpDefinitionIds = new ArrayList<>();

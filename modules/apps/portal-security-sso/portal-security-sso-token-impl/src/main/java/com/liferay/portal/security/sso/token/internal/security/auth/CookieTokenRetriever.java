@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.token.internal.security.auth;
 
-import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 import com.liferay.portal.security.sso.token.security.auth.TokenRetriever;
 
@@ -35,7 +35,7 @@ public class CookieTokenRetriever implements TokenRetriever {
 	public String getLoginToken(
 		HttpServletRequest httpServletRequest, String userTokenName) {
 
-		return CookieKeys.getCookie(httpServletRequest, userTokenName, false);
+		return CookiesManagerUtil.getCookieValue(userTokenName, httpServletRequest, false);
 	}
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.saml.internal.servlet.filter;
 
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -103,8 +103,8 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/logout")) {
-			String samlSsoSessionId = CookieKeys.getCookie(
-				httpServletRequest, SamlWebKeys.SAML_SSO_SESSION_ID);
+			String samlSsoSessionId = CookiesManagerUtil.getCookieValue(
+				SamlWebKeys.SAML_SSO_SESSION_ID, httpServletRequest);
 
 			if (Validator.isNotNull(samlSsoSessionId)) {
 				_singleLogoutProfile.processIdpLogout(

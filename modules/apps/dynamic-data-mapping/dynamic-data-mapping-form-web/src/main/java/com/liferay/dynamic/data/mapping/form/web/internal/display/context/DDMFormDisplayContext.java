@@ -56,6 +56,8 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -80,7 +82,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -678,8 +679,8 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isRememberMe() {
-		String rememberMe = CookieKeys.getCookie(
-			_getHttpServletRequest(), CookieKeys.REMEMBER_ME);
+		String rememberMe = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME, _getHttpServletRequest());
 
 		if ((rememberMe != null) && rememberMe.equals("true")) {
 			return true;

@@ -17,6 +17,8 @@ package com.liferay.portal.util;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +40,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -112,8 +113,8 @@ public class PortalInstances {
 
 		if (companyId <= 0) {
 			long cookieCompanyId = GetterUtil.getLong(
-				CookieKeys.getCookie(
-					httpServletRequest, CookieKeys.COMPANY_ID, false));
+				CookiesManagerUtil.getCookieValue(
+					CookiesConstants.NAME_COMPANY_ID, httpServletRequest, false));
 
 			if (cookieCompanyId > 0) {
 				try {

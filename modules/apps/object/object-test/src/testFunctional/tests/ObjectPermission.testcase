@@ -2517,7 +2517,7 @@ definition {
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View" activated can vizualize object entries"
 	@priority = "5"
 	test GuestCanViewObjectEntriesWithViewPermission {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectPermission#GuestCanViewObjectEntriesWithViewPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2565,6 +2565,15 @@ definition {
 		Portlet.addPG(
 			pageName = "Object Page",
 			portletName = "Custom Objects");
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		PermissionsInline.gotoConfigurationPG(portletName = "Custom Objects");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			permissionFlagged = "true",
+			roleTitle = "Guest");
 
 		Navigator.openURL();
 

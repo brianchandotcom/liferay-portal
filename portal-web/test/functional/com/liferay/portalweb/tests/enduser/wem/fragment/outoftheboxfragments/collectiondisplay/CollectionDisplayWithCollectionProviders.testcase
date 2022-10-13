@@ -448,6 +448,125 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163440. The page creator could define Flex Column, Align Items and Justify Content of a Collection Display."
+	@priority = "5"
+	test ConfigureFlexColumnCollectionDisplayStyles {
+		task ("Given a page creator has an empty Collection Display on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page creator chooses the Flex Column style display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets",
+				styleDisplay = "Flex Column");
+		}
+
+		task ("Then the page creator sees the empty message shown in Collection Display") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Collection Display",
+				messageInfo = "There are no items to display.");
+		}
+
+		task ("When the page creator adds the Heading and Image fragments into Collection Display with collection items") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+
+			Refresh();
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title 3",
+				fragmentName = "Heading");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Then the page creator sees the Heading and Image fragments displayed as list inside Collection Display") {
+			AssertElementNotPresent(
+				key_flexWrap = "wrap",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_FLEX_WRAP");
+
+			AssertElementNotPresent(
+				key_alignItems = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_ALIGN_ITEMS");
+
+			AssertElementNotPresent(
+				key_justifyContent = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_JUSTIFY_CONTENT");
+
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Flex Wrap",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "No Wrap");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Align Items",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Stretch");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Justify Content",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Start");
+
+			var blockWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__collection__block')]");
+			var collectionDisplayWidth = selenium.getElementWidth("//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
+
+			TestUtils.assertEquals(
+				actual = "${blockWidth}",
+				expected = "${collectionDisplayWidth}");
+		}
+
+		task ("When the page creator changes the align items to End") {
+			PageEditor.editCollectionDisplay(
+				alignItems = "End",
+				fragmentName = "Collection Display",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Then the page creator sees the Heading and Image fragments aligned horizontally with the right of Collection Display") {
+			AssertElementNotPresent(
+				key_flexWrap = "wrap",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_FLEX_WRAP");
+
+			AssertElementNotPresent(
+				key_justifyContent = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_JUSTIFY_CONTENT");
+
+			PageEditor.viewCollectionDisplayStyle(
+				alignItems = "end",
+				position = "1");
+
+			var blockWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__collection__block')]");
+			var collectionDisplayWidth = selenium.getElementWidth("//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
+
+			TestUtils.isLessThan(
+				actual = "${blockWidth}",
+				expected = "${collectionDisplayWidth}");
+		}
+	}
+
 	@description = "This is a test for LPS-163440. The page creator could define Flex Row, Flex Wrap, Align Items and Justify Content of a Collection Display."
 	@priority = "5"
 	test ConfigureFlexRowCollectionDisplayStyles {

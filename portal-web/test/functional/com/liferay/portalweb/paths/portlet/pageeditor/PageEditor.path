@@ -804,6 +804,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_FLEX_WRAP</td>
+	<td>xpath=(//div[@aria-label='Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__container')][contains(@class,'flex-${key_flexWrap}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_ALIGN_ITEMS</td>
 	<td>xpath=(//div[@aria-label='Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'page-editor__container')][contains(@class,'align-items-${key_alignItems}')]</td>
 	<td></td>

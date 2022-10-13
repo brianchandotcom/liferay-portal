@@ -712,7 +712,8 @@ public abstract class BaseJob implements Job {
 							catch (Exception exception) {
 								System.out.println(
 									JenkinsResultsParserUtil.combine(
-										"Retry creating a test class group in ",
+										"[", batchName, "] Retry creating a ",
+										"test class group in ",
 										String.valueOf(
 											_pauseRetryDuration / 1000),
 										" seconds."));

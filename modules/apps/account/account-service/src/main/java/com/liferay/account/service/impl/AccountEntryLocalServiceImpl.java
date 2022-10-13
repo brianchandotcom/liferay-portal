@@ -799,6 +799,10 @@ public class AccountEntryLocalServiceImpl
 
 		AccountEntry accountEntry = getAccountEntry(accountEntryId);
 
+		if (accountEntry.getStatus() == status) {
+			return accountEntry;
+		}
+
 		accountEntry.setStatus(status);
 
 		User user = _userLocalService.getUser(userId);

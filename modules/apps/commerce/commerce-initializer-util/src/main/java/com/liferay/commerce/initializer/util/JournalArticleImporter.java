@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Steven Smith
  */
-@Component(enabled = false, service = JournalArticleImporter.class)
+@Component(service = JournalArticleImporter.class)
 public class JournalArticleImporter {
 
 	public void importJournalArticles(

@@ -102,7 +102,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
-@Component(enabled = false, service = CPDefinitionsImporter.class)
+@Component(service = CPDefinitionsImporter.class)
 public class CPDefinitionsImporter {
 
 	public void importCPDefinitions(

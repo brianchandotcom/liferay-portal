@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Steven Smith
  */
-@Component(enabled = false, service = CommerceDiscountsImporter.class)
+@Component(service = CommerceDiscountsImporter.class)
 public class CommerceDiscountsImporter {
 
 	public void importCommerceDiscounts(

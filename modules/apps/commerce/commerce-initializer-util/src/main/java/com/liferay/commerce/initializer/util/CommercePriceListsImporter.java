@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(enabled = false, service = CommercePriceListsImporter.class)
+@Component(service = CommercePriceListsImporter.class)
 public class CommercePriceListsImporter {
 
 	public void importCommercePriceLists(

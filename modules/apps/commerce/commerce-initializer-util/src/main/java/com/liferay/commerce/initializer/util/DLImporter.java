@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Steven Smith
  */
-@Component(enabled = false, service = DLImporter.class)
+@Component(service = DLImporter.class)
 public class DLImporter {
 
 	public void importDocuments(

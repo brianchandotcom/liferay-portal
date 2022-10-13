@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(enabled = false, service = CPAttachmentFileEntryCreator.class)
+@Component(service = CPAttachmentFileEntryCreator.class)
 public class CPAttachmentFileEntryCreator {
 
 	@SuppressFBWarnings("PATH_TRAVERSAL_IN")

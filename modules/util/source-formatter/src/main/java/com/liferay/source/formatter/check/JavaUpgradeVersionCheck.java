@@ -287,10 +287,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 
 		String methodContent = javaTerm.getContent();
 
-		if (methodContent.contains(
-				"registry.registerInitialDeploymentUpgradeSteps") ||
-			methodContent.contains("registry.registerInitialization()")) {
-
+		if (methodContent.contains("registry.registerInitialization()")) {
 			return content;
 		}
 

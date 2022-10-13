@@ -34,7 +34,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewSuggestionsWithPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-156421=true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -113,7 +113,9 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Suggestions");
 
 		KBArticleSuggestion.gotoSuggestionStatusNew(suggestionCount = "1");
 

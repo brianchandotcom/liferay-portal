@@ -13,6 +13,7 @@ import {useMemo} from 'react';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
 import getRaysourceContactRoleName from '../utils/getRaysourceContactRoleName';
 import useDeleteUserAccount from './useDeleteUserAccount';
+import useUpdateUserAccount from './useUpdateUserAccount';
 
 export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
@@ -31,6 +32,13 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		deleteContactRoles,
 		deleting: removing,
 	} = useDeleteUserAccount();
+
+	const {
+		replaceAccountRole,
+		updateCalled,
+		updateContactRoles,
+		updating,
+	} = useUpdateUserAccount();
 
 	const supportSeatsCount = useMemo(
 		() =>
@@ -54,6 +62,29 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		});
 	};
 
+	const update = (userAccount, currentAccountRole, newAccountRoleItem) => {
+		const newContactRoleName = getRaysourceContactRoleName(
+			newAccountRoleItem.label
+		);
+
+		updateContactRoles({
+			onCompleted: () =>
+				replaceAccountRole({
+					variables: {
+						currentAccountRoleId: currentAccountRole.id,
+						emailAddress: userAccount.emailAddress,
+						externalReferenceCode,
+						newAccountRoleId: newAccountRoleItem.value,
+					},
+				}),
+			variables: {
+				contactEmail: userAccount.emailAddress,
+				contactRoleName: newContactRoleName,
+				externalReferenceCode,
+			},
+		});
+	};
+
 	return [
 		supportSeatsCount,
 		{
@@ -62,6 +93,9 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 			remove,
 			removeCalled,
 			removing,
+			update,
+			updateCalled,
+			updating,
 		},
 	];
 }

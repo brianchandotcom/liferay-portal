@@ -14,7 +14,14 @@ import i18n from '../../../../../../../../../../common/I18n';
 import {ButtonDropDown} from '../../../../../../../../../../common/components';
 import MenuUserActions from './components/MenuUserActions';
 
-const OptionsColumn = ({edit, onCancel, onEdit, onRemove, onSave}) => {
+const OptionsColumn = ({
+	edit,
+	onCancel,
+	onEdit,
+	onRemove,
+	onSave,
+	saveDisabled,
+}) => {
 	const userOptions = [
 		{
 			label: i18n.translate('edit'),
@@ -28,7 +35,11 @@ const OptionsColumn = ({edit, onCancel, onEdit, onRemove, onSave}) => {
 	];
 
 	return edit ? (
-		<MenuUserActions onCancel={() => onCancel()} onSave={() => onSave()} />
+		<MenuUserActions
+			onCancel={() => onCancel()}
+			onSave={() => onSave()}
+			saveDisabled={saveDisabled}
+		/>
 	) : (
 		<ButtonDropDown
 			customDropDownButton={

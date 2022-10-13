@@ -23,6 +23,7 @@ import RolesColumn from './components/columns/RolesColumn/RolesColumn';
 import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
+import getFilteredRoleBriefByName from './utils/getFilteredRoleBriefByName';
 
 const TeamMembersTable = ({
 	koroneikiAccount,
@@ -33,7 +34,7 @@ const TeamMembersTable = ({
 
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
 	const [currentIndexRemoving, setCurrentIndexRemoving] = useState();
-	const [, setSelectedAccountRoleItem] = useState();
+	const [selectedAccountRoleItem, setSelectedAccountRoleItem] = useState();
 
 	const [
 		supportSeatsCount,
@@ -43,6 +44,9 @@ const TeamMembersTable = ({
 			remove,
 			removeCalled,
 			removing,
+			update,
+			updateCalled,
+			updating,
 		},
 	] = useUserAccountsByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey,
@@ -83,18 +87,31 @@ const TeamMembersTable = ({
 	}, [onOpenChange, removeCalled, removing]);
 
 	useEffect(() => {
+		if (updateCalled && !updating) {
+			setCurrentIndexEditing();
+			setSelectedAccountRoleItem();
+		}
+	}, [onOpenChange, updateCalled, updating]);
+
+	useEffect(() => {
 		if (currentIndexEditing) {
 			setSelectedAccountRoleItem();
 		}
 	}, [currentIndexEditing]);
 
-	const getCurrentRoleBriefName = useCallback(
+	const getCurrentRoleBrief = useCallback(
 		(accountBrief) =>
-			accountBrief.roleBriefs.filter(
-				(roleBrief) => roleBrief.name !== 'User'
-			)[0]?.name || 'User',
+			getFilteredRoleBriefByName(accountBrief.roleBriefs, 'User'),
 		[]
 	);
+
+	const handleEdit = (userAccount) => {
+		const currentAccountRole = getCurrentRoleBrief(
+			userAccount.selectedAccountSummary
+		);
+
+		update(userAccount, currentAccountRole, selectedAccountRoleItem);
+	};
 
 	return (
 		<>
@@ -140,7 +157,10 @@ const TeamMembersTable = ({
 									setCurrentIndexRemoving(index);
 									onOpenChange(true);
 								}}
-								onSave={() => {}}
+								onSave={() => handleEdit(userAccount)}
+								saveDisabled={
+									!selectedAccountRoleItem || updating
+								}
 							/>
 						),
 						role: (
@@ -149,9 +169,11 @@ const TeamMembersTable = ({
 								availableSupportSeatsCount={
 									availableSupportSeatsCount
 								}
-								currentRoleBriefName={getCurrentRoleBriefName(
-									userAccount.selectedAccountSummary
-								)}
+								currentRoleBriefName={
+									getCurrentRoleBrief(
+										userAccount.selectedAccountSummary
+									)?.name || 'User'
+								}
 								edit={index === currentIndexEditing}
 								hasAccountSupportSeatRole={
 									userAccount.selectedAccountSummary

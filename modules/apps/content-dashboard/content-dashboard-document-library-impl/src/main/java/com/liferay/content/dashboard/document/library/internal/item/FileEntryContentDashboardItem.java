@@ -27,6 +27,8 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemV
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
+import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -85,6 +87,7 @@ public class FileEntryContentDashboardItem
 		ContentDashboardItemVersionActionProviderTracker
 			contentDashboardItemVersionActionProviderTracker,
 		ContentDashboardItemSubtype contentDashboardItemSubtype,
+		DLDisplayContextProvider dlDisplayContextProvider,
 		DLURLHelper dlURLHelper, FileEntry fileEntry, Group group,
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
 		Language language, Portal portal) {
@@ -108,6 +111,7 @@ public class FileEntryContentDashboardItem
 		_contentDashboardItemVersionActionProviderTracker =
 			contentDashboardItemVersionActionProviderTracker;
 		_contentDashboardItemSubtype = contentDashboardItemSubtype;
+		_dlDisplayContextProvider = dlDisplayContextProvider;
 		_dlURLHelper = dlURLHelper;
 		_fileEntry = fileEntry;
 		_group = group;
@@ -436,6 +440,28 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public boolean isShowContentDashboardItemVersions(
+		HttpServletRequest httpServletRequest) {
+
+		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
+			_dlDisplayContextProvider.getDLEditFileEntryDisplayContext(
+				httpServletRequest, null, _fileEntry);
+
+		try {
+			if (!dlEditFileEntryDisplayContext.isVersionInfoVisible()) {
+				return false;
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		if (ListUtil.isEmpty(
 				_fileEntry.getFileVersions(
@@ -644,6 +670,7 @@ public class FileEntryContentDashboardItem
 	private final ContentDashboardItemSubtype _contentDashboardItemSubtype;
 	private final ContentDashboardItemVersionActionProviderTracker
 		_contentDashboardItemVersionActionProviderTracker;
+	private final DLDisplayContextProvider _dlDisplayContextProvider;
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final Group _group;

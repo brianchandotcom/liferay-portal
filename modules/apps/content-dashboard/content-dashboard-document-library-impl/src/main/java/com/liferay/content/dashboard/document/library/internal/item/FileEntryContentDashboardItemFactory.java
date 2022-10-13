@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProvi
 import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -83,7 +84,7 @@ public class FileEntryContentDashboardItemFactory
 			_contentDashboardItemVersionActionProviderTracker,
 			contentDashboardItemSubtypeFactory.create(
 				dlFileEntry.getFileEntryTypeId(), dlFileEntry.getFileEntryId()),
-			_dlURLHelper, fileEntry,
+			_dlDisplayContextProvider, _dlURLHelper, fileEntry,
 			_groupLocalService.fetchGroup(fileEntry.getGroupId()),
 			infoItemFieldValuesProvider, _language, _portal);
 	}
@@ -117,6 +118,9 @@ public class FileEntryContentDashboardItemFactory
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLDisplayContextProvider _dlDisplayContextProvider;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

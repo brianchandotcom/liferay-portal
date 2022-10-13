@@ -53,6 +53,7 @@ public class JournalDisplayPagePreviewFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163074")) &&
+			!isEditDefaultValues(article) &&
 			(_isDepotArticle(article) || isGlobalScopeArticle(article))) {
 
 			return true;

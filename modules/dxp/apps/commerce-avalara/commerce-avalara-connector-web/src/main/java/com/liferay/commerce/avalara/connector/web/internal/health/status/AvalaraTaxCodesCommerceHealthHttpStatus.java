@@ -47,12 +47,14 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"commerce.health.status.display.order:Integer=70",
-		"commerce.health.status.key=" + CommerceAvalaraConstants.AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_KEY
+		"commerce.health.status.key=" + CommerceHealthHttpStatus.KEY
 	},
 	service = CommerceHealthHttpStatus.class
 )
 public class AvalaraTaxCodesCommerceHealthHttpStatus
 	implements CommerceHealthHttpStatus {
+
+	public final String KEY = "avalara.tax.codes.commerce.health.status.key";
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -83,16 +85,12 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 
 	@Override
 	public String getKey() {
-		return CommerceAvalaraConstants.
-			AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_KEY;
+		return KEY;
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return _language.get(
-			locale,
-			CommerceAvalaraConstants.
-				AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_KEY);
+		return _language.get(locale, KEY);
 	}
 
 	@Override

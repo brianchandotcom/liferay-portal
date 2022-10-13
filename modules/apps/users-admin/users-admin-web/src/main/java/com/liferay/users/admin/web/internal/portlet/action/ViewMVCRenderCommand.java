@@ -14,6 +14,8 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.users.admin.constants.UsersAdminManagementToolbarKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -21,17 +23,17 @@ import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorTracker;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -54,34 +56,36 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS,
 			_filterContributorTracker.getFilterContributors(
 				UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS));
+
+		List<UserActionContributor> userActionContributors = new ArrayList<>();
+
+		for (UserActionContributor userActionContributor :
+				_serviceTrackerList) {
+
+			userActionContributors.add(userActionContributor);
+		}
+
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS,
-			_userActionContributors.toArray(new UserActionContributor[0]));
+			userActionContributors.toArray(new UserActionContributor[0]));
 
 		return "/view.jsp";
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setUserActionContributor(
-		UserActionContributor userActionContributor) {
-
-		_userActionContributors.add(userActionContributor);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, UserActionContributor.class);
 	}
 
-	protected void unsetUserActionContributor(
-		UserActionContributor userActionContributor) {
-
-		_userActionContributors.remove(userActionContributor);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	@Reference
 	private FilterContributorTracker _filterContributorTracker;
 
-	private final List<UserActionContributor> _userActionContributors =
-		new CopyOnWriteArrayList<>();
+	private ServiceTrackerList<UserActionContributor> _serviceTrackerList;
 
 }

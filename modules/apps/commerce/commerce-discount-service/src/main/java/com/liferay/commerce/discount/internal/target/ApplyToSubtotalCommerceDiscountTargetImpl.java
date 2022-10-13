@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_SUBTOTAL,
 		"commerce.discount.target.order:Integer=40"

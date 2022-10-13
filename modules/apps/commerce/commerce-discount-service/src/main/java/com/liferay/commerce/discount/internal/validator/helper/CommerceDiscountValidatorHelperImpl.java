@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(enabled = false, service = CommerceDiscountValidatorHelper.class)
+@Component(service = CommerceDiscountValidatorHelper.class)
 public class CommerceDiscountValidatorHelperImpl
 	implements CommerceDiscountValidatorHelper {
 

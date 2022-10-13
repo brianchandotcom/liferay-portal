@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(enabled = false, service = CommerceDiscountAccountRelFinder.class)
+@Component(service = CommerceDiscountAccountRelFinder.class)
 public class CommerceDiscountAccountRelFinderImpl
 	extends CommerceDiscountAccountRelFinderBaseImpl
 	implements CommerceDiscountAccountRelFinder {

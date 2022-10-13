@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.discount.validator.key=" + DefaultCommerceDiscountValidator.KEY,
 		"commerce.discount.validator.priority:Integer=10",

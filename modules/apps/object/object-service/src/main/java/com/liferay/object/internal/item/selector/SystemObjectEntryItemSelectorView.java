@@ -284,29 +284,36 @@ public class SystemObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
-			try {
-				ObjectRelatedModelsProvider objectRelatedModelsProvider =
-					_objectRelatedModelsProviderRegistry.
-						getObjectRelatedModelsProvider(
-							_objectDefinition.getClassName(),
-							ParamUtil.getString(
-								_portletRequest, "objectRelationshipType"));
+			String objectRelationshipType = ParamUtil.getString(
+				_portletRequest, "objectRelationshipType");
 
-				List<BaseModel<?>> baseModels =
-					objectRelatedModelsProvider.getUnrelatedModels(
-						_themeDisplay.getCompanyId(),
-						_themeDisplay.getScopeGroupId(), _objectDefinition,
-						ParamUtil.getLong(_portletRequest, "objectEntryId"),
-						ParamUtil.getLong(
-							_portletRequest, "objectRelationshipId"));
-
-				searchContainer.setResultsAndTotal(
-					() -> baseModels, baseModels.size());
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-
+			if (objectRelationshipType.isEmpty()) {
 				searchContainer.setResultsAndTotal(ArrayList::new, 0);
+			}
+			else {
+				try {
+					ObjectRelatedModelsProvider objectRelatedModelsProvider =
+						_objectRelatedModelsProviderRegistry.
+							getObjectRelatedModelsProvider(
+								_objectDefinition.getClassName(),
+								objectRelationshipType);
+
+					List<BaseModel<?>> baseModels =
+						objectRelatedModelsProvider.getUnrelatedModels(
+							_themeDisplay.getCompanyId(),
+							_themeDisplay.getScopeGroupId(), _objectDefinition,
+							ParamUtil.getLong(_portletRequest, "objectEntryId"),
+							ParamUtil.getLong(
+								_portletRequest, "objectRelationshipId"));
+
+					searchContainer.setResultsAndTotal(
+						() -> baseModels, baseModels.size());
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					searchContainer.setResultsAndTotal(ArrayList::new, 0);
+				}
 			}
 
 			return searchContainer;

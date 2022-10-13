@@ -241,6 +241,16 @@ public class ClientExtensionEntryRelPersistenceTest {
 		ClientExtensionEntryRel newClientExtensionEntryRel =
 			addClientExtensionEntryRel();
 
+		newClientExtensionEntryRel.setCompanyId(
+			clientExtensionEntryRel.getCompanyId());
+
+		newClientExtensionEntryRel = _persistence.update(
+			newClientExtensionEntryRel);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newClientExtensionEntryRel);
+
 		newClientExtensionEntryRel.setExternalReferenceCode(
 			clientExtensionEntryRel.getExternalReferenceCode());
 

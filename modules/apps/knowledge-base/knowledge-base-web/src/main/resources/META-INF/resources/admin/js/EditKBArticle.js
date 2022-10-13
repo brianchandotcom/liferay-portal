@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function EditKBArticle({namespace}) {
+export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
@@ -32,12 +32,99 @@ export default function EditKBArticle({namespace}) {
 		contextualSidebarButtonOnClick
 	);
 
+	const titleInput = document.getElementById(`${namespace}title`);
+	const urlTitleInput = document.getElementById(`${namespace}urlTitle`);
+
+	const titleOnInputEvent = (event) => {
+		const customUrl = urlTitleInput.dataset.customUrl;
+
+		if (customUrl === 'false') {
+			urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(
+				event.target.value
+			);
+		}
+	};
+
+	const urlTitleOnInputEvent = (event) => {
+		event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
+	};
+
+	if (!kbArticle) {
+		titleInput.addEventListener('input', titleOnInputEvent);
+
+		urlTitleInput.addEventListener('input', urlTitleOnInputEvent);
+	}
+
+	const publishButton = document.getElementById(`${namespace}publishButton`);
+
+	const publishButtonOnClick = () => {
+		const workflowActionInput = document.getElementById(
+			`${namespace}workflowAction`
+		);
+
+		if (workflowActionInput) {
+			workflowActionInput.value = publishAction;
+		}
+
+		if (!kbArticle) {
+			const customUrl = urlTitleInput.dataset.customUrl;
+
+			if (customUrl === 'false') {
+				urlTitleInput.value = '';
+			}
+		}
+	};
+
+	publishButton.addEventListener('click', publishButtonOnClick);
+
+	const form = document.getElementById(`${namespace}fm`);
+
+	const updateMultipleKBArticleAttachments = function () {
+		const selectedFileNameContainer = document.getElementById(
+			`${namespace}selectedFileNameContainer`
+		);
+		const buffer = [];
+		const filesChecked = form.querySelectorAll(
+			`input[name=${namespace}selectUploadedFile]:checked`
+		);
+
+		for (let i = 0; i < filesChecked.length; i++) {
+			buffer.push(
+				`<input id="${namespace}selectedFileName${i}"
+					name="${namespace}selectedFileName"
+					type="hidden"
+					value="${filesChecked[i].value}"
+				/>`
+			);
+		}
+
+		selectedFileNameContainer.innerHTML = buffer.join('');
+	};
+
+	form.addEventListener('submit', () => {
+		document.getElementById(`${namespace}content`).value = window[
+			`${namespace}contentEditor`
+		].getHTML();
+
+		updateMultipleKBArticleAttachments();
+	});
+
 	return {
 		dispose() {
 			contextualSidebarButton.removeEventListener(
 				'click',
 				contextualSidebarButtonOnClick
 			);
+
+			if (!kbArticle) {
+				titleInput.removeEventListener('input', titleOnInputEvent);
+				urlTitleInput.removeEventListener(
+					'input',
+					urlTitleOnInputEvent
+				);
+			}
+
+			publishButton.removeEventListener('click', publishButtonOnClick);
 		},
 	};
 }

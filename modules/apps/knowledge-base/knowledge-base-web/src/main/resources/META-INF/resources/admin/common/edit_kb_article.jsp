@@ -298,78 +298,12 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 </aui:form>
 
 <liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"kbArticle", editKBArticleDisplayContext.getKBArticle()
+		).put(
+			"publishAction", WorkflowConstants.ACTION_PUBLISH
+		).build()
+	%>'
 	module="admin/js/EditKBArticle"
 />
-
-<script>
-	<c:if test="<%= editKBArticleDisplayContext.getKBArticle() == null %>">
-		var titleInput = document.getElementById('<portlet:namespace />title');
-		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
-
-		titleInput.addEventListener('input', (event) => {
-			var customUrl = urlTitleInput.dataset.customUrl;
-
-			if (customUrl === 'false') {
-				var title = event.target.value;
-
-				urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(title);
-			}
-		});
-
-		urlTitleInput.addEventListener('input', (event) => {
-			event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
-		});
-	</c:if>
-
-	document
-		.getElementById('<portlet:namespace />publishButton')
-		.addEventListener('click', () => {
-			var workflowActionInput = document.getElementById(
-				'<portlet:namespace />workflowAction'
-			);
-
-			if (workflowActionInput) {
-				workflowActionInput.value =
-					'<%= WorkflowConstants.ACTION_PUBLISH %>';
-			}
-
-			<c:if test="<%= editKBArticleDisplayContext.getKBArticle() == null %>">
-				var customUrl = urlTitleInput.dataset.customUrl;
-
-				if (customUrl === 'false') {
-					urlTitleInput.value = '';
-				}
-			</c:if>
-		});
-
-	var form = document.getElementById('<portlet:namespace />fm');
-
-	var updateMultipleKBArticleAttachments = function () {
-		var selectedFileNameContainer = document.getElementById(
-			'<portlet:namespace />selectedFileNameContainer'
-		);
-		var buffer = [];
-		var filesChecked = form.querySelectorAll(
-			'input[name=<portlet:namespace />selectUploadedFile]:checked'
-		);
-
-		for (var i = 0; i < filesChecked.length; i++) {
-			buffer.push(
-				'<input id="<portlet:namespace />selectedFileName' +
-					i +
-					'" name="<portlet:namespace />selectedFileName" type="hidden" value="' +
-					filesChecked[i].value +
-					'" />'
-			);
-		}
-
-		selectedFileNameContainer.innerHTML = buffer.join('');
-	};
-
-	form.addEventListener('submit', () => {
-		document.getElementById(
-			'<portlet:namespace />content'
-		).value = window.<portlet:namespace />contentEditor.getHTML();
-		updateMultipleKBArticleAttachments();
-	});
-</script>

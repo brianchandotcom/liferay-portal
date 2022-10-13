@@ -124,14 +124,14 @@ const ExperienceItem = ({
 
 										{experience.active ? (
 											<ClayLabel
-												className="inline-item-after"
+												className="flex-shrink-0 inline-item-after"
 												displayType="success"
 											>
 												{Liferay.Language.get('active')}
 											</ClayLabel>
 										) : (
 											<ClayLabel
-												className="inline-item-after"
+												className="flex-shrink-0 inline-item-after"
 												displayType="secondary"
 											>
 												{Liferay.Language.get(

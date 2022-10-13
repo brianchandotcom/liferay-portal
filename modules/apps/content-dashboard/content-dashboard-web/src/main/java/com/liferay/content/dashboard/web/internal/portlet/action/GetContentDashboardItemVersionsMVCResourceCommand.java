@@ -90,14 +90,10 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 	}
 
 	private JSONArray _getContentDashboardItemVersionsJSONArray(
-		int displayVersions, HttpServletRequest httpServletRequest,
-		VersionableContentDashboardItem versionableContentDashboardItem) {
+		List<ContentDashboardItemVersion> contentDashboardItemVersions,
+		int displayVersions) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		List<ContentDashboardItemVersion> contentDashboardItemVersions =
-			versionableContentDashboardItem.getAllContentDashboardItemVersions(
-				httpServletRequest);
 
 		if (ListUtil.isEmpty(contentDashboardItemVersions)) {
 			return jsonArray;
@@ -158,8 +154,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		return JSONUtil.put(
 			"versions",
 			_getContentDashboardItemVersionsJSONArray(
-				displayVersions, httpServletRequest,
-				versionableContentDashboardItem)
+				contentDashboardItemVersions, displayVersions)
 		).put(
 			"viewVersionsURL",
 			() -> {

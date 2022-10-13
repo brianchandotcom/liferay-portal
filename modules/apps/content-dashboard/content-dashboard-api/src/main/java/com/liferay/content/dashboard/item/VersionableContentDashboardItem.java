@@ -29,4 +29,10 @@ public interface VersionableContentDashboardItem<T>
 
 	public String getViewVersionsURL(HttpServletRequest httpServletRequest);
 
+	public default boolean isShowContentDashboardItemVersions(
+		HttpServletRequest httpServletRequest) {
+
+		return true;
+	}
+
 }

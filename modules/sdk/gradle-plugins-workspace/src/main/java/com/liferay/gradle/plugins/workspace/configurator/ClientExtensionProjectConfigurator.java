@@ -350,7 +350,7 @@ public class ClientExtensionProjectConfigurator
 									return intoJsonNode.asText();
 								}
 
-								return "static";
+								return ".";
 							}
 
 						},
@@ -358,7 +358,12 @@ public class ClientExtensionProjectConfigurator
 
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {
-								copySpec.from(fromJsonNode.asText());
+								if (fromJsonNode != null) {
+									copySpec.from(fromJsonNode.asText());
+								}
+								else {
+									copySpec.from(".");
+								}
 
 								if (includeJsonNode instanceof ArrayNode) {
 									ArrayNode arrayNode =
@@ -369,7 +374,10 @@ public class ClientExtensionProjectConfigurator
 											include.asText()));
 								}
 								else {
-									copySpec.include(includeJsonNode.asText());
+									if (includeJsonNode != null) {
+										copySpec.include(
+											includeJsonNode.asText());
+									}
 								}
 
 								copySpec.setIncludeEmptyDirs(false);

@@ -14,6 +14,8 @@
 
 package com.liferay.upload.web.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -21,14 +23,10 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.upload.AttachmentContentUpdater;
 import com.liferay.upload.AttachmentElementHandler;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Alejandro Tardín
@@ -51,7 +49,7 @@ public class DefaultAttachmentContentUpdater
 		}
 
 		for (AttachmentElementHandler attachmentElementHandler :
-				_attachmentElementHandlers) {
+				_serviceTrackerList) {
 
 			content = attachmentElementHandler.replaceAttachmentElements(
 				content, saveTempFileUnsafeFunction);
@@ -60,24 +58,17 @@ public class DefaultAttachmentContentUpdater
 		return content;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addAttachmentElementHandler(
-		AttachmentElementHandler attachmentElementHandler) {
-
-		_attachmentElementHandlers.add(attachmentElementHandler);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, AttachmentElementHandler.class);
 	}
 
-	protected void removeAttachmentElementHandler(
-		AttachmentElementHandler attachmentElementHandler) {
-
-		_attachmentElementHandlers.remove(attachmentElementHandler);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
-	private static final List<AttachmentElementHandler>
-		_attachmentElementHandlers = new CopyOnWriteArrayList<>();
+	private ServiceTrackerList<AttachmentElementHandler> _serviceTrackerList;
 
 }

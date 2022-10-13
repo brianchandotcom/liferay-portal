@@ -75,9 +75,26 @@ definition {
 	macro gotoCP {
 		var key_kbFolderName = "${kbFolderName}";
 
-		AssertClick(
-			locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
-			value1 = "${kbFolderName}");
+		if (isSet(pageTreePanel)) {
+			Click(
+				key_itemName = "${kbFolderName}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+
+			AssertVisible(
+				key_itemName = "${kbFolderName}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_HIGHLIGHT");
+		}
+		else {
+			AssertClick(
+				locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
+				value1 = "${kbFolderName}");
+
+			if (isSet(highlight)) {
+				AssertVisible(
+					key_itemName = "${kbFolderName}",
+					locator1 = "KnowledgeBase#PAGE_TREE_ITEM_HIGHLIGHT");
+			}
+		}
 
 		AssertTextEquals(
 			key_breadcrumbName = "${kbFolderName}",

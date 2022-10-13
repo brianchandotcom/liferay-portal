@@ -1362,6 +1362,10 @@ definition {
 			Click(
 				key_itemName = "${kbArticleTitle}",
 				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+
+			AssertVisible(
+				key_itemName = "${kbArticleTitle}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_HIGHLIGHT");
 		}
 		else {
 			AssertTextEquals(
@@ -1383,6 +1387,12 @@ definition {
 			AssertClick(
 				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
 				value1 = "${kbArticleTitle}");
+
+			if (isSet(highlight)) {
+				AssertVisible(
+					key_itemName = "${kbArticleTitle}",
+					locator1 = "KnowledgeBase#PAGE_TREE_ITEM_HIGHLIGHT");
+			}
 		}
 
 		AssertTextEquals(

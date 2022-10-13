@@ -371,7 +371,6 @@ definition {
 
 		Navigator.openURL();
 
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -454,7 +453,6 @@ definition {
 		AssertElementPresent(
 			key_workflowItemSubject = "Web Content Article: Web Content Title",
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
-			
 	}
 
 	@description = "Verify that the Subfolder can use the Workflow of the Parent Folder"

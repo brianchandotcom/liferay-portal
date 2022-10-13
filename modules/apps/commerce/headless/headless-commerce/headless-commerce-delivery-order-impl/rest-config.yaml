@@ -7,5 +7,4 @@ application:
 author: "Andrea Sbarra"
 clientDir: "../headless-commerce-delivery-order-client/src/main/java"
 forcePredictableSchemaPropertyName: false
-liferayEnterpriseApp: true
 testDir: "../headless-commerce-delivery-order-test/src/testIntegration/java"

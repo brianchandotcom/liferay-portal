@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/placed-order-address.properties",
 	scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, PlacedOrderAddressResource.class}

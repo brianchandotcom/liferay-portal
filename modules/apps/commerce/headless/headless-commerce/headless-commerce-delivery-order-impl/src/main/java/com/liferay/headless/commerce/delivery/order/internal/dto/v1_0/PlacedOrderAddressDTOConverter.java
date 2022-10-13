@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false,
 	property = "dto.class.name=com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderAddress",
 	service = {DTOConverter.class, PlacedOrderAddressDTOConverter.class}
 )

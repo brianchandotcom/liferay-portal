@@ -103,7 +103,7 @@ const VersionsContent = ({
 								version,
 							}) => (
 								<li
-									className="list-group-item list-group-item-flex"
+									className="list-group-item list-group-item-flex p-0"
 									key={version}
 								>
 									<ClayLayout.ContentCol expand>

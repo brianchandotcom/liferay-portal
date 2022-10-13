@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"commerce.health.status.display.order:Integer=70",
-		"commerce.health.status.key=" + CommerceHealthHttpStatus.KEY
+		"commerce.health.status.key=" + AvalaraTaxCodesCommerceHealthHttpStatus.KEY
 	},
 	service = CommerceHealthHttpStatus.class
 )

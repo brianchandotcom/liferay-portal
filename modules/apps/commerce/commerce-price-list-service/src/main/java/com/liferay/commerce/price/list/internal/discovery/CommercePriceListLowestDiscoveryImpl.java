@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	property = "commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_LOWEST_ENTRY,
 	service = CommercePriceListDiscovery.class
 )

@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see CommercePriceListChannelRelServiceBaseImpl
  */
 @Component(
-	enabled = false,
 	property = {
 		"json.web.service.context.name=commerce",
 		"json.web.service.context.path=CommercePriceListChannelRel"

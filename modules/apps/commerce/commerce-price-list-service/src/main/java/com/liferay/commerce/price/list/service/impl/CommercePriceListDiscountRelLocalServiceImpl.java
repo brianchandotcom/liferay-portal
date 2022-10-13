@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see CommercePriceListDiscountRelLocalServiceBaseImpl
  */
 @Component(
-	enabled = false,
 	property = "model.class.name=com.liferay.commerce.price.list.model.CommercePriceListDiscountRel",
 	service = AopService.class
 )

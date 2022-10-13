@@ -190,7 +190,7 @@ Liferay.Util.addParams = addParams;
 
 Liferay.Util.openAlertModal = (...args) => {
 	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/commands/OpenAlertModal',
+		'frontend-js-web/liferay/modal/commands/open_alert_modal',
 		(commands) => {
 			commands.default(...args);
 		}
@@ -295,7 +295,7 @@ Liferay.Util.toggleDisabled = toggleDisabled;
 
 Liferay.Util.openConfirmModal = (...args) => {
 	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/commands/OpenConfirmModal',
+		'frontend-js-web/liferay/modal/commands/open_confirm_modal',
 		(commands) => {
 			commands.default(...args);
 		}

@@ -59,8 +59,8 @@ export {default as PortletBase} from './liferay/PortletBase.es';
 
 export {openModal, openSelectionModal} from './liferay/modal/Modal';
 
-export {default as openAlertModal} from './liferay/modal/commands/OpenAlertModal';
-export {default as openConfirmModal} from './liferay/modal/commands/OpenConfirmModal';
+export {default as openAlertModal} from './liferay/modal/commands/open_alert_modal';
+export {default as openConfirmModal} from './liferay/modal/commands/open_confirm_modal';
 
 export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimpleInputModal.es';
 

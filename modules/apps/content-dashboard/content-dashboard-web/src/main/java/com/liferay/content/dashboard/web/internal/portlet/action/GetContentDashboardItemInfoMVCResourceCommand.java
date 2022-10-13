@@ -158,6 +158,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 							return null;
 						}
 
+						VersionableContentDashboardItem
+							versionableContentDashboardItem =
+								(VersionableContentDashboardItem)
+									contentDashboardItem;
+
+						if (!versionableContentDashboardItem.
+								isShowContentDashboardItemVersions(
+									httpServletRequest)) {
+
+							return null;
+						}
+
 						return ResourceURLBuilder.createResourceURL(
 							resourceResponse
 						).setParameter(
@@ -182,6 +194,24 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"preview",
 					_getPreviewJSONObject(
 						contentDashboardItem, httpServletRequest)
+				).put(
+					"showItemVersions",
+					() -> {
+						if (!(contentDashboardItem instanceof
+								VersionableContentDashboardItem)) {
+
+							return false;
+						}
+
+						VersionableContentDashboardItem
+							versionableContentDashboardItem =
+								(VersionableContentDashboardItem)
+									contentDashboardItem;
+
+						return versionableContentDashboardItem.
+							isShowContentDashboardItemVersions(
+								httpServletRequest);
+					}
 				).put(
 					"specificFields",
 					_getSpecificFieldsJSONObject(contentDashboardItem, locale)

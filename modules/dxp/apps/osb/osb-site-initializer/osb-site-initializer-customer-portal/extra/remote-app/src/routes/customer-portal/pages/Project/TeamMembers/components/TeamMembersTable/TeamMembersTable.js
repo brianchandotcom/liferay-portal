@@ -42,10 +42,8 @@ const TeamMembersTable = ({
 			data: userAccountsData,
 			loading: userAccountsLoading,
 			remove,
-			removeCalled,
 			removing,
 			update,
-			updateCalled,
 			updating,
 		},
 	] = useUserAccountsByAccountExternalReferenceCode(
@@ -79,19 +77,19 @@ const TeamMembersTable = ({
 	const loading = userAccountsLoading || accountRolesLoading;
 
 	useEffect(() => {
-		if (removeCalled && !removing) {
+		if (!removing) {
 			onOpenChange(false);
 
 			setCurrentIndexRemoving();
 		}
-	}, [onOpenChange, removeCalled, removing]);
+	}, [onOpenChange, removing]);
 
 	useEffect(() => {
-		if (updateCalled && !updating) {
+		if (!updating) {
 			setCurrentIndexEditing();
 			setSelectedAccountRoleItem();
 		}
-	}, [onOpenChange, updateCalled, updating]);
+	}, [onOpenChange, updating]);
 
 	useEffect(() => {
 		if (currentIndexEditing) {
@@ -105,12 +103,16 @@ const TeamMembersTable = ({
 		[]
 	);
 
-	const handleEdit = (userAccount) => {
+	const handleEdit = () => {
 		const currentAccountRole = getCurrentRoleBrief(
-			userAccount.selectedAccountSummary
+			userAccounts[currentIndexEditing].selectedAccountSummary
 		);
 
-		update(userAccount, currentAccountRole, selectedAccountRoleItem);
+		update(
+			userAccounts[currentIndexEditing],
+			currentAccountRole,
+			selectedAccountRoleItem
+		);
 	};
 
 	return (
@@ -157,7 +159,7 @@ const TeamMembersTable = ({
 									setCurrentIndexRemoving(index);
 									onOpenChange(true);
 								}}
-								onSave={() => handleEdit(userAccount)}
+								onSave={() => handleEdit()}
 								saveDisabled={
 									!selectedAccountRoleItem || updating
 								}

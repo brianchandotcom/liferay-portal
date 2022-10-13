@@ -15,11 +15,12 @@ import {useDeleteRolesByContactEmailAddress} from '../../../../../../../../commo
 export default function useDeleteUserAccount() {
 	const [
 		deleteUserAccount,
-		{called: deleteUserAccountCalled, loading: deleteUserAccountLoading},
+		{loading: deleteUserAccountLoading},
 	] = useDeleteUserAccountByEmailAddress();
+
 	const [
 		deleteContactRoles,
-		{called: deleteContactRolesCalled, loading: deleteContactRolesLoading},
+		{loading: deleteContactRolesLoading},
 	] = useDeleteRolesByContactEmailAddress({
 		onCompleted: (_, {variables}) =>
 			deleteUserAccount({
@@ -30,12 +31,10 @@ export default function useDeleteUserAccount() {
 			}),
 	});
 
-	const deleting = deleteUserAccountLoading || deleteContactRolesLoading;
-	const deleteCalled = deleteUserAccountCalled && deleteContactRolesCalled;
+	const loading = deleteUserAccountLoading || deleteContactRolesLoading;
 
 	return {
-		deleteCalled,
 		deleteContactRoles,
-		deleting,
+		loading,
 	};
 }

@@ -15,21 +15,19 @@ import {useUpdateRolesByContactEmailAddress} from '../../../../../../../../commo
 export default function useUpdateUserAccount() {
 	const [
 		replaceAccountRole,
-		{called: replaceAccountRoleCalled, loading: replaceAccountRoleLoading},
+		{loading: replaceAccountRoleLoading},
 	] = useReplaceAccountRoleByUserAccountEmailAddress();
 
 	const [
 		updateContactRoles,
-		{called: updateContactRolesCalled, loading: updateContactRolesLoading},
+		{loading: updateContactRolesLoading},
 	] = useUpdateRolesByContactEmailAddress();
 
-	const updating = replaceAccountRoleLoading || updateContactRolesLoading;
-	const updateCalled = replaceAccountRoleCalled && updateContactRolesCalled;
+	const loading = replaceAccountRoleLoading || updateContactRolesLoading;
 
 	return {
+		loading,
 		replaceAccountRole,
-		updateCalled,
 		updateContactRoles,
-		updating,
 	};
 }

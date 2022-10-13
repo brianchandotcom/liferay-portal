@@ -27,17 +27,12 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		}
 	);
 
-	const {
-		deleteCalled: removeCalled,
-		deleteContactRoles,
-		deleting: removing,
-	} = useDeleteUserAccount();
+	const {deleteContactRoles, loading: removing} = useDeleteUserAccount();
 
 	const {
+		loading: updating,
 		replaceAccountRole,
-		updateCalled,
 		updateContactRoles,
-		updating,
 	} = useUpdateUserAccount();
 
 	const supportSeatsCount = useMemo(
@@ -91,10 +86,8 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 			data,
 			loading: koroneikiAccountLoading || loading,
 			remove,
-			removeCalled,
 			removing,
 			update,
-			updateCalled,
 			updating,
 		},
 	];

@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceChannelFDSNames.TAX_METHOD,
 		"frontend.data.set.name=" + CommerceChannelFDSNames.TAX_METHOD

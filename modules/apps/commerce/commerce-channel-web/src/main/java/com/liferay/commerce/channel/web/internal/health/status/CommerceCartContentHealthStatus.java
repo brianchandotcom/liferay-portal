@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.channel.health.status.display.order:Integer=20",
 		"commerce.channel.health.status.key=" + CommerceHealthStatusConstants.COMMERCE_CART_CONTENT_COMMERCE_HEALTH_STATUS_KEY

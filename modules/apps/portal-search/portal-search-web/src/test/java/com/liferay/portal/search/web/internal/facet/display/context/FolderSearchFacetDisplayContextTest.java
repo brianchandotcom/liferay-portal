@@ -130,7 +130,7 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			0, folderSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			title, folderSearchFacetTermDisplayContext.getDisplayName());
+			title, folderSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId),
 			folderSearchFacetTermDisplayContext.getFilterValue());
@@ -192,7 +192,7 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, folderSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			title, folderSearchFacetTermDisplayContext.getDisplayName());
+			title, folderSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId),
 			folderSearchFacetTermDisplayContext.getFilterValue());
@@ -238,7 +238,7 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, folderSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			title, folderSearchFacetTermDisplayContext.getDisplayName());
+			title, folderSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId),
 			folderSearchFacetTermDisplayContext.getFilterValue());
@@ -533,7 +533,7 @@ public class FolderSearchFacetDisplayContextTest {
 				folderSearchFacetTermDisplayContext :
 					folderSearchFacetTermDisplayContexts) {
 
-			sb.append(folderSearchFacetTermDisplayContext.getDisplayName());
+			sb.append(folderSearchFacetTermDisplayContext.getBucketText());
 			sb.append(StringPool.COLON);
 			sb.append(folderSearchFacetTermDisplayContext.getFrequency());
 			sb.append(StringPool.PIPE);

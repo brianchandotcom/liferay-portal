@@ -104,7 +104,7 @@ FolderFacetPortletInstanceConfiguration folderFacetPortletInstanceConfiguration 
 
 												<span class="custom-control-label term-name <%= folderSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 													<span class="custom-control-label-text">
-														<%= HtmlUtil.escape(folderSearchFacetTermDisplayContext.getDisplayName()) %>
+														<%= HtmlUtil.escape(folderSearchFacetTermDisplayContext.getBucketText()) %>
 													</span>
 												</span>
 

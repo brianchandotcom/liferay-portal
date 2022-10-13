@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false,
 	property = "dto.class.name=com.liferay.commerce.product.model.CPTaxCategory",
 	service = {DTOConverter.class, TaxCategoryDTOConverter.class}
 )

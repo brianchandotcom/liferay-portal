@@ -62,7 +62,6 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false,
 	property = "resource.locator.key=/headless-commerce-admin-channel/v1.0/ShippingMethod",
 	service = ShippingMethodResource.Factory.class
 )

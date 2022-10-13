@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	property = "dto.class.name=com.liferay.commerce.term.model.CommerceTermEntry",
 	service = {DTOConverter.class, TermDTOConverter.class}
 )

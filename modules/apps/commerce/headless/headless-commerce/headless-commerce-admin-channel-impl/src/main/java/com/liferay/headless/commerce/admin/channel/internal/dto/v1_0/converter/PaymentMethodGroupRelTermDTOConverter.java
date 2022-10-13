@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	enabled = false,
 	property = "dto.class.name=com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier-Term",
 	service = {DTOConverter.class, PaymentMethodGroupRelTermDTOConverter.class}
 )

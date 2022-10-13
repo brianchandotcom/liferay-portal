@@ -73,7 +73,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 				printWriter.print("importmap-shim");
 			}
 			else {
-				printWriter.print("importmap");				
+				printWriter.print("importmap");
 			}
 
 			printWriter.print("\">");

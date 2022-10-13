@@ -13,8 +13,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		task ("Given Frontend Dataset sample portlet") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Frontend Data Set Test Page");
@@ -30,7 +28,7 @@ definition {
 				layoutTemplate = "1 Column");
 
 			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
-		}
+
 	}
 
 	tearDown {
@@ -49,9 +47,6 @@ definition {
 	@description = "LPS-164617. Assert that it's possible to make changes in the FDS "
 	@priority = "4"
 	test CanBeEditted {
-
-		// To-do CanBeEditted Autom. test
-
 	}
 
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
@@ -106,9 +101,48 @@ definition {
 	@description = "LPS-164618. Assert that it's possible can edit a new instance was previously created"
 	@priority = "4"
 	test CanCreateMultiple {
+		task ("And Given A custom view is created and selected") {
+			FDSCustomView.createNewView(key_nameView = "FrontendDataSet View");
+		}
 
-		// To-do CanCreateMultiple Autom. test
+		task ("When Make some changes to dataset display (filter, sorting, page size or visible columns if data display in table)") {
+			FDSFilters.editFilters(key_filter = "Color", key_disableFilters = "Blue,Green,Yellow", key_enableFilters = "Red");
 
+			Click(
+				locator1 = "Icon#ANY",
+				key_text = "order-arrow-down");
+
+			Click(
+				locator1 = "Icon#ANY",
+				key_text = "order-arrow-down");
+
+			FDSCustomView.selectColumn(key_optionName = "Description");
+
+			Pagination.changePagination(itemsPerPage = "4 items");
+		}
+
+		task ("And Click Save as button, provide a name") {
+			FDSCustomView.createNewView(key_nameView = "FrontendDataSet View 2");
+		}
+
+		task ("Then A new custom view is created, and selected as current view") {
+			FDSCustomView.assertCustomView(key_nameCustomView = "FrontendDataSet View 2");
+
+			FDSCustomView.changeCustomView(key_optionName = "FrontendDataSet View");
+
+			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
+
+			FDSCustomView.viewColumn(key_field = "Description");
+
+			FDSCustomView.changeCustomView(key_optionName = "FrontendDataSet View 2");
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 25");
+
+			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Red");
+
+			FDSCustomView.viewNoColumn(key_field = "Description");
+
+			FDSCustomView.compareValue(key_index1 = "1", key_index2 = "2", key_column = "2");
+		}
 	}
-
 }

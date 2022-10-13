@@ -107,8 +107,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		try {
 			file = FileUtil.createTempFile();
 
-			downloadApp(
-				actionRequest, actionResponse, appPackageId, unlicensed, file);
+			downloadApp(actionRequest, appPackageId, unlicensed, file);
 
 			App app = _appService.updateApp(file);
 
@@ -279,8 +278,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		try {
 			file = FileUtil.createTempFile();
 
-			downloadApp(
-				actionRequest, actionResponse, appPackageId, unlicensed, file);
+			downloadApp(actionRequest, appPackageId, unlicensed, file);
 
 			App app = _appService.updateApp(file);
 
@@ -365,9 +363,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 					try {
 						file = FileUtil.createTempFile();
 
-						downloadApp(
-							actionRequest, actionResponse, appPackageId, false,
-							file);
+						downloadApp(actionRequest, appPackageId, false, file);
 
 						App app = _appService.updateApp(file);
 
@@ -431,8 +427,8 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	}
 
 	protected void downloadApp(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			long appPackageId, boolean unlicensed, File file)
+			PortletRequest portletRequest, long appPackageId,
+			boolean unlicensed, File file)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

@@ -29,15 +29,18 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddFolder {
+		property custom.properties = "feature.flag.LPS-156421=true";
 		property portal.acceptance = "true";
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "KB Folder 1");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+		KBFolder.gotoCP(
+			kbFolderName = "KB Folder 1",
+			pageTreePanel = "true");
 
-		KBArticle.viewDefaultCP();
+		KBArticle.viewDefaultCP(featureFlag = "true");
 	}
 
 	@description = "This test ensures that users can add folder via center pane button."
@@ -240,7 +243,9 @@ definition {
 
 		KBFolder.selectParentCP(kbFolderName = "KB Folder 2");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+		KBFolder.gotoCP(
+			highlight = "true",
+			kbFolderName = "KB Folder 2");
 
 		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
 	}

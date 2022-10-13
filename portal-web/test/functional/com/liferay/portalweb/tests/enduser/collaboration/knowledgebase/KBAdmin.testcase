@@ -31,6 +31,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddMultipleArticles {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
 		for (var kbCount : list "1,2,3") {
 			JSONKnowledgeBase.addkBArticle(
 				groupName = "Guest",
@@ -42,6 +44,7 @@ definition {
 			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 			KBArticle.viewCP(
+				highlight = "true",
 				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
 				kbArticleTitle = "Knowledge Base Article Title ${kbCount}");
 		}

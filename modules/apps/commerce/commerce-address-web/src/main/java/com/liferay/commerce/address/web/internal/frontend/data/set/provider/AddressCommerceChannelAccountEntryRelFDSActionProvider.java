@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceAddressFDSNames.ACCOUNT_ENTRY_BILLING_ADDRESSES,
 		"fds.data.provider.key=" + CommerceAddressFDSNames.ACCOUNT_ENTRY_SHIPPING_ADDRESSES

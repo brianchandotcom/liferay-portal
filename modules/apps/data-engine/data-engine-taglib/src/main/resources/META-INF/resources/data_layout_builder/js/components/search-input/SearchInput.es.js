@@ -47,6 +47,7 @@ const SearchInput = React.forwardRef(
 				key="searcgButton"
 				onClick={(_) => onSubmit(value)}
 				symbol="search"
+				title={Liferay.Language.get('search')}
 				{...restProps}
 			/>
 		);

@@ -50,6 +50,7 @@ const FieldsSidebarSettingsHeader: React.FC<IProps> = ({field}) => {
 				monospaced={false}
 				onClick={() => dispatch({type: EVENT_TYPES.SIDEBAR.FIELD.BLUR})}
 				symbol="angle-left"
+				title={Liferay.Language.get('back')}
 			/>
 
 			<Sidebar.Title title={label} />

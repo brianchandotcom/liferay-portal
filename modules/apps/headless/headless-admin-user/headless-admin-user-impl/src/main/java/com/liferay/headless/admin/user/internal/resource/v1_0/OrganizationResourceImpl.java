@@ -407,13 +407,16 @@ public class OrganizationResourceImpl
 	public Organization putOrganization(
 			String organizationId, Organization organization)
 		throws Exception {
-		ServiceContext serviceContext = _createServiceContext(organization);
-		serviceContext.setUserId(contextUser.getUserId());
+
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
 				_organizationResourceDTOConverter.getObject(organizationId);
 		long countryId = _getCountryId(organization);
 		Group group = serviceBuilderOrganization.getGroup();
+
+		ServiceContext serviceContext = _createServiceContext(organization);
+
+		serviceContext.setUserId(contextUser.getUserId());
 
 		return _organizationResourceDTOConverter.toDTO(
 			_getDTOConverterContext(organizationId),
@@ -426,8 +429,7 @@ public class OrganizationResourceImpl
 				organization.getComment(), false, null, group.isSite(),
 				_getAddresses(organization), _getEmailAddresses(organization),
 				_getOrgLabors(organization), _getPhones(organization),
-				_getWebsites(organization),
-				serviceContext));
+				_getWebsites(organization), serviceContext));
 	}
 
 	@Override

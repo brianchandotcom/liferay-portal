@@ -55,6 +55,8 @@ definition {
 
 		Role.openRolesAdmin();
 
+		// The define permission via json macro not ablt to change the permission scope
+
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
 			permissionDefinitionValue = "Access in Site and Asset Library Administration",
@@ -378,6 +380,8 @@ definition {
 
 		Role.openRolesAdmin();
 
+		// The define permission via json macro not ablt to change the permission scope
+
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
@@ -565,6 +569,8 @@ definition {
 		Role.add(roleTitle = "Roles Siterole Name");
 
 		Role.openRolesAdmin();
+
+		// The define permission via json macro not ablt to change the permission scope
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
@@ -1108,6 +1114,8 @@ definition {
 
 		Role.openRolesAdmin();
 
+		// This macro can not be replaced by the one define permission via json, since no additional role automatically added when using json api
+
 		Role.definePermissionCP(
 			permissionDefinitionKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "Access in Control Panel",
@@ -1141,12 +1149,6 @@ definition {
 			roleTitle = "Site Member");
 
 		Role.openRolesAdmin();
-
-		RoleNavigator.gotoDefineRolePermissions(
-			permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA",
-			portlet = "Documents and Media",
-			roleTitle = "Site Member",
-			roleType = "Site");
 
 		AssertTextNotPresent(value1 = "action.ADD_REPOSITORY");
 

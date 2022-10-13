@@ -118,6 +118,8 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		// The define permission via json macro not ablt to change the permission scope
+
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
@@ -130,6 +132,8 @@ definition {
 			siteNameScope = "${siteName}");
 
 		Role.openRolesAdmin();
+
+		// The define permission via json macro not ablt to change the permission scope
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
@@ -194,13 +198,15 @@ definition {
 			roleKey = "Permission Scope",
 			roleTitle = "Permission Scope");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library",
+			roleTitle = "Permission Scope",
+			roleType = "regular");
+
 		Role.openRolesAdmin();
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			roleTitle = "Permission Scope",
-			siteNameScope = "${siteName}");
+		RoleNavigator.gotoDefineRolePermissions(roleTitle = "Permission Scope");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",

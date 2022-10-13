@@ -17,6 +17,7 @@ package com.liferay.hello.velocity.web.internal.portlet;
 import com.liferay.hello.velocity.web.internal.constants.HelloVelocityPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -28,10 +29,16 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.VelocityPortlet;
 
 import java.io.IOException;
+import java.io.Writer;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,6 +82,59 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 		prepareTemplate(template, portletRequest, portletResponse);
 
 		mergeTemplate(template, portletResponse);
+	}
+
+	protected void mergeTemplate(
+			Template template, PortletResponse portletResponse)
+		throws Exception {
+
+		Writer writer = null;
+
+		if (portletResponse instanceof MimeResponse) {
+			MimeResponse mimeResponse = (MimeResponse)portletResponse;
+
+			writer = mimeResponse.getWriter();
+		}
+		else {
+			writer = new UnsyncStringWriter();
+		}
+
+		template.processTemplate(writer);
+	}
+
+	protected void prepareTemplate(
+		Template template, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
+		template.put("portletConfig", getPortletConfig());
+		template.put("portletContext", getPortletContext());
+		template.put("preferences", portletRequest.getPreferences());
+		template.put(
+			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
+
+		template.put("portletRequest", portletRequest);
+
+		if (portletRequest instanceof ActionRequest) {
+			template.put("actionRequest", portletRequest);
+		}
+		else if (portletRequest instanceof RenderRequest) {
+			template.put("renderRequest", portletRequest);
+		}
+		else {
+			template.put("resourceRequest", portletRequest);
+		}
+
+		template.put("portletResponse", portletResponse);
+
+		if (portletResponse instanceof ActionResponse) {
+			template.put("actionResponse", portletResponse);
+		}
+		else if (portletRequest instanceof RenderResponse) {
+			template.put("renderResponse", portletResponse);
+		}
+		else {
+			template.put("resourceResponse", portletResponse);
+		}
 	}
 
 	private TemplateResource _getTemplateResource(String templateId) {

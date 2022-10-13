@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.settings.rest.internal.dto.converter;
+package com.liferay.analytics.settings.rest.internal.dto.v1_0.converter;
 
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSource;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;

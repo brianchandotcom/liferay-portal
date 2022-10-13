@@ -17,7 +17,7 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
-import com.liferay.analytics.settings.rest.internal.dto.converter.ChannelDTOConverter;
+import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverter;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;

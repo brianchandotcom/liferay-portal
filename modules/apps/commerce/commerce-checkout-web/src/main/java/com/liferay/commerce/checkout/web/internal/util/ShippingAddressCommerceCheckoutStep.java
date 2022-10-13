@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"commerce.checkout.step.name=" + ShippingAddressCommerceCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=10"

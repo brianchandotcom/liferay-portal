@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
-	service = CommerceCheckoutStepServicesTracker.class
+	immediate = true, service = CommerceCheckoutStepServicesTracker.class
 )
 public class CommerceCheckoutStepServicesTrackerImpl
 	implements CommerceCheckoutStepServicesTracker {

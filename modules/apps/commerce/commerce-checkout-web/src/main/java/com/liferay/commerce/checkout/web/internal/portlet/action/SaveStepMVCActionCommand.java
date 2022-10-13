@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CHECKOUT,
 		"mvc.command.name=/commerce_checkout/save_step"

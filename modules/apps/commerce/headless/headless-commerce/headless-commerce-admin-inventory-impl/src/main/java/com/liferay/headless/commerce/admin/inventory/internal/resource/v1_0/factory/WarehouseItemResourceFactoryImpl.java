@@ -62,7 +62,6 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false,
 	property = "resource.locator.key=/headless-commerce-admin-inventory/v1.0/WarehouseItem",
 	service = WarehouseItemResource.Factory.class
 )

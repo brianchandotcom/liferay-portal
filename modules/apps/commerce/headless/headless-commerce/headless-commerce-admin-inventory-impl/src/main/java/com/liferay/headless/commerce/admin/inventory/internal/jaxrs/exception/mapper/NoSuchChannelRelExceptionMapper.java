@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory)",
 		"osgi.jaxrs.extension=true",

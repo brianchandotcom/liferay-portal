@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/replenishment-item.properties",
 	scope = ServiceScope.PROTOTYPE, service = ReplenishmentItemResource.class
 )

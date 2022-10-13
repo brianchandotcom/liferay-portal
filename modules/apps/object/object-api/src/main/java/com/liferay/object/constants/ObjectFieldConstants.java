@@ -29,6 +29,8 @@ public class ObjectFieldConstants {
 
 	public static final String BUSINESS_TYPE_DECIMAL = "Decimal";
 
+	public static final String BUSINESS_TYPE_FORMULA = "Formula";
+
 	public static final String BUSINESS_TYPE_INTEGER = "Integer";
 
 	public static final String BUSINESS_TYPE_LARGE_FILE = "LargeFile";

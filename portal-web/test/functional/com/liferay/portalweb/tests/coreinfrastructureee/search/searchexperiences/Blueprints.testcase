@@ -3939,6 +3939,31 @@ definition {
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "&quot;es_ES&quot;: &quot;Descripción en Español&quot;");
 
+		var elementSourceJson = '''
+{
+	"description_i18n": {
+		"en_US": "Description in English",
+		"es_ES": "Descripción en Español",
+		"de_DE": "Beschreibung auf Deutsch"
+	},
+	"elementDefinition": {
+		"category": "custom",
+		"configuration": {},
+		"icon": "custom-field"
+	},
+	"title_i18n": {
+		"en_US": "Title in English",
+		"es_ES": "Título en Español",
+		"de_DE": "Titel auf Deutsch"
+	},
+	"type": 0
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
 		PortletEntry.save();
 
 		Blueprints.openBlueprintsAdmin(locale = "es");
@@ -3956,6 +3981,22 @@ definition {
 			entryTitle = "Título en Español",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Descripción en Español");
+
+		Blueprints.openBlueprintsAdmin(locale = "de");
+
+		Navigator.gotoNavItem(navItem = "Elemente");
+
+		AssertTextEquals(
+			cellPosition = "2",
+			entryTitle = "Titel auf Deutsch",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Titel auf Deutsch");
+
+		AssertTextEquals(
+			cellPosition = "3",
+			entryTitle = "Titel auf Deutsch",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Beschreibung auf Deutsch");
 
 		Blueprints.openBlueprintsAdmin(locale = "en");
 

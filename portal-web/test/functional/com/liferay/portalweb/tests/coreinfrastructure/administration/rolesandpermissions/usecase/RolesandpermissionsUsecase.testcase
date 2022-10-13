@@ -55,7 +55,7 @@ definition {
 
 		Role.openRolesAdmin();
 
-		// The define permission via json macro not ablt to change the permission scope
+		// The define permission via json macro is not able to change the permission scope
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
@@ -380,7 +380,7 @@ definition {
 
 		Role.openRolesAdmin();
 
-		// The define permission via json macro not ablt to change the permission scope
+		// The define permission via json macro is not able to change the permission scope
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
@@ -570,7 +570,7 @@ definition {
 
 		Role.openRolesAdmin();
 
-		// The define permission via json macro not ablt to change the permission scope
+		// The define permission via json macro is not able to change the permission scope
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",

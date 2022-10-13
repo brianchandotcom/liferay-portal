@@ -40,7 +40,7 @@ definition {
 				userLastName = "Test with a long lastname in the Liferay Profile Widget");
 		}
 
-		task ("When go to the My Prfile page and switch the Mobile Simulation") {
+		task ("When go to the My Profile page and switch to the Mobile Simulation") {
 			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
 			MobileDevice.previewPG(deviceType = "smartphone");
@@ -53,7 +53,7 @@ definition {
 				value1 = "normal");
 		}
 
-		task ("When refresh the page and switch the Tablet Simulation") {
+		task ("When refresh the page and switch to the Tablet Simulation") {
 			Refresh();
 
 			MobileDevice.previewPG(deviceType = "tablet");

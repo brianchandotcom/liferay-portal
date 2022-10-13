@@ -146,28 +146,6 @@ public class VelocityPortlet extends GenericPortlet {
 		}
 	}
 
-	protected void mergeTemplate(
-			String templateId, PortletRequest portletRequest,
-			PortletResponse portletResponse)
-		throws Exception {
-
-		TemplateResource templateResource =
-			TemplateResourceLoaderUtil.getTemplateResource(
-				TemplateConstants.LANG_TYPE_VM, templateId);
-
-		if (templateResource == null) {
-			throw new Exception(
-				"Unable to load template resource " + templateId);
-		}
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource, false);
-
-		prepareTemplate(template, portletRequest, portletResponse);
-
-		mergeTemplate(template, portletResponse);
-	}
-
 	protected void mergeTemplate(Template template, PortletResponse portletResponse)
 		throws Exception {
 

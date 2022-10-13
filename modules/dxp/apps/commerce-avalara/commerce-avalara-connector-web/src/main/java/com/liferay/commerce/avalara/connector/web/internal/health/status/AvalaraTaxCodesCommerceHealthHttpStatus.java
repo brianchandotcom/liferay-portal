@@ -76,11 +76,8 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 
 	@Override
 	public String getDescription(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return _language.get(
-			resourceBundle,
+			locale,
 			"avalara.tax.codes.commerce.health.status.description");
 	}
 
@@ -92,11 +89,8 @@ public class AvalaraTaxCodesCommerceHealthHttpStatus
 
 	@Override
 	public String getName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return _language.get(
-			resourceBundle,
+			locale,
 			CommerceAvalaraConstants.
 				AVALARA_TAX_CODES_COMMERCE_HEALTH_STATUS_KEY);
 	}

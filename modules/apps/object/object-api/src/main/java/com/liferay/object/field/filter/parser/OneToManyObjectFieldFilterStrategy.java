@@ -117,7 +117,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		return new OneToManyAutocompleteFDSFilter(
 			parse(), restContextPath, titleObjectField.getLabel(locale),
-			_objectField.getDBColumnName(), titleObjectField.getName());
+			_objectField.getName(), titleObjectField.getName());
 	}
 
 	@Override

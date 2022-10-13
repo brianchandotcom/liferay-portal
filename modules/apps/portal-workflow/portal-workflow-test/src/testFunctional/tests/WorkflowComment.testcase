@@ -131,7 +131,7 @@ definition {
 			workflowAssetTitle = "Page Comment Comment",
 			workflowAssetType = "Comment",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Review");
+			workflowTask = "Single Approver");
 
 		PageComment.tearDownPG(pageName = "Page Comments Page");
 

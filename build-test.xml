@@ -7040,7 +7040,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<property name="database.docker.database.options" value="" />
 			<property name="database.docker.run.options" value="" />
 
-			<start-docker-container image="${database.docker.image}" name="${database.host}" options="${database.docker.database.options}">\
+			<get-testcase-property property.name="database.lowercase.enabled" />
+			<if>
+				<and>
+					<equals arg1="${database.lowercase.enabled}" arg2="true" />
+					<equals arg1="${database.type}" arg2="mysql" />
+				</and>
+				<then>
+					<var name="database.docker.database.options.new" value="${database.docker.database.options} --lower_case_table_names=1" />
+				</then>
+				<else>
+					<var name="database.docker.database.options.new" value="${database.docker.database.options}" />
+				</else>
+			</if>
+
+			<start-docker-container image="${database.docker.image}" name="${database.host}" options="${database.docker.database.options.new}">\
 				${database.docker.run.options} \
 			</start-docker-container>
 

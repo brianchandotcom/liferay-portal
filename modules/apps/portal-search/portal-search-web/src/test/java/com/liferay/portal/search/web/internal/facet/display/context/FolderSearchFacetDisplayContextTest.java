@@ -132,7 +132,8 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			title, folderSearchFacetTermDisplayContext.getDisplayName());
 		Assert.assertEquals(
-			folderId, folderSearchFacetTermDisplayContext.getFolderId());
+			String.valueOf(folderId),
+			folderSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertTrue(folderSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			folderSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -193,7 +194,8 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			title, folderSearchFacetTermDisplayContext.getDisplayName());
 		Assert.assertEquals(
-			folderId, folderSearchFacetTermDisplayContext.getFolderId());
+			String.valueOf(folderId),
+			folderSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertFalse(folderSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			folderSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -238,7 +240,8 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			title, folderSearchFacetTermDisplayContext.getDisplayName());
 		Assert.assertEquals(
-			folderId, folderSearchFacetTermDisplayContext.getFolderId());
+			String.valueOf(folderId),
+			folderSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertTrue(folderSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			folderSearchFacetTermDisplayContext.isFrequencyVisible());

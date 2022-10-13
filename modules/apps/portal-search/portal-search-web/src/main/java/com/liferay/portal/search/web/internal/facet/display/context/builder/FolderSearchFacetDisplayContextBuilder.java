@@ -227,7 +227,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 				new FolderSearchFacetTermDisplayContext();
 
 		folderSearchFacetTermDisplayContext.setDisplayName(displayName);
-		folderSearchFacetTermDisplayContext.setFolderId(folderId);
+		folderSearchFacetTermDisplayContext.setFilterValue(
+			String.valueOf(folderId));
 		folderSearchFacetTermDisplayContext.setFrequency(frequency);
 		folderSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);

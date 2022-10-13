@@ -23,19 +23,10 @@ public class FolderSearchFacetTermDisplayContext extends BucketDisplayContext {
 		return _displayName;
 	}
 
-	public long getFolderId() {
-		return _folderId;
-	}
-
 	public void setDisplayName(String displayName) {
 		_displayName = displayName;
 	}
 
-	public void setFolderId(long folderId) {
-		_folderId = folderId;
-	}
-
 	private String _displayName;
-	private long _folderId;
 
 }

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_USERS,
 	service = FDSView.class
 )

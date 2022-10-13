@@ -214,6 +214,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163440. The page creator could define the Flex Column and Flex Wrap of a Container."
+	@priority = "5"
+	test ConfigureFlexColumnAndFlexWrapContainerStyles {
+		task ("Given a page creator has a Container with fragments on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				navTab = "Fragments");
+
+			var i = "1";
+
+			while ("${i}" != "4") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Button",
+					navTab = "Fragments",
+					targetElementName = "Button");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("When the page creator changes the Content Display to Flex Column and set up a Max Height smaller than nested Buttons' height") {
+			PageEditor.editLayoutContainer(
+				contentDisplay = "Flex Column",
+				maxHeight = "50",
+				panel = "General");
+		}
+
+		task ("Then the nested Buttons overflow the Container") {
+			var totalHeight = Css.getElementPropertyValue(
+				element = "//div[contains(@class,'page-editor__container')]",
+				property = "scrollHeight");
+			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
+
+			TestUtils.isGreaterThan(
+				actual = "${totalHeight}",
+				expected = "${containerHeight}");
+		}
+
+		task ("When the page creator changes the Flex Wrap to wrap") {
+			PageEditor.editLayoutContainer(
+				flexWrap = "Wrap",
+				panel = "General");
+		}
+
+		task ("Then the nested Buttons are wrapped in a single row") {
+			PageEditor.viewContainerStyle(
+				flexWrap = "wrap",
+				position = "1");
+
+			var totalHeight = Css.getElementPropertyValue(
+				element = "//div[contains(@class,'page-editor__container')]",
+				property = "scrollHeight");
+			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
+
+			TestUtils.assertEquals(
+				actual = "${totalHeight}",
+				expected = "${containerHeight}");
+		}
+	}
+
 	@description = "This is a test for LPS-120693. Configure the Flex Column and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexColumnAndFluidContainerStyles {

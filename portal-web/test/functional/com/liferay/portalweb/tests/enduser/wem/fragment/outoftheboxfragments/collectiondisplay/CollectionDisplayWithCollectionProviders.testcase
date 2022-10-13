@@ -448,6 +448,130 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163440. The page creator could define Flex Row, Flex Wrap, Align Items and Justify Content of a Collection Display."
+	@priority = "5"
+	test ConfigureFlexRowCollectionDisplayStyles {
+		task ("Given a page creator has an empty Collection Display on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page creator chooses the Flex Row style display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets",
+				styleDisplay = "Flex Row");
+		}
+
+		task ("Then the page creator sees the empty message shown in Collection Display") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Collection Display",
+				messageInfo = "There are no items to display.");
+		}
+
+		task ("When the page creator adds the Button and Paragraph fragments into Collection Display with collection items") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+
+			Refresh();
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title 3",
+				fragmentName = "Button");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Button");
+		}
+
+		task ("Then the page creator sees the Button and Paragraph fragments displayed as line inside Collection Display") {
+			AssertElementNotPresent(
+				key_flexWrap = "wrap",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_FLEX_WRAP");
+
+			AssertElementNotPresent(
+				key_alignItems = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_ALIGN_ITEMS");
+
+			AssertElementNotPresent(
+				key_justifyContent = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_JUSTIFY_CONTENT");
+
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Flex Wrap",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "No Wrap");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Align Items",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Stretch");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Justify Content",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Start");
+		}
+
+		task ("When the page creator changes the Justify Content to Center") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				justifyContent = "Center",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Then the page creator sees the Button and Paragraph fragments aligned horizontally with center of Collection Display") {
+			AssertElementNotPresent(
+				key_flexWrap = "wrap",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_FLEX_WRAP");
+
+			AssertElementNotPresent(
+				key_alignItems = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_ALIGN_ITEMS");
+
+			PageEditor.viewCollectionDisplayStyle(
+				justifyContent = "center",
+				position = "1");
+		}
+
+		task ("When the page creator changes the Flex Wrap to Wrap") {
+			PageEditor.editCollectionDisplay(
+				flexWrap = "Wrap",
+				fragmentName = "Collection Display",
+				selectedName = "Highest Rated Assets");
+		}
+
+		task ("Then the page creator sees the Button and Paragraph fragments displayed as list inside Collection Display") {
+			AssertElementNotPresent(
+				key_alignItems = "",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_ALIGN_ITEMS");
+
+			PageEditor.viewCollectionDisplayStyle(
+				flexWrap = "wrap",
+				justifyContent = "center",
+				position = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-126009 and LPS-147390. The user is able to filter web contents in Collection Display using Tag."
 	@priority = "5"
 	test FilterWebContentByTag {

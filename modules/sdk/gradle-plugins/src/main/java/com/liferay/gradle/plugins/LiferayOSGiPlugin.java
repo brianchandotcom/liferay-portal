@@ -847,9 +847,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 										"project.buildpath",
 										buildDirs.getAsPath());
 
-									if (logger.isDebugEnabled()) {
-										logger.debug(
-											"Builder Classpath: {}",
+									if (logger.isDebugEnabled() ||
+										Boolean.getBoolean(
+											"build.bnd.print.builder." +
+												"classpath")) {
+
+										logger.lifecycle(
+											"BND Builder Classpath {}: {}",
+											project.getName(),
 											buildDirs.getAsPath());
 									}
 
@@ -879,7 +884,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 									if (logger.isDebugEnabled()) {
 										logger.debug(
-											"Builder Sourcepath: {}",
+											"BND Builder Sourcepath {}: {}",
+											project.getName(),
 											builder.getSourcePath());
 									}
 
@@ -920,8 +926,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 									if (logger.isDebugEnabled()) {
 										logger.debug(
-											"Builder Properties: {}",
-											properties);
+											"BND Builder Properties {}: {}",
+											project.getName(), properties);
 									}
 
 									aQute.bnd.osgi.Jar bndJar = builder.build();
@@ -1477,6 +1483,21 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							@Override
 							public void execute(Task task) {
 								bundleTaskConvention.buildBundle();
+
+								Logger logger = task.getLogger();
+
+								if (logger.isDebugEnabled() ||
+									Boolean.getBoolean(
+										"build.bnd.print.builder.classpath")) {
+
+									FileCollection builderClasspath =
+										bundleTaskConvention.getClasspath();
+
+									logger.lifecycle(
+										"BND Builder Classpath {}: {}",
+										project.getName(),
+										builderClasspath.getAsPath());
+								}
 							}
 
 						});

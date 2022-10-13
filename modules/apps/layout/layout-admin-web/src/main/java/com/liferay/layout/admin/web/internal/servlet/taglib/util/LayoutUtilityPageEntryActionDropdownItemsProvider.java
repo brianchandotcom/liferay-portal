@@ -92,6 +92,8 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						_getPermissionsLayoutUtilityPageEntryActionUnsafeConsumer()
+					).add(
+						_getViewLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -269,6 +271,20 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getViewLayoutUtilityPageEntryActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				HttpComponentsUtil.setParameter(
+					PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
+					"p_l_back_url", _themeDisplay.getURLCurrent()));
+			dropdownItem.setIcon("shortcut");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "preview"));
 		};
 	}
 

@@ -87,7 +87,10 @@ export function LengthField({field, onEnter, onValueSelect, value}) {
 				field={field}
 				onEnter={onEnter}
 				onValueSelect={(name, value) => {
-					setShowRestoreButton(true);
+					if (RESTORABLE_FIELDS.has(field.name)) {
+						setShowRestoreButton(true);
+					}
+
 					onValueSelect(name, value);
 				}}
 				showLabel={!field.icon}

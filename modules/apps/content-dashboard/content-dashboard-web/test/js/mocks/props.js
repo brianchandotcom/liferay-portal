@@ -214,6 +214,7 @@ export const mockedProps = {
 		},
 	],
 	modifiedDate: '2020-07-27T10:56:56.027',
+	singlePageApplicationEnabled: false,
 	specificFields: {
 		'display-date': {
 			title: 'Display Date',

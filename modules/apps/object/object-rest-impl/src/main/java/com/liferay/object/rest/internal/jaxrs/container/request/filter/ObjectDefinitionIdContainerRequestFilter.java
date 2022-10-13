@@ -14,12 +14,15 @@
 
 package com.liferay.object.rest.internal.jaxrs.container.request.filter;
 
+import com.liferay.object.model.ObjectDefinition;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -33,13 +36,6 @@ import javax.ws.rs.ext.Provider;
 public class ObjectDefinitionIdContainerRequestFilter
 	implements ContainerRequestFilter {
 
-	public ObjectDefinitionIdContainerRequestFilter(
-		Long objectDefinitionId, String objectDefinitionName) {
-
-		_objectDefinitionId = objectDefinitionId;
-		_objectDefinitionName = objectDefinitionName;
-	}
-
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext) {
 		UriInfo uriInfo = containerRequestContext.getUriInfo();
@@ -50,7 +46,8 @@ public class ObjectDefinitionIdContainerRequestFilter
 			uriInfo.getQueryParameters();
 
 		queryParameters.add(
-			"objectDefinitionId", String.valueOf(_objectDefinitionId));
+			"objectDefinitionId",
+			String.valueOf(_objectDefinition.getObjectDefinitionId()));
 
 		for (Map.Entry<String, List<String>> entry :
 				queryParameters.entrySet()) {
@@ -58,12 +55,13 @@ public class ObjectDefinitionIdContainerRequestFilter
 			uriBuilder.queryParam(entry.getKey(), entry.getValue());
 		}
 
-		uriBuilder.queryParam("taskItemDelegateName", _objectDefinitionName);
+		uriBuilder.queryParam(
+			"taskItemDelegateName", _objectDefinition.createOSGIJAXRsName());
 
 		containerRequestContext.setRequestUri(uriBuilder.build());
 	}
 
-	private final Long _objectDefinitionId;
-	private final String _objectDefinitionName;
+	@Context
+	private ObjectDefinition _objectDefinition;
 
 }

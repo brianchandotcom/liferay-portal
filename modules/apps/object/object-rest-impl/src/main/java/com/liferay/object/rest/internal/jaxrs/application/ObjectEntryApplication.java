@@ -19,12 +19,10 @@ import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,26 +39,11 @@ public class ObjectEntryApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> objects = new HashSet<>();
 
-		objects.add(
-			new ObjectDefinitionIdContainerRequestFilter(
-				_objectDefinitionId, _objectDefinitionName));
-		objects.add(
-			new OpenAPIResourceImpl(
-				_objectDefinitionId, _objectEntryOpenAPIResource));
+		objects.add(new ObjectDefinitionIdContainerRequestFilter());
+		objects.add(new OpenAPIResourceImpl(_objectEntryOpenAPIResource));
 
 		return objects;
 	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_objectDefinitionName = (String)properties.get(
-			"liferay.object.definition.name");
-		_objectDefinitionId = (Long)properties.get(
-			"liferay.object.definition.id");
-	}
-
-	private Long _objectDefinitionId;
-	private String _objectDefinitionName;
 
 	@Reference
 	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;

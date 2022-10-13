@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -35,10 +36,8 @@ import javax.ws.rs.core.UriInfo;
 public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(
-		long objectDefinitionId,
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource) {
 
-		_objectDefinitionId = objectDefinitionId;
 		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
 	}
 
@@ -49,10 +48,12 @@ public class OpenAPIResourceImpl {
 		throws Exception {
 
 		return _objectEntryOpenAPIResource.getOpenAPI(
-			_objectDefinitionId, type, _uriInfo);
+			_objectDefinition, type, _uriInfo);
 	}
 
-	private final long _objectDefinitionId;
+	@Context
+	private ObjectDefinition _objectDefinition;
+
 	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Context

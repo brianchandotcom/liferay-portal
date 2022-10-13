@@ -292,6 +292,16 @@ public class ObjectDefinitionWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public String createOSGIJAXRsName() {
+		return model.createOSGIJAXRsName();
+	}
+
+	@Override
+	public String createOSGIJAXRsName(String className) {
+		return model.createOSGIJAXRsName(className);
+	}
+
 	/**
 	 * Returns the account entry restricted of this object definition.
 	 *

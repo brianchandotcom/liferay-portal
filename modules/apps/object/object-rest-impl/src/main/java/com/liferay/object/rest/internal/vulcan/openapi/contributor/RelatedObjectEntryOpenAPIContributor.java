@@ -263,7 +263,7 @@ public class RelatedObjectEntryOpenAPIContributor
 		throws Exception {
 
 		Response response = _objectEntryOpenAPIResource.getOpenAPI(
-			objectDefinition.getObjectDefinitionId(), "json", null);
+			objectDefinition, "json", null);
 
 		return (OpenAPI)response.getEntity();
 	}

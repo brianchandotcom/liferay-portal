@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommerceSubscriptionFDSNames.SUBSCRIPTION_ORDER_ITEMS,
 	service = FDSView.class
 )

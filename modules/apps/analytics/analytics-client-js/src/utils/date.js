@@ -43,14 +43,3 @@ export function getTimezoneOffsetHour(date = new Date()) {
 
 	return `${hourFormatted}:00`;
 }
-
-const unixSecond = 1000;
-const unixMinute = unixSecond * 60;
-const unixHour = unixMinute * 60;
-const unixDay = unixHour * 24;
-
-export function isExpired(unixTime, days = 7) {
-	const curUnixTime = Date.now();
-
-	return curUnixTime - unixTime >= days * unixDay;
-}

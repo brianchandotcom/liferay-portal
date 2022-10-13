@@ -15,7 +15,6 @@
 import {
 	convertUTCDateToLocalDate,
 	getTimezoneOffsetHour,
-	isExpired,
 } from '../../src/utils/date';
 
 describe('convertUTCDateToLocalDate()', () => {
@@ -34,30 +33,4 @@ describe('getTimezoneOffsetHour()', () => {
 
 		expect(getTimezoneOffsetHour(date)).toBe('+00:00');
 	});
-});
-
-describe('isExpired()', () => {
-	let dateNowSpy;
-
-	beforeAll(() => {
-		dateNowSpy = jest
-			.spyOn(Date, 'now')
-			.mockImplementation(() => 1641801600000); // Jan 10th 2022 PDT
-	});
-
-	afterAll(() => {
-		dateNowSpy.mockRestore();
-	});
-
-	it.each`
-		days  | unixTime         | result
-		${7}  | ${1641024000000} | ${true}
-		${10} | ${1641024000000} | ${false}
-		${11} | ${1641024000000} | ${false}
-	`(
-		'returns $result if the current date is $days days from $unixTime',
-		({days, result, unixTime}) => {
-			expect(isExpired(unixTime, days)).toEqual(result);
-		}
-	);
 });

@@ -17,6 +17,7 @@ package com.liferay.account.service.impl;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryServiceBaseImpl;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -61,10 +63,14 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	public AccountEntry activateAccountEntry(long accountEntryId)
 		throws PortalException {
 
-		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.UPDATE);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		return accountEntryLocalService.activateAccountEntry(accountEntryId);
+		_accountEntryModelResourcePermission.check(
+			permissionChecker, accountEntryId, ActionKeys.UPDATE);
+
+		return _withServiceContext(
+			() -> accountEntryLocalService.activateAccountEntry(accountEntryId),
+			permissionChecker.getUserId());
 	}
 
 	@Override
@@ -132,10 +138,15 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	public AccountEntry deactivateAccountEntry(long accountEntryId)
 		throws PortalException {
 
-		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.DELETE);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		return accountEntryLocalService.deactivateAccountEntry(accountEntryId);
+		_accountEntryModelResourcePermission.check(
+			permissionChecker, accountEntryId, ActionKeys.DELETE);
+
+		return _withServiceContext(
+			() -> accountEntryLocalService.deactivateAccountEntry(
+				accountEntryId),
+			permissionChecker.getUserId());
 	}
 
 	@Override
@@ -306,6 +317,25 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 		}
 
 		return null;
+	}
+
+	private AccountEntry _withServiceContext(
+			UnsafeSupplier<AccountEntry, PortalException> unsafeRunnable,
+			long userId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUserId(userId);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			return unsafeRunnable.get();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Reference(

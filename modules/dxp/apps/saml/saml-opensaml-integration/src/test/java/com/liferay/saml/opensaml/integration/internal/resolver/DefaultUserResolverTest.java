@@ -42,7 +42,6 @@ import com.liferay.saml.opensaml.integration.field.expression.resolver.UserField
 import com.liferay.saml.opensaml.integration.field.expression.resolver.registry.UserFieldExpressionResolverRegistry;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.field.expression.handler.DefaultUserFieldExpressionHandler;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.processor.factory.UserProcessorFactoryImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
@@ -128,8 +127,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_companyLocalService",
 			_mockCompanyLocalService(_company));
-		ReflectionTestUtil.setFieldValue(
-			_defaultUserResolver, "_metadataManager", _mockMetadataManager());
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_samlPeerBindingLocalService",
 			_mockSamlPeerBindingLocalService());
@@ -671,18 +668,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());
-	}
-
-	private MetadataManager _mockMetadataManager() {
-		MetadataManager metadataManager = Mockito.mock(MetadataManager.class);
-
-		Mockito.when(
-			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
-		).thenReturn(
-			_ATTRIBUTE_MAPPINGS
-		);
-
-		return metadataManager;
 	}
 
 	private SamlPeerBindingLocalService _mockSamlPeerBindingLocalService() {

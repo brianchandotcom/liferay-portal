@@ -1388,6 +1388,86 @@ definition {
 		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 	}
 
+	@description = "LPS-163660 - Verify that a label is displayed on the creation of a Relationship Tab, to differentiate parent (left side) information from child (right side) information"
+	@priority = "4"
+	test CanSeeLabelWhenCreatingRelationshipTab {
+		task ("Create an Object and add an attachment field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object LPS163660",
+				objectName = "CustomObjectLPS163660",
+				pluralLabelName = "Custom Objects LPS163660");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObjectLPS163660");
+		}
+
+		task ("Go to the Objects Admin page and select the created definition") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163660");
+		}
+
+		task ("Add a many to many relationship withself") {
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.addObjectRelationshipViaUI(
+				label = "Relationship",
+				object = "Custom Object LPS163660",
+				type = "Many to Many");
+		}
+
+		task ("Add a layout and set it as Default") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObjectLPS163660");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163660");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+		}
+
+		task ("Create a tab field") {
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+		}
+
+		task ("Create a relationship tab on Layout") {
+			LexiconEntry.gotoAddNoSelectFrame();
+
+			Click(
+				key_type = "Relationships",
+				locator1 = "ObjectAdmin#TAB_TYPE");
+
+			Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
+		}
+
+		task ("Assert that a label indicating the Parent and Child relationships are displayed") {
+			AssertElementPresent(
+				key_relationType = "Parent",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS");
+
+			AssertElementPresent(
+				key_relationType = "Child",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS");
+		}
+	}
+
 	@description = "LPS-145393 - Verify it is possible to set a Title Field for a Native Object"
 	@priority = "4"
 	test CanSetTitleFieldForNativeObject {

@@ -179,6 +179,54 @@ definition {
 
 	}
 
+	@description = "COMMERCE-9427 CanSortAccountEntriesUsingReverseSortDirectionButton"
+	@priority = "3"
+	test CanSortAccountEntriesUsingReverseSortDirectionButton {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And 2 Business accounts are created") {
+			for (var account : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Commerce Account ${account}",
+					accountEntryType = "Business");
+			}
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		}
+
+		task ("And on the Account Management Entry List Commerce Account 1 is listed on the first line as the icon is up") {
+			AssertElementPresent(
+				key_icon = "order-list-up",
+				locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_REVERSE_SORT_DIRECTION_BUTTON_ICON");
+
+			AssertTextEquals(
+				key_rowNumber = "1",
+				locator1 = "WorkflowMetricsProcessListView#METRICS_OVERDUE_ITEMS_TABLE_ROW",
+				value1 = "Commerce Account 1");
+		}
+
+		task ("When Reverse Sort Direction button is clicked from the Account Management Widget it turns to upside down") {
+			Click(locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_REVERSE_SORT_DIRECTION_BUTTON");
+
+			AssertElementPresent(
+				key_icon = "order-list-down",
+				locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_REVERSE_SORT_DIRECTION_BUTTON_ICON");
+		}
+
+		task ("Then it can be verified that on the Account Management Entry List Commerce Account 2 is listed on the first line") {
+			AssertTextEquals(
+				key_rowNumber = "1",
+				locator1 = "WorkflowMetricsProcessListView#METRICS_OVERDUE_ITEMS_TABLE_ROW",
+				value1 = "Commerce Account 2");
+		}
+	}
+
 	@description = "COMMERCE-6378. In Account Details page, I want to be able to edit account by clicking 'Edit Account'(Account Image, Account Name, VAT Number, Email, Default Billing/Shipping address) and I want to be able to see changes I made in Account details page"
 	@ignore = "true"
 	@priority = "3"

@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -75,6 +78,12 @@ public class ExportImportObjectDefinitionTest {
 				"feature.flag.LPS-158672", "true"
 			).build());
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
 		ObjectDefinition objectDefinition = _importObjectDefinition();
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
@@ -96,6 +105,8 @@ public class ExportImportObjectDefinitionTest {
 
 		_objectDefinitionResource.deleteObjectDefinition(
 			objectDefinition.getId());
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(

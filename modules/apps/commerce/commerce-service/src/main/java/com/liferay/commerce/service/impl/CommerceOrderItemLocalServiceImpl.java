@@ -255,7 +255,7 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		validateParentCommerceOrderId(commerceOrderItem);
+		_validateParentCommerceOrderId(commerceOrderItem);
 
 		return _deleteCommerceOrderItem(commerceOrderItem);
 	}
@@ -689,7 +689,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		validateParentCommerceOrderId(commerceOrderItem);
+		_validateParentCommerceOrderId(commerceOrderItem);
 
 		List<CommerceOrderItem> childCommerceOrderItems =
 			commerceOrderItemPersistence.findByParentCommerceOrderItemId(
@@ -758,7 +758,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		validateParentCommerceOrderId(commerceOrderItem);
+		_validateParentCommerceOrderId(commerceOrderItem);
 
 		List<CommerceOrderItem> childCommerceOrderItems =
 			commerceOrderItemPersistence.findByParentCommerceOrderItemId(
@@ -946,7 +946,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		validateParentCommerceOrderId(commerceOrderItem);
+		_validateParentCommerceOrderId(commerceOrderItem);
 
 		boolean discountChanged = _isDiscountChanged(
 			discountAmount, commerceOrderItem);
@@ -1184,7 +1184,7 @@ public class CommerceOrderItemLocalServiceImpl
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
-	protected void validateParentCommerceOrderId(
+	private void _validateParentCommerceOrderId(
 			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 

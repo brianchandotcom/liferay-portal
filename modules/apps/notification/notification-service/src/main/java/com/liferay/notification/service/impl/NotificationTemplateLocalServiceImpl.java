@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -70,6 +71,10 @@ public class NotificationTemplateLocalServiceImpl
 			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
+
+		if (Validator.isNull(type)) {
+			type = NotificationConstants.TYPE_EMAIL;
+		}
 
 		_validate(
 			objectDefinitionId, from, name, type, attachmentObjectFieldIds);
@@ -246,10 +251,6 @@ public class NotificationTemplateLocalServiceImpl
 			long objectDefinitionId, String from, String name, String type,
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
-
-		if (type == null) {
-			type = NotificationConstants.TYPE_EMAIL;
-		}
 
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(type);

@@ -1,0 +1,57 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "upgrade.database.auto.run=false";
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Frontend Dataset sample portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				widgetName = "Frontend Data Set Sample");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				layoutTemplate = "1 Column");
+
+			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+		}
+	}
+
+	@description = "LPS-165727. Assert the details shown in the FDS table"
+	@priority = "4"
+	test HeadersCanBeLocalized {
+
+		// To-do HeadersCanBeLocalized Autom. test
+
+	}
+
+}

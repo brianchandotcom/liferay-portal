@@ -48,11 +48,12 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 	@Override
 	public ObjectField addCustomObjectField(
-			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, String dbType, String defaultValue,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, List<ObjectFieldSetting> objectFieldSettings)
+			String externalReferenceCode, long listTypeDefinitionId,
+			long objectDefinitionId, String businessType, String dbType,
+			String defaultValue, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -70,9 +71,10 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 		}
 
 		return objectFieldLocalService.addCustomObjectField(
-			getUserId(), listTypeDefinitionId, objectDefinitionId, businessType,
-			dbType, defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, objectFieldSettings);
+			externalReferenceCode, getUserId(), listTypeDefinitionId,
+			objectDefinitionId, businessType, dbType, defaultValue, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			state, objectFieldSettings);
 	}
 
 	@Override

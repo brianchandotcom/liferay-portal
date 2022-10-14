@@ -99,7 +99,8 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addCustomObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			String externalReferenceCode, long userId,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
@@ -118,10 +119,10 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		ObjectField objectField = _addObjectField(
-			userId, listTypeDefinitionId, objectDefinitionId, businessType,
-			name + StringPool.UNDERLINE, dbTableName, dbType, defaultValue,
-			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-			required, state, false);
+			externalReferenceCode, userId, listTypeDefinitionId,
+			objectDefinitionId, businessType, name + StringPool.UNDERLINE,
+			dbTableName, dbType, defaultValue, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state, false);
 
 		if (objectDefinition.isApproved() &&
 			!Objects.equals(
@@ -154,10 +155,10 @@ public class ObjectFieldLocalServiceImpl
 
 		if (existingObjectField == null) {
 			return objectFieldLocalService.addCustomObjectField(
-				userId, listTypeDefinitionId, objectDefinitionId, businessType,
-				dbType, defaultValue, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, name, required, state,
-				objectFieldSettings);
+				externalReferenceCode, userId, listTypeDefinitionId,
+				objectDefinitionId, businessType, dbType, defaultValue, indexed,
+				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+				state, objectFieldSettings);
 		}
 
 		return objectFieldLocalService.updateCustomObjectField(
@@ -211,7 +212,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return _addObjectField(
-			userId, 0, objectDefinitionId, businessType, dbColumnName,
+			null, userId, 0, objectDefinitionId, businessType, dbColumnName,
 			dbTableName, dbType, defaultValue, indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, state, true);
 	}
@@ -520,8 +521,9 @@ public class ObjectFieldLocalServiceImpl
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
 		_validateExternalReferenceCode(
-			newObjectField.getObjectFieldId(), newObjectField.getCompanyId(),
-			externalReferenceCode, newObjectField.getObjectDefinitionId());
+			newObjectField.getCompanyId(), externalReferenceCode,
+			newObjectField.getObjectDefinitionId(),
+			newObjectField.getObjectFieldId());
 
 		_validateDefaultValue(
 			businessType, defaultValue, listTypeDefinitionId, state);
@@ -630,7 +632,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private ObjectField _addObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			String externalReferenceCode, long userId,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, String defaultValue, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
@@ -640,6 +643,10 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		_validateExternalReferenceCode(
+			objectDefinition.getCompanyId(), externalReferenceCode,
+			objectDefinitionId, 0);
 
 		_validateDefaultValue(
 			businessType, defaultValue, listTypeDefinitionId, state);
@@ -651,6 +658,8 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField objectField = objectFieldPersistence.create(
 			counterLocalService.increment());
+
+		objectField.setExternalReferenceCode(externalReferenceCode);
 
 		_setBusinessTypeAndDBType(businessType, dbType, objectField);
 
@@ -927,8 +936,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-			long objectFieldId, long companyId, String externalReferenceCode,
-			long objectDefinitionId)
+			long companyId, String externalReferenceCode,
+			long objectDefinitionId, long objectFieldId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {

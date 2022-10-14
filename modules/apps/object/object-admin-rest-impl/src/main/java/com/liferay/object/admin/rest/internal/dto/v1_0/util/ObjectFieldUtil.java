@@ -53,6 +53,8 @@ public class ObjectFieldUtil {
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);
 
+		serviceBuilderObjectField.setExternalReferenceCode(
+			objectField.getExternalReferenceCode());
 		serviceBuilderObjectField.setListTypeDefinitionId(
 			GetterUtil.getLong(objectField.getListTypeDefinitionId()));
 		serviceBuilderObjectField.setBusinessType(

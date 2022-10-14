@@ -81,20 +81,12 @@ definition {
 		}
 
 		task ("Change the activation card status to Active") {
-			CustomerPortal.activeStatus(index = "1");
-		}
-
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.activeStatusViaDropdown(
+				dropdownItem = "Set to Active",
+				value = "001");
 		}
 
 		task ("Assert that the activation card link has changed") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testproduct}");
-
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#PRODUCT_CONSOLE",
 				value1 = "Go to Product Console");

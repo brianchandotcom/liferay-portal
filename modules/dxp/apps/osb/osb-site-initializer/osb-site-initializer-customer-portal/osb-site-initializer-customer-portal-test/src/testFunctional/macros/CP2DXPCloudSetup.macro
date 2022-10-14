@@ -6,7 +6,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscriptions");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "6");
+		CustomerPortal.viewCPObjectCustomInfo(index = "1");
 
 		Click(locator1 = "CP2DXPCloudSetup#HAS_DISASTER_DATA_CENTER_REGION");
 
@@ -170,6 +170,8 @@ definition {
 	}
 
 	macro viewDisasterRegionList {
+		Click(locator1 = "CP2DXPCloudSetup#SELECT_DISASTER_REGION");
+	
 		for (var region : list "${regionRow}") {
 			AssertElementPresent(
 				key_region = "${regionRow}",

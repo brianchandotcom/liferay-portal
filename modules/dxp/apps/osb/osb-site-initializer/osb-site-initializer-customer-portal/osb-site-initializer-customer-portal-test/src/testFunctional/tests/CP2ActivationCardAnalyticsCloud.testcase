@@ -43,6 +43,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150373 | Test Summary: Verify if the card has the following details Active: Activation form status"
+	@ignore = "true"
 	@priority = "5"
 	test DetailsFromActiveCard {
 		task ("Change the user role in the project") {

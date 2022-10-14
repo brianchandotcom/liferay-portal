@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>PROJECT_LOGO</td>
-	<td>//div[contains(@class, 'card-subscription')]//img[contains(@src, '${logo}')]</td>
+	<td>//*[contains(@class, 'subscription-card')]//img[contains(@src, '${logo}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,12 +107,12 @@
 </tr>
 <tr>
 	<td>CARD_DATE</td>
-	<td>//div[contains(@class, 'card-subscription')]//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
+	<td>//*[contains(@class, 'card-body')]//*[(text()='${date}')]//..//*[(text()='${status}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CARD_INSTANCE</td>
-	<td>xpath=(//div[contains(@class, 'card-subscription')]//..//p[contains(text(), '${title}')])[${key_index}]</td>
+	<td>xpath=(//*[contains(@class, 'subscription-card')]//..//p[contains(text(), '${title}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,12 +127,12 @@
 </tr>
 <tr>
 	<td>SUBSCRIPTION_NAVBAR</td>
-	<td>//div[@id='subscription-navbar']/button[@value='${value}']</td>
+	<td>//*[contains(@class, 'nav-segment')]//*[contains(text(), '${value}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTION_DROPDOWN</td>
-	<td>//*[contains(text(), '${key_dropdownLabel}')]/following-sibling::*[@class='dropdown']</td>
+	<td>//*[@data-testid= 'subscriptionDropDown']</td>
 	<td></td>
 </tr>
 <tr>
@@ -227,12 +227,12 @@
 </tr>
 <tr>
 	<td>SLA_CARD</td>
-	<td>//div[contains(text(), '${type}')]</td>
+	<td>//*[contains(text(), '${type}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_HEADING</td>
-	<td>///*[contains(@class, 'customer-portal-welcome-banner') and contains(.,'${key_title}')]</td>
+	<td>//*[contains(@class, 'customer-portal-welcome-banner') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -353,6 +353,16 @@
 <tr>
 	<td>SUPPORT_SEAT</td>
 	<td>//p[contains(text(), 'Support Seat')]//..//*[*[name()='svg'][contains(@class,'lexicon-icon-info-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_STATUS</td>
+	<td>//span[contains(text(), 'In Progress')]/ancestor::span/following-sibling::div//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ID_CONFIRMATION</td>
+	<td>//input[@id='basicInputText']</td>
 	<td></td>
 </tr>
 </tbody>

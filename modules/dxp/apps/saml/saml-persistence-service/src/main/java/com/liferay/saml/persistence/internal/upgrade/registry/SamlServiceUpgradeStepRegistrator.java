@@ -134,6 +134,15 @@ public class SamlServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.0", "3.0.1", new SamlSpIdpConnectionDataUpgradeProcess());
+
+		registry.register(
+			"3.0.1", "3.0.2",
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlPeerEntityId", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlNameIdFormat", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlPeerBinding", "samlNameIdValue", "VARCHAR(1024) null"));
 	}
 
 	@Reference

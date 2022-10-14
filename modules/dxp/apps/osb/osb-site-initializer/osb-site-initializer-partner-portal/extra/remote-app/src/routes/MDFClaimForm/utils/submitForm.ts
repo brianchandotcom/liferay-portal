@@ -86,4 +86,5 @@ export default async function submitForm(
 	}
 
 	// Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
+
 }

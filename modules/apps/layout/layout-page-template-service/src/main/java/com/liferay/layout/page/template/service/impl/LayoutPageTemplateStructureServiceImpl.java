@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,8 +64,5 @@ public class LayoutPageTemplateStructureServiceImpl
 
 	@Reference
 	private LayoutPermission _layoutPermission;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -26,6 +26,8 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -125,6 +127,18 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		}
 
 		if (secure) {
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				cpAttachmentFileEntry.getFileEntryId());
+
+			if ((dlFileEntry != null) &&
+				!cpAttachmentFileEntry.isCDNEnabled() &&
+				!_dlFileEntryModelResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), dlFileEntry,
+					ActionKeys.VIEW)) {
+
+				return getDefaultURL(cpAttachmentFileEntry.getGroupId());
+			}
+
 			String className = cpAttachmentFileEntry.getClassName();
 
 			if (className.equals(AssetCategory.class.getName())) {
@@ -215,6 +229,15 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

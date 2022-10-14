@@ -24,11 +24,16 @@ import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
@@ -46,6 +51,9 @@ public class CPMediaUtil {
 	public static List<CPMedia> getAttachmentCPMedias(
 			long classNameId, long classPK,
 			CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService,
+			DLFileEntryLocalService dlFileEntryLocalService,
+			ModelResourcePermission<DLFileEntry>
+				dlFileEntryModelResourcePermission,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -56,11 +64,26 @@ public class CPMediaUtil {
 				classNameId, classPK, CPAttachmentFileEntryConstants.TYPE_OTHER,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS),
-			cpAttachmentFileEntry -> new CPMediaImpl(
-				CommerceUtil.getCommerceAccountId(
-					(CommerceContext)httpServletRequest.getAttribute(
-						CommerceWebKeys.COMMERCE_CONTEXT)),
-				cpAttachmentFileEntry, themeDisplay));
+			cpAttachmentFileEntry -> {
+				DLFileEntry dlFileEntry =
+					dlFileEntryLocalService.fetchDLFileEntry(
+						cpAttachmentFileEntry.getFileEntryId());
+
+				if ((dlFileEntry != null) &&
+					!cpAttachmentFileEntry.isCDNEnabled() &&
+					!dlFileEntryModelResourcePermission.contains(
+						PermissionThreadLocal.getPermissionChecker(),
+						dlFileEntry, ActionKeys.VIEW)) {
+
+					return null;
+				}
+
+				return new CPMediaImpl(
+					CommerceUtil.getCommerceAccountId(
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT)),
+					cpAttachmentFileEntry, themeDisplay);
+			});
 	}
 
 	public static List<CPMedia> getImageCPMedias(

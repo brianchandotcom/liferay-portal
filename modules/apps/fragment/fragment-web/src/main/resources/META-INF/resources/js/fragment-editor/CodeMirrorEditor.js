@@ -263,10 +263,25 @@ const CodeMirrorEditor = ({
 
 	useEffect(() => {
 		if (ref.current) {
+			const hasEnabledTabKey = ({state: {keyMaps}}) =>
+				keyMaps.every((key) => key.name !== 'tabKey');
+
 			const codeMirror = CodeMirror(ref.current, {
 				autoCloseTags: true,
 				autoRefresh: true,
 				extraKeys: {
+					'Ctrl-M'(cm) {
+						if (hasEnabledTabKey(cm)) {
+							cm.addKeyMap({
+								'Shift-Tab': false,
+								'Tab': false,
+								'name': 'tabKey',
+							});
+						}
+						else {
+							cm.removeKeyMap('tabKey');
+						}
+					},
 					'Ctrl-Space': readOnly ? '' : 'autocomplete',
 				},
 				foldGutter: true,
@@ -302,6 +317,16 @@ const CodeMirrorEditor = ({
 					!AUTOCOMPLETE_EXCLUDED_KEYS.has(event.key)
 				) {
 					codeMirror.showHint();
+				}
+			});
+
+			codeMirror.on('focus', (cm) => {
+				if (hasEnabledTabKey(cm)) {
+					cm.addKeyMap({
+						'Shift-Tab': false,
+						'Tab': false,
+						'name': 'tabKey',
+					});
 				}
 			});
 

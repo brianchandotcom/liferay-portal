@@ -100,7 +100,9 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				}
 			}
 
-			SessionMessages.add(httpServletRequest, "requestProcessed");
+			SessionMessages.add(
+				httpServletRequest, "requestProcessed",
+				"your-request-completed-successfully");
 
 			_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 		}
@@ -145,7 +147,9 @@ public class RepositoryBrowserServlet extends HttpServlet {
 						Folder.class.getName(), httpServletRequest));
 			}
 
-			SessionMessages.add(httpServletRequest, "requestProcessed");
+			SessionMessages.add(
+				httpServletRequest, "requestProcessed",
+				"your-request-completed-successfully");
 
 			_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 		}
@@ -212,7 +216,9 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				ServiceContextFactory.getInstance(
 					Folder.class.getName(), httpServletRequest));
 
-			SessionMessages.add(httpServletRequest, "requestProcessed");
+			SessionMessages.add(
+				httpServletRequest, "requestProcessed",
+				"your-request-completed-successfully");
 
 			_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 		}

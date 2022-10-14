@@ -48,6 +48,7 @@ definition {
 	}
 
 	macro getSearchKeywords {
+
 		// The pause is necessary because it takes some time for the keywords to appear during curl see LRAC-12141
 
 		Pause(locator1 = "5000");

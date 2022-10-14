@@ -33,13 +33,30 @@ UserLayoutConfiguration userLayoutConfiguration = (UserLayoutConfiguration)reque
 </div>
 
 <script>
+	let enablePrivateLayoutsElement = document.getElementById(
+		'<portlet:namespace />enablePrivateLayouts'
+	);
+	let privateLayoutsAutoCreateElement = document.getElementById(
+		'<portlet:namespace />privateLayoutsAutoCreate'
+	);
+
+	let enablePublicLayoutsElement = document.getElementById(
+		'<portlet:namespace />enablePublicLayouts'
+	);
+	let publicLayoutsAutoCreateElement = document.getElementById(
+		'<portlet:namespace />publicLayoutsAutoCreate'
+	);
+
+
+	if(enablePrivateLayoutsElement.checked===false){
+		privateLayoutsAutoCreateElement.setAttribute('disabled', '');
+	}
+
+	if(enablePublicLayoutsElement.checked===false){
+		publicLayoutsAutoCreateElement.setAttribute('disabled', '');
+	}
+
 	function togglePrivateLayoutsAutoCreate() {
-		let enablePrivateLayoutsElement = document.getElementById(
-			'<portlet:namespace />enablePrivateLayouts'
-		);
-		let privateLayoutsAutoCreateElement = document.getElementById(
-			'<portlet:namespace />privateLayoutsAutoCreate'
-		);
 
 		if (!enablePrivateLayoutsElement.checked) {
 			privateLayoutsAutoCreateElement.checked = false;
@@ -47,16 +64,11 @@ UserLayoutConfiguration userLayoutConfiguration = (UserLayoutConfiguration)reque
 		}
 		else {
 			privateLayoutsAutoCreateElement.removeAttribute('disabled');
+
 		}
 	}
 
 	function togglePublicLayoutsAutoCreate() {
-		let enablePublicLayoutsElement = document.getElementById(
-			'<portlet:namespace />enablePublicLayouts'
-		);
-		let publicLayoutsAutoCreateElement = document.getElementById(
-			'<portlet:namespace />publicLayoutsAutoCreate'
-		);
 
 		if (!enablePublicLayoutsElement.checked) {
 			publicLayoutsAutoCreateElement.checked = false;

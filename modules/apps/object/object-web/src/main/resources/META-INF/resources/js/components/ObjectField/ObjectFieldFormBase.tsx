@@ -33,6 +33,7 @@ import React, {
 import {toCamelCase} from '../../utils/string';
 import {AggregationFormBase} from './AggregationFormBase';
 import {AttachmentFormBase} from './AttachmentFormBase';
+import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
 
@@ -102,6 +103,7 @@ export default function ObjectFieldFormBase({
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
 		TObjectRelationship
 	>();
+	const [selectedOutput, setSelectedOutput] = useState<string>('');
 
 	useEffect(() => {
 		const {businessType, defaultValue, objectFieldSettings} = values;
@@ -288,6 +290,28 @@ export default function ObjectFieldFormBase({
 				/>
 			)}
 
+			{values.businessType === 'Formula' && (
+				<SingleSelect<FormulaOutput>
+					error={errors.output}
+					label={Liferay.Language.get('output')}
+					onChange={({label, value}) => {
+						setValues({
+							objectFieldSettings: [
+								{
+									name: 'output',
+									value,
+								},
+							],
+						});
+
+						setSelectedOutput(label);
+					}}
+					options={FORMULA_OUTPUT_OPTIONS}
+					required
+					value={selectedOutput}
+				/>
+			)}
+
 			{picklistBusinessType && (
 				<Select
 					disabled={disabled}
@@ -313,15 +337,16 @@ export default function ObjectFieldFormBase({
 			{children}
 
 			<ClayForm.Group className="lfr-objects__object-field-form-base-form-group-toggles">
-				{values.businessType !== 'Aggregation' && (
-					<ClayToggle
-						disabled={getMandatoryToggleState()}
-						label={Liferay.Language.get('mandatory')}
-						name="required"
-						onToggle={(required) => setValues({required})}
-						toggled={values.required || values.state}
-					/>
-				)}
+				{values.businessType !== 'Aggregation' &&
+					values.businessType !== 'Formula' && (
+						<ClayToggle
+							disabled={getMandatoryToggleState()}
+							label={Liferay.Language.get('mandatory')}
+							name="required"
+							onToggle={(required) => setValues({required})}
+							toggled={values.required || values.state}
+						/>
+					)}
 
 				{picklistBusinessType && validListTypeDefinitionId && (
 					<ClayToggle

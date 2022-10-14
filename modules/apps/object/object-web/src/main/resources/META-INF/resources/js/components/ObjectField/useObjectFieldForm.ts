@@ -167,6 +167,9 @@ export function useObjectFieldForm({
 				}
 			}
 		}
+		else if (field.businessType === 'Formula' && !settings.output) {
+			errors.output = REQUIRED_MSG;
+		}
 		else if (
 			field.businessType === 'Text' ||
 			field.businessType === 'LongText'

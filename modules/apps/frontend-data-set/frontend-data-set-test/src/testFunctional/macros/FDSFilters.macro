@@ -48,6 +48,26 @@ definition {
 		}
 	}
 
+	macro editFilters {
+		FDSFilters.openFilters();
+
+		FDSFilters.searchFilter(searchTerm = "${key_filter}");
+
+		Click(
+			key_filter = "${key_filter}",
+			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+
+		FDSFilters.disableStatusFilters(key_status = "${key_disableFilters}");
+
+		FDSFilters.enableStatusFilters(key_status = "${key_enableFilters}");
+
+		Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+
+		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+
+		FDSFilters.closeFilters();
+	}
+
 	macro enableStatusFilters {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
@@ -92,23 +112,4 @@ definition {
 		ClickNoError(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");
 	}
 
-	macro editFilters {
-		FDSFilters.openFilters();
-
-		FDSFilters.searchFilter(searchTerm = "${key_filter}");
-
-		Click(
-			key_filter = "${key_filter}",
-			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
-
-		FDSFilters.disableStatusFilters(key_status = "${key_disableFilters}");
-
-		FDSFilters.enableStatusFilters(key_status = "${key_enableFilters}");
-
-		Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
-
-		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
-
-		FDSFilters.closeFilters();
-	}
 }

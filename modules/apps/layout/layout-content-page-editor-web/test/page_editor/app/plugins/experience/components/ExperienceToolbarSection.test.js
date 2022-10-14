@@ -12,7 +12,13 @@
  * details.
  */
 
-import {render, waitFor, within} from '@testing-library/react';
+import {
+	fireEvent,
+	render,
+	waitFor,
+	waitForElementToBeRemoved,
+	within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -795,6 +801,36 @@ describe('ExperienceToolbarSection', () => {
 			expect.objectContaining({
 				type: CREATE_SEGMENTS_EXPERIENCE,
 			})
+		);
+	});
+
+	it('respond to ESC keydown event hiding the dropdown', async () => {
+		const {findByRole, getByLabelText} = renderExperienceToolbarSection(
+			mockState,
+			mockConfig
+		);
+
+		const dropDownButton = getByLabelText('experience');
+
+		userEvent.click(dropDownButton);
+
+		await findByRole('list');
+
+		const dropdownElement = document.querySelector(
+			'.page-editor__toolbar-experience__dropdown-menu'
+		);
+
+		expect(dropdownElement).toBeInTheDocument();
+
+		fireEvent.keyDown(document, {
+			charCode: 27,
+			code: 'Escape',
+			key: 'Escape',
+			keyCode: 27,
+		});
+
+		waitForElementToBeRemoved(dropdownElement).then(() =>
+			expect(dropdownElement).not.toBeInTheDocument()
 		);
 	});
 });

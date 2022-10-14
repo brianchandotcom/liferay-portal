@@ -2867,7 +2867,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC Title");
 		}
-		
+
 		task ("Go to Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 		}
@@ -2880,8 +2880,8 @@ definition {
 
 		task ("Expire the web content version") {
 			ContentDashboard.expireVersion(
-				versionName = "Version 1.0", 
-				item = "Expire");
+				item = "Expire",
+				versionName = "Version 1.0");
 		}
 
 		task ("Check the Expire label is present for the web content") {
@@ -5959,6 +5959,57 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
 				value1 = "Web Content Title");
+		}
+	}
+
+	@description = "LPS-161544 Given the Version History page for Web Contents
+	When the user clicks on back
+	Then the Web Content is selected and the Info Panel is open to the Versions tab"
+	@priority = "4"
+	test ViewMoreWCVersionsBackButton {
+		task ("Create Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
+
+		task ("Edit Web Content 10 times") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
+				WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 1");
+
+				WebContent.editCP(
+					webContentTitle = "WC Title 1",
+					webContentTitleEdit = "WC Title 1");
+			}
+		}
+
+		task ("Go to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Open the info panel and go to the versions tab") {
+			ContentDashboard.clickQuickActionIcon(iconName = "Info");
+
+			ContentDashboard.openVersionsTab();
+		}
+
+		task ("Click on View more and check the user is redirected to the Version History page") {
+			Click(
+				key_text = "View More",
+				locator1 = "Button#ANY");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "WC Title 1");
+		}
+
+		task ("Click on back and check the user is redirected to the Content Dashboard and the info panel is opened in the Versions tab") {
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				key_text = "View More",
+				locator1 = "Button#ANY");
 		}
 	}
 

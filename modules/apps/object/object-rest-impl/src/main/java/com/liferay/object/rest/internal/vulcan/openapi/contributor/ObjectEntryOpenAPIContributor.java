@@ -80,12 +80,15 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 
 				ObjectDefinition relatedObjectDefinition = entry.getValue();
 
-				if (uriInfo != null) {
-					_addSchema(relatedObjectDefinition, openAPI);
-				}
+				if (!relatedObjectDefinition.isSystem()) {
+					if (uriInfo != null) {
+						_addSchema(relatedObjectDefinition, openAPI);
+					}
 
-				_addRelationshipPaths(
-					key, relatedObjectDefinition, objectRelationship, paths);
+					_addRelationshipPaths(
+						key, relatedObjectDefinition, objectRelationship,
+						paths);
+				}
 
 				openAPI.getComponents(
 				).getSchemas(

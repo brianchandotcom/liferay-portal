@@ -850,7 +850,7 @@ definition {
 		task ("And the Heading fragments are deployed on the page and the fields are mapped") {
 			CommerceDisplayPageTemplates.mapFragmentsToFields(
 				displayPageName = "Test Commerce Product Display Page Template",
-				fieldsList = "product custom field one,product custom field two",
+				fieldsList = "Product Custom Field One,Product Custom Field Two",
 				fragmentName = "Heading",
 				siteURLKey = "minium");
 		}

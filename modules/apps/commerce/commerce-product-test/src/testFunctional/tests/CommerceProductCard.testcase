@@ -721,9 +721,12 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "Minium");
 
-			var catalog_default_img = "//img[@class='current-image']";
+			var miniumChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = "Minium Portal");
+			var comparisonProductId = CommerceJSONProductsAPI._getProductId(productName = "Transmission Cooler Line Assembly");
 
-			var catalog_default_img_src = selenium.getAttribute("${catalog_default_img}@src");
+			var catalogDefaultImgSrc = CommerceJSONProductsAPI._getCommerceProductImageURL(
+				channelId = "${miniumChannelId}",
+				productId = "${comparisonProductId}");
 		}
 
 		task ("And given a new product") {
@@ -743,13 +746,13 @@ definition {
 		}
 
 		task ("Then the product card shows the default Minium catalog image") {
-			var minium_catalog_default_img = "//a[contains(@href,'simple-t-shirt')]//img[contains(@class,'card-picture')]";
+			var miniumCatalogDefaultImg = "//a[contains(@href,'simple-t-shirt')]//img[contains(@class,'card-picture')]";
 
-			var minium_catalog_default_img_src = selenium.getAttribute("${minium_catalog_default_img}@src");
+			var miniumCatalogDefaultImgSrc = selenium.getAttribute("${miniumCatalogDefaultImg}@src");
 
 			TestUtils.assertEquals(
-				actual = "${minium_catalog_default_img_src}",
-				expected = "${catalog_default_img_src}");
+				actual = "${miniumCatalogDefaultImgSrc}",
+				expected = "${catalogDefaultImgSrc}");
 		}
 	}
 

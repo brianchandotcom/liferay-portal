@@ -426,9 +426,9 @@ definition {
 			-H 'accept: application/json' \
 		''';
 
-		var productImageUrl = JSONCurlUtil.get("${curl}", "$..['urlImage']");
+		var productImageURL = JSONCurlUtil.get("${curl}", "$..['urlImage']");
 
-		return "${productImageUrl}";
+		return "${productImageURL}";
 	}
 
 	macro _getCommerceProductOptionId {

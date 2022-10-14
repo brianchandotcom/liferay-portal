@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -351,8 +350,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		abTestVariantIdCookie.setMaxAge(CookiesConstants.MAX_AGE);
 		abTestVariantIdCookie.setPath(path);
 
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, abTestVariantIdCookie);
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_PERSONALIZATION, abTestVariantIdCookie,
+			httpServletRequest, httpServletResponse);
 	}
 
 	private void _unsetCookie(

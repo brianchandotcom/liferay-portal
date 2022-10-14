@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>GENERIC_TEXT</td>
-	<td>//*[normalize-space(text())='${key_textValue}']</td>
+	<td>//*[text()='${key_textValue}']</td>
 	<td></td>
 </tr>
 <tr>

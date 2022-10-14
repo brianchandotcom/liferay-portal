@@ -64,6 +64,15 @@ public class ListTypeDefinitionLocalServiceWrapper
 			userId, nameMap);
 	}
 
+	@Override
+	public com.liferay.list.type.model.ListTypeDefinition addListTypeDefinition(
+			String externalReferenceCode, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeDefinitionLocalService.addListTypeDefinition(
+			externalReferenceCode, userId);
+	}
+
 	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *

@@ -87,6 +87,11 @@ public interface ListTypeDefinitionLocalService
 			long userId, Map<Locale, String> nameMap)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ListTypeDefinition addListTypeDefinition(
+			String externalReferenceCode, long userId)
+		throws PortalException;
+
 	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *

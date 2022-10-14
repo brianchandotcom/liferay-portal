@@ -383,6 +383,8 @@ public class DefaultObjectEntryManagerImplTest {
 					).put(
 						"decimalObjectFieldName", 15.7
 					).put(
+						"picklistObjectFieldName", _addListTypeEntry()
+					).put(
 						"r_oneToManyRelationshipName_" +
 							_objectDefinition1.getPKObjectFieldName(),
 						parentObjectEntry1.getId()
@@ -438,8 +440,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_objectFilterLocalService.addObjectFilter(
 			_user.getUserId(), objectField.getObjectFieldId(),
-			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
-			"{\"ne\": \"15\"}");
+			"integerObjectFieldName", ObjectFilterConstants.TYPE_NOT_EQUALS,
+			"{\"ne\":\"15\"}");
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
 
@@ -448,15 +450,15 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_objectFilterLocalService.addObjectFilter(
 			_user.getUserId(), objectField.getObjectFieldId(),
-			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
-			"{\"in\": [\"" + listTypeEntryKey + "\"]}");
+			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
+			"{\"not\":{\"in\":[\"" + listTypeEntryKey + "\"]}}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
 			_user.getUserId(), objectField.getObjectFieldId(),
-			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
-			"{\"not\":{\"in\": [\"" + listTypeEntryKey + "\"]}}");
+			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
+			"{\"in\":[\"" + listTypeEntryKey + "\"]}");
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
 

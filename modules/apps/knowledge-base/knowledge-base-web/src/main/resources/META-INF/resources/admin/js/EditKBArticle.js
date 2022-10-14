@@ -98,14 +98,6 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
-	form.addEventListener('submit', () => {
-		document.getElementById(`${namespace}content`).value = window[
-			`${namespace}contentEditor`
-		].getHTML();
-
-		updateMultipleKBArticleAttachments();
-	});
-
 	const eventHandlers = [
 		attachListener(publishButton, 'click', publishButtonOnClick),
 		attachListener(
@@ -113,8 +105,13 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			'click',
 			contextualSidebarButtonOnClick
 		),
+		attachListener(form, 'submit', () => {
+			document.getElementById(`${namespace}content`).value = window[
+				`${namespace}contentEditor`
+			].getHTML();
 
-
+			updateMultipleKBArticleAttachments();
+		}),
 	];
 
 	if (!kbArticle) {

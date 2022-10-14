@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1714,8 +1713,8 @@ public class LanguageImpl implements Language, Serializable {
 		languageIdCookie.setMaxAge(CookiesConstants.MAX_AGE);
 		languageIdCookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, languageIdCookie);
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, languageIdCookie,
+			httpServletRequest, httpServletResponse);
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag() {

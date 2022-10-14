@@ -24,7 +24,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -91,7 +91,7 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 
 		if (Validator.isNotNull(configurationValues)) {
 			JSONObject configurationValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(configurationValues);
+				_jsonFactory.createJSONObject(configurationValues);
 
 			JSONObject editableValuesJSONObject = JSONUtil.put(
 				FragmentEntryProcessorConstants.
@@ -173,6 +173,9 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

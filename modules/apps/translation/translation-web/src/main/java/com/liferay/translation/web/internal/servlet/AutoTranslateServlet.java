@@ -17,7 +17,7 @@ package com.liferay.translation.web.internal.servlet;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -77,8 +77,7 @@ public class AutoTranslateServlet extends HttpServlet {
 				TranslatorPacket translatedTranslatorPacket =
 					translator.translate(
 						new JSONTranslatorPacket(
-							companyId,
-							JSONFactoryUtil.createJSONObject(content)));
+							companyId, _jsonFactory.createJSONObject(content)));
 
 				_writeJSON(
 					httpServletResponse, _toJSON(translatedTranslatorPacket));
@@ -113,7 +112,7 @@ public class AutoTranslateServlet extends HttpServlet {
 	}
 
 	private JSONObject _getFieldsJSONObject(Map<String, String> fieldsMap) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
 			jsonObject.put(entry.getKey(), entry.getValue());
@@ -155,6 +154,9 @@ public class AutoTranslateServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutoTranslateServlet.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

@@ -15,7 +15,7 @@
 package com.liferay.product.navigation.product.menu.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -66,7 +66,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String keywords = ParamUtil.getString(resourceRequest, "keywords");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
@@ -75,7 +75,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		if (Validator.isNull(keywords)) {
 			jsonObject.put(
-				"layouts", JSONFactoryUtil.createJSONArray()
+				"layouts", _jsonFactory.createJSONArray()
 			).put(
 				"totalCount", 0
 			);
@@ -89,7 +89,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			themeDisplay.getSiteGroupId(), keywords,
@@ -142,7 +142,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 	private JSONArray _getLayoutPathJSONArray(Layout layout, Locale locale)
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
 
@@ -154,6 +154,9 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return jsonArray;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

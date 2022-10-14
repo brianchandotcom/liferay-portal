@@ -19,7 +19,7 @@ import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,8 +71,7 @@ public class StyleBookScopedCSSVariablesProvider
 
 					try {
 						JSONObject frontendTokensValuesJSONObject =
-							JSONFactoryUtil.createJSONObject(
-								frontendTokensValues);
+							_jsonFactory.createJSONObject(frontendTokensValues);
 
 						Iterator<String> iterator =
 							frontendTokensValuesJSONObject.keys();
@@ -139,6 +138,9 @@ public class StyleBookScopedCSSVariablesProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyleBookScopedCSSVariablesProvider.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

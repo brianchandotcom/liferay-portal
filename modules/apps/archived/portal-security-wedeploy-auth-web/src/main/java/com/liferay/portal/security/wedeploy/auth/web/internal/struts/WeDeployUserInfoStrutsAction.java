@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.wedeploy.auth.web.internal.struts;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -58,7 +58,7 @@ public class WeDeployUserInfoStrutsAction implements StrutsAction {
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		String accessToken = ParamUtil.getString(httpServletRequest, "token");
 
@@ -96,6 +96,9 @@ public class WeDeployUserInfoStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WeDeployUserInfoStrutsAction.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

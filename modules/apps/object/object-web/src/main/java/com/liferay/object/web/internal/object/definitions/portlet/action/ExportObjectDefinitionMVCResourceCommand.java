@@ -21,7 +21,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -98,7 +98,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 				"predefinedValues",
 				ListUtil.toList(
 					(ArrayList<LinkedHashMap>)object,
-					JSONFactoryUtil::createJSONObject));
+					_jsonFactory::createJSONObject));
 		}
 
 		objectDefinition.setObjectFields(
@@ -110,8 +110,8 @@ public class ExportObjectDefinitionMVCResourceCommand
 						objectField.getBusinessTypeAsString(),
 						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)));
 
-		JSONObject objectDefinitionJSONObject =
-			JSONFactoryUtil.createJSONObject(objectDefinition.toString());
+		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
+			objectDefinition.toString());
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
 			objectDefinitionJSONObject.remove("storageType");
@@ -166,6 +166,9 @@ public class ExportObjectDefinitionMVCResourceCommand
 			}
 		}
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;

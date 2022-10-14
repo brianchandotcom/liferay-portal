@@ -17,7 +17,7 @@ package com.liferay.push.notifications.service.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -132,8 +132,7 @@ public class PushNotificationsDeviceServiceImpl
 			getPermissionChecker(), 0,
 			PushNotificationsActionKeys.SEND_PUSH_NOTIFICATION);
 
-		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
-			payload);
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(payload);
 
 		pushNotificationsDeviceLocalService.sendPushNotification(
 			toUserIds, payloadJSONObject);
@@ -148,8 +147,7 @@ public class PushNotificationsDeviceServiceImpl
 			getPermissionChecker(), 0,
 			PushNotificationsActionKeys.SEND_PUSH_NOTIFICATION);
 
-		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
-			payload);
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(payload);
 
 		pushNotificationsDeviceLocalService.sendPushNotification(
 			platform, tokens, payloadJSONObject);
@@ -157,6 +155,9 @@ public class PushNotificationsDeviceServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PushNotificationsDeviceServiceImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(
 		target = "(resource.name=" + PushNotificationsConstants.RESOURCE_NAME + ")"

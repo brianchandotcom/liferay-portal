@@ -15,7 +15,7 @@
 package com.liferay.segments.asah.connector.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -148,7 +148,7 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 					actionRequest, "segmentsExperimentRels");
 
 				JSONObject segmentsExperimentRelsJSONObject =
-					JSONFactoryUtil.createJSONObject(segmentsExperimentRels);
+					_jsonFactory.createJSONObject(segmentsExperimentRels);
 
 				Iterator<String> iterator =
 					segmentsExperimentRelsJSONObject.keys();
@@ -178,6 +178,9 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 		CalculateSegmentsExperimentEstimatedDurationMVCActionCommand.class);
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private JSONWebServiceClient _jsonWebServiceClient;

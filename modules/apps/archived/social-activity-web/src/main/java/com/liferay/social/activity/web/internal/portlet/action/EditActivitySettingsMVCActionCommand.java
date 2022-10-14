@@ -15,7 +15,7 @@
 package com.liferay.social.activity.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -143,7 +143,7 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 		String settingsJSON = ParamUtil.getString(
 			actionRequest, "settingsJSON");
 
-		JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject settingsJSONObject = _jsonFactory.createJSONObject(
 			settingsJSON);
 
 		JSONArray actionsJSONArray = settingsJSONObject.getJSONArray("actions");
@@ -187,6 +187,9 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 				activityType, activityCounterDefinitions);
 		}
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private SocialActivitySettingService _socialActivitySettingService;
 

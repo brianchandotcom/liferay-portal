@@ -17,7 +17,7 @@ package com.liferay.portal.security.sso.facebook.connect.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -81,7 +81,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 		try {
 			String content = _http.URLtoString(options);
 
-			JSONObject contentJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject contentJSONObject = _jsonFactory.createJSONObject(
 				content);
 
 			String accessToken = contentJSONObject.getString("access_token");
@@ -167,7 +167,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 			String json = _http.URLtoString(options);
 
-			return JSONFactoryUtil.createJSONObject(json);
+			return _jsonFactory.createJSONObject(json);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -264,6 +264,9 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

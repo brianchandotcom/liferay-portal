@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -287,8 +287,7 @@ public class OpenSSOImpl implements OpenSSO {
 				String json = _http.URLtoString(url, true);
 
 				try {
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-						json);
+					JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 					String realm = jsonObject.getString("realm");
 					String uid = jsonObject.getString("uid");
@@ -484,6 +483,9 @@ public class OpenSSOImpl implements OpenSSO {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

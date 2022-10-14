@@ -23,7 +23,7 @@ import com.eatthepath.pushy.apns.util.SimpleApnsPushNotification;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -161,7 +161,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		SimpleApnsPayloadBuilder simpleApnsPayloadBuilder =
 			new SimpleApnsPayloadBuilder();
 
-		JSONObject newPayloadJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject newPayloadJSONObject = _jsonFactory.createJSONObject();
 
 		Iterator<String> iterator = payloadJSONObject.keys();
 
@@ -348,6 +348,9 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		ApplePushNotificationsSender.class);
 
 	private volatile ApnsClient _apnsClient;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MessageBus _messageBus;

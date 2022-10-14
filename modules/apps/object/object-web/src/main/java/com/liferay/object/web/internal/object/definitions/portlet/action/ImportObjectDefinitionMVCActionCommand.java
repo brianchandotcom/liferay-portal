@@ -19,7 +19,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -136,8 +136,8 @@ public class ImportObjectDefinitionMVCActionCommand
 		String objectDefinitionJSON = FileUtil.read(
 			uploadPortletRequest.getFile("objectDefinitionJSON"));
 
-		JSONObject objectDefinitionJSONObject =
-			JSONFactoryUtil.createJSONObject(objectDefinitionJSON);
+		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
+			objectDefinitionJSON);
 
 		ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
 			objectDefinitionJSONObject.toString());
@@ -161,6 +161,9 @@ public class ImportObjectDefinitionMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportObjectDefinitionMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

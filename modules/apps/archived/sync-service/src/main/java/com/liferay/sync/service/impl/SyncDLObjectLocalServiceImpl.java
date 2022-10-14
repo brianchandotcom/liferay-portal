@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -185,7 +185,7 @@ public class SyncDLObjectLocalServiceImpl
 					parentFolderExtension)) {
 
 				JSONObject extraSettingsJSONObject =
-					JSONFactoryUtil.createJSONObject(
+					_jsonFactory.createJSONObject(
 						parentFolderSyncDLObject.getExtraSettings());
 
 				extraSettingsJSONObject.put("macPackage", true);
@@ -415,6 +415,9 @@ public class SyncDLObjectLocalServiceImpl
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SyncDLFileVersionDiffLocalService

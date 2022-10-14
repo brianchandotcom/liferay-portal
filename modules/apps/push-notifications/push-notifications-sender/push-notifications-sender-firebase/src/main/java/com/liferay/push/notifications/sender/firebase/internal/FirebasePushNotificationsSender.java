@@ -19,7 +19,7 @@ import com.liferay.mobile.fcm.Notification;
 import com.liferay.mobile.fcm.Sender;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -102,7 +103,7 @@ public class FirebasePushNotificationsSender
 		builder.notification(_buildNotification(payloadJSONObject));
 		builder.to(tokens);
 
-		JSONObject newPayloadJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject newPayloadJSONObject = _jsonFactory.createJSONObject();
 
 		Iterator<String> iterator = payloadJSONObject.keys();
 
@@ -212,6 +213,10 @@ public class FirebasePushNotificationsSender
 
 	private volatile FirebasePushNotificationsSenderConfiguration
 		_firebasePushNotificationsSenderConfiguration;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private volatile Sender _sender;
 
 }

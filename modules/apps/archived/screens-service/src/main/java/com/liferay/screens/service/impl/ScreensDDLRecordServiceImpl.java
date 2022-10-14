@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -163,12 +163,12 @@ public class ScreensDDLRecordServiceImpl
 
 		return JSONUtil.put(
 			"modelAttributes",
-			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(ddlRecord.getModelAttributes()))
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerialize(ddlRecord.getModelAttributes()))
 		).put(
 			"modelValues",
-			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(ddlRecordMap))
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerialize(ddlRecordMap))
 		);
 	}
 
@@ -176,7 +176,7 @@ public class ScreensDDLRecordServiceImpl
 			List<DDLRecord> ddlRecords, Locale locale)
 		throws PortalException {
 
-		JSONArray ddlRecordsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray ddlRecordsJSONArray = _jsonFactory.createJSONArray();
 
 		for (DDLRecord ddlRecord : ddlRecords) {
 			ddlRecordsJSONArray.put(getDDLRecordJSONObject(ddlRecord, locale));
@@ -206,8 +206,8 @@ public class ScreensDDLRecordServiceImpl
 			return fieldValueString;
 		}
 		else if (dataType.equals(FieldConstants.DOCUMENT_LIBRARY)) {
-			return JSONFactoryUtil.looseSerialize(
-				JSONFactoryUtil.looseDeserialize(fieldValueString));
+			return _jsonFactory.looseSerialize(
+				_jsonFactory.looseDeserialize(fieldValueString));
 		}
 		else if (dataType.equals(FieldConstants.FLOAT) ||
 				 dataType.equals(FieldConstants.NUMBER)) {
@@ -251,5 +251,8 @@ public class ScreensDDLRecordServiceImpl
 	)
 	private ModelResourcePermission<DDLRecordSet>
 		_ddlRecordSetModelResourcePermission;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

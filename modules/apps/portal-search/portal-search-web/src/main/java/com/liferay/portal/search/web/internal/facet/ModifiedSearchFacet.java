@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -57,7 +56,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 		facetConfiguration.setClassName(getFacetClassName());
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = jsonFactory.createJSONArray();
 
 		for (int i = 0; i < _LABELS.length; i++) {
 			jsonArray.put(
@@ -116,7 +115,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		String[] rangesIndexes = StringUtil.split(
 			ParamUtil.getString(
@@ -193,17 +192,6 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		return DateFormatFactoryUtil.getDateFormatFactory();
 	}
 
-	private JSONFactory _getJSONFactory() {
-
-		// See LPS-72507 and LPS-76500
-
-		if (jsonFactory != null) {
-			return jsonFactory;
-		}
-
-		return JSONFactoryUtil.getJSONFactory();
-	}
-
 	private JSONArray _replaceAliases(JSONArray rangesJSONArray) {
 		DateRangeFactory dateRangeFactory = new DateRangeFactory(
 			_getDateFormatFactory());
@@ -211,7 +199,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		CalendarFactory calendarFactory = _getCalendarFactory();
 
 		return dateRangeFactory.replaceAliases(
-			rangesJSONArray, calendarFactory.getCalendar(), _getJSONFactory());
+			rangesJSONArray, calendarFactory.getCalendar(), _jsonFactory);
 	}
 
 	private static final String[] _LABELS = {
@@ -222,6 +210,9 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		"[past-hour TO *]", "[past-24-hours TO *]", "[past-week TO *]",
 		"[past-month TO *]", "[past-year TO *]"
 	};
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.search.web)")
 	private ServletContext _servletContext;

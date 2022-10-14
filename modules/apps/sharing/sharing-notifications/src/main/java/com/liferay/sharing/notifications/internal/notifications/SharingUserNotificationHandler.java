@@ -15,7 +15,7 @@
 package com.liferay.sharing.notifications.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
@@ -55,8 +55,7 @@ public class SharingUserNotificationHandler
 		throws Exception {
 
 		JSONObject userNotificationEventPayloadJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				userNotificationEvent.getPayload());
+			_jsonFactory.createJSONObject(userNotificationEvent.getPayload());
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
 			userNotificationEventPayloadJSONObject.getLong("classPK"));
@@ -104,6 +103,9 @@ public class SharingUserNotificationHandler
 
 		return trashHandler.isInTrash(classPK);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

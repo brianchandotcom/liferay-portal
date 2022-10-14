@@ -31,7 +31,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -133,7 +133,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 					getLayoutDisplayPageInfoItemFieldValuesProvider(className);
 
 		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
-			return JSONFactoryUtil.createJSONArray();
+			return _jsonFactory.createJSONArray();
 		}
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -223,6 +223,9 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

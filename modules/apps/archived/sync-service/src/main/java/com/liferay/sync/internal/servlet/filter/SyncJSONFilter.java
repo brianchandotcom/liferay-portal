@@ -15,7 +15,7 @@
 package com.liferay.sync.internal.servlet.filter;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -241,7 +241,7 @@ public class SyncJSONFilter implements Filter {
 				cmd = StringUtil.read(servletRequest.getInputStream());
 			}
 
-			Object cmdObject = JSONFactoryUtil.looseDeserialize(cmd);
+			Object cmdObject = _jsonFactory.looseDeserialize(cmd);
 
 			List<Object> jsonItems = null;
 
@@ -290,6 +290,9 @@ public class SyncJSONFilter implements Filter {
 	private static final int _ABSOLUTE_SYNC_CLIENT_MIN_BUILD_IOS = 7;
 
 	private static final Log _log = LogFactoryUtil.getLog(SyncJSONFilter.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

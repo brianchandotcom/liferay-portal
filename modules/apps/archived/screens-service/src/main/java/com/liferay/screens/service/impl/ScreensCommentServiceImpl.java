@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -127,7 +127,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 		DiscussionCommentIterator threadDiscussionCommentIterator =
 			rootDiscussionComment.getThreadDiscussionCommentIterator(start);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		if (end == QueryUtil.ALL_POS) {
 			while (threadDiscussionCommentIterator.hasNext()) {
@@ -254,5 +254,8 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

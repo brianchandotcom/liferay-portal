@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.screens.service.base.ScreensDDMStructureVersionServiceBaseImpl;
@@ -48,18 +48,20 @@ public class ScreensDDMStructureVersionServiceImpl
 
 		return JSONUtil.put(
 			"ddmFormLayout",
-			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerializeDeep(
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(
 					ddmStructureVersion.getDDMFormLayout()))
 		).put(
 			"ddmStructure",
-			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(
-					ddmStructureVersion.getStructure()))
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerialize(ddmStructureVersion.getStructure()))
 		);
 	}
 
 	@Reference
 	private DDMStructureVersionService _ddmStructureVersionService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

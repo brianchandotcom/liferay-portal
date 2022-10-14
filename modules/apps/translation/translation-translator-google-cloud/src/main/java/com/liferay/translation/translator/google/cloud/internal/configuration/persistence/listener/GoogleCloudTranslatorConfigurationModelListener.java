@@ -16,7 +16,7 @@ package com.liferay.translation.translator.google.cloud.internal.configuration.p
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -61,7 +61,7 @@ public class GoogleCloudTranslatorConfigurationModelListener
 
 	private boolean _isValid(String serviceAccountPrivateKey) {
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				serviceAccountPrivateKey);
 
 			if (jsonObject.length() > 0) {
@@ -81,6 +81,9 @@ public class GoogleCloudTranslatorConfigurationModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleCloudTranslatorConfigurationModelListener.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

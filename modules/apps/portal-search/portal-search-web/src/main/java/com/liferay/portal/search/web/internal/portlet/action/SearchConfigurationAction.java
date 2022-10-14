@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -56,7 +56,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		JSONArray facetsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray facetsJSONArray = _jsonFactory.createJSONArray();
 
 		for (SearchFacet searchFacet : searchFacetTracker.getSearchFacets()) {
 			JSONObject facetJSONObject = JSONUtil.put(
@@ -105,5 +105,8 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	protected SearchFacetTracker searchFacetTracker;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

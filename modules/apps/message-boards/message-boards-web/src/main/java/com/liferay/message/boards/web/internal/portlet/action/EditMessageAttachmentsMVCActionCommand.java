@@ -19,7 +19,7 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.web.internal.upload.TempAttachmentMBUploadFileEntryHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -138,7 +138,7 @@ public class EditMessageAttachmentsMVCActionCommand
 		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			_mbMessageService.deleteTempAttachment(
@@ -181,6 +181,9 @@ public class EditMessageAttachmentsMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditMessageAttachmentsMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MBMessageService _mbMessageService;

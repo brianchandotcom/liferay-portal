@@ -18,7 +18,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
@@ -66,7 +66,7 @@ public class MBThreadSocialActivityManager
 			long userId, long groupId, MBThread thread, String extraData)
 		throws PortalException {
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject extraDataJSONObject = _jsonFactory.createJSONObject(
 			extraData);
 
 		extraDataJSONObject.put("threadId", thread.getThreadId());
@@ -93,6 +93,9 @@ public class MBThreadSocialActivityManager
 			userId, rootMessage.getGroupId(), MBMessage.class.getName(),
 			rootMessage.getMessageId(), type, extraData, receiverUserId);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

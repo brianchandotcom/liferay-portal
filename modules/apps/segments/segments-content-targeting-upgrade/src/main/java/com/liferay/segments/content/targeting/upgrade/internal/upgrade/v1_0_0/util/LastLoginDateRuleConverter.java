@@ -15,7 +15,7 @@
 package com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0.util;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,8 +51,7 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 		long companyId, Criteria criteria, String typeSettings) {
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				typeSettings);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(typeSettings);
 
 			String startDateTimeZoneId = jsonObject.getString(
 				"startDateTimeZoneId");
@@ -131,5 +130,8 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 
 	@Reference(target = "(segments.criteria.contributor.key=context)")
 	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

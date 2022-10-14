@@ -20,7 +20,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,8 +47,7 @@ public class CustomFieldRuleConverter implements RuleConverter {
 		long companyId, Criteria criteria, String typeSettings) {
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				typeSettings);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(typeSettings);
 
 			String attributeName = jsonObject.getString("attributeName");
 			String value = jsonObject.getString("value");
@@ -99,6 +98,9 @@ public class CustomFieldRuleConverter implements RuleConverter {
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(target = "(segments.criteria.contributor.key=user)")
 	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;

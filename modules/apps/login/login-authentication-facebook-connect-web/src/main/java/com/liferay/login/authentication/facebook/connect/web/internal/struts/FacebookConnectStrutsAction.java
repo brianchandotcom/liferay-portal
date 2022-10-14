@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -137,7 +137,7 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 
 		String state = ParamUtil.getString(httpServletRequest, "state");
 
-		JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject(state);
+		JSONObject stateJSONObject = _jsonFactory.createJSONObject(state);
 
 		String stateNonce = stateJSONObject.getString("stateNonce");
 
@@ -486,6 +486,9 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 	private FacebookConnect _facebookConnect;
 
 	private String _forward;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

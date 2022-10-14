@@ -17,7 +17,7 @@ package com.liferay.push.notifications.sender.microsoft.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
@@ -35,6 +35,7 @@ import org.jboss.aerogear.windows.mpns.notifications.ToastNotification;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -63,7 +64,7 @@ public class MicrosoftPushNotificationsSender
 		String body = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_BODY);
 
-		JSONObject newPayloadJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject newPayloadJSONObject = _jsonFactory.createJSONObject();
 
 		Iterator<String> iterator = payloadJSONObject.keys();
 
@@ -150,6 +151,9 @@ public class MicrosoftPushNotificationsSender
 
 		return sb.toString();
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private volatile MpnsService _mpnsService;
 

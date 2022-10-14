@@ -24,7 +24,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -112,7 +112,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 		throws Exception {
 
 		JSONArray childPanelCategoriesJSONArray =
-			JSONFactoryUtil.createJSONArray();
+			_jsonFactory.createJSONArray();
 
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
@@ -180,7 +180,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONArray panelAppsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray panelAppsJSONArray = _jsonFactory.createJSONArray();
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			key, themeDisplay.getPermissionChecker(),
@@ -199,7 +199,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONArray panelCategoriesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray panelCategoriesJSONArray = _jsonFactory.createJSONArray();
 
 		List<PanelCategory> applicationsMenuPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
@@ -236,7 +236,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONArray recentSitesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray recentSitesJSONArray = _jsonFactory.createJSONArray();
 
 		boolean applicationMenuApp = _isApplicationMenuApp(
 			resourceRequest, themeDisplay);
@@ -267,7 +267,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONObject sitesJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject sitesJSONObject = _jsonFactory.createJSONObject();
 
 		int max = 8;
 
@@ -374,6 +374,9 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

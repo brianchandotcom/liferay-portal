@@ -15,7 +15,7 @@
 package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -103,7 +103,7 @@ public class UpdateCertificateMVCResourceCommand
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			SamlTempFileEntryUtil.deleteTempFileEntry(
@@ -173,6 +173,9 @@ public class UpdateCertificateMVCResourceCommand
 
 	@Reference
 	private CertificateUploadResponseHandler _certificateUploadResponseHandler;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private UploadHandler _uploadHandler;

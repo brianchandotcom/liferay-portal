@@ -16,7 +16,7 @@ package com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0.u
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +40,7 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 		long companyId, Criteria criteria, String typeSettings) {
 
 		try {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(typeSettings);
+			JSONArray jsonArray = _jsonFactory.createJSONArray(typeSettings);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -65,5 +65,8 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 
 	@Reference(target = "(segments.criteria.contributor.key=context)")
 	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

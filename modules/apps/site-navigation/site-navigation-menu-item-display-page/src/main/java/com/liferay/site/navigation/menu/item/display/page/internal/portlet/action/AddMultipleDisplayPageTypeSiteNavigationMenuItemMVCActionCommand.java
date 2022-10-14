@@ -22,7 +22,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTr
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -73,7 +73,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		String siteNavigationMenuItemType = ParamUtil.getString(
 			actionRequest, "siteNavigationMenuItemType");
@@ -93,7 +93,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				List<InfoItemReference> infoItemReferences = new ArrayList<>();
 				Map<Long, JSONObject> jsonObjects = new HashMap<>();
 
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				JSONArray jsonArray = _jsonFactory.createJSONArray(
 					ParamUtil.getString(actionRequest, "items"));
 
 				for (int i = 0; i < jsonArray.length(); i++) {
@@ -234,6 +234,9 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

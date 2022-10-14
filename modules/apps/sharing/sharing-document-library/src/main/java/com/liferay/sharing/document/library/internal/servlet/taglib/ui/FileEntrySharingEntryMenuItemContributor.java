@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 
 import java.util.Collection;
@@ -116,8 +115,5 @@ public class FileEntrySharingEntryMenuItemContributor
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private SharingPermission _sharingPermission;
 
 }

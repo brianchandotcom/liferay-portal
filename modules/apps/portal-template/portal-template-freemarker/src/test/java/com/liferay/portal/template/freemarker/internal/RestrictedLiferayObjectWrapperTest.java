@@ -602,11 +602,6 @@ public class RestrictedLiferayObjectWrapperTest
 			return String.valueOf(_companyId);
 		}
 
-		@Override
-		public String toXmlString() {
-			return null;
-		}
-
 		private TestBaseModel(long companyId) {
 			_companyId = companyId;
 		}

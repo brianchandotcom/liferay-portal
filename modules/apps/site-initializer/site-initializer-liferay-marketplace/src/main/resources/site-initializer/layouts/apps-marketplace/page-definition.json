@@ -9,7 +9,7 @@
 								"value": "Apps Banner"
 							},
 							"url": {
-								"value": "/documents/448812852/449778893/Apps_Banner.jpg/1c4c5f79-851d-8cc2-b530-2b31aef340d6?t=1657124058329&download=true"
+								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Apps_Banner.jpg$]"
 							}
 						},
 						"paddingTop": "9"

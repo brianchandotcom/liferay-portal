@@ -9,7 +9,7 @@
 								"value": "Solutions Banner"
 							},
 							"url": {
-								"value": "/documents/448812852/449778893/Solutions_Banner.jpg/3c5e52d1-8786-dd78-b7a7-d9fd187ec1a6?t=1657124144067&download=true"
+								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Solutions_Banner.jpg$]"
 							}
 						},
 						"paddingTop": "9"

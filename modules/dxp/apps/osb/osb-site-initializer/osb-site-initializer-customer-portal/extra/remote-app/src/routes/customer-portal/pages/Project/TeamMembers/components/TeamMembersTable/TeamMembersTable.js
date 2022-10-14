@@ -51,6 +51,9 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
+	const availableSupportSeatsCount =
+		koroneikiAccount?.maxRequestors - supportSeatsCount;
+
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
 
@@ -70,9 +73,6 @@ const TeamMembersTable = ({
 
 	const availableAccountRoles =
 		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
-
-	const availableSupportSeatsCount =
-		koroneikiAccount?.maxRequestors - supportSeatsCount;
 
 	const loading = userAccountsLoading || accountRolesLoading;
 

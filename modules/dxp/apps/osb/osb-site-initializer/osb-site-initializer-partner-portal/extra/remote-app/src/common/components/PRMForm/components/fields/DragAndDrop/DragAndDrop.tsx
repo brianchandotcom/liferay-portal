@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {FormikContextType, useFormikContext} from 'formik';
-import React from 'react';
+import {ClayInput} from '@clayui/form';
+import {FormikContextType} from 'formik';
 import Dropzone, {useDropzone} from 'react-dropzone';
 
 import MDFClaim from '../../../../../interfaces/mdfClaim';
@@ -18,43 +18,50 @@ import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 interface IProps {
-	activityIndex: number;
-	values: MDFClaim;
+	onAccept: (value: File[]) => void;
 }
 
 const DragAndDrop = ({
-	activityIndex,
 	description,
+	field,
 	label,
-	setFieldValue,
+	onAccept,
+	required,
 }: PRMFormFieldProps &
-	PRMFormFieldStateProps<File> &
+	PRMFormFieldStateProps<File[]> &
 	Pick<FormikContextType<MDFClaim>, 'setFieldValue'> &
 	IProps) => {
-	const {values} = useFormikContext<MDFClaim>();
-
-	const {getInputProps, getRootProps, open} = useDropzone({
+	const {acceptedFiles, getInputProps, getRootProps, open} = useDropzone({
 		noClick: true,
 		noKeyboard: true,
 		onDrop: (acceptedFiles) => {
-			setFieldValue(
-				`activities[${activityIndex}].contents`,
-				acceptedFiles
-			);
+			onAccept(acceptedFiles);
 		},
 	});
 
 	return (
 		<div className="mb-3">
-			<h4 className="text-neutral-10">{label}</h4>
+			{label && (
+				<label className="font-weight-semi-bold ml-0">
+					{label}
+
+					{required && <span className="text-danger">*</span>}
+				</label>
+			)}
 
 			<div
 				{...getRootProps({
 					className:
-						'bg-white d-flex text-dark align-items-center justify-content-center rounded flex-column dropzone border-neutral-4 border',
+						'bg-white d-flex text-dark align-items-center justify-content-center rounded flex-column border-neutral-4 border',
 				})}
 			>
-				<input {...getInputProps()} />
+				<ClayInput
+					{...getInputProps({
+						name: field.name,
+						required,
+						type: 'file',
+					})}
+				/>
 
 				<p className="font-weight-bold text-neutral-10 text-paragraph">
 					{description}
@@ -74,14 +81,11 @@ const DragAndDrop = ({
 				<div className="mt-3 overflow-auto" style={{height: '12rem'}}>
 					<h5>Files</h5>
 
-					{values?.activities &&
-						values?.activities[
-							activityIndex
-						].contents?.map((file, i) => (
-							<li key={i}>
-								{`File:${file.name} Type:${file.type} Size:${file.size} bytes`}{' '}
-							</li>
-						))}
+					{acceptedFiles?.map((file, i) => (
+						<li key={i}>
+							{`File:${file.name} Type:${file.type} Size:${file.size} bytes`}{' '}
+						</li>
+					))}
 				</div>
 			</div>
 		</div>

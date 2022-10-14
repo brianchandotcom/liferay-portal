@@ -14,7 +14,7 @@ import Link from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
@@ -173,11 +173,15 @@ const ActivityClaimPanel = ({
 					</div>
 
 					<PRMFormik.Field
-						activityIndex={activityIndex}
 						component={PRMForm.DragAndDrop}
 						description="Drag and drop your files here to upload."
 						label="All Contents"
-						setFieldValue={setFieldValue}
+						onAccept={(value: File) => 
+							setFieldValue(
+								`activities[${activityIndex}].contents`,
+								value
+							)
+						}
 					/>
 				</PanelBody>
 			</ClayPanel>

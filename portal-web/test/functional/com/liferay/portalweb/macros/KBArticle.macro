@@ -4,7 +4,7 @@ definition {
 		var key_kbChildArticleTitle = "${kbChildArticleTitle}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Wiki#CHILD_PAGE_HEADER",
+			locator1 = "KnowledgeBase#CHILD_PAGE_HEADER",
 			value1 = "Child Article");
 
 		AssertTextEquals(

@@ -12,6 +12,16 @@
  * details.
  */
 
+function attachListener(element, eventType, callback) {
+	element?.addEventListener(eventType, callback);
+
+	return {
+		detach() {
+			element?.removeEventListener(eventType, callback);
+		},
+	};
+}
+
 export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
@@ -26,11 +36,6 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			'contextual-sidebar-visible'
 		);
 	};
-
-	contextualSidebarButton.addEventListener(
-		'click',
-		contextualSidebarButtonOnClick
-	);
 
 	const titleInput = document.getElementById(`${namespace}title`);
 	const urlTitleInput = document.getElementById(`${namespace}urlTitle`);
@@ -48,12 +53,6 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	const urlTitleOnInputEvent = (event) => {
 		event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
 	};
-
-	if (!kbArticle) {
-		titleInput.addEventListener('input', titleOnInputEvent);
-
-		urlTitleInput.addEventListener('input', urlTitleOnInputEvent);
-	}
 
 	const publishButton = document.getElementById(`${namespace}publishButton`);
 
@@ -74,8 +73,6 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			}
 		}
 	};
-
-	publishButton.addEventListener('click', publishButtonOnClick);
 
 	const form = document.getElementById(`${namespace}fm`);
 
@@ -109,22 +106,32 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		updateMultipleKBArticleAttachments();
 	});
 
+	const eventHandlers = [
+		attachListener(publishButton, 'click', publishButtonOnClick),
+		attachListener(
+			contextualSidebarButton,
+			'click',
+			contextualSidebarButtonOnClick
+		),
+
+
+	];
+
+	if (!kbArticle) {
+		eventHandlers.push(
+			attachListener(titleInput, 'input', titleOnInputEvent)
+		);
+
+		eventHandlers.push(
+			attachListener(urlTitleInput, 'input', urlTitleOnInputEvent)
+		);
+	}
+
 	return {
 		dispose() {
-			contextualSidebarButton.removeEventListener(
-				'click',
-				contextualSidebarButtonOnClick
-			);
-
-			if (!kbArticle) {
-				titleInput.removeEventListener('input', titleOnInputEvent);
-				urlTitleInput.removeEventListener(
-					'input',
-					urlTitleOnInputEvent
-				);
-			}
-
-			publishButton.removeEventListener('click', publishButtonOnClick);
+			eventHandlers.forEach(({detach}) => {
+				detach();
+			});
 		},
 	};
 }

@@ -1184,20 +1184,6 @@ public class CommerceOrderItemLocalServiceImpl
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
-	private void _validateParentCommerceOrderId(
-			CommerceOrderItem commerceOrderItem)
-		throws PortalException {
-
-		if (commerceOrderItem.getParentCommerceOrderItemId() != 0) {
-			throw new ProductBundleException(
-				StringBundler.concat(
-					"Operation not allowed on an item ",
-					commerceOrderItem.getCommerceOrderItemId(),
-					" because it is a child commerce order item ",
-					commerceOrderItem.getParentCommerceOrderItemId()));
-		}
-	}
-
 	private SearchContext _buildSearchContext(
 			long commerceOrderId, Long parentCommerceOrderItemId, int start,
 			int end, Sort sort)
@@ -2280,6 +2266,20 @@ public class CommerceOrderItemLocalServiceImpl
 				throw new CommerceOrderValidatorException(
 					commerceCartValidatorResults);
 			}
+		}
+	}
+
+	private void _validateParentCommerceOrderId(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		if (commerceOrderItem.getParentCommerceOrderItemId() != 0) {
+			throw new ProductBundleException(
+				StringBundler.concat(
+					"Operation not allowed on an item ",
+					commerceOrderItem.getCommerceOrderItemId(),
+					" because it is a child commerce order item ",
+					commerceOrderItem.getParentCommerceOrderItemId()));
 		}
 	}
 

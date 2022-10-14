@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcos Martins
  */
 @Component(
-	immediate = true,
 	property = {
 		"dispatch.task.executor.name=" + OrganizationAnalyticsDXPEntityExportDispatchTaskExecutor.KEY,
 		"dispatch.task.executor.type=" + OrganizationAnalyticsDXPEntityExportDispatchTaskExecutor.KEY

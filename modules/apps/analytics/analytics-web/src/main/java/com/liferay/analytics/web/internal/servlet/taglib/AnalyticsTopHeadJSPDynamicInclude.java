@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

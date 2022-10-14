@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = AnalyticsReportsInfoItemTracker.class)
+@Component(service = AnalyticsReportsInfoItemTracker.class)
 public class AnalyticsReportsInfoItemTrackerImpl
 	implements AnalyticsReportsInfoItemTracker {
 

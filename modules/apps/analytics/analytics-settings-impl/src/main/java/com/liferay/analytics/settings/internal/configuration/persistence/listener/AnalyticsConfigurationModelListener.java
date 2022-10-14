@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shinn Lok
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
 	service = ConfigurationModelListener.class
 )

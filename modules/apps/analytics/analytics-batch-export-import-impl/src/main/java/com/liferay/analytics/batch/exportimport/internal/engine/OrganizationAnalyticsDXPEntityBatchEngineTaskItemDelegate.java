@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcos Martins
  */
 @Component(
-	immediate = true,
 	property = "batch.engine.task.item.delegate.name=organization-analytics-dxp-entities",
 	service = BatchEngineTaskItemDelegate.class
 )

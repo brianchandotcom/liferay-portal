@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcos Martins
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class AnalyticsMessageStorageServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

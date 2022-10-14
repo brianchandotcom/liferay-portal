@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = AnalyticsBatchExportImportManager.class)
+@Component(service = AnalyticsBatchExportImportManager.class)
 public class AnalyticsBatchExportImportManagerImpl
 	implements AnalyticsBatchExportImportManager {
 

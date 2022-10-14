@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = EntityModelListenerTracker.class)
+@Component(service = EntityModelListenerTracker.class)
 public class EntityModelListenerTracker {
 
 	public EntityModelListener<?> getEntityModelListener(String className) {

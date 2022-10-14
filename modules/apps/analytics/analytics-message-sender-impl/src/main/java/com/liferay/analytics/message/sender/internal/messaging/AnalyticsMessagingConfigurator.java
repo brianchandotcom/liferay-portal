@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class AnalyticsMessagingConfigurator {
 
 	@Activate

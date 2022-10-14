@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(
-	immediate = true, service = {EntityModelListener.class, ModelListener.class}
-)
+@Component(service = {EntityModelListener.class, ModelListener.class})
 public class UserGroupModelListener extends BaseEntityModelListener<UserGroup> {
 
 	@Override

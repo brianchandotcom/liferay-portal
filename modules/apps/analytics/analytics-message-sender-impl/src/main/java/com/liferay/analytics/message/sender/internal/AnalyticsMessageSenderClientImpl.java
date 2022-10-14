@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = AnalyticsMessageSenderClient.class)
+@Component(service = AnalyticsMessageSenderClient.class)
 public class AnalyticsMessageSenderClientImpl
 	extends BaseAnalyticsClientImpl implements AnalyticsMessageSenderClient {
 

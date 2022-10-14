@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = ConfigurationScreen.class)
+@Component(service = ConfigurationScreen.class)
 public class AnalyticsSyncedContactsDataConfigurationScreen
 	extends BaseAnalyticsConfigurationScreen {
 

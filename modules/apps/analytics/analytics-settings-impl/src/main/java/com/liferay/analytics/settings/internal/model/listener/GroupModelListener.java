@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcos Martins
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class GroupModelListener
 	extends BaseAnalyticsDXPEntityModelListener<Group> {
 

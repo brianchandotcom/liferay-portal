@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(
-	immediate = true, service = CheckAnalyticsConnectionsMessageListener.class
-)
+@Component(service = CheckAnalyticsConnectionsMessageListener.class)
 public class CheckAnalyticsConnectionsMessageListener
 	extends BaseMessageListener {
 

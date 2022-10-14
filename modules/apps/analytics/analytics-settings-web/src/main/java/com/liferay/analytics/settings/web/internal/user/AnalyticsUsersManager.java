@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = AnalyticsUsersManager.class)
+@Component(service = AnalyticsUsersManager.class)
 public class AnalyticsUsersManager {
 
 	public int getCompanyUsersCount(long companyId) {

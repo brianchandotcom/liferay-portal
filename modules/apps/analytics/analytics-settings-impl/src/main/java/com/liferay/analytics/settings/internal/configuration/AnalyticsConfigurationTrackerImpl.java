@@ -87,7 +87,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.analytics.settings.configuration.AnalyticsConfiguration.scoped",
 	service = {AnalyticsConfigurationTracker.class, ManagedServiceFactory.class}
 )

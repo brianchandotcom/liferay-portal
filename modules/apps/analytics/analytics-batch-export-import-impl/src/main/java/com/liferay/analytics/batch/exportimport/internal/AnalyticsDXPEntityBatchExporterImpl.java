@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcos Martins
  */
-@Component(immediate = true, service = AnalyticsDXPEntityBatchExporter.class)
+@Component(service = AnalyticsDXPEntityBatchExporter.class)
 public class AnalyticsDXPEntityBatchExporterImpl
 	implements AnalyticsDXPEntityBatchExporter {
 

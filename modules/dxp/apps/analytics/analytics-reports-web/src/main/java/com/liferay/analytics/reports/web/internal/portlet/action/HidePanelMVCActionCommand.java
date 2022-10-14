@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Sarai Díaz
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
 		"mvc.command.name=/analytics_reports/hide_panel"

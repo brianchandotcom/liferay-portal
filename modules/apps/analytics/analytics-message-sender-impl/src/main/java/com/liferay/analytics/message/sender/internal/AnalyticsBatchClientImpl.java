@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = AnalyticsBatchClient.class)
+@Component(service = AnalyticsBatchClient.class)
 public class AnalyticsBatchClientImpl
 	extends BaseAnalyticsClientImpl implements AnalyticsBatchClient {
 

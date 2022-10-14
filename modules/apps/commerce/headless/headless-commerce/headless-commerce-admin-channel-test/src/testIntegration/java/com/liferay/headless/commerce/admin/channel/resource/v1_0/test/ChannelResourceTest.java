@@ -31,6 +31,8 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -89,6 +91,13 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 
 			iterator.remove();
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetChannelsPage() throws Exception {
+		super.testGraphQLGetChannelsPage();
 	}
 
 	@Override

@@ -48,6 +48,10 @@ definition {
 	}
 
 	macro getSearchKeywords {
+		// The pause is necessary because it takes some time for the keywords to appear during curl see LRAC-12141
+
+		Pause(locator1 = "5000");
+
 		if (isSet(displayLanguageId) && isSet(groupId) && isSet(page) && isSet(size) && isSet(sort)) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size}&displayLanguageId=${displayLanguageId}&page=${page}&groupId=${groupId}&sort=${sort} \

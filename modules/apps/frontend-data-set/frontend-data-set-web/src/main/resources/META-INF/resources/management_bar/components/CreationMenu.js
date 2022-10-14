@@ -21,8 +21,9 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {triggerAction} from '../../utils/actionItems/index';
 
 function CreationMenu({primaryItems}) {
-	const [active, setActive] = useState(false);
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
+
+	const [active, setActive] = useState(false);
 
 	return (
 		primaryItems?.length > 0 && (

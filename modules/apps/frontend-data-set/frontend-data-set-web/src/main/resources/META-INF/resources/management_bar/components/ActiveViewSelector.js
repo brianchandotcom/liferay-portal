@@ -22,9 +22,10 @@ import persistActiveView from '../../thunks/persistActiveView';
 import ViewsContext from '../../views/ViewsContext';
 
 function ActiveViewSelector({views}) {
-	const [active, setActive] = useState(false);
-	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
 	const {appURL, id, portletId} = useContext(FrontendDataSetContext);
+	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
+
+	const [active, setActive] = useState(false);
 
 	return (
 		<ClayDropDown

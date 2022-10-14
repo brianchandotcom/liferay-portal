@@ -22,7 +22,6 @@ import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import Context from './TableContext';
 
 function Cell({children, className, columnName, expand, heading, resizable}) {
-	const [{modifiedFields}, viewsDispatch] = useContext(ViewsContext);
 	const {
 		draggingAllowed,
 		draggingColumnName,
@@ -31,6 +30,7 @@ function Cell({children, className, columnName, expand, heading, resizable}) {
 		updateDraggingAllowed,
 		updateDraggingColumnName,
 	} = useContext(Context);
+	const [{modifiedFields}, viewsDispatch] = useContext(ViewsContext);
 
 	const cellRef = useRef();
 	const clientXRef = useRef({current: null});

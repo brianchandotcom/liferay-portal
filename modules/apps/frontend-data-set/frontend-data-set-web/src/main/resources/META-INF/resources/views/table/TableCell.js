@@ -32,10 +32,11 @@ function InlineEditInputRenderer({
 	valuePath,
 	...otherProps
 }) {
+	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
+
 	const [InputRenderer, setInputRenderer] = useState(() =>
 		getInputRendererById(type)
 	);
-	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
 
 	useEffect(() => {
 		setInputRenderer(() => getInputRendererById(type));

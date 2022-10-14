@@ -21,8 +21,8 @@ import Cell from './Cell';
 import TableContext from './TableContext';
 
 function Row({children, className, paddingLeftCells}) {
-	const [{modifiedFields}] = useContext(ViewsContext);
 	const {columnNames, isFixed} = useContext(TableContext);
+	const [{modifiedFields}] = useContext(ViewsContext);
 
 	const marginLeft = useMemo(() => {
 		let margin = 0;

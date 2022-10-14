@@ -71,6 +71,7 @@ function ActionsDropdown({
 	setLoading,
 }) {
 	const context = useContext(FrontendDataSetContext);
+
 	const [menuActive, setMenuActive] = useState(false);
 
 	const inlineEditingAvailable =

@@ -25,9 +25,6 @@ import ViewsContext from '../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
 
 const CustomViewsControls = () => {
-	const [viewsDropdownActive, setViewsDropdownActive] = useState(false);
-	const [actionsDropdownActive, setActionsDropdownActive] = useState(false);
-
 	const {appURL, id: fdsName, namespace, portletId} = useContext(
 		FrontendDataSetContext
 	);
@@ -44,6 +41,9 @@ const CustomViewsControls = () => {
 		},
 		viewsDispatch,
 	] = useContext(ViewsContext);
+
+	const [viewsDropdownActive, setViewsDropdownActive] = useState(false);
+	const [actionsDropdownActive, setActionsDropdownActive] = useState(false);
 
 	const customViewLabelInputRef = useRef();
 

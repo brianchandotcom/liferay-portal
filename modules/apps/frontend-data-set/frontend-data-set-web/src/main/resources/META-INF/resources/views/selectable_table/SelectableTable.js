@@ -22,8 +22,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
-	const {namespace} = useContext(FrontendDataSetContext);
-	const {selectedItemsKey} = useContext(FrontendDataSetContext);
+	const {namespace, selectedItemsKey} = useContext(FrontendDataSetContext);
+
 	const [items, setItems] = useState(null);
 
 	useEffect(() => {

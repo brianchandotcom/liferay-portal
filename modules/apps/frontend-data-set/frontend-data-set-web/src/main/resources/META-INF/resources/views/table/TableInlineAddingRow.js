@@ -28,6 +28,7 @@ function TableInlineAddingRow({fields, selectable}) {
 		toggleItemInlineEdit,
 		updateItem,
 	} = useContext(FrontendDataSetContext);
+
 	const isMounted = useIsMounted();
 	const [loading, setLoading] = useState(false);
 	const itemHasChanged =

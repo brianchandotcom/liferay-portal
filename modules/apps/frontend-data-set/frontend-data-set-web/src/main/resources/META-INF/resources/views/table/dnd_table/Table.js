@@ -21,6 +21,7 @@ function Table({children, className}) {
 	const {draggingColumnName, isFixed, updateTableWidth} = useContext(
 		TableContext
 	);
+
 	const dndTableRef = useRef(null);
 
 	useLayoutEffect(() => {

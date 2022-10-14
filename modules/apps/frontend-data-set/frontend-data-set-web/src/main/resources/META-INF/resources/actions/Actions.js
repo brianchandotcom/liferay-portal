@@ -161,15 +161,15 @@ export function handleAction(
 }
 function Actions({actions, itemData, itemId}) {
 	const context = useContext(FrontendDataSetContext);
-	const {inlineEditingSettings, onActionDropdownItemClick} = context;
-
-	const [loading, setLoading] = useState(false);
-
 	const [
 		{
 			activeView: {quickActionsEnabled},
 		},
 	] = useContext(ViewsContext);
+
+	const {inlineEditingSettings, onActionDropdownItemClick} = context;
+
+	const [loading, setLoading] = useState(false);
 
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;

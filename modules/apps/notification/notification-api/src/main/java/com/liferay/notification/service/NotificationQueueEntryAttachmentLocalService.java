@@ -257,6 +257,11 @@ public interface NotificationQueueEntryAttachmentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNotificationQueueEntryAttachmentsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationQueueEntryAttachment>
+		getNotificationQueueEntryNotificationQueueEntryAttachments(
+			long notificationQueueEntryId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

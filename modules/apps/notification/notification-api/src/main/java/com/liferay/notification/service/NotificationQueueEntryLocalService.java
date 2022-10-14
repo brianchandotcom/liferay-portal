@@ -276,6 +276,10 @@ public interface NotificationQueueEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationQueueEntry> getUnsentNotificationEntries(
+		String type);
+
 	public NotificationQueueEntry resendNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException;

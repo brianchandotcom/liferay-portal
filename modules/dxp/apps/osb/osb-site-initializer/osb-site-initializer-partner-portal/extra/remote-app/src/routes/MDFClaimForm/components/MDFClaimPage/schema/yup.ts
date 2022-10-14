@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {array, mixed, number, object, string} from 'yup';
+import {array, boolean, mixed, number, object, string} from 'yup';
 
-const permitedDocument = {
+const validDocument = {
 	maxSize: 100000,
 	types: [
 		'image/jpg',
@@ -24,28 +24,9 @@ const permitedDocument = {
 
 const claimSchema = object({
 	activities: array()
-		.test(
-			'needAtLeatOneSelectedActivity',
-			'Need at least one selected activity',
-			(activities) =>
-				activities?.some((activity) => activity.selected) ? true : false
-		)
-		.test(
-			'needMoreThanOneSelectedActivity',
-			'Need at least one invoice uploaded',
-			(activities) =>
-				activities?.some(
-					(activity) =>
-						activity.selected &&
-						activity.budgets.some((budget: any) =>
-							budget.invoice ? true : false
-						)
-				)
-					? true
-					: false
-		)
 		.of(
 			object({
+				budgets: array().of(object({invoice: mixed()})),
 				listQualifiedLeads: mixed().when('selected', {
 					is: (selected: boolean) => selected,
 					then: (schema) =>
@@ -54,7 +35,7 @@ const claimSchema = object({
 								'fileSize',
 								'File Size is too large',
 								(listQualifiedLeads) =>
-									permitedDocument.types.includes(
+									validDocument.types.includes(
 										listQualifiedLeads?.type
 									)
 							)
@@ -62,17 +43,36 @@ const claimSchema = object({
 								'fileType',
 								'Unsupported File Format',
 								(listQualifiedLeads) =>
-									permitedDocument.types.includes(
+									validDocument.types.includes(
 										listQualifiedLeads?.type
 									)
 							)
 							.required('Required'),
 				}),
-				metrics: string().when('selected', {
-					is: (selected: boolean) => selected,
-					then: (schema) => schema.required('Required'),
-				}),
+				metrics: string().max(
+					350,
+					'You have exceeded the character limit'
+				),
+				selected: boolean(),
 			})
+		)
+		.test(
+			'needAtLeatOneSelectedActivity',
+			'Need at least one selected activity',
+			(activities) =>
+				Boolean(activities?.some((activity) => activity.selected))
+		)
+		.test(
+			'needMoreThanOneSelectedActivity',
+			'Need at least one invoice uploaded',
+			(activities) =>
+				Boolean(
+					activities?.some((activity) =>
+						Boolean(
+							activity.budgets?.some((budget) => budget.invoice)
+						)
+					)
+				)
 		),
 	reimbursementInvoice: mixed()
 		.required('Required')
@@ -80,10 +80,10 @@ const claimSchema = object({
 			'fileSize',
 			'File Size is too large',
 			(reimbursementInvoice) =>
-				reimbursementInvoice?.size <= permitedDocument.maxSize
+				reimbursementInvoice?.size <= validDocument.maxSize
 		)
 		.test('fileType', 'Unsupported File Format', (reimbursementInvoice) =>
-			permitedDocument.types.includes(reimbursementInvoice?.type)
+			validDocument.types.includes(reimbursementInvoice?.type)
 		),
 	totalClaimAmount: number()
 		.moreThan(0, 'Need be bigger than 0')

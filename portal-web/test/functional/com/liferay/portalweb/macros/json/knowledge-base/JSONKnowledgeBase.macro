@@ -180,6 +180,17 @@ definition {
 				kbArticleTitle = "${kbArticleTitle}");
 		}
 
+		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
+			var displayDateYear = DateUtil.getCurrentYear();
+
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
@@ -193,7 +204,9 @@ definition {
 				-d description= \
 				-d sourceURL= \
 				-d sections= \
-				-d selectedFileNames=
+				-d selectedFileNames= \
+				-d expirationDate=${expirationDate} \
+				-d reviewDate=${reviewDate}
 		''';
 
 		echo("## Adding a 'KBChildArticle' with the following info using JSONWS:");
@@ -272,6 +285,17 @@ definition {
 				kbChildArticleTitle = "${kbChildArticleTitle}");
 		}
 
+		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
+			var displayDateYear = DateUtil.getCurrentYear();
+
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
@@ -285,7 +309,9 @@ definition {
 				-d description= \
 				-d sourceURL= \
 				-d sections= \
-				-d selectedFileNames=
+				-d selectedFileNames= \
+				-d expirationDate=${expirationDate} \
+				-d reviewDate=${reviewDate}
 		''';
 
 		echo("## Adding a 'KBGrandchildArticle' with the following info using JSONWS:");
@@ -376,6 +402,17 @@ definition {
 				groupName = "${groupName}");
 		}
 
+		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
+			var displayDateYear = DateUtil.getCurrentYear();
+
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var reviewDate = "${displayDateYear}-01-01T01:01:00Z";
+			var displayDateYear = ${displayDateYear} + 1;
+
+			var expirationDate = "${displayDateYear}-01-01T01:01:00Z";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbarticle/update-kb-article \
 				-u test@liferay.com:test \
@@ -387,6 +424,8 @@ definition {
 				-d sections= \
 				-d selectedFileNames= \
 				-d removeFileEntryIds= \
+				-d expirationDate=${expirationDate} \
+				-d reviewDate=${reviewDate} \
 				-d serviceContext=${serviceContext}
 		''';
 

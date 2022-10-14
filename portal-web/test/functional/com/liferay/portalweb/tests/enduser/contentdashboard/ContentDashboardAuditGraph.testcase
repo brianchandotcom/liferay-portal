@@ -355,7 +355,7 @@ definition {
 		}
 
 		task ("Prioritize stage vocabulary") {
-			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
+			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
@@ -444,7 +444,7 @@ definition {
 		}
 
 		task ("Prioritize stage vocabulary") {
-			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
+			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
@@ -800,14 +800,14 @@ definition {
 		}
 
 		task ("Check which vocabulary is displayed in x-axis") {
-			ContentDashboard.setVocabularyInUseSecondPosition(vocabularyName = "Stage");
+			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Stage");
 
 			AssertTextPresent(
 				auditGraphCheckboxName = "Stage 1",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
 				value1 = "WC Title");
 
-			ContentDashboard.setVocabularyInUseSecondPosition(vocabularyName = "Audience");
+			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Audience");
 
 			AssertTextPresent(
 				auditGraphCheckboxName = "Audience 1",
@@ -834,14 +834,14 @@ definition {
 		}
 
 		task ("Check which vocabulary is displayed in x-axis") {
-			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
+			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
-			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Audience");
+			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Audience");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",

@@ -2181,7 +2181,8 @@ public class ListTypeDefinitionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof ListTypeDefinition) {
@@ -2296,7 +2297,7 @@ public class ListTypeDefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);

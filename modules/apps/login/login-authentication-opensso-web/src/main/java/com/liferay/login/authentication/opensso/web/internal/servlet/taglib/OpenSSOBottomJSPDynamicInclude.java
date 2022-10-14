@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -126,9 +125,6 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private OpenSSO _openSSO;
 
 	@Reference
 	private Portal _portal;

@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Site Initializer Raylife AP
 Bundle-SymbolicName: com.liferay.site.initializer.raylife.ap
 Bundle-Version: 1.0.46
+Liferay-Site-Initializer-Feature-Flag: LPS-165493
 Liferay-Site-Initializer-Name: Raylife AP
 Provide-Capability: liferay.site.initializer
 Web-ContextPath: /site-initializer-raylife-ap

@@ -305,7 +305,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 		OrganizationServiceUtil.updateOrganization(
 			organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
-			organization.getType(), 0, 0, organization.getStatusId(),
+			organization.getType(), 0, 0, organization.getStatusListTypeId(),
 			organization.getComments(), false,
 			ServiceContextTestUtil.getServiceContext());
 

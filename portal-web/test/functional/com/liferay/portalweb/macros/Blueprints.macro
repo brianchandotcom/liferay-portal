@@ -303,6 +303,17 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
+	macro viewLocalizationLabel {
+		Click(
+			key_currentLocale = StringUtil.lowerCase("${currentLocale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		AssertTextEquals(
+			key_locale = "${locale}",
+			locator1 = "Blueprints#LANGUAGE_LABEL",
+			value1 = "${label}");
+	}
+
 	macro viewNoEntry {
 		AssertElementNotPresent(
 			entryTitle = "${title}",

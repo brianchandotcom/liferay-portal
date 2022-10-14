@@ -802,15 +802,6 @@ public class DDLRecordSetLocalServiceImpl
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	private DDMStructureVersion _getDDMStructureVersion(long ddmStructureId)
-		throws PortalException {
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			ddmStructureId);
-
-		return ddmStructure.getStructureVersion();
-	}
-
 	private long _getDDMStructureVersionId(long ddmStructureId)
 		throws PortalException {
 

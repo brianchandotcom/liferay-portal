@@ -158,13 +158,40 @@ export default function AddObjectField({
 		return () => Liferay.detach('addObjectField');
 	}, []);
 
+	const applyFeatureFlag = () => {
+		return objectFieldTypes.filter((objectFieldType) => {
+			if (
+				!Liferay.FeatureFlags['LPS-164948'] &&
+				!Liferay.FeatureFlags['LPS-158776']
+			) {
+				return (
+					objectFieldType.businessType !== 'Formula' &&
+					objectFieldType.businessType !== 'MultiSelectPicklist'
+				);
+			}
+
+			if (!Liferay.FeatureFlags['LPS-164948']) {
+				return objectFieldType.businessType !== 'Formula';
+			}
+
+			if (!Liferay.FeatureFlags['LPS-158776']) {
+				return objectFieldType.businessType !== 'MultiSelectPicklist';
+			}
+		});
+	};
+
 	return (
 		<ClayModalProvider>
 			{isVisible && (
 				<ModalAddObjectField
 					apiURL={apiURL}
 					objectDefinitionId={objectDefinitionId}
-					objectFieldTypes={objectFieldTypes}
+					objectFieldTypes={
+						!Liferay.FeatureFlags['LPS-164948'] ||
+						!Liferay.FeatureFlags['LPS-158776']
+							? applyFeatureFlag()
+							: objectFieldTypes
+					}
 					objectName={objectName}
 					observer={observer}
 					onClose={onClose}

@@ -12,23 +12,25 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		task ("Given Custom view enabled for a dataset display instance") {
+			User.firstLoginPG();
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Frontend Data Set Test Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Frontend Data Set Test Page",
-			widgetName = "Frontend Data Set Sample");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				widgetName = "Frontend Data Set Sample");
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "Frontend Data Set Test Page",
-			layoutTemplate = "1 Column");
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+		}
 	}
 
 	tearDown {
@@ -129,11 +131,11 @@ definition {
 		}
 
 		task ("Then A new custom view is created, and selected as current view") {
-			FDSCustomView.assertCustomView(key_nameCustomView = "FrontendDataSet View 2");
+			FDSCustomView.verifyCustomView(key_nameCustomView = "FrontendDataSet View 2");
 
 			FDSCustomView.changeCustomView(key_optionName = "FrontendDataSet View");
 
-			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
+			FDSCustomView.verifyFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
 
 			FDSCustomView.viewColumn(key_field = "Description");
 
@@ -141,14 +143,14 @@ definition {
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25");
 
-			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Red");
+			FDSCustomView.verifyFilterSummaryLabel(key_filter = "Color: Red");
 
 			FDSCustomView.viewNoColumn(key_field = "Description");
 
 			FDSCustomView.compareValue(
-				key_column = "2",
-				key_index1 = "1",
-				key_index2 = "2");
+				key_columnIndex = "2",
+				key_valueIndex1 = "1",
+				key_valueIndex2 = "2");
 		}
 	}
 

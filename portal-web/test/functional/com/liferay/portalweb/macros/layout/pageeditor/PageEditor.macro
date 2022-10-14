@@ -4207,6 +4207,18 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		PageEditor.waitForAutoSave();
 	}
 
+	macro restoreSpacing {
+		Click(
+			ariaLabel = "${fieldLabel}",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		Click(
+			key_text = "restore",
+			locator1 = "MenuItem#ANY_ICON");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro searchFragmentViaSidebar {
 		WaitForPageLoad();
 

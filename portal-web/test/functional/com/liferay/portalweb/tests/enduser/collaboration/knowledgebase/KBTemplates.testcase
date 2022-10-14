@@ -96,6 +96,28 @@ definition {
 		KBTemplate.viewTemplatesThroughPageTreePanel(kbTemplatesList = "Knowledge Base Template Title");
 	}
 
+	@description = "This test ensures that users can delete the kb template from the center pane."
+	@priority = "5"
+	test CanDeleteTemplateEntryViaCenterPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.deleteTemplate(kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.viewNoTemplates();
+	}
+
 	@description = "This test ensures that users can delete the kb template from the navigation pane."
 	@priority = "5"
 	test CanDeleteTemplateEntryViaNavigationPane {
@@ -147,6 +169,43 @@ definition {
 		KBTemplate.viewTemplatesThroughPageTreePanel(kbTemplatesList = "Knowledge Base Template Title Edit");
 	}
 
+	@description = "This test ensures that users can edit the kb template permissions from the center pane."
+	@priority = "5"
+	test CanEditTemplatePermissionsViaCenterPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "Knowledge Base Template Title");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "site member");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
+			kbTemplateTitle = "Knowledge Base Template Title",
+			menuItem = "Permissions");
+
+		IFrame.selectPermissionsFrame();
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "site member");
+	}
+
 	@description = "This test ensures that users can edit the kb template permissions from the navigation pane."
 	@priority = "5"
 	test CanEditTemplatePermissionsViaNavigationPane {
@@ -182,6 +241,50 @@ definition {
 		PermissionsInline.viewPermissionsChecked(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "site member");
+	}
+
+	@description = "This test ensures that users can edit the kb template from the center pane."
+	@priority = "5"
+	test CanEditTemplateViaCenterPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.editTemplate(
+			kbTemplateTitle = "Knowledge Base Template Title",
+			kbTemplateTitleEdit = "Knowledge Base Template Title Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Template Title Edit");
+
+		KBTemplate.viewTemplatesThroughPageTreePanel(kbTemplatesList = "Knowledge Base Template Title Edit");
+	}
+
+	@description = "This test ensures that users can preview the kb template from the center pane."
+	@priority = "5"
+	test CanPreviewTemplateViaCenterPane {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.previewTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
 	}
 
 	@description = "This test ensures that the empty message can be displayed in the pane."	

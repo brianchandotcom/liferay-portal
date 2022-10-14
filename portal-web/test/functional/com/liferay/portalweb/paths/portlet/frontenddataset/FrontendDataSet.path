@@ -194,11 +194,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BTN</td>
-	<td>//*[@class="btn btn-primary"]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COLUMN_NAME</td>
 	<td>//div[contains(text(),${columnName})]</td>
 	<td></td>

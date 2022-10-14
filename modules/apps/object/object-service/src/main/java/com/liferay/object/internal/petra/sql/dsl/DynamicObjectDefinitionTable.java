@@ -33,7 +33,6 @@ import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -114,8 +113,7 @@ public class DynamicObjectDefinitionTable
 			Column.FLAG_PRIMARY);
 
 		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(
-					objectField.getBusinessType(),
+			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
 				continue;
@@ -142,8 +140,7 @@ public class DynamicObjectDefinitionTable
 		sb.append(" LONG not null primary key");
 
 		for (ObjectField objectField : _objectFields) {
-			if (Objects.equals(
-					objectField.getBusinessType(),
+			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
 				continue;

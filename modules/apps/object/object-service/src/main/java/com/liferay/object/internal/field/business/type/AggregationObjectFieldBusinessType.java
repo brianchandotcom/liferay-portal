@@ -289,8 +289,7 @@ public class AggregationObjectFieldBusinessType
 				GetterUtil.getString(objectFilter.getFilterBy()));
 
 			if ((objectField == null) ||
-				Objects.equals(
-					objectField.getBusinessType(),
+				objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
 				throw new ObjectFieldSettingValueException.InvalidValue(

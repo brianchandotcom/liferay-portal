@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,8 +75,7 @@ public class ObjectFieldSettingLocalServiceImpl
 		objectFieldSettingPersistence.removeByObjectFieldId(
 			objectField.getObjectFieldId());
 
-		if (Objects.equals(
-				objectField.getBusinessType(),
+		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
 			_objectFilterLocalService.deleteObjectFieldObjectFilter(
@@ -106,8 +104,7 @@ public class ObjectFieldSettingLocalServiceImpl
 		List<ObjectFieldSetting> objectFieldSettings =
 			objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
 
-		if (!Objects.equals(
-				objectField.getBusinessType(),
+		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
 			return objectFieldSettings;

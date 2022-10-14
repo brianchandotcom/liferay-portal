@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -221,10 +220,10 @@ public class AuthenticatedSessionManagerImpl
 			}
 		}
 
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, companyIdCookie, secure);
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, idCookie, secure);
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, companyIdCookie,
+			httpServletRequest, httpServletResponse, secure);
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, idCookie,
+			httpServletRequest, httpServletResponse, secure);
 
 		if (rememberMe) {
 			Cookie loginCookie = new Cookie(CookiesConstants.NAME_LOGIN, login);
@@ -236,8 +235,8 @@ public class AuthenticatedSessionManagerImpl
 			loginCookie.setMaxAge(loginMaxAge);
 			loginCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(
-				httpServletRequest, httpServletResponse, loginCookie, secure);
+			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, loginCookie,
+				httpServletRequest, httpServletResponse, secure);
 
 			Cookie passwordCookie = new Cookie(
 				CookiesConstants.NAME_PASSWORD,
@@ -250,8 +249,8 @@ public class AuthenticatedSessionManagerImpl
 			passwordCookie.setMaxAge(loginMaxAge);
 			passwordCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(
-				httpServletRequest, httpServletResponse, passwordCookie,
+			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, passwordCookie,
+				httpServletRequest, httpServletResponse,
 				secure);
 
 			Cookie rememberMeCookie = new Cookie(
@@ -264,8 +263,8 @@ public class AuthenticatedSessionManagerImpl
 			rememberMeCookie.setMaxAge(loginMaxAge);
 			rememberMeCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(
-				httpServletRequest, httpServletResponse, rememberMeCookie,
+			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,
+				httpServletRequest, httpServletResponse,
 				secure);
 		}
 	}

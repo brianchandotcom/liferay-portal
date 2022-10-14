@@ -19,10 +19,11 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -121,9 +122,10 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 			MessageContext messageContext = getMessageContext();
 
-			CookieKeys.addCookie(
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 				messageContext.getHttpServletRequest(),
-				messageContext.getHttpServletResponse(), cookie);
+				messageContext.getHttpServletResponse());
 
 			Map<String, String> extraProperties =
 				serverAuthorizationCodeGrant.getExtraProperties();
@@ -270,9 +272,9 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 			MessageContext messageContext = getMessageContext();
 
-			CookieKeys.addCookie(
+			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 				messageContext.getHttpServletRequest(),
-				messageContext.getHttpServletResponse(), cookie);
+				messageContext.getHttpServletResponse());
 
 			Map<String, String> extraProperties =
 				oAuthRedirectionState.getExtraProperties();

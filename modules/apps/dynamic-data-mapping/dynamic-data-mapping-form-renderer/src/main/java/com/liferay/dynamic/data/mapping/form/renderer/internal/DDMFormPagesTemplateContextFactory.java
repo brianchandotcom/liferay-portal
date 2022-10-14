@@ -39,11 +39,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -169,6 +171,16 @@ public class DDMFormPagesTemplateContextFactory {
 		List<Object> columnsTemplateContext = new ArrayList<>();
 
 		for (DDMFormLayoutColumn ddmFormLayoutColumn : ddmFormLayoutColumns) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-164998"))) {
+
+				List<String> ddmFormFieldNames =
+					ddmFormLayoutColumn.getDDMFormFieldNames();
+
+				ddmFormFieldNames.remove("headerText");
+				ddmFormFieldNames.remove("bodyText");
+			}
+
 			columnsTemplateContext.add(
 				_createColumnTemplateContext(ddmFormLayoutColumn));
 		}

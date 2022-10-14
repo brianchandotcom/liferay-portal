@@ -10,11 +10,11 @@
  */
 
 export default interface MDFClaimDocumentsDTO {
-	url?: string;
+	fileName?: string;
+	fileSize?: number;
 	r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId?: number;
 	r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId?: number;
 	r_mdfClaimToMdfClaimDocuments_c_mdfClaimId?: number;
 	type?: string;
-	fileName?: string;
-	fileSize?: number;
+	url?: string;
 }

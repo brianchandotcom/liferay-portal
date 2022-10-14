@@ -16,9 +16,9 @@ export default interface MDFClaimActivityDTO
 		MDFClaimActivity,
 		'metrics' | 'name' | 'selected' | 'totalCost'
 	> {
-	totalCost?: number;
-	name?: string;
 	metrics?: string;
-	r_mdfClaimToMdfClaimActivities_c_mdfClaimId?: number;
+	name?: string;
 	r_activityToMDFClaimActivities_c_activityId?: number;
+	r_mdfClaimToMdfClaimActivities_c_mdfClaimId?: number;
+	totalCost?: number;
 }

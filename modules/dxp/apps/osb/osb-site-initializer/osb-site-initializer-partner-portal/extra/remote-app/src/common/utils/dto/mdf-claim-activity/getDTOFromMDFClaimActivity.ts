@@ -19,8 +19,8 @@ export default function getDTOFromMDFClaimActivity(
 	return {
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
-		totalCost: mdfClaimActivity.totalCost,
-		r_mdfClaimToMdfClaimActivities_c_mdfClaimId: mdfClaimId,
 		r_activityToMDFClaimActivities_c_activityId: mdfClaimActivity.id,
+		r_mdfClaimToMdfClaimActivities_c_mdfClaimId: mdfClaimId,
+		totalCost: mdfClaimActivity.totalCost,
 	};
 }

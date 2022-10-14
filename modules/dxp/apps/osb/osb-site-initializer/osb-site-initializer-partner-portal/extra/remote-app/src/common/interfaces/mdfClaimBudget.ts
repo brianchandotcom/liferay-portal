@@ -12,8 +12,8 @@
 import LiferayObject from './liferayObject';
 
 export default interface MDFClaimBudget extends Partial<LiferayObject> {
-	id?: number;
 	claimAmount: number;
 	expenseName?: string;
+	id?: number;
 	invoice?: File;
 }

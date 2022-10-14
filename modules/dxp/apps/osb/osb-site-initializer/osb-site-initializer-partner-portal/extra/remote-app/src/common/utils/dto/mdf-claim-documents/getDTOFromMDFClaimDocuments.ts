@@ -20,12 +20,12 @@ export function getDTOFromMDFClaimDocuments(
 	type?: string
 ): MDFClaimDocumentsDTO {
 	return {
-		url,
+		fileName: file?.name,
+		fileSize: file?.size,
 		r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId: activityId,
 		r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId: budgetId,
 		r_mdfClaimToMdfClaimDocuments_c_mdfClaimId: claimId,
 		type,
-		fileName: file?.name,
-		fileSize: file?.size,
+		url,
 	};
 }

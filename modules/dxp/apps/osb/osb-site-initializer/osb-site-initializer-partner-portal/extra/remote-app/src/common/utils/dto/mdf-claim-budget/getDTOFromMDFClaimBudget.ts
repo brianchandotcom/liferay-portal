@@ -18,10 +18,10 @@ export default function getDTOFromMDFClaimBudget(
 	mdfClaimId?: number
 ): MDFClaimBudgetDTO {
 	return {
-		expenseName: budget.expenseName,
 		claimAmount: budget.claimAmount,
+		expenseName: budget.expenseName,
 		r_budgetToMdfClaimBudgets_c_budgetId: budget.id,
-		r_mdfClaimToMdfClaimBudgets_c_mdfClaimId: mdfClaimId,
 		r_mdfClaimActivityToMdfClaimBudgets_c_mdfClaimActivityId: activityId,
+		r_mdfClaimToMdfClaimBudgets_c_mdfClaimId: mdfClaimId,
 	};
 }

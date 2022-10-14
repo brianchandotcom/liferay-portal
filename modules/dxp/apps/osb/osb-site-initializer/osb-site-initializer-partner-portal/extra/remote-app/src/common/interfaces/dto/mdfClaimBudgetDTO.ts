@@ -13,6 +13,6 @@ import MDFClaimBudget from '../mdfClaimBudget';
 
 export default interface MDFClaimBudgetDTO extends MDFClaimBudget {
 	r_budgetToMdfClaimBudgets_c_budgetId?: number;
-	r_mdfClaimToMdfClaimBudgets_c_mdfClaimId?: number;
 	r_mdfClaimActivityToMdfClaimBudgets_c_mdfClaimActivityId?: number;
+	r_mdfClaimToMdfClaimBudgets_c_mdfClaimId?: number;
 }

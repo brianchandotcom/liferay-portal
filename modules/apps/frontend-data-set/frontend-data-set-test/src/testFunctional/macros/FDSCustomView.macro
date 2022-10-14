@@ -40,9 +40,9 @@ definition {
 			value1 = "${key_nameCustomView}");
 	}
 
-	macro assertFilterSummaryLabel {
-		AssertElementPresent(
-			key_filter = "${key_filter}",
+	macro verifyFilterSummaryLabel {
+		VerifyElementPresent(
+			value1 = "${key_filter}",
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 	}
 
@@ -55,16 +55,16 @@ definition {
 	}
 
 	macro compareValue {
-		var dataSetId1 = FDSCustomView.getIdByPosition(
-			column = "${key_column}",
-			index = "${key_index1}");
-		var dataSetId2 = FDSCustomView.getIdByPosition(
-			column = "${key_column}",
-			index = "${key_index2}");
+		var dataSetValue1 = FDSCustomView.getValueByPosition(
+			columnIndex = "${key_columnIndex}",
+			valueIndex = "${key_valueIndex1}");
+		var dataSetValue2 = FDSCustomView.getValueByPosition(
+			columnIndex = "${key_columnIndex}",
+			valueIndex = "${key_valueIndex2}");
 
 		TestUtils.isGreaterThan(
-			actual = "${dataSetId1}",
-			expected = "${dataSetId2}");
+			actual = "${dataSetValue1}",
+			expected = "${dataSetValue2}");
 	}
 
 	macro createNewView {
@@ -83,12 +83,12 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro getIdByPosition {
-		var key_column = "${column}";
-		var key_index = "${index}";
-		var dataSetId = selenium.getText("FrontendDataSet#TABLE_CELL");
+	macro getValueByPosition {
+		var key_columnIndex = "${columnIndex}";
+		var key_valueIndex = "${valueIndex}";
+		var dataSetValue = selenium.getText("FrontendDataSet#TABLE_CELL");
 
-		return "${dataSetId}";
+		return "${dataSetValue}";
 	}
 
 	macro saveCustomView {
@@ -126,7 +126,7 @@ definition {
 	}
 
 	macro viewColumn {
-		AssertElementPresent(
+		VerifyElementPresent(
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}

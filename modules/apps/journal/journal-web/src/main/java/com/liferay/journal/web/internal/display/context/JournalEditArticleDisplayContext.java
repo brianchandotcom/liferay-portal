@@ -277,8 +277,12 @@ public class JournalEditArticleDisplayContext {
 			}
 		).put(
 			"sitesCount",
-			() -> GroupServiceUtil.getGroupsCount(
-				_themeDisplay.getCompanyId(), 0, Boolean.TRUE)
+			() -> {
+				int groupsCount = GroupServiceUtil.getGroupsCount(
+					_themeDisplay.getCompanyId(), 0, Boolean.TRUE);
+
+				return groupsCount - 1;
+			}
 		).build();
 	}
 

@@ -15,7 +15,7 @@
 
 <tr>
 	<td>TEMPLATE_TITLE</td>
-	<td>//div[@class='kb-title']</td>
+	<td>//div[@class='kb-article-title']</td>
 	<td></td>
 </tr>
 <tr>

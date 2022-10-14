@@ -111,6 +111,7 @@ function Root({children}) {
 function CollectionItem({children}) {
 	return <div>{children}</div>;
 }
+
 function Fragment({item}) {
 	const ref = useRef(null);
 	const selectItem = useSelectItem();
@@ -135,9 +136,11 @@ function Fragment({item}) {
 		};
 
 		element.addEventListener('click', handler);
+		element.setAttribute('inert', '');
 
 		return () => {
 			element.removeEventListener('click', handler);
+			element.removeAttribute('inert');
 		};
 	});
 

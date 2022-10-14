@@ -105,6 +105,20 @@ public class ListTypeDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (listTypeDefinition.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(listTypeDefinition.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (listTypeDefinition.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -213,6 +227,15 @@ public class ListTypeDefinitionSerDes {
 					listTypeDefinition.getDateModified()));
 		}
 
+		if (listTypeDefinition.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(listTypeDefinition.getExternalReferenceCode()));
+		}
+
 		if (listTypeDefinition.getId() == null) {
 			map.put("id", null);
 		}
@@ -282,6 +305,14 @@ public class ListTypeDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

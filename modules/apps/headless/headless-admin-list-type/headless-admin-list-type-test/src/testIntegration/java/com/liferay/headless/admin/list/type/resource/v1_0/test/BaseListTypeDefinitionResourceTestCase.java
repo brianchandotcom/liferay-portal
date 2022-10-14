@@ -188,6 +188,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		ListTypeDefinition listTypeDefinition = randomListTypeDefinition();
 
+		listTypeDefinition.setExternalReferenceCode(regex);
 		listTypeDefinition.setName(regex);
 
 		String json = ListTypeDefinitionSerDes.toJSON(listTypeDefinition);
@@ -196,6 +197,8 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		listTypeDefinition = ListTypeDefinitionSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, listTypeDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, listTypeDefinition.getName());
 	}
 
@@ -944,6 +947,16 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (listTypeDefinition.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("listTypeEntries", additionalAssertFieldName)) {
 				if (listTypeDefinition.getListTypeEntries() == null) {
 					valid = false;
@@ -1089,6 +1102,19 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						listTypeDefinition1.getDateModified(),
 						listTypeDefinition2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						listTypeDefinition1.getExternalReferenceCode(),
+						listTypeDefinition2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1311,6 +1337,15 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(listTypeDefinition.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1380,6 +1415,8 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

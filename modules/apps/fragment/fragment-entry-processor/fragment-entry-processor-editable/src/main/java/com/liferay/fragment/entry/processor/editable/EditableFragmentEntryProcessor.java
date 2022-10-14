@@ -27,6 +27,8 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,10 +57,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Pavel Savinov
@@ -73,9 +76,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (Map.Entry<String, EditableElementParser> editableElementParser :
-				_editableElementParsers.entrySet()) {
-
+		for (String key : _editableElementParserServiceTrackerMap.keySet()) {
 			StringBundler sb = new StringBundler(
 				2 + (5 * _REQUIRED_ATTRIBUTE_NAMES.length));
 
@@ -89,7 +90,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				String value = StringPool.BLANK;
 
 				if (attributeName.equals("type")) {
-					value = editableElementParser.getKey();
+					value = key;
 				}
 
 				sb.append(value);
@@ -102,7 +103,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				JSONUtil.put(
 					"content", sb.toString()
 				).put(
-					"name", "lfr-editable:" + editableElementParser.getKey()
+					"name", "lfr-editable:" + key
 				));
 		}
 
@@ -113,11 +114,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public JSONArray getDataAttributesJSONArray() {
 		JSONArray jsonArray = JSONUtil.put("lfr-editable-id");
 
-		for (Map.Entry<String, EditableElementParser> editableElementParser :
-				_editableElementParsers.entrySet()) {
-
-			jsonArray.put(
-				"lfr-editable-type:" + editableElementParser.getKey());
+		for (String key : _editableElementParserServiceTrackerMap.keySet()) {
+			jsonArray.put("lfr-editable-type:" + key);
 		}
 
 		return jsonArray;
@@ -315,7 +313,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				}
 
 				EditableElementMapper editableElementMapper =
-					_editableElementMappers.get(mapperType);
+					_editableElementMapperServiceTrackerMap.getService(
+						mapperType);
 
 				if (editableElementMapper != null) {
 					editableElementMapper.map(
@@ -365,50 +364,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return bodyElement.outerHtml();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	public void registerEditableElementMapper(
-		EditableElementMapper editableElementMapper,
-		Map<String, Object> properties) {
-
-		String type = (String)properties.get("type");
-
-		_editableElementMappers.put(type, editableElementMapper);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	public void registerEditableElementParser(
-		EditableElementParser editableElementParser,
-		Map<String, Object> properties) {
-
-		String editableTagName = (String)properties.get("type");
-
-		_editableElementParsers.put(editableTagName, editableElementParser);
-	}
-
-	public void unregisterEditableElementMapper(
-		EditableElementMapper editableElementMapper,
-		Map<String, Object> properties) {
-
-		String type = (String)properties.get("type");
-
-		_editableElementMappers.remove(type);
-	}
-
-	public void unregisterEditableElementParser(
-		EditableElementParser editableElementParser,
-		Map<String, Object> properties) {
-
-		String editableTagName = (String)properties.get("type");
-
-		_editableElementParsers.remove(editableTagName);
-	}
-
 	@Override
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
@@ -423,6 +378,23 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		_validateDuplicatedIds(elements);
 
 		_validateEditableElements(elements);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_editableElementParserServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, EditableElementParser.class, "type");
+
+		_editableElementMapperServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, EditableElementMapper.class, "type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_editableElementParserServiceTrackerMap.close();
+		_editableElementMapperServiceTrackerMap.close();
 	}
 
 	private JSONObject _getDefaultEditableValuesJSONObject(String html) {
@@ -471,7 +443,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		String type = EditableFragmentEntryProcessorUtil.getElementType(
 			element);
 
-		return _editableElementParsers.get(type);
+		return _editableElementParserServiceTrackerMap.getService(type);
 	}
 
 	private boolean _hasNestedWidget(Element element) {
@@ -613,10 +585,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
 
-	private final Map<String, EditableElementMapper> _editableElementMappers =
-		new HashMap<>();
-	private final Map<String, EditableElementParser> _editableElementParsers =
-		new HashMap<>();
+	private ServiceTrackerMap<String, EditableElementMapper>
+		_editableElementMapperServiceTrackerMap;
+	private ServiceTrackerMap<String, EditableElementParser>
+		_editableElementParserServiceTrackerMap;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

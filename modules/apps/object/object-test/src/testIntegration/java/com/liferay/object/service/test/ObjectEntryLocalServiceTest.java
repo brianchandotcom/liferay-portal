@@ -254,14 +254,14 @@ public class ObjectEntryLocalServiceTest {
 				_objectDefinition.getObjectDefinitionId());
 
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false, false,
 			Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
@@ -271,7 +271,7 @@ public class ObjectEntryLocalServiceTest {
 				_createObjectFieldSetting("fileSource", "userComputer"),
 				_createObjectFieldSetting("maximumFileSize", "100")));
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE, null, true, false, null,
@@ -1328,7 +1328,7 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getCompanyId(), User.class.getName());
 
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.DB_TYPE_LONG, null,
@@ -1337,7 +1337,7 @@ public class ObjectEntryLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"longField", false, false, Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null,

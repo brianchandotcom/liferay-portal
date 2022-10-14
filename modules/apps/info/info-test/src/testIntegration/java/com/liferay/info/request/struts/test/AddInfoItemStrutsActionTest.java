@@ -234,7 +234,8 @@ public class AddInfoItemStrutsActionTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			_user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			null, _user.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, true, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

@@ -550,7 +550,7 @@ public class ObjectFieldLocalServiceTest {
 			_hasColumn(objectDefinition.getDBTableName(), "able_"));
 
 		ableObjectField = _objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
@@ -570,7 +570,7 @@ public class ObjectFieldLocalServiceTest {
 			_hasColumn(objectDefinition.getDBTableName(), "able_"));
 
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
@@ -645,7 +645,7 @@ public class ObjectFieldLocalServiceTest {
 		}
 
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
@@ -687,7 +687,7 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
@@ -765,7 +765,7 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_objectFieldLocalService.addCustomObjectField(
-				TestPropsValues.getUserId(), 0,
+				null, TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 				ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
@@ -783,7 +783,7 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_objectFieldLocalService.addCustomObjectField(
-				TestPropsValues.getUserId(), 0,
+				null, TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
@@ -804,7 +804,7 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_objectFieldLocalService.addCustomObjectField(
-				TestPropsValues.getUserId(), 0,
+				null, TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
@@ -824,7 +824,7 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_objectFieldLocalService.addCustomObjectField(
-				TestPropsValues.getUserId(), 0,
+				null, TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
@@ -842,7 +842,7 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_objectFieldLocalService.addCustomObjectField(
-				TestPropsValues.getUserId(), 0,
+				null, TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
@@ -863,7 +863,7 @@ public class ObjectFieldLocalServiceTest {
 		// Business type attachment
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
@@ -988,7 +988,8 @@ public class ObjectFieldLocalServiceTest {
 		).build();
 
 		objectField = _objectFieldLocalService.addCustomObjectField(
-			objectField.getUserId(), objectField.getListTypeDefinitionId(),
+			objectField.getExternalReferenceCode(), objectField.getUserId(),
+			objectField.getListTypeDefinitionId(),
 			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
 			objectField.getDBType(), objectField.getDefaultValue(),
 			objectField.isIndexed(), objectField.isIndexedAsKeyword(),

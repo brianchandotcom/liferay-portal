@@ -128,7 +128,8 @@ public class SalesforceObjectEntryManagerImplTest {
 				Collections.emptyList());
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			_user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+			null, _user.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap("Title"), "title", false, false,

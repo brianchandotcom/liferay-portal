@@ -189,8 +189,8 @@ public class ObjectEntryExtensionProviderTest {
 		throws Exception {
 
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0, objectDefinitionId, businessType,
-			dbType, null, RandomTestUtil.randomBoolean(),
+			null, TestPropsValues.getUserId(), 0, objectDefinitionId,
+			businessType, dbType, null, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, required, false, Collections.emptyList());

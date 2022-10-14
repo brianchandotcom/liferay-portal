@@ -414,7 +414,7 @@ public class ObjectDefinitionServiceTest {
 
 			ObjectField objectField =
 				_objectFieldLocalService.addCustomObjectField(
-					ownerUser.getUserId(), 0,
+					null, ownerUser.getUserId(), 0,
 					objectDefinition.getObjectDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, null, false, false,

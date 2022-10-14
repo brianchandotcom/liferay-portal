@@ -763,6 +763,7 @@ public class DefaultObjectEntryManagerImplTest {
 		throws Exception {
 
 		_objectFieldService.addCustomObjectField(
+			objectField.getExternalReferenceCode(),
 			objectField.getListTypeDefinitionId(),
 			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
 			objectField.getDBType(), objectField.getDefaultValue(),

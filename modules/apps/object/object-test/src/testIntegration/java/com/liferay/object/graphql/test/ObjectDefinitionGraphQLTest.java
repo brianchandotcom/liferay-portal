@@ -101,7 +101,7 @@ public class ObjectDefinitionGraphQLTest {
 				Collections.emptyList());
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, true, "",
@@ -109,7 +109,7 @@ public class ObjectDefinitionGraphQLTest {
 			_objectFieldName, false, false, Collections.emptyList());
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			listTypeDefinition.getListTypeDefinitionId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,

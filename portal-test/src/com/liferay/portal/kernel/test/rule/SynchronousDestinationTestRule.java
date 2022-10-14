@@ -216,9 +216,6 @@ public class SynchronousDestinationTestRule
 				}
 			}
 
-			replaceDestination(DestinationNames.SEARCH_READER);
-			replaceDestination(DestinationNames.SEARCH_WRITER);
-
 			Destination schedulerDestination = _destinations.get(
 				DestinationNames.SCHEDULER_DISPATCH);
 

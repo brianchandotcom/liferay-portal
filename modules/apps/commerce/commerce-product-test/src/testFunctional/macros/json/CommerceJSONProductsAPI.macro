@@ -411,6 +411,26 @@ definition {
 		return "${productImageIds}";
 	}
 
+	macro _getCommerceProductImageURL {
+		Variables.assertDefined(parameterList = "${channelId},${productId}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var productImageUrl = JSONCurlUtil.get("${curl}", "$..['urlImage']");
+
+		return "${productImageUrl}";
+	}
+
 	macro _getCommerceProductOptionId {
 		Variables.assertDefined(parameterList = "${productName},${productOptionName}");
 

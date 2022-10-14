@@ -74,6 +74,7 @@ export function ModalAddDefaultSortColumn({
 			(objectViewColumn) =>
 				!objectViewColumn.defaultSort &&
 				objectViewColumn.objectFieldBusinessType !== 'Aggregation' &&
+				objectViewColumn.objectFieldBusinessType !== 'Formula' &&
 				objectViewColumn.objectFieldBusinessType !== 'Relationship'
 		);
 

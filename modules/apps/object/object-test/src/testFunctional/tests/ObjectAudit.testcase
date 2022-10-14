@@ -909,33 +909,49 @@ definition {
 	@description = "LPS-149508 - Verify it's when add, delete or update a field the user can view two Resource Name (ObjectField and ObjectFieldSetting) created"
 	@priority = "4"
 	test CanViewTwoAddsWhenAddOneField {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153587",
-			objectName = "CustomObject153587",
-			pluralLabelName = "Custom Objects 153587");
+		task ("Create Custom Object and go to it") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 153587",
+				objectName = "CustomObject153587",
+				pluralLabelName = "Custom Objects 153587");
 
-		ObjectAdmin.openObjectAdmin();
+			ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153587");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 153587");
+		}
 
-		ObjectAdmin.goToFieldsTab();
+		task ("Add Custom Field") {
+			ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Field",
-			fieldType = "Text");
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Field",
+				fieldType = "Text");
+		}
 
-		Audit.openAuditAdmin();
+		task ("Assert Custom Field - This way get more time to see 'Seconds Ago'") {
+			Refresh();
 
-		for (var resourceNames : list "ObjectField,ObjectFieldSetting") {
-			Audit.viewAuditEntries(
-				clientIP = "127.0.0.1",
-				createDate = "Seconds Ago",
-				id = "0",
-				position = "1",
-				resourceAction = "ADD",
-				resourceID = "",
-				resourceName = "${resourceNames}",
-				userName = "");
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Field",
+				fieldType = "Text");
+
+			Navigator.openURL();
+		}
+
+		task ("Go to Audit and assert fields") {
+			Audit.openAuditAdmin();
+
+			for (var resourceNames : list "ObjectField,ObjectFieldSetting") {
+				Audit.viewAuditEntries(
+					clientIP = "127.0.0.1",
+					createDate = "Seconds Ago",
+					id = "0",
+					position = "1",
+					resourceAction = "ADD",
+					resourceID = "",
+					resourceName = "${resourceNames}",
+					userName = "");
+			}
 		}
 	}
 

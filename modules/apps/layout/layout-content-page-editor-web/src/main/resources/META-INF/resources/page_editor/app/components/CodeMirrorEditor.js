@@ -67,10 +67,25 @@ const CodeMirrorEditor = ({
 
 	useEffect(() => {
 		if (ref.current) {
+			const hasEnabledTabKey = ({state: {keyMaps}}) =>
+				keyMaps.every((key) => key.name !== 'tabKey');
+
 			const codeMirror = CodeMirror(ref.current, {
 				autoCloseTags: true,
 				autoRefresh: true,
 				extraKeys: {
+					'Ctrl-M'(cm) {
+						if (hasEnabledTabKey(cm)) {
+							cm.addKeyMap({
+								'Shift-Tab': false,
+								'Tab': false,
+								'name': 'tabKey',
+							});
+						}
+						else {
+							cm.removeKeyMap('tabKey');
+						}
+					},
 					'Ctrl-Space': 'autocomplete',
 				},
 				globalVars: true,
@@ -90,6 +105,16 @@ const CodeMirrorEditor = ({
 			});
 
 			codeMirror.setSize(null, '100%');
+
+			codeMirror.on('focus', (cm) => {
+				if (hasEnabledTabKey(cm)) {
+					cm.addKeyMap({
+						'Shift-Tab': false,
+						'Tab': false,
+						'name': 'tabKey',
+					});
+				}
+			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

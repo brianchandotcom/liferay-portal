@@ -102,14 +102,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 			SessionMessages.add(httpServletRequest, "requestProcessed");
 
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.put(
-					"success", true
-				).toString());
+			_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 		}
 		catch (PortalException portalException) {
 			throw new ServletException(portalException);
@@ -126,16 +119,8 @@ public class RepositoryBrowserServlet extends HttpServlet {
 			String name = ParamUtil.getString(httpServletRequest, "name");
 
 			if (Validator.isNull(name)) {
-				httpServletResponse.setContentType(
-					ContentTypes.APPLICATION_JSON);
-				httpServletResponse.setStatus(
-					HttpServletResponse.SC_BAD_REQUEST);
-
-				ServletResponseUtil.write(
-					httpServletResponse,
-					JSONUtil.put(
-						"success", false
-					).toString());
+				_sendResponse(
+					httpServletResponse, HttpServletResponse.SC_BAD_REQUEST);
 
 				return;
 			}
@@ -162,14 +147,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 			SessionMessages.add(httpServletRequest, "requestProcessed");
 
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.put(
-					"success", true
-				).toString());
+			_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 		}
 		catch (PortalException portalException) {
 			throw new ServletException(portalException);
@@ -187,16 +165,8 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				httpServletRequest, "repositoryId");
 
 			if (repositoryId <= 0) {
-				httpServletResponse.setContentType(
-					ContentTypes.APPLICATION_JSON);
-				httpServletResponse.setStatus(
-					HttpServletResponse.SC_BAD_REQUEST);
-
-				ServletResponseUtil.write(
-					httpServletResponse,
-					JSONUtil.put(
-						"success", false
-					).toString());
+				_sendResponse(
+					httpServletResponse, HttpServletResponse.SC_BAD_REQUEST);
 
 				return;
 			}
@@ -220,15 +190,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 				SessionMessages.add(httpServletRequest, "requestProcessed");
 
-				httpServletResponse.setContentType(
-					ContentTypes.APPLICATION_JSON);
-				httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-
-				ServletResponseUtil.write(
-					httpServletResponse,
-					JSONUtil.put(
-						"success", true
-					).toString());
+				_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 
 				return;
 			}
@@ -252,14 +214,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 			SessionMessages.add(httpServletRequest, "requestProcessed");
 
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				JSONUtil.put(
-					"success", true
-				).toString());
+			_sendResponse(httpServletResponse, HttpServletResponse.SC_OK);
 		}
 		catch (PortalException portalException) {
 			throw new ServletException(portalException);
@@ -287,8 +242,12 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 			super.service(httpServletRequest, httpServletResponse);
 		}
-		catch (PortalException portalException) {
-			throw new ServletException(portalException);
+		catch (IOException | PortalException | ServletException exception) {
+			_log.error(exception);
+
+			_sendResponse(
+				httpServletResponse,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -330,6 +289,26 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				_log.debug(portalException);
 			}
 		}
+	}
+
+	private void _sendResponse(
+			HttpServletResponse httpServletResponse, int status)
+		throws IOException {
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setStatus(status);
+
+		boolean success = false;
+
+		if (status == HttpServletResponse.SC_OK) {
+			success = true;
+		}
+
+		ServletResponseUtil.write(
+			httpServletResponse,
+			JSONUtil.put(
+				"success", success
+			).toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

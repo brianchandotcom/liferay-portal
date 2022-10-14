@@ -65,6 +65,8 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						_getEditLayoutUtilityPageEntryActionUnsafeConsumer()
+					).add(
+						_getViewLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -82,18 +84,15 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer()
+						_getPermissionsLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						_getPermissionsLayoutUtilityPageEntryActionUnsafeConsumer()
-					).add(
-						_getViewLayoutUtilityPageEntryActionUnsafeConsumer()
+						_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}

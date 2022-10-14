@@ -17,7 +17,6 @@ package com.liferay.journal.internal.upgrade.v1_1_0;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import java.util.HashMap;
@@ -198,21 +196,19 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	}
 
 	private void _updateJournalArticleLocalizedFields() throws Exception {
-		String sql =
-			"insert into JournalArticleLocalization(articleLocalizationId, " +
-				"companyId, articlePK, title, description, languageId) " +
-					"values(?, ?, ?, ?, ?, ?)";
-
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				"select id_, companyId, title, description, " +
 					"defaultLanguageId from JournalArticle",
+				"insert into JournalArticleLocalization(" +
+					"articleLocalizationId, companyId, articlePK, title, " +
+						"description, languageId) values(?, ?, ?, ?, ?, ?)",
 				resultSet -> new Object[] {
 					resultSet.getLong(1), resultSet.getLong(2),
 					resultSet.getString(3), resultSet.getString(4),
 					resultSet.getString(5)
 				},
-				values -> {
+				(values, preparedStatement) -> {
 					long id = (Long)values[0];
 					long companyId = (Long)values[1];
 
@@ -230,63 +226,43 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 					locales.addAll(titleMap.keySet());
 					locales.addAll(descriptionMap.keySet());
 
-					try (PreparedStatement updatePreparedStatement =
-							AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-								connection, sql)) {
+					for (Locale locale : locales) {
+						String localizedTitle = titleMap.get(locale);
+						String localizedDescription = descriptionMap.get(
+							locale);
 
-						for (Locale locale : locales) {
-							String localizedTitle = titleMap.get(locale);
-							String localizedDescription = descriptionMap.get(
-								locale);
+						if ((localizedTitle != null) &&
+							(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
 
-							if ((localizedTitle != null) &&
-								(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
+							localizedTitle = StringUtil.shorten(
+								localizedTitle, _MAX_LENGTH_TITLE);
 
-								localizedTitle = StringUtil.shorten(
-									localizedTitle, _MAX_LENGTH_TITLE);
+							_log(id, "title");
+						}
 
-								_log(id, "title");
+						if (localizedDescription != null) {
+							String safeLocalizedDescription = _truncate(
+								localizedDescription, _MAX_LENGTH_DESCRIPTION);
+
+							if (localizedDescription !=
+									safeLocalizedDescription) {
+
+								_log(id, "description");
 							}
 
-							if (localizedDescription != null) {
-								String safeLocalizedDescription = _truncate(
-									localizedDescription,
-									_MAX_LENGTH_DESCRIPTION);
-
-								if (localizedDescription !=
-										safeLocalizedDescription) {
-
-									_log(id, "description");
-								}
-
-								localizedDescription = safeLocalizedDescription;
-							}
-
-							updatePreparedStatement.setLong(
-								1, _counterLocalService.increment());
-							updatePreparedStatement.setLong(2, companyId);
-							updatePreparedStatement.setLong(3, id);
-							updatePreparedStatement.setString(
-								4, localizedTitle);
-							updatePreparedStatement.setString(
-								5, localizedDescription);
-							updatePreparedStatement.setString(
-								6, LocaleUtil.toLanguageId(locale));
-
-							updatePreparedStatement.addBatch();
+							localizedDescription = safeLocalizedDescription;
 						}
 
-						try {
-							updatePreparedStatement.executeBatch();
-						}
-						catch (Exception exception) {
-							_log.error(
-								"Unable to update localized fields for " +
-									"article " + id,
-								exception);
+						preparedStatement.setLong(
+							1, _counterLocalService.increment());
+						preparedStatement.setLong(2, companyId);
+						preparedStatement.setLong(3, id);
+						preparedStatement.setString(4, localizedTitle);
+						preparedStatement.setString(5, localizedDescription);
+						preparedStatement.setString(
+							6, LocaleUtil.toLanguageId(locale));
 
-							throw exception;
-						}
+						preparedStatement.addBatch();
 					}
 				},
 				"Unable to update journal article localized fields");

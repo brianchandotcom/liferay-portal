@@ -18,18 +18,13 @@ export default async function createMDFClaimDocuments(
 	file?: File,
 	claimId?: number,
 	activityId?: number,
-	budgetId?: number,
-	type?: string
+	budgetId?: number
 ) {
-	const url = file?.name;
-
 	const dtoMDFClaimDocuments = getDTOFromMDFClaimDocuments(
 		file,
-		url,
 		claimId,
 		activityId,
-		budgetId,
-		type
+		budgetId
 	);
 
 	return await liferayFetcher.post(

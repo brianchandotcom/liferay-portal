@@ -21,13 +21,11 @@ export default async function createMDFClaimActivities(
 ) {
 	return await Promise.all(
 		mdfClaimActivities.map((activity) => {
-			if (activity.selected) {
-				return liferayFetcher.post(
-					`/o/${LiferayAPIs.OBJECT}/mdfclaimactivities`,
-					Liferay.authToken,
-					getDTOFromMDFClaimActivity(activity, mdfClaimId)
-				);
-			}
+			return liferayFetcher.post(
+				`/o/${LiferayAPIs.OBJECT}/mdfclaimactivities`,
+				Liferay.authToken,
+				getDTOFromMDFClaimActivity(activity, mdfClaimId)
+			);
 		})
 	);
 }

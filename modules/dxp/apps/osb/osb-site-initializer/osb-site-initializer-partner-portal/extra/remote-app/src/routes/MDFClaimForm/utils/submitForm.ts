@@ -11,10 +11,12 @@
 
 import {FormikHelpers} from 'formik';
 
-import {MDFClaimTypeFile} from '../../../common/enums/mdfClaimTypeFile';
-import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
+// import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
+
 import MDFClaim from '../../../common/interfaces/mdfClaim';
-import {Liferay} from '../../../common/services/liferay';
+
+// import {Liferay} from '../../../common/services/liferay';
+
 import createMDFClaimActivities from '../../../common/services/liferay/object/claim-activity/createMDFClaimActivities';
 import createMDFClaimActivityBudgets from '../../../common/services/liferay/object/claim-budgets/createMDFClaimActivityBudgets';
 import createMDFClaimDocuments from '../../../common/services/liferay/object/mdf-claim-documents/createMDFClaimDocuments';
@@ -23,24 +25,25 @@ import createMDFClaim from '../../../common/services/liferay/object/mdf-claim/cr
 export default async function submitForm(
 	values: MDFClaim,
 	formikHelpers: Omit<FormikHelpers<MDFClaim>, 'setFieldValue'>,
-	siteURL: string
+	_siteURL: string
 ) {
 	formikHelpers.setSubmitting(true);
 
 	const dtoMDFClaim = await createMDFClaim(values);
 
-	createMDFClaimDocuments(
+	await createMDFClaimDocuments(
 		values.reimbursementInvoice,
 		dtoMDFClaim?.id,
 		0,
-		0,
-		MDFClaimTypeFile.REIMBURSEMENT_INVOICE
+		0
 	);
 
 	if (values.activities?.length && dtoMDFClaim?.id) {
 		const dtoMDFClaimActivities = await createMDFClaimActivities(
 			dtoMDFClaim.id,
-			values.activities
+			values.activities?.filter((activity) => {
+				return activity.selected;
+			})
 		);
 
 		if (dtoMDFClaimActivities?.length) {
@@ -49,17 +52,18 @@ export default async function submitForm(
 					const dtoActivity = dtoMDFClaimActivities[index];
 
 					if (activity.budgets?.length && dtoActivity?.id) {
-						createMDFClaimDocuments(
+						await createMDFClaimDocuments(
 							activity?.listQualifiedLeads,
 							0,
 							dtoActivity?.id,
-							0,
-							MDFClaimTypeFile.LIST_OF_QUALIFIED_LEADS
+							0
 						);
 
 						const dtoMDFClaimBudgets = await createMDFClaimActivityBudgets(
 							dtoActivity.id,
-							activity.budgets,
+							activity.budgets?.filter((budget) => {
+								return budget.invoice;
+							}),
 							dtoMDFClaim.id
 						);
 
@@ -67,12 +71,11 @@ export default async function submitForm(
 							const dtoBudget = dtoMDFClaimBudgets[index];
 
 							if (dtoBudget?.id) {
-								createMDFClaimDocuments(
+								await createMDFClaimDocuments(
 									budgets?.invoice,
 									0,
 									0,
-									dtoBudget?.id,
-									MDFClaimTypeFile.THIRD_PARTY_INVOICES
+									dtoBudget?.id
 								);
 							}
 						});
@@ -82,5 +85,5 @@ export default async function submitForm(
 		}
 	}
 
-	Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
+	// Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
 }

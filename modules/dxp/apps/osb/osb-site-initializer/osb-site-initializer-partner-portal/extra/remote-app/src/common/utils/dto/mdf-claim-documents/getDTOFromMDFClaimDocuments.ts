@@ -9,23 +9,19 @@
  * distribution rights of the Software.
  */
 
-import MDFClaimDocumentsDTO from '../../../interfaces/dto/mdfClaimDocumentsDTO';
+import MDFClaimDocumensDTO from '../../../interfaces/dto/mdfClaimDocumentDTO';
 
 export function getDTOFromMDFClaimDocuments(
 	file?: File,
-	url?: string,
 	claimId?: number,
 	activityId?: number,
-	budgetId?: number,
-	type?: string
-): MDFClaimDocumentsDTO {
+	budgetId?: number
+): MDFClaimDocumensDTO {
 	return {
 		fileName: file?.name,
 		fileSize: file?.size,
 		r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId: activityId,
 		r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId: budgetId,
 		r_mdfClaimToMdfClaimDocuments_c_mdfClaimId: claimId,
-		type,
-		url,
 	};
 }

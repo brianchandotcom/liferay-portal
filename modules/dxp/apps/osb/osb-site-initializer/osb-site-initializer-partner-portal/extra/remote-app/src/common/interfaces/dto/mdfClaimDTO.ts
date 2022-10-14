@@ -11,7 +11,8 @@
 
 import MDFClaim from '../mdfClaim';
 
-export default interface MDFClaimDTO extends MDFClaim {
+export default interface MDFClaimDTO
+	extends Omit<MDFClaim, 'totalrequestedAmount'> {
 	amountClaimed?: number;
 	mdfRequestedAmount?: number;
 }

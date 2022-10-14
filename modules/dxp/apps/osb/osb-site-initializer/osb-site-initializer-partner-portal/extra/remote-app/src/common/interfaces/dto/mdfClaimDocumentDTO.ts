@@ -9,9 +9,12 @@
  * distribution rights of the Software.
  */
 
-export enum MDFClaimTypeFile {
-	REIMBURSEMENT_INVOICE = 'Reimbursement Invoice',
-	LIST_OF_QUALIFIED_LEADS = 'List of Qualified Leads',
-	ALL_CONTENTS = 'All Contents',
-	THIRD_PARTY_INVOICES = 'Third Party Invoices',
+export default interface MDFClaimDocumentDTO {
+	fileName?: string;
+	fileSize?: number;
+	r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId?: number;
+	r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId?: number;
+	r_mdfClaimToMdfClaimDocuments_c_mdfClaimId?: number;
+	type?: string;
+	url?: string;
 }

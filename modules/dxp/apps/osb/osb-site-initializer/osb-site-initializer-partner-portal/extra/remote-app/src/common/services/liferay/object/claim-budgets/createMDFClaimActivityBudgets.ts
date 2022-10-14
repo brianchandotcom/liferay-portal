@@ -22,13 +22,11 @@ export default async function createMDFClaimActivityBudgets(
 ) {
 	return await Promise.all(
 		budgets.map((budget) => {
-			if (budget.invoice) {
-				return liferayFetcher.post(
-					`/o/${LiferayAPIs.OBJECT}/mdfclaimbudgets`,
-					Liferay.authToken,
-					getDTOFromMDFClaimBudget(budget, activityId, mdfClaimId)
-				);
-			}
+			return liferayFetcher.post(
+				`/o/${LiferayAPIs.OBJECT}/mdfclaimbudgets`,
+				Liferay.authToken,
+				getDTOFromMDFClaimBudget(budget, activityId, mdfClaimId)
+			);
 		})
 	);
 }

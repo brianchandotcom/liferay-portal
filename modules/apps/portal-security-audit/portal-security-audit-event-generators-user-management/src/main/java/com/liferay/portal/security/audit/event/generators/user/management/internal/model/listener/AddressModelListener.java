@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AttributesBuilder;
@@ -85,9 +84,6 @@ public class AddressModelListener extends BaseModelListener<Address> {
 
 		return attributesBuilder.getAttributes();
 	}
-
-	@Reference
-	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private AuditRouter _auditRouter;

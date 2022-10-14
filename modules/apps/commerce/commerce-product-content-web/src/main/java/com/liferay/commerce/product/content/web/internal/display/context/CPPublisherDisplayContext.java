@@ -40,6 +40,8 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -56,6 +58,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -96,6 +99,9 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			CPFriendlyURL cpFriendlyURL,
 			CPPublisherWebHelper cpPublisherWebHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
+			DLFileEntryLocalService dlFileEntryLocalService,
+			ModelResourcePermission<DLFileEntry>
+				dlFileEntryModelResourcePermission,
 			FriendlyURLEntryLocalService friendlyURLEntryLocalService,
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws PortalException {
@@ -112,6 +118,9 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpDefinitionLocalService = cpDefinitionLocalService;
 		_cpFriendlyURL = cpFriendlyURL;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_dlFileEntryModelResourcePermission =
+			dlFileEntryModelResourcePermission;
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 		_portal = portal;
 
@@ -180,7 +189,9 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		return CPMediaUtil.getAttachmentCPMedias(
 			_portal.getClassNameId(CPDefinition.class.getName()),
-			cpDefinitionId, _cpAttachmentFileEntryLocalService, themeDisplay);
+			cpDefinitionId, _cpAttachmentFileEntryLocalService,
+			_dlFileEntryLocalService, _dlFileEntryModelResourcePermission,
+			themeDisplay);
 	}
 
 	public List<CPMedia> getImages(
@@ -399,6 +410,9 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 	private final CPFriendlyURL _cpFriendlyURL;
 	private final long _cProductId;
 	private final int _delta;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
 	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 	private final Portal _portal;
 	private SearchContainer<CPCatalogEntry> _searchContainer;

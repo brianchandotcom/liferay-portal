@@ -69,6 +69,8 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,6 +84,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -361,7 +364,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		return CPMediaUtil.getAttachmentCPMedias(
 			_portal.getClassNameId(CPDefinition.class.getName()),
-			cpDefinitionId, _cpAttachmentFileEntryLocalService, themeDisplay);
+			cpDefinitionId, _cpAttachmentFileEntryLocalService,
+			_dlFileEntryLocalService, _dlFileEntryModelResourcePermission,
+			themeDisplay);
 	}
 
 	@Override
@@ -909,6 +914,15 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private DDMHelper _ddmHelper;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
 
 	@Reference
 	private Language _language;

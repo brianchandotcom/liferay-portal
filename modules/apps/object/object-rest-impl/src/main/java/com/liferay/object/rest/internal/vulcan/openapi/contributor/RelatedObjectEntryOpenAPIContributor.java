@@ -153,6 +153,10 @@ public class RelatedObjectEntryOpenAPIContributor
 				_getIdParameterTemplate(objectDefinition.getShortName())),
 			new PathItem() {
 				{
+					delete(
+						_getDeleteOperation(
+							objectDefinition, systemObjectRelationship,
+							systemObjectDefinitionMetadata));
 					put(
 						_getPutOperation(
 							objectDefinition, systemObjectRelationship,
@@ -166,11 +170,13 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		MediaType mediaType = new MediaType();
 
-		Schema schema = new Schema();
+		if (schemaName != null) {
+			Schema schema = new Schema();
 
-		schema.set$ref(schemaName);
+			schema.set$ref(schemaName);
 
-		mediaType.setSchema(schema);
+			mediaType.setSchema(schema);
+		}
 
 		content.addMediaType("application/json", mediaType);
 		content.addMediaType("application/xml", mediaType);
@@ -187,6 +193,59 @@ public class RelatedObjectEntryOpenAPIContributor
 		return dtoConverter.getContentType();
 	}
 
+	private Operation _getDeleteOperation(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship,
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+
+		DTOConverter<?, ?> dtoConverter = _dtoConverterRegistry.getDTOConverter(
+			systemObjectDefinitionMetadata.getModelClassName());
+
+		return new Operation() {
+			{
+				operationId(
+					_getOperationId(
+						"delete", dtoConverter.getContentType(),
+						objectRelationship.getName()));
+
+				parameters(
+					Arrays.asList(
+						new Parameter() {
+							{
+								in("path");
+								name(
+									_getIdParameterName(
+										dtoConverter.getContentType()));
+								required(true);
+							}
+						},
+						new Parameter() {
+							{
+								in("path");
+								name(
+									_getIdParameterName(
+										objectDefinition.getShortName()));
+								required(true);
+							}
+						}));
+				responses(
+					new ApiResponses() {
+						{
+							setDefault(
+								new ApiResponse() {
+									{
+										setContent(_getContent(null));
+									}
+								});
+						}
+					});
+				tags(
+					Collections.singletonList(
+						_getContentType(systemObjectDefinitionMetadata)));
+			}
+		};
+	}
+
 	private Operation _getGetOperation(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship,
@@ -195,13 +254,15 @@ public class RelatedObjectEntryOpenAPIContributor
 		String parameterName = _getIdParameterName(
 			_getContentType(systemObjectDefinitionMetadata));
 
+		DTOConverter<?, ?> dtoConverter = _dtoConverterRegistry.getDTOConverter(
+			systemObjectDefinitionMetadata.getModelClassName());
+
 		return new Operation() {
 			{
 				operationId(
-					StringBundler.concat(
-						"get", systemObjectDefinitionMetadata.getName(),
-						StringUtil.upperCaseFirstLetter(
-							objectRelationship.getName())));
+					_getOperationId(
+						"get", dtoConverter.getContentType(),
+						objectRelationship.getName()));
 				parameters(
 					Collections.singletonList(
 						new Parameter() {
@@ -248,20 +309,29 @@ public class RelatedObjectEntryOpenAPIContributor
 		return path.split(StringPool.SLASH)[0];
 	}
 
+	private String _getOperationId(
+		String operation, String systemObjectDefinitionName,
+		String objectRelationshipName) {
+
+		return StringBundler.concat(
+			operation, systemObjectDefinitionName,
+			StringUtil.upperCaseFirstLetter(objectRelationshipName));
+	}
+
 	private Operation _getPutOperation(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
-
-		String upperCaseFirstLetterObjectRelationshipName =
-			StringUtil.upperCaseFirstLetter(objectRelationship.getName());
 
 		DTOConverter<?, ?> dtoConverter = _dtoConverterRegistry.getDTOConverter(
 			systemObjectDefinitionMetadata.getModelClassName());
 
 		return new Operation() {
 			{
-				operationId("put" + upperCaseFirstLetterObjectRelationshipName);
+				operationId(
+					_getOperationId(
+						"put", dtoConverter.getContentType(),
+						objectRelationship.getName()));
 				parameters(
 					Arrays.asList(
 						new Parameter() {

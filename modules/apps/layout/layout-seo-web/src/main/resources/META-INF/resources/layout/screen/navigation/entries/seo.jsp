@@ -36,15 +36,16 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_seo" var="editSEOURL" />
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_seo" var="editSEOURL">
+	<portlet:param name="mvcRenderCommandName" value="/layout/edit_seo" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="portletResource" value='<%= ParamUtil.getString(request, "portletResource") %>' />
+	<portlet:param name="groupId" value="<%= String.valueOf(layoutsSEODisplayContext.getGroupId()) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsSEODisplayContext.isPrivateLayout()) %>" />
+	<portlet:param name="layoutId" value="<%= String.valueOf(layoutsSEODisplayContext.getLayoutId()) %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= editSEOURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layoutsSEODisplayContext.isPrivateLayout() %>" />
-	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
-
 	<clay:sheet>
 		<clay:sheet-header>
 			<h2 class="sheet-title"><liferay-ui:message key="seo" /></h2>

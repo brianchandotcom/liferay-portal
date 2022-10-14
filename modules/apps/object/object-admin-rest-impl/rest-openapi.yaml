@@ -144,7 +144,7 @@ components:
                     readOnly: true
                     type: object
                 businessType:
-                    enum: [Aggregation, Attachment, Boolean, Date, Decimal, Integer, LongInteger, LongText, Picklist, PrecisionDecimal, Relationship, RichText, Text]
+                    enum: [Aggregation, Attachment, Boolean, Date, Decimal, Formula, Integer, LongInteger, LongText, Picklist, PrecisionDecimal, Relationship, RichText, Text]
                     type: string
                 defaultValue:
                     type: string

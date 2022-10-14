@@ -39,6 +39,7 @@ import {SearchableContainer} from './SearchableContainer';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './EditObjectField.scss';
+import {FormulaContainer} from './FormulaContainer';
 
 interface AggregationFilters {
 	defaultSort?: boolean;
@@ -650,7 +651,17 @@ export default function EditObjectField({
 				/>
 			)}
 
-			{values.DBType !== 'Blob' && (
+			{values.businessType === 'Formula' && (
+				<FormulaContainer
+					errors={errors}
+					objectFieldSettings={
+						values.objectFieldSettings as ObjectFieldSetting[]
+					}
+					setValues={setValues}
+				/>
+			)}
+
+			{values.DBType !== 'Blob' && values.businessType !== 'Formula' && (
 				<SearchableContainer
 					errors={errors}
 					isApproved={isApproved}

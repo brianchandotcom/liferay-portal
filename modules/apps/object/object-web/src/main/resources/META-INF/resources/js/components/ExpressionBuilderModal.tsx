@@ -12,13 +12,20 @@
  * details.
  */
 
-/// <reference types="react" />
+import {
+	ExpressionBuilderModal as Modal,
+	SidebarCategory,
+} from '@liferay/object-js-components-web';
+import React from 'react';
 
-import {SidebarCategory} from '@liferay/object-js-components-web';
-export default function ExpressionBuilderModal({
-	sidebarElements,
-}: IProps): JSX.Element;
 interface IProps {
+	header?: string;
 	sidebarElements: SidebarCategory[];
 }
-export {};
+
+export default function ExpressionBuilderModal({
+	header,
+	sidebarElements,
+}: IProps) {
+	return <Modal header={header} sidebarElements={sidebarElements} />;
+}

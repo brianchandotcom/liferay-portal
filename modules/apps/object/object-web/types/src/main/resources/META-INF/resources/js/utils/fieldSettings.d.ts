@@ -31,6 +31,14 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	script?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
 	maxLength?:
 		| string
 		| number

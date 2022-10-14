@@ -505,9 +505,10 @@ public class ObjectField implements Cloneable, Serializable {
 
 		AGGREGATION("Aggregation"), ATTACHMENT("Attachment"),
 		BOOLEAN("Boolean"), DATE("Date"), DECIMAL("Decimal"),
-		INTEGER("Integer"), LONG_INTEGER("LongInteger"), LONG_TEXT("LongText"),
-		PICKLIST("Picklist"), PRECISION_DECIMAL("PrecisionDecimal"),
-		RELATIONSHIP("Relationship"), RICH_TEXT("RichText"), TEXT("Text");
+		FORMULA("Formula"), INTEGER("Integer"), LONG_INTEGER("LongInteger"),
+		LONG_TEXT("LongText"), PICKLIST("Picklist"),
+		PRECISION_DECIMAL("PrecisionDecimal"), RELATIONSHIP("Relationship"),
+		RICH_TEXT("RichText"), TEXT("Text");
 
 		public static BusinessType create(String value) {
 			for (BusinessType businessType : values()) {

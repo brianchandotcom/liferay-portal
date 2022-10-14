@@ -1,0 +1,27 @@
+.evp-login-button {
+	align-items: flex-end;
+	display: flex;
+	justify-content: center;
+}
+
+.evp-login-button:hover {
+	border-color: transparent !important;
+	color: #0053f0;
+}
+
+.evp-login-button:hover::after {
+	background-color: #0053f0;
+	content: '';
+	display: block;
+	height: 2px;
+	position: absolute;
+	width: 58px;
+}
+
+.evp-login-button a:focus-visible {
+	outline-color: transparent !important;
+}
+
+.evp-login-button .btn:active:focus {
+	box-shadow: 0 0 0 0 transparent !important;
+}

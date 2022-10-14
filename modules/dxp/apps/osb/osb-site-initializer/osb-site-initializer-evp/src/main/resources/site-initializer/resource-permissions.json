@@ -1,0 +1,44 @@
+[
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.portal.kernel.model.Layout",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPRequest$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	}
+]

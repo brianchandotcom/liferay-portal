@@ -390,7 +390,7 @@
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "",
+	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "EVP Organization"

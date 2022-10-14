@@ -4,6 +4,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderRadius": "",
 						"borderWidth": "0",
 						"shadow": "boxShadowSm",
 						"textAlign": ""
@@ -44,6 +45,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -94,6 +96,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -166,6 +169,7 @@
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -199,6 +203,7 @@
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -233,50 +238,22 @@
 													]
 												},
 												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "login-button"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
 											}
 										],
 										"type": "Section"
-									},
-									{
-										"definition": {
-											"cssClasses": [
-												"justify-content-center",
-												"evp-login-button",
-												"align-items-end",
-												"d-flex"
-											],
-											"customCSS": ".evp-login-button :hover {\n  border-color: transparent !important;\n  color: #0053f0;\n}\n\n.evp-login-button:hover::after {\n    background-color: #0053f0;\n    content: \"\";\n    display: block;\n  \theight: 2px;\n  \twidth: 53px;\n  \tposition: absolute;\n}\n    ",
-											"fragment": {
-												"key": "DIALECT-dialect-button"
-											},
-											"fragmentConfig": {
-												"buttonSize": "",
-												"inverted": false,
-												"style": "neutral",
-												"type": "borderless",
-												"uppercase": false
-											},
-											"fragmentFields": [
-												{
-													"id": "link",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Sign Out"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"marginLeft": "1",
-												"textAlign": ""
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
 									}
 								],
 								"type": "Section"
@@ -331,6 +308,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 4,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -367,6 +345,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -389,6 +368,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -468,6 +448,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -590,6 +571,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -689,6 +671,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,

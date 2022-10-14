@@ -178,24 +178,29 @@ export function ModalAddFilter({
 		(objectField: ObjectField) => {
 			if (objectField?.businessType === 'Picklist') {
 				const makeFetch = async () => {
-					const items = await API.getPickListItems(
-						objectField.listTypeDefinitionId
-					);
+					if (objectField.listTypeDefinitionId) {
+						const items = await API.getPickListItems(
+							objectField.listTypeDefinitionId
+						);
 
-					if (editingFilter) {
-						setItems(
-							getCheckedPickListItems(items, setEditingFilterType)
-						);
-					}
-					else {
-						setItems(
-							items.map((item) => {
-								return {
-									label: item.name,
-									value: item.key,
-								};
-							})
-						);
+						if (editingFilter) {
+							setItems(
+								getCheckedPickListItems(
+									items,
+									setEditingFilterType
+								)
+							);
+						}
+						else {
+							setItems(
+								items.map((item) => {
+									return {
+										label: item.name,
+										value: item.key,
+									};
+								})
+							);
+						}
 					}
 				};
 

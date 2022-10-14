@@ -113,6 +113,7 @@ export default function EditObjectField({
 	});
 
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
+		delete objectField.listTypeDefinitionId;
 		delete objectField.system;
 
 		try {

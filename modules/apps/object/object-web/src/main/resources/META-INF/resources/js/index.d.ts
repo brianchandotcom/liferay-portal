@@ -86,7 +86,7 @@ interface ObjectField {
 	indexedLanguageId: Locale | null;
 	label: LocalizedValue<string>;
 	listTypeDefinitionExternalReferenceCode: string;
-	listTypeDefinitionId: number;
+	listTypeDefinitionId?: number;
 	name: string;
 	objectFieldSettings?: ObjectFieldSetting[];
 	relationshipId?: number;

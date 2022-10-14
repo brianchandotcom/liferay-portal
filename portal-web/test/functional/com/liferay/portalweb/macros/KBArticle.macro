@@ -1538,6 +1538,11 @@ definition {
 					locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
 					value1 = "Knowledge base is empty.");
 			}
+			else if (isSet(suggestions)) {
+				AssertTextEquals(
+					locator1 = "Message#EMPTY_INFO",
+					value1 = "There are no suggestions.");
+			}
 			else {
 				AssertTextEquals(
 					locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",

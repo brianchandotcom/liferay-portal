@@ -25,15 +25,17 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetri
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +43,11 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jorge Ferrer
@@ -70,7 +72,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
-		MVCRenderCommand customRenderCommand = _renderCommands.get(factoryPid);
+		MVCRenderCommand customRenderCommand = _serviceTrackerMap.getService(
+			factoryPid);
 
 		if (customRenderCommand != null) {
 			return customRenderCommand.render(renderRequest, renderResponse);
@@ -133,23 +136,22 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/configuration_admin/view_factory_instances)(configurationPid=*))"
-	)
-	protected void addRenderCommand(
-		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {
-
-		_renderCommands.put(
-			(String)properties.get("configurationPid"), mvcRenderCommand);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MVCRenderCommand.class,
+			StringBundler.concat(
+				"(&(javax.portlet.name=",
+				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+				")(mvc.command.name=/configuration_admin",
+				"/view_factory_instances)(configurationPid=*))"),
+			(serviceReference, emitter) -> serviceReference.getProperty(
+				"configurationPid"));
 	}
 
-	protected void removeRenderCommand(
-		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {
-
-		_renderCommands.remove(properties.get("configurationPid"));
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
@@ -161,10 +163,9 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private Portal _portal;
 
-	private final Map<String, MVCRenderCommand> _renderCommands =
-		new HashMap<>();
-
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
+
+	private ServiceTrackerMap<String, MVCRenderCommand> _serviceTrackerMap;
 
 }

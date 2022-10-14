@@ -614,7 +614,7 @@ definition {
 	}
 
 	@priority = "3"
-	test CanOrderFolderFacetTermsWithDifferentOptions {
+	test CanOrderFolderFacetTerms {
 		for (var folder : list "Product,Engineering,2021,2022") {
 			JSONFolder.addFolder(
 				dmFolderName = "${folder}",
@@ -649,14 +649,10 @@ definition {
 			}
 		}
 
-		task ("Search for 'test'") {
-			ProductMenu.gotoHomePage();
+		SearchPortlets.searchEmbedded(searchTerm = "test");
 
-			SearchPortlets.searchEmbedded(searchTerm = "test");
-		}
-
-		task ("Assert that the order of Folder facet values are 2022, 2021, Engineering, Product") {
-			SearchFacetPortlet.assertFacetItemsByOrder(facetOrder = "2022,2021,Engineering,Product");
+		task ("Assert that the Folder facet sorts by term frequency descending by default") {
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2022,2021,Engineering,Product");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term frequency ascending") {
@@ -664,7 +660,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.assertFacetItemsByOrder(facetOrder = "Product,Engineering,2021,2022");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2021,2022");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value ascending") {
@@ -672,7 +668,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.assertFacetItemsByOrder(facetOrder = "2021,2022,Engineering,Product");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2021,2022,Engineering,Product");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value descending") {
@@ -680,7 +676,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.assertFacetItemsByOrder(facetOrder = "Product,Engineering,2022,2021");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2022,2021");
 		}
 	}
 

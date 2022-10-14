@@ -1,18 +1,5 @@
 definition {
 
-	macro assertFacetItemsByOrder {
-		var itemOrder = "0";
-
-		for (var current : list "${facetOrder}") {
-			var itemOrder = ${itemOrder} + 1;
-
-			AssertElementPresent(
-				key_itemName = "${current}",
-				key_itemOrder = "${itemOrder}",
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS_BY_ORDER");
-		}
-	}
-
 	macro checkFacet {
 		FormFields.enableCheckbox(fieldName = "${facetValueName}");
 	}
@@ -322,6 +309,19 @@ definition {
 		PortletEntry.save();
 
 		IFrame.closeFrame();
+	}
+
+	macro viewFacetItemsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var facetItem : list "${facetList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertElementPresent(
+				key_facetItem = "${facetItem}",
+				key_resultOrder = "${resultOrder}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER");
+		}
 	}
 
 }

@@ -233,8 +233,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACET_PORTLET_ITEMS_BY_ORDER</td>
-	<td>//label[contains(@for,'term_${key_itemOrder}')]//span[contains(@class,'facet-term')]//span[contains(text(), '${key_itemName}')]</td>
+	<td>FACET_PORTLET_ITEMS_SPECIFIC_ORDER</td>
+	<td>//label[contains(@for,'term_${key_resultOrder}')]//span[contains(@class,'facet-term')]//span[contains(text(), '${key_facetItem}')]</td>
 	<td></td>
 </tr>
 <tr>

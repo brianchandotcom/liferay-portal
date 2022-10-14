@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
@@ -65,6 +68,16 @@ public class BatchEngineAutoDeployListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+
 		MockitoAnnotations.openMocks(this);
 
 		ReflectionTestUtil.setFieldValue(
@@ -167,6 +180,62 @@ public class BatchEngineAutoDeployListenerTest {
 
 			}
 		);
+	}
+
+	@Test
+	public void testAdvancedWithMultiData() throws Exception {
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
+
+		autoDeploymentContext.setFile(_getFile("advanced_batch2.zip"));
+
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
+
+		Mockito.verify(
+			_noticeableExecutorService, Mockito.times(2)
+		).submit(
+			Mockito.any(Runnable.class)
+		);
+
+		Assert.assertEquals(
+			_batchEngineImportTasks.toString(), 2,
+			_batchEngineImportTasks.size());
+	}
+
+	@Test
+	public void testAdvancedWithSingleData() throws Exception {
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
+
+		autoDeploymentContext.setFile(_getFile("advanced_batch1.zip"));
+
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
+
+		Mockito.verify(
+			_noticeableExecutorService, Mockito.times(1)
+		).submit(
+			Mockito.any(Runnable.class)
+		);
+
+		Assert.assertEquals(
+			_batchEngineImportTasks.toString(), 1,
+			_batchEngineImportTasks.size());
 	}
 
 	@Test

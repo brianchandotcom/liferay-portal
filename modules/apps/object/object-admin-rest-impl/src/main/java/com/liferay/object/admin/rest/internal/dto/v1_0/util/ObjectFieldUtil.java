@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Objects;
+
 /**
  * @author Gabriel Albuquerque
  */
@@ -91,6 +93,14 @@ public class ObjectFieldUtil {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectFilterLocalService objectFilterLocalService) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164948")) &&
+			Objects.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);

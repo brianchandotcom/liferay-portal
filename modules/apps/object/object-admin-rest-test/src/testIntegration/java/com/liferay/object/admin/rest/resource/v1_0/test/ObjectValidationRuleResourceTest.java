@@ -59,7 +59,7 @@ public class ObjectValidationRuleResourceTest
 				Collections.emptyList());
 
 		_objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), null, 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,

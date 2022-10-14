@@ -93,7 +93,7 @@ public class ObjectStateFlowLocalServiceTest {
 				Collections.emptyList());
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(), null,
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
@@ -372,7 +372,7 @@ public class ObjectStateFlowLocalServiceTest {
 		throws Exception {
 
 		return _objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(), listTypeDefinitionId,
+			TestPropsValues.getUserId(), null, listTypeDefinitionId,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",

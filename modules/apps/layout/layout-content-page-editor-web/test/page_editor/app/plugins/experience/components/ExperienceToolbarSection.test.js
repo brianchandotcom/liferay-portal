@@ -458,6 +458,12 @@ describe('ExperienceToolbarSection', () => {
 
 		await findByRole('list');
 
+		let dropdownElement = document.querySelector(
+			'.page-editor__toolbar-experience__dropdown-menu'
+		);
+
+		expect(dropdownElement).toBeInTheDocument();
+
 		const experienceItems = getAllByRole('listitem');
 
 		expect(experienceItems.length).toBe(3);
@@ -467,6 +473,11 @@ describe('ExperienceToolbarSection', () => {
 		userEvent.click(newExperienceButton);
 
 		await findByLabelText('name');
+
+		const modal = document.querySelector('.modal');
+
+		expect(modal).toBeInTheDocument();
+		expect(dropdownElement).not.toBeInTheDocument();
 
 		const nameInput = getByLabelText('name');
 		const audienceInput = getByLabelText('audience');
@@ -498,6 +509,17 @@ describe('ExperienceToolbarSection', () => {
 				type: CREATE_SEGMENTS_EXPERIENCE,
 			})
 		);
+
+		await waitForElementToBeRemoved(modal).then(() =>
+			expect(modal).not.toBeInTheDocument()
+		);
+
+		await findByRole('list');
+
+		dropdownElement = document.querySelector(
+			'.page-editor__toolbar-experience__dropdown-menu'
+		);
+		await waitFor(() => expect(dropdownElement).toBeInTheDocument());
 	});
 
 	it('calls the backend to update the experience', async () => {

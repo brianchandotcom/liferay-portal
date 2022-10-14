@@ -48,12 +48,12 @@ create table SamlPeerBinding (
 	userId LONG,
 	userName VARCHAR(75) null,
 	deleted BOOLEAN,
-	samlNameIdFormat VARCHAR(75) null,
+	samlNameIdFormat VARCHAR(1024) null,
 	samlNameIdNameQualifier VARCHAR(75) null,
 	samlNameIdSpNameQualifier VARCHAR(75) null,
 	samlNameIdSpProvidedId VARCHAR(75) null,
-	samlNameIdValue VARCHAR(75) null,
-	samlPeerEntityId VARCHAR(75) null
+	samlNameIdValue VARCHAR(1024) null,
+	samlPeerEntityId VARCHAR(1024) null
 );
 
 create table SamlSpAuthRequest (

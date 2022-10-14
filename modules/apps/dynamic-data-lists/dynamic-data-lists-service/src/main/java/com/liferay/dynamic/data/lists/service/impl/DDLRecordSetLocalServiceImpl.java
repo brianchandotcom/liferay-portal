@@ -739,6 +739,18 @@ public class DDLRecordSetLocalServiceImpl
 			minDisplayRows, serviceContext, recordSet);
 	}
 
+	@Reference
+	protected DDMFormValuesValidator ddmFormValuesValidator;
+
+	@Reference
+	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
+
+	@Reference
+	protected DDMStructureLocalService ddmStructureLocalService;
+
+	@Reference
+	protected DDMStructureVersionLocalService ddmStructureVersionLocalService;
+
 	private void _addDefaultName(Map<Locale, String> nameMap) {
 		Locale locale = LocaleUtil.getSiteDefault();
 
@@ -982,18 +994,6 @@ public class DDLRecordSetLocalServiceImpl
 					ddmStructureId);
 		}
 	}
-
-	@Reference
-	protected DDMFormValuesValidator ddmFormValuesValidator;
-
-	@Reference
-	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
-
-	@Reference
-	protected DDMStructureVersionLocalService ddmStructureVersionLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

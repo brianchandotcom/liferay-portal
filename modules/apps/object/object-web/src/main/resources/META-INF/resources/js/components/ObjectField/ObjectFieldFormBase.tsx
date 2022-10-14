@@ -134,6 +134,20 @@ export default function ObjectFieldFormBase({
 			}
 		}
 
+		if (values.businessType === 'Formula') {
+			const output = values.objectFieldSettings?.find(
+				(fieldSetting) => fieldSetting.name === 'output'
+			);
+
+			if (output) {
+				setSelectedOutput(
+					FORMULA_OUTPUT_OPTIONS.find(
+						(formulaOption) => formulaOption.value === output?.value
+					)?.label as string
+				);
+			}
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.businessType, values.listTypeDefinitionId]);
 

@@ -814,4 +814,72 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12152 | Test Summary: Check if the identity event is sent without the login and if the user is classified as anonymous"
+	@priority = "5"
+	test CheckIfEventSentWithoutLoginAndIfUserClassifiedAsAnonymous {
+		property analytics.cloud.upstream = "false";
+		property proxy.server.enabled = "true";
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
+		}
+
+		task ("Sign out") {
+			UserBar.signOut();
+		}
+
+		task ("Visit the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the userId number of the identity event") {
+			var userId = ACUtils.getPageRefRequestPropertyValue(
+				pageRef = "identity",
+				property = "userId");
+		}
+
+		task ("Get userId number from local storage") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
+		}
+
+		task ("Compare userId numbers to check if they are the same") {
+			TestUtils.assertEquals(
+				actual = "${userId}",
+				expected = "${localStorageItem1}");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Anonymous",
+				count = "1");
+		}
+	}
 }

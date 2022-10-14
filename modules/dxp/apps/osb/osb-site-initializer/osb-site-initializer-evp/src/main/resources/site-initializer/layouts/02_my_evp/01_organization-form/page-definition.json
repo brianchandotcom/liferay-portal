@@ -7,6 +7,25 @@
 						"formReference": {
 							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 							"classType": 0
+						},
+						"formSuccessSubmissionResult": {
+							"itemReference": {
+								"className": "com.liferay.portal.kernel.model.Layout",
+								"fields": [
+									{
+										"fieldName": "friendlyURL",
+										"fieldValue": "/submit-page"
+									},
+									{
+										"fieldName": "privatePage",
+										"fieldValue": "false"
+									},
+									{
+										"fieldName": "siteKey",
+										"fieldValue": "[$GROUP_KEY$]"
+									}
+								]
+							}
 						}
 					},
 					"indexed": true,
@@ -538,25 +557,48 @@
 					},
 					{
 						"definition": {
-							"fragment": {
-								"key": "INPUTS-submit-button"
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "End",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
 							},
-							"fragmentConfig": {
-								"buttonSize": "nm",
-								"buttonType": "primary"
-							},
-							"fragmentFields": [
-								{
-									"id": "submit-button-text",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								}
-							],
-							"indexed": true
+							"name": "Button Container"
 						},
-						"type": "Fragment"
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-submit-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "nm",
+										"buttonType": "primary"
+									},
+									"fragmentFields": [
+										{
+											"id": "submit-button-text",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Form"

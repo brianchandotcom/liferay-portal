@@ -384,7 +384,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOsGiState = "true");
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 

@@ -99,7 +99,8 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addCustomObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			long userId, String externalReferenceCode,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
@@ -118,10 +119,10 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		ObjectField objectField = _addObjectField(
-			userId, listTypeDefinitionId, objectDefinitionId, businessType,
-			name + StringPool.UNDERLINE, dbTableName, dbType, defaultValue,
-			indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-			required, state, false);
+			userId, externalReferenceCode, listTypeDefinitionId,
+			objectDefinitionId, businessType, name + StringPool.UNDERLINE,
+			dbTableName, dbType, defaultValue, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state, false);
 
 		if (objectDefinition.isApproved() &&
 			!Objects.equals(
@@ -154,10 +155,10 @@ public class ObjectFieldLocalServiceImpl
 
 		if (existingObjectField == null) {
 			return objectFieldLocalService.addCustomObjectField(
-				userId, listTypeDefinitionId, objectDefinitionId, businessType,
-				dbType, defaultValue, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, name, required, state,
-				objectFieldSettings);
+				userId, externalReferenceCode, listTypeDefinitionId,
+				objectDefinitionId, businessType, dbType, defaultValue, indexed,
+				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+				state, objectFieldSettings);
 		}
 
 		return objectFieldLocalService.updateCustomObjectField(
@@ -211,7 +212,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return _addObjectField(
-			userId, 0, objectDefinitionId, businessType, dbColumnName,
+			userId, null, 0, objectDefinitionId, businessType, dbColumnName,
 			dbTableName, dbType, defaultValue, indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, state, true);
 	}
@@ -631,7 +632,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private ObjectField _addObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			long userId, String externalReferenceCode,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, String defaultValue, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
@@ -644,6 +646,9 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateDefaultValue(
 			businessType, defaultValue, listTypeDefinitionId, state);
+		_validateExternalReferenceCode(
+			0, objectDefinition.getCompanyId(), externalReferenceCode,
+			objectDefinitionId);
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
@@ -661,6 +666,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setUserId(user.getUserId());
 		objectField.setUserName(user.getFullName());
 
+		objectField.setExternalReferenceCode(externalReferenceCode);
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setObjectDefinitionId(objectDefinitionId);
 		objectField.setDBColumnName(dbColumnName);

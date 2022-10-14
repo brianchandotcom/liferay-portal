@@ -884,7 +884,8 @@ public class ObjectDefinitionLocalServiceImpl
 				}
 				else {
 					_objectFieldLocalService.addCustomObjectField(
-						userId, objectField.getListTypeDefinitionId(),
+						userId, objectField.getExternalReferenceCode(),
+						objectField.getListTypeDefinitionId(),
 						objectDefinition.getObjectDefinitionId(),
 						objectField.getBusinessType(), objectField.getDBType(),
 						objectField.getDefaultValue(), objectField.isIndexed(),

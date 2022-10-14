@@ -182,15 +182,6 @@ public class CommercePriceListOrderTypeRelLocalServiceImpl
 				commercePriceListId, name));
 	}
 
-	private void _reindexCommercePriceList(long commercePriceListId)
-		throws PortalException {
-
-		Indexer<CommercePriceList> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
-
-		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
-	}
-
 	private GroupByStep _getGroupByStep(
 			FromStep fromStep, Long commercePriceListId, String keywords)
 		throws PortalException {
@@ -220,6 +211,15 @@ public class CommercePriceListOrderTypeRelLocalServiceImpl
 
 				return predicate;
 			});
+	}
+
+	private void _reindexCommercePriceList(long commercePriceListId)
+		throws PortalException {
+
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
 	}
 
 	@Reference

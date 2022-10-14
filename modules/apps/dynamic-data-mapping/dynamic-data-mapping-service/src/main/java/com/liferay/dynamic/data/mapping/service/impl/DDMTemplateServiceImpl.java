@@ -356,7 +356,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long groupId, long classNameId,
 		long resourceClassNameId, int status) {
 
-		return getTemplates(
+		return _getTemplates(
 			companyId, new long[] {groupId}, classNameId, 0,
 			resourceClassNameId, null, null, status);
 	}
@@ -371,7 +371,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 		ddmTemplates.addAll(
-			getTemplates(
+			_getTemplates(
 				companyId, new long[] {groupId}, classNameId, classPK,
 				resourceClassNameId, null, null, status));
 
@@ -380,7 +380,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		}
 
 		ddmTemplates.addAll(
-			getTemplates(
+			_getTemplates(
 				companyId, _portal.getAncestorSiteGroupIds(groupId),
 				classNameId, classPK, resourceClassNameId, null, null, status));
 
@@ -392,7 +392,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, int status) {
 
-		return getTemplates(
+		return _getTemplates(
 			companyId, new long[] {groupId}, classNameId, classPK,
 			resourceClassNameId, null, null, status);
 	}
@@ -417,7 +417,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String type, int status) {
 
-		return getTemplates(
+		return _getTemplates(
 			companyId, new long[] {groupId}, classNameId, classPK,
 			resourceClassNameId, type, null, status);
 	}
@@ -427,7 +427,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String type, String mode, int status) {
 
-		return getTemplates(
+		return _getTemplates(
 			companyId, new long[] {groupId}, classNameId, classPK,
 			resourceClassNameId, type, mode, status);
 	}
@@ -460,7 +460,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long companyId, long groupId, long classPK, long resourceClassNameId,
 		int status) {
 
-		return getTemplates(
+		return _getTemplates(
 			companyId, new long[] {groupId}, 0, classPK, resourceClassNameId,
 			null, null, status);
 	}
@@ -1082,7 +1082,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			mode, language, script, cacheable, serviceContext);
 	}
 
-	protected List<DDMTemplate> getTemplates(
+	private List<DDMTemplate> _getTemplates(
 		long companyId, long[] groupIds, long classNameId, long classPK,
 		long resourceClassNameId, String type, String mode, int status) {
 

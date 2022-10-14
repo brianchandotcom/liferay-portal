@@ -32,6 +32,8 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 		index,
 		inputRef,
 		items,
+		listItemRef,
+		listRef,
 		onBackscape,
 		onClickRow,
 		onInputKeyPress,
@@ -40,8 +42,6 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 		setBreadCrumb,
 		setSearch,
 		tabDisabled,
-		tabRefs,
-		ulRef,
 	} = useBreadcrumbFinder();
 
 	const params = useParams();
@@ -74,25 +74,16 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 	}
 
 	return (
-		<div
-			className="breadcrumb-finder-container breadcrumb-finder-navigator"
-			id="breadcrumbFinderContainer"
-		>
+		<div className="breadcrumb-finder-container breadcrumb-finder-navigator">
 			<div
 				className="breadcrumb-finder-overlay overlay"
-				onClick={() => setActive((previus) => !previus)}
-			></div>
+				onClick={() => setActive((active) => !active)}
+			/>
 
-			<div
-				className="breadcrumb-finder-content"
-				id="breadcrumbFinderContent"
-			>
+			<div className="breadcrumb-finder-content">
 				<div className="d-flex flex-column flex-nowrap w-100">
 					<div className="d-flex flex-nowrap flex-row w-100">
-						<span
-							className="selected-container"
-							id="selectedContainer"
-						>
+						<span className="selected-container">
 							{!!breadCrumb.length && (
 								<div className="divider">/</div>
 							)}
@@ -119,7 +110,7 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 								}
 								onKeyDown={({key}) => {
 									if (key === 'Backspace' && search === '') {
-										onBackscape();
+										return onBackscape();
 									}
 									onInputKeyPress(key);
 								}}
@@ -133,7 +124,7 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 
 					<hr />
 
-					<ul className="list-unstyled" ref={ulRef}>
+					<ul className="list-unstyled" ref={listRef}>
 						{items.map((item, itemIndex) => (
 							<li
 								className={classNames(
@@ -143,7 +134,7 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 								id={item.label}
 								key={itemIndex}
 								onClick={() => onClickRow(itemIndex)}
-								ref={tabRefs[itemIndex]}
+								ref={listItemRef[itemIndex]}
 							>
 								<div
 									className={classNames(

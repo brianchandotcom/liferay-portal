@@ -106,20 +106,21 @@
 	width: 98%;
 }
 
-.overlay {
+.breadcrumb-finder-container .overlay {
 	inset: 0;
 	overflow-y: scroll;
 	position: fixed;
 }
 
-[aria-hidden='true'] {
-	display: none;
-}
-[aria-hidden='false'] {
-	display: block;
-}
-
 .breadcrumb-finder-container {
+	[aria-hidden='false'] {
+		display: block;
+	}
+
+	[aria-hidden='true'] {
+		display: none;
+	}
+
 	.breadcrumb-finder-content,
 	.breadcrumb-input-edit {
 		display: inline-block;

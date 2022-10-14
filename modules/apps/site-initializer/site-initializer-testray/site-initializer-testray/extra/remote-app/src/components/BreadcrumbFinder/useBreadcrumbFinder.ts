@@ -25,11 +25,12 @@ import {useNavigate} from 'react-router-dom';
 
 import useBreadcrumb, {defaultEntities} from '../../hooks/useBreadcrumb';
 
-const ON_CLICK_ROW_ENABLED = true;
-
 type Key = {
 	[key: string]: () => void;
 };
+
+const BREADCRUMB_HEIGHT = 90;
+const INPUT_FOCUS_DELAY = 10;
 
 const useBreadcrumbFinder = () => {
 	const navigate = useNavigate();
@@ -48,9 +49,9 @@ const useBreadcrumbFinder = () => {
 	const [active, setActive] = useState(false);
 	const [index, setIndex] = useState(0);
 
-	const ulRef = useRef<HTMLUListElement>(null);
+	const listRef = useRef<HTMLUListElement>(null);
 
-	const tabRefs = useMemo(
+	const listItemRef = useMemo(
 		() =>
 			Array.from({length: items.length}).map(() =>
 				createRef<HTMLLIElement>()
@@ -83,27 +84,22 @@ const useBreadcrumbFinder = () => {
 	}, [activeItem, currentEntity, ids, navigate, setBreadCrumb, setSearch]);
 
 	const onClickRow = (rowIndex: number) => {
-		if (ON_CLICK_ROW_ENABLED) {
-			const currentItem = items[rowIndex];
+		const currentItem = items[rowIndex];
 
-			if (currentEntity.getPage) {
-				navigate(currentEntity?.getPage([...ids, currentItem.value]));
-				setBreadCrumb((prevBreadCrumb) => [
-					...prevBreadCrumb,
-					currentItem,
-				]);
-			}
-			setSearch('');
-			setActive(false);
+		if (currentEntity.getPage) {
+			navigate(currentEntity?.getPage([...ids, currentItem.value]));
+			setBreadCrumb((prevBreadCrumb) => [...prevBreadCrumb, currentItem]);
 		}
+		setSearch('');
+		setActive(false);
 	};
 
 	const scrollIntoView = useCallback((liElement: any) => {
 		if (liElement.current) {
-			ulRef.current?.scrollTo({
+			listRef.current?.scrollTo({
 				behavior: 'smooth',
 				left: 0,
-				top: liElement.current.offsetTop - 90,
+				top: liElement.current.offsetTop - BREADCRUMB_HEIGHT,
 			});
 		}
 	}, []);
@@ -116,11 +112,11 @@ const useBreadcrumbFinder = () => {
 				currentIndex = 0;
 			}
 
-			scrollIntoView(tabRefs[currentIndex]);
+			scrollIntoView(listItemRef[currentIndex]);
 
 			return currentIndex;
 		});
-	}, [itemsLength, scrollIntoView, tabRefs]);
+	}, [itemsLength, scrollIntoView, listItemRef]);
 
 	const onKeyUp = useCallback(() => {
 		setIndex((prevIndex) => {
@@ -130,15 +126,13 @@ const useBreadcrumbFinder = () => {
 				currentIndex = itemsLength - 1;
 			}
 
-			scrollIntoView(tabRefs[currentIndex]);
+			scrollIntoView(listItemRef[currentIndex]);
 
 			return currentIndex;
 		});
-	}, [itemsLength, scrollIntoView, tabRefs]);
+	}, [itemsLength, scrollIntoView, listItemRef]);
 
-	const onEscape = useCallback(() => {
-		setActive(false);
-	}, []);
+	const onEscape = useCallback(() => setActive(false), []);
 
 	const onTab = useCallback(() => {
 		setBreadCrumb((prevBreadCrumb) => [...prevBreadCrumb, activeItem]);
@@ -146,13 +140,13 @@ const useBreadcrumbFinder = () => {
 		setSearch('');
 		setTimeout(() => {
 			inputRef.current?.focus();
-		}, 10);
+		}, INPUT_FOCUS_DELAY);
 	}, [activeItem, inputRef, setBreadCrumb, setSearch]);
 
 	useEffect(() => {
 		setTimeout(() => {
 			inputRef.current?.focus();
-		}, 10);
+		}, INPUT_FOCUS_DELAY);
 	}, [inputRef, active]);
 
 	useHotkeys('/', () => setActive(true), {enabled: !active});
@@ -164,7 +158,7 @@ const useBreadcrumbFinder = () => {
 		'down',
 		onKeyDown,
 		{...baseOptions, filterPreventDefault: true},
-		[itemsLength, tabRefs]
+		[itemsLength, listItemRef]
 	);
 	useHotkeys(
 		'tab',
@@ -174,7 +168,7 @@ const useBreadcrumbFinder = () => {
 	);
 	useHotkeys('up', onKeyUp, {...baseOptions, filterPreventDefault: true}, [
 		itemsLength,
-		tabRefs,
+		listItemRef,
 	]);
 
 	const onInputKeyPress = (key: string) => {
@@ -199,6 +193,8 @@ const useBreadcrumbFinder = () => {
 		index,
 		inputRef,
 		items,
+		listItemRef,
+		listRef,
 		onBackscape,
 		onClickRow,
 		onInputKeyPress,
@@ -207,8 +203,6 @@ const useBreadcrumbFinder = () => {
 		setBreadCrumb,
 		setSearch,
 		tabDisabled,
-		tabRefs,
-		ulRef,
 	};
 };
 

@@ -122,21 +122,21 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-center"
+							cssClass="text-right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
 							name="num-of-kb-folders"
 							value="<%= String.valueOf(kbFoldersCount) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-center"
+							cssClass="text-right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
 							name="num-of-kb-articles"
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-center"
+							cssClass="text-right"
 						>
 							<aui:button
 								cssClass="selector-button"
@@ -206,21 +206,21 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-center"
+							cssClass="text-right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
 							name="num-of-kb-folders"
 							value="-"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-center"
+							cssClass="text-right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
 							name="num-of-kb-articles"
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-center"
+							cssClass="text-right"
 						>
 							<aui:button
 								cssClass="selector-button"

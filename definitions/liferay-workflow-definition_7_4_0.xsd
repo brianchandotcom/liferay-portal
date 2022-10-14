@@ -475,13 +475,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="script-language-type">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="beanshell" />
-			<xs:enumeration value="drl" />
-			<xs:enumeration value="groovy" />
-			<xs:enumeration value="java" />
-			<xs:enumeration value="javascript" />
-			<xs:enumeration value="python" />
-			<xs:enumeration value="ruby" />
+			<xs:pattern value="(beanshell|drl|groovy|java|javascript|python|ruby|function#[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*)" />
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="task-execution-type">

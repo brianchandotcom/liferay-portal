@@ -133,7 +133,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		return _openAPIResource.getOpenAPI(
 			new ObjectEntryOpenAPIContributor(
-				_objectDefinition, _objectDefinitionLocalService,
+				_objectDefinition, _objectDefinitionLocalService, this,
 				_objectRelationshipLocalService),
 			_getOpenAPISchemaFilter(_objectDefinition.getRESTContextPath()),
 			new HashSet<Class<?>>() {

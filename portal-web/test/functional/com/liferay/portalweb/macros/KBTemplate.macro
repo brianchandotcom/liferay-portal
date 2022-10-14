@@ -59,14 +59,6 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro gotoCP {
-		Navigator.gotoNavItem(navItem = "Templates");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "View",
-			rowEntry = "${kbTemplateTitle}");
-	}
-
 	macro gotoTemplateMenuItemThroughPageTreePanel {
 		MouseOver(
 			key_itemLinkName = "${kbTemplateTitle}",
@@ -129,18 +121,6 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-	}
-
-	macro viewCP {
-		KBTemplate.gotoCP(kbTemplateTitle = "${kbTemplateTitle}");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBaseTemplate#TEMPLATE_TITLE",
-			value1 = "${kbTemplateTitle}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "KnowledgeBaseTemplate#TEMPLATE_CONTENT",
-			value1 = "${kbTemplateContent}");
 	}
 
 	macro viewCPViaAddTemplate {

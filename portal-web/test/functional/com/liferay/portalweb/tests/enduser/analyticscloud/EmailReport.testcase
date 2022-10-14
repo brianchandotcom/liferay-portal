@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("Check that email report has been disabled") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Disabled");
 		}
 	}
 
@@ -90,7 +90,7 @@ definition {
 			for (var frequencyOption : list "${frequencyList}") {
 				ACEmailReport.enableEmailReport(frequency = "${frequencyOption}");
 
-				ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+				ACUtils.viewGenericText(textValueList = "Email Reports: ,Enabled");
 
 				Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
 
@@ -117,7 +117,7 @@ definition {
 		}
 
 		task ("See in the property that the email report has the status of enabled and the success alert appears") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Enabled");
 
 			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
 		}
@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("See in the property that the email report has the status of disabled and the success alert appears") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Disabled");
 
 			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
 		}
@@ -192,7 +192,7 @@ definition {
 			}
 
 			task ("Check that email report is disabled") {
-				ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+				ACUtils.viewGenericText(textValueList = "Email Reports: ,Disabled");
 			}
 
 			task ("Enable and configure email report frequency") {
@@ -200,7 +200,7 @@ definition {
 			}
 
 			task ("Check that email report has been enabled") {
-				ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+				ACUtils.viewGenericText(textValueList = "Email Reports: ,Enabled");
 			}
 		}
 	}
@@ -221,7 +221,7 @@ definition {
 		task ("Enable email reports with the daily option and then see in the property that the email report has the status of enabled") {
 			ACEmailReport.enableEmailReport(frequency = "Daily");
 
-			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Enabled");
 		}
 
 		task ("Login AC with a different user then go to Settings > Go to Properties > Open the new property") {
@@ -237,13 +237,13 @@ definition {
 		}
 
 		task ("See that the changes made in another account did not affect the actual account") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Disabled");
 		}
 
 		task ("Enable the email reports with the monthly option and then see in the property that the email report has the status of enabled") {
 			ACEmailReport.enableEmailReport(frequency = "Monthly");
 
-			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Enabled");
 		}
 
 		task ("Login with the Test Test account and then go to Settings > Go to Properties > Open the new property") {
@@ -271,7 +271,7 @@ definition {
 
 			Button.clickSave();
 
-			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Disabled");
 		}
 
 		task ("Login with Corbin then go to Settings > Go to Properties > Open the new property") {
@@ -287,7 +287,7 @@ definition {
 		}
 
 		task ("Observe that the change made to another account did not affect the current account") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Enabled");
 
 			ACEmailReport.accessEmailReportSettings();
 
@@ -315,7 +315,7 @@ definition {
 		}
 
 		task ("Check that the Email Reports field appears and has the status disabled") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+			ACUtils.viewGenericText(textValueList = "Email Reports: ,Disabled");
 		}
 
 		task ("Check that the Email Reports widget icon is disabled if the property is not synced") {

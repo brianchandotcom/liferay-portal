@@ -774,12 +774,7 @@ definition {
 
 			ACUtils.viewGenericText(textValueList = "There are no tests found.");
 
-			for (var textValue : list "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.") {
-				AssertTextEquals.assertPartialText(
-					key_textValue = "${textValue}",
-					locator1 = "ACUtils#GENERIC_TEXT",
-					value1 = "${textValue}");
-			}
+			ACUtils.viewGenericText(textValueList = "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.");
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about tests.");
 
@@ -1534,7 +1529,7 @@ definition {
 			ACUtils.closeModal();
 		}
 
-		task ("Asset that there are no properties on the sites page") {
+		task ("Assert that there are no properties on the sites page") {
 			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES");
 
 			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");

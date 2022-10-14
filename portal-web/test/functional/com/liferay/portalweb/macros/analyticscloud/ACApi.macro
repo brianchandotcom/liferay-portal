@@ -1,5 +1,13 @@
 definition {
 
+	macro assertSearchResponse {
+		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[0].keywords");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expected}");
+	}
+
 	macro createNewExportSchedule {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
@@ -21,6 +29,34 @@ definition {
 			''';
 
 		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
+
+		return "${apiResponse}";
+	}
+
+	macro getSearchHeaderValues {
+		var script = '''
+			    out.println(com.liferay.portal.util.PrefsPropsUtil.getPreferences(com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId(), false).getMap().get("${header}")[0]);
+		    ''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		var scriptValue = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
+
+		return "${scriptValue}";
+	}
+
+	macro getSearchKeywords {
+		if (isSet(displayLanguageId) && isSet(groupId) && isSet(page) && isSet(size) && isSet(sort)) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size}&displayLanguageId=${displayLanguageId}&page=${page}&groupId=${groupId}&sort=${sort} \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+
+			static var apiResponse = JSONCurlUtil.get("${curl}");
+		}
 
 		return "${apiResponse}";
 	}

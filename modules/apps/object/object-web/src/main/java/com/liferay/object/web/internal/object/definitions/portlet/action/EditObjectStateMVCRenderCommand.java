@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -67,6 +68,7 @@ public class EditObjectStateMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsStateManagerDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
+					_listTypeDefinitionService,
 					_objectDefinitionModelResourcePermission));
 		}
 		catch (PortalException portalException) {
@@ -75,6 +77,9 @@ public class EditObjectStateMVCRenderCommand implements MVCRenderCommand {
 
 		return "/object_definitions/edit_object_state.jsp";
 	}
+
+	@Reference
+	private ListTypeDefinitionService _listTypeDefinitionService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

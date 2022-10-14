@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
@@ -55,6 +56,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 	public ObjectDefinitionsFieldsDisplayContext(
 		HttpServletRequest httpServletRequest,
+		ListTypeDefinitionService listTypeDefinitionService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
@@ -62,6 +64,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
+		_listTypeDefinitionService = listTypeDefinitionService;
 		_objectFieldBusinessTypeTracker = objectFieldBusinessTypeTracker;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 	}
@@ -158,7 +161,8 @@ public class ObjectDefinitionsFieldsDisplayContext
 	}
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {
-		return ObjectFieldUtil.toJSONObject(objectField);
+		return ObjectFieldUtil.toJSONObject(
+			_listTypeDefinitionService, objectField);
 	}
 
 	public Long getObjectRelationshipId(ObjectField objectField) {
@@ -182,6 +186,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 		return "/object-fields";
 	}
 
+	private final ListTypeDefinitionService _listTypeDefinitionService;
 	private final ObjectFieldBusinessTypeTracker
 		_objectFieldBusinessTypeTracker;
 	private final ObjectRelationshipLocalService

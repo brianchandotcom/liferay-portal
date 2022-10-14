@@ -86,6 +86,29 @@ definition {
 		}
 	}
 
+	macro previewTemplate {
+		if (isSet(pageTreePanel)) {
+			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
+				kbTemplateTitle = "${kbTemplateTitle}",
+				menuItem = "View");
+		}
+		else {
+			Click(
+				key_rowEntry = "${kbTemplateTitle}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "View");
+		}
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseTemplate#TEMPLATE_TITLE",
+			value1 = "${kbTemplateTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBaseTemplate#TEMPLATE_CONTENT",
+			value1 = "${kbTemplateContent}");
+	}
+
 	macro tearDownCP {
 		Navigator.openURL();
 

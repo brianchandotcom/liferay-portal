@@ -65,7 +65,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'
 			),
-			importDate: super.getAttribute('import-date'),
+			importDate: new Date(super.getAttribute('import-date')),
 			liferayWebDAV: super.getAttribute('liferaywebdavurl'),
 			submitSupportTicketURL: super.getAttribute(
 				'submit-support-ticket-url'

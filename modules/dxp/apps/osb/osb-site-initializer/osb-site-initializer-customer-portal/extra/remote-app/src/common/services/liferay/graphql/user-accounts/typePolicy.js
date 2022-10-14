@@ -39,6 +39,11 @@ export const userAccountsTypePolicy = {
 	},
 	UserAccount: {
 		fields: {
+			dateCreated: {
+				read(dateCreated) {
+					return new Date(dateCreated);
+				},
+			},
 			isLiferayStaff: {
 				read(_, {readField}) {
 					return !!readField('organizationBriefs').some(

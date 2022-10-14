@@ -16,6 +16,7 @@ export const AppPropertiesContext = createContext({
 	articleDeployingActivationKeysURL: '',
 	client: undefined,
 	gravatarAPI: '',
+	importDate: undefined,
 	liferayWebDAV: '',
 	oktaSessionAPI: '',
 	provisioningServerAPI: '',

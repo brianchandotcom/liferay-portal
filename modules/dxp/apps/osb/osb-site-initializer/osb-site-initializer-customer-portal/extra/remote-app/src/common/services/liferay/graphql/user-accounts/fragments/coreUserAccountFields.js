@@ -22,6 +22,7 @@ export const CORE_USER_ACCOUNT_FIELDS = gql`
 				name
 			}
 		}
+		dateCreated
 		emailAddress
 		id
 		isLiferayStaff @client

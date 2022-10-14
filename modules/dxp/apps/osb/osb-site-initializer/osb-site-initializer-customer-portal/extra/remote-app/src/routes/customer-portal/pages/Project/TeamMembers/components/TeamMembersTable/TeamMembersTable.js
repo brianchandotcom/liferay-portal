@@ -29,7 +29,11 @@ const TeamMembersTable = ({
 	koroneikiAccount,
 	loading: koroneikiAccountLoading,
 }) => {
-	const {articleAccountSupportURL, gravatarAPI} = useAppPropertiesContext();
+	const {
+		articleAccountSupportURL,
+		gravatarAPI,
+		importDate,
+	} = useAppPropertiesContext();
 	const {observer, onOpenChange, open} = useModal();
 
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
@@ -192,7 +196,8 @@ const TeamMembersTable = ({
 						status: (
 							<StatusTag
 								currentStatus={
-									userAccount?.lastLoginDate
+									userAccount.lastLoginDate ||
+									userAccount.dateCreated <= importDate
 										? STATUS_TAG_TYPES.active
 										: STATUS_TAG_TYPES.invited
 								}

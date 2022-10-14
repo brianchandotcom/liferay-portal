@@ -2856,6 +2856,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-162827 Given the kebab menu of a web content with just one version
+	When the user clicks on Expire option
+	Then the web content is expired and it changes its status to Expired"
+	@priority = "4"
+	test ExpireVersionLabel {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+		
+		task ("Go to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Open the info panel and go to the versions tab") {
+			ContentDashboard.clickQuickActionIcon(iconName = "Info");
+
+			ContentDashboard.openVersionsTab();
+		}
+
+		task ("Expire the web content version") {
+			ContentDashboard.expireVersion(
+				versionName = "Version 1.0", 
+				item = "Expire");
+		}
+
+		task ("Check the Expire label is present for the web content") {
+			AssertTextPresent(
+				assetName = "WC Title",
+				locator1 = "ContentDashboard#ASSET_STATUS_LABEL",
+				value1 = "EXPIRED");
+		}
+	}
+
 	@description = "LPS-124236 Given the Content Dashboard
 	When there are no contents in the list
 	Then the Export XLS button is disabled"

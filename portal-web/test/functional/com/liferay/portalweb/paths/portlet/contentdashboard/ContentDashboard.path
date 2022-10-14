@@ -241,6 +241,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_PANEL_VERSIONS_TAB</td>
+	<td>//button[contains(@class,'nav-link') and contains (.,'Versions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_CATEGORIES_SELECTED_TEXT</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There are no categories selected')]</td>
 	<td></td>
@@ -328,6 +333,11 @@
 <tr>
 	<td>URL_LABEL</td>
 	<td>//*[contains(@class, 'sidebar-dl') and descendant::input] //h5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_ELLIPSIS</td>
+	<td>//*[contains(@class,'list-group-item')][contains(.,'${key_version}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

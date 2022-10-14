@@ -20,7 +20,6 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
-import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -850,9 +849,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 			}
 		}
 	}
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private GroupService _groupService;

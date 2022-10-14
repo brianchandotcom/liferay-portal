@@ -1,0 +1,99 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12141 | Test Summary: Request search keywords using all parameters"
+	@priority = "3"
+	test RequestKeywordsUsingAllParameters {
+		var displayLanguageId = "en-US";
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+		var keyword = "all parameters";
+		var page = "0";
+		var size = "10";
+		var sort = "counts,desc";
+
+		task ("Go to Server Administration") {
+			ServerAdministration.openServerAdmin();
+		}
+
+		task ("Get Faro Backend URL") {
+			var faroBackendURL = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
+		}
+
+		task ("Get OSB-Asah-Faro-Backend-Security-Signature") {
+			var osbAsahFaroBackendSS = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
+		}
+
+		task ("Get OSB-Asah-Project-Id") {
+			var osbAsahProjectId = ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Type keyword in search bar") {
+			SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+		}
+
+		task ("Run curl command to get keyword results") {
+			ACApi.getSearchKeywords(
+				displayLanguageId = "${displayLanguageId}",
+				faroBackendURL = "${faroBackendURL}",
+				groupId = "${groupId}",
+				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
+				osbAsahProjectId = "${osbAsahProjectId}",
+				page = "${page}",
+				size = "${size}",
+				sort = "${sort}");			
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword}");
+		}
+	}
+
+}

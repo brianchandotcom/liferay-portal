@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaComponentAnnotationsCheck" files="src/main/java/com/liferay/portal/funcio/internal/workflow/FuncioActionExecutor\.java" />
+	</source-check>
+</suppressions>

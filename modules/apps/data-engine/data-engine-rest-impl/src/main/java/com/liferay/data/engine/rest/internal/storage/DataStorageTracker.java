@@ -15,17 +15,13 @@
 package com.liferay.data.engine.rest.internal.storage;
 
 import com.liferay.data.engine.storage.DataStorage;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
-import java.util.TreeMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jeyvison Nascimento
@@ -34,37 +30,20 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DataStorageTracker {
 
 	public DataStorage getDataStorage(String dataStorageType) {
-		return _dataStorages.get(dataStorageType);
+		return _serviceTrackerMap.getService(dataStorageType);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDataStorage(
-		DataStorage dataStorage, Map<String, Object> properties) {
-
-		String dataStorageType = MapUtil.getString(
-			properties, "data.storage.type");
-
-		_dataStorages.put(dataStorageType, dataStorage);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DataStorage.class, "data.storage.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dataStorages.clear();
+		_serviceTrackerMap.close();
 	}
 
-	protected void removeDataStorage(
-		DataStorage dataStorage, Map<String, Object> properties) {
-
-		String dataStorageType = MapUtil.getString(
-			properties, "data.storage.type");
-
-		_dataStorages.remove(dataStorageType);
-	}
-
-	private final Map<String, DataStorage> _dataStorages = new TreeMap<>();
+	private ServiceTrackerMap<String, DataStorage> _serviceTrackerMap;
 
 }

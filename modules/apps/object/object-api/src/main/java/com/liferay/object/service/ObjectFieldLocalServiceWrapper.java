@@ -39,7 +39,8 @@ public class ObjectFieldLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectField addCustomObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			long userId, String externalReferenceCode,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
@@ -49,9 +50,10 @@ public class ObjectFieldLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addCustomObjectField(
-			userId, listTypeDefinitionId, objectDefinitionId, businessType,
-			dbType, defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, objectFieldSettings);
+			userId, externalReferenceCode, listTypeDefinitionId,
+			objectDefinitionId, businessType, dbType, defaultValue, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			state, objectFieldSettings);
 	}
 
 	/**

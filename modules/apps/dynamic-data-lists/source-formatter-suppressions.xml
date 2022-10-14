@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="AccessModifierCheck" files="dynamic-data-lists-service/src/main/java/com/liferay/dynamic/data/lists/service/impl/DDLRecordLocalServiceImpl\.java" />
+	</checkstyle>
+</suppressions>

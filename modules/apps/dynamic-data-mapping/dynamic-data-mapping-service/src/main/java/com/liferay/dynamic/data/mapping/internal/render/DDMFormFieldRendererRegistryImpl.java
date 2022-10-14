@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.internal.render;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -85,26 +84,16 @@ public class DDMFormFieldRendererRegistryImpl
 					_bundleContext.ungetService(serviceReference);
 				}
 			});
-
-		DDMFormFieldRendererRegistryUtil ddmFormFieldRendererRegistryUtil =
-			new DDMFormFieldRendererRegistryUtil();
-
-		ddmFormFieldRendererRegistryUtil.setDDMFormFieldRendererRegistry(this);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmFormFieldRendererRegistryUtil.setDDMFormFieldRendererRegistry(null);
-
 		_serviceTrackerMap.close();
 
 		_serviceRegistration.unregister();
 	}
 
 	private BundleContext _bundleContext;
-	private final DDMFormFieldRendererRegistryUtil
-		_ddmFormFieldRendererRegistryUtil =
-			new DDMFormFieldRendererRegistryUtil();
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

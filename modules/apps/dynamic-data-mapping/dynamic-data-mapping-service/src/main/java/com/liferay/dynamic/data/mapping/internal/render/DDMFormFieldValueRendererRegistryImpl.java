@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.internal.render;
 
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -63,16 +62,10 @@ public class DDMFormFieldValueRendererRegistryImpl
 					bundleContext.ungetService(serviceReference);
 				}
 			});
-
-		_ddmFormFieldValueRendererRegistryUtil.
-			setDDMFormFieldValueRendererRegistry(this);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmFormFieldValueRendererRegistryUtil.
-			setDDMFormFieldValueRendererRegistry(null);
-
 		_serviceTrackerMap.close();
 
 		for (ServiceRegistration<?> serviceRegistration :
@@ -82,9 +75,6 @@ public class DDMFormFieldValueRendererRegistryImpl
 		}
 	}
 
-	private final DDMFormFieldValueRendererRegistryUtil
-		_ddmFormFieldValueRendererRegistryUtil =
-			new DDMFormFieldValueRendererRegistryUtil();
 	private final DDMFormFieldValueRenderer[]
 		_defaultDDMFormFieldValueRenderers = {
 			new CheckboxDDMFormFieldValueRenderer(),

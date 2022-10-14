@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
 /**
  * @author Pablo Carvalho
  */
@@ -26,18 +28,11 @@ public class DDMFormFieldRendererRegistryUtil {
 			ddmFormFieldType);
 	}
 
-	public static DDMFormFieldRendererRegistry
-		getDDMFormFieldRendererRegistry() {
-
-		return _ddmFormFieldRendererRegistry;
-	}
-
-	public void setDDMFormFieldRendererRegistry(
-		DDMFormFieldRendererRegistry ddmFormFieldRendererRegistry) {
-
-		_ddmFormFieldRendererRegistry = ddmFormFieldRendererRegistry;
-	}
-
-	private static DDMFormFieldRendererRegistry _ddmFormFieldRendererRegistry;
+	private static volatile DDMFormFieldRendererRegistry
+		_ddmFormFieldRendererRegistry =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				DDMFormFieldRendererRegistry.class,
+				DDMFormFieldRendererRegistryUtil.class,
+				"_ddmFormFieldRendererRegistry", true);
 
 }

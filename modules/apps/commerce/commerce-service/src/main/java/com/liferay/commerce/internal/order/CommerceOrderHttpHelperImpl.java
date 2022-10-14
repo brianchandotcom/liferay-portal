@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -341,8 +340,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				cookie.setMaxAge(CookiesConstants.MAX_AGE);
 				cookie.setPath(StringPool.SLASH);
 
-				CookieKeys.addCookie(
-					httpServletRequest, themeDisplay.getResponse(), cookie);
+				CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+					httpServletRequest, themeDisplay.getResponse());
 			}
 
 			portletURL.setParameter("redirect", checkoutPortletURL.toString());
@@ -736,8 +735,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		cookie.setMaxAge(CookiesConstants.MAX_AGE);
 		cookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(
-			themeDisplay.getRequest(), themeDisplay.getResponse(), cookie);
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+			themeDisplay.getRequest(), themeDisplay.getResponse());
 	}
 
 	private void _validateCommerceOrderItemVersions(

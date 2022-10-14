@@ -38,7 +38,9 @@ import org.osgi.annotation.versioning.ProviderType;
 				"setVisible('emailToAddress', getValue('sendEmailNotification'))",
 				"setVisible('objectDefinitionId', contains(getValue('storageType'), \"object\"))",
 				"setVisible('published', FALSE)",
-				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))"
+				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))",
+				"setVisible('headerText', getValue('limitToOneSubmissionPerUser'))",
+				"setVisible('bodyText', getValue('limitToOneSubmissionPerUser'))"
 			},
 			condition = "TRUE"
 		),
@@ -106,8 +108,8 @@ import org.osgi.annotation.versioning.ProviderType;
 							size = 12,
 							value = {
 								"showPartialResultsToRespondents",
-								"limitToOneSubmissionPerUser", "expirationDate",
-								"neverExpire"
+								"limitToOneSubmissionPerUser", "headerText",
+								"bodyText", "expirationDate", "neverExpire"
 							}
 						)
 					}
@@ -124,6 +126,13 @@ public interface DDMFormInstanceSettings {
 		properties = "showAsSwitcher=true"
 	)
 	public boolean autosaveEnabled();
+
+	@DDMFormField(
+		label = "%body",
+		predefinedValue = "%you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake",
+		properties = "displayStyle=multiline", type = "localizable_text"
+	)
+	public String bodyText();
 
 	@DDMFormField
 	public boolean convertedFromPolls();
@@ -156,6 +165,12 @@ public interface DDMFormInstanceSettings {
 		validationParameter = "{\"startsFrom\": {\"date\": \"responseDate\", \"quantity\": 1, \"type\": \"customDate\", \"unit\": \"days\"}}"
 	)
 	public String expirationDate();
+
+	@DDMFormField(
+		label = "%header", predefinedValue = "%you-have-already-responded",
+		type = "localizable_text"
+	)
+	public String headerText();
 
 	@DDMFormField(
 		label = "%limit-to-one-submission-per-user",

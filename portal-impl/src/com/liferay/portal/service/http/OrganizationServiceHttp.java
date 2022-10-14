@@ -88,7 +88,7 @@ public class OrganizationServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
 			HttpPrincipal httpPrincipal, long parentOrganizationId, String name,
-			String type, long regionId, long countryId, long statusId,
+			String type, long regionId, long countryId, long statusListTypeId,
 			String comments, boolean site,
 			java.util.List<com.liferay.portal.kernel.model.Address> addresses,
 			java.util.List<com.liferay.portal.kernel.model.EmailAddress>
@@ -106,8 +106,8 @@ public class OrganizationServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, parentOrganizationId, name, type, regionId,
-				countryId, statusId, comments, site, addresses, emailAddresses,
-				orgLabors, phones, websites, serviceContext);
+				countryId, statusListTypeId, comments, site, addresses,
+				emailAddresses, orgLabors, phones, websites, serviceContext);
 
 			Object returnObj = null;
 
@@ -139,7 +139,7 @@ public class OrganizationServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
 			HttpPrincipal httpPrincipal, long parentOrganizationId, String name,
-			String type, long regionId, long countryId, long statusId,
+			String type, long regionId, long countryId, long statusListTypeId,
 			String comments, boolean site,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -151,7 +151,7 @@ public class OrganizationServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, parentOrganizationId, name, type, regionId,
-				countryId, statusId, comments, site, serviceContext);
+				countryId, statusListTypeId, comments, site, serviceContext);
 
 			Object returnObj = null;
 
@@ -229,8 +229,9 @@ public class OrganizationServiceHttp {
 			addOrUpdateOrganization(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long parentOrganizationId, String name, String type,
-				long regionId, long countryId, long statusId, String comments,
-				boolean hasLogo, byte[] logoBytes, boolean site,
+				long regionId, long countryId, long statusListTypeId,
+				String comments, boolean hasLogo, byte[] logoBytes,
+				boolean site,
 				java.util.List<com.liferay.portal.kernel.model.Address>
 					addresses,
 				java.util.List<com.liferay.portal.kernel.model.EmailAddress>
@@ -250,7 +251,7 @@ public class OrganizationServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, parentOrganizationId, name,
-				type, regionId, countryId, statusId, comments, hasLogo,
+				type, regionId, countryId, statusListTypeId, comments, hasLogo,
 				logoBytes, site, addresses, emailAddresses, orgLabors, phones,
 				websites, serviceContext);
 
@@ -1039,8 +1040,9 @@ public class OrganizationServiceHttp {
 			updateOrganization(
 				HttpPrincipal httpPrincipal, long organizationId,
 				long parentOrganizationId, String name, String type,
-				long regionId, long countryId, long statusId, String comments,
-				boolean hasLogo, byte[] logoBytes, boolean site,
+				long regionId, long countryId, long statusListTypeId,
+				String comments, boolean hasLogo, byte[] logoBytes,
+				boolean site,
 				java.util.List<com.liferay.portal.kernel.model.Address>
 					addresses,
 				java.util.List<com.liferay.portal.kernel.model.EmailAddress>
@@ -1060,9 +1062,9 @@ public class OrganizationServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, organizationId, parentOrganizationId, name, type,
-				regionId, countryId, statusId, comments, hasLogo, logoBytes,
-				site, addresses, emailAddresses, orgLabors, phones, websites,
-				serviceContext);
+				regionId, countryId, statusListTypeId, comments, hasLogo,
+				logoBytes, site, addresses, emailAddresses, orgLabors, phones,
+				websites, serviceContext);
 
 			Object returnObj = null;
 
@@ -1096,8 +1098,8 @@ public class OrganizationServiceHttp {
 			updateOrganization(
 				HttpPrincipal httpPrincipal, long organizationId,
 				long parentOrganizationId, String name, String type,
-				long regionId, long countryId, long statusId, String comments,
-				boolean site,
+				long regionId, long countryId, long statusListTypeId,
+				String comments, boolean site,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1108,7 +1110,8 @@ public class OrganizationServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, organizationId, parentOrganizationId, name, type,
-				regionId, countryId, statusId, comments, site, serviceContext);
+				regionId, countryId, statusListTypeId, comments, site,
+				serviceContext);
 
 			Object returnObj = null;
 

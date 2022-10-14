@@ -29,10 +29,10 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -209,12 +209,6 @@ public class FolderSearchFacetDisplayContextBuilder {
 		return false;
 	}
 
-	private static int _compareDisplayNames(
-		String displayName1, String displayName2) {
-
-		return displayName1.compareTo(displayName2);
-	}
-
 	private BucketDisplayContext _buildBucketDisplayContext(
 		long folderId, String displayName, int frequency, boolean selected) {
 
@@ -277,18 +271,9 @@ public class FolderSearchFacetDisplayContextBuilder {
 		}
 
 		if (_order != null) {
-			if (_order.equals("count:asc")) {
-				bucketDisplayContexts.sort(_COMPARATOR_FREQUENCY_ASC);
-			}
-			else if (_order.equals("count:desc")) {
-				bucketDisplayContexts.sort(_COMPARATOR_FREQUENCY_DESC);
-			}
-			else if (_order.equals("key:asc")) {
-				bucketDisplayContexts.sort(_COMPARATOR_TERM_ASC);
-			}
-			else if (_order.equals("key:desc")) {
-				bucketDisplayContexts.sort(_COMPARATOR_TERM_DESC);
-			}
+			bucketDisplayContexts.sort(
+				BucketDisplayContextComparatorFactoryUtil.
+					getBucketDisplayContextComparator(_order));
 		}
 
 		return bucketDisplayContexts;
@@ -317,95 +302,6 @@ public class FolderSearchFacetDisplayContextBuilder {
 
 		return bucketDisplayContextsStream.collect(Collectors.toList());
 	}
-
-	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_FREQUENCY_ASC = new Comparator<BucketDisplayContext>() {
-
-			public int compare(
-				BucketDisplayContext displayContext1,
-				BucketDisplayContext displayContext2) {
-
-				int result =
-					displayContext1.getFrequency() -
-						displayContext2.getFrequency();
-
-				if (result == 0) {
-					return _compareDisplayNames(
-						displayContext1.getBucketText(),
-						displayContext2.getBucketText());
-				}
-
-				return result;
-			}
-
-		};
-
-	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_FREQUENCY_DESC = new Comparator<BucketDisplayContext>() {
-
-			@Override
-			public int compare(
-				BucketDisplayContext displayContext1,
-				BucketDisplayContext displayContext2) {
-
-				int result =
-					displayContext2.getFrequency() -
-						displayContext1.getFrequency();
-
-				if (result == 0) {
-					return _compareDisplayNames(
-						displayContext1.getBucketText(),
-						displayContext2.getBucketText());
-				}
-
-				return result;
-			}
-
-		};
-
-	private static final Comparator<BucketDisplayContext> _COMPARATOR_TERM_ASC =
-		new Comparator<BucketDisplayContext>() {
-
-			@Override
-			public int compare(
-				BucketDisplayContext displayContext1,
-				BucketDisplayContext displayContext2) {
-
-				int result = _compareDisplayNames(
-					displayContext1.getBucketText(),
-					displayContext2.getBucketText());
-
-				if (result == 0) {
-					return displayContext2.getFrequency() -
-						displayContext1.getFrequency();
-				}
-
-				return result;
-			}
-
-		};
-
-	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_TERM_DESC = new Comparator<BucketDisplayContext>() {
-
-			@Override
-			public int compare(
-				BucketDisplayContext displayContext1,
-				BucketDisplayContext displayContext2) {
-
-				int result = _compareDisplayNames(
-					displayContext2.getBucketText(),
-					displayContext1.getBucketText());
-
-				if (result == 0) {
-					return displayContext2.getFrequency() -
-						displayContext1.getFrequency();
-				}
-
-				return result;
-			}
-
-		};
 
 	private Facet _facet;
 	private final FolderFacetPortletInstanceConfiguration

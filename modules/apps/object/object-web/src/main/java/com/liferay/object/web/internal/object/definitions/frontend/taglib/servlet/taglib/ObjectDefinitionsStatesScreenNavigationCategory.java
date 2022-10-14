@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsStateManagerDisplayContext;
@@ -84,13 +85,17 @@ public class ObjectDefinitionsStatesScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsStateManagerDisplayContext(
-				httpServletRequest, _objectDefinitionModelResourcePermission));
+				httpServletRequest, _listTypeDefinitionService,
+				_objectDefinitionModelResourcePermission));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ListTypeDefinitionService _listTypeDefinitionService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

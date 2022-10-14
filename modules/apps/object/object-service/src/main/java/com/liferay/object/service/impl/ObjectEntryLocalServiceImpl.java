@@ -58,6 +58,7 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.util.ObjectRelationshipUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -93,6 +94,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -1162,7 +1164,19 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
 
-		objectEntry = objectEntryPersistence.update(objectEntry);
+		if (_skipModelListenersThreadLocal.get()) {
+			while (objectEntry instanceof ModelWrapper) {
+				ModelWrapper<ObjectEntry> modelWrapper =
+					(ModelWrapper<ObjectEntry>)objectEntry;
+
+				objectEntry = modelWrapper.getWrappedModel();
+			}
+
+			objectEntry = objectEntryPersistence.updateImpl(objectEntry);
+		}
+		else {
+			objectEntry = objectEntryPersistence.update(objectEntry);
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(
@@ -2526,10 +2540,20 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-			objectEntry, serviceContext);
+		try {
+			_skipModelListenersThreadLocal.set(true);
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
+				userId, objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId(), objectEntry, serviceContext);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+		finally {
+			_skipModelListenersThreadLocal.set(false);
+		}
 	}
 
 	private void _updateTable(
@@ -2991,6 +3015,12 @@ public class ObjectEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);
+
+	private static final ThreadLocal<Boolean> _skipModelListenersThreadLocal =
+		new CentralizedThreadLocal<>(
+			ObjectEntryLocalServiceImpl.class +
+				"._skipModelListenersThreadLocal",
+			() -> false);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

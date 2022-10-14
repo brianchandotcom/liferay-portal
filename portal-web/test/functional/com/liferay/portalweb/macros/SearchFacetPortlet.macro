@@ -1,5 +1,18 @@
 definition {
 
+	macro assertFacetItemsByOrder {
+		var itemOrder = "0";
+
+		for (var current : list "${facetOrder}") {
+			var itemOrder = ${itemOrder} + 1;
+
+			AssertElementPresent(
+				key_itemName = "${current}",
+				key_itemOrder = "${itemOrder}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS_BY_ORDER");
+		}
+	}
+
 	macro checkFacet {
 		FormFields.enableCheckbox(fieldName = "${facetValueName}");
 	}
@@ -86,6 +99,23 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${customParameterName}");
 		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureFolderFacet {
+		Portlet.gotoPortletOptions(
+			portletName = "Folder Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Select(
+			key_fieldLabel = "Order Terms By",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${sortOption}");
 
 		PortletEntry.save();
 
@@ -292,37 +322,6 @@ definition {
 		PortletEntry.save();
 
 		IFrame.closeFrame();
-	}
-
-	macro assertFacetItemsByOrder {
-		var itemOrder = "0";
-        for (var current : list "${facetOrder}") {
-			var itemOrder = ${itemOrder} + 1;
-			AssertElementPresent(
-				key_itemName = "${current}",
-				key_itemOrder = "${itemOrder}",
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS_BY_ORDER");
-        }      
-    }
-
-	macro configureFolderFacet {
-
-		Portlet.gotoPortletOptions(
-			portletName = "Folder Facet",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Select( 
-			key_fieldLabel = "Order Terms By", 
-			locator1 = "Select#GENERIC_SELECT_FIELD", 
-			value1 = "${sortOption}");
-		
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-
 	}
 
 }

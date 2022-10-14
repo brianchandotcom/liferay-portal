@@ -15,7 +15,9 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.exception.CommerceChannelTypeException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelTable;
@@ -98,6 +100,8 @@ public class CommerceChannelLocalServiceImpl
 			}
 		}
 
+		_validateType(type);
+
 		long commerceChannelId = counterLocalService.increment();
 
 		commerceChannel = commerceChannelPersistence.create(commerceChannelId);
@@ -164,6 +168,8 @@ public class CommerceChannelLocalServiceImpl
 				commerceChannelLocalService.fetchByExternalReferenceCode(
 					externalReferenceCode, user.getCompanyId());
 		}
+
+		_validateType(type);
 
 		if (commerceChannel == null) {
 			return commerceChannelLocalService.addCommerceChannel(
@@ -393,6 +399,8 @@ public class CommerceChannelLocalServiceImpl
 			String commerceCurrencyCode)
 		throws PortalException {
 
+		_validateType(type);
+
 		CommerceChannel commerceChannel =
 			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
 
@@ -424,6 +432,8 @@ public class CommerceChannelLocalServiceImpl
 			String commerceCurrencyCode, String priceDisplayType,
 			boolean discountsTargetNetPrice)
 		throws PortalException {
+
+		_validateType(type);
 
 		CommerceChannel commerceChannel =
 			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
@@ -585,6 +595,15 @@ public class CommerceChannelLocalServiceImpl
 			group.getGroupId(), typeSettingsUnicodeProperties.toString());
 	}
 
+	private void _validateType(String type) throws PortalException {
+		if (Validator.isNull(type) ||
+			(_commerceChannelTypeRegistry.getCommerceChannelType(type) ==
+				null)) {
+
+			throw new CommerceChannelTypeException();
+		}
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
@@ -598,6 +617,9 @@ public class CommerceChannelLocalServiceImpl
 
 	@BeanReference(type = CommerceChannelRelLocalService.class)
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
+
+	@ServiceReference(type = CommerceChannelTypeRegistry.class)
+	private CommerceChannelTypeRegistry _commerceChannelTypeRegistry;
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;

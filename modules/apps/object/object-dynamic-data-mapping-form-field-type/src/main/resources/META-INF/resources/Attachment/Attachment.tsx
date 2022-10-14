@@ -90,7 +90,7 @@ function validateFileSize(
 	}
 }
 
-function File({attachment, loading, onDelete}: IFileProps) {
+function File({attachment, loading, onDelete, readOnly}: IFileProps) {
 	if (loading) {
 		return (
 			<ClayLoadingIndicator className="lfr-objects__attachment-loading" />
@@ -101,6 +101,7 @@ function File({attachment, loading, onDelete}: IFileProps) {
 			<>
 				<div className="lfr-objects__attachment-title">
 					<ClayButton
+						disabled={readOnly}
 						displayType="unstyled"
 						onClick={() => {
 							window.open(attachment.contentURL, '_blank');
@@ -109,20 +110,24 @@ function File({attachment, loading, onDelete}: IFileProps) {
 						{attachment.title}
 					</ClayButton>
 
-					<a
-						className="lfr-objects__attachment-download"
-						href={attachment.contentURL}
-					>
-						<ClayIcon symbol="download" />
-					</a>
+					{!readOnly && (
+						<>
+							<a
+								className="lfr-objects__attachment-download"
+								href={attachment.contentURL}
+							>
+								<ClayIcon symbol="download" />
+							</a>
 
-					<ClayButtonWithIcon
-						borderless
-						displayType="secondary"
-						monospaced
-						onClick={() => onDelete()}
-						symbol="times-circle-full"
-					/>
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								monospaced
+								onClick={() => onDelete()}
+								symbol="times-circle-full"
+							/>
+						</>
+					)}
 				</div>
 			</>
 		);
@@ -138,6 +143,8 @@ export default function Attachment({
 	maximumFileSize,
 	onChange,
 	overallMaximumUploadRequestSize,
+	readOnly,
+	tip,
 	title,
 	url,
 	...otherProps
@@ -237,38 +244,46 @@ export default function Attachment({
 	};
 
 	return (
-		<FieldBase {...otherProps} {...error}>
+		<FieldBase
+			readOnly={readOnly}
+			tip={!readOnly ? tip : ''}
+			{...otherProps}
+			{...error}
+		>
 			<div className="inline-item lfr-objects__attachment">
-				<ClayButton
-					className="lfr-objects__attachment-button"
-					displayType="secondary"
-					onClick={() => {
-						setError({});
+				{!readOnly && (
+					<ClayButton
+						className="lfr-objects__attachment-button"
+						displayType="secondary"
+						onClick={() => {
+							setError({});
 
-						if (fileSource === 'documentsAndMedia') {
-							openSelectionModal({
-								onSelect: handleSelectedItem,
-								selectEventName: `${portletNamespace}selectAttachmentEntry`,
-								title: Liferay.Language.get('select-file'),
-								url,
-							});
-						}
-						else if (fileSource === 'userComputer') {
-							const filePicker = inputRef.current;
-							if (filePicker) {
-								filePicker.value = '';
-								filePicker.click();
+							if (fileSource === 'documentsAndMedia') {
+								openSelectionModal({
+									onSelect: handleSelectedItem,
+									selectEventName: `${portletNamespace}selectAttachmentEntry`,
+									title: Liferay.Language.get('select-file'),
+									url,
+								});
 							}
-						}
-					}}
-				>
-					{Liferay.Language.get('select-file')}
-				</ClayButton>
+							else if (fileSource === 'userComputer') {
+								const filePicker = inputRef.current;
+								if (filePicker) {
+									filePicker.value = '';
+									filePicker.click();
+								}
+							}
+						}}
+					>
+						{Liferay.Language.get('select-file')}
+					</ClayButton>
+				)}
 
 				<File
 					attachment={attachment}
 					loading={isLoading}
 					onDelete={handleDelete}
+					readOnly={readOnly}
 				/>
 			</div>
 
@@ -289,6 +304,7 @@ export default function Attachment({
 interface File {
 	contentURL: string;
 	fileEntryId: string;
+	readOnly: boolean;
 	title: string;
 }
 
@@ -301,6 +317,7 @@ interface IFileProps {
 	attachment: Attachment | null;
 	loading?: boolean;
 	onDelete: () => void;
+	readOnly: boolean;
 }
 interface IProps {
 	acceptedFileExtensions: string;
@@ -309,6 +326,8 @@ interface IProps {
 	maximumFileSize: number;
 	onChange: FieldChangeEventHandler<string>;
 	overallMaximumUploadRequestSize: number;
+	readOnly: boolean;
+	tip: string;
 	title: string;
 	url: string;
 }

@@ -23,6 +23,8 @@ export default function Attachment({
 	maximumFileSize,
 	onChange,
 	overallMaximumUploadRequestSize,
+	readOnly,
+	tip,
 	title,
 	url,
 	...otherProps
@@ -34,6 +36,8 @@ interface IProps {
 	maximumFileSize: number;
 	onChange: FieldChangeEventHandler<string>;
 	overallMaximumUploadRequestSize: number;
+	readOnly: boolean;
+	tip: string;
 	title: string;
 	url: string;
 }

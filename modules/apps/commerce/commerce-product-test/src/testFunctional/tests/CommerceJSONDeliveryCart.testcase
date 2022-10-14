@@ -1,0 +1,41 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-9738. Assert that if skuId is not passed, cart cannot be created."
+	@priority = "3"
+	test CannotCreateCartViaJSONDeliveryAPIWithoutSkuId {
+		property portal.acceptance = "false";
+
+		task ("Given a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("When a post request for creating the cart (using delivery APIs) is sent without passing the skuId") {
+			var actual = CommerceJSONDeliveryCart.getOrderItemPostRequestStatus(
+				accountEntryName = "Commerce Account",
+				cartItems = ":5");
+		}
+
+		task ("Then a BAD_REQUEST error is thrown") {
+			TestUtils.assertEquals(
+				actual = "${actual}",
+				expected = "BAD_REQUEST");
+		}
+	}
+
+}

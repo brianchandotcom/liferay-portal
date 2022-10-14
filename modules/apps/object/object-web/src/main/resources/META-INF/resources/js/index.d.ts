@@ -219,6 +219,7 @@ type ObjectFieldSettingName =
 	| 'objectFieldName'
 	| 'objectRelationshipName'
 	| 'output'
+	| 'script'
 	| 'showCounter'
 	| 'showFilesInDocumentsAndMedia'
 	| 'stateFlow'

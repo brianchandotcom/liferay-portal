@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="AccessModifierCheck" files="journal-service/src/main/java/com/liferay/journal/service/impl/JournalArticleLocalServiceImpl\.java" />
+	</checkstyle>
+</suppressions>

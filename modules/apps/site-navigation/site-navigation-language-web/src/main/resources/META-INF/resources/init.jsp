@@ -25,7 +25,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLanguagePortletInstanceConfiguration" %><%@
+page import="com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyURLConfiguration" %><%@
 page import="com.liferay.site.navigation.language.web.internal.display.context.SiteNavigationLanguageDisplayContext" %>
 
 <liferay-theme:defineObjects />

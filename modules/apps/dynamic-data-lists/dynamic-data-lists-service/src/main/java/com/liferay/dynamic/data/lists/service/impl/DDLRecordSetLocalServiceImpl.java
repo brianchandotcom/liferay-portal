@@ -802,6 +802,53 @@ public class DDLRecordSetLocalServiceImpl
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
+	private DDMStructureVersion _getDDMStructureVersion(long ddmStructureId)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		return ddmStructure.getStructureVersion();
+	}
+
+	private long _getDDMStructureVersionId(long ddmStructureId)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmStructure.getStructureVersion();
+
+		return ddmStructureVersion.getStructureVersionId();
+	}
+
+	private String _getNextVersion(String version, boolean majorVersion) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		if (majorVersion) {
+			versionParts[0]++;
+			versionParts[1] = 0;
+		}
+		else {
+			versionParts[1]++;
+		}
+
+		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	private String _serialize(DDMFormValues ddmFormValues) {
+		DDMFormValuesSerializerSerializeRequest.Builder builder =
+			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
+				ddmFormValues);
+
+		DDMFormValuesSerializerSerializeResponse
+			ddmFormValuesSerializerSerializeResponse =
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
+
+		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
 	private DDLRecordSet _updateRecordSet(
 			long userId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
@@ -890,53 +937,6 @@ public class DDLRecordSetLocalServiceImpl
 		}
 
 		return updatedRecordSet;
-	}
-
-	private DDMStructureVersion _getDDMStructureVersion(long ddmStructureId)
-		throws PortalException {
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			ddmStructureId);
-
-		return ddmStructure.getStructureVersion();
-	}
-
-	private long _getDDMStructureVersionId(long ddmStructureId)
-		throws PortalException {
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			ddmStructureId);
-
-		DDMStructureVersion ddmStructureVersion =
-			ddmStructure.getStructureVersion();
-
-		return ddmStructureVersion.getStructureVersionId();
-	}
-
-	private String _getNextVersion(String version, boolean majorVersion) {
-		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
-
-		if (majorVersion) {
-			versionParts[0]++;
-			versionParts[1] = 0;
-		}
-		else {
-			versionParts[1]++;
-		}
-
-		return versionParts[0] + StringPool.PERIOD + versionParts[1];
-	}
-
-	private String _serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializerSerializeRequest.Builder builder =
-			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
-				ddmFormValues);
-
-		DDMFormValuesSerializerSerializeResponse
-			ddmFormValuesSerializerSerializeResponse =
-				_jsonDDMFormValuesSerializer.serialize(builder.build());
-
-		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
 	private void _updateRecordSetVersion(

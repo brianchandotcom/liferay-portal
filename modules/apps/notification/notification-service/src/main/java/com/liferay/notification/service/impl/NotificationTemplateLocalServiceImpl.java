@@ -163,6 +163,15 @@ public class NotificationTemplateLocalServiceImpl
 		return notificationTemplate;
 	}
 
+	@Override
+	public NotificationTemplate getNotificationTemplate(
+			long notificationTemplateId)
+		throws PortalException {
+
+		return notificationTemplatePersistence.findByPrimaryKey(
+			notificationTemplateId);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationTemplate updateNotificationTemplate(

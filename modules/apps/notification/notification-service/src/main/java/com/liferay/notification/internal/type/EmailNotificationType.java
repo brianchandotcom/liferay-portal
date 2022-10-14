@@ -27,18 +27,16 @@ import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateAttachment;
+import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
-import com.liferay.notification.service.persistence.NotificationQueueEntryAttachmentPersistence;
-import com.liferay.notification.service.persistence.NotificationQueueEntryPersistence;
-import com.liferay.notification.service.persistence.NotificationTemplateAttachmentPersistence;
-import com.liferay.notification.service.persistence.NotificationTemplatePersistence;
+import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationContext;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -99,7 +97,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		throws PortalException {
 
 		NotificationTemplate notificationTemplate =
-			_notificationTemplatePersistence.findByPrimaryKey(
+			_notificationTemplateLocalService.getNotificationTemplate(
 				notificationContext.getNotificationTemplateId());
 
 		User user = _userLocalService.getUser(notificationContext.getUserId());
@@ -191,9 +189,9 @@ public class EmailNotificationType extends BaseNotificationType {
 	@Override
 	public void sendUnsentNotifications() {
 		for (NotificationQueueEntry notificationQueueEntry :
-				_notificationQueueEntryPersistence.findByT_S(
-					NotificationConstants.TYPE_EMAIL,
-					NotificationQueueEntryConstants.STATUS_UNSENT)) {
+				_notificationQueueEntryLocalService.
+					getUnsentNotificationEntries(
+						NotificationConstants.TYPE_EMAIL)) {
 
 			try {
 				MailMessage mailMessage = new MailMessage(
@@ -229,8 +227,8 @@ public class EmailNotificationType extends BaseNotificationType {
 				notificationQueueEntry.setStatus(
 					NotificationQueueEntryConstants.STATUS_FAILED);
 
-				_notificationQueueEntryPersistence.update(
-					notificationQueueEntry);
+				_notificationQueueEntryLocalService.
+					updateNotificationQueueEntry(notificationQueueEntry);
 			}
 		}
 	}
@@ -254,8 +252,9 @@ public class EmailNotificationType extends BaseNotificationType {
 		MailMessage mailMessage, long notificationQueueEntryId) {
 
 		for (NotificationQueueEntryAttachment notificationQueueEntryAttachment :
-				_notificationQueueEntryAttachmentPersistence.
-					findByNotificationQueueEntryId(notificationQueueEntryId)) {
+				_notificationQueueEntryAttachmentLocalService.
+					getNotificationQueueEntryNotificationQueueEntryAttachments(
+						notificationQueueEntryId)) {
 
 			try {
 				FileEntry fileEntry =
@@ -406,8 +405,8 @@ public class EmailNotificationType extends BaseNotificationType {
 		List<Long> fileEntryIds = new ArrayList<>();
 
 		for (NotificationTemplateAttachment notificationTemplateAttachment :
-				_notificationTemplateAttachmentPersistence.
-					findByNotificationTemplateId(
+				_notificationTemplateAttachmentLocalService.
+					getNotificationTemplateAttachments(
 						notificationContext.getNotificationTemplateId())) {
 
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
@@ -492,23 +491,19 @@ public class EmailNotificationType extends BaseNotificationType {
 	private MailService _mailService;
 
 	@Reference
-	private NotificationQueueEntryAttachmentPersistence
-		_notificationQueueEntryAttachmentPersistence;
+	private NotificationQueueEntryAttachmentLocalService
+		_notificationQueueEntryAttachmentLocalService;
 
 	@Reference
 	private NotificationQueueEntryLocalService
 		_notificationQueueEntryLocalService;
 
 	@Reference
-	private NotificationQueueEntryPersistence
-		_notificationQueueEntryPersistence;
+	private NotificationTemplateAttachmentLocalService
+		_notificationTemplateAttachmentLocalService;
 
 	@Reference
-	private NotificationTemplateAttachmentPersistence
-		_notificationTemplateAttachmentPersistence;
-
-	@Reference
-	private NotificationTemplatePersistence _notificationTemplatePersistence;
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private NotificationTermContributorRegistry

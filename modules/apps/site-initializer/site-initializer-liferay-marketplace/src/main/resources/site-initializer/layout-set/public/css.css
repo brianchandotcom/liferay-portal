@@ -73,6 +73,10 @@
 	display: flex;
 }
 
+html body:not(.has-edit-mode-menu) #main-content.layout-content {
+	margin-top: 3.5rem;
+}
+
 html .layout-content .class-toggle {
 	cursor: pointer;
 	position: relative;

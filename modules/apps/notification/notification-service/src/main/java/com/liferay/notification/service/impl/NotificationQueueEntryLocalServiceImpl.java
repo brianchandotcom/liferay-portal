@@ -149,6 +149,14 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<NotificationQueueEntry> getUnsentNotificationEntries(
+		String type) {
+
+		return notificationQueueEntryPersistence.findByT_S(
+			type, NotificationQueueEntryConstants.STATUS_UNSENT);
+	}
+
+	@Override
 	public NotificationQueueEntry resendNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException {
@@ -156,6 +164,14 @@ public class NotificationQueueEntryLocalServiceImpl
 		return notificationQueueEntryLocalService.updateStatus(
 			notificationQueueEntryId,
 			NotificationQueueEntryConstants.STATUS_UNSENT);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public NotificationQueueEntry updateNotificationQueueEntry(
+		NotificationQueueEntry notificationQueueEntry) {
+
+		return notificationQueueEntryPersistence.update(notificationQueueEntry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

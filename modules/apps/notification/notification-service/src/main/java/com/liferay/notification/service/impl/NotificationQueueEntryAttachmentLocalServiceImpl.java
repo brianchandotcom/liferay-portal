@@ -20,6 +20,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,6 +69,15 @@ public class NotificationQueueEntryAttachmentLocalServiceImpl
 			_portletFileRepository.deletePortletFileEntry(
 				notificationQueueEntryAttachment.getFileEntryId());
 		}
+	}
+
+	@Override
+	public List<NotificationQueueEntryAttachment>
+		getNotificationQueueEntryNotificationQueueEntryAttachments(
+			long notificationQueueEntryId) {
+
+		return notificationQueueEntryAttachmentPersistence.
+			findByNotificationQueueEntryId(notificationQueueEntryId);
 	}
 
 	@Reference

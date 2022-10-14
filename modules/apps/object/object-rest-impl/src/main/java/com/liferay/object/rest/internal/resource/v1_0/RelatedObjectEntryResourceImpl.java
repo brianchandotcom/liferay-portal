@@ -16,6 +16,8 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
@@ -24,6 +26,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,6 +56,44 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RelatedObjectEntryResourceImpl
 	extends BaseRelatedObjectEntryResourceImpl {
+
+	@Override
+	public void deleteObjectRelationshipMappingTableValues(
+			String previousPath, Long objectEntryId,
+			String objectRelationshipName, Long relatedObjectEntryId)
+		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
+			throw new NotFoundException();
+		}
+
+		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
+			previousPath);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				getObjectRelationshipByObjectDefinitionId(
+					systemObjectDefinition.getObjectDefinitionId(),
+					objectRelationshipName);
+
+		_getRelatedObjectEntry(
+			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
+
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				systemObjectDefinition.getClassName(),
+				objectRelationship.getType());
+
+		objectRelatedModelsProvider.disassociateRelatedModels(
+			GuestOrUserUtil.getUserId(),
+			objectRelationship.getObjectRelationshipId(),
+			_getPrimaryKey1(
+				objectRelationship.getObjectDefinitionId1(), objectEntryId,
+				relatedObjectEntryId, systemObjectDefinition),
+			_getPrimaryKey2(
+				objectRelationship.getObjectDefinitionId1(), objectEntryId,
+				relatedObjectEntryId, systemObjectDefinition));
+	}
 
 	@Override
 	public Page<Object> getRelatedObjectEntriesPage(
@@ -113,31 +154,18 @@ public class RelatedObjectEntryResourceImpl
 					systemObjectDefinition.getObjectDefinitionId(),
 					objectRelationshipName);
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(),
 			_getPrimaryKey1(
-				objectDefinition, objectEntryId, relatedObjectEntryId,
-				systemObjectDefinition),
+				objectRelationship.getObjectDefinitionId1(), objectEntryId,
+				relatedObjectEntryId, systemObjectDefinition),
 			_getPrimaryKey2(
-				objectDefinition, objectEntryId, relatedObjectEntryId,
-				systemObjectDefinition),
+				objectRelationship.getObjectDefinitionId1(), objectEntryId,
+				relatedObjectEntryId, systemObjectDefinition),
 			new ServiceContext());
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerTracker.getObjectEntryManager(
-				systemObjectDefinition.getStorageType());
-
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			systemObjectDefinition, objectRelationship);
-
-		return objectEntryManager.getObjectEntry(
-			_getDefaultDTOConverterContext(
-				relatedObjectDefinition, relatedObjectEntryId, _uriInfo),
-			relatedObjectDefinition, relatedObjectEntryId);
+		return _getRelatedObjectEntry(
+			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
@@ -157,10 +185,10 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private long _getPrimaryKey1(
-		ObjectDefinition objectDefinition, long objectEntryId,
-		long relatedObjectEntryId, ObjectDefinition systemObjectDefinition) {
+		long objectDefinitionId, long objectEntryId, long relatedObjectEntryId,
+		ObjectDefinition systemObjectDefinition) {
 
-		if (objectDefinition.getObjectDefinitionId() ==
+		if (objectDefinitionId ==
 				systemObjectDefinition.getObjectDefinitionId()) {
 
 			return objectEntryId;
@@ -170,10 +198,10 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private long _getPrimaryKey2(
-		ObjectDefinition objectDefinition, long objectEntryId,
-		long relatedObjectEntryId, ObjectDefinition systemObjectDefinition) {
+		long objectDefinitionId, long objectEntryId, long relatedObjectEntryId,
+		ObjectDefinition systemObjectDefinition) {
 
-		if (objectDefinition.getObjectDefinitionId() ==
+		if (objectDefinitionId ==
 				systemObjectDefinition.getObjectDefinitionId()) {
 
 			return relatedObjectEntryId;
@@ -196,6 +224,24 @@ public class RelatedObjectEntryResourceImpl
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			objectRelationship.getObjectDefinitionId2());
+	}
+
+	private ObjectEntry _getRelatedObjectEntry(
+			ObjectRelationship objectRelationship, long relatedObjectEntryId,
+			ObjectDefinition systemObjectDefinition)
+		throws Exception {
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerTracker.getObjectEntryManager(
+				systemObjectDefinition.getStorageType());
+
+		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
+			systemObjectDefinition, objectRelationship);
+
+		return objectEntryManager.getObjectEntry(
+			_getDefaultDTOConverterContext(
+				relatedObjectDefinition, relatedObjectEntryId, _uriInfo),
+			relatedObjectDefinition, relatedObjectEntryId);
 	}
 
 	private ObjectDefinition _getSystemObjectDefinition(String previousPath) {
@@ -253,6 +299,10 @@ public class RelatedObjectEntryResourceImpl
 
 	@Reference
 	private ObjectEntryManagerTracker _objectEntryManagerTracker;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

@@ -388,48 +388,6 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected void processConcurrently(
-			String selectSqlQuery, String updateSqlQuery,
-			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
-			UnsafeBiConsumer<Object[], PreparedStatement, Exception>
-				unsafeConsumer,
-			String exceptionMessage)
-		throws Exception {
-
-		int fetchSize = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
-
-		try (Statement statement = connection.createStatement()) {
-			statement.setFetchSize(fetchSize);
-
-			try (PreparedStatement updatePreparedStatement =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection, updateSqlQuery);
-				ResultSet resultSet = statement.executeQuery(selectSqlQuery)) {
-
-				_processConcurrently(
-					() -> {
-						if (resultSet.next()) {
-							return unsafeFunction.apply(resultSet);
-						}
-
-						return null;
-					},
-					updatePreparedStatement, unsafeConsumer, exceptionMessage);
-
-				try {
-					updatePreparedStatement.executeBatch();
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to execute the batch statment ", exception);
-
-					throw exception;
-				}
-			}
-		}
-	}
-
-	protected void processConcurrently(
 			String sqlQuery,
 			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
 			UnsafeConsumer<Object[], Exception> unsafeConsumer,
@@ -474,6 +432,34 @@ public abstract class BaseDBProcess implements DBProcess {
 				return null;
 			},
 			unsafeConsumer, exceptionMessage);
+	}
+
+	protected void processConcurrently(
+			String selectSqlQuery, String updateSqlQuery,
+			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
+			UnsafeBiConsumer<Object[], PreparedStatement, Exception>
+				unsafeBiConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		int fetchSize = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
+
+		try (Statement statement = connection.createStatement()) {
+			statement.setFetchSize(fetchSize);
+
+			try (ResultSet resultSet = statement.executeQuery(selectSqlQuery)) {
+				_processConcurrentlyWithAutoBatch(
+					() -> {
+						if (resultSet.next()) {
+							return unsafeFunction.apply(resultSet);
+						}
+
+						return null;
+					},
+					updateSqlQuery, unsafeBiConsumer, exceptionMessage);
+			}
+		}
 	}
 
 	protected void removePrimaryKey(String tableName) throws Exception {
@@ -540,86 +526,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
-		}
-	}
-
-	private <T> void _processConcurrently(
-			UnsafeSupplier<T, Exception> unsafeSupplier,
-			PreparedStatement autoBatchPreparedStatement,
-			UnsafeBiConsumer<T, PreparedStatement, Exception> unsafeConsumer,
-			String exceptionMessage)
-		throws Exception {
-
-		Objects.requireNonNull(unsafeSupplier);
-		Objects.requireNonNull(unsafeConsumer);
-
-		ExecutorService executorService = Executors.newWorkStealingPool();
-
-		ThrowableCollector throwableCollector = new ThrowableCollector();
-
-		List<Future<Void>> futures = new ArrayList<>();
-
-		try {
-			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
-			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			T next = null;
-
-			while ((next = unsafeSupplier.get()) != null) {
-				T current = next;
-
-				Future<Void> future = executorService.submit(
-					() -> {
-						NotificationThreadLocal.setEnabled(notificationEnabled);
-						WorkflowThreadLocal.setEnabled(workflowEnabled);
-
-						try (SafeCloseable safeCloseable =
-								CompanyThreadLocal.lock(companyId)) {
-
-							unsafeConsumer.accept(
-								current, autoBatchPreparedStatement);
-						}
-						catch (Exception exception) {
-							throwableCollector.collect(exception);
-						}
-
-						return null;
-					});
-
-				int futuresMaxSize = GetterUtil.getInteger(
-					PropsUtil.get(
-						PropsKeys.
-							UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE));
-
-				if (futures.size() >= futuresMaxSize) {
-					for (Future<Void> curFuture : futures) {
-						curFuture.get();
-					}
-
-					futures.clear();
-				}
-
-				futures.add(future);
-			}
-		}
-		finally {
-			executorService.shutdown();
-
-			for (Future<Void> future : futures) {
-				future.get();
-			}
-		}
-
-		Throwable throwable = throwableCollector.getThrowable();
-
-		if (throwable != null) {
-			if (exceptionMessage != null) {
-				throw new Exception(exceptionMessage, throwable);
-			}
-
-			ReflectionUtil.throwException(throwable);
 		}
 	}
 
@@ -698,6 +604,119 @@ public abstract class BaseDBProcess implements DBProcess {
 			}
 
 			ReflectionUtil.throwException(throwable);
+		}
+	}
+
+	private <T> void _processConcurrentlyWithAutoBatch(
+			UnsafeSupplier<T, Exception> unsafeSupplier, String updateSqlQuery,
+			UnsafeBiConsumer<T, PreparedStatement, Exception> unsafeBiConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		Objects.requireNonNull(unsafeSupplier);
+		Objects.requireNonNull(unsafeBiConsumer);
+
+		ExecutorService executorService = Executors.newWorkStealingPool();
+
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		HashMap<Thread, PreparedStatement> preparedStatementHashMap =
+			new HashMap<>();
+
+		try {
+			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
+			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+			long companyId = CompanyThreadLocal.getCompanyId();
+
+			T next = null;
+
+			while ((next = unsafeSupplier.get()) != null) {
+				T current = next;
+
+				Future<Void> future = executorService.submit(
+					() -> {
+						NotificationThreadLocal.setEnabled(notificationEnabled);
+						WorkflowThreadLocal.setEnabled(workflowEnabled);
+
+						try (SafeCloseable safeCloseable =
+								CompanyThreadLocal.lock(companyId)) {
+
+							Thread thread = Thread.currentThread();
+
+							PreparedStatement preparedStatement =
+								preparedStatementHashMap.computeIfAbsent(
+									thread,
+									k -> {
+										try {
+											return AutoBatchPreparedStatementUtil.
+												concurrentAutoBatch(
+													connection, updateSqlQuery);
+										}
+										catch (SQLException sqlException) {
+											throw new RuntimeException(
+												sqlException);
+										}
+									});
+
+							unsafeBiConsumer.accept(current, preparedStatement);
+						}
+						catch (Exception exception) {
+							throwableCollector.collect(exception);
+						}
+
+						return null;
+					});
+
+				int futuresMaxSize = GetterUtil.getInteger(
+					PropsUtil.get(
+						PropsKeys.
+							UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE));
+
+				if (futures.size() >= futuresMaxSize) {
+					for (Future<Void> curFuture : futures) {
+						curFuture.get();
+					}
+
+					futures.clear();
+				}
+
+				futures.add(future);
+			}
+		}
+		finally {
+			executorService.shutdown();
+
+			for (Future<Void> future : futures) {
+				future.get();
+			}
+		}
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			if (exceptionMessage != null) {
+				throw new Exception(exceptionMessage, throwable);
+			}
+
+			ReflectionUtil.throwException(throwable);
+		}
+
+		try {
+			for (PreparedStatement preparedStatement :
+					preparedStatementHashMap.values()) {
+
+				preparedStatement.executeBatch();
+
+				preparedStatement.close();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exceptionMessage, exception);
+
+			throw exception;
 		}
 	}
 

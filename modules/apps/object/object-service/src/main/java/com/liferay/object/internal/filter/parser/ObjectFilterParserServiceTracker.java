@@ -14,11 +14,35 @@
 
 package com.liferay.object.internal.filter.parser;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Feliphe Marinho
  */
-public interface ObjectFilterParserServiceTracker {
+@Component(service = ObjectFilterParserServiceTracker.class)
+public class ObjectFilterParserServiceTracker {
 
-	public ObjectFilterParser getObjectFilterParser(String type);
+	public ObjectFilterParser getObjectFilterParser(String type) {
+		return _serviceTrackerMap.getService(type);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectFilterParser.class, "filter.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private ServiceTrackerMap<String, ObjectFilterParser> _serviceTrackerMap;
 
 }

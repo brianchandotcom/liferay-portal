@@ -298,6 +298,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by entering a value in the text area".
+	@priority = "4"
+	test ResetSpacingStylesFromCustomValue {
+		task ("Given a page designer has a Button fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer defines a custom value for the Padding Top") {
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			Click(
+				ariaLabel = "Padding Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			Type(
+				ariaLabel = "Padding Top",
+				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				value1 = "4");
+
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Padding Top");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page designer can see the reset button on the dropdown list") {
+			AssertVisible(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			AssertCssValue(
+				index = "1",
+				key_fragmentName = "Button",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
+				locator2 = "padding-top",
+				value1 = "4px");
+
+			Click(
+				index = "1",
+				key_fragmentName = "Button",
+				locator1 = "Fragment#FRAGMENT_CONTENT");
+		}
+
+		task ("When the page designer resets the padding top style to initial value") {
+			PageEditor.restoreSpacing(fieldLabel = "Padding Top");
+		}
+
+		task ("Then the page designer sees the padding top back to the default one") {
+			AssertCssValue(
+				index = "1",
+				key_fragmentName = "Button",
+				locator1 = "Fragment#FRAGMENT_CONTENT",
+				locator2 = "padding-top",
+				value1 = "0px");
+		}
+	}
+
 	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by selecting from Existing tokens".
 	@priority = "4"
 	test ResetSpacingStylesFromExistingTokens {

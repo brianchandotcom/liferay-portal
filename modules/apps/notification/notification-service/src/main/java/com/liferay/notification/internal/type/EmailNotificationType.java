@@ -510,9 +510,6 @@ public class EmailNotificationType extends BaseNotificationType {
 		_notificationTermContributorRegistry;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference

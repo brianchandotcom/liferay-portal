@@ -46,8 +46,6 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * @author André de Oliveira
  */
@@ -202,7 +200,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			_searchResultManagerImpl, "_summaryFactory",
 			_createSummaryFactory());
 
-		_searchResultManagerImpl.activate(_bundleContext);
+		_searchResultManagerImpl.activate(bundleContext);
 
 		return _searchResultManagerImpl;
 	}
@@ -221,8 +219,6 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	private final AssetRendererFactory<?> _assetRendererFactory = Mockito.mock(
 		AssetRendererFactory.class);
-	private final BundleContext _bundleContext = Mockito.mock(
-		BundleContext.class);
 	private final Indexer<Object> _indexer = Mockito.mock(Indexer.class);
 	private final IndexerRegistry _indexerRegistry = Mockito.mock(
 		IndexerRegistry.class);

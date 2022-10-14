@@ -57,6 +57,9 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author André de Oliveira
  */
@@ -71,6 +74,11 @@ public class SearchResultUtilDLFileEntryTest
 	@After
 	public void tearDown() {
 		_assetRendererFactoryRegistryUtilMockedStatic.close();
+
+		ReflectionTestUtil.invoke(
+			_searchResultManagerImpl, "deactivate", new Class<?>[0]);
+
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -380,15 +388,24 @@ public class SearchResultUtilDLFileEntryTest
 	}
 
 	private SearchResultManager _createSearchResultManager() {
-		SearchResultManagerImpl searchResultManagerImpl =
-			new SearchResultManagerImpl();
+		_searchResultManagerImpl = new SearchResultManagerImpl();
 
-		searchResultManagerImpl.addSearchResultContributor(
-			_createSearchResultContributor());
-		searchResultManagerImpl.setClassNameLocalService(classNameLocalService);
-		searchResultManagerImpl.setSummaryFactory(_createSummaryFactory());
+		ReflectionTestUtil.setFieldValue(
+			_searchResultManagerImpl, "_classNameLocalService",
+			classNameLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_searchResultManagerImpl, "_summaryFactory",
+			_createSummaryFactory());
 
-		return searchResultManagerImpl;
+		_serviceRegistration = bundleContext.registerService(
+			SearchResultContributor.class, _createSearchResultContributor(),
+			null);
+
+		ReflectionTestUtil.invoke(
+			_searchResultManagerImpl, "activate",
+			new Class<?>[] {BundleContext.class}, bundleContext);
+
+		return _searchResultManagerImpl;
 	}
 
 	private SummaryFactory _createSummaryFactory() {
@@ -417,5 +434,7 @@ public class SearchResultUtilDLFileEntryTest
 	private final Indexer<Object> _indexer = Mockito.mock(Indexer.class);
 	private final IndexerRegistry _indexerRegistry = Mockito.mock(
 		IndexerRegistry.class);
+	private SearchResultManagerImpl _searchResultManagerImpl;
+	private ServiceRegistration<SearchResultContributor> _serviceRegistration;
 
 }

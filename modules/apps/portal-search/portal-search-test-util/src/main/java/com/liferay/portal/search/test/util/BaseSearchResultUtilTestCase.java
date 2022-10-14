@@ -17,6 +17,7 @@ package com.liferay.portal.search.test.util;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ClassNameWrapper;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
@@ -34,6 +35,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author André de Oliveira
@@ -127,6 +130,7 @@ public abstract class BaseSearchResultUtilTestCase {
 		searchResultTranslator = createSearchResultTranslator();
 	}
 
+	protected BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 	protected ClassNameLocalService classNameLocalService;
 	protected SearchResultTranslator searchResultTranslator;
 

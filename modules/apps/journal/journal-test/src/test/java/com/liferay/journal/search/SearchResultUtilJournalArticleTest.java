@@ -42,6 +42,7 @@ import java.util.logging.Level;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -49,6 +50,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author André de Oliveira
@@ -65,6 +68,12 @@ public class SearchResultUtilJournalArticleTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+	}
+
+	@After
+	public void tearDown() {
+		ReflectionTestUtil.invoke(
+			_searchResultManagerImpl, "deactivate", new Class<?>[0]);
 	}
 
 	@Test
@@ -148,12 +157,16 @@ public class SearchResultUtilJournalArticleTest
 	}
 
 	protected SearchResultManager createSearchResultManager() {
-		SearchResultManagerImpl searchResultManagerImpl =
-			new SearchResultManagerImpl();
+		_searchResultManagerImpl = new SearchResultManagerImpl();
 
-		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+		ReflectionTestUtil.setFieldValue(
+			_searchResultManagerImpl, "_summaryFactory",
+			createSummaryFactory());
+		ReflectionTestUtil.invoke(
+			_searchResultManagerImpl, "activate",
+			new Class<?>[] {BundleContext.class}, bundleContext);
 
-		return searchResultManagerImpl;
+		return _searchResultManagerImpl;
 	}
 
 	@Override
@@ -186,5 +199,6 @@ public class SearchResultUtilJournalArticleTest
 	private final Indexer<Object> _indexer = Mockito.mock(Indexer.class);
 	private final IndexerRegistry _indexerRegistry = Mockito.mock(
 		IndexerRegistry.class);
+	private SearchResultManagerImpl _searchResultManagerImpl;
 
 }

@@ -88,7 +88,7 @@ definition {
 				osbAsahProjectId = "${osbAsahProjectId}",
 				page = "${page}",
 				size = "${size}",
-				sort = "${sort}");			
+				sort = "${sort}");
 		}
 
 		task ("Assert response returns keyword") {

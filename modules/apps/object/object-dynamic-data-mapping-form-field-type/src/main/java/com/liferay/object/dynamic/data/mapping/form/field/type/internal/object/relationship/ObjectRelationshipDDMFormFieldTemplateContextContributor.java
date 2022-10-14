@@ -206,7 +206,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				objectDefinition.getTitleObjectFieldId());
 
 			if (objectField != null) {
-				return objectField.getName();
+				return _replaceDateLabelKey(objectField.getName());
 			}
 		}
 
@@ -233,6 +233,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 
 		return systemObjectDefinitionMetadata.getRESTDTOIdPropertyName();
+	}
+
+	private String _replaceDateLabelKey(String date) {
+		return date.replaceAll("createDate", "dateCreated");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -145,7 +145,7 @@ class LocalizedDropdown extends React.Component {
 											{defaultLang === key && (
 												<span className="label label-info ml-1">
 													{Liferay.Language.get(
-														'default-value'
+														'default'
 													)}
 												</span>
 											)}
@@ -160,7 +160,7 @@ class LocalizedDropdown extends React.Component {
 												) : (
 													<span className="label label-warning ml-1">
 														{Liferay.Language.get(
-															'untranslated'
+															'not-translated'
 														)}
 													</span>
 												))}

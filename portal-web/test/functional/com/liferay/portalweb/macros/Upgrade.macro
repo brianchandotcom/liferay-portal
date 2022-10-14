@@ -624,8 +624,10 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Organization1");
 
 		Organization.viewCP(
-			orgName = "Sub-organization-Pre1",
+			orgName = "Sub-organization-Pre",
 			orgType = "Organization");
+
+		Organization.openOrganizationsAdmin();
 
 		Organization.gotoCP(
 			orgName = "Sub-organization-Pre",
@@ -661,6 +663,8 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
+		LexiconEntry.gotoEntry(rowEntry = "Organization1 Edit");
+
 		Organization.edit(
 			orgName = "Sub-organization1",
 			orgNameEdit = "Sub-organization1 Edit");
@@ -677,6 +681,8 @@ definition {
 			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization2");
 
 		Organization.delete(orgName = "Sub-organization2");
 
@@ -700,6 +706,8 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
+		LexiconEntry.gotoEntry(rowEntry = "Organization1 Edit");
+
 		LexiconEntry.gotoEntry(rowEntry = "Sub-organization1 Edit");
 
 		Organization.removeAssignee(userFullName = "user2 user2");
@@ -712,6 +720,8 @@ definition {
 			portlet = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization1 Edit");
 
 		Organization.delete(orgName = "Sub-organization1 Edit");
 

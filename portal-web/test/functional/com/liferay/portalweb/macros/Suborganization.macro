@@ -33,12 +33,6 @@ definition {
 	}
 
 	macro viewCP {
-		Organization.viewCP(
-			orgName = "${suborgName}",
-			orgType = "${suborgType}");
-
-		var key_suborgName = "${suborgName}";
-
 		LexiconEntry.openEntryMenu(rowEntry = "${suborgName}");
 
 		MenuItem.click(menuItem = "Edit");

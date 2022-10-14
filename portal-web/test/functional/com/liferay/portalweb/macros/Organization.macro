@@ -438,8 +438,6 @@ definition {
 			menuItem = "Remove",
 			rowEntry = "${userFullName}");
 
-		MenuItem.click(menuItem = "Remove");
-
 		Alert.viewSuccessMessage();
 	}
 
@@ -529,14 +527,16 @@ definition {
 	}
 
 	macro viewCP {
-		var key_orgName = "${orgName}";
-
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME",
+			key_columnName = "name",
+			key_tableEntry = "${orgName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 			value1 = "${orgName}");
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_TYPE",
+			key_columnName = "type",
+			key_tableEntry = "${orgType}",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 			value1 = "${orgType}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${orgName}");
@@ -589,11 +589,15 @@ definition {
 				locator1 = "IFrame#MODAL_ANY");
 
 			AssertTextEquals(
-				locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
+				key_columnName = "name",
+				key_rowEntry = "${subOrgName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 				value1 = "${subOrgName}");
 
 			AssertTextEquals(
-				locator1 = "ContentRow#ORGANIZATION_TABLE_NAME_SECOND_COLUMN",
+				key_columnName = "parent-organization",
+				key_rowEntry = "${subOrgName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 				value1 = "${parentOrgName}");
 		}
 		else {
@@ -606,11 +610,15 @@ definition {
 				locator1 = "IFrame#MODAL_ANY");
 
 			AssertTextEquals(
-				locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
-				value1 = "${orgName}");
+				key_columnName = "name",
+				key_rowEntry = "${subOrgName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "${subOrgName}");
 
 			AssertTextEquals(
-				locator1 = "ContentRow#ORGANIZATION_TABLE_NAME_SECOND_COLUMN",
+				key_columnName = "parent-organization",
+				key_rowEntry = "${subOrgName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 				value1 = "");
 		}
 

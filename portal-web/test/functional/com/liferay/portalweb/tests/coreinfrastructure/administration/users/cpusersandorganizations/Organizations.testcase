@@ -64,6 +64,8 @@ definition {
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 
+			LexiconEntry.gotoEntry(rowEntry = "Organization Name 1");
+
 			Organization.viewParentOrganizationCP(
 				orgName = "Suborganization Name ${count}",
 				parentOrgName = "Organization Name 1",
@@ -1044,7 +1046,7 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		AOrganization.openOrganizationsAdmin();
+		Organization.openOrganizationsAdmin();
 
 		Organization.addSiteCP(orgName = "Organization Name");
 

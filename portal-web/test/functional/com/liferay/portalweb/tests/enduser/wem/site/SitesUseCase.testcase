@@ -89,6 +89,8 @@ definition {
 		task ("Add an organization site") {
 			Organization.openOrganizationsAdmin();
 
+			LexiconEntry.gotoEntry(rowEntry = "Space Program Academy of Continuing Education");
+
 			Organization.addSiteCP(orgName = "College of Agricultural Science");
 		}
 

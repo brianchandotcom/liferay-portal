@@ -12,33 +12,44 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.cookies.internal.events;
 
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.cookies.internal.manager.CookiesManagerImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManager;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.lang.reflect.Field;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Raymond Augé
+ * @author Olivér Kecskeméty
  */
-public class CookieKeysTest {
+public class CookiesDomainTest {
 
 	@ClassRule
-	public static LiferayUnitTestRule liferayUnitTestRule =
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		ReflectionTestUtil.setFieldValue(
+			CookiesManagerUtil.class, "_cookiesManager", _cookiesManager);
+	}
 
 	@Test
 	public void testDomain1() throws Exception {
 		Assert.assertEquals(
-			".liferay.com", CookieKeys.getDomain("www.liferay.com"));
+			".liferay.com", CookiesManagerUtil.getDomain("www.liferay.com"));
 	}
 
 	@Test
@@ -49,7 +60,8 @@ public class CookieKeysTest {
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
 		Assert.assertEquals(
-			StringPool.BLANK, CookieKeys.getDomain(mockHttpServletRequest));
+			".liferay.com",
+			CookiesManagerUtil.getDomain(mockHttpServletRequest));
 	}
 
 	@Test
@@ -59,20 +71,18 @@ public class CookieKeysTest {
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
-		Field field = ReflectionUtil.getDeclaredField(
-			CookieKeys.class, "_SESSION_COOKIE_DOMAIN");
-
-		Object value = field.get(null);
+		Object value = ReflectionTestUtil.getAndSetFieldValue(
+			CookiesManagerImpl.class, "_SESSION_COOKIE_DOMAIN",
+			"www.example.com");
 
 		try {
-			field.set(null, "www.example.com");
-
 			Assert.assertEquals(
 				"www.example.com",
-				CookieKeys.getDomain(mockHttpServletRequest));
+				CookiesManagerUtil.getDomain(mockHttpServletRequest));
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				CookiesManagerImpl.class, "_SESSION_COOKIE_DOMAIN", value);
 		}
 	}
 
@@ -83,19 +93,19 @@ public class CookieKeysTest {
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
-		Field field = ReflectionUtil.getDeclaredField(
-			CookieKeys.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME");
-
-		Object value = field.get(null);
+		Object value = ReflectionTestUtil.getAndSetFieldValue(
+			CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
+			Boolean.FALSE);
 
 		try {
-			field.set(null, Boolean.FALSE);
-
 			Assert.assertEquals(
-				".liferay.com", CookieKeys.getDomain(mockHttpServletRequest));
+				".liferay.com",
+				CookiesManagerUtil.getDomain(mockHttpServletRequest));
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
+				value);
 		}
 	}
 
@@ -106,20 +116,22 @@ public class CookieKeysTest {
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
-		Field field = ReflectionUtil.getDeclaredField(
-			CookieKeys.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME");
-
-		Object value = field.get(null);
+		Object value = ReflectionTestUtil.getAndSetFieldValue(
+			CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
+			Boolean.TRUE);
 
 		try {
-			field.set(null, Boolean.TRUE);
-
 			Assert.assertEquals(
-				StringPool.BLANK, CookieKeys.getDomain(mockHttpServletRequest));
+				StringPool.BLANK,
+				CookiesManagerUtil.getDomain(mockHttpServletRequest));
 		}
 		finally {
-			field.set(null, value);
+			ReflectionTestUtil.setFieldValue(
+				CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
+				value);
 		}
 	}
+
+	private final CookiesManager _cookiesManager = new CookiesManagerImpl();
 
 }

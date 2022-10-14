@@ -1259,6 +1259,90 @@ main();
 		}
 	}
 
+	@description = "This is a test for LPS-164081. The fragment developer can configure a URL selector on Freemarker."
+	@priority = "3"
+	test ConfigureURLSelectorConfiguration {
+		task ("Given a fragment developer has a new fragment with URL selector configuration") {
+			var newLine = '''
+''';
+			var htmlSnippet = '''
+<div class="fragment-name">
+	Fragment Example
+</div>''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var jsonSnippet = '''
+{
+    "fieldSets": [
+        {
+            "fields" : [
+                {
+                    "label": "Link",
+                    "name": "Link",
+                    "type": "url"
+                }
+            ]
+        }
+    ]
+}''';
+
+			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2");
+		}
+
+		task ("When the fragment developer adds the new fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the fragment developer could link the fragment to a page via the URL selector") {
+			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+
+			Select(
+				key_fieldLabel = "Link",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Page");
+
+			Click(
+				key_fieldLabel = "Page",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Portlet.expandTree();
+
+			Click(
+				key_nodeName = "Test Page Name 2",
+				locator1 = "Treeview#NODE_UNSELECTED");
+
+			SelectFrameTop();
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_fieldLabel = "Page",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Test Page Name 2");
+		}
+	}
+
 	@description = "This is a test for LPS-164242. The fragment developer could map to web contents in Collection Display using itemSelector configuration."
 	@priority = "5"
 	test MapToWebContentsInCollectionDisplayViaItemSelectorConfiguration {

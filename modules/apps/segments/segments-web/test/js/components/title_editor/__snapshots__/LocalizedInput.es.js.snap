@@ -52,6 +52,105 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
               class="inline-item inline-item-before"
             >
               <svg
+                class="lexicon-icon lexicon-icon-ar-sa"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#ar-sa"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              ar-SA
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-ca-es"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#ca-es"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              ca-ES
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-de-de"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#de-de"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              de-DE
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
                 class="lexicon-icon lexicon-icon-en-us"
                 role="presentation"
               >
@@ -65,9 +164,9 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
             >
               en-US
               <span
-                class="label label-success ml-1"
+                class="label label-info ml-1"
               >
-                translated
+                default
               </span>
             </span>
           </span>
@@ -101,6 +200,270 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
                 class="label label-success ml-1"
               >
                 translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-fi-fi"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#fi-fi"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              fi-FI
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-fr-fr"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#fr-fr"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              fr-FR
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-hu-hu"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#hu-hu"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              hu-HU
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-ja-jp"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#ja-jp"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              ja-JP
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-nl-nl"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#nl-nl"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              nl-NL
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-pt-br"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#pt-br"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              pt-BR
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-sv-se"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#sv-se"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              sv-SE
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
+              </span>
+            </span>
+          </span>
+        </li>
+        <li
+          role="presentation"
+        >
+          <span
+            class="dropdown-item lfr-icon-item palette-item taglib-icon"
+            role="menuitem"
+            tabindex="0"
+            target="_self"
+          >
+            <span
+              class="inline-item inline-item-before"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-zh-cn"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#zh-cn"
+                />
+              </svg>
+            </span>
+            <span
+              class="taglib-text-icon"
+            >
+              zh-CN
+              <span
+                class="label label-warning ml-1"
+              >
+                not-translated
               </span>
             </span>
           </span>

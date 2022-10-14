@@ -12,6 +12,7 @@
  * details.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
@@ -71,9 +72,26 @@ describe('LocalizedInput', () => {
 		});
 
 		it('has dropdown with options', () => {
-			const {asFragment, getByTestId} = setUpComponent();
+			const {
+				asFragment,
+				getAllByText,
+				getByTestId,
+				getByText,
+			} = setUpComponent();
 			const dropdownButton = getByTestId(LOCALIZED_DROPDOWN_BUTTON);
 			fireEvent.click(dropdownButton);
+
+			expect(
+				getByText('translated').closest('span.taglib-text-icon')
+					.textContent
+			).toBe('es-EStranslated');
+
+			expect(
+				getByText('default').closest('span.taglib-text-icon')
+					.textContent
+			).toBe('en-USdefault');
+
+			expect(getAllByText('not-translated').length).toBe(11);
 
 			expect(asFragment()).toMatchSnapshot();
 		});
@@ -97,9 +115,21 @@ describe('LocalizedInput', () => {
 			const testHelpers = render(
 				<LocalizedInput
 					availableLanguages={{
-						en_US: '',
-						es_ES: '',
+						ar_SA: 'Arabic (Saudi Arabia)',
+						ca_ES: 'Catalan (Spain)',
+						de_DE: 'German (Germany)',
+						en_US: 'English (United States)',
+						es_ES: 'Spanish (Spain)',
+						fi_FI: 'Finnish (Finland)',
+						fr_FR: 'French (France)',
+						hu_HU: 'Hungarian (Hungary)',
+						ja_JP: 'Japanese (Japan)',
+						nl_NL: 'Dutch (Netherlands)',
+						pt_BR: 'Portuguese (Brazil)',
+						sv_SE: 'Swedish (Sweden)',
+						zh_CN: 'Chinese (China)',
 					}}
+					defaultLang="en_US"
 					initialLanguageId="en_US"
 					initialValues={{
 						en_US: PRE_EXISTING_VALUE,

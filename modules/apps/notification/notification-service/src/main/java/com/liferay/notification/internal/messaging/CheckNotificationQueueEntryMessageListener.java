@@ -38,7 +38,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-@Component(service = CheckNotificationQueueEntryMessageListener.class)
+@Component(
+	immediate = true, service = CheckNotificationQueueEntryMessageListener.class
+)
 public class CheckNotificationQueueEntryMessageListener
 	extends BaseMessageListener {
 

@@ -415,6 +415,11 @@
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-info-circle')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LANGUAGE_LABEL</td>
+	<td>//*[text()='${key_locale}']//..//..//span[contains(@class,'label-item')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

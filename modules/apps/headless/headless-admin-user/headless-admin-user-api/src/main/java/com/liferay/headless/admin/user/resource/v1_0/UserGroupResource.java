@@ -56,6 +56,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface UserGroupResource {
 
+	public Page<UserGroup> getUserUserGroups(Long userAccountId)
+		throws Exception;
+
 	public Page<UserGroup> getUserGroupsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;

@@ -1115,6 +1115,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userUserGroups(userAccountId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the user's user groups.")
+	public UserGroupPage userUserGroups(
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userGroupResource -> new UserGroupPage(
+				userGroupResource.getUserUserGroups(userAccountId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userGroups(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -1983,6 +2000,26 @@ public class Query {
 		}
 
 		private Organization _organization;
+
+	}
+
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserUserGroupsTypeExtension {
+
+		public GetUserUserGroupsTypeExtension(UserAccount userAccount) {
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField(description = "Retrieves the user's user groups.")
+		public UserGroupPage userUserGroups() throws Exception {
+			return _applyComponentServiceObjects(
+				_userGroupResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userGroupResource -> new UserGroupPage(
+					userGroupResource.getUserUserGroups(_userAccount.getId())));
+		}
+
+		private UserAccount _userAccount;
 
 	}
 

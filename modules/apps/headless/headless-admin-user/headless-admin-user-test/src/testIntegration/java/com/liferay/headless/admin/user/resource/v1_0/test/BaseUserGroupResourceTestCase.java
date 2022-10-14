@@ -202,6 +202,70 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetUserUserGroups() throws Exception {
+		Long userAccountId = testGetUserUserGroups_getUserAccountId();
+		Long irrelevantUserAccountId =
+			testGetUserUserGroups_getIrrelevantUserAccountId();
+
+		Page<UserGroup> page = userGroupResource.getUserUserGroups(
+			userAccountId);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantUserAccountId != null) {
+			UserGroup irrelevantUserGroup = testGetUserUserGroups_addUserGroup(
+				irrelevantUserAccountId, randomIrrelevantUserGroup());
+
+			page = userGroupResource.getUserUserGroups(irrelevantUserAccountId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantUserGroup),
+				(List<UserGroup>)page.getItems());
+			assertValid(page);
+		}
+
+		UserGroup userGroup1 = testGetUserUserGroups_addUserGroup(
+			userAccountId, randomUserGroup());
+
+		UserGroup userGroup2 = testGetUserUserGroups_addUserGroup(
+			userAccountId, randomUserGroup());
+
+		page = userGroupResource.getUserUserGroups(userAccountId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userGroup1, userGroup2),
+			(List<UserGroup>)page.getItems());
+		assertValid(page);
+
+		userGroupResource.deleteUserGroup(userGroup1.getId());
+
+		userGroupResource.deleteUserGroup(userGroup2.getId());
+	}
+
+	protected UserGroup testGetUserUserGroups_addUserGroup(
+			Long userAccountId, UserGroup userGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserUserGroups_getUserAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserUserGroups_getIrrelevantUserAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetUserGroupsPage() throws Exception {
 		Page<UserGroup> page = userGroupResource.getUserGroupsPage(
 			null, null, Pagination.of(1, 10), null);

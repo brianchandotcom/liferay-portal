@@ -798,6 +798,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12152 | Test Summary: Check if the identity event is sent without the login and if the user is classified as anonymous"
+	@ignore = "true"
 	@priority = "5"
 	test CheckIfEventSentWithoutLoginAndIfUserClassifiedAsAnonymous {
 		property analytics.cloud.upstream = "false";
@@ -867,6 +868,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12153 | Test Summary: Check if identity is sent after the first visit with an anonymous user and check if it is sent again after the login with the same user but as a known individual"
+	@ignore = "true"
 	@priority = "5"
 	test CheckIfEventSentAgainAfterLoginAndIfUserClassifiedAsKnownIndividual {
 		property analytics.cloud.upstream = "false";

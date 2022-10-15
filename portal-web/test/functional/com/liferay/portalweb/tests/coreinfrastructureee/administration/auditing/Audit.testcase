@@ -39,7 +39,7 @@ definition {
 
 			var runGet = JSONCurlUtil.get("${curl}");
 
-			for (var logString : list "xRequestId,companyId=${companyId},virtualHostName,clientIP,emailAddress,serverName,userId=${userId}") {
+			for (var logString : list "xRequestId,companyId=${companyId},virtualHostName,clientIP,userEmailAddress,serverName,userId=${userId}") {
 				AuditLog.viewLogFileContent(logString = "${logString}");
 			}
 		}
@@ -65,7 +65,7 @@ definition {
 		}
 
 		task ("Then: Assert the email address is present in the audit log context in a human-readable format") {
-			AuditLog.viewLogFileContent(logString = "emailAddress=test@liferay.com");
+			AuditLog.viewLogFileContent(logString = "userEmailAddress=test@liferay.com");
 		}
 	}
 

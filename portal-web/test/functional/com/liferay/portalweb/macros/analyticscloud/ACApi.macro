@@ -51,7 +51,7 @@ definition {
 
 		// The pause is necessary because it takes some time for the keywords to appear during curl see LRAC-12141
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "10000");
 
 		if (isSet(displayLanguageId) && isSet(groupId) && isSet(page) && isSet(size) && isSet(sort)) {
 			var curl = '''

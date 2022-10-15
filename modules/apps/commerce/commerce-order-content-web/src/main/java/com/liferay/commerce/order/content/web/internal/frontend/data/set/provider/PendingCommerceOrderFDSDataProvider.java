@@ -71,10 +71,10 @@ public class PendingCommerceOrderFDSDataProvider
 		CommerceGroupThreadLocal.set(commerceChannel.getGroup());
 
 		List<CommerceOrder> commerceOrders =
-			_commerceOrderService.getUserPendingCommerceOrders(
+			_commerceOrderService.getUserOpenCommerceOrders(
 				commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition(), sort);
 
 		return CommerceOrderFDSUtil.getOrders(
 			commerceChannel.getGroupId(), commerceOrders,

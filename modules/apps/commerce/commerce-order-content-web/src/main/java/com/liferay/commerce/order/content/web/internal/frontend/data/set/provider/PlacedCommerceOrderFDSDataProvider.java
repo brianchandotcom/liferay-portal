@@ -83,7 +83,7 @@ public class PlacedCommerceOrderFDSDataProvider
 			_commerceOrderService.getUserPlacedCommerceOrders(
 				commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition(), sort);
 
 		CPRequestHelper cpRequestHelper = new CPRequestHelper(
 			httpServletRequest);

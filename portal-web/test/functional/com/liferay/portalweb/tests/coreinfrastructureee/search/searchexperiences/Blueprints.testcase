@@ -3824,16 +3824,27 @@ definition {
 			ariaLabel = "Edit Title",
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
 
-		Blueprints.viewLocalizationLabel(
+		Blueprints.viewTitleAndDescriptionLocalization(
 			currentLocale = "en-US",
-			label = "Translated",
-			locale = "de-DE");
+			description = "Beschreibung auf Deutsch",
+			locale = "de-DE",
+			title = "Titel auf Deutsch");
 
 		PortletEntry.save();
 
-		Blueprints.openBlueprintsAdmin(locale = "es");
+		AssertTextEquals(
+			cellPosition = "2",
+			entryTitle = "Title in English",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Title in English");
 
-		Navigator.gotoNavItem(navItem = "Elementos");
+		AssertTextEquals(
+			cellPosition = "3",
+			entryTitle = "Title in English",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Description in English");
+
+		Navigator.ensureLocaleURL(locale = "es");
 
 		AssertTextEquals(
 			cellPosition = "2",
@@ -3862,22 +3873,6 @@ definition {
 			entryTitle = "Titel auf Deutsch",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Beschreibung auf Deutsch");
-
-		Blueprints.openBlueprintsAdmin(locale = "en");
-
-		Navigator.gotoNavItem(navItem = "Elements");
-
-		AssertTextEquals(
-			cellPosition = "2",
-			entryTitle = "Title in English",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Title in English");
-
-		AssertTextEquals(
-			cellPosition = "3",
-			entryTitle = "Title in English",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "Description in English");
 	}
 
 	test ViewElementsAdminBulkDeletion {

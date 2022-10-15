@@ -416,8 +416,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LANGUAGE_LABEL</td>
-	<td>//*[text()='${key_locale}']//..//..//span[contains(@class,'label-item')]</td>
+	<td>LANGUAGE_TRANSLATED_LABEL</td>
+	<td>//button[contains(.,'${key_locale}')]//span[text()='Translated']</td>
 	<td></td>
 </tr>
 </tbody>

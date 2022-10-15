@@ -303,21 +303,32 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
-	macro viewLocalizationLabel {
-		Click(
-			key_currentLocale = StringUtil.lowerCase("${currentLocale}"),
-			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
-
-		AssertTextEquals(
-			key_locale = "${locale}",
-			locator1 = "Blueprints#LANGUAGE_LABEL",
-			value1 = "${label}");
-	}
-
 	macro viewNoEntry {
 		AssertElementNotPresent(
 			entryTitle = "${title}",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+	}
+
+	macro viewTitleAndDescriptionLocalization {
+		Click(
+			key_currentLocale = StringUtil.lowerCase("${currentLocale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		AssertElementPresent(
+			key_locale = "${locale}",
+			locator1 = "Blueprints#LANGUAGE_TRANSLATED_LABEL");
+
+		Click(
+			key_locale = "${locale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			locator1 = "TextInput#TITLE",
+			value1 = "${title}");
+
+		AssertElementPresent(
+			locator1 = "TextArea#DESCRIPTION",
+			value1 = "${description}");
 	}
 
 }

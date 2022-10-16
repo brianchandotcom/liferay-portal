@@ -63,7 +63,10 @@ const InviteTeamMembersPage = ({
 	const [
 		associateUserAccount,
 		{error: associateUserAccountError},
-	] = useMutation(associateUserAccountWithAccountAndAccountRole);
+	] = useMutation(associateUserAccountWithAccountAndAccountRole, {
+		awaitRefetchQueries: true,
+		refetchQueries: ['getUserAccountsByAccountExternalReferenceCode'],
+	});
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [hasInitialError, setInitialError] = useState();
@@ -118,13 +121,8 @@ const InviteTeamMembersPage = ({
 		};
 
 		getRoles();
-	}, [
-		availableAdministratorAssets,
-		client,
-		project,
-		projectHasSLAGoldPlatinum,
-		setFieldValue,
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [availableAdministratorAssets, client, setFieldValue]);
 
 	useEffect(() => {
 		if (values && accountRoles?.length) {
@@ -164,14 +162,12 @@ const InviteTeamMembersPage = ({
 				isSelectdAdministratorOrRequestorRole
 			) {
 				setBaseButtonDisabled(true);
-			}
-			else {
+			} else {
 				setInitialError(false);
 				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -235,8 +231,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

@@ -35,8 +35,11 @@
 }
 </style>
 
+<#if serviceLocator??>
+	<#assign assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService") />
+</#if>
+
 <#assign
-	assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService")
 	searchContainer = cpSearchResultsDisplayContext.getSearchContainer()
 
 	COMMERCE_PRODUCT_CLASS_NAME = "com.liferay.commerce.product.model.CPDefinition"
@@ -53,8 +56,12 @@
 	<div class="cards-container pb-6">
 		<#if entries?has_content>
 			<#list entries as curCPCatalogEntry>
+
+				<#if serviceLocator?? && assetCategoryLocalService??>
+					<#assign categories = assetCategoryLocalService.getCategories(COMMERCE_PRODUCT_CLASS_NAME, curCPCatalogEntry.getCPDefinitionId()) />
+				</#if>
+
 				<#assign
-					categories = assetCategoryLocalService.getCategories(COMMERCE_PRODUCT_CLASS_NAME, curCPCatalogEntry.getCPDefinitionId())
 					cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
 					developerName = expandoValueLocalService.getData(companyId, COMMERCE_PRODUCT_CLASS_NAME, "CUSTOM_FIELDS", "Developer Name", curCPCatalogEntry.getCPDefinitionId(), "")!""
 					productName = curCPCatalogEntry.getName()
@@ -101,11 +108,13 @@
 							</div>
 
 							<div class="font-weight-semi-bold price">
-								<#list categories as category>
-									<#if category.getVocabularyId() == MARKETPLACE_PRICE_VOCABULARY_ID>
-										${category.getName()}
-									</#if>
-								</#list>
+								<#if categories??>
+									<#list categories as category>
+										<#if category.getVocabularyId() == MARKETPLACE_PRICE_VOCABULARY_ID>
+											${category.getName()}
+										</#if>
+									</#list>
+								</#if>
 							</div>
 						</div>
 					</div>

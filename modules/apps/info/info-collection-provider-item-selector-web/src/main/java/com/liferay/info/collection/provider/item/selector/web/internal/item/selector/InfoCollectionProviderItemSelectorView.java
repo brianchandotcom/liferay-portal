@@ -16,12 +16,11 @@ package com.liferay.info.collection.provider.item.selector.web.internal.item.sel
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
-import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
-import com.liferay.info.collection.provider.item.selector.web.internal.display.context.InfoCollectionProviderItemSelectorDisplayContext;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +35,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -81,23 +79,14 @@ public class InfoCollectionProviderItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			_getInfoCollectionProviders(
-				infoCollectionProviderItemSelectorCriterion);
-
-		servletRequest.setAttribute(
-			InfoCollectionProviderItemSelectorWebKeys.
-				INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			new InfoCollectionProviderItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest, infoCollectionProviders,
-				_infoItemServiceTracker, itemSelectedEventName, _language,
-				portletURL));
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/view_info_collection_providers.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
+		_itemSelectorViewDescriptorRenderer.renderHTML(
+			servletRequest, servletResponse,
+			infoCollectionProviderItemSelectorCriterion, portletURL,
+			itemSelectedEventName, search,
+			new InfoCollectionProviderItemSelectorViewDescriptor(
+				(HttpServletRequest)servletRequest, portletURL,
+				_getInfoCollectionProviders(
+					infoCollectionProviderItemSelectorCriterion)));
 	}
 
 	private List<InfoCollectionProvider<?>> _getAllInfoCollectionProviders() {
@@ -148,6 +137,11 @@ public class InfoCollectionProviderItemSelectorView
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private ItemSelectorViewDescriptorRenderer
+		<InfoCollectionProviderItemSelectorCriterion>
+			_itemSelectorViewDescriptorRenderer;
 
 	@Reference
 	private Language _language;

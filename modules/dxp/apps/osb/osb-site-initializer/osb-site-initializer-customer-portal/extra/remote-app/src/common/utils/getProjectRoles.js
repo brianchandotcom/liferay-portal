@@ -25,6 +25,7 @@ export default async function getProjectRoles(client, project) {
 
 	const isProjectPartner = project.partner;
 	const {data} = await client.query({
+		fetchPolicy: 'network-only',
 		query: getAccountRoles,
 		variables: {
 			accountId: project.id,

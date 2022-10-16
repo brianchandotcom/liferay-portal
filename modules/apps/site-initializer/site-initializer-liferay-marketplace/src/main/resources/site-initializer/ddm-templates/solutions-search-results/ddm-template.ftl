@@ -70,7 +70,6 @@
 
 <#assign
 	assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService")
-	expandoValueLocalService = serviceLocator.findService("com.liferay.expando.kernel.service.ExpandoValueLocalService")
 	searchContainer = cpSearchResultsDisplayContext.getSearchContainer()
 
 	ACCOUNT_ID_GUEST = -1

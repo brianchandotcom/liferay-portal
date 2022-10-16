@@ -37,7 +37,6 @@
 
 <#assign
 	assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService")
-	expandoValueLocalService = serviceLocator.findService("com.liferay.expando.kernel.service.ExpandoValueLocalService")
 	searchContainer = cpSearchResultsDisplayContext.getSearchContainer()
 
 	COMMERCE_PRODUCT_CLASS_NAME = "com.liferay.commerce.product.model.CPDefinition"

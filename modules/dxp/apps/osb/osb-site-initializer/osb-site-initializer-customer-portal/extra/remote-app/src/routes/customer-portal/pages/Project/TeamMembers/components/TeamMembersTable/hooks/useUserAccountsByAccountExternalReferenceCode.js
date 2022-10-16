@@ -9,20 +9,38 @@
  * distribution rights of the Software.
  */
 
+import {NetworkStatus} from '@apollo/client';
 import {useMemo} from 'react';
+import useSearchTerm from '../../../../../../../../common/hooks/useSearchTerm';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
 import getRaysourceContactRoleName from '../utils/getRaysourceContactRoleName';
 import useDeleteUserAccount from './useDeleteUserAccount';
+import useSupportSeatsCount from './useSupportSeatsCount';
 import useUpdateUserAccount from './useUpdateUserAccount';
+
+const DEFAULT_FILTER = "not (userGroupRoleNames/any(s:s eq 'Provisioning'))";
+
+const getFilter = (searchTerm) => {
+	if (searchTerm) {
+		return `${DEFAULT_FILTER} and (contains(name, '${searchTerm}') or userGroupRoleNames/any(s:contains(s, '${searchTerm}')))`;
+	}
+
+	return DEFAULT_FILTER;
+};
 
 export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
 	koroneikiAccountLoading
 ) {
-	const {data, loading} = useGetUserAccountsByAccountExternalReferenceCode(
+	const {
+		data,
+		networkStatus,
+		refetch,
+	} = useGetUserAccountsByAccountExternalReferenceCode(
 		externalReferenceCode,
 		{
-			filter: "not (userGroupRoleNames/any(s:s eq 'Provisioning'))",
+			filter: DEFAULT_FILTER,
+			notifyOnNetworkStatusChange: true,
 			skip: koroneikiAccountLoading,
 		}
 	);
@@ -35,12 +53,20 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		updateContactRoles,
 	} = useUpdateUserAccount();
 
-	const supportSeatsCount = useMemo(
-		() =>
-			data?.accountUserAccountsByExternalReferenceCode.items.filter(
-				(item) => item.selectedAccountSummary.hasSupportSeatRole
-			).length,
-		[data?.accountUserAccountsByExternalReferenceCode.items]
+	const supportSeatsCount = useSupportSeatsCount(
+		useMemo(
+			() =>
+				data?.accountUserAccountsByExternalReferenceCode.items.filter(
+					(item) => item.selectedAccountSummary.hasSupportSeatRole
+				).length,
+			[data?.accountUserAccountsByExternalReferenceCode.items]
+		)
+	);
+
+	const search = useSearchTerm((searchTerm) =>
+		refetch({
+			filter: getFilter(searchTerm),
+		})
 	);
 
 	const remove = (userAccount) => {
@@ -84,9 +110,13 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		supportSeatsCount,
 		{
 			data,
-			loading: koroneikiAccountLoading || loading,
+			loading:
+				koroneikiAccountLoading ||
+				networkStatus === NetworkStatus.loading,
 			remove,
 			removing,
+			search,
+			searching: networkStatus === NetworkStatus.setVariables,
 			update,
 			updating,
 		},

@@ -156,6 +156,43 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
+		String cachedLibraryVulnerabilitiesContent =
+			_getCachedLibraryVulnerabilitiesContent();
+
+		int x = cachedLibraryVulnerabilitiesContent.indexOf(
+			StringBundler.concat(
+				securityAdvisoryEcosystemEnum, StringPool.COMMA, packageName,
+				StringPool.COMMA, version));
+
+		if (x != -1) {
+			String cachedLibraryVulnerabilities;
+
+			int y = cachedLibraryVulnerabilitiesContent.indexOf(
+				StringPool.NEW_LINE, x);
+
+			if (y != -1) {
+				cachedLibraryVulnerabilities =
+					cachedLibraryVulnerabilitiesContent.substring(x, y);
+			}
+			else {
+				cachedLibraryVulnerabilities =
+					cachedLibraryVulnerabilitiesContent.substring(x);
+			}
+
+			String[] parts = StringUtil.split(cachedLibraryVulnerabilities);
+
+			if (parts.length > 3) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Library '", packageName, ":", version,
+						"' contains known vulnerabilities(", parts[3], ", ",
+						parts[4], ")"));
+			}
+
+			return;
+		}
+
 		if (!_vulnerableVersionMap.containsKey(
 				securityAdvisoryEcosystemEnum + ":" + packageName)) {
 
@@ -210,6 +247,28 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			_getSecurityVulnerabilityNodes(
 				packageName, null, securityAdvisoryEcosystemEnum, severities,
 				githubToken));
+	}
+
+	private synchronized String _getCachedLibraryVulnerabilitiesContent()
+		throws Exception {
+
+		if (Validator.isNotNull(_cachedLibraryVulnerabilitiesContent)) {
+			return _cachedLibraryVulnerabilitiesContent;
+		}
+
+		_cachedLibraryVulnerabilitiesContent = StringPool.BLANK;
+
+		File file = new File(
+			System.getProperty("user.home") +
+				"/cachedLibraryVulnerabilities.text");
+
+		if (!file.exists()) {
+			return _cachedLibraryVulnerabilitiesContent;
+		}
+
+		_cachedLibraryVulnerabilitiesContent = FileUtil.read(file);
+
+		return _cachedLibraryVulnerabilitiesContent;
 	}
 
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
@@ -566,6 +625,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LibraryVersionCheck.class);
 
+	private String _cachedLibraryVulnerabilitiesContent;
 	private final Map<String, List<SecurityVulnerabilityNode>>
 		_vulnerableVersionMap = new ConcurrentHashMap<>();
 

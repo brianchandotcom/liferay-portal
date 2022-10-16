@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
@@ -56,11 +57,13 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 
 	public InfoCollectionProviderItemSelectorViewDescriptor(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		List<InfoCollectionProvider<?>> infoCollectionProviders) {
+		List<InfoCollectionProvider<?>> infoCollectionProviders,
+		InfoItemServiceTracker infoItemServiceTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_infoCollectionProviders = infoCollectionProviders;
+		_infoItemServiceTracker = infoItemServiceTracker;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -113,7 +116,8 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 		InfoCollectionProvider<?> infoCollectionProvider) {
 
 		return new InfoCollectionProviderItemDescriptor(
-			_httpServletRequest, infoCollectionProvider);
+			_httpServletRequest, infoCollectionProvider,
+			_infoItemServiceTracker);
 	}
 
 	@Override
@@ -235,6 +239,7 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 
 	private final HttpServletRequest _httpServletRequest;
 	private final List<InfoCollectionProvider<?>> _infoCollectionProviders;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final PortletURL _portletURL;
 	private String _selectedItemType;
 	private final ThemeDisplay _themeDisplay;

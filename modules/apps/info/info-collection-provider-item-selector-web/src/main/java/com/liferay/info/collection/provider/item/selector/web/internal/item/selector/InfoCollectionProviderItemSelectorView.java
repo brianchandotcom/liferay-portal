@@ -86,7 +86,8 @@ public class InfoCollectionProviderItemSelectorView
 			new InfoCollectionProviderItemSelectorViewDescriptor(
 				(HttpServletRequest)servletRequest, portletURL,
 				_getInfoCollectionProviders(
-					infoCollectionProviderItemSelectorCriterion)));
+					infoCollectionProviderItemSelectorCriterion),
+				_infoItemServiceTracker));
 	}
 
 	private List<InfoCollectionProvider<?>> _getAllInfoCollectionProviders() {

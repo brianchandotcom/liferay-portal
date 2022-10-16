@@ -15,10 +15,15 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
-import com.liferay.info.collection.provider.item.selector.web.internal.display.context.InfoCollectionProviderItemSelectorDisplayContext;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.RenderRequest;
@@ -30,11 +35,13 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 
 	public InfoCollectionProviderVerticalCard(
 		InfoCollectionProvider<?> infoCollectionProvider,
+		InfoItemServiceTracker infoItemServiceTracker,
 		RenderRequest renderRequest, RowChecker rowChecker) {
 
 		super(null, renderRequest, rowChecker);
 
 		_infoCollectionProvider = infoCollectionProvider;
+		_infoItemServiceTracker = infoItemServiceTracker;
 	}
 
 	@Override
@@ -54,16 +61,7 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getStickerIcon() {
-		InfoCollectionProviderItemSelectorDisplayContext
-			infoCollectionProviderItemSelectorDisplayContext =
-				(InfoCollectionProviderItemSelectorDisplayContext)
-					renderRequest.getAttribute(
-						InfoCollectionProviderItemSelectorWebKeys.
-							INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT);
-
-		if (infoCollectionProviderItemSelectorDisplayContext.supportsFilters(
-				_infoCollectionProvider)) {
-
+		if (_infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
 			return "filter";
 		}
 
@@ -72,26 +70,13 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		InfoCollectionProviderItemSelectorDisplayContext
-			infoCollectionProviderItemSelectorDisplayContext =
-				(InfoCollectionProviderItemSelectorDisplayContext)
-					renderRequest.getAttribute(
-						InfoCollectionProviderItemSelectorWebKeys.
-							INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT);
-
-		String title =
-			infoCollectionProviderItemSelectorDisplayContext.getTitle(
-				_infoCollectionProvider, themeDisplay.getLocale());
-
-		String subtitle =
-			infoCollectionProviderItemSelectorDisplayContext.getSubtitle(
-				_infoCollectionProvider, themeDisplay.getLocale());
+		String subtitle = _getSubtitle();
 
 		if (Validator.isNull(subtitle)) {
-			return title;
+			return _getTitle();
 		}
 
-		return title + " - " + subtitle;
+		return _getTitle() + " - " + subtitle;
 	}
 
 	@Override
@@ -104,6 +89,54 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 		return true;
 	}
 
+	private String _getSubtitle() {
+		String className = _infoCollectionProvider.getCollectionItemClassName();
+
+		if (Validator.isNull(className) ||
+			!(_infoCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider)) {
+
+			return StringPool.BLANK;
+		}
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		if (infoItemFormVariationsProvider == null) {
+			return StringPool.BLANK;
+		}
+
+		SingleFormVariationInfoCollectionProvider<?>
+			singleFormVariationInfoCollectionProvider =
+				(SingleFormVariationInfoCollectionProvider<?>)
+					_infoCollectionProvider;
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				themeDisplay.getScopeGroupId(),
+				singleFormVariationInfoCollectionProvider.
+					getFormVariationKey());
+
+		if (infoItemFormVariation == null) {
+			return StringPool.BLANK;
+		}
+
+		return infoItemFormVariation.getLabel(themeDisplay.getLocale());
+	}
+
+	private String _getTitle() {
+		String className = _infoCollectionProvider.getCollectionItemClassName();
+
+		if (Validator.isNull(className)) {
+			return StringPool.BLANK;
+		}
+
+		return ResourceActionsUtil.getModelResource(
+			themeDisplay.getLocale(), className);
+	}
+
 	private final InfoCollectionProvider<?> _infoCollectionProvider;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 
 }

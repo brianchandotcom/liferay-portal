@@ -10,8 +10,8 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
+import useSearchTerm from '../../../common/hooks/useSearchTerm';
 import {useGetKoroneikiAccounts} from '../../../common/services/liferay/graphql/koroneiki-accounts';
-import useSearchTerm from './useSearchTerm';
 
 export default function useKoroneikiAccounts() {
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({

@@ -93,7 +93,14 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 	return (
 		<div className="d-flex flex-column">
 			<div className="d-flex">
-				<SearchBar setFilters={setFilters} />
+				<SearchBar
+					onSearchSubmit={(term) => {
+						setFilters((previousFilters) => ({
+							...previousFilters,
+							searchTerm: term,
+						}));
+					}}
+				/>
 
 				<DropDownWithDrillDown
 					className="align-items-center d-flex"

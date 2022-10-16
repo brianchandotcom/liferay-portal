@@ -9,4 +9,6 @@
  * distribution rights of the Software.
  */
 
-export {default} from './TeamMembersFilter';
+export default function isAccountAdministrator(name) {
+	return name === 'Administrator' || name === 'Partner Manager';
+}

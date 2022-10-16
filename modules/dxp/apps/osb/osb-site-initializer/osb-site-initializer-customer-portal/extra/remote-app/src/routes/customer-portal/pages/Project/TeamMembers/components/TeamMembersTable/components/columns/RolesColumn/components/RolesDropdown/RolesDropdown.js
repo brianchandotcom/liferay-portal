@@ -36,7 +36,7 @@ const RolesDropdown = ({
 				disabled: hasAccountSupportSeatRole
 					? supportSeatsCount === 1
 					: isSupportSeatRole(accountRole.name) &&
-					  availableSupportSeatsCount <= 0,
+					  availableSupportSeatsCount === 0,
 				label: accountRole.name,
 				value: accountRole.id,
 			})),

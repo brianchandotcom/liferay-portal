@@ -35,7 +35,7 @@ const PopoverIconButton = ({
 			{i18n.translate(
 				'the-limit-of-support-seats-available-counts-the-total-of-administrators-requesters-roles-assigned-due-to-both-have-role-permissions-to-open-support-tickets'
 			)}
-
+			&nbsp;
 			<a
 				href={articleAccountSupportURL}
 				rel="noopener noreferrer"

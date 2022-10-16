@@ -9,81 +9,47 @@
  * distribution rights of the Software.
  */
 
-import {useModal} from '@clayui/core';
+import {Button, useModal} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import i18n from '../../../../../../../../../common/I18n';
-import {Button} from '../../../../../../../../../common/components';
-import {useAppPropertiesContext} from '../../../../../../../../../common/contexts/AppPropertiesContext';
-import {ROLE_TYPES} from '../../../../../../../../../common/utils/constants';
-import BadgeFilter from './components/BadgeFilter/BadgeFilter';
-import InvitesModal from './components/InvitesModal/InvitesModal';
-import PopoverIconButton from './components/PopoverIconButton/PopoverIconButton';
-import TeamMembersFilter from './components/TeamMembersFilter/TeamMembersFilter';
+import {Skeleton} from '../../../../../../../../../common/components';
+import InviteTeamMembersForm from '../../../../../../../../../common/containers/setup-forms/InviteTeamMembersForm';
+import SearchBar from '../../../../../../../components/SearchBar';
+import PopoverIconButton from '../PopoverIconButton/PopoverIconButton';
 
 const TeamMembersTableHeader = ({
-	administratorsAvailable,
-	hasAdminAccess,
-	project,
-	sessionId,
-	setAdministratorsAvailable,
-	setUserAccounts,
-	userAccounts,
+	articleAccountSupportURL,
+	availableSupportSeatsCount,
+	count,
+	hasAdministratorRole,
+	koroneikiAccount,
 	loading,
-	filterState: [filters, setFilters],
+	onSearch,
+	searching,
+	sessionId,
 }) => {
-	const [visible, setVisible] = useState(false);
-	const {articleAccountSupportURL} = useAppPropertiesContext();
-
-	useEffect(() => {
-		const currentAdministrators = userAccounts?.filter((userAccount) =>
-			userAccount?.roles?.some(
-				(role) =>
-					role === ROLE_TYPES.admin.key ||
-					role === ROLE_TYPES.requester.key
-			)
-		)?.length;
-
-		setAdministratorsAvailable(
-			project.maxRequestors - currentAdministrators
-		);
-	}, [project.maxRequestors, setAdministratorsAvailable, userAccounts]);
-
-	const handleOnUserInvite = (invitedUsers) => {
-		setVisible(false);
-
-		if (invitedUsers) {
-			const formattedInvitedUsers = invitedUsers?.map((invite) => {
-				const userData = invite?.data?.c?.createTeamMembersInvitation;
-
-				return {
-					emailAddress: userData?.email,
-					name: userData?.email,
-					roles: [userData?.role],
-				};
-			});
-
-			setUserAccounts((previousUserAccounts) => [
-				...previousUserAccounts,
-				...formattedInvitedUsers,
-			]);
-		}
-	};
-
-	const modalProps = useModal({
-		onClose: () => setVisible(false),
-	});
+	const [searchTerm, setSearchTerm] = useState('');
+	const {observer, onOpenChange, open} = useModal();
 
 	return (
 		<div className="bg-neutral-1 d-flex flex-column pt-3 px-3 py-3 rounded">
 			<div className="d-flex">
-				<TeamMembersFilter
-					filtersState={[setFilters]}
-					userAccounts={userAccounts}
-				/>
+				<div className="d-flex flex-column">
+					<div className="d-flex">
+						<SearchBar
+							onSearchSubmit={(term) => {
+								setSearchTerm(term);
+								onSearch(term);
+							}}
+						/>
+					</div>
+				</div>
 
 				<div className="align-items-center d-flex ml-auto">
-					{project?.maxRequestors > 0 && (
+					{koroneikiAccount?.maxRequestors > 0 && (
 						<>
 							<PopoverIconButton
 								alignPosition="top"
@@ -97,53 +63,69 @@ const TeamMembersTableHeader = ({
 								&nbsp;
 							</p>
 
-							<p
-								className={classNames(
-									'font-weight-semi-bold m-0 text-neutral-7',
-									{
-										'mr-4': !hasAdminAccess,
-									}
-								)}
-							>
-								{`${i18n.sub('x-of-x', [
-									`${
-										administratorsAvailable < 0
-											? '0'
-											: administratorsAvailable
-									}`,
-									project.maxRequestors,
-								])}`}
-							</p>
+							{loading ? (
+								<Skeleton height={24} width={42} />
+							) : (
+								<p
+									className={classNames(
+										'font-weight-semi-bold m-0 text-neutral-7',
+										{
+											'mr-4': !hasAdministratorRole,
+										}
+									)}
+								>
+									{i18n.sub('x-of-x', [
+										availableSupportSeatsCount,
+										koroneikiAccount.maxRequestors,
+									])}
+								</p>
+							)}
 						</>
 					)}
 
-					{hasAdminAccess && (
+					{hasAdministratorRole && (
 						<Button
-							className="btn-outline-primary invite-button ml-3 mr-1 px-3 py-2"
-							onClick={() => setVisible(true)}
-							prependIcon="user-plus"
-							prependIconClassName="mr-2"
+							className="invite-button ml-3 mr-1 px-3 py-2"
+							displayType="primary"
+							onClick={() => onOpenChange(true)}
+							outline
 						>
+							<span className="inline-item inline-item-before mr-2">
+								<ClayIcon symbol="user-plus" />
+							</span>
+
 							{i18n.translate('invite')}
 						</Button>
 					)}
 				</div>
 			</div>
 
-			<BadgeFilter
-				activationKeysLength={userAccounts?.length}
-				filtersState={[filters]}
-				loading={loading}
-			/>
+			<div className="d-flex">
+				{Boolean(searchTerm) && !searching && (
+					<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
+						{count > 1
+							? i18n.sub('x-results-for-x', [count, searchTerm])
+							: i18n.sub('x-result-for-x', [count, searchTerm])}
+					</p>
+				)}
+			</div>
 
-			{visible && (
-				<InvitesModal
-					mutateUserData={handleOnUserInvite}
-					{...modalProps}
-					availableAdministratorAssets={administratorsAvailable}
-					project={project}
-					sessionId={sessionId}
-				/>
+			{open && (
+				<ClayModal center observer={observer}>
+					<InviteTeamMembersForm
+						availableAdministratorAssets={
+							availableSupportSeatsCount
+						}
+						handlePage={() => onOpenChange(false)}
+						leftButton={i18n.translate('cancel')}
+						project={{
+							...koroneikiAccount,
+							id:
+								koroneikiAccount.r_accountEntryToKoroneikiAccount_accountEntryId,
+						}}
+						sessionId={sessionId}
+					/>
+				</ClayModal>
 			)}
 		</div>
 	);

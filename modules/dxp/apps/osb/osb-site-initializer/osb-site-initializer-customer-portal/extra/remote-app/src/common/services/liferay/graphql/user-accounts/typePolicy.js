@@ -10,6 +10,7 @@
  */
 
 import {Liferay} from '../..';
+import isAccountAdministrator from '../../../../utils/isAccountAdministrator';
 import isSupportSeatRole from '../../../../utils/isSupportSeatRole';
 
 export const userAccountsTypePolicy = {
@@ -84,10 +85,8 @@ export const userAccountsTypePolicy = {
 						name: readField('name', roleBrief),
 					}));
 
-					const hasAdministratorRole = roleBriefs.some(
-						({name}) =>
-							name === 'Administrator' ||
-							name === 'Partner Manager'
+					const hasAdministratorRole = roleBriefs.some(({name}) =>
+						isAccountAdministrator(name)
 					);
 
 					const hasSupportSeatRole = roleBriefs.some(({name}) =>

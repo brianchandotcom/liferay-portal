@@ -11,64 +11,57 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {useState} from 'react';
+import {memo, useState} from 'react';
 import i18n from '../../../../common/I18n';
 
-const SearchBar = ({setFilters}) => {
-	const [searchTerm, setSearchTerm] = useState('');
-	const [isSearchButton, setIsSearchButton] = useState(true);
+const SearchBar = ({onSearchSubmit}) => {
+	const [term, setTerm] = useState('');
+	const [searching, setSearching] = useState(true);
 
-	const updateSearchTermFilter = (searchTerm) => {
-		setFilters((previousFilters) => ({
-			...previousFilters,
-			searchTerm,
-		}));
-	};
+	const handleSearchSubmit = () => {
+		if (searching) {
+			onSearchSubmit(term);
+			setSearching(false);
 
-	const updateSearchFilter = () => {
-		if (isSearchButton) {
-			setIsSearchButton(false);
-			updateSearchTermFilter(searchTerm);
+			return;
 		}
-		else {
-			setSearchTerm('');
-			updateSearchTermFilter('');
-			setIsSearchButton(true);
-		}
+
+		setTerm('');
+		onSearchSubmit('');
+		setSearching(true);
 	};
 
 	return (
 		<ClayInput.Group className="m-0 mr-2">
 			<ClayInput.GroupItem>
 				<ClayInput
-					aria-label="Search"
 					className="form-control input-group-inset input-group-inset-after"
 					onChange={(event) => {
-						setSearchTerm(event.target.value);
-						setIsSearchButton(true);
+						setTerm(event.target.value);
+						setSearching(true);
 					}}
 					onKeyPress={(event) => {
 						if (event.key === 'Enter') {
-							updateSearchFilter();
+							handleSearchSubmit();
 						}
 					}}
 					placeholder={i18n.translate('search')}
 					type="text"
-					value={searchTerm}
+					value={term}
 				/>
 
 				<ClayInput.GroupInsetItem after tag="span">
-					{isSearchButton ? (
+					{searching || !term ? (
 						<ClayButtonWithIcon
 							displayType="unstyled"
-							onClick={() => updateSearchFilter()}
+							onClick={() => handleSearchSubmit()}
 							symbol="search"
 						/>
 					) : (
 						<ClayButtonWithIcon
 							className="navbar-breakpoint-d-none"
 							displayType="unstyled"
-							onClick={() => updateSearchFilter()}
+							onClick={() => handleSearchSubmit()}
 							symbol="times"
 						/>
 					)}
@@ -77,4 +70,4 @@ const SearchBar = ({setFilters}) => {
 		</ClayInput.Group>
 	);
 };
-export default SearchBar;
+export default memo(SearchBar);

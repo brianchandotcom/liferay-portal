@@ -308,6 +308,7 @@
 	"support-seat": "Support Seat",
 	"support-seats": "Support Seats",
 	"support-seats-available": "Support Seats Available",
+	"the-limit-of-support-seats-available-counts-the-total-of-administrators-requesters-roles-assigned-due-to-both-have-role-permissions-to-open-support-tickets": "The limit of support seats available counts the total of administrators requesters roles assigned due to both have role permissions to open support tickets.",
 	"sydney-australia": "Sydney, Australia",
 	"system-admin-s-email-address": "System Admin's Email Address",
 	"system-admin-s-first-name": "System Admin's First Name",

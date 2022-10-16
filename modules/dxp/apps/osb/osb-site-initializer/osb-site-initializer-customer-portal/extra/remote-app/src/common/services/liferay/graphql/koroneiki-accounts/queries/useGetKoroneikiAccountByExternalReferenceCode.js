@@ -25,6 +25,7 @@ const GET_KORONEIKI_ACCOUNT_BY_EXTERNAL_REFERENCE_CODE = gql`
 				path: "/c/koroneikiaccounts/by-external-reference-code/{args.externalReferenceCode}"
 			) {
 			...CoreKoroneikiAccountFields
+			r_accountEntryToKoroneikiAccount_accountEntryId
 		}
 	}
 `;

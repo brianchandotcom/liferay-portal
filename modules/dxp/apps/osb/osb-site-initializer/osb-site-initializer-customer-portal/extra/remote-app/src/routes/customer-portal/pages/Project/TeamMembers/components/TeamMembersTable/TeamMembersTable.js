@@ -11,16 +11,19 @@
 
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
+import {useCustomerPortal} from '../../../../../context';
 import {STATUS_TAG_TYPES} from '../../../../../utils/constants/statusTag';
 import RemoveUserModal from './components/RemoveUserModal/RemoveUserModal';
+import TeamMembersTableHeader from './components/TeamMembersTableHeader/TeamMembersTableHeader';
 import NameColumn from './components/columns/NameColumn';
 import OptionsColumn from './components/columns/OptionsColumn';
 import RolesColumn from './components/columns/RolesColumn/RolesColumn';
 import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
+import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAccountByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefByName from './utils/getFilteredRoleBriefByName';
@@ -34,11 +37,24 @@ const TeamMembersTable = ({
 		gravatarAPI,
 		importDate,
 	} = useAppPropertiesContext();
+
+	const [{sessionId}] = useCustomerPortal();
+
 	const {observer, onOpenChange, open} = useModal();
 
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
 	const [currentIndexRemoving, setCurrentIndexRemoving] = useState();
 	const [selectedAccountRoleItem, setSelectedAccountRoleItem] = useState();
+
+	const {
+		data: myUserAccountData,
+		loading: myUserAccountLoading,
+	} = useMyUserAccountByAccountExternalReferenceCode(
+		koroneikiAccountLoading,
+		koroneikiAccount?.accountKey
+	);
+
+	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
 	const [
 		supportSeatsCount,
@@ -47,6 +63,8 @@ const TeamMembersTable = ({
 			loading: userAccountsLoading,
 			remove,
 			removing,
+			search,
+			searching,
 			update,
 			updating,
 		},
@@ -55,16 +73,16 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
-	const availableSupportSeatsCount =
+	let availableSupportSeatsCount =
 		koroneikiAccount?.maxRequestors - supportSeatsCount;
+	availableSupportSeatsCount =
+		availableSupportSeatsCount < 0 ? 0 : availableSupportSeatsCount;
 
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
 
-	const loggedUserAccount = useMemo(
-		() => userAccounts?.find((userAccount) => userAccount.isLoggedUser),
-		[userAccounts]
-	);
+	const totalUserAccounts =
+		userAccountsData?.accountUserAccountsByExternalReferenceCode.totalCount;
 
 	const {
 		data: accountRolesData,
@@ -78,7 +96,8 @@ const TeamMembersTable = ({
 	const availableAccountRoles =
 		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
 
-	const loading = userAccountsLoading || accountRolesLoading;
+	const loading =
+		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
 
 	useEffect(() => {
 		if (!removing) {
@@ -130,88 +149,111 @@ const TeamMembersTable = ({
 				/>
 			)}
 
+			<TeamMembersTableHeader
+				articleAccountSupportURL={articleAccountSupportURL}
+				availableSupportSeatsCount={availableSupportSeatsCount}
+				count={totalUserAccounts}
+				hasAdministratorRole={
+					loggedUserAccount?.selectedAccountSummary
+						.hasAdministratorRole
+				}
+				koroneikiAccount={koroneikiAccount}
+				loading={loading}
+				onSearch={(term) => search(term)}
+				searching={searching}
+				sessionId={sessionId}
+			/>
+
 			<div className="cp-team-members-table-wrapper overflow-auto">
-				<Table
-					className="border-0 cp-team-members-table"
-					columns={getColumns(
-						loggedUserAccount?.selectedAccountSummary
-							.hasAdministratorRole,
-						articleAccountSupportURL
-					)}
-					isLoading={loading}
-					rows={userAccounts?.map((userAccount, index) => ({
-						email: (
-							<p className="m-0 text-truncate">
-								{userAccount.emailAddress}
-							</p>
-						),
-						name: (
-							<NameColumn
-								gravatarAPI={gravatarAPI}
-								userAccount={userAccount}
-							/>
-						),
-						options: (
-							<OptionsColumn
-								edit={index === currentIndexEditing}
-								onCancel={() => {
-									setCurrentIndexEditing();
-									setSelectedAccountRoleItem();
-								}}
-								onEdit={() => setCurrentIndexEditing(index)}
-								onRemove={() => {
-									setCurrentIndexRemoving(index);
-									onOpenChange(true);
-								}}
-								onSave={() => handleEdit()}
-								saveDisabled={
-									!selectedAccountRoleItem || updating
-								}
-							/>
-						),
-						role: (
-							<RolesColumn
-								accountRoles={availableAccountRoles}
-								availableSupportSeatsCount={
-									availableSupportSeatsCount
-								}
-								currentRoleBriefName={
-									getCurrentRoleBrief(
+				{!totalUserAccounts && !(loading || searching) && (
+					<div className="d-flex justify-content-center py-4">
+						No team members were found.
+					</div>
+				)}
+
+				{(totalUserAccounts || loading || searching) && (
+					<Table
+						className="border-0 cp-team-members-table"
+						columns={getColumns(
+							loggedUserAccount?.selectedAccountSummary
+								.hasAdministratorRole,
+							articleAccountSupportURL
+						)}
+						isLoading={loading || searching}
+						rows={userAccounts?.map((userAccount, index) => ({
+							email: (
+								<p className="m-0 text-truncate">
+									{userAccount.emailAddress}
+								</p>
+							),
+							name: (
+								<NameColumn
+									gravatarAPI={gravatarAPI}
+									userAccount={userAccount}
+								/>
+							),
+							options: (
+								<OptionsColumn
+									edit={index === currentIndexEditing}
+									onCancel={() => {
+										setCurrentIndexEditing();
+										setSelectedAccountRoleItem();
+									}}
+									onEdit={() => setCurrentIndexEditing(index)}
+									onRemove={() => {
+										setCurrentIndexRemoving(index);
+										onOpenChange(true);
+									}}
+									onSave={() => handleEdit()}
+									saveDisabled={
+										!selectedAccountRoleItem || updating
+									}
+								/>
+							),
+							role: (
+								<RolesColumn
+									accountRoles={availableAccountRoles}
+									availableSupportSeatsCount={
+										availableSupportSeatsCount
+									}
+									currentRoleBriefName={
+										getCurrentRoleBrief(
+											userAccount.selectedAccountSummary
+										)?.name || 'User'
+									}
+									edit={index === currentIndexEditing}
+									hasAccountSupportSeatRole={
 										userAccount.selectedAccountSummary
-									)?.name || 'User'
-								}
-								edit={index === currentIndexEditing}
-								hasAccountSupportSeatRole={
-									userAccount.selectedAccountSummary
-										.hasSupportSeatRole
-								}
-								onClick={(selectedAccountRoleItem) =>
-									setSelectedAccountRoleItem(
-										selectedAccountRoleItem
-									)
-								}
-								supportSeatsCount={supportSeatsCount}
-							/>
-						),
-						status: (
-							<StatusTag
-								currentStatus={
-									userAccount.lastLoginDate ||
-									userAccount.dateCreated <= importDate
-										? STATUS_TAG_TYPES.active
-										: STATUS_TAG_TYPES.invited
-								}
-							/>
-						),
-						supportSeat: userAccount.selectedAccountSummary
-							.hasSupportSeatRole && (
-							<ClayIcon
-								className="cp-team-members-support-seat-icon"
-								symbol="check-circle-full"
-							/>
-						),
-					}))}
-				/>
+											.hasSupportSeatRole
+									}
+									onClick={(selectedAccountRoleItem) =>
+										setSelectedAccountRoleItem(
+											selectedAccountRoleItem
+										)
+									}
+									supportSeatsCount={supportSeatsCount}
+								/>
+							),
+							status: (
+								<StatusTag
+									currentStatus={
+										userAccount.lastLoginDate ||
+										userAccount.dateCreated <= importDate
+											? STATUS_TAG_TYPES.active
+											: STATUS_TAG_TYPES.invited
+									}
+								/>
+							),
+							supportSeat: userAccount.selectedAccountSummary
+								.hasSupportSeatRole && (
+								<ClayIcon
+									className="cp-team-members-support-seat-icon"
+									symbol="check-circle-full"
+								/>
+							),
+						}))}
+					/>
+				)}
 			</div>
 		</>
 	);

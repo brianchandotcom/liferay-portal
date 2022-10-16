@@ -262,11 +262,7 @@ public class UpgradeExecutor {
 
 		String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
 
-		String upgradeStepName = String.valueOf(upgradeInfo.getUpgradeStep());
-
-		if (fromSchemaVersion.equals("0.0.0") &&
-			upgradeStepName.equals("Initial Database Creation")) {
-
+		if (fromSchemaVersion.equals("0.0.0")) {
 			return true;
 		}
 

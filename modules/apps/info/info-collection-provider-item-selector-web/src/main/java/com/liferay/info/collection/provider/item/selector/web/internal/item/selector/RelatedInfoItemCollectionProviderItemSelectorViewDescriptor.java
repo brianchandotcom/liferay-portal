@@ -15,6 +15,7 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.item.selector;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -73,7 +74,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 
 	@Override
 	public ItemSelectorReturnType getItemSelectorReturnType() {
-		return new RelatedInfoItemCollectionProviderItemSelectorReturnType();
+		return new InfoListProviderItemSelectorReturnType();
 	}
 
 	@Override

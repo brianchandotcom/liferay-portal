@@ -8577,11 +8577,16 @@ public class PortalImpl implements Portal {
 
 		Layout layout = layouts.get(0);
 
-		if (layout.isPublished()) {
-			return layout;
+		if (!layout.isPublished()) {
+			Layout firstPublishedLayout = _getFirstPublishedLayout(
+				groupId, privateLayout);
+
+			if (firstPublishedLayout != null) {
+				return firstPublishedLayout;
+			}
 		}
 
-		return _getFirstPublishedLayout(groupId, privateLayout);
+		return layout;
 	}
 
 	private String _getPortalURL(

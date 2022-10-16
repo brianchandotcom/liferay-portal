@@ -325,6 +325,12 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
 
+		if (_releaseLocalService.fetchRelease(bundle.getSymbolicName()) ==
+				null) {
+
+			return true;
+		}
+
 		try {
 			Collection<ServiceReference<Release>> releases =
 				_bundleContext.getServiceReferences(

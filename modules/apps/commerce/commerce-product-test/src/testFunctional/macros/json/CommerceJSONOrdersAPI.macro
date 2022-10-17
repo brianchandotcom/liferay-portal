@@ -23,8 +23,8 @@ definition {
 		var orderItemsList = "";
 
 		if (isSet(orderItems)) {
-			if (!(isSet(orderItemCustomFields))) {
-				var orderItemCustomFields = "";
+			if (!(isSet(orderItemsCustomFields))) {
+				var orderItemsCustomFields = "";
 			}
 
 			for (var orderItem : list "${orderItems}") {

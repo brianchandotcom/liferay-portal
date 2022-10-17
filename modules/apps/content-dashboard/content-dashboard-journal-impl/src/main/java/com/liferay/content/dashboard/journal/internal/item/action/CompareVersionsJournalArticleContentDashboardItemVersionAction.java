@@ -39,15 +39,14 @@ public class CompareVersionsJournalArticleContentDashboardItemVersionAction
 
 	public CompareVersionsJournalArticleContentDashboardItemVersionAction(
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
-		JournalArticle latestJournalArticle,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		Language language) {
+		Language language, JournalArticle latestJournalArticle,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
+		_language = language;
 		_latestJournalArticle = latestJournalArticle;
 		_requestBackedPortletURLFactory = requestBackedPortletURLFactory;
-		_language = language;
 	}
 
 	@Override

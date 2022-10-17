@@ -66,9 +66,8 @@ public class
 		}
 
 		return new CompareVersionsJournalArticleContentDashboardItemVersionAction(
-			httpServletRequest, journalArticle, latestJournalArticle,
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			_language);
+			httpServletRequest, journalArticle, _language, latestJournalArticle,
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 	}
 
 	@Override

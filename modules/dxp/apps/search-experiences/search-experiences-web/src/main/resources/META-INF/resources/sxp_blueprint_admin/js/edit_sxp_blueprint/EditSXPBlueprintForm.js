@@ -81,7 +81,12 @@ function EditSXPBlueprintForm({
 	initialTitle = {},
 	sxpBlueprintId,
 }) {
-	const {isCompanyAdmin, locale, redirectURL} = useContext(ThemeContext);
+	const {
+		featureFlagLps153813,
+		isCompanyAdmin,
+		locale,
+		redirectURL,
+	} = useContext(ThemeContext);
 
 	const formRef = useRef();
 	const sxpElementIdCounterRef = useRef(
@@ -436,7 +441,7 @@ function EditSXPBlueprintForm({
 			.then((responseContent) => setIndexFields(responseContent.items))
 			.catch(() => setIndexFields([]));
 
-		if (isCompanyAdmin) {
+		if (featureFlagLps153813 && isCompanyAdmin) {
 
 			// Example response:
 			// {

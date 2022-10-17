@@ -64,8 +64,7 @@ public class DispatchTriggerResourceImpl
 		return Page.of(dispatchTriggers1);
 	}
 
-	public Response postExecuteDispatchTrigger(
-			Long dispatchTriggerId, String string)
+	public Response postExecuteDispatchTrigger(Long dispatchTriggerId)
 		throws Exception {
 
 		com.liferay.dispatch.model.DispatchTrigger dispatchTrigger =

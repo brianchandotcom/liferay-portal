@@ -153,8 +153,7 @@ public class EditAccountEntryMVCActionCommand
 		accountEntry = _accountEntryService.updateAccountEntry(
 			accountEntryId, accountEntry.getParentAccountEntryId(), name,
 			description, deleteLogo, domains, emailAddress,
-			_getLogoBytes(actionRequest), taxIdNumber,
-			_getStatus(actionRequest),
+			_getLogoBytes(actionRequest), taxIdNumber, accountEntry.getStatus(),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
@@ -208,7 +207,7 @@ public class EditAccountEntryMVCActionCommand
 			themeDisplay.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			name, description, domains, emailAddress,
 			_getLogoBytes(actionRequest), taxIdNumber, type,
-			_getStatus(actionRequest),
+			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
@@ -227,16 +226,6 @@ public class EditAccountEntryMVCActionCommand
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		return FileUtil.getBytes(fileEntry.getContentStream());
-	}
-
-	private int _getStatus(ActionRequest actionRequest) {
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
-		if (active) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		return WorkflowConstants.STATUS_INACTIVE;
 	}
 
 	private boolean _isAllowUpdateDomains(String type) {

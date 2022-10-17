@@ -86,8 +86,4 @@ String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 		<aui:input name="description" type="textarea" value="<%= accountEntryDisplay.getDescription() %>" />
 	</aui:field-wrapper>
-
-	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-		<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= accountEntryDisplay.isActive() %>" />
-	</aui:field-wrapper>
 </clay:sheet-section>

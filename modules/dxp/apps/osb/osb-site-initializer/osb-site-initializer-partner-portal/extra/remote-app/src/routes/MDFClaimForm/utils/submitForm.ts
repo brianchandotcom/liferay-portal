@@ -11,12 +11,7 @@
 
 import {FormikHelpers} from 'formik';
 
-// import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
-
 import MDFClaim from '../../../common/interfaces/mdfClaim';
-
-// import {Liferay} from '../../../common/services/liferay';
-
 import createMDFClaimActivities from '../../../common/services/liferay/object/claim-activity/createMDFClaimActivities';
 import createMDFClaimActivityBudgets from '../../../common/services/liferay/object/claim-budgets/createMDFClaimActivityBudgets';
 import createMDFClaimDocuments from '../../../common/services/liferay/object/mdf-claim-documents/createMDFClaimDocuments';
@@ -30,13 +25,12 @@ export default async function submitForm(
 	formikHelpers.setSubmitting(true);
 
 	const dtoMDFClaim = await createMDFClaim(values);
-
-	await createMDFClaimDocuments(
-		values.reimbursementInvoice,
-		dtoMDFClaim?.id,
-		0,
-		0
-	);
+	if (values.reimbursementInvoice) {
+		await createMDFClaimDocuments(
+			values.reimbursementInvoice,
+			dtoMDFClaim?.id
+		);
+	}
 
 	if (values.activities?.length && dtoMDFClaim?.id) {
 		const dtoMDFClaimActivities = await createMDFClaimActivities(
@@ -51,12 +45,14 @@ export default async function submitForm(
 				values.activities.map(async (activity, index) => {
 					const dtoActivity = dtoMDFClaimActivities[index];
 
-					if (activity.budgets?.length && dtoActivity?.id) {
+					if (
+						activity.budgets?.length &&
+						dtoActivity?.id &&
+						activity.listQualifiedLeads
+					) {
 						await createMDFClaimDocuments(
 							activity?.listQualifiedLeads,
-							0,
-							dtoActivity?.id,
-							0
+							dtoActivity?.id
 						);
 
 						const dtoMDFClaimBudgets = await createMDFClaimActivityBudgets(
@@ -70,11 +66,9 @@ export default async function submitForm(
 						activity.budgets.map(async (budgets, index) => {
 							const dtoBudget = dtoMDFClaimBudgets[index];
 
-							if (dtoBudget?.id) {
+							if (dtoBudget?.id && budgets.invoice) {
 								await createMDFClaimDocuments(
 									budgets?.invoice,
-									0,
-									0,
 									dtoBudget?.id
 								);
 							}
@@ -84,7 +78,4 @@ export default async function submitForm(
 			);
 		}
 	}
-
-	// Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
-
 }

@@ -704,6 +704,173 @@ public interface CPAttachmentFileEntryPersistence
 	public int countByLtD_S(Date displayDate, int status);
 
 	/**
+	 * Returns all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @return the matching cp attachment file entries
+	 */
+	public java.util.List<CPAttachmentFileEntry> findByG_C_F(
+		long groupId, long classNameId, long fileEntryId);
+
+	/**
+	 * Returns a range of all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of cp attachment file entries
+	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	 * @return the range of matching cp attachment file entries
+	 */
+	public java.util.List<CPAttachmentFileEntry> findByG_C_F(
+		long groupId, long classNameId, long fileEntryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of cp attachment file entries
+	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp attachment file entries
+	 */
+	public java.util.List<CPAttachmentFileEntry> findByG_C_F(
+		long groupId, long classNameId, long fileEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of cp attachment file entries
+	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp attachment file entries
+	 */
+	public java.util.List<CPAttachmentFileEntry> findByG_C_F(
+		long groupId, long classNameId, long fileEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cp attachment file entry in the ordered set where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp attachment file entry
+	 * @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
+	 */
+	public CPAttachmentFileEntry findByG_C_F_First(
+			long groupId, long classNameId, long fileEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPAttachmentFileEntry> orderByComparator)
+		throws NoSuchCPAttachmentFileEntryException;
+
+	/**
+	 * Returns the first cp attachment file entry in the ordered set where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	 */
+	public CPAttachmentFileEntry fetchByG_C_F_First(
+		long groupId, long classNameId, long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last cp attachment file entry in the ordered set where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp attachment file entry
+	 * @throws NoSuchCPAttachmentFileEntryException if a matching cp attachment file entry could not be found
+	 */
+	public CPAttachmentFileEntry findByG_C_F_Last(
+			long groupId, long classNameId, long fileEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPAttachmentFileEntry> orderByComparator)
+		throws NoSuchCPAttachmentFileEntryException;
+
+	/**
+	 * Returns the last cp attachment file entry in the ordered set where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	 */
+	public CPAttachmentFileEntry fetchByG_C_F_Last(
+		long groupId, long classNameId, long fileEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp attachment file entry
+	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
+	 */
+	public CPAttachmentFileEntry[] findByG_C_F_PrevAndNext(
+			long CPAttachmentFileEntryId, long groupId, long classNameId,
+			long fileEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPAttachmentFileEntry> orderByComparator)
+		throws NoSuchCPAttachmentFileEntryException;
+
+	/**
+	 * Removes all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 */
+	public void removeByG_C_F(long groupId, long classNameId, long fileEntryId);
+
+	/**
+	 * Returns the number of cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param fileEntryId the file entry ID
+	 * @return the number of matching cp attachment file entries
+	 */
+	public int countByG_C_F(long groupId, long classNameId, long fileEntryId);
+
+	/**
 	 * Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63;.
 	 *
 	 * @param classNameId the class name ID

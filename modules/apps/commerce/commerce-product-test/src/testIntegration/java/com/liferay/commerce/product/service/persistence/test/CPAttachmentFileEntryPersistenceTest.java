@@ -352,6 +352,15 @@ public class CPAttachmentFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_F() throws Exception {
+		_persistence.countByG_C_F(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_F(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_F() throws Exception {
 		_persistence.countByC_C_F(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

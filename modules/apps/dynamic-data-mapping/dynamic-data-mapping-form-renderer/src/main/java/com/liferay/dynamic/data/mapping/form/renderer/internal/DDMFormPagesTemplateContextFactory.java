@@ -177,8 +177,8 @@ public class DDMFormPagesTemplateContextFactory {
 				List<String> ddmFormFieldNames =
 					ddmFormLayoutColumn.getDDMFormFieldNames();
 
-				ddmFormFieldNames.remove("bodyText");
-				ddmFormFieldNames.remove("headerText");
+				ddmFormFieldNames.remove("limitToOneSubmissionPerUserBody");
+				ddmFormFieldNames.remove("limitToOneSubmissionPerUserHeader");
 			}
 
 			columnsTemplateContext.add(

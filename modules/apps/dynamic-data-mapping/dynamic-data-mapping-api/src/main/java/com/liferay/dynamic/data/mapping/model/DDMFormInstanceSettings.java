@@ -32,12 +32,12 @@ import org.osgi.annotation.versioning.ProviderType;
 		@DDMFormRule(
 			actions = {
 				"setEnabled('expirationDate', equals(getValue('neverExpire'), FALSE))",
-				"setVisible('bodyText', getValue('limitToOneSubmissionPerUser'))",
 				"setVisible('emailFromAddress', getValue('sendEmailNotification'))",
 				"setVisible('emailFromName', getValue('sendEmailNotification'))",
 				"setVisible('emailSubject', getValue('sendEmailNotification'))",
 				"setVisible('emailToAddress', getValue('sendEmailNotification'))",
-				"setVisible('headerText', getValue('limitToOneSubmissionPerUser'))",
+				"setVisible('limitToOneSubmissionPerUserBody', getValue('limitToOneSubmissionPerUser'))",
+				"setVisible('limitToOneSubmissionPerUserHeader', getValue('limitToOneSubmissionPerUser'))",
 				"setVisible('objectDefinitionId', contains(getValue('storageType'), \"object\"))",
 				"setVisible('published', FALSE)",
 				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))"
@@ -108,8 +108,10 @@ import org.osgi.annotation.versioning.ProviderType;
 							size = 12,
 							value = {
 								"showPartialResultsToRespondents",
-								"limitToOneSubmissionPerUser", "headerText",
-								"bodyText", "expirationDate", "neverExpire"
+								"limitToOneSubmissionPerUser",
+								"limitToOneSubmissionPerUserHeader",
+								"limitToOneSubmissionPerUserBody",
+								"expirationDate", "neverExpire"
 							}
 						)
 					}
@@ -126,13 +128,6 @@ public interface DDMFormInstanceSettings {
 		properties = "showAsSwitcher=true"
 	)
 	public boolean autosaveEnabled();
-
-	@DDMFormField(
-		label = "%body",
-		predefinedValue = "%you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake",
-		properties = "displayStyle=multiline", type = "localizable_text"
-	)
-	public String bodyText();
 
 	@DDMFormField
 	public boolean convertedFromPolls();
@@ -167,16 +162,23 @@ public interface DDMFormInstanceSettings {
 	public String expirationDate();
 
 	@DDMFormField(
-		label = "%header", predefinedValue = "%you-have-already-responded",
-		type = "localizable_text"
-	)
-	public String headerText();
-
-	@DDMFormField(
 		label = "%limit-to-one-submission-per-user",
 		tip = "%respondents-will-be-required-to-sign-in", type = "checkbox"
 	)
 	public boolean limitToOneSubmissionPerUser();
+
+	@DDMFormField(
+		label = "%body",
+		predefinedValue = "%you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake",
+		properties = "displayStyle=multiline", type = "localizable_text"
+	)
+	public String limitToOneSubmissionPerUserBody();
+
+	@DDMFormField(
+		label = "%header", predefinedValue = "%you-have-already-responded",
+		type = "localizable_text"
+	)
+	public String limitToOneSubmissionPerUserHeader();
 
 	@DDMFormField(
 		label = "%never-expire", predefinedValue = "true", type = "checkbox"

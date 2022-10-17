@@ -32,15 +32,15 @@ import org.osgi.annotation.versioning.ProviderType;
 		@DDMFormRule(
 			actions = {
 				"setEnabled('expirationDate', equals(getValue('neverExpire'), FALSE))",
+				"setVisible('bodyText', getValue('limitToOneSubmissionPerUser'))",
 				"setVisible('emailFromAddress', getValue('sendEmailNotification'))",
 				"setVisible('emailFromName', getValue('sendEmailNotification'))",
 				"setVisible('emailSubject', getValue('sendEmailNotification'))",
 				"setVisible('emailToAddress', getValue('sendEmailNotification'))",
+				"setVisible('headerText', getValue('limitToOneSubmissionPerUser'))",
 				"setVisible('objectDefinitionId', contains(getValue('storageType'), \"object\"))",
 				"setVisible('published', FALSE)",
-				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))",
-				"setVisible('headerText', getValue('limitToOneSubmissionPerUser'))",
-				"setVisible('bodyText', getValue('limitToOneSubmissionPerUser'))"
+				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))"
 			},
 			condition = "TRUE"
 		),

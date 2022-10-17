@@ -53,7 +53,7 @@ FolderFacetPortletInstanceConfiguration folderFacetPortletInstanceConfiguration 
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= folderSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= FolderSearchFacetTermDisplayContext.class.getName() %>"
+				className="<%= FolderSearchFacetDisplayContext.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"folderSearchFacetDisplayContext", folderSearchFacetDisplayContext

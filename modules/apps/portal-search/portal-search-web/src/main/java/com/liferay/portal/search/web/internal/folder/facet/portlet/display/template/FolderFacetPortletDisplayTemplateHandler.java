@@ -48,7 +48,7 @@ public class FolderFacetPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return FolderSearchFacetTermDisplayContext.class.getName();
+		return FolderSearchFacetDisplayContext.class.getName();
 	}
 
 	@Override

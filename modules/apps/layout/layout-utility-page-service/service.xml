@@ -49,6 +49,11 @@
 			<finder-column name="defaultLayoutUtilityPageEntry" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_N_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateLayoutUtilityPageEntryExternalReferenceCode</exception>

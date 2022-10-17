@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -31,7 +32,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -48,10 +48,8 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -122,12 +120,12 @@ public class RelatedObjectEntryOpenAPIContributor
 		ObjectDefinition objectDefinition = _getRelatedObjectDefinition(
 			systemObjectDefinitionMetadata, systemObjectRelationship);
 
-		OpenAPI objectEntryOpenAPI = _getObjectEntryOpenAPI(objectDefinition);
+		OpenAPI objectEntryOpenAPI =
+			OpenAPIContributorUtil.getObjectEntryOpenAPI(
+				objectDefinition, _objectEntryOpenAPIResource);
 
-		_copySchema(
-			_getPageSchemaName(objectDefinition), objectEntryOpenAPI, openAPI);
-		_copySchema(
-			_getSchemaName(objectDefinition), objectEntryOpenAPI, openAPI);
+		OpenAPIContributorUtil.copySchemas(
+			objectDefinition, objectEntryOpenAPI, openAPI);
 
 		Paths paths = openAPI.getPaths();
 
@@ -161,16 +159,6 @@ public class RelatedObjectEntryOpenAPIContributor
 							systemObjectDefinitionMetadata));
 				}
 			});
-	}
-
-	private OpenAPI _copySchema(
-		String schemaName, OpenAPI sourceOpenAPI, OpenAPI targetOpenAPI) {
-
-		Components components = sourceOpenAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		return targetOpenAPI.schema(schemaName, schemas.get(schemaName));
 	}
 
 	private Content _getContent(String schemaName) {
@@ -231,8 +219,9 @@ public class RelatedObjectEntryOpenAPIContributor
 									{
 										setContent(
 											_getContent(
-												_getPageSchemaName(
-													objectDefinition)));
+												OpenAPIContributorUtil.
+													getPageSchemaName(
+														objectDefinition)));
 									}
 								});
 						}
@@ -257,19 +246,6 @@ public class RelatedObjectEntryOpenAPIContributor
 		String path = uriInfo.getPath();
 
 		return path.split(StringPool.SLASH)[0];
-	}
-
-	private OpenAPI _getObjectEntryOpenAPI(ObjectDefinition objectDefinition)
-		throws Exception {
-
-		Response response = _objectEntryOpenAPIResource.getOpenAPI(
-			objectDefinition, "json", null);
-
-		return (OpenAPI)response.getEntity();
-	}
-
-	private String _getPageSchemaName(ObjectDefinition objectDefinition) {
-		return "Page" + _getSchemaName(objectDefinition);
 	}
 
 	private Operation _getPutOperation(
@@ -314,8 +290,9 @@ public class RelatedObjectEntryOpenAPIContributor
 									{
 										setContent(
 											_getContent(
-												_getSchemaName(
-													objectDefinition)));
+												OpenAPIContributorUtil.
+													getSchemaName(
+														objectDefinition)));
 									}
 								});
 						}
@@ -346,10 +323,6 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			objectRelationship.getObjectDefinitionId2());
-	}
-
-	private String _getSchemaName(ObjectDefinition objectDefinition) {
-		return objectDefinition.getShortName();
 	}
 
 	private String _getSystemObjectBasePath(

@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -41,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -138,7 +138,8 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 	private void _addSchema(ObjectDefinition objectDefinition, OpenAPI openAPI)
 		throws Exception {
 
-		String schemaName = _getSchemaName(objectDefinition);
+		String schemaName = OpenAPIContributorUtil.getSchemaName(
+			objectDefinition);
 
 		Components components = openAPI.getComponents();
 
@@ -148,21 +149,12 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 			return;
 		}
 
-		OpenAPI objectEntryOpenAPI = _getObjectEntryOpenAPI(objectDefinition);
+		OpenAPI objectEntryOpenAPI =
+			OpenAPIContributorUtil.getObjectEntryOpenAPI(
+				objectDefinition, _objectEntryOpenAPIResource);
 
-		_copySchema(
-			_getPageSchemaName(objectDefinition), objectEntryOpenAPI, openAPI);
-		_copySchema(schemaName, objectEntryOpenAPI, openAPI);
-	}
-
-	private OpenAPI _copySchema(
-		String schemaName, OpenAPI sourceOpenAPI, OpenAPI targetOpenAPI) {
-
-		Components components = sourceOpenAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		return targetOpenAPI.schema(schemaName, schemas.get(schemaName));
+		OpenAPIContributorUtil.copySchemas(
+			objectDefinition, objectEntryOpenAPI, openAPI);
 	}
 
 	private Operation _createOperation(
@@ -231,10 +223,12 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 		String schemaName;
 
 		if (StringUtil.equals(httpMethod, "get")) {
-			schemaName = _getPageSchemaName(relatedObjectDefinition);
+			schemaName = OpenAPIContributorUtil.getPageSchemaName(
+				relatedObjectDefinition);
 		}
 		else {
-			schemaName = _getSchemaName(relatedObjectDefinition);
+			schemaName = OpenAPIContributorUtil.getSchemaName(
+				relatedObjectDefinition);
 		}
 
 		ApiResponses operationResponses = operation.getResponses();
@@ -276,19 +270,6 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		return content;
-	}
-
-	private OpenAPI _getObjectEntryOpenAPI(ObjectDefinition objectDefinition)
-		throws Exception {
-
-		Response response = _objectEntryOpenAPIResource.getOpenAPI(
-			objectDefinition, "json", null);
-
-		return (OpenAPI)response.getEntity();
-	}
-
-	private String _getPageSchemaName(ObjectDefinition objectDefinition) {
-		return "Page" + _getSchemaName(objectDefinition);
 	}
 
 	private List<Parameter> _getParameters(
@@ -352,10 +333,6 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		return relatedObjectDefinitionsMap;
-	}
-
-	private String _getSchemaName(ObjectDefinition objectDefinition) {
-		return objectDefinition.getShortName();
 	}
 
 	private final ObjectDefinition _objectDefinition;

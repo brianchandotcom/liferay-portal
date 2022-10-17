@@ -95,6 +95,21 @@ public interface ObjectEntryModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this object entry.
+	 *
+	 * @return the external reference code of this object entry
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this object entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this object entry
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the object entry ID of this object entry.
 	 *
 	 * @return the object entry ID of this object entry
@@ -220,21 +235,6 @@ public interface ObjectEntryModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the external reference code of this object entry.
-	 *
-	 * @return the external reference code of this object entry
-	 */
-	@AutoEscape
-	public String getExternalReferenceCode();
-
-	/**
-	 * Sets the external reference code of this object entry.
-	 *
-	 * @param externalReferenceCode the external reference code of this object entry
-	 */
-	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the object definition ID of this object entry.

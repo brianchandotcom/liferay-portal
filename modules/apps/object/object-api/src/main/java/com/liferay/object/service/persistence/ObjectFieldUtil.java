@@ -1460,86 +1460,86 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.
+	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the matching object field
 	 * @throws NoSuchObjectFieldException if a matching object field could not be found
 	 */
-	public static ObjectField findByC_ERC_ODI(
-			long companyId, String externalReferenceCode,
+	public static ObjectField findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
 			long objectDefinitionId)
 		throws com.liferay.object.exception.NoSuchObjectFieldException {
 
-		return getPersistence().findByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		return getPersistence().findByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 	}
 
 	/**
-	 * Returns the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the matching object field, or <code>null</code> if a matching object field could not be found
 	 */
-	public static ObjectField fetchByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId) {
+	public static ObjectField fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
 
-		return getPersistence().fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 	}
 
 	/**
-	 * Returns the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching object field, or <code>null</code> if a matching object field could not be found
 	 */
-	public static ObjectField fetchByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId,
+	public static ObjectField fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId,
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId,
 			useFinderCache);
 	}
 
 	/**
-	 * Removes the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; from the database.
+	 * Removes the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the object field that was removed
 	 */
-	public static ObjectField removeByC_ERC_ODI(
-			long companyId, String externalReferenceCode,
+	public static ObjectField removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
 			long objectDefinitionId)
 		throws com.liferay.object.exception.NoSuchObjectFieldException {
 
-		return getPersistence().removeByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		return getPersistence().removeByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 	}
 
 	/**
-	 * Returns the number of object fields where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63;.
+	 * Returns the number of object fields where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the number of matching object fields
 	 */
-	public static int countByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId) {
+	public static int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
 
-		return getPersistence().countByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		return getPersistence().countByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 	}
 
 	/**

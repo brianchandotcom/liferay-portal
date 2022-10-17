@@ -4167,37 +4167,37 @@ public class ObjectFieldPersistenceImpl
 	private static final String _FINDER_COLUMN_ODI_S_SYSTEM_2 =
 		"objectField.system = ?";
 
-	private FinderPath _finderPathFetchByC_ERC_ODI;
-	private FinderPath _finderPathCountByC_ERC_ODI;
+	private FinderPath _finderPathFetchByERC_C_ODI;
+	private FinderPath _finderPathCountByERC_C_ODI;
 
 	/**
-	 * Returns the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.
+	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the matching object field
 	 * @throws NoSuchObjectFieldException if a matching object field could not be found
 	 */
 	@Override
-	public ObjectField findByC_ERC_ODI(
-			long companyId, String externalReferenceCode,
+	public ObjectField findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
 			long objectDefinitionId)
 		throws NoSuchObjectFieldException {
 
-		ObjectField objectField = fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		ObjectField objectField = fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 
 		if (objectField == null) {
 			StringBundler sb = new StringBundler(8);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append(", objectDefinitionId=");
 			sb.append(objectDefinitionId);
@@ -4215,33 +4215,33 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	@Override
-	public ObjectField fetchByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId) {
+	public ObjectField fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
 
-		return fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId, true);
+		return fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId, true);
 	}
 
 	/**
-	 * Returns the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching object field, or <code>null</code> if a matching object field could not be found
 	 */
 	@Override
-	public ObjectField fetchByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId,
+	public ObjectField fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
 		boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
@@ -4250,7 +4250,7 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			finderArgs = new Object[] {
-				companyId, externalReferenceCode, objectDefinitionId
+				externalReferenceCode, companyId, objectDefinitionId
 			};
 		}
 
@@ -4258,16 +4258,16 @@ public class ObjectFieldPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC_ODI, finderArgs, this);
+				_finderPathFetchByERC_C_ODI, finderArgs, this);
 		}
 
 		if (result instanceof ObjectField) {
 			ObjectField objectField = (ObjectField)result;
 
-			if ((companyId != objectField.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
 					objectField.getExternalReferenceCode()) ||
+				(companyId != objectField.getCompanyId()) ||
 				(objectDefinitionId != objectField.getObjectDefinitionId())) {
 
 				result = null;
@@ -4279,20 +4279,20 @@ public class ObjectFieldPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBJECTFIELD_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_ODI_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_ODI_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_ODI_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_ERC_ODI_OBJECTDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2);
 
 			String sql = sb.toString();
 
@@ -4305,11 +4305,11 @@ public class ObjectFieldPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				queryPos.add(objectDefinitionId);
 
@@ -4318,7 +4318,7 @@ public class ObjectFieldPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC_ODI, finderArgs, list);
+							_finderPathFetchByERC_C_ODI, finderArgs, list);
 					}
 				}
 				else {
@@ -4346,43 +4346,43 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Removes the object field where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; from the database.
+	 * Removes the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the object field that was removed
 	 */
 	@Override
-	public ObjectField removeByC_ERC_ODI(
-			long companyId, String externalReferenceCode,
+	public ObjectField removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
 			long objectDefinitionId)
 		throws NoSuchObjectFieldException {
 
-		ObjectField objectField = findByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		ObjectField objectField = findByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 
 		return remove(objectField);
 	}
 
 	/**
-	 * Returns the number of object fields where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63;.
+	 * Returns the number of object fields where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param objectDefinitionId the object definition ID
 	 * @return the number of matching object fields
 	 */
 	@Override
-	public int countByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId) {
+	public int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC_ODI;
+		FinderPath finderPath = _finderPathCountByERC_C_ODI;
 
 		Object[] finderArgs = new Object[] {
-			companyId, externalReferenceCode, objectDefinitionId
+			externalReferenceCode, companyId, objectDefinitionId
 		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -4392,20 +4392,20 @@ public class ObjectFieldPersistenceImpl
 
 			sb.append(_SQL_COUNT_OBJECTFIELD_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_ODI_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_ODI_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_ODI_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_ERC_ODI_OBJECTDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2);
 
 			String sql = sb.toString();
 
@@ -4418,11 +4418,11 @@ public class ObjectFieldPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				queryPos.add(objectDefinitionId);
 
@@ -4441,18 +4441,18 @@ public class ObjectFieldPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_ODI_COMPANYID_2 =
-		"objectField.companyId = ? AND ";
-
 	private static final String
-		_FINDER_COLUMN_C_ERC_ODI_EXTERNALREFERENCECODE_2 =
+		_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2 =
 			"objectField.externalReferenceCode = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_ERC_ODI_EXTERNALREFERENCECODE_3 =
+		_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3 =
 			"(objectField.externalReferenceCode IS NULL OR objectField.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_ODI_OBJECTDEFINITIONID_2 =
+	private static final String _FINDER_COLUMN_ERC_C_ODI_COMPANYID_2 =
+		"objectField.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2 =
 		"objectField.objectDefinitionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByODI_DBT_I;
@@ -5119,11 +5119,10 @@ public class ObjectFieldPersistenceImpl
 			objectField);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC_ODI,
+			_finderPathFetchByERC_C_ODI,
 			new Object[] {
-				objectField.getCompanyId(),
 				objectField.getExternalReferenceCode(),
-				objectField.getObjectDefinitionId()
+				objectField.getCompanyId(), objectField.getObjectDefinitionId()
 			},
 			objectField);
 	}
@@ -5209,15 +5208,15 @@ public class ObjectFieldPersistenceImpl
 			_finderPathFetchByODI_N, args, objectFieldModelImpl);
 
 		args = new Object[] {
-			objectFieldModelImpl.getCompanyId(),
 			objectFieldModelImpl.getExternalReferenceCode(),
+			objectFieldModelImpl.getCompanyId(),
 			objectFieldModelImpl.getObjectDefinitionId()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByC_ERC_ODI, args, Long.valueOf(1));
+			_finderPathCountByERC_C_ODI, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC_ODI, args, objectFieldModelImpl);
+			_finderPathFetchByERC_C_ODI, args, objectFieldModelImpl);
 	}
 
 	/**
@@ -5832,25 +5831,25 @@ public class ObjectFieldPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "system_"}, false);
 
-		_finderPathFetchByC_ERC_ODI = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC_ODI",
+		_finderPathFetchByERC_C_ODI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
 			new String[] {
-				"companyId", "externalReferenceCode", "objectDefinitionId"
+				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
 			true);
 
-		_finderPathCountByC_ERC_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC_ODI",
+		_finderPathCountByERC_C_ODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C_ODI",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
 			new String[] {
-				"companyId", "externalReferenceCode", "objectDefinitionId"
+				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
 			false);
 

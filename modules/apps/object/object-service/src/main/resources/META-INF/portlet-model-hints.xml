@@ -67,6 +67,7 @@
 	<model name="com.liferay.object.model.ObjectEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="objectEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -74,7 +75,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="externalReferenceCode" type="String" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
@@ -85,13 +85,13 @@
 	<model name="com.liferay.object.model.ObjectField">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="objectFieldId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="externalReferenceCode" type="String" />
 		<field name="listTypeDefinitionId" type="long" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="businessType" type="String" />

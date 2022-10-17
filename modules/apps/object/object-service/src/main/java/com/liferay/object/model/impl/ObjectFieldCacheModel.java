@@ -83,6 +83,8 @@ public class ObjectFieldCacheModel
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", objectFieldId=");
 		sb.append(objectFieldId);
 		sb.append(", companyId=");
@@ -95,8 +97,6 @@ public class ObjectFieldCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
 		sb.append(", listTypeDefinitionId=");
 		sb.append(listTypeDefinitionId);
 		sb.append(", objectDefinitionId=");
@@ -147,6 +147,13 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setUuid(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectFieldImpl.setExternalReferenceCode("");
+		}
+		else {
+			objectFieldImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		objectFieldImpl.setObjectFieldId(objectFieldId);
 		objectFieldImpl.setCompanyId(companyId);
 		objectFieldImpl.setUserId(userId);
@@ -170,13 +177,6 @@ public class ObjectFieldCacheModel
 		}
 		else {
 			objectFieldImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (externalReferenceCode == null) {
-			objectFieldImpl.setExternalReferenceCode("");
-		}
-		else {
-			objectFieldImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		objectFieldImpl.setListTypeDefinitionId(listTypeDefinitionId);
@@ -261,6 +261,7 @@ public class ObjectFieldCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		objectFieldId = objectInput.readLong();
 
@@ -270,7 +271,6 @@ public class ObjectFieldCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		externalReferenceCode = objectInput.readUTF();
 
 		listTypeDefinitionId = objectInput.readLong();
 
@@ -307,6 +307,13 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(objectFieldId);
 
 		objectOutput.writeLong(companyId);
@@ -322,13 +329,6 @@ public class ObjectFieldCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		if (externalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(externalReferenceCode);
-		}
 
 		objectOutput.writeLong(listTypeDefinitionId);
 
@@ -410,13 +410,13 @@ public class ObjectFieldCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long objectFieldId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String externalReferenceCode;
 	public long listTypeDefinitionId;
 	public long objectDefinitionId;
 	public String businessType;

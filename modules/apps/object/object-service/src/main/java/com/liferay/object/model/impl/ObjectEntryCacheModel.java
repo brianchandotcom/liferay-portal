@@ -83,6 +83,8 @@ public class ObjectEntryCacheModel
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", objectEntryId=");
 		sb.append(objectEntryId);
 		sb.append(", groupId=");
@@ -97,8 +99,6 @@ public class ObjectEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
 		sb.append(", lastPublishDate=");
@@ -129,6 +129,13 @@ public class ObjectEntryCacheModel
 			objectEntryImpl.setUuid(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			objectEntryImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		objectEntryImpl.setObjectEntryId(objectEntryId);
 		objectEntryImpl.setGroupId(groupId);
 		objectEntryImpl.setCompanyId(companyId);
@@ -153,13 +160,6 @@ public class ObjectEntryCacheModel
 		}
 		else {
 			objectEntryImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (externalReferenceCode == null) {
-			objectEntryImpl.setExternalReferenceCode("");
-		}
-		else {
-			objectEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		objectEntryImpl.setObjectDefinitionId(objectDefinitionId);
@@ -197,6 +197,7 @@ public class ObjectEntryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		objectEntryId = objectInput.readLong();
 
@@ -208,7 +209,6 @@ public class ObjectEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		externalReferenceCode = objectInput.readUTF();
 
 		objectDefinitionId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -231,6 +231,13 @@ public class ObjectEntryCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(objectEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -248,13 +255,6 @@ public class ObjectEntryCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		if (externalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(externalReferenceCode);
-		}
 
 		objectOutput.writeLong(objectDefinitionId);
 		objectOutput.writeLong(lastPublishDate);
@@ -275,6 +275,7 @@ public class ObjectEntryCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long objectEntryId;
 	public long groupId;
 	public long companyId;
@@ -282,7 +283,6 @@ public class ObjectEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String externalReferenceCode;
 	public long objectDefinitionId;
 	public long lastPublishDate;
 	public int status;

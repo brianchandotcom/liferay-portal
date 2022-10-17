@@ -81,10 +81,10 @@ public class ObjectFieldModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"objectFieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"externalReferenceCode", Types.VARCHAR},
 		{"listTypeDefinitionId", Types.BIGINT},
 		{"objectDefinitionId", Types.BIGINT}, {"businessType", Types.VARCHAR},
 		{"dbColumnName", Types.VARCHAR}, {"dbTableName", Types.VARCHAR},
@@ -102,13 +102,13 @@ public class ObjectFieldModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("businessType", Types.VARCHAR);
@@ -128,7 +128,7 @@ public class ObjectFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,dbType VARCHAR(75) null,defaultValue VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,state_ BOOLEAN,system_ BOOLEAN)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,dbType VARCHAR(75) null,defaultValue VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,state_ BOOLEAN,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -327,6 +327,12 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<ObjectField, String>)ObjectField::setUuid);
 		attributeGetterFunctions.put(
+			"externalReferenceCode", ObjectField::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<ObjectField, String>)
+				ObjectField::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"objectFieldId", ObjectField::getObjectFieldId);
 		attributeSetterBiConsumers.put(
 			"objectFieldId",
@@ -351,12 +357,6 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<ObjectField, Date>)ObjectField::setModifiedDate);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", ObjectField::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<ObjectField, String>)
-				ObjectField::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"listTypeDefinitionId", ObjectField::getListTypeDefinitionId);
 		attributeSetterBiConsumers.put(
@@ -475,6 +475,35 @@ public class ObjectFieldModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -602,35 +631,6 @@ public class ObjectFieldModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public String getExternalReferenceCode() {
-		if (_externalReferenceCode == null) {
-			return "";
-		}
-		else {
-			return _externalReferenceCode;
-		}
-	}
-
-	@Override
-	public void setExternalReferenceCode(String externalReferenceCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_externalReferenceCode = externalReferenceCode;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalExternalReferenceCode() {
-		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1244,13 +1244,13 @@ public class ObjectFieldModelImpl
 
 		objectFieldImpl.setMvccVersion(getMvccVersion());
 		objectFieldImpl.setUuid(getUuid());
+		objectFieldImpl.setExternalReferenceCode(getExternalReferenceCode());
 		objectFieldImpl.setObjectFieldId(getObjectFieldId());
 		objectFieldImpl.setCompanyId(getCompanyId());
 		objectFieldImpl.setUserId(getUserId());
 		objectFieldImpl.setUserName(getUserName());
 		objectFieldImpl.setCreateDate(getCreateDate());
 		objectFieldImpl.setModifiedDate(getModifiedDate());
-		objectFieldImpl.setExternalReferenceCode(getExternalReferenceCode());
 		objectFieldImpl.setListTypeDefinitionId(getListTypeDefinitionId());
 		objectFieldImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectFieldImpl.setBusinessType(getBusinessType());
@@ -1280,6 +1280,8 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		objectFieldImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		objectFieldImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		objectFieldImpl.setObjectFieldId(
 			this.<Long>getColumnOriginalValue("objectFieldId"));
 		objectFieldImpl.setCompanyId(
@@ -1291,8 +1293,6 @@ public class ObjectFieldModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectFieldImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		objectFieldImpl.setExternalReferenceCode(
-			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		objectFieldImpl.setListTypeDefinitionId(
 			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
 		objectFieldImpl.setObjectDefinitionId(
@@ -1409,6 +1409,18 @@ public class ObjectFieldModelImpl
 			objectFieldCacheModel.uuid = null;
 		}
 
+		objectFieldCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			objectFieldCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			objectFieldCacheModel.externalReferenceCode = null;
+		}
+
 		objectFieldCacheModel.objectFieldId = getObjectFieldId();
 
 		objectFieldCacheModel.companyId = getCompanyId();
@@ -1439,18 +1451,6 @@ public class ObjectFieldModelImpl
 		}
 		else {
 			objectFieldCacheModel.modifiedDate = Long.MIN_VALUE;
-		}
-
-		objectFieldCacheModel.externalReferenceCode =
-			getExternalReferenceCode();
-
-		String externalReferenceCode =
-			objectFieldCacheModel.externalReferenceCode;
-
-		if ((externalReferenceCode != null) &&
-			(externalReferenceCode.length() == 0)) {
-
-			objectFieldCacheModel.externalReferenceCode = null;
 		}
 
 		objectFieldCacheModel.listTypeDefinitionId = getListTypeDefinitionId();
@@ -1602,6 +1602,7 @@ public class ObjectFieldModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _objectFieldId;
 	private long _companyId;
 	private long _userId;
@@ -1609,7 +1610,6 @@ public class ObjectFieldModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _externalReferenceCode;
 	private long _listTypeDefinitionId;
 	private long _objectDefinitionId;
 	private String _businessType;
@@ -1659,14 +1659,14 @@ public class ObjectFieldModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("objectFieldId", _objectFieldId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put(
-			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
 			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
@@ -1713,19 +1713,19 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("objectFieldId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("objectFieldId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("externalReferenceCode", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
 		columnBitmasks.put("listTypeDefinitionId", 512L);
 

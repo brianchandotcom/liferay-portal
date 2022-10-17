@@ -1271,83 +1271,166 @@ public class ObjectEntryUtil {
 	}
 
 	/**
-	 * Returns the object entry where groupId = &#63; and companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
+	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
 	 *
+	 * @param externalReferenceCode the external reference code
 	 * @param groupId the group ID
 	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
 	 * @return the matching object entry
 	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
 	 */
-	public static ObjectEntry findByG_C_ERC(
-			long groupId, long companyId, String externalReferenceCode)
+	public static ObjectEntry findByERC_G_C(
+			String externalReferenceCode, long groupId, long companyId)
 		throws com.liferay.object.exception.NoSuchObjectEntryException {
 
-		return getPersistence().findByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
+		return getPersistence().findByERC_G_C(
+			externalReferenceCode, groupId, companyId);
 	}
 
 	/**
-	 * Returns the object entry where groupId = &#63; and companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param externalReferenceCode the external reference code
 	 * @param groupId the group ID
 	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
 	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
 	 */
-	public static ObjectEntry fetchByG_C_ERC(
-		long groupId, long companyId, String externalReferenceCode) {
+	public static ObjectEntry fetchByERC_G_C(
+		String externalReferenceCode, long groupId, long companyId) {
 
-		return getPersistence().fetchByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
+		return getPersistence().fetchByERC_G_C(
+			externalReferenceCode, groupId, companyId);
 	}
 
 	/**
-	 * Returns the object entry where groupId = &#63; and companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param externalReferenceCode the external reference code
 	 * @param groupId the group ID
 	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
 	 */
-	public static ObjectEntry fetchByG_C_ERC(
-		long groupId, long companyId, String externalReferenceCode,
+	public static ObjectEntry fetchByERC_G_C(
+		String externalReferenceCode, long groupId, long companyId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByG_C_ERC(
-			groupId, companyId, externalReferenceCode, useFinderCache);
+		return getPersistence().fetchByERC_G_C(
+			externalReferenceCode, groupId, companyId, useFinderCache);
 	}
 
 	/**
-	 * Removes the object entry where groupId = &#63; and companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; from the database.
 	 *
+	 * @param externalReferenceCode the external reference code
 	 * @param groupId the group ID
 	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
 	 * @return the object entry that was removed
 	 */
-	public static ObjectEntry removeByG_C_ERC(
-			long groupId, long companyId, String externalReferenceCode)
+	public static ObjectEntry removeByERC_G_C(
+			String externalReferenceCode, long groupId, long companyId)
 		throws com.liferay.object.exception.NoSuchObjectEntryException {
 
-		return getPersistence().removeByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
+		return getPersistence().removeByERC_G_C(
+			externalReferenceCode, groupId, companyId);
 	}
 
 	/**
-	 * Returns the number of object entries where groupId = &#63; and companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of object entries where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63;.
 	 *
+	 * @param externalReferenceCode the external reference code
 	 * @param groupId the group ID
 	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
 	 * @return the number of matching object entries
 	 */
-	public static int countByG_C_ERC(
-		long groupId, long companyId, String externalReferenceCode) {
+	public static int countByERC_G_C(
+		String externalReferenceCode, long groupId, long companyId) {
 
-		return getPersistence().countByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
+		return getPersistence().countByERC_G_C(
+			externalReferenceCode, groupId, companyId);
+	}
+
+	/**
+	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public static ObjectEntry findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws com.liferay.object.exception.NoSuchObjectEntryException {
+
+		return getPersistence().findByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public static ObjectEntry fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public static ObjectEntry fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object entry that was removed
+	 */
+	public static ObjectEntry removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws com.liferay.object.exception.NoSuchObjectEntryException {
+
+		return getPersistence().removeByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the number of object entries where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object entries
+	 */
+	public static int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return getPersistence().countByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 	}
 
 	/**
@@ -1554,89 +1637,6 @@ public class ObjectEntryUtil {
 
 		return getPersistence().countByG_ODI_S(
 			groupId, objectDefinitionId, status);
-	}
-
-	/**
-	 * Returns the object entry where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entry
-	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
-	 */
-	public static ObjectEntry findByC_ERC_ODI(
-			long companyId, String externalReferenceCode,
-			long objectDefinitionId)
-		throws com.liferay.object.exception.NoSuchObjectEntryException {
-
-		return getPersistence().findByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
-	}
-
-	/**
-	 * Returns the object entry where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	public static ObjectEntry fetchByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId) {
-
-		return getPersistence().fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
-	}
-
-	/**
-	 * Returns the object entry where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
-	 * @param objectDefinitionId the object definition ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	public static ObjectEntry fetchByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId,
-		boolean useFinderCache) {
-
-		return getPersistence().fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId,
-			useFinderCache);
-	}
-
-	/**
-	 * Removes the object entry where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
-	 * @param objectDefinitionId the object definition ID
-	 * @return the object entry that was removed
-	 */
-	public static ObjectEntry removeByC_ERC_ODI(
-			long companyId, String externalReferenceCode,
-			long objectDefinitionId)
-		throws com.liferay.object.exception.NoSuchObjectEntryException {
-
-		return getPersistence().removeByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
-	}
-
-	/**
-	 * Returns the number of object entries where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param externalReferenceCode the external reference code
-	 * @param objectDefinitionId the object definition ID
-	 * @return the number of matching object entries
-	 */
-	public static int countByC_ERC_ODI(
-		long companyId, String externalReferenceCode, long objectDefinitionId) {
-
-		return getPersistence().countByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
 	}
 
 	/**

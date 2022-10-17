@@ -128,6 +128,8 @@ public class ObjectEntryPersistenceTest {
 
 		newObjectEntry.setUuid(RandomTestUtil.randomString());
 
+		newObjectEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newObjectEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newObjectEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -139,8 +141,6 @@ public class ObjectEntryPersistenceTest {
 		newObjectEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		newObjectEntry.setModifiedDate(RandomTestUtil.nextDate());
-
-		newObjectEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		newObjectEntry.setObjectDefinitionId(RandomTestUtil.nextLong());
 
@@ -165,6 +165,9 @@ public class ObjectEntryPersistenceTest {
 		Assert.assertEquals(
 			existingObjectEntry.getUuid(), newObjectEntry.getUuid());
 		Assert.assertEquals(
+			existingObjectEntry.getExternalReferenceCode(),
+			newObjectEntry.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingObjectEntry.getObjectEntryId(),
 			newObjectEntry.getObjectEntryId());
 		Assert.assertEquals(
@@ -181,9 +184,6 @@ public class ObjectEntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectEntry.getModifiedDate()),
 			Time.getShortTimestamp(newObjectEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingObjectEntry.getExternalReferenceCode(),
-			newObjectEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingObjectEntry.getObjectDefinitionId(),
 			newObjectEntry.getObjectDefinitionId());
@@ -262,13 +262,23 @@ public class ObjectEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_ERC() throws Exception {
-		_persistence.countByG_C_ERC(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+	public void testCountByERC_G_C() throws Exception {
+		_persistence.countByERC_G_C(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_C_ERC(0L, 0L, "null");
+		_persistence.countByERC_G_C("null", 0L, 0L);
 
-		_persistence.countByG_C_ERC(0L, 0L, (String)null);
+		_persistence.countByERC_G_C((String)null, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByERC_C_ODI() throws Exception {
+		_persistence.countByERC_C_ODI(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C_ODI("null", 0L, 0L);
+
+		_persistence.countByERC_C_ODI((String)null, 0L, 0L);
 	}
 
 	@Test
@@ -278,16 +288,6 @@ public class ObjectEntryPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_ODI_S(0L, 0L, 0);
-	}
-
-	@Test
-	public void testCountByC_ERC_ODI() throws Exception {
-		_persistence.countByC_ERC_ODI(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
-
-		_persistence.countByC_ERC_ODI(0L, "null", 0L);
-
-		_persistence.countByC_ERC_ODI(0L, (String)null, 0L);
 	}
 
 	@Test
@@ -315,12 +315,12 @@ public class ObjectEntryPersistenceTest {
 
 	protected OrderByComparator<ObjectEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ObjectEntry", "mvccVersion", true, "uuid", true, "objectEntryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"externalReferenceCode", true, "objectDefinitionId", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"ObjectEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "objectEntryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "objectDefinitionId",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -597,6 +597,11 @@ public class ObjectEntryPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				objectEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
 			Long.valueOf(objectEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				objectEntry, "getColumnOriginalValue",
@@ -606,22 +611,17 @@ public class ObjectEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				objectEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
+
 		Assert.assertEquals(
 			objectEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				objectEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
-
 		Assert.assertEquals(
 			Long.valueOf(objectEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				objectEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
-			objectEntry.getExternalReferenceCode(),
-			ReflectionTestUtil.invoke(
-				objectEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "externalReferenceCode"));
 		Assert.assertEquals(
 			Long.valueOf(objectEntry.getObjectDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -638,6 +638,8 @@ public class ObjectEntryPersistenceTest {
 
 		objectEntry.setUuid(RandomTestUtil.randomString());
 
+		objectEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		objectEntry.setGroupId(RandomTestUtil.nextLong());
 
 		objectEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -649,8 +651,6 @@ public class ObjectEntryPersistenceTest {
 		objectEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		objectEntry.setModifiedDate(RandomTestUtil.nextDate());
-
-		objectEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		objectEntry.setObjectDefinitionId(RandomTestUtil.nextLong());
 

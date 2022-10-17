@@ -36,6 +36,10 @@ public class ObjectEntryTable extends BaseTable<ObjectEntryTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ObjectEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Long> objectEntryId = createColumn(
 		"objectEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ObjectEntryTable, Long> groupId = createColumn(
@@ -50,10 +54,6 @@ public class ObjectEntryTable extends BaseTable<ObjectEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<ObjectEntryTable, String> externalReferenceCode =
-		createColumn(
-			"externalReferenceCode", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Long> objectDefinitionId =
 		createColumn(
 			"objectDefinitionId", Long.class, Types.BIGINT,

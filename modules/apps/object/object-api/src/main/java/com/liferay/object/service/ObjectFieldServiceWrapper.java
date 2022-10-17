@@ -36,9 +36,10 @@ public class ObjectFieldServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectField addCustomObjectField(
-			long listTypeDefinitionId, long objectDefinitionId,
-			String businessType, String dbType, String defaultValue,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String externalReferenceCode, long listTypeDefinitionId,
+			long objectDefinitionId, String businessType, String dbType,
+			String defaultValue, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
@@ -46,9 +47,10 @@ public class ObjectFieldServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldService.addCustomObjectField(
-			listTypeDefinitionId, objectDefinitionId, businessType, dbType,
-			defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, objectFieldSettings);
+			externalReferenceCode, listTypeDefinitionId, objectDefinitionId,
+			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state,
+			objectFieldSettings);
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class ObjectFieldServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectField updateObjectField(
-			long objectFieldId, String externalReferenceCode,
+			String externalReferenceCode, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
 			String defaultValue, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId,
@@ -90,7 +92,7 @@ public class ObjectFieldServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldService.updateObjectField(
-			objectFieldId, externalReferenceCode, listTypeDefinitionId,
+			externalReferenceCode, objectFieldId, listTypeDefinitionId,
 			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, state,
 			objectFieldSettings);

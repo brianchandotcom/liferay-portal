@@ -4,4 +4,7 @@
 	<mime-type type="application/zip">
 		<glob pattern="*.lar" />
 	</mime-type>
+	<mime-type type="text/calendar">
+		<glob pattern="*.ics" />
+	</mime-type>
 </mime-info>

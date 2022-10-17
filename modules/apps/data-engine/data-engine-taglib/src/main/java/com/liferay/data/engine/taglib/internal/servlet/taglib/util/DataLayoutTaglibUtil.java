@@ -108,7 +108,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Gabriel Albuquerque
  * @author Leonardo Barros
  */
-@Component(service = DataLayoutTaglibUtil.class)
+@Component(service = {})
 public class DataLayoutTaglibUtil {
 
 	public static Set<Locale> getAvailableLocales(

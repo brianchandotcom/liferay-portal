@@ -12,7 +12,6 @@
 import {fetch} from 'frontend-js-web';
 
 import {DEFAULT_ERROR} from './constants';
-import {openErrorToast} from './toasts';
 
 const DEFAULT_HEADERS_OBJECT = {
 	'Accept': 'application/json',
@@ -46,8 +45,6 @@ export function fetchData(resource = '', {headers, ...init} = {}) {
 			return response.json();
 		})
 		.catch((error) => {
-			openErrorToast();
-
 			if (process.env.NODE_ENV === 'development') {
 				console.error(error);
 			}

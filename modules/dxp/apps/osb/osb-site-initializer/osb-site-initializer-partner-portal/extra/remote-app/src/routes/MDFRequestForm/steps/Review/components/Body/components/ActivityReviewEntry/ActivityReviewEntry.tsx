@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {TypeActivityExternalReferenceCode} from '../../../../../../../../common/enums/typeActivityExternalReferenceCode';
+import {TypeActivityKey} from '../../../../../../../../common/enums/TypeActivityKey';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
 import {Liferay} from '../../../../../../../../common/services/liferay';
 import TableItem from '../../../../interfaces/tableItem';
@@ -25,21 +25,19 @@ interface IProps {
 }
 
 type TypeOfActivityComponent = {
-	[key in TypeActivityExternalReferenceCode]: TableItem[];
+	[key in TypeActivityKey]: TableItem[];
 };
 
 const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 	const fieldsByTypeActivity: TypeOfActivityComponent = {
-		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: getDigitalMarketFields(
+		[TypeActivityKey.DIGITAL_MARKETING]: getDigitalMarketFields(
 			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: getContentMarketFields(
+		[TypeActivityKey.CONTENT_MARKETING]: getContentMarketFields(
 			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.EVENT]: getEventFields(
-			mdfRequestActivity
-		),
-		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketing(
+		[TypeActivityKey.EVENT]: getEventFields(mdfRequestActivity),
+		[TypeActivityKey.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketing(
 			mdfRequestActivity
 		),
 	};
@@ -54,15 +52,14 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 					},
 					{
 						title: 'Type of Activity',
-						value: mdfRequestActivity.typeActivity.name,
+						value: mdfRequestActivity.typeActivity.key,
 					},
 					{
 						title: 'Tactic',
 						value: mdfRequestActivity.tactic.name,
 					},
 					...fieldsByTypeActivity[
-						mdfRequestActivity.typeActivity
-							.externalReferenceCode as TypeActivityExternalReferenceCode
+						mdfRequestActivity.typeActivity.key as TypeActivityKey
 					],
 					{
 						title: 'Start Date',

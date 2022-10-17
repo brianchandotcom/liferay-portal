@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -13,8 +14,8 @@ import {useCallback} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
+import {TypeActivityKey} from '../../../../../../common/enums/TypeActivityKey';
 import {LiferayPicklistName} from '../../../../../../common/enums/liferayPicklistName';
-import {TypeActivityExternalReferenceCode} from '../../../../../../common/enums/typeActivityExternalReferenceCode';
 import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
 import getBooleanEntries from '../../../../../../common/utils/getBooleanEntries';
 import BudgetBreakdownSection from './components/BudgetBreakdownSection';
@@ -45,7 +46,7 @@ const Form = ({
 	currentActivityIndex,
 	setFieldValue,
 }: IProps) => {
-	const {fieldEntries, typeActivities} = useDynamicFieldEntries();
+	const {fieldEntries} = useDynamicFieldEntries();
 
 	const {
 		onTypeActivitySelected,
@@ -53,7 +54,8 @@ const Form = ({
 		tacticsBySelectedTypeActivity,
 		typeActivitiesOptions,
 	} = useTypeActivityOptions(
-		typeActivities,
+		fieldEntries[LiferayPicklistName.TYPE_OF_ACTIVITY],
+		fieldEntries[LiferayPicklistName.TACTIC],
 		useCallback(
 			(selectedTypeActivity) => {
 				setFieldValue(
@@ -78,22 +80,21 @@ const Form = ({
 			[currentActivityIndex, setFieldValue]
 		)
 	);
-
 	const typeActivityComponents: TypeActivityComponent = {
-		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: (
+		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingFields
 				currentActivityIndex={currentActivityIndex}
 			/>
 		),
-		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: (
+		[TypeActivityKey.CONTENT_MARKETING]: (
 			<ContentMarketingFields
 				currentActivityIndex={currentActivityIndex}
 			/>
 		),
-		[TypeActivityExternalReferenceCode.EVENT]: (
+		[TypeActivityKey.EVENT]: (
 			<EventFields currentActivityIndex={currentActivityIndex} />
 		),
-		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: (
+		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarketingFields
 				currentActivityIndex={currentActivityIndex}
 			/>
@@ -133,7 +134,7 @@ const Form = ({
 
 				{
 					typeActivityComponents[
-						selectedTypeActivity?.externalReferenceCode || ''
+						String(selectedTypeActivity?.value) || ''
 					]
 				}
 

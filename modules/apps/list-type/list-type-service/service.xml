@@ -58,6 +58,7 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateListTypeEntry</exception>
+		<exception>DuplicateListTypeExternalReferenceCode</exception>
 		<exception>ListTypeDefinitionName</exception>
 		<exception>ListTypeEntryKey</exception>
 		<exception>ListTypeEntryName</exception>

@@ -76,7 +76,7 @@ public class KBAdminNavigationDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_ancestorSelectedItemIds = _getAncestorSelectedItemIds();
+		_selectedItemAncestorIds = _getSelectedItemAncestorIds();
 
 		_kbArticleURLHelper = new KBArticleURLHelper(
 			renderRequest, renderResponse);
@@ -311,38 +311,6 @@ public class KBAdminNavigationDisplayContext {
 		return Objects.equals(productMenuState, "open");
 	}
 
-	private List<Long> _getAncestorSelectedItemIds() throws PortalException {
-		List<Long> ancestorSelectedItemIds = new ArrayList<>();
-
-		if (!_isRootFolderSelected()) {
-			Long kbFolderId = null;
-
-			if (_isKBArticleSelected()) {
-				KBArticle kbArticle = _getKBArticle(
-					_getKBArticleResourcePrimaryKeyFromRequestParameter());
-
-				if (kbArticle != null) {
-					ancestorSelectedItemIds.addAll(
-						kbArticle.getAncestorResourcePrimaryKeys());
-					kbFolderId = kbArticle.getKbFolderId();
-				}
-			}
-
-			if (kbFolderId == null) {
-				kbFolderId = _getKBFolderIdFromRequestParameter();
-			}
-
-			KBFolder kbFolder = _getKBFolder(kbFolderId);
-
-			if (kbFolder != null) {
-				ancestorSelectedItemIds.addAll(
-					kbFolder.getAncestorKBFolderIds());
-			}
-		}
-
-		return ancestorSelectedItemIds;
-	}
-
 	private JSONArray _getChildKBArticlesJSONArray(KBArticle parentKBArticle)
 		throws PortalException {
 
@@ -570,6 +538,38 @@ public class KBAdminNavigationDisplayContext {
 			));
 	}
 
+	private List<Long> _getSelectedItemAncestorIds() throws PortalException {
+		List<Long> selectedItemAncestorIds = new ArrayList<>();
+
+		if (!_isRootFolderSelected()) {
+			Long kbFolderId = null;
+
+			if (_isKBArticleSelected()) {
+				KBArticle kbArticle = _getKBArticle(
+					_getKBArticleResourcePrimaryKeyFromRequestParameter());
+
+				if (kbArticle != null) {
+					selectedItemAncestorIds.addAll(
+						kbArticle.getAncestorResourcePrimaryKeys());
+					kbFolderId = kbArticle.getKbFolderId();
+				}
+			}
+
+			if (kbFolderId == null) {
+				kbFolderId = _getKBFolderIdFromRequestParameter();
+			}
+
+			KBFolder kbFolder = _getKBFolder(kbFolderId);
+
+			if (kbFolder != null) {
+				selectedItemAncestorIds.addAll(
+					kbFolder.getAncestorKBFolderIds());
+			}
+		}
+
+		return selectedItemAncestorIds;
+	}
+
 	private long _getSelectedItemId() {
 		return ParamUtil.getLong(
 			_httpServletRequest, "selectedItemId",
@@ -600,12 +600,12 @@ public class KBAdminNavigationDisplayContext {
 		return false;
 	}
 
-	private final List<Long> _ancestorSelectedItemIds;
 	private final HttpServletRequest _httpServletRequest;
 	private final KBArticleURLHelper _kbArticleURLHelper;
 	private final KBDropdownItemsProvider _kbDropdownItemsProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final List<Long> _selectedItemAncestorIds;
 	private final ThemeDisplay _themeDisplay;
 
 }

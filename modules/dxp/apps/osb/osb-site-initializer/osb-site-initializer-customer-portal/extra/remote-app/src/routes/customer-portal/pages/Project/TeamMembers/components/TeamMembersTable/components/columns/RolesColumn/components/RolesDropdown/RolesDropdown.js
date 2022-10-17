@@ -77,7 +77,7 @@ const RolesDropdown = ({
 			onActiveChange={setActive}
 			trigger={
 				<Button
-					className="align-items-center d-flex justify-content-between w-100"
+					className="align-items-center bg-white d-flex justify-content-between w-100"
 					displayType="secondary"
 					outline
 					small

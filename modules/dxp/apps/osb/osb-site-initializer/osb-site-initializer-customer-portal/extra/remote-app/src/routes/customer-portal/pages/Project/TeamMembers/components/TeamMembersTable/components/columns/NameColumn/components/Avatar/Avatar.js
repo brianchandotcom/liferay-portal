@@ -22,15 +22,13 @@ const Avatar = ({emailAddress, gravatarAPI, userName}) => {
 	)}/128/0B5FFF/FFFFFF/2/0.33/true/true/true`;
 
 	return (
-		<div className="cp-team-members-avatar mr-2">
-			<img
-				height={AVATAR_SIZE_IN_PX}
-				src={`${gravatarAPI}/${emailAddressMD5}?d=${encodeURIComponent(
-					uiAvatarURL
-				)}`}
-				width={AVATAR_SIZE_IN_PX}
-			/>
-		</div>
+		<img
+			height={AVATAR_SIZE_IN_PX}
+			src={`${gravatarAPI}/${emailAddressMD5}?d=${encodeURIComponent(
+				uiAvatarURL
+			)}`}
+			width={AVATAR_SIZE_IN_PX}
+		/>
 	);
 };
 

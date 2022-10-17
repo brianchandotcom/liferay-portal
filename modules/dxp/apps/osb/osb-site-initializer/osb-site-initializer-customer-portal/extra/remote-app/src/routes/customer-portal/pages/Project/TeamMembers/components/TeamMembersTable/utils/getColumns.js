@@ -19,7 +19,7 @@ const getInitialColumns = (articleAccountSupportURL) => [
 		header: {
 			name: i18n.translate('name'),
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand',
+				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand',
 		},
 		truncate: true,
 	},
@@ -30,7 +30,7 @@ const getInitialColumns = (articleAccountSupportURL) => [
 		header: {
 			name: i18n.translate('email'),
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-small',
+				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-small',
 		},
 		truncate: true,
 	},
@@ -51,7 +51,7 @@ const getInitialColumns = (articleAccountSupportURL) => [
 			),
 			noWrap: true,
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
+				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
 	},
 	{
@@ -60,7 +60,7 @@ const getInitialColumns = (articleAccountSupportURL) => [
 		header: {
 			name: i18n.translate('role'),
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
+				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
 		truncate: true,
 	},
@@ -70,7 +70,7 @@ const getInitialColumns = (articleAccountSupportURL) => [
 		header: {
 			name: i18n.translate('status'),
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smallest',
+				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-smallest',
 		},
 	},
 ];
@@ -81,7 +81,7 @@ const optionColumn = {
 	bodyClass: 'border-0',
 	header: {
 		name: '',
-		styles: 'bg-transparent',
+		styles: 'border-bottom bg-transparent',
 	},
 };
 

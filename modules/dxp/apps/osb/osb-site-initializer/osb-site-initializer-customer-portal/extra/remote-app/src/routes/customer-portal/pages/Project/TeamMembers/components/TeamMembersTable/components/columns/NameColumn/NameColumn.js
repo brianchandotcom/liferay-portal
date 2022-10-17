@@ -22,12 +22,10 @@ const NameColumn = ({gravatarAPI, userAccount}) => (
 			userName={userAccount.name}
 		/>
 
-		<p className="m-0 text-truncate">{userAccount.name}</p>
+		<p className="m-0 ml-2 mr-1 text-truncate">{userAccount.name}</p>
 
 		{userAccount.isLoggedUser && (
-			<span className="ml-1 text-neutral-7">
-				({i18n.translate('me')})
-			</span>
+			<span className="text-neutral-7">({i18n.translate('me')})</span>
 		)}
 	</div>
 );

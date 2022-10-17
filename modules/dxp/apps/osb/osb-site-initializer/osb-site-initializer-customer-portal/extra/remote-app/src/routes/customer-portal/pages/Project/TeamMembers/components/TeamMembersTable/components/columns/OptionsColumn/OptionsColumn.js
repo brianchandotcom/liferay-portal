@@ -24,11 +24,12 @@ const OptionsColumn = ({
 }) => {
 	const userOptions = [
 		{
+			customOptionStyle: 'pr-5',
 			label: i18n.translate('edit'),
 			onClick: () => onEdit(),
 		},
 		{
-			customOptionStyle: 'cp-remove-member-option',
+			customOptionStyle: 'pr-5',
 			label: i18n.translate('remove'),
 			onClick: () => onRemove(),
 		},
@@ -49,6 +50,7 @@ const OptionsColumn = ({
 			menuElementAttrs={{
 				className: 'p-0',
 			}}
+			menuWidth="shrink"
 		/>
 	);
 };

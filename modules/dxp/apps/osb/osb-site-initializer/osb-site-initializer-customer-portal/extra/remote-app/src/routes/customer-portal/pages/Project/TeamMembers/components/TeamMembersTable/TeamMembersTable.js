@@ -166,14 +166,14 @@ const TeamMembersTable = ({
 
 			<div className="cp-team-members-table-wrapper overflow-auto">
 				{!totalUserAccounts && !(loading || searching) && (
-					<div className="d-flex justify-content-center py-4">
+					<div className="d-flex justify-content-center pt-4">
 						No team members were found.
 					</div>
 				)}
 
 				{(totalUserAccounts || loading || searching) && (
 					<Table
-						className="border-0 cp-team-members-table"
+						className="border-0"
 						columns={getColumns(
 							loggedUserAccount?.selectedAccountSummary
 								.hasAdministratorRole,
@@ -247,7 +247,7 @@ const TeamMembersTable = ({
 							supportSeat: userAccount.selectedAccountSummary
 								.hasSupportSeatRole && (
 								<ClayIcon
-									className="cp-team-members-support-seat-icon"
+									className="text-brand-primary-darken-2"
 									symbol="check-circle-full"
 								/>
 							),

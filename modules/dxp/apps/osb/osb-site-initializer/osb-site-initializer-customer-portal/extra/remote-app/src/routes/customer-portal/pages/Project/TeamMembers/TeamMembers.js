@@ -28,27 +28,25 @@ const TeamMembers = () => {
 
 	return (
 		<>
-			<div>
-				<h1>{i18n.translate('team-members')}</h1>
+			<h1>{i18n.translate('team-members')}</h1>
 
-				<p className="text-neutral-7 text-paragraph-sm">
-					{i18n.translate(
-						'team-members-have-access-to-this-project-in-customer-portal'
-					)}
-				</p>
-			</div>
+			<p className="text-neutral-7 text-paragraph-sm">
+				{i18n.translate(
+					'team-members-have-access-to-this-project-in-customer-portal'
+				)}
+			</p>
 
 			<div className="mt-4">
 				<TeamMembersTable
 					koroneikiAccount={koroneikiAccount}
 					loading={loading}
 				/>
-			</div>
 
-			<ManageProductUsers
-				koroneikiAccount={koroneikiAccount}
-				loading={loading}
-			/>
+				<ManageProductUsers
+					koroneikiAccount={koroneikiAccount}
+					loading={loading}
+				/>
+			</div>
 		</>
 	);
 };

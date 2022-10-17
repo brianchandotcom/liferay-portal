@@ -85,7 +85,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 	};
 
 	return (
-		<div className="bg-brand-primary-lighten-6 cp-manage-product-users mt-5 p-4 rounded-lg">
+		<div className="bg-brand-primary-lighten-6 cp-manage-product-users mt-4 p-4 rounded-lg">
 			{accountSubscriptionGroupsLoading ? (
 				<Skeleton height={25} width={224} />
 			) : (

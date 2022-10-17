@@ -9,8 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 import i18n from '../../../../../../../../../common/I18n';
 
@@ -20,18 +19,18 @@ const PopoverIconButton = ({
 }) => (
 	<ClayPopover
 		alignPosition={alignPosition}
-		className="cp-team-members-popover"
 		closeOnClickOutside
+		size="lg"
 		trigger={
-			<ClayButton className="px-1" displayType="unstyled">
-				<ClayIcon
-					className="cp-team-members-support-seat-icon py-0"
-					symbol="info-circle"
-				/>
-			</ClayButton>
+			<ClayButtonWithIcon
+				className="text-brand-primary-darken-2"
+				displayType={null}
+				size="sm"
+				symbol="info-circle"
+			/>
 		}
 	>
-		<p className="m-0 text-neutral-10">
+		<p className="font-weight-bold m-0">
 			{i18n.translate(
 				'the-limit-of-support-seats-available-counts-the-total-of-administrators-requesters-roles-assigned-due-to-both-have-role-permissions-to-open-support-tickets'
 			)}

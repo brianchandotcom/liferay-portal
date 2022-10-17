@@ -35,17 +35,33 @@ const TeamMembersTableHeader = ({
 	const {observer, onOpenChange, open} = useModal();
 
 	return (
-		<div className="bg-neutral-1 d-flex flex-column pt-3 px-3 py-3 rounded">
-			<div className="d-flex">
-				<div className="d-flex flex-column">
-					<div className="d-flex">
-						<SearchBar
-							onSearchSubmit={(term) => {
-								setSearchTerm(term);
-								onSearch(term);
-							}}
-						/>
-					</div>
+		<>
+			{open && (
+				<ClayModal center observer={observer}>
+					<InviteTeamMembersForm
+						availableAdministratorAssets={
+							availableSupportSeatsCount
+						}
+						handlePage={() => onOpenChange(false)}
+						leftButton={i18n.translate('cancel')}
+						project={{
+							...koroneikiAccount,
+							id:
+								koroneikiAccount.r_accountEntryToKoroneikiAccount_accountEntryId,
+						}}
+						sessionId={sessionId}
+					/>
+				</ClayModal>
+			)}
+
+			<div className="bg-neutral-1 d-flex px-3 py-3 rounded">
+				<div>
+					<SearchBar
+						onSearchSubmit={(term) => {
+							setSearchTerm(term);
+							onSearch(term);
+						}}
+					/>
 				</div>
 
 				<div className="align-items-center d-flex ml-auto">
@@ -85,7 +101,7 @@ const TeamMembersTableHeader = ({
 
 					{hasAdministratorRole && (
 						<Button
-							className="invite-button ml-3 mr-1 px-3 py-2"
+							className="bg-white ml-3 px-3 py-2"
 							displayType="primary"
 							onClick={() => onOpenChange(true)}
 							outline
@@ -98,36 +114,24 @@ const TeamMembersTableHeader = ({
 						</Button>
 					)}
 				</div>
-			</div>
 
-			<div className="d-flex">
-				{Boolean(searchTerm) && !searching && (
-					<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
-						{count > 1
-							? i18n.sub('x-results-for-x', [count, searchTerm])
-							: i18n.sub('x-result-for-x', [count, searchTerm])}
-					</p>
-				)}
+				<div className="d-flex">
+					{Boolean(searchTerm) && !searching && (
+						<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
+							{count > 1
+								? i18n.sub('x-results-for-x', [
+										count,
+										searchTerm,
+								  ])
+								: i18n.sub('x-result-for-x', [
+										count,
+										searchTerm,
+								  ])}
+						</p>
+					)}
+				</div>
 			</div>
-
-			{open && (
-				<ClayModal center observer={observer}>
-					<InviteTeamMembersForm
-						availableAdministratorAssets={
-							availableSupportSeatsCount
-						}
-						handlePage={() => onOpenChange(false)}
-						leftButton={i18n.translate('cancel')}
-						project={{
-							...koroneikiAccount,
-							id:
-								koroneikiAccount.r_accountEntryToKoroneikiAccount_accountEntryId,
-						}}
-						sessionId={sessionId}
-					/>
-				</ClayModal>
-			)}
-		</div>
+		</>
 	);
 };
 

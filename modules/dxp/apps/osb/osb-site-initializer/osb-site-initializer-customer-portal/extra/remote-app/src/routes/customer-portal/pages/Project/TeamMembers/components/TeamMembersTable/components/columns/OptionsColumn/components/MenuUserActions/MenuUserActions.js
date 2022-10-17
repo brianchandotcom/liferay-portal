@@ -15,7 +15,7 @@ import i18n from '../../../../../../../../../../../../common/I18n';
 const MenuUserActions = ({onCancel, onSave, saveDisabled}) => (
 	<div className="align-items-center d-flex">
 		<Button
-			className="mr-2"
+			className="bg-white mr-2"
 			displayType="secondary"
 			onClick={onCancel}
 			small

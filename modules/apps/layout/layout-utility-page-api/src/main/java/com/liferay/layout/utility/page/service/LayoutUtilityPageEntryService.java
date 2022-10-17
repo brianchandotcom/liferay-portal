@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -57,6 +58,11 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long groupId, String name, int type,
 			long masterLayoutPlid)
+		throws PortalException;
+
+	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
+			long groupId, long layoutUtilityPageEntryId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(

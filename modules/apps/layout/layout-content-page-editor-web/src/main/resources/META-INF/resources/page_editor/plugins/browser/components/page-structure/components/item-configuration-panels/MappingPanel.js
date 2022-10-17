@@ -63,6 +63,11 @@ export function MappingPanel({item}) {
 								...EDITABLE_TYPE_DEFAULT_OPTIONS[type],
 								...editableValue.config,
 						  }
+						: !isMapped(nextEditableValue) &&
+						  type === EDITABLE_TYPES['date-time']
+						? {
+								...(editableValue.config === undefined),
+						  }
 						: editableValue.config,
 					defaultValue: editableValue.defaultValue,
 					...nextEditableValue,

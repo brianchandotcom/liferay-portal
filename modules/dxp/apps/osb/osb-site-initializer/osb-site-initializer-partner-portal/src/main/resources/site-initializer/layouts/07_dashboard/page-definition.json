@@ -366,7 +366,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "dashboard-template"
+			"key": "main-template"
 		}
 	},
 	"version": 1.1

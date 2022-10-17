@@ -83,12 +83,12 @@ public class
 
 		User user = themeDisplay.getUser();
 
-		int countArticles = _journalArticleService.getArticlesCountByArticleId(
+		int count = _journalArticleService.getArticlesCountByArticleId(
 			journalArticle.getGroupId(), journalArticle.getArticleId());
 
-		if (permissionChecker.isContentReviewer(
-				user.getCompanyId(), themeDisplay.getScopeGroupId()) &&
-			(countArticles > 1)) {
+		if ((count > 1) &&
+			permissionChecker.isContentReviewer(
+				user.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return true;
 		}

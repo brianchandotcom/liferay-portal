@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,19 +51,34 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 			return null;
 		}
 
-		return _getContentDashboardItemVersionAction(fileVersion);
+		FileEntry fileEntry = _getFileEntry(fileVersion);
+
+		if (fileEntry == null) {
+			return null;
+		}
+
+		return _getContentDashboardItemVersionAction(fileEntry);
 	}
 
 	@Override
 	public boolean isShow(
 		FileVersion fileVersion, HttpServletRequest httpServletRequest) {
 
+		FileEntry fileEntry = _getFileEntry(fileVersion);
+
+		if ((fileEntry == null) ||
+			Objects.equals(
+				fileEntry.getMimeType(),
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
+
+			return false;
+		}
+
 		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
-			_getContentDashboardItemVersionAction(fileVersion);
+			_getContentDashboardItemVersionAction(fileEntry);
 
-		if ((contentDashboardItemVersionAction == null) ||
-			Validator.isNull(contentDashboardItemVersionAction.getURL())) {
-
+		if (Validator.isNull(contentDashboardItemVersionAction.getURL())) {
 			return false;
 		}
 
@@ -68,18 +86,7 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 	}
 
 	private ContentDashboardItemVersionAction
-		_getContentDashboardItemVersionAction(FileVersion fileVersion) {
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = fileVersion.getFileEntry();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return null;
-		}
+		_getContentDashboardItemVersionAction(FileEntry fileEntry) {
 
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -87,6 +94,17 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 
 		return new DownloadFileVersionContentDashboardItemVersionAction(
 			fileEntry, infoItemFieldValuesProvider, _language);
+	}
+
+	private FileEntry _getFileEntry(FileVersion fileVersion) {
+		try {
+			return fileVersion.getFileEntry();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -238,7 +238,7 @@ const HighlightButton = ({item, onToggleHighlighted}) => {
 			}
 			borderless
 			className={classNames(
-				'page-editor__fragments-widgets__tab-highlight-button',
+				'page-editor__fragments-widgets__tab-fragment-button',
 				{highlighted}
 			)}
 			displayType="secondary"

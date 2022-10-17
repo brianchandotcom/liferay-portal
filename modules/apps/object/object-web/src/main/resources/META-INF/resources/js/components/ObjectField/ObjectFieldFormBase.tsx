@@ -305,6 +305,10 @@ export default function ObjectFieldFormBase({
 					onChange={({label, value}) => {
 						setValues({
 							objectFieldSettings: [
+								...(values.objectFieldSettings?.filter(
+									(objectFieldSetting) =>
+										objectFieldSetting.name !== 'output'
+								) as ObjectFieldSetting[]),
 								{
 									name: 'output',
 									value,

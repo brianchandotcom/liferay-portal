@@ -14,9 +14,18 @@
 
 package com.liferay.dispatch.rest.internal.resource.v1_0;
 
+import com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger;
+import com.liferay.dispatch.rest.internal.dto.v1_0.util.DispatchTriggerUtil;
 import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +37,26 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class DispatchTriggerResourceImpl
 	extends BaseDispatchTriggerResourceImpl {
+
+	public Page<DispatchTrigger> getDispatchTriggersPage() throws Exception {
+		List<DispatchTrigger> dispatchTriggers1 = new ArrayList<>();
+
+		List<com.liferay.dispatch.model.DispatchTrigger> dispatchTriggers2 =
+			_dispatchTriggerLocalService.getDispatchTriggers(
+				contextCompany.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (com.liferay.dispatch.model.DispatchTrigger dispatchTrigger :
+				dispatchTriggers2) {
+
+			dispatchTriggers1.add(
+				DispatchTriggerUtil.toDispatchTrigger(dispatchTrigger));
+		}
+
+		return Page.of(dispatchTriggers1);
+	}
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
 }

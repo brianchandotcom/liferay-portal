@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.io.IOException;
@@ -388,6 +389,34 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected void processConcurrently(
+			String selectSqlQuery, String updateSqlQuery,
+			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
+			UnsafeBiConsumer<Object[], PreparedStatement, Exception>
+				unsafeBiConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		int fetchSize = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
+
+		try (Statement statement = connection.createStatement()) {
+			statement.setFetchSize(fetchSize);
+
+			try (ResultSet resultSet = statement.executeQuery(selectSqlQuery)) {
+				_processConcurrently(
+					() -> {
+						if (resultSet.next()) {
+							return unsafeFunction.apply(resultSet);
+						}
+
+						return null;
+					},
+					null, updateSqlQuery, unsafeBiConsumer, exceptionMessage);
+			}
+		}
+	}
+
+	protected void processConcurrently(
 			String sqlQuery,
 			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
 			UnsafeConsumer<Object[], Exception> unsafeConsumer,
@@ -409,7 +438,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 						return null;
 					},
-					unsafeConsumer, exceptionMessage);
+					unsafeConsumer, null, null, exceptionMessage);
 			}
 		}
 	}
@@ -431,35 +460,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 				return null;
 			},
-			unsafeConsumer, exceptionMessage);
-	}
-
-	protected void processConcurrently(
-			String selectSqlQuery, String updateSqlQuery,
-			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
-			UnsafeBiConsumer<Object[], PreparedStatement, Exception>
-				unsafeBiConsumer,
-			String exceptionMessage)
-		throws Exception {
-
-		int fetchSize = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
-
-		try (Statement statement = connection.createStatement()) {
-			statement.setFetchSize(fetchSize);
-
-			try (ResultSet resultSet = statement.executeQuery(selectSqlQuery)) {
-				_processConcurrentlyWithAutoBatch(
-					() -> {
-						if (resultSet.next()) {
-							return unsafeFunction.apply(resultSet);
-						}
-
-						return null;
-					},
-					updateSqlQuery, unsafeBiConsumer, exceptionMessage);
-			}
-		}
+			unsafeConsumer, null, null, exceptionMessage);
 	}
 
 	protected void removePrimaryKey(String tableName) throws Exception {
@@ -531,90 +532,19 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private <T> void _processConcurrently(
 			UnsafeSupplier<T, Exception> unsafeSupplier,
-			UnsafeConsumer<T, Exception> unsafeConsumer,
-			String exceptionMessage)
-		throws Exception {
-
-		Objects.requireNonNull(unsafeSupplier);
-		Objects.requireNonNull(unsafeConsumer);
-
-		ExecutorService executorService = Executors.newWorkStealingPool();
-
-		ThrowableCollector throwableCollector = new ThrowableCollector();
-
-		List<Future<Void>> futures = new ArrayList<>();
-
-		try {
-			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
-			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			T next = null;
-
-			while ((next = unsafeSupplier.get()) != null) {
-				T current = next;
-
-				Future<Void> future = executorService.submit(
-					() -> {
-						NotificationThreadLocal.setEnabled(notificationEnabled);
-						WorkflowThreadLocal.setEnabled(workflowEnabled);
-
-						try (SafeCloseable safeCloseable =
-								CompanyThreadLocal.lock(companyId)) {
-
-							unsafeConsumer.accept(current);
-						}
-						catch (Exception exception) {
-							throwableCollector.collect(exception);
-						}
-
-						return null;
-					});
-
-				int futuresMaxSize = GetterUtil.getInteger(
-					PropsUtil.get(
-						PropsKeys.
-							UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE));
-
-				if (futures.size() >= futuresMaxSize) {
-					for (Future<Void> curFuture : futures) {
-						curFuture.get();
-					}
-
-					futures.clear();
-				}
-
-				futures.add(future);
-			}
-		}
-		finally {
-			executorService.shutdown();
-
-			for (Future<Void> future : futures) {
-				future.get();
-			}
-		}
-
-		Throwable throwable = throwableCollector.getThrowable();
-
-		if (throwable != null) {
-			if (exceptionMessage != null) {
-				throw new Exception(exceptionMessage, throwable);
-			}
-
-			ReflectionUtil.throwException(throwable);
-		}
-	}
-
-	private <T> void _processConcurrentlyWithAutoBatch(
-			UnsafeSupplier<T, Exception> unsafeSupplier, String updateSqlQuery,
+			UnsafeConsumer<T, Exception> unsafeConsumer, String updateSqlQuery,
 			UnsafeBiConsumer<T, PreparedStatement, Exception> unsafeBiConsumer,
 			String exceptionMessage)
 		throws Exception {
 
 		Objects.requireNonNull(unsafeSupplier);
-		Objects.requireNonNull(unsafeBiConsumer);
+
+		if (Validator.isNull(updateSqlQuery)) {
+			Objects.requireNonNull(unsafeConsumer);
+		}
+		else {
+			Objects.requireNonNull(unsafeBiConsumer);
+		}
 
 		ExecutorService executorService = Executors.newWorkStealingPool();
 
@@ -644,24 +574,16 @@ public abstract class BaseDBProcess implements DBProcess {
 						try (SafeCloseable safeCloseable =
 								CompanyThreadLocal.lock(companyId)) {
 
-							Thread thread = Thread.currentThread();
-
-							PreparedStatement preparedStatement =
-								preparedStatementHashMap.computeIfAbsent(
-									thread,
-									k -> {
-										try {
-											return AutoBatchPreparedStatementUtil.
-												concurrentAutoBatch(
-													connection, updateSqlQuery);
-										}
-										catch (SQLException sqlException) {
-											throw new RuntimeException(
-												sqlException);
-										}
-									});
-
-							unsafeBiConsumer.accept(current, preparedStatement);
+							if (Validator.isNull(updateSqlQuery)) {
+								unsafeConsumer.accept(current);
+							}
+							else {
+								unsafeBiConsumer.accept(
+									current,
+									_getConcurrentPreparedStatement(
+										updateSqlQuery,
+										preparedStatementHashMap));
+							}
 						}
 						catch (Exception exception) {
 							throwableCollector.collect(exception);

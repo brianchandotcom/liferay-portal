@@ -571,7 +571,10 @@ const ExperiencesSelectorHeader = ({canCreateExperiences, onNewExperience}) => {
 							'experience-help-message-more-info-see'
 						)} `}
 
-						<a href="#" target="_blank">
+						<a
+							href={config.contentPagePersonalizationLearnURL}
+							target="_blank"
+						>
 							{Liferay.Language.get(
 								'content-page-personalization'
 							)}

@@ -53,6 +53,7 @@ export interface Config {
 
 	changeMasterLayoutURL: string;
 	changeStyleBookEntryURL: string;
+	contentPagePersonalizationLearnURL: string;
 	collectionSelectorURL: string;
 
 	commonStyles: Array<{

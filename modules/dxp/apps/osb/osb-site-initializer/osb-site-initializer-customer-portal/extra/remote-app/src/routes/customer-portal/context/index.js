@@ -11,6 +11,7 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
+import useRouterPath from '../../../common/hooks/useRouterPath';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
@@ -38,6 +39,8 @@ const AppContextProvider = ({children}) => {
 		subscriptionGroups: undefined,
 		userAccount: undefined,
 	});
+
+	const pageRoutes = useRouterPath();
 
 	useEffect(() => {
 		const getUser = async (projectExternalReferenceCode) => {
@@ -160,6 +163,10 @@ const AppContextProvider = ({children}) => {
 
 		const fetchData = async () => {
 			const projectExternalReferenceCode = getAccountKey();
+
+			if (!projectExternalReferenceCode) {
+				Liferay.Util.navigate(pageRoutes.home());
+			}
 
 			const user = await getUser(projectExternalReferenceCode);
 

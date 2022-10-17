@@ -128,9 +128,8 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register(
 			"3.2.4", "3.2.5",
 			new SyncDLFileEntryTypesDDMStructurePermissions(
-                                _ddmPermissionSupport,
-                                _resourceActionLocalService,
-                                _resourcePermissionLocalService));
+				_ddmPermissionSupport, _resourceActionLocalService,
+				_resourcePermissionLocalService));
 	}
 
 	@Reference
@@ -139,8 +138,8 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-        @Reference
-        private DDMPermissionSupport _ddmPermissionSupport;
+	@Reference
+	private DDMPermissionSupport _ddmPermissionSupport;
 
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper
@@ -149,10 +148,10 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
 
-        @Reference
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-        @Reference
+	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference(target = "(dl.store.impl.enabled=true)")

@@ -31,6 +31,7 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalServiceUtil;
 import com.liferay.commerce.payment.test.util.TestCommercePaymentMethod;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -275,7 +276,8 @@ public class CommerceTestUtil {
 
 		return CommerceChannelLocalServiceUtil.addCommerceChannel(
 			StringPool.BLANK, groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, commerceCurrencyCode,
+			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
+			commerceCurrencyCode,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
@@ -285,7 +287,8 @@ public class CommerceTestUtil {
 
 		return CommerceChannelLocalServiceUtil.addCommerceChannel(
 			StringPool.BLANK, RandomTestUtil.nextLong(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(),
+			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			commerceCurrencyCode, ServiceContextTestUtil.getServiceContext());
 	}
 

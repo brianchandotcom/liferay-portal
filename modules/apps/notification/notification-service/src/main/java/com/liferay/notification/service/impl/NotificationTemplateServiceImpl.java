@@ -19,6 +19,7 @@ import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.base.NotificationTemplateServiceBaseImpl;
+import com.liferay.notification.type.NotificationContext;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -64,6 +65,19 @@ public class NotificationTemplateServiceImpl
 			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
 			fromNameMap, name, recipientType, subjectMap, toMap, type,
 			attachmentObjectFieldIds);
+	}
+
+	@Override
+	public NotificationTemplate addNotificationTemplate(
+			NotificationContext notificationContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
+
+		return _notificationTemplateLocalService.addNotificationTemplate(
+			notificationContext);
 	}
 
 	@Override

@@ -123,6 +123,44 @@ public class NotificationTemplateLocalServiceImpl
 		return notificationTemplate;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public NotificationTemplate addNotificationTemplate(
+			NotificationContext notificationContext)
+		throws PortalException {
+
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(
+				notificationContext.getType());
+
+		notificationType.validateNotificationTemplate(notificationContext);
+
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		notificationTemplate = notificationTemplatePersistence.update(
+			notificationTemplate);
+
+		_resourceLocalService.addResources(
+			notificationTemplate.getCompanyId(), 0,
+			notificationTemplate.getUserId(),
+			NotificationTemplate.class.getName(),
+			notificationTemplate.getNotificationTemplateId(), false, true,
+			true);
+
+		for (long attachmentObjectFieldId :
+				notificationContext.getAttachmentObjectFieldIds()) {
+
+			_notificationTemplateAttachmentLocalService.
+				addNotificationTemplateAttachment(
+					notificationTemplate.getCompanyId(),
+					notificationTemplate.getNotificationTemplateId(),
+					attachmentObjectFieldId);
+		}
+
+		return notificationTemplate;
+	}
+
 	@Override
 	public NotificationTemplate deleteNotificationTemplate(
 			long notificationTemplateId)

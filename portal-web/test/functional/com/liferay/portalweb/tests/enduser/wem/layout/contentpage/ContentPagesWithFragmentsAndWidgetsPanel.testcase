@@ -442,6 +442,11 @@ definition {
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Fragments",
+				setName = "Basic Components");
+
 			Click(locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS");
 
 			MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Basic Components");
@@ -461,8 +466,13 @@ definition {
 				navTab = "Fragments",
 				setName = "Cookie Banner");
 
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Fragments",
+				setName = "Cookie Banner");
+
 			AssertVisible(
-				index = "2",
+				index = "1",
 				key_panel = "Cookie Banner",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -473,12 +483,12 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			AssertVisible(
-				index = "2",
+				index = "1",
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			AssertVisible(
-				index = "3",
+				index = "2",
 				key_panel = "Cookie Banner",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}

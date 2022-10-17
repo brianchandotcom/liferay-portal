@@ -601,6 +601,102 @@ public class DDMFormDisplayContextTest {
 		Assert.assertFalse(ddmFormDisplayContext.isShowSuccessPage());
 	}
 
+	@Test
+	public void testSubmissionLimitReachedCustomMessage() throws Exception {
+		String limitToOneSubmissionPerUserBody =
+			"You cannot submit more than once.";
+		String limitToOneSubmissionPerUserHeader = "Limit reached";
+
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		_mockDDMFormInstance(ddmFormInstanceSettings);
+
+		Mockito.when(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUserBody()
+		).thenReturn(
+			JSONUtil.put(
+				_DEFAULT_LANGUAGE_ID, limitToOneSubmissionPerUserBody
+			).toString()
+		);
+
+		Mockito.when(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUserHeader()
+		).thenReturn(
+			JSONUtil.put(
+				_DEFAULT_LANGUAGE_ID, limitToOneSubmissionPerUserHeader
+			).toString()
+		);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			_createDDMFormDisplayContext(_mockRenderRequest());
+
+		Assert.assertEquals(
+			limitToOneSubmissionPerUserBody,
+			ddmFormDisplayContext.getLimitToOneSubmissionPerUserBody());
+		Assert.assertEquals(
+			limitToOneSubmissionPerUserHeader,
+			ddmFormDisplayContext.getLimitToOneSubmissionPerUserHeader());
+	}
+
+	@Test
+	public void testSubmissionLimitReachedDefaultMessage() throws Exception {
+		String limitToOneSubmissionPerUserBody =
+			"You can fill out this form only once. Contact the owner of the " +
+				"form if you think this is a mistake.";
+		String limitToOneSubmissionPerUserHeader =
+			"You have already responded.";
+
+		Mockito.when(
+			_language.get(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.eq(
+					"you-can-fill-out-this-form-only-once.-contact-the-owner-" +
+						"of-the-form-if-you-think-this-is-a-mistake"))
+		).thenReturn(
+			limitToOneSubmissionPerUserBody
+		);
+
+		Mockito.when(
+			_language.get(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.eq("you-have-already-responded"))
+		).thenReturn(
+			limitToOneSubmissionPerUserHeader
+		);
+
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		_mockDDMFormInstance(ddmFormInstanceSettings);
+
+		Mockito.when(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUserBody()
+		).thenReturn(
+			JSONUtil.put(
+				_DEFAULT_LANGUAGE_ID, StringPool.BLANK
+			).toString()
+		);
+
+		Mockito.when(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUserHeader()
+		).thenReturn(
+			JSONUtil.put(
+				_DEFAULT_LANGUAGE_ID, StringPool.BLANK
+			).toString()
+		);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			_createDDMFormDisplayContext(_mockRenderRequest());
+
+		Assert.assertEquals(
+			limitToOneSubmissionPerUserBody,
+			ddmFormDisplayContext.getLimitToOneSubmissionPerUserBody());
+		Assert.assertEquals(
+			limitToOneSubmissionPerUserHeader,
+			ddmFormDisplayContext.getLimitToOneSubmissionPerUserHeader());
+	}
+
 	private DDMForm _createDDMForm(
 		Set<Locale> availableLocales, Locale locale) {
 

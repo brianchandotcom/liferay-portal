@@ -32,12 +32,12 @@ import org.osgi.annotation.versioning.ProviderType;
 		@DDMFormRule(
 			actions = {
 				"setEnabled('expirationDate', equals(getValue('neverExpire'), FALSE))",
-				"setVisible('bodyText', getValue('limitToOneSubmissionPerUser'))",
+				"setVisible('body', getValue('limitToOneSubmissionPerUser'))",
 				"setVisible('emailFromAddress', getValue('sendEmailNotification'))",
 				"setVisible('emailFromName', getValue('sendEmailNotification'))",
 				"setVisible('emailSubject', getValue('sendEmailNotification'))",
 				"setVisible('emailToAddress', getValue('sendEmailNotification'))",
-				"setVisible('headerText', getValue('limitToOneSubmissionPerUser'))",
+				"setVisible('header', getValue('limitToOneSubmissionPerUser'))",
 				"setVisible('objectDefinitionId', contains(getValue('storageType'), \"object\"))",
 				"setVisible('published', FALSE)",
 				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))"
@@ -108,8 +108,8 @@ import org.osgi.annotation.versioning.ProviderType;
 							size = 12,
 							value = {
 								"showPartialResultsToRespondents",
-								"limitToOneSubmissionPerUser", "headerText",
-								"bodyText", "expirationDate", "neverExpire"
+								"limitToOneSubmissionPerUser", "header", "body",
+								"expirationDate", "neverExpire"
 							}
 						)
 					}
@@ -132,7 +132,7 @@ public interface DDMFormInstanceSettings {
 		predefinedValue = "%you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake",
 		properties = "displayStyle=multiline", type = "localizable_text"
 	)
-	public String bodyText();
+	public String body();
 
 	@DDMFormField
 	public boolean convertedFromPolls();
@@ -170,7 +170,7 @@ public interface DDMFormInstanceSettings {
 		label = "%header", predefinedValue = "%you-have-already-responded",
 		type = "localizable_text"
 	)
-	public String headerText();
+	public String header();
 
 	@DDMFormField(
 		label = "%limit-to-one-submission-per-user",

@@ -177,8 +177,8 @@ public class DDMFormPagesTemplateContextFactory {
 				List<String> ddmFormFieldNames =
 					ddmFormLayoutColumn.getDDMFormFieldNames();
 
-				ddmFormFieldNames.remove("bodyText");
-				ddmFormFieldNames.remove("headerText");
+				ddmFormFieldNames.remove("body");
+				ddmFormFieldNames.remove("header");
 			}
 
 			columnsTemplateContext.add(

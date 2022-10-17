@@ -936,8 +936,8 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
-		ObjectField objectField = objectFieldPersistence.fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		ObjectField objectField = objectFieldPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 
 		if ((objectField != null) &&
 			(objectField.getObjectFieldId() != objectFieldId)) {

@@ -289,8 +289,8 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			objectEntry = objectEntryPersistence.fetchByG_C_ERC(
-				groupId, user.getCompanyId(), externalReferenceCode);
+			objectEntry = objectEntryPersistence.fetchByERC_G_C(
+				externalReferenceCode, groupId, user.getCompanyId());
 
 			if (objectEntry != null) {
 				return updateObjectEntry(
@@ -399,8 +399,8 @@ public class ObjectEntryLocalServiceImpl
 			String externalReferenceCode, long companyId, long groupId)
 		throws PortalException {
 
-		ObjectEntry objectEntry = objectEntryPersistence.findByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
+		ObjectEntry objectEntry = objectEntryPersistence.findByERC_G_C(
+			externalReferenceCode, groupId, companyId);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}
@@ -601,8 +601,8 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		return objectEntryPersistence.fetchByC_ERC_ODI(
-			objectDefinition.getCompanyId(), externalReferenceCode,
+		return objectEntryPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, objectDefinition.getCompanyId(),
 			objectDefinitionId);
 	}
 
@@ -611,8 +611,8 @@ public class ObjectEntryLocalServiceImpl
 			String externalReferenceCode, long companyId, long groupId)
 		throws PortalException {
 
-		return objectEntryPersistence.findByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
+		return objectEntryPersistence.findByERC_G_C(
+			externalReferenceCode, groupId, companyId);
 	}
 
 	public List<ObjectEntry> getOneToManyObjectEntries(
@@ -2702,8 +2702,8 @@ public class ObjectEntryLocalServiceImpl
 			long objectDefinitionId, long objectEntryId)
 		throws PortalException {
 
-		ObjectEntry objectEntry = objectEntryPersistence.fetchByC_ERC_ODI(
-			companyId, externalReferenceCode, objectDefinitionId);
+		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
 
 		if ((objectEntry != null) &&
 			(objectEntry.getObjectEntryId() != objectEntryId)) {

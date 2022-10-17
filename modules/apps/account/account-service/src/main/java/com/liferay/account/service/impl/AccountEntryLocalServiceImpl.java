@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -235,6 +237,8 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		if (_isWorkflowEnabled(accountEntry.getCompanyId())) {
+			_checkStatus(accountEntry.getStatus(), status);
+
 			accountEntry = _startWorkflowInstance(
 				userId, accountEntry, workflowServiceContext);
 		}
@@ -655,6 +659,8 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		if (_isWorkflowEnabled(accountEntry.getCompanyId())) {
+			_checkStatus(accountEntry.getStatus(), status);
+
 			accountEntry = _startWorkflowInstance(
 				workflowUserId, accountEntry, workflowServiceContext);
 		}
@@ -817,6 +823,16 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setStatusDate(serviceContext.getModifiedDate(new Date()));
 
 		return updateAccountEntry(accountEntry);
+	}
+
+	private void _checkStatus(int oldStatus, int newStatus) {
+		if (oldStatus != newStatus) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Workflow is enabled for AccountEntry. The status " +
+						"parameter will be ignored.");
+			}
+		}
 	}
 
 	private Predicate _getAccountEntryWherePredicate(
@@ -1247,6 +1263,9 @@ public class AccountEntryLocalServiceImpl
 						AccountConstants.ACCOUNT_ENTRY_TYPES, ", ")));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountEntryLocalServiceImpl.class);
 
 	@Reference
 	private AccountEntryEmailAddressValidatorFactory

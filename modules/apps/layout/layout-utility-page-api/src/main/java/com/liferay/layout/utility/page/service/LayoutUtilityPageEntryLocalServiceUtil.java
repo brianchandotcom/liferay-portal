@@ -71,6 +71,15 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 			masterLayoutPlid);
 	}
 
+	public static LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
+			long userId, long groupId, long layoutUtilityPageEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyLayoutUtilityPageEntry(
+			userId, groupId, layoutUtilityPageEntryId, serviceContext);
+	}
+
 	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.
 	 *
@@ -223,6 +232,12 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static LayoutUtilityPageEntry fetchByG_N_T(
+		long groupId, String name, int type) {
+
+		return getService().fetchByG_N_T(groupId, name, type);
 	}
 
 	public static LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(

@@ -48,7 +48,8 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 				});
 
 				onCloseModal();
-			} else {
+			}
+			else {
 				Liferay.Util.openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-system-error-occurred'

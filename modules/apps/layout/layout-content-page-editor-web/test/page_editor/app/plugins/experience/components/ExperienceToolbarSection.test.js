@@ -197,6 +197,48 @@ describe('ExperienceToolbarSection', () => {
 		).toBeInTheDocument();
 	});
 
+	it('shows active/inactive label close to the experiences name', async () => {
+		const {
+			container,
+			findByRole,
+			getAllByRole,
+			getByLabelText,
+		} = renderExperienceToolbarSection(mockState, mockConfig);
+
+		const dropDownButtonLabel = getByLabelText('experience');
+		const dropDownButton = container.querySelector(
+			'.page-editor__toolbar-experience'
+		);
+
+		userEvent.click(dropDownButtonLabel);
+
+		await findByRole('list');
+
+		const listedExperiences = getAllByRole('listitem');
+
+		/**
+		 * Experiences with active/inactive label
+		 */
+
+		expect(
+			container.querySelector('.page-editor__toolbar-experience')
+		).toBeInTheDocument();
+
+		expect(
+			within(dropDownButton).getByText('inactive')
+		).toBeInTheDocument();
+
+		expect(
+			within(listedExperiences[0]).getByText('active')
+		).toBeInTheDocument();
+		expect(
+			within(listedExperiences[1]).getByText('active')
+		).toBeInTheDocument();
+		expect(
+			within(listedExperiences[2]).getByText('inactive')
+		).toBeInTheDocument();
+	});
+
 	it('displays a help hint on the locked icon for a locked Experience', async () => {
 		serviceFetch.mockImplementation(() => Promise.resolve());
 

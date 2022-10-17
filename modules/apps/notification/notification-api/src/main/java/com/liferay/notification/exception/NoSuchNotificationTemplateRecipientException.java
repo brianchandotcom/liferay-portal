@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.notification.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Gabriel Albuquerque
  */
-public class NoSuchNotificationTemplateRecipientException extends NoSuchModelException {
+public class NoSuchNotificationTemplateRecipientException
+	extends NoSuchModelException {
 
 	public NoSuchNotificationTemplateRecipientException() {
 	}
@@ -27,7 +29,9 @@ public class NoSuchNotificationTemplateRecipientException extends NoSuchModelExc
 		super(msg);
 	}
 
-	public NoSuchNotificationTemplateRecipientException(String msg, Throwable throwable) {
+	public NoSuchNotificationTemplateRecipientException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

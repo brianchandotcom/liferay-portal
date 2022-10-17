@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.util;
+package com.liferay.petra.function.transform;
 
 import com.liferay.petra.function.UnsafeFunction;
 

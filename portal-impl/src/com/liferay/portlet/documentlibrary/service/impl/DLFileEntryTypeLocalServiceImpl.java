@@ -773,21 +773,25 @@ public class DLFileEntryTypeLocalServiceImpl
                 // This covers the creation case. Updating is handled in
                 // com.liferay.document.library.internal.security.permission.DLFileEntryTypePermissionUpdateHandler
 
-                ModelPermissions structurePermissions = ModelPermissionsFactory.create(DDM_FILE_ENTRY_METADATA);
+                ModelPermissions structurePermissions = null;
 
-                Set<String> fileEntryMetadataActions = _resourceActionLocalService
-                        .getResourceActions(DDM_FILE_ENTRY_METADATA)
-                        .stream()
-                        .map(ra -> ra.getActionId())
-                        .collect(Collectors.toSet());
+                if (modelPermissions != null) {
+                        structurePermissions = ModelPermissionsFactory.create(DDM_FILE_ENTRY_METADATA);
 
-                for(String role: modelPermissions.getRoleNames()) {
-                    String[] structureActionIds = Arrays
-                            .stream(modelPermissions.getActionIds(role))
-                            .filter(actionId -> fileEntryMetadataActions.contains(actionId))
-                            .collect(Collectors.toList())
-                            .toArray(new String[0]);
-                    structurePermissions.addRolePermissions(role, structureActionIds);
+                        Set<String> fileEntryMetadataActions = _resourceActionLocalService
+                                .getResourceActions(DDM_FILE_ENTRY_METADATA)
+                                .stream()
+                                .map(ra -> ra.getActionId())
+                                .collect(Collectors.toSet());
+
+                        for (String role : modelPermissions.getRoleNames()) {
+                                String[] structureActionIds = Arrays
+                                        .stream(modelPermissions.getActionIds(role))
+                                        .filter(actionId -> fileEntryMetadataActions.contains(actionId))
+                                        .collect(Collectors.toList())
+                                        .toArray(new String[0]);
+                                structurePermissions.addRolePermissions(role, structureActionIds);
+                        }
                 }
 
 		_resourceLocalService.addModelResources(

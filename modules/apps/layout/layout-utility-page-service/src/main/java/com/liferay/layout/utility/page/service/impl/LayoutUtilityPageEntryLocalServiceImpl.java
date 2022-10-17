@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -99,6 +101,25 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		layoutUtilityPageEntry.setType(type);
 
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
+			long userId, long groupId, long layoutUtilityPageEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutUtilityPageEntry sourceLayoutUtilityPageEntry =
+			layoutUtilityPageEntryPersistence.findByPrimaryKey(
+				layoutUtilityPageEntryId);
+
+		String name = _getUniqueCopyName(
+			groupId, sourceLayoutUtilityPageEntry.getName(),
+			sourceLayoutUtilityPageEntry.getType(), serviceContext.getLocale());
+
+		return addLayoutUtilityPageEntry(
+			null, userId, serviceContext.getScopeGroupId(), name,
+			sourceLayoutUtilityPageEntry.getType(), 0);
 	}
 
 	@Override
@@ -276,6 +297,29 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		return colorScheme.getColorSchemeId();
 	}
 
+	private String _getUniqueCopyName(
+		long groupId, String sourceName, int type, Locale locale) {
+
+		String copy = _language.get(locale, "copy");
+
+		String name = StringUtil.appendParentheticalSuffix(sourceName, copy);
+
+		for (int i = 1;; i++) {
+			LayoutUtilityPageEntry layoutUtilityPageEntry =
+				layoutUtilityPageEntryLocalService.fetchByG_N_T(
+					groupId, name, type);
+
+			if (layoutUtilityPageEntry == null) {
+				break;
+			}
+
+			name = StringUtil.appendParentheticalSuffix(
+				sourceName, copy + StringPool.SPACE + i);
+		}
+
+		return name;
+	}
+
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -312,6 +356,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				MustNotExceedMaximumSize(nameMaxLength);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

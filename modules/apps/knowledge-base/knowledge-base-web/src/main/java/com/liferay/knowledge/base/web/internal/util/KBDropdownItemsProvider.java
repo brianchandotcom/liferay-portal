@@ -27,6 +27,7 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.KBUtil;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.DisplayPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
@@ -158,6 +159,31 @@ public class KBDropdownItemsProvider {
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
 						"subscribe"));
+			}
+		).add(
+			() -> _hasHistoryPermission(kbArticle),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/common/kb_history.jsp"
+					).setRedirect(
+						_currentURL
+					).setParameter(
+						"resourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).setParameter(
+						"status",
+						_liferayPortletRequest.getAttribute(
+							KBWebKeys.KNOWLEDGE_BASE_STATUS)
+					).buildRenderURL());
+				dropdownItem.setIcon(null);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"history"));
 			}
 		).add(
 			() -> _hasMovePermission(kbArticle),
@@ -703,6 +729,14 @@ public class KBDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), kbTemplate,
 				KBActionKeys.DELETE)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private Boolean _hasHistoryPermission(KBArticle kbArticle) {
+		if (kbArticle.isApproved() || !kbArticle.isFirstVersion()) {
 			return true;
 		}
 

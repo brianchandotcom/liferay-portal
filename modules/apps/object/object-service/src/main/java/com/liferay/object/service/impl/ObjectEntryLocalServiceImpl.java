@@ -796,7 +796,7 @@ public class ObjectEntryLocalServiceImpl
 			_getSelectExpressions(extensionDynamicObjectDefinitionTable));
 
 		List<Object[]> rows = _list(
-			DSLQueryFactoryUtil.selectDistinct(
+			DSLQueryFactoryUtil.select(
 				selectExpressions
 			).from(
 				dynamicObjectDefinitionTable
@@ -835,7 +835,7 @@ public class ObjectEntryLocalServiceImpl
 			_EXPRESSIONS);
 
 		List<Object[]> rows = _list(
-			DSLQueryFactoryUtil.selectDistinct(
+			DSLQueryFactoryUtil.select(
 				selectExpressions
 			).from(
 				dynamicObjectDefinitionTable

@@ -24,16 +24,11 @@ import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response;
 
@@ -72,25 +67,14 @@ public class DispatchTriggerResourceImpl
 	public DispatchTrigger postDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			dispatchTrigger.getDispatchTaskSettings());
-
 		return DispatchTriggerUtil.toDispatchTrigger(
 			_dispatchTriggerLocalService.addDispatchTrigger(
 				dispatchTrigger.getExternalReferenceCode(),
 				contextUser.getUserId(),
 				dispatchTrigger.getDispatchTaskExecutorType(),
-				UnicodePropertiesBuilder.create(
-					jsonObject.toMap(
-					).entrySet(
-					).stream(
-					).collect(
-						Collectors.toMap(
-							Map.Entry::getKey, e -> (String)e.getValue())
-					),
-					true
-				).build(),
-				dispatchTrigger.getName(), false));
+				DispatchTriggerUtil.toSettingsUnicodeProperties(
+					dispatchTrigger.getDispatchTaskSettings()),
+				dispatchTrigger.getName(), dispatchTrigger.getSystem()));
 	}
 
 	public Response postExecuteDispatchTrigger(Long dispatchTriggerId)

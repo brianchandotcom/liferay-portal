@@ -17,7 +17,9 @@ import {EDITABLE_TYPES} from './editableTypes';
 export const EDITABLE_TYPE_DEFAULT_OPTIONS = {
 	[EDITABLE_TYPES.backgroundImage]: {},
 	[EDITABLE_TYPES['date-time']]: {
-		dateFormat: 'MM/dd/yy',
+		dateFormat: {
+			en_US: 'MM/dd/yy',
+		},
 	},
 	[EDITABLE_TYPES.html]: {},
 	[EDITABLE_TYPES.image]: {

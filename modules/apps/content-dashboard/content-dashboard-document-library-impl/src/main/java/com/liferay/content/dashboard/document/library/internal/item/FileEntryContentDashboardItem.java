@@ -27,6 +27,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemV
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.util.DLURLHelper;
@@ -43,6 +44,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -51,6 +56,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -71,6 +77,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -436,7 +444,26 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public String getViewVersionsURL(HttpServletRequest httpServletRequest) {
-		return null;
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createControlPanelRenderURL(
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, _group, 0, 0)
+		).setMVCRenderCommandName(
+			"/document_library/view_file_entry_history"
+		).setBackURL(
+			() -> {
+				LiferayPortletResponse liferayPortletResponse =
+					_portal.getLiferayPortletResponse(
+						(PortletResponse)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE));
+
+				return liferayPortletResponse.createRenderURL();
+			}
+		).setParameter(
+			"fileEntryId", _fileEntry.getFileEntryId()
+		).buildString();
 	}
 
 	@Override

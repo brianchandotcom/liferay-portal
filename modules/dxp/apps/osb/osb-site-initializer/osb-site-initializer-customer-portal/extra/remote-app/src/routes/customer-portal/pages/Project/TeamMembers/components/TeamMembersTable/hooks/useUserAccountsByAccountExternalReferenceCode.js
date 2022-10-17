@@ -119,11 +119,10 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 				koroneikiAccountLoading ||
 				networkStatus === NetworkStatus.loading,
 			remove,
-			removing,
 			search,
 			searching: networkStatus === NetworkStatus.setVariables,
 			update,
-			updating,
+			updating: updating || removing,
 		},
 	];
 }

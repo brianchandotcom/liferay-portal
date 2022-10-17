@@ -62,7 +62,6 @@ const TeamMembersTable = ({
 			data: userAccountsData,
 			loading: userAccountsLoading,
 			remove,
-			removing,
 			search,
 			searching,
 			update,
@@ -100,12 +99,12 @@ const TeamMembersTable = ({
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;
 
 	useEffect(() => {
-		if (!removing) {
+		if (!updating) {
 			onOpenChange(false);
 
 			setCurrentIndexRemoving();
 		}
-	}, [onOpenChange, removing]);
+	}, [onOpenChange, updating]);
 
 	useEffect(() => {
 		if (!updating) {
@@ -145,7 +144,7 @@ const TeamMembersTable = ({
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onRemove={() => remove(userAccounts[currentIndexRemoving])}
-					removing={removing}
+					removing={updating}
 				/>
 			)}
 

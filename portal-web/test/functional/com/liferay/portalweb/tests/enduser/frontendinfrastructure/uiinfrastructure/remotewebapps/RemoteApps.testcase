@@ -596,6 +596,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-165425. Validate that HTML eror is thrown if left empty."
+	@priority = "3"
+	test ErrorAppearsWhenHTMLBlank {
+		task ("Given Add Custom Element Remote Apps admin page") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When required fields Name, HTML Element Name, and JS URL are blank and When attempt to save remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then error message 'HTML element name is empty'") {
+			AssertElementPresent(
+				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "HTML element name is empty.");
+		}
+
+		task ("And Then Remote App is not added") {
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "LPS-163525. Validate Remote Apps UI has an understandable error message when user inputs an invalid URL."
 	@priority = "4"
 	test HasAnUnderstandableErrorMessageWhenURLInvalid {
@@ -653,6 +681,89 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_STATE_INFO",
 				value1 = "No Results Found");
+		}
+	}
+
+	@description = "LPS-165745. Error thrown when HTML Element contains empty/white space."
+	@priority = "3"
+	test HTMLElementConatinsInvlaidCharacters {
+		task ("Given Add Custom Element Remote Apps") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When type 'vanilla counter' in HTML Element field") {
+			Type(
+				key_text = "HTML Element Name",
+				locator1 = "TextInput#ANY",
+				value1 = "vanilla counter");
+		}
+
+		task ("When attempt to save the remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then error message 'HTML Element name contains invalid character' with empty/white space appears under HTML Element field") {
+			AssertElementPresent(
+				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "HTML element name contains invalid character");
+		}
+	}
+
+	@description = "LPS-165835. Error thrown when HTML Element doesn't have at least one hyphen."
+	@priority = "3"
+	test HTMLElementMustHaveOneHyphen {
+		task ("Given Add Custom Element Remote Apps") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When type 'vanilla.counter' in HTML Element Name field") {
+			Type(
+				key_text = "HTML Element Name",
+				locator1 = "TextInput#ANY",
+				value1 = "vanilla.counter");
+		}
+
+		task ("And When attempt to save the remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then error message 'HTML element name must contain at least one hyphen' appears under HTML Element field") {
+			AssertElementPresent(
+				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "HTML element name must contain at least one hyphen");
+		}
+	}
+
+	@description = "LPS-165834. Error thrown when HTML Element doesn't start with a lowercase letter."
+	@priority = "3"
+	test HTMLElementMustStartWithLowercase {
+		task ("Given Add Custom Element Remote Apps") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addType(type = "Custom Element");
+		}
+
+		task ("When type 'Vanilla counter' in HTML Element Name field") {
+			Type(
+				key_text = "HTML Element Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Vanilla counter");
+
+			Button.clickPublish();
+		}
+
+		task ("And When attempt to save the remote app") {
+			Button.clickPublish();
+		}
+
+		task ("Then error message 'HTML element name must start with a lowercase letter' appears under HTML Element field") {
+			AssertElementPresent(
+				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "HTML element name must start with a lowercase letter");
 		}
 	}
 

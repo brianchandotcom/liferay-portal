@@ -62,6 +62,16 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Channel patchChannel(@GraphQLName("channel") Channel channel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> channelResource.patchChannel(channel));
+	}
+
+	@GraphQLField
 	public Channel createChannel(@GraphQLName("channel") Channel channel)
 		throws Exception {
 

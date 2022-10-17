@@ -99,6 +99,23 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/channels' -d $'{"channelId": ___, "createDate": ___, "dataSources": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Channel")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/channels")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Channel patchChannel(Channel channel) throws Exception {
+		return new Channel();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/analytics-settings-rest/v1.0/channels' -d $'{"channelId": ___, "createDate": ___, "dataSources": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(

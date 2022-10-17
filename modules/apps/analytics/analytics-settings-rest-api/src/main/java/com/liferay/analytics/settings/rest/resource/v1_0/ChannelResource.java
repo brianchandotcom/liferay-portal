@@ -58,6 +58,8 @@ public interface ChannelResource {
 			String keywords, Filter filter, Pagination pagination)
 		throws Exception;
 
+	public Channel patchChannel(Channel channel) throws Exception;
+
 	public Channel postChannel(Channel channel) throws Exception;
 
 	public default void setContextAcceptLanguage(

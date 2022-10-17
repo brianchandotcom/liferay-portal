@@ -343,6 +343,11 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
+	public void testPatchChannel() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostChannel() throws Exception {
 		Channel randomChannel = randomChannel();
 

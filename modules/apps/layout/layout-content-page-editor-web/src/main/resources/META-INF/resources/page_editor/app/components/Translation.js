@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
@@ -170,7 +171,7 @@ export default function Translation({
 		showNotTranslated,
 	]);
 
-	const {languageIcon, languageLabel} = availableLanguages[languageId];
+	const {languageIcon, w3cLanguageId} = availableLanguages[languageId];
 
 	return (
 		<ClayDropDown
@@ -192,7 +193,12 @@ export default function Translation({
 				>
 					<ClayIcon symbol={languageIcon} />
 
-					<span className="sr-only">{languageLabel}</span>
+					<span className="sr-only">
+						{sub(
+							Liferay.Language.get('current-language-x'),
+							w3cLanguageId
+						)}
+					</span>
 				</ClayButton>
 			}
 		>

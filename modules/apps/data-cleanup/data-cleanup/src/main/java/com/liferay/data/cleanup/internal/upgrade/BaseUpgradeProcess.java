@@ -15,7 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -28,7 +28,11 @@ import java.sql.ResultSet;
  */
 public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
-	protected void removeExpandoData(String expandoTableName) throws Exception {
+	protected void removeExpandoData(
+			ExpandoTableLocalService expandoTableLocalService,
+			String expandoTableName)
+		throws Exception {
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select tableId from ExpandoTable where name = ?")) {
 
@@ -36,7 +40,7 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					ExpandoTableLocalServiceUtil.deleteTable(
+					expandoTableLocalService.deleteTable(
 						resultSet.getLong("tableId"));
 				}
 			}

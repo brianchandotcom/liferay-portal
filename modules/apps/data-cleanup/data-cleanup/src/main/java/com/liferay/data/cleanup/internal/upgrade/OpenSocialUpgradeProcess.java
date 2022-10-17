@@ -14,14 +14,22 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+
 /**
  * @author Kevin Lee
  */
 public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
+	public OpenSocialUpgradeProcess(
+		ExpandoTableLocalService expandoTableLocalService) {
+
+		_expandoTableLocalService = expandoTableLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		removeExpandoData("OPEN_SOCIAL_DATA_");
+		removeExpandoData(_expandoTableLocalService, "OPEN_SOCIAL_DATA_");
 
 		removePortletData(
 			new String[] {"opensocial-portlet"}, null,
@@ -42,5 +50,7 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 				"OpenSocial_OAuthToken"
 			});
 	}
+
+	private final ExpandoTableLocalService _expandoTableLocalService;
 
 }

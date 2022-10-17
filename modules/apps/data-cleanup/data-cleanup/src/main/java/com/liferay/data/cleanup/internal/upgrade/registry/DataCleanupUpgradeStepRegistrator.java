@@ -31,6 +31,7 @@ import com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.TwitterUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.UpgradeHelloWorld;
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
@@ -126,7 +127,8 @@ public class DataCleanupUpgradeStepRegistrator
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpOpenSocialModuleData,
-				"opensocial-portlet", OpenSocialUpgradeProcess::new);
+				"opensocial-portlet",
+				() -> new OpenSocialUpgradeProcess(_expandoTableLocalService));
 
 			_removeModuleData(
 				_dataCleanupConfiguration::removePublishedCTSContentData,
@@ -196,6 +198,9 @@ public class DataCleanupUpgradeStepRegistrator
 	private CTSContentLocalService _ctsContentLocalService;
 
 	private DataCleanupConfiguration _dataCleanupConfiguration;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

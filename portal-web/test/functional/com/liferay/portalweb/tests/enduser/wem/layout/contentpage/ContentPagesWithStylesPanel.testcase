@@ -143,6 +143,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162301. Designers cannot reset undefined Spacing styles."
+	@priority = "3"
+	test CannotResetUndefinedSpacingStyles {
+		task ("Given a page designer has a Button fragment with padding right styles on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(paddingRight = "9");
+		}
+
+		task ("When the page designer opens the Padding Top dropdown list") {
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			Click(
+				ariaLabel = "Padding Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+
+		task ("Then the page designer cannot see the reset button") {
+			AssertElementNotPresent(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+		}
+	}
+
 	@description = "This is a test for LPS-142050. In page editor, selecting Custom in units could insert any type of character."
 	@priority = "4"
 	test ConfigureCustomUnit {

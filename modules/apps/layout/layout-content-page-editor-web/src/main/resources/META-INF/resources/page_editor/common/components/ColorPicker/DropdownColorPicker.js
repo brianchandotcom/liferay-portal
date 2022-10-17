@@ -150,7 +150,7 @@ export function DropdownColorPicker({
 
 						<span className="text-truncate">{label}</span>
 
-						{Liferay.FeatureFlags['LPS-163362'] && inherited ? (
+						{inherited ? (
 							<span
 								className="inherited"
 								title={Liferay.Language.get('inherited-value')}

@@ -131,10 +131,6 @@ jest.mock('frontend-js-web', () => ({
 }));
 
 describe('AdvancedSelectField', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-163362'] = true;
-	});
-
 	it('renders AdvancedSelectField', () => {
 		renderAdvancedSelectField();
 

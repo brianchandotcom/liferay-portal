@@ -110,10 +110,8 @@ export function AdvancedSelectField({
 
 	useEffect(() => {
 		setIsTokenValueOrInherited(
-			Liferay.FeatureFlags['LPS-163362']
-				? !isNullOrUndefined(tokenValues[value]) ||
-						(!value && field.inherited)
-				: !isNullOrUndefined(tokenValues[value]) || !value
+			!isNullOrUndefined(tokenValues[value]) ||
+				(!value && field.inherited)
 		);
 	}, [selectedViewportSize, tokenValues, value, field.inherited]);
 
@@ -173,77 +171,71 @@ export function AdvancedSelectField({
 				/>
 			)}
 
-			{value || Liferay.FeatureFlags['LPS-163362'] ? (
-				canDetachTokenValues ? (
-					isTokenValueOrInherited ? (
-						<ClayButtonWithIcon
-							className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__select-field__action-button"
-							displayType="secondary"
-							onClick={() => {
-								onSetValue({
-									isTokenValue: false,
-									value: tokenValues[value]
-										? tokenValues[value].value
-										: defaultOptionComputedValue,
-								});
-							}}
-							small
-							symbol="chain-broken"
-							title={
-								Liferay.FeatureFlags['LPS-163362']
-									? Liferay.Language.get('detach-style')
-									: Liferay.Language.get('detach-token')
-							}
-						/>
-					) : (
-						<ClayDropDown
-							active={active}
-							alignmentPosition={Align.BottomRight}
-							className="flex-shrink-0 ml-2"
-							menuElementAttrs={{
-								containerProps: {
-									className: 'cadmin',
-								},
-							}}
-							onActiveChange={setActive}
-							trigger={
-								<ClayButtonWithIcon
-									className="border-0"
-									displayType="secondary"
-									id={triggerId}
-									small
-									symbol="theme"
-									title={Liferay.Language.get(
-										'value-from-stylebook'
-									)}
-								/>
-							}
-						>
-							<ClayDropDown.ItemList aria-labelledby={triggerId}>
-								{options.map(({label, value}) => {
-									if (!value) {
-										return;
-									}
+			{canDetachTokenValues ? (
+				isTokenValueOrInherited ? (
+					<ClayButtonWithIcon
+						className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__select-field__action-button"
+						displayType="secondary"
+						onClick={() => {
+							onSetValue({
+								isTokenValue: false,
+								value: tokenValues[value]
+									? tokenValues[value].value
+									: defaultOptionComputedValue,
+							});
+						}}
+						small
+						symbol="chain-broken"
+						title={Liferay.Language.get('detach-style')}
+					/>
+				) : (
+					<ClayDropDown
+						active={active}
+						alignmentPosition={Align.BottomRight}
+						className="flex-shrink-0 ml-2"
+						menuElementAttrs={{
+							containerProps: {
+								className: 'cadmin',
+							},
+						}}
+						onActiveChange={setActive}
+						trigger={
+							<ClayButtonWithIcon
+								className="border-0"
+								displayType="secondary"
+								id={triggerId}
+								small
+								symbol="theme"
+								title={Liferay.Language.get(
+									'value-from-stylebook'
+								)}
+							/>
+						}
+					>
+						<ClayDropDown.ItemList aria-labelledby={triggerId}>
+							{options.map(({label, value}) => {
+								if (!value) {
+									return;
+								}
 
-									return (
-										<ClayDropDown.Item
-											key={value}
-											onClick={() => {
-												setActive(false);
-												onSetValue({
-													isTokenValue: true,
-													value,
-												});
-											}}
-										>
-											{label}
-										</ClayDropDown.Item>
-									);
-								})}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					)
-				) : null
+								return (
+									<ClayDropDown.Item
+										key={value}
+										onClick={() => {
+											setActive(false);
+											onSetValue({
+												isTokenValue: true,
+												value,
+											});
+										}}
+									>
+										{label}
+									</ClayDropDown.Item>
+								);
+							})}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				)
 			) : null}
 
 			{value ? (
@@ -287,44 +279,16 @@ const SingleSelectWithIcon = ({
 }) => {
 	const inputId = useId();
 
-	const defaultOptionLabel = useMemo(
-		() =>
-			options.find((option) => option.value === field.defaultValue)
-				?.label,
-		[field.defaultValue, options]
-	);
-
 	const selectedOptionLabel = useMemo(() => {
-		if (Liferay.FeatureFlags['LPS-163362']) {
-			if (value === field.defaultValue) {
-				return defaultOptionComputedValue;
-			}
-
-			return (
-				options.find((option) => option.value === value)?.label ||
-				defaultOptionComputedValue
-			);
-		}
-
 		if (value === field.defaultValue) {
-			if (defaultOptionComputedValue) {
-				return `${defaultOptionLabel} · ${defaultOptionComputedValue}`;
-			}
-
-			return defaultOptionLabel;
+			return defaultOptionComputedValue;
 		}
 
 		return (
 			options.find((option) => option.value === value)?.label ||
-			defaultOptionLabel
+			defaultOptionComputedValue
 		);
-	}, [
-		defaultOptionComputedValue,
-		defaultOptionLabel,
-		field.defaultValue,
-		options,
-		value,
-	]);
+	}, [defaultOptionComputedValue, field.defaultValue, options, value]);
 
 	return (
 		<div className="btn btn-unstyled flex-grow-1 m-0 p-0 page-editor__single-select-with-icon">
@@ -351,34 +315,22 @@ const SingleSelectWithIcon = ({
 				value={value || ''}
 			/>
 
-			{Liferay.FeatureFlags['LPS-163362'] ? (
-				<div
-					className={classNames(
-						'page-editor__single-select-with-icon__label p-2 w-100 d-flex',
-						{disabled}
-					)}
-					role="presentation"
-				>
-					<span className="text-truncate">{selectedOptionLabel}</span>
+			<div
+				className={classNames(
+					'page-editor__single-select-with-icon__label p-2 w-100 d-flex',
+					{disabled}
+				)}
+				role="presentation"
+			>
+				<span className="text-truncate">{selectedOptionLabel}</span>
 
-					{!value && field.inherited ? (
-						<span
-							className="inherited"
-							title={Liferay.Language.get('inherited-value')}
-						></span>
-					) : null}
-				</div>
-			) : (
-				<div
-					className={classNames(
-						'page-editor__single-select-with-icon__label p-2 text-truncate w-100',
-						{disabled}
-					)}
-					role="presentation"
-				>
-					<span>{selectedOptionLabel}</span>
-				</div>
-			)}
+				{!value && field.inherited ? (
+					<span
+						className="inherited"
+						title={Liferay.Language.get('inherited-value')}
+					></span>
+				) : null}
+			</div>
 		</div>
 	);
 };

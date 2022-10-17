@@ -44,10 +44,6 @@ const renderLengthField = ({
 	);
 
 describe('LengthField', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-163362'] = true;
-	});
-
 	it('renders LengthField', () => {
 		renderLengthField();
 

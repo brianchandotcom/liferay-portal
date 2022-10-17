@@ -24,14 +24,24 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldTable;
+import com.liferay.object.model.ObjectRelationshipTable;
+import com.liferay.object.model.ObjectViewFilterColumn;
+import com.liferay.object.model.ObjectViewFilterColumnTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.service.ObjectViewFilterColumnLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -86,6 +96,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		_route(EventTypes.DELETE, null, objectEntry);
 
+		try {
+			_updateObjectViewFilterColumn(StringPool.BLANK, objectEntry);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
 			objectEntry);
@@ -101,6 +118,21 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			originalObjectEntry, objectEntry);
+
+		if (StringUtil.equals(
+				originalObjectEntry.getExternalReferenceCode(),
+				objectEntry.getExternalReferenceCode())) {
+
+			return;
+		}
+
+		try {
+			_updateObjectViewFilterColumn(
+				objectEntry.getExternalReferenceCode(), originalObjectEntry);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	@Override
@@ -396,6 +428,69 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		return objectEntry.getModelAttributes();
 	}
 
+	private void _updateObjectViewFilterColumn(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws PortalException {
+
+		List<ObjectViewFilterColumn> objectViewFilterColumns =
+			_objectViewFilterColumnLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					ObjectViewFilterColumnTable.INSTANCE
+				).from(
+					ObjectViewFilterColumnTable.INSTANCE
+				).innerJoinON(
+					ObjectFieldTable.INSTANCE,
+					ObjectFieldTable.INSTANCE.name.eq(
+						ObjectViewFilterColumnTable.INSTANCE.objectFieldName)
+				).innerJoinON(
+					ObjectRelationshipTable.INSTANCE,
+					ObjectRelationshipTable.INSTANCE.objectFieldId2.eq(
+						ObjectFieldTable.INSTANCE.objectFieldId)
+				).where(
+					ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
+						objectEntry.getObjectDefinitionId())
+				));
+
+		for (ObjectViewFilterColumn objectViewFilterColumn :
+				objectViewFilterColumns) {
+
+			JSONArray valueJSONArray = objectViewFilterColumn.getJSONArray();
+
+			JSONArray newValueJSONArray = new JSONArrayImpl();
+
+			for (int i = 0; i < valueJSONArray.length(); i++) {
+				if (StringUtil.equals(
+						(String)valueJSONArray.get(i),
+						objectEntry.getExternalReferenceCode())) {
+
+					if (!StringUtil.equals(
+							externalReferenceCode, StringPool.BLANK)) {
+
+						newValueJSONArray.put(externalReferenceCode);
+					}
+				}
+				else {
+					newValueJSONArray.put((String)valueJSONArray.get(i));
+				}
+			}
+
+			if (newValueJSONArray.length() == 0) {
+				_objectViewFilterColumnLocalService.
+					deleteObjectViewFilterColumn(objectViewFilterColumn);
+
+				continue;
+			}
+
+			objectViewFilterColumn.setJSON(
+				StringBundler.concat(
+					"{\"", objectViewFilterColumn.getFilterType(), "\":",
+					newValueJSONArray, "}"));
+
+			_objectViewFilterColumnLocalService.updateObjectViewFilterColumn(
+				objectViewFilterColumn);
+		}
+	}
+
 	private void _validateObjectEntry(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
@@ -440,6 +535,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Reference
+	private ObjectViewFilterColumnLocalService
+		_objectViewFilterColumnLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

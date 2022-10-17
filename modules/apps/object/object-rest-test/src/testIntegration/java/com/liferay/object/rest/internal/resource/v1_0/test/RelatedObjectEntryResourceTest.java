@@ -53,6 +53,7 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,47 +108,303 @@ public class RelatedObjectEntryResourceTest {
 			_systemObjectDefinitionMetadataTracker.
 				getSystemObjectDefinitionMetadata("User");
 
-		ObjectDefinition userSystemObjectDefinition =
+		_userSystemObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				_userSystemObjectDefinitionMetadata.getName());
 
-		_objectRelationship =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(),
-				userSystemObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
 		_user = TestPropsValues.getUser();
-
-		ObjectRelationshipLocalServiceUtil.
-			addObjectRelationshipMappingTableValues(
-				TestPropsValues.getUserId(),
-				_objectRelationship.getObjectRelationshipId(),
-				_objectEntry.getPrimaryKey(), _user.getUserId(),
-				ServiceContextTestUtil.getServiceContext());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		ObjectRelationshipLocalServiceUtil.
-			deleteObjectRelationshipMappingTableValues(
-				_objectRelationship.getObjectRelationshipId(),
-				_objectEntry.getPrimaryKey(), _user.getUserId());
-		ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
-			_objectRelationship);
+		for (ObjectRelationship objectRelationship : _objectRelationships) {
+			ObjectRelationshipLocalServiceUtil.
+				deleteObjectRelationshipMappingTableValues(
+					objectRelationship.getObjectRelationshipId(),
+					_user.getUserId(), _objectEntry.getPrimaryKey());
+
+			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+				objectRelationship);
+		}
 	}
 
 	@Test
-	public void testGetSystemObjectRelatedObjects() throws Exception {
+	public void testDeleteManyToManySystemObjectNotFoundRelatedObject()
+		throws Exception {
+
+		Long irrelevantUserId = RandomTestUtil.randomLong();
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry.getPrimaryKey()),
+			Http.Method.DELETE);
+
+		String statusCode = jsonObject.getString("status");
+
+		Assert.assertEquals("NOT_FOUND", statusCode);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testDeleteManyToManySystemObjectRelatedObject()
+		throws Exception {
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
 		JSONObject jsonObject = _invoke(
 			StringBundler.concat(
 				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		_invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry.getPrimaryKey()),
+			Http.Method.DELETE);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(0, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testDeleteManyToManySystemObjectRelatedObjectNotFound()
+		throws Exception {
+
+		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				irrelevantPrimaryKey),
+			Http.Method.DELETE);
+
+		String statusCode = jsonObject.getString("status");
+
+		Assert.assertEquals("NOT_FOUND", statusCode);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testDeleteOneToManySystemObjectNotFoundRelatedObject()
+		throws Exception {
+
+		Long irrelevantUserId = RandomTestUtil.randomLong();
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), _user.getUserId(),
+			_objectEntry.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry.getPrimaryKey()),
+			Http.Method.DELETE);
+
+		String statusCode = jsonObject.getString("status");
+
+		Assert.assertEquals("NOT_FOUND", statusCode);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testDeleteOneToManySystemObjectRelatedObject()
+		throws Exception {
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), _user.getUserId(),
+			_objectEntry.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		_invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry.getPrimaryKey()),
+			Http.Method.DELETE);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(0, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testDeleteOneToManySystemObjectRelatedObjectNotFound()
+		throws Exception {
+
+		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), _user.getUserId(),
+			_objectEntry.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				irrelevantPrimaryKey),
+			Http.Method.DELETE);
+
+		String statusCode = jsonObject.getString("status");
+
+		Assert.assertEquals("NOT_FOUND", statusCode);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testGetSystemObjectNotFoundRelatedObjects() throws Exception {
+		Long irrelevantUserId = RandomTestUtil.randomLong();
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		String statusCode = jsonObject.getString("status");
+
+		Assert.assertEquals("NOT_FOUND", statusCode);
+	}
+
+	@Test
+	public void testGetSystemObjectRelatedObjects() throws Exception {
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -162,6 +419,14 @@ public class RelatedObjectEntryResourceTest {
 
 	@Test
 	public void testPutSystemObjectRelatedObject() throws Exception {
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
 		String objectFieldValue = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addObjectEntry(objectFieldValue);
@@ -170,7 +435,7 @@ public class RelatedObjectEntryResourceTest {
 			StringBundler.concat(
 				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
 				objectEntry.getPrimaryKey()),
 			Http.Method.PUT);
 
@@ -181,12 +446,48 @@ public class RelatedObjectEntryResourceTest {
 			StringBundler.concat(
 				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+				objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(2, itemsJSONArray.length());
+	}
+
+	@Test
+	public void testPutSystemObjectRelatedObjectNotFound() throws Exception {
+		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
+
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			name, _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				irrelevantPrimaryKey),
+			Http.Method.PUT);
+
+		String statusCode = jsonObject.getString("status");
+
+		Assert.assertEquals("NOT_FOUND", statusCode);
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
 	}
 
 	private ObjectEntry _addObjectEntry(String objectFieldValue)
@@ -201,6 +502,29 @@ public class RelatedObjectEntryResourceTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private ObjectRelationship _addObjectRelationship(
+			String name, long objectDefinitionId1, long objectDefinitionId2,
+			long primaryKey1, long primaryKey2, String type)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+				_user.getUserId(), objectDefinitionId1, objectDefinitionId2, 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, type);
+
+		ObjectRelationshipLocalServiceUtil.
+			addObjectRelationshipMappingTableValues(
+				_user.getUserId(), objectRelationship.getObjectRelationshipId(),
+				primaryKey1, primaryKey2,
+				ServiceContextTestUtil.getServiceContext());
+
+		_objectRelationships.add(objectRelationship);
+
+		return objectRelationship;
+	}
+
 	private JSONObject _invoke(String endpoint, Http.Method httpMethod)
 		throws Exception {
 
@@ -213,9 +537,7 @@ public class RelatedObjectEntryResourceTest {
 			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
 		options.setLocation("http://localhost:8080/o/" + endpoint);
 
-		if (httpMethod == Http.Method.PUT) {
-			options.setPut(true);
-		}
+		options.setMethod(httpMethod);
 
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
@@ -251,13 +573,15 @@ public class RelatedObjectEntryResourceTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private ObjectEntry _objectEntry;
-	private ObjectRelationship _objectRelationship;
+	private final List<ObjectRelationship> _objectRelationships =
+		new ArrayList<>();
 
 	@Inject
 	private SystemObjectDefinitionMetadataTracker
 		_systemObjectDefinitionMetadataTracker;
 
 	private User _user;
+	private ObjectDefinition _userSystemObjectDefinition;
 	private SystemObjectDefinitionMetadata _userSystemObjectDefinitionMetadata;
 
 }

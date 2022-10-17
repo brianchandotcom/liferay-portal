@@ -24,6 +24,7 @@ import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldDefaultValueException;
 import com.liferay.object.exception.ObjectFieldLabelException;
+import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldStateException;
@@ -105,6 +106,9 @@ public class ObjectFieldLocalServiceImpl
 			Map<Locale, String> labelMap, String name, boolean required,
 			boolean state, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
+
+		_validateObjectFieldListTypeDefinitionId(
+			listTypeDefinitionId, businessType);
 
 		name = StringUtil.trim(name);
 
@@ -596,6 +600,9 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
+		_validateObjectFieldListTypeDefinitionId(
+			listTypeDefinitionId, businessType);
+
 		if (system) {
 			return objectFieldLocalService.addOrUpdateSystemObjectField(
 				userId, objectDefinitionId, businessType, dbColumnName,
@@ -1029,6 +1036,19 @@ public class ObjectFieldLocalServiceImpl
 			(objectField.getObjectFieldId() != objectFieldId)) {
 
 			throw new ObjectFieldNameException.MustNotBeDuplicate(name);
+		}
+	}
+
+	private void _validateObjectFieldListTypeDefinitionId(
+			long listTypeDefinitionId, String businessType)
+		throws PortalException {
+
+		if ((listTypeDefinitionId == 0) &&
+			StringUtil.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			throw new ObjectFieldListTypeDefinitionIdException(
+				"List type definition id must not be null");
 		}
 	}
 

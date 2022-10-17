@@ -47,6 +47,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -106,6 +107,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerTracker objectEntryManagerTracker,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -128,6 +130,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerTracker = objectEntryManagerTracker;
+		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -252,19 +255,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectRelatedModelsProvider.class,
 				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryLocalService,
-					_objectFieldLocalService, _objectRelationshipLocalService),
+					_objectEntryService, _objectFieldLocalService, _objectRelationshipLocalService),
 				null),
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryLocalService,
-					_objectFieldLocalService, _objectRelationshipLocalService),
+					_objectEntryService, _objectFieldLocalService, _objectRelationshipLocalService),
 				null),
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryLocalService,
-					_objectRelationshipLocalService),
+					_objectEntryService, _objectRelationshipLocalService),
 				null),
 			_bundleContext.registerService(
 				PortletResourcePermission.class, portletResourcePermission,
@@ -397,6 +400,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectRelationshipLocalService

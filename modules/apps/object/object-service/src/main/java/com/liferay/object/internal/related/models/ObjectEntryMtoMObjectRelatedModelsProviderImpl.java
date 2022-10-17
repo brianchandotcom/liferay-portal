@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,9 +42,11 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	public ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryService objectEntryService,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryService = objectEntryService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 
 		_className = objectDefinition.getClassName();
@@ -89,7 +92,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
-				_objectEntryLocalService.deleteObjectEntry(
+				_objectEntryService.deleteObjectEntry(
 					objectEntry.getObjectEntryId());
 			}
 		}
@@ -165,6 +168,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 	private final String _className;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 

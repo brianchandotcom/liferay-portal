@@ -322,6 +322,55 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testLayoutPropagationWithMasterLayout() throws Exception {
+		Layout masterLayoutOfLayoutSetPrototype =
+			LayoutTestUtil.addTypeContentLayout(
+				_layoutSetPrototypeGroup, true, false);
+
+		Layout layoutOfLayoutSetPrototype1 =
+			LayoutTestUtil.addTypeContentLayout(
+				_layoutSetPrototypeGroup, true, false);
+
+		layoutOfLayoutSetPrototype1.setMasterLayoutPlid(
+			masterLayoutOfLayoutSetPrototype.getPlid());
+
+		LayoutLocalServiceUtil.updateLayout(layoutOfLayoutSetPrototype1);
+
+		propagateChanges(group);
+
+		Layout layoutOfLayoutSetPrototype2 =
+			LayoutTestUtil.addTypeContentLayout(
+				_layoutSetPrototypeGroup, true, false);
+
+		layoutOfLayoutSetPrototype2.setMasterLayoutPlid(
+			masterLayoutOfLayoutSetPrototype.getPlid());
+
+		LayoutLocalServiceUtil.updateLayout(layoutOfLayoutSetPrototype2);
+
+		propagateChanges(group);
+
+		List<Layout> siteLayoutsWithTemplateMasters =
+			LayoutLocalServiceUtil.getMasterLayouts(
+				group.getGroupId(), masterLayoutOfLayoutSetPrototype.getPlid());
+
+		Assert.assertEquals(
+			siteLayoutsWithTemplateMasters.toString(), 0,
+			siteLayoutsWithTemplateMasters.size());
+
+		Layout layoutMasterOfSite = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false,
+			masterLayoutOfLayoutSetPrototype.getFriendlyURL());
+
+		List<Layout> siteLayoutsWithSiteMasters =
+			LayoutLocalServiceUtil.getMasterLayouts(
+				group.getGroupId(), layoutMasterOfSite.getPlid());
+
+		Assert.assertEquals(
+			siteLayoutsWithSiteMasters.toString(), 2,
+			siteLayoutsWithSiteMasters.size());
+	}
+
+	@Test
 	public void testPortletDataPropagationWithLinkDisabled() throws Exception {
 		doTestPortletDataPropagation(false);
 	}

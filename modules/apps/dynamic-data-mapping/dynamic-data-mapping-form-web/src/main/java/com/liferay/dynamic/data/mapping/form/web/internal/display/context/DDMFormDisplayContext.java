@@ -436,6 +436,54 @@ public class DDMFormDisplayContext {
 			"formInstanceRecordId");
 	}
 
+	public String getLimitToOneSubmissionPerUserBody() throws PortalException {
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		if (ddmFormInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUserBody());
+
+		String limitToOneSubmissionPerUserBody = jsonObject.getString(
+			getDefaultLanguageId());
+
+		if (Validator.isNotNull(limitToOneSubmissionPerUserBody)) {
+			return limitToOneSubmissionPerUserBody;
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public String getLimitToOneSubmissionPerUserHeader()
+		throws PortalException {
+
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		if (ddmFormInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			ddmFormInstanceSettings.limitToOneSubmissionPerUserHeader());
+
+		String limitToOneSubmissionPerUserHeader = jsonObject.getString(
+			getDefaultLanguageId());
+
+		if (Validator.isNotNull(limitToOneSubmissionPerUserHeader)) {
+			return limitToOneSubmissionPerUserHeader;
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getRedirectURL() throws PortalException {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 

@@ -93,8 +93,8 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 					pageTitle = ddmFormDisplayContext.getSuccessPageTitle(displayLocale);
 				}
 				else {
-					pageDescription = LanguageUtil.get(request, "you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake");
-					pageTitle = LanguageUtil.get(request, "you-have-already-responded");
+					pageDescription = ddmFormDisplayContext.getLimitToOneSubmissionPerUserBody();
+					pageTitle = ddmFormDisplayContext.getLimitToOneSubmissionPerUserHeader();
 				}
 				%>
 

@@ -513,33 +513,19 @@ definition {
 		}
 
 		task ("When the admin duplicate Simple T-Shirt") {
-			Click(
-				key_itemName = "",
-				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-			Click(
-				key_optionValue = "Duplicate",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-			CommerceEntry.addProductsEntry(
+			CommerceProducts.duplicateProduct(
+				checkProductFields = "true",
+				compileDescription = "false",
 				productCatalog = "Master",
-				productFullDescription = "",
+				productName = "Simple T-Shirt",
+				publishProduct = "true");
+
+			CommerceProducts.duplicateProduct(
+				checkProductFields = "true",
+				compileDescription = "false",
+				productCatalog = "Master",
 				productName = "Copy of Simple T-Shirt",
-				productShortDescription = "");
-
-			Click(
-				key_itemName = "",
-				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-			Click(
-				key_optionValue = "Duplicate",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-			CommerceEntry.addProductsEntry(
-				productCatalog = "Master",
-				productFullDescription = "",
-				productName = "Copy of Copy of Simple T-Shirt",
-				productShortDescription = "");
+				publishProduct = "true");
 
 			Navigator.gotoBack();
 		}

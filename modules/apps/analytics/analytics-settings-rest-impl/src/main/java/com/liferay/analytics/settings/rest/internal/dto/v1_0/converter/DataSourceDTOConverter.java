@@ -44,6 +44,8 @@ public class DataSourceDTOConverter
 
 		return new DataSource() {
 			{
+				commerceChannelIds =
+					analyticsDataSource.getCommerceChannelIds();
 				dataSourceId = String.valueOf(analyticsDataSource.getId());
 				siteIds = analyticsDataSource.getSiteIds();
 			}

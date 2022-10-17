@@ -53,7 +53,7 @@ public class CommerceChannelDTOConverter
 
 		return new CommerceChannel() {
 			{
-				id = group.getGroupId();
+				id = group.getClassPK();
 				name = group.getDescriptiveName();
 
 				setChannelName(

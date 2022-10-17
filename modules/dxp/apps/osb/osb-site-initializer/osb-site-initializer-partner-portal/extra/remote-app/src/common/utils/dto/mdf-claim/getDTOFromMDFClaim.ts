@@ -12,11 +12,12 @@
 import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
 import MDFClaim from '../../../interfaces/mdfClaim';
 
-export function getDTOFromMDFClaim(mdfClaim: MDFClaim): MDFClaimDTO {
+export function getDTOFromMDFClaim(mdfClaim: MDFClaim): MDFClaimDTO & MDFClaim {
 	return {
 		amountClaimed: mdfClaim.totalClaimAmount,
-		mdfRequestedAmount: mdfClaim.totalrequestedAmount,
 		r_mdfRequestToMdfClaims_c_mdfRequestId:
 			mdfClaim.r_mdfRequestToMdfClaims_c_mdfRequestId,
+		reimbursementInvoice: mdfClaim.reimbursementInvoice,
+		totalrequestedAmount: mdfClaim.totalrequestedAmount,
 	};
 }

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Luis Miguel Barcos
  */
-@Component(immediate = true, service = GraphQLContributor.class)
+@Component(service = GraphQLContributor.class)
 public class StructuredContentGraphQLContributor implements GraphQLContributor {
 
 	@Override

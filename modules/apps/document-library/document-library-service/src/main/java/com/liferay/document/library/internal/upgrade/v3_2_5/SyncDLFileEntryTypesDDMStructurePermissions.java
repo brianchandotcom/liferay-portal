@@ -14,58 +14,67 @@
 
 package com.liferay.document.library.internal.upgrade.v3_2_5;
 
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Matthias Bläsing
  */
-public class SyncDLFileEntryTypesDDMStructurePermissions extends UpgradeProcess {
+public class SyncDLFileEntryTypesDDMStructurePermissions
+	extends UpgradeProcess {
 
 	public SyncDLFileEntryTypesDDMStructurePermissions(
-                DDMPermissionSupport ddmPermissionSupport,
-                ResourceActionLocalService resourceActionLocalService,
+		DDMPermissionSupport ddmPermissionSupport,
+		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
-                _ddmPermissionSupport = ddmPermissionSupport;
-                _resourceActionLocalService = resourceActionLocalService;
+		_ddmPermissionSupport = ddmPermissionSupport;
+		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-                String metadataResourceName = _ddmPermissionSupport
-                        .getStructureModelResourceName(DLFileEntryMetadata.class.getName());
+		String metadataResourceName =
+			_ddmPermissionSupport.getStructureModelResourceName(
+				DLFileEntryMetadata.class.getName());
 
-                List<ResourceAction> fileEntryTypeActions = _resourceActionLocalService
-                        .getResourceActions(DLFileEntryType.class.getName());
+		List<ResourceAction> fileEntryTypeActions =
+			_resourceActionLocalService.getResourceActions(
+				DLFileEntryType.class.getName());
 
-                Set<String> fileEntryMetadataActions = _resourceActionLocalService
-                        .getResourceActions(metadataResourceName)
-                        .stream()
-                        .map(ra -> ra.getActionId())
-                        .collect(Collectors.toSet());
+		List<ResourceAction> fileEntryMetadataAction =
+			_resourceActionLocalService.getResourceActions(
+				metadataResourceName);
+
+		Set<String> fileEntryMetadataActionIds = new HashSet<>();
+
+		for (ResourceAction ra : fileEntryMetadataAction) {
+			fileEntryMetadataActionIds.add(ra.getActionId());
+		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId, fileEntryTypeId, dataDefinitionId from DLFileEntryType");
+				"select companyId, fileEntryTypeId, dataDefinitionId from " +
+					"DLFileEntryType");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -73,46 +82,50 @@ public class SyncDLFileEntryTypesDDMStructurePermissions extends UpgradeProcess 
 				long fileEntryTypeId = resultSet.getLong("fileEntryTypeId");
 				long dataDefinitionId = resultSet.getLong("dataDefinitionId");
 
-                                List<ResourcePermission> permissions = _resourcePermissionLocalService.getResourcePermissions(
-                                        companyId,
-                                        DLFileEntryType.class.getName(),
-                                        ResourceConstants.SCOPE_INDIVIDUAL,
-                                        Long.toString(fileEntryTypeId)
-                                );
+				List<ResourcePermission> permissions =
+					_resourcePermissionLocalService.getResourcePermissions(
+						companyId, DLFileEntryType.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(fileEntryTypeId));
 
-                                Map<Long,String[]> roleIdsToActionIds = new HashMap<>();
+				Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
-                                for(ResourcePermission permission: permissions) {
-                                        long actionIds = permission.getActionIds();
-                                        List<String> actionIdList = new ArrayList<>();
-                                        for(ResourceAction ra: fileEntryTypeActions) {
-                                            String actionId = ra.getActionId();
-                                            if((actionIds & ra.getBitwiseValue()) == ra.getBitwiseValue() && fileEntryMetadataActions.contains(actionId)) {
-                                                actionIdList.add(actionId);
-                                            }
-                                        }
-                                        roleIdsToActionIds.put(permission.getRoleId(), actionIdList.toArray(new String[0]));
-                                }
+				for (ResourcePermission permission : permissions) {
+					long actionIds = permission.getActionIds();
+					List<String> actionIdList = new ArrayList<>();
 
-                                try {
-                                    _resourcePermissionLocalService.setResourcePermissions(
-                                            companyId,
-                                            metadataResourceName,
-                                            ResourceConstants.SCOPE_INDIVIDUAL,
-                                            Long.toString(dataDefinitionId),
-                                            roleIdsToActionIds
-                                    );
-                                }
-                                catch (PortalException portalException) {
-                                        ReflectionUtil.throwException(portalException);
-                                }
+					for (ResourceAction ra : fileEntryTypeActions) {
+						String actionId = ra.getActionId();
+
+						if (((actionIds & ra.getBitwiseValue()) ==
+								ra.getBitwiseValue()) &&
+							fileEntryMetadataActionIds.contains(actionId)) {
+
+							actionIdList.add(actionId);
+						}
+					}
+
+					roleIdsToActionIds.put(
+						permission.getRoleId(),
+						actionIdList.toArray(new String[0]));
+				}
+
+				try {
+					_resourcePermissionLocalService.setResourcePermissions(
+						companyId, metadataResourceName,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(dataDefinitionId), roleIdsToActionIds);
+				}
+				catch (PortalException portalException) {
+					ReflectionUtil.throwException(portalException);
+				}
 			}
 		}
 	}
 
+	private final DDMPermissionSupport _ddmPermissionSupport;
 	private final ResourceActionLocalService _resourceActionLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
-	private final ResourcePermissionLocalService _resourcePermissionLocalService;
-
-        private final DDMPermissionSupport _ddmPermissionSupport;
 }

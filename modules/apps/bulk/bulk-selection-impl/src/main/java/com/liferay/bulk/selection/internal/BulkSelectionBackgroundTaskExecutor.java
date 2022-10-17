@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "background.task.executor.class.name=com.liferay.bulk.selection.internal.BulkSelectionBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )

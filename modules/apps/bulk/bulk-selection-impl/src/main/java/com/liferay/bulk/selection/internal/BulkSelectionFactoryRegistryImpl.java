@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = BulkSelectionFactoryRegistry.class)
+@Component(service = BulkSelectionFactoryRegistry.class)
 public class BulkSelectionFactoryRegistryImpl
 	implements BulkSelectionFactoryRegistry {
 

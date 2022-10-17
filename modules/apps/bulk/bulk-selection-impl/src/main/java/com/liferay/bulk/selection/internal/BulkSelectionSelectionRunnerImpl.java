@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = BulkSelectionRunner.class)
+@Component(service = BulkSelectionRunner.class)
 public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 	@Override

@@ -36,6 +36,8 @@ public class DispatchTriggerUtil {
 				dispatchTaskSettings =
 					dispatchTrigger.getDispatchTaskSettings();
 				endDate = dispatchTrigger.getEndDate();
+				externalReferenceCode =
+					dispatchTrigger.getExternalReferenceCode();
 				id = dispatchTrigger.getDispatchTriggerId();
 				name = dispatchTrigger.getName();
 				overlapAllowed = dispatchTrigger.getOverlapAllowed();

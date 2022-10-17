@@ -19,6 +19,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -53,6 +54,16 @@ public class LayoutUtilityPageEntryServiceImpl
 		return layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			externalReferenceCode, getUserId(), groupId, name, type,
 			masterLayoutPlid);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
+			long groupId, long layoutUtilityPageEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.copyLayoutUtilityPageEntry(
+			getUserId(), groupId, layoutUtilityPageEntryId, serviceContext);
 	}
 
 	@Override

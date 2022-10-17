@@ -21,6 +21,10 @@ import {
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
 const ACTIONS = {
+	copyLayoutUtilityPageEntry({copyLayoutUtilityPageEntryURL}) {
+		send(copyLayoutUtilityPageEntryURL);
+	},
+
 	deleteLayoutUtilityPageEntry({
 		deleteLayoutUtilityPageEntryMessage,
 		deleteLayoutUtilityPageEntryURL,

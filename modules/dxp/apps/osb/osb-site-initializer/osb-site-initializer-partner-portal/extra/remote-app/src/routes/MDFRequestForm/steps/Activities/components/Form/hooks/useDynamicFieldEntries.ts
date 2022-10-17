@@ -13,15 +13,15 @@ import {useMemo} from 'react';
 
 import {LiferayPicklistName} from '../../../../../../../common/enums/liferayPicklistName';
 import useGetListTypeDefinitions from '../../../../../../../common/services/liferay/list-type-definitions/useGetListTypeDefinitions';
-import useGetTypeActivities from '../../../../../../../common/services/liferay/object/type-activities/useGetTypeActivities';
 import getEntriesByListTypeDefinitions from '../../../../../utils/getEntriesByListTypeDefinitions';
 
 export default function useDynamicFieldEntries() {
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
 		LiferayPicklistName.LEAD_FOLLOW_UP_STRATEGIES,
 		LiferayPicklistName.BUDGET_EXPENSES,
+		LiferayPicklistName.TYPE_OF_ACTIVITY,
+		LiferayPicklistName.TACTIC,
 	]);
-	const {data: typeActivities} = useGetTypeActivities();
 
 	const fieldEntries = useMemo(
 		() => getEntriesByListTypeDefinitions(listTypeDefinitions?.items),
@@ -30,6 +30,5 @@ export default function useDynamicFieldEntries() {
 
 	return {
 		fieldEntries,
-		typeActivities: typeActivities?.items,
 	};
 }

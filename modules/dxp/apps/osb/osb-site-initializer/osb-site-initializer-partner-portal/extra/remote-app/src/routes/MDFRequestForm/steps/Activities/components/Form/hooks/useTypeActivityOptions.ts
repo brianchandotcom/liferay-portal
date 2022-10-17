@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,50 +10,50 @@
  * distribution rights of the Software.
  */
 
-import {useEffect, useMemo, useState} from 'react';
+import {OptionHTMLAttributes, useEffect, useMemo, useState} from 'react';
 
-import TypeActivity from '../../../../../../../common/interfaces/typeActivity';
-import useGetTacticsByTypeActivityId from '../../../../../../../common/services/liferay/object/type-activities/useGetTacticsByTypeActivityId';
+import LiferayPicklist from '../../../../../../../common/interfaces/liferayPicklist';
 
 export default function useTypeActivityOptions(
-	typeActivities: TypeActivity[] | undefined,
-	handleSelected: (typeActivity: TypeActivity) => void
+	typeActivities: OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
+	tactics: OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
+	handleSelected: (option: LiferayPicklist) => void
 ) {
 	const [selectedTypeActivity, setSelectedTypeActivity] = useState<
-		TypeActivity
+		OptionHTMLAttributes<HTMLOptionElement>
 	>();
 
-	const {data: tactics} = useGetTacticsByTypeActivityId(
-		selectedTypeActivity?.id
-	);
+	const tacticsBySelectedTypeActivity = tactics?.filter((tactic) => {
+		return String(tactic.value).includes(
+			String(selectedTypeActivity?.value)
+		);
+	});
 
 	useEffect(() => {
 		if (selectedTypeActivity) {
-			handleSelected(selectedTypeActivity);
+			handleSelected({
+				key: selectedTypeActivity?.value as string,
+				name: selectedTypeActivity?.label as string,
+			});
 		}
 	}, [handleSelected, selectedTypeActivity]);
 
 	const onTypeActivitySelected = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const optionSelected = typeActivities?.find(
-			(typeActivity) => typeActivity.id === +event.target.value
-		);
+		const optionSelected = typeActivities?.find((typeActivity) => {
+			return typeActivity.value === event.target.value;
+		});
 
-		setSelectedTypeActivity(optionSelected);
+		setSelectedTypeActivity(
+			optionSelected as OptionHTMLAttributes<HTMLOptionElement>
+		);
 	};
 
 	return {
 		onTypeActivitySelected,
 		selectedTypeActivity,
-		tacticsBySelectedTypeActivity: tactics?.items,
-		typeActivitiesOptions: useMemo(
-			() =>
-				typeActivities?.map((typeActivity) => ({
-					label: typeActivity.name,
-					value: typeActivity.id,
-				})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
-			[typeActivities]
-		),
+		tacticsBySelectedTypeActivity,
+		typeActivitiesOptions: useMemo(() => typeActivities, [typeActivities]),
 	};
 }

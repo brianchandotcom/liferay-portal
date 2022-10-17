@@ -9,31 +9,27 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
+import {OptionHTMLAttributes, useMemo} from 'react';
 
-import Tactic from '../../../../../../../common/interfaces/tactic';
+import LiferayPicklist from '../../../../../../../common/interfaces/liferayPicklist';
 
 export default function useTacticsOptions(
-	tactics: Tactic[] | undefined,
-	handleSelected: (selectedTactic?: Tactic) => void
+	tactics: OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
+	handleSelected: (option: LiferayPicklist) => void
 ) {
 	const onTacticSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const optionSelected = tactics?.find(
-			(tactic) => tactic.id === +event.target.value
+			(tactic) => tactic.value === event.target.value
 		);
 
-		handleSelected(optionSelected);
+		handleSelected({
+			key: optionSelected?.value as string,
+			name: optionSelected?.label as string,
+		});
 	};
 
 	return {
 		onTacticSelected,
-		tacticsOptions: useMemo(
-			() =>
-				tactics?.map((tatic) => ({
-					label: tatic.name,
-					value: tatic.id,
-				})),
-			[tactics]
-		),
+		tacticsOptions: useMemo(() => tactics, [tactics]),
 	};
 }

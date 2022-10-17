@@ -321,6 +321,12 @@ public class KBDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getKBFolderDropdownItems(KBFolder kbFolder) {
+		return getKBFolderDropdownItems(kbFolder, null);
+	}
+
+	public List<DropdownItem> getKBFolderDropdownItems(
+		KBFolder kbFolder, List<Long> selectedItemAncestorIds) {
+
 		return DropdownItemListBuilder.add(
 			() -> _hasUpdatePermission(kbFolder),
 			dropdownItem -> {
@@ -450,7 +456,24 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/delete_kb_folder"
 					).setRedirect(
-						_currentURL
+						() -> {
+							if (ListUtil.isNotEmpty(selectedItemAncestorIds)) {
+								if (selectedItemAncestorIds.contains(
+										kbFolder.getKbFolderId())) {
+
+									return _createKbFolderRenderURL(
+										kbFolder.getParentKBFolderId());
+								}
+							}
+							else {
+								if (_isKBFolderSelected(kbFolder)) {
+									return _createKbFolderRenderURL(
+										kbFolder.getParentKBFolderId());
+								}
+							}
+
+							return _currentURL;
+						}
 					).setParameter(
 						"kbFolderId", kbFolder.getKbFolderId()
 					).buildString());
@@ -881,6 +904,23 @@ public class KBDropdownItemsProvider {
 				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
 
 			if (resourcePrimaryKey == kbArticle.getResourcePrimKey()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isKBFolderSelected(KBFolder kbFolder) {
+		long parentResourceClassNameId = ParamUtil.getLong(
+			_liferayPortletRequest, "parentResourceClassNameId");
+
+		if (parentResourceClassNameId == kbFolder.getClassNameId()) {
+			long parentResourcePrimaryKey = ParamUtil.getLong(
+				_liferayPortletRequest, "parentResourcePrimKey",
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			if (parentResourcePrimaryKey == kbFolder.getKbFolderId()) {
 				return true;
 			}
 		}

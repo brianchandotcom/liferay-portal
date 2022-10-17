@@ -133,6 +133,25 @@ public class DownloadFileVersionContentDashboardItemVersionActionProviderTest {
 				_fileEntry.getFileVersion(), new MockHttpServletRequest()));
 	}
 
+	@Test
+	public void testIsShowInvalidMimeType() throws Exception {
+		_fileEntry = _dlAppLocalService.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." +
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML,
+			MimeTypesUtil.getExtensionContentType(
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML),
+			new byte[0], null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertTrue(
+			_contentDashboardItemVersionActionProvider.isShow(
+				_fileEntry.getFileVersion(), new MockHttpServletRequest()));
+	}
+
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
 		throws Exception {
 

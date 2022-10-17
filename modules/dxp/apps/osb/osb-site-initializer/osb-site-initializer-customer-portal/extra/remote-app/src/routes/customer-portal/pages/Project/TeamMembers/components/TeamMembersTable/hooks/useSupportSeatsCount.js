@@ -11,14 +11,18 @@
 
 import {useEffect, useState} from 'react';
 
-export default function useSupportSeatsCount(supportSeatsCount) {
-	const [maxSupportSeatsCount, setMaxSupportSeatsCount] = useState(0);
+export default function useSupportSeatsCount(userAccounts, searching) {
+	const [supportSeatsCount, setSupportSeatsCount] = useState();
 
 	useEffect(() => {
-		if (supportSeatsCount > maxSupportSeatsCount) {
-			setMaxSupportSeatsCount(supportSeatsCount);
+		if (!searching) {
+			setSupportSeatsCount(
+				userAccounts?.items.filter(
+					(item) => item.selectedAccountSummary.hasSupportSeatRole
+				).length
+			);
 		}
-	}, [maxSupportSeatsCount, supportSeatsCount]);
+	}, [searching, userAccounts?.items]);
 
-	return maxSupportSeatsCount;
+	return supportSeatsCount;
 }

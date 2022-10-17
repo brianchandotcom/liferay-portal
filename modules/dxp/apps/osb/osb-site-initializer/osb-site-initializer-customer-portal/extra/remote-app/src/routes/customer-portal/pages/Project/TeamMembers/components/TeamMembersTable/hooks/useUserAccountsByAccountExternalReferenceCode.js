@@ -10,7 +10,7 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
-import {useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import useSearchTerm from '../../../../../../../../common/hooks/useSearchTerm';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
 import getRaysourceContactRoleName from '../utils/getRaysourceContactRoleName';
@@ -32,6 +32,8 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
 	koroneikiAccountLoading
 ) {
+	const [searching, setSearching] = useState(false);
+
 	const {
 		data,
 		networkStatus,
@@ -53,21 +55,24 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		updateContactRoles,
 	} = useUpdateUserAccount();
 
+	useEffect(() => {
+		if (networkStatus === NetworkStatus.refetch) {
+			setSearching(false);
+		}
+	}, [networkStatus]);
+
 	const supportSeatsCount = useSupportSeatsCount(
-		useMemo(
-			() =>
-				data?.accountUserAccountsByExternalReferenceCode.items.filter(
-					(item) => item.selectedAccountSummary.hasSupportSeatRole
-				).length,
-			[data?.accountUserAccountsByExternalReferenceCode.items]
-		)
+		data?.accountUserAccountsByExternalReferenceCode,
+		searching
 	);
 
-	const search = useSearchTerm((searchTerm) =>
+	const search = useSearchTerm((searchTerm) => {
+		setSearching(true);
+
 		refetch({
 			filter: getFilter(searchTerm),
-		})
-	);
+		});
+	});
 
 	const remove = (userAccount) => {
 		const contactRoleNames = userAccount.selectedAccountSummary.roleBriefs?.map(

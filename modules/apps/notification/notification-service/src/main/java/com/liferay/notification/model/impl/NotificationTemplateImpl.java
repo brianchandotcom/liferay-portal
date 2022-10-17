@@ -14,8 +14,23 @@
 
 package com.liferay.notification.model.impl;
 
+import com.liferay.notification.model.NotificationTemplateRecipient;
+
 /**
  * @author Gabriel Albuquerque
  */
 public class NotificationTemplateImpl extends NotificationTemplateBaseImpl {
+
+	public NotificationTemplateRecipient getNotificationTemplateRecipient() {
+		return _notificationTemplateRecipient;
+	}
+
+	public void setNotificationTemplateRecipient(
+		NotificationTemplateRecipient notificationTemplateRecipient) {
+
+		_notificationTemplateRecipient = notificationTemplateRecipient;
+	}
+
+	private NotificationTemplateRecipient _notificationTemplateRecipient;
+
 }

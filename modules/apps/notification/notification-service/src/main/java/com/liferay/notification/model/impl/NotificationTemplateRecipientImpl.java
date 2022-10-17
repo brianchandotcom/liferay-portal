@@ -14,9 +14,31 @@
 
 package com.liferay.notification.model.impl;
 
+import com.liferay.notification.model.NotificationTemplateRecipientSetting;
+
+import java.util.List;
+
 /**
- * @author Gabriel Albuquerque
+ * @author Feliphe Marinho
  */
 public class NotificationTemplateRecipientImpl
 	extends NotificationTemplateRecipientBaseImpl {
+
+	public List<NotificationTemplateRecipientSetting>
+		getNotificationTemplateRecipientSettings() {
+
+		return _notificationTemplateRecipientSettings;
+	}
+
+	public void setNotificationTemplateRecipientSettings(
+		List<NotificationTemplateRecipientSetting>
+			notificationTemplateRecipientSettings) {
+
+		_notificationTemplateRecipientSettings =
+			notificationTemplateRecipientSettings;
+	}
+
+	private List<NotificationTemplateRecipientSetting>
+		_notificationTemplateRecipientSettings;
+
 }

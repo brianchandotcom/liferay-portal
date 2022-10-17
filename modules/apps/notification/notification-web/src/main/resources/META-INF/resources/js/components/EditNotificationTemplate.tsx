@@ -469,8 +469,12 @@ export default function EditNotificationTemplate({
 														},
 													})
 												}
-												placeholder={Liferay.Language.get(
-													'use-terms-to-configure-recipients-for-this-notifications'
+												placeholder={Liferay.Util.sub(
+													Liferay.Language.get(
+														'use-terms-to-configure-recipients-for-this-notifications-x'
+													),
+													'[%ENTRY_CREATOR%], [%BUYER_NAME%]',
+													'.'
 												)}
 												type="text"
 												value={

@@ -15,7 +15,7 @@
 
 <tr>
 	<td>ADD_NEW_USER_HEADER</td>
-	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'Add New User to ${key_accountName}')]</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//h1[contains(@data-qa-id,'headerTitle') and contains(.,'Add New User to ${key_accountName}')]</td>
 	<td></td>
 </tr>
 <tr>

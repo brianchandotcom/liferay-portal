@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>HEADER</td>
-	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - Export Personal Data')]</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//h1[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - Export Personal Data')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_PROCESS_HEADER</td>
-	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - New Data Export')]</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//h1[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - New Data Export')]</td>
 	<td></td>
 </tr>
 <tr>

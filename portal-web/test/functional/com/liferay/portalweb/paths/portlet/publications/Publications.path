@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>MANAGE_PUBLICATIONS_PAGE_TITLE</td>
-	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
+	<td>//h1[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
 </tr>
 <tr>

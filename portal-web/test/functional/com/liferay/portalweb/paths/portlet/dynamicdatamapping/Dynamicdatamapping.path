@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>HEADER_TITLE</td>
-	<td>//span[contains(.,'${key_headerTitle}')]</td>
+	<td>//h1[contains(.,'${key_headerTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

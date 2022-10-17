@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>PROCESS_BUILDER_HEADER_TITLE</td>
-	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_pageName}')]</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//h1[contains(@data-qa-id,'headerTitle') and contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

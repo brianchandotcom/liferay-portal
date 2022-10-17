@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>DETAIL_PAGE_HEADER</td>
-	<td>//span[contains(@data-qa-id,'headerTitle') and contains(text(),'${key_header}')]</td>
+	<td>//h1[contains(@data-qa-id,'headerTitle') and contains(text(),'${key_header}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -95,13 +95,15 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 					FunctionObjectActionExecutorImplConfiguration.class,
 					properties);
 
-		_location = _getLocation(functionObjectActionExecutorImplConfiguration);
 		_oAuth2Application =
 			_oAuth2ApplicationLocalService.
-				fetchOAuth2ApplicationByExternalReferenceCode(
+				getOAuth2ApplicationByExternalReferenceCode(
 					company.getCompanyId(),
 					functionObjectActionExecutorImplConfiguration.
 						oAuth2ApplicationExternalReferenceCode());
+
+		_location = _getLocation(
+			functionObjectActionExecutorImplConfiguration, _oAuth2Application);
 		_timeout = functionObjectActionExecutorImplConfiguration.timeout();
 	}
 
@@ -145,7 +147,8 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 
 	private String _getLocation(
 		FunctionObjectActionExecutorImplConfiguration
-			functionObjectActionExecutorImplConfiguration) {
+			functionObjectActionExecutorImplConfiguration,
+		OAuth2Application oAuth2Application) {
 
 		String resourcePath =
 			functionObjectActionExecutorImplConfiguration.resourcePath();
@@ -154,7 +157,7 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 			return resourcePath;
 		}
 
-		String homePageURL = _oAuth2Application.getHomePageURL();
+		String homePageURL = oAuth2Application.getHomePageURL();
 
 		if (homePageURL.endsWith(StringPool.SLASH)) {
 			homePageURL = homePageURL.substring(0, homePageURL.length() - 1);

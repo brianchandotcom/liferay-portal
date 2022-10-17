@@ -60,10 +60,16 @@ public class AnalyticsSettingsManager {
 			AnalyticsConfiguration.class, companyId);
 	}
 
+	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId)
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			AnalyticsConfiguration.class, companyId);
+	}
+
 	public boolean isAnalyticsEnabled(long companyId) throws Exception {
 		AnalyticsConfiguration analyticsConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId);
+			getAnalyticsConfiguration(companyId);
 
 		if (Validator.isNull(
 				analyticsConfiguration.liferayAnalyticsDataSourceId()) ||

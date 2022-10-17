@@ -826,13 +826,15 @@ describe('ExperienceToolbarSection', () => {
 		);
 	});
 
-	it('respond to ESC keydown event hiding the dropdown', async () => {
+	it('respond to ESC keydown and click outside events hiding the dropdown', async () => {
 		const {findByRole, getByLabelText} = renderExperienceToolbarSection(
 			mockState,
 			mockConfig
 		);
 
 		const dropDownButton = getByLabelText('experience');
+
+		// ESC
 
 		userEvent.click(dropDownButton);
 
@@ -851,8 +853,33 @@ describe('ExperienceToolbarSection', () => {
 			keyCode: 27,
 		});
 
-		waitForElementToBeRemoved(dropdownElement).then(() =>
-			expect(dropdownElement).not.toBeInTheDocument()
+		await waitForElementToBeRemoved(dropdownElement);
+		expect(dropdownElement).not.toBeInTheDocument();
+
+		// clickoutside
+
+		userEvent.click(dropDownButton);
+
+		await findByRole('list');
+
+		const dropdownElement2 = document.querySelector(
+			'.page-editor__toolbar-experience__dropdown-menu'
 		);
+
+		expect(dropdownElement2).toBeInTheDocument();
+
+		const outerDiv = document.querySelector('body > div');
+
+		fireEvent(
+			outerDiv,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		waitForElementToBeRemoved(dropdownElement2).then(() => {
+			expect(dropdownElement2).not.toBeInTheDocument();
+		});
 	});
 });

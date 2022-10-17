@@ -15,7 +15,7 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimDocuments(
-	file?: File,
+	file: File,
 	claimId?: number,
 	activityId?: number,
 	budgetId?: number

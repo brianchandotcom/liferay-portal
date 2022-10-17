@@ -25,10 +25,9 @@ import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';
 import submitForm from './utils/submitForm';
 
 const getInitialFormValues = (
-	mdfRequestId:number,
+	mdfRequestId: number,
 	activitiesDTO?: MDFRequestActivityDTO[],
 	totalrequestedAmount?: number
-
 ): MDFClaim => ({
 	activities: activitiesDTO?.map((activity) => ({
 		budgets: activity.activityToBudgets?.map((budget) => ({
@@ -67,7 +66,7 @@ const MDFClaimForm = () => {
 			initialValues={getInitialFormValues(
 				Number(mdfRequestId),
 				mdfRequest.mdfRequestToActivities,
-				mdfRequest.totalMDFRequestAmount,
+				mdfRequest.totalMDFRequestAmount
 			)}
 			onSubmit={(values, formikHelpers) =>
 				submitForm(values, formikHelpers, siteURL)

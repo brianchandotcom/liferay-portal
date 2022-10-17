@@ -14,9 +14,10 @@ import MDFClaimActivity from '../../../interfaces/mdfClaimActivity';
 
 export default function getDTOFromMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
-	mdfClaimId?: number
+	mdfClaimId: number
 ): MDFClaimActivityDTO {
 	return {
+		listQualifiedLeads: mdfClaimActivity.listQualifiedLeads,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
 		r_activityToMDFClaimActivities_c_activityId: mdfClaimActivity.id,

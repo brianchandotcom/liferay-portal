@@ -12,7 +12,7 @@
 import MDFClaimDocumensDTO from '../../../interfaces/dto/mdfClaimDocumentDTO';
 
 export function getDTOFromMDFClaimDocuments(
-	file?: File,
+	file: File,
 	claimId?: number,
 	activityId?: number,
 	budgetId?: number

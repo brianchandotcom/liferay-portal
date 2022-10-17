@@ -25,6 +25,10 @@ import java.util.List;
  */
 public class FolderSearchFacetDisplayContext implements Serializable {
 
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
+		return _bucketDisplayContexts;
+	}
+
 	public long getDisplayStyleGroupId() {
 		return _displayStyleGroupId;
 	}
@@ -33,12 +37,6 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 		getFolderFacetPortletInstanceConfiguration() {
 
 		return _folderFacetPortletInstanceConfiguration;
-	}
-
-	public List<BucketDisplayContext>
-		getBucketDisplayContexts() {
-
-		return _bucketDisplayContexts;
 	}
 
 	public String getPaginationStartParameterName() {
@@ -65,6 +63,12 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 		return _renderNothing;
 	}
 
+	public void setBucketDisplayContexts(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		_bucketDisplayContexts = bucketDisplayContexts;
+	}
+
 	public void setDisplayStyleGroupId(long displayStyleGroupId) {
 		_displayStyleGroupId = displayStyleGroupId;
 	}
@@ -75,14 +79,6 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 
 		_folderFacetPortletInstanceConfiguration =
 			folderFacetPortletInstanceConfiguration;
-	}
-
-	public void setBucketDisplayContexts(
-		List<BucketDisplayContext>
-			bucketDisplayContexts) {
-
-		_bucketDisplayContexts =
-			bucketDisplayContexts;
 	}
 
 	public void setNothingSelected(boolean nothingSelected) {
@@ -111,11 +107,10 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 		_renderNothing = renderNothing;
 	}
 
+	private List<BucketDisplayContext> _bucketDisplayContexts;
 	private long _displayStyleGroupId;
 	private FolderFacetPortletInstanceConfiguration
 		_folderFacetPortletInstanceConfiguration;
-	private List<BucketDisplayContext>
-		_bucketDisplayContexts;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;
 	private String _parameterName;

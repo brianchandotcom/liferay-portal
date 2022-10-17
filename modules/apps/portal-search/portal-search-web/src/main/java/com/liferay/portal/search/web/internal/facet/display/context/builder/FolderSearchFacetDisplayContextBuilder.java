@@ -62,9 +62,8 @@ public class FolderSearchFacetDisplayContextBuilder {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			new FolderSearchFacetDisplayContext();
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				_buildBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			_buildBucketDisplayContexts();
 
 		folderSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
@@ -82,8 +81,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 		folderSearchFacetDisplayContext.setParameterValues(
 			getParameterValueStrings());
 		folderSearchFacetDisplayContext.setRenderNothing(
-			isRenderNothing(
-				getTermCollectors(), bucketDisplayContexts));
+			isRenderNothing(getTermCollectors(), bucketDisplayContexts));
 
 		return folderSearchFacetDisplayContext;
 	}
@@ -217,28 +215,22 @@ public class FolderSearchFacetDisplayContextBuilder {
 		return displayName1.compareTo(displayName2);
 	}
 
-	private BucketDisplayContext
-		_buildBucketDisplayContext(
-			long folderId, String displayName, int frequency,
-			boolean selected) {
+	private BucketDisplayContext _buildBucketDisplayContext(
+		long folderId, String displayName, int frequency, boolean selected) {
 
-		BucketDisplayContext
-			bucketDisplayContext =
-				new BucketDisplayContext();
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
 		bucketDisplayContext.setBucketText(displayName);
-		bucketDisplayContext.setFilterValue(
-			String.valueOf(folderId));
+		bucketDisplayContext.setFilterValue(String.valueOf(folderId));
 		bucketDisplayContext.setFrequency(frequency);
-		bucketDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;
 	}
 
-	private BucketDisplayContext
-		_buildBucketDisplayContext(TermCollector termCollector) {
+	private BucketDisplayContext _buildBucketDisplayContext(
+		TermCollector termCollector) {
 
 		long folderId = GetterUtil.getLong(termCollector.getTerm());
 
@@ -253,18 +245,15 @@ public class FolderSearchFacetDisplayContextBuilder {
 			isSelected(folderId));
 	}
 
-	private List<BucketDisplayContext>
-		_buildBucketDisplayContexts() {
-
+	private List<BucketDisplayContext> _buildBucketDisplayContexts() {
 		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {
 			return _getEmptyBucketDisplayContexts();
 		}
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts = new ArrayList<>(
-				termCollectors.size());
+		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
+			termCollectors.size());
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			if ((_maxTerms > 0) && (i >= _maxTerms)) {
@@ -279,31 +268,26 @@ public class FolderSearchFacetDisplayContextBuilder {
 				break;
 			}
 
-			BucketDisplayContext
-				bucketDisplayContext =
-					_buildBucketDisplayContext(termCollector);
+			BucketDisplayContext bucketDisplayContext =
+				_buildBucketDisplayContext(termCollector);
 
 			if (bucketDisplayContext != null) {
-				bucketDisplayContexts.add(
-					bucketDisplayContext);
+				bucketDisplayContexts.add(bucketDisplayContext);
 			}
 		}
 
 		if (_order != null) {
 			if (_order.equals("count:asc")) {
-				bucketDisplayContexts.sort(
-					_COMPARATOR_FREQUENCY_ASC);
+				bucketDisplayContexts.sort(_COMPARATOR_FREQUENCY_ASC);
 			}
 			else if (_order.equals("count:desc")) {
-				bucketDisplayContexts.sort(
-					_COMPARATOR_FREQUENCY_DESC);
+				bucketDisplayContexts.sort(_COMPARATOR_FREQUENCY_DESC);
 			}
 			else if (_order.equals("key:asc")) {
 				bucketDisplayContexts.sort(_COMPARATOR_TERM_ASC);
 			}
 			else if (_order.equals("key:desc")) {
-				bucketDisplayContexts.sort(
-					_COMPARATOR_TERM_DESC);
+				bucketDisplayContexts.sort(_COMPARATOR_TERM_DESC);
 			}
 		}
 
@@ -320,118 +304,108 @@ public class FolderSearchFacetDisplayContextBuilder {
 		return null;
 	}
 
-	private BucketDisplayContext
-		_getEmptyBucketDisplayContext(long folderId) {
-
+	private BucketDisplayContext _getEmptyBucketDisplayContext(long folderId) {
 		return _buildBucketDisplayContext(
 			folderId, _getDisplayName(folderId), 0, true);
 	}
 
-	private List<BucketDisplayContext>
-		_getEmptyBucketDisplayContexts() {
-
+	private List<BucketDisplayContext> _getEmptyBucketDisplayContexts() {
 		Stream<Long> folderIdsStream = _selectedFolderIds.stream();
 
-		Stream<BucketDisplayContext>
-			bucketDisplayContextsStream = folderIdsStream.map(
-				this::_getEmptyBucketDisplayContext);
+		Stream<BucketDisplayContext> bucketDisplayContextsStream =
+			folderIdsStream.map(this::_getEmptyBucketDisplayContext);
 
-		return bucketDisplayContextsStream.collect(
-			Collectors.toList());
+		return bucketDisplayContextsStream.collect(Collectors.toList());
 	}
 
 	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_FREQUENCY_ASC =
-			new Comparator<BucketDisplayContext>() {
+		_COMPARATOR_FREQUENCY_ASC = new Comparator<BucketDisplayContext>() {
 
-				public int compare(
-					BucketDisplayContext displayContext1,
-					BucketDisplayContext displayContext2) {
+			public int compare(
+				BucketDisplayContext displayContext1,
+				BucketDisplayContext displayContext2) {
 
-					int result =
-						displayContext1.getFrequency() -
-							displayContext2.getFrequency();
+				int result =
+					displayContext1.getFrequency() -
+						displayContext2.getFrequency();
 
-					if (result == 0) {
-						return _compareDisplayNames(
-							displayContext1.getBucketText(),
-							displayContext2.getBucketText());
-					}
-
-					return result;
-				}
-
-			};
-
-	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_FREQUENCY_DESC =
-			new Comparator<BucketDisplayContext>() {
-
-				@Override
-				public int compare(
-					BucketDisplayContext displayContext1,
-					BucketDisplayContext displayContext2) {
-
-					int result =
-						displayContext2.getFrequency() -
-							displayContext1.getFrequency();
-
-					if (result == 0) {
-						return _compareDisplayNames(
-							displayContext1.getBucketText(),
-							displayContext2.getBucketText());
-					}
-
-					return result;
-				}
-
-			};
-
-	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_TERM_ASC =
-			new Comparator<BucketDisplayContext>() {
-
-				@Override
-				public int compare(
-					BucketDisplayContext displayContext1,
-					BucketDisplayContext displayContext2) {
-
-					int result = _compareDisplayNames(
+				if (result == 0) {
+					return _compareDisplayNames(
 						displayContext1.getBucketText(),
 						displayContext2.getBucketText());
-
-					if (result == 0) {
-						return displayContext2.getFrequency() -
-							displayContext1.getFrequency();
-					}
-
-					return result;
 				}
 
-			};
+				return result;
+			}
+
+		};
 
 	private static final Comparator<BucketDisplayContext>
-		_COMPARATOR_TERM_DESC =
-			new Comparator<BucketDisplayContext>() {
+		_COMPARATOR_FREQUENCY_DESC = new Comparator<BucketDisplayContext>() {
 
-				@Override
-				public int compare(
-					BucketDisplayContext displayContext1,
-					BucketDisplayContext displayContext2) {
+			@Override
+			public int compare(
+				BucketDisplayContext displayContext1,
+				BucketDisplayContext displayContext2) {
 
-					int result = _compareDisplayNames(
-						displayContext2.getBucketText(),
-						displayContext1.getBucketText());
+				int result =
+					displayContext2.getFrequency() -
+						displayContext1.getFrequency();
 
-					if (result == 0) {
-						return displayContext2.getFrequency() -
-							displayContext1.getFrequency();
-					}
-
-					return result;
+				if (result == 0) {
+					return _compareDisplayNames(
+						displayContext1.getBucketText(),
+						displayContext2.getBucketText());
 				}
 
-			};
+				return result;
+			}
+
+		};
+
+	private static final Comparator<BucketDisplayContext> _COMPARATOR_TERM_ASC =
+		new Comparator<BucketDisplayContext>() {
+
+			@Override
+			public int compare(
+				BucketDisplayContext displayContext1,
+				BucketDisplayContext displayContext2) {
+
+				int result = _compareDisplayNames(
+					displayContext1.getBucketText(),
+					displayContext2.getBucketText());
+
+				if (result == 0) {
+					return displayContext2.getFrequency() -
+						displayContext1.getFrequency();
+				}
+
+				return result;
+			}
+
+		};
+
+	private static final Comparator<BucketDisplayContext>
+		_COMPARATOR_TERM_DESC = new Comparator<BucketDisplayContext>() {
+
+			@Override
+			public int compare(
+				BucketDisplayContext displayContext1,
+				BucketDisplayContext displayContext2) {
+
+				int result = _compareDisplayNames(
+					displayContext2.getBucketText(),
+					displayContext1.getBucketText());
+
+				if (result == 0) {
+					return displayContext2.getFrequency() -
+						displayContext1.getFrequency();
+				}
+
+				return result;
+			}
+
+		};
 
 	private Facet _facet;
 	private final FolderFacetPortletInstanceConfiguration

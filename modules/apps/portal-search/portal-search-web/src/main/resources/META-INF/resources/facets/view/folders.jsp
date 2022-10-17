@@ -54,8 +54,7 @@ FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = folderSearchFa
 						</li>
 
 						<%
-						java.util.List<BucketDisplayContext>
-							bucketDisplayContexts = folderSearchFacetDisplayContext.getBucketDisplayContexts();
+						java.util.List<BucketDisplayContext> bucketDisplayContexts = folderSearchFacetDisplayContext.getBucketDisplayContexts();
 
 						for (BucketDisplayContext bucketDisplayContext : bucketDisplayContexts) {
 						%>

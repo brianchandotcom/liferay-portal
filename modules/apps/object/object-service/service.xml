@@ -121,6 +121,10 @@
 	</entity>
 	<entity local-service="true" name="ObjectEntry" remote-service="true" uuid="true">
 
+		<!-- External Reference Code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="objectEntryId" primary="true" type="long" />
@@ -139,7 +143,6 @@
 
 		<!-- Other fields -->
 
-		<column name="externalReferenceCode" type="String" />
 		<column name="objectDefinitionId" type="long" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
@@ -188,6 +191,10 @@
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 
+		<!-- External Reference Code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="objectFieldId" primary="true" type="long" />
@@ -202,7 +209,6 @@
 
 		<!-- Other fields -->
 
-		<column name="externalReferenceCode" type="String" />
 		<column name="listTypeDefinitionId" type="long" />
 		<column name="objectDefinitionId" type="long" />
 		<column name="businessType" type="String" />

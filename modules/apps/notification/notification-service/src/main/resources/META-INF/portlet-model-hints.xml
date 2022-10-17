@@ -34,6 +34,29 @@
 		<field name="fileEntryId" type="long" />
 		<field name="notificationQueueEntryId" type="long" />
 	</model>
+	<model name="com.liferay.notification.model.NotificationQueueEntryRecipient">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationQueueEntryRecipientId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationQueueEntryId" type="long" />
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationQueueEntryRecipientSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationQueueEntryRecipientSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationQueueEntryRecipientId" type="long" />
+		<field name="name" type="String" />
+		<field name="value" type="String" />
+	</model>
 	<model name="com.liferay.notification.model.NotificationTemplate">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
@@ -64,5 +87,28 @@
 		<field name="companyId" type="long" />
 		<field name="notificationTemplateId" type="long" />
 		<field name="objectFieldId" type="long" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationTemplateRecipient">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationTemplateRecipientId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationTemplateId" type="long" />
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationTemplateRecipientSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationTemplateRecipientSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationTemplateRecipientId" type="long" />
+		<field name="name" type="String" />
+		<field name="value" type="String" />
 	</model>
 </model-hints>

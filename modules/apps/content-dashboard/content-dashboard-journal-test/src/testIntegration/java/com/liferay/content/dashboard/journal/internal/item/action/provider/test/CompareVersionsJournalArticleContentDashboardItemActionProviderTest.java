@@ -178,6 +178,25 @@ public class
 		}
 	}
 
+	@Test
+	public void testIsShowWithoutVersions() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(
+				mockHttpServletRequest, LocaleUtil.US,
+				TestPropsValues.getUser()));
+
+		Assert.assertFalse(
+			_contentDashboardItemVersionActionProvider.isShow(
+				journalArticle, mockHttpServletRequest));
+	}
+
 	private ThemeDisplay _getThemeDisplay(
 			HttpServletRequest httpServletRequest, Locale locale, User user)
 		throws Exception {

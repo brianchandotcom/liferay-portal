@@ -200,6 +200,91 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12154 | Test Summary: Check if the identity event is sent when the user interacts with sites that have different channels ids"
+	@ignore = "true"
+	@priority = "3"
+	test CheckEventSentWhenUserInteractsWithSitesWithDifferentChannelId {
+		property analytics.cloud.upstream = "false";
+		property proxy.server.enabled = "true";
+
+		var sitePageName = "AC Test";
+
+		task ("Add a new site with a public page") {
+			ACUtils.addSiteAndPage(
+				layoutName = "${sitePageName}",
+				siteName = "${sitePageName}");
+		}
+
+		task ("Create another property and sync the second site") {
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACDXPSettings.createCombinedProperties(siteName = "${sitePageName}");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
+		}
+
+		task ("Go to the first site and interact with it") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the time of the last update of the first identity event sent") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Go to the second site and interact with it") {
+			ACUtils.navigateToSitePage(
+				pageName = "${sitePageName}",
+				siteName = "${sitePageName}");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the time of the last update of the second identity event sent") {
+			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check that the times in milliseconds that the events were sent are different") {
+			TestUtils.assertNotEquals(
+				actual = "${localStorageItem2}",
+				expected = "${localStorageItem1}");
+		}
+	}
+
 	@description = "Story: LRAC-10998 | Automation ID: LRAC-11380 | Test Summary: Check that the Identify event is not sent every time the user interacts with the site"
 	@priority = "3"
 	test CheckIdentityEventNotTriggeredAlwaysUserInteractsWithSite {
@@ -452,28 +537,24 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12155 | Test Summary: New user changes emailAddressHashed"
+	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12153 | Test Summary: Check if identity is sent after the first visit with an anonymous user and check if it is sent again after the login with the same user but as a known individual"
 	@ignore = "true"
 	@priority = "5"
-	test NewUserChangeEmailAddressHashed {
+	test CheckIfEventSentAgainAfterLoginAndIfUserClassifiedAsKnownIndividual {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
 
-		var usernameList = "user1,user2";
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
 
-		task ("Add two new users") {
-			for (var username : list "${usernameList}") {
-				JSONUser.addUser(
-					userEmailAddress = "${username}@liferay.com",
-					userFirstName = "${username}",
-					userLastName = "${username}",
-					userScreenName = "${username}");
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "${username}@liferay.com");
-			}
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
 		}
 
 		task ("Sync the Contact Data") {
@@ -484,10 +565,66 @@ definition {
 			ProxyUtil.startHarRecording("identity");
 		}
 
+		task ("Sign out") {
+			UserBar.signOut();
+		}
+
+		task ("Visit the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the userId number of the identity event") {
+			var userId = ACUtils.getPageRefRequestPropertyValue(
+				pageRef = "identity",
+				property = "userId");
+		}
+
+		task ("Get userId number from local storage") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
+		}
+
+		task ("Compare userId numbers to check if they are the same") {
+			TestUtils.assertEquals(
+				actual = "${userId}",
+				expected = "${localStorageItem1}");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Anonymous",
+				count = "1");
+		}
+
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
+			ACUtils.launchDXP(userEmailAddress = "user1@liferay.com");
 		}
 
 		task ("Visit the document") {
@@ -503,45 +640,15 @@ definition {
 		}
 
 		task ("Get the emailAddressHashed number of the identity event") {
-			var emailAddressHashed1 = ACUtils.getPageRefRequestPropertyValue(
+			var emailAddressHashed = ACUtils.getPageRefRequestPropertyValue(
 				pageRef = "identity",
 				property = "emailAddressHashed");
 		}
 
 		task ("Check that the emailAddressHashed is not empty") {
 			TestUtils.assertNotEquals(
-				actual = "${emailAddressHashed1}",
+				actual = "${emailAddressHashed}",
 				expected = "");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user2@liferay.com",
-				userLoginFullName = "user2 user2");
-		}
-
-		task ("Download the document") {
-			ACUtils.navigateToSitePage(
-				actionType = "Download DM",
-				documentTitleList = "DM AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
-		}
-
-		task ("Get the emailAddressHashed number of the identity event") {
-			var emailAddressHashed2 = ACUtils.getPageRefRequestPropertyValue(
-				pageRef = "identity",
-				property = "emailAddressHashed");
-		}
-
-		task ("Check if the emailAddressHashed was modified") {
-			TestUtils.assertNotEquals(
-				actual = "${emailAddressHashed2}",
-				expected = "${emailAddressHashed1}");
 		}
 
 		task ("Close sessions") {
@@ -554,22 +661,94 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+		task ("Navigate to the Overview on the Individuals dashboard") {
 			ACNavigation.goToIndividuals();
 
-			ACIndividualsDashboard.goToKnownIndividualsTab();
+			ACIndividualsDashboard.goToOverviewTab();
 		}
 
-		task ("Navigate to the individuals page of new user") {
-			ACNavigation.openItem(itemName = "user1 user1");
+		task ("View the number of Total Individuals, Known and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Known",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Anonymous",
+				count = "0");
+		}
+	}
+
+	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12152 | Test Summary: Check if the identity event is sent without the login and if the user is classified as anonymous"
+	@ignore = "true"
+	@priority = "5"
+	test CheckIfEventSentWithoutLoginAndIfUserClassifiedAsAnonymous {
+		property analytics.cloud.upstream = "false";
+		property proxy.server.enabled = "true";
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
 		}
 
-		task ("Navigate to the individuals page of new user") {
-			ACNavigation.openItem(itemName = "user2 user2");
+		task ("Sign out") {
+			UserBar.signOut();
 		}
 
-		task ("Check that the two individuals are classified as known individuals") {
-			ACUtils.viewNameList(nameList = "${usernameList} ${usernameList}");
+		task ("Visit the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the userId number of the identity event") {
+			var userId = ACUtils.getPageRefRequestPropertyValue(
+				pageRef = "identity",
+				property = "userId");
+		}
+
+		task ("Get userId number from local storage") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
+		}
+
+		task ("Compare userId numbers to check if they are the same") {
+			TestUtils.assertEquals(
+				actual = "${userId}",
+				expected = "${localStorageItem1}");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Anonymous",
+				count = "1");
 		}
 	}
 
@@ -797,94 +976,28 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12152 | Test Summary: Check if the identity event is sent without the login and if the user is classified as anonymous"
+	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12155 | Test Summary: New user changes emailAddressHashed"
 	@ignore = "true"
 	@priority = "5"
-	test CheckIfEventSentWithoutLoginAndIfUserClassifiedAsAnonymous {
+	test NewUserChangeEmailAddressHashed {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
 
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("identity");
-		}
+		var usernameList = "user1,user2";
 
-		task ("Sign out") {
-			UserBar.signOut();
-		}
+		task ("Add two new users") {
+			for (var username : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${username}@liferay.com",
+					userFirstName = "${username}",
+					userLastName = "${username}",
+					userScreenName = "${username}");
 
-		task ("Visit the document") {
-			ACUtils.navigateToSitePage(
-				actionType = "View DM",
-				documentTitleList = "DM AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
-		}
-
-		task ("Get the userId number of the identity event") {
-			var userId = ACUtils.getPageRefRequestPropertyValue(
-				pageRef = "identity",
-				property = "userId");
-		}
-
-		task ("Get userId number from local storage") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
-		}
-
-		task ("Compare userId numbers to check if they are the same") {
-			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to the Overview on the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-
-			ACIndividualsDashboard.goToOverviewTab();
-		}
-
-		task ("View the number of Total Individuals and Anonymous") {
-			ACCards.viewTotalCount(
-				cardName = "Total Individuals",
-				count = "1");
-
-			ACCards.viewTotalCount(
-				cardName = "Anonymous",
-				count = "1");
-		}
-	}
-
-	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12153 | Test Summary: Check if identity is sent after the first visit with an anonymous user and check if it is sent again after the login with the same user but as a known individual"
-	@ignore = "true"
-	@priority = "5"
-	test CheckIfEventSentAgainAfterLoginAndIfUserClassifiedAsKnownIndividual {
-		property analytics.cloud.upstream = "false";
-		property proxy.server.enabled = "true";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${username}@liferay.com");
+			}
 		}
 
 		task ("Sync the Contact Data") {
@@ -895,66 +1008,10 @@ definition {
 			ProxyUtil.startHarRecording("identity");
 		}
 
-		task ("Sign out") {
-			UserBar.signOut();
-		}
-
-		task ("Visit the document") {
-			ACUtils.navigateToSitePage(
-				actionType = "View DM",
-				documentTitleList = "DM AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
-		}
-
-		task ("Get the userId number of the identity event") {
-			var userId = ACUtils.getPageRefRequestPropertyValue(
-				pageRef = "identity",
-				property = "userId");
-		}
-
-		task ("Get userId number from local storage") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
-		}
-
-		task ("Compare userId numbers to check if they are the same") {
-			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to the Overview on the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-
-			ACIndividualsDashboard.goToOverviewTab();
-		}
-
-		task ("View the number of Total Individuals and Anonymous") {
-			ACCards.viewTotalCount(
-				cardName = "Total Individuals",
-				count = "1");
-
-			ACCards.viewTotalCount(
-				cardName = "Anonymous",
-				count = "1");
-		}
-
 		task ("Sign in as new user") {
-			ACUtils.launchDXP(userEmailAddress = "user1@liferay.com");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
 		}
 
 		task ("Visit the document") {
@@ -970,15 +1027,45 @@ definition {
 		}
 
 		task ("Get the emailAddressHashed number of the identity event") {
-			var emailAddressHashed = ACUtils.getPageRefRequestPropertyValue(
+			var emailAddressHashed1 = ACUtils.getPageRefRequestPropertyValue(
 				pageRef = "identity",
 				property = "emailAddressHashed");
 		}
 
 		task ("Check that the emailAddressHashed is not empty") {
 			TestUtils.assertNotEquals(
-				actual = "${emailAddressHashed}",
+				actual = "${emailAddressHashed1}",
 				expected = "");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user2@liferay.com",
+				userLoginFullName = "user2 user2");
+		}
+
+		task ("Download the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "Download DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the emailAddressHashed number of the identity event") {
+			var emailAddressHashed2 = ACUtils.getPageRefRequestPropertyValue(
+				pageRef = "identity",
+				property = "emailAddressHashed");
+		}
+
+		task ("Check if the emailAddressHashed was modified") {
+			TestUtils.assertNotEquals(
+				actual = "${emailAddressHashed2}",
+				expected = "${emailAddressHashed1}");
 		}
 
 		task ("Close sessions") {
@@ -991,109 +1078,14 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Navigate to the Overview on the Individuals dashboard") {
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
 			ACNavigation.goToIndividuals();
 
-			ACIndividualsDashboard.goToOverviewTab();
+			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("View the number of Total Individuals, Known and Anonymous") {
-			ACCards.viewTotalCount(
-				cardName = "Total Individuals",
-				count = "1");
-
-			ACCards.viewTotalCount(
-				cardName = "Known",
-				count = "1");
-
-			ACCards.viewTotalCount(
-				cardName = "Anonymous",
-				count = "0");
-		}
-	}
-
-	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12154 | Test Summary: Check if the identity event is sent when the user interacts with sites that have different channels ids"
-	@ignore = "true"
-	@priority = "3"
-	test CheckEventSentWhenUserInteractsWithSitesWithDifferentChannelId {
-		property analytics.cloud.upstream = "false";
-		property proxy.server.enabled = "true";
-
-		var sitePageName = "AC Test";
-
-		task ("Add a new site with a public page") {
-			ACUtils.addSiteAndPage(
-				siteName = "${sitePageName}",
-				layoutName = "${sitePageName}");
-		}
-
-		task ("Create another property and sync the second site") {
-			ACDXPSettings.navToSyncedSitesMenu();
-
-			ACDXPSettings.createCombinedProperties(siteName = "${sitePageName}");
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
-		}
-
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("identity");
-		}
-
-		task ("Go to the first site and interact with it") {
-			ACUtils.navigateToSitePage(
-				actionType = "View DM",
-				documentTitleList = "DM AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
-		}
-
-		task ("Get the time of the last update of the first identity event sent") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
-		}
-
-		task ("Go to the second site and interact with it") {
-			ACUtils.navigateToSitePage(
-				pageName = "${sitePageName}",
-				siteName = "${sitePageName}");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
-		}
-
-		task ("Get the time of the last update of the second identity event sent") {
-			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
-		}
-
-		task ("Check that the times in milliseconds that the events were sent are different") {
-			TestUtils.assertNotEquals(
-				actual = "${localStorageItem2}",
-				expected = "${localStorageItem1}");
+		task ("Check that the two individuals are classified as known individuals") {
+			ACUtils.viewNameList(nameList = "${usernameList} ${usernameList}");
 		}
 	}
 

@@ -491,7 +491,6 @@ const ExperienceSelector = ({
 						<ExperiencesSelectorHeader
 							canCreateExperiences={canUpdateExperiences}
 							onNewExperience={handleOnNewExperienceClick}
-							showEmptyStateMessage={experiences.length <= 1}
 						/>
 
 						{experiences.length > 1 && (
@@ -536,11 +535,7 @@ const ExperienceSelector = ({
 	);
 };
 
-const ExperiencesSelectorHeader = ({
-	canCreateExperiences,
-	onNewExperience,
-	showEmptyStateMessage,
-}) => {
+const ExperiencesSelectorHeader = ({canCreateExperiences, onNewExperience}) => {
 	const [dismissAlert, setDismissAlert] = useState(false);
 
 	return (
@@ -567,15 +562,23 @@ const ExperiencesSelectorHeader = ({
 			</ClayLayout.ContentRow>
 
 			{canCreateExperiences && (
-				<p className="text-secondary">
-					{showEmptyStateMessage
-						? Liferay.Language.get(
-								'experience-help-message-empty-state'
-						  )
-						: Liferay.Language.get(
-								'experience-help-message-started-state'
-						  )}
-				</p>
+				<>
+					<p className="text-secondary">
+						{Liferay.Language.get('experience-help-message')}
+					</p>
+					<p className="text-secondary">
+						{`${Liferay.Language.get(
+							'experience-help-message-more-info-see'
+						)} `}
+
+						<a href="#" target="_blank">
+							{Liferay.Language.get(
+								'content-page-personalization'
+							)}
+							.
+						</a>
+					</p>
+				</>
 			)}
 
 			{!config.isSegmentationEnabled && !dismissAlert ? (

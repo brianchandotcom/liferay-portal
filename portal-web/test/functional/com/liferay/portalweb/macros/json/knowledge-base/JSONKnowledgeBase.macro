@@ -146,10 +146,10 @@ definition {
 				-d urlTitle=${urlTitle} \
 				-d content=<p>${kbArticleContent}</p> \
 				-d description= \
+				-d sections= \
 				-d sourceURL= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
-				-d sections= \
 				-d selectedFileNames= \
 				-d serviceContext=${serviceContext}
 		''';
@@ -202,10 +202,10 @@ definition {
 				-d urlTitle= \
 				-d content=<p>${kbChildArticleContent}</p> \
 				-d description= \
+				-d sections= \
 				-d sourceURL= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
-				-d sections= \
 				-d selectedFileNames= \
 		''';
 
@@ -307,10 +307,10 @@ definition {
 				-d urlTitle= \
 				-d content=<p>${kbGrandchildArticleContent}</p> \
 				-d description= \
+				-d sections= \
 				-d sourceURL= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
-				-d sections= \
 				-d selectedFileNames= \
 		''';
 
@@ -420,10 +420,10 @@ definition {
 				-d title=${newKbArticleTitle} \
 				-d content=<p>${newKbArticleContent}</p> \
 				-d description= \
+				-d sections= \
 				-d sourceURL= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
-				-d sections= \
 				-d selectedFileNames= \
 				-d removeFileEntryIds= \
 				-d serviceContext=${serviceContext}

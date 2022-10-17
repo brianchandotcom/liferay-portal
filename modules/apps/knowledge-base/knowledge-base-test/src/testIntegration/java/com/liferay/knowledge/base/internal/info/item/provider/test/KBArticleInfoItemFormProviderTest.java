@@ -215,7 +215,7 @@ public class KBArticleInfoItemFormProviderTest {
 				KBFolderConstants.getClassName()),
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title KB Article",
 			StringUtil.randomString(), "<strong>Context text</strong>",
-			"Description", StringPool.BLANK, null, null, null, null,
+			"Description", null, StringPool.BLANK, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

@@ -80,8 +80,8 @@ public class KBArticleInfoItemProviderTest {
 				KBFolderConstants.getClassName()),
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringPool.BLANK, null, null, null, null, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), null,
+			StringPool.BLANK, null, null, null, _serviceContext);
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 

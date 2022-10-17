@@ -99,8 +99,8 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			kbArticle = _kbArticleService.addKBArticle(
 				null, _portal.getPortletId(actionRequest),
 				parentResourceClassNameId, parentResourcePrimKey, title,
-				urlTitle, content, description, sourceURL, expirationDate,
-				reviewDate, sections, selectedFileNames, serviceContext);
+				urlTitle, content, description, sections, sourceURL,
+				expirationDate, reviewDate, selectedFileNames, serviceContext);
 		}
 		else if (cmd.equals(Constants.REVERT)) {
 			int version = ParamUtil.getInteger(
@@ -114,8 +114,8 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "removeFileEntryIds");
 
 			kbArticle = _kbArticleService.updateKBArticle(
-				resourcePrimKey, title, content, description, sourceURL,
-				expirationDate, reviewDate, sections, selectedFileNames,
+				resourcePrimKey, title, content, description, sections,
+				sourceURL, expirationDate, reviewDate, selectedFileNames,
 				removeFileEntryIds, serviceContext);
 		}
 

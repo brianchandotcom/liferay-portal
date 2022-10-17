@@ -72,8 +72,8 @@ public class KBArticleInfoItemPermissionProviderTest {
 				KBFolderConstants.getClassName()),
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringPool.BLANK, null, null, null, null,
+			StringUtil.randomString(), StringUtil.randomString(), null,
+			StringPool.BLANK, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		RoleTestUtil.removeResourcePermission(

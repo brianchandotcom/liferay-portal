@@ -34,12 +34,13 @@ public class DownloadFileVersionContentDashboardItemVersionAction
 	implements ContentDashboardItemVersionAction {
 
 	public DownloadFileVersionContentDashboardItemVersionAction(
-		FileEntry fileEntry, Language language,
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider) {
+		FileEntry fileEntry,
+		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
+		Language language) {
 
 		_fileEntry = fileEntry;
-		_language = language;
 		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
+		_language = language;
 	}
 
 	@Override

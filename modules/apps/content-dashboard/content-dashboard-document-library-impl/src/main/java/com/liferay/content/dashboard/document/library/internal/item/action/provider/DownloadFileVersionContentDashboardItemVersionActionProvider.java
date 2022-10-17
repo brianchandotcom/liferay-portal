@@ -82,7 +82,7 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
 
 		return new DownloadFileVersionContentDashboardItemVersionAction(
-			fileEntry, _language, infoItemFieldValuesProvider);
+			fileEntry, infoItemFieldValuesProvider, _language);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

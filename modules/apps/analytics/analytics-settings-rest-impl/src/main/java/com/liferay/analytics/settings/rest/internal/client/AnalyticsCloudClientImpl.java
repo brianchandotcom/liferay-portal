@@ -29,29 +29,43 @@ import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -267,6 +281,169 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		}
 	}
 
+	@Override
+	public AnalyticsChannel updateAnalyticsChannel(
+			String channelId, Long[] commerceChannelIds, long companyId,
+			String dataSourceId, Locale locale, Long[] siteGroupIds)
+		throws Exception {
+
+		try {
+			AnalyticsConfiguration analyticsConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AnalyticsConfiguration.class, companyId);
+
+			if (!dataSourceId.equals(
+					analyticsConfiguration.liferayAnalyticsDataSourceId())) {
+
+				throw new IllegalArgumentException("Unknown data source ID");
+			}
+
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+
+			options.setBody(
+				JSONUtil.put(
+					"commerceChannels",
+					_getGroupsJSONArray(
+						commerceChannelId -> _groupLocalService.fetchGroup(
+							companyId, _commerceChannelClassNameId,
+							commerceChannelId),
+						commerceChannelIds, locale)
+				).put(
+					"dataSourceId", dataSourceId
+				).put(
+					"groups",
+					_getGroupsJSONArray(
+						groupId -> _groupLocalService.fetchGroup(groupId),
+						siteGroupIds, locale)
+				).toString(),
+				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+			options.setLocation(
+				String.format(
+					"%s/api/1.0/channels/%s",
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					channelId));
+
+			options.setPatch(true);
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				JsonNode jsonNode = _objectMapper.readTree(content);
+
+				ObjectReader objectReader = _objectMapper.readerFor(
+					AnalyticsChannel.class);
+
+				return objectReader.readValue(jsonNode.get("channel"));
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					String.format(
+						"Received response code %s",
+						response.getResponseCode()));
+			}
+
+			throw new PortalException("Unable to patch analytics channel");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get analytics channels page", exception);
+		}
+	}
+
+	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
+			long companyId, boolean commerceChannelsSelected,
+			boolean sitesSelected)
+		throws Exception {
+
+		try {
+			AnalyticsConfiguration analyticsConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AnalyticsConfiguration.class, companyId);
+
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+
+			options.setBody(
+				JSONUtil.put(
+					"commerceChannelsSelected", commerceChannelsSelected
+				).put(
+					"sitesSelected", sitesSelected
+				).toString(),
+				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+			options.setLocation(
+				String.format(
+					"%s/api/1.0/data-sources/%s/details",
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					analyticsConfiguration.liferayAnalyticsDataSourceId()));
+
+			options.setPut(true);
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				return _objectMapper.readValue(
+					content, AnalyticsDataSource.class);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					String.format(
+						"Received response code %s",
+						response.getResponseCode()));
+			}
+
+			throw new PortalException(
+				"Unable to put analytics data source details");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to update analytics data source details", exception);
+		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceChannelClassNameId = _portal.getClassNameId(
+			"com.liferay.commerce.product.model.CommerceChannel");
+	}
+
+	private JSONObject _buildGroupJSONObject(Group group, Locale locale) {
+		JSONObject groupJSONObject = JSONUtil.put(
+			"id", String.valueOf(group.getClassPK()));
+
+		try {
+			return groupJSONObject.put(
+				"name", group.getDescriptiveName(locale));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass());
+
+			return groupJSONObject.put(
+				"name", _language.get(resourceBundle, "unknown"));
+		}
+	}
+
 	private JSONObject _decodeToken(String connectionToken) throws Exception {
 		try {
 			if (Validator.isBlank(connectionToken)) {
@@ -281,6 +458,28 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 			throw new PortalException("Unable to decode token", exception);
 		}
+	}
+
+	private JSONArray _getGroupsJSONArray(
+			Function<Long, Group> fetchGroupFunction, Long[] groupIds,
+			Locale locale)
+		throws Exception {
+
+		if (groupIds == null) {
+			return null;
+		}
+
+		Stream<Long> stream = Arrays.stream(groupIds);
+
+		return JSONUtil.toJSONArray(
+			stream.map(
+				fetchGroupFunction
+			).filter(
+				Objects::nonNull
+			).collect(
+				Collectors.toList()
+			),
+			group -> _buildGroupJSONObject(group, locale));
 	}
 
 	private Http.Options _getOptions(
@@ -310,6 +509,8 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		}
 	};
 
+	private long _commerceChannelClassNameId;
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -317,10 +518,19 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Http _http;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

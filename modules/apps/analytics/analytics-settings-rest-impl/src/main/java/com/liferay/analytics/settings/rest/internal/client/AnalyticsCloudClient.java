@@ -18,6 +18,7 @@ import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChanne
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,6 +38,16 @@ public interface AnalyticsCloudClient {
 
 	public Page<AnalyticsChannel> getAnalyticsChannelsPage(
 			long companyId, String keywords, int page, int size)
+		throws Exception;
+
+	public AnalyticsChannel updateAnalyticsChannel(
+			String channelId, Long[] commerceChannelIds, long companyId,
+			String dataSourceId, Locale locale, Long[] siteGroupIds)
+		throws Exception;
+
+	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
+			long companyId, boolean commerceChannelsSelected,
+			boolean sitesSelected)
 		throws Exception;
 
 }

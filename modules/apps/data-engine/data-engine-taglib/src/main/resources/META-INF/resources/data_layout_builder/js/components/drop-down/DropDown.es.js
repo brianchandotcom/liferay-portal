@@ -24,7 +24,7 @@ export default function DropDown({actions, className, disabled}) {
 
 	const DropdownButton = (
 		<ClayButtonWithIcon
-			aria-label={Liferay.Language.get('Actions')}
+			aria-label={Liferay.Language.get('actions')}
 			className="page-link"
 			disabled={disabled}
 			displayType="unstyled"

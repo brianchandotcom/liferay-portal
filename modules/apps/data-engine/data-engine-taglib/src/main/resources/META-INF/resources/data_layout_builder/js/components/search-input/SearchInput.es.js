@@ -55,7 +55,7 @@ const SearchInput = React.forwardRef(
 		if (clearButton && value) {
 			SearchButton = (
 				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('Clear')}
+					aria-label={Liferay.Language.get('clear')}
 					displayType="unstyled"
 					key="clearButton"
 					onClick={onClear}

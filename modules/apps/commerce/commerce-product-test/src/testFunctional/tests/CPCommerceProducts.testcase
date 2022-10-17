@@ -377,11 +377,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Any Product",
 			productCatalog = "Master",
 			productName = "Any Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Any");
 	}
 
@@ -471,11 +471,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Approved Product",
 			productCatalog = "Master",
 			productName = "Approved Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Approved");
 	}
 
@@ -565,11 +565,11 @@ definition {
 		Click(locator1 = "Icon#BACK");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Simple T-Shirt",
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Approved");
 
 		User.logoutPG();
@@ -594,11 +594,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Denied Product",
 			productCatalog = "Master",
 			productName = "Denied Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Denied");
 	}
 
@@ -842,11 +842,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Draft Product",
 			productCatalog = "Master",
 			productName = "Draft Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Draft");
 	}
 
@@ -902,11 +902,11 @@ definition {
 		Click(locator1 = "Icon#BACK");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Simple T-Shirt",
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Draft");
 
 		User.logoutPG();
@@ -931,11 +931,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Expired Product",
 			productCatalog = "Master",
 			productName = "Expired Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Expired");
 	}
 
@@ -954,11 +954,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Inactive Product",
 			productCatalog = "Master",
 			productName = "Inactive Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Inactive");
 	}
 
@@ -977,11 +977,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Incomplete Product",
 			productCatalog = "Master",
 			productName = "Incomplete Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Incomplete");
 	}
 
@@ -1000,11 +1000,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "In Recycle Bin Product",
 			productCatalog = "Master",
 			productName = "In Recycle Bin Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "In Recycle Bin");
 	}
 
@@ -1023,11 +1023,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Pending Product",
 			productCatalog = "Master",
 			productName = "Pending Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Pending");
 	}
 
@@ -1120,11 +1120,11 @@ definition {
 		Click(locator1 = "Icon#BACK");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Simple T-Shirt",
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Pending (Review)");
 
 		User.logoutPG();
@@ -1164,11 +1164,11 @@ definition {
 			portlet = "Products");
 
 		CommerceProducts.checkProductStatusAfterDuplicationAndConvertionToDraft(
+			checkProductFields = "true",
+			compileDescription = "false",
 			entryName = "Scheduled Product",
 			productCatalog = "Master",
 			productName = "Scheduled Product",
-			checkProductFields = "true",
-			compileDescription = "false",
 			status = "Scheduled");
 	}
 

@@ -336,11 +336,11 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "${entryName}");
 
 		CommerceProducts.duplicateProduct(
+			checkProductFields = "${productName}",
+			compileDescription = "${productName}",
 			productCatalog = "${productCatalog}",
 			productName = "${productName}",
-            checkProductFields = "${productName}",
-            compileDescription = "${productName}",
-            publishProduct = "false",
+			publishProduct = "false",
 			status = "${status}");
 
 		Click(locator1 = "Icon#BACK");
@@ -570,7 +570,7 @@ definition {
 
 		if (!(isSet(publishProduct)) || ("${publishProduct}" == "true")) {
 			CommerceEntry.publishEntry(status = "Approved");
-		} 
+		}
 		else {
 			AssertElementPresent(
 				key_status = "Draft",

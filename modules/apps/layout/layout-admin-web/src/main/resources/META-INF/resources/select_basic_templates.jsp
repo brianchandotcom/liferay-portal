@@ -40,7 +40,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 	</ul>
 
 	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() > 0 %>">
-		<h3 class="sheet-subtitle">
+		<h3 class="h6 sheet-subtitle">
 			<liferay-ui:message key="other" />
 		</h3>
 

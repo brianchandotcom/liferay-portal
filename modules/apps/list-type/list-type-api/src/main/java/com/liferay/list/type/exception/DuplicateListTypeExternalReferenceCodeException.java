@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Mateus Santana
  */
-public class DuplicateListTypeExternalReferenceCodeException extends PortalException {
+public class DuplicateListTypeExternalReferenceCodeException
+	extends PortalException {
 
 	public DuplicateListTypeExternalReferenceCodeException() {
 	}
@@ -28,11 +29,15 @@ public class DuplicateListTypeExternalReferenceCodeException extends PortalExcep
 		super(msg);
 	}
 
-	public DuplicateListTypeExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateListTypeExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateListTypeExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateListTypeExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

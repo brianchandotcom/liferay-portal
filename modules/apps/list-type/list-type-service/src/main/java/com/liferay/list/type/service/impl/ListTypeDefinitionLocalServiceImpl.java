@@ -14,6 +14,7 @@
 
 package com.liferay.list.type.service.impl;
 
+import com.liferay.list.type.exception.DuplicateListTypeExternalReferenceCodeException;
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -74,6 +75,15 @@ public class ListTypeDefinitionLocalServiceImpl
 		ListTypeDefinition listTypeDefinition =
 			listTypeDefinitionPersistence.create(
 				counterLocalService.increment());
+
+		int count = listTypeDefinitionPersistence.countByC_ERC(
+			listTypeDefinition.getCompanyId(), externalReferenceCode);
+
+		if (count != 0) {
+			throw new DuplicateListTypeExternalReferenceCodeException(
+				"Duplicated External Reference Code: " +
+					listTypeDefinition.getExternalReferenceCode());
+		}
 
 		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
 

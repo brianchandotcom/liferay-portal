@@ -119,7 +119,7 @@ describe('ColorPicker', () => {
 		it('renders the dropdown color picker', () => {
 			const {getByLabelText, getByTitle} = renderColorPicker();
 
-			expect(getByTitle('detach-token')).toBeInTheDocument();
+			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
@@ -136,7 +136,7 @@ describe('ColorPicker', () => {
 		it('change to input color picker when detach token button is clicked', () => {
 			const {baseElement, getByTitle} = renderColorPicker();
 
-			userEvent.click(getByTitle('detach-token'));
+			userEvent.click(getByTitle('detach-style'));
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
 			expect(baseElement.querySelector('input')).toHaveValue('#9BE169');
@@ -145,12 +145,11 @@ describe('ColorPicker', () => {
 			).toBeInTheDocument();
 		});
 
-		it('does not show the action buttons when the value is default', () => {
+		it('does not show the Value From Stylebook button when the value is inherited', () => {
 			const {queryByTitle} = renderColorPicker({
-				value: null,
+				field: {...FIELD, inherited: true, value: null},
 			});
 
-			expect(queryByTitle('detach-token')).not.toBeInTheDocument();
 			expect(
 				queryByTitle('value-from-stylebook')
 			).not.toBeInTheDocument();
@@ -207,7 +206,7 @@ describe('ColorPicker', () => {
 			userEvent.click(getByTitle('value-from-stylebook'));
 			userEvent.click(getByTitle('Blue'));
 
-			expect(getByTitle('detach-token')).toBeInTheDocument();
+			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(getByLabelText('Blue')).toBeInTheDocument();
 		});
 
@@ -220,7 +219,7 @@ describe('ColorPicker', () => {
 
 			onTypeValue(baseElement.querySelector('input'), 'green');
 
-			expect(getByTitle('detach-token')).toBeInTheDocument();
+			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 

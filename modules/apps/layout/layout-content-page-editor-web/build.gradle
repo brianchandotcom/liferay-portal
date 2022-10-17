@@ -44,6 +44,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-admin-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-taglib")
+	compileOnly project(":apps:learn:learn-api")
 	compileOnly project(":apps:mentions:mentions-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal:portal-aop-api")

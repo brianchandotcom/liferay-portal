@@ -39,6 +39,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
+import com.liferay.learn.LearnMessage;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -142,6 +144,15 @@ public class ContentPageLayoutEditorDisplayContext
 				themeDisplay.getScopeGroupId()));
 		configContext.put(
 			"availableSegmentsEntries", _getAvailableSegmentsEntries());
+
+		LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
+			"content-page-personalization",
+			LanguageUtil.getLanguageId(httpServletRequest),
+			"layout-content-page-editor-web");
+
+		configContext.put(
+			"contentPagePersonalizationLearnURL", learnMessage.getURL());
+
 		configContext.put(
 			"defaultSegmentsEntryId", SegmentsEntryConstants.ID_DEFAULT);
 		configContext.put(
@@ -170,6 +181,7 @@ public class ContentPageLayoutEditorDisplayContext
 			"availableSegmentsExperiences",
 			SegmentsExperienceUtil.getAvailableSegmentsExperiences(
 				httpServletRequest));
+
 		stateContext.put("layoutDataList", _getLayoutDataList());
 		stateContext.put(
 			"segmentsExperimentStatus",

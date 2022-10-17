@@ -186,7 +186,6 @@ export default function Translation({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					aria-pressed={active}
 					className="btn-monospaced"
 					displayType="secondary"
 					small

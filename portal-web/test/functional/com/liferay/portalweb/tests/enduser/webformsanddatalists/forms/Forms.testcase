@@ -970,6 +970,47 @@ definition {
 			fieldValue = "1/1/16");
 	}
 
+	@description = "Verify that the back button on the forms view entries page works correctly without creating new forms."
+	@priority = "4"
+	test CheckBackButtonViewEntries {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Test");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoBack();
+
+		Form.duplicate(formName = "Test");
+
+		FormsAdmin.viewForm(
+			formDescription = "",
+			formName = "Test");
+
+		FormsAdmin.viewForm(
+			formDescription = "",
+			formName = "Copy of Test");
+
+		FormsAdminNavigator.gotoViewEntries(formName = "Copy of Test");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdmin.viewForm(
+			formDescription = "",
+			formName = "Test");
+
+		FormsAdmin.viewForm(
+			formDescription = "",
+			formName = "Copy of Test");
+	}
+
 	@description = "LPS-69214 - Verify that a confirmation appears when attempting to leave a Form without saving."
 	@priority = "3"
 	test ConfirmationAppearsWhenLeavingFormWithoutSaving {

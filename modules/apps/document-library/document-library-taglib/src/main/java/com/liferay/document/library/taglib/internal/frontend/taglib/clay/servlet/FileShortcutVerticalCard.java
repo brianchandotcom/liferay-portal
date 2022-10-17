@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -39,22 +41,32 @@ import javax.servlet.http.HttpServletRequest;
 public class FileShortcutVerticalCard implements VerticalCard {
 
 	public FileShortcutVerticalCard(
-			FileShortcut fileShortcut, HttpServletRequest httpServletRequest,
+			FileShortcut fileShortcut,
+			ModelResourcePermission<FileShortcut>
+				fileShortcutModelResourcePermission,
+			HttpServletRequest httpServletRequest,
 			RepositoryBrowserTagDisplayContext
 				repositoryBrowserTagDisplayContext)
 		throws PortalException {
 
 		_fileShortcut = fileShortcut;
+		_fileShortcutModelResourcePermission =
+			fileShortcutModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_repositoryBrowserTagDisplayContext =
 			repositoryBrowserTagDisplayContext;
 
 		_fileVersion = fileShortcut.getFileVersion();
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			() -> _fileShortcutModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), _fileShortcut,
+				ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
@@ -116,9 +128,12 @@ public class FileShortcutVerticalCard implements VerticalCard {
 	}
 
 	private final FileShortcut _fileShortcut;
+	private final ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission;
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;
 	private final RepositoryBrowserTagDisplayContext
 		_repositoryBrowserTagDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

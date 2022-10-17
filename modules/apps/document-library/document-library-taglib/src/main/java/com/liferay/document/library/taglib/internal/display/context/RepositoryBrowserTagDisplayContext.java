@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -74,13 +75,21 @@ import javax.servlet.http.HttpServletRequest;
 public class RepositoryBrowserTagDisplayContext {
 
 	public RepositoryBrowserTagDisplayContext(
-		DLAppService dlAppService, long folderId,
-		HttpServletRequest httpServletRequest,
+		DLAppService dlAppService,
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
+		ModelResourcePermission<FileShortcut>
+			fileShortcutModelResourcePermission,
+		ModelResourcePermission<Folder> folderModelResourcePermission,
+		long folderId, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletRequest portletRequest, long repositoryId) {
 
 		_dlAppService = dlAppService;
+		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
+		_fileShortcutModelResourcePermission =
+			fileShortcutModelResourcePermission;
+		_folderModelResourcePermission = folderModelResourcePermission;
 		_folderId = folderId;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -153,15 +162,17 @@ public class RepositoryBrowserTagDisplayContext {
 		}
 
 		return new FolderHorizontalCard(
-			(Folder)repositoryEntry, _httpServletRequest, this);
+			(Folder)repositoryEntry, _folderModelResourcePermission,
+			_httpServletRequest, this);
 	}
 
 	public ManagementToolbarDisplayContext getManagementToolbarDisplayContext()
 		throws PortalException {
 
 		return new RepositoryBrowserManagementToolbarDisplayContext(
-			_folderId, _httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse, _repositoryId, getSearchContainer());
+			_folderId, _folderModelResourcePermission, _httpServletRequest,
+			_liferayPortletRequest, _liferayPortletResponse, _repositoryId,
+			getSearchContainer());
 	}
 
 	public String getRenameFileEntryURL(FileEntry fileEntry) {
@@ -240,12 +251,15 @@ public class RepositoryBrowserTagDisplayContext {
 
 		if (repositoryEntry instanceof FileEntry) {
 			return new FileEntryVerticalCard(
-				(FileEntry)repositoryEntry, _httpServletRequest, this);
+				(FileEntry)repositoryEntry, _fileEntryModelResourcePermission,
+				_httpServletRequest, this);
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
 			return new FileShortcutVerticalCard(
-				(FileShortcut)repositoryEntry, _httpServletRequest, this);
+				(FileShortcut)repositoryEntry,
+				_fileShortcutModelResourcePermission, _httpServletRequest,
+				this);
 		}
 
 		throw new IllegalArgumentException(
@@ -398,7 +412,13 @@ public class RepositoryBrowserTagDisplayContext {
 	}
 
 	private final DLAppService _dlAppService;
+	private final ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
+	private final ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission;
 	private final long _folderId;
+	private final ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

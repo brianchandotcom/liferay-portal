@@ -24,6 +24,10 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -35,18 +39,27 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderHorizontalCard implements HorizontalCard {
 
 	public FolderHorizontalCard(
-		Folder folder, HttpServletRequest httpServletRequest,
+		Folder folder,
+		ModelResourcePermission<Folder> folderModelResourcePermission,
+		HttpServletRequest httpServletRequest,
 		RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext) {
 
 		_folder = folder;
+		_folderModelResourcePermission = folderModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_repositoryBrowserTagDisplayContext =
 			repositoryBrowserTagDisplayContext;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			() -> _folderModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), _folder,
+				ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
 				dropdownItem.putData(
@@ -59,6 +72,9 @@ public class FolderHorizontalCard implements HorizontalCard {
 					LanguageUtil.get(_httpServletRequest, "rename"));
 			}
 		).add(
+			() -> _folderModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), _folder,
+				ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
@@ -112,8 +128,11 @@ public class FolderHorizontalCard implements HorizontalCard {
 	}
 
 	private final Folder _folder;
+	private final ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private final RepositoryBrowserTagDisplayContext
 		_repositoryBrowserTagDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

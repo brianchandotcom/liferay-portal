@@ -22,9 +22,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -37,7 +44,9 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public RepositoryBrowserManagementToolbarDisplayContext(
-		long folderId, HttpServletRequest httpServletRequest,
+		long folderId,
+		ModelResourcePermission<Folder> folderModelResourcePermission,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long repositoryId,
 		SearchContainer<Object> searchContainer) {
@@ -47,12 +56,25 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 			searchContainer);
 
 		_folderId = folderId;
+		_folderModelResourcePermission = folderModelResourcePermission;
 		_repositoryId = repositoryId;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			() -> {
+				User user = _themeDisplay.getUser();
+
+				if (user.isDefaultUser()) {
+					return false;
+				}
+
+				return true;
+			},
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
 				dropdownItem.setIcon("trash");
@@ -75,6 +97,11 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
+			() -> ModelResourcePermissionUtil.contains(
+				_folderModelResourcePermission,
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), _folderId,
+				ActionKeys.ADD_DOCUMENT),
 			dropdownItem -> {
 				dropdownItem.putData("action", "uploadFile");
 				dropdownItem.setIcon("upload");
@@ -82,6 +109,11 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "file-upload"));
 			}
 		).addDropdownItem(
+			() -> ModelResourcePermissionUtil.contains(
+				_folderModelResourcePermission,
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), _folderId,
+				ActionKeys.ADD_FOLDER),
 			dropdownItem -> {
 				dropdownItem.putData("action", "addFolder");
 				dropdownItem.putData(
@@ -116,6 +148,9 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	}
 
 	private final long _folderId;
+	private final ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 	private final long _repositoryId;
+	private final ThemeDisplay _themeDisplay;
 
 }

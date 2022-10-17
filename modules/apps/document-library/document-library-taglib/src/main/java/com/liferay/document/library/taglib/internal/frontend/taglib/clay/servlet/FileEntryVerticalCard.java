@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -39,22 +41,30 @@ import javax.servlet.http.HttpServletRequest;
 public class FileEntryVerticalCard implements VerticalCard {
 
 	public FileEntryVerticalCard(
-			FileEntry fileEntry, HttpServletRequest httpServletRequest,
+			FileEntry fileEntry,
+			ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
+			HttpServletRequest httpServletRequest,
 			RepositoryBrowserTagDisplayContext
 				repositoryBrowserTagDisplayContext)
 		throws PortalException {
 
 		_fileEntry = fileEntry;
+		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_repositoryBrowserTagDisplayContext =
 			repositoryBrowserTagDisplayContext;
 
 		_fileVersion = fileEntry.getFileVersion();
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			() -> _fileEntryModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), _fileEntry,
+				ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
 				dropdownItem.putData(
@@ -67,6 +77,9 @@ public class FileEntryVerticalCard implements VerticalCard {
 					LanguageUtil.get(_httpServletRequest, "rename"));
 			}
 		).add(
+			() -> _fileEntryModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), _fileEntry,
+				ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
@@ -128,9 +141,12 @@ public class FileEntryVerticalCard implements VerticalCard {
 	}
 
 	private final FileEntry _fileEntry;
+	private final ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;
 	private final RepositoryBrowserTagDisplayContext
 		_repositoryBrowserTagDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

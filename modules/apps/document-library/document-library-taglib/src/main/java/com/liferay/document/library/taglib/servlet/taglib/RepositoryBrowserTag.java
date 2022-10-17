@@ -17,10 +17,15 @@ package com.liferay.document.library.taglib.servlet.taglib;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext;
 import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -73,7 +78,10 @@ public class RepositoryBrowserTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
-				DLAppServiceUtil.getService(), _getFolderId(),
+				DLAppServiceUtil.getService(),
+				_fileEntryModelResourcePermission,
+				_fileShortcutModelResourcePermission,
+				_folderModelResourcePermission, _getFolderId(),
 				httpServletRequest,
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
@@ -99,6 +107,26 @@ public class RepositoryBrowserTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/repository_browser/page.jsp";
+
+	private static volatile ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryBrowserTag.class,
+				"_fileEntryModelResourcePermission",
+				"(model.class.name=" + FileEntry.class.getName() + ")", false);
+	private static volatile ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryBrowserTag.class,
+				"_fileShortcutModelResourcePermission",
+				"(model.class.name=" + FileShortcut.class.getName() + ")",
+				false);
+	private static volatile ModelResourcePermission<Folder>
+		_folderModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryBrowserTag.class,
+				"_folderModelResourcePermission",
+				"(model.class.name=" + Folder.class.getName() + ")", false);
 
 	private long _repositoryId;
 

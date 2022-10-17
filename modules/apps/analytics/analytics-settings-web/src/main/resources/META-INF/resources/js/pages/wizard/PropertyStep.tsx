@@ -35,7 +35,7 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 			setProperties(response.items);
 		};
 		request();
-	}, []);
+	}, [properties]);
 
 	return (
 		<BasePage
@@ -80,7 +80,12 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 				</div>
 			)}
 
-			{open && <CreatePropertyModal observer={observer} />}
+			{open && (
+				<CreatePropertyModal
+					observer={observer}
+					onCloseModal={() => onOpenChange(false)}
+				/>
+			)}
 
 			<BasePage.Footer>
 				<ClayButton.Group spaced>

@@ -14,18 +14,21 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
-import {ESteps} from '../pages/wizard/WizardPage';
-import {fetchConnectionModal} from '../utils/api';
+import {createProperty} from '../utils/api';
+import LoadingInline from './LoadingInline';
 
 interface IModalProps {
 	observer: any;
+	onCloseModal: () => void;
 }
 
-const CreatePropertyModal: React.FC<IModalProps> = ({observer}) => {
-	const {onClose, onOpenChange} = useModal();
+const CreatePropertyModal: React.FC<IModalProps> = ({
+	observer,
+	onCloseModal,
+}) => {
 	const [propertyName, setPropertyName] = useState('');
 	const [submitting, setSubmitting] = useState(false);
 
@@ -35,19 +38,17 @@ const CreatePropertyModal: React.FC<IModalProps> = ({observer}) => {
 		const request = async () => {
 			setSubmitting(true);
 
-			const result = await fetchConnectionModal(propertyName);
+			const result: any = await createProperty(propertyName);
+
 			setSubmitting(false);
 
-			if (result) {
-				observer(ESteps.Property);
-
+			if (result.ok) {
 				Liferay.Util.openToast({
 					message: Liferay.Language.get('saved-successfully'),
 				});
 
-				onOpenChange(false);
-			}
-			else {
+				onCloseModal();
+			} else {
 				Liferay.Util.openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-system-error-occurred'
@@ -61,8 +62,8 @@ const CreatePropertyModal: React.FC<IModalProps> = ({observer}) => {
 	};
 
 	return (
-		<ClayForm onSubmit={handleSubmit}>
-			<ClayModal center observer={observer}>
+		<ClayModal center observer={observer}>
+			<ClayForm onSubmit={handleSubmit}>
 				<ClayModal.Header>
 					{Liferay.Language.get('new-property')}
 				</ClayModal.Header>
@@ -89,7 +90,7 @@ const CreatePropertyModal: React.FC<IModalProps> = ({observer}) => {
 						<ClayButton.Group spaced>
 							<ClayButton
 								displayType="secondary"
-								onClick={() => onClose()}
+								onClick={onCloseModal}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
@@ -98,22 +99,15 @@ const CreatePropertyModal: React.FC<IModalProps> = ({observer}) => {
 								disabled={!propertyName || submitting}
 								type="submit"
 							>
-								{submitting && (
-									<span className="inline-item inline-item-before">
-										<span
-											aria-hidden="true"
-											className="loading-animation"
-										></span>
-									</span>
-								)}
+								{submitting && <LoadingInline />}
 
 								{Liferay.Language.get('create')}
 							</ClayButton>
 						</ClayButton.Group>
 					}
 				/>
-			</ClayModal>
-		</ClayForm>
+			</ClayForm>
+		</ClayModal>
 	);
 };
 

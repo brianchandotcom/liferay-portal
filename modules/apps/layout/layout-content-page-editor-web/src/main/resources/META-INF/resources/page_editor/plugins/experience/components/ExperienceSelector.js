@@ -308,6 +308,43 @@ const ExperienceSelector = ({
 		});
 	};
 
+	const handleDropdownKeydown = (event) => {
+		if (event.key === 'Escape') {
+			buttonRef.current?.focus();
+		}
+		else if (event.key === 'Tab') {
+			const focusableElements = getKeyboardFocusableElements(
+				selectorRef.current
+			);
+
+			if (
+				event.shiftKey &&
+				focusableElements.indexOf(event.target) === 0
+			) {
+				event.preventDefault();
+
+				buttonRef.current?.focus();
+
+				return;
+			}
+
+			if (
+				focusableElements.indexOf(event.target) ===
+				focusableElements.length - 1
+			) {
+				event.preventDefault();
+
+				const allFocusableElements = getKeyboardFocusableElements(
+					document
+				);
+
+				const index = allFocusableElements.indexOf(buttonRef.current);
+
+				allFocusableElements[index + 1]?.focus();
+			}
+		}
+	};
+
 	const deleteExperience = (id) => {
 		dispatch(
 			removeExperience({
@@ -423,45 +460,7 @@ const ExperienceSelector = ({
 					<div
 						className="dropdown-menu p-4 page-editor__toolbar-experience__dropdown-menu toggled"
 						id={experienceSelectorContentId}
-						onKeyDown={(event) => {
-							if (event.key === 'Escape') {
-								buttonRef.current?.focus();
-							}
-							else if (event.key === 'Tab') {
-								const focusableElements = getKeyboardFocusableElements(
-									selectorRef.current
-								);
-
-								if (
-									event.shiftKey &&
-									focusableElements.indexOf(event.target) ===
-										0
-								) {
-									event.preventDefault();
-
-									buttonRef.current?.focus();
-
-									return;
-								}
-
-								if (
-									focusableElements.indexOf(event.target) ===
-									focusableElements.length - 1
-								) {
-									event.preventDefault();
-
-									const allFocusableElements = getKeyboardFocusableElements(
-										document
-									);
-
-									const index = allFocusableElements.indexOf(
-										buttonRef.current
-									);
-
-									allFocusableElements[index + 1]?.focus();
-								}
-							}
-						}}
+						onKeyDown={handleDropdownKeydown}
 						ref={selectorRef}
 						style={{
 							left: buttonBoundingClientRect.left,

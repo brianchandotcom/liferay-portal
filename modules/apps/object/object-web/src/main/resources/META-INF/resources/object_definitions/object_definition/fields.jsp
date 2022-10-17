@@ -68,8 +68,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements()
-			).put(
-				"header", LanguageUtil.get(request, "formula-builder")
 			).build()
 		%>'
 	/>

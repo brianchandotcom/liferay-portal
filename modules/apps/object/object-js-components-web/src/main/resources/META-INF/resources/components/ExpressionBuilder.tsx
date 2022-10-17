@@ -83,11 +83,21 @@ export function ExpressionBuilder({
 export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 	const editorRef = useRef<CodeMirror.Editor>(null);
 	const [
-		{error, onSave, required, source, validateExpressionURL},
+		{
+			error,
+			header,
+			onSave,
+			placeholder,
+			required,
+			source,
+			validateExpressionURL,
+		},
 		setState,
 	] = useState<{
 		error?: string;
+		header?: string;
 		onSave?: Callback;
+		placeholder?: string;
 		required?: boolean;
 		source?: string;
 		validateExpressionURL?: string;
@@ -99,7 +109,9 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 
 	useEffect(() => {
 		const openModal = (params: {
+			header: string;
 			onSave: Callback;
+			placeholder: string;
 			required: boolean;
 			source: string;
 			validateExpressionURL: string;
@@ -165,19 +177,22 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 			size="lg"
 		>
 			<ClayModal.Header>
-				{Liferay.Language.get('expression-builder')}
+				{header ?? Liferay.Language.get('expression-builder')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<CodeEditor
 					error={error}
 					onChange={() => {}}
-					placeholder={`<#-- ${Liferay.Util.sub(
-						Liferay.Language.get(
-							'create-the-condition-of-the-action-using-the-expression-builder-type-x-to-use-the-autocomplete-feature'
-						),
-						['"${"']
-					)} -->`}
+					placeholder={
+						placeholder ??
+						`<#-- ${Liferay.Util.sub(
+							Liferay.Language.get(
+								'create-the-condition-of-the-action-using-the-expression-builder-type-x-to-use-the-autocomplete-feature'
+							),
+							['"${"']
+						)} -->`
+					}
 					ref={editorRef}
 					sidebarElements={sidebarElements}
 					value={source}

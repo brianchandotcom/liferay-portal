@@ -19,13 +19,9 @@ import {
 import React from 'react';
 
 interface IProps {
-	header?: string;
 	sidebarElements: SidebarCategory[];
 }
 
-export default function ExpressionBuilderModal({
-	header,
-	sidebarElements,
-}: IProps) {
-	return <Modal header={header} sidebarElements={sidebarElements} />;
+export default function ExpressionBuilderModal({sidebarElements}: IProps) {
+	return <Modal sidebarElements={sidebarElements} />;
 }

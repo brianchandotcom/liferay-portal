@@ -326,7 +326,7 @@ public class KBAdminNavigationDisplayContext {
 				JSONUtil.put(
 					"actions",
 					_kbDropdownItemsProvider.getKBArticleDropdownItems(
-						kbArticle)
+						kbArticle, _selectedItemAncestorIds)
 				).put(
 					"children", _getChildKBArticlesJSONArray(kbArticle)
 				).put(
@@ -419,7 +419,7 @@ public class KBAdminNavigationDisplayContext {
 				jsonObject.put(
 					"actions",
 					_kbDropdownItemsProvider.getKBArticleDropdownItems(
-						kbArticle)
+						kbArticle, _selectedItemAncestorIds)
 				).put(
 					"children", _getChildKBArticlesJSONArray(kbArticle)
 				).put(

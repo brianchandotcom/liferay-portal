@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,6 +75,12 @@ public class KBDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
+		return getKBArticleDropdownItems(kbArticle, null);
+	}
+
+	public List<DropdownItem> getKBArticleDropdownItems(
+		KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
+
 		return DropdownItemListBuilder.add(
 			() -> _hasUpdatePermission(kbArticle),
 			dropdownItem -> {
@@ -209,17 +216,17 @@ public class KBDropdownItemsProvider {
 						"/knowledge_base/delete_kb_article"
 					).setRedirect(
 						() -> {
-							if (_isKBArticleSelected(kbArticle)) {
-								KBArticle parentKBArticle =
-									kbArticle.getParentKBArticle();
+							if (ListUtil.isNotEmpty(selectedItemAncestorIds)) {
+								if (selectedItemAncestorIds.contains(
+										kbArticle.getResourcePrimKey())) {
 
-								if (parentKBArticle != null) {
-									return _createKbArticleRenderURL(
-										parentKBArticle);
+									return _getParentNodeURL(kbArticle);
 								}
-
-								return _createKbFolderRenderURL(
-									kbArticle.getKbFolderId());
+							}
+							else {
+								if (_isKBArticleSelected(kbArticle)) {
+									return _getParentNodeURL(kbArticle);
+								}
 							}
 
 							return _currentURL;
@@ -568,6 +575,18 @@ public class KBDropdownItemsProvider {
 		).setParameter(
 			"selectedItemId", kbFolderId
 		).buildString();
+	}
+
+	private String _getParentNodeURL(KBArticle kbArticle)
+		throws PortalException {
+
+		KBArticle parentKBArticle = kbArticle.getParentKBArticle();
+
+		if (parentKBArticle != null) {
+			return _createKbArticleRenderURL(parentKBArticle);
+		}
+
+		return _createKbFolderRenderURL(kbArticle.getKbFolderId());
 	}
 
 	private String _getPermissionsURL(KBFolder kbFolder) throws Exception {

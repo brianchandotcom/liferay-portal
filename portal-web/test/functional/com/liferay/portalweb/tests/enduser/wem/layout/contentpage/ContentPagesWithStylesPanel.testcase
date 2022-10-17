@@ -298,8 +298,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by entering a value in the text area".
-	@priority = "4"
+	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by entering a value in the text area."
+	@priority = "3"
 	test ResetSpacingStylesFromCustomValue {
 		task ("Given a page designer has a Button fragment on a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -362,7 +362,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by selecting from Existing tokens".
+	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by selecting from Existing tokens."
 	@priority = "4"
 	test ResetSpacingStylesFromExistingTokens {
 		task ("Given a page designer has a Button fragment on a content page") {
@@ -411,7 +411,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component to the parent viewport value".
+	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component to the parent viewport value."
 	@priority = "4"
 	test ResetSpacingStylesToParentViewportValue {
 		task ("Given a page designer has a Button fragment with different spacing styles in each viewport") {

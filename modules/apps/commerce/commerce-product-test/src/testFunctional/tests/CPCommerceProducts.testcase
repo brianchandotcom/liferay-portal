@@ -380,6 +380,8 @@ definition {
 			entryName = "Any Product",
 			productCatalog = "Master",
 			productName = "Any Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Any");
 	}
 
@@ -397,19 +399,11 @@ definition {
 			productName = "Simple T-Shirt",
 			productType = "Simple");
 
-		Click(
-			key_itemName = "",
-			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-		Click(
-			key_optionValue = "Duplicate",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-		CommerceEntry.addProductsEntry(
+		CommerceProducts.duplicateProduct(
+			checkProductFields = "true",
+			compileDescription = "false",
 			productCatalog = "Master",
-			productFullDescription = "",
-			productName = "Copy of Simple T-Shirt",
-			productShortDescription = "",
+			productName = "Simple T-Shirt",
 			publishProduct = "false");
 
 		AssertElementPresent(
@@ -480,6 +474,8 @@ definition {
 			entryName = "Approved Product",
 			productCatalog = "Master",
 			productName = "Approved Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Approved");
 	}
 
@@ -572,6 +568,8 @@ definition {
 			entryName = "Simple T-Shirt",
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Approved");
 
 		User.logoutPG();
@@ -599,6 +597,8 @@ definition {
 			entryName = "Denied Product",
 			productCatalog = "Master",
 			productName = "Denied Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Denied");
 	}
 
@@ -618,19 +618,11 @@ definition {
 			productType = "Simple",
 			publishProduct = "false");
 
-		Click(
-			key_itemName = "",
-			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-		Click(
-			key_optionValue = "Duplicate",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-		CommerceEntry.addProductsEntry(
+		CommerceProducts.duplicateProduct(
+			checkProductFields = "true",
+			compileDescription = "false",
 			productCatalog = "Master",
-			productFullDescription = "",
-			productName = "Copy of Simple T-Shirt",
-			productShortDescription = "",
+			productName = "Simple T-Shirt",
 			publishProduct = "false");
 
 		AssertElementPresent(
@@ -853,6 +845,8 @@ definition {
 			entryName = "Draft Product",
 			productCatalog = "Master",
 			productName = "Draft Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Draft");
 	}
 
@@ -911,6 +905,8 @@ definition {
 			entryName = "Simple T-Shirt",
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Draft");
 
 		User.logoutPG();
@@ -938,6 +934,8 @@ definition {
 			entryName = "Expired Product",
 			productCatalog = "Master",
 			productName = "Expired Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Expired");
 	}
 
@@ -959,6 +957,8 @@ definition {
 			entryName = "Inactive Product",
 			productCatalog = "Master",
 			productName = "Inactive Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Inactive");
 	}
 
@@ -980,6 +980,8 @@ definition {
 			entryName = "Incomplete Product",
 			productCatalog = "Master",
 			productName = "Incomplete Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Incomplete");
 	}
 
@@ -1001,6 +1003,8 @@ definition {
 			entryName = "In Recycle Bin Product",
 			productCatalog = "Master",
 			productName = "In Recycle Bin Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "In Recycle Bin");
 	}
 
@@ -1022,6 +1026,8 @@ definition {
 			entryName = "Pending Product",
 			productCatalog = "Master",
 			productName = "Pending Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Pending");
 	}
 
@@ -1117,6 +1123,8 @@ definition {
 			entryName = "Simple T-Shirt",
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Pending (Review)");
 
 		User.logoutPG();
@@ -1159,6 +1167,8 @@ definition {
 			entryName = "Scheduled Product",
 			productCatalog = "Master",
 			productName = "Scheduled Product",
+			checkProductFields = "true",
+			compileDescription = "false",
 			status = "Scheduled");
 	}
 
@@ -1584,21 +1594,12 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
 
-			Click(
-				key_itemName = "",
-				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
-
-			Click(
-				key_optionValue = "Duplicate",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
-
-			CommerceEntry.addProductsEntry(
+			CommerceProducts.duplicateProduct(
+				checkProductFields = "true",
+				compileDescription = "false",
 				productCatalog = "Minium",
-				productFullDescription = "",
-				productName = "Copy of ABS Sensor",
-				productShortDescription = "");
-
-			Button.clickPublish();
+				productName = "ABS Sensor",
+				publishProduct = "true");
 		}
 
 		task ("And if I change the SKU price of the original product") {

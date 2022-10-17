@@ -14,6 +14,8 @@
 
 package com.liferay.notification.type;
 
+import com.liferay.notification.model.NotificationTemplate;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -44,6 +46,10 @@ public class NotificationContext {
 		return _classPK;
 	}
 
+	public NotificationTemplate getNotificationTemplate() {
+		return _notificationTemplate;
+	}
+
 	public long getNotificationTemplateId() {
 		return _notificationTemplateId;
 	}
@@ -58,6 +64,10 @@ public class NotificationContext {
 
 	public Map<String, Object> getTermValues() {
 		return _termValues;
+	}
+
+	public String getType() {
+		return _type;
 	}
 
 	public long getUserId() {
@@ -82,6 +92,12 @@ public class NotificationContext {
 		_classPK = classPK;
 	}
 
+	public void setNotificationTemplate(
+		NotificationTemplate notificationTemplate) {
+
+		_notificationTemplate = notificationTemplate;
+	}
+
 	public void setNotificationTemplateId(long notificationTemplateId) {
 		_notificationTemplateId = notificationTemplateId;
 	}
@@ -98,6 +114,10 @@ public class NotificationContext {
 		_termValues = termValues;
 	}
 
+	public void setType(String type) {
+		_type = type;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
@@ -106,10 +126,12 @@ public class NotificationContext {
 	private Map<String, Serializable> _attributes;
 	private String _className;
 	private long _classPK;
+	private NotificationTemplate _notificationTemplate;
 	private long _notificationTemplateId;
 	private String _notificationTemplateName;
 	private long _objectDefinitionId;
 	private Map<String, Object> _termValues;
+	private String _type;
 	private long _userId;
 
 }

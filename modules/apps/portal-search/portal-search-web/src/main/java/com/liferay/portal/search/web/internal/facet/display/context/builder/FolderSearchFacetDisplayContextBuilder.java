@@ -64,11 +64,11 @@ public class FolderSearchFacetDisplayContextBuilder {
 
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
-				_buildFolderSearchFacetTermDisplayContexts();
+				_buildBucketDisplayContexts();
 
 		folderSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
-		folderSearchFacetDisplayContext.setFolderSearchFacetTermDisplayContexts(
+		folderSearchFacetDisplayContext.setBucketDisplayContexts(
 			bucketDisplayContexts);
 		folderSearchFacetDisplayContext.
 			setFolderFacetPortletInstanceConfiguration(
@@ -218,7 +218,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	private BucketDisplayContext
-		_buildFolderSearchFacetTermDisplayContext(
+		_buildBucketDisplayContext(
 			long folderId, String displayName, int frequency,
 			boolean selected) {
 
@@ -238,7 +238,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	private BucketDisplayContext
-		_buildFolderSearchFacetTermDisplayContext(TermCollector termCollector) {
+		_buildBucketDisplayContext(TermCollector termCollector) {
 
 		long folderId = GetterUtil.getLong(termCollector.getTerm());
 
@@ -248,18 +248,18 @@ public class FolderSearchFacetDisplayContextBuilder {
 			return null;
 		}
 
-		return _buildFolderSearchFacetTermDisplayContext(
+		return _buildBucketDisplayContext(
 			folderId, displayName, termCollector.getFrequency(),
 			isSelected(folderId));
 	}
 
 	private List<BucketDisplayContext>
-		_buildFolderSearchFacetTermDisplayContexts() {
+		_buildBucketDisplayContexts() {
 
 		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {
-			return _getEmptyFolderSearchFacetTermDisplayContexts();
+			return _getEmptyBucketDisplayContexts();
 		}
 
 		List<BucketDisplayContext>
@@ -281,7 +281,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 
 			BucketDisplayContext
 				bucketDisplayContext =
-					_buildFolderSearchFacetTermDisplayContext(termCollector);
+					_buildBucketDisplayContext(termCollector);
 
 			if (bucketDisplayContext != null) {
 				bucketDisplayContexts.add(
@@ -321,20 +321,20 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	private BucketDisplayContext
-		_getEmptyFolderSearchFacetTermDisplayContext(long folderId) {
+		_getEmptyBucketDisplayContext(long folderId) {
 
-		return _buildFolderSearchFacetTermDisplayContext(
+		return _buildBucketDisplayContext(
 			folderId, _getDisplayName(folderId), 0, true);
 	}
 
 	private List<BucketDisplayContext>
-		_getEmptyFolderSearchFacetTermDisplayContexts() {
+		_getEmptyBucketDisplayContexts() {
 
 		Stream<Long> folderIdsStream = _selectedFolderIds.stream();
 
 		Stream<BucketDisplayContext>
 			bucketDisplayContextsStream = folderIdsStream.map(
-				this::_getEmptyFolderSearchFacetTermDisplayContext);
+				this::_getEmptyBucketDisplayContext);
 
 		return bucketDisplayContextsStream.collect(
 			Collectors.toList());

@@ -36,7 +36,7 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 	}
 
 	public List<BucketDisplayContext>
-		getFolderSearchFacetTermDisplayContexts() {
+		getBucketDisplayContexts() {
 
 		return _bucketDisplayContexts;
 	}
@@ -77,7 +77,7 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 			folderFacetPortletInstanceConfiguration;
 	}
 
-	public void setFolderSearchFacetTermDisplayContexts(
+	public void setBucketDisplayContexts(
 		List<BucketDisplayContext>
 			bucketDisplayContexts) {
 

@@ -169,8 +169,8 @@ public class
 				WebKeys.THEME_DISPLAY,
 				_getThemeDisplay(mockHttpServletRequest, LocaleUtil.US, user));
 
-			Assert.assertTrue(
-				!_contentDashboardItemVersionActionProvider.isShow(
+			Assert.assertFalse(
+				_contentDashboardItemVersionActionProvider.isShow(
 					journalArticle, mockHttpServletRequest));
 		}
 		finally {

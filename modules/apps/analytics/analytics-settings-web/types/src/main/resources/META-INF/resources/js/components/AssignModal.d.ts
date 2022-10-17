@@ -12,7 +12,16 @@
  * details.
  */
 
-export declare function fetchConnection(token: string): Promise<Response>;
-export declare function deleteConnection(): Promise<Response>;
-export declare function fetchProperties(): Promise<any>;
-export declare function createProperty(name: string): Promise<Response>;
+import React from 'react';
+import {TProperty} from '../components/PropertiesTable';
+interface IAssignModal {
+	observer: any;
+	onCloseModal: () => void;
+	propertyData: TProperty;
+}
+export declare enum ETabs {
+	Channel = 0,
+	Sites = 1,
+}
+declare const AssignModal: React.FC<IAssignModal>;
+export default AssignModal;

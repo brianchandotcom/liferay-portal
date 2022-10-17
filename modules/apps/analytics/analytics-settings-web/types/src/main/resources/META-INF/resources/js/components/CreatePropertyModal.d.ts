@@ -15,6 +15,7 @@
 import React from 'react';
 interface IModalProps {
 	observer: any;
+	onCloseModal: () => void;
 }
 declare const CreatePropertyModal: React.FC<IModalProps>;
 export default CreatePropertyModal;

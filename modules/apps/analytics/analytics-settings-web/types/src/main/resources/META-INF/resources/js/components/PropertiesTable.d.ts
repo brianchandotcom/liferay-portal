@@ -13,11 +13,12 @@
  */
 
 import React from 'react';
-declare type TDataSource = {
+export declare type TDataSource = {
 	dataSourceId: string;
 	siteIds: Array<number>;
 };
-declare type TProperty = {
+export declare type TProperty = {
+	channelId: string;
 	dataSources: Array<TDataSource>;
 	name: string;
 };

@@ -163,6 +163,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
               aria-labelledby="tab-1"
               class="tab-pane active fade show"
               role="tabpanel"
+              tabindex="0"
             >
               <div
                 class="panel panel-unstyled"

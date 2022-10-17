@@ -79,11 +79,7 @@ export function LengthField({field, onEnter, onValueSelect, value}) {
 		<div className="align-items-center d-flex page-editor__length-field">
 			<LengthInput
 				className={field.icon ? 'mb-0' : null}
-				defaultUnit={
-					Liferay.FeatureFlags['LPS-163362']
-						? field.typeOptions?.defaultUnit
-						: null
-				}
+				defaultUnit={field.typeOptions?.defaultUnit}
 				field={field}
 				onEnter={onEnter}
 				onValueSelect={(name, value) => {

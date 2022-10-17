@@ -32,13 +32,6 @@ const DISPLAY_SIZES = {
 	small: 'small',
 };
 
-const DEFAULT_VALUE_FIELDS = {
-	borderRadius: '',
-	borderWidth: 0,
-	opacity: '',
-	shadow: '',
-};
-
 export function fieldIsDisabled(item, field) {
 	if (field.disabled) {
 		return true;
@@ -127,29 +120,11 @@ function FieldSetContent({
 	onValueSelect,
 	values,
 }) {
-	const newFields = Liferay.FeatureFlags['LPS-163362']
-		? fields
-		: fields.map((field) => ({
-				...field,
-				defaultValue: isNullOrUndefined(
-					DEFAULT_VALUE_FIELDS[field.name]
-				)
-					? field.defaultValue
-					: DEFAULT_VALUE_FIELDS[field.name],
-		  }));
-
 	return (
 		<div className="page-editor__sidebar__fieldset">
-			{newFields.map((field, index) => {
-				let FieldComponent =
+			{fields.map((field, index) => {
+				const FieldComponent =
 					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
-
-				if (
-					!Liferay.FeatureFlags['LPS-163362'] &&
-					field.name === 'opacity'
-				) {
-					FieldComponent = FRAGMENT_CONFIGURATION_FIELDS.text;
-				}
 
 				return (
 					<div

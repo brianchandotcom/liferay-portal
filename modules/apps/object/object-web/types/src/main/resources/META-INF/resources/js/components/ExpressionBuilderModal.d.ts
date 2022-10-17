@@ -16,11 +16,9 @@
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
 interface IProps {
-	header?: string;
 	sidebarElements: SidebarCategory[];
 }
 export default function ExpressionBuilderModal({
-	header,
 	sidebarElements,
 }: IProps): JSX.Element;
 export {};

@@ -411,6 +411,154 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component to the parent viewport value".
+	@priority = "4"
+	test ResetSpacingStylesToParentViewportValue {
+		task ("Given a page designer has a Button fragment with different spacing styles in each viewport") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.gotoStyle(fragmentName = "Button");
+
+			PageEditor.configureFragment(paddingLeft = "1");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			PageEditor.configureFragment(paddingLeft = "2");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			PageEditor.configureFragment(paddingLeft = "4");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			PageEditor.configureFragment(paddingLeft = "5");
+		}
+
+		task ("When the page designer switches to the Landscape Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "4");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the page designer can reset the padding left to the Tablet viewport value") {
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			MouseOver(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			AssertVisible(
+				key_content = "Reset to Tablet Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+			Click(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			PageEditor.waitForAutoSave();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "2");
+
+			SelectFrameTop();
+		}
+
+		task ("When the page designer switches to the Portrait Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "5");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the page designer can reset the padding left to the Landscape Phone viewport value") {
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			MouseOver(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			AssertVisible(
+				key_content = "Reset to Landscape Phone Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+			Click(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			PageEditor.waitForAutoSave();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "2");
+
+			SelectFrameTop();
+		}
+
+		task ("When the page designer switches to the Tablet viewport") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "2");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the page designer can reset the padding left to the Desktop viewport value") {
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			MouseOver(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			AssertVisible(
+				key_content = "Reset to Desktop Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+			Click(
+				key_text = "restore",
+				locator1 = "MenuItem#ANY_ICON");
+
+			PageEditor.waitForAutoSave();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Button",
+				paddingLeft = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-136279. View the styles of color selectors."
 	@priority = "4"
 	test ViewStylesOfColorInputs {

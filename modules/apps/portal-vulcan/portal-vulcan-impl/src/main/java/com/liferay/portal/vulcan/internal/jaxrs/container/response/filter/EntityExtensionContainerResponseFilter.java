@@ -62,6 +62,10 @@ public class EntityExtensionContainerResponseFilter
 
 		MediaType mediaType = containerResponseContext.getMediaType();
 
+		if (mediaType == null) {
+			mediaType = MediaType.WILDCARD_TYPE;
+		}
+
 		ContextResolver<EntityExtensionHandler> contextResolver =
 			_providers.getContextResolver(
 				EntityExtensionHandler.class, mediaType);

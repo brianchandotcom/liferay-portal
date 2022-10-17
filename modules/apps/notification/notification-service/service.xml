@@ -182,6 +182,26 @@
 		<column name="notificationTemplateId" type="long" />
 		<column name="type" type="String" />
 	</entity>
+	<entity local-service="true" name="NotificationTemplateRecipientSetting" table="NTemplateRecipientSetting" uuid="false">
+
+		<!-- PK fields -->
+
+		<column db-name="NTemplateRecipientSettingId" name="notificationTemplateRecipientSettingId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column db-name="NTemplateRecipientId" name="notificationTemplateRecipientId" type="long" />
+		<column name="name" type="String" />
+		<column name="value" type="String" />
+	</entity>
 	<exceptions>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>
 		<exception>NotificationTemplateFrom</exception>

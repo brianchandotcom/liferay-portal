@@ -973,6 +973,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				HttpServletResponse httpServletResponse =
 					(HttpServletResponse)pageContext.getResponse();
 
+				// LPS-164462 Call render before getting attribute value
+
 				String html = fragmentRendererController.render(
 					defaultFragmentRendererContext, httpServletRequest,
 					httpServletResponse);

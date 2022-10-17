@@ -1660,7 +1660,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		).setParameter(
 			"resourcePrimKey", kbArticle.getResourcePrimKey()
 		).setParameter(
-			"selectedItemId", kbArticle.getKbArticleId()
+			"selectedItemId", kbArticle.getResourcePrimKey()
 		).buildString();
 	}
 

@@ -37,6 +37,7 @@ const Home = () => {
 
 	return (
 		<ClayLayout.ContainerFluid
+			className="cp-home-wrapper"
 			size={hasManyProjects && !loading ? 'md' : 'xl'}
 		>
 			<ClayLayout.Row>

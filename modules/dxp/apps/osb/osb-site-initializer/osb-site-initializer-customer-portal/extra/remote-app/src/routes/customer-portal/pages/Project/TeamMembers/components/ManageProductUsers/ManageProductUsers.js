@@ -85,42 +85,39 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 	};
 
 	return (
-		<div className="bg-brand-primary-lighten-6 cp-manage-product-users mt-4 p-4 rounded-lg">
-			{accountSubscriptionGroupsLoading ? (
-				<Skeleton height={25} width={224} />
-			) : (
-				<h4 className="mb-0">
-					{accountSubscriptionGroupLiferayExperienceCloud
-						? i18n.translate(
-								'manage-liferay-experience-cloud-users'
-						  )
-						: i18n.translate('manage-product-users')}
-				</h4>
-			)}
+		(accountSubscriptionGroupsLoading ||
+			Boolean(accountSubscriptionGroupLiferayExperienceCloud) ||
+			Boolean(accountSubscriptionGroups?.length)) && (
+			<div className="bg-brand-primary-lighten-6 cp-manage-product-users mt-4 p-4 rounded-lg">
+				{accountSubscriptionGroupsLoading ? (
+					<Skeleton height={25} width={224} />
+				) : (
+					<h4 className="mb-0">
+						{accountSubscriptionGroupLiferayExperienceCloud
+							? i18n.translate(
+									'manage-liferay-experience-cloud-users'
+							  )
+							: i18n.translate('manage-product-users')}
+					</h4>
+				)}
 
-			{accountSubscriptionGroupsLoading ? (
-				<Skeleton className="mb-3 mt-2" height={20} width={320} />
-			) : (
-				<p className="mt-2 text-neutral-7 text-paragraph-sm">
-					{i18n.translate(
-						'manage-roles-and-permissions-of-users-within-each-product'
-					)}
-				</p>
-			)}
-
-			{accountSubscriptionGroupsLoading ? (
-				<Skeleton height={34} width={210} />
-			) : (
-				getManageUsersButton()
-			)}
-
-			{!accountSubscriptionGroupsLoading &&
-				!accountSubscriptionGroups?.length && (
-					<p className="mb-0 text-neutral-7 text-paragraph-sm">
-						There is no active product
+				{accountSubscriptionGroupsLoading ? (
+					<Skeleton className="mb-3 mt-2" height={20} width={320} />
+				) : (
+					<p className="mt-2 text-neutral-7 text-paragraph-sm">
+						{i18n.translate(
+							'manage-roles-and-permissions-of-users-within-each-product'
+						)}
 					</p>
 				)}
-		</div>
+
+				{accountSubscriptionGroupsLoading ? (
+					<Skeleton height={34} width={210} />
+				) : (
+					getManageUsersButton()
+				)}
+			</div>
+		)
 	);
 };
 

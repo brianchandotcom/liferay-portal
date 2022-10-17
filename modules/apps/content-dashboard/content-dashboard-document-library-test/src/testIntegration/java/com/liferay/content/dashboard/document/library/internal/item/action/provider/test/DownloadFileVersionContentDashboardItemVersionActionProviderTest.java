@@ -84,6 +84,10 @@ public class DownloadFileVersionContentDashboardItemVersionActionProviderTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
@@ -92,10 +96,6 @@ public class DownloadFileVersionContentDashboardItemVersionActionProviderTest {
 
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, mockLiferayResourceRequest);
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE,
-			new MockLiferayPortletRenderResponse());
 
 		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
 			_contentDashboardItemVersionActionProvider.

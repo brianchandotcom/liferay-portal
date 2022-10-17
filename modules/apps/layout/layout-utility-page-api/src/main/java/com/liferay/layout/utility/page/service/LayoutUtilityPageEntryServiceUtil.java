@@ -48,6 +48,15 @@ public class LayoutUtilityPageEntryServiceUtil {
 			externalReferenceCode, groupId, name, type, masterLayoutPlid);
 	}
 
+	public static LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
+			long groupId, long layoutUtilityPageEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyLayoutUtilityPageEntry(
+			groupId, layoutUtilityPageEntryId, serviceContext);
+	}
+
 	public static LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId)
 		throws PortalException {

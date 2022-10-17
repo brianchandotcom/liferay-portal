@@ -68,11 +68,11 @@ definition {
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25");
 
-			Click(locator1 = "FrontendDataSet#OPEN_SELECT_FIELD");
+			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
 
 			Click(
 				key_itemName = "Description",
-				locator1 = "FrontendDataSet#SELECT_OPTION");
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 		}
 
 		task ("And When Save As the custom view") {
@@ -82,7 +82,7 @@ definition {
 
 			Click(
 				key_itemName = "Save View",
-				locator1 = "FrontendDataSet#SELECT_OPTION");
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 		}
 
 		task ("Then A new custom view is created and selected as current view") {
@@ -121,7 +121,7 @@ definition {
 				key_text = "order-arrow-down",
 				locator1 = "Icon#ANY");
 
-			FDSCustomView.selectColumn(key_optionName = "Description");
+			FDSCustomView.selectColumn(key_itemName = "Description");
 
 			Pagination.changePagination(itemsPerPage = "4 items");
 		}
@@ -133,13 +133,13 @@ definition {
 		task ("Then A new custom view is created, and selected as current view") {
 			FDSCustomView.verifyCustomView(key_nameCustomView = "FrontendDataSet View 2");
 
-			FDSCustomView.changeCustomView(key_optionName = "FrontendDataSet View");
+			FDSCustomView.changeCustomView(key_itemName = "FrontendDataSet View");
 
 			FDSCustomView.verifyFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
 
 			FDSCustomView.viewColumn(key_field = "Description");
 
-			FDSCustomView.changeCustomView(key_optionName = "FrontendDataSet View 2");
+			FDSCustomView.changeCustomView(key_itemName = "FrontendDataSet View 2");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25");
 

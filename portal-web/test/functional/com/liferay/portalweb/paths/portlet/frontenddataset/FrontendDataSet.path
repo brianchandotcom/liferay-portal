@@ -184,7 +184,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPEN_SELECT_FIELD</td>
+	<td>SELECT_FIELD</td>
 	<td>//button[contains(@aria-label, "Open Fields Menu")]</td>
 	<td></td>
 </tr>
@@ -194,8 +194,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_OPTION</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(text(), '${key_optionName}')]</td>
+	<td>SELECT_OPTION_CUSTOM_VIEW</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(), '${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>

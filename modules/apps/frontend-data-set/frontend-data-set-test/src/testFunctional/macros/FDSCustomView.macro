@@ -1,57 +1,9 @@
 definition {
 
-	macro addRemoveColumn {
-		Click(
-			ariaLabel = "Open Fields Menu",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		Click(
-			key_column = "${key_column}",
-			locator1 = "FrontendDataSet#OPEN_SELECT_FIELD");
-
-		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-	}
-
-	macro createNewView {
-		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-
-		Click(
-			key_itemName = "Save View As",
-			locator1 = "FrontendDataSet#SELECT_OPTION");
-
-		Type(
-			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
-			value1 = "${key_nameView}");
-
-		Click(
-			key_name = "Save",
-			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-	}
-
-	macro selectView {
-		Click(
-			locator1 = "FrontendDataSet#SELECT_OPTION",
-			value1 = "${key_itemName}");
-	}
-
 	macro assertCustomView {
 		AssertTextEquals(
 			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 			value1 = "${key_nameCustomView}");
-	}
-
-	macro verifyFilterSummaryLabel {
-		VerifyElementPresent(
-			value1 = "${key_filter}",
-			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
-	}
-
-	macro changeCustomView {
-		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-
-		Click(
-			key_optionName = "${key_optionName}",
-			locator1 = "FrontendDataSet#SELECT_OPTION");
 	}
 
 	macro compareValue {
@@ -71,8 +23,8 @@ definition {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 		Click(
-			key_optionName = "Save View As",
-			locator1 = "FrontendDataSet#SELECT_OPTION");
+			key_itemName = "Save View As",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 
 		Type(
 			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
@@ -96,15 +48,15 @@ definition {
 
 		Click(
 			key_optionName = "Save View",
-			locator1 = "FrontendDataSet#SELECT_OPTION");
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 	}
 
 	macro saveViewAs {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 		Click(
-			key_optionName = "Save View As",
-			locator1 = "FrontendDataSet#SELECT_OPTION");
+			key_itemName = "Save View As",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 
 		Type(
 			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
@@ -121,8 +73,14 @@ definition {
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Click(
-			key_optionName = "${key_optionName}",
-			locator1 = "FrontendDataSet#SELECT_OPTION");
+			key_itemName = "${key_itemName}",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+	}
+
+	macro selectView {
+		Click(
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
+			value1 = "${key_itemName}");
 	}
 
 	macro verifyCustomView {
@@ -148,5 +106,13 @@ definition {
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
+
+	 macro changeCustomView {
+        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+		Click(
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
+			key_optionName = "${key_itemName}");
+    }
 
 }

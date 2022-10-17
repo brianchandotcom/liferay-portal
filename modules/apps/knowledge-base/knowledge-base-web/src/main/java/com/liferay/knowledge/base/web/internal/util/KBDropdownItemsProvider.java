@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.web.internal.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
@@ -208,12 +209,7 @@ public class KBDropdownItemsProvider {
 						"/knowledge_base/delete_kb_article"
 					).setRedirect(
 						() -> {
-							String mvcRenderCommandName = ParamUtil.getString(
-								_liferayPortletRequest, "mvcRenderCommandName");
-
-							if (mvcRenderCommandName.equals(
-									"/knowledge_base/view_article")) {
-
+							if (_isKBArticleSelected(kbArticle)) {
 								KBArticle parentKBArticle =
 									kbArticle.getParentKBArticle();
 
@@ -555,7 +551,7 @@ public class KBDropdownItemsProvider {
 		).setParameter(
 			"resourcePrimKey", kbArticle.getResourcePrimKey()
 		).setParameter(
-			"selectedItemId", kbArticle.getKbArticleId()
+			"selectedItemId", kbArticle.getResourcePrimKey()
 		).buildString();
 	}
 
@@ -851,6 +847,23 @@ public class KBDropdownItemsProvider {
 				KBActionKeys.VIEW)) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isKBArticleSelected(KBArticle kbArticle) {
+		long resourceClassNameId = ParamUtil.getLong(
+			_liferayPortletRequest, "resourceClassNameId");
+
+		if (resourceClassNameId == kbArticle.getClassNameId()) {
+			long resourcePrimaryKey = ParamUtil.getLong(
+				_liferayPortletRequest, "resourcePrimKey",
+				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
+
+			if (resourcePrimaryKey == kbArticle.getResourcePrimKey()) {
+				return true;
+			}
 		}
 
 		return false;

@@ -342,9 +342,8 @@ public class ObjectDefinitionResourceImpl
 
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
 			_objectFieldLocalService.updateObjectField(
-				contextUser.getUserId(), objectDefinitionId,
-				GetterUtil.getLong(objectField.getId()),
-				objectField.getExternalReferenceCode(),
+				objectField.getExternalReferenceCode(), contextUser.getUserId(),
+				objectDefinitionId, GetterUtil.getLong(objectField.getId()),
 				GetterUtil.getLong(objectField.getListTypeDefinitionId()),
 				objectField.getBusinessTypeAsString(), null, null,
 				objectField.getDBTypeAsString(), objectField.getDefaultValue(),

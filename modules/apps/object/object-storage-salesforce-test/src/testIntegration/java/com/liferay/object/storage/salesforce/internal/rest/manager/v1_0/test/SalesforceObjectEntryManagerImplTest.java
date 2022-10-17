@@ -135,7 +135,7 @@ public class SalesforceObjectEntryManagerImplTest {
 			Collections.emptyList());
 
 		_objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), "Title__c", 0,
+			"Title__c", objectField.getObjectFieldId(), 0,
 			objectField.getBusinessType(), objectField.getDBType(), null, false,
 			false, null, objectField.getLabelMap(), objectField.getName(),
 			false, false, objectField.getObjectFieldSettings());

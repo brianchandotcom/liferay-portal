@@ -883,7 +883,7 @@ public class ObjectFieldLocalServiceTest {
 			"maximumFileSize", objectField.getObjectFieldId(), "100");
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), StringPool.BLANK, 0,
+			StringPool.BLANK, objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -903,7 +903,7 @@ public class ObjectFieldLocalServiceTest {
 		// Business type text
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), StringPool.BLANK, 0,
+			StringPool.BLANK, objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -921,7 +921,7 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getObjectFieldId(), "maximumFileSize"));
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), StringPool.BLANK, 0,
+			StringPool.BLANK, objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -936,7 +936,7 @@ public class ObjectFieldLocalServiceTest {
 			"showCounter", objectField.getObjectFieldId(), "true");
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), StringPool.BLANK, 0,
+			StringPool.BLANK, objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1069,7 +1069,7 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
-			objectField.getObjectFieldId(), StringPool.BLANK, 0,
+			StringPool.BLANK, objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER, StringPool.BLANK, false, true,
 			StringPool.BLANK, LocalizedMapUtil.getLocalizedMap("charlie"),
@@ -1309,8 +1309,8 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectField objectField =
 			_objectFieldLocalService.updateCustomObjectField(
-				expectedObjectField.getObjectFieldId(),
 				expectedObjectField.getExternalReferenceCode(),
+				expectedObjectField.getObjectFieldId(),
 				expectedObjectField.getListTypeDefinitionId(),
 				expectedObjectField.getBusinessType(),
 				expectedObjectField.getDBType(),
@@ -1380,7 +1380,7 @@ public class ObjectFieldLocalServiceTest {
 					objectDefinition1.getPKObjectFieldName());
 
 			_objectFieldLocalService.updateCustomObjectField(
-				objectField.getObjectFieldId(), StringPool.BLANK,
+				StringPool.BLANK, objectField.getObjectFieldId(),
 				objectField.getListTypeDefinitionId(),
 				objectField.getBusinessType(),
 				ObjectFieldConstants.DB_TYPE_STRING,

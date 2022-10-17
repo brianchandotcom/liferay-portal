@@ -103,7 +103,7 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 	@Override
 	public ObjectField updateObjectField(
-			long objectFieldId, String externalReferenceCode,
+			String externalReferenceCode, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
 			String defaultValue, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap, String name,
@@ -119,9 +119,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return objectFieldLocalService.updateObjectField(
-			objectField.getUserId(), objectField.getObjectDefinitionId(),
-			objectFieldId, externalReferenceCode, listTypeDefinitionId,
-			businessType, objectField.getDBColumnName(),
+			externalReferenceCode, objectField.getUserId(),
+			objectField.getObjectDefinitionId(), objectFieldId,
+			listTypeDefinitionId, businessType, objectField.getDBColumnName(),
 			objectField.getDBTableName(), dbType, defaultValue, indexed,
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			state, objectField.isSystem(), objectFieldSettings);

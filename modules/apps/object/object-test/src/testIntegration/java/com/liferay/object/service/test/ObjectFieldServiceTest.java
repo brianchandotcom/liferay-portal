@@ -266,7 +266,7 @@ public class ObjectFieldServiceTest {
 			objectField = _addObjectField(user);
 
 			objectField = _objectFieldService.updateObjectField(
-				objectField.getObjectFieldId(), StringPool.BLANK, 0, "Text",
+				StringPool.BLANK, objectField.getObjectFieldId(), 0, "Text",
 				"String", null, true, false,
 				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
 				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true, false,

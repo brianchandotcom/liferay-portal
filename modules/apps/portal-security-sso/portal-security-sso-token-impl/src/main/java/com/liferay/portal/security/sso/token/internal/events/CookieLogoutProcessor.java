@@ -14,14 +14,10 @@
 
 package com.liferay.portal.security.sso.token.internal.events;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
-import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.token.events.LogoutProcessor;
 import com.liferay.portal.security.sso.token.events.LogoutProcessorType;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,19 +40,7 @@ public class CookieLogoutProcessor implements LogoutProcessor {
 
 		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
-		for (String parameter : parameters) {
-			Cookie cookie = new Cookie(parameter, StringPool.BLANK);
-
-			if (Validator.isNotNull(domain)) {
-				cookie.setDomain(domain);
-			}
-
-			cookie.setMaxAge(0);
-			cookie.setPath(StringPool.SLASH);
-
-			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
-				httpServletRequest, httpServletResponse);
-		}
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, parameters);
 	}
 
 }

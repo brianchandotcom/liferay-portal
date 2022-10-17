@@ -369,14 +369,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
-		if (Validator.isNotNull(domain)) {
-			cookie.setDomain(domain);
-		}
-
-		cookie.setMaxAge(0);
-		cookie.setPath(path);
-
-		httpServletResponse.addCookie(cookie);
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, cookie.getName());
 	}
 
 	private static final String _AB_TEST_VARIANT_ID_COOKIE_NAME =

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -390,70 +389,17 @@ public abstract class BaseProfile {
 		HttpServletResponse httpServletResponse) {
 
 		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
-
-		Cookie companyIdCookie = new Cookie(
-			CookiesConstants.NAME_COMPANY_ID, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			companyIdCookie.setDomain(domain);
-		}
-
-		companyIdCookie.setMaxAge(0);
-		companyIdCookie.setPath(StringPool.SLASH);
-
-		Cookie idCookie = new Cookie(CookiesConstants.NAME_ID, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			idCookie.setDomain(domain);
-		}
-
-		idCookie.setMaxAge(0);
-		idCookie.setPath(StringPool.SLASH);
-
-		Cookie passwordCookie = new Cookie(
-			CookiesConstants.NAME_PASSWORD, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			passwordCookie.setDomain(domain);
-		}
-
-		passwordCookie.setMaxAge(0);
-		passwordCookie.setPath(StringPool.SLASH);
-
 		boolean rememberMe = GetterUtil.getBoolean(
 			CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, httpServletRequest));
 
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_COMPANY_ID);
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_PASSWORD);
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_REMEMBER_ME);
+
 		if (!rememberMe) {
-			Cookie loginCookie = new Cookie(CookiesConstants.NAME_LOGIN, StringPool.BLANK);
-
-			if (Validator.isNotNull(domain)) {
-				loginCookie.setDomain(domain);
-			}
-
-			loginCookie.setMaxAge(0);
-			loginCookie.setPath(StringPool.SLASH);
-
-			CookieKeys.addCookie(
-				httpServletRequest, httpServletResponse, loginCookie);
+			CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_LOGIN);
 		}
-
-		Cookie rememberMeCookie = new Cookie(
-			CookiesConstants.NAME_REMEMBER_ME, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			rememberMeCookie.setDomain(domain);
-		}
-
-		rememberMeCookie.setMaxAge(0);
-		rememberMeCookie.setPath(StringPool.SLASH);
-
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, companyIdCookie);
-		CookieKeys.addCookie(httpServletRequest, httpServletResponse, idCookie);
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, passwordCookie);
-		CookieKeys.addCookie(
-			httpServletRequest, httpServletResponse, rememberMeCookie);
 
 		HttpSession httpSession = httpServletRequest.getSession();
 

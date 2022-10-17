@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.auto.login.remember.me;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
@@ -25,13 +24,11 @@ import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -132,19 +129,10 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Cookie cookie = new Cookie(CookiesConstants.NAME_ID, StringPool.BLANK);
+		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
-		cookie.setMaxAge(0);
-		cookie.setPath(StringPool.SLASH);
-
-		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
-
-		cookie = new Cookie(CookiesConstants.NAME_PASSWORD, StringPool.BLANK);
-
-		cookie.setMaxAge(0);
-		cookie.setPath(StringPool.SLASH);
-
-		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_PASSWORD);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

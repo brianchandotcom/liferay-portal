@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
@@ -145,6 +146,8 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
+		_createListTypeDefinition(objectField);
+
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
@@ -175,6 +178,18 @@ public class ObjectFieldResourceImpl
 			Long objectFieldId, ObjectField objectField)
 		throws Exception {
 
+		com.liferay.object.model.ObjectField serviceBuilderObjectField =
+			_objectFieldService.getObjectField(objectFieldId);
+
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderobjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					serviceBuilderObjectField.getObjectDefinitionId());
+
+		if (!serviceBuilderobjectDefinition.isApproved()) {
+			_createListTypeDefinition(objectField);
+		}
+
 		return _toObjectField(
 			_objectFieldService.updateObjectField(
 				objectField.getExternalReferenceCode(), objectFieldId,
@@ -198,6 +213,28 @@ public class ObjectFieldResourceImpl
 							objectField.getBusinessTypeAsString(),
 							objectFieldSetting, _objectFieldSettingLocalService,
 							_objectFilterLocalService))));
+	}
+
+	private void _createListTypeDefinition(ObjectField objectField)
+		throws Exception {
+
+		if (Validator.isNull(
+				objectField.getListTypeDefinitionExternalReferenceCode())) {
+
+			return;
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					contextUser.getCompanyId(),
+					objectField.getListTypeDefinitionExternalReferenceCode());
+
+		if (listTypeDefinition == null) {
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				objectField.getListTypeDefinitionExternalReferenceCode(),
+				contextUser.getUserId());
+		}
 	}
 
 	private ObjectField _toObjectField(

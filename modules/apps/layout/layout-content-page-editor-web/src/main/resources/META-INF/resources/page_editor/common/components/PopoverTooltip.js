@@ -12,14 +12,18 @@
  * details.
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 import React, {useEffect, useState} from 'react';
+
+const BUTTON_COMPONENTS = new Set([ClayButton, ClayButtonWithIcon, 'button']);
 
 export function PopoverTooltip({
 	alignPosition = 'top',
 	content,
 	header = undefined,
 	id,
+	showTooltipOnClick = true,
 	trigger,
 }) {
 	const [showPopover, setShowPopover] = useState(false);
@@ -40,6 +44,23 @@ export function PopoverTooltip({
 		return () => window.removeEventListener('keydown', handleKeyDown);
 	}, [showPopover]);
 
+	const triggerProps = {
+		'aria-controls': id,
+		'onBlur': () => setShowPopover(false),
+		'onFocus': () => setShowPopover(true),
+		'onMouseEnter': () => setShowPopover(true),
+		'onMouseLeave': () => setShowPopover(false),
+		'type': 'button',
+	};
+
+	const handleClick = (event) => {
+		if (showTooltipOnClick) {
+			setShowPopover((show) => !show);
+		}
+
+		trigger.props.onClick?.(event);
+	};
+
 	return (
 		<ClayPopover
 			alignPosition={alignPosition}
@@ -51,17 +72,14 @@ export function PopoverTooltip({
 			role="tooltip"
 			show={showPopover}
 			trigger={
-				<button
-					aria-controls={id}
-					onBlur={() => setShowPopover(false)}
-					onClick={() => setShowPopover((show) => !show)}
-					onFocus={() => setShowPopover(true)}
-					onMouseEnter={() => setShowPopover(true)}
-					onMouseLeave={() => setShowPopover(false)}
-					type="button"
-				>
-					{trigger}
-				</button>
+				BUTTON_COMPONENTS.has(trigger.type) ? (
+					React.cloneElement(trigger, {
+						...triggerProps,
+						onClick: handleClick,
+					})
+				) : (
+					<button {...triggerProps}>{trigger}</button>
+				)
 			}
 		>
 			{content}

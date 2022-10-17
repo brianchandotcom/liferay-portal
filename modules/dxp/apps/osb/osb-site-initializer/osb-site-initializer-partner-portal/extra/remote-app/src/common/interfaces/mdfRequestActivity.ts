@@ -10,9 +10,8 @@
  */
 
 import LiferayObject from './liferayObject';
+import LiferayPicklist from './liferayPicklist';
 import MDFRequestBudget from './mdfRequestBudget';
-import Tactic from './tactic';
-import TypeActivity from './typeActivity';
 
 export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	activityPromotion: string;
@@ -40,9 +39,9 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	sourceAndSizeOfInviteeList: string;
 	specificSites: string;
 	startDate?: Date;
-	tactic: Tactic;
+	tactic: LiferayPicklist;
 	targetOfLeads: string;
 	totalCostOfExpense: number;
-	typeActivity: TypeActivity;
+	typeActivity: LiferayPicklist;
 	venueName: string;
 }

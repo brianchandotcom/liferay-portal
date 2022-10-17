@@ -47,15 +47,15 @@ export default function getDTOFromMDFRequestActivity(
 		overallMessageContentCTA: mdfRequestActivity.overallMessageContentCTA,
 		primaryThemeOrMessage: mdfRequestActivity.primaryThemeOrMessage,
 		r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
-		r_tacticToActivities_c_tacticId: mdfRequestActivity.tactic.id,
-		r_typeActivityToActivities_c_typeActivityId:
-			mdfRequestActivity.typeActivity.id,
+
 		sourceAndSizeOfInviteeList:
 			mdfRequestActivity.sourceAndSizeOfInviteeList,
 		specificSites: mdfRequestActivity.specificSites,
 		startDate: mdfRequestActivity.startDate,
+		tactic: mdfRequestActivity.tactic,
 		targetOfLeads: mdfRequestActivity.targetOfLeads,
 		totalCostOfExpense: mdfRequestActivity.totalCostOfExpense,
+		typeActivity: mdfRequestActivity.typeActivity,
 		venueName: mdfRequestActivity.venueName,
 	};
 }

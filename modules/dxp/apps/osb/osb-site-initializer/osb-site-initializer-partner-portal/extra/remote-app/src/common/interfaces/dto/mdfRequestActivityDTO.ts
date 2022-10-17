@@ -15,17 +15,11 @@ import MDFRequestBudgetDTO from './mdfRequestBudgetDTO';
 export default interface MDFRequestActivityDTO
 	extends Omit<
 		MDFRequestActivity,
-		| 'budgets'
-		| 'leadFollowUpStrategies'
-		| 'mdfRequestId'
-		| 'tactic'
-		| 'typeActivity'
+		'budgets' | 'leadFollowUpStrategies' | 'mdfRequestId'
 	> {
 	activityToBudgets?: MDFRequestBudgetDTO[];
 	externalReferenceCodeSF?: string;
 	leadFollowUpStrategies?: string;
 	mdfRequestExternalReferenceCodeSF?: string;
 	r_mdfRequestToActivities_c_mdfRequestId?: number;
-	r_tacticToActivities_c_tacticId?: number;
-	r_typeActivityToActivities_c_typeActivityId?: number;
 }

@@ -233,6 +233,11 @@ public class ObjectFieldWrapper
 	}
 
 	@Override
+	public boolean compareBusinessType(String businessType) {
+		return model.compareBusinessType(businessType);
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
 	}

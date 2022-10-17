@@ -56,6 +56,8 @@ public interface ObjectField extends ObjectFieldModel, PersistedModel {
 
 		};
 
+	public boolean compareBusinessType(String businessType);
+
 	public java.util.List<ObjectFieldSetting> getObjectFieldSettings();
 
 	public void setObjectFieldSettings(

@@ -79,7 +79,7 @@ export default function StructureTreeNodeActions({
 				containerProps={{
 					className: 'cadmin',
 				}}
-				onSetActive={setActive}
+				onActiveChange={setActive}
 				ref={dropdownRef}
 			>
 				{active && (

@@ -35,9 +35,9 @@ public class OpenAPIContributorUtil {
 		OpenAPI targetOpenAPI) {
 
 		_copySchema(
-			getSchemaName(objectDefinition), sourceOpenAPI, targetOpenAPI);
-		_copySchema(
 			getPageSchemaName(objectDefinition), sourceOpenAPI, targetOpenAPI);
+		_copySchema(
+			getSchemaName(objectDefinition), sourceOpenAPI, targetOpenAPI);
 	}
 
 	public static OpenAPI getObjectEntryOpenAPI(

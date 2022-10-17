@@ -48,9 +48,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
-import com.liferay.sharing.security.permission.SharingPermission;
 
 import java.io.IOException;
 
@@ -233,13 +231,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	private Searcher _searcher;
 
 	@Reference
-	private SharingConfigurationFactory _sharingConfigurationFactory;
-
-	@Reference
 	private SharingJavaScriptFactory _sharingJavaScriptFactory;
-
-	@Reference
-	private SharingPermission _sharingPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

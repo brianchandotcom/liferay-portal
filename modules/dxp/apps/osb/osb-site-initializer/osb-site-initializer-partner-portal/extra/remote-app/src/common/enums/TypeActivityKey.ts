@@ -9,8 +9,9 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-
-export default interface TypeActivity extends Partial<LiferayObject> {
-	name?: string;
+export enum TypeActivityKey {
+	EVENT = 'prmtact001',
+	DIGITAL_MARKETING = 'prmtact002',
+	CONTENT_MARKETING = 'prmtact003',
+	MISCELLANEOUS_MARKETING = 'prmtact004',
 }

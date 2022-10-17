@@ -16,6 +16,7 @@ export enum LiferayPicklistName {
 	LIFERAY_BUSINESS_SALES_GOALS = 'Liferay Business/Sales Goals',
 	PARTNER_LEVELS = 'Partner Levels',
 	REGIONS = 'Regions',
+	TACTIC = 'Tactic',
 	TARGET_AUDIENCE_ROLES = 'Target Audience/Roles',
 	TARGET_MARKETS = 'Target Markets',
 	PROJECT_INFORMATIONS = 'Project Informations',
@@ -24,4 +25,5 @@ export enum LiferayPicklistName {
 	DEPARTMENTS = 'Departments',
 	JOB_ROLES = 'Job Roles',
 	STATE = 'State',
+	TYPE_OF_ACTIVITY = 'Type Of Activity',
 }

@@ -95,6 +95,38 @@ paths:
                                     $ref: "#/components/schemas/Channel"
                                 type: array
             tags: ["Channel"]
+        patch:
+            operationId: patchChannel
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Channel"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Channel"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    descritpion:
+                        Patch Channel
+                500:
+                    content:
+                        application/json:
+                            schema:
+                            type: string
+                        application/xml:
+                            schema:
+                            type: string
+                    description:
+                        Unexpected error
+            tags: ["Channel"]
         post:
             operationId: postChannel
             requestBody:

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(enabled = false, service = ModelListener.class)
 public class CommerceOrderAnalyticsDeleteMessageModelListener
 	extends BaseAnalyticsDXPEntityModelListener<CommerceOrder> {
 }

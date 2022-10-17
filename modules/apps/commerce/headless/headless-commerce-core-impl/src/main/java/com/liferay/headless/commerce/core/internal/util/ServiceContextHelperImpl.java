@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Zoltán Takács
  */
-@Component(
-	enabled = false, immediate = true, service = ServiceContextHelper.class
-)
+@Component(enabled = false, service = ServiceContextHelper.class)
 public class ServiceContextHelperImpl implements ServiceContextHelper {
 
 	@Override

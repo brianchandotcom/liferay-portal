@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(
-	enabled = false, immediate = true,
-	service = BatchEngineTaskItemDelegate.class
-)
+@Component(enabled = false, service = BatchEngineTaskItemDelegate.class)
 public class UserRecommendationBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<UserRecommendation> {
 

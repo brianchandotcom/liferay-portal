@@ -218,16 +218,6 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 		_waitForYellowStatus();
 	}
 
-	public void unsetElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = null;
-	}
-
-	public void unsetIndexFactory(IndexFactory indexFactory) {
-		_indexFactory = null;
-	}
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_checkNodeVersions();
@@ -268,44 +258,6 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 		}
 
 		return false;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchConfigurationWrapper(
-		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper) {
-
-		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
-	}
-
-	@Reference
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference
-	protected void setIndexFactory(IndexFactory indexFactory) {
-		_indexFactory = indexFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setSearchEngineAdapter(
-		SearchEngineAdapter searchEngineAdapter) {
-
-		_searchEngineAdapter = searchEngineAdapter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchEngineInformation(
-		SearchEngineInformation searchEngineInformation) {
-
-		_searchEngineInformation = searchEngineInformation;
 	}
 
 	private void _checkNodeVersions() {
@@ -464,14 +416,20 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	private volatile CrossClusterReplicationHelper
 		_crossClusterReplicationHelper;
 
+	@Reference
 	private volatile ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
+
+	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 
 	@Reference
 	private ElasticsearchEngineConfigurator _elasticsearchEngineConfigurator;
 
+	@Reference
 	private IndexFactory _indexFactory;
+
+	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
@@ -480,7 +438,10 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private IndexWriter _indexWriter;
 
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchEngineAdapter _searchEngineAdapter;
+
+	@Reference
 	private SearchEngineInformation _searchEngineInformation;
 
 }

@@ -146,6 +146,14 @@ definition {
 		}
 	}
 
+	macro uncheckChildPages {
+		for (var childPagesName : list "${uncheckChildPagesNameList}") {
+			Click(
+				key_pageName = "${childPagesName}",
+				locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
+		}
+	}
+
 	macro uncheckContentNameList {
 		for (var contentName : list "${uncheckContentNameList}") {
 			Uncheck.uncheckToggleSwitch(

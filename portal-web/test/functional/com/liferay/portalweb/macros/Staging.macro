@@ -383,6 +383,10 @@ definition {
 			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
 		}
 
+		if (isSet(uncheckChildPages)) {
+			ContentConfiguration.uncheckChildPages(uncheckChildPagesNameList = "${uncheckChildPagesNameList}");
+		}
+
 		if (isSet(uncheckContentNameList)) {
 			ContentConfiguration.uncheckContentNameList(uncheckContentNameList = "${uncheckContentNameList}");
 		}

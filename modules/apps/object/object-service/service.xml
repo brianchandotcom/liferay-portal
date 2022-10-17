@@ -174,19 +174,19 @@
 			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_C_ERC" return-type="ObjectEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_ERC_ODI" return-type="ObjectEntry" unique="true">
 			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
+			<finder-column name="objectDefinitionId" />
 		</finder>
 		<finder name="G_ODI_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="status" />
-		</finder>
-		<finder name="C_ERC_ODI" return-type="ObjectEntry" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="externalReferenceCode" />
-			<finder-column name="objectDefinitionId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
@@ -257,8 +257,8 @@
 			<finder-column name="system" />
 		</finder>
 		<finder name="C_ERC_ODI" return-type="ObjectEntry" unique="true">
-			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
 			<finder-column name="objectDefinitionId" />
 		</finder>
 		<finder name="ODI_DBT_I" return-type="Collection">

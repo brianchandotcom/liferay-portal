@@ -14,7 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -30,7 +29,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ValidatorException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
@@ -81,8 +79,5 @@ public class UpdateContentDashboardConfigurationMVCActionCommand
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
-
-	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

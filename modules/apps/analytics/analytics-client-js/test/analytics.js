@@ -190,7 +190,7 @@ describe('Analytics', () => {
 		}, FLUSH_INTERVAL * 2);
 	});
 
-	it('replace the user id whenever the set identity hash is changed', async () => {
+	it('does not replace the user id whenever the set identity hash is changed', async () => {
 		fetchMock.mock(/ac-server/i, () => Promise.resolve(200));
 		fetchMock.mock(/identity$/, () => Promise.resolve(200));
 
@@ -208,7 +208,7 @@ describe('Analytics', () => {
 
 		const secondUserId = getItem(STORAGE_KEY_USER_ID);
 
-		expect(firstUserId).not.toEqual(secondUserId);
+		expect(firstUserId).toEqual(secondUserId);
 	});
 
 	it('does not replace the user id whenever the set identity hash is the same', async () => {

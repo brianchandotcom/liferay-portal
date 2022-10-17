@@ -112,6 +112,11 @@ public class FormulaObjectFieldBusinessType implements ObjectFieldBusinessType {
 	}
 
 	@Override
+	public Set<String> getRequiredObjectFieldSettingsNames() {
+		return SetUtil.fromArray("output");
+	}
+
+	@Override
 	public void validateObjectFieldSettings(
 			long objectDefinitionId, String objectFieldName,
 			List<ObjectFieldSetting> objectFieldSettings)

@@ -63,8 +63,9 @@ public interface KBArticleService extends BaseService {
 			String externalReferenceCode, String portletId,
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			String title, String urlTitle, String content, String description,
-			String sourceURL, String[] sections, String[] selectedFileNames,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			String sourceURL, Date expirationDate, Date reviewDate,
+			String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public int addKBArticlesMarkdown(
@@ -248,9 +249,9 @@ public interface KBArticleService extends BaseService {
 
 	public KBArticle updateKBArticle(
 			long resourcePrimKey, String title, String content,
-			String description, String sourceURL, String[] sections,
-			String[] selectedFileNames, long[] removeFileEntryIds,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			String description, String sourceURL, Date expirationDate,
+			Date reviewDate, String[] sections, String[] selectedFileNames,
+			long[] removeFileEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateKBArticlesPriorities(

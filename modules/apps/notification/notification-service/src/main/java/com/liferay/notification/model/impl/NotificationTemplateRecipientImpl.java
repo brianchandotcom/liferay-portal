@@ -26,7 +26,6 @@ public class NotificationTemplateRecipientImpl
 
 	public List<NotificationTemplateRecipientSetting>
 		getNotificationTemplateRecipientSettings() {
-
 		return _notificationTemplateRecipientSettings;
 	}
 

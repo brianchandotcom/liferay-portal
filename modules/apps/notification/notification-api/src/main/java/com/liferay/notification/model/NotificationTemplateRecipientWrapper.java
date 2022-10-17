@@ -184,6 +184,13 @@ public class NotificationTemplateRecipientWrapper
 		return model.getNotificationTemplateRecipientId();
 	}
 
+	@Override
+	public java.util.List<NotificationTemplateRecipientSetting>
+		getNotificationTemplateRecipientSettings() {
+
+		return model.getNotificationTemplateRecipientSettings();
+	}
+
 	/**
 	 * Returns the primary key of this notification template recipient.
 	 *
@@ -300,6 +307,15 @@ public class NotificationTemplateRecipientWrapper
 
 		model.setNotificationTemplateRecipientId(
 			notificationTemplateRecipientId);
+	}
+
+	@Override
+	public void setNotificationTemplateRecipientSettings(
+		java.util.List<NotificationTemplateRecipientSetting>
+			notificationTemplateRecipientSettings) {
+
+		model.setNotificationTemplateRecipientSettings(
+			notificationTemplateRecipientSettings);
 	}
 
 	/**

@@ -64,4 +64,11 @@ public interface NotificationTemplateRecipient
 
 			};
 
+	public java.util.List<NotificationTemplateRecipientSetting>
+		getNotificationTemplateRecipientSettings();
+
+	public void setNotificationTemplateRecipientSettings(
+		java.util.List<NotificationTemplateRecipientSetting>
+			notificationTemplateRecipientSettings);
+
 }

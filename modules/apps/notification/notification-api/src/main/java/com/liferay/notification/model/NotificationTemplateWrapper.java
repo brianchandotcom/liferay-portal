@@ -526,6 +526,11 @@ public class NotificationTemplateWrapper
 		return model.getNotificationTemplateId();
 	}
 
+	@Override
+	public NotificationTemplateRecipient getNotificationTemplateRecipient() {
+		return model.getNotificationTemplateRecipient();
+	}
+
 	/**
 	 * Returns the object definition ID of this notification template.
 	 *
@@ -1057,6 +1062,13 @@ public class NotificationTemplateWrapper
 	@Override
 	public void setNotificationTemplateId(long notificationTemplateId) {
 		model.setNotificationTemplateId(notificationTemplateId);
+	}
+
+	@Override
+	public void setNotificationTemplateRecipient(
+		NotificationTemplateRecipient notificationTemplateRecipient) {
+
+		model.setNotificationTemplateRecipient(notificationTemplateRecipient);
 	}
 
 	/**

@@ -5,8 +5,8 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.springframework", name: "spring-expression", version: "4.3.30.RELEASE"
 	compile group: "org.springframework", name: "spring-core", version: "4.3.30.RELEASE"
+	compile group: "org.springframework", name: "spring-expression", version: "4.3.30.RELEASE"
 }
 
 patch {

@@ -194,7 +194,7 @@ definition {
 			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
 
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Go...Somewhere",
+				searchAssetTitle = "Go Somewhere",
 				searchAssetType = "Page");
 		}
 
@@ -289,9 +289,11 @@ definition {
 
 				SelectFrameTop();
 
-				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
-					layoutName = "Page Name ${pageNum}");
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Edit",
+					pageName = "Page Name ${pageNum}");
+
+				PageEditor.publish();
 			}
 		}
 

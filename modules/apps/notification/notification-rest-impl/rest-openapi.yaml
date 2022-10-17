@@ -60,14 +60,10 @@ components:
                         format: int64
                         type: integer
                     type: array
-                bcc:
-                    type: string
                 body:
                     additionalProperties:
                         type: string
                     type: object
-                cc:
-                    type: string
                 dateCreated:
                     format: date
                     readOnly: true
@@ -78,12 +74,6 @@ components:
                     type: string
                 description:
                     type: string
-                from:
-                    type: string
-                fromName:
-                    additionalProperties:
-                        type: string
-                    type: object
                 id:
                     format: int64
                     readOnly: true
@@ -97,6 +87,8 @@ components:
                 objectDefinitionId:
                     format: int64
                     type: integer
+                recipient:
+                    $ref: "#/components/schemas/Recipient"
                 recipientType:
                     enum: [role, term, user]
                     type: string
@@ -104,12 +96,32 @@ components:
                     additionalProperties:
                         type: string
                     type: object
-                to:
-                    additionalProperties:
-                        type: string
-                    type: object
                 type:
                     type: string
+            type: object
+        Recipient:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                settings:
+                    items:
+                        $ref: "#/components/schemas/Setting"
+                    type: array
+                type:
+                    type: string
+            type: object
+        Setting:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                value:
+                    type: object
             type: object
 info:
     description:

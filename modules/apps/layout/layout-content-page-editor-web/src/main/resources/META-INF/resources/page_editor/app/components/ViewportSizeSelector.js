@@ -15,12 +15,12 @@
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
-import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 
+import {PopoverTooltip} from '../../common/components/PopoverTooltip';
+import {useId} from '../../core/hooks/useId';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 
@@ -40,56 +40,34 @@ const VIEWPORT_DESCRIPTIONS = {
 };
 
 const SelectorButton = ({icon, label, onSelect, selectedSize, sizeId}) => {
-	const buttonRef = useRef(null);
-	const popoverRef = useRef(null);
-	const [showPopover, setShowPopover] = useState(false);
-
-	useLayoutEffect(() => {
-		if (showPopover) {
-			align(
-				popoverRef.current,
-				buttonRef.current,
-				ALIGN_POSITIONS.Bottom,
-				false
-			);
-		}
-	}, [showPopover]);
+	const tooltipId = useId();
 
 	return (
-		<>
-			<ClayButtonWithIcon
-				aria-label={label}
-				aria-pressed={selectedSize === sizeId}
-				className={classNames({
-					'page-editor__viewport-size-selector--default':
-						sizeId === VIEWPORT_SIZES.desktop,
-				})}
-				displayType="secondary"
-				key={sizeId}
-				onClick={() => onSelect(sizeId)}
-				onMouseEnter={() => setShowPopover(true)}
-				onMouseLeave={() => setShowPopover(false)}
-				ref={buttonRef}
-				small
-				symbol={icon}
-			/>
-			{showPopover && (
-				<ClayPopover
-					alignPosition="bottom"
-					className="page-editor__viewport-size-selector__popover"
-					header={label}
-					ref={popoverRef}
-				>
-					{sizeId === VIEWPORT_SIZES.desktop && (
-						<span className="d-block font-weight-semi-bold">
-							{Liferay.Language.get('default-viewport')}
-						</span>
-					)}
-
-					{VIEWPORT_DESCRIPTIONS[sizeId]}
-				</ClayPopover>
-			)}
-		</>
+		<PopoverTooltip
+			alignPosition="bottom"
+			content={VIEWPORT_DESCRIPTIONS[sizeId]}
+			header={
+				sizeId === VIEWPORT_SIZES.desktop &&
+				Liferay.Language.get('default-viewport')
+			}
+			id={tooltipId}
+			showTooltipOnClick={false}
+			trigger={
+				<ClayButtonWithIcon
+					aria-label={label}
+					aria-pressed={selectedSize === sizeId}
+					className={classNames({
+						'page-editor__viewport-size-selector--default':
+							sizeId === VIEWPORT_SIZES.desktop,
+					})}
+					displayType="secondary"
+					key={sizeId}
+					onClick={() => onSelect(sizeId)}
+					small
+					symbol={icon}
+				/>
+			}
+		/>
 	);
 };
 

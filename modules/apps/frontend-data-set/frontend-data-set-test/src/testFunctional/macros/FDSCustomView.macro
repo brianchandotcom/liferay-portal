@@ -6,6 +6,14 @@ definition {
 			value1 = "${key_nameCustomView}");
 	}
 
+	macro changeCustomView {
+		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+		Click(
+			key_optionName = "${key_itemName}",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+	}
+
 	macro compareValue {
 		var dataSetValue1 = FDSCustomView.getValueByPosition(
 			columnIndex = "${key_columnIndex}",
@@ -106,13 +114,5 @@ definition {
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
-
-	 macro changeCustomView {
-        Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-
-		Click(
-			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
-			key_optionName = "${key_itemName}");
-    }
 
 }

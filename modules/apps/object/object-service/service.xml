@@ -715,7 +715,7 @@
 			<finder-column name="objectFieldName" />
 		</finder>
 	</entity>
-	<entity local-service="false" name="ObjectViewFilterColumn" remote-service="false" uuid="true">
+	<entity local-service="true" name="ObjectViewFilterColumn" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

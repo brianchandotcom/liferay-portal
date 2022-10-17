@@ -16,16 +16,17 @@ import ClayButton from '@clayui/button';
 import {ClayToggle} from '@clayui/form';
 import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
-import React from 'react';
+import React, {useState} from 'react';
 
 import AssignModal from '../components/AssignModal';
 
-type TDataSource = {
+export type TDataSource = {
 	dataSourceId: string;
 	siteIds: Array<number>;
 };
 
-type TProperty = {
+export type TProperty = {
+	channelId: string;
 	dataSources: Array<TDataSource>;
 	name: string;
 };
@@ -36,6 +37,7 @@ interface IPropertiesTable {
 
 const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 	const {observer, onOpenChange, open} = useModal();
+	const [property, setProperty] = useState<TProperty>(properties[0]);
 
 	return (
 		<ClayTable className="mt-4">
@@ -104,24 +106,28 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 								<ClayTable.Cell columnTextAlignment="end">
 									<ClayButton
 										displayType="secondary"
-										onClick={() => onOpenChange(true)}
+										onClick={() => {
+											onOpenChange(true);
+											setProperty(property);
+										}}
 										type="button"
 									>
 										{Liferay.Language.get('assign')}
 									</ClayButton>
 								</ClayTable.Cell>
 							</ClayTable.Row>
-
-							{open && (
-								<AssignModal
-									observer={observer}
-									onCloseModal={() => onOpenChange(false)}
-								/>
-							)}
 						</>
 					);
 				})}
 			</ClayTable.Body>
+
+			{open && (
+				<AssignModal
+					observer={observer}
+					onCloseModal={() => onOpenChange(false)}
+					propertyData={property}
+				/>
+			)}
 		</ClayTable>
 	);
 };

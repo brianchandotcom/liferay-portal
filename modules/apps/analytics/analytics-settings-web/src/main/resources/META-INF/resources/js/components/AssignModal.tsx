@@ -17,11 +17,14 @@ import ClayModal from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
+import {TProperty} from '../components/PropertiesTable';
 import ChannelTab from './ChannelTab';
 import SitesTab from './SitesTab';
 
 interface IAssignModal {
 	observer: any;
+	onCloseModal: () => void;
+	propertyData: TProperty;
 }
 
 export enum ETabs {
@@ -29,7 +32,11 @@ export enum ETabs {
 	Sites = 1,
 }
 
-const AssignModal: React.FC<IAssignModal> = ({observer}) => {
+const AssignModal: React.FC<IAssignModal> = ({
+	observer,
+	onCloseModal,
+	propertyData,
+}) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState<number>(
 		ETabs.Channel
 	);
@@ -37,7 +44,7 @@ const AssignModal: React.FC<IAssignModal> = ({observer}) => {
 	return (
 		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header>
-				{Liferay.Language.get('assign-to')} Propertie Name
+				{Liferay.Language.get('assign-to')} {propertyData.name}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -49,7 +56,7 @@ const AssignModal: React.FC<IAssignModal> = ({observer}) => {
 						}}
 						onClick={() => setActiveTabKeyValue(0)}
 					>
-						Channel
+						{Liferay.Language.get('channel')}
 					</ClayTabs.Item>
 
 					<ClayTabs.Item
@@ -59,7 +66,7 @@ const AssignModal: React.FC<IAssignModal> = ({observer}) => {
 						}}
 						onClick={() => setActiveTabKeyValue(1)}
 					>
-						Sites
+						{Liferay.Language.get('sites')}
 					</ClayTabs.Item>
 
 					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
@@ -77,7 +84,10 @@ const AssignModal: React.FC<IAssignModal> = ({observer}) => {
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary">
+						<ClayButton
+							displayType="secondary"
+							onClick={onCloseModal}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 

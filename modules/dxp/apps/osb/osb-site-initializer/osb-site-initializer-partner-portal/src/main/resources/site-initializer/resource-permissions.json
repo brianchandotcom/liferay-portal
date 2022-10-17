@@ -43,18 +43,6 @@
 	},
 	{
 		"actionId": "VIEW",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TypeActivity$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionId": "VIEW",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Tactic$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionId": "VIEW",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
 		"roleName": "User",
 		"scope": "1"

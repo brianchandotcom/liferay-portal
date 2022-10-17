@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
@@ -140,17 +141,23 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		ElasticsearchConnectionManager elasticsearchConnectionManager,
 		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
 
-		return new ElasticsearchSearchEngine() {
-			{
-				setElasticsearchConnectionManager(
-					elasticsearchConnectionManager);
-				setIndexFactory(
-					_createCompanyIndexFactory(indexNameBuilder, properites));
-				setIndexNameBuilder(String::valueOf);
-				setSearchEngineAdapter(
-					_createSearchEngineAdapter(elasticsearchClientResolver));
-			}
-		};
+		ElasticsearchSearchEngine elasticsearchSearchEngine =
+			new ElasticsearchSearchEngine();
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchSearchEngine, "_elasticsearchConnectionManager",
+			elasticsearchConnectionManager);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchSearchEngine, "_indexFactory",
+			_createCompanyIndexFactory(indexNameBuilder, properites));
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchSearchEngine, "_indexNameBuilder",
+			(IndexNameBuilder)String::valueOf);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchSearchEngine, "_searchEngineAdapter",
+			_createSearchEngineAdapter(elasticsearchClientResolver));
+
+		return elasticsearchSearchEngine;
 	}
 
 	private CompanyIdIndexNameBuilder _createIndexNameBuilder() {

@@ -1576,8 +1576,6 @@ definition {
 	@description = "LPS-135888 - Verify that when the user delete the order, the task is not displayed under My Workflow Tasks"
 	@priority = "3"
 	test TaskIsNotDisplayedAfterOrderIsDeleted {
-		property portal.upstream = "quarantine";
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(

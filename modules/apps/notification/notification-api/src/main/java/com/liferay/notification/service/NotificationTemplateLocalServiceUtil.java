@@ -61,6 +61,14 @@ public class NotificationTemplateLocalServiceUtil {
 			attachmentObjectFieldIds);
 	}
 
+	public static NotificationTemplate addNotificationTemplate(
+			com.liferay.notification.type.NotificationContext
+				notificationContext)
+		throws PortalException {
+
+		return getService().addNotificationTemplate(notificationContext);
+	}
+
 	/**
 	 * Adds the notification template to the database. Also notifies the appropriate model listeners.
 	 *

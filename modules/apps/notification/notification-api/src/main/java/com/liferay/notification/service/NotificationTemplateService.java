@@ -15,6 +15,7 @@
 package com.liferay.notification.service;
 
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.type.NotificationContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -60,6 +61,10 @@ public interface NotificationTemplateService extends BaseService {
 			String recipientType, Map<Locale, String> subjectMap,
 			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
+		throws PortalException;
+
+	public NotificationTemplate addNotificationTemplate(
+			NotificationContext notificationContext)
 		throws PortalException;
 
 	public NotificationTemplate deleteNotificationTemplate(

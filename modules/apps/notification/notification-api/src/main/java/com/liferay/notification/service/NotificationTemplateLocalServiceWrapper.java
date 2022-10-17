@@ -56,6 +56,17 @@ public class NotificationTemplateLocalServiceWrapper
 			attachmentObjectFieldIds);
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationTemplate
+			addNotificationTemplate(
+				com.liferay.notification.type.NotificationContext
+					notificationContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationTemplateLocalService.addNotificationTemplate(
+			notificationContext);
+	}
+
 	/**
 	 * Adds the notification template to the database. Also notifies the appropriate model listeners.
 	 *

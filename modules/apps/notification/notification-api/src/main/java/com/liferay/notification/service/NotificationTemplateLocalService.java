@@ -16,6 +16,7 @@ package com.liferay.notification.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.type.NotificationContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -75,6 +76,11 @@ public interface NotificationTemplateLocalService
 			String recipientType, Map<Locale, String> subjectMap,
 			Map<Locale, String> toMap, String type,
 			List<Long> attachmentObjectFieldIds)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public NotificationTemplate addNotificationTemplate(
+			NotificationContext notificationContext)
 		throws PortalException;
 
 	/**

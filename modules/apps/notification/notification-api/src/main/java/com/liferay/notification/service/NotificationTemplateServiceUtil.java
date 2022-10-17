@@ -55,6 +55,14 @@ public class NotificationTemplateServiceUtil {
 			attachmentObjectFieldIds);
 	}
 
+	public static NotificationTemplate addNotificationTemplate(
+			com.liferay.notification.type.NotificationContext
+				notificationContext)
+		throws PortalException {
+
+		return getService().addNotificationTemplate(notificationContext);
+	}
+
 	public static NotificationTemplate deleteNotificationTemplate(
 			long notificationTemplateId)
 		throws PortalException {

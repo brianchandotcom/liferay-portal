@@ -58,6 +58,17 @@ public class NotificationTemplateServiceWrapper
 
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
+			addNotificationTemplate(
+				com.liferay.notification.type.NotificationContext
+					notificationContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationTemplateService.addNotificationTemplate(
+			notificationContext);
+	}
+
+	@Override
+	public com.liferay.notification.model.NotificationTemplate
 			deleteNotificationTemplate(long notificationTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

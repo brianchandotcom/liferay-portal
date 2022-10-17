@@ -104,6 +104,51 @@ public class NotificationTemplateServiceHttp {
 	}
 
 	public static com.liferay.notification.model.NotificationTemplate
+			addNotificationTemplate(
+				HttpPrincipal httpPrincipal,
+				com.liferay.notification.type.NotificationContext
+					notificationContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationTemplateServiceUtil.class,
+				"addNotificationTemplate",
+				_addNotificationTemplateParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, notificationContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationTemplate)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.notification.model.NotificationTemplate
 			deleteNotificationTemplate(
 				HttpPrincipal httpPrincipal, long notificationTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -112,7 +157,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"deleteNotificationTemplate",
-				_deleteNotificationTemplateParameterTypes1);
+				_deleteNotificationTemplateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId);
@@ -157,7 +202,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"deleteNotificationTemplate",
-				_deleteNotificationTemplateParameterTypes2);
+				_deleteNotificationTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplate);
@@ -200,7 +245,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"getNotificationTemplate",
-				_getNotificationTemplateParameterTypes3);
+				_getNotificationTemplateParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId);
@@ -251,7 +296,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"updateNotificationTemplate",
-				_updateNotificationTemplateParameterTypes4);
+				_updateNotificationTemplateParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId, objectDefinitionId, bcc,
@@ -298,13 +343,15 @@ public class NotificationTemplateServiceHttp {
 			String.class, String.class, java.util.Map.class,
 			java.util.Map.class, String.class, java.util.List.class
 		};
-	private static final Class<?>[] _deleteNotificationTemplateParameterTypes1 =
-		new Class[] {long.class};
+	private static final Class<?>[] _addNotificationTemplateParameterTypes1 =
+		new Class[] {com.liferay.notification.type.NotificationContext.class};
 	private static final Class<?>[] _deleteNotificationTemplateParameterTypes2 =
-		new Class[] {com.liferay.notification.model.NotificationTemplate.class};
-	private static final Class<?>[] _getNotificationTemplateParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateNotificationTemplateParameterTypes4 =
+	private static final Class<?>[] _deleteNotificationTemplateParameterTypes3 =
+		new Class[] {com.liferay.notification.model.NotificationTemplate.class};
+	private static final Class<?>[] _getNotificationTemplateParameterTypes4 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateNotificationTemplateParameterTypes5 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			String.class, String.class, String.class, java.util.Map.class,

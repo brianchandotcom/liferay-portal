@@ -48,7 +48,7 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 			return null;
 		}
 
-		return _getContentDashboardItemAction(fileVersion);
+		return _getContentDashboardItemVersionAction(fileVersion);
 	}
 
 	@Override
@@ -56,17 +56,19 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 		FileVersion fileVersion, HttpServletRequest httpServletRequest) {
 
 		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
-			_getContentDashboardItemAction(fileVersion);
+			_getContentDashboardItemVersionAction(fileVersion);
 
-		if (Validator.isNull(contentDashboardItemVersionAction.getURL())) {
+		if ((contentDashboardItemVersionAction == null) ||
+			Validator.isNull(contentDashboardItemVersionAction.getURL())) {
+
 			return false;
 		}
 
 		return true;
 	}
 
-	private ContentDashboardItemVersionAction _getContentDashboardItemAction(
-		FileVersion fileVersion) {
+	private ContentDashboardItemVersionAction
+		_getContentDashboardItemVersionAction(FileVersion fileVersion) {
 
 		FileEntry fileEntry = null;
 
@@ -75,6 +77,8 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
+
+			return null;
 		}
 
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =

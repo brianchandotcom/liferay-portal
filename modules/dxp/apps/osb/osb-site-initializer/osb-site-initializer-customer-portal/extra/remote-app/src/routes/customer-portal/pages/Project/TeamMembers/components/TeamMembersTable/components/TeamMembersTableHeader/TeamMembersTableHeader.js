@@ -32,6 +32,8 @@ const TeamMembersTableHeader = ({
 	sessionId,
 }) => {
 	const [searchTerm, setSearchTerm] = useState('');
+	const [clearSearchTerm, setClearSearchTerm] = useState(false);
+
 	const {observer, onOpenChange, open} = useModal();
 
 	return (
@@ -58,9 +60,11 @@ const TeamMembersTableHeader = ({
 				<div className="d-flex">
 					<div>
 						<SearchBar
+							clearSearchTerm={clearSearchTerm}
 							onSearchSubmit={(term) => {
 								setSearchTerm(term);
 								onSearch(term);
+								setClearSearchTerm(false);
 							}}
 						/>
 					</div>
@@ -104,7 +108,10 @@ const TeamMembersTableHeader = ({
 							<Button
 								className="bg-white ml-3 px-3 py-2"
 								displayType="primary"
-								onClick={() => onOpenChange(true)}
+								onClick={() => {
+									onOpenChange(true);
+									setClearSearchTerm(true);
+								}}
 								outline
 							>
 								<span className="inline-item inline-item-before mr-2">

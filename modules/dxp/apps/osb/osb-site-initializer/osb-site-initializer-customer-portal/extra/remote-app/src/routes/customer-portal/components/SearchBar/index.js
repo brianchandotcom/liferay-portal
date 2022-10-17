@@ -11,10 +11,10 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {memo, useState} from 'react';
+import {memo, useEffect, useState} from 'react';
 import i18n from '../../../../common/I18n';
 
-const SearchBar = ({onSearchSubmit}) => {
+const SearchBar = ({clearSearchTerm, onSearchSubmit}) => {
 	const [term, setTerm] = useState('');
 	const [searching, setSearching] = useState(true);
 
@@ -30,6 +30,14 @@ const SearchBar = ({onSearchSubmit}) => {
 		onSearchSubmit('');
 		setSearching(true);
 	};
+
+	useEffect(() => {
+		if (clearSearchTerm) {
+			setTerm('');
+			onSearchSubmit('');
+			setSearching(true);
+		}
+	}, [clearSearchTerm, onSearchSubmit]);
 
 	return (
 		<ClayInput.Group className="m-0 mr-2">

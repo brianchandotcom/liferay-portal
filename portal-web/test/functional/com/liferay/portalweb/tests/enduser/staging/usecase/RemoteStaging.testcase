@@ -36,6 +36,55 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPP-8122. Verify that when remote publishing, the child pages are not published when they are unselected."
+	@priority = "3"
+	test AssertCannotPublishChildPageWhenUnselected {
+		property test.name.skip.portal.instance = "RemoteStaging#AssertCannotPublishChildPageWhenUnselected";
+
+		task ("Given: Add two children pages for Staging Test Page") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Child Page ${i}",
+					parentLayoutName = "Staging Test Page");
+			}
+		}
+
+		task ("When: Publish only the Parent Page and not the child pages to remote live") {
+			Navigator.gotoSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.configurePublishToLive(
+				uncheckChildPages = "true",
+				uncheckChildPagesNameList = "Test Child Page 1,Test Child Page 2");
+
+			Staging.publishToLive(remoteStaging = "true");
+		}
+
+		task ("Then: Assert that child pages aren't published on the remote site") {
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.gotoSitePage(
+				baseURL = "http://localhost:9080",
+				pageName = "Staging Test Page",
+				siteName = "Remote Site");
+
+			PagesAdmin.viewPageItemPresent(pageName = "Staging Test Page");
+
+			PagesAdmin.viewPageItemNotPresent(pageName = "Test Child Page 1");
+
+			PagesAdmin.viewPageItemNotPresent(pageName = "Test Child Page 2");
+		}
+	}
+
 	@description = "This is a use case for LPS-154557 TC-1: Verify detailed error message should show up with default configuration."
 	@priority = "4"
 	test AssertDetailedErrorMessageWithDefaultConfiguration {

@@ -418,7 +418,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String instanceId = jsonObject.getString("instanceId");
 
-		String encodePortletId = PortletIdCodec.encode(portletId, instanceId);
+		String encodedPortletId = PortletIdCodec.encode(portletId, instanceId);
 
 		String html = _fragmentPortletRenderer.renderPortlet(
 			fragmentEntryProcessorContext.getHttpServletRequest(),
@@ -427,7 +427,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			PortletPreferencesFactoryUtil.toXML(
 				PortletPreferencesFactoryUtil.getPortletPreferences(
 					fragmentEntryProcessorContext.getHttpServletRequest(),
-					encodePortletId)));
+					encodedPortletId)));
 
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();
@@ -443,7 +443,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				ParamUtil.getLong(
 					fragmentEntryProcessorContext.getHttpServletRequest(),
 					"p_l_id"),
-				"#", encodePortletId);
+				"#", encodedPortletId);
 
 			httpServletRequest.setAttribute(
 				FragmentWebKeys.ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID +

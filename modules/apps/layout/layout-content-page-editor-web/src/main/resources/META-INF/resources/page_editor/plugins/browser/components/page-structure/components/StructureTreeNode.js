@@ -375,6 +375,8 @@ function StructureTreeNodeContent({
 						'page-editor__page-structure__tree-node__buttons--hidden':
 							node.hidden || node.hiddenAncestor,
 					})}
+					onFocus={(event) => event.stopPropagation()}
+					onKeyDown={(event) => event.stopPropagation()}
 				>
 					{(node.hidable || node.hidden) && (
 						<VisibilityButton

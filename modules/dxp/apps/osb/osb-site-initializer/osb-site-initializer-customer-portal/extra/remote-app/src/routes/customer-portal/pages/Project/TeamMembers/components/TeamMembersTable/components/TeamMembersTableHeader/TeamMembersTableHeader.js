@@ -54,65 +54,67 @@ const TeamMembersTableHeader = ({
 				</ClayModal>
 			)}
 
-			<div className="bg-neutral-1 d-flex px-3 py-3 rounded">
-				<div>
-					<SearchBar
-						onSearchSubmit={(term) => {
-							setSearchTerm(term);
-							onSearch(term);
-						}}
-					/>
-				</div>
+			<div className="bg-neutral-1 d-flex flex-column px-3 py-3 rounded">
+				<div className="d-flex">
+					<div>
+						<SearchBar
+							onSearchSubmit={(term) => {
+								setSearchTerm(term);
+								onSearch(term);
+							}}
+						/>
+					</div>
 
-				<div className="align-items-center d-flex ml-auto">
-					{koroneikiAccount?.maxRequestors > 0 && (
-						<>
-							<PopoverIconButton
-								alignPosition="top"
-								articleAccountSupportURL={
-									articleAccountSupportURL
-								}
-							/>
+					<div className="align-items-center d-flex ml-auto">
+						{koroneikiAccount?.maxRequestors > 0 && (
+							<>
+								<PopoverIconButton
+									alignPosition="top"
+									articleAccountSupportURL={
+										articleAccountSupportURL
+									}
+								/>
 
-							<p className="font-weight-bold m-0">
-								{i18n.translate('support-seats-available')}:
-								&nbsp;
-							</p>
-
-							{loading ? (
-								<Skeleton height={24} width={42} />
-							) : (
-								<p
-									className={classNames(
-										'font-weight-semi-bold m-0 text-neutral-7',
-										{
-											'mr-4': !hasAdministratorRole,
-										}
-									)}
-								>
-									{i18n.sub('x-of-x', [
-										availableSupportSeatsCount,
-										koroneikiAccount.maxRequestors,
-									])}
+								<p className="font-weight-bold m-0">
+									{i18n.translate('support-seats-available')}:
+									&nbsp;
 								</p>
-							)}
-						</>
-					)}
 
-					{hasAdministratorRole && (
-						<Button
-							className="bg-white ml-3 px-3 py-2"
-							displayType="primary"
-							onClick={() => onOpenChange(true)}
-							outline
-						>
-							<span className="inline-item inline-item-before mr-2">
-								<ClayIcon symbol="user-plus" />
-							</span>
+								{loading ? (
+									<Skeleton height={24} width={42} />
+								) : (
+									<p
+										className={classNames(
+											'font-weight-semi-bold m-0 text-neutral-7',
+											{
+												'mr-4': !hasAdministratorRole,
+											}
+										)}
+									>
+										{i18n.sub('x-of-x-available', [
+											availableSupportSeatsCount,
+											koroneikiAccount.maxRequestors,
+										])}
+									</p>
+								)}
+							</>
+						)}
 
-							{i18n.translate('invite')}
-						</Button>
-					)}
+						{hasAdministratorRole && (
+							<Button
+								className="bg-white ml-3 px-3 py-2"
+								displayType="primary"
+								onClick={() => onOpenChange(true)}
+								outline
+							>
+								<span className="inline-item inline-item-before mr-2">
+									<ClayIcon symbol="user-plus" />
+								</span>
+
+								{i18n.translate('invite')}
+							</Button>
+						)}
+					</div>
 				</div>
 
 				<div className="d-flex">

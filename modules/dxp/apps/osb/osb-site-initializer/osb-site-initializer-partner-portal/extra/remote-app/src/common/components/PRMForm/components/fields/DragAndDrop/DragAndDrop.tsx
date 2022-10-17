@@ -59,7 +59,6 @@ const DragAndDrop = ({
 					{...getInputProps({
 						name: field.name,
 						required,
-						type: 'file',
 					})}
 				/>
 
@@ -81,9 +80,10 @@ const DragAndDrop = ({
 				<div className="mt-3 overflow-auto" style={{height: '12rem'}}>
 					<h5>Files</h5>
 
-					{acceptedFiles?.map((file, i) => (
-						<li key={i}>
-							{`File:${file.name} Type:${file.type} Size:${file.size} bytes`}{' '}
+					{acceptedFiles?.map((file, index) => (
+						<li key={index}>
+							File: {file.name} Type: {file.type} Size:{' '}
+							{file.size} bytes
 						</li>
 					))}
 				</div>

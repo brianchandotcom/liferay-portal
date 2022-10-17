@@ -15,6 +15,7 @@
 package com.liferay.object.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -30,7 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	"com.liferay.object.model.impl.ObjectViewFilterColumnImpl"
 )
 @ProviderType
-public interface ObjectViewFilterColumn extends ObjectViewFilterColumnModel {
+public interface ObjectViewFilterColumn
+	extends ObjectViewFilterColumnModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,5 +59,8 @@ public interface ObjectViewFilterColumn extends ObjectViewFilterColumnModel {
 				}
 
 			};
+
+	public com.liferay.portal.kernel.json.JSONArray getJSONArray()
+		throws com.liferay.portal.kernel.json.JSONException;
 
 }

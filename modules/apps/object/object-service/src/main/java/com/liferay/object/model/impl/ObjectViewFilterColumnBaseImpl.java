@@ -15,6 +15,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.model.ObjectViewFilterColumn;
+import com.liferay.object.service.ObjectViewFilterColumnLocalServiceUtil;
 
 /**
  * The extended model base implementation for the ObjectViewFilterColumn service. Represents a row in the &quot;ObjectViewFilterColumn&quot; database table, with each column mapped to a property of this class.
@@ -36,5 +37,16 @@ public abstract class ObjectViewFilterColumnBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a object view filter column model instance should use the <code>ObjectViewFilterColumn</code> interface instead.
 	 */
+	@Override
+	public void persist() {
+		if (this.isNew()) {
+			ObjectViewFilterColumnLocalServiceUtil.addObjectViewFilterColumn(
+				this);
+		}
+		else {
+			ObjectViewFilterColumnLocalServiceUtil.updateObjectViewFilterColumn(
+				this);
+		}
+	}
 
 }

@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -168,6 +169,57 @@ public class FDSApplication extends Application {
 		singletons.add(this);
 
 		return singletons;
+	}
+
+	@Path("/fds/{fdsName}/custom-views/{fdsCustomViewId}/label")
+	@POST
+	public Response renameFDSCustomView(
+		@PathParam("fdsName") String fdsName,
+		@PathParam("fdsCustomViewId") String fdsCustomViewId,
+		@FormParam("customViewLabel") String fdsCustomViewLabel,
+		@Context HttpServletRequest httpServletRequest,
+		@Context ThemeDisplay themeDisplay) {
+
+		try {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					httpServletRequest);
+
+			String fdsSettingsNamespace =
+				ServletContextUtil.getFDSSettingsNamespace(
+					httpServletRequest, fdsName);
+
+			JSONObject customViewsJSONObject = _jsonFactory.createJSONObject(
+				portalPreferences.getValue(
+					fdsSettingsNamespace, "customViews", "{}"));
+
+			JSONObject customViewJSONObject =
+				customViewsJSONObject.getJSONObject(fdsCustomViewId);
+
+			if (customViewJSONObject == null) {
+				return Response.status(
+					Response.Status.NOT_FOUND
+				).build();
+			}
+
+			customViewJSONObject.put("customViewLabel", fdsCustomViewLabel);
+
+			customViewsJSONObject.put(fdsCustomViewId, customViewJSONObject);
+
+			portalPreferences.setValue(
+				fdsSettingsNamespace, "customViews",
+				customViewsJSONObject.toString());
+
+			return Response.ok(
+			).build();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return Response.status(
+			Response.Status.INTERNAL_SERVER_ERROR
+		).build();
 	}
 
 	@Consumes(MediaType.APPLICATION_JSON)

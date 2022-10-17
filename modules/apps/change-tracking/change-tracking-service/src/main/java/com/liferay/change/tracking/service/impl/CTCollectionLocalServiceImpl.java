@@ -35,7 +35,9 @@ import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.mapping.CTMappingTableInfo;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.CTSchemaVersion;
@@ -55,6 +57,7 @@ import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -737,6 +740,34 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		return ctEntries;
+	}
+
+	public List<CTCollection> getExclusivePublishedCTCollections(
+			long modelClassNameId, long modelClassPK)
+		throws PortalException {
+
+		return ctCollectionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				CTCollectionTable.INSTANCE
+			).from(
+				CTCollectionTable.INSTANCE
+			).innerJoinON(
+				CTEntryTable.INSTANCE,
+				CTEntryTable.INSTANCE.ctCollectionId.eq(
+					CTCollectionTable.INSTANCE.ctCollectionId
+				).and(
+					CTEntryTable.INSTANCE.modelClassNameId.eq(
+						modelClassNameId
+					).and(
+						CTEntryTable.INSTANCE.modelClassPK.eq(modelClassPK)
+					)
+				)
+			).where(
+				CTCollectionTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_APPROVED)
+			).orderBy(
+				CTCollectionTable.INSTANCE.statusDate.ascending()
+			));
 	}
 
 	@Override

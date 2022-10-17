@@ -17,8 +17,8 @@ import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivit
 import MDFClaim from '../../common/interfaces/mdfClaim';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
 import MDFClaimPage from './components/MDFClaimPage';
-import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';
 import claimSchema from './components/MDFClaimPage/schema/yup';
+import useGetMDFRequestIdByHash from './hooks/useGetMDFRequestIdByHash';
 
 const getInitialFormValues = (
 	totalrequestedAmount?: number,

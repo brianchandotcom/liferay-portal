@@ -61,8 +61,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 		"osgi.command.function=check", "osgi.command.function=checkAll",
 		"osgi.command.function=execute", "osgi.command.function=executeAll",
 		"osgi.command.function=help", "osgi.command.function=list",
-		"osgi.command.function=show", "osgi.command.function=showReports",
-		"osgi.command.scope=verify"
+		"osgi.command.function=show", "osgi.command.scope=verify"
 	},
 	service = VerifyProcessTrackerOSGiCommands.class
 )

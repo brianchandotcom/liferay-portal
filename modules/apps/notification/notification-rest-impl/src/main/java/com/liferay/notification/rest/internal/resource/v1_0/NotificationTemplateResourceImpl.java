@@ -18,6 +18,7 @@ import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.internal.dto.v1_0.util.NotificationTemplateUtil;
 import com.liferay.notification.rest.internal.odata.entity.v1_0.NotificationTemplateEntityModel;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
@@ -120,25 +121,8 @@ public class NotificationTemplateResourceImpl
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
-				contextUser.getUserId(),
-				GetterUtil.getLong(
-					notificationTemplate.getObjectDefinitionId()),
-				notificationTemplate.getBcc(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBody()),
-				notificationTemplate.getCc(),
-				notificationTemplate.getDescription(),
-				notificationTemplate.getFrom(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getFromName()),
-				notificationTemplate.getName(),
-				notificationTemplate.getRecipientTypeAsString(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getSubject()),
-				LocalizedMapUtil.getLocalizedMap(notificationTemplate.getTo()),
-				notificationTemplate.getType(),
-				ListUtil.fromArray(
-					notificationTemplate.getAttachmentObjectFieldIds())));
+				NotificationTemplateUtil.toNotificationContext(
+					contextUser.getUserId(), notificationTemplate)));
 	}
 
 	@Override

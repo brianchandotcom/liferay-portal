@@ -70,14 +70,14 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(facetParam);
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(), 0,
-			folderSearchFacetTermDisplayContexts.size());
+			bucketDisplayContexts.toString(), 0,
+			bucketDisplayContexts.size());
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -114,29 +114,29 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(facetParam);
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(), 1,
-			folderSearchFacetTermDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1,
+			bucketDisplayContexts.size());
 
-		FolderSearchFacetTermDisplayContext
-			folderSearchFacetTermDisplayContext =
-				folderSearchFacetTermDisplayContexts.get(0);
+		BucketDisplayContext
+			bucketDisplayContext =
+				bucketDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			title, folderSearchFacetTermDisplayContext.getBucketText());
+			title, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId),
-			folderSearchFacetTermDisplayContext.getFilterValue());
+			bucketDisplayContext.getFilterValue());
 		Assert.assertEquals(
-			0, folderSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertTrue(folderSearchFacetTermDisplayContext.isSelected());
+			0, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
 		Assert.assertTrue(
-			folderSearchFacetTermDisplayContext.isFrequencyVisible());
+			bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			facetParam, folderSearchFacetDisplayContext.getParameterValue());
@@ -176,29 +176,29 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(facetParam);
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(), 1,
-			folderSearchFacetTermDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1,
+			bucketDisplayContexts.size());
 
-		FolderSearchFacetTermDisplayContext
-			folderSearchFacetTermDisplayContext =
-				folderSearchFacetTermDisplayContexts.get(0);
+		BucketDisplayContext
+			bucketDisplayContext =
+				bucketDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			title, folderSearchFacetTermDisplayContext.getBucketText());
+			title, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId),
-			folderSearchFacetTermDisplayContext.getFilterValue());
+			bucketDisplayContext.getFilterValue());
 		Assert.assertEquals(
-			count, folderSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertFalse(folderSearchFacetTermDisplayContext.isSelected());
+			count, bucketDisplayContext.getFrequency());
+		Assert.assertFalse(bucketDisplayContext.isSelected());
 		Assert.assertTrue(
-			folderSearchFacetTermDisplayContext.isFrequencyVisible());
+			bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			facetParam, folderSearchFacetDisplayContext.getParameterValue());
@@ -222,29 +222,29 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(facetParam);
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(), 1,
-			folderSearchFacetTermDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1,
+			bucketDisplayContexts.size());
 
-		FolderSearchFacetTermDisplayContext
-			folderSearchFacetTermDisplayContext =
-				folderSearchFacetTermDisplayContexts.get(0);
+		BucketDisplayContext
+			bucketDisplayContext =
+				bucketDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			title, folderSearchFacetTermDisplayContext.getBucketText());
+			title, bucketDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(folderId),
-			folderSearchFacetTermDisplayContext.getFilterValue());
+			bucketDisplayContext.getFilterValue());
 		Assert.assertEquals(
-			count, folderSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertTrue(folderSearchFacetTermDisplayContext.isSelected());
+			count, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isSelected());
 		Assert.assertTrue(
-			folderSearchFacetTermDisplayContext.isFrequencyVisible());
+			bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			facetParam, folderSearchFacetDisplayContext.getParameterValue());
@@ -263,16 +263,16 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "count:asc");
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		String nameFrequencyString = _buildNameFrequencyString(
-			folderSearchFacetTermDisplayContexts);
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(),
+			bucketDisplayContexts.toString(),
 			"alpha:4|bravo:5|charlie:5|delta:6", nameFrequencyString);
 	}
 
@@ -287,16 +287,16 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "count:desc");
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		String nameFrequencyString = _buildNameFrequencyString(
-			folderSearchFacetTermDisplayContexts);
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(),
+			bucketDisplayContexts.toString(),
 			"delta:6|bravo:5|charlie:5|alpha:4", nameFrequencyString);
 	}
 
@@ -310,16 +310,16 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "key:asc");
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		String nameFrequencyString = _buildNameFrequencyString(
-			folderSearchFacetTermDisplayContexts);
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(),
+			bucketDisplayContexts.toString(),
 			"alpha:2|bravo:5|bravo:3|charlie:4", nameFrequencyString);
 	}
 
@@ -333,16 +333,16 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null, "key:desc");
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		String nameFrequencyString = _buildNameFrequencyString(
-			folderSearchFacetTermDisplayContexts);
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(),
+			bucketDisplayContexts.toString(),
 			"charlie:4|bravo:5|bravo:3|alpha:2", nameFrequencyString);
 	}
 
@@ -359,25 +359,25 @@ public class FolderSearchFacetDisplayContextTest {
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			createDisplayContext(null);
 
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts =
+		List<BucketDisplayContext>
+			bucketDisplayContexts =
 				folderSearchFacetDisplayContext.
 					getFolderSearchFacetTermDisplayContexts();
 
 		String nameFrequencyString = _buildNameFrequencyString(
-			folderSearchFacetTermDisplayContexts);
+			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(),
+			bucketDisplayContexts.toString(),
 			"alpha:8|volatile:7|assert:6", nameFrequencyString);
 
 		Assert.assertEquals(
 			termCollectors.toString(), 36,
 			_getTotalTermCollectorFrequencyCount(termCollectors));
 		Assert.assertEquals(
-			folderSearchFacetTermDisplayContexts.toString(), 21,
+			bucketDisplayContexts.toString(), 21,
 			_getTotalFolderSearchFacetTermDisplayContextFrequencyCount(
-				folderSearchFacetTermDisplayContexts));
+				bucketDisplayContexts));
 	}
 
 	protected FolderSearchFacetDisplayContext createDisplayContext(
@@ -522,20 +522,20 @@ public class FolderSearchFacetDisplayContextTest {
 	}
 
 	private String _buildNameFrequencyString(
-			List<FolderSearchFacetTermDisplayContext>
-				folderSearchFacetTermDisplayContexts)
+			List<BucketDisplayContext>
+				bucketDisplayContexts)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(
-			folderSearchFacetTermDisplayContexts.size() * 4);
+			bucketDisplayContexts.size() * 4);
 
-		for (FolderSearchFacetTermDisplayContext
-				folderSearchFacetTermDisplayContext :
-					folderSearchFacetTermDisplayContexts) {
+		for (BucketDisplayContext
+			bucketDisplayContext :
+			bucketDisplayContexts) {
 
-			sb.append(folderSearchFacetTermDisplayContext.getBucketText());
+			sb.append(bucketDisplayContext.getBucketText());
 			sb.append(StringPool.COLON);
-			sb.append(folderSearchFacetTermDisplayContext.getFrequency());
+			sb.append(bucketDisplayContext.getFrequency());
 			sb.append(StringPool.PIPE);
 		}
 
@@ -545,16 +545,16 @@ public class FolderSearchFacetDisplayContextTest {
 	}
 
 	private int _getTotalFolderSearchFacetTermDisplayContextFrequencyCount(
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts) {
+		List<BucketDisplayContext>
+			bucketDisplayContexts) {
 
 		int total = 0;
 
-		for (FolderSearchFacetTermDisplayContext
-				folderSearchFacetTermDisplayContext :
-					folderSearchFacetTermDisplayContexts) {
+		for (BucketDisplayContext
+			bucketDisplayContext :
+			bucketDisplayContexts) {
 
-			total += folderSearchFacetTermDisplayContext.getFrequency();
+			total += bucketDisplayContext.getFrequency();
 		}
 
 		return total;

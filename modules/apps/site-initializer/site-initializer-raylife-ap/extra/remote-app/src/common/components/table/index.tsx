@@ -110,7 +110,6 @@ const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 													rowContent[item.key]
 												);
 											}
-
 											if (
 												((item.clickable &&
 													rowContent['name'] ===

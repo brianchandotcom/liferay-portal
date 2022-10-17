@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
 
 import MultiSteps from '../../../../common/components/multi-steps';
@@ -20,6 +21,7 @@ import {setFirstLetterUpperCase} from '../../../../common/utils';
 import {CONSTANTS} from '../../../../common/utils/constants';
 import {redirectTo} from '../../../../common/utils/liferay';
 import ActionDetail from './components/action-detail';
+import QuotedSummary from './components/quoted-summary';
 import BoundContent from './components/status-content/bound-content';
 import IncompleteContent from './components/status-content/incomplete-content';
 import Summary from './components/summary';
@@ -156,7 +158,7 @@ const ApplicationDetails = () => {
 						<Summary application={app} />
 					</div>
 
-					<div className="applciation-action-detail-content col-12 col-lg-12 col-md-12 col-sm-12 col-xl-9">
+					<div className="application-action-detail-content col-12 col-lg-12 col-md-12 col-sm-12 col-xl-9 mb-4">
 						<ActionDetail>
 							{currentStep === STEP.INCOMPLETE && (
 								<IncompleteContent onClick={handleClick} />
@@ -164,6 +166,21 @@ const ApplicationDetails = () => {
 
 							{currentStep === STEP.BOUND && <BoundContent />}
 						</ActionDetail>
+					</div>
+				</div>
+
+				<div
+					className={classNames('quoted-summary-detail-content row', {
+						'd-block': currentStep === STEP.BOUND,
+						'd-none': currentStep !== STEP.BOUND,
+					})}
+				>
+					<div className="col-12">
+						<QuotedSummary
+							externalReferenceCode={
+								app?.data?.externalReferenceCode
+							}
+						/>
 					</div>
 				</div>
 			</div>

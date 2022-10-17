@@ -27,13 +27,10 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
-import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
-import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -689,9 +686,6 @@ public class DataLayoutTaglibUtil {
 	private DataRecordResource.Factory _dataRecordResourceFactory;
 
 	@Reference
-	private DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
-
-	@Reference
 	private DDMFormBuilderSettingsRetrieverHelper
 		_ddmFormBuilderSettingsRetrieverHelper;
 
@@ -702,16 +696,10 @@ public class DataLayoutTaglibUtil {
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
 	@Reference
-	private DDMFormValuesFactory _ddmFormValuesFactory;
-
-	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference(target = "(ddm.form.deserializer.type=json)")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
 	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;

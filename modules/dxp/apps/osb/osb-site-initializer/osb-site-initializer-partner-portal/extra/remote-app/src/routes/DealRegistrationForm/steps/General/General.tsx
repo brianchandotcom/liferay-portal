@@ -233,7 +233,7 @@ const General = ({
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
-								LiferayPicklistName.PROJECT_INFORMATION
+								LiferayPicklistName.PROJECT_INFORMATIONS
 							]
 						}
 						label="Project Need (Select all that apply)"

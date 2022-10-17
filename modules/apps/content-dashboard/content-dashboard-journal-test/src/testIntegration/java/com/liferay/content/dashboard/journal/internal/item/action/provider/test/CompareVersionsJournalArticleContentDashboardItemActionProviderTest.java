@@ -128,6 +128,17 @@ public class
 		Assert.assertTrue(
 			url.contains("articleId=" + journalArticle.getArticleId()));
 		Assert.assertTrue(url.contains("compare_versions"));
+		Assert.assertTrue(
+			url.contains("groupId=" + journalArticle.getGroupId()));
+		Assert.assertTrue(
+			url.contains("sourceVersion=" + journalArticle.getVersion()));
+
+		JournalArticle latestJournalArticle =
+			_journalArticleService.getLatestArticle(
+				journalArticle.getResourcePrimKey());
+
+		Assert.assertTrue(
+			url.contains("targetVersion=" + latestJournalArticle.getVersion()));
 	}
 
 	@Test

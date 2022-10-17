@@ -21,5 +21,5 @@ String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuW
 %>
 
 <li class="control-menu-nav-item control-menu-nav-item-content">
-	<h1 class="control-menu-level-1-heading text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></h1>
+	<h1 class="control-menu-level-1-heading mb-0 text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></h1>
 </li>

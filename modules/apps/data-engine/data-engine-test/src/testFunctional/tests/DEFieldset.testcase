@@ -77,12 +77,46 @@ definition {
 	}
 
 	@description = "LPS-165487 - Verify if the user can create structures with different Global language."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanBeCreatedWithDifferentGlobalLanguage {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
-		// TODO LPS-165487 CanBeCreatedWithDifferentGlobalLanguage pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "Structure A");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		WebContentStructures.saveCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Site.configureCurrentLanguagesCP(
+			defaultSiteLanguage = "Portuguese (Brazil)",
+			displaySettings = "Display Settings");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure B");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "Structure A");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure B");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "Structure A",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LRQA-68940. This test verifies that is possible to create Fields Group on the Fieldset modal."

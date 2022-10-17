@@ -1008,4 +1008,89 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12154 | Test Summary: Check if the identity event is sent when the user interacts with sites that have different channels ids"
+	@ignore = "true"
+	@priority = "3"
+	test CheckEventSentWhenUserInteractsWithSitesWithDifferentChannelId {
+		property analytics.cloud.upstream = "false";
+		property proxy.server.enabled = "true";
+
+		var sitePageName = "AC Test";
+
+		task ("Add a new site with a public page") {
+			ACUtils.addSiteAndPage(
+				siteName = "${sitePageName}",
+				layoutName = "${sitePageName}");
+		}
+
+		task ("Create another property and sync the second site") {
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACDXPSettings.createCombinedProperties(siteName = "${sitePageName}");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
+		}
+
+		task ("Go to the first site and interact with it") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the time of the last update of the first identity event sent") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Go to the second site and interact with it") {
+			ACUtils.navigateToSitePage(
+				pageName = "${sitePageName}",
+				siteName = "${sitePageName}");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("Get the time of the last update of the second identity event sent") {
+			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check that the times in milliseconds that the events were sent are different") {
+			TestUtils.assertNotEquals(
+				actual = "${localStorageItem2}",
+				expected = "${localStorageItem1}");
+		}
+	}
+
 }

@@ -143,9 +143,9 @@ public class KBArticleImporter {
 				userId, kbArticle.getResourcePrimKey(),
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(),
-				kbArticleMarkdownConverter.getSourceURL(), null, null, null,
-				kbArticle.getExpirationDate(), kbArticle.getReviewDate(),
-				serviceContext);
+				kbArticleMarkdownConverter.getSourceURL(),
+				kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
+				null, null, serviceContext);
 		}
 		catch (Exception exception) {
 			throw new KBArticleImportException(

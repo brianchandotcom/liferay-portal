@@ -331,9 +331,8 @@ public class KBArticleStagedModelDataHandler
 			parentResourceClassNameId, parentResourcePrimKey,
 			kbArticle.getTitle(), kbArticle.getUrlTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(),
-			kbArticle.getSourceURL(), sections, null,
-			kbArticle.getExpirationDate(), kbArticle.getReviewDate(),
-			serviceContext);
+			kbArticle.getSourceURL(), kbArticle.getExpirationDate(),
+			kbArticle.getReviewDate(), sections, null, serviceContext);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -490,9 +489,8 @@ public class KBArticleStagedModelDataHandler
 		_kbArticleLocalService.updateKBArticle(
 			userId, resourcePrimKey, kbArticle.getTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(),
-			kbArticle.getSourceURL(), sections, null, null,
-			kbArticle.getExpirationDate(), kbArticle.getReviewDate(),
-			serviceContext);
+			kbArticle.getSourceURL(), kbArticle.getExpirationDate(),
+			kbArticle.getReviewDate(), sections, null, null, serviceContext);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

@@ -99,8 +99,8 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			kbArticle = _kbArticleService.addKBArticle(
 				null, _portal.getPortletId(actionRequest),
 				parentResourceClassNameId, parentResourcePrimKey, title,
-				urlTitle, content, description, sourceURL, sections,
-				selectedFileNames, expirationDate, reviewDate, serviceContext);
+				urlTitle, content, description, sourceURL, expirationDate,
+				reviewDate, sections, selectedFileNames, serviceContext);
 		}
 		else if (cmd.equals(Constants.REVERT)) {
 			int version = ParamUtil.getInteger(
@@ -115,8 +115,8 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 
 			kbArticle = _kbArticleService.updateKBArticle(
 				resourcePrimKey, title, content, description, sourceURL,
-				sections, selectedFileNames, removeFileEntryIds, expirationDate,
-				reviewDate, serviceContext);
+				expirationDate, reviewDate, sections, selectedFileNames,
+				removeFileEntryIds, serviceContext);
 		}
 
 		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {

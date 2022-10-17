@@ -233,8 +233,8 @@ public class KBArticleLocalServiceTest {
 			null, _user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			null, Date.from(instant.minus(Duration.ofDays(1))), null,
+			StringUtil.randomString(), StringUtil.randomString(), null,
+			Date.from(instant.minus(Duration.ofDays(1))), null, null, null,
 			_serviceContext);
 	}
 
@@ -249,7 +249,7 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			null, null, Date.from(instant.minus(Duration.ofDays(1))),
+			Date.from(instant.minus(Duration.ofDays(1))), null, null,
 			_serviceContext);
 	}
 
@@ -280,8 +280,8 @@ public class KBArticleLocalServiceTest {
 			null, _user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			null, expirationDate, reviewDate, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), null,
+			expirationDate, reviewDate, null, null, _serviceContext);
 
 		Assert.assertEquals(expirationDate, kbArticle.getExpirationDate());
 		Assert.assertEquals(reviewDate, kbArticle.getReviewDate());
@@ -292,8 +292,8 @@ public class KBArticleLocalServiceTest {
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, expirationDate,
-			reviewDate, _serviceContext);
+			StringUtil.randomString(), null, expirationDate, reviewDate, null,
+			null, null, _serviceContext);
 
 		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
@@ -1211,8 +1211,8 @@ public class KBArticleLocalServiceTest {
 			null, _user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			null, expirationDate, reviewDate, _serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), null,
+			expirationDate, reviewDate, null, null, _serviceContext);
 
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),

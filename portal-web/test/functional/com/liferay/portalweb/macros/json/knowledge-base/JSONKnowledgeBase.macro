@@ -147,10 +147,10 @@ definition {
 				-d content=<p>${kbArticleContent}</p> \
 				-d description= \
 				-d sourceURL= \
-				-d sections= \
-				-d selectedFileNames= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
+				-d sections= \
+				-d selectedFileNames= \
 				-d serviceContext=${serviceContext}
 		''';
 
@@ -203,10 +203,10 @@ definition {
 				-d content=<p>${kbChildArticleContent}</p> \
 				-d description= \
 				-d sourceURL= \
-				-d sections= \
-				-d selectedFileNames= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
+				-d sections= \
+				-d selectedFileNames= \
 		''';
 
 		echo("## Adding a 'KBChildArticle' with the following info using JSONWS:");
@@ -308,10 +308,10 @@ definition {
 				-d content=<p>${kbGrandchildArticleContent}</p> \
 				-d description= \
 				-d sourceURL= \
-				-d sections= \
-				-d selectedFileNames= \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
+				-d sections= \
+				-d selectedFileNames= \
 		''';
 
 		echo("## Adding a 'KBGrandchildArticle' with the following info using JSONWS:");
@@ -421,11 +421,11 @@ definition {
 				-d content=<p>${newKbArticleContent}</p> \
 				-d description= \
 				-d sourceURL= \
+				-d expirationDate=${expirationDate} \
+				-d reviewDate=${reviewDate} \
 				-d sections= \
 				-d selectedFileNames= \
 				-d removeFileEntryIds= \
-				-d expirationDate=${expirationDate} \
-				-d reviewDate=${reviewDate} \
 				-d serviceContext=${serviceContext}
 		''';
 

@@ -1,0 +1,112 @@
+diff --git a/org/springframework/expression/spel/SpelMessage.java b/org/springframework/expression/spel/SpelMessage.java
+index b7b1fbf34f13..1fec6bfeecd2 100644
+--- a/org/springframework/expression/spel/SpelMessage.java
++++ b/org/springframework/expression/spel/SpelMessage.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2018 the original author or authors.
++ * Copyright 2002-2022 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -31,6 +31,7 @@ import java.text.MessageFormat;
+  *
+  * @author Andy Clement
+  * @author Juergen Hoeller
++ * @author Sam Brannen
+  * @since 3.0
+  */
+ public enum SpelMessage {
+@@ -255,8 +256,11 @@ public enum SpelMessage {
+ 
+ 	/** @since 4.3.17 */
+ 	FLAWED_PATTERN(Kind.ERROR, 1073,
+-			"Failed to efficiently evaluate pattern ''{0}'': consider redesigning it");
++		"Failed to efficiently evaluate pattern ''{0}'': consider redesigning it"),
+ 
++	/** @since 5.2.20 */
++	MAX_ARRAY_ELEMENTS_THRESHOLD_EXCEEDED(Kind.ERROR, 1075,
++		"Array declares too many elements, exceeding the threshold of ''{0}''");
+ 
+ 	private final Kind kind;
+ 
+@@ -321,3 +325,4 @@ public enum SpelMessage {
+ 	public enum Kind { INFO, WARNING, ERROR }
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/expression/spel/ast/ConstructorReference.java b/org/springframework/expression/spel/ast/ConstructorReference.java
+index ab85f3bcb342..ca358c54583e 100644
+--- a/org/springframework/expression/spel/ast/ConstructorReference.java
++++ b/org/springframework/expression/spel/ast/ConstructorReference.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2002-2018 the original author or authors.
++ * Copyright 2002-2022 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -51,11 +51,19 @@ import org.springframework.expression.spel.support.ReflectiveConstructorExecutor
+  *
+  * @author Andy Clement
+  * @author Juergen Hoeller
++ * @author Sam Brannen
+  * @since 3.0
+  */
+ public class ConstructorReference extends SpelNodeImpl {
+ 
+-	private boolean isArrayConstructor = false;
++	/**
++	 * Maximum number of elements permitted in an array declaration, applying
++	 * to one-dimensional as well as multi-dimensional arrays.
++	 * @since 5.2.20
++	 */
++	private static final int MAX_ARRAY_ELEMENTS = 256 * 1024; // 256K
++
++	private final boolean isArrayConstructor;
+ 
+ 	private SpelNodeImpl[] dimensions;
+ 
+@@ -256,14 +264,19 @@ public class ConstructorReference extends SpelNodeImpl {
+ 			if (this.dimensions.length == 1) {
+ 				TypedValue o = this.dimensions[0].getTypedValue(state);
+ 				int arraySize = ExpressionUtils.toInt(typeConverter, o);
++				checkNumElements(arraySize);
+ 				newArray = Array.newInstance(componentType, arraySize);
+ 			}
+ 			else {
+ 				// Multi-dimensional - hold onto your hat!
+ 				int[] dims = new int[this.dimensions.length];
++				long numElements = 1;
+ 				for (int d = 0; d < this.dimensions.length; d++) {
+ 					TypedValue o = this.dimensions[d].getTypedValue(state);
+-					dims[d] = ExpressionUtils.toInt(typeConverter, o);
++					int arraySize = ExpressionUtils.toInt(typeConverter, o);
++					dims[d] = arraySize;
++					numElements *= arraySize;
++					checkNumElements(numElements);
+ 				}
+ 				newArray = Array.newInstance(componentType, dims);
+ 			}
+@@ -323,6 +336,14 @@ public class ConstructorReference extends SpelNodeImpl {
+ 		return new TypedValue(newArray);
+ 	}
+ 
++	private void checkNumElements(long numElements) {
++		if (numElements >= MAX_ARRAY_ELEMENTS) {
++			throw new SpelEvaluationException(getStartPosition(),
++				SpelMessage.MAX_ARRAY_ELEMENTS_THRESHOLD_EXCEEDED, MAX_ARRAY_ELEMENTS);
++		}
++	}
++
++
+ 	private void populateReferenceTypeArray(ExpressionState state, Object newArray, TypeConverter typeConverter,
+ 			InlineList initializer, Class<?> componentType) {
+ 
+@@ -457,3 +478,4 @@ public class ConstructorReference extends SpelNodeImpl {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

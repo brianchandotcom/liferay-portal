@@ -73,6 +73,32 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			permissionChecker.getUserId());
 	}
 
+	/**
+	 * @param userId the creator's userId. Required.
+	 * @param parentAccountEntryId the parent account's ID. Use 0 if there
+	 *        is no parent account.
+	 * @param name the account's name. Required.
+	 * @param description the account's description. Optional.
+	 * @param domains an array of email domains associated with the account.
+	 *        This will define which users can be managed by the account
+	 *        administrator, as well as optionally restricting membership to
+	 *        users with matching email address domains. If the user does not
+	 *        have the MANAGE_DOMAINS permission for accounts, this parameter
+	 *        is ignored. Optional.
+	 * @param email the email address associated with this account.
+	 *        Optional.
+	 * @param logoBytes the account's logo bytes. Optional.
+	 * @param taxIdNumber the account's tax ID number. Optional.
+	 * @param type the account's type. Must be one of: "business", "person"
+	 * @param status the account's workflow status. If workflow is enabled for
+	 *        the AccountEntry model, this parameter is ignored.
+	 * @param serviceContext the service context object. This object can contain
+	 *        information about the account's asset tags and categories, and
+	 *        custom fields.
+	 *
+	 * @return the newly created AccountEntry instance
+	 * @throws PortalException
+	 */
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
@@ -252,6 +278,31 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 		return accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
+	/**
+	 * @param accountEntryId the account's ID. Required.
+	 * @param parentAccountEntryId the parent account's ID. Use 0 if there
+	 *        is no parent account.
+	 * @param name the account's name. Required.
+	 * @param description the account's description. Optional.
+	 * @param domains an array of email domains associated with the account.
+	 *        This will define which users can be managed by the account
+	 *        administrator, as well as optionally restricting membership to
+	 *        users with matching email address domains. If the user does not
+	 *        have the MANAGE_DOMAINS permission for accounts, this parameter
+	 *        is ignored. Optional.
+	 * @param emailAddress the email address associated with this account.
+	 *        Optional.
+	 * @param logoBytes the account's logo bytes. Optional.
+	 * @param taxIdNumber the account's tax ID number. Optional.
+	 * @param status the account's workflow status. If workflow is enabled for
+	 *        the AccountEntry model, this parameter is ignored.
+	 * @param serviceContext the service context object. This object can contain
+	 *        information about the account's asset tags and categories, and
+	 *        custom fields.
+	 *
+	 * @return the updated AccountEntry instance
+	 * @throws PortalException
+	 */
 	@Override
 	public AccountEntry updateAccountEntry(
 			long accountEntryId, long parentAccountEntryId, String name,

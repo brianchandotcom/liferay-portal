@@ -1943,6 +1943,12 @@ definition {
 	@priority = "4"
 	test ViewPageURLOnTooltipWhenSelectPageItem {
 		task ("Given a page creator opens the link to page modal") {
+			task ("Get the guest site name") {
+				Navigator.openURL();
+
+				var siteName = selenium.getText("Home#SITE_NAME");
+			}
+
 			task ("Publish content page") {
 				JSONLayout.publishLayout(
 					groupName = "Test Site Name",
@@ -1999,7 +2005,7 @@ definition {
 				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-			LexiconCard.clickCardTitle(card = "Liferay DXP");
+			LexiconCard.clickCardTitle(card = "${siteName}");
 
 			Portlet.expandTree();
 

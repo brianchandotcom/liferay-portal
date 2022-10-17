@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
+import {OptionHTMLAttributes} from 'react';
 import {array, date, number, object, string} from 'yup';
 
-import {TypeActivityExternalReferenceCode} from '../../../../../common/enums/typeActivityExternalReferenceCode';
-import TypeActivity from '../../../../../common/interfaces/typeActivity';
+import {TypeActivityKey} from '../../../../../common/enums/TypeActivityKey';
 import isObjectEmpty from '../../../utils/isObjectEmpty';
 
 const activitiesSchema = object({
@@ -20,18 +20,20 @@ const activitiesSchema = object({
 		.of(
 			object({
 				activityPromotion: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.EVENT,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) => typeActivity.value === TypeActivityKey.EVENT,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				assetsLiferayRequired: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.DIGITAL_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.DIGITAL_MARKETING,
 					then: (schema) => schema.required('Required'),
 				}),
 				budgets: array()
@@ -52,16 +54,16 @@ const activitiesSchema = object({
 					)
 					.min(1, 'Required'),
 				description: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.EVENT,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) => typeActivity.value === TypeActivityKey.EVENT,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				detailsLeadFollowUp: string()
-					.max(350, 'You have exceeded the character limit')
+					.max(255, 'You have exceeded the character limit')
 					.required('Required'),
 				endDate: date()
 					.test(
@@ -111,65 +113,75 @@ const activitiesSchema = object({
 					)
 					.required('Required'),
 				gatedLandingPage: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.CONTENT_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.CONTENT_MARKETING,
 					then: (schema) => schema.required('Required'),
 				}),
 				goalOfContent: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.CONTENT_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.CONTENT_MARKETING,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				hiringOutsideWriterOrAgency: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.CONTENT_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.CONTENT_MARKETING,
 					then: (schema) => schema.required('Required'),
 				}),
 				howLiferayBrandUsed: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.DIGITAL_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.DIGITAL_MARKETING,
 					then: (schema) => schema.required('Required'),
 				}),
 				leadFollowUpStrategies: array().min(1, 'Required'),
 				leadGenerated: string().required('Required'),
 				liferayBranding: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.EVENT,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) => typeActivity.value === TypeActivityKey.EVENT,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				liferayParticipationRequirements: string().when(
 					'typeActivity',
 					{
-						is: (typeActivity: TypeActivity) =>
-							typeActivity.externalReferenceCode ===
-							TypeActivityExternalReferenceCode.EVENT,
+						is: (
+							typeActivity: OptionHTMLAttributes<
+								HTMLOptionElement
+							>
+						) => typeActivity.value === TypeActivityKey.EVENT,
 						then: (schema) =>
 							schema
 								.max(
-									350,
+									255,
 									'You have exceeded the character limit'
 								)
 								.required('Required'),
 					}
 				),
 				location: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.EVENT,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) => typeActivity.value === TypeActivityKey.EVENT,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				mdfRequestAmount: number()
@@ -190,42 +202,48 @@ const activitiesSchema = object({
 						}
 					),
 				name: string()
-					.max(350, 'You have exceeded the character limit')
+					.max(255, 'You have exceeded the character limit')
 					.required('Required'),
 				overallMessageContentCTA: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.DIGITAL_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.DIGITAL_MARKETING,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				primaryThemeOrMessage: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.CONTENT_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.CONTENT_MARKETING,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				sourceAndSizeOfInviteeList: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.EVENT,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) => typeActivity.value === TypeActivityKey.EVENT,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				specificSites: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.DIGITAL_MARKETING,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) =>
+						typeActivity.value ===
+						TypeActivityKey.DIGITAL_MARKETING,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 				startDate: date()
@@ -253,24 +271,24 @@ const activitiesSchema = object({
 					(value) => !isObjectEmpty(value)
 				),
 				targetOfLeads: string()
-					.max(350, 'You have exceeded the character limit')
+					.max(255, 'You have exceeded the character limit')
 					.required('Required'),
 				typeActivity: object({
-					externalReferenceCode: string(),
 					id: number(),
 					name: string(),
+					value: string(),
 				}).test(
 					'is-empty',
 					'Required',
 					(value) => !isObjectEmpty(value)
 				),
 				venueName: string().when('typeActivity', {
-					is: (typeActivity: TypeActivity) =>
-						typeActivity.externalReferenceCode ===
-						TypeActivityExternalReferenceCode.EVENT,
+					is: (
+						typeActivity: OptionHTMLAttributes<HTMLOptionElement>
+					) => typeActivity.value === TypeActivityKey.EVENT,
 					then: (schema) =>
 						schema
-							.max(350, 'You have exceeded the character limit')
+							.max(255, 'You have exceeded the character limit')
 							.required('Required'),
 				}),
 			})

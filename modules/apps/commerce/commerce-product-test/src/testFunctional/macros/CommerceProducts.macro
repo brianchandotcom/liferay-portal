@@ -338,6 +338,9 @@ definition {
 		CommerceProducts.duplicateProduct(
 			productCatalog = "${productCatalog}",
 			productName = "${productName}",
+            checkProductFields = "${productName}",
+            compileDescription = "${productName}",
+            publishProduct = "false",
 			status = "${status}");
 
 		Click(locator1 = "Icon#BACK");
@@ -516,19 +519,23 @@ definition {
 	}
 
 	macro duplicateProduct {
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		var productName = "${productName}";
 
-		if ("${status}" != "Draft") {
-			AssertElementNotPresent(
-				key_text = "Save as Draft",
-				locator1 = "Button#ANY");
-		}
-		else {
+		if (isSet(status)) {
 			AssertElementPresent(
-				key_text = "Save as Draft",
-				locator1 = "Button#ANY");
+				key_status = "${status}",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+			if ("${status}" != "Draft") {
+				AssertElementNotPresent(
+					key_text = "Save as Draft",
+					locator1 = "Button#ANY");
+			}
+			else {
+				AssertElementPresent(
+					key_text = "Save as Draft",
+					locator1 = "Button#ANY");
+			}
 		}
 
 		Click(
@@ -539,16 +546,36 @@ definition {
 			key_optionValue = "Duplicate",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 
-		CommerceEntry.addProductsEntry(
-			productCatalog = "${productCatalog}",
-			productFullDescription = "Full Description for ${productName}",
-			productName = "Copy of ${productName}",
-			productShortDescription = "Short Description for ${productName}",
-			publishProduct = "false");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		CommerceEntry.selectAutoCompleteField(
+			entryName = "${productCatalog}",
+			label = "Catalog");
+
+		Button.clickSubmitButton();
+
+		if (!(isSet(checkProductFields)) || ("${checkProductFields}" == "true")) {
+			CommerceEntry.checkProductsEntryFields(
+				productCatalog = "${productCatalog}",
+				productName = "Copy of ${productName}");
+		}
+
+		if (!(isSet(compileDescription)) || ("${compileDescription}" == "true")) {
+			CommerceEntry.addProductDescription(
+				productFullDescription = "${productFullDescription}",
+				productShortDescription = "${productShortDescription}");
+		}
+
+		if (!(isSet(publishProduct)) || ("${publishProduct}" == "true")) {
+			CommerceEntry.publishEntry(status = "Approved");
+		} 
+		else {
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
 	}
 
 	macro enableProductSingleApproverWorkflow {

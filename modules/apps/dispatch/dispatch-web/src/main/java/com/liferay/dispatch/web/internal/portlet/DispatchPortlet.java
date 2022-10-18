@@ -23,7 +23,6 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -102,8 +101,5 @@ public class DispatchPortlet extends MVCPortlet {
 
 	@Reference
 	private DispatchTriggerMetadataProvider _dispatchTriggerMetadataProvider;
-
-	@Reference
-	private Portal _portal;
 
 }

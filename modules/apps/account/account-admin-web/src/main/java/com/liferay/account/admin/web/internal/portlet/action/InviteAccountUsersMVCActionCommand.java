@@ -19,7 +19,10 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -65,25 +68,39 @@ public class InviteAccountUsersMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
-		String[] emailAddresses = ParamUtil.getStringValues(
-			actionRequest, "emailAddresses");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
-			accountEntryId);
+		try {
+			long accountEntryId = ParamUtil.getLong(
+				actionRequest, "accountEntryId");
+			String[] emailAddresses = ParamUtil.getStringValues(
+				actionRequest, "emailAddresses");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			User.class.getName(), actionRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		for (String emailAddress : emailAddresses) {
-			_accountEntryUserRelLocalService.inviteUser(
-				accountEntry.getAccountEntryId(), null, emailAddress,
-				themeDisplay.getUser(), serviceContext);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				User.class.getName(), actionRequest);
+
+			for (String emailAddress : emailAddresses) {
+				_accountEntryUserRelLocalService.inviteUser(
+					accountEntry.getAccountEntryId(), null, emailAddress,
+					themeDisplay.getUser(), serviceContext);
+			}
+
+			jsonObject.put("success", true);
 		}
+		catch (Exception exception) {
+			jsonObject.put("success", false);
+
+			throw exception;
+		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	@Reference

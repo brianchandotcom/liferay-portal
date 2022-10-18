@@ -20,6 +20,7 @@ import {
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
+	openToast,
 	postForm,
 	sub,
 } from 'frontend-js-web';
@@ -95,6 +96,20 @@ export default function propsTransformer({
 												}
 											);
 										}
+										else {
+											throw new Error();
+										}
+									})
+									.catch(() => {
+										openToast({
+											message: Liferay.Language.get(
+												'please-enter-email-addresses-with-valid-domains-only'
+											),
+											title: Liferay.Language.get(
+												'error'
+											),
+											type: 'danger',
+										});
 									});
 							},
 						},

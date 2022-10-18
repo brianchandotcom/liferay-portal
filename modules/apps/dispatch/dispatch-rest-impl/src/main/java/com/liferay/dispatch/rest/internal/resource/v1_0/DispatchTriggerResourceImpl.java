@@ -22,8 +22,11 @@ import com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger;
 import com.liferay.dispatch.rest.internal.dto.v1_0.util.DispatchTriggerUtil;
 import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
 import com.liferay.dispatch.service.DispatchLogLocalService;
-import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.service.DispatchTriggerService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
@@ -50,9 +53,8 @@ public class DispatchTriggerResourceImpl
 		List<DispatchTrigger> dispatchTriggers1 = new ArrayList<>();
 
 		List<com.liferay.dispatch.model.DispatchTrigger> dispatchTriggers2 =
-			_dispatchTriggerLocalService.getDispatchTriggers(
-				contextCompany.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			_dispatchTriggerService.getDispatchTriggers(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (com.liferay.dispatch.model.DispatchTrigger dispatchTrigger :
 				dispatchTriggers2) {
@@ -68,20 +70,24 @@ public class DispatchTriggerResourceImpl
 		throws Exception {
 
 		return DispatchTriggerUtil.toDispatchTrigger(
-			_dispatchTriggerLocalService.addDispatchTrigger(
+			_dispatchTriggerService.addDispatchTrigger(
 				dispatchTrigger.getExternalReferenceCode(),
 				contextUser.getUserId(),
 				dispatchTrigger.getDispatchTaskExecutorType(),
 				DispatchTriggerUtil.toSettingsUnicodeProperties(
 					dispatchTrigger.getDispatchTaskSettings()),
-				dispatchTrigger.getName(), dispatchTrigger.getSystem()));
+				dispatchTrigger.getName()));
 	}
 
 	public Response postExecuteDispatchTrigger(Long dispatchTriggerId)
 		throws Exception {
 
+		_dispatchTriggerModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), dispatchTriggerId,
+			ActionKeys.UPDATE);
+
 		com.liferay.dispatch.model.DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
+			_dispatchTriggerService.getDispatchTrigger(dispatchTriggerId);
 
 		if (!dispatchTrigger.isOverlapAllowed()) {
 			DispatchLog dispatchLog =
@@ -131,6 +137,21 @@ public class DispatchTriggerResourceImpl
 		).build();
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<com.liferay.dispatch.model.DispatchTrigger>
+			modelResourcePermission) {
+
+		_dispatchTriggerModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission
+		<com.liferay.dispatch.model.DispatchTrigger>
+			_dispatchTriggerModelResourcePermission;
+
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
 
@@ -138,6 +159,6 @@ public class DispatchTriggerResourceImpl
 	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Reference
-	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+	private DispatchTriggerService _dispatchTriggerService;
 
 }

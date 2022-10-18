@@ -31,29 +31,29 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONKnowledgeBase.addkBArticle(
-			groupName = "Test Site Name",
+			groupName = "Guest",
 			kbArticleContent = "Content",
 			kbArticleTitle = "KB parent article");
 
 		JSONKnowledgeBase.addkBChildArticle(
-			groupName = "Test Site Name",
+			groupName = "Guest",
 			kbArticleTitle = "KB parent article",
 			kbChildArticleContent = "Content",
 			kbChildArticleTitle = "2nd tier article");
 
 		JSONKnowledgeBase.addkBGrandchildArticle(
-			groupName = "Test Site Name",
+			groupName = "Guest",
 			kbArticleTitle = "KB parent article",
 			kbChildArticleTitle = "2nd tier article",
-			kbGrandchildArticleContent = "Content",
+			kbGrandchildArticleContent = "Grandchild Content",
 			kbGrandchildArticleTitle = "3rd tier article");
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Knowledge Base Article",
 			displayPageTemplateEntryName = "Display Page Name",
-			groupName = "Test Site Name");
+			groupName = "Guest");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -67,7 +67,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/k/3rd-tier-article");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/k/3rd-tier-article");
 
 		AssertElementPresent(
 			key_kbArticleTitle = "KB parent article",

@@ -86,25 +86,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					getSystemObjectDefinitionMetadata(
 						objectDefinition.getName());
 
-			_componentInstancesMap.computeIfAbsent(
-				systemObjectDefinitionMetadata.getRESTContextPath(),
-				key -> Arrays.asList(
-					_relatedObjectEntryResourceFactory.newInstance(
-						HashMapDictionaryBuilder.<String, Object>put(
-							"api.version", "v1.0"
-						).put(
-							"osgi.jaxrs.application.select",
-							() -> {
-								String jaxRsApplicationName =
-									systemObjectDefinitionMetadata.
-										getJaxRsApplicationName();
+			if (systemObjectDefinitionMetadata != null) {
+				_componentInstancesMap.computeIfAbsent(
+					systemObjectDefinitionMetadata.getRESTContextPath(),
+					key -> Arrays.asList(
+						_relatedObjectEntryResourceFactory.newInstance(
+							HashMapDictionaryBuilder.<String, Object>put(
+								"api.version", "v1.0"
+							).put(
+								"osgi.jaxrs.application.select",
+								() -> {
+									String jaxRsApplicationName =
+										systemObjectDefinitionMetadata.
+											getJaxRsApplicationName();
 
-								return "(osgi.jaxrs.name=" +
-									jaxRsApplicationName + ")";
-							}
-						).put(
-							"osgi.jaxrs.resource", "true"
-						).build())));
+									return "(osgi.jaxrs.name=" +
+										jaxRsApplicationName + ")";
+								}
+							).put(
+								"osgi.jaxrs.resource", "true"
+							).build())));
+			}
 
 			return Collections.emptyList();
 		}

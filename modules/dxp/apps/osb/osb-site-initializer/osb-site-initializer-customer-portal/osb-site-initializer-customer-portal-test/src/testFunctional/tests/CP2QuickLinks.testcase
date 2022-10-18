@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account DXP,Test Account Enterprise Search,Test Account Partnership";
+	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account DXP,Test Account Enterprise Search,Test Account Partnership,Test Account QA 7.3,Test Account QA 7.4,Test Account No SLA";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -67,6 +67,36 @@ definition {
 			CustomerPortal.assertQuickLinksPanelInfo(title = "Latest Updates");
 
 			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Latest Fix Packs");
+		}
+	}
+
+	@description = "Automation ID: LPS-150533 | Test Summary: Verify the 'Submit a Ticket' card appears at the top of the Quick Links list if the project has an SLA card."
+	@priority = "4"
+	test CanViewSubmitATicketCard {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account No SLA");
+		}
+
+		task ("Assert that the project does not have an SLA card and that the 'Submit a Ticket' card does not appear in Quick Links") {
+			CP2Overview.assertEmptySLACardMessage(message = "The project's Support Level is displayed here for projects with ticketing support.");
+
+			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Submit a Ticket");
+		}
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+		}
+
+		task ("Assert the project has SLA card and that the 'Submit a Ticket appears in Quick Links") {
+			CustomerPortal.assertSlaCard(type = "Platinum");
+
+			CustomerPortal.assertQuickLinksPanelInfo(title = "Submit a Ticket");
 		}
 	}
 

@@ -27,6 +27,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -159,7 +161,11 @@ public class FragmentEntryProcessorHelperTest {
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
 			_fragmentEntryProcessorHelper.getFileEntryId(
-				journalArticle, fieldId, LocaleUtil.getSiteDefault()));
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					new ClassPKInfoItemIdentifier(
+						journalArticle.getResourcePrimKey())),
+				fieldId, LocaleUtil.getSiteDefault()));
 	}
 
 	private DDMStructure _addDDMStructure(Group group, String content)

@@ -2,6 +2,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
+	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

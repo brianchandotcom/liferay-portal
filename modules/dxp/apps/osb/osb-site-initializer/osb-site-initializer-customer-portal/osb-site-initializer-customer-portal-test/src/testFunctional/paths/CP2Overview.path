@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>EMPTY_SLA_CARD_MESSAGE</td>
-	<td>//*[contains(@class, 'cp-n-sla-card')]//*[contains(@class, 'text-paragraph-sm')]</td>
+	<td>//*[contains(@class, 'cp-sla-card')]//*[contains(@class, 'text-paragraph-sm')]</td>
 	<td></td>
 </tr>
 </tbody>

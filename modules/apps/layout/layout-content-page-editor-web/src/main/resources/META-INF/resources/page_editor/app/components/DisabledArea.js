@@ -151,6 +151,7 @@ const DisabledArea = () => {
 
 					Array.from(child.children).forEach((grandChild) => {
 						grandChild.setAttribute('inert', '');
+						grandChild.setAttribute('aria-hidden', 'true');
 					});
 				}
 			});
@@ -168,6 +169,7 @@ const DisabledArea = () => {
 
 				Array.from(element.children).forEach((child) => {
 					child.removeAttribute('inert');
+					child.removeAttribute('aria-hidden');
 				});
 			});
 		};

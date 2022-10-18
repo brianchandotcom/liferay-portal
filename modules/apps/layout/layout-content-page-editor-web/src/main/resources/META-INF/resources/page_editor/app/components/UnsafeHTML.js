@@ -141,13 +141,6 @@ export default class UnsafeHTML extends React.PureComponent {
 			ref.removeAttribute('id');
 		}
 
-		if (this.props.id) {
-			ref.id = this.props.id;
-		}
-		else {
-			ref.removeAttribute('id');
-		}
-
 		if (this.props.hideFromAccessibilityTree) {
 			ref.setAttribute('aria-hidden', 'true');
 		}

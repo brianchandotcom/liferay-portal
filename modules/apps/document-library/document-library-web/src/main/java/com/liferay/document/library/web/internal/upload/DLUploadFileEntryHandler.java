@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.upload;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
@@ -252,9 +251,6 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private DLValidator _dlValidator;

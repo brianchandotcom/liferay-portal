@@ -4,11 +4,19 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": true,
-					"description": "HTML Icon",
-					"label": "HTML Icon",
-					"name": "htmlIcon",
-					"type": "checkbox"
+					"defaultValue": "white",
+					"description": "icon-color",
+					"label": "Icon Color",
+					"name": "iconColor",
+					"type": "colorPicker"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"description": "icon-background-color",
+					"label": "Icon Background Color",
+					"name": "iconBackgroundColor",
+					"type": "colorPicker"
 				}
 			],
 			"label": "configuration"

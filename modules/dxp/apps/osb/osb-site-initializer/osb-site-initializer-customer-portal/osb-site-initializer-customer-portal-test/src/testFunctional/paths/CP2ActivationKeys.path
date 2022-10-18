@@ -222,6 +222,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_NEW_KEY_CARD</td>
+	<td>//*[contains(@class, 'text-truncate')]//*[contains(., '${key_label}') and contains(., '${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_ICON_HOST_NAME</td>
 	<td>//div[contains(@class, 'row')][5]//*[contains(@class, 'lexicon-icon-copy')]</td>
 	<td></td>

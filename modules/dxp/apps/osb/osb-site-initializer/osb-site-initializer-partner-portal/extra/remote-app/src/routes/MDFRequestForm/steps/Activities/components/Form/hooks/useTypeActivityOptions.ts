@@ -48,9 +48,7 @@ export default function useTypeActivityOptions(
 			return typeActivity.value === event.target.value;
 		});
 
-		setSelectedTypeActivity(
-			optionSelected as OptionHTMLAttributes<HTMLOptionElement>
-		);
+		setSelectedTypeActivity(optionSelected);
 	};
 
 	return {

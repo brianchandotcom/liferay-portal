@@ -1222,6 +1222,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for bug COMMERCE-9503. Verify a product image can be uploaded via headless API with default workflow enabled"
+	@priority = "3"
+	test CanUploadProductImageViaAPIWithWorkflowEnabled {
+		property portal.acceptance = "false";
+
+		task ("When the default workflow is enabled for Commerce Product") {
+			CommerceProducts.enableProductSingleApproverWorkflow();
+		}
+
+		task ("And a new product is created with an image using the API") {
+			CommerceJSONProductsAPI._addCommerceProductImage(
+				catalogName = "Master",
+				imageTitle = "Image Title",
+				productStatus = "2",
+				productTitle = "Simple Product",
+				productType = "simple");
+		}
+
+		task ("Then the new product is created with an image") {
+			CommerceProducts.openProductsAdmin();
+
+			AssertElementPresent(
+				key_src = "account",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_IMAGE");
+
+			CommerceNavigator.gotoEntry(entryName = "Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementPresent(
+				key_src = "account",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_IMAGE");
+
+			AssertElementPresent(
+				key_entryName = "Image Title",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				key_status = "Approved",
+				locator1 = "Questions#WORKFLOW_STATUS");
+		}
+
+		CommerceProducts.disableProductSingleApproverWorkflow();
+	}
+
 	@description = "This is a test for COMMERCE-6747. ConfigureGroupedProduct"
 	@ignore = "true"
 	@priority = "3"

@@ -47,7 +47,7 @@ definition {
 	@priority = "2"
 	test CanViewTheDataInThePanel {
 
-		// TODO LPS- CP2NewKeyGenerationPart2B archive pending implementation
+		// TODO LPS- CanViewTheDataInThePanel pending implementation
 
 	}
 
@@ -55,7 +55,7 @@ definition {
 	@priority = "4"
 	test CanViewTheGenerateClusterButtonEnabled {
 
-		// TODO LPS-150809 CP2NewKeyGenerationPart2B archive pending implementation
+		// TODO LPS-150809 CanViewTheGenerateClusterButtonEnabled pending implementation
 
 	}
 
@@ -63,7 +63,7 @@ definition {
 	@priority = "3"
 	test CanViewTheModalClosing {
 
-		// TODO LPS-150805 CP2NewKeyGenerationPart2B archive pending implementation
+		// TODO LPS-150805 CanViewTheModalClosing pending implementation
 
 	}
 
@@ -71,7 +71,7 @@ definition {
 	@priority = "2"
 	test CanViewTheNumberOfKeysInTheButtonText {
 
-		// TODO LPS-150810 CP2NewKeyGenerationPart2B archive pending implementation
+		// TODO LPS-150810 CanViewTheNumberOfKeysInTheButtonText pending implementation
 
 	}
 
@@ -79,7 +79,7 @@ definition {
 	@priority = "3"
 	test CanViewTheSuccessMessageAfterDownloadingTheNewKey {
 
-		// TODO LPS-150812 CP2NewKeyGenerationPart2B archive pending implementation
+		// TODO LPS-150812 CanViewTheSuccessMessageAfterDownloadingTheNewKey pending implementation
 
 	}
 
@@ -87,7 +87,7 @@ definition {
 	@priority = "3"
 	test UserGoesBackToThePreviousScreenAndNoChangesAreMade {
 
-		// TODO LPS-150807 CP2NewKeyGenerationPart2B archive pending implementation
+		// TODO LPS-150807 UserGoesBackToThePreviousScreenAndNoChangesAreMade pending implementation
 
 	}
 

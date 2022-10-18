@@ -29,7 +29,10 @@ RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.
 	<c:when test="<%= redirectDisplayContext.isShowRedirectNotFoundEntries() %>">
 		<liferay-util:include page="/view_redirect_not_found_entries.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:otherwise>
+	<c:when test="<%= redirectDisplayContext.isShowRedirectEntries() %>">
 		<liferay-util:include page="/view_redirect_entries.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/view_redirect_patterns.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

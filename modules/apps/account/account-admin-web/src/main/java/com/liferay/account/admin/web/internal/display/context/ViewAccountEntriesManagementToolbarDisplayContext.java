@@ -19,6 +19,7 @@ import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -34,21 +35,29 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletURL;
 
@@ -69,6 +78,9 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_workflowEnabled = _isWorkflowEnabled(
+			PortalUtil.getCompanyId(httpServletRequest));
 	}
 
 	@Override
@@ -297,7 +309,14 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {"active", "inactive"};
+		String[] navigationKeys = {"active", "inactive"};
+
+		if (_workflowEnabled) {
+			navigationKeys = ArrayUtil.append(
+				navigationKeys, new String[] {"pending", "draft"});
+		}
+
+		return navigationKeys;
 	}
 
 	@Override
@@ -330,7 +349,25 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 		return ParamUtil.getString(liferayPortletRequest, "type", "all");
 	}
 
+	private boolean _isWorkflowEnabled(long companyId) {
+		Supplier<WorkflowDefinitionLink> workflowDefinitionLinkSupplier = () ->
+			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
+				companyId, GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				AccountEntry.class.getName(), 0, 0);
+
+		if (WorkflowThreadLocal.isEnabled() &&
+			WorkflowEngineManagerUtil.isDeployed() &&
+			(workflowDefinitionLinkSupplier.get() != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewAccountEntriesManagementToolbarDisplayContext.class);
+
+	private final boolean _workflowEnabled;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.fragment.entry.processor.helper;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,19 +38,19 @@ public interface FragmentEntryProcessorHelper {
 	public String getEditableValue(JSONObject jsonObject, Locale locale);
 
 	public long getFileEntryId(
-			long classNameId, long classPK, String fieldName, Locale locale)
-		throws PortalException;
+		InfoItemReference infoItemReference, String fieldName, Locale locale);
 
 	public long getFileEntryId(
-		Object displayObject, String fieldName, Locale locale);
+			long classNameId, long classPK, String fieldName, Locale locale)
+		throws PortalException;
 
 	public long getFileEntryId(String className, long classPK);
 
 	public long getFileEntryId(WebImage webImage);
 
 	public Object getMappedCollectionValue(
-			Optional<Object> displayObjectOptional, JSONObject jsonObject,
-			Locale locale)
+			Optional<InfoItemReference> infoItemReferenceOptional,
+			JSONObject jsonObject, Locale locale)
 		throws PortalException;
 
 	public Object getMappedInfoItemFieldValue(

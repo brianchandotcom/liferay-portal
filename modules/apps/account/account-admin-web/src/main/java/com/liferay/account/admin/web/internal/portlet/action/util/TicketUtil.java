@@ -14,10 +14,10 @@
 
 package com.liferay.account.admin.web.internal.portlet.action.util;
 
+import com.liferay.account.constants.AccountTicketConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,7 +42,8 @@ public class TicketUtil {
 			Ticket ticket = ticketLocalService.fetchTicket(ticketKey);
 
 			if ((ticket == null) ||
-				(ticket.getType() != TicketConstants.TYPE_EMAIL_ADDRESS)) {
+				(ticket.getType() !=
+					AccountTicketConstants.TYPE_USER_INVITATION)) {
 
 				return null;
 			}

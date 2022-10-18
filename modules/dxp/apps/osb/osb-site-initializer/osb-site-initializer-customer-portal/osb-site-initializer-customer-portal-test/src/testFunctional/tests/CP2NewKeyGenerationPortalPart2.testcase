@@ -295,10 +295,97 @@ definition {
     }
 
     @description = "Automation ID: LPS-151805 | Test Summary: Verify if 'Generate X Keys' is disabled if any of the server details have an unexpected format. (ex. invalid IP address)"
+	@ignore = "true"
 	@priority = "3"
 	test IfGenerateXKeysIsDisabled {
-		
-		// TODO LPS-151805 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+		task ("Given I active IP and MAC Address field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "IP Address");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "MAC Address");
+		}
+
+		task ("Given I fulfill the IP Address field with a invalid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1234567789",
+				field = "IP Address");
+		}
+
+		task ("Then I should see the alert with the text 'Invalid IP.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid IP.");
+		}
+
+		task ("Given I fulfill the IP Address field with a IP with white spaces") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168 .1.1",
+				field = "IP Address");
+		}
+
+		task ("Then I should see the alert with the text 'The IP most not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The IP must not have spaces.");
+		}
+
+		task ("When I fulfill the IP Address field with a valid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168.1.1",
+				field = "IP Address");
+		}
+
+		task ("Then I should not see the alert with the text 'Invalid IP.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid IP.");
+		}
+
+		task ("Then I should not see the alert with the text 'The IP must not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "The IP must not have spaces.");
+		}
+
+		task ("When I fulfill the MAC Address field with a invalid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "InvalidMACAddress",
+				field = "MAC Address");
+		}
+
+		task ("Then I should see the alert with the text 'Invalid Mac.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid MAC.");
+		}
+
+		task ("When I fulfill the MAC Address field with a MAC with white spaces") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2- D3-E4-F5",
+				field = "MAC Address");
+		}
+
+		task ("Then I should see the alert with the text 'The Mac must not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The MAC must not have spaces.");
+		}
+
+		task ("When I fulfill the MAC Address field with a valid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2-D3-E4-F5",
+				field = "MAC Address");
+		}
+
+		task ("Then I should not see the alert with the text 'Invalid MAC.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid MAC.");
+		}
 
     }
 }

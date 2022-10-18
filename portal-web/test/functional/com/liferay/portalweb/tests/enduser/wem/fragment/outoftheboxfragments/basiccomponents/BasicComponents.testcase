@@ -494,11 +494,11 @@ definition {
 				value1 = "rgba(39, 40, 51, 1)");
 		}
 
-		task ("View the Inherited is shown in Text Color field") {
+		task ("View the Inherited value is shown in Text Color field") {
 			AssertTextEquals(
 				key_fieldLabel = "Text Color",
 				locator1 = "Button#COLOR_PICKER",
-				value1 = "Inherited · #272833");
+				value1 = "#272833");
 		}
 
 		task ("Remove the Paragraph") {

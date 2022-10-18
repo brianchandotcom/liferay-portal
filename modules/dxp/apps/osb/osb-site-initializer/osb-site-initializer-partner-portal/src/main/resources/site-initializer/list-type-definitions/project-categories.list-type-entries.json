@@ -16,7 +16,7 @@
 		"type": "string"
 	},
 	{
-		"key": "b2c",
+		"key": "b2C",
 		"name": "B2C",
 		"name_i18n": {
 			"en-US": "B2C"
@@ -24,10 +24,10 @@
 		"type": "string"
 	},
 	{
-		"key": "b3E",
+		"key": "b2E",
 		"name": "B2E",
 		"name_i18n": {
-			"en-US": "B2B2C"
+			"en-US": "B2E"
 		},
 		"type": "string"
 	},

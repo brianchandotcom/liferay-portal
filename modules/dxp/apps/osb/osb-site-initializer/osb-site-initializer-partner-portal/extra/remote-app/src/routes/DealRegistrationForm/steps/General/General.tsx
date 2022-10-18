@@ -57,6 +57,14 @@ const General = ({
 	);
 
 	const {
+		onSelected: onStateSelected,
+		options: stateOptions,
+	} = getPicklistOptions(
+		fieldEntries[LiferayPicklistName.STATES],
+		(selected) => setFieldValue('prospect.state', selected)
+	);
+
+	const {
 		onSelected: onIndustrySelected,
 		options: industryOptions,
 	} = getPicklistOptions(
@@ -69,7 +77,7 @@ const General = ({
 		options: departmentOptions,
 	} = getPicklistOptions(
 		fieldEntries[LiferayPicklistName.DEPARTMENTS],
-		(selected) => setFieldValue('prospect.department', selected)
+		(selected) => setFieldValue('primaryProspect.department', selected)
 	);
 
 	const {
@@ -77,7 +85,7 @@ const General = ({
 		options: jobRoleOptions,
 	} = getPicklistOptions(
 		fieldEntries[LiferayPicklistName.JOB_ROLES],
-		(selected) => setFieldValue('prospect.jobRole', selected)
+		(selected) => setFieldValue('primaryProspect.jobRole', selected)
 	);
 
 	return (
@@ -90,6 +98,7 @@ const General = ({
 						name="partnerAccountName"
 						onChange={onCompanySelected}
 						options={companyOptions}
+						required
 					/>
 
 					<PRMFormik.Field
@@ -105,6 +114,7 @@ const General = ({
 					component={PRMForm.InputText}
 					label="Account Name"
 					name="prospect.accountName"
+					required
 				/>
 
 				<PRMFormik.Field
@@ -113,12 +123,14 @@ const General = ({
 					name="prospect.industry"
 					onChange={onIndustrySelected}
 					options={industryOptions}
+					required
 				/>
 
 				<PRMFormik.Field
 					component={PRMForm.InputText}
 					label="Address"
 					name="prospect.address"
+					required
 				/>
 
 				<PRMForm.Group>
@@ -126,12 +138,14 @@ const General = ({
 						component={PRMForm.InputText}
 						label="City"
 						name="prospect.city"
+						required
 					/>
 
 					<PRMFormik.Field
 						component={PRMForm.InputText}
 						label="Postal Code"
 						name="prospect.postalCode"
+						required
 					/>
 				</PRMForm.Group>
 
@@ -142,6 +156,7 @@ const General = ({
 						name="prospect.country"
 						onChange={onCountrySelected}
 						options={countryOptions}
+						required
 					/>
 
 					{values.prospect?.country?.name === 'US' && (
@@ -149,6 +164,9 @@ const General = ({
 							component={PRMForm.Select}
 							label="State"
 							name="prospect.state"
+							onChange={onStateSelected}
+							options={stateOptions}
+							required
 						/>
 					)}
 				</PRMForm.Group>
@@ -159,12 +177,14 @@ const General = ({
 							component={PRMForm.InputText}
 							label="First Name"
 							name="primaryProspect.firstName"
+							required
 						/>
 
 						<PRMFormik.Field
 							component={PRMForm.InputText}
 							label="Last Name"
 							name="primaryProspect.lastName"
+							required
 						/>
 					</PRMForm.Group>
 
@@ -172,18 +192,21 @@ const General = ({
 						component={PRMForm.InputText}
 						label="Email Address"
 						name="primaryProspect.emailAddress"
+						required
 					/>
 
 					<PRMFormik.Field
 						component={PRMForm.InputText}
 						label="Phone"
 						name="primaryProspect.phone"
+						required
 					/>
 
 					<PRMFormik.Field
 						component={PRMForm.InputText}
 						label="Business Unit"
 						name="primaryProspect.businessUnit"
+						required
 					/>
 
 					<PRMFormik.Field
@@ -192,6 +215,7 @@ const General = ({
 						name="primaryProspect.department"
 						onChange={onDepartmentSelected}
 						options={departmentOptions}
+						required
 					/>
 
 					<PRMFormik.Field
@@ -200,6 +224,7 @@ const General = ({
 						name="primaryProspect.jobRole"
 						onChange={onJobRoleSelected}
 						options={jobRoleOptions}
+						required
 					/>
 				</PRMForm.Section>
 
@@ -243,16 +268,17 @@ const General = ({
 						}
 						label="Project Need (Select all that apply)"
 						name="projectNeed"
+						required
 					/>
-				</PRMForm.Section>
 
-				<PRMForm.Section title="Project Solution Categories (Select all that apply)">
 					<PRMFormik.Field
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[LiferayPicklistName.PROJECT_CATEGORIES]
 						}
+						label="Project Solution Categories (Select all that apply)"
 						name="categories"
+						required
 					/>
 				</PRMForm.Section>
 
@@ -261,6 +287,7 @@ const General = ({
 						component={PRMForm.InputText}
 						label="Project Timeline"
 						name="projectTimeline"
+						required
 					/>
 				</PRMForm.Section>
 			</PRMForm.Section>

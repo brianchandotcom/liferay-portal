@@ -25,6 +25,7 @@ export default function useDynamicFieldEntries() {
 		LiferayPicklistName.JOB_ROLES,
 		LiferayPicklistName.DEPARTMENTS,
 		LiferayPicklistName.INDUSTRIES,
+		LiferayPicklistName.STATES,
 	]);
 
 	const companiesEntries = useMemo(

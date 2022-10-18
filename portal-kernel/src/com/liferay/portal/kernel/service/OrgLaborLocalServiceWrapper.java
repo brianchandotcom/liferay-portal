@@ -36,14 +36,14 @@ public class OrgLaborLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
-			long organizationId, long typeId, int sunOpen, int sunClose,
+			long organizationId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _orgLaborLocalService.addOrgLabor(
-			organizationId, typeId, sunOpen, sunClose, monOpen, monClose,
+			organizationId, listTypeId, sunOpen, sunClose, monOpen, monClose,
 			tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen,
 			friClose, satOpen, satClose);
 	}
@@ -331,16 +331,16 @@ public class OrgLaborLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
-			long orgLaborId, long typeId, int sunOpen, int sunClose,
+			long orgLaborId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _orgLaborLocalService.updateOrgLabor(
-			orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
-			tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen, friClose,
-			satOpen, satClose);
+			orgLaborId, listTypeId, sunOpen, sunClose, monOpen, monClose,
+			tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen,
+			friClose, satOpen, satClose);
 	}
 
 	/**

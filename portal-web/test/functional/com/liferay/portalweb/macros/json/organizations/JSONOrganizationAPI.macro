@@ -114,4 +114,44 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the number of childs organizations based on its parent organization id"
+	macro _getChildOrganizationCount {
+		Variables.assertDefined(parameterList = "${parentOrganizationId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/get-organizations-count \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d parentOrganizationId=${parentOrganizationId}
+		''';
+
+		var numberOfChildren = JSONCurlUtil.post("${curl}");
+
+		var numberOfChildren = StringUtil.extractDigits("${numberOfChildren}");
+
+		return "${numberOfChildren}";
+	}
+
+	@summary = "Get the childs organizations ids based on its parent organization id"
+	macro _getOrganization {
+		Variables.assertDefined(parameterList = "${parentOrganizationId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/get-organizations \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d parentOrganizationId=${parentOrganizationId}
+		''';
+
+		var organizationIds = JSONCurlUtil.post("${curl}", "$..['organizationId']");
+
+		return "${organizationIds}";
+	}
+
 }

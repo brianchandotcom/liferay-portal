@@ -105,6 +105,7 @@ definition {
 		JSONRoleAPI._deleteRoleById(roleId = "${roleId}");
 	}
 
+	@summary = "Gets all users that contains 'Test' and deletes them"
 	macro deleteTestRoles {
 		var rolesIds = JSONRoleAPI._searchRolesIds(roleName = "Test");
 

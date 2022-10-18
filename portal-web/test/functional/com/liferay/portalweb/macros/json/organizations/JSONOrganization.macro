@@ -120,4 +120,26 @@ definition {
 		return "${organizationName}";
 	}
 
+	@summary = "Delete the organizations and its first level children organizations"
+	macro tearDownOrganizations {
+		var organizationsIds = ListUtil.newList();
+		var parentOrganizationIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = "0");
+
+		for (var parentOrganizationId : list "${parentOrganizationIds}") {
+			var numberOfChildren = JSONOrganizationAPI._getChildOrganizationCount(parentOrganizationId = "${parentOrganizationId}");
+
+			if ("${numberOfChildren}" != "0") {
+				var childrenOrganizationsIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = "${parentOrganizationId}");
+
+				ListUtil.add("${organizationsIds}", "${childrenOrganizationsIds}");
+			}
+		}
+
+		ListUtil.add("${organizationsIds}", "${parentOrganizationIds}");
+
+		for (var organizationId : list "${organizationsIds}") {
+			JSONOrganizationAPI._deleteOrganization(organizationId = "${organizationId}");
+		}
+	}
+
 }

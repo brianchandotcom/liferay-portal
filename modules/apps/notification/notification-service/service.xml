@@ -200,7 +200,7 @@
 
 		<column db-name="NTemplateRecipientId" name="notificationTemplateRecipientId" type="long" />
 		<column name="name" type="String" />
-		<column name="value" type="String" />
+		<column localized="true" name="value" type="String" />
 	</entity>
 	<exceptions>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>

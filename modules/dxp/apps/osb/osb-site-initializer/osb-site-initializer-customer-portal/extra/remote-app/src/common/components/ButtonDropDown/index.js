@@ -15,12 +15,17 @@ import {useState} from 'react';
 
 const ButtonDropDown = ({
 	customDropDownButton,
+	isAdminOrPartnerManager,
 	label,
 	align = Align.BottomRight,
 	items,
 	...props
 }) => {
 	const [active, setActive] = useState(false);
+
+	const filteredDropdownItems = items.filter(
+		(item) => item.label === 'Export All Key Details (csv)'
+	);
 
 	return (
 		<ClayDropDown
@@ -39,39 +44,77 @@ const ButtonDropDown = ({
 			}
 			{...props}
 		>
-			<ClayDropDown.ItemList>
-				{items.map(
-					({
-						customOptionStyle,
-						disabled,
-						icon,
-						label,
-						onClick,
-						tooltip,
-					}) => (
-						<ClayDropDown.Item
-							className={classNames(
-								'font-weight-semi-bold text-paragraph-sm px-3 rounded-xs',
-								customOptionStyle,
-								{
-									'cp-common-drop-down-item text-neutral-8': !disabled,
-									'text-neutral-5': disabled,
-								}
-							)}
-							disabled={disabled}
-							key={label}
-							onClick={onClick}
-							title={disabled ? tooltip : null}
-						>
-							<div className="d-flex">
-								{icon && <div className="mr-1">{icon}</div>}
+			{!isAdminOrPartnerManager && (
+				<ClayDropDown.ItemList>
+					{filteredDropdownItems.map(
+						({
+							customOptionStyle,
+							disabled,
+							icon,
+							label,
+							onClick,
+							tooltip,
+						}) => (
+							<ClayDropDown.Item
+								className={classNames(
+									'font-weight-semi-bold text-paragraph-sm px-3 rounded-xs',
+									customOptionStyle,
+									{
+										'cp-common-drop-down-item text-neutral-8': !disabled,
+										'text-neutral-5': disabled,
+									}
+								)}
+								disabled={disabled}
+								key={label}
+								onClick={onClick}
+								title={disabled ? tooltip : null}
+							>
+								<div className="d-flex">
+									{icon && <div className="mr-1">{icon}</div>}
 
-								{label}
-							</div>
-						</ClayDropDown.Item>
-					)
-				)}
-			</ClayDropDown.ItemList>
+									{label}
+								</div>
+							</ClayDropDown.Item>
+						)
+					)}
+				</ClayDropDown.ItemList>
+			)}
+
+			{isAdminOrPartnerManager && (
+				<ClayDropDown.ItemList>
+					{items.map(
+						({
+							customOptionStyle,
+							disabled,
+							icon,
+							label,
+							onClick,
+							tooltip,
+						}) => (
+							<ClayDropDown.Item
+								className={classNames(
+									'font-weight-semi-bold text-paragraph-sm px-3 rounded-xs',
+									customOptionStyle,
+									{
+										'cp-common-drop-down-item text-neutral-8': !disabled,
+										'text-neutral-5': disabled,
+									}
+								)}
+								disabled={disabled}
+								key={label}
+								onClick={onClick}
+								title={disabled ? tooltip : null}
+							>
+								<div className="d-flex">
+									{icon && <div className="mr-1">{icon}</div>}
+
+									{label}
+								</div>
+							</ClayDropDown.Item>
+						)
+					)}
+				</ClayDropDown.ItemList>
+			)}
 		</ClayDropDown>
 	);
 };

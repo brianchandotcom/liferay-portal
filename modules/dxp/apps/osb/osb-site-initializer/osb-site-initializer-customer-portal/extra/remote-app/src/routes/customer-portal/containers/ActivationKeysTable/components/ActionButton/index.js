@@ -23,6 +23,7 @@ const ActionButton = ({
 	activationKeysByStatusPaginatedChecked,
 	filterCheckedActivationKeys,
 	isAbleToDownloadAggregateKeys,
+	isAdminOrPartnerManager,
 	productName,
 	project,
 	sessionId,
@@ -110,6 +111,7 @@ const ActionButton = ({
 
 	return (
 		<ButtonDropDown
+			isAdminOrPartnerManager={isAdminOrPartnerManager}
 			items={activationKeysActionsItems}
 			label={i18n.translate('actions')}
 			menuElementAttrs={{

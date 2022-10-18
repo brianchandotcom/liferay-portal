@@ -119,7 +119,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 	private Optional<EntityField> _getEntityField(ObjectField objectField) {
 		if (objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+			objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 			return Optional.empty();
 		}

@@ -937,7 +937,9 @@ public class ObjectEntryDisplayContext {
 						objectField.getName());
 
 					if (objectField.compareBusinessType(
-							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+						objectField.compareBusinessType(
+							ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 						nestedDDMFormFields.add(
 							_getDDMFormField(objectField, true));

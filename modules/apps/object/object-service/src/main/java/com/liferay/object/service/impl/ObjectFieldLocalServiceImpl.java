@@ -127,7 +127,9 @@ public class ObjectFieldLocalServiceImpl
 
 		if (objectDefinition.isApproved() &&
 			!objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
@@ -839,7 +841,9 @@ public class ObjectFieldLocalServiceImpl
 				  objectField.getBusinessType(),
 				  ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP))) &&
 			!objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(

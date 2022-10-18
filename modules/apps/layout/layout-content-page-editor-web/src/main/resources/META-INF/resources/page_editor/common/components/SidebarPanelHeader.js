@@ -34,7 +34,7 @@ export default function SidebarPanelHeader({
 		>
 			{iconLeft}
 
-			<h1 className="flex-grow-1 mb-0 mr-1 text-3">{children}</h1>
+			<h2 className="flex-grow-1 mb-0 mr-1 text-3">{children}</h2>
 
 			{iconRight}
 

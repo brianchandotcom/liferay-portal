@@ -64,6 +64,10 @@ public interface DispatchTriggerService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DispatchTrigger getDispatchTrigger(long dispatchTriggerId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DispatchTrigger> getDispatchTriggers(int start, int end)
 		throws PortalException;
 

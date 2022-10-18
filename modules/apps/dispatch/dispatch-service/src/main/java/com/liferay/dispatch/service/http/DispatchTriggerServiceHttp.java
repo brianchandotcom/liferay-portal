@@ -132,6 +132,46 @@ public class DispatchTriggerServiceHttp {
 		}
 	}
 
+	public static com.liferay.dispatch.model.DispatchTrigger getDispatchTrigger(
+			HttpPrincipal httpPrincipal, long dispatchTriggerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DispatchTriggerServiceUtil.class, "getDispatchTrigger",
+				_getDispatchTriggerParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, dispatchTriggerId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.dispatch.model.DispatchTrigger)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
 			getDispatchTriggers(HttpPrincipal httpPrincipal, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -139,7 +179,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "getDispatchTriggers",
-				_getDispatchTriggersParameterTypes2);
+				_getDispatchTriggersParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, start, end);
@@ -179,7 +219,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "getDispatchTriggersCount",
-				_getDispatchTriggersCountParameterTypes3);
+				_getDispatchTriggersCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -227,7 +267,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes4);
+				_updateDispatchTriggerParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId, active, cronExpression,
@@ -275,7 +315,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes5);
+				_updateDispatchTriggerParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId,
@@ -319,11 +359,13 @@ public class DispatchTriggerServiceHttp {
 		};
 	private static final Class<?>[] _deleteDispatchTriggerParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getDispatchTriggersParameterTypes2 =
+	private static final Class<?>[] _getDispatchTriggerParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getDispatchTriggersParameterTypes3 =
 		new Class[] {int.class, int.class};
-	private static final Class<?>[] _getDispatchTriggersCountParameterTypes3 =
+	private static final Class<?>[] _getDispatchTriggersCountParameterTypes4 =
 		new Class[] {};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes4 =
+	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
 		new Class[] {
 			long.class, boolean.class, String.class,
 			com.liferay.dispatch.executor.DispatchTaskClusterMode.class,
@@ -331,7 +373,7 @@ public class DispatchTriggerServiceHttp {
 			boolean.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, String.class
 		};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
+	private static final Class<?>[] _updateDispatchTriggerParameterTypes6 =
 		new Class[] {
 			long.class, com.liferay.portal.kernel.util.UnicodeProperties.class,
 			String.class

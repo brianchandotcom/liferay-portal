@@ -74,6 +74,17 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 	}
 
 	@Override
+	public DispatchTrigger getDispatchTrigger(long dispatchTriggerId)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.VIEW);
+
+		return dispatchTriggerLocalService.getDispatchTrigger(
+			dispatchTriggerId);
+	}
+
+	@Override
 	public List<DispatchTrigger> getDispatchTriggers(int start, int end)
 		throws PortalException {
 

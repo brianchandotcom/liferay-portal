@@ -58,6 +58,14 @@ public class DispatchTriggerServiceWrapper
 	}
 
 	@Override
+	public com.liferay.dispatch.model.DispatchTrigger getDispatchTrigger(
+			long dispatchTriggerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchTriggerService.getDispatchTrigger(dispatchTriggerId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
 			getDispatchTriggers(int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

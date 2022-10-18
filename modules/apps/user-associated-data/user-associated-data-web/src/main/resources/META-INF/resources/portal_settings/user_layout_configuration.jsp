@@ -47,29 +47,25 @@ UserLayoutConfiguration userLayoutConfiguration = (UserLayoutConfiguration)reque
 		'<portlet:namespace />publicLayoutsAutoCreate'
 	);
 
-
-	if(enablePrivateLayoutsElement.checked===false){
+	if (enablePrivateLayoutsElement.checked === false) {
 		privateLayoutsAutoCreateElement.setAttribute('disabled', '');
 	}
 
-	if(enablePublicLayoutsElement.checked===false){
+	if (enablePublicLayoutsElement.checked === false) {
 		publicLayoutsAutoCreateElement.setAttribute('disabled', '');
 	}
 
 	function togglePrivateLayoutsAutoCreate() {
-
 		if (!enablePrivateLayoutsElement.checked) {
 			privateLayoutsAutoCreateElement.checked = false;
 			privateLayoutsAutoCreateElement.setAttribute('disabled', '');
 		}
 		else {
 			privateLayoutsAutoCreateElement.removeAttribute('disabled');
-
 		}
 	}
 
 	function togglePublicLayoutsAutoCreate() {
-
 		if (!enablePublicLayoutsElement.checked) {
 			publicLayoutsAutoCreateElement.checked = false;
 			publicLayoutsAutoCreateElement.setAttribute('disabled', '');

@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.site.initializer.extender.internal.file.backed.servlet.FileBackedThumbnailServlet",
 		"osgi.http.whiteboard.servlet.pattern=/file-backed-site-initializer/*",

@@ -14,8 +14,9 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
-import com.liferay.oauth2.provider.rest.spi.scope.checker.JaxRsResourceScopeChecker;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
+import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -153,8 +154,11 @@ public class HttpMethodFeature implements Feature {
 
 	private BundleContext _bundleContext;
 
+	@Reference
+	private ScopeChecker _scopeChecker;
+
 	@Reference(target = "(oauth2.scope.checker.type=http.method)")
-	private JaxRsResourceScopeChecker _jaxRsResourceScopeChecker;
+	private ScopeLogic _scopeLogic;
 
 	private final Set<String> _scopes = new HashSet<>();
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
@@ -165,8 +169,8 @@ public class HttpMethodFeature implements Feature {
 		public boolean isContainerRequestContextAllowed(
 			ContainerRequestContext containerRequestContext) {
 
-			return _jaxRsResourceScopeChecker.check(
-				_resourceInfo.getResourceClass(),
+			return _scopeLogic.check(
+				_scopeChecker, _resourceInfo.getResourceClass(),
 				_resourceInfo.getResourceMethod());
 		}
 

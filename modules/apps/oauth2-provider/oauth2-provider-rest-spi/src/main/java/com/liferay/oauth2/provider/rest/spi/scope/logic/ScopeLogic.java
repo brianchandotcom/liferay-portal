@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.spi.scope.checker;
+package com.liferay.oauth2.provider.rest.spi.scope.logic;
+
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 
 import java.lang.reflect.Method;
 
 /**
  * @author Carlos Correa
+ * @author Stian Sigvartsen
  */
-public interface JaxRsResourceScopeChecker {
+public interface ScopeLogic {
 
-	public boolean check(Class<?> resourceClass, Method resourceMethod);
+	public boolean check(
+		ScopeChecker scopeChecker, Class<?> resourceClass,
+		Method resourceMethod);
 
 }

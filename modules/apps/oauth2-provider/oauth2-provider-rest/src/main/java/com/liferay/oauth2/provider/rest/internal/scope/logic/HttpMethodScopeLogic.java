@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
+package com.liferay.oauth2.provider.rest.internal.scope.logic;
 
-import com.liferay.oauth2.provider.rest.spi.scope.checker.JaxRsResourceScopeChecker;
+import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.osgi.util.StringPlus;
@@ -45,16 +45,19 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
+ * @author Stian Sigvartsen
  */
 @Component(
 	property = "oauth2.scope.checker.type=http.method",
-	service = JaxRsResourceScopeChecker.class
+	service = ScopeLogic.class
 )
-public class JaxRsResourceMethodScopeChecker
-	implements JaxRsResourceScopeChecker {
+public class HttpMethodScopeLogic implements ScopeLogic {
 
 	@Override
-	public boolean check(Class<?> resourceClass, Method resourceMethod) {
+	public boolean check(
+		ScopeChecker scopeChecker, Class<?> resourceClass,
+		Method resourceMethod) {
+
 		try {
 			String applicationName = _getApplicationName(resourceClass);
 
@@ -73,7 +76,7 @@ public class JaxRsResourceMethodScopeChecker
 
 			if ((!scopes.contains(httpMethod) &&
 				 ignoreMissingScopes.contains(httpMethod)) ||
-				_scopeChecker.checkScope(httpMethod)) {
+				scopeChecker.checkScope(httpMethod)) {
 
 				return true;
 			}
@@ -181,7 +184,7 @@ public class JaxRsResourceMethodScopeChecker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JaxRsResourceMethodScopeChecker.class);
+		HttpMethodScopeLogic.class);
 
 	private BundleContext _bundleContext;
 
@@ -195,8 +198,5 @@ public class JaxRsResourceMethodScopeChecker
 
 	@Reference
 	private JaxRsResourceRegistry _jaxRsResourceRegistry;
-
-	@Reference
-	private ScopeChecker _scopeChecker;
 
 }

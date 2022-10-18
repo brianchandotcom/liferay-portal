@@ -14,8 +14,9 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
-import com.liferay.oauth2.provider.rest.spi.scope.checker.JaxRsResourceScopeChecker;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
+import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 
 import java.util.HashSet;
@@ -95,8 +96,11 @@ public class AnnotationFeature implements Feature {
 
 	private BundleContext _bundleContext;
 
+	@Reference
+	private ScopeChecker _scopeChecker;
+
 	@Reference(target = "(oauth2.scope.checker.type=annotations)")
-	private JaxRsResourceScopeChecker _jaxRsResourceScopeChecker;
+	private ScopeLogic _scopeLogic;
 
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
 
@@ -106,8 +110,8 @@ public class AnnotationFeature implements Feature {
 		public boolean isContainerRequestContextAllowed(
 			ContainerRequestContext containerRequestContext) {
 
-			return _jaxRsResourceScopeChecker.check(
-				_resourceInfo.getResourceClass(),
+			return _scopeLogic.check(
+				_scopeChecker, _resourceInfo.getResourceClass(),
 				_resourceInfo.getResourceMethod());
 		}
 

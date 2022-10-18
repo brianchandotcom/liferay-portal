@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
+package com.liferay.oauth2.provider.rest.internal.scope.logic;
 
-import com.liferay.oauth2.provider.rest.spi.scope.checker.JaxRsResourceScopeChecker;
+import com.liferay.oauth2.provider.rest.internal.jaxrs.feature.RequiresScopeAnnotationFinder;
+import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -24,20 +25,22 @@ import com.liferay.petra.string.StringPool;
 import java.lang.reflect.Method;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
+ * @author Stian Sigvartsen
  */
 @Component(
 	property = "oauth2.scope.checker.type=annotations",
-	service = JaxRsResourceScopeChecker.class
+	service = ScopeLogic.class
 )
-public class JaxRsResourceAnnotationScopeChecker
-	implements JaxRsResourceScopeChecker {
+public class AnnotationScopeLogic implements ScopeLogic {
 
 	@Override
-	public boolean check(Class<?> resourceClass, Method resourceMethod) {
+	public boolean check(
+		ScopeChecker scopeChecker, Class<?> resourceClass,
+		Method resourceMethod) {
+
 		RequiresNoScope requiresNoScope =
 			RequiresScopeAnnotationFinder.getScopeAnnotation(
 				resourceMethod, RequiresNoScope.class);
@@ -61,7 +64,9 @@ public class JaxRsResourceAnnotationScopeChecker
 			throw new RuntimeException(sb.toString());
 		}
 
-		if ((requiresNoScope != null) || _checkRequiresScope(requiresScope)) {
+		if ((requiresNoScope != null) ||
+			_checkRequiresScope(scopeChecker, requiresScope)) {
+
 			return true;
 		}
 
@@ -79,26 +84,27 @@ public class JaxRsResourceAnnotationScopeChecker
 					"defined"));
 		}
 
-		if ((requiresNoScope != null) || _checkRequiresScope(requiresScope)) {
+		if ((requiresNoScope != null) ||
+			_checkRequiresScope(scopeChecker, requiresScope)) {
+
 			return true;
 		}
 
 		return false;
 	}
 
-	private boolean _checkRequiresScope(RequiresScope requiresScope) {
+	private boolean _checkRequiresScope(
+		ScopeChecker scopeChecker, RequiresScope requiresScope) {
+
 		if (requiresScope != null) {
 			if (requiresScope.allNeeded()) {
-				return _scopeChecker.checkAllScopes(requiresScope.value());
+				return scopeChecker.checkAllScopes(requiresScope.value());
 			}
 
-			return _scopeChecker.checkAnyScope(requiresScope.value());
+			return scopeChecker.checkAnyScope(requiresScope.value());
 		}
 
 		return false;
 	}
-
-	@Reference
-	private ScopeChecker _scopeChecker;
 
 }

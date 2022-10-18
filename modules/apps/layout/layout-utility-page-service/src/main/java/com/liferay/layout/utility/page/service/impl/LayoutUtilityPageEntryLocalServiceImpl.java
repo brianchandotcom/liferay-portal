@@ -123,14 +123,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	@Override
-	public LayoutUtilityPageEntry fetchByG_N_T(
-		long groupId, String name, int type) {
-
-		return layoutUtilityPageEntryPersistence.fetchByG_N_T_First(
-			groupId, name, type, null);
-	}
-
-	@Override
 	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
 		long groupId, int type) {
 
@@ -306,7 +298,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		for (int i = 1;; i++) {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				layoutUtilityPageEntryLocalService.fetchByG_N_T(
+				layoutUtilityPageEntryPersistence.fetchByG_N_T(
 					groupId, name, type);
 
 			if (layoutUtilityPageEntry == null) {

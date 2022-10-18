@@ -1225,10 +1225,31 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 			String resourceName = _getStructureModelResourceName(classNameId);
 
-			resourcePermission.setName(resourceName);
+			// Check if the target permission already exists. For
+			// example the permissions for the structures backing
+			// DLFileEntryTypes are also updated through
+			// SyncDLFileEntryTypesDDMStructurePermissions in
+			// document-library-service. If this situation arises,
+			// don't try to rename the existing structure, but
+			// remove it, as the permissions were created in the
+			// second way.
 
-			_resourcePermissionLocalService.updateResourcePermission(
-				resourcePermission);
+			ResourcePermission existingPermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(structureId),
+					resourcePermission.getRoleId());
+
+			if (existingPermission != null) {
+				_resourcePermissionLocalService.deleteResourcePermission(
+					resourcePermission.getResourcePermissionId());
+			}
+			else {
+				resourcePermission.setName(resourceName);
+
+				_resourcePermissionLocalService.updateResourcePermission(
+					resourcePermission);
+			}
 		}
 	}
 

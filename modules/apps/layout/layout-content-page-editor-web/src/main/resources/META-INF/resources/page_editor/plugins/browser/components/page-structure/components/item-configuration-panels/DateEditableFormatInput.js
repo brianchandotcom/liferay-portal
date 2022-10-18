@@ -106,25 +106,33 @@ export default function DateEditableFormatInput({
 
 	return (
 		<>
-			<SelectField
-				field={{
-					label: Liferay.Language.get('date-format'),
-					name: 'dateFormat',
-					typeOptions: {
-						validValues: DATE_FORMAT_OPTIONS,
-					},
-				}}
-				onValueSelect={(name, value) => {
-					if (value === DATE_EDITABLE_FORMAT_OPTIONS.custom) {
-						setEnableCustomInput(true);
-					}
-					else {
-						setEnableCustomInput(false);
-						onValueSelectHandler(name, value);
-					}
-				}}
-				value={selectedOption}
-			/>
+			<div className={classnames('autofit-row align-items-end mb-3')}>
+				<div className={classnames('autofit-col autofit-col-expand')}>
+					<SelectField
+						field={{
+							label: Liferay.Language.get('date-format'),
+							name: 'dateFormat',
+							typeOptions: {
+								validValues: DATE_FORMAT_OPTIONS,
+							},
+						}}
+						onValueSelect={(name, value) => {
+							if (value === DATE_EDITABLE_FORMAT_OPTIONS.custom) {
+								setEnableCustomInput(true);
+							}
+							else {
+								setEnableCustomInput(false);
+								onValueSelectHandler(name, value);
+							}
+						}}
+						value={getSelectedOption(
+							editableValue.config.dateFormat[languageId]
+						)}
+					/>
+				</div>
+
+				<CurrentLanguageFlag />
+			</div>
 			{enableCustomInput && (
 				<TextField
 					field={{

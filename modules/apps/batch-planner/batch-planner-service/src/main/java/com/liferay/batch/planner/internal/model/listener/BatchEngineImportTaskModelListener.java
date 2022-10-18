@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matija Petanjek
  * @author Igor Beslic
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class BatchEngineImportTaskModelListener
 	extends BaseModelListener<BatchEngineImportTask> {
 

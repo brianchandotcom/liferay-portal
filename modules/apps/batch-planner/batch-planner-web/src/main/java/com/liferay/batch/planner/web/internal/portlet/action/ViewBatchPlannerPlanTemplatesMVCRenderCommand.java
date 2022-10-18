@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Matija Petanjek
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 		"mvc.command.name=/batch_planner/view_batch_planner_plan_templates"

@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 	service = UserNotificationHandler.class
 )

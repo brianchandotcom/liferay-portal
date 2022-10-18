@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Beslic
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.batch.planner.configuration.BatchPlannerConfiguration",
 	service = ConfigurationModelListener.class
 )

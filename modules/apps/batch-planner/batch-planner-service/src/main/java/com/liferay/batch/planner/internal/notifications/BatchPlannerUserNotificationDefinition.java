@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Beslic
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 	service = UserNotificationDefinition.class
 )

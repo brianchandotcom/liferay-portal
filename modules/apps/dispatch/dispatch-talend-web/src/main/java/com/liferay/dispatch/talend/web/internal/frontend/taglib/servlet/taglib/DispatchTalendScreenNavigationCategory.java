@@ -19,7 +19,6 @@ import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.talend.web.internal.display.context.TalendDispatchDisplayContext;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -122,9 +121,6 @@ public class DispatchTalendScreenNavigationCategory
 
 		return dispatchTrigger.getDispatchTriggerId();
 	}
-
-	@Reference
-	private DispatchFileRepository _dispatchFileRepository;
 
 	@Reference
 	private DispatchTriggerMetadataProvider _dispatchTriggerMetadataProvider;

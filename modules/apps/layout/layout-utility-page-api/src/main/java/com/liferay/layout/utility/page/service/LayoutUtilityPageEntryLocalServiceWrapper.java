@@ -261,14 +261,6 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutUtilityPageEntry fetchByG_N_T(
-		long groupId, String name, int type) {
-
-		return _layoutUtilityPageEntryLocalService.fetchByG_N_T(
-			groupId, name, type);
-	}
-
-	@Override
 	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
 		long groupId, int type) {
 

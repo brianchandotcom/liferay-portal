@@ -78,7 +78,7 @@ public class LayoutUtilityPageEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -110,6 +110,8 @@ public class LayoutUtilityPageEntryCacheModel
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", previewFileEntryId=");
+		sb.append(previewFileEntryId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -179,6 +181,7 @@ public class LayoutUtilityPageEntryCacheModel
 		}
 
 		layoutUtilityPageEntryImpl.setType(type);
+		layoutUtilityPageEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutUtilityPageEntryImpl.setLastPublishDate(null);
@@ -218,6 +221,8 @@ public class LayoutUtilityPageEntryCacheModel
 		name = objectInput.readUTF();
 
 		type = objectInput.readInt();
+
+		previewFileEntryId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -271,6 +276,8 @@ public class LayoutUtilityPageEntryCacheModel
 		}
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeLong(previewFileEntryId);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -289,6 +296,7 @@ public class LayoutUtilityPageEntryCacheModel
 	public boolean defaultLayoutUtilityPageEntry;
 	public String name;
 	public int type;
+	public long previewFileEntryId;
 	public long lastPublishDate;
 
 }

@@ -17,6 +17,7 @@
 		<field name="defaultLayoutUtilityPageEntry" type="boolean" />
 		<field name="name" type="String" />
 		<field name="type" type="int" />
+		<field name="previewFileEntryId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

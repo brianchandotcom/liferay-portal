@@ -77,6 +77,10 @@ public class LayoutUtilityPageEntryTable
 	public final Column<LayoutUtilityPageEntryTable, Integer> type =
 		createColumn(
 			"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<LayoutUtilityPageEntryTable, Long> previewFileEntryId =
+		createColumn(
+			"previewFileEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<LayoutUtilityPageEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

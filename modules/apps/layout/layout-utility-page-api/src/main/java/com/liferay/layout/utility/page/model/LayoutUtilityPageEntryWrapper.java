@@ -64,6 +64,7 @@ public class LayoutUtilityPageEntryWrapper
 			"defaultLayoutUtilityPageEntry", isDefaultLayoutUtilityPageEntry());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -162,6 +163,12 @@ public class LayoutUtilityPageEntryWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
+
+		if (previewFileEntryId != null) {
+			setPreviewFileEntryId(previewFileEntryId);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -294,6 +301,16 @@ public class LayoutUtilityPageEntryWrapper
 	@Override
 	public long getPlid() {
 		return model.getPlid();
+	}
+
+	/**
+	 * Returns the preview file entry ID of this layout utility page entry.
+	 *
+	 * @return the preview file entry ID of this layout utility page entry
+	 */
+	@Override
+	public long getPreviewFileEntryId() {
+		return model.getPreviewFileEntryId();
 	}
 
 	/**
@@ -491,6 +508,16 @@ public class LayoutUtilityPageEntryWrapper
 	@Override
 	public void setPlid(long plid) {
 		model.setPlid(plid);
+	}
+
+	/**
+	 * Sets the preview file entry ID of this layout utility page entry.
+	 *
+	 * @param previewFileEntryId the preview file entry ID of this layout utility page entry
+	 */
+	@Override
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		model.setPreviewFileEntryId(previewFileEntryId);
 	}
 
 	/**

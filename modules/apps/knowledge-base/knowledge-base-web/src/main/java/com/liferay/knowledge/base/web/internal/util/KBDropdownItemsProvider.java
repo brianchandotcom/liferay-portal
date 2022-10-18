@@ -179,7 +179,7 @@ public class KBDropdownItemsProvider {
 						_liferayPortletRequest.getAttribute(
 							KBWebKeys.KNOWLEDGE_BASE_STATUS)
 					).buildRenderURL());
-				dropdownItem.setIcon(null);
+				dropdownItem.setIcon("date-time");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),

@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
-import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplayFactoryUtil;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -55,7 +55,8 @@ public abstract class BaseAccountEntryScreenNavigationEntry
 
 		httpServletRequest.setAttribute(
 			AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
-			AccountEntryDisplay.of(accountEntryId));
+			AccountEntryDisplayFactoryUtil.create(
+				accountEntryId, httpServletRequest));
 
 		jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse, getJspPath());

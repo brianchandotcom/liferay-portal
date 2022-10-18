@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountEntryDisplay accountEntryDisplay = AccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
+AccountEntryDisplay accountEntryDisplay = AccountEntryDisplayFactoryUtil.create(ParamUtil.getLong(request, "accountEntryId"), request);
 
 long defaultAddressId = 0;
 

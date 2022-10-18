@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplayFactoryUtil;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
@@ -170,7 +171,9 @@ public class AccountEntryDisplaySearchContainerFactory {
 
 		accountEntryDisplaySearchContainer.setResultsAndTotal(
 			() -> TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountEntryDisplay::of),
+				baseModelSearchResult.getBaseModels(),
+				accountEntry -> AccountEntryDisplayFactoryUtil.create(
+					accountEntry, liferayPortletRequest)),
 			baseModelSearchResult.getLength());
 		accountEntryDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));

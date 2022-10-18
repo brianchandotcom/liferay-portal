@@ -51,7 +51,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Keven Leone
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.DIGITAL_SIGNATURE,
 		"mvc.command.name=/digital_signature/get_ds_envelope"

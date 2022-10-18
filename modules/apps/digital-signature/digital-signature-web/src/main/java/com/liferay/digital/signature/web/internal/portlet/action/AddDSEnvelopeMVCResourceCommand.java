@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author José Abelenda
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE,
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.DIGITAL_SIGNATURE,

@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Keven Leone
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",

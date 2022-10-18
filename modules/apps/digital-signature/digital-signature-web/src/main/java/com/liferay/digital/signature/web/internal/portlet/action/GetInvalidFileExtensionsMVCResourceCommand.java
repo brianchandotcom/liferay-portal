@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Keven Leone
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE,
 		"mvc.command.name=/digital_signature/get_invalid_file_extensions"

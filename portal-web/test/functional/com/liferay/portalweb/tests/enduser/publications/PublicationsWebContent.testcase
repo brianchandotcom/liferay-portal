@@ -566,4 +566,81 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "Error executing FreeMarker template");
 	}
 
+	@description = "This is the use case for LPS-161841. The order of the versions is not reversed When resolving web content article version conflicts during publication."
+	@priority = "4"
+	test WebContentArticleVersionCannotBeReversedWhenResolvingTheConflicts {
+		task ("Add new web content on new added site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Edit the web content 3 times") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 1",
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit 1");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 2",
+				webContentTitle = "Web Content Title Edit 1",
+				webContentTitleEdit = "Web Content Title Edit 2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 2");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 3",
+				webContentTitle = "Web Content Title Edit 2",
+				webContentTitleEdit = "Web Content Title Edit 3");
+		}
+
+		task ("Edit the web content on Production mode") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			Publications.workOnProduction();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 1",
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit 1");
+		}
+
+		task ("Publish the publication") {
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			JSONPublications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+
+		task ("View the web content version 1.3 displays on Production") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 3");
+
+			WebContent.viewCP(
+				webContentContent = "Web Content Content Edit 3",
+				webContentTitle = "Web Content Title Edit 3");
+		}
+	}
+
 }

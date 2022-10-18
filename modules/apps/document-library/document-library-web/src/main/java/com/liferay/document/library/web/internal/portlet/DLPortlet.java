@@ -18,7 +18,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -84,9 +83,6 @@ public class DLPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.document.library.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

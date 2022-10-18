@@ -225,11 +225,73 @@ definition {
     }
 
     @description = "Automation ID: LPS-151804 | Test Summary: Verify if '- Remove Activation Key' is working if there are at least 2 sets of Server Details on the form"
+	@ignore = "true"
 	@priority = "4"
 	test IfRemoveActivationKeyIsWorking {
-        
-		// TODO LPS-151804 CP2NewKeyGenerationPortalPart2 archive pending implementation
 
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+        task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+		}
+
+		task ("And the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("And I click at '+ Add Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields two times") {
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "3");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
     }
 
     @description = "Automation ID: LPS-151805 | Test Summary: Verify if 'Generate X Keys' is disabled if any of the server details have an unexpected format. (ex. invalid IP address)"

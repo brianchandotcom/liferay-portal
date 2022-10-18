@@ -625,7 +625,7 @@ public interface PropsKeys {
 	public static final String DEFAULT_PORTLET_DECORATOR_CSS_CLASS =
 		"default.portlet.decorator.css.class";
 
-	public static final String DEFAULT_PORTLET_DECORATOR_ID =
+	public static String DEFAULT_PORTLET_DECORATOR_ID =
 		"default.portlet.decorator.id";
 
 	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID =

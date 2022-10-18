@@ -30,20 +30,20 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 
 	@Override
 	public OrgLabor addOrgLabor(
-			long organizationId, long typeId, int sunOpen, int sunClose,
+			long organizationId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
 		throws PortalException {
 
-		validate(typeId);
+		validate(listTypeId);
 
 		long orgLaborId = counterLocalService.increment();
 
 		OrgLabor orgLabor = orgLaborPersistence.create(orgLaborId);
 
 		orgLabor.setOrganizationId(organizationId);
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(listTypeId);
 		orgLabor.setSunOpen(sunOpen);
 		orgLabor.setSunClose(sunClose);
 		orgLabor.setMonOpen(monOpen);
@@ -69,17 +69,17 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 
 	@Override
 	public OrgLabor updateOrgLabor(
-			long orgLaborId, long typeId, int sunOpen, int sunClose,
+			long orgLaborId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
 		throws PortalException {
 
-		validate(typeId);
+		validate(listTypeId);
 
 		OrgLabor orgLabor = orgLaborPersistence.findByPrimaryKey(orgLaborId);
 
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(listTypeId);
 		orgLabor.setSunOpen(sunOpen);
 		orgLabor.setSunClose(sunClose);
 		orgLabor.setMonOpen(monOpen);
@@ -98,9 +98,9 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		return orgLaborPersistence.update(orgLabor);
 	}
 
-	protected void validate(long typeId) throws PortalException {
+	protected void validate(long listTypeId) throws PortalException {
 		_listTypeLocalService.validate(
-			typeId, ListTypeConstants.ORGANIZATION_SERVICE);
+			listTypeId, ListTypeConstants.ORGANIZATION_SERVICE);
 	}
 
 	@BeanReference(type = ListTypeLocalService.class)

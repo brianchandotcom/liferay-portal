@@ -105,11 +105,69 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150809 | Test Summary: Verify that after filling out all required fields the Generate Cluster (Keys) button is enabled"
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheGenerateClusterButtonEnabled {
 
-		// TODO LPS-150809 CanViewTheGenerateClusterButtonEnabled pending implementation
+		// Needs refactor since it depends on example FIFA account
 
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate Cluster ( Keys)");
+		}
+
+		task ("After filling in the Cluster Nodes field the button is then enabled") {
+			CP2ActivationKeys.environmentDetails(
+				environmentDetails = "name",
+				value = "Liferay Test");
+
+			CP2ActivationKeys.selectClusterNodes(key_option = "1");
+		}
+
+		task ("Then I should be able to see that the Next button is enabled") {
+			CustomerPortal.assertButtonIsActive(text = "Generate Cluster (1 Keys)");
+		}
 	}
 
 	@description = "Automation ID: LPS-150805 | Test Summary: Verify if the user clicks the Cancel button the modal closes without saving anything"

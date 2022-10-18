@@ -42,6 +42,34 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-150534 | Test Summary: Verify if for projects with DXP version 7.4 the card title is 'Latest Updates' and in the version 7.3 appears 'Latest Fix Packs'"
+	@priority = "4"
+	test CanViewCardsInDiferentVersions {
+		task ("Go to CP2.0 and join a project with version 7.3") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.3");
+		}
+
+		task ("Assert that the 'Latest Fix Packs' appears in Quick Links and the 'Latest Updates' don't") {
+			CustomerPortal.assertQuickLinksPanelInfo(title = "Latest Fix Packs");
+
+			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Latest Updates");
+		}
+
+		task ("Go to CP2.0 and join a project with version 7.4") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
+		}
+
+		task ("Assert that the 'Latest Updates' appears in Quick Links and the 'Latest Fix Packs' don't") {
+			CustomerPortal.assertQuickLinksPanelInfo(title = "Latest Updates");
+
+			CustomerPortal.cannotAppearsQuickLinksPanelInfo(title = "Latest Fix Packs");
+		}
+	}
+
 	@description = "Automation ID: LPS-144906 | Test Summary: Verify if when Hide button is clicked by user, the Quick Links panel collapses"
 	@priority = "3"
 	test HideButtonClickedPanelCollapses {

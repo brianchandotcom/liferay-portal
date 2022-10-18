@@ -44,10 +44,63 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150811 | Test Summary: Verify if the right pane displays the following data (Product - Version - Environment Type - Subscription - Key Activations Available - Instance size)"
+	@ignore = "true"
 	@priority = "2"
 	test CanViewTheDataInThePanel {
 
-		// TODO LPS- CanViewTheDataInThePanel pending implementation
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("Then the card will show all the details of the generated activation key") {
+			CP2ActivationKeys.assertInfoNewKeyCard(
+				product = "DXP",
+				version = "7.4",
+				licenseType = "Production (Virtual Cluster)",
+				subscription = "Jun 30, 2021 - Mar 30, 2023",
+				activationsAvailable = "62",
+				instanceSize = "1");
+		}
 
 	}
 

@@ -131,27 +131,7 @@ public class NotificationTemplateResourceImpl
 			NotificationTemplate notificationTemplate)
 		throws Exception {
 
-		return _toNotificationTemplate(
-			_notificationTemplateService.updateNotificationTemplate(
-				notificationTemplateId,
-				GetterUtil.getLong(
-					notificationTemplate.getObjectDefinitionId()),
-				notificationTemplate.getBcc(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBody()),
-				notificationTemplate.getCc(),
-				notificationTemplate.getDescription(),
-				notificationTemplate.getFrom(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getFromName()),
-				notificationTemplate.getName(),
-				notificationTemplate.getRecipientTypeAsString(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getSubject()),
-				LocalizedMapUtil.getLocalizedMap(notificationTemplate.getTo()),
-				notificationTemplate.getType(),
-				ListUtil.fromArray(
-					notificationTemplate.getAttachmentObjectFieldIds())));
+		return null;
 	}
 
 	private NotificationTemplate _toNotificationTemplate(
@@ -200,19 +180,14 @@ public class NotificationTemplateResourceImpl
 								getNotificationTemplateId()),
 					NotificationTemplateAttachment::getObjectFieldId,
 					Long.class);
-				bcc = serviceBuilderNotificationTemplate.getBcc();
 				body = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getBodyMap());
-				cc = serviceBuilderNotificationTemplate.getCc();
 				dateCreated =
 					serviceBuilderNotificationTemplate.getCreateDate();
 				dateModified =
 					serviceBuilderNotificationTemplate.getModifiedDate();
 				description =
 					serviceBuilderNotificationTemplate.getDescription();
-				from = serviceBuilderNotificationTemplate.getFrom();
-				fromName = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderNotificationTemplate.getFromNameMap());
 				id =
 					serviceBuilderNotificationTemplate.
 						getNotificationTemplateId();
@@ -221,12 +196,8 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getNameMap());
 				objectDefinitionId =
 					serviceBuilderNotificationTemplate.getObjectDefinitionId();
-				recipientType = NotificationTemplate.RecipientType.create(
-					serviceBuilderNotificationTemplate.getRecipientType());
 				subject = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
-				to = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderNotificationTemplate.getToMap());
 				type = serviceBuilderNotificationTemplate.getType();
 			}
 		};

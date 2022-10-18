@@ -31,10 +31,4 @@ public class InfoDisplayWebKeys {
 	public static final String INFO_ITEM_SERVICE_TRACKER =
 		"INFO_ITEM_SERVICE_TRACKER";
 
-	public static final String INFO_LIST_DISPLAY_OBJECT =
-		"INFO_LIST_DISPLAY_OBJECT";
-
-	public static final String INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE =
-		"INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE";
-
 }

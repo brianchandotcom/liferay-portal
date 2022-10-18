@@ -59,7 +59,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 		/>
 	</c:if>
 
-	<c:if test="<%= portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) && accountEntryDisplay.isActive() && !accountEntryDisplay.isSelectedAccountEntry(themeDisplay.getScopeGroupId(), user.getUserId()) %>">
+	<c:if test="<%= portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) && accountEntryDisplay.isApproved() && !accountEntryDisplay.isSelectedAccountEntry(themeDisplay.getScopeGroupId(), user.getUserId()) %>">
 		<portlet:actionURL name="/account_admin/select_account_entry" var="selectAccountURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
@@ -86,7 +86,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 	</c:if>
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
-		<c:if test='<%= Objects.equals(accountEntryDisplay.getStatusLabel(), "active") %>'>
+		<c:if test="<%= accountEntryDisplay.isApproved() %>">
 			<portlet:actionURL name="/account_admin/update_account_entry_status" var="deactivateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -99,7 +99,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 			/>
 		</c:if>
 
-		<c:if test='<%= Objects.equals(accountEntryDisplay.getStatusLabel(), "inactive") %>'>
+		<c:if test="<%= accountEntryDisplay.isInactive() %>">
 			<portlet:actionURL name="/account_admin/update_account_entry_status" var="activateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 				<portlet:param name="navigation" value="<%= navigation %>" />

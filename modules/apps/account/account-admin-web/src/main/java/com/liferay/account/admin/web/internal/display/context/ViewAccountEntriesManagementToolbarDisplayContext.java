@@ -161,10 +161,10 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 			return availableActions;
 		}
 
-		if (accountEntryDisplay.isActive()) {
+		if (accountEntryDisplay.isApproved()) {
 			availableActions.add("deactivateAccountEntries");
 		}
-		else {
+		else if (accountEntryDisplay.isInactive()) {
 			availableActions.add("activateAccountEntries");
 		}
 

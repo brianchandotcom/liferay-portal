@@ -407,8 +407,7 @@ public class OrganizationResourceImpl
 	public Organization putOrganization(
 			String organizationId, Organization organization)
 		throws Exception {
-		ServiceContext serviceContext = _createServiceContext(organization);
-		serviceContext.setUserId(contextUser.getUserId());
+
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
 				_organizationResourceDTOConverter.getObject(organizationId);
@@ -427,7 +426,7 @@ public class OrganizationResourceImpl
 				_getAddresses(organization), _getEmailAddresses(organization),
 				_getOrgLabors(organization), _getPhones(organization),
 				_getWebsites(organization),
-				serviceContext));
+				_createServiceContext(organization)));
 	}
 
 	@Override

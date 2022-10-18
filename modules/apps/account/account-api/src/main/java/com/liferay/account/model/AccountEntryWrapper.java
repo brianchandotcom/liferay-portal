@@ -246,6 +246,18 @@ public class AccountEntryWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization>
+		fetchOrganizations() {
+
+		return model.fetchOrganizations();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> fetchUsers() {
+		return model.fetchUsers();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Group getAccountEntryGroup() {
 		return model.getAccountEntryGroup();
 	}

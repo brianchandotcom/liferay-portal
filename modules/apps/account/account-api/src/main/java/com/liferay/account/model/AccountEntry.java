@@ -56,6 +56,11 @@ public interface AccountEntry extends AccountEntryModel, PersistedModel {
 
 		};
 
+	public java.util.List<com.liferay.portal.kernel.model.Organization>
+		fetchOrganizations();
+
+	public java.util.List<com.liferay.portal.kernel.model.User> fetchUsers();
+
 	public com.liferay.portal.kernel.model.Group getAccountEntryGroup();
 
 	public long getAccountEntryGroupId();

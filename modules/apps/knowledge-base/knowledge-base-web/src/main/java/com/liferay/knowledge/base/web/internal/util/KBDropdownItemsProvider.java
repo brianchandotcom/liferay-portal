@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -184,6 +185,31 @@ public class KBDropdownItemsProvider {
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
 						"history"));
+			}
+		).add(
+			this::_hasPrintPermission,
+			dropdownItem -> {
+				dropdownItem.putData("action", "print");
+				dropdownItem.putData(
+					"printURL",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/common/print_kb_article.jsp"
+					).setParameter(
+						"resourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).setParameter(
+						"viewMode", Constants.PRINT
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
+				dropdownItem.setIcon("print");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"print"));
 			}
 		).add(
 			() -> _hasMovePermission(kbArticle),
@@ -842,6 +868,10 @@ public class KBDropdownItemsProvider {
 		}
 
 		return false;
+	}
+
+	private Boolean _hasPrintPermission() {
+		return true;
 	}
 
 	private boolean _hasSubscription() {

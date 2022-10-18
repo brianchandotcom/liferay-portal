@@ -34,6 +34,13 @@ const ACTIONS = {
 			url: permissionsURL,
 		});
 	},
+
+	print({printURL}) {
+		openModal({
+			title: Liferay.Language.get('print'),
+			url: printURL,
+		});
+	},
 };
 
 export default function propsTransformer({items, ...props}) {

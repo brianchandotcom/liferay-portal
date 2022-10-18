@@ -197,12 +197,12 @@ definition {
 
 	macro configureSearchBarWidget {
 		if (isSet(index)) {
-			SearchPortlets.gotoWidgetOptionsSpecific(
+			SearchPortlets.gotoSearchBarWidgetOptionsSpecific(
 				index = "${index}",
 				portletOption = "Configuration");
 		}
 		else {
-			SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+			SearchPortlets.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 		}
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -386,7 +386,7 @@ definition {
 	}
 
 	macro configureWidgetScope {
-		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+		SearchPortlets.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 
 		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -447,10 +447,14 @@ definition {
 			value1 = "${searchAssetTitle}");
 	}
 
-	macro gotoWidgetOptions {
-		MouseOver.mouseOverNotVisible(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
+	macro gotoSearchBarWidgetOptions {
+		MouseOver.mouseOverNotVisible(
+			key_portletName = "Search Bar",
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON");
 
-		Click(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
+		Click(
+			key_portletName = "Search Bar",
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON");
 
 		if (isSet(portletOption)) {
 			var key_menuItem = "${portletOption}";
@@ -459,14 +463,16 @@ definition {
 		}
 	}
 
-	macro gotoWidgetOptionsSpecific {
+	macro gotoSearchBarWidgetOptionsSpecific {
 		MouseOver.mouseOverNotVisible(
 			key_index = "${index}",
-			locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+			key_portletName = "Search Bar",
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		Click(
 			key_index = "${index}",
-			locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+			key_portletName = "Search Bar",
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		if (isSet(portletOption)) {
 			var key_menuItem = "${portletOption}";

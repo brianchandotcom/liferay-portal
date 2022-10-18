@@ -1818,7 +1818,7 @@ definition {
 			searchAssetTitle = "Potato Blog",
 			searchAssetType = "Blogs Entry");
 
-		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
+		SearchPortlets.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

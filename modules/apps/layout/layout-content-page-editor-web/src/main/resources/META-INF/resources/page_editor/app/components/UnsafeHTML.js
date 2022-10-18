@@ -141,6 +141,20 @@ export default class UnsafeHTML extends React.PureComponent {
 			ref.removeAttribute('id');
 		}
 
+		if (this.props.id) {
+			ref.id = this.props.id;
+		}
+		else {
+			ref.removeAttribute('id');
+		}
+
+		if (this.props.hideFromAccessibilityTree) {
+			ref.setAttribute('aria-hidden', 'true');
+		}
+		else {
+			ref.removeAttribute('aria-hidden');
+		}
+
 		ref.removeAttribute('style');
 
 		Object.entries(this.props.style).forEach(([key, value]) => {
@@ -209,6 +223,7 @@ UnsafeHTML.defaultProps = {
 		document,
 		window,
 	},
+	hideFromAccessibilityTree: true,
 	id: '',
 	markup: '',
 	onRender: () => {},

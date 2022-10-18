@@ -210,6 +210,9 @@ function ToolbarBody({className}) {
 									<Suspense
 										fallback={
 											<UnsafeHTML
+												hideFromAccessibilityTree={
+													false
+												}
 												markup={loadingPlaceholder}
 											/>
 										}

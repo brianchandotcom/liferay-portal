@@ -17,7 +17,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:login:login-web-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
-	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")

@@ -113,7 +113,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-57574 TC-1: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled with a synced user on SP."
+	@description = "This is a use case for LRQA-57574 TC-1: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled with a synced user on SP. - Blocked by LPS-160238."
+	@ignore = "true"
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
 		property oauth2.local.enabled = "true";
@@ -228,7 +229,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-57574 TC-2: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled and authenticating with a user who is not synced to SP."
+	@description = "This is a use case for LRQA-57574 TC-2: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and OAuth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled and authenticating with a user who is not synced to SP. - Blocked by LPS-160238."
+	@ignore = "true"
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser {
 		property oauth2.local.enabled = "true";

@@ -52,8 +52,8 @@ definition {
 		task ("And clicks the Edit button of the Minium Channel from Payment Methods section") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "PaymentMethod",
 				key_secondColumnValue = "Use Priority Settings",
+				key_table = "PaymentMethod",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 		}
 
@@ -88,8 +88,8 @@ definition {
 		task ("When the user clicks the Edit button to change the payment method a second time") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "PaymentMethod",
 				key_secondColumnValue = "Money Order",
+				key_table = "PaymentMethod",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -276,7 +276,7 @@ definition {
 			}
 		}
 
-		task ("And given Money Order and Mercanet are linked to Order Type 1 and PayPal is linked to Order Type 2") {		
+		task ("And given Money Order and Mercanet are linked to Order Type 1 and PayPal is linked to Order Type 2") {
 			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Money Order");
@@ -463,7 +463,7 @@ definition {
 			}
 		}
 
-		task ("And given PayPal, Money Order, and Mercanet payment methods are linked to order type 1") {	
+		task ("And given PayPal, Money Order, and Mercanet payment methods are linked to order type 1") {
 			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "PayPal");
@@ -495,7 +495,7 @@ definition {
 			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-		
+
 			CommerceChannels.editPaymentMethod(
 				active = "false",
 				paymentMethod = "PayPal");

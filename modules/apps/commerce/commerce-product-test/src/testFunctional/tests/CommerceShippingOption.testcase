@@ -32,8 +32,8 @@ definition {
 		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "ShippingOption",
 				key_secondColumnValue = "Use Priority Settings",
+				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -66,8 +66,8 @@ definition {
 		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry and selects a different shipping option") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "ShippingOption",
 				key_secondColumnValue = "Flat Rate",
+				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -92,8 +92,8 @@ definition {
 		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry and selects Use Priority Settings") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "ShippingOption",
 				key_secondColumnValue = "Flat Rate",
+				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -146,8 +146,8 @@ definition {
 		task ("And click on 'Edit' button for the 'Minium Portal' entry") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "ShippingOption",
 				key_secondColumnValue = "Use Priority Settings",
+				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -311,8 +311,8 @@ definition {
 		task ("When the Sales Manager clicks on the Edit button for the Minium channel entry") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "ShippingOption",
 				key_secondColumnValue = "Use Priority Settings",
+				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -672,8 +672,8 @@ definition {
 		task ("When the Sales Manager clicks on the Edit button for the Minium Channel entry") {
 			Click(
 				key_firstColumnValue = "Minium Portal",
-				key_table = "ShippingOption",
 				key_secondColumnValue = "Use Priority Settings",
+				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");

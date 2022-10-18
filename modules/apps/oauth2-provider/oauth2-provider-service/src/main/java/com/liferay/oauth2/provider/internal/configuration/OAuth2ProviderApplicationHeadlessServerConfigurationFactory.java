@@ -99,6 +99,9 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				externalReferenceCode + ".oauth2.introspection.uri",
 				serviceAddress.concat("/o/oauth2/introspect")
 			).put(
+				externalReferenceCode + ".oauth2.jwks.uri",
+				serviceAddress.concat("/o/oauth2/jwks")
+			).put(
 				externalReferenceCode + ".oauth2.token.uri",
 				serviceAddress.concat("/o/oauth2/token")
 			).build(),

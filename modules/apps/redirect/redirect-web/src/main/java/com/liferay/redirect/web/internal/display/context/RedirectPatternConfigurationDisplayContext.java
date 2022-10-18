@@ -16,8 +16,10 @@ package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 
 import java.util.ArrayList;
@@ -36,25 +38,21 @@ public class RedirectPatternConfigurationDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		RedirectPatternConfigurationProvider
-			redirectPatternConfigurationProvider,
-		long scopePK) {
+			redirectPatternConfigurationProvider) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_redirectPatternConfigurationProvider =
 			redirectPatternConfigurationProvider;
-		_scopePK = scopePK;
 	}
 
 	public String getRedirectPatternConfigurationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/redirect_settings/edit_redirect_patterns"
+			"/redirect/edit_redirect_patterns"
 		).setRedirect(
 			PortalUtil.getCurrentURL(_httpServletRequest)
-		).setParameter(
-			"scopePK", _scopePK
 		).buildString();
 	}
 
@@ -64,9 +62,13 @@ public class RedirectPatternConfigurationDisplayContext {
 			() -> {
 				List<Map<String, Object>> list = new ArrayList<>();
 
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				Map<Pattern, String> patternStrings =
 					_redirectPatternConfigurationProvider.getPatternStrings(
-						_scopePK);
+						themeDisplay.getScopeGroupId());
 
 				patternStrings.forEach(
 					(pattern, destinationURL) -> list.add(
@@ -87,6 +89,5 @@ public class RedirectPatternConfigurationDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final RedirectPatternConfigurationProvider
 		_redirectPatternConfigurationProvider;
-	private final long _scopePK;
 
 }

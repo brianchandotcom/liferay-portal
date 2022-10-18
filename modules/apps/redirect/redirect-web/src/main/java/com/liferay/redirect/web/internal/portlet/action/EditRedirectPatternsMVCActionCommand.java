@@ -14,14 +14,16 @@
 
 package com.liferay.redirect.web.internal.portlet.action;
 
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
-		"mvc.command.name=/redirect_settings/edit_redirect_patterns"
+		"javax.portlet.name=" + RedirectPortletKeys.REDIRECT,
+		"mvc.command.name=/redirect/edit_redirect_patterns"
 	},
 	service = MVCActionCommand.class
 )
@@ -50,8 +52,11 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			_redirectPatternConfigurationProvider.updatePatternStrings(
-				ParamUtil.getLong(actionRequest, "scopePK"),
+				themeDisplay.getScopeGroupId(),
 				_getPatternStrings(actionRequest));
 		}
 		catch (ConfigurationModelListenerException

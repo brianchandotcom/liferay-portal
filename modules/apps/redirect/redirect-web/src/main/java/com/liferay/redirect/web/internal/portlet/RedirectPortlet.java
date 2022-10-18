@@ -15,9 +15,7 @@
 package com.liferay.redirect.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
@@ -97,16 +95,12 @@ public class RedirectPortlet extends MVCPortlet {
 					_stagingGroupHelper));
 		}
 		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			renderRequest.setAttribute(
 				RedirectPatternConfigurationDisplayContext.class.getName(),
 				new RedirectPatternConfigurationDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					_redirectPatternConfigurationProvider,
-					themeDisplay.getScopeGroupId()));
+					_redirectPatternConfigurationProvider));
 		}
 
 		super.render(renderRequest, renderResponse);

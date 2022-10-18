@@ -16,18 +16,14 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -89,12 +85,6 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private DDM _ddm;
-
-	@Reference
-	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
-
-	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference(
@@ -102,11 +92,5 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 	)
 	private ModelResourcePermission<DDMStructure>
 		_ddmStructureModelResourcePermission;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

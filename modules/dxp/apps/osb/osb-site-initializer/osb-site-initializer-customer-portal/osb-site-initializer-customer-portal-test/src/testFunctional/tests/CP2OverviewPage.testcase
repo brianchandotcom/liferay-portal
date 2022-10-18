@@ -50,10 +50,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Open the drop-down and assert the active status") {
 			Click(
@@ -74,10 +74,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Open the drop-down and assert the expired status") {
 			Click(
@@ -98,10 +98,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Open the drop-down and assert the future status") {
 			Click(
@@ -122,10 +122,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Open the drop-down and assert the all status") {
 			var options = "Active,Expired,Future";
@@ -142,10 +142,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Select a status and open a subscription card") {
 			AssertVisible(

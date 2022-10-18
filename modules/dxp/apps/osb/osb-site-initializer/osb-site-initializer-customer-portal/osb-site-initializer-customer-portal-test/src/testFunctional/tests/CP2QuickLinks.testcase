@@ -404,10 +404,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "Test Account LXC - SM");
+			CustomerPortal.search(searchItem = "Test Account LXC - SM");
 
-            CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
-        }
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+		}
 
 		task ("Go to the Team Members page") {
 			CP2NavigationMenu.goToTeamMembers();

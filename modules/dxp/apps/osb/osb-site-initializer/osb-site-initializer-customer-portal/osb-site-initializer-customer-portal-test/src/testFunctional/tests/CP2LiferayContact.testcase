@@ -50,10 +50,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Assert the e-mail Contact Liferay") {
 			AssertTextEquals(
@@ -71,10 +71,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Assert the title Liferay Contact") {
 			AssertElementPresent(
@@ -92,10 +92,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
 		task ("Assert the Liferay Contact role") {
 			AssertTextEquals(

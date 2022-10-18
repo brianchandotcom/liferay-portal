@@ -787,17 +787,17 @@ public class OrganizationResourceImpl
 	}
 
 	private OrgLabor _toOrgLabor(Service service) {
-		long typeId = ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
+		long listTypeId = ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 			"administrative", service.getServiceType(),
 			ListTypeConstants.ORGANIZATION_SERVICE);
 
-		if (typeId == -1) {
+		if (listTypeId == -1) {
 			return null;
 		}
 
 		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(0);
 
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(listTypeId);
 
 		HoursAvailable[] hoursAvailableArray = service.getHoursAvailable();
 

@@ -35,7 +35,7 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 			setProperties(response.items);
 		};
 		request();
-	}, [properties]);
+	}, []);
 
 	return (
 		<BasePage
@@ -83,7 +83,14 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 			{open && (
 				<CreatePropertyModal
 					observer={observer}
-					onCloseModal={() => onOpenChange(false)}
+					onCloseModal={() => {
+						const request = async () => {
+							const response = await fetchProperties();
+							setProperties(response.items);
+						};
+						request();
+						onOpenChange(false);
+					}}
 				/>
 			)}
 

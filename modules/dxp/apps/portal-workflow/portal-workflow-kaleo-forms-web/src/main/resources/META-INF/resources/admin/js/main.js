@@ -79,7 +79,7 @@ AUI.add(
 
 						instance
 							.one(
-								'.control-menu-level-1-nav .tools-control-group span.control-menu-level-1-heading'
+								'.control-menu-level-1-nav .tools-control-group .control-menu-level-1-heading'
 							)
 							.setContent(currentName);
 					}

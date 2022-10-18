@@ -113,10 +113,45 @@ definition {
     }
 
     @description = "Automation ID: LPS-151797 | Test Summary: Verify if '+ Add Activation Key' button is disabled when the user reaches the maximum number of activation keys allowed"
+	@ignore = "true"
 	@priority = "4"
 	test IfAddActivationIsDisabledWithMaximumNumber {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
         
-        // TODO LPS-151797 CP2NewKeyGenerationPortalPart2 archive pending implementation
+       	task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+		}
+
+		task ("When I add the maximum of Activation Keys") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("Then I should be able to see the '+ Add Activation Key' button disabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Add Activation Key");
+		}
+
+		task ("When I put the mouse over the '+ Add Activation Key' button") {
+			CustomerPortal.putMouseOverButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to see the tool tip with the text 'Maximum number of Activation Keys reached for this subscription.'") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
+		}
 
     }
 

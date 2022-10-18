@@ -336,24 +336,18 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
-		List<Layout> siteLayoutsWithTemplateMasters =
-			LayoutLocalServiceUtil.getMasterLayouts(
-				group.getGroupId(), masterLayout.getPlid());
-
 		Assert.assertEquals(
-			siteLayoutsWithTemplateMasters.toString(), 0,
-			siteLayoutsWithTemplateMasters.size());
+			0,
+			LayoutLocalServiceUtil.getMasterLayoutsCount(
+				group.getGroupId(), masterLayout.getPlid()));
 
 		Layout layoutMasterOfSite = LayoutLocalServiceUtil.getFriendlyURLLayout(
 			group.getGroupId(), false, masterLayout.getFriendlyURL());
 
-		List<Layout> siteLayoutsWithSiteMasters =
-			LayoutLocalServiceUtil.getMasterLayouts(
-				group.getGroupId(), layoutMasterOfSite.getPlid());
-
 		Assert.assertEquals(
-			siteLayoutsWithSiteMasters.toString(), 2,
-			siteLayoutsWithSiteMasters.size());
+			2,
+			LayoutLocalServiceUtil.getMasterLayoutsCount(
+				group.getGroupId(), layoutMasterOfSite.getPlid()));
 	}
 
 	@Test

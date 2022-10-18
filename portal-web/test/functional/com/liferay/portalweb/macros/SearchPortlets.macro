@@ -481,6 +481,24 @@ definition {
 		}
 	}
 
+	macro gotoSearchFacetOptionsSpecific {
+		MouseOver.mouseOverNotVisible(
+			key_index = "${index}",
+			key_portletName = "${portletName}",
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+
+		Click(
+			key_index = "${index}",
+			key_portletName = "${portletName}",
+			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+
+		if (isSet(portletOption)) {
+			var key_menuItem = "${portletOption}";
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
 	macro searchEmbedded {
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 

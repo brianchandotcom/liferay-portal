@@ -17,7 +17,6 @@ package com.liferay.friendly.url.internal.model.listener;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -62,10 +61,6 @@ public class FriendlyURLEntryLocalizationModelListener
 			}
 		}
 	}
-
-	@Reference
-	private FriendlyURLEntryLocalizationPersistence
-		_friendlyURLEntryLocalizationPersistence;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

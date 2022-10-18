@@ -45,6 +45,49 @@ definition {
 			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
 	}
+	macro assertInfoNewKeyCard {
+		if (isSet(product)) {
+			var key_label = "Product";
+			var key_value = "${product}";
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+
+		if (isSet(version)) {
+			var key_label = "Version";
+			var key_value = "${version}";
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+
+		if (isSet(licenseType)) {
+			var key_label = "License Type";
+			var key_value = "${licenseType}";
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+
+		if (isSet(subscription)) {
+			var key_label = "Subscription";
+			var key_value = "${subscription}";
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+
+		if (isSet(activationsAvailable)) {
+			var key_label = "Key Activations Available";
+			var key_value = "${activationsAvailable}";
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+
+		if (isSet(instanceSize)) {
+			var key_label = "Instance Size";
+			var key_value = "${instanceSize}";
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+	}
 
 	macro assertKeyDetailsEnvironmentElements {
 		var key_group = "Environment";

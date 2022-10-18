@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author José Abelenda
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 		"mvc.command.name=/click_to_chat/save_company_configuration"

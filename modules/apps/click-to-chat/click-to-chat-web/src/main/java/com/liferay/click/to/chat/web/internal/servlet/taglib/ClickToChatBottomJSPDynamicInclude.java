@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author José Abelenda
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class ClickToChatBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

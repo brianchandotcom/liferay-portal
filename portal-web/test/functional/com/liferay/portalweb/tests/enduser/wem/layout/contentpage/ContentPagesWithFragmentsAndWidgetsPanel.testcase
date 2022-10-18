@@ -326,6 +326,11 @@ definition {
 				navTab = "Fragments",
 				setName = "Cookie Banner");
 
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Fragments",
+				setName = "Cookie Banner");
+
 			AssertVisible(
 				index = "1",
 				key_panel = "Cookie Banner",

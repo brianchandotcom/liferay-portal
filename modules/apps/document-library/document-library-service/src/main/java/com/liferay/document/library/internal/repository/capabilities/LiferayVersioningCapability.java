@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
-import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.versioning.VersionPurger;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -222,9 +221,6 @@ public class LiferayVersioningCapability
 
 		return fileEntry;
 	}
-
-	@Reference
-	private DLConfiguration _dlConfiguration;
 
 	private ServiceTrackerList<VersionPurger.VersionPurgedListener>
 		_versionPurgedListeners;

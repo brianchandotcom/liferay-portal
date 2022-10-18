@@ -329,7 +329,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
 
 		task ("Assert that the project does not have a Partnership subscription and does not have a limited SLA card") {
@@ -360,7 +360,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+			CustomerPortal.enterOnProject(title = "Test Account Others");
 		}
 
 		task ("Assert that the desired card appears in the panel") {
@@ -389,13 +389,25 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-154791 | Test Summary: Verify that the Quick Links Panel does not appear in Team Members"
+	@ignore = "true"
 	@priority = "3"
 	test QuickLinksDoesNotAppearInTeamMembers {
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+		// Needs refactor since it depends on login OKTA
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
+
+		task ("Given I go to the test account") {
+            CustomerPortal.search(searchItem = "Test Account LXC - SM");
+
+            CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+        }
 
 		task ("Go to the Team Members page") {
 			CP2NavigationMenu.goToTeamMembers();

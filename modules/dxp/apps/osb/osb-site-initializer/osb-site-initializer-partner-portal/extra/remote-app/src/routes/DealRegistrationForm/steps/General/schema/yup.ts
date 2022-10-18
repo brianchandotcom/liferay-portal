@@ -14,10 +14,6 @@ import {array, number, object, string} from 'yup';
 import isDropDownEmpty from '../../../utils/isDropDownEmpty';
 
 const generalSchema = object({
-	additionalInformationAboutTheOpportunity: string().max(
-		500,
-		'reached max characters'
-	),
 	additionalContact: object({
 		emailAddress: string()
 			.max(255, 'reached max characters')
@@ -25,6 +21,10 @@ const generalSchema = object({
 		firstName: string().max(255, 'reached max characters'),
 		lastName: string().max(255, 'reached max characters'),
 	}),
+	additionalInformationAboutTheOpportunity: string().max(
+		500,
+		'reached max characters'
+	),
 	categories: array().min(1, 'Required'),
 	partnerAccountName: object({
 		id: number(),

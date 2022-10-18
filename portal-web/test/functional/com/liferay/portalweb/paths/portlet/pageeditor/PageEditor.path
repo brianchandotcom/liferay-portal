@@ -554,12 +554,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE</td>
-	<td>//div[contains(@class,'page-editor__sidebar__panel-header')and contains(.,'Comments')]</td>
+	<td>//header[contains(@class,'page-editor__sidebar__panel-header')and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME</td>
-	<td>//div[contains(@class,'page-editor__sidebar__panel-header')]//span[contains(.,'${key_fragmentName}')]</td>
+	<td>//header[contains(@class,'page-editor__sidebar__panel-header')]//h1[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -569,7 +569,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_EDITOR</td>
-	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentReplyEditor')]/div[contains(@data-placeholder,'Type your comment here.')]</td>
+	<td>//div[contains(@class,'alloy-editor-container')]/div[contains(@id,'pageEditorCommentReplyEditor') and contains(@data-placeholder,'Type your comment here.')]</td>
 	<td></td>
 </tr>
 <tr>

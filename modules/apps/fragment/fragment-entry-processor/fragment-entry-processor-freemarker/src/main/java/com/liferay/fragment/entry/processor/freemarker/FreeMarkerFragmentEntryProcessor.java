@@ -24,6 +24,11 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -135,10 +140,8 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getLocale());
 
-		Optional<Object> displayObjectOptional =
-			fragmentEntryProcessorContext.getDisplayObjectOptional();
-
-		Object displayObject = displayObjectOptional.orElse(null);
+		Optional<InfoItemReference> contextInfoItemReferenceOptional =
+			fragmentEntryProcessorContext.getContextInfoItemReferenceOptional();
 
 		template.putAll(
 			HashMapBuilder.<String, Object>put(
@@ -155,7 +158,8 @@ public class FreeMarkerFragmentEntryProcessor
 			).putAll(
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
-					fragmentEntryLink.getConfiguration(), displayObject,
+					fragmentEntryLink.getConfiguration(),
+					_getInfoItem(contextInfoItemReferenceOptional.orElse(null)),
 					fragmentEntryProcessorContext.getSegmentsEntryIds())
 			).build());
 
@@ -273,6 +277,31 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 	}
 
+	private Object _getInfoItem(InfoItemReference infoItemReference) {
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		try {
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getLayoutMode(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getString(
 			_portal.getOriginalServletRequest(httpServletRequest), "p_l_mode",
@@ -319,6 +348,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private FragmentEntryLinkHelper _fragmentEntryLinkHelper;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -14,8 +14,10 @@
 
 package com.liferay.fragment.entry.processor.internal.util;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -128,6 +129,15 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public long getFileEntryId(
+		InfoItemReference infoItemReference, String fieldName, Locale locale) {
+
+		return _getFileEntryId(
+			infoItemReference.getClassName(), _getInfoItem(infoItemReference),
+			fieldName, locale);
+	}
+
+	@Override
+	public long getFileEntryId(
 			long classNameId, long classPK, String fieldName, Locale locale)
 		throws PortalException {
 
@@ -155,22 +165,6 @@ public class FragmentEntryProcessorHelperImpl
 
 		return _getFileEntryId(
 			_portal.getClassName(classNameId), object, fieldName, locale);
-	}
-
-	@Override
-	public long getFileEntryId(
-		Object displayObject, String fieldName, Locale locale) {
-
-		if (Validator.isNull(fieldName) ||
-			!(displayObject instanceof ClassedModel)) {
-
-			return 0;
-		}
-
-		ClassedModel classedModel = (ClassedModel)displayObject;
-
-		return _getFileEntryId(
-			classedModel.getModelClassName(), displayObject, fieldName, locale);
 	}
 
 	@Override
@@ -210,30 +204,24 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public Object getMappedCollectionValue(
-		Optional<Object> displayObjectOptional, JSONObject jsonObject,
-		Locale locale) {
+		Optional<InfoItemReference> infoItemReferenceOptional,
+		JSONObject jsonObject, Locale locale) {
 
 		if (!isMappedCollection(jsonObject)) {
 			return _jsonFactory.createJSONObject();
 		}
 
-		if (!displayObjectOptional.isPresent()) {
+		if (!infoItemReferenceOptional.isPresent()) {
 			return null;
 		}
 
-		Object displayObject = displayObjectOptional.get();
-
-		if (!(displayObject instanceof ClassedModel)) {
-			return null;
-		}
-
-		ClassedModel classedModel = (ClassedModel)displayObject;
+		InfoItemReference infoItemReference = infoItemReferenceOptional.get();
 
 		// LPS-111037
 
-		String className = classedModel.getModelClassName();
+		String className = infoItemReference.getClassName();
 
-		if (classedModel instanceof FileEntry) {
+		if (Objects.equals(className, DLFileEntry.class.getName())) {
 			className = FileEntry.class.getName();
 		}
 
@@ -253,7 +241,8 @@ public class FragmentEntryProcessorHelperImpl
 
 		return getMappedInfoItemFieldValue(
 			jsonObject.getString("collectionFieldId"),
-			infoItemFieldValuesProvider, locale, displayObjectOptional.get());
+			infoItemFieldValuesProvider, locale,
+			_getInfoItem(infoItemReference));
 	}
 
 	@Override
@@ -477,6 +466,31 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return infoCollectionTextFormatter;
+	}
+
+	private Object _getInfoItem(InfoItemReference infoItemReference) {
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		try {
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
 	}
 
 	private static final InfoCollectionTextFormatter<Object>

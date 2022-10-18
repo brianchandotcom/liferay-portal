@@ -30,6 +30,7 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
@@ -374,11 +375,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext.getMode(),
 					fragmentRendererContext.getLocale());
 
-		Optional<Object> displayObjectOptional =
-			fragmentRendererContext.getDisplayObjectOptional();
+		Optional<InfoItemReference> contextInfoItemReferenceOptional =
+			fragmentRendererContext.getContextInfoItemReferenceOptional();
 
-		defaultFragmentEntryProcessorContext.setDisplayObject(
-			displayObjectOptional.orElse(null));
+		defaultFragmentEntryProcessorContext.setContextInfoItemReference(
+			contextInfoItemReferenceOptional.orElse(null));
 
 		defaultFragmentEntryProcessorContext.setFragmentElementId(
 			fragmentRendererContext.getFragmentElementId());

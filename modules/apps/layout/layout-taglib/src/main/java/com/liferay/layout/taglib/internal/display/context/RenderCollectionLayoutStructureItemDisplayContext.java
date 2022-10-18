@@ -20,9 +20,13 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoFilterProvider;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -43,6 +47,8 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -348,6 +354,38 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return configuration;
 	}
 
+	private Object _getContextObject() {
+		InfoItemReference infoItemReference =
+			(InfoItemReference)_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		InfoItemServiceTracker infoItemServiceTracker =
+			ServletContextUtil.getInfoItemServiceTracker();
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		try {
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
+	}
+
 	private DefaultLayoutListRetrieverContext
 		_getDefaultLayoutListRetrieverContext(
 			LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
@@ -359,8 +397,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		defaultLayoutListRetrieverContext.setConfiguration(_getConfiguration());
 		defaultLayoutListRetrieverContext.setContextObject(
 			Optional.ofNullable(
-				_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT)
+				_getContextObject()
 			).orElse(
 				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
 			));
@@ -573,6 +610,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		return _segmentsEntryIds;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RenderCollectionLayoutStructureItemDisplayContext.class);
 
 	private Integer _activePage;
 	private Integer _collectionCount;

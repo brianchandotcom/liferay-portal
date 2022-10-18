@@ -17,7 +17,7 @@
 <%@ include file="/repository_entry_browser/init.jsp" %>
 
 <clay:button
-	aria-label="preview"
+	aria-label='<%= LanguageUtil.get(request, "preview") %>'
 	borderless="<%= true %>"
 	cssClass="component-action icon-view"
 	displayType="secondary"

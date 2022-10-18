@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.oauth2.provider.scope.liferay.ScopeContext;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -212,8 +211,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -653,9 +650,6 @@ public class GraphQLServletExtender {
 									invocationTargetException) {
 
 							throw invocationTargetException.getCause();
-						}
-						finally {
-							_scopeContext.clear();
 						}
 					}
 
@@ -1866,13 +1860,6 @@ public class GraphQLServletExtender {
 	private Portal _portal;
 
 	private final Map<String, String> _registeredClassNames = new HashMap<>();
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ScopeContext _scopeContext;
-
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();

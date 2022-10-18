@@ -282,7 +282,9 @@ public class ObjectDefinitionResourceImpl
 
 		// TODO Move logic to service
 
-		if (!Validator.isBlank(objectDefinition.getStorageType())) {
+		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+
 			throw new ObjectDefinitionStorageTypeException();
 		}
 

@@ -5030,14 +5030,9 @@ components:
                 type:
                     # @review
                     description:
-                        The type of content.
-                    properties:
-                        className:
-                            # @review
-                            description:
-                                The content type's class name.
-                            type: string
-                    type: object
+                        The utility page template type.
+                    enum: [Error, TermsOfUse]
+                    type: string
             type: object
         WidgetInstance:
             # @review

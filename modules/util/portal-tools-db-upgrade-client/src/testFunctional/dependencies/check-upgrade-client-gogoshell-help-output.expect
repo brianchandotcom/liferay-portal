@@ -42,11 +42,6 @@ expect {
 }
 
 expect {
-	"showReports - Show all available outputs\r\r\n   scope: verify" {}
-	timeout {send_user "No available command verify:showReports";exit 2}
-}
-
-expect {
 	"executeAll - Execute all pending upgrades\r\r\n   scope: upgrade" {}
 	timeout {send_user "No available command upgrade:executeAll";exit 2}
 }
@@ -97,11 +92,6 @@ expect {
 }
 
 expect {
-	"show - Show all verify processes for a specific verify process name" {send "help verify:showReports\r"}
+	"show - Show all verify processes for a specific verify process name" {send_user "PASS"}
 	timeout {send_user "No help output for command verify:show";exit 2}
-}
-
-expect {
-	"showReports - Show all available outputs" {send_user "PASS"}
-	timeout {send_user "No help output for command verify:showReports";exit 2}
 }

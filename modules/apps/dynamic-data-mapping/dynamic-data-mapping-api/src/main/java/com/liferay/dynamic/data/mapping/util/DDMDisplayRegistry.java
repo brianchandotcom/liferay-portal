@@ -17,9 +17,7 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.List;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -35,10 +33,6 @@ public class DDMDisplayRegistry {
 
 	public DDMDisplay getDDMDisplay(String portletId) {
 		return _serviceTrackerMap.getService(portletId);
-	}
-
-	public List<DDMDisplay> getDDMDisplays() {
-		return ListUtil.fromCollection(_serviceTrackerMap.values());
 	}
 
 	public String[] getPortletIds() {

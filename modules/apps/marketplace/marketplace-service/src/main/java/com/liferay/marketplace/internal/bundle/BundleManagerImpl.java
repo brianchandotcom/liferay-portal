@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.util.ShutdownUtil;
 
 import java.io.File;
@@ -45,7 +44,6 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joan Kim
@@ -228,8 +226,5 @@ public class BundleManagerImpl implements BundleManager {
 		BundleManagerImpl.class);
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private LPKGVerifier _lpkgVerifier;
 
 }

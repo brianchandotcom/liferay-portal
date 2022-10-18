@@ -14,130 +14,36 @@
 
 package com.liferay.account.admin.web.internal.display;
 
-import com.liferay.account.admin.web.internal.util.AccountEntryEmailAddressValidatorFactoryUtil;
 import com.liferay.account.admin.web.internal.util.CurrentAccountEntryManagerUtil;
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryOrganizationRel;
-import com.liferay.account.model.AccountEntryOrganizationRelModel;
-import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryLocalServiceUtil;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
-import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
-import com.liferay.account.validator.AccountEntryEmailAddressValidator;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.account.model.AccountEntryWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.portlet.PortletRequest;
 
 /**
+ * @author Drew Brokke
  * @author Pei-Jung Lan
  */
-public class AccountEntryDisplay {
+public class AccountEntryDisplay extends AccountEntryWrapper {
 
-	public static AccountEntryDisplay of(AccountEntry accountEntry) {
-		if (accountEntry != null) {
-			return new AccountEntryDisplay(accountEntry);
-		}
-
-		return new AccountEntryDisplay();
+	public AccountEntryDisplay(AccountEntry accountEntry) {
+		super(accountEntry);
 	}
 
-	public static AccountEntryDisplay of(long accountEntryId) {
-		return of(
-			AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId));
+	public String getDefaultLogoURL() {
+		return _defaultLogoURL;
 	}
 
-	public AccountEntry getAccountEntry() {
-		return _accountEntry;
-	}
-
-	public long getAccountEntryId() {
-		return _accountEntryId;
-	}
-
-	public Address getDefaultBillingAddress() {
-		return _defaultBillingAddress;
-	}
-
-	public long getDefaultBillingAddressId() {
-		if (_defaultBillingAddress == null) {
-			return 0L;
-		}
-
-		return _defaultBillingAddress.getAddressId();
-	}
-
-	public String getDefaultLogoURL(PortletRequest portletRequest) {
-		return PortalUtil.getPathContext(portletRequest) +
-			"/account_entries_admin/icons/briefcase.svg";
-	}
-
-	public Address getDefaultShippingAddress() {
-		return _defaultShippingAddress;
-	}
-
-	public long getDefaultShippingAddressId() {
-		if (_defaultShippingAddress == null) {
-			return 0L;
-		}
-
-		return _defaultShippingAddress.getAddressId();
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public List<String> getDomains() {
-		return _domains;
-	}
-
-	public String getExternalReferenceCode() {
-		return _externalReferenceCode;
-	}
-
-	public long getLogoId() {
-		return _logoId;
-	}
-
-	public String getLogoURL(String imagePath) {
-		return StringBundler.concat(
-			imagePath, "/account_entry_logo?img_id=", _logoId, "&t=",
-			WebServerServletTokenUtil.getToken(_logoId));
-	}
-
-	public String getName() {
-		return _name;
+	public String getLogoURL() {
+		return _logoURL;
 	}
 
 	public String getOrganizationNames() {
 		return _organizationNames;
 	}
 
-	public Optional<User> getPersonAccountEntryUserOptional() {
-		return _personAccountEntryUserOptional;
+	public User getPersonAccountEntryUser() {
+		return _personAccountEntryUser;
 	}
 
 	public String getStatusLabel() {
@@ -148,28 +54,16 @@ public class AccountEntryDisplay {
 		return _statusLabelStyle;
 	}
 
-	public String getTaxIdNumber() {
-		return _taxIdNumber;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public boolean isActive() {
-		return _active;
-	}
-
 	public boolean isEmailAddressDomainValidationEnabled() {
 		return _emailAddressDomainValidationEnabled;
 	}
 
-	public boolean isRestrictMembership() {
-		return _restrictMembership;
-	}
-
 	public boolean isSelectedAccountEntry(long groupId, long userId)
 		throws PortalException {
+
+		if (isNew()) {
+			return false;
+		}
 
 		long currentAccountEntryId =
 			CurrentAccountEntryManagerUtil.getCurrentAccountEntryId(
@@ -183,210 +77,51 @@ public class AccountEntryDisplay {
 	}
 
 	public boolean isValidateUserEmailAddress() {
-		if (_emailAddressDomainValidationEnabled &&
-			ListUtil.isNotEmpty(_domains)) {
-
-			return true;
-		}
-
-		return false;
+		return _validateUserEmailAddress;
 	}
 
-	private AccountEntryDisplay() {
-		_accountEntry = null;
-		_accountEntryEmailAddressValidator =
-			AccountEntryEmailAddressValidatorFactoryUtil.create(
-				CompanyThreadLocal.getCompanyId(), new String[0]);
-		_accountEntryId = 0;
-		_active = true;
-		_defaultBillingAddress = null;
-		_defaultShippingAddress = null;
-		_description = StringPool.BLANK;
-		_domains = Collections.emptyList();
+	public void setDefaultLogoURL(String defaultLogoURL) {
+		_defaultLogoURL = defaultLogoURL;
+	}
+
+	public void setEmailAddressDomainValidationEnabled(
+		boolean emailAddressDomainValidationEnabled) {
+
 		_emailAddressDomainValidationEnabled =
-			_accountEntryEmailAddressValidator.
-				isEmailAddressDomainValidationEnabled();
-		_externalReferenceCode = StringPool.BLANK;
-		_logoId = 0;
-		_name = StringPool.BLANK;
-		_organizationNames = StringPool.BLANK;
-		_personAccountEntryUserOptional = Optional.empty();
-		_restrictMembership = true;
-		_statusLabel = StringPool.BLANK;
-		_statusLabelStyle = StringPool.BLANK;
-		_taxIdNumber = StringPool.BLANK;
-		_type = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+			emailAddressDomainValidationEnabled;
 	}
 
-	private AccountEntryDisplay(AccountEntry accountEntry) {
-		_accountEntry = accountEntry;
-
-		_accountEntryEmailAddressValidator =
-			AccountEntryEmailAddressValidatorFactoryUtil.create(
-				accountEntry.getCompanyId(), accountEntry.getDomainsArray());
-		_accountEntryId = accountEntry.getAccountEntryId();
-		_active = _isActive(accountEntry);
-		_defaultBillingAddress = accountEntry.getDefaultBillingAddress();
-		_defaultShippingAddress = accountEntry.getDefaultShippingAddress();
-		_description = accountEntry.getDescription();
-		_domains = _getDomains(accountEntry);
-		_emailAddressDomainValidationEnabled =
-			_accountEntryEmailAddressValidator.
-				isEmailAddressDomainValidationEnabled();
-		_externalReferenceCode = accountEntry.getExternalReferenceCode();
-		_logoId = accountEntry.getLogoId();
-		_name = accountEntry.getName();
-		_organizationNames = _getOrganizationNames(accountEntry);
-		_personAccountEntryUserOptional = _getPersonAccountEntryUserOptional(
-			accountEntry);
-		_restrictMembership = accountEntry.isRestrictMembership();
-		_statusLabel = _getStatusLabel(accountEntry);
-		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
-		_taxIdNumber = accountEntry.getTaxIdNumber();
-		_type = accountEntry.getType();
+	public void setLogoURL(String logoURL) {
+		_logoURL = logoURL;
 	}
 
-	private List<User> _getAccountEntryUsers(AccountEntry accountEntry) {
-		return Stream.of(
-			AccountEntryUserRelLocalServiceUtil.
-				getAccountEntryUserRelsByAccountEntryId(
-					accountEntry.getAccountEntryId())
-		).flatMap(
-			List::stream
-		).map(
-			AccountEntryUserRel::getAccountUserId
-		).map(
-			UserLocalServiceUtil::fetchUser
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+	public void setOrganizationNames(String organizationNames) {
+		_organizationNames = organizationNames;
 	}
 
-	private List<String> _getDomains(AccountEntry accountEntry) {
-		return StringUtil.split(accountEntry.getDomains());
+	public void setPersonAccountEntryUser(User personAccountEntryUser) {
+		_personAccountEntryUser = personAccountEntryUser;
 	}
 
-	private String _getOrganizationNames(AccountEntry accountEntry) {
-		StringBundler sb = new StringBundler(4);
-
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
-			AccountEntryOrganizationRelLocalServiceUtil.
-				getAccountEntryOrganizationRels(
-					accountEntry.getAccountEntryId());
-
-		int size = accountEntryOrganizationRels.size();
-
-		sb.append(
-			Stream.of(
-				accountEntryOrganizationRels
-			).flatMap(
-				List::stream
-			).map(
-				AccountEntryOrganizationRelModel::getOrganizationId
-			).map(
-				OrganizationLocalServiceUtil::fetchOrganization
-			).filter(
-				Objects::nonNull
-			).limit(
-				Math.min(_ORGANIZATION_NAMES_LIMIT, size)
-			).map(
-				Organization::getName
-			).collect(
-				Collectors.joining(StringPool.COMMA_AND_SPACE)
-			));
-
-		if (size > _ORGANIZATION_NAMES_LIMIT) {
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(
-				LanguageUtil.format(
-					LocaleThreadLocal.getThemeDisplayLocale(), "and-x-more",
-					size - _ORGANIZATION_NAMES_LIMIT));
-			sb.append(StringPool.TRIPLE_PERIOD);
-		}
-
-		return sb.toString();
+	public void setStatusLabel(String statusLabel) {
+		_statusLabel = statusLabel;
 	}
 
-	private Optional<User> _getPersonAccountEntryUserOptional(
-		AccountEntry accountEntry) {
-
-		if (!Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
-				accountEntry.getType())) {
-
-			return Optional.empty();
-		}
-
-		List<User> users = _getAccountEntryUsers(accountEntry);
-
-		if (ListUtil.isNotEmpty(users)) {
-			return Optional.of(users.get(0));
-		}
-
-		return Optional.empty();
+	public void setStatusLabelStyle(String statusLabelStyle) {
+		_statusLabelStyle = statusLabelStyle;
 	}
 
-	private String _getStatusLabel(AccountEntry accountEntry) {
-		int status = accountEntry.getStatus();
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			return "active";
-		}
-
-		if (status == WorkflowConstants.STATUS_INACTIVE) {
-			return "inactive";
-		}
-
-		return StringPool.BLANK;
+	public void setValidateUserEmailAddress(boolean validateUserEmailAddress) {
+		_validateUserEmailAddress = validateUserEmailAddress;
 	}
 
-	private String _getStatusLabelStyle(AccountEntry accountEntry) {
-		int status = accountEntry.getStatus();
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			return "success";
-		}
-
-		if (status == WorkflowConstants.STATUS_INACTIVE) {
-			return "secondary";
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private boolean _isActive(AccountEntry accountEntry) {
-		int status = accountEntry.getStatus();
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final int _ORGANIZATION_NAMES_LIMIT = 5;
-
-	private final AccountEntry _accountEntry;
-	private final AccountEntryEmailAddressValidator
-		_accountEntryEmailAddressValidator;
-	private final long _accountEntryId;
-	private final boolean _active;
-	private final Address _defaultBillingAddress;
-	private final Address _defaultShippingAddress;
-	private final String _description;
-	private final List<String> _domains;
-	private final boolean _emailAddressDomainValidationEnabled;
-	private final String _externalReferenceCode;
-	private final long _logoId;
-	private final String _name;
-	private final String _organizationNames;
-	private final Optional<User> _personAccountEntryUserOptional;
-	private final boolean _restrictMembership;
-	private final String _statusLabel;
-	private final String _statusLabelStyle;
-	private final String _taxIdNumber;
-	private final String _type;
+	private String _defaultLogoURL;
+	private boolean _emailAddressDomainValidationEnabled = true;
+	private String _logoURL;
+	private String _organizationNames;
+	private User _personAccountEntryUser;
+	private String _statusLabel;
+	private String _statusLabelStyle;
+	private boolean _validateUserEmailAddress;
 
 }

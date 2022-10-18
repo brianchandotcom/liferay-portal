@@ -31,6 +31,7 @@ const DragAndDrop = ({
 	PRMFormFieldStateProps<File[]> &
 	Pick<FormikContextType<MDFClaim>, 'setFieldValue'> &
 	IProps) => {
+		
 	const {acceptedFiles, getInputProps, getRootProps, open} = useDropzone({
 		noClick: true,
 		noKeyboard: true,
@@ -82,8 +83,7 @@ const DragAndDrop = ({
 
 					{acceptedFiles?.map((file, index) => (
 						<li key={index}>
-							File: {file.name} Type: {file.type} Size:{' '}
-							{file.size} bytes
+							File: {file.name} Type: {file.type} Size:{' '} {file.size} bytes
 						</li>
 					))}
 				</div>

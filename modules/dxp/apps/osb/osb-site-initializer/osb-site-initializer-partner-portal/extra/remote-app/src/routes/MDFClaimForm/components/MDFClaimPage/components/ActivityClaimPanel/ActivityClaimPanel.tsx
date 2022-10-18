@@ -14,7 +14,7 @@ import Link from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';

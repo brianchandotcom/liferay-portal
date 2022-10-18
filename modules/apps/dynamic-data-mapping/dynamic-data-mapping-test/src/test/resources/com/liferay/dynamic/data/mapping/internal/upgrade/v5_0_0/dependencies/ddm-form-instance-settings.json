@@ -6,6 +6,11 @@
 			"value": "true"
 		},
 		{
+			"fieldReference": "body",
+			"name": "body",
+			"value": ""
+		},
+		{
 			"fieldReference": "convertedFromPolls",
 			"name": "convertedFromPolls",
 			"value": "true"
@@ -33,6 +38,11 @@
 		{
 			"fieldReference": "expirationDate",
 			"name": "expirationDate",
+			"value": ""
+		},
+		{
+			"fieldReference": "header",
+			"name": "header",
 			"value": ""
 		},
 		{

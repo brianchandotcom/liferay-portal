@@ -170,6 +170,97 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-163499. Asserts a web content with an image field is displayed after publishing to live."
+	@priority = "3"
+	test CanPublishWebContentWithImageField {
+		task ("Given a user creates a Web Content Structure, Template, and a Web Content with an image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "My Image");
+
+			DEBuilder.addField(
+				fieldLabel = "Image",
+				fieldName = "Image");
+
+			DEBuilder.editFieldReference(
+				fieldLabel = "Image",
+				fieldReference = "myimage");
+
+			WebContentStructures.saveCP();
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "My Image",
+				templateName = "My Image",
+				templateScript = "<#if (myimage.getData())?? && myimage.getData() != ''><img alt='${myimage.getAttribute('alt')}' data-fileentryid='${myimage.getAttribute('fileEntryId')}' src='${myimage.getAttribute('url')}' /></#if>");
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "My Image");
+
+			WebContent.addWithStructureCP(
+				imageFileName = "tree.png",
+				navTab = "Documents and Media",
+				structureName = "My Image",
+				templateName = "My Image",
+				webContentImage = "tree.png",
+				webContentTitle = "My Image");
+
+			PortletEntry.publish();
+		}
+
+		task ("And given the user creates a Web Content Display on the home page for the image and stages the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Home");
+
+			PageEditor.addWidget(
+				portletName = "Web Content Display",
+				targetFragmentName = "Container");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "My Image");
+
+			JSONStaging.enableLocalStaging(groupName = "Guest");
+		}
+
+		task ("When the user publishes the changes to the staging site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest-staging");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Home");
+
+			WaitForElementPresent(
+				key_content = "[@data-analytics-asset-title='My Image']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the image will be displayed on the live site after publishing") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Home");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Guest");
+
+			AssertElementPresent(
+				key_content = "[@data-analytics-asset-title='My Image']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+	}
+
 	@description = "This is a use case for LPS-121695. Assert imported DDMStructures in Global Staging are not published in Global Live."
 	@priority = "4"
 	test ImportedDDMStructuresInGlobalStagingNotPublishedInLive {

@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTOR_FIELD</td>
+	<td>//div[@class='item-preview selector-button']//p[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FOLDER_BUTTON</td>
 	<td>//button[@data-title='${key_kbFolderName}' and contains(.,'Select')]</td>
 	<td></td>

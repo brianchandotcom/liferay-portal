@@ -49,7 +49,11 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 
-		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea1@liferay.com");
+		JSONUser.tearDownNonAdminUsers();
+
+		JSONRole.deleteTestRoles();
+
+		JSONOrganization.tearDownOrganizations();
 	}
 
 	@description = "LPS-147302 Given there are several users segmented, one per segment
@@ -220,12 +224,6 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "User 3");
 		}
-
-		task ("Delete users created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea2@liferay.com");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea3@liferay.com");
-		}
 	}
 
 	@description = "This is a use case for LPS-106776. When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
@@ -355,10 +353,6 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea2@liferay.com");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "userea2@liferay.com");
 		}
 
 		task ("Add two segments via JSONWS") {
@@ -440,10 +434,6 @@ definition {
 					locator1 = "Experience#FRAGMENT_HEADING",
 					value1 = "User1 and User2 will see this heading");
 			}
-		}
-
-		task ("Delete userea2 via JSONWS") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea2@liferay.com");
 		}
 	}
 
@@ -535,10 +525,6 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
 		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
-		}
 	}
 
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Date modified criteria"
@@ -624,10 +610,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
-		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 		}
 	}
 
@@ -717,10 +699,6 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
 		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
-		}
 	}
 
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Name criteria"
@@ -809,10 +787,6 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
 		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
-		}
 	}
 
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Organization criteria"
@@ -900,10 +874,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
-		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 		}
 	}
 
@@ -1006,12 +976,6 @@ definition {
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
 		}
-
-		task ("Delete organizations via JSONWS") {
-			for (var organization : list "organization Name,Suborganization Name") {
-				JSONOrganization.deleteOrganizationByName(organizationName = "${organization}");
-			}
-		}
 	}
 
 	@description = "LPS-130266: Validate if it's posible to create a experience using a segment based on Organization > Region criteria"
@@ -1108,10 +1072,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
-		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 		}
 	}
 
@@ -1210,10 +1170,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
-		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "organization Name");
 		}
 	}
 
@@ -1331,10 +1287,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Org users will see this heading");
-		}
-
-		task ("Delete organization via JSONWS") {
-			JSONOrganization.deleteOrganizationByName(organizationName = "United States");
 		}
 	}
 
@@ -1501,10 +1453,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "This is a new experience for you");
-		}
-
-		task ("Delete user via JSONWS") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -2955,7 +2903,7 @@ definition {
 
 		task ("Assign role to user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
+				roleTitle = "Power User",
 				userEmailAddress = "userea1@liferay.com");
 		}
 
@@ -2965,7 +2913,7 @@ definition {
 				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "Segment Title",
-				selectedOption = "Administrator");
+				selectedOption = "Power User");
 		}
 
 		task ("Naviagte to edit page") {
@@ -3104,12 +3052,12 @@ definition {
 
 		task ("Create and assign site role") {
 			JSONRole.addSiteRole(
-				roleKey = "Site Role Name",
-				roleTitle = "Site Role Name");
+				roleKey = "Site Role Name Test",
+				roleTitle = "Site Role Name Test");
 
 			JSONGroup.assignGroupRoleToUser(
 				groupName = "Test Site Name",
-				roleTitle = "Site Role Name",
+				roleTitle = "Site Role Name Test",
 				userEmailAddress = "userea1@liferay.com");
 
 			SearchAdministration.executeReindex();
@@ -3121,7 +3069,7 @@ definition {
 				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "UserSiteOrganizationRoleSegment Name",
-				selectedOption = "Site Role Name");
+				selectedOption = "Site Role Name Test");
 		}
 
 		task ("Naviagte to edit page") {
@@ -4621,11 +4569,11 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "Experiences Test Role",
-				roleTitle = "Experiences Test Role");
+				roleKey = "Experiences Test Role Test",
+				roleTitle = "Experiences Test Role Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Experiences Test Role",
+				roleTitle = "Experiences Test Role Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -4633,12 +4581,12 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
 				resourceName = "com.liferay.segments",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 		}
 
 		task ("Create a Segment") {
@@ -4702,18 +4650,6 @@ definition {
 				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
 				value1 = "Segment First Name Test");
 		}
-
-		task ("Login with Test user to allow teardown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("Delete Role and User created") {
-			JSONRole.deleteRole(roleTitle = "Experiences Test Role");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
-		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions but no segments are available and interact with the New Segment by New Experience"
@@ -4735,11 +4671,11 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "Experiences Test Role",
-				roleTitle = "Experiences Test Role");
+				roleKey = "Experiences Test Role Test",
+				roleTitle = "Experiences Test Role Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Experiences Test Role",
+				roleTitle = "Experiences Test Role Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -4747,12 +4683,12 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
 				resourceName = "com.liferay.segments",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 		}
 
 		task ("Create a Segment") {
@@ -4801,18 +4737,6 @@ definition {
 				locator1 = "Button#ANY");
 
 			AssertVisible(locator1 = "Segmentation#PROPERTIES_SEARCH");
-		}
-
-		task ("Login with Test user to allow teardown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("Delete Role and User created") {
-			JSONRole.deleteRole(roleTitle = "Experiences Test Role");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -4920,11 +4844,11 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "Experiences Test Role",
-				roleTitle = "Experiences Test Role");
+				roleKey = "Experiences Test Role Test",
+				roleTitle = "Experiences Test Role Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Experiences Test Role",
+				roleTitle = "Experiences Test Role Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -4932,7 +4856,7 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 		}
 
 		task ("Create a Segment") {
@@ -4997,11 +4921,11 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "Experiences Test Role",
-				roleTitle = "Experiences Test Role");
+				roleKey = "Experiences Test Role Test",
+				roleTitle = "Experiences Test Role Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Experiences Test Role",
+				roleTitle = "Experiences Test Role Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -5009,12 +4933,12 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
 				resourceName = "com.liferay.segments",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 		}
 
 		task ("Login with user created") {
@@ -5051,18 +4975,6 @@ definition {
 
 			AssertVisible(locator1 = "Segmentation#PROPERTIES_SEARCH");
 		}
-
-		task ("Login with Test user to allow teardown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("Delete Role and User created") {
-			JSONRole.deleteRole(roleTitle = "Experiences Test Role");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
-		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when segments available but the user has no permissions"
@@ -5084,11 +4996,11 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "Experiences Test Role",
-				roleTitle = "Experiences Test Role");
+				roleKey = "Experiences Test Role Test",
+				roleTitle = "Experiences Test Role Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Experiences Test Role",
+				roleTitle = "Experiences Test Role Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -5096,7 +5008,7 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role");
+				roleTitle = "Experiences Test Role Test");
 		}
 
 		task ("Create a Segment") {

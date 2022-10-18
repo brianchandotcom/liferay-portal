@@ -150,6 +150,7 @@ definition {
 
 		KBArticle.selectPGViaKBArticle(
 			kbArticleTitle = "KB Folder",
+			kbDisplay = "true",
 			pageName = "Knowledge Base Article Page");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

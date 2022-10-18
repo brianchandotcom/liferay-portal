@@ -37,10 +37,6 @@ export default function RepositoryBrowserComponent({
 
 	fileInput.addEventListener('change', onInputChange);
 
-	window[`${namespace}UploadFile`] = function () {
-		fileInput.click();
-	};
-
 	return {
 		dispose() {
 			fileInput.removeEventListener('change', onInputChange);

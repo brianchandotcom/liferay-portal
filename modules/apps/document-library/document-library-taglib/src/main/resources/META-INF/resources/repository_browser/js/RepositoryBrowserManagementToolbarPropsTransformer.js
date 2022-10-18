@@ -76,7 +76,11 @@ export default function propsTransformer({
 				});
 			}
 			else if (item?.data?.action === 'uploadFile') {
-				window[`${portletNamespace}UploadFile`]();
+				const fileInput = document.getElementById(
+					`${portletNamespace}file`
+				);
+
+				fileInput?.click();
 			}
 		},
 	};

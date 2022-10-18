@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + QuestionsPortletKeys.QUESTIONS,
 	service = ConfigurationAction.class
 )

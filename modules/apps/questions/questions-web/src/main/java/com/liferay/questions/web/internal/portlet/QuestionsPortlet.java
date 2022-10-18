@@ -74,7 +74,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-questions",
 		"com.liferay.portlet.display-category=category.collaboration",

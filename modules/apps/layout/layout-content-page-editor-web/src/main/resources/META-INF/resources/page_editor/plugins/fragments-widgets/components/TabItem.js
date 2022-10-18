@@ -17,7 +17,7 @@ import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
@@ -41,7 +41,7 @@ const ITEM_PROPTYPES_SHAPE = PropTypes.shape({
 export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
 
-	const onToggleHighlighted = () => {
+	const onToggleHighlighted = useCallback(() => {
 		if (item.data.portletId) {
 			dispatch(
 				toggleWidgetHighlighted({
@@ -60,7 +60,7 @@ export default function TabItem({displayStyle, item}) {
 				})
 			);
 		}
-	};
+	}, [dispatch, item]);
 
 	const {isDraggingSource, sourceRef} = useDragSymbol(
 		{

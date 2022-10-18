@@ -389,7 +389,8 @@ public class KBAdminNavigationDisplayContext {
 
 				jsonObject.put(
 					"actions",
-					_kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder, _selectedItemAncestorIds)
+					_kbDropdownItemsProvider.getKBFolderDropdownItems(
+						kbFolder, _selectedItemAncestorIds)
 				).put(
 					"children", _getChildrenJSONArray(kbFolder.getKbFolderId())
 				).put(

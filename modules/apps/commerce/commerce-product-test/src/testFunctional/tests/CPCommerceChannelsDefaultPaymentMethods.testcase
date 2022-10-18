@@ -30,23 +30,37 @@ definition {
 
 	@description = "Verify users can add and remove a new default payment method linked to an account"
 	@priority = "3"
-	test AddAndRemoveANewDefaultPaymentMethod {
+	test CanAddAndEditDefaultPaymentMethod {
 		property portal.acceptance = "false";
+
+		task ("Given all payment methods are activated from Channels") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal") {
+				CommerceChannels.editPaymentMethod(
+					active = "true",
+					paymentMethod = "${paymentMethod}");
+			}
+		}
 
 		task ("When the user goes into the Channel Defaults tab for an account in Minium account Management") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
-		task ("And clicks on the Set Default Account Payment Methods button") {
+		task ("And clicks the Edit button of the Minium Channel from Payment Methods section") {
 			Click(
-				key_text = "Set Default Commerce Payment Method",
-				locator1 = "Button#ANY");
+				key_firstColumnValue = "Minium Portal",
+				key_table = "PaymentMethod",
+				key_secondColumnValue = "Use Priority Settings",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 		}
 
-		task ("Then a dropdown appears with all the payment methods entries created by default using Minium") {
+		task ("Then a list of active payment methods appears as sorted alphanumerically by localized name") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal") {
+			for (var paymentMethod : list "Use Priority Settings,Authorize.Net,Mercanet,Money Order,PayPal") {
 				AssertElementPresent(
 					key_radioOption = "${paymentMethod}",
 					locator1 = "CommerceEntry#RADIO_BUTTON");
@@ -58,29 +72,97 @@ definition {
 				key_radioOption = "Money Order",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
+			Button.clickSave();
+
 			IFrame.selectTopFrame();
+		}
+
+		task ("Then the Default Payment Method should be saved and listed correctly") {
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "Minium Portal",
+				key_value = "Money Order",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+
+		task ("When the user clicks the Edit button to change the payment method a second time") {
+			Click(
+				key_firstColumnValue = "Minium Portal",
+				key_table = "PaymentMethod",
+				key_secondColumnValue = "Money Order",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then after choosing the option 'Use Priority Settings', it will be saved and listed correctly") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Use Priority Settings",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			Button.clickSave();
+
+			IFrame.selectTopFrame();
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "Minium Portal",
+				key_value = "Use Priority Settings",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+	}
+
+	@description = "Verify users can verify the status of a default payment method linked to an account"
+	@priority = "3"
+	test CanDeactivatePaymentMethodLinkedToAnAccount {
+		property portal.acceptance = "false";
+
+		task ("Given all payment methods are activated from Channels") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal") {
+				CommerceChannels.editPaymentMethod(
+					active = "true",
+					paymentMethod = "${paymentMethod}");
+			}
 		}
 
-		task ("Then the Default Account Commerce Payment Method should be saved") {
-			AssertTextEquals(
-				key_defaultOption = "Default Account Commerce Payment Methods",
-				locator1 = "CommerceEntry#ACCOUNT_ORDER_DEFAULTS_ENTRY",
-				value1 = "Money Order");
+		task ("And given Money Order is set as the default payment method for the Commerce Account") {
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				paymentMethod = "Money Order",
+				secondColumnValue = "Use Priority Settings");
 		}
 
-		task ("When the user clicks on the Remove button next to the Payment Method") {
-			Click(
-				key_text = "Remove",
-				locator1 = "Button#ANY_SECONDARY");
+		task ("When the Money Order payment method is disabled") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editPaymentMethod(
+				active = "false",
+				paymentMethod = "Money Order");
 		}
 
-		task ("Then the Default Account Commerce Payment Method should be 'Use Priority Settings'") {
-			AssertTextEquals(
-				key_defaultOption = "Default Account Commerce Payment Methods",
-				locator1 = "CommerceEntry#ACCOUNT_ORDER_DEFAULTS_ENTRY",
-				value1 = "Use Priority Settings");
+		task ("And the user goes into the Channel Defaults tab inside the Account") {
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+		}
+
+		task ("Then the the status of Payment Method on the Active column for Minium Portal is No") {
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "Minium Portal",
+				key_value = "Money Order",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_productName = "Minium Portal",
+				key_value = "No",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 	}
 
@@ -89,13 +171,7 @@ definition {
 	test CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel {
 		property portal.acceptance = "false";
 
-		task ("Given PayPal is set as the default payment method for the Commerce Account") {
-			CommerceOrders.setAccountOrderDefaults(
-				accountName = "Commerce Account",
-				paymentMethod = "PayPal");
-		}
-
-		task ("And given Paypal and Money Order payment methods are active with priorities 1 and 2") {
+		task ("Given Paypal and Money Order payment methods are active with priorities 1 and 2") {
 			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
@@ -111,7 +187,19 @@ definition {
 			}
 		}
 
+		task ("And given PayPal is set as the default payment method for the Commerce Account") {
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				paymentMethod = "PayPal",
+				secondColumnValue = "Use Priority Settings");
+		}
+
 		task ("And given the PayPal payment method is disabled") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
 			CommerceChannels.editPaymentMethod(
 				active = "false",
 				paymentMethod = "PayPal");
@@ -172,12 +260,6 @@ definition {
 				orderTypeName = "Order Type 2");
 		}
 
-		task ("And given PayPal is set as the default payment method for the Commerce Account") {
-			CommerceOrders.setAccountOrderDefaults(
-				accountName = "Commerce Account",
-				paymentMethod = "PayPal");
-		}
-
 		task ("And given Paypal, Money Order and Mercanet payment methods are active with priorities 0,1, and 2") {
 			CommerceChannels.openChannelsAdmin();
 
@@ -194,7 +276,7 @@ definition {
 			}
 		}
 
-		task ("And given Money Order and Mercanet are linked to Order Type 1 and PayPal is linked to Order Type 2") {
+		task ("And given Money Order and Mercanet are linked to Order Type 1 and PayPal is linked to Order Type 2") {		
 			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "Money Order");
@@ -212,6 +294,14 @@ definition {
 				paymentMethod = "PayPal");
 
 			Refresh();
+		}
+
+		task ("And given PayPal is set as the default payment method for the Commerce Account") {
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				paymentMethod = "PayPal",
+				secondColumnValue = "Use Priority Settings");
 		}
 
 		task ("When the buyer creates an order from pending orders with Order Type 1") {
@@ -264,12 +354,6 @@ definition {
 				orderTypeName = "Order Type 1");
 		}
 
-		task ("And given Money Order is set as the default payment method for the Commerce Account") {
-			CommerceOrders.setAccountOrderDefaults(
-				accountName = "Commerce Account",
-				paymentMethod = "Money Order");
-		}
-
 		task ("And given Money Order, Mercanet, and PayPal payment methods are active with priorities 1,2, and 3") {
 			CommerceChannels.openChannelsAdmin();
 
@@ -304,6 +388,14 @@ definition {
 				paymentMethod = "Mercanet");
 
 			Refresh();
+		}
+
+		task ("And given Money Order is set as the default payment method for the Commerce Account") {
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				paymentMethod = "Money Order",
+				secondColumnValue = "Use Priority Settings");
 		}
 
 		task ("When the buyer creates an order from pending orders with Order Type 1") {
@@ -355,12 +447,6 @@ definition {
 				orderTypeName = "Order Type 1");
 		}
 
-		task ("And given PayPal is set as the default payment method for the Commerce Account") {
-			CommerceOrders.setAccountOrderDefaults(
-				accountName = "Commerce Account",
-				paymentMethod = "PayPal");
-		}
-
 		task ("And given Money Order, Mercanet, and PayPal payment methods are active with priorities 1,2, and 3") {
 			CommerceChannels.openChannelsAdmin();
 
@@ -377,7 +463,7 @@ definition {
 			}
 		}
 
-		task ("And given PayPal, Money Order, and Mercanet payment methods are linked to order type 1") {
+		task ("And given PayPal, Money Order, and Mercanet payment methods are linked to order type 1") {	
 			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type 1",
 				paymentMethod = "PayPal");
@@ -397,7 +483,19 @@ definition {
 			Refresh();
 		}
 
+		task ("And given PayPal is set as the default payment method for the Commerce Account") {
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
+				accountName = "Commerce Account",
+				channelName = "Minium Portal",
+				paymentMethod = "PayPal",
+				secondColumnValue = "Use Priority Settings");
+		}
+
 		task ("And given the PayPal payment method is disabled") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		
 			CommerceChannels.editPaymentMethod(
 				active = "false",
 				paymentMethod = "PayPal");
@@ -463,9 +561,11 @@ definition {
 		}
 
 		task ("And given Money Order is set as the default payment method for the Commerce Account") {
-			CommerceOrders.setAccountOrderDefaults(
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
 				accountName = "Commerce Account",
-				paymentMethod = "Money Order");
+				channelName = "Minium Portal",
+				paymentMethod = "Money Order",
+				secondColumnValue = "Use Priority Settings");
 		}
 
 		task ("When the buyer adds a product to the cart and starts the checkout process") {
@@ -522,9 +622,11 @@ definition {
 		}
 
 		task ("And given the offline payment method is set as default payment method for the Commerce Account") {
-			CommerceOrders.setAccountOrderDefaults(
+			CommerceAccountChannelDefaults.setChannelAccountDefaults(
 				accountName = "Commerce Account",
-				paymentMethod = "Test Offline Payment Method");
+				channelName = "Minium Portal",
+				paymentMethod = "Test Offline Payment Method",
+				secondColumnValue = "Use Priority Settings");
 		}
 
 		task ("When the user deletes the offline payment method") {
@@ -546,11 +648,12 @@ definition {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
-		task ("Then the Default Account Commerce Payment Method should be 'Use Priority Settings'") {
-			AssertTextEquals(
-				key_defaultOption = "Default Account Commerce Payment Methods",
-				locator1 = "CommerceEntry#ACCOUNT_ORDER_DEFAULTS_ENTRY",
-				value1 = "Use Priority Settings");
+		task ("Then the Default Payment Method should be 'Use Priority Settings'") {
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "Minium Portal",
+				key_value = "Use Priority Settings",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 	}
 

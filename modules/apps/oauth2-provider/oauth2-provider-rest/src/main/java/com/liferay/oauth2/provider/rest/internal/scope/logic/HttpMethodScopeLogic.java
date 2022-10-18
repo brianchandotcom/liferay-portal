@@ -20,9 +20,8 @@ import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.jaxrs.JaxRsResourceRegistry;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -31,41 +30,48 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Application;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
  * @author Stian Sigvartsen
  */
 @Component(
-	property = "oauth2.scope.checker.type=http.method",
+	property = {
+		"ignore.missing.scopes=HEAD", "ignore.missing.scopes=OPTIONS",
+		"oauth2.scope.checker.type=http.method"
+	},
 	service = ScopeLogic.class
 )
 public class HttpMethodScopeLogic implements ScopeLogic {
 
 	@Override
 	public boolean check(
-		ScopeChecker scopeChecker, Class<?> resourceClass,
-		Method resourceMethod) {
+		ScopeChecker scopeChecker,
+		Function<String, Object> propertyAccessorFunction,
+		Class<?> resourceClass, Method resourceMethod) {
 
 		try {
-			String applicationName = _getApplicationName(resourceClass);
+			String applicationName = GetterUtil.getString(
+				propertyAccessorFunction.apply("osgi.jaxrs.name"));
 
-			Set<String> ignoreMissingScopes = Optional.ofNullable(
-				_getIgnoreMissingScopes(applicationName)
-			).orElse(
-				_ignoreMissingScopes
-			);
+			Object ignoreMissingScopesObject = propertyAccessorFunction.apply(
+				"ignore.missing.scopes");
+
+			Set<String> ignoreMissingScopes = _ignoreMissingScopes;
+
+			if (ignoreMissingScopesObject != null) {
+				ignoreMissingScopes = new HashSet<>(
+					StringPlus.asList(ignoreMissingScopesObject));
+			}
 
 			ScopeFinder scopeFinder = _bundleContext.getService(
 				_getServiceReference(applicationName, ScopeFinder.class));
@@ -95,15 +101,9 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_bundleContext = bundleContext;
-	}
 
-	private String _getApplicationName(Class<?> resourceClass) {
-		String applicationName =
-			(String)_jaxRsResourceRegistry.getPropertyValue(
-				resourceClass.getName(), "osgi.jaxrs.application.select");
-
-		return StringUtil.removeSubstrings(
-			applicationName, "(osgi.jaxrs.name=", ")");
+		_ignoreMissingScopes = new HashSet<>(
+			StringPlus.asList(properties.get("ignore.missing.scopes")));
 	}
 
 	private String _getHttpMethod(Method method) {
@@ -126,23 +126,6 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 		}
 
 		throw new UnsupportedOperationException();
-	}
-
-	private Set<String> _getIgnoreMissingScopes(String applicationName)
-		throws Exception {
-
-		ServiceReference<Application> serviceReference =
-			(ServiceReference<Application>)_getServiceReference(
-				applicationName, Application.class);
-
-		Object ignoreMissingScopesObject = serviceReference.getProperty(
-			"ignore.missing.scopes");
-
-		if (ignoreMissingScopesObject == null) {
-			return null;
-		}
-
-		return new HashSet<>(StringPlus.asList(ignoreMissingScopesObject));
 	}
 
 	private <T> ServiceReference<? extends T> _getServiceReference(
@@ -187,16 +170,6 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 		HttpMethodScopeLogic.class);
 
 	private BundleContext _bundleContext;
-
-	private final Set<String> _ignoreMissingScopes = new HashSet<String>() {
-		{
-			add(HttpMethod.HEAD);
-
-			add(HttpMethod.OPTIONS);
-		}
-	};
-
-	@Reference
-	private JaxRsResourceRegistry _jaxRsResourceRegistry;
+	private Set<String> _ignoreMissingScopes;
 
 }

@@ -18,6 +18,8 @@ import com.liferay.oauth2.provider.scope.ScopeChecker;
 
 import java.lang.reflect.Method;
 
+import java.util.function.Function;
+
 /**
  * @author Carlos Correa
  * @author Stian Sigvartsen
@@ -25,7 +27,8 @@ import java.lang.reflect.Method;
 public interface ScopeLogic {
 
 	public boolean check(
-		ScopeChecker scopeChecker, Class<?> resourceClass,
-		Method resourceMethod);
+		ScopeChecker scopeChecker,
+		Function<String, Object> propertyAccessorFunction,
+		Class<?> resourceClass, Method resourceMethod);
 
 }

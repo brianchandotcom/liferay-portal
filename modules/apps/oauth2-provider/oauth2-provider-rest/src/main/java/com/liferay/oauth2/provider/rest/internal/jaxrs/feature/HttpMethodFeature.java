@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.annotation.Priority;
 
@@ -85,6 +86,7 @@ public class HttpMethodFeature implements Feature {
 		_serviceRegistration = _bundleContext.registerService(
 			ScopeFinder.class, new CollectionScopeFinder(_scopes),
 			new Hashtable<>(applicationProperties));
+		_propertyAccessorFunction = applicationProperties::get;
 
 		return true;
 	}
@@ -153,6 +155,7 @@ public class HttpMethodFeature implements Feature {
 		HttpMethodFeature.class);
 
 	private BundleContext _bundleContext;
+	private Function<String, Object> _propertyAccessorFunction;
 
 	@Reference
 	private ScopeChecker _scopeChecker;
@@ -170,7 +173,8 @@ public class HttpMethodFeature implements Feature {
 			ContainerRequestContext containerRequestContext) {
 
 			return _scopeLogic.check(
-				_scopeChecker, _resourceInfo.getResourceClass(),
+				_scopeChecker, _propertyAccessorFunction,
+				_resourceInfo.getResourceClass(),
 				_resourceInfo.getResourceMethod());
 		}
 

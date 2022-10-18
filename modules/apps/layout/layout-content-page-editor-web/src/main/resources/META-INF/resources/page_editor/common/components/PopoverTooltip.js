@@ -45,7 +45,7 @@ export function PopoverTooltip({
 	}, [showPopover]);
 
 	const triggerProps = {
-		'aria-controls': id,
+		'aria-describedby': id,
 		'onBlur': () => setShowPopover(false),
 		'onFocus': () => setShowPopover(true),
 		'onMouseEnter': () => setShowPopover(true),

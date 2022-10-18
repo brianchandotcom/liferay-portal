@@ -21,7 +21,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 %>
 
 <liferay-frontend:screen-navigation
-	context="<%= accountEntryDisplay.getAccountEntry() %>"
+	context="<%= accountEntryDisplay %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY %>"
 	portletURL='<%=
 		PortletURLBuilder.createRenderURL(

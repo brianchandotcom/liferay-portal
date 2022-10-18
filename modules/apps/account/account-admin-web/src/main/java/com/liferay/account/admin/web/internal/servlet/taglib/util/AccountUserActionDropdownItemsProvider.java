@@ -65,8 +65,7 @@ public class AccountUserActionDropdownItemsProvider {
 				if (AccountUserPermission.hasEditUserPermission(
 						_permissionChecker,
 						PortalUtil.getPortletId(_httpServletRequest),
-						_accountEntryDisplay.getAccountEntry(),
-						_accountUserDisplay.getUser())) {
+						_accountEntryDisplay, _accountUserDisplay.getUser())) {
 
 					return true;
 				}

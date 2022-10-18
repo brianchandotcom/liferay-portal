@@ -236,19 +236,23 @@ function AssetDisplayPageSelector({
 				disabled={!assetDisplayPageSelected}
 				displayType="secondary"
 				onClick={() => {
-					const formDateInput = document.getElementById(
-						`${namespace}formDate`
-					);
-
-					formDateInput.value = Date.now().toString();
+					updateJournalInput({
+						name: 'formDate',
+						namespace,
+						value: Date.now().toString(),
+					});
 
 					const form = document.getElementById(`${namespace}fm1`);
 
 					const formData = new FormData(form);
 
+					const articleId = document.getElementById(
+						`${namespace}articleId`
+					);
+
 					formData.append(
 						`${namespace}cmd`,
-						newArticle ? 'add' : 'update'
+						newArticle && !articleId.value ? 'add' : 'update'
 					);
 
 					return Liferay.Util.fetch(saveAsDraftURL, {
@@ -256,7 +260,7 @@ function AssetDisplayPageSelector({
 						method: form.method,
 					})
 						.then((response) => response.json())
-						.then(({classPK, error, version}) => {
+						.then(({articleId, classPK, error, version}) => {
 							if (error) {
 								openToast({
 									message: Liferay.Language.get(
@@ -267,11 +271,17 @@ function AssetDisplayPageSelector({
 								});
 							}
 							else {
-								const formDateInput = document.getElementById(
-									`${namespace}formDate`
-								);
+								updateJournalInput({
+									name: 'formDate',
+									namespace,
+									value: Date.now().toString(),
+								});
 
-								formDateInput.value = Date.now().toString();
+								updateJournalInput({
+									name: 'articleId',
+									namespace,
+									value: articleId,
+								});
 
 								openModal({
 									title: Liferay.Language.get('preview'),
@@ -302,4 +312,10 @@ function AssetDisplayPageSelector({
 			</ClayButton>
 		</div>
 	);
+}
+
+function updateJournalInput({name, namespace, value}) {
+	const input = document.getElementById(`${namespace}${name}`);
+
+	input.value = value;
 }

@@ -179,11 +179,11 @@ public class AccountEntryDisplaySearchContainerFactory {
 	}
 
 	private static int _getStatus(String navigation) {
-		if (Objects.equals(navigation, "inactive")) {
-			return WorkflowConstants.STATUS_INACTIVE;
+		if (Objects.equals(navigation, "active")) {
+			return WorkflowConstants.getLabelStatus("approved");
 		}
 
-		return WorkflowConstants.STATUS_APPROVED;
+		return WorkflowConstants.getLabelStatus(navigation);
 	}
 
 	private static boolean _isReverseOrder(String orderByType) {

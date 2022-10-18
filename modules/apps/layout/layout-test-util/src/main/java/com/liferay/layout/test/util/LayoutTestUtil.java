@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -163,6 +164,25 @@ public class LayoutTestUtil {
 			LayoutConstants.TYPE_CONTENT, false, system, StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	public static Layout addTypeContentLayout(
+			Group group, long masterLayoutPlid, boolean privateLayout,
+			boolean system)
+		throws Exception {
+
+		return LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), group.getGroupId(), privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, system,
+			Collections.emptyMap(), masterLayoutPlid,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	public static Layout addTypeContentLayout(Group group, String name)

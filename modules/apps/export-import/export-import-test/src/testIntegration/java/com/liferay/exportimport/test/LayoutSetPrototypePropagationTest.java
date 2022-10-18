@@ -323,43 +323,29 @@ public class LayoutSetPrototypePropagationTest
 
 	@Test
 	public void testLayoutPropagationWithMasterLayout() throws Exception {
-		Layout masterLayoutOfLayoutSetPrototype =
-			LayoutTestUtil.addTypeContentLayout(
-				_layoutSetPrototypeGroup, true, false);
+		Layout masterLayout = LayoutTestUtil.addTypeContentLayout(
+			_layoutSetPrototypeGroup, true, false);
 
-		Layout layoutOfLayoutSetPrototype1 =
-			LayoutTestUtil.addTypeContentLayout(
-				_layoutSetPrototypeGroup, true, false);
-
-		layoutOfLayoutSetPrototype1.setMasterLayoutPlid(
-			masterLayoutOfLayoutSetPrototype.getPlid());
-
-		LayoutLocalServiceUtil.updateLayout(layoutOfLayoutSetPrototype1);
+		LayoutTestUtil.addTypeContentLayout(
+			_layoutSetPrototypeGroup, masterLayout.getPlid(), true, false);
 
 		propagateChanges(group);
 
-		Layout layoutOfLayoutSetPrototype2 =
-			LayoutTestUtil.addTypeContentLayout(
-				_layoutSetPrototypeGroup, true, false);
-
-		layoutOfLayoutSetPrototype2.setMasterLayoutPlid(
-			masterLayoutOfLayoutSetPrototype.getPlid());
-
-		LayoutLocalServiceUtil.updateLayout(layoutOfLayoutSetPrototype2);
+		LayoutTestUtil.addTypeContentLayout(
+			_layoutSetPrototypeGroup, masterLayout.getPlid(), true, false);
 
 		propagateChanges(group);
 
 		List<Layout> siteLayoutsWithTemplateMasters =
 			LayoutLocalServiceUtil.getMasterLayouts(
-				group.getGroupId(), masterLayoutOfLayoutSetPrototype.getPlid());
+				group.getGroupId(), masterLayout.getPlid());
 
 		Assert.assertEquals(
 			siteLayoutsWithTemplateMasters.toString(), 0,
 			siteLayoutsWithTemplateMasters.size());
 
 		Layout layoutMasterOfSite = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			group.getGroupId(), false,
-			masterLayoutOfLayoutSetPrototype.getFriendlyURL());
+			group.getGroupId(), false, masterLayout.getFriendlyURL());
 
 		List<Layout> siteLayoutsWithSiteMasters =
 			LayoutLocalServiceUtil.getMasterLayouts(

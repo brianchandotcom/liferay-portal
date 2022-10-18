@@ -17,6 +17,7 @@ import {
 	getCheckedCheckboxes,
 	openConfirmModal,
 	openSimpleInputModal,
+	openToast,
 } from 'frontend-js-web';
 
 export default function propsTransformer({
@@ -43,9 +44,18 @@ export default function propsTransformer({
 						{
 							method: 'DELETE',
 						}
-					).then(() => {
-						window.location.reload();
-					});
+					)
+						.then(() => {
+							window.location.reload();
+						})
+						.catch(() => {
+							openToast({
+								message: Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
+								type: 'danger',
+							});
+						});
 				};
 
 				openConfirmModal({

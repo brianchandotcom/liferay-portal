@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 
 export default function RepositoryBrowserComponent({
 	namespace,
@@ -32,7 +32,16 @@ export default function RepositoryBrowserComponent({
 		fetch(uploadFileURL, {
 			body: formData,
 			method: 'PUT',
-		}).then(() => window.location.reload());
+		})
+			.then(() => window.location.reload())
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
 	};
 
 	fileInput.addEventListener('change', onInputChange);

@@ -3,9 +3,12 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"htmlTag": "Div",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -26,8 +29,33 @@
 							"fragmentConfig": {
 							},
 							"fragmentFields": [
-							]
+								{
+									"id": "testray-logo",
+									"value": {
+										"fragmentLink": {
+										}
+									}
+								}
+							],
+							"indexed": true
 						},
+						"pageElements": [
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:TESTRAY$]"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
 						"type": "Fragment"
 					}
 				],
@@ -37,6 +65,5 @@
 		"type": "Root"
 	},
 	"settings": {
-		"themeName": "Dialect"
 	}
 }

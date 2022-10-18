@@ -56,4 +56,6 @@ function main() {
 	);
 }
 
-main();
+if (!themeDisplay.isSignedIn()) {
+	main();
+}

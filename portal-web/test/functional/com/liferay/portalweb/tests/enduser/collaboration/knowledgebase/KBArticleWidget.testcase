@@ -39,6 +39,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test DeleteKBArticleViaKBArticle {
+		property custom.properties = "feature.flag.LPS-125653=true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -47,6 +49,7 @@ definition {
 		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
 		KBArticle.selectPGViaKBArticle(
+			kbArticle = "true",
 			kbArticleTitle = "Knowledge Base Article Title",
 			pageName = "Knowledge Base Article Page");
 
@@ -62,7 +65,9 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.viewDefaultCP();
+		KBArticle.viewDefaultCP(
+			defaultHome = "true",
+			featureFlag = "true");
 	}
 
 }

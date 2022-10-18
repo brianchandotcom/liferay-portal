@@ -289,10 +289,71 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150807 | Test Summary: Verify if the user goes back to the previous screen no changes have been made"
+	@ignore = "true"
 	@priority = "3"
 	test UserGoesBackToThePreviousScreenAndNoChangesAreMade {
 
-		// TODO LPS-150807 UserGoesBackToThePreviousScreenAndNoChangesAreMade pending implementation
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("Given I click at 'Provious' button") {
+			CustomerPortal.clickAtButton(text = "Previous");
+		}
+
+		task ("Then I should be able to view the previous forms fields values") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+		}
 
 	}
 

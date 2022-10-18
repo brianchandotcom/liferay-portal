@@ -1027,7 +1027,7 @@
 		<field name="orgLaborId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="organizationId" type="long" />
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="sunOpen" type="int" />
 		<field name="sunClose" type="int" />
 		<field name="monOpen" type="int" />

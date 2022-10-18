@@ -70,7 +70,7 @@ public class OrgLaborModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"orgLaborId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"organizationId", Types.BIGINT},
-		{"typeId", Types.BIGINT}, {"sunOpen", Types.INTEGER},
+		{"listTypeId", Types.BIGINT}, {"sunOpen", Types.INTEGER},
 		{"sunClose", Types.INTEGER}, {"monOpen", Types.INTEGER},
 		{"monClose", Types.INTEGER}, {"tueOpen", Types.INTEGER},
 		{"tueClose", Types.INTEGER}, {"wedOpen", Types.INTEGER},
@@ -88,7 +88,7 @@ public class OrgLaborModelImpl
 		TABLE_COLUMNS_MAP.put("orgLaborId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("organizationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("listTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sunOpen", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("sunClose", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("monOpen", Types.INTEGER);
@@ -106,15 +106,15 @@ public class OrgLaborModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OrgLabor (mvccVersion LONG default 0 not null,orgLaborId LONG not null primary key,companyId LONG,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER)";
+		"create table OrgLabor (mvccVersion LONG default 0 not null,orgLaborId LONG not null primary key,companyId LONG,organizationId LONG,listTypeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table OrgLabor";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY orgLabor.organizationId ASC, orgLabor.typeId ASC";
+		" ORDER BY orgLabor.organizationId ASC, orgLabor.listTypeId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY OrgLabor.organizationId ASC, OrgLabor.typeId ASC";
+		" ORDER BY OrgLabor.organizationId ASC, OrgLabor.listTypeId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -151,7 +151,7 @@ public class OrgLaborModelImpl
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPEID_COLUMN_BITMASK = 2L;
+	public static final long LISTTYPEID_COLUMN_BITMASK = 2L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -267,9 +267,9 @@ public class OrgLaborModelImpl
 		attributeSetterBiConsumers.put(
 			"organizationId",
 			(BiConsumer<OrgLabor, Long>)OrgLabor::setOrganizationId);
-		attributeGetterFunctions.put("typeId", OrgLabor::getTypeId);
+		attributeGetterFunctions.put("listTypeId", OrgLabor::getListTypeId);
 		attributeSetterBiConsumers.put(
-			"typeId", (BiConsumer<OrgLabor, Long>)OrgLabor::setTypeId);
+			"listTypeId", (BiConsumer<OrgLabor, Long>)OrgLabor::setListTypeId);
 		attributeGetterFunctions.put("sunOpen", OrgLabor::getSunOpen);
 		attributeSetterBiConsumers.put(
 			"sunOpen", (BiConsumer<OrgLabor, Integer>)OrgLabor::setSunOpen);
@@ -391,17 +391,17 @@ public class OrgLaborModelImpl
 
 	@JSON
 	@Override
-	public long getTypeId() {
-		return _typeId;
+	public long getListTypeId() {
+		return _listTypeId;
 	}
 
 	@Override
-	public void setTypeId(long typeId) {
+	public void setListTypeId(long listTypeId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_typeId = typeId;
+		_listTypeId = listTypeId;
 	}
 
 	@JSON
@@ -674,7 +674,7 @@ public class OrgLaborModelImpl
 		orgLaborImpl.setOrgLaborId(getOrgLaborId());
 		orgLaborImpl.setCompanyId(getCompanyId());
 		orgLaborImpl.setOrganizationId(getOrganizationId());
-		orgLaborImpl.setTypeId(getTypeId());
+		orgLaborImpl.setListTypeId(getListTypeId());
 		orgLaborImpl.setSunOpen(getSunOpen());
 		orgLaborImpl.setSunClose(getSunClose());
 		orgLaborImpl.setMonOpen(getMonOpen());
@@ -707,7 +707,8 @@ public class OrgLaborModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 		orgLaborImpl.setOrganizationId(
 			this.<Long>getColumnOriginalValue("organizationId"));
-		orgLaborImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		orgLaborImpl.setListTypeId(
+			this.<Long>getColumnOriginalValue("listTypeId"));
 		orgLaborImpl.setSunOpen(
 			this.<Integer>getColumnOriginalValue("sunOpen"));
 		orgLaborImpl.setSunClose(
@@ -758,10 +759,10 @@ public class OrgLaborModelImpl
 			return value;
 		}
 
-		if (getTypeId() < orgLabor.getTypeId()) {
+		if (getListTypeId() < orgLabor.getListTypeId()) {
 			value = -1;
 		}
-		else if (getTypeId() > orgLabor.getTypeId()) {
+		else if (getListTypeId() > orgLabor.getListTypeId()) {
 			value = 1;
 		}
 		else {
@@ -839,7 +840,7 @@ public class OrgLaborModelImpl
 
 		orgLaborCacheModel.organizationId = getOrganizationId();
 
-		orgLaborCacheModel.typeId = getTypeId();
+		orgLaborCacheModel.listTypeId = getListTypeId();
 
 		orgLaborCacheModel.sunOpen = getSunOpen();
 
@@ -934,7 +935,7 @@ public class OrgLaborModelImpl
 	private long _orgLaborId;
 	private long _companyId;
 	private long _organizationId;
-	private long _typeId;
+	private long _listTypeId;
 	private int _sunOpen;
 	private int _sunClose;
 	private int _monOpen;
@@ -981,7 +982,7 @@ public class OrgLaborModelImpl
 		_columnOriginalValues.put("orgLaborId", _orgLaborId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("organizationId", _organizationId);
-		_columnOriginalValues.put("typeId", _typeId);
+		_columnOriginalValues.put("listTypeId", _listTypeId);
 		_columnOriginalValues.put("sunOpen", _sunOpen);
 		_columnOriginalValues.put("sunClose", _sunClose);
 		_columnOriginalValues.put("monOpen", _monOpen);
@@ -1017,7 +1018,7 @@ public class OrgLaborModelImpl
 
 		columnBitmasks.put("organizationId", 8L);
 
-		columnBitmasks.put("typeId", 16L);
+		columnBitmasks.put("listTypeId", 16L);
 
 		columnBitmasks.put("sunOpen", 32L);
 

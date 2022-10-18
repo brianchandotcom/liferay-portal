@@ -44,7 +44,7 @@ public class OrgLaborWrapper
 		attributes.put("orgLaborId", getOrgLaborId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("organizationId", getOrganizationId());
-		attributes.put("typeId", getTypeId());
+		attributes.put("listTypeId", getListTypeId());
 		attributes.put("sunOpen", getSunOpen());
 		attributes.put("sunClose", getSunClose());
 		attributes.put("monOpen", getMonOpen());
@@ -89,10 +89,10 @@ public class OrgLaborWrapper
 			setOrganizationId(organizationId);
 		}
 
-		Long typeId = (Long)attributes.get("typeId");
+		Long listTypeId = (Long)attributes.get("listTypeId");
 
-		if (typeId != null) {
-			setTypeId(typeId);
+		if (listTypeId != null) {
+			setListTypeId(listTypeId);
 		}
 
 		Integer sunOpen = (Integer)attributes.get("sunOpen");
@@ -213,6 +213,16 @@ public class OrgLaborWrapper
 	@Override
 	public int getFriOpen() {
 		return model.getFriOpen();
+	}
+
+	/**
+	 * Returns the list type ID of this org labor.
+	 *
+	 * @return the list type ID of this org labor
+	 */
+	@Override
+	public long getListTypeId() {
+		return model.getListTypeId();
 	}
 
 	/**
@@ -363,16 +373,6 @@ public class OrgLaborWrapper
 	}
 
 	/**
-	 * Returns the type ID of this org labor.
-	 *
-	 * @return the type ID of this org labor
-	 */
-	@Override
-	public long getTypeId() {
-		return model.getTypeId();
-	}
-
-	/**
 	 * Returns the wed close of this org labor.
 	 *
 	 * @return the wed close of this org labor
@@ -425,6 +425,16 @@ public class OrgLaborWrapper
 	@Override
 	public void setFriOpen(int friOpen) {
 		model.setFriOpen(friOpen);
+	}
+
+	/**
+	 * Sets the list type ID of this org labor.
+	 *
+	 * @param listTypeId the list type ID of this org labor
+	 */
+	@Override
+	public void setListTypeId(long listTypeId) {
+		model.setListTypeId(listTypeId);
 	}
 
 	/**
@@ -565,16 +575,6 @@ public class OrgLaborWrapper
 	@Override
 	public void setTueOpen(int tueOpen) {
 		model.setTueOpen(tueOpen);
-	}
-
-	/**
-	 * Sets the type ID of this org labor.
-	 *
-	 * @param typeId the type ID of this org labor
-	 */
-	@Override
-	public void setTypeId(long typeId) {
-		model.setTypeId(typeId);
 	}
 
 	/**

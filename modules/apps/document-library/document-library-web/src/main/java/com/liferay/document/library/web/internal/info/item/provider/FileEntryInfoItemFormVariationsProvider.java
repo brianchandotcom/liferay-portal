@@ -19,7 +19,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -151,9 +150,6 @@ public class FileEntryInfoItemFormVariationsProvider
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Reference
-	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Reference
 	private Portal _portal;

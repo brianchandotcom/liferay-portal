@@ -15,10 +15,14 @@
 import {useEffect} from 'react';
 
 import updateWidgets from '../actions/updateWidgets';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorRef,
+} from '../contexts/StoreContext';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
-import {useDispatch, useSelector, useSelectorRef} from './StoreContext';
 
 export default function WidgetsManager() {
 	const dispatch = useDispatch();

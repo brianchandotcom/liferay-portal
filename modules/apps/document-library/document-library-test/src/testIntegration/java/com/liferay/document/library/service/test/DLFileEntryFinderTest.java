@@ -1472,17 +1472,17 @@ public class DLFileEntryFinderTest {
 		throws Exception {
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId,
+			null, TestPropsValues.getUserId(), repositoryId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
 			StringPool.BLANK, serviceContext);
 
 		DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
-			"Folder B", StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), repositoryId,
+			folder.getFolderId(), "Folder B", StringPool.BLANK, serviceContext);
 
 		Folder folderC = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
-			"Folder C", StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), repositoryId,
+			folder.getFolderId(), "Folder C", StringPool.BLANK, serviceContext);
 
 		DLTrashServiceUtil.moveFolderToTrash(folderC.getFolderId());
 

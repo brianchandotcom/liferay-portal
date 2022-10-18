@@ -106,8 +106,9 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 		}
 
 		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			name, RandomTestUtil.randomString(),
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 

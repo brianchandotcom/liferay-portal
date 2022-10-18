@@ -540,7 +540,7 @@ public class FileEntryStagedModelDataHandlerTest
 			new UnicodeProperties(), true, serviceContext);
 
 		Folder folder = _dlAppLocalService.addFolder(
-			TestPropsValues.getUserId(), repository.getRepositoryId(),
+			null, TestPropsValues.getUserId(), repository.getRepositoryId(),
 			repository.getDlFolderId(), "testFolder", "test folder",
 			serviceContext);
 
@@ -598,7 +598,7 @@ public class FileEntryStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
 
 		Folder folder = _dlAppService.addFolder(
-			stagingGroup.getGroupId(),
+			null, stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
@@ -631,7 +631,8 @@ public class FileEntryStagedModelDataHandlerTest
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		Folder folder = _dlAppService.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));

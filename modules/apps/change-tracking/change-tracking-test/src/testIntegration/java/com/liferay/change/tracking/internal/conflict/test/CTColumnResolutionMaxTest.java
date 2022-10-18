@@ -74,8 +74,9 @@ public class CTColumnResolutionMaxTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFolder parentDLFolder = _dlFolderLocalService.addFolder(
-			_group.getCreatorUserId(), _group.getGroupId(), _group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getCreatorUserId(), _group.getGroupId(),
+			_group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
@@ -84,7 +85,7 @@ public class CTColumnResolutionMaxTest {
 					_ctCollection.getCtCollectionId())) {
 
 			_dlFolderLocalService.addFolder(
-				_group.getCreatorUserId(), _group.getGroupId(),
+				null, _group.getCreatorUserId(), _group.getGroupId(),
 				_group.getGroupId(), false, parentDLFolder.getFolderId(),
 				_ctCollection.getName(), null, false, serviceContext);
 		}
@@ -123,8 +124,9 @@ public class CTColumnResolutionMaxTest {
 		String originalName = "original_name";
 
 		DLFolder parentDLFolder = _dlFolderLocalService.addFolder(
-			_group.getCreatorUserId(), _group.getGroupId(), _group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, originalName,
+			null, _group.getCreatorUserId(), _group.getGroupId(),
+			_group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, originalName,
 			RandomTestUtil.randomString(), false, serviceContext);
 
 		try (SafeCloseable safeCloseable =
@@ -132,7 +134,7 @@ public class CTColumnResolutionMaxTest {
 					_ctCollection.getCtCollectionId())) {
 
 			_dlFolderLocalService.addFolder(
-				_group.getCreatorUserId(), _group.getGroupId(),
+				null, _group.getCreatorUserId(), _group.getGroupId(),
 				_group.getGroupId(), false, parentDLFolder.getFolderId(),
 				_ctCollection.getName(), null, false, serviceContext);
 		}

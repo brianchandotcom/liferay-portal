@@ -105,7 +105,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		serviceContext.setAddGuestPermissions(true);
 
 		DLAppServiceUtil.addFolder(
-			groupId, parentFolderId, folderName, description, serviceContext);
+			null, groupId, parentFolderId, folderName, description,
+			serviceContext);
 	}
 
 	@Override

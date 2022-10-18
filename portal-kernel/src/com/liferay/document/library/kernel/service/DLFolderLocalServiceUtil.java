@@ -84,15 +84,15 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static DLFolder addFolder(
-			long userId, long groupId, long repositoryId, boolean mountPoint,
-			long parentFolderId, String name, String description,
-			boolean hidden,
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, boolean mountPoint, long parentFolderId,
+			String name, String description, boolean hidden,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFolder(
-			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
-			description, hidden, serviceContext);
+			externalReferenceCode, userId, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, hidden, serviceContext);
 	}
 
 	public static void clearDLFileEntryTypeDLFolders(long fileEntryTypeId) {

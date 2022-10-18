@@ -120,7 +120,7 @@ public class RepositoryTest {
 		repositoryIds[0] = repository.getRepositoryId();
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			_group.getGroupId(), _group.getGroupId(), false,
+			null, _group.getGroupId(), _group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
@@ -377,7 +377,7 @@ public class RepositoryTest {
 			_TEST_CONTENT.length(), null, null, new ServiceContext());
 
 		Folder folder = localRepository.addFolder(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());

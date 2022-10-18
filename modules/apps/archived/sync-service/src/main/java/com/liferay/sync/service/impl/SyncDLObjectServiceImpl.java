@@ -223,7 +223,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			}
 
 			Folder folder = _dlAppService.addFolder(
-				repositoryId, parentFolderId, name, description,
+				null, repositoryId, parentFolderId, name, description,
 				serviceContext);
 
 			return toSyncDLObject(folder, SyncDLObjectConstants.EVENT_ADD);

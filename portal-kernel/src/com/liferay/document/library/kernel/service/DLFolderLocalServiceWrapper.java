@@ -88,15 +88,15 @@ public class DLFolderLocalServiceWrapper
 
 	@Override
 	public DLFolder addFolder(
-			long userId, long groupId, long repositoryId, boolean mountPoint,
-			long parentFolderId, String name, String description,
-			boolean hidden,
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, boolean mountPoint, long parentFolderId,
+			String name, String description, boolean hidden,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderLocalService.addFolder(
-			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
-			description, hidden, serviceContext);
+			externalReferenceCode, userId, groupId, repositoryId, mountPoint,
+			parentFolderId, name, description, hidden, serviceContext);
 	}
 
 	@Override

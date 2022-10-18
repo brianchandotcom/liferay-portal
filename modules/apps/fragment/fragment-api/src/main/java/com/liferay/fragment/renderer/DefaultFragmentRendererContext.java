@@ -17,6 +17,7 @@ package com.liferay.fragment.renderer;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -35,8 +36,8 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	}
 
 	@Override
-	public Optional<Object> getDisplayObjectOptional() {
-		return Optional.ofNullable(_displayObject);
+	public Optional<InfoItemReference> getContextInfoItemReferenceOptional() {
+		return Optional.ofNullable(_infoItemReference);
 	}
 
 	@Override
@@ -94,8 +95,10 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		return _useCachedContent;
 	}
 
-	public void setDisplayObject(Object object) {
-		_displayObject = object;
+	public void setContextInfoItemReference(
+		InfoItemReference infoItemReference) {
+
+		_infoItemReference = infoItemReference;
 	}
 
 	public void setInfoForm(InfoForm infoForm) {
@@ -134,10 +137,10 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_useCachedContent = useCachedContent;
 	}
 
-	private Object _displayObject;
 	private final String _fragmentEntryElementId;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private InfoForm _infoForm;
+	private InfoItemReference _infoItemReference;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private String _mode = FragmentEntryLinkConstants.VIEW;
 	private long _previewClassNameId;

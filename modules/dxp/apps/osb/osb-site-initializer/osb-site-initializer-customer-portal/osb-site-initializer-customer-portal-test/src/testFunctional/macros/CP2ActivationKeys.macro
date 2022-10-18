@@ -364,35 +364,6 @@ definition {
 		return "${downloadedFileName}";
 	}
 
-	macro generateKeyFlow {
-		CustomerPortal.search(searchItem = "NASA ICE");
-
-		CustomerPortal.enterOnProject(title = "NASA ICE");
-	
-		CP2NavigationMenu.goToProductActivation();
-
-		CP2NavigationMenu.clickOnProductButton(product = "Portal");
-		
-		CP2ActivationKeys.generateNewKey();
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-			field = "Product",
-			option = "Portal");
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-			field = "Version",
-			option = "6.1 GA1");
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-			field = "Key Type",
-			option = "Production");
-
-		CP2ActivationKeys.selectFistActiveSubscriptionInput();
-
-		CustomerPortal.clickAtButton(text = "Next");
-	
-	}
-
 	macro fulfillActivationKey {
 		var key_text = "Add Activation Key";
 
@@ -456,6 +427,34 @@ definition {
 		Type(
 			locator1 = "CP2ActivationKeys#GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD",
 			value1 = "${content}");
+	}
+
+	macro generateKeyFlow {
+		CustomerPortal.search(searchItem = "NASA ICE");
+
+		CustomerPortal.enterOnProject(title = "NASA ICE");
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+		CP2ActivationKeys.generateNewKey();
+
+		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+			field = "Product",
+			option = "Portal");
+
+		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+			field = "Version",
+			option = "6.1 GA1");
+
+		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+			field = "Key Type",
+			option = "Production");
+
+		CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+		CustomerPortal.clickAtButton(text = "Next");
 	}
 
 	macro generateNewKey {

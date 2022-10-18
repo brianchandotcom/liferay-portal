@@ -43,7 +43,49 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-151788 | Test Summary: Verify if when user fill the mandatory field and at least one detail from Activation Key Server Details, button 'Generate 1 Key' is already enable"
+	@description = "Automation ID: LPS-151797 | Test Summary: Verify if '+ Add Activation Key' button is disabled when the user reaches the maximum number of activation keys allowed"
+	@ignore = "true"
+	@priority = "4"
+	test IfAddActivationIsDisabledWithMaximumNumber {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+		task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+		}
+
+		task ("When I add the maximum of Activation Keys") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("Then I should be able to see the '+ Add Activation Key' button disabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Add Activation Key");
+		}
+
+		task ("When I put the mouse over the '+ Add Activation Key' button") {
+			CustomerPortal.putMouseOverButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to see the tool tip with the text 'Maximum number of Activation Keys reached for this subscription.'") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
+		}
+	}
+
+	@description = "Automation ID: LPS-151788 | Test Summary: Verify if when user fill the mandatory field and at least one detail from Activation Key Server Details, button 'Generate 1 Key' is already enable"
 	@ignore = "true"
 	@priority = "4"
 	test IfGenerate1KeyIsEnable {
@@ -109,192 +151,9 @@ definition {
 		task ("Then The Generate button should be active") {
 			CustomerPortal.assertButtonIsActive(text = "Generate 1 Key");
 		}
+	}
 
-    }
-
-    @description = "Automation ID: LPS-151797 | Test Summary: Verify if '+ Add Activation Key' button is disabled when the user reaches the maximum number of activation keys allowed"
-	@ignore = "true"
-	@priority = "4"
-	test IfAddActivationIsDisabledWithMaximumNumber {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
-			CP2ActivationKeys.generateKeyFlow();
-		}
-        
-       	task ("Given I fulfill the Environment field") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "Environment Test Name",
-				field = "Environment Name");
-		}
-
-		task ("When I add the maximum of Activation Keys") {
-			CP2ActivationKeys.fulfillActivationKey();
-		}
-
-		task ("Then I should be able to see the '+ Add Activation Key' button disabled") {
-			CustomerPortal.assertButtonIsDisabled(text = "Add Activation Key");
-		}
-
-		task ("When I put the mouse over the '+ Add Activation Key' button") {
-			CustomerPortal.putMouseOverButton(text = "Add Activation Key");
-		}
-
-		task ("Then I should be able to see the tool tip with the text 'Maximum number of Activation Keys reached for this subscription.'") {
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
-		}
-
-    }
-
-    @description = "Automation ID: LPS-151798 | Test Summary: Verify if the user can enter more than one IP addresses"
-	@ignore = "true"
-	@priority = "3"
-	test IfUserCanAddMoreIPAddresses {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
-			CP2ActivationKeys.generateKeyFlow();
-		}
-
-        task ("When I fulfill the IP Address field with a two valid IP") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "1.1.1.1",
-				field = "IP Address");
-
-			KeyPress.keyPressNoError(
-			locator1 = "KaleoDesignerEditWorkflow#BODY",
-			value1 = "\ENTER");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "2.2.2.2",
-				field = "IP Address");
-		}
-
-    }
-
-    @description = "Automation ID: LPS-151802 | Test Summary: Verify if the user can enter more than one MAC addresses"
-	@ignore = "true"
-	@priority = "3"
-	test IfUserCanAddMoreMACAddresses {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-        task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
-			CP2ActivationKeys.generateKeyFlow();
-		}
-
-		task ("When I fulfill the MAC Address field with a two valid MAC") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "10-10-10-10-10-10",
-				field = "MAC Address");
-
-			KeyPress.keyPressNoError(
-			locator1 = "KaleoDesignerEditWorkflow#BODY",
-			value1 = "\ENTER");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "20-20-20-20-20-20",
-				field = "MAC Address");
-		}
-    }
-
-    @description = "Automation ID: LPS-151804 | Test Summary: Verify if '- Remove Activation Key' is working if there are at least 2 sets of Server Details on the form"
-	@ignore = "true"
-	@priority = "4"
-	test IfRemoveActivationKeyIsWorking {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
-			CP2ActivationKeys.generateKeyFlow();
-		}
-
-        task ("Given I fulfill the Environment field") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "Environment Test Name",
-				field = "Environment Name");
-		}
-
-		task ("And the '- Remove Activation Key' button should not preset") {
-			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
-		}
-
-		task ("And I fulfill all fields") {
-			CP2ActivationKeys.fulfillActivationKey();
-		}
-
-		task ("And I click at '+ Add Activation Key' button") {
-			CustomerPortal.clickAtButton(text = "Add Activation Key");
-		}
-
-		task ("Then I should be able to view '- Remove Activation Key' button") {
-			CustomerPortal.viewButton(text = "Remove Activation Key");
-		}
-
-		task ("When I click at '- Remove Activation Key' button") {
-			CustomerPortal.clickAtButton(text = "Remove Activation Key");
-		}
-
-		task ("And I fulfill all fields two times") {
-			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "3");
-		}
-
-		task ("Then I should be able to view '- Remove Activation Key' button") {
-			CustomerPortal.viewButton(text = "Remove Activation Key");
-		}
-
-		task ("When I click at '- Remove Activation Key' button") {
-			CustomerPortal.clickAtButton(text = "Remove Activation Key");
-		}
-
-		task ("Then I should be able to view '- Remove Activation Key' button") {
-			CustomerPortal.viewButton(text = "Remove Activation Key");
-		}
-
-		task ("When I click at '- Remove Activation Key' button") {
-			CustomerPortal.clickAtButton(text = "Remove Activation Key");
-		}
-
-		task ("Then the '- Remove Activation Key' button should not preset") {
-			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
-		}
-    }
-
-    @description = "Automation ID: LPS-151805 | Test Summary: Verify if 'Generate X Keys' is disabled if any of the server details have an unexpected format. (ex. invalid IP address)"
+	@description = "Automation ID: LPS-151805 | Test Summary: Verify if 'Generate X Keys' is disabled if any of the server details have an unexpected format. (ex. invalid IP address)"
 	@ignore = "true"
 	@priority = "3"
 	test IfGenerateXKeysIsDisabled {
@@ -386,6 +245,144 @@ definition {
 		task ("Then I should not see the alert with the text 'Invalid MAC.'") {
 			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid MAC.");
 		}
+	}
 
-    }
+	@description = "Automation ID: LPS-151804 | Test Summary: Verify if '- Remove Activation Key' is working if there are at least 2 sets of Server Details on the form"
+	@ignore = "true"
+	@priority = "4"
+	test IfRemoveActivationKeyIsWorking {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+		task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+		}
+
+		task ("And the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("And I click at '+ Add Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields two times") {
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = "3");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+	}
+
+	@description = "Automation ID: LPS-151798 | Test Summary: Verify if the user can enter more than one IP addresses"
+	@ignore = "true"
+	@priority = "3"
+	test IfUserCanAddMoreIPAddresses {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+		task ("When I fulfill the IP Address field with a two valid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1.1.1.1",
+				field = "IP Address");
+
+			KeyPress.keyPressNoError(
+				locator1 = "KaleoDesignerEditWorkflow#BODY",
+				value1 = "\ENTER");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "2.2.2.2",
+				field = "IP Address");
+		}
+	}
+
+	@description = "Automation ID: LPS-151802 | Test Summary: Verify if the user can enter more than one MAC addresses"
+	@ignore = "true"
+	@priority = "3"
+	test IfUserCanAddMoreMACAddresses {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+		task ("When I fulfill the MAC Address field with a two valid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "10-10-10-10-10-10",
+				field = "MAC Address");
+
+			KeyPress.keyPressNoError(
+				locator1 = "KaleoDesignerEditWorkflow#BODY",
+				value1 = "\ENTER");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "20-20-20-20-20-20",
+				field = "MAC Address");
+		}
+	}
+
 }

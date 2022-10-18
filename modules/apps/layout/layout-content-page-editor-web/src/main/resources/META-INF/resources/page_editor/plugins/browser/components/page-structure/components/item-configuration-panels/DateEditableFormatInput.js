@@ -12,7 +12,8 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import classnames from 'classnames';
+import React, {useEffect, useState} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {TextField} from '../../../../../../app/components/fragment-configuration-fields/TextField';
@@ -22,9 +23,9 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
-import {setIn} from '../../../../../../app/utils/setIn';
+import {updateIn} from '../../../../../../app/utils/updateIn';
+import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 
 const DATE_EDITABLE_FORMAT_OPTIONS = {
 	custom: 'custom',
@@ -62,21 +63,33 @@ export default function DateEditableFormatInput({
 	const dispatch = useDispatch();
 	const editableValue = editableValues[editableValueNamespace][editableId];
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [selectedOption, setSelectedOption] = useState(() =>
 		!editableValue.config.dateFormat
 			? DATE_FORMAT_OPTIONS[0].value
-			: getSelectedOption(editableValue.config.dateFormat)
+			: getSelectedOption(editableValue.config.dateFormat[languageId])
 	);
 	const [enableCustomInput, setEnableCustomInput] = useState(
 		() => selectedOption === DATE_EDITABLE_FORMAT_OPTIONS.custom
 	);
 
+	useEffect(() => {
+		if (
+			getSelectedOption(editableValue.config.dateFormat[languageId]) !==
+			DATE_EDITABLE_FORMAT_OPTIONS.custom
+		) {
+			setEnableCustomInput(false);
+		}
+		else {
+			setEnableCustomInput(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [languageId]);
+
 	const onValueSelectHandler = (name, value) => {
 		setSelectedOption(getSelectedOption(value));
 		dispatch(
 			updateEditableValues({
-				editableValues: setIn(
+				editableValues: updateIn(
 					editableValues,
 					[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -84,11 +97,9 @@ export default function DateEditableFormatInput({
 						'config',
 						name,
 					],
-					value
+					(nextValue) => ({...nextValue, [languageId]: value})
 				),
 				fragmentEntryLinkId,
-				languageId,
-				segmentsExperienceId,
 			})
 		);
 	};
@@ -121,13 +132,21 @@ export default function DateEditableFormatInput({
 						name: 'dateFormat',
 					}}
 					onValueSelect={onValueSelectHandler}
-					value={editableValue.config.dateFormat}
+					value={
+						editableValue.config.dateFormat[languageId]
+							? editableValue.config.dateFormat[languageId]
+							: DATE_FORMAT_OPTIONS[0].value
+					}
 				/>
 			)}
 		</>
 	);
 
 	function getSelectedOption(value) {
+		if (value === undefined) {
+			return DATE_FORMAT_OPTIONS[0].value;
+		}
+
 		const selectedOption = DATE_FORMAT_OPTIONS.find(
 			(option) => value === option.value
 		);

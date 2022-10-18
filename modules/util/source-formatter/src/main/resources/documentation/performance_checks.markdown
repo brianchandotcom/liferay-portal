@@ -9,7 +9,6 @@ ConstructorGlobalVariableDeclarationCheck | .java | Checks that initial values o
 [ExceptionCheck](check/exception_check.markdown#exceptioncheck) | .java | Finds private methods that throw unnecessary exception. |
 [FrameworkBundleCheck](check/framework_bundle_check.markdown#frameworkbundlecheck) | .java | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used. |
 [GradleDependenciesCheck](check/gradle_dependencies_check.markdown#gradledependenciescheck) | .gradle | Checks that modules are not depending on other modules. |
-JSONPackageJSONRedundantDependenciesCheck | .ipynb, .json or .npmbridgerc | Checks for preventing internal dependencies from being added to `package.json`. |
 [JSPDefineObjectsCheck](check/jsp_define_objects_check.markdown#jspdefineobjectscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for unnecessary duplication of code that already exists in `defineObjects`. |
 [JSPUnusedJSPFCheck](check/jsp_unused_jspf_check.markdown#jspunusedjspfcheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds `.jspf` files that are not used. |
 JSPUnusedTermsCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds taglibs, variables and imports that are unused. |

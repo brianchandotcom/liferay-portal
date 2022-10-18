@@ -60,13 +60,6 @@ public interface FragmentEntryProcessorHelper {
 		throws PortalException;
 
 	public Object getMappedInfoItemFieldValue(
-			JSONObject jsonObject,
-			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap, String mode,
-			Locale locale, long previewClassPK, long previewClassNameId,
-			int previewType)
-		throws PortalException;
-
-	public Object getMappedInfoItemFieldValue(
 		String fieldName,
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
 		Object object);

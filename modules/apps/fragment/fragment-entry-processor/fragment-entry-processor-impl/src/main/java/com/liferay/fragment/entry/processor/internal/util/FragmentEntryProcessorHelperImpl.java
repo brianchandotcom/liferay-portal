@@ -339,19 +339,6 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public Object getMappedInfoItemFieldValue(
-			JSONObject jsonObject,
-			Map<Long, InfoItemFieldValues> infoDisplaysFieldValues, String mode,
-			Locale locale, long previewClassPK, long previewClassNameId,
-			int previewType)
-		throws PortalException {
-
-		return getMappedInfoItemFieldValue(
-			jsonObject, infoDisplaysFieldValues, locale, mode, previewClassPK,
-			StringPool.BLANK);
-	}
-
-	@Override
-	public Object getMappedInfoItemFieldValue(
 		String fieldName,
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
 		Object object) {

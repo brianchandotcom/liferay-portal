@@ -2,18 +2,24 @@
 	"accountEntryRestricted": false,
 	"accountEntryRestrictedObjectFieldId": 0,
 	"actions": {
-		"delete": {},
-		"get": {},
-		"permissions": {},
-		"publish": {},
-		"update": {}
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"publish": {
+		},
+		"update": {
+		}
 	},
 	"active": false,
 	"label": {
 		"en_US": "EVP Organization"
 	},
 	"name": "EVPOrganization",
-	"objectActions": [],
+	"objectActions": [
+	],
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -48,7 +54,8 @@
 				"en_US": "Contact Email"
 			},
 			"name": "contactEmail",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": false,
@@ -87,7 +94,8 @@
 				"en_US": "Contact Phone"
 			},
 			"name": "contactPhone",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": false,
@@ -104,7 +112,8 @@
 				"en_US": "Create Date"
 			},
 			"name": "createDate",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": true,
@@ -121,7 +130,8 @@
 				"en_US": "Author"
 			},
 			"name": "creator",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": true,
@@ -160,7 +170,8 @@
 				"en_US": "External Reference Code"
 			},
 			"name": "externalReferenceCode",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": true,
@@ -177,7 +188,8 @@
 				"en_US": "ID"
 			},
 			"name": "id",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": true,
@@ -194,7 +206,8 @@
 				"en_US": "Modified Date"
 			},
 			"name": "modifiedDate",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": true,
@@ -277,7 +290,8 @@
 				"en_US": "Status"
 			},
 			"name": "status",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"state": false,
 			"system": true,
@@ -385,8 +399,10 @@
 			"type": "String"
 		}
 	],
-	"objectLayouts": [],
-	"objectViews": [],
+	"objectLayouts": [
+	],
+	"objectViews": [
+	],
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {

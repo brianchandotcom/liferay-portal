@@ -26,6 +26,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_FACET_EXPAND_VOCABULARIES</td>
+	<td>xpath=(//span[*[name()='svg'][contains(@class,'lexicon-icon-angle-right component-expanded-d-none')]])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_FACET_VOCABULARY_CHECKBOX</td>
+	<td>//div[@class='autofit-row'][contains(.,'${key_vocabularyName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_FACET_VOCABULARY_SCOPE_RADIO</td>
+	<td>//span[contains(.,'${vocabularyScope}')]/preceding-sibling::input[@role='radio']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GLOBAL_SEARCH_BAR</td>
 	<td>//input[@ref='searchInput']</td>
 	<td></td>

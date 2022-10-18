@@ -64,6 +64,53 @@ definition {
 		}
 	}
 
+	macro configureCategoryFacet {
+		if (isSet(index)) {
+			SearchPortlets.gotoSearchFacetOptionsSpecific(
+				index = "${index}",
+				portletName = "Category Facet",
+				portletOption = "Configuration");
+		}
+		else {
+			SearchPortlets.gotoSearchFacetOptionsSpecific(
+				index = "1",
+				portletName = "Category Facet",
+				portletOption = "Configuration");
+		}
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(vocabularyScope)) {
+			if ("${vocabularyScope}" == "Select Vocabularies") {
+				Check.checkNotVisible(
+					key_radioName = "${vocabularyScope}",
+					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
+
+				Click(
+					key_radioName = "${vocabularyScope}",
+					locator1 = "Search#CATEGORY_FACET_EXPAND_VOCABULARIES");
+
+				for (var vocabularyName : list "${vocabularyName}") {
+					Check.checkNotVisible(
+						key_vocabularyName = "${vocabularyName}",
+						locator1 = "Search#CATEGORY_FACET_VOCABULARY_CHECKBOX");
+				}
+			}
+			else if ("${vocabularyScope}" == "All Vocabularies") {
+				Check.checkNotVisible(
+					key_radioName = "${vocabularyScope}",
+					locator1 = "MenuItem#ANY_RADIO");
+			}
+			else {
+				fail("Invalid vocabulary scope. Must be (All Vocabularies|Select Vocabularies).");
+			}
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro configureCustomFilter {
 		Portlet.gotoPortletOptions(
 			portletName = "Custom Filter",

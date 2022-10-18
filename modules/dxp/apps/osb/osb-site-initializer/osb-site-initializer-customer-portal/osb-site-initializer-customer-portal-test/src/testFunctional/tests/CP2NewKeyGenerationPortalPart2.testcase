@@ -10,6 +10,7 @@ definition {
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
 	var testAccount = "Test Account Portal";
+	var testProduct = "Portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -43,10 +44,71 @@ definition {
 	}
 
     @description = "Automation ID: LPS-151788 | Test Summary: Verify if when user fill the mandatory field and at least one detail from Activation Key Server Details, button 'Generate 1 Key' is already enable"
+	@ignore = "true"
 	@priority = "4"
 	test IfGenerate1KeyIsEnable {
 
-        // TODO LPS-151788 CP2NewKeyGenerationPortalPart2 archive pending implementation
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("I generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Given I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "Portal");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "6.1 GA1");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+
+		task ("And I fulfill the Environment and Host name fields") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+		}
+
+		task ("Then The Generate button should be active") {
+			CustomerPortal.assertButtonIsActive(text = "Generate 1 Key");
+		}
 
     }
 

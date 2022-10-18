@@ -389,11 +389,17 @@ definition {
 		}
 
 		task ("Then the user can go through the first flow") {
-			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
 
-			CP2ActivationKeys.selectSubscription(position = "1");
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
 
 			Button.click(button = "Next");
+		}
+
+		task ("And the Generate button must be disabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate Cluster ( Keys)");
 		}
 
 		task ("After filling in the Cluster Nodes field the button is then enabled") {
@@ -401,13 +407,9 @@ definition {
 				environmentDetails = "name",
 				value = "Liferay Test");
 
-			AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_BUTTON_DISABLED");
-
 			CP2ActivationKeys.selectClusterNodes(key_option = "2");
 
-			AssertElementPresent(
-				key_number = "2",
-				locator1 = "CP2ActivationKeys#GENERATE_KEY_BUTTON_ENABLED");
+			CustomerPortal.assertButtonIsActive(text = "Generate Cluster (2 Keys)");
 		}
 	}
 

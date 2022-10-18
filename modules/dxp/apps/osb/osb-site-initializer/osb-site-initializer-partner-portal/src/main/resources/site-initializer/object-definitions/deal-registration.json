@@ -5,8 +5,8 @@
 	"name": "DealRegistration",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -14,7 +14,7 @@
 			},
 			"name": "additionalInformationAboutTheOpportunity",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",

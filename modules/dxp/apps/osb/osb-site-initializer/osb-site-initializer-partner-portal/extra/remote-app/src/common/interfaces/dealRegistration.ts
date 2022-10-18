@@ -41,13 +41,13 @@ interface AdditionalContact {
 
 export default interface DealRegistration extends Partial<LiferayObject> {
 	additionalContact: AdditionalContact;
-	primaryProspect?: PrimaryProspect;
-	prospect?: Prospect;
 	additionalInformationAboutTheOpportunity: string;
 	categories: string[];
 	generalMdfActivityAssociated: string;
 	generalPartnerAccountName: string;
+	primaryProspect?: PrimaryProspect;
 	projectNeed: string[];
 	projectTimeline: string;
+	prospect?: Prospect;
 	requestStatus?: RequestStatus;
 }

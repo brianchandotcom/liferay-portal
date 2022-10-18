@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
+import LiferayAccountBrief from '../../../common/interfaces/liferayAccountBrief';
 
-export default function isDropDownEmpty(value: LiferayPicklist) {
+export default function isDropDownEmpty(value: LiferayAccountBrief) {
 	return !(value && value.name);
 }

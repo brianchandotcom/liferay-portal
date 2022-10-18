@@ -10,29 +10,73 @@
  */
 
 import {array, number, object, string} from 'yup';
+
 import isDropDownEmpty from '../../../utils/isDropDownEmpty';
 
 const generalSchema = object({
+	additionalInformationAboutTheOpportunity: string().max(
+		500,
+		'reached max characters'
+	),
+	additionalContact: object({
+		emailAddress: string()
+			.max(255, 'reached max characters')
+			.email('must be a valid email'),
+		firstName: string().max(255, 'reached max characters'),
+		lastName: string().max(255, 'reached max characters'),
+	}),
+	categories: array().min(1, 'Required'),
 	partnerAccountName: object({
 		id: number(),
 		name: string(),
 	}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
-	projectNeed: array().min(1, 'Required'),
-	categories: array().min(1, 'Required'),
-	projectTimeline: string().required('Required'),
-	prospect: object({
-		accountName: string().required('Required'),
-		industry: object({
+	primaryProspect: object({
+		businessUnit: string()
+			.max(255, 'reached max characters')
+			.required('Required'),
+		department: object({
 			key: string(),
 			name: string(),
 		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		emailAddress: string()
+			.max(255, 'reached max characters')
+			.email('must be a valid email')
+			.required('Required'),
+		firstName: string()
+			.max(255, 'reached max characters')
+			.required('Required'),
+		jobRole: object({
+			key: string(),
+			name: string(),
+		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		lastName: string()
+			.max(255, 'reached max characters')
+			.required('Required'),
+		phone: string().max(255, 'reached max characters').required('Required'),
+	}),
+	projectNeed: array().min(1, 'Required'),
+	projectTimeline: string()
+		.max(255, 'reached max characters')
+		.required('Required'),
+	prospect: object({
+		accountName: string()
+			.max(255, 'reached max characters')
+			.required('Required'),
+		address: string()
+			.max(255, 'reached max characters')
+			.required('Required'),
+		city: string().max(255, 'reached max characters').required('Required'),
 		country: object({
 			key: string(),
 			name: string(),
 		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
-		address: string().required('Required'),
-		city: string().required('Required'),
-		postalCode: string().required('Required'),
+		industry: object({
+			key: string(),
+			name: string(),
+		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		postalCode: string()
+			.max(255, 'reached max characters')
+			.required('Required'),
 		state: object({
 			key: string(),
 			name: string(),
@@ -41,21 +85,6 @@ const generalSchema = object({
 				? !isDropDownEmpty(value)
 				: true
 		),
-	}),
-	primaryProspect: object({
-		businessUnit: string().required('Required'),
-		department: object({
-			key: string(),
-			name: string(),
-		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
-		emailAddress: string().required('Required'),
-		firstName: string().required('Required'),
-		jobRole: object({
-			key: string(),
-			name: string(),
-		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
-		lastName: string().required('Required'),
-		phone: string().required('Required'),
 	}),
 });
 

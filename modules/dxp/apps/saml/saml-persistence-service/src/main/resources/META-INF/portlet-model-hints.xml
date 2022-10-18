@@ -64,16 +64,16 @@
 		<field name="userName" type="String" />
 		<field name="deleted" type="boolean" />
 		<field name="samlNameIdFormat" type="String">
-			<hint name="max-length">1024</hint>
+			<hint-collection name="ENTITY-ID" />
 		</field>
 		<field name="samlNameIdNameQualifier" type="String" />
 		<field name="samlNameIdSpNameQualifier" type="String" />
 		<field name="samlNameIdSpProvidedId" type="String" />
 		<field name="samlNameIdValue" type="String">
-			<hint name="max-length">1024</hint>
+			<hint-collection name="ENTITY-ID" />
 		</field>
 		<field name="samlPeerEntityId" type="String">
-			<hint name="max-length">1024</hint>
+			<hint-collection name="ENTITY-ID" />
 		</field>
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlSpAuthRequest">

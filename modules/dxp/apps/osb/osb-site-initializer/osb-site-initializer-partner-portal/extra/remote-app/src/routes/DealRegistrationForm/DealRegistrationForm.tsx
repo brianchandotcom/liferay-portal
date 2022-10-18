@@ -15,6 +15,7 @@ import PRMFormik from '../../common/components/PRMFormik';
 import DealRegistration from '../../common/interfaces/dealRegistration';
 import {StepType} from './enums/stepType';
 import General from './steps/General';
+import generalSchema from './steps/General/schema/yup';
 import Review from './steps/Review';
 
 type StepComponent = {
@@ -40,6 +41,7 @@ const DealRegistrationForm = () => {
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onSaveAsDraft={onSaveAsDraft}
+				validationSchema={generalSchema}
 			/>
 		),
 		[StepType.REVIEW]: (

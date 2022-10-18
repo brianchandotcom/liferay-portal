@@ -82,7 +82,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
 			Collections.singletonMap(
-				_language.getLanguageId(LocaleUtil.ENGLISH), "url-title-en"),
+				_language.getLanguageId(LocaleUtil.US), "url-title-en"),
 			_getServiceContext());
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
@@ -99,7 +99,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		Assert.assertEquals(
 			"url-title-en",
 			finalFriendlyURL.getUrlTitle(
-				_language.getLanguageId(LocaleUtil.ENGLISH)));
+				_language.getLanguageId(LocaleUtil.US)));
 		Assert.assertEquals(
 			"url-title-zh",
 			finalFriendlyURL.getUrlTitle(
@@ -288,6 +288,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 

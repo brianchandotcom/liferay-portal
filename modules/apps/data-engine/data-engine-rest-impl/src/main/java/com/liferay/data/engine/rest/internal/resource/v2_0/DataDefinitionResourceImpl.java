@@ -21,7 +21,6 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
-import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
@@ -1521,9 +1520,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	@Reference
 	private DataDefinitionModelResourcePermission
 		_dataDefinitionModelResourcePermission;
-
-	@Reference
-	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Reference
 	private DataLayoutResource.Factory _dataLayoutResourceFactory;

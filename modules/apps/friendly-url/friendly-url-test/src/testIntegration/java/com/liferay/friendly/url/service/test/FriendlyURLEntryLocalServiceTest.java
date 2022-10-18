@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -125,6 +126,37 @@ public class FriendlyURLEntryLocalServiceTest {
 				urlTitle, _getServiceContext());
 
 		Assert.assertEquals(urlTitle, finalFriendlyURL.getUrlTitle());
+	}
+
+	@Test
+	public void testDeleteAllFriendlyURLLocalizationEntries() throws Exception {
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				_group.getGroupId(),
+				_classNameLocalService.getClassNameId(User.class),
+				TestPropsValues.getUserId(),
+				HashMapBuilder.put(
+					_language.getLanguageId(LocaleUtil.CHINA), "url-title-zh"
+				).put(
+					_language.getLanguageId(LocaleUtil.US), "url-title-en"
+				).build(),
+				_getServiceContext());
+
+		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+			friendlyURLEntry.getFriendlyURLEntryId(),
+			_language.getLanguageId(LocaleUtil.CHINA));
+
+		Assert.assertNotNull(
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				friendlyURLEntry.getFriendlyURLEntryId()));
+
+		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+			friendlyURLEntry.getFriendlyURLEntryId(),
+			_language.getLanguageId(LocaleUtil.US));
+
+		Assert.assertNull(
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				friendlyURLEntry.getFriendlyURLEntryId()));
 	}
 
 	@Test

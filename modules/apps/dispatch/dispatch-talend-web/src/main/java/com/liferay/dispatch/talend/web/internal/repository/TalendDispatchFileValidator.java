@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	configurationPid = "com.liferay.dispatch.talend.web.internal.configuration.DispatchTalendConfiguration",
-	immediate = true,
 	property = "dispatch.file.validator.type=" + TalendDispatchFileValidator.FILE_VALIDATOR_TYPE_TALEND,
 	service = DispatchFileValidator.class
 )

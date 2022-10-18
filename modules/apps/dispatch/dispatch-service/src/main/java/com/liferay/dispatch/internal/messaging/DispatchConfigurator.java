@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matija Petanjek
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DispatchConfigurator {
 
 	@Activate

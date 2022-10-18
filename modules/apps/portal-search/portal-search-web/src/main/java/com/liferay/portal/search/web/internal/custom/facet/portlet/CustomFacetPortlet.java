@@ -116,10 +116,6 @@ public class CustomFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		Facet facet = _getFacet(
-			portletSharedSearchResponse, customFacetPortletPreferences,
-			renderRequest);
-
 		String parameterName = _getParameterName(customFacetPortletPreferences);
 
 		Optional<List<String>> parameterValuesOptional =
@@ -129,7 +125,9 @@ public class CustomFacetPortlet extends MVCPortlet {
 		return customFacetDisplayContextBuilder.setCustomDisplayCaption(
 			customFacetPortletPreferences.getCustomHeadingOptional()
 		).setFacet(
-			facet
+			_getFacet(
+				portletSharedSearchResponse, customFacetPortletPreferences,
+				renderRequest)
 		).setFieldToAggregate(
 			customFacetPortletPreferences.getAggregationFieldString()
 		).setFrequenciesVisible(

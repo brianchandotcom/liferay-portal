@@ -16,14 +16,12 @@ package com.liferay.portal.search.web.internal.folder.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearcher;
-import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookupImpl;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
@@ -104,24 +102,23 @@ public class FolderFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			_getAggregationName(renderRequest));
+		FolderSearchFacetDisplayContextBuilder
+			folderSearchFacetDisplayContextBuilder =
+				_createFolderSearchFacetDisplayContextBuilder(renderRequest);
 
-		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
-			new FolderSearcher(), portal.getHttpServletRequest(renderRequest));
+		folderSearchFacetDisplayContextBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				_getAggregationName(renderRequest)));
+		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
+			new FolderTitleLookupImpl(
+				new FolderSearcher(),
+				portal.getHttpServletRequest(renderRequest)));
 
 		FolderFacetPortletPreferences folderFacetPortletPreferences =
 			new FolderFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		FolderSearchFacetDisplayContextBuilder
-			folderSearchFacetDisplayContextBuilder =
-				_createFolderSearchFacetDisplayContextBuilder(renderRequest);
-
-		folderSearchFacetDisplayContextBuilder.setFacet(facet);
-		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(
-			folderTitleLookup);
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			folderFacetPortletPreferences.isFrequenciesVisible());
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(
@@ -130,6 +127,7 @@ public class FolderFacetPortlet extends MVCPortlet {
 			folderFacetPortletPreferences.getMaxTerms());
 		folderSearchFacetDisplayContextBuilder.setOrder(
 			folderFacetPortletPreferences.getOrder());
+
 		folderSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

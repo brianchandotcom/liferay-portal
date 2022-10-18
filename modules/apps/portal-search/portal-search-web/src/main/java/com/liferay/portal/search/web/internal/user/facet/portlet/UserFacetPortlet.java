@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.user.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -105,25 +104,26 @@ public class UserFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			_getAggregationName(renderRequest));
+		UserSearchFacetDisplayContextBuilder
+			userSearchFacetDisplayContextBuilder =
+				_createUserSearchFacetDisplayContextBuilder(renderRequest);
+
+		userSearchFacetDisplayContextBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				_getAggregationName(renderRequest)));
 
 		UserFacetPortletPreferences userFacetPortletPreferences =
 			new UserFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		UserSearchFacetDisplayContextBuilder
-			userSearchFacetDisplayContextBuilder =
-				_createUserSearchFacetDisplayContextBuilder(renderRequest);
-
-		userSearchFacetDisplayContextBuilder.setFacet(facet);
 		userSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			userFacetPortletPreferences.isFrequenciesVisible());
 		userSearchFacetDisplayContextBuilder.setFrequencyThreshold(
 			userFacetPortletPreferences.getFrequencyThreshold());
 		userSearchFacetDisplayContextBuilder.setMaxTerms(
 			userFacetPortletPreferences.getMaxTerms());
+
 		userSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
 

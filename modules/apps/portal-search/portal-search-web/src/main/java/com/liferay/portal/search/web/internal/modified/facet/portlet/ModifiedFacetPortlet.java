@@ -117,11 +117,6 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences =
-			new ModifiedFacetPortletPreferencesImpl(
-				portletSharedSearchResponse.getPortletPreferences(
-					renderRequest));
-
 		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
 			_createModifiedFacetDisplayContextBuilder(
 				_getCalendarFactory(), _getDateFormatFactory(), renderRequest);
@@ -131,15 +126,25 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		modifiedFacetDisplayContextBuilder.setFacet(
 			portletSharedSearchResponse.getFacet(_getFieldName()));
 
+		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences =
+			new ModifiedFacetPortletPreferencesImpl(
+				portletSharedSearchResponse.getPortletPreferences(
+					renderRequest));
+
+		String parameterName =
+			modifiedFacetPortletPreferences.getParameterName();
+
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchResponse.getParameter(
+				parameterName + "From", renderRequest),
+			modifiedFacetDisplayContextBuilder::setFromParameterValue);
+
 		ThemeDisplay themeDisplay = _getThemeDisplay(renderRequest);
 
 		modifiedFacetDisplayContextBuilder.setLocale(themeDisplay.getLocale());
 
 		modifiedFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
-
-		String parameterName =
-			modifiedFacetPortletPreferences.getParameterName();
 
 		modifiedFacetDisplayContextBuilder.setParameterName(parameterName);
 
@@ -148,10 +153,8 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 				parameterName, renderRequest),
 			modifiedFacetDisplayContextBuilder::setParameterValues);
 
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchResponse.getParameter(
-				parameterName + "From", renderRequest),
-			modifiedFacetDisplayContextBuilder::setFromParameterValue);
+		modifiedFacetDisplayContextBuilder.setTimeZone(
+			themeDisplay.getTimeZone());
 
 		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameter(
@@ -161,8 +164,6 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getSearchResponse();
 
-		modifiedFacetDisplayContextBuilder.setTimeZone(
-			themeDisplay.getTimeZone());
 		modifiedFacetDisplayContextBuilder.setTotalHits(
 			searchResponse.getTotalHits());
 

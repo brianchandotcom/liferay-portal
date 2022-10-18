@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.tag.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -102,21 +101,21 @@ public class TagFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			_getAggregationName(renderRequest));
+		AssetTagsSearchFacetDisplayContextBuilder
+			assetTagsSearchFacetDisplayContextBuilder =
+				_createTagsSearchFacetDisplayContextBuilder(renderRequest);
 
 		TagFacetPortletPreferences tagFacetPortletPreferences =
 			new TagFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		AssetTagsSearchFacetDisplayContextBuilder
-			assetTagsSearchFacetDisplayContextBuilder =
-				_createTagsSearchFacetDisplayContextBuilder(renderRequest);
-
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle(
 			tagFacetPortletPreferences.getDisplayStyle());
-		assetTagsSearchFacetDisplayContextBuilder.setFacet(facet);
+
+		assetTagsSearchFacetDisplayContextBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				_getAggregationName(renderRequest)));
 		assetTagsSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			tagFacetPortletPreferences.isFrequenciesVisible());
 		assetTagsSearchFacetDisplayContextBuilder.setFrequencyThreshold(

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {OptionHTMLAttributes, useMemo} from 'react';
+import {OptionHTMLAttributes} from 'react';
 
 import LiferayPicklist from '../../../../../../../common/interfaces/liferayPicklist';
 
@@ -30,6 +30,6 @@ export default function useTacticsOptions(
 
 	return {
 		onTacticSelected,
-		tacticsOptions: useMemo(() => tactics, [tactics]),
+		tacticsOptions: tactics,
 	};
 }

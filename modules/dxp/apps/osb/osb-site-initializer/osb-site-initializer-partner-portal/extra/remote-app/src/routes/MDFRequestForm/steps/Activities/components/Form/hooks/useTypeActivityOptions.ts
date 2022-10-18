@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -23,11 +22,15 @@ export default function useTypeActivityOptions(
 		OptionHTMLAttributes<HTMLOptionElement>
 	>();
 
-	const tacticsBySelectedTypeActivity = tactics?.filter((tactic) => {
-		return String(tactic.value).includes(
-			String(selectedTypeActivity?.value)
-		);
-	});
+	const tacticsBySelectedTypeActivity = useMemo(
+		() =>
+			tactics?.filter((tactic) => {
+				return String(tactic.value).includes(
+					String(selectedTypeActivity?.value)
+				);
+			}),
+		[selectedTypeActivity?.value, tactics]
+	);
 
 	useEffect(() => {
 		if (selectedTypeActivity) {
@@ -54,6 +57,6 @@ export default function useTypeActivityOptions(
 		onTypeActivitySelected,
 		selectedTypeActivity,
 		tacticsBySelectedTypeActivity,
-		typeActivitiesOptions: useMemo(() => typeActivities, [typeActivities]),
+		typeActivitiesOptions: typeActivities,
 	};
 }

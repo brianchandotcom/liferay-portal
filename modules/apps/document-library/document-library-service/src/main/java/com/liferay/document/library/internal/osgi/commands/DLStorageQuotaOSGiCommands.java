@@ -17,7 +17,6 @@ package com.liferay.document.library.internal.osgi.commands;
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,9 +57,6 @@ public class DLStorageQuotaOSGiCommands {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLStorageQuotaOSGiCommands.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLStorageQuotaLocalService _dlStorageQuotaLocalService;

@@ -598,6 +598,7 @@ definition {
 	test CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2114,6 +2115,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CanViewSingleObjectEntryWithViewPermission";
 
 		ObjectAdmin.addObjectViaAPI(

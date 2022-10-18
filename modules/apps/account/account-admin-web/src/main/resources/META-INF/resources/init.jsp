@@ -118,6 +118,7 @@ page import="com.liferay.portal.kernel.service.AddressLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.ListTypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.UserPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -139,10 +140,8 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.Collections" %><%@
-page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Objects" %><%@
-page import="java.util.Optional" %>
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@

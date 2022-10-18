@@ -14,8 +14,8 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
+import com.liferay.oauth2.provider.rest.internal.scope.logic.HttpMethodScopeLogic;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
-import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.portal.kernel.log.Log;
@@ -43,6 +43,7 @@ import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.framework.BundleContext;
@@ -155,13 +156,14 @@ public class HttpMethodFeature implements Feature {
 		HttpMethodFeature.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference(target = "(oauth2.scope.checker.type=http.method)")
+	private HttpMethodScopeLogic _httpMethodScopeLogic;
+
 	private Function<String, Object> _propertyAccessorFunction;
 
 	@Reference
 	private ScopeChecker _scopeChecker;
-
-	@Reference(target = "(oauth2.scope.checker.type=http.method)")
-	private ScopeLogic _scopeLogic;
 
 	private final Set<String> _scopes = new HashSet<>();
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
@@ -172,10 +174,10 @@ public class HttpMethodFeature implements Feature {
 		public boolean isContainerRequestContextAllowed(
 			ContainerRequestContext containerRequestContext) {
 
-			return _scopeLogic.check(
-				_scopeChecker, _propertyAccessorFunction,
-				_resourceInfo.getResourceClass(),
-				_resourceInfo.getResourceMethod());
+			Request request = containerRequestContext.getRequest();
+
+			return _httpMethodScopeLogic.check(
+				_scopeChecker, _propertyAccessorFunction, request.getMethod());
 		}
 
 		@Context

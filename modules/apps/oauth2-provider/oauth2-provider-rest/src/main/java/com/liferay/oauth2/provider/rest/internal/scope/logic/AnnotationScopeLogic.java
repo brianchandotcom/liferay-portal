@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 
 import java.lang.reflect.Method;
 
+import java.util.function.Function;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -38,8 +40,9 @@ public class AnnotationScopeLogic implements ScopeLogic {
 
 	@Override
 	public boolean check(
-		ScopeChecker scopeChecker, Class<?> resourceClass,
-		Method resourceMethod) {
+		ScopeChecker scopeChecker,
+		Function<String, Object> propertyAccessorFunction,
+		Class<?> resourceClass, Method resourceMethod) {
 
 		RequiresNoScope requiresNoScope =
 			RequiresScopeAnnotationFinder.getScopeAnnotation(

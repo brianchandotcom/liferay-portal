@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
 		"ignore.missing.scopes=HEAD", "ignore.missing.scopes=OPTIONS",
 		"oauth2.scope.checker.type=http.method"
 	},
-	service = ScopeLogic.class
+	service = {HttpMethodScopeLogic.class, ScopeLogic.class}
 )
 public class HttpMethodScopeLogic implements ScopeLogic {
 
@@ -58,6 +58,16 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 		ScopeChecker scopeChecker,
 		Function<String, Object> propertyAccessorFunction,
 		Class<?> resourceClass, Method resourceMethod) {
+
+		return check(
+			scopeChecker, propertyAccessorFunction,
+			_getHttpMethod(resourceMethod));
+	}
+
+	public boolean check(
+		ScopeChecker scopeChecker,
+		Function<String, Object> propertyAccessorFunction,
+		String requestMethod) {
 
 		try {
 			String applicationName = GetterUtil.getString(
@@ -78,11 +88,9 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 
 			Collection<String> scopes = scopeFinder.findScopes();
 
-			String httpMethod = _getHttpMethod(resourceMethod);
-
-			if ((!scopes.contains(httpMethod) &&
-				 ignoreMissingScopes.contains(httpMethod)) ||
-				scopeChecker.checkScope(httpMethod)) {
+			if ((!scopes.contains(requestMethod) &&
+				 ignoreMissingScopes.contains(requestMethod)) ||
+				scopeChecker.checkScope(requestMethod)) {
 
 				return true;
 			}

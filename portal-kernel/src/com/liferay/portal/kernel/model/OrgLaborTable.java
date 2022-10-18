@@ -38,8 +38,8 @@ public class OrgLaborTable extends BaseTable<OrgLaborTable> {
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<OrgLaborTable, Long> organizationId = createColumn(
 		"organizationId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<OrgLaborTable, Long> typeId = createColumn(
-		"typeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<OrgLaborTable, Long> listTypeId = createColumn(
+		"listTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<OrgLaborTable, Integer> sunOpen = createColumn(
 		"sunOpen", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<OrgLaborTable, Integer> sunClose = createColumn(

@@ -126,7 +126,8 @@ public class OrgLaborModelArgumentsResolver implements ArgumentsResolver {
 
 		orderByColumnsBitmask |= OrgLaborModelImpl.getColumnBitmask(
 			"organizationId");
-		orderByColumnsBitmask |= OrgLaborModelImpl.getColumnBitmask("typeId");
+		orderByColumnsBitmask |= OrgLaborModelImpl.getColumnBitmask(
+			"listTypeId");
 
 		_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
 	}

@@ -5008,6 +5008,37 @@ components:
                     description:
                         The localized submission of URL type.
             type: object
+        UtilityPageTemplate:
+            description:
+                Represents a Utility Page Template.
+            properties:
+                defaultTemplate:
+                    # @review
+                    description:
+                        Specifies if the utility page template should be the default for the given type.
+                    type: boolean
+                key:
+                    # @review
+                    description:
+                        The utility page template key.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The utility page template name.
+                    type: string
+                type:
+                    # @review
+                    description:
+                        The type of content.
+                    properties:
+                        className:
+                            # @review
+                            description:
+                                The content type's class name.
+                            type: string
+                    type: object
+            type: object
         WidgetInstance:
             # @review
             description:

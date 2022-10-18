@@ -89,6 +89,8 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
 				JSONUtil.put(
+					"articleId", article.getArticleId()
+				).put(
 					"classPK", article.getResourcePrimKey()
 				).put(
 					"version", article.getVersion()

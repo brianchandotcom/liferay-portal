@@ -575,6 +575,52 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
 	}
 
+	@description = "This ensures that the default URL of the document will be displayed when accessing a document stored in the current site asset."
+	@priority = "5"
+	test DefaultURLIsDisplayedWhenAccessingDocumentInCurrentSite {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Document DPT",
+			groupName = "Guest",
+			subType = "Basic Document");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+		PageEditor.publish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document DPT");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/d/dm-document-title");
+	}
+
 	@description = "This ensures that the permanent redirection can be performed when accessing the old friendly URL of a blog entry displayed with a display page template."
 	@priority = "4"
 	test PermanentRedirectionCanBePerformedWhenAccessingBlogOldFriendlyURL {
@@ -737,6 +783,54 @@ definition {
 		Redirect.viewURLRedirectionType(
 			temporary = "true",
 			url = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
+	@description = "This ensures that the friendly URL will contain the group info to identify the attribution of the document when accessing other site documents."
+	@priority = "5"
+	test URLIsDisplayedWithGroupWhenAccessingDocumentInOtherSite {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Document DPT",
+			groupName = "Test Site Name",
+			subType = "Basic Document");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+		PageEditor.publish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document DPT");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureScope(otherSite = "Test Site Name");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/test-site-name/d/dm-document-title");
 	}
 
 }

@@ -1038,6 +1038,10 @@ definition {
 				expected = "");
 		}
 
+		task ("Clear local storage") {
+			ACUtils.clearLocalStorage();
+		}
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user2@liferay.com",

@@ -92,7 +92,6 @@ const CaseForm = () => {
 		formState: {errors},
 		handleSubmit,
 		register,
-		reset,
 		setValue,
 		watch,
 	} = useForm<CaseFormData>({
@@ -123,9 +122,9 @@ const CaseForm = () => {
 			.then(mutateTestrayCase)
 			.then(() => {
 				if (addAnother) {
-					onSuccess();
+					setValue('name', i18n.sub('copy-x', form.name));
 
-					return reset();
+					return onSuccess();
 				}
 
 				return onSave();
@@ -250,13 +249,15 @@ const CaseForm = () => {
 
 				<Form.Divider />
 
-				<div className="my-5">
-					<ClayCheckbox
-						checked={addAnother}
-						label={i18n.translate('add-another')}
-						onChange={() => setValue('addAnother', !addAnother)}
-					/>
-				</div>
+				{!testrayCase && (
+					<div className="my-5">
+						<ClayCheckbox
+							checked={addAnother}
+							label={i18n.translate('add-another')}
+							onChange={() => setValue('addAnother', !addAnother)}
+						/>
+					</div>
+				)}
 
 				<Form.Footer
 					onClose={onClose}

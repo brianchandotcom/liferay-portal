@@ -93,6 +93,7 @@ export default {
 	'component': 'Component',
 	'components': 'Components',
 	'confirm-password': 'Confirm Password',
+	'copy-x': 'Copy - {0}',
 	'create': 'Create',
 	'create-cases-if-you-want-to-link-cases-to-this-build':
 		'Create cases if you want to link cases to this build.',

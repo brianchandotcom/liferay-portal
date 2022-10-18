@@ -28,6 +28,78 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	macro setChannelAccountDefaults {
+		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "${accountName}");
+
+		if (isSet(paymentMethod)) {
+			WaitForPageLoad();
+
+			Click(
+				key_firstColumnValue = "${channelName}",
+				key_table = "PaymentMethod",
+				key_secondColumnValue = "${secondColumnValue}",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "${paymentMethod}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#SAVE");
+
+			IFrame.selectTopFrame();
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "${channelName}",
+				key_value = "${paymentMethod}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+
+		if (isSet(shippingOption) && isSet(channelName)) {
+			Click(
+				key_firstColumnValue = "${channelName}",
+				key_table = "ShippingOption",
+				key_secondColumnValue = "${shippingMethodEntry}",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			if ("${shippingOption}" == "Use Priority Settings") {
+				var shippingMethod = "Use Priority Settings";
+				var shippingOption = "Use Priority Settings";
+
+				Click.clickAtNotVisible(
+					key_radioOption = "Use Priority Settings",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+			else {
+				Click.clickAtNotVisible(
+					key_radioOption = "${shippingMethod} / ${shippingOption}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+
+			Button.clickSave();
+
+			IFrame.selectTopFrame();
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_productName = "${channelName}",
+				key_value = "${shippingMethodEntry}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_productName = "${channelName}",
+				key_value = "${shippingOption}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+	}
+
 	macro deleteChannelAccountManagersEntry {
 		Variables.assertDefined(parameterList = "${channelName},${userFullName}");
 

@@ -40,8 +40,6 @@ definition {
 	@description = "This is a test for LPS-158744. The new fragment set will be appended to the bottom of fragment sets list with customized order in Fragments and Widgets panel."
 	@priority = "4"
 	test AppendNewFragmentSetToTheBottomOfCustomizedOrder {
-		property custom.properties = "feature.flag.LPS-158737=true";
-
 		task ("Given a page creator customized the order of fragment sets") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
@@ -167,7 +165,6 @@ definition {
 	@description = "This is a test for LPS-158744. The page creator could customize the order of fragment sets and widget categories in Fragments and Widgets panel."
 	@priority = "4"
 	test CustomizeOrderOfFragmentSetsAndWidgetCategories {
-		property custom.properties = "feature.flag.LPS-158737=true";
 		property portal.release = "false";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
@@ -392,7 +389,6 @@ definition {
 	@description = "This is a test for LPS-158744. The page creator could customize the order of fragment sets and widget categories in Fragments and Widgets panel."
 	@priority = "4"
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesOnReleaseBundle {
-		property custom.properties = "feature.flag.LPS-158737=true";
 		property portal.upstream = "false";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
@@ -431,8 +427,6 @@ definition {
 	@description = "This is a test for LPS-158744. When move a fragment set to the place of a hidden fragment set, it should be placed bottom of the hidden fragment set in Fragments and Widgets panel."
 	@priority = "4"
 	test MoveFragmentSetToThePlaceOfHiddenOne {
-		property custom.properties = "feature.flag.LPS-158737=true";
-
 		task ("Given a page creator has a content page based on a custom master with disallowed fragment set") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",

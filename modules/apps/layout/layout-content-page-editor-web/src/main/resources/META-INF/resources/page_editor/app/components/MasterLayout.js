@@ -137,10 +137,12 @@ function Fragment({item}) {
 
 		element.addEventListener('click', handler);
 		element.setAttribute('inert', '');
+		element.setAttribute('aria-hidden', 'true');
 
 		return () => {
 			element.removeEventListener('click', handler);
 			element.removeAttribute('inert');
+			element.removeAttribute('aria-hidden');
 		};
 	});
 

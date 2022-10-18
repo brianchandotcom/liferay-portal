@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
@@ -165,19 +166,24 @@ public class BackgroundImageFragmentEntryProcessor
 						fragmentEntryProcessorContext.getLocale());
 				}
 
-				Optional<Object> displayObjectOptional =
-					fragmentEntryProcessorContext.getDisplayObjectOptional();
+				Optional<InfoItemReference> contextInfoItemReferenceOptional =
+					fragmentEntryProcessorContext.
+						getContextInfoItemReferenceOptional();
 
-				if ((fileEntryId == 0) && displayObjectOptional.isPresent()) {
+				if ((fileEntryId == 0) &&
+					contextInfoItemReferenceOptional.isPresent()) {
+
 					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-						displayObjectOptional.get(),
+						contextInfoItemReferenceOptional.get(),
 						editableValueJSONObject.getString("collectionFieldId"),
 						fragmentEntryProcessorContext.getLocale());
 				}
 
-				if ((fileEntryId == 0) && displayObjectOptional.isPresent()) {
+				if ((fileEntryId == 0) &&
+					contextInfoItemReferenceOptional.isPresent()) {
+
 					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-						displayObjectOptional.get(),
+						contextInfoItemReferenceOptional.get(),
 						editableValueJSONObject.getString("mappedField"),
 						fragmentEntryProcessorContext.getLocale());
 				}
@@ -293,7 +299,8 @@ public class BackgroundImageFragmentEntryProcessor
 					editableValueJSONObject)) {
 
 			return _fragmentEntryProcessorHelper.getMappedCollectionValue(
-				fragmentEntryProcessorContext.getDisplayObjectOptional(),
+				fragmentEntryProcessorContext.
+					getContextInfoItemReferenceOptional(),
 				editableValueJSONObject,
 				fragmentEntryProcessorContext.getLocale());
 		}

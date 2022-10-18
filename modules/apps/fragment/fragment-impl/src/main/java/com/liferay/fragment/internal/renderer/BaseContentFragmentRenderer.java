@@ -20,7 +20,14 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Tuple;
@@ -61,31 +68,54 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 				jsonObject.getLong("classPK"));
 		}
 
-		Optional<Object> displayObjectOptional =
-			fragmentRendererContext.getDisplayObjectOptional();
+		Optional<InfoItemReference> contextInfoItemReferenceOptional =
+			fragmentRendererContext.getContextInfoItemReferenceOptional();
 
-		if (displayObjectOptional.isPresent()) {
-			Object displayObject = displayObjectOptional.get();
+		if (contextInfoItemReferenceOptional.isPresent()) {
+			InfoItemReference infoItemReference =
+				contextInfoItemReferenceOptional.get();
 
-			if (displayObject instanceof ClassedModel) {
-				ClassedModel classedModel = (ClassedModel)displayObject;
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
 
-				String modelClassName = classedModel.getModelClassName();
-				Serializable primaryKeyObj = classedModel.getPrimaryKeyObj();
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					infoItemReference.getClassName(),
+					infoItemIdentifier.getInfoItemServiceFilter());
 
-				if (!Objects.equals(
-						modelClassName, AssetEntry.class.getName())) {
+			try {
+				Object infoItem = infoItemObjectProvider.getInfoItem(
+					infoItemIdentifier);
 
-					return new Tuple(modelClassName, primaryKeyObj);
+				if (infoItem instanceof ClassedModel) {
+					ClassedModel classedModel = (ClassedModel)infoItem;
+
+					Serializable primaryKeyObj =
+						classedModel.getPrimaryKeyObj();
+
+					if (!Objects.equals(
+							classedModel.getModelClassName(),
+							AssetEntry.class.getName())) {
+
+						return new Tuple(
+							classedModel.getModelClassName(), primaryKeyObj);
+					}
+
+					AssetEntry assetEntry =
+						assetEntryLocalService.fetchAssetEntry(
+							(Long)primaryKeyObj);
+
+					if (assetEntry != null) {
+						return new Tuple(
+							portal.getClassName(assetEntry.getClassNameId()),
+							assetEntry.getClassPK());
+					}
 				}
-
-				AssetEntry assetEntry = assetEntryLocalService.fetchAssetEntry(
-					(Long)primaryKeyObj);
-
-				if (assetEntry != null) {
-					return new Tuple(
-						portal.getClassName(assetEntry.getClassNameId()),
-						assetEntry.getClassPK());
+			}
+			catch (NoSuchInfoItemException noSuchInfoItemException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchInfoItemException);
 				}
 			}
 		}
@@ -109,6 +139,12 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 	protected FragmentEntryConfigurationParser fragmentEntryConfigurationParser;
 
 	@Reference
+	protected InfoItemServiceTracker infoItemServiceTracker;
+
+	@Reference
 	protected Portal portal;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseContentFragmentRenderer.class);
 
 }

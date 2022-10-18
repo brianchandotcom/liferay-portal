@@ -4,7 +4,6 @@ definition {
 		Variables.assertDefined(parameterList = "${channelName},${channelType},${currencyCode}");
 
 		var baseURL = "${baseURL}";
-		var channelType = StringUtil.lowerCase("${channelType}");
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -15,17 +14,22 @@ definition {
 		}
 
 		var curl = '''
-			${baseURL}/api/jsonws/commerce.commercechannel/add-commerce-channel \
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels \
 			-u test@liferay.com:test \
-			-d externalReferenceCode=${externalReferenceCode} \
-			-d siteGroupId=0 \
-			-d name=${channelName} \
-			-d type=${channelType} \
-			-d -typeSettingsUnicodeProperties= \
-			-d commerceCurrencyCode=${currencyCode}
+			-H 'accept: application/json' \
+            -H 'Content-Type: application/json' \
+			-d '{
+				"externalReferenceCode": "${externalReferenceCode}",
+				"siteGroupId": 0,
+				"name": "${channelName}",
+				"type": "${channelType}",
+				"currencyCode": "${currencyCode}"
+			}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		var addChannelResponse = JSONCurlUtil.post("${curl}");
+
+		return "${addChannelResponse}";
 	}
 
 	macro _deleteAllCommerceChannels {

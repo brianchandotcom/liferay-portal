@@ -200,6 +200,8 @@ definition {
 
 		Role.openRolesAdmin();
 
+		// The define permission via json macro is not able to change the permission scope
+
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",

@@ -41,7 +41,6 @@ const isValidPage = async (
 	if (data) {
 		const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
 		const isAccountAdministrator = userAccount.isAdmin;
-		const isStaff = userAccount.isStaff;
 
 		if (pageKey === ROUTE_TYPES.onboarding) {
 			if (!(isAccountAdministrator && !hasAccountFlags)) {
@@ -57,7 +56,7 @@ const isValidPage = async (
 		}
 
 		if (pageKey === ROUTE_TYPES.project) {
-			if ((isStaff || isAccountAdministrator) && !hasAccountFlags) {
+			if (isAccountAdministrator && !hasAccountFlags) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

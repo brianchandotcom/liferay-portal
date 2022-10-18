@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.similar.results.web.internal.portlet.shared.search;
 
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -305,9 +304,6 @@ public class SimilarResultsPortletSharedSearchContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

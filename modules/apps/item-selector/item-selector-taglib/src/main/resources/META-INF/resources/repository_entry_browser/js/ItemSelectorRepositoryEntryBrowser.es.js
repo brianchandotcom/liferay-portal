@@ -86,7 +86,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		const items = itemsNodes.map((node) => node.dataset);
 
-		const clickableItems = Array.from(this.all('.icon'));
+		const clickableItems = Array.from(this.all('.icon-view'));
 
 		if (items.length === clickableItems.length) {
 			clickableItems.forEach((clickableItem, index) => {

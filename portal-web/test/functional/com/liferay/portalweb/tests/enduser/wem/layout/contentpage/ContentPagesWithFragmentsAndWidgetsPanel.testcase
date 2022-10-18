@@ -168,6 +168,7 @@ definition {
 	@priority = "4"
 	test CustomizeOrderOfFragmentSetsAndWidgetCategories {
 		property custom.properties = "feature.flag.LPS-158737=true";
+		property portal.release = "false";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -206,6 +207,7 @@ definition {
 	@priority = "4"
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUser {
 		property custom.properties = "feature.flag.LPS-158737=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.release = "false";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
 			ContentPagesNavigator.openEditContentPage(
@@ -290,6 +292,138 @@ definition {
 			AssertVisible(
 				index = "4",
 				key_panel = "Content Display",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+	}
+
+	@description = "This is a test for LPS-158744. Each user could customize order of fragment sets and widgets categories in Fragments and Widgets panel."
+	@priority = "4"
+	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUserOnReleaseBundle {
+		property custom.properties = "feature.flag.LPS-158737=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.upstream = "false";
+
+		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.reorderSets(
+				action = "Move Down",
+				navTab = "Fragments",
+				setName = "Basic Components");
+
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Widgets",
+				setName = "Commerce");
+		}
+
+		task ("When a site administrator navigates to the Fragments and Widgets panel") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the site administrator sees the default order of fragment sets and widget categories on Fragments and Widgets panel") {
+			AssertVisible(
+				index = "2",
+				key_panel = "Basic Components",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			AssertVisible(
+				index = "4",
+				key_panel = "Commerce",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+
+		task ("When the site administrator customizes the order of fragment sets and widget categories") {
+			PageEditor.reorderSets(
+				action = "Move Down",
+				navTab = "Fragments",
+				setName = "Content Display");
+
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Widgets",
+				setName = "Collaboration");
+		}
+
+		task ("Then the site administrator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
+			AssertVisible(
+				index = "2",
+				key_panel = "Collaboration",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			AssertVisible(
+				index = "4",
+				key_panel = "Content Display",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+		}
+	}
+
+	@description = "This is a test for LPS-158744. The page creator could customize the order of fragment sets and widget categories in Fragments and Widgets panel."
+	@priority = "4"
+	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesOnReleaseBundle {
+		property custom.properties = "feature.flag.LPS-158737=true";
+		property portal.upstream = "false";
+
+		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator customizes the order of fragment sets and widget categories") {
+			PageEditor.reorderSets(
+				action = "Move Down",
+				navTab = "Fragments",
+				setName = "Basic Components");
+
+			PageEditor.reorderSets(
+				action = "Move Up",
+				navTab = "Widgets",
+				setName = "Commerce");
+		}
+
+		task ("Then the page creator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
+			AssertVisible(
+				index = "3",
+				key_panel = "Basic Components",
+				locator1 = "Panel#TAB_PANEL_BY_INDEX");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			AssertVisible(
+				index = "3",
+				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}

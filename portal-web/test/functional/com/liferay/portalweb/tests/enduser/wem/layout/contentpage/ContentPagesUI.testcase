@@ -220,6 +220,8 @@ definition {
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
 	@priority = "5"
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSession {
+		property portal.release = "false";
+
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -298,6 +300,125 @@ definition {
 					key_collectionName = "Collaboration",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED",
 					value1 = "Collaboration");
+
+				MouseOver(
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Favorite",
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertElementPresent(
+					key_collectionName = "Highlighted",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Unmark Favorite",
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertElementNotPresent(
+					key_collectionName = "Highlighted",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Collaboration",
+					key_fragmentName = "Calendar",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
+	@priority = "5"
+	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSessionOnReleaseBundle {
+		property portal.upstream = "false";
+
+		task ("When go to edit content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then could add and remove fragment to Favorites session and widget to Highlighted session") {
+			task ("Go to add and remove favorite fragment") {
+				MouseOver(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				MouseOver(
+					ariaLabel = "Mark Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertTextEquals(
+					locator1 = "Tooltip#GENERIC_TOOLTIP",
+					value1 = "Mark Favorite");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Mark Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertElementPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					index = "1",
+					key_panel = "Favorites",
+					locator1 = "Panel#PANEL_BY_INDEX");
+
+				MouseOver(
+					ariaLabel = "Unmark Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertTextEquals(
+					locator1 = "Tooltip#GENERIC_TOOLTIP",
+					value1 = "Unmark Favorite");
+
+				Click.clickNoMouseOver(
+					ariaLabel = "Unmark Favorite",
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_FAVORITE");
+
+				AssertElementNotPresent(
+					key_collectionName = "Favorites",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+				AssertElementPresent(
+					key_collectionName = "Basic Components",
+					key_fragmentName = "Button",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+			}
+
+			task ("Go to add and remove favorite widget") {
+				Navigator.gotoNavTab(navTab = "Widgets");
 
 				MouseOver(
 					key_collectionName = "Collaboration",

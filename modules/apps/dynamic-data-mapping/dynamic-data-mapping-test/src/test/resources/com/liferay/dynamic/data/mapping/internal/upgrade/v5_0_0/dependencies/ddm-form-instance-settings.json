@@ -36,6 +36,16 @@
 			"value": ""
 		},
 		{
+			"fieldReference": "limitToOneSubmissionPerUserBody",
+			"name": "limitToOneSubmissionPerUserBody",
+			"value": ""
+		},
+		{
+			"fieldReference": "limitToOneSubmissionPerUserHeader",
+			"name": "limitToOneSubmissionPerUserHeader",
+			"value": ""
+		},
+		{
 			"fieldReference": "limitToOneSubmissionPerUser",
 			"name": "limitToOneSubmissionPerUser",
 			"value": "false"

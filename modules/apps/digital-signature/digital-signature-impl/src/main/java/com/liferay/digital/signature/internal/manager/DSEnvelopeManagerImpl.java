@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = DSEnvelopeManager.class)
+@Component(service = DSEnvelopeManager.class)
 public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override

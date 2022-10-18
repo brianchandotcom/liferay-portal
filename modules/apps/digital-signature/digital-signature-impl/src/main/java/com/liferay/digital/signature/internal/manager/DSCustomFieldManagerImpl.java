@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Victor Trajano
  */
-@Component(immediate = true, service = DSCustomFieldManager.class)
+@Component(service = DSCustomFieldManager.class)
 public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 
 	@Override

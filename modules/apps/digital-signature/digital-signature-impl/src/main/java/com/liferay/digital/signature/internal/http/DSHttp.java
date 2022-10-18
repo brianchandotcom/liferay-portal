@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = DSHttp.class)
+@Component(service = DSHttp.class)
 public class DSHttp {
 
 	public JSONObject get(long companyId, long groupId, String location) {

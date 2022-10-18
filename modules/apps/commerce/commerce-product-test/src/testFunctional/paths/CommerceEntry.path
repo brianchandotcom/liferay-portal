@@ -691,6 +691,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON</td>
+	<td>//div[contains(@id,'${key_table}')]//div[1][@class='dnd-td' and contains(.,'${key_firstColumnValue}')]/../div[@class='dnd-td' and contains (.,'${key_secondColumnValue}')]/../div[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS</td>
 	<td>//div[contains(@id,'${key_table}')]//div[1][@class='dnd-td' and contains(.,'${key_firstColumnValue}')]/following::div[@class='dnd-td' and contains (.,'${key_secondColumnValue}')]/following::div[@class='dropdown']</td>
 	<td></td>

@@ -31,6 +31,10 @@ definition {
 
 			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 		}
+
+		task ("And Given: site URL localized to Spanish //localhost:8080/es/*") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/es/frontend-data-set-test-page/");
+		}
 	}
 
 	tearDown {
@@ -49,9 +53,34 @@ definition {
 	@description = "LPS-165727. Assert the details shown in the FDS table"
 	@priority = "4"
 	test HeadersCanBeLocalized {
+		task ("When: on classic tab view") {
+			Click(
+			locator1 = "FrontendDataSet#FDS_DATASET",
+			key_sampleTab = "Clásico");	
+		}
 
-		// To-do HeadersCanBeLocalized Autom. test
+		task ("Then: There is no hyphen in any header text") {
+			AssertTextNotPresent(
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW",
+				key_itemName = "Nombre",
+				value1 = "-");
+		}
 
+		task ("And Then: First letter is capitalized for all headers and localized Spanish headers are present") {
+			AssertTextEquals.assertTextCaseSensitive(
+				locator1 = "FrontendDataSet#COLUMN_NAME",
+				key_columnName = "Nombre",
+				value1 = "Nombre");
+
+			AssertTextEquals.assertTextCaseSensitive(
+				locator1 = "FrontendDataSet#COLUMN_NAME",
+				key_columnName = "Apellido",
+				value1 = "Apellido");
+
+			AssertTextEquals.assertTextCaseSensitive(
+				locator1 = "FrontendDataSet#COLUMN_NAME",
+				key_columnName = "Dirección de correo",
+				value1 = "Dirección de correo");
+		}
 	}
-
 }

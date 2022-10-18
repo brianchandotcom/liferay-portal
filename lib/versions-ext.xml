@@ -998,7 +998,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/velocity.jar</file-name>
-				<version>1.6.4</version>
+				<version>1.6.4.LIFERAY-PATCHED-2</version>
 				<project-name>Velocity</project-name>
 				<project-url>http://velocity.apache.org</project-url>
 				<licenses>

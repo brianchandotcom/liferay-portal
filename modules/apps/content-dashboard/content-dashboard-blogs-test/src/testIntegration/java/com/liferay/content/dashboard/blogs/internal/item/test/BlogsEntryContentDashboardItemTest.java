@@ -27,10 +27,13 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -43,12 +46,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -207,6 +213,48 @@ public class BlogsEntryContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetAvailableLocales() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		List<Locale> availableLocales =
+			contentDashboardItem.getAvailableLocales();
+
+		Assert.assertEquals(
+			availableLocales.toString(), 0, availableLocales.size());
+	}
+
+	@Test
+	public void testGetContentDashboardItemSubtype() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		Assert.assertNull(
+			contentDashboardItem.getContentDashboardItemSubtype());
+	}
+
+	@Test
+	public void testGetCreateDate() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		Assert.assertEquals(
+			blogsEntry.getCreateDate(), contentDashboardItem.getCreateDate());
+	}
+
+	@Test
 	public void testGetDescription() throws Exception {
 		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
@@ -218,6 +266,58 @@ public class BlogsEntryContentDashboardItemTest {
 		Assert.assertEquals(
 			blogsEntry.getSubtitle(),
 			contentDashboardItem.getDescription(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetInfoItemReference() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		Assert.assertEquals(
+			infoItemReference, contentDashboardItem.getInfoItemReference());
+	}
+
+	@Test
+	public void testGetLatestContentDashboardItemVersions() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		List<ContentDashboardItemVersion> latestContentDashboardItemVersions =
+			contentDashboardItem.getLatestContentDashboardItemVersions(
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			latestContentDashboardItemVersions.toString(), 1,
+			latestContentDashboardItemVersions.size());
+
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			latestContentDashboardItemVersions.get(0);
+
+		Assert.assertNull(contentDashboardItemVersion.getChangeLog());
+		Assert.assertEquals(
+			blogsEntry.getCreateDate(),
+			contentDashboardItemVersion.getCreateDate());
+		Assert.assertEquals(
+			_language.get(LocaleUtil.US, "approved"),
+			contentDashboardItemVersion.getLabel());
+		Assert.assertEquals(
+			WorkflowConstants.getStatusStyle(blogsEntry.getStatus()),
+			contentDashboardItemVersion.getStyle());
+		Assert.assertEquals(
+			blogsEntry.getUserName(),
+			contentDashboardItemVersion.getUserName());
+		Assert.assertEquals("1.0", contentDashboardItemVersion.getVersion());
 	}
 
 	@Test
@@ -246,6 +346,26 @@ public class BlogsEntryContentDashboardItemTest {
 		Assert.assertEquals(
 			_group.getDescriptiveName(LocaleUtil.US),
 			contentDashboardItem.getScopeName(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetSpecificInformation() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		Map<String, Object> specificInformation =
+			contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+
+		Assert.assertEquals(
+			specificInformation.toString(), 1, specificInformation.size());
+
+		Assert.assertEquals(
+			specificInformation.get("display-date"),
+			blogsEntry.getDisplayDate());
 	}
 
 	@Test
@@ -337,6 +457,25 @@ public class BlogsEntryContentDashboardItemTest {
 			contentDashboardItem.isViewable(mockHttpServletRequest));
 	}
 
+	@Test
+	public void testIsViewableWithNoDisplayPage() throws Exception {
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
+
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
+
+		Assert.assertFalse(
+			contentDashboardItem.isViewable(mockHttpServletRequest));
+	}
+
 	private ThemeDisplay _getThemeDisplay(Locale locale) {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -366,6 +505,9 @@ public class BlogsEntryContentDashboardItemTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

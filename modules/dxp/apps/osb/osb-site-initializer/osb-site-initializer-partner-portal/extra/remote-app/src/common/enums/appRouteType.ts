@@ -14,4 +14,5 @@ export enum AppRouteType {
 	MDF_REQUEST_LIST = 'mdf-request-list',
 	MDF_CLAIM_FORM = 'mdf-claim-form',
 	DEAL_REGISTRATION_FORM = 'deal-registration-form',
+	DEAL_REGISTRATION_LIST = 'deal-registration-list',
 }

@@ -9,8 +9,4 @@
  * distribution rights of the Software.
  */
 
-export enum PRMPageRoute {
-	CREATE_MDF_REQUEST = 'marketing/mdf-requests/new',
-	MDF_REQUESTS_LISTING = 'marketing/mdf-requests',
-	CREATE_DEAL_REGISTRATION = 'sales/deal-registration/new',
-}
+export {default} from './DealRegistrationList';

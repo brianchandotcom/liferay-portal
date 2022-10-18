@@ -261,7 +261,7 @@ definition {
 		}
 
 		task ("Get the time of the last update of the first identity event sent") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+			var identityLastUpdateDate1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
 		}
 
 		task ("Go to the second site and interact with it") {
@@ -275,13 +275,13 @@ definition {
 		}
 
 		task ("Get the time of the last update of the second identity event sent") {
-			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+			var identityLastUpdateDate2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
 		}
 
 		task ("Check that the times in milliseconds that the events were sent are different") {
 			TestUtils.assertNotEquals(
-				actual = "${localStorageItem2}",
-				expected = "${localStorageItem1}");
+				actual = "${identityLastUpdateDate2}",
+				expected = "${identityLastUpdateDate1}");
 		}
 	}
 

@@ -529,6 +529,47 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
+	@description = "This is a test for COMMERCE-6413. Commerce Channel API unable to define Type"
+	@priority = "3"
+	test CanCreateChannelViaAPIAndCheckTabs {
+		property portal.acceptance = "false";
+
+		var wrongChannelType = "Site";
+		var correctChannelType = "site";
+		var channelTabsList = "General,Type,Notification Queue,Notification Templates,Payment Restrictions,Shipping Restrictions,Punch Out";
+		var createChannelResponseWithError = CommerceJSONChannelsAPI._addChannel(
+			channelName = "Test Channel New",
+			channelType = "${wrongChannelType}",
+			currencyCode = "US",
+			externalReferenceCode = "101");
+
+		var createChannelErrorMessage = JSONUtil.getWithJSONPath("${createChannelResponseWithError}", "$");
+
+		TestUtils.assertEquals(
+			actual = "${createChannelErrorMessage}",
+			expected = "{errorDescription=Invalid type, message=null, status=400}");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		IsElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+
+		CommerceJSONChannelsAPI._addChannel(
+			channelName = "Test Channel New",
+			channelType = "${correctChannelType}",
+			currencyCode = "US",
+			externalReferenceCode = "101");
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "Test Channel New");
+
+		for (var channelTab : list "${channelTabsList}") {
+			CommerceEntry.gotoMenuTab(menuTab = "${channelTab}");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9459. CanEditShippingMethodTrackingURL"
 	@priority = "2"
 	test CanEditShippingMethodTrackingURL {
@@ -2517,12 +2558,12 @@ definition {
 
 		CommerceJSONChannelsAPI._addChannel(
 			channelName = "Test Channel",
-			channelType = "Site",
+			channelType = "site",
 			currencyCode = "USD");
 
 		CommerceJSONChannelsAPI._addChannel(
 			channelName = "Minium",
-			channelType = "Site",
+			channelType = "site",
 			currencyCode = "USD");
 
 		CommerceChannels.openChannelsAdmin();

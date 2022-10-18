@@ -66,12 +66,6 @@ public class OAuth2GraphQLRequestContextValidator
 			return;
 		}
 
-		_scopeContext.setApplicationName(
-			graphQLRequestContext.getApplicationName());
-		_scopeContext.setBundle(
-			FrameworkUtil.getBundle(graphQLRequestContext.getResourceClass()));
-		_scopeContext.setCompanyId(graphQLRequestContext.getCompanyId());
-
 		if (OAuth2ProviderScopeLiferayAccessControlContext.
 				isOAuth2AuthVerified()) {
 
@@ -117,18 +111,31 @@ public class OAuth2GraphQLRequestContextValidator
 				ScopeLogic.class,
 				"(oauth2.scope.checker.type=" + scopeSheckerType + ")");
 
-		for (ServiceReference<ScopeLogic> serviceReference :
-				serviceReferences) {
+		_scopeContext.setApplicationName(
+			graphQLRequestContext.getApplicationName());
+		_scopeContext.setBundle(
+			FrameworkUtil.getBundle(graphQLRequestContext.getResourceClass()));
+		_scopeContext.setCompanyId(graphQLRequestContext.getCompanyId());
 
-			ScopeLogic scopeLogic = _bundleContext.getService(serviceReference);
+		try {
+			for (ServiceReference<ScopeLogic> serviceReference :
+					serviceReferences) {
 
-			if (!scopeLogic.check(
-					applicationServiceReference::getProperty,
-					graphQLRequestContext.getResourceClass(),
-					graphQLRequestContext.getResourceMethod(), _scopeChecker)) {
+				ScopeLogic scopeLogic = _bundleContext.getService(
+					serviceReference);
 
-				throw new ForbiddenException();
+				if (!scopeLogic.check(
+						applicationServiceReference::getProperty,
+						graphQLRequestContext.getResourceClass(),
+						graphQLRequestContext.getResourceMethod(),
+						_scopeChecker)) {
+
+					throw new ForbiddenException();
+				}
 			}
+		}
+		finally {
+			_scopeContext.clear();
 		}
 	}
 

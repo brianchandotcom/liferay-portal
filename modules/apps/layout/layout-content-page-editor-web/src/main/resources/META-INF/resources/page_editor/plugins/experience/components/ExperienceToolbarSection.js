@@ -22,7 +22,7 @@ import ExperienceSelector from './ExperienceSelector';
 
 // TODO: show how to colocate CSS with plugins (may use loaders)
 
-export default function ExperienceToolbarSection({selectId}) {
+export default function ExperienceToolbarSection() {
 	const availableSegmentsExperiences = useSelector(
 		(state) => state.availableSegmentsExperiences
 	);
@@ -76,15 +76,17 @@ export default function ExperienceToolbarSection({selectId}) {
 
 	return (
 		<div className="page-editor__toolbar-experience">
-			<label className="d-lg-block d-none mr-2" htmlFor={selectId}>
+			<span
+				aria-hidden
+				className="d-lg-block d-none font-weight-bold mr-2"
+			>
 				{Liferay.Language.get('experience')}
-			</label>
+			</span>
 
 			<ExperienceSelector
 				editSegmentsEntryURL={config.editSegmentsEntryURL}
 				experiences={experiences}
 				segments={segments}
-				selectId={selectId}
 				selectedExperience={selectedExperience}
 			/>
 		</div>

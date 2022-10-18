@@ -92,12 +92,7 @@ function getUpdateExperiencePriorityTargets(
 	};
 }
 
-const ExperienceSelector = ({
-	experiences,
-	segments,
-	selectId,
-	selectedExperience,
-}) => {
+const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 	const dispatch = useDispatch();
 
 	const canUpdateExperiences = useSelector(selectCanUpdateExperiences);
@@ -426,10 +421,10 @@ const ExperienceSelector = ({
 				aria-controls={experienceSelectorContentId}
 				aria-expanded={open}
 				aria-haspopup="true"
+				aria-label={Liferay.Language.get('experience')}
 				className="form-control-select pr-4 text-left text-truncate"
 				disabled={!canUpdateExperiences}
 				displayType="secondary"
-				id={selectId}
 				onClick={() => debouncedSetOpen(!open)}
 				onKeyDown={(event) => {
 					if (event.key === 'Tab' && !event.shiftKey && open) {

@@ -21,11 +21,9 @@ import ExperienceReducer from './reducers/index';
 function renderExperiencesSection() {
 	const {Component} = this;
 
-	const selectId = `${this.toolbarId}_${this.toolbarPluginId}`;
-
 	return (
 		<Component>
-			<ExperienceToolbarSection selectId={selectId} />
+			<ExperienceToolbarSection />
 		</Component>
 	);
 }

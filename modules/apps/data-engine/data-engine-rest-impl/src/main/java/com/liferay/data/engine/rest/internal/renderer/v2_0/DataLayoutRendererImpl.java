@@ -19,7 +19,6 @@ import com.liferay.data.engine.renderer.DataLayoutRendererContext;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.MapToDDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -134,9 +133,6 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 		return ddmFormRenderingContext;
 	}
-
-	@Reference(target = "(ddm.form.deserializer.type=json)")
-	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;

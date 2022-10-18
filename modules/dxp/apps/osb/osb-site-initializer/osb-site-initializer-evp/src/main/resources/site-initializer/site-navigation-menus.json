@@ -10,6 +10,11 @@
 				"friendlyURL": "/my-evp",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"friendlyURL": "/company",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "Header Navigation Menu",

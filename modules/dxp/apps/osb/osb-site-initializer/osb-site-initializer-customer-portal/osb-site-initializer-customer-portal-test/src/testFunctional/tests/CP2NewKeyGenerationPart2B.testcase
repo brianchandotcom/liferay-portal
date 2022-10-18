@@ -106,13 +106,19 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
 			CP2ActivationKeys.generateNewKey();
 		}
 

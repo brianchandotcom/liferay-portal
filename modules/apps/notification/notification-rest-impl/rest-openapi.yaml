@@ -87,10 +87,11 @@ components:
                 objectDefinitionId:
                     format: int64
                     type: integer
-                recipient:
-                    $ref: "#/components/schemas/Recipient"
+                recipients:
+                    items:
+                        type: object
+                    type: array
                 recipientType:
-                    enum: [role, term, user]
                     type: string
                 subject:
                     additionalProperties:
@@ -98,30 +99,6 @@ components:
                     type: object
                 type:
                     type: string
-            type: object
-        Recipient:
-            properties:
-                id:
-                    format: int64
-                    readOnly: true
-                    type: integer
-                settings:
-                    items:
-                        $ref: "#/components/schemas/Setting"
-                    type: array
-                type:
-                    type: string
-            type: object
-        Setting:
-            properties:
-                id:
-                    format: int64
-                    readOnly: true
-                    type: integer
-                name:
-                    type: string
-                value:
-                    type: object
             type: object
 info:
     description:

@@ -156,10 +156,37 @@ definition {
     }
 
     @description = "Automation ID: LPS-151798 | Test Summary: Verify if the user can enter more than one IP addresses"
+	@ignore = "true"
 	@priority = "3"
 	test IfUserCanAddMoreIPAddresses {
-        
-        // TODO LPS-151798 CP2NewKeyGenerationPortalPart2 archive pending implementation
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
+			CP2ActivationKeys.generateKeyFlow();
+		}
+
+        task ("When I fulfill the IP Address field with a two valid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1.1.1.1",
+				field = "IP Address");
+
+			KeyPress.keyPressNoError(
+			locator1 = "KaleoDesignerEditWorkflow#BODY",
+			value1 = "\ENTER");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "2.2.2.2",
+				field = "IP Address");
+		}
 
     }
 

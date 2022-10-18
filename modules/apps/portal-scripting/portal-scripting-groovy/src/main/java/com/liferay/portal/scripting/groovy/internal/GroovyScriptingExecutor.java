@@ -71,7 +71,10 @@ public class GroovyScriptingExecutor extends BaseScriptingExecutor {
 			Map<String, Object> outputObjects = new HashMap<>();
 
 			for (String outputName : outputNames) {
-				outputObjects.put(outputName, binding.getVariable(outputName));
+				if (binding.hasVariable(outputName)) {
+					outputObjects.put(
+						outputName, binding.getVariable(outputName));
+				}
 			}
 
 			return outputObjects;

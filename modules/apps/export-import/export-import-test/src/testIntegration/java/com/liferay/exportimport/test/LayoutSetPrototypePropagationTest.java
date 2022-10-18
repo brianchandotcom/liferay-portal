@@ -323,31 +323,34 @@ public class LayoutSetPrototypePropagationTest
 
 	@Test
 	public void testLayoutPropagationWithMasterLayout() throws Exception {
-		Layout masterLayout = LayoutTestUtil.addTypeContentLayout(
+		Layout siteTemplateMasterLayout = LayoutTestUtil.addTypeContentLayout(
 			_layoutSetPrototypeGroup, true, false);
 
 		LayoutTestUtil.addTypeContentLayout(
-			_layoutSetPrototypeGroup, masterLayout.getPlid(), true, false);
+			_layoutSetPrototypeGroup, siteTemplateMasterLayout.getPlid(), true,
+			false);
 
 		propagateChanges(group);
 
 		LayoutTestUtil.addTypeContentLayout(
-			_layoutSetPrototypeGroup, masterLayout.getPlid(), true, false);
+			_layoutSetPrototypeGroup, siteTemplateMasterLayout.getPlid(), true,
+			false);
 
 		propagateChanges(group);
 
 		Assert.assertEquals(
 			0,
 			LayoutLocalServiceUtil.getMasterLayoutsCount(
-				group.getGroupId(), masterLayout.getPlid()));
+				group.getGroupId(), siteTemplateMasterLayout.getPlid()));
 
-		Layout layoutMasterOfSite = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			group.getGroupId(), false, masterLayout.getFriendlyURL());
+		Layout siteMasterLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false,
+			siteTemplateMasterLayout.getFriendlyURL());
 
 		Assert.assertEquals(
 			2,
 			LayoutLocalServiceUtil.getMasterLayoutsCount(
-				group.getGroupId(), layoutMasterOfSite.getPlid()));
+				group.getGroupId(), siteMasterLayout.getPlid()));
 	}
 
 	@Test

@@ -28,10 +28,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -50,20 +49,12 @@ public class DispatchTriggerResourceImpl
 	extends BaseDispatchTriggerResourceImpl {
 
 	public Page<DispatchTrigger> getDispatchTriggersPage() throws Exception {
-		List<DispatchTrigger> dispatchTriggers1 = new ArrayList<>();
-
-		List<com.liferay.dispatch.model.DispatchTrigger> dispatchTriggers2 =
-			_dispatchTriggerService.getDispatchTriggers(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (com.liferay.dispatch.model.DispatchTrigger dispatchTrigger :
-				dispatchTriggers2) {
-
-			dispatchTriggers1.add(
-				DispatchTriggerUtil.toDispatchTrigger(dispatchTrigger));
-		}
-
-		return Page.of(dispatchTriggers1);
+		return Page.of(
+			TransformUtil.transform(
+				_dispatchTriggerService.getDispatchTriggers(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				dispatchTrigger -> DispatchTriggerUtil.toDispatchTrigger(
+					dispatchTrigger)));
 	}
 
 	public DispatchTrigger postDispatchTrigger(DispatchTrigger dispatchTrigger)

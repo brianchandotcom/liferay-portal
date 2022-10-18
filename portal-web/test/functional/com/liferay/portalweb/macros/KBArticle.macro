@@ -1208,10 +1208,18 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		AssertClick(
-			key_kbArticleTitle = "${kbArticleTitle}",
-			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
-			value1 = "Select");
+		if (isSet(kbDisplay)) {
+			AssertClick(
+				key_kbArticleTitle = "${kbArticleTitle}",
+				locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
+				value1 = "Select");
+		}
+		else if (isSet(kbArticle)) {
+			AssertClick(
+				key_kbArticleTitle = "${kbArticleTitle}",
+				locator1 = "KnowledgeBaseSelectParent#SELECTOR_FIELD",
+				value1 = "${kbArticleTitle}");
+		}
 
 		SelectFrame(value1 = "relative=top");
 

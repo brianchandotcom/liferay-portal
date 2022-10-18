@@ -63,4 +63,14 @@ public interface AccountEntryOrganizationRel
 
 			};
 
+	public AccountEntry fetchAccountEntry();
+
+	public com.liferay.portal.kernel.model.Organization fetchOrganization();
+
+	public AccountEntry getAccountEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.model.Organization getOrganization()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

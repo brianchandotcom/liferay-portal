@@ -26,7 +26,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.template.model.TemplateEntry;
-import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.List;
 import java.util.Map;
@@ -174,8 +173,5 @@ public class TemplateEntryStagedModelDataHandler
 		target = "(model.class.name=com.liferay.template.model.TemplateEntry)"
 	)
 	private StagedModelRepository<TemplateEntry> _stagedModelRepository;
-
-	@Reference
-	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

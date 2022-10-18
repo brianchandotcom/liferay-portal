@@ -13,11 +13,9 @@
  */
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {PopoverTooltip} from '../../common/components/PopoverTooltip';
 import {useId} from '../../core/hooks/useId';
@@ -71,85 +69,24 @@ const SelectorButton = ({icon, label, onSelect, selectedSize, sizeId}) => {
 	);
 };
 
-const SelectorButtonList = ({
-	availableViewportSizes,
-	dropdown,
-	onSelect,
-	selectedSize,
-}) =>
-	Object.values(availableViewportSizes).map(({icon, label, sizeId}) =>
-		dropdown ? (
-			<ClayDropDown.Item
-				key={sizeId}
-				onClick={() => onSelect(sizeId)}
-				symbolLeft={icon}
-			>
-				{label}
-			</ClayDropDown.Item>
-		) : (
-			<SelectorButton
-				icon={icon}
-				key={sizeId}
-				label={label}
-				onSelect={onSelect}
-				selectedSize={selectedSize}
-				sizeId={sizeId}
-			/>
-		)
-	);
-
 export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 	const {availableViewportSizes} = config;
-	const [active, setActive] = useState(false);
 
 	return (
-		<>
-			<ClayButton.Group className="d-lg-block d-none">
-				<SelectorButtonList
-					availableViewportSizes={availableViewportSizes}
-					onSelect={onSizeSelected}
-					selectedSize={selectedSize}
-					setActive={setActive}
-				/>
-			</ClayButton.Group>
-
-			<ClayDropDown
-				active={active}
-				className="d-lg-none"
-				hasLeftSymbols
-				hasRightSymbols
-				menuElementAttrs={{
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
-				onActiveChange={setActive}
-				trigger={
-					<ClayButton
-						className="btn-monospaced"
-						displayType="secondary"
-						small
-					>
-						<ClayIcon
-							symbol={availableViewportSizes[selectedSize].icon}
-						/>
-
-						<span className="sr-only">
-							{availableViewportSizes[selectedSize].label}
-						</span>
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					<SelectorButtonList
-						availableViewportSizes={availableViewportSizes}
-						dropdown
+		<ClayButton.Group>
+			{Object.values(availableViewportSizes).map(
+				({icon, label, sizeId}) => (
+					<SelectorButton
+						icon={icon}
+						key={sizeId}
+						label={label}
 						onSelect={onSizeSelected}
 						selectedSize={selectedSize}
+						sizeId={sizeId}
 					/>
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		</>
+				)
+			)}
+		</ClayButton.Group>
 	);
 }
 

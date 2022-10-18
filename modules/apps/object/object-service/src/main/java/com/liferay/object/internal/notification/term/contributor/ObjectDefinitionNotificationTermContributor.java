@@ -42,24 +42,16 @@ public class ObjectDefinitionNotificationTermContributor
 		ObjectFieldLocalService objectFieldLocalService,
 		UserLocalService userLocalService) {
 
+		_objectDefinition = objectDefinition;
 		_objectFieldLocalService = objectFieldLocalService;
 		_userLocalService = userLocalService;
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectField objectField : objectFields) {
-			_objectFieldIds.put(
-				ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-					objectDefinition.getShortName(), objectField.getName()),
-				objectField.getObjectFieldId());
-		}
 	}
 
 	@Override
 	public List<String> getTermNames() {
-		return new ArrayList<>(_objectFieldIds.keySet());
+		Map<String, Long> objectFieldIds = _getObjectFieldIds();
+
+		return new ArrayList<>(objectFieldIds.keySet());
 	}
 
 	@Override
@@ -79,8 +71,10 @@ public class ObjectDefinitionNotificationTermContributor
 			return user.getFullName(true, true);
 		}
 
+		Map<String, Long> objectFieldIds = _getObjectFieldIds();
+
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectFieldIds.get(termName));
+			objectFieldIds.get(termName));
 
 		if (objectField == null) {
 			return termName;
@@ -101,15 +95,49 @@ public class ObjectDefinitionNotificationTermContributor
 			return LanguageUtil.get(locale, "creator");
 		}
 
+		Map<String, Long> objectFieldIds = _getObjectFieldIds();
+
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectFieldIds.get(termName));
+			objectFieldIds.get(termName));
 
 		return objectField.getLabel(locale);
 	}
 
-	private final Map<String, Long> _objectFieldIds = HashMapBuilder.put(
-		"[%OBJECT_ENTRY_CREATOR%]", 0L
-	).build();
+	private Map<String, Long> _getObjectFieldIds() {
+		Map<String, Long> objectFieldIds = _objectFieldIds;
+
+		if (objectFieldIds != null) {
+			return objectFieldIds;
+		}
+
+		synchronized (this) {
+			if (_objectFieldIds != null) {
+				return _objectFieldIds;
+			}
+
+			objectFieldIds = HashMapBuilder.put(
+				"[%OBJECT_ENTRY_CREATOR%]", 0L
+			).build();
+
+			for (ObjectField objectField :
+					_objectFieldLocalService.getObjectFields(
+						_objectDefinition.getObjectDefinitionId())) {
+
+				objectFieldIds.put(
+					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+						_objectDefinition.getShortName(),
+						objectField.getName()),
+					objectField.getObjectFieldId());
+			}
+
+			_objectFieldIds = objectFieldIds;
+		}
+
+		return objectFieldIds;
+	}
+
+	private final ObjectDefinition _objectDefinition;
+	private volatile Map<String, Long> _objectFieldIds;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final UserLocalService _userLocalService;
 

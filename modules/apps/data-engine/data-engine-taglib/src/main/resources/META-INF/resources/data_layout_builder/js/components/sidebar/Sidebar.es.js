@@ -135,7 +135,9 @@ const SidebarTitle = ({className, title}) => (
 	<ClayLayout.ContentRow className={classNames('sidebar-section', className)}>
 		<ClayLayout.ContentCol expand>
 			<div className="component-title">
-				<span className="text-truncate-inline">{title}</span>
+				<h2 className="text-truncate-inline" tabIndex="0">
+					{title}
+				</h2>
 			</div>
 		</ClayLayout.ContentCol>
 	</ClayLayout.ContentRow>

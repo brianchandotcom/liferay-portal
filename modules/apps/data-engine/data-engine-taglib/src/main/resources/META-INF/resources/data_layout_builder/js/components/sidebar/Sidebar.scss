@@ -26,6 +26,13 @@
 
 		.sidebar-header {
 			padding-bottom: 0;
+			.component-title {
+				h2 {
+					font-size: 1.25rem;
+					line-height: 1.25;
+					margin-bottom: 0;
+				}
+			}
 		}
 	}
 

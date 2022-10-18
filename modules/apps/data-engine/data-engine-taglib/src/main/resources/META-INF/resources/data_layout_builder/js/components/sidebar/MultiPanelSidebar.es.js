@@ -138,7 +138,7 @@ export default function MultiPanelSidebar({
 				>
 					<ul className="tbar-nav">
 						{panels.reduce((elements, group, groupIndex) => {
-							const buttons = group.map((panelId) => {
+							const buttons = group.map((panelId, index) => {
 								const panel = sidebarPanels[panelId];
 
 								const active =
@@ -190,6 +190,9 @@ export default function MultiPanelSidebar({
 												onFocus={prefetch}
 												onMouseEnter={prefetch}
 												symbol={icon}
+												tabIndex={
+													index === 0 ? '0' : '-1'
+												}
 												title={label}
 											/>
 										)}
@@ -211,6 +214,7 @@ export default function MultiPanelSidebar({
 				</nav>
 
 				<div
+					aria-label={Liferay.Language.get('sidebar')}
 					className={classNames('multi-panel-sidebar-content', {
 						'multi-panel-sidebar-content-open': open,
 					})}

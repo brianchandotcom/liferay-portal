@@ -49,7 +49,7 @@
 			<finder-column name="defaultLayoutUtilityPageEntry" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_N_T" return-type="Collection">
+		<finder name="G_N_T" return-type="LayoutUtilityPageEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 			<finder-column name="type" />

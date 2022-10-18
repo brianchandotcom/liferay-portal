@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
-	immediate = true, service = MessageListener.class
+	service = MessageListener.class
 )
 public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 

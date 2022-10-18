@@ -293,17 +293,18 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 	private static final Set<String> _layoutRevisionMethodNames = new HashSet<>(
 		Arrays.asList(
 			"getColorScheme", "getColorSchemeId", "getCss", "getCssText",
-			"getDescription", "getGroupId", "getHTMLTitle", "getIconImage",
-			"getIconImageId", "getKeywords", "getLayoutSet", "getModifiedDate",
-			"getName", "getNameMap", "getRobots", "getTarget", "getTheme",
-			"getThemeId", "getThemeSetting", "getTitle", "getTypeSettings",
-			"getTypeSettingsProperties", "getTypeSettingsProperty",
-			"isContentDisplayPage", "isCustomizable", "isEscapedModel",
-			"isIconImage", "isInheritLookAndFeel", "setColorSchemeId", "setCss",
-			"setDescription", "setDescriptionMap", "setEscapedModel",
-			"setGroupId", "setIconImage", "setIconImageId", "setKeywords",
-			"setKeywordsMap", "setModifiedDate", "setName", "setNameMap",
-			"setRobots", "setRobotsMap", "setThemeId", "setTitle",
+			"getDescription", "getDescriptionMap", "getKeywordsMap",
+			"getGroupId", "getHTMLTitle", "getIconImage", "getIconImageId",
+			"getKeywords", "getLayoutSet", "getModifiedDate", "getName",
+			"getNameMap", "getRobots", "getRobotsMap", "getTarget", "getTheme",
+			"getThemeId", "getThemeSetting", "getTitle", "getTitleMap",
+			"getTypeSettings", "getTypeSettingsProperties",
+			"getTypeSettingsProperty", "isContentDisplayPage", "isCustomizable",
+			"isEscapedModel", "isIconImage", "isInheritLookAndFeel",
+			"setColorSchemeId", "setCss", "setDescription", "setDescriptionMap",
+			"setEscapedModel", "setGroupId", "setIconImage", "setIconImageId",
+			"setKeywords", "setKeywordsMap", "setModifiedDate", "setName",
+			"setNameMap", "setRobots", "setRobotsMap", "setThemeId", "setTitle",
 			"setTitleMap", "setTypeSettings", "setTypeSettingsProperties"));
 
 	private final Layout _layout;

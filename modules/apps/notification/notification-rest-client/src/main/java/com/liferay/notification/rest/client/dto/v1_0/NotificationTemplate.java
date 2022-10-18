@@ -81,25 +81,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Long[] attachmentObjectFieldIds;
 
-	public String getBcc() {
-		return bcc;
-	}
-
-	public void setBcc(String bcc) {
-		this.bcc = bcc;
-	}
-
-	public void setBcc(UnsafeSupplier<String, Exception> bccUnsafeSupplier) {
-		try {
-			bcc = bccUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String bcc;
-
 	public Map<String, String> getBody() {
 		return body;
 	}
@@ -120,25 +101,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> body;
-
-	public String getCc() {
-		return cc;
-	}
-
-	public void setCc(String cc) {
-		this.cc = cc;
-	}
-
-	public void setCc(UnsafeSupplier<String, Exception> ccUnsafeSupplier) {
-		try {
-			cc = ccUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String cc;
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -202,46 +164,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected String description;
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public void setFrom(UnsafeSupplier<String, Exception> fromUnsafeSupplier) {
-		try {
-			from = fromUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String from;
-
-	public Map<String, String> getFromName() {
-		return fromName;
-	}
-
-	public void setFromName(Map<String, String> fromName) {
-		this.fromName = fromName;
-	}
-
-	public void setFromName(
-		UnsafeSupplier<Map<String, String>, Exception> fromNameUnsafeSupplier) {
-
-		try {
-			fromName = fromNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> fromName;
 
 	public Long getId() {
 		return id;
@@ -324,24 +246,16 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Long objectDefinitionId;
 
-	public RecipientType getRecipientType() {
+	public String getRecipientType() {
 		return recipientType;
 	}
 
-	public String getRecipientTypeAsString() {
-		if (recipientType == null) {
-			return null;
-		}
-
-		return recipientType.toString();
-	}
-
-	public void setRecipientType(RecipientType recipientType) {
+	public void setRecipientType(String recipientType) {
 		this.recipientType = recipientType;
 	}
 
 	public void setRecipientType(
-		UnsafeSupplier<RecipientType, Exception> recipientTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> recipientTypeUnsafeSupplier) {
 
 		try {
 			recipientType = recipientTypeUnsafeSupplier.get();
@@ -351,7 +265,28 @@ public class NotificationTemplate implements Cloneable, Serializable {
 		}
 	}
 
-	protected RecipientType recipientType;
+	protected String recipientType;
+
+	public Object[] getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(Object[] recipients) {
+		this.recipients = recipients;
+	}
+
+	public void setRecipients(
+		UnsafeSupplier<Object[], Exception> recipientsUnsafeSupplier) {
+
+		try {
+			recipients = recipientsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object[] recipients;
 
 	public Map<String, String> getSubject() {
 		return subject;
@@ -373,27 +308,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> subject;
-
-	public Map<String, String> getTo() {
-		return to;
-	}
-
-	public void setTo(Map<String, String> to) {
-		this.to = to;
-	}
-
-	public void setTo(
-		UnsafeSupplier<Map<String, String>, Exception> toUnsafeSupplier) {
-
-		try {
-			to = toUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> to;
 
 	public String getType() {
 		return type;
@@ -444,39 +358,6 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	public String toString() {
 		return NotificationTemplateSerDes.toJSON(this);
-	}
-
-	public static enum RecipientType {
-
-		ROLE("role"), TERM("term"), USER("user");
-
-		public static RecipientType create(String value) {
-			for (RecipientType recipientType : values()) {
-				if (Objects.equals(recipientType.getValue(), value) ||
-					Objects.equals(recipientType.name(), value)) {
-
-					return recipientType;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private RecipientType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
 }

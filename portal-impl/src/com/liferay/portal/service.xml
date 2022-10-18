@@ -1267,7 +1267,7 @@
 		<!-- Other fields -->
 
 		<column name="organizationId" type="long" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="sunOpen" type="int" />
 		<column name="sunClose" type="int" />
 		<column name="monOpen" type="int" />
@@ -1287,7 +1287,7 @@
 
 		<order by="asc">
 			<order-column name="organizationId" />
-			<order-column name="typeId" />
+			<order-column name="listTypeId" />
 		</order>
 
 		<!-- Finder methods -->

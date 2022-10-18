@@ -17,8 +17,7 @@
 </tr>
 <tr>
 	<td>GLOBAL_SEARCH_SUGGESTION</td>
-	<td>//div[contains(@class,'commerce-suggestions__item ') and contains(.,'${key_entryName}')]
-</td>
+	<td>//div[contains(@class,'commerce-suggestions__item ') and contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -738,10 +738,10 @@ public class UsersAdminImpl implements UsersAdmin {
 			ParamUtil.getString(actionRequest, "orgLaborsIndexes"), 0);
 
 		for (int orgLaborsIndex : orgLaborsIndexes) {
-			long typeId = ParamUtil.getLong(
+			long listTypeId = ParamUtil.getLong(
 				actionRequest, "orgLaborTypeId" + orgLaborsIndex, -1);
 
-			if (typeId == -1) {
+			if (listTypeId == -1) {
 				continue;
 			}
 
@@ -780,7 +780,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			OrgLabor orgLabor = OrgLaborLocalServiceUtil.createOrgLabor(
 				orgLaborId);
 
-			orgLabor.setTypeId(typeId);
+			orgLabor.setListTypeId(listTypeId);
 			orgLabor.setSunOpen(sunOpen);
 			orgLabor.setSunClose(sunClose);
 			orgLabor.setMonOpen(monOpen);
@@ -1327,7 +1327,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		for (OrgLabor orgLabor : orgLabors) {
 			long orgLaborId = orgLabor.getOrgLaborId();
 
-			long typeId = orgLabor.getTypeId();
+			long listTypeId = orgLabor.getListTypeId();
 			int sunOpen = orgLabor.getSunOpen();
 			int sunClose = orgLabor.getSunClose();
 			int monOpen = orgLabor.getMonOpen();
@@ -1345,7 +1345,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 			if (orgLaborId <= 0) {
 				orgLabor = OrgLaborServiceUtil.addOrgLabor(
-					classPK, typeId, sunOpen, sunClose, monOpen, monClose,
+					classPK, listTypeId, sunOpen, sunClose, monOpen, monClose,
 					tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
 					friOpen, friClose, satOpen, satClose);
 
@@ -1353,9 +1353,9 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 			else {
 				OrgLaborServiceUtil.updateOrgLabor(
-					orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose,
-					tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
-					friOpen, friClose, satOpen, satClose);
+					orgLaborId, listTypeId, sunOpen, sunClose, monOpen,
+					monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen,
+					thuClose, friOpen, friClose, satOpen, satClose);
 			}
 
 			orgLaborsIds.add(orgLaborId);

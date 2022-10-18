@@ -99,6 +99,8 @@ definition {
 	@description = "LPS-143065 - Verify that the file can be downloaded (a download button appears on the side of the name on the mouse hover)"
 	@priority = "4"
 	test CanDownloadFile {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151581",
 			objectName = "CustomObject151581",
@@ -256,6 +258,8 @@ definition {
 	@description = "LPS-143065 - Verify that the user can't upload a file with a invalid extension and the error message is displayed"
 	@priority = "4"
 	test CantUploadInvalidExtensionFile {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151574",
 			objectName = "CustomObject151574",
@@ -288,6 +292,8 @@ definition {
 	@description = "LPS-143065 - Verify that the user can't upload a file with a invalid size and the error message is displayed"
 	@priority = "4"
 	test CantUploadInvalidSizeFile {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151575",
 			objectName = "CustomObject151575",
@@ -358,6 +364,8 @@ definition {
 	@description = "LPS-143065 - Verify that when the user click on the file name, the file can be viewed"
 	@priority = "4"
 	test CanViewFile {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151576",
 			objectName = "CustomObject151576",
@@ -398,6 +406,8 @@ definition {
 	@description = "LPS-143065 - Verify if the name and extension of the file are displayed when the user upload a image"
 	@priority = "4"
 	test CanViewFileNameAndExtension {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151576",
 			objectName = "CustomObject151576",

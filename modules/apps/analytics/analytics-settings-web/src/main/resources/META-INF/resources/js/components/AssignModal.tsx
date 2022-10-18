@@ -21,10 +21,10 @@ import {TProperty} from '../components/PropertiesTable';
 import ChannelTab from './ChannelTab';
 import SitesTab from './SitesTab';
 
-interface IAssignModal {
+interface IAssignModalProps {
 	observer: any;
 	onCloseModal: () => void;
-	propertyData: TProperty;
+	property: TProperty;
 }
 
 export enum ETabs {
@@ -32,39 +32,39 @@ export enum ETabs {
 	Sites = 1,
 }
 
-const AssignModal: React.FC<IAssignModal> = ({
+const AssignModal: React.FC<IAssignModalProps> = ({
 	observer,
 	onCloseModal,
-	propertyData,
+	property,
 }) => {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useState<number>(
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState<ETabs>(
 		ETabs.Channel
 	);
 
 	return (
-		<ClayModal observer={observer} size="lg">
+		<ClayModal center observer={observer} size="lg">
 			<ClayModal.Header>
-				{Liferay.Language.get('assign-to')} {propertyData.name}
+				{Liferay.Language.get('assign-to')} {property.name}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<ClayTabs modern>
 					<ClayTabs.Item
-						active={activeTabKeyValue === 0}
+						active={activeTabKeyValue === ETabs.Channel}
 						innerProps={{
 							'aria-controls': 'tabpanel-1',
 						}}
-						onClick={() => setActiveTabKeyValue(0)}
+						onClick={() => setActiveTabKeyValue(ETabs.Channel)}
 					>
 						{Liferay.Language.get('channel')}
 					</ClayTabs.Item>
 
 					<ClayTabs.Item
-						active={activeTabKeyValue === 1}
+						active={activeTabKeyValue === ETabs.Sites}
 						innerProps={{
 							'aria-controls': 'tabpanel-2',
 						}}
-						onClick={() => setActiveTabKeyValue(1)}
+						onClick={() => setActiveTabKeyValue(ETabs.Sites)}
 					>
 						{Liferay.Language.get('sites')}
 					</ClayTabs.Item>
@@ -86,7 +86,7 @@ const AssignModal: React.FC<IAssignModal> = ({
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={onCloseModal}
+							onClick={() => onCloseModal()}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>

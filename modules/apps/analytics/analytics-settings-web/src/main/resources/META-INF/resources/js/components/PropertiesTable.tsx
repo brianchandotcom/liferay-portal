@@ -125,7 +125,7 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 				<AssignModal
 					observer={observer}
 					onCloseModal={() => onOpenChange(false)}
-					propertyData={property}
+					property={property}
 				/>
 			)}
 		</ClayTable>

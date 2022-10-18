@@ -14,14 +14,14 @@
 
 import React from 'react';
 import {TProperty} from '../components/PropertiesTable';
-interface IAssignModal {
+interface IAssignModalProps {
 	observer: any;
 	onCloseModal: () => void;
-	propertyData: TProperty;
+	property: TProperty;
 }
 export declare enum ETabs {
 	Channel = 0,
 	Sites = 1,
 }
-declare const AssignModal: React.FC<IAssignModal>;
+declare const AssignModal: React.FC<IAssignModalProps>;
 export default AssignModal;

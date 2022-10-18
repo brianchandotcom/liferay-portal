@@ -499,7 +499,6 @@ function EditSXPBlueprintForm({
 			highlightConfiguration: highlightConfig
 				? JSON.parse(highlightConfig)
 				: {},
-			indexConfiguration: indexConfig || {},
 			parameterConfiguration: parameterConfig
 				? JSON.parse(parameterConfig)
 				: {},
@@ -508,6 +507,10 @@ function EditSXPBlueprintForm({
 			},
 			sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
 		};
+
+		if (featureFlagLps153813) {
+			configuration.indexConfiguration = indexConfig || {};
+		}
 
 		return configuration;
 	};

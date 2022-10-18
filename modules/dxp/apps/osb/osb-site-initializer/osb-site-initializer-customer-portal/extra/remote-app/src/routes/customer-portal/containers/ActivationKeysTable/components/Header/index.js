@@ -52,7 +52,8 @@ const ActivationKeysTableHeader = ({
 	useEffect(() => {
 		if (filteredAccounts.length) {
 			setIsAdminOrPartnerManager(true);
-		} else {
+		}
+		else {
 			setIsAdminOrPartnerManager(false);
 		}
 	}, [isAdminOrPartnerManager, filteredAccounts]);

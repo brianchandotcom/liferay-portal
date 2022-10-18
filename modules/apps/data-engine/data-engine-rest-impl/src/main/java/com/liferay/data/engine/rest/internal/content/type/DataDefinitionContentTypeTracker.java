@@ -17,7 +17,6 @@ package com.liferay.data.engine.rest.internal.content.type;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
 import java.util.Optional;
@@ -111,8 +110,5 @@ public class DataDefinitionContentTypeTracker {
 		_dataDefinitionContentTypesByClassNameId = new TreeMap<>();
 	private final Map<String, DataDefinitionContentType>
 		_dataDefinitionContentTypesByContentType = new TreeMap<>();
-
-	@Reference
-	private Portal _portal;
 
 }

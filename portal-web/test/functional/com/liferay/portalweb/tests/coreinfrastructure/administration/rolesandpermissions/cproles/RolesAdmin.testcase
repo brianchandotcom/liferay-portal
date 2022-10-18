@@ -198,15 +198,13 @@ definition {
 			roleKey = "Permission Scope",
 			roleTitle = "Permission Scope");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.document.library",
-			roleTitle = "Permission Scope",
-			roleType = "regular");
-
 		Role.openRolesAdmin();
 
-		RoleNavigator.gotoDefineRolePermissions(roleTitle = "Permission Scope");
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Permission Scope",
+			siteNameScope = "${siteName}");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",

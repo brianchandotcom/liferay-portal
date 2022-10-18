@@ -32,19 +32,6 @@ definition {
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
 	}
 
-	macro assertTextButton {
-		var key_text = "${text}";
-
-		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
-	}
-
-	macro assertInstructionsTable {
-		for (var text : list "${textList}") {
-			var key_text = "${text}";
-
-			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
-		}
-	}
 	macro assertInfoNewKeyCard {
 		if (isSet(product)) {
 			var key_label = "Product";
@@ -86,6 +73,14 @@ definition {
 			var key_value = "${instanceSize}";
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
+		}
+	}
+
+	macro assertInstructionsTable {
+		for (var text : list "${textList}") {
+			var key_text = "${text}";
+
+			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
 	}
 
@@ -219,6 +214,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_POSITION",
 			value1 = "${text}");
+	}
+
+	macro assertTextButton {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
 	}
 
 	macro assertTooltipIsVisible {

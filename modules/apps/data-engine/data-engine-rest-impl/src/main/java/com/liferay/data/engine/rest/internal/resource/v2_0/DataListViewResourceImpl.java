@@ -19,7 +19,6 @@ import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataDefinitionEntityModel;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
@@ -415,9 +414,6 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new DataDefinitionEntityModel();
-
-	@Reference
-	private DataDefinitionContentTypeTracker _dataDefinitionContentTypeTracker;
 
 	@Reference
 	private DataDefinitionModelResourcePermission

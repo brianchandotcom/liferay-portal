@@ -80,6 +80,26 @@
 	<td>//div[contains(text(),'${key_emptyMessaage}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MY_SUBMISSIONS_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SUBMISSIONS_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SUBMISSIONS_TABLE_TASK</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SUBMISSIONS_TABLE_DEFINITION</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]//a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

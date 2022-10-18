@@ -19,8 +19,6 @@
 <%
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-List<String> domains = accountEntryDisplay.getDomains();
-
 boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), AccountActionKeys.MANAGE_DOMAINS);
 %>
 
@@ -67,7 +65,7 @@ boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, 
 		</c:if>
 	</clay:content-row>
 
-	<aui:input name="domains" type="hidden" value="<%= StringUtil.merge(domains) %>" />
+	<aui:input name="domains" type="hidden" value="<%= accountEntryDisplay.getDomains() %>" />
 
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"
@@ -75,11 +73,11 @@ boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, 
 		headerNames="title,null"
 		id="accountDomainsSearchContainer"
 		iteratorURL="<%= currentURLObj %>"
-		total="<%= domains.size() %>"
+		total="<%= ArrayUtil.getLength(accountEntryDisplay.getDomainsArray()) %>"
 	>
 		<liferay-ui:search-container-results
 			calculateStartAndEnd="<%= true %>"
-			results="<%= domains %>"
+			results="<%= ListUtil.fromArray(accountEntryDisplay.getDomainsArray()) %>"
 		/>
 
 		<liferay-ui:search-container-row

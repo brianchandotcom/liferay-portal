@@ -32,6 +32,12 @@ definition {
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
 	}
 
+	macro assertTextButton {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
+	}
+
 	macro assertInstructionsTable {
 		for (var text : list "${textList}") {
 			var key_text = "${text}";

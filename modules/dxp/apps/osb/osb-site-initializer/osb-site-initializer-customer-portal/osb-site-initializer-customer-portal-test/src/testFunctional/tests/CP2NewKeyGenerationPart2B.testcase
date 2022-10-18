@@ -445,9 +445,11 @@ definition {
 		}
 
 		task ("Then the user can go through the first flow") {
-			CP2ActivationKeys.selectKeyType(key_option = "Production");
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
 
-			CP2ActivationKeys.selectSubscription(position = "1");
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
 
 			Button.click(button = "Next");
 		}

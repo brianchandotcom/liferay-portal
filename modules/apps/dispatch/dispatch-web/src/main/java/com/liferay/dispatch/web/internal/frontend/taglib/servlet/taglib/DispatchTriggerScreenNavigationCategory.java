@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -97,8 +96,5 @@ public class DispatchTriggerScreenNavigationCategory
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 
 import java.util.Map;
 
@@ -81,9 +80,6 @@ public class PortletConfigurationImporterHelper {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private PortletPreferencesPortletConfigurationImporter

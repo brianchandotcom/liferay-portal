@@ -217,9 +217,10 @@ public class FriendlyURLServlet extends HttpServlet {
 			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
 
 			if (layout != null) {
+				User user = _getUser(httpServletRequest);
+
 				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(
-						_getUser(httpServletRequest));
+					PermissionCheckerFactoryUtil.create(user);
 
 				if (!LayoutPermissionUtil.contains(
 						permissionChecker, layout, ActionKeys.VIEW)) {
@@ -234,6 +235,14 @@ public class FriendlyURLServlet extends HttpServlet {
 					}
 
 					throw new LayoutPermissionException();
+				}
+
+				if (user.isDefaultUser() && layout.isSystem() &&
+					Objects.equals(
+						layout.getFriendlyURL(),
+						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+
+					throw new NoSuchLayoutException();
 				}
 
 				if ((redirectProviderRedirect != null) &&

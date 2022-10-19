@@ -63,7 +63,7 @@ public class IPGeocoderCountrySegmentsFieldCustomizer
 	public List<Field.Option> getOptions(Locale locale) {
 		return TransformUtil.transform(
 			_countryService.getCompanyCountries(
-			CompanyThreadLocal.getCompanyId()),
+				CompanyThreadLocal.getCompanyId()),
 			country -> new Field.Option(
 				country.getName(locale), country.getA2()));
 	}

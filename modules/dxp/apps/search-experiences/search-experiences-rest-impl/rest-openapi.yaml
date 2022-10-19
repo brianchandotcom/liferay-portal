@@ -155,6 +155,13 @@ components:
                         type:
                             type: string
                     type: object
+                indexConfiguration:
+                    properties:
+                        external:
+                            type: boolean
+                        indexName:
+                            type: string
+                    type: object
                 parameterConfiguration:
                     properties:
                         parameters:
@@ -454,6 +461,12 @@ components:
                 templateVariable:
                     type: string
             type: object
+        SearchIndex:
+            properties:
+                external:
+                    type: boolean
+                name:
+                    type: string
         SearchRequest:
             properties:
                 queryString:
@@ -646,6 +659,23 @@ paths:
                                     $ref: "#/components/schemas/QueryPrefilterContributor"
                                 type: array
             tags: ["QueryPrefilterContributor"]
+    /search-indexes:
+        get:
+            operationId: getSearchIndexesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchIndex"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchIndex"
+                                type: array
+            tags: ["SearchIndex"]
     /searchable-asset-names:
         get:
             operationId: getSearchableAssetNamesPage

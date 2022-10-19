@@ -35,12 +35,15 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVe
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -49,12 +52,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -63,6 +68,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -74,8 +81,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -235,6 +244,41 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetAvailableLocales() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			new HashMap<>(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, LocaleUtil.getSiteDefault(), null, false, false,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		List<Locale> availableLocales =
+			contentDashboardItem.getAvailableLocales();
+
+		Assert.assertEquals(
+			availableLocales.toString(), 2, availableLocales.size());
+
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.SPAIN));
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
+	}
+
+	@Test
 	public void testGetContentDashboardItemVersionActions() throws Exception {
 		TestJournalArticleContentDashboardItemVersionAction
 			testJournalArticleContentDashboardItemVersionAction =
@@ -291,6 +335,21 @@ public class JournalArticleContentDashboardItemTest {
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	@Test
+	public void testGetCreateDate() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			journalArticle.getCreateDate(),
+			contentDashboardItem.getCreateDate());
 	}
 
 	@Test
@@ -450,6 +509,99 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetDescription() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "Description"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, LocaleUtil.getSiteDefault(), null, false, false,
+			_serviceContext);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			journalArticle.getDescription(LocaleUtil.US),
+			contentDashboardItem.getDescription(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetInfoItemReference() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			infoItemReference, contentDashboardItem.getInfoItemReference());
+	}
+
+	@Test
+	public void testGetLatestContentDashboardItemVersions() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticleWithWorkflow(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true);
+
+		journalArticle = updateArticleStatus(
+			journalArticle, WorkflowConstants.STATUS_APPROVED,
+			journalArticle.getUserId());
+
+		JournalArticle latestJournalArticle = updateArticleStatus(
+			journalArticle, WorkflowConstants.STATUS_DRAFT,
+			journalArticle.getUserId());
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		List<ContentDashboardItemVersion> contentDashboardItemVersions =
+			contentDashboardItem.getLatestContentDashboardItemVersions(
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			contentDashboardItemVersions.toString(), 2,
+			contentDashboardItemVersions.size());
+
+		ContentDashboardItemVersion contentDashboardItemVersion =
+			contentDashboardItemVersions.get(0);
+
+		Assert.assertEquals(
+			_language.get(LocaleUtil.US, "approved"),
+			contentDashboardItemVersion.getLabel());
+		Assert.assertEquals(
+			String.valueOf(journalArticle.getVersion()),
+			contentDashboardItemVersion.getVersion());
+
+		contentDashboardItemVersion = contentDashboardItemVersions.get(1);
+
+		Assert.assertEquals(
+			_language.get(LocaleUtil.US, "draft"),
+			contentDashboardItemVersion.getLabel());
+		Assert.assertEquals(
+			String.valueOf(latestJournalArticle.getVersion()),
+			contentDashboardItemVersion.getVersion());
+	}
+
+	@Test
 	public void testGetModifiedDate() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -477,6 +629,33 @@ public class JournalArticleContentDashboardItemTest {
 		Assert.assertEquals(
 			_group.getDescriptiveName(LocaleUtil.US),
 			contentDashboardItem.getScopeName(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetSpecificInformation() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		Map<String, Object> specificInformation =
+			contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+
+		Assert.assertEquals(
+			specificInformation.toString(), 3, specificInformation.size());
+
+		Assert.assertEquals(
+			specificInformation.get("display-date"),
+			journalArticle.getDisplayDate());
+		Assert.assertEquals(
+			specificInformation.get("expiration-date"),
+			journalArticle.getExpirationDate());
+		Assert.assertEquals(
+			specificInformation.get("review-date"),
+			journalArticle.getReviewDate());
 	}
 
 	@Test
@@ -512,6 +691,22 @@ public class JournalArticleContentDashboardItemTest {
 		Assert.assertEquals(
 			journalArticle.getTitle(LocaleUtil.US),
 			contentDashboardItem.getTitle(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetTypeLabel() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			ResourceActionsUtil.getModelResource(
+				LocaleUtil.US, JournalArticle.class.getName()),
+			contentDashboardItem.getTypeLabel(LocaleUtil.US));
 	}
 
 	@Test
@@ -767,6 +962,70 @@ public class JournalArticleContentDashboardItemTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	@Test
+	public void testIsViewableWithNoAssetDisplayPageEntry() throws Exception {
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
+
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		try {
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			ContentDashboardItem contentDashboardItem =
+				_contentDashboardItemFactory.create(
+					journalArticle.getResourcePrimKey());
+
+			Assert.assertFalse(
+				contentDashboardItem.isViewable(mockHttpServletRequest));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testViewVersionURL() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ContentDashboardItem contentDashboardItem =
+			_contentDashboardItemFactory.create(
+				journalArticle.getResourcePrimKey());
+
+		VersionableContentDashboardItem versionableContentDashboardItem =
+			(VersionableContentDashboardItem)contentDashboardItem;
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
+
+		String viewVersionsURL =
+			versionableContentDashboardItem.getViewVersionsURL(
+				mockHttpServletRequest);
+
+		Assert.assertNotNull(viewVersionsURL);
+		Assert.assertTrue(
+			viewVersionsURL.contains(
+				"articleId=" + journalArticle.getArticleId()));
+		Assert.assertTrue(
+			viewVersionsURL.contains(
+				"mvcPath=" + HtmlUtil.escapeURL("/view_article_history.jsp")));
 	}
 
 	protected JournalArticle updateArticleStatus(

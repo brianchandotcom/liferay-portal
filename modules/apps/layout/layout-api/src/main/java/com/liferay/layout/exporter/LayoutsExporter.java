@@ -32,4 +32,7 @@ public interface LayoutsExporter {
 	public File exportPageTemplates(long[] layoutPageTemplateEntryIds)
 		throws Exception;
 
+	public File exportUtilityPages(long[] layoutUtilityPageEntryIds)
+		throws Exception;
+
 }

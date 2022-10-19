@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.exporter.LayoutUtilityPageEntryExporter;
+import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
 import java.io.FileInputStream;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -81,17 +78,8 @@ public class ExportLayoutUtilityPageEntriesMVCResourceCommand
 		throws PortletException {
 
 		try {
-			List<LayoutUtilityPageEntry> layoutUtilityPageEntries =
-				new ArrayList<>();
-
-			for (long layoutUtilityPageEntryId : layoutUtilityPageEntryIds) {
-				layoutUtilityPageEntries.add(
-					_layoutUtilityPageEntryLocalService.
-						fetchLayoutUtilityPageEntry(layoutUtilityPageEntryId));
-			}
-
-			return _layoutUtilityPageEntryExporter.exportUtilityPages(
-				layoutUtilityPageEntries);
+			return _layoutsExporter.exportUtilityPages(
+				layoutUtilityPageEntryIds);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -134,7 +122,7 @@ public class ExportLayoutUtilityPageEntriesMVCResourceCommand
 	}
 
 	@Reference
-	private LayoutUtilityPageEntryExporter _layoutUtilityPageEntryExporter;
+	private LayoutsExporter _layoutsExporter;
 
 	@Reference
 	private LayoutUtilityPageEntryLocalService

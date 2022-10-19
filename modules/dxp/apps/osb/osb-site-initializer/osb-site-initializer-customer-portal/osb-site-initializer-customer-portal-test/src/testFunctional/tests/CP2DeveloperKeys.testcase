@@ -65,7 +65,6 @@ definition {
     @description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
 	@priority = "3"
 	test ConfirmRedirectionToAnotherPage {
-
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
@@ -84,7 +83,7 @@ definition {
             Navigator.selectSpecificWindow(windowTitle = "Deploying Activation Keys – Liferay Help Center"); 
         }
 
-        task("Assert the new page as open and go back to 'Product Activation page' and close the page 'Deploying Activation Keys'") {
+		task ("Assert the new page as open and go back to 'Product Activation page' and close the page 'Deploying Activation Keys'") {
             AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
 
             Navigator.closeSpecificWindow(

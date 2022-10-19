@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.upgrade.v3_2_5;
 
+import com.liferay.document.library.internal.util.DLFileEntryTypePermissionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
@@ -27,11 +28,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -54,10 +52,6 @@ public class DLFileEntryTypesDDMStructureUpgradeProcess extends UpgradeProcess {
 		String dlFileEntryMetadataResourceName =
 			_ddmPermissionSupport.getStructureModelResourceName(
 				DLFileEntryMetadata.class.getName());
-
-		List<ResourceAction> dlFileEntryTypeResourceActions =
-			_resourceActionLocalService.getResourceActions(
-				DLFileEntryType.class.getName());
 
 		List<ResourceAction> dlFileEntryMetadataResourceAction =
 			_resourceActionLocalService.getResourceActions(
@@ -87,38 +81,15 @@ public class DLFileEntryTypesDDMStructureUpgradeProcess extends UpgradeProcess {
 						ResourceConstants.SCOPE_INDIVIDUAL,
 						String.valueOf(fileEntryTypeId));
 
-				Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
-
-				for (ResourcePermission resourcePermission :
-						resourcePermissions) {
-
-					long actionIds = resourcePermission.getActionIds();
-
-					List<String> resourcePermissionActionIds =
-						new ArrayList<>();
-
-					for (ResourceAction resourceAction :
-							dlFileEntryTypeResourceActions) {
-
-						String actionId = resourceAction.getActionId();
-
-						if (((actionIds & resourceAction.getBitwiseValue()) ==
-								resourceAction.getBitwiseValue()) &&
-							dlFileEntryMetadataActionIds.contains(actionId)) {
-
-							resourcePermissionActionIds.add(actionId);
-						}
-					}
-
-					roleIdsToActionIds.put(
-						resourcePermission.getRoleId(),
-						resourcePermissionActionIds.toArray(new String[0]));
-				}
-
 				_resourcePermissionLocalService.setResourcePermissions(
 					companyId, dlFileEntryMetadataResourceName,
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(dataDefinitionId), roleIdsToActionIds);
+					String.valueOf(dataDefinitionId),
+					DLFileEntryTypePermissionUtil.getRoleIdsToActionIds(
+						_resourceActionLocalService.getResourceActions(
+							DLFileEntryType.class.getName()),
+						resourcePermissions,
+						dlFileEntryMetadataActionIds::contains));
 			}
 		}
 	}

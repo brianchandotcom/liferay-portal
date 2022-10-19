@@ -15,7 +15,7 @@ definition {
 			nestedObjectParameterName = "${nestedObjectParameterName}",
 			objectId = "${objectId}",
 			responseToParse = "${responseToParse}");
-			
+
 		TestUtils.assertEquals(
 			actual = "${actualManagerFirstname}",
 			expected = "${expectedManagerFirstname}");
@@ -291,7 +291,7 @@ definition {
 		return "${json}";
 	}
 
-	macro _getObjectFirstnameById {	
+	macro _getObjectFirstnameById {
 		var objectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].firstname");
 
 		return "${objectFirstname}";
@@ -429,9 +429,8 @@ definition {
 	}
 
 	macro assertEmployeeHasNestedFieldManager {
-		
 		var nestedObjectParameterName = StringUtil.replace("${nestedField}", "Id", "");
-		
+
 		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
 			expectedEmployeeFirstname = "${expectedEmployeeFirstname}",
 			objectId = "${objectId}",

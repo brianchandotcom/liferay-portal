@@ -1238,7 +1238,7 @@ definition {
 			Click(
 				key_fieldLabel = "Border Radius",
 				key_text = "theme",
-				locator1 = "PageEditor#FIELDSET_ICON");
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 			MenuItem.click(menuItem = "${borderRadius}");
 
@@ -1279,7 +1279,7 @@ definition {
 			Click(
 				key_fieldLabel = "Shadow",
 				key_text = "theme",
-				locator1 = "PageEditor#FIELDSET_ICON");
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 			MenuItem.click(menuItem = "${boxShadow}");
 
@@ -3077,7 +3077,7 @@ definition {
 				Click(
 					key_fieldLabel = "Border Radius",
 					key_text = "theme",
-					locator1 = "PageEditor#FIELDSET_ICON");
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 				MenuItem.click(menuItem = "${borderRadius}");
 
@@ -3097,7 +3097,7 @@ definition {
 				Click(
 					key_fieldLabel = "Shadow",
 					key_text = "theme",
-					locator1 = "PageEditor#FIELDSET_ICON");
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 				MenuItem.click(menuItem = "${boxShadow}");
 
@@ -3430,7 +3430,7 @@ definition {
 				Click(
 					key_fieldLabel = "Border Radius",
 					key_text = "theme",
-					locator1 = "PageEditor#FIELDSET_ICON");
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 				MenuItem.click(menuItem = "${borderRadius}");
 
@@ -3450,7 +3450,7 @@ definition {
 				Click(
 					key_fieldLabel = "Shadow",
 					key_text = "theme",
-					locator1 = "PageEditor#FIELDSET_ICON");
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 				MenuItem.click(menuItem = "${boxShadow}");
 

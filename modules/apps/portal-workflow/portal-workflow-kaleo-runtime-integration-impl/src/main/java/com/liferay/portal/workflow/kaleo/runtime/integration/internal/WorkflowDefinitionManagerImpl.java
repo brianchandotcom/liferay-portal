@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
-import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
@@ -510,8 +509,5 @@ public class WorkflowDefinitionManagerImpl
 
 	@Reference
 	private WorkflowEngine _workflowEngine;
-
-	@Reference
-	private WorkflowModelParser _workflowModelParser;
 
 }

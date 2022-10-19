@@ -43,7 +43,6 @@ dependencies {
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:site:site-item-selector-api")
-	compileOnly project(":apps:site:site-taglib")
 	compileOnly project(":apps:social:social-bookmarks-taglib")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

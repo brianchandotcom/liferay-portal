@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.Locale;
@@ -130,9 +129,6 @@ public class KaleoDefinitionVersionCTDisplayRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDefinitionVersionCTDisplayRenderer.class);
-
-	@Reference
-	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

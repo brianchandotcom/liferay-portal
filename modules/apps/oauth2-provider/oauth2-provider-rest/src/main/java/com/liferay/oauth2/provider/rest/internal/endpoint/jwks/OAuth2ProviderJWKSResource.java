@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2Authorizati
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Map;
 
@@ -66,13 +67,10 @@ public class OAuth2ProviderJWKSResource {
 			oAuth2AuthorizationServerConfiguration.
 				jwtAccessTokenSigningJSONWebKey());
 
-		_jwks = _jsonFactory.createJSONObject(
-		).put(
+		_jwks = JSONUtil.put(
 			"keys",
-			_jsonFactory.createJSONArray(
-			).put(
-				_jsonFactory.createJSONObject(
-				).put(
+			JSONUtil.put(
+				JSONUtil.put(
 					"alg", jwkJSONObject.get("alg")
 				).put(
 					"e", jwkJSONObject.get("e")
@@ -84,9 +82,8 @@ public class OAuth2ProviderJWKSResource {
 					"n", jwkJSONObject.get("n")
 				).put(
 					"use", jwkJSONObject.get("use")
-				)
-			)
-		).toJSONString();
+				))
+		).toString();
 	}
 
 	@Reference

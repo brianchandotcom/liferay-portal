@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.validation;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
@@ -527,9 +526,6 @@ public class JournalArticleModelValidator
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

@@ -880,6 +880,18 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}
 
+	macro viewVersions {
+		Click(
+			key_dropdownLabel = "${dropDownLabel}",
+			locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
+
+		for (var dropDownItem : list "${dropDownItems}") {
+			AssertVisible(
+				key_text = "${dropDownItem}",
+				locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
+		}
+	}
+
 	macro waitCP20PageToLoad {
 		WaitForVisible(
 			key_userFirstName = "${userFirstName}",

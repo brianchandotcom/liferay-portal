@@ -55,32 +55,33 @@ definition {
 	test HeadersCanBeLocalized {
 		task ("When: on classic tab view") {
 			Click(
-			locator1 = "FrontendDataSet#FDS_DATASET",
-			key_sampleTab = "Clásico");	
+				key_sampleTab = "Clásico",
+				locator1 = "FrontendDataSet#FDS_DATASET");
 		}
 
 		task ("Then: There is no hyphen in any header text") {
 			AssertTextNotPresent(
-				locator1 = "FrontendDataSet#TABLE_ITEM_ROW",
 				key_itemName = "Nombre",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW",
 				value1 = "-");
 		}
 
 		task ("And Then: First letter is capitalized for all headers and localized Spanish headers are present") {
 			AssertTextEquals.assertTextCaseSensitive(
-				locator1 = "FrontendDataSet#COLUMN_NAME",
 				key_columnName = "Nombre",
+				locator1 = "FrontendDataSet#COLUMN_NAME",
 				value1 = "Nombre");
 
 			AssertTextEquals.assertTextCaseSensitive(
-				locator1 = "FrontendDataSet#COLUMN_NAME",
 				key_columnName = "Apellido",
+				locator1 = "FrontendDataSet#COLUMN_NAME",
 				value1 = "Apellido");
 
 			AssertTextEquals.assertTextCaseSensitive(
-				locator1 = "FrontendDataSet#COLUMN_NAME",
 				key_columnName = "Dirección de correo",
+				locator1 = "FrontendDataSet#COLUMN_NAME",
 				value1 = "Dirección de correo");
 		}
 	}
+
 }

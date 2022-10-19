@@ -10,7 +10,6 @@ Import-Package:\
 	!org.apache.abdera.*,\
 	!org.apache.avalon.*,\
 	!org.apache.cxf.aegis.*,\
-	!org.apache.cxf.jaxrs.client.*,\
 	!org.apache.html.dom.*,\
 	!org.apache.log.*,\
 	!org.apache.xmlbeans.*,\

@@ -24,6 +24,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
@@ -49,11 +50,15 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 @Path("/jwks")
 public class LiferayJWKSService extends JwksService {
 
+	/**
+	 * TODO: replace this method with JwksService.getPublicVerificationKeys()
+	 */
 	@GET
-	@Override
 	@Produces(MediaType.APPLICATION_JSON)
-	public JsonWebKeys getPublicVerificationKeys() {
-		return _jsonWebKeys;
+	public Response jwks() {
+		return Response.ok(
+			JwkUtils.jwkSetToJson(_jsonWebKeys)
+		).build();
 	}
 
 	@Activate

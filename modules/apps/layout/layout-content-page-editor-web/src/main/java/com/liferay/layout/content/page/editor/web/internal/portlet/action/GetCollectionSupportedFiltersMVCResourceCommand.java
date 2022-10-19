@@ -22,7 +22,7 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -61,14 +61,14 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			_getSupportedFiltersJSONObject(
-				_jsonFactory.createJSONArray(collections)));
+				JSONFactoryUtil.createJSONArray(collections)));
 	}
 
 	private JSONObject _getSupportedFiltersJSONObject(
 			JSONArray collectionsJSONArray)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		for (int i = 0; i < collectionsJSONArray.length(); i++) {
 			JSONObject collectionJSONObject =
@@ -105,9 +105,6 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 
 		return jsonObject;
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;

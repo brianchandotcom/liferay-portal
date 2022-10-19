@@ -17,7 +17,7 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.internal.constants.SegmentsSourceConstants;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -76,7 +75,7 @@ public class SegmentDTOConverter
 						if (!criteria.isEmpty()) {
 							try {
 								return _toMap(
-									_jsonFactory.createJSONObject(
+									JSONFactoryUtil.createJSONObject(
 										segmentsEntry.getCriteria()));
 							}
 							catch (JSONException jsonException) {
@@ -128,8 +127,5 @@ public class SegmentDTOConverter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentDTOConverter.class);
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

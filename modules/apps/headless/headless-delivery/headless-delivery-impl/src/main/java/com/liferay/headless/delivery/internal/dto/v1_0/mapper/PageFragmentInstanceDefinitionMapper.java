@@ -55,7 +55,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -171,8 +171,9 @@ public class PageFragmentInstanceDefinitionMapper {
 		FragmentEntryLink fragmentEntryLink) {
 
 		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
 
 			JSONObject configJSONObject =
 				editableValuesJSONObject.getJSONObject(
@@ -218,7 +219,7 @@ public class PageFragmentInstanceDefinitionMapper {
 
 							JSONDeserializer<Map<String, Object>>
 								jsonDeserializer =
-									_jsonFactory.createJSONDeserializer();
+									JSONFactoryUtil.createJSONDeserializer();
 
 							value = jsonDeserializer.deserialize(
 								value.toString());
@@ -267,7 +268,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		JSONObject editableValuesJSONObject = null;
 
 		try {
-			editableValuesJSONObject = _jsonFactory.createJSONObject(
+			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 		}
 		catch (JSONException jsonException) {
@@ -971,9 +972,6 @@ public class PageFragmentInstanceDefinitionMapper {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

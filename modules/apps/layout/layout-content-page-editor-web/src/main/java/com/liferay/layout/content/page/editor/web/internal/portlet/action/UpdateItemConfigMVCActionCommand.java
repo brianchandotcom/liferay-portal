@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -70,7 +70,7 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
 			jsonObject.put(
@@ -79,7 +79,7 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
 					themeDisplay.getPlid(),
 					layoutStructure -> layoutStructure.updateItemConfig(
-						_jsonFactory.createJSONObject(itemConfig), itemId))
+						JSONFactoryUtil.createJSONObject(itemConfig), itemId))
 			).put(
 				"pageContents",
 				ContentUtil.getPageContentsJSONArray(
@@ -104,9 +104,6 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateItemConfigMVCActionCommand.class);
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

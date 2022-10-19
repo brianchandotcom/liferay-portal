@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -125,8 +125,9 @@ public class FragmentEntryLinkManager {
 				defaultFragmentRendererContext, httpServletRequest,
 				httpServletResponse);
 
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
 
 			if (fragmentEntryLink.isTypePortlet()) {
 				String portletId = editableValuesJSONObject.getString(
@@ -137,7 +138,7 @@ public class FragmentEntryLinkManager {
 					_getFragmentEntryLinkCommentsJSONArray(
 						fragmentEntryLink, httpServletRequest)
 				).put(
-					"configuration", _jsonFactory.createJSONObject()
+					"configuration", JSONFactoryUtil.createJSONObject()
 				).put(
 					"content", content
 				).put(
@@ -160,12 +161,12 @@ public class FragmentEntryLinkManager {
 					}
 				).put(
 					"defaultConfigurationValues",
-					_jsonFactory.createJSONObject()
+					JSONFactoryUtil.createJSONObject()
 				).put(
 					"editableTypes", Collections.emptyMap()
 				).put(
 					"editableValues",
-					_jsonFactory.createJSONObject(
+					JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getEditableValues())
 				).put(
 					"fragmentEntryId", 0
@@ -194,8 +195,8 @@ public class FragmentEntryLinkManager {
 			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);
 
-			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
-				configuration);
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
 
 			FragmentEntryLinkItemSelectorUtil.
 				addFragmentEntryLinkFieldsSelectorURL(
@@ -349,7 +350,7 @@ public class FragmentEntryLinkManager {
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		try {
 			if (!_commentManager.hasDiscussion(
@@ -375,7 +376,7 @@ public class FragmentEntryLinkManager {
 					QueryUtil.ALL_POS);
 
 				JSONArray childCommentsJSONArray =
-					_jsonFactory.createJSONArray();
+					JSONFactoryUtil.createJSONArray();
 
 				for (Comment childComment : childComments) {
 					childCommentsJSONArray.put(
@@ -488,8 +489,6 @@ public class FragmentEntryLinkManager {
 	private ItemSelector _itemSelector;
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
 	private Portal _portal;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -58,7 +58,7 @@ public class GetCollectionFiltersMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		JSONObject fragmentCollectionFiltersJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		for (FragmentCollectionFilter fragmentCollectionFilter :
 				_fragmentCollectionFilterTracker.
@@ -85,14 +85,14 @@ public class GetCollectionFiltersMVCResourceCommand
 
 	private JSONObject _getConfigurationJSONObject(String configuration) {
 		try {
-			return _jsonFactory.createJSONObject(configuration);
+			return JSONFactoryUtil.createJSONObject(configuration);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 	}
 
@@ -101,8 +101,5 @@ public class GetCollectionFiltersMVCResourceCommand
 
 	@Reference
 	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

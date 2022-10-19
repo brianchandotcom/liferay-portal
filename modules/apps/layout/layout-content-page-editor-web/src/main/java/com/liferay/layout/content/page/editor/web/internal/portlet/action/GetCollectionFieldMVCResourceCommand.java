@@ -58,7 +58,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -112,7 +112,7 @@ public class GetCollectionFieldMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactorys.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -197,10 +197,10 @@ public class GetCollectionFieldMVCResourceCommand
 			String templateKey)
 		throws PortalException {
 
-		JSONObject jsonObject = _jsonFactorys.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject layoutObjectReferenceJSONObject =
-			_jsonFactorys.createJSONObject(layoutObjectReference);
+			JSONFactoryUtil.createJSONObject(layoutObjectReference);
 
 		String type = layoutObjectReferenceJSONObject.getString("type");
 
@@ -280,10 +280,10 @@ public class GetCollectionFieldMVCResourceCommand
 						itemType);
 			}
 
-			return _jsonFactorys.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 
-		JSONArray jsonArray = _jsonFactorys.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Object> list = layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
@@ -413,7 +413,7 @@ public class GetCollectionFieldMVCResourceCommand
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
 		Object object, Locale locale) {
 
-		JSONObject displayObjectJSONObject = _jsonFactorys.createJSONObject();
+		JSONObject displayObjectJSONObject = JSONFactoryUtil.createJSONObject();
 
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
@@ -563,9 +563,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private JSONFactory _jsonFactorys;
 
 	@Reference
 	private Language _language;

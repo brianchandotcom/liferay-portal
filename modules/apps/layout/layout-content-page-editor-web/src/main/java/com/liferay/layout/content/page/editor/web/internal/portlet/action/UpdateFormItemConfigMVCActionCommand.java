@@ -48,7 +48,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -126,10 +126,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		if (infoField != null) {
 			JSONObject editableValuesJSONObject =
-				_jsonFactory.createJSONObject();
+				JSONFactoryUtil.createJSONObject();
 
 			if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
-				editableValuesJSONObject = _jsonFactory.createJSONObject(
+				editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues());
 			}
 
@@ -138,7 +138,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (jsonObject == null) {
-				jsonObject = _jsonFactory.createJSONObject();
+				jsonObject = JSONFactoryUtil.createJSONObject();
 
 				editableValuesJSONObject.put(
 					FragmentEntryProcessorConstants.
@@ -390,7 +390,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
 		JSONArray fragmentEntryLinkIdsJSONArray =
-			_jsonFactory.createJSONArray();
+			JSONFactoryUtil.createJSONArray();
 
 		for (String itemId :
 				ListUtil.copy(
@@ -433,7 +433,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String formItemId = ParamUtil.getString(actionRequest, "itemId");
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -456,10 +456,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 				(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
-					_jsonFactory.createJSONObject(itemConfig), formItemId);
+					JSONFactoryUtil.createJSONObject(itemConfig), formItemId);
 
 			JSONArray removedLayoutStructureItemsJSONArray =
-				_jsonFactory.createJSONArray();
+				JSONFactoryUtil.createJSONArray();
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(actionRequest);
@@ -507,7 +507,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			JSONObject addedFragmentEntryLinksJSONObject =
-				_jsonFactory.createJSONObject();
+				JSONFactoryUtil.createJSONObject();
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
@@ -570,9 +570,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

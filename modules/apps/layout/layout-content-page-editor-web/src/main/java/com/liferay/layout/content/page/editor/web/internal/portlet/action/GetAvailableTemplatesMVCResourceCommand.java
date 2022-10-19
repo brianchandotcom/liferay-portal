@@ -25,7 +25,7 @@ import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -69,7 +69,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 		String className = ParamUtil.getString(resourceRequest, "className");
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		Object infoItemObject = _getInfoItemObject(className, classPK);
 
@@ -81,7 +81,8 @@ public class GetAvailableTemplatesMVCResourceCommand
 			}
 
 			if (infoItemRenderer instanceof InfoItemTemplatedRenderer) {
-				JSONArray templatesJSONArray = _jsonFactory.createJSONArray();
+				JSONArray templatesJSONArray =
+					JSONFactoryUtil.createJSONArray();
 
 				InfoItemTemplatedRenderer<Object> infoItemTemplatedRenderer =
 					(InfoItemTemplatedRenderer<Object>)infoItemRenderer;
@@ -164,8 +165,5 @@ public class GetAvailableTemplatesMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

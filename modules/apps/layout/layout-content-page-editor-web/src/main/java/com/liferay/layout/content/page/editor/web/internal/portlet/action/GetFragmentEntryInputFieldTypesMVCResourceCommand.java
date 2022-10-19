@@ -19,7 +19,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -70,12 +70,12 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_jsonFactory.createJSONArray());
+				JSONFactoryUtil.createJSONArray());
 
 			return;
 		}
 
-		JSONObject typeOptionsJSONObject = _jsonFactory.createJSONObject(
+		JSONObject typeOptionsJSONObject = JSONFactoryUtil.createJSONObject(
 			fragmentEntry.getTypeOptions());
 
 		JSONArray fieldTypesJSONArray = typeOptionsJSONObject.getJSONArray(
@@ -86,7 +86,7 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_jsonFactory.createJSONArray());
+				JSONFactoryUtil.createJSONArray());
 
 			return;
 		}
@@ -117,8 +117,5 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

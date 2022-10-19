@@ -28,7 +28,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -183,14 +183,14 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 	private JSONObject _createJSONObject(String json) {
 		try {
-			return _jsonFactory.createJSONObject(json);
+			return JSONFactoryUtil.createJSONObject(json);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 	}
 
@@ -211,7 +211,8 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 	private JSONObject _getFrontendTokensJSONObject(
 		long groupId, Layout layout, boolean styleBookEntryPreview) {
 
-		JSONObject frontendTokensJSONObject = _jsonFactory.createJSONObject();
+		JSONObject frontendTokensJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		StyleBookEntry styleBookEntry = null;
 
@@ -221,7 +222,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		}
 
 		JSONObject frontendTokenValuesJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		if (styleBookEntry != null) {
 			frontendTokenValuesJSONObject = _createJSONObject(
@@ -231,7 +232,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
@@ -245,7 +246,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 				layoutSet.getThemeId());
 
 		if (frontendTokenDefinition == null) {
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		Collection<FrontendToken> frontendTokens =
@@ -361,7 +362,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		).map(
 			viewportJSONObject -> viewportJSONObject.getJSONObject("styles")
 		).orElse(
-			_jsonFactory.createJSONObject()
+			JSONFactoryUtil.createJSONObject()
 		);
 	}
 
@@ -478,9 +479,6 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

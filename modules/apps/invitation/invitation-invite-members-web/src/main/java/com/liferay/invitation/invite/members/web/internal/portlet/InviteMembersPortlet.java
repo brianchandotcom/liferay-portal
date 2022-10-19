@@ -19,7 +19,7 @@ import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -114,7 +114,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 			keywords, start, end);
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (User user : users) {
 			jsonArray.put(
@@ -181,7 +181,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 			actionRequest, "memberRequestId");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
 			_memberRequestLocalService.updateMemberRequest(
@@ -309,9 +309,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MemberRequestLocalService _memberRequestLocalService;

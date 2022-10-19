@@ -16,7 +16,7 @@ package com.liferay.frontend.js.module.launcher.internal;
 
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,7 +29,6 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleReference;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
@@ -48,7 +47,7 @@ public class JSModuleResolverImpl implements JSModuleResolver {
 		}
 
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(url.openStream()));
 
 			String packageName = jsonObject.getString("name");
@@ -79,8 +78,5 @@ public class JSModuleResolverImpl implements JSModuleResolver {
 
 		return resolveModule(bundleReference.getBundle(), moduleName);
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

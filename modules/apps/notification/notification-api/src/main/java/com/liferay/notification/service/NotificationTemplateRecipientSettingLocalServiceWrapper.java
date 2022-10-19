@@ -295,6 +295,16 @@ public class NotificationTemplateRecipientSettingLocalServiceWrapper
 				notificationTemplateRecipientSettingId);
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationTemplateRecipientSetting
+		getNotificationTemplateRecipientSetting(
+			String name, long notificationTemplateRecipientId) {
+
+		return _notificationTemplateRecipientSettingLocalService.
+			getNotificationTemplateRecipientSetting(
+				name, notificationTemplateRecipientId);
+	}
+
 	/**
 	 * Returns a range of all the notification template recipient settings.
 	 *
@@ -313,6 +323,17 @@ public class NotificationTemplateRecipientSettingLocalServiceWrapper
 
 		return _notificationTemplateRecipientSettingLocalService.
 			getNotificationTemplateRecipientSettings(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.notification.model.NotificationTemplateRecipientSetting>
+			getNotificationTemplateRecipientSettings(
+				long notificationTemplateRecipientId) {
+
+		return _notificationTemplateRecipientSettingLocalService.
+			getNotificationTemplateRecipientSettings(
+				notificationTemplateRecipientId);
 	}
 
 	/**

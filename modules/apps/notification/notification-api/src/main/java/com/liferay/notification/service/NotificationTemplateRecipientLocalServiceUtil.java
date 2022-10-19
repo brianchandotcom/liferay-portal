@@ -241,6 +241,15 @@ public class NotificationTemplateRecipientLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static NotificationTemplateRecipient
+		getNotificationTemplateNotificationTemplateRecipient(
+			long notificationTemplateId) {
+
+		return getService().
+			getNotificationTemplateNotificationTemplateRecipient(
+				notificationTemplateId);
+	}
+
 	/**
 	 * Returns the notification template recipient with the primary key.
 	 *

@@ -42,6 +42,54 @@ public interface NotificationTemplateRecipientPersistence
 	 */
 
 	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or throws a <code>NoSuchNotificationTemplateRecipientException</code> if it could not be found.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template recipient
+	 * @throws NoSuchNotificationTemplateRecipientException if a matching notification template recipient could not be found
+	 */
+	public NotificationTemplateRecipient findByNotificationTemplateId(
+			long notificationTemplateId)
+		throws NoSuchNotificationTemplateRecipientException;
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template recipient, or <code>null</code> if a matching notification template recipient could not be found
+	 */
+	public NotificationTemplateRecipient fetchByNotificationTemplateId(
+		long notificationTemplateId);
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notification template recipient, or <code>null</code> if a matching notification template recipient could not be found
+	 */
+	public NotificationTemplateRecipient fetchByNotificationTemplateId(
+		long notificationTemplateId, boolean useFinderCache);
+
+	/**
+	 * Removes the notification template recipient where notificationTemplateId = &#63; from the database.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the notification template recipient that was removed
+	 */
+	public NotificationTemplateRecipient removeByNotificationTemplateId(
+			long notificationTemplateId)
+		throws NoSuchNotificationTemplateRecipientException;
+
+	/**
+	 * Returns the number of notification template recipients where notificationTemplateId = &#63;.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the number of matching notification template recipients
+	 */
+	public int countByNotificationTemplateId(long notificationTemplateId);
+
+	/**
 	 * Caches the notification template recipient in the entity cache if it is enabled.
 	 *
 	 * @param notificationTemplateRecipient the notification template recipient

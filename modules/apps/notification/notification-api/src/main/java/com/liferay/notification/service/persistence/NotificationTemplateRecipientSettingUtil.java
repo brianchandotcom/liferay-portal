@@ -131,6 +131,289 @@ public class NotificationTemplateRecipientSettingUtil {
 	}
 
 	/**
+	 * Returns all the notification template recipient settings where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @return the matching notification template recipient settings
+	 */
+	public static List<NotificationTemplateRecipientSetting>
+		findByNotificationTemplateRecipientId(
+			long notificationTemplateRecipientId) {
+
+		return getPersistence().findByNotificationTemplateRecipientId(
+			notificationTemplateRecipientId);
+	}
+
+	/**
+	 * Returns a range of all the notification template recipient settings where notificationTemplateRecipientId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationTemplateRecipientSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param start the lower bound of the range of notification template recipient settings
+	 * @param end the upper bound of the range of notification template recipient settings (not inclusive)
+	 * @return the range of matching notification template recipient settings
+	 */
+	public static List<NotificationTemplateRecipientSetting>
+		findByNotificationTemplateRecipientId(
+			long notificationTemplateRecipientId, int start, int end) {
+
+		return getPersistence().findByNotificationTemplateRecipientId(
+			notificationTemplateRecipientId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification template recipient settings where notificationTemplateRecipientId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationTemplateRecipientSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param start the lower bound of the range of notification template recipient settings
+	 * @param end the upper bound of the range of notification template recipient settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification template recipient settings
+	 */
+	public static List<NotificationTemplateRecipientSetting>
+		findByNotificationTemplateRecipientId(
+			long notificationTemplateRecipientId, int start, int end,
+			OrderByComparator<NotificationTemplateRecipientSetting>
+				orderByComparator) {
+
+		return getPersistence().findByNotificationTemplateRecipientId(
+			notificationTemplateRecipientId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification template recipient settings where notificationTemplateRecipientId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationTemplateRecipientSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param start the lower bound of the range of notification template recipient settings
+	 * @param end the upper bound of the range of notification template recipient settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notification template recipient settings
+	 */
+	public static List<NotificationTemplateRecipientSetting>
+		findByNotificationTemplateRecipientId(
+			long notificationTemplateRecipientId, int start, int end,
+			OrderByComparator<NotificationTemplateRecipientSetting>
+				orderByComparator,
+			boolean useFinderCache) {
+
+		return getPersistence().findByNotificationTemplateRecipientId(
+			notificationTemplateRecipientId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first notification template recipient setting in the ordered set where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification template recipient setting
+	 * @throws NoSuchNotificationTemplateRecipientSettingException if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting
+			findByNotificationTemplateRecipientId_First(
+				long notificationTemplateRecipientId,
+				OrderByComparator<NotificationTemplateRecipientSetting>
+					orderByComparator)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientSettingException {
+
+		return getPersistence().findByNotificationTemplateRecipientId_First(
+			notificationTemplateRecipientId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first notification template recipient setting in the ordered set where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notification template recipient setting, or <code>null</code> if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting
+		fetchByNotificationTemplateRecipientId_First(
+			long notificationTemplateRecipientId,
+			OrderByComparator<NotificationTemplateRecipientSetting>
+				orderByComparator) {
+
+		return getPersistence().fetchByNotificationTemplateRecipientId_First(
+			notificationTemplateRecipientId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last notification template recipient setting in the ordered set where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification template recipient setting
+	 * @throws NoSuchNotificationTemplateRecipientSettingException if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting
+			findByNotificationTemplateRecipientId_Last(
+				long notificationTemplateRecipientId,
+				OrderByComparator<NotificationTemplateRecipientSetting>
+					orderByComparator)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientSettingException {
+
+		return getPersistence().findByNotificationTemplateRecipientId_Last(
+			notificationTemplateRecipientId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last notification template recipient setting in the ordered set where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notification template recipient setting, or <code>null</code> if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting
+		fetchByNotificationTemplateRecipientId_Last(
+			long notificationTemplateRecipientId,
+			OrderByComparator<NotificationTemplateRecipientSetting>
+				orderByComparator) {
+
+		return getPersistence().fetchByNotificationTemplateRecipientId_Last(
+			notificationTemplateRecipientId, orderByComparator);
+	}
+
+	/**
+	 * Returns the notification template recipient settings before and after the current notification template recipient setting in the ordered set where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientSettingId the primary key of the current notification template recipient setting
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notification template recipient setting
+	 * @throws NoSuchNotificationTemplateRecipientSettingException if a notification template recipient setting with the primary key could not be found
+	 */
+	public static NotificationTemplateRecipientSetting[]
+			findByNotificationTemplateRecipientId_PrevAndNext(
+				long notificationTemplateRecipientSettingId,
+				long notificationTemplateRecipientId,
+				OrderByComparator<NotificationTemplateRecipientSetting>
+					orderByComparator)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientSettingException {
+
+		return getPersistence().
+			findByNotificationTemplateRecipientId_PrevAndNext(
+				notificationTemplateRecipientSettingId,
+				notificationTemplateRecipientId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the notification template recipient settings where notificationTemplateRecipientId = &#63; from the database.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 */
+	public static void removeByNotificationTemplateRecipientId(
+		long notificationTemplateRecipientId) {
+
+		getPersistence().removeByNotificationTemplateRecipientId(
+			notificationTemplateRecipientId);
+	}
+
+	/**
+	 * Returns the number of notification template recipient settings where notificationTemplateRecipientId = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @return the number of matching notification template recipient settings
+	 */
+	public static int countByNotificationTemplateRecipientId(
+		long notificationTemplateRecipientId) {
+
+		return getPersistence().countByNotificationTemplateRecipientId(
+			notificationTemplateRecipientId);
+	}
+
+	/**
+	 * Returns the notification template recipient setting where notificationTemplateRecipientId = &#63; and name = &#63; or throws a <code>NoSuchNotificationTemplateRecipientSettingException</code> if it could not be found.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param name the name
+	 * @return the matching notification template recipient setting
+	 * @throws NoSuchNotificationTemplateRecipientSettingException if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting findByN_NTRI(
+			long notificationTemplateRecipientId, String name)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientSettingException {
+
+		return getPersistence().findByN_NTRI(
+			notificationTemplateRecipientId, name);
+	}
+
+	/**
+	 * Returns the notification template recipient setting where notificationTemplateRecipientId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param name the name
+	 * @return the matching notification template recipient setting, or <code>null</code> if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting fetchByN_NTRI(
+		long notificationTemplateRecipientId, String name) {
+
+		return getPersistence().fetchByN_NTRI(
+			notificationTemplateRecipientId, name);
+	}
+
+	/**
+	 * Returns the notification template recipient setting where notificationTemplateRecipientId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notification template recipient setting, or <code>null</code> if a matching notification template recipient setting could not be found
+	 */
+	public static NotificationTemplateRecipientSetting fetchByN_NTRI(
+		long notificationTemplateRecipientId, String name,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByN_NTRI(
+			notificationTemplateRecipientId, name, useFinderCache);
+	}
+
+	/**
+	 * Removes the notification template recipient setting where notificationTemplateRecipientId = &#63; and name = &#63; from the database.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param name the name
+	 * @return the notification template recipient setting that was removed
+	 */
+	public static NotificationTemplateRecipientSetting removeByN_NTRI(
+			long notificationTemplateRecipientId, String name)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientSettingException {
+
+		return getPersistence().removeByN_NTRI(
+			notificationTemplateRecipientId, name);
+	}
+
+	/**
+	 * Returns the number of notification template recipient settings where notificationTemplateRecipientId = &#63; and name = &#63;.
+	 *
+	 * @param notificationTemplateRecipientId the notification template recipient ID
+	 * @param name the name
+	 * @return the number of matching notification template recipient settings
+	 */
+	public static int countByN_NTRI(
+		long notificationTemplateRecipientId, String name) {
+
+		return getPersistence().countByN_NTRI(
+			notificationTemplateRecipientId, name);
+	}
+
+	/**
 	 * Caches the notification template recipient setting in the entity cache if it is enabled.
 	 *
 	 * @param notificationTemplateRecipientSetting the notification template recipient setting

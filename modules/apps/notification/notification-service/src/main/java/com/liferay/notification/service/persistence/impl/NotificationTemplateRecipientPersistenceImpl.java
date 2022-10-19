@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -44,12 +45,14 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +102,235 @@ public class NotificationTemplateRecipientPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByNotificationTemplateId;
+	private FinderPath _finderPathCountByNotificationTemplateId;
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or throws a <code>NoSuchNotificationTemplateRecipientException</code> if it could not be found.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template recipient
+	 * @throws NoSuchNotificationTemplateRecipientException if a matching notification template recipient could not be found
+	 */
+	@Override
+	public NotificationTemplateRecipient findByNotificationTemplateId(
+			long notificationTemplateId)
+		throws NoSuchNotificationTemplateRecipientException {
+
+		NotificationTemplateRecipient notificationTemplateRecipient =
+			fetchByNotificationTemplateId(notificationTemplateId);
+
+		if (notificationTemplateRecipient == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("notificationTemplateId=");
+			sb.append(notificationTemplateId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchNotificationTemplateRecipientException(
+				sb.toString());
+		}
+
+		return notificationTemplateRecipient;
+	}
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template recipient, or <code>null</code> if a matching notification template recipient could not be found
+	 */
+	@Override
+	public NotificationTemplateRecipient fetchByNotificationTemplateId(
+		long notificationTemplateId) {
+
+		return fetchByNotificationTemplateId(notificationTemplateId, true);
+	}
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notification template recipient, or <code>null</code> if a matching notification template recipient could not be found
+	 */
+	@Override
+	public NotificationTemplateRecipient fetchByNotificationTemplateId(
+		long notificationTemplateId, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {notificationTemplateId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByNotificationTemplateId, finderArgs, this);
+		}
+
+		if (result instanceof NotificationTemplateRecipient) {
+			NotificationTemplateRecipient notificationTemplateRecipient =
+				(NotificationTemplateRecipient)result;
+
+			if (notificationTemplateId !=
+					notificationTemplateRecipient.getNotificationTemplateId()) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_NOTIFICATIONTEMPLATERECIPIENT_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(notificationTemplateId);
+
+				List<NotificationTemplateRecipient> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByNotificationTemplateId,
+							finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									notificationTemplateId
+								};
+							}
+
+							_log.warn(
+								"NotificationTemplateRecipientPersistenceImpl.fetchByNotificationTemplateId(long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					NotificationTemplateRecipient
+						notificationTemplateRecipient = list.get(0);
+
+					result = notificationTemplateRecipient;
+
+					cacheResult(notificationTemplateRecipient);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (NotificationTemplateRecipient)result;
+		}
+	}
+
+	/**
+	 * Removes the notification template recipient where notificationTemplateId = &#63; from the database.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the notification template recipient that was removed
+	 */
+	@Override
+	public NotificationTemplateRecipient removeByNotificationTemplateId(
+			long notificationTemplateId)
+		throws NoSuchNotificationTemplateRecipientException {
+
+		NotificationTemplateRecipient notificationTemplateRecipient =
+			findByNotificationTemplateId(notificationTemplateId);
+
+		return remove(notificationTemplateRecipient);
+	}
+
+	/**
+	 * Returns the number of notification template recipients where notificationTemplateId = &#63;.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the number of matching notification template recipients
+	 */
+	@Override
+	public int countByNotificationTemplateId(long notificationTemplateId) {
+		FinderPath finderPath = _finderPathCountByNotificationTemplateId;
+
+		Object[] finderArgs = new Object[] {notificationTemplateId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_NOTIFICATIONTEMPLATERECIPIENT_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(notificationTemplateId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2 =
+			"notificationTemplateRecipient.notificationTemplateId = ?";
 
 	public NotificationTemplateRecipientPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -129,6 +361,13 @@ public class NotificationTemplateRecipientPersistenceImpl
 		entityCache.putResult(
 			NotificationTemplateRecipientImpl.class,
 			notificationTemplateRecipient.getPrimaryKey(),
+			notificationTemplateRecipient);
+
+		finderCache.putResult(
+			_finderPathFetchByNotificationTemplateId,
+			new Object[] {
+				notificationTemplateRecipient.getNotificationTemplateId()
+			},
 			notificationTemplateRecipient);
 	}
 
@@ -214,6 +453,21 @@ public class NotificationTemplateRecipientPersistenceImpl
 			entityCache.removeResult(
 				NotificationTemplateRecipientImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		NotificationTemplateRecipientModelImpl
+			notificationTemplateRecipientModelImpl) {
+
+		Object[] args = new Object[] {
+			notificationTemplateRecipientModelImpl.getNotificationTemplateId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByNotificationTemplateId, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByNotificationTemplateId, args,
+			notificationTemplateRecipientModelImpl);
 	}
 
 	/**
@@ -412,7 +666,9 @@ public class NotificationTemplateRecipientPersistenceImpl
 
 		entityCache.putResult(
 			NotificationTemplateRecipientImpl.class,
-			notificationTemplateRecipient, false, true);
+			notificationTemplateRecipientModelImpl, false, true);
+
+		cacheUniqueFindersCache(notificationTemplateRecipientModelImpl);
 
 		if (isNew) {
 			notificationTemplateRecipient.setNew(false);
@@ -708,6 +964,17 @@ public class NotificationTemplateRecipientPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
+		_finderPathFetchByNotificationTemplateId = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByNotificationTemplateId",
+			new String[] {Long.class.getName()},
+			new String[] {"notificationTemplateId"}, true);
+
+		_finderPathCountByNotificationTemplateId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByNotificationTemplateId",
+			new String[] {Long.class.getName()},
+			new String[] {"notificationTemplateId"}, false);
+
 		_setNotificationTemplateRecipientUtilPersistence(this);
 	}
 
@@ -772,14 +1039,24 @@ public class NotificationTemplateRecipientPersistenceImpl
 	private static final String _SQL_SELECT_NOTIFICATIONTEMPLATERECIPIENT =
 		"SELECT notificationTemplateRecipient FROM NotificationTemplateRecipient notificationTemplateRecipient";
 
+	private static final String
+		_SQL_SELECT_NOTIFICATIONTEMPLATERECIPIENT_WHERE =
+			"SELECT notificationTemplateRecipient FROM NotificationTemplateRecipient notificationTemplateRecipient WHERE ";
+
 	private static final String _SQL_COUNT_NOTIFICATIONTEMPLATERECIPIENT =
 		"SELECT COUNT(notificationTemplateRecipient) FROM NotificationTemplateRecipient notificationTemplateRecipient";
+
+	private static final String _SQL_COUNT_NOTIFICATIONTEMPLATERECIPIENT_WHERE =
+		"SELECT COUNT(notificationTemplateRecipient) FROM NotificationTemplateRecipient notificationTemplateRecipient WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"notificationTemplateRecipient.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No NotificationTemplateRecipient exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No NotificationTemplateRecipient exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationTemplateRecipientPersistenceImpl.class);

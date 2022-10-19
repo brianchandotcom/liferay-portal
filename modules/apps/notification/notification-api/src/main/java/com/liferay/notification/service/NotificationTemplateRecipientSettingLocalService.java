@@ -231,6 +231,11 @@ public interface NotificationTemplateRecipientSettingLocalService
 				long notificationTemplateRecipientSettingId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationTemplateRecipientSetting
+		getNotificationTemplateRecipientSetting(
+			String name, long notificationTemplateRecipientId);
+
 	/**
 	 * Returns a range of all the notification template recipient settings.
 	 *
@@ -245,6 +250,11 @@ public interface NotificationTemplateRecipientSettingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<NotificationTemplateRecipientSetting>
 		getNotificationTemplateRecipientSettings(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationTemplateRecipientSetting>
+		getNotificationTemplateRecipientSettings(
+			long notificationTemplateRecipientId);
 
 	/**
 	 * Returns the number of notification template recipient settings.

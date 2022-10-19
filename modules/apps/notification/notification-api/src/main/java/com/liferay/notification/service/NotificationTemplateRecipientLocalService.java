@@ -211,6 +211,11 @@ public interface NotificationTemplateRecipientLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationTemplateRecipient
+		getNotificationTemplateNotificationTemplateRecipient(
+			long notificationTemplateId);
+
 	/**
 	 * Returns the notification template recipient with the primary key.
 	 *

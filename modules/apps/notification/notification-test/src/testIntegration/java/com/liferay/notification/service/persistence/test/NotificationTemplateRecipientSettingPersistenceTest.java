@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -204,6 +206,23 @@ public class NotificationTemplateRecipientSettingPersistenceTest {
 		Assert.assertEquals(
 			existingNotificationTemplateRecipientSetting.getValue(),
 			newNotificationTemplateRecipientSetting.getValue());
+	}
+
+	@Test
+	public void testCountByNotificationTemplateRecipientId() throws Exception {
+		_persistence.countByNotificationTemplateRecipientId(
+			RandomTestUtil.nextLong());
+
+		_persistence.countByNotificationTemplateRecipientId(0L);
+	}
+
+	@Test
+	public void testCountByN_NTRI() throws Exception {
+		_persistence.countByN_NTRI(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByN_NTRI(0L, "null");
+
+		_persistence.countByN_NTRI(0L, (String)null);
 	}
 
 	@Test
@@ -513,6 +532,82 @@ public class NotificationTemplateRecipientSettingPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		NotificationTemplateRecipientSetting
+			newNotificationTemplateRecipientSetting =
+				addNotificationTemplateRecipientSetting();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newNotificationTemplateRecipientSetting.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		NotificationTemplateRecipientSetting
+			newNotificationTemplateRecipientSetting =
+				addNotificationTemplateRecipientSetting();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			NotificationTemplateRecipientSetting.class,
+			_dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"notificationTemplateRecipientSettingId",
+				newNotificationTemplateRecipientSetting.
+					getNotificationTemplateRecipientSettingId()));
+
+		List<NotificationTemplateRecipientSetting> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		NotificationTemplateRecipientSetting
+			notificationTemplateRecipientSetting) {
+
+		Assert.assertEquals(
+			Long.valueOf(
+				notificationTemplateRecipientSetting.
+					getNotificationTemplateRecipientId()),
+			ReflectionTestUtil.<Long>invoke(
+				notificationTemplateRecipientSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "NTemplateRecipientId"));
+		Assert.assertEquals(
+			notificationTemplateRecipientSetting.getName(),
+			ReflectionTestUtil.invoke(
+				notificationTemplateRecipientSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected NotificationTemplateRecipientSetting

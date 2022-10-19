@@ -259,6 +259,14 @@ public class NotificationTemplateRecipientSettingLocalServiceUtil {
 			notificationTemplateRecipientSettingId);
 	}
 
+	public static NotificationTemplateRecipientSetting
+		getNotificationTemplateRecipientSetting(
+			String name, long notificationTemplateRecipientId) {
+
+		return getService().getNotificationTemplateRecipientSetting(
+			name, notificationTemplateRecipientId);
+	}
+
 	/**
 	 * Returns a range of all the notification template recipient settings.
 	 *
@@ -275,6 +283,14 @@ public class NotificationTemplateRecipientSettingLocalServiceUtil {
 
 		return getService().getNotificationTemplateRecipientSettings(
 			start, end);
+	}
+
+	public static List<NotificationTemplateRecipientSetting>
+		getNotificationTemplateRecipientSettings(
+			long notificationTemplateRecipientId) {
+
+		return getService().getNotificationTemplateRecipientSettings(
+			notificationTemplateRecipientId);
 	}
 
 	/**

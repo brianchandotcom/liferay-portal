@@ -272,6 +272,16 @@ public class NotificationTemplateRecipientLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationTemplateRecipient
+		getNotificationTemplateNotificationTemplateRecipient(
+			long notificationTemplateId) {
+
+		return _notificationTemplateRecipientLocalService.
+			getNotificationTemplateNotificationTemplateRecipient(
+				notificationTemplateId);
+	}
+
 	/**
 	 * Returns the notification template recipient with the primary key.
 	 *

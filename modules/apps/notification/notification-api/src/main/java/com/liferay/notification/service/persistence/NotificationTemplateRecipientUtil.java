@@ -126,6 +126,77 @@ public class NotificationTemplateRecipientUtil {
 	}
 
 	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or throws a <code>NoSuchNotificationTemplateRecipientException</code> if it could not be found.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template recipient
+	 * @throws NoSuchNotificationTemplateRecipientException if a matching notification template recipient could not be found
+	 */
+	public static NotificationTemplateRecipient findByNotificationTemplateId(
+			long notificationTemplateId)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientException {
+
+		return getPersistence().findByNotificationTemplateId(
+			notificationTemplateId);
+	}
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template recipient, or <code>null</code> if a matching notification template recipient could not be found
+	 */
+	public static NotificationTemplateRecipient fetchByNotificationTemplateId(
+		long notificationTemplateId) {
+
+		return getPersistence().fetchByNotificationTemplateId(
+			notificationTemplateId);
+	}
+
+	/**
+	 * Returns the notification template recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notification template recipient, or <code>null</code> if a matching notification template recipient could not be found
+	 */
+	public static NotificationTemplateRecipient fetchByNotificationTemplateId(
+		long notificationTemplateId, boolean useFinderCache) {
+
+		return getPersistence().fetchByNotificationTemplateId(
+			notificationTemplateId, useFinderCache);
+	}
+
+	/**
+	 * Removes the notification template recipient where notificationTemplateId = &#63; from the database.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the notification template recipient that was removed
+	 */
+	public static NotificationTemplateRecipient removeByNotificationTemplateId(
+			long notificationTemplateId)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateRecipientException {
+
+		return getPersistence().removeByNotificationTemplateId(
+			notificationTemplateId);
+	}
+
+	/**
+	 * Returns the number of notification template recipients where notificationTemplateId = &#63;.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the number of matching notification template recipients
+	 */
+	public static int countByNotificationTemplateId(
+		long notificationTemplateId) {
+
+		return getPersistence().countByNotificationTemplateId(
+			notificationTemplateId);
+	}
+
+	/**
 	 * Caches the notification template recipient in the entity cache if it is enabled.
 	 *
 	 * @param notificationTemplateRecipient the notification template recipient

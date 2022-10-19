@@ -78,14 +78,16 @@ definition {
 		task ("And When Save As the custom view") {
 			FDSCustomView.createNewView(key_nameView = "TEST");
 
-			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 			Click(
 				key_itemName = "Save View",
-				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 		}
 
 		task ("Then A new custom view is created and selected as current view") {
+			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
 			FDSCustomView.selectView(key_itemName = "Default View");
 
 			AssertElementPresent(

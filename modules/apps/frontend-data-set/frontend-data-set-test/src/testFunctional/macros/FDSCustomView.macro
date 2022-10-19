@@ -28,7 +28,7 @@ definition {
 	}
 
 	macro createNewView {
-		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
 			key_itemName = "Save View As",

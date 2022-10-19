@@ -133,6 +133,8 @@ definition {
 		task ("And to Customer Portal Site") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
 		}
 
@@ -143,7 +145,7 @@ definition {
 		}
 
 		task ("Then I should be able to view SLA Start and End Date of Current") {
-			CP2Overview.assertSLACardContentIsVisible(cardContent = "${startDate} - ${endDate}");
+			CP2Overview.assertSLACardUnicContentIsVisible(cardContent = "12/30/2020 - 01/01/2024");
 		}
 	}
 

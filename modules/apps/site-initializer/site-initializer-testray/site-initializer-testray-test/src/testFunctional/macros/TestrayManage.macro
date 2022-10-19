@@ -10,6 +10,16 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	macro addProductVersionInBuild {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "TestrayBuild#TYPE_PRODUCT_VERSION_IN_BUILD",
+			value1 = "${key_name}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON_IN_MODAL");
+	}
+
 	macro addProjectManageBar {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -66,16 +76,6 @@ definition {
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
 
 		TestrayManage.createNewCaseTypes(caseName = "${version}");
-	}
-
-	macro addProductVersionInBuild {
-		Click(locator1 = "Button#PLUS");
-
-		Type(
-			locator1 = "TestrayBuild#TYPE_PRODUCT_VERSION_IN_BUILD",
-			value1 = "${key_name}");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON_IN_MODAL");
 	}
 
 	macro createTeam {

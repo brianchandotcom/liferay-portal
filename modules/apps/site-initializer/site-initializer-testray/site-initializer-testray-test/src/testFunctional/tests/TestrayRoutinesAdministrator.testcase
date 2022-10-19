@@ -140,8 +140,8 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Routines_4 Build Description",
+				dropdownItem = "New Build",
 				fieldName = "Routines_4 Build",
 				gitHash = "12345",
 				productVersion = "1.x",

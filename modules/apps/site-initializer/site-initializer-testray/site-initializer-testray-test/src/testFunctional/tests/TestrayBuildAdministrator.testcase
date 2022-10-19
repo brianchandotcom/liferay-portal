@@ -14,9 +14,9 @@ definition {
 
 			User.firstLoginPG();
 
-			// Testray.createTestraySite(siteName = "Testray 2");
+			//Testray.createTestraySite(siteName = "Testray 2");
+			//Refresh();
 
-			// Refresh();
 		}
 
 		task ("Go to Testray, Create Project and change pagination") {
@@ -82,11 +82,11 @@ definition {
 
 		Testray.deleteAllProjects();
 
-		// Testray.tearDownCP();
+		//Testray.tearDownCP();
+		//if ("${testPortalInstance}" == "true") {
+		//	PortalInstances.tearDownCP();
+		//}
 
-		// if ("${testPortalInstance}" == "true") {
-		// 	PortalInstances.tearDownCP();
-		// }
 	}
 
 	@description = "This is a test for LPS-156438 - Verify if as an Administrator can Add a Build"
@@ -104,8 +104,8 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",
@@ -150,8 +150,8 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",
@@ -182,8 +182,8 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",
@@ -232,8 +232,8 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",
@@ -273,8 +273,8 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",
@@ -283,8 +283,8 @@ definition {
 
 		task ("When add a build with duplicated name") {
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",
@@ -323,14 +323,14 @@ definition {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
-				
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.0",

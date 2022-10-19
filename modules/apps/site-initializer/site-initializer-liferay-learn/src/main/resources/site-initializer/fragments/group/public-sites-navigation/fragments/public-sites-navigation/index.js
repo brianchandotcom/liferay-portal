@@ -26,6 +26,8 @@ const closeBtn = fragmentElement.querySelector('.close-btn');
 
 const accountMenus = fragmentElement.querySelectorAll('.account');
 
+const sites = fragmentElement.querySelector('.sites');
+
 menuBtn.addEventListener('click', () => {
 	menuButtonGroup.classList.toggle('menu-open');
 	tabletMobileNavSection.classList.toggle('menu-open');
@@ -36,8 +38,13 @@ closeBtn.addEventListener('click', () => {
 	tabletMobileNavSection.classList.toggle('menu-open');
 });
 
+
 accountMenus.forEach((accountMenu) => {
 	accountMenu.addEventListener('click', () =>  {
 		accountMenu.classList.toggle('menu-open');
 	});
+});
+
+sites.addEventListener('click', () => {
+	sites.classList.toggle('show');
 });

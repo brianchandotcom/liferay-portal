@@ -13,13 +13,23 @@
 	<div class="utility-nav-container">
 		<div class="align-items-center d-flex justify-content-between utility-nav w-100">
 			<div class="d-flex sites-languages-container">
-				<div class="sites">
-					<span class="pr-1">[@clay["icon"] symbol="sites"/]</span>
-					<span>Liferay Sites</span>
-					<span>[@clay["icon"] symbol="caret-bottom-l"/]</span>
+				<div class="d-flex p-2 sites">
+					<span class="pr-1 sites-icon">[@clay["icon"] symbol="sites"/]</span>
+
+					<div class="d-flex liferay-sites position-relative">
+						${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
+						<span class="caret-bottom-icon pl-1">[@clay["icon"] symbol="caret-bottom"/]</span>
+						<span class="caret-top-icon pl-1">[@clay["icon"] symbol="caret-top"/]</span>
+
+						<div class="liferay-sites-dropdown">
+							<lfr-drop-zone>
+
+							</lfr-drop-zone>
+						</div>
+					</div>
 				</div>
 				[#if configuration.showLanguageMenu]
-					<div class="language pl-4">
+					<div class="language p-2 pl-4">
 						<span class="pr-1">[@clay["icon"] symbol="globe-lines"/]</span>
 						<span>EN</span>
 						<span>[@clay["icon"] symbol="caret-bottom-l"/]</span>

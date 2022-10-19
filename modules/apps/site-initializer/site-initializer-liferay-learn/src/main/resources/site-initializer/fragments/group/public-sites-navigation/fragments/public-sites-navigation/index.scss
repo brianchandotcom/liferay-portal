@@ -111,6 +111,63 @@ nav.public-sites-navigation {
 		}
 	}
 
+	.sites {
+		border-radius: 6px;
+		cursor: pointer;
+
+		.liferay-sites {
+			.liferay-sites-dropdown {
+				background: var(--white);
+				border: 1px solid #c9c9cf;
+				border-radius: 6px;
+				color: var(--color-neutral-3);
+				display: none;
+				left: -1.5rem;
+				margin-top: 2.25rem;
+				position: absolute;
+				width: 15rem;
+				z-index: 10;
+			}
+
+			.caret-bottom-icon {
+				display: block;
+			}
+
+			.caret-top-icon {
+				display: none;
+				fill: var(--color-action-primary-default-hover);
+			}
+		}
+
+		&.show {
+			.sites-icon svg {
+				fill: var(--color-action-primary-default-hover);
+			}
+
+			.liferay-sites {
+				color: var(--color-action-primary-active);
+
+				.caret-bottom-icon {
+					display: none;
+				}
+
+				.caret-top-icon {
+					display: block;
+				}
+
+				.liferay-sites-dropdown {
+					display: block;
+				}
+			}
+		}
+
+		&:hover,
+		&:active,
+		&:focus {
+			background-color: var(--color-action-primary-hover-lighten);
+		}
+	}
+
 	.dropdown-content {
 		background: var(--white);
 		border: 1px solid var(--color-neutral-3);

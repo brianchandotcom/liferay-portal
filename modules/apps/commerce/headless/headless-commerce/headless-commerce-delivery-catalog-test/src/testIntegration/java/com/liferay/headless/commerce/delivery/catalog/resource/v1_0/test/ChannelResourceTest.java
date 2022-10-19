@@ -15,14 +15,17 @@
 package com.liferay.headless.commerce.delivery.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Channel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -61,6 +64,22 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"currencyCode", "name", "type"};
+	}
+
+	@Override
+	protected Channel randomChannel() throws Exception {
+		return new Channel() {
+			{
+				currencyCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				siteGroupId = RandomTestUtil.randomLong();
+				type = CommerceChannelConstants.CHANNEL_TYPE_SITE;
+			}
+		};
 	}
 
 	protected Channel testGetChannelsPage_addChannel(Channel channel)

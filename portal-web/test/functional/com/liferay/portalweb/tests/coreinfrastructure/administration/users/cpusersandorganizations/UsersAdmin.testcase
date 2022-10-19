@@ -1576,12 +1576,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

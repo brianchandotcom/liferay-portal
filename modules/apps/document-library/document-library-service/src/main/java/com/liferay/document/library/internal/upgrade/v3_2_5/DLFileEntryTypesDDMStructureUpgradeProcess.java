@@ -37,10 +37,9 @@ import java.util.Set;
 /**
  * @author Matthias Bläsing
  */
-public class SyncDLFileEntryTypesDDMStructurePermissions
-	extends UpgradeProcess {
+public class DLFileEntryTypesDDMStructureUpgradeProcess extends UpgradeProcess {
 
-	public SyncDLFileEntryTypesDDMStructurePermissions(
+	public DLFileEntryTypesDDMStructureUpgradeProcess(
 		DDMPermissionSupport ddmPermissionSupport,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService) {

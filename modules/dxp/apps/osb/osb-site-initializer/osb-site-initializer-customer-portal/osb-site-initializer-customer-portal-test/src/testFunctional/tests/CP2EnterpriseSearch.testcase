@@ -73,7 +73,6 @@ definition {
 		task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
 			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
 		}
-
 	}
 
 	@description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"

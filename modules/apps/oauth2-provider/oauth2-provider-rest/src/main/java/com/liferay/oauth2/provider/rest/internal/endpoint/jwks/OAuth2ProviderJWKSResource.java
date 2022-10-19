@@ -68,22 +68,24 @@ public class OAuth2ProviderJWKSResource {
 				jwtAccessTokenSigningJSONWebKey());
 
 		_jwks = JSONUtil.put(
-			"keys",
-			JSONUtil.put(
-				JSONUtil.put(
-					"alg", jwkJSONObject.get("alg")
-				).put(
-					"e", jwkJSONObject.get("e")
-				).put(
-					"kid", jwkJSONObject.get("kid")
-				).put(
-					"kty", jwkJSONObject.get("kty")
-				).put(
-					"n", jwkJSONObject.get("n")
-				).put(
-					"use", jwkJSONObject.get("use")
-				))
+			"keys", JSONUtil.put(_parsePublicKeyJWKJSONObject(jwkJSONObject))
 		).toString();
+	}
+
+	private JSONObject _parsePublicKeyJWKJSONObject(JSONObject jwkJSONObject) {
+		return JSONUtil.put(
+			"alg", jwkJSONObject.get("alg")
+		).put(
+			"e", jwkJSONObject.get("e")
+		).put(
+			"kid", jwkJSONObject.get("kid")
+		).put(
+			"kty", jwkJSONObject.get("kty")
+		).put(
+			"n", jwkJSONObject.get("n")
+		).put(
+			"use", jwkJSONObject.get("use")
+		);
 	}
 
 	@Reference

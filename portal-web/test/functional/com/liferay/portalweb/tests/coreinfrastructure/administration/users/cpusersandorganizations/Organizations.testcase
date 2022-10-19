@@ -1485,6 +1485,8 @@ definition {
 
 	@priority = "3"
 	test OrganizationUserManagement {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1547,6 +1549,8 @@ definition {
 
 	@priority = "4"
 	test RemoveMember {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

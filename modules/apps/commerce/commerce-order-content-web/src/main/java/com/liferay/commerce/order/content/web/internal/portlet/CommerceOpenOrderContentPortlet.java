@@ -41,8 +41,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -56,8 +54,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -94,20 +90,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = {CommerceOpenOrderContentPortlet.class, Portlet.class}
 )
 public class CommerceOpenOrderContentPortlet extends MVCPortlet {
-
-	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-				new ProxyModeThreadLocalCloseable()) {
-
-			ProxyModeThreadLocal.setWithSafeCloseable(true);
-
-			super.processAction(actionRequest, actionResponse);
-		}
-	}
 
 	@Override
 	public void render(

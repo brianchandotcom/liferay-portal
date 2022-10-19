@@ -14,12 +14,10 @@
 
 package com.liferay.portal.kernel.scheduler.config;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -42,9 +40,7 @@ public class PluginSchedulingConfigurator {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		try (SafeCloseable safeCloseable =
-				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
+		try {
 			ClassLoader portalClassLoader =
 				PortalClassLoaderUtil.getClassLoader();
 

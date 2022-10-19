@@ -25,7 +25,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -301,9 +299,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (!ArrayUtil.isEmpty(addUserIds) ||
 			!ArrayUtil.isEmpty(removeUserIds)) {
 
-			try (SafeCloseable safeCloseable =
-					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
+			try {
 				_userService.addRoleUsers(roleId, addUserIds);
 				_userService.unsetRoleUsers(roleId, removeUserIds);
 			}
@@ -330,15 +326,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "addSegmentsEntryIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(addSegmentsEntryIds)) {
-			try (SafeCloseable safeCloseable =
-					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
-				for (long segmentsEntryId : addSegmentsEntryIds) {
-					_segmentsEntryRoleLocalService.addSegmentsEntryRole(
-						segmentsEntryId, roleId,
-						ServiceContextFactory.getInstance(
-							Role.class.getName(), actionRequest));
-				}
+			for (long segmentsEntryId : addSegmentsEntryIds) {
+				_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+					segmentsEntryId, roleId,
+					ServiceContextFactory.getInstance(
+						Role.class.getName(), actionRequest));
 			}
 		}
 
@@ -346,13 +338,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeSegmentsEntryIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(removeSegmentsEntryIds)) {
-			try (SafeCloseable safeCloseable =
-					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
-				for (long segmentsEntryId : removeSegmentsEntryIds) {
-					_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
-						segmentsEntryId, roleId);
-				}
+			for (long segmentsEntryId : removeSegmentsEntryIds) {
+				_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
+					segmentsEntryId, roleId);
 			}
 		}
 	}

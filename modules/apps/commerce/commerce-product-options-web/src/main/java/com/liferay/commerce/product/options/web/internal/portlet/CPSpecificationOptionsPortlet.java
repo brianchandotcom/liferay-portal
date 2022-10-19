@@ -20,9 +20,7 @@ import com.liferay.commerce.product.options.web.internal.display.context.CPSpeci
 import com.liferay.commerce.product.options.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -31,8 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -69,20 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = {CPSpecificationOptionsPortlet.class, Portlet.class}
 )
 public class CPSpecificationOptionsPortlet extends MVCPortlet {
-
-	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		try (SafeCloseable safeCloseable =
-				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
-			ProxyModeThreadLocal.setWithSafeCloseable(true);
-
-			super.processAction(actionRequest, actionResponse);
-		}
-	}
 
 	@Override
 	public void render(

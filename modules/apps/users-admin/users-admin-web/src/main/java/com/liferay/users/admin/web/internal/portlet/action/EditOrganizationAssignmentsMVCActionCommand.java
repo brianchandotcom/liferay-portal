@@ -14,9 +14,7 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -96,34 +94,28 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		try (SafeCloseable safeCloseable =
-				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
+		_userService.addOrganizationUsers(organizationId, addUserIds);
+		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 
-			_userService.addOrganizationUsers(organizationId, addUserIds);
-			_userService.unsetOrganizationUsers(organizationId, removeUserIds);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Organization.class.getName(), actionRequest);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				Organization.class.getName(), actionRequest);
+		long[] removeOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
-			long[] removeOrganizationIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "removeOrganizationIds"),
-				0L);
+		for (long removeOrganizationId : removeOrganizationIds) {
+			Organization organization = _organizationService.getOrganization(
+				removeOrganizationId);
 
-			for (long removeOrganizationId : removeOrganizationIds) {
-				Organization organization =
-					_organizationService.getOrganization(removeOrganizationId);
+			Group organizationGroup = organization.getGroup();
 
-				Group organizationGroup = organization.getGroup();
-
-				_organizationService.updateOrganization(
-					removeOrganizationId,
-					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-					organization.getName(), organization.getType(),
-					organization.getRegionId(), organization.getCountryId(),
-					organization.getStatusListTypeId(),
-					organization.getComments(), organizationGroup.isSite(),
-					serviceContext);
-			}
+			_organizationService.updateOrganization(
+				removeOrganizationId,
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				organization.getName(), organization.getType(),
+				organization.getRegionId(), organization.getCountryId(),
+				organization.getStatusListTypeId(), organization.getComments(),
+				organizationGroup.isSite(), serviceContext);
 		}
 	}
 

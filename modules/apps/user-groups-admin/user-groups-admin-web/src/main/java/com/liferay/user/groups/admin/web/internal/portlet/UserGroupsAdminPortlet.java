@@ -14,12 +14,10 @@
 
 package com.liferay.user.groups.admin.web.internal.portlet;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.RequiredUserGroupException;
 import com.liferay.portal.kernel.exception.UserGroupNameException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -100,23 +98,19 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 
 		UserGroup userGroup = null;
 
-		try (SafeCloseable safeCloseable =
-				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
+		if (userGroupId <= 0) {
 
-			if (userGroupId <= 0) {
+			// Add user group
 
-				// Add user group
+			userGroup = _userGroupService.addUserGroup(
+				name, description, serviceContext);
+		}
+		else {
 
-				userGroup = _userGroupService.addUserGroup(
-					name, description, serviceContext);
-			}
-			else {
+			// Update user group
 
-				// Update user group
-
-				userGroup = _userGroupService.updateUserGroup(
-					userGroupId, name, description, serviceContext);
-			}
+			userGroup = _userGroupService.updateUserGroup(
+				userGroupId, name, description, serviceContext);
 		}
 
 		// Layout set prototypes
@@ -153,12 +147,8 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		try (SafeCloseable safeCloseable =
-				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
-			_userService.addUserGroupUsers(userGroupId, addUserIds);
-			_userService.unsetUserGroupUsers(userGroupId, removeUserIds);
-		}
+		_userService.addUserGroupUsers(userGroupId, addUserIds);
+		_userService.unsetUserGroupUsers(userGroupId, removeUserIds);
 	}
 
 	@Override

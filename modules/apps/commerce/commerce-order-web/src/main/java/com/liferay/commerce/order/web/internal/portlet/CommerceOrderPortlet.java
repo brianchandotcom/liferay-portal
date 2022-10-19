@@ -17,18 +17,12 @@ package com.liferay.commerce.order.web.internal.portlet;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -65,20 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = {CommerceOrderPortlet.class, Portlet.class}
 )
 public class CommerceOrderPortlet extends MVCPortlet {
-
-	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-				new ProxyModeThreadLocalCloseable()) {
-
-			ProxyModeThreadLocal.setWithSafeCloseable(true);
-
-			super.processAction(actionRequest, actionResponse);
-		}
-	}
 
 	@Override
 	public void render(

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -109,11 +108,9 @@ public class ViewCountEntryLocalServiceTest {
 
 			FutureTask<Void> futureTask = new FutureTask<>(
 				() -> {
-					try (SafeCloseable safeCloseable1 =
+					try (SafeCloseable safeCloseable =
 							BufferedIncrementThreadLocal.setWithSafeCloseable(
-								true);
-						SafeCloseable safeCloseable2 =
-							ProxyModeThreadLocal.setWithSafeCloseable(true)) {
+								true)) {
 
 						_viewCountEntryLocalService.incrementViewCount(
 							TestPropsValues.getCompanyId(),

@@ -23,7 +23,6 @@ import com.liferay.message.boards.exception.MailingListOutUserNameException;
 import com.liferay.message.boards.internal.messaging.MailingListRequest;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.base.MBMailingListLocalServiceBaseImpl;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -31,7 +30,6 @@ import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhit
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -208,13 +206,9 @@ public class MBMailingListLocalServiceImpl
 		// Scheduler
 
 		if (active) {
-			try (SafeCloseable safeCloseable =
-					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
+			_unscheduleMailingList(mailingList);
 
-				_unscheduleMailingList(mailingList);
-
-				_scheduleMailingList(mailingList);
-			}
+			_scheduleMailingList(mailingList);
 		}
 		else {
 			_unscheduleMailingList(mailingList);

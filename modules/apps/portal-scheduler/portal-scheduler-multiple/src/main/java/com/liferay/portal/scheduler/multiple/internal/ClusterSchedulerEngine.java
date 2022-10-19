@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.multiple.internal;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.scheduler.JobState;
@@ -872,9 +870,7 @@ public class ClusterSchedulerEngine
 
 		@Override
 		protected void doMasterTokenAcquired() throws Exception {
-			try (SafeCloseable safeCloseable =
-					ProxyModeThreadLocal.setWithSafeCloseable(true)) {
-
+			try {
 				_writeLock.lock();
 
 				for (ObjectValuePair<SchedulerResponse, TriggerState>

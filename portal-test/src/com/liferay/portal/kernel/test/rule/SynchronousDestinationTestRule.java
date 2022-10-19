@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
@@ -178,8 +177,6 @@ public class SynchronousDestinationTestRule
 
 			_bufferedIncrementForceSyncSafeCloseable =
 				BufferedIncrementThreadLocal.setWithSafeCloseable(true);
-			_forceSyncSafeCloseable = ProxyModeThreadLocal.setWithSafeCloseable(
-				true);
 
 			replaceDestination(DestinationNames.AUDIT);
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
@@ -322,10 +319,6 @@ public class SynchronousDestinationTestRule
 				_bufferedIncrementForceSyncSafeCloseable.close();
 			}
 
-			if (_forceSyncSafeCloseable != null) {
-				_forceSyncSafeCloseable.close();
-			}
-
 			for (Destination destination : _asyncServiceDestinations) {
 				_destinations.put(destination.getName(), destination);
 			}
@@ -408,7 +401,6 @@ public class SynchronousDestinationTestRule
 			new ArrayList<>();
 		private SafeCloseable _bufferedIncrementForceSyncSafeCloseable;
 		private Map<String, Destination> _destinations;
-		private SafeCloseable _forceSyncSafeCloseable;
 		private final List<InvokerMessageListener>
 			_schedulerInvokerMessageListeners = new ArrayList<>();
 		private Sync _sync;

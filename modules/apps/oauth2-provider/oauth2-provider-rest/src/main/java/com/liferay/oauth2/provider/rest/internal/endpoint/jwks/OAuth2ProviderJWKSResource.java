@@ -62,7 +62,7 @@ public class OAuth2ProviderJWKSResource {
 				ConfigurableUtil.createConfigurable(
 					OAuth2AuthorizationServerConfiguration.class, properties);
 
-		JSONObject jwkObject = _jsonFactory.createJSONObject(
+		JSONObject jwkJSONObject = _jsonFactory.createJSONObject(
 			oAuth2AuthorizationServerConfiguration.
 				jwtAccessTokenSigningJSONWebKey());
 
@@ -73,17 +73,17 @@ public class OAuth2ProviderJWKSResource {
 			).put(
 				_jsonFactory.createJSONObject(
 				).put(
-					"alg", jwkObject.get("alg")
+					"alg", jwkJSONObject.get("alg")
 				).put(
-					"e", jwkObject.get("e")
+					"e", jwkJSONObject.get("e")
 				).put(
-					"kid", jwkObject.get("kid")
+					"kid", jwkJSONObject.get("kid")
 				).put(
-					"kty", jwkObject.get("kty")
+					"kty", jwkJSONObject.get("kty")
 				).put(
-					"n", jwkObject.get("n")
+					"n", jwkJSONObject.get("n")
 				).put(
-					"use", jwkObject.get("use")
+					"use", jwkJSONObject.get("use")
 				)
 			)
 		).toJSONString();

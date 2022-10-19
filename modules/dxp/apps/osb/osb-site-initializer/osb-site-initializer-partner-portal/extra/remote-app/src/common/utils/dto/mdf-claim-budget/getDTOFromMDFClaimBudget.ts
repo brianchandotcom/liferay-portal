@@ -14,8 +14,7 @@ import MDFClaimBudget from '../../../interfaces/mdfClaimBudget';
 
 export default function getDTOFromMDFClaimBudget(
 	budget: MDFClaimBudget,
-	activityId: number,
-	mdfClaimId?: number
+	activityId: number
 ): MDFClaimBudgetDTO {
 	return {
 		claimAmount: budget.claimAmount,
@@ -23,6 +22,5 @@ export default function getDTOFromMDFClaimBudget(
 		invoice: budget.invoice,
 		r_budgetToMdfClaimBudgets_c_budgetId: budget.id,
 		r_mdfClaimActivityToMdfClaimBudgets_c_mdfClaimActivityId: activityId,
-		r_mdfClaimToMdfClaimBudgets_c_mdfClaimId: mdfClaimId,
 	};
 }

@@ -17,15 +17,14 @@ import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimActivityBudgets(
 	activityId: number,
-	budgets: MDFClaimBudget[],
-	mdfClaimId?: number
+	budgets: MDFClaimBudget[]
 ) {
 	return await Promise.all(
 		budgets.map((budget) => {
 			return liferayFetcher.post(
 				`/o/${LiferayAPIs.OBJECT}/mdfclaimbudgets`,
 				Liferay.authToken,
-				getDTOFromMDFClaimBudget(budget, activityId, mdfClaimId)
+				getDTOFromMDFClaimBudget(budget, activityId)
 			);
 		})
 	);

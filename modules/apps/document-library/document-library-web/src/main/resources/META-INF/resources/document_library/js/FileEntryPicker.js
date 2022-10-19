@@ -12,13 +12,13 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {formatStorage, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const FileNamePicker = ({
 	maxFileSize: initialMaxFileSize,
@@ -31,6 +31,7 @@ const FileNamePicker = ({
 	const [inputValue, setInputValue] = useState('');
 	const [fileName, setFileName] = useState('');
 	const [maxFileSizeError, setMaxFileSizeError] = useState(false);
+	const inputFileRef = useRef();
 
 	useEffect(() => {
 		setFileName(inputValue ? inputValue.replace(/^.*[\\]/, '') : '');
@@ -66,9 +67,13 @@ const FileNamePicker = ({
 				'has-error': maxFileSizeError,
 			})}
 		>
-			<label className="btn btn-secondary" htmlFor={inputId}>
+			<ClayButton
+				displayType="secondary"
+				onClick={() => inputFileRef.current?.click()}
+				title={Liferay.Language.get('select-file')}
+			>
 				{Liferay.Language.get('select-file')}
-			</label>
+			</ClayButton>
 
 			{fileName && (
 				<>
@@ -92,6 +97,7 @@ const FileNamePicker = ({
 				id={inputId}
 				name={inputId}
 				onChange={onInputChange}
+				ref={inputFileRef}
 				type="file"
 				value={inputValue}
 			/>

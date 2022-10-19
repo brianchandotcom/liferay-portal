@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.headless.delivery.dto.v1_0;
+package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;

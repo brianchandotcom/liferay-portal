@@ -4273,9 +4273,17 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro selectColorSwatchItem {
-		Click(
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "Button#COLOR_PICKER");
+		if (IsElementPresent(key_fieldLabel = "${fieldLabel}", key_text = "theme", locator1 = "Icon#ANY_ITEM_SELECTOR")) {
+			Click(
+				key_fieldLabel = "${fieldLabel}",
+				key_text = "theme",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "Button#COLOR_PICKER");
+		}
 
 		Click(
 			key_colorSwatchItem = "${colorSwatchItem}",

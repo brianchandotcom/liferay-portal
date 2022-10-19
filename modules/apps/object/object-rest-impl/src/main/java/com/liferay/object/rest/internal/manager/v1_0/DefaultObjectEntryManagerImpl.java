@@ -902,7 +902,17 @@ public class DefaultObjectEntryManagerImpl
 				"permissions",
 				ActionUtil.addAction(
 					ActionKeys.PERMISSIONS, ObjectEntryResourceImpl.class,
-					objectEntry.getObjectEntryId(), "patchObjectEntry", null,
+					objectEntry.getObjectEntryId(),
+					"getObjectEntryPermissionsPage", null,
+					objectEntry.getUserId(),
+					_getObjectEntryPermissionName(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+			).put(
+				"replace",
+				ActionUtil.addAction(
+					ActionKeys.UPDATE, ObjectEntryResourceImpl.class,
+					objectEntry.getObjectEntryId(), "putObjectEntry", null,
 					objectEntry.getUserId(),
 					_getObjectEntryPermissionName(
 						objectEntry.getObjectDefinitionId()),
@@ -911,7 +921,7 @@ public class DefaultObjectEntryManagerImpl
 				"update",
 				ActionUtil.addAction(
 					ActionKeys.UPDATE, ObjectEntryResourceImpl.class,
-					objectEntry.getObjectEntryId(), "putObjectEntry", null,
+					objectEntry.getObjectEntryId(), "patchObjectEntry", null,
 					objectEntry.getUserId(),
 					_getObjectEntryPermissionName(
 						objectEntry.getObjectDefinitionId()),

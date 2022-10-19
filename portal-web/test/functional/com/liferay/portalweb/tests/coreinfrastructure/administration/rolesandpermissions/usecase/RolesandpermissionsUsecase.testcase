@@ -354,6 +354,8 @@ definition {
 			permissionDefinitionValue = "Update Discussion",
 			permissionNavigationValue = "Web Content > Web Content Article");
 
+		Role.openRolesAdmin();
+
 		Role.viewAssignee(
 			assigneeName = "Site Name",
 			assigneeType = "Sites",

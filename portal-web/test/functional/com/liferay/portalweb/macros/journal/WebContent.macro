@@ -46,6 +46,11 @@ definition {
 
 				SelectFrameTop();
 			}
+			else if (isSet(imageSourceURL)) {
+				ItemSelector.addImageFromURL(
+					imageSourceURL = "${imageSourceURL}",
+					navTab = "URL");
+			}
 			else {
 				SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 

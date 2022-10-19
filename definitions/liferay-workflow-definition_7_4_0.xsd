@@ -475,7 +475,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="script-language-type">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="(beanshell|drl|groovy|java|javascript|python|ruby|function#[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*)" />
+			<xs:pattern value="(beanshell|drl|function#[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*|groovy|java|javascript|python|ruby)" />
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="task-execution-type">

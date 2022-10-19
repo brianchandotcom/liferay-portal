@@ -75,7 +75,7 @@ public class RedirectDisplayContext {
 	}
 
 	public boolean isShowRedirectEntries() {
-		if (_isShowNavigationPanel("redirects")) {
+		if (_isShowNavigationPanel("aliases")) {
 			return true;
 		}
 
@@ -92,7 +92,7 @@ public class RedirectDisplayContext {
 
 	private boolean _isShowNavigationPanel(String name) {
 		String navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "redirects");
+			_httpServletRequest, "navigation", "aliases");
 
 		if (navigation.equals(name)) {
 			return true;

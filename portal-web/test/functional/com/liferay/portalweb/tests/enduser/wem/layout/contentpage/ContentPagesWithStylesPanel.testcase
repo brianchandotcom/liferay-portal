@@ -613,17 +613,17 @@ definition {
 				AssertTextEquals(
 					key_fieldLabel = "Text Color",
 					locator1 = "Button#COLOR_PICKER",
-					value1 = "Inherited · #272833");
+					value1 = "#272833");
 
 				AssertTextEquals(
-					key_fieldLabel = "Background Color",
-					locator1 = "Button#COLOR_PICKER",
-					value1 = "Inherited · #00000000");
+					key_text = "Background Color",
+					locator1 = "TextInput#ANY",
+					value1 = "#00000000");
 
 				AssertTextEquals(
-					key_fieldLabel = "Border Color",
-					locator1 = "Button#COLOR_PICKER",
-					value1 = "Inherited · #272833");
+					key_text = "Border Color",
+					locator1 = "TextInput#ANY",
+					value1 = "#272833");
 			}
 
 			task ("View the tooltip shown when hover on icon of selectors") {
@@ -636,8 +636,8 @@ definition {
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 
 				MouseOver(
-					key_fieldLabel = "Text Color",
-					locator1 = "Icon#COLOR_PICKER_ICON");
+					key_fieldLabel = "Background Color",
+					locator1 = "Button#COLOR_PICKER");
 
 				AssertVisible(
 					key_content = "Background Color",
@@ -645,7 +645,7 @@ definition {
 
 				MouseOver(
 					key_fieldLabel = "Border Color",
-					locator1 = "Icon#COLOR_PICKER_ICON");
+					locator1 = "Button#COLOR_PICKER");
 
 				AssertVisible(
 					key_content = "Border Color",
@@ -673,40 +673,46 @@ definition {
 
 		task ("Then the page designer sees the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors") {
 			task ("View the Font Family, Font Weight, Font Size, Border Radius and Shadow selectors use icon") {
-				for (var fieldName : list "font-family,bold,font-size,corner-radius,shadow") {
+				for (var fieldName : list "font-family,bold,font-size") {
 					AssertElementPresent(
 						key_text = "${fieldName}",
 						locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON");
 				}
+
+				for (var fieldName : list "corner-radius,shadow") {
+					AssertElementPresent(
+						key_text = "${fieldName}",
+						locator1 = "TextInput#GENERIC_TEXT_INPUT_WITH_ICON");
+				}
 			}
 
-			task ("View the Inherited · computed value is shown in the Font Family, Font Weight and Font Size selectors by default") {
+			task ("View the computed value is shown in the Font Family, Font Weight and Font Size selectors by default") {
 				AssertTextEquals(
 					key_text = "font-family",
 					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
-					value1 = "Inherited · system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+					value1 = "system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
 
 				AssertTextEquals(
 					key_text = "bold",
 					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
-					value1 = "Inherited · 400");
+					value1 = "400");
 
 				AssertTextEquals(
 					key_text = "font-size",
 					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
-					value1 = "Inherited · 14px");
+					value1 = "14px");
 			}
 
-			task ("View the Default · computed value is shown in Border Radius and Shadow selectors by default") {
+			task ("View the computed value is shown in Border Radius and Shadow selectors by default") {
 				AssertTextEquals(
-					key_text = "corner-radius",
-					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
-					value1 = "Default · 0px");
+					ariaLabel = "Border Radius",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "0");
 
 				AssertTextEquals(
-					key_text = "shadow",
-					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
-					value1 = "Default · none");
+					ariaLabel = "Shadow",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "none");
 			}
 
 			task ("View the tooltip shown when hover on icon of selectors") {

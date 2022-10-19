@@ -205,13 +205,10 @@ public class MBMailingListLocalServiceImpl
 
 		// Scheduler
 
-		if (active) {
-			_unscheduleMailingList(mailingList);
+		_unscheduleMailingList(mailingList);
 
+		if (active) {
 			_scheduleMailingList(mailingList);
-		}
-		else {
-			_unscheduleMailingList(mailingList);
 		}
 
 		return mailingList;

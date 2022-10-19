@@ -275,10 +275,8 @@ public class KBDropdownItemsProvider {
 									return _getParentNodeURL(kbArticle);
 								}
 							}
-							else {
-								if (_isKBArticleSelected(kbArticle)) {
-									return _getParentNodeURL(kbArticle);
-								}
+							else if (_isKBArticleSelected(kbArticle)) {
+								return _getParentNodeURL(kbArticle);
 							}
 
 							return _currentURL;
@@ -517,11 +515,9 @@ public class KBDropdownItemsProvider {
 										kbFolder.getParentKBFolderId());
 								}
 							}
-							else {
-								if (_isKBFolderSelected(kbFolder)) {
-									return _createKbFolderRenderURL(
-										kbFolder.getParentKBFolderId());
-								}
+							else if (_isKBFolderSelected(kbFolder)) {
+								return _createKbFolderRenderURL(
+									kbFolder.getParentKBFolderId());
 							}
 
 							return _currentURL;

@@ -19,7 +19,6 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,8 +56,5 @@ public class ResetValuesDDMStructureMVCActionCommand
 
 	@Reference
 	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private Portal _portal;
 
 }

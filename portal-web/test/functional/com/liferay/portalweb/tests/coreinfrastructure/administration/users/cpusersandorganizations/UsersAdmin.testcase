@@ -1271,6 +1271,8 @@ definition {
 
 	@priority = "4"
 	test EditUserAdditionalEmailAddresses {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1366,6 +1368,7 @@ definition {
 
 	@priority = "4"
 	test EditUserAddresses {
+		property portal.acceptance = "true";
 		property testray.component.names = "Address";
 
 		JSONUser.addUser(
@@ -1448,6 +1451,8 @@ definition {
 
 	@priority = "3"
 	test EditUserDisplaySettings {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1471,6 +1476,8 @@ definition {
 
 	@priority = "4"
 	test EditUserPhoneNumbers {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1614,6 +1621,8 @@ definition {
 
 	@priority = "4"
 	test EditUserWebsites {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -2852,6 +2861,8 @@ definition {
 
 	@priority = "4"
 	test ViewUserFormPersistence {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

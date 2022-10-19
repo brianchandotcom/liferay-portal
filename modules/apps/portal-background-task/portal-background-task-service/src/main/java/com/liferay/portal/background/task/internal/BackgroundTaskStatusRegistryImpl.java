@@ -69,6 +69,31 @@ public class BackgroundTaskStatusRegistryImpl
 	}
 
 	@Override
+	public BackgroundTaskStatusMessageTranslator
+		getBackgroundTaskStatusMessageTranslator(long backgroundTaskId) {
+
+		Lock lock = _readWriteLock.readLock();
+
+		lock.lock();
+
+		try {
+			Map.Entry
+				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+					backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
+						backgroundTaskId);
+
+			if (backgroundTaskStatusEntry == null) {
+				return null;
+			}
+
+			return backgroundTaskStatusEntry.getValue();
+		}
+		finally {
+			lock.unlock();
+		}
+	}
+
+	@Override
 	public BackgroundTaskStatus registerBackgroundTaskStatus(
 		long backgroundTaskId,
 		BackgroundTaskStatusMessageTranslator

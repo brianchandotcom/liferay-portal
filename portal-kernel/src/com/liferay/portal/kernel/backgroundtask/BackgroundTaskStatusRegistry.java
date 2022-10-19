@@ -21,6 +21,9 @@ public interface BackgroundTaskStatusRegistry {
 
 	public BackgroundTaskStatus getBackgroundTaskStatus(long backgroundTaskId);
 
+	public BackgroundTaskStatusMessageTranslator
+		getBackgroundTaskStatusMessageTranslator(long backgroundTaskId);
+
 	public BackgroundTaskStatus registerBackgroundTaskStatus(
 		long backgroundTaskId,
 		BackgroundTaskStatusMessageTranslator

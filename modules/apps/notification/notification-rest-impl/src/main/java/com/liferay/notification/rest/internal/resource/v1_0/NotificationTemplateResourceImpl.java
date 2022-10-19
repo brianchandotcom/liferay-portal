@@ -23,6 +23,7 @@ import com.liferay.notification.rest.internal.odata.entity.v1_0.NotificationTemp
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
 import com.liferay.notification.service.NotificationTemplateService;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.notification.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -122,7 +122,9 @@ public class NotificationTemplateResourceImpl
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
 				NotificationTemplateUtil.toNotificationContext(
-					contextUser.getUserId(), notificationTemplate)));
+					contextUser.getUserId(), notificationTemplate,
+					_notificationTypeServiceTracker.getNotificationType(
+						notificationTemplate.getType()))));
 	}
 
 	@Override
@@ -212,5 +214,8 @@ public class NotificationTemplateResourceImpl
 
 	@Reference
 	private NotificationTemplateService _notificationTemplateService;
+
+	@Reference
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 }

@@ -715,19 +715,19 @@ definition {
 		var key_workflowAssetTitle = "Wiki Page Title";
 
 		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE",
+			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_DEFINITION",
 			value1 = "Single Approver");
 
 		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
+			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TITLE",
 			value1 = "Wiki Page Title");
 
 		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
+			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TYPE",
 			value1 = "Wiki Page");
 
 		AssertTextEquals(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK",
+			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TASK",
 			value1 = "Review");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");

@@ -13,6 +13,6 @@ import MDFClaim from '../mdfClaim';
 
 export default interface MDFClaimDTO
 	extends Omit<MDFClaim, 'activities' | 'reimbursementInvoice'> {
-		amountClaimed?:number,
-		mdfRequestedAmount?:number,
-	}
+	amountClaimed?: number;
+	mdfRequestedAmount?: number;
+}

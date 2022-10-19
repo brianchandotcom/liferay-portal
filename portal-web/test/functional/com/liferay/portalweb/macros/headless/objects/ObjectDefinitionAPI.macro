@@ -12,11 +12,10 @@ definition {
 
 	macro _assertManagerFirstnameCorrect {
 		var actualManagerFirstname = ObjectDefinitionAPI._getNestedObjectFirstnameByObjectId(
-			nestedField = "${nestedField}",
+			nestedObjectParameterName = "${nestedObjectParameterName}",
 			objectId = "${objectId}",
-			relationshipName = "${relationshipName}",
 			responseToParse = "${responseToParse}");
-
+			
 		TestUtils.assertEquals(
 			actual = "${actualManagerFirstname}",
 			expected = "${expectedManagerFirstname}");
@@ -24,9 +23,8 @@ definition {
 
 	macro _assertManagerIdCorrect {
 		var actualManagerId = ObjectDefinitionAPI._getNestedObjectIdByObjectId(
-			nestedField = "${nestedField}",
+			nestedObjectParameterName = "${nestedObjectParameterName}",
 			objectId = "${objectId}",
-			relationshipName = "${relationshipName}",
 			responseToParse = "${responseToParse}");
 
 		TestUtils.assertEquals(
@@ -234,13 +232,13 @@ definition {
 	}
 
 	macro _getNestedObjectFirstnameByObjectId {
-		var nestedObjectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].r_${relationshipName}_c_${nestedField}.firstname");
+		var nestedObjectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].r_supervisor_c_manager.firstname");
 
 		return "${nestedObjectFirstname}";
 	}
 
 	macro _getNestedObjectIdByObjectId {
-		var nestedObjectId = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].r_${relationshipName}_c_${nestedField}.id");
+		var nestedObjectId = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].${nestedObjectParameterName}.id");
 
 		return "${nestedObjectId}";
 	}
@@ -293,7 +291,7 @@ definition {
 		return "${json}";
 	}
 
-	macro _getObjectFirstnameById {
+	macro _getObjectFirstnameById {	
 		var objectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].firstname");
 
 		return "${objectFirstname}";
@@ -431,6 +429,9 @@ definition {
 	}
 
 	macro assertEmployeeHasNestedFieldManager {
+		
+		var nestedObjectParameterName = StringUtil.replace("${nestedField}", "Id", "");
+		
 		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
 			expectedEmployeeFirstname = "${expectedEmployeeFirstname}",
 			objectId = "${objectId}",
@@ -440,15 +441,13 @@ definition {
 			expectedManagerFirstname = "${expectedManagerFirstname}",
 			nestedField = "${nestedField}",
 			objectId = "${objectId}",
-			relationshipName = "${relationshipName}",
 			responseToParse = "${responseToParse}");
 
 		ObjectDefinitionAPI._assertManagerIdCorrect(
 			expectedManagerFirstname = "${expectedManagerFirstname}",
 			expectedManagerId = "${expectedManagerId}",
-			nestedField = "${nestedField}",
+			nestedObjectParameterName = "${nestedObjectParameterName}",
 			objectId = "${objectId}",
-			relationshipName = "${relationshipName}",
 			responseToParse = "${responseToParse}");
 	}
 

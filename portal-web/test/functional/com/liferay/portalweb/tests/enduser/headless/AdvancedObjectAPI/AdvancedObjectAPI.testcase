@@ -1,5 +1,4 @@
 @component-name = "portal-headless"
-@disable-webdriver = "true"
 definition {
 
 	property portal.release = "true";
@@ -8,7 +7,7 @@ definition {
 	property testray.main.component.name = "Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given active object definitions created") {
 			var objectDefinitionId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
@@ -46,6 +45,7 @@ definition {
 	}
 
 	@description = "Aggregation Terms in oneToMany relationship"
+	@disable-webdriver = "true"
 	@ignore = "true"
 	@priority = "5"
 	test CanReturnAggregationTermsDetailsInOneToManyRelationship {
@@ -88,6 +88,7 @@ definition {
 	}
 
 	@description = "Aggregation Terms in oneToMany relationship after object deletion"
+	@disable-webdriver = "true"
 	@ignore = "true"
 	@priority = "5"
 	test CanReturnAggregationTermsDetailsInOneToManyRelationshipAfterObjectDeletion {
@@ -134,6 +135,7 @@ definition {
 	}
 
 	@description = "Aggregation Terms in oneToMany updated relationship"
+	@disable-webdriver = "true"
 	@ignore = "true"
 	@priority = "5"
 	test CanReturnAggregationTermsDetailsInOneToManyUpdatedRelationship {
@@ -178,6 +180,7 @@ definition {
 	}
 
 	@description = "Nested fields in oneToMany relationship"
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanReturnNestedFieldsDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
@@ -194,23 +197,25 @@ definition {
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
 			var getEmployeesWithManager = ObjectDefinitionAPI.getObjectsWithNestedField(
-				nestedField = "manager",
+				nestedField = "r_supervisor_c_managerId",
 				objects = "employees");
 		}
 
 		task ("Then 'employee' information should be provided with 'manager' information nested as an object") {
-			ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
+				ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
 				expectedEmployeeFirstname = "Bruce",
 				expectedManagerFirstname = "Courtney",
 				expectedManagerId = "${managerId}",
-				nestedField = "manager",
+				nestedField = "r_${relationshipName}_c_${nestedObject}Id",
 				objectId = "${employeeId}",
+				nestedObject = "manager",
 				relationshipName = "supervisor",
 				responseToParse = "${getEmployeesWithManager}");
 		}
 	}
 
 	@description = "Nested fields in oneToMany relationship after object deletion"
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanReturnNestedFieldsDetailsInOneToManyRelationshipAfterObjectDeletion {
 		property portal.acceptance = "true";
@@ -250,6 +255,7 @@ definition {
 	}
 
 	@description = "Nested fields in oneToMany Updated relationship"
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanReturnNestedFieldsDetailsInOneToManyUpdatedRelationship {
 		property portal.acceptance = "true";
@@ -277,7 +283,7 @@ definition {
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
 			var getEmployeesWithManager = ObjectDefinitionAPI.getObjectsWithNestedField(
-				nestedField = "manager",
+				nestedField = "r_supervisor_c_managerId",
 				objects = "employees");
 		}
 
@@ -286,8 +292,9 @@ definition {
 				expectedEmployeeFirstname = "Bruce",
 				expectedManagerFirstname = "Aaron",
 				expectedManagerId = "${managerId2}",
-				nestedField = "manager",
+				nestedField = "r_${relationshipName}_c_${nestedObject}Id",
 				objectId = "${employeeId1}",
+				nestedObject = "manager",
 				relationshipName = "supervisor",
 				responseToParse = "${getEmployeesWithManager}");
 		}

@@ -73,6 +73,14 @@ definition {
 			locator1 = "Link#ANY");
 	}
 
+	macro clickMenuOfVersion {
+		Click.waitForMenuToggleJSClick(
+			key_version = "${versionName}",
+			locator1 = "ContentDashboard#VERSION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${item}");
+	}
+
 	macro clickOnFirstBar {
 		if (!(isSet(fillColor))) {
 			var fillColor = "4B9FFF";
@@ -126,14 +134,6 @@ definition {
 		else {
 			Button.clickPublish();
 		}
-	}
-
-	macro expireVersion {
-		Click.waitForMenuToggleJSClick(
-			key_version = "${versionName}",
-			locator1 = "ContentDashboard#VERSION_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
 	macro filterByAuthor {

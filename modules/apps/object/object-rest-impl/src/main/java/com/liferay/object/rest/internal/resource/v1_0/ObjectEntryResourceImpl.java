@@ -400,6 +400,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			null, filter, pagination, sorts);
 	}
 
+	public void setObjectDefinition(ObjectDefinition objectDefinition) {
+		_objectDefinition = objectDefinition;
+	}
+
 	@Override
 	public void update(
 			Collection<ObjectEntry> objectEntries,

@@ -24,6 +24,7 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValues
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
@@ -39,9 +40,20 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 
 import java.lang.reflect.Method;
@@ -185,6 +197,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private ObjectEntryResourceImpl _createObjectEntryResource() {
+		return new ObjectEntryResourceImpl(
+			_filterPredicateFactory, _objectDefinitionLocalService,
+			_objectEntryLocalService, _objectEntryManagerTracker,
+			_objectFieldLocalService, _objectRelationshipService,
+			_objectScopeProviderRegistry);
 	}
 
 	private void _excludeScopedMethods(
@@ -336,6 +356,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"RequiredObjectRelationshipExceptionMapper")
 					).build()),
 				_bundleContext.registerService(
+					ObjectEntryResource.Factory.class,
+					new ObjectEntryResourceFactoryImpl(
+						_companyLocalService, _defaultPermissionCheckerFactory,
+						_expressionConvert, _filterParserProvider,
+						_groupLocalService, objectDefinition,
+						this::_createObjectEntryResource,
+						_resourceActionLocalService,
+						_resourcePermissionLocalService, _roleLocalService,
+						_sortParserProvider, _userLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"resource.locator.key",
+						objectDefinition.getRESTContextPath() + "/" +
+							objectDefinition.getShortName()
+					).build()),
+				_bundleContext.registerService(
 					ObjectEntryResource.class,
 					new PrototypeServiceFactory<ObjectEntryResource>() {
 
@@ -345,14 +380,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							ServiceRegistration<ObjectEntryResource>
 								serviceRegistration) {
 
-							return new ObjectEntryResourceImpl(
-								_filterPredicateFactory,
-								_objectDefinitionLocalService,
-								_objectEntryLocalService,
-								_objectEntryManagerTracker,
-								_objectFieldLocalService,
-								_objectRelationshipService,
-								_objectScopeProviderRegistry);
+							return _createObjectEntryResource();
 						}
 
 						@Override
@@ -422,6 +450,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinitionDeployerImpl.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private final Map<String, List<ComponentInstance>> _componentInstancesMap =
 		new HashMap<>();
 
@@ -429,7 +461,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
+	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
+
+	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -468,11 +514,26 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	)
 	private ComponentFactory _relatedObjectEntryResourceFactory;
 
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
 	private final Map<String, List<ServiceRegistration<?>>>
 		_serviceRegistrationsMap = new HashMap<>();
 
 	@Reference
+	private SortParserProvider _sortParserProvider;
+
+	@Reference
 	private SystemObjectDefinitionMetadataTracker
 		_systemObjectDefinitionMetadataTracker;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

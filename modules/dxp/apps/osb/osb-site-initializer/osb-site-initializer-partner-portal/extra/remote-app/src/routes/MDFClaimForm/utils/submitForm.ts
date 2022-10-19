@@ -19,8 +19,7 @@ import createMDFClaim from '../../../common/services/liferay/object/mdf-claim/cr
 
 export default async function submitForm(
 	values: MDFClaim,
-	formikHelpers: Omit<FormikHelpers<MDFClaim>, 'setFieldValue'>,
-	_siteURL: string
+	formikHelpers: Omit<FormikHelpers<MDFClaim>, 'setFieldValue'>
 ) {
 	formikHelpers.setSubmitting(true);
 
@@ -59,8 +58,7 @@ export default async function submitForm(
 							dtoActivity.id,
 							activity.budgets?.filter((budget) => {
 								return budget.invoice;
-							}),
-							dtoMDFClaim.id
+							})
 						);
 
 						activity.budgets.map(async (budgets, index) => {

@@ -45,7 +45,7 @@ definition {
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX",
 			permissionDefinitionValue = "Manage Pages",
 			permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
-			permissionNavigationValue = "Site Pages",
+			permissionNavigationValue = "Pages",
 			roleTitle = "Organization User",
 			roleType = "Organization");
 

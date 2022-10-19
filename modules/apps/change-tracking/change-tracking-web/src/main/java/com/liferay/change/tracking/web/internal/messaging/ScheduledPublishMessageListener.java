@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
 	service = MessageListener.class
 )

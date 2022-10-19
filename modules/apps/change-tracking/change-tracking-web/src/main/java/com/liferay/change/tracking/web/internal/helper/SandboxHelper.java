@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Truong
  */
-@Component(immediate = true, service = SandboxHelper.class)
+@Component(service = SandboxHelper.class)
 public class SandboxHelper {
 
 	public void sandbox(CTPreferences ctPreferences) throws PortalException {

@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = CTDisplayRendererRegistry.class)
+@Component(service = CTDisplayRendererRegistry.class)
 public class CTDisplayRendererRegistry {
 
 	public <T extends BaseModel<T>> T fetchCTModel(

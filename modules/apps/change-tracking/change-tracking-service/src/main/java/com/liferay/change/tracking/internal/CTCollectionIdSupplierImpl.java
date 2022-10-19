@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTCollectionIdSupplier.class)
+@Component(service = CTCollectionIdSupplier.class)
 public class CTCollectionIdSupplierImpl implements CTCollectionIdSupplier {
 
 	@Override

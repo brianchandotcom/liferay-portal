@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 	service = PortletConfigurationIcon.class
 )

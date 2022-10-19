@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
-	immediate = true, service = CTSettingsConfigurationHelper.class
+	service = CTSettingsConfigurationHelper.class
 )
 public class CTSettingsConfigurationHelper {
 

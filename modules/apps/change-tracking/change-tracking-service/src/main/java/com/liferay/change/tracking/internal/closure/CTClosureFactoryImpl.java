@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTClosureFactory.class)
+@Component(service = CTClosureFactory.class)
 public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override

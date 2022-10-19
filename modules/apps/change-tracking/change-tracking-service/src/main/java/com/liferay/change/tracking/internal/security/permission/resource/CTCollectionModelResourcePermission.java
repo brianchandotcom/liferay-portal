@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.change.tracking.model.CTCollection",
 	service = ModelResourcePermission.class
 )

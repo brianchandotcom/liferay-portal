@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Truong
  */
 @Component(
-	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=CTCollection Preview Filter", "url-pattern=/*"

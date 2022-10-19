@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTPersistenceHelper.class)
+@Component(service = CTPersistenceHelper.class)
 public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 	@Override

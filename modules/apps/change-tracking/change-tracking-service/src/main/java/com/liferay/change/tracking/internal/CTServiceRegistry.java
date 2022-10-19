@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTServiceRegistry.class)
+@Component(service = CTServiceRegistry.class)
 public class CTServiceRegistry {
 
 	public CTService<?> getCTService(long classNameId) {

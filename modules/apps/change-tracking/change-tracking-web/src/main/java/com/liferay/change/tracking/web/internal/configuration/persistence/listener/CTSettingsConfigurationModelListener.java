@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author David Truong
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 	service = ConfigurationModelListener.class
 )

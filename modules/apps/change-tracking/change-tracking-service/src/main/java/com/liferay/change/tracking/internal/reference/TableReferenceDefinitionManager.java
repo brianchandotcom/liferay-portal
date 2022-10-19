@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = TableReferenceDefinitionManager.class)
+@Component(service = TableReferenceDefinitionManager.class)
 public class TableReferenceDefinitionManager {
 
 	public long getClassNameId(String tableName) {

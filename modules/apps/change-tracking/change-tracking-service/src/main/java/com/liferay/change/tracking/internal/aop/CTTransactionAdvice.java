@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = ChainableMethodAdvice.class)
+@Component(service = ChainableMethodAdvice.class)
 public class CTTransactionAdvice extends ChainableMethodAdvice {
 
 	@Override

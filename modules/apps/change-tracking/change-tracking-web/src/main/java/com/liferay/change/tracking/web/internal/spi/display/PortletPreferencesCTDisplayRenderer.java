@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Truong
  */
-@Component(immediate = true, service = CTDisplayRenderer.class)
+@Component(service = CTDisplayRenderer.class)
 public class PortletPreferencesCTDisplayRenderer
 	extends BaseCTDisplayRenderer<PortletPreferences> {
 

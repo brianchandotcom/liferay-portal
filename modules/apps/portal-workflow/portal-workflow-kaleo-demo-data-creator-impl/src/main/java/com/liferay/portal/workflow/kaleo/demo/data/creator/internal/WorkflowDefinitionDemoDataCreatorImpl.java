@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.demo.data.creator.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -83,9 +82,6 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowDefinitionManager _workflowDefinitionManager;

@@ -316,7 +316,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 				navigationKeys, new String[] {"pending", "draft"});
 		}
 
-		return navigationKeys;
+		return ArrayUtil.append(navigationKeys, "all");
 	}
 
 	@Override

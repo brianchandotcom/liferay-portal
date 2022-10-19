@@ -48,7 +48,7 @@ public class RedirectDisplayContext {
 				navigationItem.setActive(isShowRedirectEntries());
 				navigationItem.setHref(_renderResponse.createRenderURL());
 				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "redirects"));
+					LanguageUtil.get(_httpServletRequest, "aliases"));
 			}
 		).add(
 			navigationItem -> {

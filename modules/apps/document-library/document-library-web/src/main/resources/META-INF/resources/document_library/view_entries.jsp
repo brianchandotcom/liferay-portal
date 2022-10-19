@@ -175,6 +175,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 												<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 													<div class="autofit-col">
 														<clay:dropdown-actions
+															aria-label='<%= LanguageUtil.get(request, "actions") %>'
 															dropdownItems="<%= dlViewFileVersionDisplayContext.getActionDropdownItems() %>"
 															propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
 														/>

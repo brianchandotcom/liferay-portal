@@ -49,9 +49,7 @@ public class MessagingProxyInvocationHandler implements InvocationHandler {
 
 		ProxyRequest proxyRequest = new ProxyRequest(method, args);
 
-		if (proxyRequest.isSynchronous() ||
-			ProxyModeThreadLocal.isForceSync()) {
-
+		if (proxyRequest.isSynchronous() || true) {
 			return _baseProxyBean.synchronousSend(proxyRequest);
 		}
 

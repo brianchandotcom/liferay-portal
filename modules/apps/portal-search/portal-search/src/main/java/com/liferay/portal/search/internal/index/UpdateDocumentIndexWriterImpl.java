@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -73,9 +72,7 @@ public class UpdateDocumentIndexWriterImpl
 
 		searchContext.setCompanyId(companyId);
 
-		_setCommitImmediately(
-			searchContext,
-			commitImmediately || ProxyModeThreadLocal.isForceSync());
+		_setCommitImmediately(searchContext, commitImmediately || true);
 
 		try {
 			indexWriter.updateDocument(searchContext, document);

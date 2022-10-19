@@ -41,6 +41,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -77,34 +78,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	public File exportDisplayPages(long[] layoutPageTemplateEntryIds)
 		throws Exception {
 
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
-
-		try {
-			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-				if (layoutPageTemplateEntry.isDraft() ||
-					(layoutPageTemplateEntry.getType() !=
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_DISPLAY_PAGE)) {
-
-					continue;
-				}
-
-				_populateDisplayPagesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter,
-					zipWriter);
-			}
-
-			return zipWriter.getFile();
-		}
-		catch (Exception exception) {
-			throw new PortletException(exception);
-		}
+		return _exportLayoutPageTemplateEntries(
+			layoutPageTemplateEntryIds,
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+			this::_populateDisplayPagesZipWriter);
 	}
 
 	@Override
@@ -168,34 +145,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	public File exportMasterLayouts(long[] layoutPageTemplateEntryIds)
 		throws Exception {
 
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
-
-		try {
-			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-				if (layoutPageTemplateEntry.isDraft() ||
-					(layoutPageTemplateEntry.getType() !=
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT)) {
-
-					continue;
-				}
-
-				_populateMasterLayoutsZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter,
-					zipWriter);
-			}
-
-			return zipWriter.getFile();
-		}
-		catch (Exception exception) {
-			throw new PortletException(exception);
-		}
+		return _exportLayoutPageTemplateEntries(
+			layoutPageTemplateEntryIds,
+			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+			this::_populateMasterLayoutsZipWriter);
 	}
 
 	@Override
@@ -228,6 +181,42 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 				_populatePageTemplatesZipWriter(
 					layoutPageTemplateEntry, layoutPageTemplateCollectionKeyMap,
 					pageDefinitionDTOConverter, zipWriter);
+			}
+
+			return zipWriter.getFile();
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+	}
+
+	private File _exportLayoutPageTemplateEntries(
+			long[] layoutPageTemplateEntryIds, int type,
+			UnsafeTriConsumer
+				<LayoutPageTemplateEntry,
+				 DTOConverter<LayoutStructure, PageDefinition>, ZipWriter,
+				 Exception> unsafeConsumer)
+		throws Exception {
+
+		DTOConverter<LayoutStructure, PageDefinition>
+			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+
+		try {
+			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+
+				if (layoutPageTemplateEntry.isDraft() ||
+					(layoutPageTemplateEntry.getType() != type)) {
+
+					continue;
+				}
+
+				unsafeConsumer.accept(
+					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					zipWriter);
 			}
 
 			return zipWriter.getFile();

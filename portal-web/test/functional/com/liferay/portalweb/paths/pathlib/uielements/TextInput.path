@@ -336,6 +336,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_TEXT_INPUT_WITH_ICON</td>
+	<td>//div[label[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]]//preceding-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERIC_TEXT_INPUT_N</td>
 	<td>xpath=(//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text'] | //div[contains(@class,'ddm-field') and contains(.,'${key_fieldLabel}')]//input[@type='text'])[${key_indexNumber}]</td>
 	<td></td>

@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_DISMISSIBLE_LINK</td>
+	<td>//div[contains(@class,'alert-danger')][contains(@class,'alert-dismissible')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_3_LINK</td>
 	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]/a)</td>
 	<td></td>

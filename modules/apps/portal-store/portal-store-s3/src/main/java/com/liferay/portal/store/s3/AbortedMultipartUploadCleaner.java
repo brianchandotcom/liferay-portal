@@ -66,6 +66,8 @@ public class AbortedMultipartUploadCleaner {
 					")(store.type=", S3Store.class.getName(), "))")),
 			new S3StoreServiceTrackerCustomizer(
 				bundleContext, _schedulerEngineHelper, _triggerFactory));
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate

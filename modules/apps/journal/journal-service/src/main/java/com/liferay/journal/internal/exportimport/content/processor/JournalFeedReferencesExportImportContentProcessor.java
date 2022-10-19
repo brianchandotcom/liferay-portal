@@ -442,7 +442,4 @@ public class JournalFeedReferencesExportImportContentProcessor
 	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
 
-	@Reference
-	private Portal _portal;
-
 }

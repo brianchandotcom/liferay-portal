@@ -1133,6 +1133,12 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
 				value1 = "${assetContent}");
+
+			if (isSet(imageThumbnailName)) {
+				AssertVisible(
+					key_thumbnailName = "${imageThumbnailName}",
+					locator1 = "AP#ASSET_ABSTRACT_DETAIL_IMAGE_THUMBNAIL");
+			}
 		}
 	}
 

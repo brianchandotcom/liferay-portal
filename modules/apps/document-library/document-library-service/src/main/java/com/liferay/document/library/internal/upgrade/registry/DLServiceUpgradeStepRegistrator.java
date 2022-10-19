@@ -25,7 +25,7 @@ import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.document.library.internal.upgrade.v3_2_1.DDMStructureLinkUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_2.DLFileEntryUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_4.UpgradeDLSizeLimitConfiguration;
-import com.liferay.document.library.internal.upgrade.v3_2_5.SyncDLFileEntryTypesDDMStructurePermissions;
+import com.liferay.document.library.internal.upgrade.v3_2_5.DLFileEntryTypesDDMStructureUpgradeProcess;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
@@ -127,7 +127,7 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.2.4", "3.2.5",
-			new SyncDLFileEntryTypesDDMStructurePermissions(
+			new DLFileEntryTypesDDMStructureUpgradeProcess(
 				_ddmPermissionSupport, _resourceActionLocalService,
 				_resourcePermissionLocalService));
 	}

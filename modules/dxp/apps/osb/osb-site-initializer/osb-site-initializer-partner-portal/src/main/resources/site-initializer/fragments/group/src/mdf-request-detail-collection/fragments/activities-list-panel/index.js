@@ -25,44 +25,12 @@ const getIntlNumberFormat = () =>
 
 const getBooleanValue = (value) => (value ? 'Yes' : 'No');
 
-const BudgetBreakdownTable = ({mdfRequestActivityId}) => {
-	const [budgets, setBudgets] = useState();
-
-	useEffect(() => {
-		const getActivityToBudgets = async () => {
-			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch(
-				`/o/c/activities/${mdfRequestActivityId}/activityToBudgets`,
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			);
-
-			if (response.ok) {
-				setBudgets(await response.json());
-
-				return;
-			}
-
-			Liferay.Util.openToast({
-				message: 'An unexpected error occured.',
-				type: 'danger',
-			});
-		};
-
-		if (mdfRequestActivityId) {
-			getActivityToBudgets();
-		}
-	}, [mdfRequestActivityId]);
-
+const BudgetBreakdownTable = ({activityToBudgets}) => {
 	return (
 		<div>
-			{budgets && (
+			{!!activityToBudgets.length && (
 				<Table
-					items={budgets.items.map((budget) => ({
+					items={activityToBudgets.map((budget) => ({
 						title: budget.expense.name,
 						value: getIntlNumberFormat().format(budget.cost),
 					}))}
@@ -179,25 +147,23 @@ const getMiscellaneousMarketingField = (mdfRequestActivity) => [
 	},
 ];
 
-const TypeActivityExternalReferenceCode = {
-	CONTENT_MARKETING: 'PRMTACT-003',
-	DIGITAL_MARKETING: 'PRMTACT-002',
-	EVENT: 'PRMTACT-001',
-	MISCELLANEOUS_MARKETING: 'PRMTACT-004',
+const TypeActivityKey = {
+	CONTENT_MARKETING: 'prmtact003',
+	DIGITAL_MARKETING: 'prmtact002',
+	EVENT: 'prmtact001',
+	MISCELLANEOUS_MARKETING: 'prmtact004',
 };
 
 const CampaignActivityTable = ({mdfRequestActivity}) => {
 	const fieldsByTypeActivity = {
-		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: getDigitalMarketFields(
+		[TypeActivityKey.DIGITAL_MARKETING]: getDigitalMarketFields(
 			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.CONTENT_MARKETING]: getContentMarketFields(
+		[TypeActivityKey.CONTENT_MARKETING]: getContentMarketFields(
 			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.EVENT]: getEventFields(
-			mdfRequestActivity
-		),
-		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketingField(
+		[TypeActivityKey.EVENT]: getEventFields(mdfRequestActivity),
+		[TypeActivityKey.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketingField(
 			mdfRequestActivity
 		),
 	};
@@ -211,19 +177,13 @@ const CampaignActivityTable = ({mdfRequestActivity}) => {
 				},
 				{
 					title: 'Type of Activity',
-					value:
-						mdfRequestActivity
-							.r_typeActivityToActivities_c_typeActivity.name,
+					value: mdfRequestActivity.typeActivity.name,
 				},
 				{
 					title: 'Tactic',
-					value:
-						mdfRequestActivity.r_tacticToActivities_c_tactic.name,
+					value: mdfRequestActivity.tactic.name,
 				},
-				...fieldsByTypeActivity[
-					mdfRequestActivity.r_typeActivityToActivities_c_typeActivity
-						.externalReferenceCode
-				],
+				...fieldsByTypeActivity[mdfRequestActivity.typeActivity.key],
 				{
 					title: 'Start Date',
 					value: new Date(
@@ -324,13 +284,15 @@ const Panel = ({children, mdfRequestActivity}) => (
 
 export default function () {
 	const [activities, setActivities] = useState();
+	// eslint-disable-next-line no-console
+	console.log('🚀 ~ file: index.js ~ line 287 ~ activities', activities);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities/?nestedFields=typeActivity,tactic`,
+				`/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities?nestedFields=activityToBudgets`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -376,7 +338,9 @@ export default function () {
 						/>
 
 						<BudgetBreakdownTable
-							mdfRequestActivityId={mdfRequestActivity.id}
+							activityToBudgets={
+								mdfRequestActivity.activityToBudgets
+							}
 						/>
 
 						<LeadListTable

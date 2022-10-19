@@ -735,18 +735,10 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryType.getFileEntryTypeId(), false, addGroupPermissions,
 			addGuestPermissions);
 
-		// Each DLFileEntryType is tied to a DDM structure, that holds
-		// the metadata definitions defined in the document type itself.
-		// The upload forms (and most probably other code) checks the
-		// permissions on the DDM structure to determine if the fields
-		// may be viewed/entered by a user. So the permissions on the
-		// structure need to be sychronized with the DLFilEntryType.
-		// This covers the creation case. Updating is handled in
-		// document-library-service, DLFileEntryTypePermissionUpdateHandler
-
 		_resourceLocalService.addResources(
 			dlFileEntryType.getCompanyId(), dlFileEntryType.getGroupId(),
-			dlFileEntryType.getUserId(), _DDM_FILE_ENTRY_METADATA,
+			dlFileEntryType.getUserId(),
+			_DL_FILE_ENTRY_METADATA_DDM_STRUCTURE_CLASS_NAME,
 			dlFileEntryType.getDataDefinitionId(), false, addGroupPermissions,
 			addGuestPermissions);
 	}
@@ -760,49 +752,51 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryType.getUserId(), DLFileEntryType.class.getName(),
 			dlFileEntryType.getFileEntryTypeId(), modelPermissions);
 
-		// Each DLFileEntryType is tied to a DDM structure, that holds
-		// the metadata definitions defined in the document type itself.
-		// The upload forms (and most probably other code) checks the
-		// permissions on the DDM structure to determine if the fields
-		// may be viewed/entered by a user. So the permissions on the
-		// structure need to be sychronized with the DLFilEntryType.
-		// This covers the creation case. Updating is handled in
-		// document-library-service, DLFileEntryTypePermissionUpdateHandler
-
-		ModelPermissions structurePermissions = null;
+		ModelPermissions dlFileEntryMetadataDDMStructureModelPermissions = null;
 
 		if (modelPermissions != null) {
-			structurePermissions = ModelPermissionsFactory.create(
-				_DDM_FILE_ENTRY_METADATA);
+			dlFileEntryMetadataDDMStructureModelPermissions =
+				ModelPermissionsFactory.create(
+					_DL_FILE_ENTRY_METADATA_DDM_STRUCTURE_CLASS_NAME);
 
-			List<ResourceAction> fileEntryMetadataActions =
+			List<ResourceAction> dlFileEntryMetadataResourceActions =
 				_resourceActionLocalService.getResourceActions(
-					_DDM_FILE_ENTRY_METADATA);
+					_DL_FILE_ENTRY_METADATA_DDM_STRUCTURE_CLASS_NAME);
 
-			Set<String> fileEntryMetadataActionIds = new HashSet<>();
+			Set<String> dlFileEntryMetadataActionIds = new HashSet<>();
 
-			for (ResourceAction ra : fileEntryMetadataActions) {
-				fileEntryMetadataActionIds.add(ra.getActionId());
+			for (ResourceAction resourceAction :
+					dlFileEntryMetadataResourceActions) {
+
+				dlFileEntryMetadataActionIds.add(resourceAction.getActionId());
 			}
 
-			for (String role : modelPermissions.getRoleNames()) {
-				Set<String> structureActionIds = new HashSet<>();
+			for (String roleName : modelPermissions.getRoleNames()) {
+				Set<String> dlFileEntryMetadataDDMStructureActionIds =
+					new HashSet<>();
 
-				for (String actionId : modelPermissions.getActionIds(role)) {
-					if (fileEntryMetadataActionIds.contains(actionId)) {
-						structureActionIds.add(actionId);
+				for (String actionId :
+						modelPermissions.getActionIds(roleName)) {
+
+					if (dlFileEntryMetadataActionIds.contains(actionId)) {
+						dlFileEntryMetadataDDMStructureActionIds.add(actionId);
 					}
 				}
 
-				structurePermissions.addRolePermissions(
-					role, structureActionIds.toArray(new String[0]));
+				dlFileEntryMetadataDDMStructureModelPermissions.
+					addRolePermissions(
+						roleName,
+						dlFileEntryMetadataDDMStructureActionIds.toArray(
+							new String[0]));
 			}
 		}
 
 		_resourceLocalService.addModelResources(
 			dlFileEntryType.getCompanyId(), dlFileEntryType.getGroupId(),
-			dlFileEntryType.getUserId(), _DDM_FILE_ENTRY_METADATA,
-			dlFileEntryType.getDataDefinitionId(), structurePermissions);
+			dlFileEntryType.getUserId(),
+			_DL_FILE_ENTRY_METADATA_DDM_STRUCTURE_CLASS_NAME,
+			dlFileEntryType.getDataDefinitionId(),
+			dlFileEntryMetadataDDMStructureModelPermissions);
 	}
 
 	protected void cascadeFileEntryTypes(
@@ -1101,9 +1095,10 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
-	private static final String _DDM_FILE_ENTRY_METADATA =
-		"com.liferay.document.library.kernel.model.DLFileEntryMetadata-" +
-			"com.liferay.dynamic.data.mapping.model.DDMStructure";
+	private static final String
+		_DL_FILE_ENTRY_METADATA_DDM_STRUCTURE_CLASS_NAME =
+			"com.liferay.document.library.kernel.model.DLFileEntryMetadata-" +
+				"com.liferay.dynamic.data.mapping.model.DDMStructure";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTypeLocalServiceImpl.class);

@@ -17,8 +17,6 @@ package com.liferay.document.library.internal.upgrade.v3_2_5;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -54,22 +52,24 @@ public class SyncDLFileEntryTypesDDMStructurePermissions
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String metadataResourceName =
+		String dlFileEntryMetadataResourceName =
 			_ddmPermissionSupport.getStructureModelResourceName(
 				DLFileEntryMetadata.class.getName());
 
-		List<ResourceAction> fileEntryTypeActions =
+		List<ResourceAction> dlFileEntryTypeResourceActions =
 			_resourceActionLocalService.getResourceActions(
 				DLFileEntryType.class.getName());
 
-		List<ResourceAction> fileEntryMetadataAction =
+		List<ResourceAction> dlFileEntryMetadataResourceAction =
 			_resourceActionLocalService.getResourceActions(
-				metadataResourceName);
+				dlFileEntryMetadataResourceName);
 
-		Set<String> fileEntryMetadataActionIds = new HashSet<>();
+		Set<String> dlFileEntryMetadataActionIds = new HashSet<>();
 
-		for (ResourceAction ra : fileEntryMetadataAction) {
-			fileEntryMetadataActionIds.add(ra.getActionId());
+		for (ResourceAction resourceAction :
+				dlFileEntryMetadataResourceAction) {
+
+			dlFileEntryMetadataActionIds.add(resourceAction.getActionId());
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -82,7 +82,7 @@ public class SyncDLFileEntryTypesDDMStructurePermissions
 				long fileEntryTypeId = resultSet.getLong("fileEntryTypeId");
 				long dataDefinitionId = resultSet.getLong("dataDefinitionId");
 
-				List<ResourcePermission> permissions =
+				List<ResourcePermission> resourcePermissions =
 					_resourcePermissionLocalService.getResourcePermissions(
 						companyId, DLFileEntryType.class.getName(),
 						ResourceConstants.SCOPE_INDIVIDUAL,
@@ -90,35 +90,36 @@ public class SyncDLFileEntryTypesDDMStructurePermissions
 
 				Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
-				for (ResourcePermission permission : permissions) {
-					long actionIds = permission.getActionIds();
-					List<String> actionIdList = new ArrayList<>();
+				for (ResourcePermission resourcePermission :
+						resourcePermissions) {
 
-					for (ResourceAction ra : fileEntryTypeActions) {
-						String actionId = ra.getActionId();
+					long actionIds = resourcePermission.getActionIds();
 
-						if (((actionIds & ra.getBitwiseValue()) ==
-								ra.getBitwiseValue()) &&
-							fileEntryMetadataActionIds.contains(actionId)) {
+					List<String> resourcePermissionActionIds =
+						new ArrayList<>();
 
-							actionIdList.add(actionId);
+					for (ResourceAction resourceAction :
+							dlFileEntryTypeResourceActions) {
+
+						String actionId = resourceAction.getActionId();
+
+						if (((actionIds & resourceAction.getBitwiseValue()) ==
+								resourceAction.getBitwiseValue()) &&
+							dlFileEntryMetadataActionIds.contains(actionId)) {
+
+							resourcePermissionActionIds.add(actionId);
 						}
 					}
 
 					roleIdsToActionIds.put(
-						permission.getRoleId(),
-						actionIdList.toArray(new String[0]));
+						resourcePermission.getRoleId(),
+						resourcePermissionActionIds.toArray(new String[0]));
 				}
 
-				try {
-					_resourcePermissionLocalService.setResourcePermissions(
-						companyId, metadataResourceName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(dataDefinitionId), roleIdsToActionIds);
-				}
-				catch (PortalException portalException) {
-					ReflectionUtil.throwException(portalException);
-				}
+				_resourcePermissionLocalService.setResourcePermissions(
+					companyId, dlFileEntryMetadataResourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(dataDefinitionId), roleIdsToActionIds);
 			}
 		}
 	}

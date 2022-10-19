@@ -107,6 +107,68 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-155637. Verify that it's possible to import exported web content structures with fieldsets."
+	@priority = "3"
+	test CanImportExportedWCStructuresWithFieldsets {
+		task ("Given: Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("And: Add a new WC structure with fields") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Numeric,Text,Image");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("And: Add new WC structures based on fieldsets") {
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name 2");
+
+			DataEngine.addFieldsetToBuilder(fieldsetName = "WC Structure Name");
+
+			WebContentStructures.saveCP();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name 3");
+
+			DataEngine.addFieldsetToBuilder(fieldsetName = "WC Structure Name 2");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("And: Export the LAR file with structures") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			LAR.exportPortlet(larFileName = "WebContent_portlet_structures.lar");
+		}
+
+		task ("When: Import the exported LAR file to another site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LAR.importPortlet(larFileName = "WebContent_portlet_structures.lar");
+		}
+
+		task ("Then: Import should be successful without error message on console") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name 3");
+
+			AssertConsoleTextNotPresent(value1 = "java.sql.BatchUpdateException");
+
+			AssertConsoleTextNotPresent(value1 = "javax.persistence.PersistenceException");
+		}
+	}
+
 	@priority = "4"
 	test ExportLARWithNestedWebContent {
 		property testray.component.names = "Web Content Administration";

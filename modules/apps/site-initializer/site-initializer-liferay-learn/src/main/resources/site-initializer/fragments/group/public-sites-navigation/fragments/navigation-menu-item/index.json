@@ -17,6 +17,15 @@
 					"label": "Icon Background Color",
 					"name": "iconBackgroundColor",
 					"type": "colorPicker"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Menu Item URL",
+					"label": "Menu Item URL",
+					"localizable": true,
+					"name": "menuItemUrl",
+					"type": "text"
 				}
 			],
 			"label": "configuration"

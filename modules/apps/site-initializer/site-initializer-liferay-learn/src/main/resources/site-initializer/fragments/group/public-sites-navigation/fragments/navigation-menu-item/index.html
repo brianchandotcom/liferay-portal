@@ -1,12 +1,12 @@
 <div class="f-navigation-menu-item">
 	<div class="d-flex menu-item-wrapper">
-		<a class="d-flex justify-content-between menu-item p-3 text-decoration-none" data-lfr-editable-id="menuItem${fragmentEntryLinkNamespace}" data-lfr-editable-type="link" href="/">
+		<a class="d-flex justify-content-between menu-item menu-item-${fragmentEntryLinkNamespace} p-3 text-decoration-none" href="${configuration.menuItemUrl}">
 			<div class="d-flex menu-item-group">
 				<div class="menu-item-icon mr-1 px-1">
 					[@clay["icon"] cssClass="sites-icon" symbol="sites"/]
 				</div>
 
-				<div class="menu-item-text ml-2">
+				<div class="menu-item-text ml-2" data-lfr-editable-id="menuItemText" data-lfr-editable-type="text">
 					Menu Item Text
 				</div>
 			</div>

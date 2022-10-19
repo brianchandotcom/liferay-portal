@@ -508,6 +508,11 @@ public class AccountEntryUserRelLocalServiceImpl
 			User inviter, ServiceContext serviceContext)
 		throws PortalException {
 
+		_validateEmailAddress(
+			_accountEntryEmailAddressValidatorFactory.create(
+				inviter.getCompanyId(), _getAccountDomains(accountEntryId)),
+			emailAddress);
+
 		try {
 			Ticket ticket = _ticketLocalService.addTicket(
 				inviter.getCompanyId(), AccountEntry.class.getName(),

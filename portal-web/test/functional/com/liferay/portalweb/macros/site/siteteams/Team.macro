@@ -48,7 +48,9 @@ definition {
 				value1 = "No users were found.");
 		}
 		else {
-			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+			if (IsElementNotPresent(key_card = "${userScreenName}", locator1 = "Card#CARD")) {
+				LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+			}
 
 			LexiconCard.checkCardCheckbox(card = "${userScreenName}");
 

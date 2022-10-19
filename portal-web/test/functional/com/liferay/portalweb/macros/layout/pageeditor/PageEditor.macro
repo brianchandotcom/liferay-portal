@@ -2935,7 +2935,7 @@ definition {
 
 		Type(
 			key_fieldLabel = "Maximum Nesting Level",
-			locator1 = "GENERIC_NUMBER_INPUT",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 			value1 = "2");
 
 		PageEditor.waitForAutoSave();

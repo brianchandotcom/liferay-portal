@@ -71,19 +71,19 @@ definition {
 
 		AssertElementPresent(
 			key_kbArticleTitle = "KB parent article",
-			locator1 = "KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_TOP_LEVEL_HIERARCHY");
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_TOP_LEVEL_HIERARCHY");
 
 		AssertElementPresent(
 			key_kbArticleTitle = "2nd tier article",
-			locator1 = "KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SECOND_LEVEL_HIERARCHY");
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SECOND_LEVEL_HIERARCHY");
 
 		AssertElementPresent(
 			key_kbArticleTitle = "3rd tier article",
-			locator1 = "KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
 
 		AssertElementNotPresent(
 			key_kbArticleTitle = "3rd tier article",
-			locator1 = "KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_THIRD_LEVEL_HIERARCHY");
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_THIRD_LEVEL_HIERARCHY");
 	}
 
 	@description = "This test ensures that a KB article is displayed with the default template when accessing the KB display page URL."

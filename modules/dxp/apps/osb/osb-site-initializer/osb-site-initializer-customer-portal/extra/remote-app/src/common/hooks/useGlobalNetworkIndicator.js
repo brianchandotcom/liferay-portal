@@ -39,7 +39,8 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 						DEFAULT_ERROR.message,
 					type: DEFAULT_ERROR.type,
 				});
-			} else {
+			}
+			else {
 				Liferay.Util.openToast(DEFAULT_ERROR);
 			}
 		}

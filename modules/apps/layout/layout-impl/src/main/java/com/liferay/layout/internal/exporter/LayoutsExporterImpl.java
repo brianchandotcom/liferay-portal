@@ -146,33 +146,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	public File exportPageTemplates(long[] layoutPageTemplateEntryIds)
 		throws Exception {
 
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
-
-		try {
-			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-				if (layoutPageTemplateEntry.isDraft() ||
-					(layoutPageTemplateEntry.getType() !=
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
-
-					continue;
-				}
-
-				_populatePageTemplatesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter,
-					zipWriter);
-			}
-
-			return zipWriter.getFile();
-		}
-		catch (Exception exception) {
-			throw new PortletException(exception);
-		}
+		return _exportLayoutPageTemplateEntries(
+			layoutPageTemplateEntryIds,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			this::_populatePageTemplatesZipWriter);
 	}
 
 	private File _exportLayoutPageTemplateEntries(

@@ -157,6 +157,74 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-139101. Verify that missing references validation also works on portlet import processes."
+	@priority = "3"
+	test CanImportJournalArticleWhenUncheckMissingReferencesValidation {
+		property test.name.skip.portal.instance = "ExportImport#CanImportJournalArticleWhenUncheckMissingReferencesValidation";
+
+		task ("Given: Uncheck the Validate Missing References box in System settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Validate Missing References");
+		}
+
+		task ("And: Add a new site and add new web content with content containing link references to the Test page") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "Web Content Title");
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			CKEditor.addSourceContent(content = '''<p><a href="${portalURL}/web/site-name/test-page">test page</a></p>''');
+
+			PortletEntry.publish();
+		}
+
+		task ("When: Export and download the web content to a LAR file") {
+			LAR.exportPortlet(larFileName = "ExportWebContent.lar");
+		}
+
+		task ("And: Delete the site and create a new one") {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONGroup.addGroup(groupName = "Site Name A");
+		}
+
+		task ("And: Import the LAR file to this site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-a");
+
+			LAR.importPortlet(
+				larFileName = "ExportWebContent.lar",
+				siteName = "Site Name A");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-a");
+		}
+
+		task ("Then: The WC will be present") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-a");
+
+			WebContent.viewTitle(webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-161743. Verify that it's not possible to import the lar file which contains missing references to classNames."
 	@priority = "3"
 	test CannotImportLARContainsMissingReferencesToClassname {

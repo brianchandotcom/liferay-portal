@@ -146,6 +146,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										"trashEnabled", componentContext.get("trashEnabled")
 									).build()
 								%>'
+								aria-label='<%= LanguageUtil.format(request, "actions-for-x", HtmlUtil.escape(title), false) %>'
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
 								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -214,8 +213,5 @@ public class PortletPermissionsImporterHelper {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private TeamLocalService _teamLocalService;
 
 }

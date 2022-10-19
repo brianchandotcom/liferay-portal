@@ -4253,7 +4253,7 @@ definition {
 
 			PageEditor.viewFragment(fragmentName = "Container");
 
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			PageEditor.openExperienceMenu();
 
 			AssertElementNotPresent(
 				key_experienceName = "New Experience",
@@ -4300,7 +4300,7 @@ definition {
 
 			PageEditor.viewFragment(fragmentName = "Heading");
 
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			PageEditor.openExperienceMenu();
 
 			AssertElementNotPresent(
 				key_experienceName = "New Experience",
@@ -5461,7 +5461,7 @@ definition {
 		}
 
 		task ("Priorize experience and publish page") {
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			PageEditor.openExperienceMenu();
 
 			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
 
@@ -5531,7 +5531,7 @@ definition {
 		}
 
 		task ("Priorize experience and publish page") {
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			PageEditor.openExperienceMenu();
 
 			PageEditor.prioritizeExperience(experienceName = "Segment Name Experience");
 

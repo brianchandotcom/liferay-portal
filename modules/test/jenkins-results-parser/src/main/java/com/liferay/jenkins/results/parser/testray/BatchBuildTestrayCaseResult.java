@@ -289,6 +289,68 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return _axisTestClassGroup;
 	}
 
+	protected List<TestrayAttachment> getLiferayLogTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getBuild(), "Liferay Log",
+			getAxisBuildURLPath() + "/liferay-log.txt.gz");
+
+		if (testrayAttachment == null) {
+			return testrayAttachments;
+		}
+
+		testrayAttachments.add(testrayAttachment);
+
+		for (int i = 1; i <= 5; i++) {
+			TestrayAttachment liferayLogTestrayAttachment =
+				getTestrayAttachment(
+					getBuild(), "Liferay Log (" + i + ")",
+					JenkinsResultsParserUtil.combine(
+						getAxisBuildURLPath(), "/liferay-log-",
+						String.valueOf(i), ".txt.gz"));
+
+			if (liferayLogTestrayAttachment == null) {
+				break;
+			}
+
+			testrayAttachments.add(liferayLogTestrayAttachment);
+		}
+
+		return testrayAttachments;
+	}
+
+	protected List<TestrayAttachment> getLiferayOSGiLogTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getBuild(), "Liferay OSGi Log",
+			getAxisBuildURLPath() + "/liferay-osgi-log.txt.gz");
+
+		if (testrayAttachment == null) {
+			return testrayAttachments;
+		}
+
+		testrayAttachments.add(testrayAttachment);
+
+		for (int i = 1; i <= 5; i++) {
+			TestrayAttachment liferayOSGiLogTestrayAttachment =
+				getTestrayAttachment(
+					getBuild(), "Liferay OSGi Log (" + i + ")",
+					JenkinsResultsParserUtil.combine(
+						getAxisBuildURLPath(), "/liferay-osgi-log-",
+						String.valueOf(i), ".txt.gz"));
+
+			if (liferayOSGiLogTestrayAttachment == null) {
+				break;
+			}
+
+			testrayAttachments.add(liferayOSGiLogTestrayAttachment);
+		}
+
+		return testrayAttachments;
+	}
+
 	@Override
 	protected TestrayAttachment getTopLevelBuildReportTestrayAttachment() {
 		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =

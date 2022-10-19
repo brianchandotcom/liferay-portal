@@ -164,8 +164,8 @@ public class FunctionalBatchBuildTestrayCaseResult
 		List<TestrayAttachment> testrayAttachments =
 			super.getTestrayAttachments();
 
-		testrayAttachments.addAll(_getLiferayLogTestrayAttachments());
-		testrayAttachments.addAll(_getLiferayOSGiLogTestrayAttachments());
+		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
+		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
 
 		testrayAttachments.add(_getPoshiReportTestrayAttachment());
 		testrayAttachments.add(_getPoshiSummaryTestrayAttachment());
@@ -192,74 +192,22 @@ public class FunctionalBatchBuildTestrayCaseResult
 		return testClassResult.getTestResult("test[" + getName() + "]");
 	}
 
-	private List<TestrayAttachment> _getLiferayLogTestrayAttachments() {
-		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
-
+	@Override
+	protected List<TestrayAttachment> getLiferayLogTestrayAttachments() {
 		if (getTestResult() == null) {
-			return testrayAttachments;
+			return new ArrayList<>();
 		}
 
-		TestrayAttachment testrayAttachment = getTestrayAttachment(
-			getBuild(), "Liferay Log",
-			getAxisBuildURLPath() + "/liferay-log.txt.gz");
-
-		if (testrayAttachment == null) {
-			return testrayAttachments;
-		}
-
-		testrayAttachments.add(testrayAttachment);
-
-		for (int i = 1; i <= 5; i++) {
-			TestrayAttachment liferayLogTestrayAttachment =
-				getTestrayAttachment(
-					getBuild(), "Liferay Log (" + i + ")",
-					JenkinsResultsParserUtil.combine(
-						getAxisBuildURLPath(), "/liferay-log-",
-						String.valueOf(i), ".txt.gz"));
-
-			if (liferayLogTestrayAttachment == null) {
-				break;
-			}
-
-			testrayAttachments.add(liferayLogTestrayAttachment);
-		}
-
-		return testrayAttachments;
+		return super.getLiferayLogTestrayAttachments();
 	}
 
-	private List<TestrayAttachment> _getLiferayOSGiLogTestrayAttachments() {
-		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
-
+	@Override
+	protected List<TestrayAttachment> getLiferayOSGiLogTestrayAttachments() {
 		if (getTestResult() == null) {
-			return testrayAttachments;
+			return new ArrayList<>();
 		}
 
-		TestrayAttachment testrayAttachment = getTestrayAttachment(
-			getBuild(), "Liferay OSGi Log",
-			getAxisBuildURLPath() + "/liferay-osgi-log.txt.gz");
-
-		if (testrayAttachment == null) {
-			return testrayAttachments;
-		}
-
-		testrayAttachments.add(testrayAttachment);
-
-		for (int i = 1; i <= 5; i++) {
-			TestrayAttachment liferayOSGiLogTestrayAttachment =
-				getTestrayAttachment(
-					getBuild(), "Liferay OSGi Log (" + i + ")",
-					JenkinsResultsParserUtil.combine(
-						getAxisBuildURLPath(), "/liferay-osgi-log-",
-						String.valueOf(i), ".txt.gz"));
-
-			if (liferayOSGiLogTestrayAttachment == null) {
-				break;
-			}
-
-			testrayAttachments.add(liferayOSGiLogTestrayAttachment);
-		}
-
-		return testrayAttachments;
+		return super.getLiferayOSGiLogTestrayAttachments();
 	}
 
 	private TestrayAttachment _getPoshiReportTestrayAttachment() {

@@ -24,6 +24,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +111,7 @@ public class JUnitBatchBuildTestrayCaseResult
 				errorMessage = "Failed for unknown reason";
 			}
 
-			String testName = testResult.getDisplayName();
+			String testName = testResult.getTestName();
 
 			errorMessages.put(
 				testName,
@@ -169,6 +170,60 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		return Status.PASSED;
+	}
+
+	@Override
+	public List<TestrayAttachment> getTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments =
+			super.getTestrayAttachments();
+
+		testrayAttachments.add(getFailureMessagesTestrayAttachment());
+		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
+		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
+
+		testrayAttachments.removeAll(Collections.singleton(null));
+
+		return testrayAttachments;
+	}
+
+	protected TestrayAttachment getFailureMessagesTestrayAttachment() {
+		List<TestClassResult> testClassResults = _getTestClassResults();
+
+		if ((testClassResults == null) || testClassResults.isEmpty()) {
+			return null;
+		}
+
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getBuild(), "Failure Messages",
+			getAxisBuildURLPath() + "/" + getName() + ".txt.gz");
+
+		if (testrayAttachment == null) {
+			return null;
+		}
+
+		return testrayAttachment;
+	}
+
+	@Override
+	protected List<TestrayAttachment> getLiferayLogTestrayAttachments() {
+		List<TestClassResult> testClassResults = _getTestClassResults();
+
+		if ((testClassResults == null) || testClassResults.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		return super.getLiferayLogTestrayAttachments();
+	}
+
+	@Override
+	protected List<TestrayAttachment> getLiferayOSGiLogTestrayAttachments() {
+		List<TestClassResult> testClassResults = _getTestClassResults();
+
+		if ((testClassResults == null) || testClassResults.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		return super.getLiferayLogTestrayAttachments();
 	}
 
 	private List<TestClassResult> _getTestClassResults() {

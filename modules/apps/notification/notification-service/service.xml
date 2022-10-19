@@ -176,6 +176,9 @@
 
 		<column name="notificationTemplateId" type="long" />
 		<column name="type" type="String" />
+		<finder name="NotificationTemplateId" return-type="NotificationTemplateRecipient">
+			<finder-column name="notificationTemplateId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="NotificationTemplateRecipientSetting" table="NTemplateRecipientSetting" uuid="false">
 
@@ -196,6 +199,13 @@
 		<column db-name="NTemplateRecipientId" name="notificationTemplateRecipientId" type="long" />
 		<column name="name" type="String" />
 		<column localized="true" name="value" type="String" />
+		<finder name="NotificationTemplateRecipientId" return-type="Collection">
+			<finder-column name="notificationTemplateRecipientId" />
+		</finder>
+		<finder name="N_NTRI" return-type="NotificationTemplateRecipientSetting">
+			<finder-column name="notificationTemplateRecipientId" />
+			<finder-column name="name" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>

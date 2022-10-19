@@ -14,8 +14,11 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.model.NotificationTemplateRecipientSetting;
 import com.liferay.notification.service.base.NotificationTemplateRecipientSettingLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,4 +31,21 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NotificationTemplateRecipientSettingLocalServiceImpl
 	extends NotificationTemplateRecipientSettingLocalServiceBaseImpl {
+
+	public NotificationTemplateRecipientSetting
+		getNotificationTemplateRecipientSetting(
+			String name, long notificationTemplateRecipientId) {
+
+		return null;
+	}
+
+	public List<NotificationTemplateRecipientSetting>
+		getNotificationTemplateRecipientSettings(
+			long notificationTemplateRecipientId) {
+
+		return notificationTemplateRecipientSettingPersistence.
+			findByNotificationTemplateRecipientId(
+				notificationTemplateRecipientId);
+	}
+
 }

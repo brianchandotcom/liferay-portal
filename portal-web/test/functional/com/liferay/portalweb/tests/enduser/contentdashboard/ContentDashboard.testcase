@@ -217,6 +217,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-162823: Add the View Action to the Version History for Documents and Media"
+	@priority = "3"
+	test BackFromViewDocumentVersion {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
+		task ("Given the version document page") {
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "DM Document Title");
+			}
+
+			task ("Open versions tab") {
+				ContentDashboard.openVersionsTab();
+			}
+
+			task ("Open view mode of a version") {
+				ContentDashboard.clickMenuOfVersion(
+					item = "View",
+					versionName = "Version 1.0");
+			}
+		}
+
+		task ("When the user clicks on the back button") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then the document is selected and the Info Panel is open to the Versions tab") {
+			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL");
+		}
+	}
+
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the blog author's avatar and name are shown"
@@ -5886,6 +5931,60 @@ definition {
 					fillColor = "FF5F5F",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 			}
+		}
+	}
+
+	@description = "LPS-162823: Add the View Action to the Version History for Documents and Media"
+	@priority = "3"
+	test ViewDocumentVersion {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
+		task ("Given the Versions tab in the Info panel of a document") {
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Add versions for the document") {
+				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+				DMDocument.editCP(
+					dmDocumentTitle = "DM Document Title",
+					dmDocumentTitleEdit = "DM Document Title Edit 1",
+					revision = "Minor",
+					versioning = "true");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "DM Document Title Edit 1");
+			}
+
+			task ("Open versions tab") {
+				ContentDashboard.openVersionsTab();
+			}
+		}
+
+		task ("When the user opens the kebab menu of a version And the user clicks on the View action") {
+			ContentDashboard.clickMenuOfVersion(
+				item = "View",
+				versionName = "Version 1.0");
+		}
+
+		task ("Then the user is redirected to the document page for that version") {
+			AssertTextEquals(
+				key_dmDocumentTitle = "DM Document Title (Version 1.0)",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
+				value1 = "DM Document Title (Version 1.0)");
 		}
 	}
 

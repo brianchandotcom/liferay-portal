@@ -1,0 +1,95 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account LXC - SM";
+	var testProduct = "LXC - SM";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
+	@priority = "4"
+	test CanViewQuantityDxpVersionsDropDownList {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+		}
+
+        task ("Go to the product activation page") {   
+            CP2NavigationMenu.goToProductActivation();
+
+		    CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+        }
+
+		task ("Open the dropdown and assert if have 5 versions") {
+            CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
+        }
+	}
+    @description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
+	@priority = "3"
+	test ConfirmRedirectionToAnotherPage {
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+		}
+
+        task ("Go to the product activation page") {
+            CP2NavigationMenu.goToProductActivation();
+
+		    CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+        }
+
+        task ("Click in the link 'deploying activation keys article' and go to the page") {
+            Click(locator1 = "CustomerPortalSite#DEPLOY_ARTICLE_PAGE");
+
+            Navigator.selectSpecificWindow(windowTitle = "Deploying Activation Keys – Liferay Help Center"); 
+        }
+
+        task("Assert the new page as open and go back to 'Product Activation page' and close the page 'Deploying Activation Keys'") {
+            AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
+
+            Navigator.closeSpecificWindow(
+			closeWindowTitle = "Deploying Activation Keys – Liferay Help Center",
+			selectWindowTitle = "Project - Customer Portal Site - Liferay DXP");
+        }
+    }
+}

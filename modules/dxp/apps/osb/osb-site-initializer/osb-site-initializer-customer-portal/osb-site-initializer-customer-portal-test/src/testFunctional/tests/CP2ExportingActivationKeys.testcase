@@ -43,38 +43,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-148064 - Verify if the option to 'Export all key details (csv)' successfully downloads keys and shows a success message"
-	@ignore = "true"
-	@priority = "3"
-	test SuccessMessageWhenKeyIsDownloaded {
-
-		// Needs refactor since it depends on example FIFA account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
-
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
-
-		task ("And I click on DXP product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-		}
-
-		task ("Then the user is able to export activation keys and receives a success message") {
-			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
-		}
-	}
-
 	@description = "Automation ID: LPS-150641 | Test Summary: Verify if when the user successfully downloads a key, shows the message Activation key details successfully exported"
 	@ignore = "true"
 	@priority = "3"
@@ -91,10 +59,10 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount1}");
+			CustomerPortal.search(searchItem = "${testAccount1}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount1}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount1}");
+		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
@@ -105,7 +73,38 @@ definition {
 		task ("Then the user is able to export activation keys and receives a success message") {
 			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
 		}
+	}
 
+	@description = "LPS-148064 - Verify if the option to 'Export all key details (csv)' successfully downloads keys and shows a success message"
+	@ignore = "true"
+	@priority = "3"
+	test SuccessMessageWhenKeyIsDownloaded {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then the user is able to export activation keys and receives a success message") {
+			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
+		}
 	}
 
 }

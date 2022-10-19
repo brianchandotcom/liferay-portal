@@ -10,6 +10,7 @@ definition {
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
 	var testAccount = "Test Account DXP";
+	var testAccount1 = "Test Account Portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -30,11 +31,16 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
-		PortalInstances.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
 	}
 
 	@description = "LPS-148064 - Verify if the option to 'Export all key details (csv)' successfully downloads keys and shows a success message"

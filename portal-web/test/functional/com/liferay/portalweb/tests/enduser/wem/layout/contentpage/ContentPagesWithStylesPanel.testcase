@@ -666,7 +666,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136279 and LPS-163362. View the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors."
+	@description = "This is a test for LPS-136279 and LPS-163362. View the styles of Font Family, Font Weight and Font Size selectors."
 	@priority = "4"
 	test ViewStylesOfSelectInputs {
 		task ("Given a page designer has a Heading fragment on a content page") {
@@ -683,18 +683,12 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 		}
 
-		task ("Then the page designer sees the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors") {
-			task ("View the Font Family, Font Weight, Font Size, Border Radius and Shadow selectors use icon") {
+		task ("Then the page designer sees the styles of Font Family, Font Weight and Font Size selectors") {
+			task ("View the Font Family, Font Weight and Font Size selectors use icon") {
 				for (var fieldName : list "font-family,bold,font-size") {
 					AssertElementPresent(
 						key_text = "${fieldName}",
 						locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON");
-				}
-
-				for (var fieldName : list "corner-radius,shadow") {
-					AssertElementPresent(
-						key_text = "${fieldName}",
-						locator1 = "TextInput#GENERIC_TEXT_INPUT_WITH_ICON");
 				}
 			}
 
@@ -715,43 +709,7 @@ definition {
 					value1 = "14px");
 			}
 
-			task ("View the computed value is shown in Border Radius and Shadow selectors by default") {
-				AssertTextEquals(
-					ariaLabel = "Border Radius",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-					value1 = "0");
-
-				AssertTextEquals(
-					ariaLabel = "Shadow",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-					value1 = "none");
-			}
-
 			task ("View the tooltip shown when hover on icon of selectors") {
-				MouseOver(
-					key_text = "font-family",
-					locator1 = "Icon#ANY");
-
-				AssertVisible(
-					key_content = "Font Family",
-					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-
-				MouseOver(
-					key_text = "bold",
-					locator1 = "Icon#ANY");
-
-				AssertVisible(
-					key_content = "Font Weight",
-					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-
-				MouseOver(
-					key_text = "font-size",
-					locator1 = "Icon#ANY");
-
-				AssertVisible(
-					key_content = "Font Size",
-					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-
 				MouseOver(
 					key_text = "corner-radius",
 					locator1 = "Icon#ANY");
@@ -870,6 +828,90 @@ definition {
 
 				AssertVisible(
 					key_content = "Justify",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-163362. View the styles of Border Width, Border Radius, Opacity and Shadow text inputs."
+	@priority = "4"
+	test ViewStylesOfTextInputs {
+		task ("Given a page designer has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page designer accesses to the Styles panel of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+		}
+
+		task ("Then the page designer sees the styles of Border Width, Border Radius, Opacity and Shadow text inputs") {
+			task ("View the Border Width, Border Radius, Opacity and Shadow selectors use icon") {
+				for (var fieldName : list "border-width,corner-radius,opacity,shadow") {
+					AssertElementPresent(
+						key_text = "${fieldName}",
+						locator1 = "TextInput#GENERIC_TEXT_INPUT_WITH_ICON");
+				}
+			}
+
+			task ("View the default value is shown in Border Width, Border Radius, Opacity and Shadow text inputs") {
+				AssertTextEquals(
+					ariaLabel = "Border Width",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "0");
+
+				AssertTextEquals(
+					ariaLabel = "Border Radius",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "0");
+
+				AssertTextEquals(
+					ariaLabel = "Opacity",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "100");
+
+				AssertTextEquals(
+					ariaLabel = "Shadow",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "none");
+			}
+
+			task ("View the tooltip shown when hover on icon of Border Width, Border Radius, Opacity and Shadow text inputs") {
+				MouseOver(
+					key_text = "border-width",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Border Width",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "corner-radius",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Border Radius",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "opacity",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Opacity",
+					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+				MouseOver(
+					key_text = "shadow",
+					locator1 = "Icon#ANY");
+
+				AssertVisible(
+					key_content = "Shadow",
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 			}
 		}

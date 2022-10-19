@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -260,6 +261,8 @@ public class AccountEntryLocalServiceImpl
 			workflowServiceContext = (ServiceContext)serviceContext.clone();
 		}
 
+		// Workflow
+
 		if (_isWorkflowEnabled(accountEntry.getCompanyId())) {
 			_checkStatus(accountEntry.getStatus(), status);
 
@@ -377,6 +380,12 @@ public class AccountEntryLocalServiceImpl
 		// Expando
 
 		_expandoRowLocalService.deleteRows(accountEntry.getAccountEntryId());
+
+		// Workflow
+
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			accountEntry.getCompanyId(), 0, AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
 
 		return accountEntry;
 	}
@@ -1363,5 +1372,8 @@ public class AccountEntryLocalServiceImpl
 	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

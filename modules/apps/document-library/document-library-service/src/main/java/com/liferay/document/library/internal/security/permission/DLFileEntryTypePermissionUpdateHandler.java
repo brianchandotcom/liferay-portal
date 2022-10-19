@@ -51,48 +51,40 @@ public class DLFileEntryTypePermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DLFileEntryType dlFileEntryType =
-			_dLFileEntryTypeLocalService.fetchDLFileEntryType(
-				GetterUtil.getLong(primKey));
-
-		if (dlFileEntryType == null) {
-			return;
-		}
-
-		dlFileEntryType.setModifiedDate(new Date());
-
-		_dLFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
-
-		// Each DLFileEntryType is tied to a DDM structure, that holds
-		// the metadata definitions defined in the document type itself.
-		// The upload forms (and most probably other code) checks the
-		// permissions on the DDM structure to determine if the fields
-		// may be viewed/entered by a user. So the permissions on the
-		// structure need to be sychronized with the DLFilEntryType.
-		// This covers the updating case. Adding is handled in
-		// portal-impl
-		// DLFileEntryTypeLocalServiceImpl.addFileEntryTypeResources
-
 		try {
-			String metadataResourceName =
+			DLFileEntryType dlFileEntryType =
+				_dLFileEntryTypeLocalService.fetchDLFileEntryType(
+					GetterUtil.getLong(primKey));
+
+			if (dlFileEntryType == null) {
+				return;
+			}
+
+			dlFileEntryType.setModifiedDate(new Date());
+
+			_dLFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
+
+			String dlFileEntryMetadataResourceName =
 				_ddmPermissionSupport.getStructureModelResourceName(
 					DLFileEntryMetadata.class.getName());
 
-			List<ResourceAction> fileEntryTypeActions =
+			List<ResourceAction> dlFileEntryTypeResourceActions =
 				_resourceActionLocalService.getResourceActions(
 					DLFileEntryType.class.getName());
 
-			List<ResourceAction> mataDataResourceActions =
+			List<ResourceAction> dlFileEntryMetadataResourceActions =
 				_resourceActionLocalService.getResourceActions(
-					metadataResourceName);
+					dlFileEntryMetadataResourceName);
 
-			Set<String> fileEntryMetadataActionIds = new HashSet<>();
+			Set<String> dlFileEntryMetadataActionIds = new HashSet<>();
 
-			for (ResourceAction ra : mataDataResourceActions) {
-				fileEntryMetadataActionIds.add(ra.getActionId());
+			for (ResourceAction resourceAction :
+					dlFileEntryMetadataResourceActions) {
+
+				dlFileEntryMetadataActionIds.add(resourceAction.getActionId());
 			}
 
-			List<ResourcePermission> permissions =
+			List<ResourcePermission> resourcePermissions =
 				_resourcePermissionLocalService.getResourcePermissions(
 					dlFileEntryType.getCompanyId(),
 					DLFileEntryType.class.getName(),
@@ -101,28 +93,31 @@ public class DLFileEntryTypePermissionUpdateHandler
 
 			Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
-			for (ResourcePermission permission : permissions) {
-				long actionIds = permission.getActionIds();
-				List<String> actionIdList = new ArrayList<>();
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				long actionIds = resourcePermission.getActionIds();
 
-				for (ResourceAction ra : fileEntryTypeActions) {
-					String actionId = ra.getActionId();
+				List<String> resourcePermissionActionIds = new ArrayList<>();
 
-					if (((actionIds & ra.getBitwiseValue()) ==
-							ra.getBitwiseValue()) &&
-						fileEntryMetadataActionIds.contains(actionId)) {
+				for (ResourceAction resourceAction :
+						dlFileEntryTypeResourceActions) {
 
-						actionIdList.add(actionId);
+					String actionId = resourceAction.getActionId();
+
+					if (((actionIds & resourceAction.getBitwiseValue()) ==
+							resourceAction.getBitwiseValue()) &&
+						dlFileEntryMetadataActionIds.contains(actionId)) {
+
+						resourcePermissionActionIds.add(actionId);
 					}
 				}
 
 				roleIdsToActionIds.put(
-					permission.getRoleId(),
-					actionIdList.toArray(new String[0]));
+					resourcePermission.getRoleId(),
+					resourcePermissionActionIds.toArray(new String[0]));
 			}
 
 			_resourcePermissionLocalService.setResourcePermissions(
-				dlFileEntryType.getCompanyId(), metadataResourceName,
+				dlFileEntryType.getCompanyId(), dlFileEntryMetadataResourceName,
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(dlFileEntryType.getDataDefinitionId()),
 				roleIdsToActionIds);

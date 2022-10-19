@@ -26,13 +26,26 @@ import java.util.regex.Pattern;
  */
 public interface ScriptLanguage {
 
-	public static final ScriptLanguage BEANSHELL = new ScriptingLanguageImpl("beanshell");
+	public static final ScriptLanguage BEANSHELL = new ScriptingLanguageImpl(
+		"beanshell");
+
 	public static final ScriptLanguage DRL = new ScriptingLanguageImpl("drl");
-	public static final ScriptLanguage GROOVY = new ScriptingLanguageImpl("groovy");
+
+	public static final ScriptLanguage GROOVY = new ScriptingLanguageImpl(
+		"groovy");
+
 	public static final ScriptLanguage JAVA = new ScriptingLanguageImpl("java");
-	public static final ScriptLanguage JAVASCRIPT = new ScriptingLanguageImpl("javascript");
-	public static final ScriptLanguage PYTHON = new ScriptingLanguageImpl("python");
+
+	public static final ScriptLanguage JAVASCRIPT = new ScriptingLanguageImpl(
+		"javascript");
+
+	public static final ScriptLanguage PYTHON = new ScriptingLanguageImpl(
+		"python");
+
 	public static final ScriptLanguage RUBY = new ScriptingLanguageImpl("ruby");
+
+	public static final Pattern functionPattern = Pattern.compile(
+		"^function#[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*$");
 
 	public static ScriptLanguage parse(String value)
 		throws KaleoDefinitionValidationException {
@@ -59,7 +72,7 @@ public interface ScriptLanguage {
 			return RUBY;
 		}
 
-		Matcher matcher = _pattern.matcher(value);
+		Matcher matcher = functionPattern.matcher(value);
 
 		if (matcher.matches()) {
 			return new ScriptingLanguageImpl(value);
@@ -68,9 +81,6 @@ public interface ScriptLanguage {
 		throw new KaleoDefinitionValidationException.InvalidScriptLanguage(
 			value);
 	}
-
-	public static final Pattern _pattern = Pattern.compile(
-		"^function#[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*$");
 
 	public String getValue();
 

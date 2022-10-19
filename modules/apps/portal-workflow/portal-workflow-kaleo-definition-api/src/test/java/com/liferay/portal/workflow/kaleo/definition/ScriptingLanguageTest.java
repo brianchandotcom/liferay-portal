@@ -14,28 +14,18 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException.InvalidScriptLanguage;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException.InvalidScriptLanguage;
-
 /**
  * @author Raymond Augé
  */
 public class ScriptingLanguageTest {
-
-	public static final String[] LANGUAGES = {
-		"beanshell", "drl", "groovy", "java", "javascript", "python", "ruby",
-		"function#foo", "function#foo-bar"
-	};
-
-	public static final String[] NOT_LANGUAGES = {
-		"beanshellV", "something", "function#-foo", "function#foo-bar-",
-		"function#Foo-bar"
-	};
 
 	@ClassRule
 	@Rule
@@ -44,19 +34,30 @@ public class ScriptingLanguageTest {
 
 	@Test
 	public void testParseScriptingLanguages() throws Exception {
-		for (String language : LANGUAGES) {
-			ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
+		for (String value :
+				new String[] {
+					"beanshell", "drl", "groovy", "java", "javascript",
+					"python", "ruby", "function#foo", "function#foo-bar"
+				}) {
 
-			Assert.assertEquals(language, scriptLanguage.getValue());
+			ScriptLanguage scriptLanguage = ScriptLanguage.parse(value);
+
+			Assert.assertEquals(value, scriptLanguage.getValue());
 		}
 
-		for (String language : NOT_LANGUAGES) {
-			try {
-				ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
+		for (String value :
+				new String[] {
+					"beanshellV", "something", "function#-foo",
+					"function#Foo-bar", "function#foo-bar-"
+				}) {
 
-				Assert.fail(language);
+			try {
+				ScriptLanguage.parse(value);
+
+				Assert.fail(value);
 			}
 			catch (InvalidScriptLanguage invalidScriptLanguage) {
+				Assert.assertNotNull(invalidScriptLanguage);
 			}
 		}
 	}

@@ -12,22 +12,43 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
+package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
 
-import com.liferay.headless.delivery.dto.v1_0.MasterPage;
+import com.liferay.headless.delivery.dto.v1_0.ContentSubtype;
+import com.liferay.headless.delivery.dto.v1_0.ContentType;
+import com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 /**
  * @author Rubén Pulido
  */
-public class MasterPageDTOConverter {
+public class DisplayPageTemplateDTOConverter {
 
-	public static MasterPage toDTO(
+	public static DisplayPageTemplate toDTO(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		return new MasterPage() {
+		return new DisplayPageTemplate() {
 			{
+				contentType = new ContentType() {
+					{
+						className = layoutPageTemplateEntry.getClassName();
+					}
+				};
 				name = layoutPageTemplateEntry.getName();
+
+				setContentSubtype(
+					() -> {
+						if (layoutPageTemplateEntry.getClassTypeId() == 0) {
+							return null;
+						}
+
+						return new ContentSubtype() {
+							{
+								subtypeId =
+									layoutPageTemplateEntry.getClassTypeId();
+							}
+						};
+					});
 			}
 		};
 	}

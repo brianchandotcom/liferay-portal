@@ -22,7 +22,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a layout block is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationRelatedBlockLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153597",
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a layout field is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationRelatedFieldLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153598",
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the field created of the a relation is deleted, updated or created when a relationship is deleted, updated or created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationRelatedRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153592",
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a relationship tab on layout is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationRelatedRelationshipTabOnLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153599",
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is add when a layout tab is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationRelatedTabLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153596",
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the custom view is add when of the custom view is duplicated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationWhenDuplicateView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153603",
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is added or deleted when modified the columns"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationWhenModifyColumnsView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153604",
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional information is add, updated or deleted when set a default sort"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAdditionalInformationWhenSetDefaultSortView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153604",
@@ -479,7 +479,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when one field is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAddOnResourceActionWhenAddField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153584",
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a layout is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAddOnResourceActionWhenAddLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153593",
@@ -538,7 +538,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when a relationship is created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAddOnResourceActionWhenAddRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153589",
@@ -569,7 +569,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAddOnResourceActionWhenAddView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153600",
@@ -597,7 +597,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (ADD) when created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAddValueWhenCreatedCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153569",
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's when creating a custom object the user can see the User ID, User Name, Resource ID, Resource Name, Resource Action, Client IP, Create Date of the custom object when created, updated or deleted"
-	@priority = "4"
+	@priority = "3"
 	test CanViewAllValuesOnColumnsOnCustomObject {
 		ObjectAdmin.openObjectAdmin();
 
@@ -645,7 +645,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if there are default resources of the System Objects on the Audit Portlet"
-	@priority = "4"
+	@priority = "3"
 	test CanViewDefaultResourcesOnSystemObjects {
 		for (var loops : list "1,2,3,4,5,6") {
 			Audit.openAuditAdmin();
@@ -677,7 +677,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when one field is deleted"
-	@priority = "4"
+	@priority = "3"
 	test CanViewDeleteOnResourceActionWhenDeleteField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153585",
@@ -713,7 +713,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a layout is deleted"
-	@priority = "4"
+	@priority = "3"
 	test CanViewDeleteOnResourceActionWhenDeleteLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153594",
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when a relationship is deleted"
-	@priority = "4"
+	@priority = "3"
 	test CanViewDeleteOnResourceActionWhenDeleteRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153590",
@@ -780,7 +780,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"
-	@priority = "4"
+	@priority = "3"
 	test CanViewDeleteOnResourceActionWhenDeleteView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153600",
@@ -810,7 +810,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (DELETE) when deleted"
-	@priority = "4"
+	@priority = "3"
 	test CanViewDeleteValueWhenRemoveCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153570",
@@ -832,7 +832,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the default resources has not User ID and User Name on the Audit Portlet"
-	@priority = "4"
+	@priority = "3"
 	test CanViewEmptyValuesDefaultOnColumnsOnSystemObjects {
 		Audit.openAuditAdmin();
 
@@ -858,7 +858,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's the Additional Information of the custom object created is validated (for example: scope, name, active and labelMap)"
-	@priority = "4"
+	@priority = "3"
 	test CanViewInformationAreCorrectCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153573",
@@ -878,7 +878,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is updated when the name, label or plural label of the object is modified"
-	@priority = "4"
+	@priority = "3"
 	test CanViewInformationAreCorrectWhenUpdateCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153574",
@@ -907,7 +907,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's when add, delete or update a field the user can view two Resource Name (ObjectField and ObjectFieldSetting) created"
-	@priority = "4"
+	@priority = "3"
 	test CanViewTwoAddsWhenAddOneField {
 		task ("Create Custom Object and go to it") {
 			ObjectAdmin.addObjectViaAPI(
@@ -956,7 +956,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a layout is updated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateOnResourceActionWhenEditLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153595",
@@ -1010,7 +1010,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when a relationship is updated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateOnResourceActionWhenEditRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153591",
@@ -1049,7 +1049,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when updated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateOnResourceActionWhenEditView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153602",
@@ -1087,7 +1087,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when one field is updated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateOnResourceActionWhenUpdateField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153586",
@@ -1127,7 +1127,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Resource Action value as (UPDATE) when updated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateValueWhenEditCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153571",
@@ -1153,7 +1153,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the Panel Category Key is updated when set on the object details"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenChangeCategoryKey {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153579",
@@ -1181,7 +1181,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the portlet of the object is updated display toggle on the object details"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenChangeDisplayToggle {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153580",
@@ -1209,7 +1209,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's  Additional Information of the scope is updated when is modified on the object details"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenChangeScope {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153578",
@@ -1237,7 +1237,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's when updated the basic info or the Searchable of the field, the Additional Information is updated"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenEditSearchableOnField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153588",
@@ -1277,7 +1277,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenEditSystemObjects {
 		ObjectAdmin.openObjectAdmin();
 
@@ -1338,7 +1338,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information is updated when the object is published"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenPublishCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153576",
@@ -1368,7 +1368,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify it's Additional Information of the toggle active and inactive of the object is updated when set on the object details"
-	@priority = "4"
+	@priority = "3"
 	test CanViewUpdateWhenToggleIsActiveOrInactive {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153577",
@@ -1419,7 +1419,7 @@ definition {
 	}
 
 	@description = "LPS-149508 - Verify if the user can view the Additional Information updated when the Title field is set"
-	@priority = "4"
+	@priority = "3"
 	test UserCanViewUpdateOnAdditionalInformation {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153575",

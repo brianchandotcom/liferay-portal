@@ -1,16 +1,16 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-    property custom.properties = "upgrade.database.auto.run=false";
-    property osgi.modules.includes = "frontend-data-set-sample-web";
-    property portal.acceptance = "true";
-    property portal.release = "true";
-    property portal.upstream = "true";
-    property testray.component.names = "Frontend Dataset";
-    property testray.main.component.name = "Frontend Dataset";
+	property custom.properties = "upgrade.database.auto.run=false";
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
 		task ("Given Custom view enabled for a dataset display instance") {
 			User.firstLoginPG();
@@ -19,24 +19,24 @@ definition {
 				groupName = "Guest",
 				layoutName = "Frontend Data Set Test Page");
 
-            JSONLayout.addWidgetToPublicLayout(
-                groupName = "Guest",
-                layoutName = "Frontend Data Set Test Page",
-                widgetName = "Frontend Data Set Sample");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				widgetName = "Frontend Data Set Sample");
 
-            JSONLayout.updateLayoutTemplateOfPublicLayout(
-                groupName = "Guest",
-                layoutName = "Frontend Data Set Test Page",
-                layoutTemplate = "1 Column");
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page",
+				layoutTemplate = "1 Column");
 
-            Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
-        }
-    }
+			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+		}
+	}
 
-    tearDown {
-        Navigator.openSpecificURL(url = "http://localhost:8080/en/home/");
+	tearDown {
+		Navigator.openSpecificURL(url = "http://localhost:8080/en/home/");
 
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

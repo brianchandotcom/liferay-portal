@@ -1,82 +1,105 @@
 definition {
+
 	macro addDateRangeFilters {
 		var key_fromDate = StringUtil.extractDigits("${key_fromDate}");
 		var key_toDate = StringUtil.extractDigits("${key_toDate}");
+
 		if (IsElementPresent(key_filter = "Date Range", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Date Range",
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
+
 		Type.sendKeys(
 			key_dateId = "from-date",
 			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
 			value1 = "${key_fromDate}");
+
 		Type.sendKeys(
 			key_dateId = "to-date",
 			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
 			value1 = "${key_toDate}");
+
 		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 	}
+
 	macro closeFilters {
 		if (IsElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
 			ClickNoError(locator1 = "FrontendDataSet#FILTER_BACK_NAVIGATION");
+
 			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
 		}
 		else if (IsElementPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
 			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
 		}
 	}
+
 	macro disableStatusFilters {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Status",
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
+
 		for (var status : list "${key_status}") {
 			Uncheck.uncheckNotVisible(
 				key_status = "${status}",
 				locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
 		}
 	}
+
 	macro editFilters {
 		FDSFilters.openFilters();
+
 		FDSFilters.searchFilter(searchTerm = "${key_filter}");
+
 		Click(
 			key_filter = "${key_filter}",
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+
 		FDSFilters.disableStatusFilters(key_status = "${key_disableFilters}");
+
 		FDSFilters.enableStatusFilters(key_status = "${key_enableFilters}");
+
 		Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+
 		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+
 		FDSFilters.closeFilters();
 	}
+
 	macro enableStatusFilters {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Status",
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
+
 		for (var status : list "${key_status}") {
 			Check.checkNotVisibleNoErrors(
 				key_status = "${status}",
 				locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
 		}
 	}
+
 	macro openFilters {
 		if (IsElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
 			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
 		}
 	}
+
 	macro removeAllFilters {
 		while (IsElementPresent(key_filter = "", locator1 = "FrontendDataSet#REMOVE_FILTER")) {
 			FDSFilters.removeFilter(key_filter = "");
 		}
 	}
+
 	macro removeFilter {
 		Click(
 			locator1 = "FrontendDataSet#REMOVE_FILTER",
 			value1 = "${key_filter}");
 	}
+
 	macro resetFilter {
 		if (!(isSet(reset_filter))) {
 			ClickNoError(
@@ -92,12 +115,14 @@ definition {
 
 	macro searchFilter {
 		VerifyElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
+
 		VerifyElementPresent(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");
+
 		Type(
 			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
 			value1 = "${searchTerm}");
+
 		ClickNoError(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");
 	}
 
 }
-

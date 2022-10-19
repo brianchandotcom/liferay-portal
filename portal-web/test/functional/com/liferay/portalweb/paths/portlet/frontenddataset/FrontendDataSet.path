@@ -2,11 +2,13 @@
 <head>
 <title>FrontendDataSet</title>
 </head>
+
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">FrontendDataSet</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>DELETE_ACTION_BUTTON</td>
@@ -99,9 +101,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ELLIPSIS</td>
-    <td>//*[@class="dropdown custom-views-actions"]</td>
-    <td></td>
+	<td>ELLIPSIS</td>
+	<td>//*[@class="dropdown custom-views-actions"]</td>
+	<td></td>
 </tr>
 
 <!--FILTERS-->

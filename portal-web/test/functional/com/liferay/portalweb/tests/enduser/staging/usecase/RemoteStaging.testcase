@@ -174,6 +174,50 @@ definition {
 			validateErrorMessage = "An unexpected error occurred with the publish process. Please check your portal and publishing configuration.");
 	}
 
+	@description = "This is a use case for LPS-52285. Verify that remote staging can be disabled after shutting down the remote site."
+	@priority = "4"
+	test CanDisableRemoteStagingAfterShuttingDownRemoteSite {
+		property test.name.skip.portal.instance = "RemoteStaging#CanDisableRemoteStagingAfterShuttingDownRemoteSite";
+
+		task ("When: Shut down the remote live environment and attempt to disable staging settings") {
+			Clustering.shutdownSpecificServer(nodePort = "9080");
+
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
+
+			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#NONE_RADIO");
+
+			AssertClickNoError(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate staging for Site Name?");
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Your request failed to complete.");
+		}
+
+		task ("Then: Assert there is an option to forcibly disable the remote staging in UI") {
+			Alert.viewErrorMessage(errorMessage = "You can also forcibly disable remote staging.");
+		}
+
+		task ("When: Click on forcibly disable") {
+			AssertClickNoError(
+				locator1 = "Message#ERROR_DISMISSIBLE_LINK",
+				value1 = "forcibly disable");
+		}
+
+		task ("Then: Assert the remote staging is disabled") {
+			AssertConfirm(value1 = "Are you sure you want to deactivate staging for Site Name?");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Staging is successfully disabled.");
+		}
+	}
+
 	@description = "This is a use case for LPS-146399. In the publish summary of a remote staging site only the previously published pages should be present."
 	@priority = "3"
 	test OnlyPublishedPagesShouldBePresentInSummary {

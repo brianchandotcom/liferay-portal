@@ -482,8 +482,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	}
 
 	@Override
-	public void updateDocument(
-			long companyId, Document document, boolean commitImmediately)
+	public void updateDocument(long companyId, Document document)
 		throws SearchException {
 
 		_enforceStandardUID(document);
@@ -506,7 +505,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		searchContext.setCompanyId(companyId);
 
-		_setCommitImmediately(searchContext, commitImmediately || true);
+		_setCommitImmediately(searchContext, true);
 
 		indexWriter.updateDocument(searchContext, document);
 	}

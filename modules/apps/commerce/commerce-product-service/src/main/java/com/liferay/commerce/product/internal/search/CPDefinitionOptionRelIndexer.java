@@ -217,7 +217,7 @@ public class CPDefinitionOptionRelIndexer
 
 		_indexWriterHelper.updateDocument(
 			cpDefinitionOptionRel.getCompanyId(),
-			getDocument(cpDefinitionOptionRel), isCommitImmediately());
+			getDocument(cpDefinitionOptionRel));
 	}
 
 	@Override

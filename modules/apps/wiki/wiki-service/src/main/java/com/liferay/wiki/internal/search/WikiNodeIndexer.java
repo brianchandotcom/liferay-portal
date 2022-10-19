@@ -132,8 +132,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			return;
 		}
 
-		_indexWriterHelper.updateDocument(
-			wikiNode.getCompanyId(), document, isCommitImmediately());
+		_indexWriterHelper.updateDocument(wikiNode.getCompanyId(), document);
 	}
 
 	@Reference

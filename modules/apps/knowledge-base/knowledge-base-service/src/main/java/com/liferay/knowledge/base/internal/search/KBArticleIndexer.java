@@ -178,8 +178,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	@Override
 	protected void doReindex(KBArticle kbArticle) throws Exception {
 		indexWriterHelper.updateDocument(
-			kbArticle.getCompanyId(), getDocument(kbArticle),
-			isCommitImmediately());
+			kbArticle.getCompanyId(), getDocument(kbArticle));
 
 		_reindexAttachments(kbArticle);
 	}

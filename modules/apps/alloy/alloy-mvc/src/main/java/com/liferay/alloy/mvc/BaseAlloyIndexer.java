@@ -74,7 +74,7 @@ public abstract class BaseAlloyIndexer extends BaseIndexer<BaseModel<?>> {
 		AuditedModel auditedModel = (AuditedModel)baseModel;
 
 		IndexWriterHelperUtil.updateDocument(
-			auditedModel.getCompanyId(), document, isCommitImmediately());
+			auditedModel.getCompanyId(), document);
 	}
 
 	@Override

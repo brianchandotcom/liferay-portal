@@ -160,8 +160,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	@Override
 	protected void doReindex(CPOption cpOption) throws Exception {
 		_indexWriterHelper.updateDocument(
-			cpOption.getCompanyId(), getDocument(cpOption),
-			isCommitImmediately());
+			cpOption.getCompanyId(), getDocument(cpOption));
 	}
 
 	@Override

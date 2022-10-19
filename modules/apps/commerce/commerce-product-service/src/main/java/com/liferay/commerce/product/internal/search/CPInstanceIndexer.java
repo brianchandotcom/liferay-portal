@@ -300,8 +300,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	@Override
 	protected void doReindex(CPInstance cpInstance) throws Exception {
 		_indexWriterHelper.updateDocument(
-			cpInstance.getCompanyId(), getDocument(cpInstance),
-			isCommitImmediately());
+			cpInstance.getCompanyId(), getDocument(cpInstance));
 	}
 
 	@Override

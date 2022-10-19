@@ -345,8 +345,7 @@ public class WikiPageIndexer
 		}
 
 		_indexWriterHelper.updateDocument(
-			wikiPage.getCompanyId(), getDocument(wikiPage),
-			isCommitImmediately());
+			wikiPage.getCompanyId(), getDocument(wikiPage));
 
 		_reindexAttachments(wikiPage);
 	}

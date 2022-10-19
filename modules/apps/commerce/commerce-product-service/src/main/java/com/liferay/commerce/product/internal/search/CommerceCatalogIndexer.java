@@ -143,8 +143,7 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 	@Override
 	protected void doReindex(CommerceCatalog commerceCatalog) throws Exception {
 		_indexWriterHelper.updateDocument(
-			commerceCatalog.getCompanyId(), getDocument(commerceCatalog),
-			isCommitImmediately());
+			commerceCatalog.getCompanyId(), getDocument(commerceCatalog));
 	}
 
 	@Override

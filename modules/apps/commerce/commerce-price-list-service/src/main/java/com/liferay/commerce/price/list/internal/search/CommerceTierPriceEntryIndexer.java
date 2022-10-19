@@ -162,7 +162,7 @@ public class CommerceTierPriceEntryIndexer
 
 		_indexWriterHelper.updateDocument(
 			commerceTierPriceEntry.getCompanyId(),
-			getDocument(commerceTierPriceEntry), isCommitImmediately());
+			getDocument(commerceTierPriceEntry));
 	}
 
 	@Override

@@ -47,15 +47,7 @@ public class MessagingProxyInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args)
 		throws Throwable {
 
-		ProxyRequest proxyRequest = new ProxyRequest(method, args);
-
-		if (proxyRequest.isSynchronous() || true) {
-			return _baseProxyBean.synchronousSend(proxyRequest);
-		}
-
-		_baseProxyBean.send(proxyRequest);
-
-		return null;
+		return _baseProxyBean.synchronousSend(new ProxyRequest(method, args));
 	}
 
 	private static final InvocationHandlerFactory _invocationHandlerFactory =

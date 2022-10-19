@@ -179,7 +179,7 @@ public class CPDefinitionOptionValueRelIndexer
 
 		_indexWriterHelper.updateDocument(
 			cpDefinitionOptionValueRel.getCompanyId(),
-			getDocument(cpDefinitionOptionValueRel), isCommitImmediately());
+			getDocument(cpDefinitionOptionValueRel));
 	}
 
 	@Override

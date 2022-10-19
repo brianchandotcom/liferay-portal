@@ -178,8 +178,7 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			commercePriceEntry.getCompanyId(), getDocument(commercePriceEntry),
-			isCommitImmediately());
+			commercePriceEntry.getCompanyId(), getDocument(commercePriceEntry));
 	}
 
 	@Override

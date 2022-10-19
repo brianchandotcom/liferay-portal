@@ -151,7 +151,7 @@ public class CommerceShippingFixedOptionIndexer
 
 		_indexWriterHelper.updateDocument(
 			commerceShippingFixedOption.getCompanyId(),
-			getDocument(commerceShippingFixedOption), isCommitImmediately());
+			getDocument(commerceShippingFixedOption));
 	}
 
 	@Override

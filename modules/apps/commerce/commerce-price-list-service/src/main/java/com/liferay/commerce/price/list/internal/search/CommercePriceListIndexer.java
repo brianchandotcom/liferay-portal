@@ -333,8 +333,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			commercePriceList.getCompanyId(), getDocument(commercePriceList),
-			isCommitImmediately());
+			commercePriceList.getCompanyId(), getDocument(commercePriceList));
 
 		_commercePriceListLocalService.cleanPriceListCache();
 	}

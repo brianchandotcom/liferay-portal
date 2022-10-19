@@ -221,7 +221,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 			_updateDocumentIndexWriter.updateDocument(
 				_modelIndexerWriterContributor.getCompanyId(baseModel),
-				document, _modelSearchSettings.isCommitImmediately());
+				document);
 		}
 		else if (indexerWriterMode == IndexerWriterMode.DELETE) {
 			delete(baseModel);

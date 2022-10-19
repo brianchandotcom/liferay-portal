@@ -361,8 +361,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			CompanyConstants.SYSTEM, getDocument(configurationModel),
-			isCommitImmediately());
+			CompanyConstants.SYSTEM, getDocument(configurationModel));
 	}
 
 	@Override

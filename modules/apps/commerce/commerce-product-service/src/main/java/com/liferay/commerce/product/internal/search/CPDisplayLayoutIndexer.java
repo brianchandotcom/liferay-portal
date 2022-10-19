@@ -204,8 +204,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 	@Override
 	protected void doReindex(CPDisplayLayout cpDisplayLayout) throws Exception {
 		_indexWriterHelper.updateDocument(
-			cpDisplayLayout.getCompanyId(), getDocument(cpDisplayLayout),
-			isCommitImmediately());
+			cpDisplayLayout.getCompanyId(), getDocument(cpDisplayLayout));
 	}
 
 	@Override

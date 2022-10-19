@@ -149,8 +149,7 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 	@Override
 	protected void doReindex(CommerceChannel commerceChannel) throws Exception {
 		_indexWriterHelper.updateDocument(
-			commerceChannel.getCompanyId(), getDocument(commerceChannel),
-			isCommitImmediately());
+			commerceChannel.getCompanyId(), getDocument(commerceChannel));
 	}
 
 	@Override

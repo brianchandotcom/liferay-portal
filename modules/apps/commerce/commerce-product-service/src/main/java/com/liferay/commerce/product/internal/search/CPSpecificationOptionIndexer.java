@@ -206,7 +206,7 @@ public class CPSpecificationOptionIndexer
 
 		_indexWriterHelper.updateDocument(
 			cpSpecificationOption.getCompanyId(),
-			getDocument(cpSpecificationOption), isCommitImmediately());
+			getDocument(cpSpecificationOption));
 	}
 
 	@Override

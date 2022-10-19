@@ -131,7 +131,7 @@ public class ClientExtensionEntryIndexer
 
 		_indexWriterHelper.updateDocument(
 			clientExtensionEntry.getCompanyId(),
-			getDocument(clientExtensionEntry), isCommitImmediately());
+			getDocument(clientExtensionEntry));
 	}
 
 	@Override

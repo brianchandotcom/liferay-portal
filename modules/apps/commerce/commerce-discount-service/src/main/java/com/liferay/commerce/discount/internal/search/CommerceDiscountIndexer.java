@@ -479,8 +479,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			commerceDiscount.getCompanyId(), getDocument(commerceDiscount),
-			isCommitImmediately());
+			commerceDiscount.getCompanyId(), getDocument(commerceDiscount));
 	}
 
 	@Override

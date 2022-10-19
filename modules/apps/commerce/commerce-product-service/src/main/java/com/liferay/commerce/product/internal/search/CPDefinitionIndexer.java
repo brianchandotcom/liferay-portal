@@ -884,8 +884,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	@Override
 	protected void doReindex(CPDefinition cpDefinition) throws Exception {
 		_indexWriterHelper.updateDocument(
-			cpDefinition.getCompanyId(), getDocument(cpDefinition),
-			isCommitImmediately());
+			cpDefinition.getCompanyId(), getDocument(cpDefinition));
 	}
 
 	@Override

@@ -269,7 +269,7 @@ public class CPAttachmentFileEntryIndexer
 
 		_indexWriterHelper.updateDocument(
 			cpAttachmentFileEntry.getCompanyId(),
-			getDocument(cpAttachmentFileEntry), isCommitImmediately());
+			getDocument(cpAttachmentFileEntry));
 	}
 
 	@Override

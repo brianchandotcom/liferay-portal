@@ -438,8 +438,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			for (JournalArticle journalArticle : journalArticles) {
 				if (journalArticle.getId() == latestIndexableArticle.getId()) {
 					_indexWriterHelper.updateDocument(
-						article.getCompanyId(), getDocument(journalArticle),
-						isCommitImmediately());
+						article.getCompanyId(), getDocument(journalArticle));
 				}
 				else {
 					_deleteDocument(journalArticle);

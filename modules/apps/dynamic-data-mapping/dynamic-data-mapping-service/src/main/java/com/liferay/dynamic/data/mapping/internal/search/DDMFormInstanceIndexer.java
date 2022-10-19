@@ -80,8 +80,7 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 	@Override
 	protected void doReindex(DDMFormInstance ddmFormInstance) throws Exception {
 		indexWriterHelper.updateDocument(
-			ddmFormInstance.getCompanyId(), getDocument(ddmFormInstance),
-			isCommitImmediately());
+			ddmFormInstance.getCompanyId(), getDocument(ddmFormInstance));
 
 		_reindexRecords(ddmFormInstance);
 	}

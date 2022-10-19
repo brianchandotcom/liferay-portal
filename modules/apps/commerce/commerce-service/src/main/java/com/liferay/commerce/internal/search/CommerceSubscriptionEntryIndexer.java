@@ -181,7 +181,7 @@ public class CommerceSubscriptionEntryIndexer
 
 		_indexWriterHelper.updateDocument(
 			commerceSubscriptionEntry.getCompanyId(),
-			getDocument(commerceSubscriptionEntry), isCommitImmediately());
+			getDocument(commerceSubscriptionEntry));
 	}
 
 	@Override

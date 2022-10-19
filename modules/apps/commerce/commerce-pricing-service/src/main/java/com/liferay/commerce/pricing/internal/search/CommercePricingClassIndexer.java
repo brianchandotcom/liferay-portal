@@ -119,7 +119,7 @@ public class CommercePricingClassIndexer
 
 		_indexWriterHelper.updateDocument(
 			commercePricingClass.getCompanyId(),
-			getDocument(commercePricingClass), isCommitImmediately());
+			getDocument(commercePricingClass));
 	}
 
 	@Override

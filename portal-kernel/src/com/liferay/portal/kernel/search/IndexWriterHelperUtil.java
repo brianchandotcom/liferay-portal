@@ -197,12 +197,10 @@ public class IndexWriterHelperUtil {
 		_indexWriterHelper.setIndexReadOnly(className, indexReadOnly);
 	}
 
-	public static void updateDocument(
-			long companyId, Document document, boolean commitImmediately)
+	public static void updateDocument(long companyId, Document document)
 		throws SearchException {
 
-		_indexWriterHelper.updateDocument(
-			companyId, document, commitImmediately);
+		_indexWriterHelper.updateDocument(companyId, document);
 	}
 
 	public static void updateDocuments(

@@ -26,8 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface UpdateDocumentIndexWriter {
 
-	public void updateDocument(
-		long companyId, Document document, boolean commitImmediately);
+	public void updateDocument(long companyId, Document document);
 
 	public void updateDocumentPartially(
 		long companyId, Document document, boolean commitImmediately);

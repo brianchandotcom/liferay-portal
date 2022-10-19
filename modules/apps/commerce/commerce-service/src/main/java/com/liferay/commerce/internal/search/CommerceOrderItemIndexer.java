@@ -196,8 +196,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			commerceOrderItem.getCompanyId(), getDocument(commerceOrderItem),
-			isCommitImmediately());
+			commerceOrderItem.getCompanyId(), getDocument(commerceOrderItem));
 	}
 
 	@Override

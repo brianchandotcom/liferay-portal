@@ -189,7 +189,7 @@ public class CommerceInventoryWarehouseIndexer
 
 		_indexWriterHelper.updateDocument(
 			commerceInventoryWarehouse.getCompanyId(),
-			getDocument(commerceInventoryWarehouse), isCommitImmediately());
+			getDocument(commerceInventoryWarehouse));
 	}
 
 	@Override

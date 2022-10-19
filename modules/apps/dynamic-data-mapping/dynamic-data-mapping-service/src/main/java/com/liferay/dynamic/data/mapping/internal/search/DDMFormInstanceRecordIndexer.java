@@ -231,7 +231,7 @@ public class DDMFormInstanceRecordIndexer
 
 		indexWriterHelper.updateDocument(
 			ddmFormInstanceRecord.getCompanyId(),
-			getDocument(ddmFormInstanceRecord), isCommitImmediately());
+			getDocument(ddmFormInstanceRecord));
 	}
 
 	@Override

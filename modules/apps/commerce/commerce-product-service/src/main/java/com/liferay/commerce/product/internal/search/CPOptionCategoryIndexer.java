@@ -149,8 +149,7 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 		throws Exception {
 
 		_indexWriterHelper.updateDocument(
-			cpOptionCategory.getCompanyId(), getDocument(cpOptionCategory),
-			isCommitImmediately());
+			cpOptionCategory.getCompanyId(), getDocument(cpOptionCategory));
 	}
 
 	@Override

@@ -125,8 +125,7 @@ public interface IndexWriterHelper {
 	@Deprecated
 	public void setIndexReadOnly(String className, boolean indexReadOnly);
 
-	public void updateDocument(
-			long companyId, Document document, boolean commitImmediately)
+	public void updateDocument(long companyId, Document document)
 		throws SearchException;
 
 	public void updateDocuments(

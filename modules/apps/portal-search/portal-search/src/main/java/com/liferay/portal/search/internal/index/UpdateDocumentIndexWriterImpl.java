@@ -50,9 +50,7 @@ public class UpdateDocumentIndexWriterImpl
 	implements UpdateDocumentIndexWriter {
 
 	@Override
-	public void updateDocument(
-		long companyId, Document document, boolean commitImmediately) {
-
+	public void updateDocument(long companyId, Document document) {
 		if (indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
@@ -72,7 +70,7 @@ public class UpdateDocumentIndexWriterImpl
 
 		searchContext.setCompanyId(companyId);
 
-		_setCommitImmediately(searchContext, commitImmediately || true);
+		_setCommitImmediately(searchContext, true);
 
 		try {
 			indexWriter.updateDocument(searchContext, document);

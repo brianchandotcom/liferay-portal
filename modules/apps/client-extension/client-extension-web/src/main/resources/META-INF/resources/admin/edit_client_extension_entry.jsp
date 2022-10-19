@@ -48,7 +48,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 		<liferay-frontend:fieldset-group>
 			<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
 
-			<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %></p>
+			<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %> <a href="https://learn.liferay.com/dxp/latest/en/building-applications/remote-apps/understanding-remote-app-types.html" target="_blank"><liferay-ui:message arguments="Client Extensions" key="learn-more-about-x" /></a></p>
 
 			<liferay-ui:panel-container
 				cssClass="panel-group-flush "

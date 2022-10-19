@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -266,9 +265,6 @@ public class JournalArticleInfoItemObjectProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleInfoItemObjectProvider.class);
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

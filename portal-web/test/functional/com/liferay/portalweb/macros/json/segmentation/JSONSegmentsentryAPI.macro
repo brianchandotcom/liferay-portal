@@ -18,7 +18,9 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var segmentId = JSONCurlUtil.post("${curl}", "$.segmentsEntryId");
+
+		return "${segmentId}";
 	}
 
 	macro _deleteSegment {

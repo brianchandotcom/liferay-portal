@@ -166,6 +166,16 @@ definition {
 		return "${nameMap}";
 	}
 
+	macro setSegmentCriteria {
+		Variables.assertDefined(parameterList = "${conjunctionOperator},${firstSegmentId},${secondSegmentId}");
+
+		var conjunctionOperator = StringUtil.toLowerCase("${conjunctionOperator}");
+
+		var criteria = '''{"criteria":{"segments":{"conjunction":"and","filterString":"(segmentsEntryIds eq %27${firstSegmentId}%27 ${conjunctionOperator} segmentsEntryIds eq %27${secondSegmentId}%27)","typeValue":"referred"}},"filterStrings":{"model":"(segmentsEntryIds eq %27${firstSegmentId}%27 ${conjunctionOperator} segmentsEntryIds eq %27${secondSegmentId}%27)","referred":"(segmentsEntryIds eq %27${firstSegmentId}%27 ${conjunctionOperator} segmentsEntryIds eq %27${secondSegmentId}%27)"}}''';
+
+		return "${criteria}";
+	}
+
 	macro setSelectedOptionId {
 		Variables.assertDefined(parameterList = "${fieldName},${selectedOption}");
 

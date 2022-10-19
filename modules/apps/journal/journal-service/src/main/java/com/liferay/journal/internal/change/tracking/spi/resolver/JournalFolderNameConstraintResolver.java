@@ -17,14 +17,12 @@ package com.liferay.journal.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
@@ -62,8 +60,5 @@ public class JournalFolderNameConstraintResolver
 	public void resolveConflict(
 		ConstraintResolverContext<JournalFolder> constraintResolverContext) {
 	}
-
-	@Reference
-	private JournalFolderLocalService _journalFolderLocalService;
 
 }

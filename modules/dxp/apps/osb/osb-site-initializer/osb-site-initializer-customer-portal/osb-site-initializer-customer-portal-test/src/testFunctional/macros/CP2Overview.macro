@@ -37,6 +37,12 @@ definition {
 		AssertVisible(locator1 = "CP2Overview#SLA_CARD_CONTENT");
 	}
 
+	macro assertSLACardUnicContentIsVisible {
+		var key_cardContent = "${cardContent}";
+
+		AssertVisible(locator1 = "CP2Overview#SLA_CARD_UNIC_CONTENT");
+	}
+
 	macro switchSLACard {
 		MouseOver(locator1 = "CP2Overview#SLA_CARD_CONTAINER");
 

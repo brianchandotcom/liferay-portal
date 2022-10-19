@@ -169,13 +169,17 @@ public interface DDMFormInstanceSettings {
 
 	@DDMFormField(
 		label = "%body",
-		predefinedValue = "%you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake",
-		properties = "displayStyle=multiline", type = "localizable_text"
+		properties = {
+			"displayStyle=multiline",
+			"placeholder=%you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-form-if-you-think-this-is-a-mistake"
+		},
+		type = "localizable_text"
 	)
 	public String limitToOneSubmissionPerUserBody();
 
 	@DDMFormField(
-		label = "%header", predefinedValue = "%you-have-already-responded",
+		label = "%header",
+		properties = "placeholder=%you-have-already-responded",
 		type = "localizable_text"
 	)
 	public String limitToOneSubmissionPerUserHeader();

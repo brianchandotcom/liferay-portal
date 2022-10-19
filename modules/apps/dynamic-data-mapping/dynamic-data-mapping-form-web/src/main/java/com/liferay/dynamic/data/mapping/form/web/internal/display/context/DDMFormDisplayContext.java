@@ -456,7 +456,10 @@ public class DDMFormDisplayContext {
 			return limitToOneSubmissionPerUserBody;
 		}
 
-		return StringPool.BLANK;
+		return LanguageUtil.get(
+			_getHttpServletRequest(),
+			"you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-" +
+				"form-if-you-think-this-is-a-mistake");
 	}
 
 	public String getLimitToOneSubmissionPerUserHeader()
@@ -481,7 +484,8 @@ public class DDMFormDisplayContext {
 			return limitToOneSubmissionPerUserHeader;
 		}
 
-		return StringPool.BLANK;
+		return LanguageUtil.get(
+			_getHttpServletRequest(), "you-have-already-responded");
 	}
 
 	public String getRedirectURL() throws PortalException {

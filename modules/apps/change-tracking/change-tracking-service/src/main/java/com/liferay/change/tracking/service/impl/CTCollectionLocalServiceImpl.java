@@ -800,8 +800,10 @@ public class CTCollectionLocalServiceImpl
 							"select count(*) from ",
 							ctPersistence.getTableName(),
 							" where ctCollectionId = ", ctCollectionId,
-							" and status != ",
-							WorkflowConstants.STATUS_APPROVED));
+							" and status not in (",
+							StringUtil.merge(
+								_ACCEPTED_STATUSES, StringPool.COMMA),
+							")"));
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {
@@ -1169,6 +1171,10 @@ public class CTCollectionLocalServiceImpl
 				"Description is too long");
 		}
 	}
+
+	private static final int[] _ACCEPTED_STATUSES = {
+		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTCollectionLocalServiceImpl.class);

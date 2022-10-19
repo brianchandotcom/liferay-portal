@@ -11,7 +11,7 @@
 
 import {ClayInput} from '@clayui/form';
 import {FormikContextType} from 'formik';
-import Dropzone, {useDropzone} from 'react-dropzone';
+import {useDropzone} from 'react-dropzone';
 
 import MDFClaim from '../../../../../interfaces/mdfClaim';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
@@ -90,7 +90,6 @@ const DragAndDrop = ({
 			</div>
 		</div>
 	);
-};
-<Dropzone />;
+}
 
 export default DragAndDrop;

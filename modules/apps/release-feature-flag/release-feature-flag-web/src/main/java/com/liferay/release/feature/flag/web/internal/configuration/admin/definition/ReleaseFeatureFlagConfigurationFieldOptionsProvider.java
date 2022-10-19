@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = {
 		"configuration.field.name=disabledReleaseFeatureFlags",
 		"configuration.pid=com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration"

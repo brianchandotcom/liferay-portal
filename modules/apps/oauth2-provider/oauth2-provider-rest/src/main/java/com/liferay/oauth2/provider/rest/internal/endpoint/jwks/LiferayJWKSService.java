@@ -24,10 +24,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
+import org.apache.cxf.rs.security.oauth2.services.JwksService;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,17 +44,16 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
 		"osgi.jaxrs.name=Liferay.Authorization.JWKS", "osgi.jaxrs.resource=true"
 	},
-	service = OAuth2ProviderJWKSResource.class
+	service = LiferayJWKSService.class
 )
 @Path("/jwks")
-public class OAuth2ProviderJWKSResource {
+public class LiferayJWKSService extends JwksService {
 
 	@GET
+	@Override
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response jwks() {
-		return Response.ok(
-			_jwks
-		).build();
+	public JsonWebKeys getPublicVerificationKeys() {
+		return _jsonWebKeys;
 	}
 
 	@Activate
@@ -64,15 +63,14 @@ public class OAuth2ProviderJWKSResource {
 				ConfigurableUtil.createConfigurable(
 					OAuth2AuthorizationServerConfiguration.class, properties);
 
-		_jwks = JwkUtils.encodeJwkSet(
-			new JsonWebKeys(
-				JwkUtils.stripPrivateParameters(
-					Collections.singletonList(
-						JwkUtils.readJwkKey(
-							oAuth2AuthorizationServerConfiguration.
-								jwtAccessTokenSigningJSONWebKey())))));
+		_jsonWebKeys = new JsonWebKeys(
+			JwkUtils.stripPrivateParameters(
+				Collections.singletonList(
+					JwkUtils.readJwkKey(
+						oAuth2AuthorizationServerConfiguration.
+							jwtAccessTokenSigningJSONWebKey()))));
 	}
 
-	private String _jwks;
+	private JsonWebKeys _jsonWebKeys;
 
 }

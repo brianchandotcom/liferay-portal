@@ -20,7 +20,7 @@
 RedirectPatternConfigurationDisplayContext redirectPatternConfigurationDisplayContext = (RedirectPatternConfigurationDisplayContext)request.getAttribute(RedirectPatternConfigurationDisplayContext.class.getName());
 %>
 
-<aui:form action="<%= redirectPatternConfigurationDisplayContext.getRedirectPatternConfigurationURL() %>" method="post" name="fm">
+<aui:form action="<%= redirectPatternConfigurationDisplayContext.getRedirectPatternConfigurationURL() %>" cssClass="container-fluid container-fluid-max-xl mt-4" method="post" name="fm">
 	<clay:sheet>
 		<clay:sheet-header>
 			<h2>

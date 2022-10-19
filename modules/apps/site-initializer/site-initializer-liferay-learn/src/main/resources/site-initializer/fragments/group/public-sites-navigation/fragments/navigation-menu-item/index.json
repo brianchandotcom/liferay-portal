@@ -4,7 +4,7 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "white",
+					"defaultValue": "colorNeutral0",
 					"description": "icon-color",
 					"label": "Icon Color",
 					"name": "iconColor",
@@ -12,7 +12,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "primary",
+					"defaultValue": "colorActionPrimaryDefault",
 					"description": "icon-background-color",
 					"label": "Icon Background Color",
 					"name": "iconBackgroundColor",

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -443,37 +444,12 @@ public class KBAdminNavigationDisplayContext {
 		return childrenJSONArray;
 	}
 
-	private KBArticle _getKBArticle(long resourcePrimKey)
-		throws PortalException {
-
-		if (resourcePrimKey !=
-			KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY) {
-
-			return KBArticleServiceUtil.getLatestKBArticle(
-				resourcePrimKey, WorkflowConstants.STATUS_ANY);
-		}
-
-		return null;
-	}
-
-	private long _getKBArticleResourcePrimaryKeyFromRequestParameter() {
-		return ParamUtil.getLong(
-			_httpServletRequest, "resourcePrimKey",
-			KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
-	}
-
 	private KBFolder _getKBFolder(long kbFolderId) throws PortalException {
 		if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return KBFolderServiceUtil.getKBFolder(kbFolderId);
 		}
 
 		return null;
-	}
-
-	private long _getKBFolderIdFromRequestParameter() {
-		return ParamUtil.getLong(
-			_httpServletRequest, "parentResourcePrimKey",
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	private JSONArray _getKBTemplateChildrenJSONArray() {
@@ -540,32 +516,36 @@ public class KBAdminNavigationDisplayContext {
 	}
 
 	private List<Long> _getSelectedItemAncestorIds() throws PortalException {
+		if (_getSelectedItemId() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return Collections.emptyList();
+		}
+
 		List<Long> selectedItemAncestorIds = new ArrayList<>();
 
-		if (!_isRootFolderSelected()) {
-			Long kbFolderId = null;
+		Long kbFolderId = null;
 
-			if (_isKBArticleSelected()) {
-				KBArticle kbArticle = _getKBArticle(
-					_getKBArticleResourcePrimaryKeyFromRequestParameter());
+		if (_isKBArticleSelected()) {
+			KBArticle kbArticle = _getSelectedKBArticle();
 
-				if (kbArticle != null) {
-					selectedItemAncestorIds.addAll(
-						kbArticle.getAncestorResourcePrimaryKeys());
-					kbFolderId = kbArticle.getKbFolderId();
-				}
-			}
-
-			if (kbFolderId == null) {
-				kbFolderId = _getKBFolderIdFromRequestParameter();
-			}
-
-			KBFolder kbFolder = _getKBFolder(kbFolderId);
-
-			if (kbFolder != null) {
+			if (kbArticle != null) {
 				selectedItemAncestorIds.addAll(
-					kbFolder.getAncestorKBFolderIds());
+					kbArticle.getAncestorResourcePrimaryKeys());
+				kbFolderId = kbArticle.getKbFolderId();
 			}
+		}
+
+		if (kbFolderId == null) {
+			kbFolderId = ParamUtil.getLong(
+				_httpServletRequest, "parentResourcePrimKey",
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		}
+
+		KBFolder kbFolder = _getKBFolder(kbFolderId);
+
+		if (kbFolder != null) {
+			selectedItemAncestorIds.addAll(kbFolder.getAncestorKBFolderIds());
 		}
 
 		return selectedItemAncestorIds;
@@ -577,6 +557,21 @@ public class KBAdminNavigationDisplayContext {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
+	private KBArticle _getSelectedKBArticle() throws PortalException {
+		long resourcePrimKey = ParamUtil.getLong(
+			_httpServletRequest, "resourcePrimKey",
+			KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
+
+		if (resourcePrimKey !=
+				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY) {
+
+			return KBArticleServiceUtil.getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY);
+		}
+
+		return null;
+	}
+
 	private boolean _isKBArticleSelected() {
 		long kbArticleClassNameId = PortalUtil.getClassNameId(
 			KBArticleConstants.getClassName());
@@ -585,16 +580,6 @@ public class KBAdminNavigationDisplayContext {
 			_httpServletRequest, "resourceClassNameId");
 
 		if (resourceClassNameId == kbArticleClassNameId) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isRootFolderSelected() {
-		if (_getSelectedItemId() ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
 			return true;
 		}
 

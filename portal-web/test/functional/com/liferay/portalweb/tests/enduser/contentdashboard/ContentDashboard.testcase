@@ -2879,7 +2879,7 @@ definition {
 		}
 
 		task ("Expire the web content version") {
-			ContentDashboard.expireVersion(
+			ContentDashboard.clickMenuOfVersion(
 				item = "Expire",
 				versionName = "Version 1.0");
 		}

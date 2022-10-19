@@ -92,7 +92,7 @@ public class ChildSitesItemSelectorViewDisplayContext
 		return filteredGroups;
 	}
 
-	private LinkedHashMap<String, Object> _getGroupParams() throws Exception {
+	private LinkedHashMap<String, Object> _getGroupParams() {
 		if (_groupParams != null) {
 			return _groupParams;
 		}

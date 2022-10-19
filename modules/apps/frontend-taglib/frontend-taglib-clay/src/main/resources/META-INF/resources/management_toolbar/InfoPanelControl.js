@@ -61,6 +61,7 @@ const InfoPanelControl = ({infoPanelId, onInfoButtonClick, separator}) => {
 				onClick={onInfoButtonClick}
 				ref={infoButtonRef}
 				symbol="info-circle-open"
+				title={Liferay.Language.get('toggle-info-panel')}
 			/>
 		</ManagementToolbar.Item>
 	);

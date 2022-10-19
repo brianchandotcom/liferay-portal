@@ -49,26 +49,6 @@ public class NotificationTemplateServiceImpl
 
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, long objectDefinitionId, String bcc,
-			Map<Locale, String> bodyMap, String cc, String description,
-			String from, Map<Locale, String> fromNameMap, String name,
-			String recipientType, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap, String type,
-			List<Long> attachmentObjectFieldIds)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
-
-		return _notificationTemplateLocalService.addNotificationTemplate(
-			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, recipientType, subjectMap, toMap, type,
-			attachmentObjectFieldIds);
-	}
-
-	@Override
-	public NotificationTemplate addNotificationTemplate(
 			NotificationContext notificationContext)
 		throws PortalException {
 

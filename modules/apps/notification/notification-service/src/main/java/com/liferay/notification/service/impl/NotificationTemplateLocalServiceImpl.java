@@ -14,11 +14,14 @@
 
 package com.liferay.notification.service.impl;
 
-import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateAttachment;
+import com.liferay.notification.model.NotificationTemplateRecipient;
+import com.liferay.notification.model.NotificationTemplateRecipientSetting;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
+import com.liferay.notification.service.NotificationTemplateRecipientLocalService;
+import com.liferay.notification.service.NotificationTemplateRecipientSettingLocalService;
 import com.liferay.notification.service.base.NotificationTemplateLocalServiceBaseImpl;
 import com.liferay.notification.service.persistence.NotificationQueueEntryPersistence;
 import com.liferay.notification.service.persistence.NotificationTemplateAttachmentPersistence;
@@ -29,7 +32,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -37,7 +39,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -64,68 +65,6 @@ public class NotificationTemplateLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, long objectDefinitionId, String bcc,
-			Map<Locale, String> bodyMap, String cc, String description,
-			String from, Map<Locale, String> fromNameMap, String name,
-			String recipientType, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap, String type,
-			List<Long> attachmentObjectFieldIds)
-		throws PortalException {
-
-		if (Validator.isNull(type)) {
-			type = NotificationConstants.TYPE_EMAIL;
-		}
-
-		_validate(
-			objectDefinitionId, from, name, type, attachmentObjectFieldIds);
-
-		NotificationTemplate notificationTemplate =
-			notificationTemplatePersistence.create(
-				counterLocalService.increment());
-
-		User user = _userLocalService.getUser(userId);
-
-		notificationTemplate.setCompanyId(user.getCompanyId());
-		notificationTemplate.setUserId(user.getUserId());
-		notificationTemplate.setUserName(user.getFullName());
-
-		notificationTemplate.setObjectDefinitionId(objectDefinitionId);
-		notificationTemplate.setBcc(bcc);
-		notificationTemplate.setBodyMap(bodyMap);
-		notificationTemplate.setCc(cc);
-		notificationTemplate.setDescription(description);
-		notificationTemplate.setFrom(from);
-		notificationTemplate.setFromNameMap(fromNameMap);
-		notificationTemplate.setName(name);
-		notificationTemplate.setRecipientType(recipientType);
-		notificationTemplate.setSubjectMap(subjectMap);
-		notificationTemplate.setToMap(toMap);
-		notificationTemplate.setType(type);
-
-		notificationTemplate = notificationTemplatePersistence.update(
-			notificationTemplate);
-
-		_resourceLocalService.addResources(
-			notificationTemplate.getCompanyId(), 0,
-			notificationTemplate.getUserId(),
-			NotificationTemplate.class.getName(),
-			notificationTemplate.getNotificationTemplateId(), false, true,
-			true);
-
-		for (long attachmentObjectFieldId : attachmentObjectFieldIds) {
-			_notificationTemplateAttachmentLocalService.
-				addNotificationTemplateAttachment(
-					notificationTemplate.getCompanyId(),
-					notificationTemplate.getNotificationTemplateId(),
-					attachmentObjectFieldId);
-		}
-
-		return notificationTemplate;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public NotificationTemplate addNotificationTemplate(
 			NotificationContext notificationContext)
 		throws PortalException {
 
@@ -136,10 +75,23 @@ public class NotificationTemplateLocalServiceImpl
 		notificationType.validateNotificationTemplate(notificationContext);
 
 		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
+			notificationTemplatePersistence.update(
+				notificationContext.getNotificationTemplate());
 
-		notificationTemplate = notificationTemplatePersistence.update(
-			notificationTemplate);
+		NotificationTemplateRecipient notificationTemplateRecipient =
+			_notificationTemplateRecipientLocalService.
+				updateNotificationTemplateRecipient(
+					notificationTemplate.getNotificationTemplateRecipient());
+
+		for (NotificationTemplateRecipientSetting
+				notificationTemplateRecipientSetting :
+					notificationTemplateRecipient.
+						getNotificationTemplateRecipientSettings()) {
+
+			_notificationTemplateRecipientSettingLocalService.
+				updateNotificationTemplateRecipientSetting(
+					notificationTemplateRecipientSetting);
+		}
 
 		_resourceLocalService.addResources(
 			notificationTemplate.getCompanyId(), 0,
@@ -320,6 +272,14 @@ public class NotificationTemplateLocalServiceImpl
 	@Reference
 	private NotificationTemplateAttachmentPersistence
 		_notificationTemplateAttachmentPersistence;
+
+	@Reference
+	private NotificationTemplateRecipientLocalService
+		_notificationTemplateRecipientLocalService;
+
+	@Reference
+	private NotificationTemplateRecipientSettingLocalService
+		_notificationTemplateRecipientSettingLocalService;
 
 	@Reference
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;

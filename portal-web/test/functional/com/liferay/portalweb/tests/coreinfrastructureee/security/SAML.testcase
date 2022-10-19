@@ -2,7 +2,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
-	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property databases.size = "1";
 	property dummy.socket.proxy.disabled = "true";
 	property minimum.slave.ram = "24";
@@ -759,7 +759,7 @@ definition {
 	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes precedence over IdP session time out."
 	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
-		property custom.properties = "session.timeout=2${line.separator}javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "SAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
 		property web.xml.timeout = "2";
 
@@ -946,7 +946,7 @@ definition {
 	@description = "This is a use case for LRQA-35784. Assert SSO session exists after SP session timeout."
 	@priority = "4"
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
-		property custom.properties = "session.timeout=2${line.separator}javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "SAML#AssertSSOSessionExistsAfterSPSessionTimeout";
 		property web.xml.timeout = "2";
 
@@ -992,7 +992,7 @@ definition {
 	@description = "This is a use case for LRQA-35833. Assert SSO expires after maximum session age."
 	@priority = "4"
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
-		property custom.properties = "session.timeout=2${line.separator}javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "SAML#AssertSSOSessionExpiresAfterMaximumSessionAge";
 		property web.xml.timeout = "2";
 

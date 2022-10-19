@@ -34,6 +34,14 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
+	const exportLayoutUtilityPageEntries = (itemData) => {
+		const form = document.getElementById(`${portletNamespace}fm`);
+
+		if (form) {
+			submitForm(form, itemData?.exportLayoutUtilityPageEntriesURL);
+		}
+	};
+
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
@@ -43,6 +51,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			if (action === 'deleteSelectedLayoutUtilityPageEntries') {
 				deleteSelectedLayoutUtilityPageEntries(data);
+			}
+			else if (action === 'exportLayoutUtilityPageEntries') {
+				exportLayoutUtilityPageEntries(data);
 			}
 		},
 	};

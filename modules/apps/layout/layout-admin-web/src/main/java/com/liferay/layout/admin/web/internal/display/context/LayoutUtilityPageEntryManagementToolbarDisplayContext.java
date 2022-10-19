@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,23 +58,49 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData(
-					"action", "deleteSelectedLayoutUtilityPageEntries");
-				dropdownItem.putData(
-					"deleteSelectedLayoutUtilityPageEntriesURL",
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/layout_admin/delete_layout_utility_page_entry"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).buildString());
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "exportLayoutUtilityPageEntries");
+							dropdownItem.putData(
+								"exportLayoutUtilityPageEntriesURL",
+								_getExportLayoutUtilityPageEntryURL());
+							dropdownItem.setIcon("upload");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "export"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action",
+								"deleteSelectedLayoutUtilityPageEntries");
+							dropdownItem.putData(
+								"deleteSelectedLayoutUtilityPageEntriesURL",
+								PortletURLBuilder.createActionURL(
+									liferayPortletResponse
+								).setActionName(
+									"/layout_admin" +
+										"/delete_layout_utility_page_entry"
+								).setRedirect(
+									_themeDisplay.getURLCurrent()
+								).buildString());
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}
@@ -122,6 +149,16 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "create-date"};
+	}
+
+	private String _getExportLayoutUtilityPageEntryURL() {
+		ResourceURL exportLayoutUtilityPageEntryURL =
+			liferayPortletResponse.createResourceURL();
+
+		exportLayoutUtilityPageEntryURL.setResourceID(
+			"/layout_admin/export_layout_utility_page_entries");
+
+		return exportLayoutUtilityPageEntryURL.toString();
 	}
 
 	private String _getSelectMasterLayoutURL(int type) {

@@ -412,9 +412,9 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(locator1 = "title=Connecting Data Sources — Liferay Learn");
+			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Data Sources");
+			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
 
 			SelectWindow(locator1 = "title=Data Sources - Settings - Analytics Cloud");
 		}
@@ -913,10 +913,10 @@ definition {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
 			task ("Switch to the documentation tab") {
-				SelectWindow(locator1 = "title=Connecting Data Sources — Liferay Learn");
+				SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 			}
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Data Sources");
+			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
 		}
 	}
 

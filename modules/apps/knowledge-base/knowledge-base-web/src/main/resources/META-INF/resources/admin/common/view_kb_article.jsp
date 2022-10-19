@@ -50,11 +50,14 @@ if (portletTitleBasedNavigation) {
 	portletDisplay.setURLBack(redirect);
 	renderResponse.setTitle(kbArticle.getTitle());
 }
-
-KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
+
+	<%
+	KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
+	%>
+
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
 			<ul class="navbar-nav navbar-nav-expand">

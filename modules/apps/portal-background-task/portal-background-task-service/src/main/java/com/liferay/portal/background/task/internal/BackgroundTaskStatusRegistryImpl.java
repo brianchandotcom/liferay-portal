@@ -15,6 +15,7 @@
 package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -50,7 +52,16 @@ public class BackgroundTaskStatusRegistryImpl
 		lock.lock();
 
 		try {
-			return _backgroundTaskStatuses.get(backgroundTaskId);
+			Map.Entry
+				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+					backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
+						backgroundTaskId);
+
+			if (backgroundTaskStatusEntry == null) {
+				return null;
+			}
+
+			return backgroundTaskStatusEntry.getKey();
 		}
 		finally {
 			lock.unlock();
@@ -59,24 +70,31 @@ public class BackgroundTaskStatusRegistryImpl
 
 	@Override
 	public BackgroundTaskStatus registerBackgroundTaskStatus(
-		long backgroundTaskId) {
+		long backgroundTaskId,
+		BackgroundTaskStatusMessageTranslator
+			backgroundTaskStatusMessageTranslator) {
 
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
 
 		try {
-			BackgroundTaskStatus backgroundTaskStatus =
-				_backgroundTaskStatuses.get(backgroundTaskId);
+			Map.Entry
+				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+					backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
+						backgroundTaskId);
 
-			if (backgroundTaskStatus == null) {
-				backgroundTaskStatus = new BackgroundTaskStatus();
+			if (backgroundTaskStatusEntry == null) {
+				backgroundTaskStatusEntry =
+					new AbstractMap.SimpleImmutableEntry<>(
+						new BackgroundTaskStatus(),
+						backgroundTaskStatusMessageTranslator);
 
 				_backgroundTaskStatuses.put(
-					backgroundTaskId, backgroundTaskStatus);
+					backgroundTaskId, backgroundTaskStatusEntry);
 			}
 
-			return backgroundTaskStatus;
+			return backgroundTaskStatusEntry.getKey();
 		}
 		finally {
 			lock.unlock();
@@ -92,7 +110,16 @@ public class BackgroundTaskStatusRegistryImpl
 		lock.lock();
 
 		try {
-			return _backgroundTaskStatuses.remove(backgroundTaskId);
+			Map.Entry
+				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+					backgroundTaskStatusEntry = _backgroundTaskStatuses.remove(
+						backgroundTaskId);
+
+			if (backgroundTaskStatusEntry == null) {
+				return null;
+			}
+
+			return backgroundTaskStatusEntry.getKey();
 		}
 		finally {
 			lock.unlock();
@@ -123,8 +150,10 @@ public class BackgroundTaskStatusRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskStatusRegistryImpl.class);
 
-	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
-		new HashMap<>();
+	private final Map
+		<Long,
+		 Map.Entry<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>>
+			_backgroundTaskStatuses = new HashMap<>();
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;

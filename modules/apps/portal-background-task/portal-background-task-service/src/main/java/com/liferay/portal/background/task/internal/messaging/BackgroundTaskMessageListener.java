@@ -24,7 +24,6 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
@@ -97,8 +96,6 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			}
 
 			BackgroundTaskExecutor backgroundTaskExecutor = null;
-			BackgroundTaskStatusMessageListener
-				backgroundTaskStatusMessageListener = null;
 
 			int status = backgroundTask.getStatus();
 			String statusMessage = null;
@@ -111,24 +108,9 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 					backgroundTask, classLoader);
 
 				_backgroundTaskStatusRegistry.registerBackgroundTaskStatus(
-					backgroundTaskId);
-
-				BackgroundTaskStatusMessageTranslator
-					backgroundTaskStatusMessageTranslator =
-						backgroundTaskExecutor.
-							getBackgroundTaskStatusMessageTranslator();
-
-				if (backgroundTaskStatusMessageTranslator != null) {
-					backgroundTaskStatusMessageListener =
-						new BackgroundTaskStatusMessageListener(
-							backgroundTaskId,
-							backgroundTaskStatusMessageTranslator,
-							_backgroundTaskStatusRegistry);
-
-					_messageBus.registerMessageListener(
-						DestinationNames.BACKGROUND_TASK_STATUS,
-						backgroundTaskStatusMessageListener);
-				}
+					backgroundTaskId,
+					backgroundTaskExecutor.
+						getBackgroundTaskStatusMessageTranslator());
 
 				backgroundTask =
 					_backgroundTaskLocalService.fetchBackgroundTask(
@@ -198,12 +180,6 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 				_backgroundTaskStatusRegistry.unregisterBackgroundTaskStatus(
 					backgroundTaskId);
-
-				if (backgroundTaskStatusMessageListener != null) {
-					_messageBus.unregisterMessageListener(
-						DestinationNames.BACKGROUND_TASK_STATUS,
-						backgroundTaskStatusMessageListener);
-				}
 
 				Message responseMessage = new Message();
 

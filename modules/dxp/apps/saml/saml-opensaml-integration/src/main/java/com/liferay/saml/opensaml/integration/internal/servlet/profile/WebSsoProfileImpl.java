@@ -15,7 +15,6 @@
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1021,7 +1020,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		addCookie(
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SSO_SESSION_ID,
-			samlSsoRequestContext.getSamlSsoSessionId(), -1);
+			samlSsoRequestContext.getSamlSsoSessionId());
 	}
 
 	private SamlSsoRequestContext _decodeAuthnConversationAfterLogin(
@@ -1492,9 +1491,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 
 			if (sessionExpired || Validator.isNull(samlSsoSessionId)) {
-				addCookie(
+				deleteCookie(
 					httpServletRequest, httpServletResponse,
-					SamlWebKeys.SAML_SSO_SESSION_ID, StringPool.BLANK, 0);
+					SamlWebKeys.SAML_SSO_SESSION_ID);
 
 				samlSsoRequestContext.setNewSession(true);
 				samlSsoRequestContext.setSamlSsoSessionId(
@@ -1654,7 +1653,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		addCookie(
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SP_SESSION_KEY,
-			samlSpSession.getSamlSpSessionKey(), -1);
+			samlSpSession.getSamlSpSessionKey());
 
 		httpServletResponse.sendRedirect(
 			_getAuthRedirectURL(messageContext, httpServletRequest));

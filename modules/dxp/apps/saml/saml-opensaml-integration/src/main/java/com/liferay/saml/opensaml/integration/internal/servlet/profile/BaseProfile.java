@@ -388,17 +388,16 @@ public abstract class BaseProfile {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 		boolean rememberMe = GetterUtil.getBoolean(
 			CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, httpServletRequest));
 
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_COMPANY_ID);
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_PASSWORD);
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_REMEMBER_ME);
+		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_COMPANY_ID);
+		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
+		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_PASSWORD);
+		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_REMEMBER_ME);
 
 		if (!rememberMe) {
-			CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_LOGIN);
+			deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_LOGIN);
 		}
 
 		HttpSession httpSession = httpServletRequest.getSession();
@@ -489,11 +488,11 @@ public abstract class BaseProfile {
 	protected void addCookie(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String cookieName,
-		String cookieValue, int maxAge) {
+		String cookieValue) {
 
 		Cookie cookie = new Cookie(cookieName, cookieValue);
 
-		cookie.setMaxAge(maxAge);
+		cookie.setMaxAge(-1);
 
 		if (Validator.isNull(portal.getPathContext())) {
 			cookie.setPath(StringPool.SLASH);
@@ -502,9 +501,16 @@ public abstract class BaseProfile {
 			cookie.setPath(portal.getPathContext());
 		}
 
-		cookie.setSecure(httpServletRequest.isSecure());
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie, httpServletRequest, httpServletResponse, httpServletRequest.isSecure());
+	}
 
-		httpServletResponse.addCookie(cookie);
+	protected void deleteCookie(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String cookieName) {
+
+		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
+
+		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, cookieName);
 	}
 
 	protected void addSamlBinding(SamlBinding samlBinding) {

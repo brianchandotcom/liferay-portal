@@ -280,7 +280,7 @@ public class SkuResourceImpl
 		long replacementCProductId = 0;
 		String replacementCPInstanceUuid = null;
 
-		if (sku.getDiscontinued()) {
+		if (GetterUtil.get(sku.getDiscontinued(), false)) {
 			CPInstance discontinuedCPInstance = null;
 
 			if (Validator.isNotNull(
@@ -293,7 +293,7 @@ public class SkuResourceImpl
 			}
 
 			if ((discontinuedCPInstance == null) &&
-				(sku.getReplacementSkuId() > 0)) {
+				(GetterUtil.getLong(sku.getReplacementSkuId()) > 0)) {
 
 				discontinuedCPInstance = _cpInstanceService.fetchCPInstance(
 					sku.getReplacementSkuId());

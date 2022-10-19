@@ -15,6 +15,7 @@
 package com.liferay.notification.model.impl;
 
 import com.liferay.notification.model.NotificationTemplateRecipientSetting;
+import com.liferay.notification.service.NotificationTemplateRecipientSettingLocalServiceUtil;
 
 import java.util.List;
 
@@ -26,7 +27,14 @@ public class NotificationTemplateRecipientImpl
 
 	public List<NotificationTemplateRecipientSetting>
 		getNotificationTemplateRecipientSettings() {
-		return _notificationTemplateRecipientSettings;
+
+		if (_notificationTemplateRecipientSettings != null) {
+			return _notificationTemplateRecipientSettings;
+		}
+
+		return NotificationTemplateRecipientSettingLocalServiceUtil.
+			getNotificationTemplateRecipientSettings(
+				getNotificationTemplateRecipientId());
 	}
 
 	public void setNotificationTemplateRecipientSettings(

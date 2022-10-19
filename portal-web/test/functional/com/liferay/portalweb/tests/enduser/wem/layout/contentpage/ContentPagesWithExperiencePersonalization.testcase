@@ -35,6 +35,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-157033 Given the View mode of a page
+	When an experience is inactive in the Control Menu
+	Then the INACTIVE label will appear next to the experience name"
+	@priority = "3"
+	test InactiveExperienceLabelInControlMenu {
+		task ("Create an experience and add on content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			PageEditor.publish();
+		}
+
+		task ("Go to the view mode of the page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Switch to the new experience") {
+			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+		}
+
+		task ("Assert the Inactive label is present") {
+			PageEditor.viewExperienceNotActiveInViewModeControlMenu(experienceName = "NewAnyoneExperience");
+		}
+	}
+	
 	@description = "This is a test for LPS-142290. The user cannot modify experiences at view mode."
 	@priority = "4"
 	test CannotModifyExperienceAtViewMode {

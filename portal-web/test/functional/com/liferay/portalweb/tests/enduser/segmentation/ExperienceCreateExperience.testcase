@@ -4101,7 +4101,7 @@ definition {
 		}
 
 		task ("Assert the experience is 'Active'") {
-			PageEditor.viewExperienceActive(experienceName = "Segment Name Experience");
+			PageEditor.viewExperienceActiveInEditMode(experienceName = "Segment Name Experience");
 		}
 
 		task ("Depriorize experience") {
@@ -4109,7 +4109,7 @@ definition {
 		}
 
 		task ("Assert the experience is not 'Active'") {
-			PageEditor.viewExperienceNotActive(experienceName = "Segment Name Experience");
+			PageEditor.viewExperienceNotActiveInEditMode(experienceName = "Segment Name Experience");
 		}
 	}
 
@@ -4200,7 +4200,7 @@ definition {
 		}
 
 		task ("Assert that Default Segment is active and at the bottom") {
-			PageEditor.viewExperienceActive(experienceName = "Default");
+			PageEditor.viewExperienceActiveInEditMode(experienceName = "Default");
 
 			PageEditor.openExperienceMenu();
 

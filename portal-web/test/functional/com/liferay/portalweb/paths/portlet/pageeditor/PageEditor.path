@@ -349,6 +349,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_ACTIVE_LABEL_VIEW_CONTROL_MENU</td>
+	<td>//*[contains(@class, 'align-items-center')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_ACTIVE_LABEL_VIEW_DROPDOWN</td>
+	<td>//*[contains(@class, 'dropdown-item')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_AUDIENCE_OPTION</td>
 	<td>//div[label[normalize-space(text())='Audience']]//select//option[normalize-space(text())='${key_segmentName}']</td>
 	<td></td>
@@ -386,6 +396,21 @@
 <tr>
 	<td>EXPERIENCE_EDIT_BUTTON</td>
 	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Edit Experience')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_INACTIVE_LABEL</td>
+	<td>//*[contains(@class, 'text-truncate-inline')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_INACTIVE_LABEL_VIEW_CONTROL_MENU</td>
+	<td>//*[contains(@class, 'align-items-center')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_INACTIVE_LABEL_VIEW_DROPDOWN</td>
+	<td>//*[contains(@class, 'dropdown-item')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -4787,7 +4787,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
-	macro viewExperienceActive {
+	macro viewExperienceActiveInEditMode {
 		PageEditor.openExperienceMenu();
 
 		AssertElementPresent(
@@ -4795,12 +4795,44 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL");
 	}
 
-	macro viewExperienceNotActive {
+	macro viewExperienceActiveInViewModeControlMenu {
+		ContentPages.openExperienceMenu();
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL_VIEW_CONTROL_MENU");
+	}
+
+	macro viewExperienceActiveInViewModeDropdown {
+		ContentPages.openExperienceMenu();
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL_VIEW_DROPDOWN");
+	}
+
+	macro viewExperienceNotActiveInEditMode {
 		PageEditor.openExperienceMenu();
 
-		AssertElementNotPresent(
+		AssertElementPresent(
 			key_experienceName = "${experienceName}",
-			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL");
+			locator1 = "PageEditor#EXPERIENCE_INACTIVE_LABEL");
+	}
+
+	macro viewExperienceNotActiveInViewModeControlMenu {
+		ContentPages.openExperienceMenu();
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#EXPERIENCE_INACTIVE_LABEL_VIEW_CONTROL_MENU");
+	}
+
+	macro viewExperienceNotActiveInViewModeDropdown {
+		ContentPages.openExperienceMenu();
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#EXPERIENCE_INACTIVE_LABEL_VIEW_DROPDOWN");
 	}
 
 	macro viewExperienceValues {

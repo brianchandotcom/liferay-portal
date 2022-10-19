@@ -804,6 +804,7 @@
 		<exception>ObjectFieldDBType</exception>
 		<exception>ObjectFieldDefaultValue</exception>
 		<exception>ObjectFieldLabel</exception>
+		<exception>ObjectFieldListTypeDefinitionId</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldRelationshipType</exception>
 		<exception>ObjectFieldSettingName</exception>

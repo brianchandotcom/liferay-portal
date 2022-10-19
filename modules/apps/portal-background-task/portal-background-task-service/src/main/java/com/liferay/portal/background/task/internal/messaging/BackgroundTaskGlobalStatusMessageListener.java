@@ -14,11 +14,15 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
 import com.liferay.portal.background.task.internal.lock.helper.BackgroundTaskLockHelper;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
@@ -40,15 +44,19 @@ public class BackgroundTaskGlobalStatusMessageListener
 
 	public BackgroundTaskGlobalStatusMessageListener(
 		BackgroundTaskLocalService backgroundTaskLocalService,
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry,
 		LockManager lockManager) {
 
 		_backgroundTaskLocalService = backgroundTaskLocalService;
+		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
 
 		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(lockManager);
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		_translateBackgroundTaskStatusMessage(message);
+
 		int status = message.getInteger("status");
 
 		if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
@@ -142,10 +150,41 @@ public class BackgroundTaskGlobalStatusMessageListener
 			backgroundTask.getBackgroundTaskId());
 	}
 
+	private void _translateBackgroundTaskStatusMessage(Message message) {
+		long backgroundTaskId = message.getLong(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID);
+
+		BackgroundTaskStatus backgroundTaskStatus =
+			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
+				backgroundTaskId);
+
+		if (backgroundTaskStatus == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to locate status for background task ",
+						backgroundTaskId, " to process ", message));
+			}
+
+			return;
+		}
+
+		BackgroundTaskStatusMessageTranslator
+			backgroundTaskStatusMessageTranslator =
+				_backgroundTaskStatusRegistry.
+					getBackgroundTaskStatusMessageTranslator(backgroundTaskId);
+
+		if (backgroundTaskStatusMessageTranslator != null) {
+			backgroundTaskStatusMessageTranslator.translate(
+				backgroundTaskStatus, message);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskGlobalStatusMessageListener.class);
 
 	private final BackgroundTaskLocalService _backgroundTaskLocalService;
 	private final BackgroundTaskLockHelper _backgroundTaskLockHelper;
+	private final BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 }

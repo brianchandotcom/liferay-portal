@@ -348,7 +348,7 @@ public class LayoutSetPrototypePropagationTest
 			siteTemplateMasterLayout.getFriendlyURL());
 
 		Assert.assertEquals(
-			2,
+			4,
 			LayoutLocalServiceUtil.getMasterLayoutsCount(
 				group.getGroupId(), siteMasterLayout.getPlid()));
 	}

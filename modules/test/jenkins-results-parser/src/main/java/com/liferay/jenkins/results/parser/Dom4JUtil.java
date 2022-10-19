@@ -302,8 +302,12 @@ public class Dom4JUtil {
 				DocumentBuilder documentBuilder =
 					documentBuilderFactory.newDocumentBuilder();
 
+				String documentTypeDefinition =
+					"<!DOCTYPE definition [\n<!ENTITY micro  \"&#181;\">\n]>\n";
+
 				org.w3c.dom.Document orgW3CDomDocument = documentBuilder.parse(
-					new InputSource(new StringReader(xml)));
+					new InputSource(
+						new StringReader(documentTypeDefinition + xml)));
 
 				DOMReader domReader = new DOMReader();
 

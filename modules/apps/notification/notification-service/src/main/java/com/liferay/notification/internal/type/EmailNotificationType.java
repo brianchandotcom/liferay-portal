@@ -14,6 +14,7 @@
 
 package com.liferay.notification.internal.type;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.mail.kernel.model.MailMessage;
@@ -27,15 +28,19 @@ import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateAttachment;
+import com.liferay.notification.model.NotificationTemplateRecipient;
+import com.liferay.notification.model.NotificationTemplateRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.notification.service.NotificationTemplateRecipientSettingLocalService;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationContext;
 import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.util.LocalizedMapUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
@@ -55,6 +60,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,9 +71,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,6 +94,53 @@ import org.osgi.service.component.annotations.Reference;
 	service = NotificationType.class
 )
 public class EmailNotificationType extends BaseNotificationType {
+
+	@Override
+	public List<NotificationTemplateRecipientSetting>
+		createNotificationTemplateRecipientSettings(
+			long notificationTemplateRecipientId, Object[] recipients,
+			User user) {
+
+		Map<String, Object> recipientMap = (Map<String, Object>)recipients[0];
+
+		List<NotificationTemplateRecipientSetting>
+			notificationTemplateRecipientSettings = new ArrayList<>();
+
+		for (Map.Entry<String, Object> entry : recipientMap.entrySet()) {
+			NotificationTemplateRecipientSetting
+				notificationTemplateRecipientSetting =
+					_notificationTemplateRecipientSettingLocalService.
+						createNotificationTemplateRecipientSetting(
+							_counterLocalService.increment());
+
+			notificationTemplateRecipientSetting.setCompanyId(
+				user.getCompanyId());
+			notificationTemplateRecipientSetting.setUserId(user.getUserId());
+			notificationTemplateRecipientSetting.setUserName(
+				user.getFullName());
+
+			notificationTemplateRecipientSetting.
+				setNotificationTemplateRecipientId(
+					notificationTemplateRecipientId);
+			notificationTemplateRecipientSetting.setName(
+				String.valueOf(entry.getKey()));
+
+			if (entry.getValue() instanceof String) {
+				notificationTemplateRecipientSetting.setValue(
+					String.valueOf(entry.getValue()));
+			}
+			else {
+				notificationTemplateRecipientSetting.setValueMap(
+					LocalizedMapUtil.getLocalizedMap(
+						(LinkedHashMap)entry.getValue()));
+			}
+
+			notificationTemplateRecipientSettings.add(
+				notificationTemplateRecipientSetting);
+		}
+
+		return notificationTemplateRecipientSettings;
+	}
 
 	@Override
 	public String getType() {
@@ -240,9 +295,26 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		super.validateNotificationTemplate(notificationContext);
 
-		if (Validator.isNull(
-				GetterUtil.getString(
-					notificationContext.getAttributeValue("from")))) {
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		NotificationTemplateRecipient notificationTemplateRecipient =
+			notificationTemplate.getNotificationTemplateRecipient();
+
+		List<NotificationTemplateRecipientSetting>
+			notificationTemplateRecipientSettings = ListUtil.filter(
+				notificationTemplateRecipient.
+					getNotificationTemplateRecipientSettings(),
+				notificationTemplateRecipientSetting -> Objects.equals(
+					notificationTemplateRecipientSetting.getName(), "from"));
+
+		NotificationTemplateRecipientSetting
+			notificationTemplateRecipientSetting =
+				notificationTemplateRecipientSettings.get(0);
+
+		if (!Objects.equals(
+				notificationTemplateRecipientSetting.getName(), "from") ||
+			Validator.isNull(notificationTemplateRecipientSetting.getValue())) {
 
 			throw new NotificationTemplateFromException("From is null");
 		}
@@ -482,6 +554,9 @@ public class EmailNotificationType extends BaseNotificationType {
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	@Reference
+	private CounterLocalService _counterLocalService;
+
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
@@ -504,6 +579,10 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private NotificationTemplateLocalService _notificationTemplateLocalService;
+
+	@Reference
+	private NotificationTemplateRecipientSettingLocalService
+		_notificationTemplateRecipientSettingLocalService;
 
 	@Reference
 	private NotificationTermContributorRegistry

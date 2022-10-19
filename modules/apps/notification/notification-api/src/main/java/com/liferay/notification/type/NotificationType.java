@@ -14,12 +14,21 @@
 
 package com.liferay.notification.type;
 
+import com.liferay.notification.model.NotificationTemplateRecipientSetting;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.List;
 
 /**
  * @author Feliphe Marinho
  */
 public interface NotificationType {
+
+	public List<NotificationTemplateRecipientSetting>
+		createNotificationTemplateRecipientSettings(
+			long notificationTemplateRecipientId, Object[] recipients,
+			User user);
 
 	public String getType();
 

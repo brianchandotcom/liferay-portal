@@ -2735,6 +2735,57 @@ definition {
 		}
 	}
 
+	@description = "LPS-161017: Add the Download Action to the Version History for Documents and Media"
+	@priority = "4"
+	test DownloadDocumentFromVersionsTab {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
+		task ("Given the Versions tab in the Info panel of a document") {
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Add versions for the document") {
+				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+				DMDocument.editCP(
+					dmDocumentTitle = "DM Document Title",
+					dmDocumentTitleEdit = "DM Document Title Edit 1",
+					revision = "Minor",
+					versioning = "true");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "DM Document Title Edit 1");
+			}
+
+			task ("Open versions tab") {
+				ContentDashboard.openVersionsTab();
+			}
+		}
+
+		task ("When the user opens the kebab menu of a version And the user clicks on the Download action") {
+			ContentDashboard.clickMenuOfVersion(
+				item = "Download",
+				versionName = "Version 1.0");
+		}
+
+		task ("Then the version of that document is downloaded") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.txt");
+		}
+	}
+
 	@description = " Given a document with and associated Display Page Template
 	When the user with permissions clicks on the edit button
 	Then the user is lead to the edit mode"

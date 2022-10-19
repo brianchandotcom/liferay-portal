@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.layout.content,\
 	com.liferay.layout.crawler,\
 	com.liferay.layout.exception,\
+	com.liferay.layout.exporter,\
 	com.liferay.layout.friendly.url,\
 	com.liferay.layout.helper,\
 	com.liferay.layout.list.retriever,\

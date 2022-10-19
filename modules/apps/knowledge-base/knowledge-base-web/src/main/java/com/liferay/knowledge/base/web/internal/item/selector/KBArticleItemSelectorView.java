@@ -32,11 +32,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -100,15 +98,6 @@ public class KBArticleItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "kb-articles");
-	}
-
-	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-125653"))) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

@@ -15,12 +15,16 @@
 package com.liferay.notification.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -38,7 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NotificationTemplateRecipientSettingModel
 	extends AuditedModel, BaseModel<NotificationTemplateRecipientSetting>,
-			MVCCModel, ShardedModel {
+			LocalizedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -223,8 +227,58 @@ public interface NotificationTemplateRecipientSettingModel
 	 *
 	 * @return the value of this notification template recipient setting
 	 */
-	@AutoEscape
 	public String getValue();
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized value of this notification template recipient setting
+	 */
+	@AutoEscape
+	public String getValue(Locale locale);
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized value of this notification template recipient setting. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getValue(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized value of this notification template recipient setting
+	 */
+	@AutoEscape
+	public String getValue(String languageId);
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized value of this notification template recipient setting
+	 */
+	@AutoEscape
+	public String getValue(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getValueCurrentLanguageId();
+
+	@AutoEscape
+	public String getValueCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized values of this notification template recipient setting.
+	 *
+	 * @return the locales and localized values of this notification template recipient setting
+	 */
+	public Map<Locale, String> getValueMap();
 
 	/**
 	 * Sets the value of this notification template recipient setting.
@@ -232,6 +286,53 @@ public interface NotificationTemplateRecipientSettingModel
 	 * @param value the value of this notification template recipient setting
 	 */
 	public void setValue(String value);
+
+	/**
+	 * Sets the localized value of this notification template recipient setting in the language.
+	 *
+	 * @param value the localized value of this notification template recipient setting
+	 * @param locale the locale of the language
+	 */
+	public void setValue(String value, Locale locale);
+
+	/**
+	 * Sets the localized value of this notification template recipient setting in the language, and sets the default locale.
+	 *
+	 * @param value the localized value of this notification template recipient setting
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setValue(String value, Locale locale, Locale defaultLocale);
+
+	public void setValueCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized values of this notification template recipient setting from the map of locales and localized values.
+	 *
+	 * @param valueMap the locales and localized values of this notification template recipient setting
+	 */
+	public void setValueMap(Map<Locale, String> valueMap);
+
+	/**
+	 * Sets the localized values of this notification template recipient setting from the map of locales and localized values, and sets the default locale.
+	 *
+	 * @param valueMap the locales and localized values of this notification template recipient setting
+	 * @param defaultLocale the default locale
+	 */
+	public void setValueMap(Map<Locale, String> valueMap, Locale defaultLocale);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public NotificationTemplateRecipientSetting cloneWithOriginalValues();

@@ -135,6 +135,11 @@ public class NotificationTemplateRecipientSettingWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
+	}
+
 	/**
 	 * Returns the company ID of this notification template recipient setting.
 	 *
@@ -153,6 +158,11 @@ public class NotificationTemplateRecipientSettingWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -255,9 +265,90 @@ public class NotificationTemplateRecipientSettingWrapper
 		return model.getValue();
 	}
 
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized value of this notification template recipient setting
+	 */
+	@Override
+	public String getValue(java.util.Locale locale) {
+		return model.getValue(locale);
+	}
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized value of this notification template recipient setting. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getValue(java.util.Locale locale, boolean useDefault) {
+		return model.getValue(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized value of this notification template recipient setting
+	 */
+	@Override
+	public String getValue(String languageId) {
+		return model.getValue(languageId);
+	}
+
+	/**
+	 * Returns the localized value of this notification template recipient setting in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized value of this notification template recipient setting
+	 */
+	@Override
+	public String getValue(String languageId, boolean useDefault) {
+		return model.getValue(languageId, useDefault);
+	}
+
+	@Override
+	public String getValueCurrentLanguageId() {
+		return model.getValueCurrentLanguageId();
+	}
+
+	@Override
+	public String getValueCurrentValue() {
+		return model.getValueCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized values of this notification template recipient setting.
+	 *
+	 * @return the locales and localized values of this notification template recipient setting
+	 */
+	@Override
+	public Map<java.util.Locale, String> getValueMap() {
+		return model.getValueMap();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -384,6 +475,60 @@ public class NotificationTemplateRecipientSettingWrapper
 	@Override
 	public void setValue(String value) {
 		model.setValue(value);
+	}
+
+	/**
+	 * Sets the localized value of this notification template recipient setting in the language.
+	 *
+	 * @param value the localized value of this notification template recipient setting
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setValue(String value, java.util.Locale locale) {
+		model.setValue(value, locale);
+	}
+
+	/**
+	 * Sets the localized value of this notification template recipient setting in the language, and sets the default locale.
+	 *
+	 * @param value the localized value of this notification template recipient setting
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setValue(
+		String value, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setValue(value, locale, defaultLocale);
+	}
+
+	@Override
+	public void setValueCurrentLanguageId(String languageId) {
+		model.setValueCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized values of this notification template recipient setting from the map of locales and localized values.
+	 *
+	 * @param valueMap the locales and localized values of this notification template recipient setting
+	 */
+	@Override
+	public void setValueMap(Map<java.util.Locale, String> valueMap) {
+		model.setValueMap(valueMap);
+	}
+
+	/**
+	 * Sets the localized values of this notification template recipient setting from the map of locales and localized values, and sets the default locale.
+	 *
+	 * @param valueMap the locales and localized values of this notification template recipient setting
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setValueMap(
+		Map<java.util.Locale, String> valueMap,
+		java.util.Locale defaultLocale) {
+
+		model.setValueMap(valueMap, defaultLocale);
 	}
 
 	@Override

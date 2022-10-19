@@ -20,6 +20,7 @@ import com.liferay.notification.model.NotificationTemplateRecipientSetting;
 import com.liferay.notification.model.NotificationTemplateRecipientSettingModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,8 +29,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -42,8 +46,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -97,7 +104,7 @@ public class NotificationTemplateRecipientSettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NTemplateRecipientSetting (mvccVersion LONG default 0 not null,NTemplateRecipientSettingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,NTemplateRecipientId LONG,name VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table NTemplateRecipientSetting (mvccVersion LONG default 0 not null,NTemplateRecipientSettingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,NTemplateRecipientId LONG,name VARCHAR(75) null,value STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NTemplateRecipientSetting";
@@ -503,12 +510,101 @@ public class NotificationTemplateRecipientSettingModelImpl
 	}
 
 	@Override
+	public String getValue(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getValue(languageId);
+	}
+
+	@Override
+	public String getValue(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getValue(languageId, useDefault);
+	}
+
+	@Override
+	public String getValue(String languageId) {
+		return LocalizationUtil.getLocalization(getValue(), languageId);
+	}
+
+	@Override
+	public String getValue(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getValue(), languageId, useDefault);
+	}
+
+	@Override
+	public String getValueCurrentLanguageId() {
+		return _valueCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getValueCurrentValue() {
+		Locale locale = getLocale(_valueCurrentLanguageId);
+
+		return getValue(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getValueMap() {
+		return LocalizationUtil.getLocalizationMap(getValue());
+	}
+
+	@Override
 	public void setValue(String value) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
 		_value = value;
+	}
+
+	@Override
+	public void setValue(String value, Locale locale) {
+		setValue(value, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setValue(String value, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(value)) {
+			setValue(
+				LocalizationUtil.updateLocalization(
+					getValue(), "Value", value, languageId, defaultLanguageId));
+		}
+		else {
+			setValue(
+				LocalizationUtil.removeLocalization(
+					getValue(), "Value", languageId));
+		}
+	}
+
+	@Override
+	public void setValueCurrentLanguageId(String languageId) {
+		_valueCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setValueMap(Map<Locale, String> valueMap) {
+		setValueMap(valueMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setValueMap(
+		Map<Locale, String> valueMap, Locale defaultLocale) {
+
+		if (valueMap == null) {
+			return;
+		}
+
+		setValue(
+			LocalizationUtil.updateLocalization(
+				valueMap, getValue(), "Value",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	public long getColumnBitmask() {
@@ -548,6 +644,72 @@ public class NotificationTemplateRecipientSettingModelImpl
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> valueMap = getValueMap();
+
+		for (Map.Entry<Locale, String> entry : valueMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getValue();
+
+		if (xml == null) {
+			return "";
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			NotificationTemplateRecipientSetting.class.getName(),
+			getPrimaryKey(), defaultLocale, availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String value = getValue(defaultLocale);
+
+		if (Validator.isNull(value)) {
+			setValue(getValue(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setValue(getValue(defaultLocale), defaultLocale, defaultLocale);
+		}
 	}
 
 	@Override
@@ -845,6 +1007,7 @@ public class NotificationTemplateRecipientSettingModelImpl
 	private long _notificationTemplateRecipientId;
 	private String _name;
 	private String _value;
+	private String _valueCurrentLanguageId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);

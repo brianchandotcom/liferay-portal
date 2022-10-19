@@ -61,7 +61,7 @@ create table NTemplateRecipientSetting (
 	modifiedDate DATE null,
 	NTemplateRecipientId LONG,
 	name VARCHAR(75) null,
-	value VARCHAR(75) null
+	value STRING null
 );
 
 create table NotificationQueueEntry (

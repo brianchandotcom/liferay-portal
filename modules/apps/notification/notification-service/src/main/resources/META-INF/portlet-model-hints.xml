@@ -109,6 +109,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="notificationTemplateRecipientId" type="long" />
 		<field name="name" type="String" />
-		<field name="value" type="String" />
+		<field localized="true" name="value" type="String" />
 	</model>
 </model-hints>

@@ -1,29 +1,28 @@
 <div class="f-navigation-menu-item">
-	<div class="align-items-center d-flex justify-content-between menu-item-wrapper p-3">
-		<div class="align-items-center d-flex icon-text-container">
-				<div class="mb-1 menu-item-icon mr-2">
-					<svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg">
-						<g>
-							<rect fill="${configuration.iconBackgroundColor}" height="22" rx="4" width="22" />
-
-							<mask height="14" id="mask0_3972_21782" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="14" x="4" y="4">
-								<path d="M7.5 14.5L12.75 12.75L14.5 7.5L9.25 9.25L7.5 14.5Z" fill="#6B6C7E" />
-								<path clip-rule="evenodd" d="M11 4C12.8705 4 14.6282 4.72733 15.9492 6.05078C17.2728 7.37151 18 9.12968 18 11C18 12.8703 17.2728 14.6258 15.9492 15.9492C14.6282 17.2727 12.8705 18 11 18C9.12952 18 7.37439 17.2727 6.05078 15.9492C4.72717 14.6285 4 12.8703 4 11C4 9.12968 4.72717 7.37151 6.05078 6.05078C7.37183 4.72733 9.12952 4 11 4ZM5.75 11C5.75 13.8957 8.10413 16.25 11 16.25C13.8959 16.25 16.25 13.8957 16.25 11C16.25 8.10429 13.8959 5.75 11 5.75C8.10413 5.75 5.75 8.10429 5.75 11Z" fill="#6B6C7E" fill-rule="evenodd" />
-							</mask>
-
-							<g mask="url(#mask0_3972_21782)">
-								<rect fill="${configuration.iconColor}" height="14" width="14" x="4" y="4" />
-							</g>
-						</g>
-					</svg>
+	<div class="d-flex menu-item-wrapper">
+		<a class="d-flex justify-content-between menu-item p-3 text-decoration-none" data-lfr-editable-id="menuItem${fragmentEntryLinkNamespace}" data-lfr-editable-type="link" href="/">
+			<div class="d-flex menu-item-group">
+				<div class="menu-item-icon mr-1 px-1">
+					[@clay["icon"] cssClass="sites-icon" symbol="sites"/]
 				</div>
-			<div class="menu-item-text ml-1 text-4" data-lfr-editable-id="menuItemText" data-lfr-editable-type="rich-text">
-				Menu Item Text
-			</div>
-		</div>
 
-		<div class="arrow-hover-icon">
-			[@clay["icon"] symbol="order-arrow-right"/]
-		</div>
+				<div class="menu-item-text ml-2">
+					Menu Item Text
+				</div>
+			</div>
+
+			<div class="arrow-hover-icon">
+				[@clay["icon"] symbol="order-arrow-right"/]
+			</div>
+		</a>
 	</div>
-</div>
+
+<style>
+	.f-navigation-menu-item .menu-item-icon {
+		background-color: ${configuration.iconBackgroundColor};
+	}
+
+	.f-navigation-menu-item .sites-icon {
+		fill: ${configuration.iconColor};
+	}
+</style>

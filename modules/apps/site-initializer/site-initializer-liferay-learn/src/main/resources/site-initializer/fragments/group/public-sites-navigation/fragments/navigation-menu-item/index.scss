@@ -1,22 +1,26 @@
 .menu-item-wrapper {
 	border-radius: var(--border-radius-sm);
 
-	&:hover {
-		background: var(--color-action-primary-hover-lighten);
-		color: var(--color-action-primary-default);
-
-		.arrow-hover-icon {
-			display: block;
-		}
-	}
-
 	.arrow-hover-icon {
 		display: none;
 		transform: rotate(-45deg);
 	}
 
+	.menu-item {
+		border-radius: 4px;
+		width: 100%;
+
+		&:hover, &:active, &:focus {
+			background: var(--color-action-primary-hover-lighten);
+			color: var(--color-action-primary-default);
+
+			.arrow-hover-icon {
+				display: block;
+			}
+		}
+	}
+
 	.menu-item-icon {
-		height: 100%;
-		max-width: 22px;
+		border-radius: 4px;
 	}
 }

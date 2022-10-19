@@ -884,11 +884,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	@Reference(
-		target = "(&(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")(destination.ready=true))"
-	)
-	private Object _destinationReady;
-
 	private final Set<ServiceRegistration<Destination>>
 		_destinationServiceRegistrations = new HashSet<>();
 

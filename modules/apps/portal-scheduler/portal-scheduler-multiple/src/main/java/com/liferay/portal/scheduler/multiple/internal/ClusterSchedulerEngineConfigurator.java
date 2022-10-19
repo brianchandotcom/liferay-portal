@@ -39,9 +39,11 @@ public class ClusterSchedulerEngineConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		SchedulerEngine schedulerEngine = _schedulerEngine;
+
 		if (_clusterLink.isEnabled()) {
 			ClusterSchedulerEngine clusterSchedulerEngine =
-				new ClusterSchedulerEngine(_schedulerEngine, _triggerFactory);
+				new ClusterSchedulerEngine(schedulerEngine, _triggerFactory);
 
 			clusterSchedulerEngine.setClusterExecutor(_clusterExecutor);
 			clusterSchedulerEngine.setClusterMasterExecutor(
@@ -52,12 +54,12 @@ public class ClusterSchedulerEngineConfigurator {
 				IdentifiableOSGiService.class, clusterSchedulerEngine,
 				new HashMapDictionary<String, Object>());
 
-			_schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
+			schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
 				clusterSchedulerEngine);
 		}
 
 		_schedulerEngineServiceRegistration = bundleContext.registerService(
-			SchedulerEngine.class, _schedulerEngine,
+			SchedulerEngine.class, schedulerEngine,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"scheduler.engine.proxy", Boolean.TRUE
 			).build());
@@ -86,7 +88,7 @@ public class ClusterSchedulerEngineConfigurator {
 	@Reference
 	private Props _props;
 
-	@Reference(target = "(scheduler.engine.proxy.bean=true)")
+	@Reference(target = "(scheduler.engine.proxy=false)")
 	private SchedulerEngine _schedulerEngine;
 
 	private volatile ServiceRegistration<SchedulerEngine>

@@ -117,8 +117,6 @@ public interface DestinationNames {
 	public static final String SCHEDULER_DISPATCH =
 		"liferay/scheduler_dispatch";
 
-	public static final String SCHEDULER_ENGINE = "liferay/scheduler_engine";
-
 	public static final String SCHEDULER_SCRIPTING =
 		"liferay/scheduler_scripting";
 

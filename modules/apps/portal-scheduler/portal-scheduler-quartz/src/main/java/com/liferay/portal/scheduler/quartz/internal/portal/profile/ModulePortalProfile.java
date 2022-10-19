@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -26,7 +27,6 @@ import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.scheduler.quartz.internal.QuartzSchedulerEngine;
 import com.liferay.portal.scheduler.quartz.internal.QuartzSchemaManager;
 import com.liferay.portal.scheduler.quartz.internal.QuartzTriggerFactory;
-import com.liferay.portal.scheduler.quartz.internal.messaging.proxy.QuartzSchedulerProxyMessageListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,7 +66,8 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			_schedulerEngineServiceRegistration = bundleContext.registerService(
 				SchedulerEngine.class,
 				ProxyFactory.newDummyInstance(SchedulerEngine.class),
-				new HashMapDictionary<>());
+				MapUtil.singletonDictionary(
+					"scheduler.engine.proxy", Boolean.FALSE));
 
 			_triggerFactoryServiceRegistration = bundleContext.registerService(
 				TriggerFactory.class,
@@ -77,7 +78,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 		init(
 			componentContext, supportedPortalProfileNames,
 			QuartzSchedulerEngine.class.getName(),
-			QuartzSchedulerProxyMessageListener.class.getName(),
 			QuartzSchemaManager.class.getName(),
 			QuartzTriggerFactory.class.getName());
 	}

@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(
-	immediate = true,
 	property = "result.class.name=java.util.function.Predicate",
 	service = ExpressionConvert.class
 )

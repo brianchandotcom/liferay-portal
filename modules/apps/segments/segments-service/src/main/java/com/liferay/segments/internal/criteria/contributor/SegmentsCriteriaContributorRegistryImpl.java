@@ -39,9 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eduardo García
  */
-@Component(
-	immediate = true, service = SegmentsCriteriaContributorRegistry.class
-)
+@Component(service = SegmentsCriteriaContributorRegistry.class)
 public class SegmentsCriteriaContributorRegistryImpl
 	implements SegmentsCriteriaContributorRegistry {
 

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = RuleConverterRegistry.class)
+@Component(service = RuleConverterRegistry.class)
 public class RuleConverterRegistry {
 
 	public RuleConverter getRuleConverter(String ruleKey) {

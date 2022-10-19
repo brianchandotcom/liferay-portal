@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class UserExpandoColumnModelListener
 	extends BaseModelListener<ExpandoColumn> {
 

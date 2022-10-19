@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eduardo García
  */
 @Component(
-	immediate = true,
 	property = {
 		"segments.entry.provider.order:Integer=100",
 		"segments.entry.provider.source=" + SegmentsEntryConstants.SOURCE_DEFAULT

@@ -24,8 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "rule.converter.key=BrowserRule",
-	service = RuleConverter.class
+	property = "rule.converter.key=BrowserRule", service = RuleConverter.class
 )
 public class BrowseRuleConverter implements RuleConverter {
 

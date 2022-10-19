@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "rule.converter.key=RegularRoleRule",
+	property = "rule.converter.key=RegularRoleRule",
 	service = RuleConverter.class
 )
 public class RegularRoleRuleConverter implements RuleConverter {

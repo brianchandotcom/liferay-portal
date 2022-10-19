@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yurena Cabrera
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration",
 	service = ConfigurationModelListener.class
 )

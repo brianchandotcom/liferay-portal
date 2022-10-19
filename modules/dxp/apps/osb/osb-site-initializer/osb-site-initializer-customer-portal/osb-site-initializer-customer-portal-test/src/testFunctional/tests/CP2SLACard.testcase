@@ -8,11 +8,11 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount1 = "Test Account LXC-SM";
+	var testAccount1 = "Test Account LXC - SM";
 	var testAccount2 = "Test Account No SLA";
 	var testAccount3 = "Test Account DXP";
 	var testUserFirstName = "Test";
-	var testProduct = "LXC-SM";
+	var testProduct = "LXC - SM";
 
 	setUp {
 		task ("Set up instance and sign in") {

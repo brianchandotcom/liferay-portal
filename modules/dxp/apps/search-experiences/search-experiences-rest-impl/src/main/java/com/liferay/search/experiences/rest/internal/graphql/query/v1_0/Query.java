@@ -35,6 +35,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryPrefilterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPParameterContributorDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchIndex;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetName;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetNameDisplay;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
@@ -45,6 +46,7 @@ import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContribut
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributorDefinitionResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchIndexResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameDisplayResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
 
@@ -134,6 +136,14 @@ public class Query {
 
 		_sxpParameterContributorDefinitionResourceComponentServiceObjects =
 			sxpParameterContributorDefinitionResourceComponentServiceObjects;
+	}
+
+	public static void setSearchIndexResourceComponentServiceObjects(
+		ComponentServiceObjects<SearchIndexResource>
+			searchIndexResourceComponentServiceObjects) {
+
+		_searchIndexResourceComponentServiceObjects =
+			searchIndexResourceComponentServiceObjects;
 	}
 
 	public static void setSearchableAssetNameResourceComponentServiceObjects(
@@ -378,6 +388,20 @@ public class Query {
 				new SXPParameterContributorDefinitionPage(
 					sxpParameterContributorDefinitionResource.
 						getSXPParameterContributorDefinitionsPage()));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {searchIndexes{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SearchIndexPage searchIndexes() throws Exception {
+		return _applyComponentServiceObjects(
+			_searchIndexResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			searchIndexResource -> new SearchIndexPage(
+				searchIndexResource.getSearchIndexesPage()));
 	}
 
 	/**
@@ -744,6 +768,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("SearchIndexPage")
+	public class SearchIndexPage {
+
+		public SearchIndexPage(Page searchIndexPage) {
+			actions = searchIndexPage.getActions();
+
+			items = searchIndexPage.getItems();
+			lastPage = searchIndexPage.getLastPage();
+			page = searchIndexPage.getPage();
+			pageSize = searchIndexPage.getPageSize();
+			totalCount = searchIndexPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SearchIndex> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("SearchableAssetNamePage")
 	public class SearchableAssetNamePage {
 
@@ -965,6 +1022,20 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			SearchIndexResource searchIndexResource)
+		throws Exception {
+
+		searchIndexResource.setContextAcceptLanguage(_acceptLanguage);
+		searchIndexResource.setContextCompany(_company);
+		searchIndexResource.setContextHttpServletRequest(_httpServletRequest);
+		searchIndexResource.setContextHttpServletResponse(_httpServletResponse);
+		searchIndexResource.setContextUriInfo(_uriInfo);
+		searchIndexResource.setContextUser(_user);
+		searchIndexResource.setGroupLocalService(_groupLocalService);
+		searchIndexResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			SearchableAssetNameResource searchableAssetNameResource)
 		throws Exception {
 
@@ -1017,6 +1088,8 @@ public class Query {
 	private static ComponentServiceObjects
 		<SXPParameterContributorDefinitionResource>
 			_sxpParameterContributorDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SearchIndexResource>
+		_searchIndexResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchableAssetNameResource>
 		_searchableAssetNameResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchableAssetNameDisplayResource>

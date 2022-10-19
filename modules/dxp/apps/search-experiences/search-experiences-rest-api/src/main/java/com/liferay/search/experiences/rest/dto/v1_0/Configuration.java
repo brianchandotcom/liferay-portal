@@ -189,6 +189,36 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
+	public IndexConfiguration getIndexConfiguration() {
+		return indexConfiguration;
+	}
+
+	public void setIndexConfiguration(IndexConfiguration indexConfiguration) {
+		this.indexConfiguration = indexConfiguration;
+	}
+
+	@JsonIgnore
+	public void setIndexConfiguration(
+		UnsafeSupplier<IndexConfiguration, Exception>
+			indexConfigurationUnsafeSupplier) {
+
+		try {
+			indexConfiguration = indexConfigurationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected IndexConfiguration indexConfiguration;
+
+	@Schema
+	@Valid
 	public ParameterConfiguration getParameterConfiguration() {
 		return parameterConfiguration;
 	}
@@ -377,6 +407,16 @@ public class Configuration implements Serializable {
 			sb.append("\"highlightConfiguration\": ");
 
 			sb.append(String.valueOf(highlightConfiguration));
+		}
+
+		if (indexConfiguration != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"indexConfiguration\": ");
+
+			sb.append(String.valueOf(indexConfiguration));
 		}
 
 		if (parameterConfiguration != null) {

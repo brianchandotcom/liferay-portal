@@ -97,6 +97,16 @@ public class ConfigurationSerDes {
 				String.valueOf(configuration.getHighlightConfiguration()));
 		}
 
+		if (configuration.getIndexConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"indexConfiguration\": ");
+
+			sb.append(String.valueOf(configuration.getIndexConfiguration()));
+		}
+
 		if (configuration.getParameterConfiguration() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +203,15 @@ public class ConfigurationSerDes {
 				String.valueOf(configuration.getHighlightConfiguration()));
 		}
 
+		if (configuration.getIndexConfiguration() == null) {
+			map.put("indexConfiguration", null);
+		}
+		else {
+			map.put(
+				"indexConfiguration",
+				String.valueOf(configuration.getIndexConfiguration()));
+		}
+
 		if (configuration.getParameterConfiguration() == null) {
 			map.put("parameterConfiguration", null);
 		}
@@ -281,6 +300,15 @@ public class ConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					configuration.setHighlightConfiguration(
 						HighlightConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "indexConfiguration")) {
+
+				if (jsonParserFieldValue != null) {
+					configuration.setIndexConfiguration(
+						IndexConfigurationSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

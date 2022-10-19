@@ -132,6 +132,28 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected HighlightConfiguration highlightConfiguration;
 
+	public IndexConfiguration getIndexConfiguration() {
+		return indexConfiguration;
+	}
+
+	public void setIndexConfiguration(IndexConfiguration indexConfiguration) {
+		this.indexConfiguration = indexConfiguration;
+	}
+
+	public void setIndexConfiguration(
+		UnsafeSupplier<IndexConfiguration, Exception>
+			indexConfigurationUnsafeSupplier) {
+
+		try {
+			indexConfiguration = indexConfigurationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected IndexConfiguration indexConfiguration;
+
 	public ParameterConfiguration getParameterConfiguration() {
 		return parameterConfiguration;
 	}

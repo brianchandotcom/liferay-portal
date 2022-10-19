@@ -52,59 +52,6 @@ public class NotificationTemplateServiceHttp {
 
 	public static com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				HttpPrincipal httpPrincipal, long userId,
-				long objectDefinitionId, String bcc,
-				java.util.Map<java.util.Locale, String> bodyMap, String cc,
-				String description, String from,
-				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, String recipientType,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap, String type,
-				java.util.List<Long> attachmentObjectFieldIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				NotificationTemplateServiceUtil.class,
-				"addNotificationTemplate",
-				_addNotificationTemplateParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectDefinitionId, bcc, bodyMap, cc,
-				description, from, fromNameMap, name, recipientType, subjectMap,
-				toMap, type, attachmentObjectFieldIds);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.notification.model.NotificationTemplate)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.notification.model.NotificationTemplate
-			addNotificationTemplate(
 				HttpPrincipal httpPrincipal,
 				com.liferay.notification.type.NotificationContext
 					notificationContext)
@@ -114,7 +61,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"addNotificationTemplate",
-				_addNotificationTemplateParameterTypes1);
+				_addNotificationTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationContext);
@@ -157,7 +104,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"deleteNotificationTemplate",
-				_deleteNotificationTemplateParameterTypes2);
+				_deleteNotificationTemplateParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId);
@@ -202,7 +149,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"deleteNotificationTemplate",
-				_deleteNotificationTemplateParameterTypes3);
+				_deleteNotificationTemplateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplate);
@@ -245,7 +192,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"getNotificationTemplate",
-				_getNotificationTemplateParameterTypes4);
+				_getNotificationTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId);
@@ -296,7 +243,7 @@ public class NotificationTemplateServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationTemplateServiceUtil.class,
 				"updateNotificationTemplate",
-				_updateNotificationTemplateParameterTypes5);
+				_updateNotificationTemplateParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationTemplateId, objectDefinitionId, bcc,
@@ -337,21 +284,14 @@ public class NotificationTemplateServiceHttp {
 		NotificationTemplateServiceHttp.class);
 
 	private static final Class<?>[] _addNotificationTemplateParameterTypes0 =
-		new Class[] {
-			long.class, long.class, String.class, java.util.Map.class,
-			String.class, String.class, String.class, java.util.Map.class,
-			String.class, String.class, java.util.Map.class,
-			java.util.Map.class, String.class, java.util.List.class
-		};
-	private static final Class<?>[] _addNotificationTemplateParameterTypes1 =
 		new Class[] {com.liferay.notification.type.NotificationContext.class};
+	private static final Class<?>[] _deleteNotificationTemplateParameterTypes1 =
+		new Class[] {long.class};
 	private static final Class<?>[] _deleteNotificationTemplateParameterTypes2 =
-		new Class[] {long.class};
-	private static final Class<?>[] _deleteNotificationTemplateParameterTypes3 =
 		new Class[] {com.liferay.notification.model.NotificationTemplate.class};
-	private static final Class<?>[] _getNotificationTemplateParameterTypes4 =
+	private static final Class<?>[] _getNotificationTemplateParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateNotificationTemplateParameterTypes5 =
+	private static final Class<?>[] _updateNotificationTemplateParameterTypes4 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			String.class, String.class, String.class, java.util.Map.class,

@@ -640,7 +640,7 @@ definition {
 					locator1 = "Button#COLOR_PICKER");
 
 				AssertVisible(
-					key_content = "Background Color",
+					key_content = "00000000",
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 
 				MouseOver(
@@ -648,7 +648,7 @@ definition {
 					locator1 = "Button#COLOR_PICKER");
 
 				AssertVisible(
-					key_content = "Border Color",
+					key_content = "272833",
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 			}
 		}

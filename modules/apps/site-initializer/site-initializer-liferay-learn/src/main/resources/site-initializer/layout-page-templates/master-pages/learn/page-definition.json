@@ -15,13 +15,6 @@
 					},
 					"fragmentFields": [
 						{
-							"id": "close-toggle-btn",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						},
-						{
 							"id": "call-to-action-btn-mobile",
 							"value": {
 								"fragmentLink": {
@@ -30,13 +23,6 @@
 						},
 						{
 							"id": "siteName",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						},
-						{
-							"id": "menu-toggle-btn",
 							"value": {
 								"fragmentLink": {
 								}
@@ -53,6 +39,9 @@
 					"indexed": true
 				},
 				"pageElements": [
+					{
+						"type": "FragmentDropZone"
+					},
 					{
 						"type": "FragmentDropZone"
 					}

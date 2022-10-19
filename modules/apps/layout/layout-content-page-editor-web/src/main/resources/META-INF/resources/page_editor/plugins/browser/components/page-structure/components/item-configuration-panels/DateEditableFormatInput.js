@@ -24,6 +24,7 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
+import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import {updateIn} from '../../../../../../app/utils/updateIn';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 
@@ -61,12 +62,18 @@ export default function DateEditableFormatInput({
 	fragmentEntryLinkId,
 }) {
 	const dispatch = useDispatch();
-	const editableValue = editableValues[editableValueNamespace][editableId];
+
 	const languageId = useSelector(selectLanguageId);
+
+	const editableValue = editableValues[editableValueNamespace][editableId];
+
+	const dateFormat = getEditableLocalizedValue(
+		editableValue.config?.dateFormat,
+		languageId
+	);
+
 	const [selectedOption, setSelectedOption] = useState(() =>
-		!editableValue.config.dateFormat
-			? DATE_FORMAT_OPTIONS[0].value
-			: getSelectedOption(editableValue.config.dateFormat[languageId])
+		getSelectedOption(dateFormat)
 	);
 	const [enableCustomInput, setEnableCustomInput] = useState(
 		() => selectedOption === DATE_EDITABLE_FORMAT_OPTIONS.custom
@@ -74,7 +81,7 @@ export default function DateEditableFormatInput({
 
 	useEffect(() => {
 		if (
-			getSelectedOption(editableValue.config.dateFormat[languageId]) !==
+			getSelectedOption(dateFormat) !==
 			DATE_EDITABLE_FORMAT_OPTIONS.custom
 		) {
 			setEnableCustomInput(false);
@@ -82,8 +89,7 @@ export default function DateEditableFormatInput({
 		else {
 			setEnableCustomInput(true);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [languageId]);
+	}, [languageId, dateFormat]);
 
 	const onValueSelectHandler = (name, value) => {
 		setSelectedOption(getSelectedOption(value));
@@ -125,9 +131,7 @@ export default function DateEditableFormatInput({
 								onValueSelectHandler(name, value);
 							}
 						}}
-						value={getSelectedOption(
-							editableValue.config.dateFormat[languageId]
-						)}
+						value={getSelectedOption(dateFormat)}
 					/>
 				</div>
 
@@ -140,18 +144,14 @@ export default function DateEditableFormatInput({
 						name: 'dateFormat',
 					}}
 					onValueSelect={onValueSelectHandler}
-					value={
-						editableValue.config.dateFormat[languageId]
-							? editableValue.config.dateFormat[languageId]
-							: DATE_FORMAT_OPTIONS[0].value
-					}
+					value={dateFormat ?? DATE_FORMAT_OPTIONS[0].value}
 				/>
 			)}
 		</>
 	);
 
 	function getSelectedOption(value) {
-		if (value === undefined) {
+		if (!value) {
 			return DATE_FORMAT_OPTIONS[0].value;
 		}
 

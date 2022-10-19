@@ -430,7 +430,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_LABEL</td>
-	<td>//div[contains(@class,'page-editor__toolbar-experience')]/label[contains(.,'Experience')]</td>
+	<td>//div[contains(@class,'page-editor__toolbar-experience')]/span[contains(.,'Experience')]</td>
 	<td></td>
 </tr>
 <tr>

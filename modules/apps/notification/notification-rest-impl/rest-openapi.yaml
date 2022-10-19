@@ -87,12 +87,12 @@ components:
                 objectDefinitionId:
                     format: int64
                     type: integer
+                recipientType:
+                    type: string
                 recipients:
                     items:
                         type: object
                     type: array
-                recipientType:
-                    type: string
                 subject:
                     additionalProperties:
                         type: string

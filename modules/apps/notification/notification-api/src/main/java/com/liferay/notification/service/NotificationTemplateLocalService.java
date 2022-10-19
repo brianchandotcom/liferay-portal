@@ -16,6 +16,7 @@ package com.liferay.notification.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.type.NotificationContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -69,12 +70,7 @@ public interface NotificationTemplateLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate addNotificationTemplate(
-			long userId, long objectDefinitionId, String bcc,
-			Map<Locale, String> bodyMap, String cc, String description,
-			String from, Map<Locale, String> fromNameMap, String name,
-			String recipientType, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap, String type,
-			List<Long> attachmentObjectFieldIds)
+			NotificationContext notificationContext)
 		throws PortalException;
 
 	/**
@@ -305,11 +301,6 @@ public interface NotificationTemplateLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	public void sendNotificationTemplate(
-			long userId, long notificationTemplateId,
-			String notificationTypeKey, Object object)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

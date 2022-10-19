@@ -48,12 +48,12 @@ public class NotificationQueueEntryLocalServiceUtil {
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName, List<Long> fileEntryIds)
+			String toName, String type, List<Long> fileEntryIds)
 		throws PortalException {
 
 		return getService().addNotificationQueueEntry(
 			userId, notificationTemplateId, bcc, body, cc, className, classPK,
-			from, fromName, priority, subject, to, toName, fileEntryIds);
+			from, fromName, priority, subject, to, toName, type, fileEntryIds);
 	}
 
 	/**
@@ -312,16 +312,18 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<NotificationQueueEntry> getUnsentNotificationEntries(
+		String type) {
+
+		return getService().getUnsentNotificationEntries(type);
+	}
+
 	public static NotificationQueueEntry resendNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException {
 
 		return getService().resendNotificationQueueEntry(
 			notificationQueueEntryId);
-	}
-
-	public static void sendNotificationQueueEntries() {
-		getService().sendNotificationQueueEntries();
 	}
 
 	/**

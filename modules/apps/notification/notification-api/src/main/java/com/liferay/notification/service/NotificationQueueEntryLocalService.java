@@ -68,7 +68,7 @@ public interface NotificationQueueEntryLocalService
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName, List<Long> fileEntryIds)
+			String toName, String type, List<Long> fileEntryIds)
 		throws PortalException;
 
 	/**
@@ -276,11 +276,13 @@ public interface NotificationQueueEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationQueueEntry> getUnsentNotificationEntries(
+		String type);
+
 	public NotificationQueueEntry resendNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException;
-
-	public void sendNotificationQueueEntries();
 
 	/**
 	 * Updates the notification queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

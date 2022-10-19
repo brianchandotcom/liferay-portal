@@ -24,6 +24,7 @@
 		<field name="subject" type="String" />
 		<field name="to" type="String" />
 		<field name="toName" type="String" />
+		<field name="type" type="String" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationQueueEntryAttachment">
@@ -32,6 +33,29 @@
 		<field name="companyId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="notificationQueueEntryId" type="long" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationQueueEntryRecipient">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationQueueEntryRecipientId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationQueueEntryId" type="long" />
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationQueueEntryRecipientSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationQueueEntryRecipientSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationQueueEntryRecipientId" type="long" />
+		<field name="name" type="String" />
+		<field name="value" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplate">
 		<field name="mvccVersion" type="long" />
@@ -43,18 +67,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
-		<field name="bcc" type="String" />
 		<field localized="true" name="body" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="cc" type="String" />
 		<field name="description" type="String" />
-		<field name="from" type="String" />
-		<field localized="true" name="fromName" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />
-		<field localized="true" name="to" type="String" />
 		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplateAttachment">
@@ -63,5 +82,28 @@
 		<field name="companyId" type="long" />
 		<field name="notificationTemplateId" type="long" />
 		<field name="objectFieldId" type="long" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationTemplateRecipient">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationTemplateRecipientId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationTemplateId" type="long" />
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationTemplateRecipientSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationTemplateRecipientSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationTemplateRecipientId" type="long" />
+		<field name="name" type="String" />
+		<field localized="true" name="value" type="String" />
 	</model>
 </model-hints>

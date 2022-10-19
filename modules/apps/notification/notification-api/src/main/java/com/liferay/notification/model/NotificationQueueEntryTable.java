@@ -90,6 +90,8 @@ public class NotificationQueueEntryTable
 	public final Column<NotificationQueueEntryTable, String> toName =
 		createColumn(
 			"toName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationQueueEntryTable, String> type =
+		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Integer> status =
 		createColumn(
 			"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);

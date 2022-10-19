@@ -14,36 +14,23 @@
 
 package com.liferay.notification.service.impl;
 
-import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailService;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
-import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.service.base.NotificationQueueEntryLocalServiceBaseImpl;
-import com.liferay.notification.service.persistence.NotificationQueueEntryAttachmentPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.mail.internet.InternetAddress;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,7 +51,7 @@ public class NotificationQueueEntryLocalServiceImpl
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName, List<Long> fileEntryIds)
+			String toName, String type, List<Long> fileEntryIds)
 		throws PortalException {
 
 		NotificationQueueEntry notificationQueueEntry =
@@ -90,6 +77,7 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationQueueEntry.setSubject(subject);
 		notificationQueueEntry.setTo(to);
 		notificationQueueEntry.setToName(toName);
+		notificationQueueEntry.setType(type);
 		notificationQueueEntry.setStatus(
 			NotificationQueueEntryConstants.STATUS_UNSENT);
 
@@ -161,6 +149,14 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<NotificationQueueEntry> getUnsentNotificationEntries(
+		String type) {
+
+		return notificationQueueEntryPersistence.findByT_S(
+			type, NotificationQueueEntryConstants.STATUS_UNSENT);
+	}
+
+	@Override
 	public NotificationQueueEntry resendNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException {
@@ -170,50 +166,12 @@ public class NotificationQueueEntryLocalServiceImpl
 			NotificationQueueEntryConstants.STATUS_UNSENT);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void sendNotificationQueueEntries() {
-		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntryPersistence.findByStatus(
-					NotificationQueueEntryConstants.STATUS_UNSENT)) {
+	public NotificationQueueEntry updateNotificationQueueEntry(
+		NotificationQueueEntry notificationQueueEntry) {
 
-			try {
-				MailMessage mailMessage = new MailMessage(
-					new InternetAddress(
-						notificationQueueEntry.getFrom(),
-						notificationQueueEntry.getFromName()),
-					new InternetAddress(
-						notificationQueueEntry.getTo(),
-						notificationQueueEntry.getToName()),
-					notificationQueueEntry.getSubject(),
-					notificationQueueEntry.getBody(), true);
-
-				_addFileAttachments(
-					mailMessage,
-					notificationQueueEntry.getNotificationQueueEntryId());
-
-				mailMessage.setBCC(
-					_toInternetAddresses(notificationQueueEntry.getBcc()));
-				mailMessage.setCC(
-					_toInternetAddresses(notificationQueueEntry.getCc()));
-
-				_mailService.sendEmail(mailMessage);
-
-				notificationQueueEntryLocalService.updateStatus(
-					notificationQueueEntry.getNotificationQueueEntryId(),
-					NotificationQueueEntryConstants.STATUS_SENT);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				notificationQueueEntry.setStatus(
-					NotificationQueueEntryConstants.STATUS_FAILED);
-
-				notificationQueueEntryPersistence.update(
-					notificationQueueEntry);
-			}
-		}
+		return notificationQueueEntryPersistence.update(notificationQueueEntry);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -238,58 +196,9 @@ public class NotificationQueueEntryLocalServiceImpl
 		return notificationQueueEntryPersistence.update(notificationQueueEntry);
 	}
 
-	private void _addFileAttachments(
-		MailMessage mailMessage, long notificationQueueEntryId) {
-
-		for (NotificationQueueEntryAttachment notificationQueueEntryAttachment :
-				_notificationQueueEntryAttachmentPersistence.
-					findByNotificationQueueEntryId(notificationQueueEntryId)) {
-
-			try {
-				FileEntry fileEntry =
-					_portletFileRepository.getPortletFileEntry(
-						notificationQueueEntryAttachment.getFileEntryId());
-
-				mailMessage.addFileAttachment(
-					FileUtil.createTempFile(fileEntry.getContentStream()),
-					fileEntry.getFileName());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-	}
-
-	private InternetAddress[] _toInternetAddresses(String string)
-		throws Exception {
-
-		List<InternetAddress> internetAddresses = new ArrayList<>();
-
-		for (String internetAddressString : StringUtil.split(string)) {
-			internetAddresses.add(new InternetAddress(internetAddressString));
-		}
-
-		return internetAddresses.toArray(new InternetAddress[0]);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationQueueEntryLocalServiceImpl.class);
-
-	@Reference
-	private MailService _mailService;
-
 	@Reference
 	private NotificationQueueEntryAttachmentLocalService
 		_notificationQueueEntryAttachmentLocalService;
-
-	@Reference
-	private NotificationQueueEntryAttachmentPersistence
-		_notificationQueueEntryAttachmentPersistence;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

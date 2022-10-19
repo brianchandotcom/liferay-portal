@@ -465,53 +465,58 @@ public interface NotificationQueueEntryPersistence
 	public int filterCountByLtSentDate(Date sentDate);
 
 	/**
-	 * Returns all the notification queue entries where status = &#63;.
+	 * Returns all the notification queue entries where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @return the matching notification queue entries
 	 */
-	public java.util.List<NotificationQueueEntry> findByStatus(int status);
+	public java.util.List<NotificationQueueEntry> findByT_S(
+		String type, int status);
 
 	/**
-	 * Returns a range of all the notification queue entries where status = &#63;.
+	 * Returns a range of all the notification queue entries where type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
 	 * </p>
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of notification queue entries
 	 * @param end the upper bound of the range of notification queue entries (not inclusive)
 	 * @return the range of matching notification queue entries
 	 */
-	public java.util.List<NotificationQueueEntry> findByStatus(
-		int status, int start, int end);
+	public java.util.List<NotificationQueueEntry> findByT_S(
+		String type, int status, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the notification queue entries where status = &#63;.
+	 * Returns an ordered range of all the notification queue entries where type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
 	 * </p>
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of notification queue entries
 	 * @param end the upper bound of the range of notification queue entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching notification queue entries
 	 */
-	public java.util.List<NotificationQueueEntry> findByStatus(
-		int status, int start, int end,
+	public java.util.List<NotificationQueueEntry> findByT_S(
+		String type, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the notification queue entries where status = &#63;.
+	 * Returns an ordered range of all the notification queue entries where type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
 	 * </p>
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of notification queue entries
 	 * @param end the upper bound of the range of notification queue entries (not inclusive)
@@ -519,158 +524,170 @@ public interface NotificationQueueEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching notification queue entries
 	 */
-	public java.util.List<NotificationQueueEntry> findByStatus(
-		int status, int start, int end,
+	public java.util.List<NotificationQueueEntry> findByT_S(
+		String type, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first notification queue entry in the ordered set where status = &#63;.
+	 * Returns the first notification queue entry in the ordered set where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
 	 */
-	public NotificationQueueEntry findByStatus_First(
-			int status,
+	public NotificationQueueEntry findByT_S_First(
+			String type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException;
 
 	/**
-	 * Returns the first notification queue entry in the ordered set where status = &#63;.
+	 * Returns the first notification queue entry in the ordered set where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
 	 */
-	public NotificationQueueEntry fetchByStatus_First(
-		int status,
+	public NotificationQueueEntry fetchByT_S_First(
+		String type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
 			orderByComparator);
 
 	/**
-	 * Returns the last notification queue entry in the ordered set where status = &#63;.
+	 * Returns the last notification queue entry in the ordered set where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a matching notification queue entry could not be found
 	 */
-	public NotificationQueueEntry findByStatus_Last(
-			int status,
+	public NotificationQueueEntry findByT_S_Last(
+			String type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException;
 
 	/**
-	 * Returns the last notification queue entry in the ordered set where status = &#63;.
+	 * Returns the last notification queue entry in the ordered set where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching notification queue entry, or <code>null</code> if a matching notification queue entry could not be found
 	 */
-	public NotificationQueueEntry fetchByStatus_Last(
-		int status,
+	public NotificationQueueEntry fetchByT_S_Last(
+		String type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
 			orderByComparator);
 
 	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where status = &#63;.
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where type = &#63; and status = &#63;.
 	 *
 	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
 	 */
-	public NotificationQueueEntry[] findByStatus_PrevAndNext(
-			long notificationQueueEntryId, int status,
+	public NotificationQueueEntry[] findByT_S_PrevAndNext(
+			long notificationQueueEntryId, String type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException;
 
 	/**
-	 * Returns all the notification queue entries that the user has permission to view where status = &#63;.
+	 * Returns all the notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @return the matching notification queue entries that the user has permission to view
 	 */
-	public java.util.List<NotificationQueueEntry> filterFindByStatus(
-		int status);
+	public java.util.List<NotificationQueueEntry> filterFindByT_S(
+		String type, int status);
 
 	/**
-	 * Returns a range of all the notification queue entries that the user has permission to view where status = &#63;.
+	 * Returns a range of all the notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
 	 * </p>
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of notification queue entries
 	 * @param end the upper bound of the range of notification queue entries (not inclusive)
 	 * @return the range of matching notification queue entries that the user has permission to view
 	 */
-	public java.util.List<NotificationQueueEntry> filterFindByStatus(
-		int status, int start, int end);
+	public java.util.List<NotificationQueueEntry> filterFindByT_S(
+		String type, int status, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the notification queue entries that the user has permissions to view where status = &#63;.
+	 * Returns an ordered range of all the notification queue entries that the user has permissions to view where type = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
 	 * </p>
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of notification queue entries
 	 * @param end the upper bound of the range of notification queue entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching notification queue entries that the user has permission to view
 	 */
-	public java.util.List<NotificationQueueEntry> filterFindByStatus(
-		int status, int start, int end,
+	public java.util.List<NotificationQueueEntry> filterFindByT_S(
+		String type, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<NotificationQueueEntry>
 			orderByComparator);
 
 	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where status = &#63;.
+	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
 	 *
 	 * @param notificationQueueEntryId the primary key of the current notification queue entry
+	 * @param type the type
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
 	 */
-	public NotificationQueueEntry[] filterFindByStatus_PrevAndNext(
-			long notificationQueueEntryId, int status,
+	public NotificationQueueEntry[] filterFindByT_S_PrevAndNext(
+			long notificationQueueEntryId, String type, int status,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<NotificationQueueEntry> orderByComparator)
 		throws NoSuchNotificationQueueEntryException;
 
 	/**
-	 * Removes all the notification queue entries where status = &#63; from the database.
+	 * Removes all the notification queue entries where type = &#63; and status = &#63; from the database.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 */
-	public void removeByStatus(int status);
+	public void removeByT_S(String type, int status);
 
 	/**
-	 * Returns the number of notification queue entries where status = &#63;.
+	 * Returns the number of notification queue entries where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @return the number of matching notification queue entries
 	 */
-	public int countByStatus(int status);
+	public int countByT_S(String type, int status);
 
 	/**
-	 * Returns the number of notification queue entries that the user has permission to view where status = &#63;.
+	 * Returns the number of notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
 	 *
+	 * @param type the type
 	 * @param status the status
 	 * @return the number of matching notification queue entries that the user has permission to view
 	 */
-	public int filterCountByStatus(int status);
+	public int filterCountByT_S(String type, int status);
 
 	/**
 	 * Caches the notification queue entry in the entity cache if it is enabled.

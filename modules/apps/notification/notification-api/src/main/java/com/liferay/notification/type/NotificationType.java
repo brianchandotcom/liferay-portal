@@ -14,19 +14,32 @@
 
 package com.liferay.notification.type;
 
-import java.util.Locale;
+import com.liferay.notification.model.NotificationTemplateRecipientSetting;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.List;
 
 /**
- * @author Gustavo Lima
+ * @author Feliphe Marinho
  */
 public interface NotificationType {
 
-	public String getClassName(Object object);
+	public List<NotificationTemplateRecipientSetting>
+		createNotificationTemplateRecipientSettings(
+			long notificationTemplateRecipientId, Object[] recipients,
+			User user);
 
-	public long getClassPK(Object object);
+	public String getType();
 
-	public String getKey();
+	public void sendNotification(NotificationContext notificationContext)
+		throws PortalException;
 
-	public String getLabel(Locale locale);
+	public default void sendUnsentNotifications() {
+	}
+
+	public void validateNotificationTemplate(
+			NotificationContext notificationContext)
+		throws PortalException;
 
 }

@@ -18,10 +18,12 @@ import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.internal.dto.v1_0.util.NotificationTemplateUtil;
 import com.liferay.notification.rest.internal.odata.entity.v1_0.NotificationTemplateEntityModel;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
 import com.liferay.notification.service.NotificationTemplateService;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.notification.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -120,25 +121,10 @@ public class NotificationTemplateResourceImpl
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
-				contextUser.getUserId(),
-				GetterUtil.getLong(
-					notificationTemplate.getObjectDefinitionId()),
-				notificationTemplate.getBcc(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBody()),
-				notificationTemplate.getCc(),
-				notificationTemplate.getDescription(),
-				notificationTemplate.getFrom(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getFromName()),
-				notificationTemplate.getName(),
-				notificationTemplate.getRecipientTypeAsString(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getSubject()),
-				LocalizedMapUtil.getLocalizedMap(notificationTemplate.getTo()),
-				notificationTemplate.getTypeAsString(),
-				ListUtil.fromArray(
-					notificationTemplate.getAttachmentObjectFieldIds())));
+				NotificationTemplateUtil.toNotificationContext(
+					contextUser.getUserId(), notificationTemplate,
+					_notificationTypeServiceTracker.getNotificationType(
+						notificationTemplate.getType()))));
 	}
 
 	@Override
@@ -147,27 +133,7 @@ public class NotificationTemplateResourceImpl
 			NotificationTemplate notificationTemplate)
 		throws Exception {
 
-		return _toNotificationTemplate(
-			_notificationTemplateService.updateNotificationTemplate(
-				notificationTemplateId,
-				GetterUtil.getLong(
-					notificationTemplate.getObjectDefinitionId()),
-				notificationTemplate.getBcc(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getBody()),
-				notificationTemplate.getCc(),
-				notificationTemplate.getDescription(),
-				notificationTemplate.getFrom(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getFromName()),
-				notificationTemplate.getName(),
-				notificationTemplate.getRecipientTypeAsString(),
-				LocalizedMapUtil.getLocalizedMap(
-					notificationTemplate.getSubject()),
-				LocalizedMapUtil.getLocalizedMap(notificationTemplate.getTo()),
-				notificationTemplate.getTypeAsString(),
-				ListUtil.fromArray(
-					notificationTemplate.getAttachmentObjectFieldIds())));
+		return null;
 	}
 
 	private NotificationTemplate _toNotificationTemplate(
@@ -216,19 +182,14 @@ public class NotificationTemplateResourceImpl
 								getNotificationTemplateId()),
 					NotificationTemplateAttachment::getObjectFieldId,
 					Long.class);
-				bcc = serviceBuilderNotificationTemplate.getBcc();
 				body = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getBodyMap());
-				cc = serviceBuilderNotificationTemplate.getCc();
 				dateCreated =
 					serviceBuilderNotificationTemplate.getCreateDate();
 				dateModified =
 					serviceBuilderNotificationTemplate.getModifiedDate();
 				description =
 					serviceBuilderNotificationTemplate.getDescription();
-				from = serviceBuilderNotificationTemplate.getFrom();
-				fromName = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderNotificationTemplate.getFromNameMap());
 				id =
 					serviceBuilderNotificationTemplate.
 						getNotificationTemplateId();
@@ -237,14 +198,9 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getNameMap());
 				objectDefinitionId =
 					serviceBuilderNotificationTemplate.getObjectDefinitionId();
-				recipientType = NotificationTemplate.RecipientType.create(
-					serviceBuilderNotificationTemplate.getRecipientType());
 				subject = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
-				to = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderNotificationTemplate.getToMap());
-				type = NotificationTemplate.Type.create(
-					serviceBuilderNotificationTemplate.getType());
+				type = serviceBuilderNotificationTemplate.getType();
 			}
 		};
 	}
@@ -258,5 +214,8 @@ public class NotificationTemplateResourceImpl
 
 	@Reference
 	private NotificationTemplateService _notificationTemplateService;
+
+	@Reference
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 }

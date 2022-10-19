@@ -202,6 +202,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		notificationQueueEntry.setTo(regex);
 		notificationQueueEntry.setToName(regex);
 		notificationQueueEntry.setTriggerBy(regex);
+		notificationQueueEntry.setType(regex);
 
 		String json = NotificationQueueEntrySerDes.toJSON(
 			notificationQueueEntry);
@@ -219,6 +220,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		Assert.assertEquals(regex, notificationQueueEntry.getTo());
 		Assert.assertEquals(regex, notificationQueueEntry.getToName());
 		Assert.assertEquals(regex, notificationQueueEntry.getTriggerBy());
+		Assert.assertEquals(regex, notificationQueueEntry.getType());
 	}
 
 	@Test
@@ -1011,6 +1013,14 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (notificationQueueEntry.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1260,6 +1270,17 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationQueueEntry1.getType(),
+						notificationQueueEntry2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1486,6 +1507,14 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("type")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationQueueEntry.getType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1547,6 +1576,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				toName = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				triggerBy = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

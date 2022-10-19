@@ -44,12 +44,13 @@ public class NotificationQueueEntryLocalServiceWrapper
 				long userId, long notificationTemplateId, String bcc,
 				String body, String cc, String className, long classPK,
 				String from, String fromName, double priority, String subject,
-				String to, String toName, java.util.List<Long> fileEntryIds)
+				String to, String toName, String type,
+				java.util.List<Long> fileEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
 			userId, notificationTemplateId, bcc, body, cc, className, classPK,
-			from, fromName, priority, subject, to, toName, fileEntryIds);
+			from, fromName, priority, subject, to, toName, type, fileEntryIds);
 	}
 
 	/**
@@ -356,17 +357,20 @@ public class NotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.notification.model.NotificationQueueEntry>
+		getUnsentNotificationEntries(String type) {
+
+		return _notificationQueueEntryLocalService.getUnsentNotificationEntries(
+			type);
+	}
+
+	@Override
 	public com.liferay.notification.model.NotificationQueueEntry
 			resendNotificationQueueEntry(long notificationQueueEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.resendNotificationQueueEntry(
 			notificationQueueEntryId);
-	}
-
-	@Override
-	public void sendNotificationQueueEntries() {
-		_notificationQueueEntryLocalService.sendNotificationQueueEntries();
 	}
 
 	/**

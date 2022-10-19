@@ -12,15 +12,23 @@
  * details.
  */
 
-package com.liferay.notification.util;
+package com.liferay.notification.service.impl;
 
-import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.service.base.NotificationQueueEntryRecipientServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gustavo Lima
+ * @author Gabriel Albuquerque
  */
-public interface NotificationTypeRegistry {
-
-	public NotificationType getNotificationType(String key);
-
+@Component(
+	property = {
+		"json.web.service.context.name=notification",
+		"json.web.service.context.path=NotificationQueueEntryRecipient"
+	},
+	service = AopService.class
+)
+public class NotificationQueueEntryRecipientServiceImpl
+	extends NotificationQueueEntryRecipientServiceBaseImpl {
 }

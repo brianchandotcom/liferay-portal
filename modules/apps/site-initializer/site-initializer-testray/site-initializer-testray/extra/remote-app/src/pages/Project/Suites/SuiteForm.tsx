@@ -98,8 +98,8 @@ const SuiteForm = () => {
 				}
 			})
 			.then(context.mutateTestraySuite)
-			.then(() => onSave())
-			.catch(() => onError());
+			.then(onSave)
+			.catch(onError);
 	};
 
 	const inputProps = {

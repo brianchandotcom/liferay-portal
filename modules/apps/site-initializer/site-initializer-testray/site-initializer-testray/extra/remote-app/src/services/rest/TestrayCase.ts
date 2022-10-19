@@ -12,9 +12,11 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
+import {SearchBuilder} from '../../util/search';
 import Rest from './Rest';
-import {TestrayCase} from './types';
+import {APIResponse, TestrayCase} from './types';
 
 type Case = typeof yupSchema.case.__outputType & {projectId: number};
 
@@ -60,6 +62,34 @@ class TestrayCaseRest extends Rest<Case, TestrayCase> {
 			}),
 			uri: 'cases',
 		});
+	}
+	protected async validate(Case: Case, id?: number) {
+		const searchBuilder = new SearchBuilder();
+
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
+
+		const filters = searchBuilder
+			.eq('name', Case.name)
+			.and()
+			.eq('projectId', Case.projectId)
+			.build();
+
+		const response = await this.fetcher<APIResponse<TestrayCase>>(
+			`/cases?filter=${filters}`
+		);
+
+		if (response?.totalCount) {
+			throw new Error(i18n.sub('the-x-name-already-exists', 'case'));
+		}
+	}
+	protected async beforeCreate(Case: Case): Promise<void> {
+		await this.validate(Case);
+	}
+
+	protected async beforeUpdate(id: number, Case: Case): Promise<void> {
+		await this.validate(Case, id);
 	}
 }
 

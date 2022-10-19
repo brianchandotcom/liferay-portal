@@ -3582,6 +3582,16 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "Element Source (JSON) is invalid.");
 
+		Click(
+			ariaLabel = "Edit Title",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
+
+		Alert.viewErrorMessage(errorMessage = "Element Source (JSON) is invalid.");
+
+		AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");		
+
+		Button.clickCancel();
+
 		var elementSourceJson = '''
 {
 	"elementDefinition": {

@@ -70,7 +70,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 
 			for (Class<?> staticClazz : _CLASSES_STATIC_UPGRADE) {
 				if (name.equals(staticClazz.getName())) {
-						return true;
+					return true;
 				}
 			}
 		}
@@ -81,7 +81,9 @@ public class Log4jLogFactoryImpl implements LogFactory {
 	}
 
 	private static final String[] _CLASS_NAMES_UPGRADE = {
-		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl"
+		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl",
+		"com.liferay.portal.upgrade.internal.registry." +
+			"UpgradeStepRegistratorTracker"
 	};
 
 	private static final Class<?>[] _CLASSES_BASE_UPGRADE = {

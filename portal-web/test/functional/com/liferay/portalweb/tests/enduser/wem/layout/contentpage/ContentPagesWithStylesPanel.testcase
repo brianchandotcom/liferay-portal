@@ -591,7 +591,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136279. View the styles of color selectors."
+	@description = "This is a test for LPS-136279 and LPS-163362. View the styles of color selectors."
 	@priority = "4"
 	test ViewStylesOfColorInputs {
 		task ("Given a page designer has a Heading fragment on a content page") {
@@ -652,9 +652,21 @@ definition {
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 			}
 		}
+
+		task ("When the page designer hovers on the inherited indicator of Text Color") {
+			MouseOver(
+				key_fieldLabel = "Text Color",
+				locator1 = "Icon#INHERITED_INDICATOR");
+		}
+
+		task ("Then the page designer sees the Inherited Value shown on the tooltip") {
+			AssertVisible(
+				key_content = "Inherited Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
 	}
 
-	@description = "This is a test for LPS-136279. View the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors."
+	@description = "This is a test for LPS-136279 and LPS-163362. View the styles of Font Family, Font Weight, Font Size, Border Radius and Shadow selectors."
 	@priority = "4"
 	test ViewStylesOfSelectInputs {
 		task ("Given a page designer has a Heading fragment on a content page") {
@@ -756,6 +768,42 @@ definition {
 					key_content = "Shadow",
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 			}
+		}
+
+		task ("When the page designer hovers on the inherited indicator of Font Family") {
+			MouseOver(
+				key_fieldLabel = "Font Family",
+				locator1 = "Icon#INHERITED_INDICATOR");
+		}
+
+		task ("Then the page designer sees the Inherited Value shown on the tooltip") {
+			AssertVisible(
+				key_content = "Inherited Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("When the page designer hovers on the inherited indicator of Font Weight") {
+			MouseOver(
+				key_fieldLabel = "Font Weight",
+				locator1 = "Icon#INHERITED_INDICATOR");
+		}
+
+		task ("Then the page designer sees the Inherited Value shown on the tooltip") {
+			AssertVisible(
+				key_content = "Inherited Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("When the page designer hovers on the inherited indicator of Font Size") {
+			MouseOver(
+				key_fieldLabel = "Font Size",
+				locator1 = "Icon#INHERITED_INDICATOR");
+		}
+
+		task ("Then the page designer sees the Inherited Value shown on the tooltip") {
+			AssertVisible(
+				key_content = "Inherited Value",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

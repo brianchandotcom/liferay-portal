@@ -120,8 +120,8 @@ public class AttachmentUploadFileEntryHandler
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, PortletResourcePermission.class,
 			"(&(com.liferay.object=true)(resource.name=*))",
-			(serviceReference, emitter) -> serviceReference.getProperty(
-				"resource.name"));
+			(serviceReference, emitter) -> emitter.emit(
+				(String)serviceReference.getProperty("resource.name")));
 	}
 
 	@Deactivate

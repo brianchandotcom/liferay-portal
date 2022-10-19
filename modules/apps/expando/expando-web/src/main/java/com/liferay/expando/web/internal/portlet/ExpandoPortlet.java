@@ -25,7 +25,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.Field;
@@ -227,7 +227,7 @@ public class ExpandoPortlet extends MVCPortlet {
 		throws Exception {
 
 		if (type == ExpandoColumnConstants.GEOLOCATION) {
-			return _jsonFactory.createJSONObject(
+			return JSONFactoryUtil.createJSONObject(
 				ParamUtil.getString(actionRequest, "defaultValue"));
 		}
 
@@ -455,9 +455,6 @@ public class ExpandoPortlet extends MVCPortlet {
 
 	@Reference
 	private ExpandoColumnService _expandoColumnService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Localization _localization;

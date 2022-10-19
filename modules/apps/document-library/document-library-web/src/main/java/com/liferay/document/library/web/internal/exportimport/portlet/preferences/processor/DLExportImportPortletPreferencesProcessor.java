@@ -38,7 +38,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -505,7 +505,8 @@ public class DLExportImportPortletPreferencesProcessor
 				return null;
 			}
 
-			return _jsonFactory.createJSONObject(stagingPreferencesMappingJSON);
+			return JSONFactoryUtil.createJSONObject(
+				stagingPreferencesMappingJSON);
 		}
 		catch (JSONException jsonException) {
 			throw new PortletDataException(jsonException);
@@ -613,8 +614,5 @@ public class DLExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	private Capability _importCapability;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

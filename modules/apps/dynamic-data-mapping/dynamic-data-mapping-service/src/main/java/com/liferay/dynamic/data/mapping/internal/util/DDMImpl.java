@@ -57,7 +57,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.TemplateModifiedDateComp
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -296,7 +296,8 @@ public class DDMImpl implements DDM {
 
 			String valueString = String.valueOf(fieldValue);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			String uuid = jsonObject.getString("uuid");
 			long groupId = jsonObject.getLong("groupId");
@@ -315,7 +316,8 @@ public class DDMImpl implements DDM {
 
 			String valueString = String.valueOf(fieldValue);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			long groupId = jsonObject.getLong("groupId");
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
@@ -328,7 +330,7 @@ public class DDMImpl implements DDM {
 		else if (type.equals(DDMFormFieldType.SELECT)) {
 			String valueString = String.valueOf(fieldValue);
 
-			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
 
 			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
 
@@ -458,7 +460,7 @@ public class DDMImpl implements DDM {
 		else if (type.equals(DDMFormFieldType.SELECT)) {
 			String valueString = (String)fieldValue;
 
-			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
 
 			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
 
@@ -650,7 +652,7 @@ public class DDMImpl implements DDM {
 		List<DDMFormField> ddmFormFields, Set<Locale> availableLocales,
 		Locale defaultLocale) {
 
-		JSONArray ddmFormFieldsJSONArray = _jsonFactory.createJSONArray();
+		JSONArray ddmFormFieldsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			JSONObject jsonObject = JSONUtil.put(
@@ -684,11 +686,11 @@ public class DDMImpl implements DDM {
 				jsonObject, ddmFormField, availableLocales, defaultLocale);
 
 			JSONObject localizationMapJSONObject =
-				_jsonFactory.createJSONObject();
+				JSONFactoryUtil.createJSONObject();
 
 			for (Locale availableLocale : availableLocales) {
 				JSONObject localeMapJSONObject =
-					_jsonFactory.createJSONObject();
+					JSONFactoryUtil.createJSONObject();
 
 				_addDDMFormFieldLocalizedProperties(
 					localeMapJSONObject, ddmFormField, availableLocale,
@@ -774,7 +776,8 @@ public class DDMImpl implements DDM {
 
 			try {
 				jsonObject.put(
-					propertyName, _jsonFactory.createJSONArray(propertyValue));
+					propertyName,
+					JSONFactoryUtil.createJSONArray(propertyValue));
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -802,7 +805,7 @@ public class DDMImpl implements DDM {
 
 		String fieldName = ddmFormField.getName();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
@@ -826,11 +829,11 @@ public class DDMImpl implements DDM {
 				defaultLocale, "option");
 
 			JSONObject localizationMapJSONObject =
-				_jsonFactory.createJSONObject();
+				JSONFactoryUtil.createJSONObject();
 
 			for (Locale availableLocale : availableLocales) {
 				JSONObject localeMapJSONObject =
-					_jsonFactory.createJSONObject();
+					JSONFactoryUtil.createJSONObject();
 
 				_addDDMFormFieldLocalizedProperty(
 					localeMapJSONObject, "label",
@@ -1090,7 +1093,7 @@ public class DDMImpl implements DDM {
 
 					fieldValue = new String[] {String.valueOf(fieldValue)};
 
-					fieldValue = _jsonFactory.serialize(fieldValue);
+					fieldValue = JSONFactoryUtil.serialize(fieldValue);
 				}
 			}
 
@@ -1321,9 +1324,6 @@ public class DDMImpl implements DDM {
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

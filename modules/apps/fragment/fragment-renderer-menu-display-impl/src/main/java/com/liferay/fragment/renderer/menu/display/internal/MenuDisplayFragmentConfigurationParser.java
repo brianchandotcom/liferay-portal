@@ -18,7 +18,7 @@ import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentCo
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -63,14 +63,14 @@ public class MenuDisplayFragmentConfigurationParser {
 
 	private JSONObject _createJSONObject(String value) {
 		try {
-			return _jsonFactory.createJSONObject(value);
+			return JSONFactoryUtil.createJSONObject(value);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 	}
 
@@ -124,8 +124,5 @@ public class MenuDisplayFragmentConfigurationParser {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

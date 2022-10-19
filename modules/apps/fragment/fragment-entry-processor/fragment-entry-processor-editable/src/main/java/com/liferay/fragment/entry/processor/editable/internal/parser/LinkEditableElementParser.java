@@ -18,7 +18,7 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -46,7 +46,7 @@ public class LinkEditableElementParser implements EditableElementParser {
 
 	@Override
 	public JSONObject getAttributes(Element element) {
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		List<Element> elements = element.getElementsByTag("a");
 
@@ -165,9 +165,6 @@ public class LinkEditableElementParser implements EditableElementParser {
 					new Object[] {"<em>", "</em>"}, false));
 		}
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

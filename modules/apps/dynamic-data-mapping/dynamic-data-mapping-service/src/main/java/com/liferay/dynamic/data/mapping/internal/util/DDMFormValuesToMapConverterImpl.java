@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -208,7 +208,8 @@ public class DDMFormValuesToMapConverterImpl
 
 		try {
 			return JSONUtil.toStringList(
-				_jsonFactory.createJSONArray(localizedValue.getString(locale)));
+				JSONFactoryUtil.createJSONArray(
+					localizedValue.getString(locale)));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -221,9 +222,6 @@ public class DDMFormValuesToMapConverterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesToMapConverterImpl.class);
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

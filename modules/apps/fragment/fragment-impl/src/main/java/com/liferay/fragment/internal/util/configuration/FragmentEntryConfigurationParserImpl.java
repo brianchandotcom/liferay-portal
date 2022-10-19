@@ -34,7 +34,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -82,7 +82,7 @@ public class FragmentEntryConfigurationParserImpl
 		List<FragmentConfigurationField> fragmentConfigurationFields =
 			getFragmentConfigurationFields(configuration);
 
-		JSONObject defaultValuesJSONObject = _jsonFactory.createJSONObject();
+		JSONObject defaultValuesJSONObject = JSONFactoryUtil.createJSONObject();
 
 		for (FragmentConfigurationField fragmentConfigurationField :
 				fragmentConfigurationFields) {
@@ -103,8 +103,8 @@ public class FragmentEntryConfigurationParserImpl
 		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType) {
 
 		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				editableValues);
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(editableValues);
 
 			JSONObject configurationValuesJSONObject =
 				editableValuesJSONObject.getJSONObject(
@@ -139,10 +139,10 @@ public class FragmentEntryConfigurationParserImpl
 			getConfigurationDefaultValuesJSONObject(configuration);
 
 		if (configurationDefaultValuesJSONObject == null) {
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 			editableValues);
 
 		JSONObject configurationValuesJSONObject =
@@ -243,8 +243,8 @@ public class FragmentEntryConfigurationParserImpl
 		FragmentConfigurationField fragmentConfigurationField, Locale locale) {
 
 		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-				editableValues);
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(editableValues);
 
 			JSONObject configurationValuesJSONObject =
 				editableValuesJSONObject.getJSONObject(
@@ -277,7 +277,7 @@ public class FragmentEntryConfigurationParserImpl
 		JSONObject editableValuesJSONObject = null;
 
 		try {
-			editableValuesJSONObject = _jsonFactory.createJSONObject(
+			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 				editableValues);
 		}
 		catch (Exception exception) {
@@ -435,8 +435,8 @@ public class FragmentEntryConfigurationParserImpl
 
 	private JSONArray _getFieldSetsJSONArray(String configuration) {
 		try {
-			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
-				configuration);
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
 
 			return configurationJSONObject.getJSONArray("fieldSets");
 		}
@@ -461,7 +461,7 @@ public class FragmentEntryConfigurationParserImpl
 			JSONUtil.isValid(parsedValue)) {
 
 			try {
-				JSONObject valueJSONObject = _jsonFactory.createJSONObject(
+				JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
 					parsedValue);
 
 				parsedValue = valueJSONObject.getString(
@@ -554,7 +554,7 @@ public class FragmentEntryConfigurationParserImpl
 				FragmentConfigurationFieldDataType.ARRAY) {
 
 			try {
-				return _jsonFactory.createJSONArray(value);
+				return JSONFactoryUtil.createJSONArray(value);
 			}
 			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {
@@ -583,7 +583,7 @@ public class FragmentEntryConfigurationParserImpl
 					FragmentConfigurationFieldDataType.OBJECT) {
 
 			try {
-				return _jsonFactory.createJSONObject(value);
+				return JSONFactoryUtil.createJSONObject(value);
 			}
 			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {
@@ -608,7 +608,7 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			String className = GetterUtil.getString(
 				jsonObject.getString("className"));
@@ -638,16 +638,17 @@ public class FragmentEntryConfigurationParserImpl
 	private JSONObject _getInfoDisplayObjectEntryJSONObject(String value) {
 		try {
 			if (Validator.isNull(value) ||
-				Objects.equals(value, _jsonFactory.getNullJSON())) {
+				Objects.equals(value, JSONFactoryUtil.getNullJSON())) {
 
-				return _jsonFactory.createJSONObject();
+				return JSONFactoryUtil.createJSONObject();
 			}
 
 			JSONObject configurationValueJSONObject =
-				_jsonFactory.createJSONObject(value);
+				JSONFactoryUtil.createJSONObject(value);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				_jsonFactory.looseSerialize(_getInfoDisplayObjectEntry(value)));
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(
+					_getInfoDisplayObjectEntry(value)));
 
 			jsonObject.put(
 				"className",
@@ -689,7 +690,7 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
 			if (jsonObject.length() <= 0) {
 				return Collections.emptyList();
@@ -734,11 +735,11 @@ public class FragmentEntryConfigurationParserImpl
 
 	private JSONObject _getInfoListObjectEntryJSONObject(String value) {
 		if (Validator.isNull(value)) {
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		try {
-			return _jsonFactory.createJSONObject(value);
+			return JSONFactoryUtil.createJSONObject(value);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -871,9 +872,6 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

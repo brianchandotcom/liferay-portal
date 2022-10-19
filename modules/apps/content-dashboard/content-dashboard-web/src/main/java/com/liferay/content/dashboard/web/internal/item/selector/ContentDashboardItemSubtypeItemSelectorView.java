@@ -39,7 +39,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -150,7 +150,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		).map(
 			jsonObjectString -> {
 				try {
-					return _jsonFactory.createJSONObject(jsonObjectString);
+					return JSONFactoryUtil.createJSONObject(jsonObjectString);
 				}
 				catch (JSONException jsonException) {
 					_log.error(jsonException);
@@ -181,7 +181,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					servletRequest);
 
 		JSONArray contentDashboardItemTypesJSONArray =
-			_jsonFactory.createJSONArray();
+			JSONFactoryUtil.createJSONArray();
 
 		for (String className :
 				_contentDashboardItemFactoryTracker.getClassNames()) {
@@ -283,7 +283,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				).put(
 					"icon", _getIcon(className)
 				).put(
-					"itemSubtypes", _jsonFactory.createJSONArray()
+					"itemSubtypes", JSONFactoryUtil.createJSONArray()
 				).put(
 					"label",
 					() -> {
@@ -320,7 +320,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			infoItemFormVariationsProvider.getInfoItemFormVariations(
 				_getGroupIds(themeDisplay.getCompanyId()));
 
-		JSONArray itemSubtypesJSONArray = _jsonFactory.createJSONArray();
+		JSONArray itemSubtypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoItemFormVariation infoItemFormVariation :
 				infoItemFormVariations) {
@@ -425,9 +425,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

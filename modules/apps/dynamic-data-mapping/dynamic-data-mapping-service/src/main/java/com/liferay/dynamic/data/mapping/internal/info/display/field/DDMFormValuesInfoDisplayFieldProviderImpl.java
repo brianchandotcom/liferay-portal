@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -238,7 +238,8 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 					ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
 				 Objects.equals(ddmFormFieldValue.getType(), "image")) {
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			jsonObject.put("url", _transformFileEntryURL(valueString));
 
@@ -253,7 +254,7 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 
 	private String _transformFileEntryURL(String data) {
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(data);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
 			String uuid = jsonObject.getString("uuid");
 			long groupId = jsonObject.getLong("groupId");
@@ -285,8 +286,5 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

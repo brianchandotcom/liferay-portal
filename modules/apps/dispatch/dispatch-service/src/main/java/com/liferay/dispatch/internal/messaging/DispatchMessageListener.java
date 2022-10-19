@@ -22,7 +22,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,7 +48,7 @@ public class DispatchMessageListener extends BaseMessageListener {
 	public void doReceive(Message message) throws Exception {
 		String payload = (String)message.getPayload();
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(payload);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(payload);
 
 		long dispatchTriggerId = jsonObject.getLong("dispatchTriggerId");
 
@@ -114,8 +114,5 @@ public class DispatchMessageListener extends BaseMessageListener {
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

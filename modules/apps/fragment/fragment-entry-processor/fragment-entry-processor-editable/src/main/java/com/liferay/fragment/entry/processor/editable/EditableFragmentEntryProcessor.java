@@ -33,7 +33,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -74,7 +74,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public JSONArray getAvailableTagsJSONArray() {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String key : _editableElementParserServiceTrackerMap.keySet()) {
 			StringBundler sb = new StringBundler(
@@ -134,7 +134,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
 		if (jsonObject.length() == 0) {
@@ -181,7 +181,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			String value = StringPool.BLANK;
 
 			JSONObject mappedValueConfigJSONObject =
-				_jsonFactory.createJSONObject();
+				JSONFactoryUtil.createJSONObject();
 
 			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode()) &&
@@ -399,7 +399,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private JSONObject _getDefaultEditableValuesJSONObject(String html) {
 		JSONObject defaultEditableValuesJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		Document document = _getDocument(html);
 
@@ -592,9 +592,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

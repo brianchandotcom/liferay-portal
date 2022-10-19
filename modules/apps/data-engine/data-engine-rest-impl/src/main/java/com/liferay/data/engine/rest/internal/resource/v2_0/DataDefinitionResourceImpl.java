@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -639,7 +640,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					nestedDataDefinitionFields = ArrayUtil.append(
 						nestedDataDefinitionFields,
 						gson.fromJson(
-							_jsonFactory.looseSerializeDeep(
+							JSONFactoryUtil.looseSerializeDeep(
 								dataDefinitionField1),
 							DataDefinitionField.class));
 				}
@@ -766,8 +767,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					_portal.getPortletId(contextHttpServletRequest)));
 			ddmFormRenderingContext.setReturnFullContext(true);
 
-			return _jsonFactory.createJSONObject(
-				_jsonFactory.looseSerializeDeep(
+			return JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerializeDeep(
 					_ddmFormTemplateContextFactory.create(
 						ddmFormFieldTypeSettingsDDMForm,
 						DDMFormLayoutFactory.create(

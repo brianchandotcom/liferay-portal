@@ -61,9 +61,9 @@ const Review = ({
 					(activity: MDFRequestActivity, index: number) => (
 						<ActivityPanel
 							activity={activity}
-							campaignName={values.campaignName}
 							detail
 							key={index}
+							overallCampaignName={values.overallCampaignName}
 						>
 							<ActivityReviewEntry
 								mdfRequestActivity={activity}

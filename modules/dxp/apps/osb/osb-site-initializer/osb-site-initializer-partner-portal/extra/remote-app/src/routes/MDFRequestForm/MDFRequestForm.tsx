@@ -30,11 +30,11 @@ import submitForm from './utils/submitForm';
 const initialFormValues: MDFRequest = {
 	activities: [],
 	additionalOption: {},
-	campaignName: '',
 	company: {},
 	country: {},
 	liferayBusinessSalesGoals: [],
 	overallCampaignDescription: '',
+	overallCampaignName: '',
 	requestStatus: RequestStatus.PENDING,
 	targetAudienceRoles: [],
 	targetMarkets: [],

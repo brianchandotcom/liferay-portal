@@ -23,7 +23,6 @@ export function getDTOFromMDFRequest(
 		accountExternalReferenceCodeSF:
 			mdfRequest.accountExternalReferenceCodeSF,
 		additionalOption: mdfRequest.additionalOption,
-		campaignName: mdfRequest.campaignName,
 		country: mdfRequest.country,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCodeSF,
@@ -32,6 +31,7 @@ export function getDTOFromMDFRequest(
 		),
 		liferaysUserIdSF: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
+		overallCampaignName: mdfRequest.overallCampaignName,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
 		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),
 		requestStatus: mdfRequest.requestStatus,

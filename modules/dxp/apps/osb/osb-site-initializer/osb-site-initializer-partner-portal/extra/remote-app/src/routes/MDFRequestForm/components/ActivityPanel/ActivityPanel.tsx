@@ -18,18 +18,18 @@ import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 
 interface IProps {
 	activity: MDFRequestActivity;
-	campaignName: string;
 	children?: React.ReactNode;
 	detail?: boolean;
 	onRemove?: () => void;
+	overallCampaignName: string;
 }
 
 const ActivityPanel = ({
 	activity,
-	campaignName,
 	children,
 	detail,
 	onRemove,
+	overallCampaignName,
 }: IProps) => {
 	return (
 		<ClayPanel
@@ -45,7 +45,7 @@ const ActivityPanel = ({
 					<div className="d-flex justify-content-between">
 						<div>
 							<div className="mb-1 text-neutral-7 text-paragraph-sm">
-								{campaignName}
+								{overallCampaignName}
 							</div>
 
 							<h5 className="mb-1">{activity.name}</h5>

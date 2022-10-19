@@ -27,7 +27,7 @@ export default function useGetListItemsFromMDFRequests(
 		() =>
 			swrResponse.data?.items.map((item) => ({
 				[MDFColumnKey.ID]: String(item.id),
-				[MDFColumnKey.NAME]: item.campaignName,
+				[MDFColumnKey.NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(
 					item.minDateActivity,
 					item.maxDateActivity

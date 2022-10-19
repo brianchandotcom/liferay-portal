@@ -35,9 +35,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Campaign Name"
+				"en_US": "Overall Campaign Name"
 			},
-			"name": "campaignName",
+			"name": "overallCampaignName",
 			"required": false,
 			"type": "String"
 		},

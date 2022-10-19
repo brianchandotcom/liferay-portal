@@ -106,7 +106,7 @@ const Goals = ({
 				<PRMFormik.Field
 					component={PRMForm.InputText}
 					label="Provide the name of the campaign"
-					name="campaignName"
+					name="overallCampaignName"
 					required
 				/>
 

@@ -20,16 +20,16 @@ import getNewActivity from '../../utils/getNewActivity';
 
 interface IProps {
 	activities: MDFRequestActivity[];
-	campaignName: string;
 	isValid: boolean;
 	onAdd: () => void;
+	overallCampaignName: string;
 }
 
 const Listing = ({
 	activities,
-	campaignName,
 	isValid,
 	onAdd,
+	overallCampaignName,
 	push,
 	remove,
 }: IProps & ArrayHelpers) => {
@@ -46,9 +46,9 @@ const Listing = ({
 					activities.map((activity, index) => (
 						<ActivityPanel
 							activity={activity}
-							campaignName={campaignName}
 							key={index}
 							onRemove={() => remove(index)}
+							overallCampaignName={overallCampaignName}
 						/>
 					))}
 

@@ -14,9 +14,6 @@ import {array, number, object, string} from 'yup';
 import isObjectEmpty from '../../../utils/isObjectEmpty';
 
 const goalsSchema = object({
-	campaignName: string()
-		.max(255, 'You have exceeded the character limit')
-		.required('Required'),
 	company: object({
 		id: number(),
 		name: string(),
@@ -29,6 +26,9 @@ const goalsSchema = object({
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),
 	overallCampaignDescription: string()
+		.max(255, 'You have exceeded the character limit')
+		.required('Required'),
+	overallCampaignName: string()
 		.max(255, 'You have exceeded the character limit')
 		.required('Required'),
 	targetAudienceRoles: array().min(1, 'Required'),

@@ -93,8 +93,7 @@ $productMenuWidth: 320px;
 					}
 
 					> .tbar-item:first-child {
-						border-top: solid thin #e7e7ed;
-						order: 1;
+						border-bottom: solid thin #e7e7ed;
 						width: 100%;
 					}
 
@@ -140,8 +139,7 @@ $productMenuWidth: 320px;
 
 				> .container-fluid > .tbar-nav {
 					> .tbar-item:first-child {
-						border-top: none;
-						order: 0;
+						border-bottom: none;
 						width: auto;
 					}
 

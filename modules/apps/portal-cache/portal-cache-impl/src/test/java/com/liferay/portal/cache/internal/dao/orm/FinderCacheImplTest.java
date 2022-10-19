@@ -300,11 +300,6 @@ public class FinderCacheImplTest {
 			throw new UnsupportedOperationException();
 		}
 
-		@Override
-		public String toXmlString() {
-			throw new UnsupportedOperationException();
-		}
-
 		private TestBaseModel(Serializable primaryKey) {
 			_primaryKey = primaryKey;
 		}

@@ -126,16 +126,11 @@
 		<!-- Other fields -->
 
 		<column name="objectDefinitionId" type="long" />
-		<column name="bcc" type="String" />
 		<column localized="true" name="body" type="String" />
-		<column name="cc" type="String" />
 		<column name="description" type="String" />
-		<column name="from" type="String" />
-		<column localized="true" name="fromName" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="recipientType" type="String" />
 		<column localized="true" name="subject" type="String" />
-		<column localized="true" name="to" type="String" />
 		<column name="type" type="String" />
 	</entity>
 	<entity local-service="true" name="NotificationTemplateAttachment" remote-service="false" table="NTemplateAttachment" uuid="false">

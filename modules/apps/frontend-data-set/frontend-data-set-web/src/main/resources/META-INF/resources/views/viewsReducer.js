@@ -82,6 +82,7 @@ export function viewsReducer(state, {type, value}) {
 			...state,
 			...defaultView,
 			activeCustomViewId: null,
+			modifiedFields: {},
 			viewUpdated: false,
 		};
 	}
@@ -104,6 +105,7 @@ export function viewsReducer(state, {type, value}) {
 			...state,
 			...activeCustomView,
 			activeCustomViewId: value,
+			modifiedFields: {},
 			viewUpdated: false,
 		};
 	}

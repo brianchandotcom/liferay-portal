@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_DETAIL_IMAGE_THUMBNAIL</td>
+	<td>//img[contains(@src,'${key_thumbnailName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

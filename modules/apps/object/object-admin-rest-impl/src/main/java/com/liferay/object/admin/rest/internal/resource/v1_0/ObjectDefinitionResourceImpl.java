@@ -309,14 +309,6 @@ public class ObjectDefinitionResourceImpl
 					objectDefinitionId, titleObjectFieldId));
 		}
 
-		boolean enableCategorization = true;
-		boolean enableComments = false;
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
-			enableCategorization = objectDefinition.getEnableCategorization();
-			enableComments = objectDefinition.getEnableComments();
-		}
-
 		serviceBuilderObjectDefinition =
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinition.getExternalReferenceCode(), objectDefinitionId,
@@ -326,7 +318,8 @@ public class ObjectDefinitionResourceImpl
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
-				enableCategorization, enableComments,
+				objectDefinition.getEnableCategorization(),
+				objectDefinition.getEnableComments(),
 				objectDefinition.getEnableObjectEntryHistory(),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
@@ -588,15 +581,9 @@ public class ObjectDefinitionResourceImpl
 				active = objectDefinition.isActive();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
-
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-158672"))) {
-
-					enableCategorization =
-						objectDefinition.getEnableCategorization();
-					enableComments = objectDefinition.getEnableComments();
-				}
-
+				enableCategorization =
+					objectDefinition.getEnableCategorization();
+				enableComments = objectDefinition.getEnableComments();
 				enableObjectEntryHistory =
 					objectDefinition.getEnableObjectEntryHistory();
 				externalReferenceCode =

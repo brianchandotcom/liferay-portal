@@ -230,21 +230,14 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 			<clay:sheet-section>
 				<h3 class="sheet-subtitle">
-					<c:choose>
-						<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672")) %>'>
-							<liferay-ui:message key="configuration" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="display" />
-						</c:otherwise>
-					</c:choose>
+					<liferay-ui:message key="configuration" />
 				</h3>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="show-widget" labelOn="show-widget" name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
 				</aui:field-wrapper>
 
-				<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672")) && objectDefinition.isDefaultStorageType() %>'>
+				<c:if test="<%= objectDefinition.isDefaultStorageType() %>">
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-categorization" labelOn="enable-categorization" name="enableCategorization" type="toggle-switch" value="<%= objectDefinition.isEnableCategorization() %>" />
 					</aui:field-wrapper>
@@ -252,9 +245,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 						<aui:input disabled="<%= objectDefinition.isEnableComments() || objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-comments" labelOn="enable-comments" name="enableComments" type="toggle-switch" value="<%= objectDefinition.isEnableComments() %>" />
 					</aui:field-wrapper>
-				</c:if>
 
-				<c:if test="<%= objectDefinition.isDefaultStorageType() %>">
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 						<aui:input disabled="<%= objectDefinition.isApproved() || objectDefinition.isSystem() %>" label="" labelOff="enable-entry-history" labelOn="enable-entry-history" name="enableObjectEntryHistory" type="toggle-switch" value="<%= objectDefinition.isEnableObjectEntryHistory() %>" />
 					</aui:field-wrapper>

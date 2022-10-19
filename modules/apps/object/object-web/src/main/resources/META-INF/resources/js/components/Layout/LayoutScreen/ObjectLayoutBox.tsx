@@ -48,10 +48,7 @@ export function ObjectLayoutBox({
 	});
 
 	const disabled =
-		(Liferay.FeatureFlags['LPS-158672'] &&
-			type === 'categorization' &&
-			!enabledCategorization) ||
-		isViewOnly;
+		(type === 'categorization' && !enabledCategorization) || isViewOnly;
 
 	return (
 		<>

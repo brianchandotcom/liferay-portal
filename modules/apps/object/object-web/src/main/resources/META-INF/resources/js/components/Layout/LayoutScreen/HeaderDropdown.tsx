@@ -69,8 +69,7 @@ export function HeaderDropdown({
 					<ClayDropDown.Item
 						disabled={
 							isThereFramework('categorization') ||
-							(Liferay.FeatureFlags['LPS-158672'] &&
-								!enabledCategorization)
+							!enabledCategorization
 						}
 						onClick={() => handleOnClick(addCategorization)}
 					>

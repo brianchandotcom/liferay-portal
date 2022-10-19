@@ -102,13 +102,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -1150,16 +1148,12 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(objectDefinition, active);
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
-			_validateEnableCategorization(
-				enableCategorization, objectDefinition.getStorageType(),
-				objectDefinition.isSystem());
-			_validateEnableComments(
-				enableComments, objectDefinition.getStorageType(),
-				objectDefinition.isSystem());
-		}
-
+		_validateEnableCategorization(
+			enableCategorization, objectDefinition.getStorageType(),
+			objectDefinition.isSystem());
+		_validateEnableComments(
+			enableComments, objectDefinition.getStorageType(),
+			objectDefinition.isSystem());
 		_validateEnableObjectEntryHistory(
 			objectDefinition.isApproved(),
 			objectDefinition.isEnableObjectEntryHistory() !=
@@ -1188,20 +1182,8 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
-			objectDefinition.setEnableCategorization(enableCategorization);
-			objectDefinition.setEnableComments(enableComments);
-		}
-		else {
-			objectDefinition.setEnableCategorization(
-				!objectDefinition.isSystem() &&
-				StringUtil.equals(
-					objectDefinition.getStorageType(),
-					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
-			objectDefinition.setEnableComments(false);
-		}
-
+		objectDefinition.setEnableCategorization(enableCategorization);
+		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableObjectEntryHistory(enableObjectEntryHistory);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setPanelAppOrder(panelAppOrder);

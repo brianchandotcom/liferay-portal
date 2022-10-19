@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import togglePermission from '../actions/togglePermission';
@@ -63,6 +64,10 @@ export default function EditModeSelector() {
 			}}
 			trigger={
 				<ClayButton
+					aria-label={sub(
+						Liferay.Language.get('edit-mode-x'),
+						editMode
+					)}
 					className="form-control-select page-editor__edit-mode-selector text-left"
 					disabled={!canSwitchEditMode}
 					displayType="secondary"

@@ -22,7 +22,6 @@ import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -407,10 +406,6 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoDisplayContributorFieldTracker
-		_infoDisplayContributorFieldTracker;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

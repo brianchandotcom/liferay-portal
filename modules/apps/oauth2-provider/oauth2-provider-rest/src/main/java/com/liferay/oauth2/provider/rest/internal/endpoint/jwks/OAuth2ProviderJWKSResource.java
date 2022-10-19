@@ -16,10 +16,8 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.jwks;
 
 import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.GET;
@@ -28,13 +26,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
+import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
+ * @author Arthur Chan
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration",
@@ -63,33 +64,14 @@ public class OAuth2ProviderJWKSResource {
 				ConfigurableUtil.createConfigurable(
 					OAuth2AuthorizationServerConfiguration.class, properties);
 
-		JSONObject jwkJSONObject = _jsonFactory.createJSONObject(
-			oAuth2AuthorizationServerConfiguration.
-				jwtAccessTokenSigningJSONWebKey());
-
-		_jwks = JSONUtil.put(
-			"keys", JSONUtil.put(_parsePublicKeyJWKJSONObject(jwkJSONObject))
-		).toString();
+		_jwks = JwkUtils.encodeJwkSet(
+			new JsonWebKeys(
+				JwkUtils.stripPrivateParameters(
+					Collections.singletonList(
+						JwkUtils.readJwkKey(
+							oAuth2AuthorizationServerConfiguration.
+								jwtAccessTokenSigningJSONWebKey())))));
 	}
-
-	private JSONObject _parsePublicKeyJWKJSONObject(JSONObject jwkJSONObject) {
-		return JSONUtil.put(
-			"alg", jwkJSONObject.get("alg")
-		).put(
-			"e", jwkJSONObject.get("e")
-		).put(
-			"kid", jwkJSONObject.get("kid")
-		).put(
-			"kty", jwkJSONObject.get("kty")
-		).put(
-			"n", jwkJSONObject.get("n")
-		).put(
-			"use", jwkJSONObject.get("use")
-		);
-	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	private String _jwks;
 

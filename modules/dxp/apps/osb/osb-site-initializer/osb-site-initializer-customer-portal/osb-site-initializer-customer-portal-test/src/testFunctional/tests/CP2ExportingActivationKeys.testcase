@@ -65,4 +65,28 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-150641 | Test Summary: Verify if when the user successfully downloads a key, shows the message Activation key details successfully exported"
+	@priority = "3"
+	test AssertTheActivationKeyDownloadMessage {
+
+		// TODO LPS-150641 AssertTheActivationKeyDownloadMessage pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150643 | Test Summary: Verify if when the user try to downloads the keys and it fails shows the message Unable to export keys, please try again"
+	@priority = "3"
+	test AssertTheActivationKeyDownloadErrorMessage {
+
+		// TODO LPS-150643 AssertTheActivationKeyDownloadErrorMessage pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150645 | Test Summary: Assert if the Export All Key Details option always download all the keys, no matter what filter is been used"
+	@priority = "4"
+	test AssertTheExportAllKeyDetailsDisplayInAnyFilter {
+		
+		// TODO LPS-150645 AssertTheExportAllKeyDetailsDisplayInAnyFilter pending implementation
+
+	}
+
 }

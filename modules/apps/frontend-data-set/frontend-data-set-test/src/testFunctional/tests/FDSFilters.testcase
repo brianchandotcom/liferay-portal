@@ -55,7 +55,7 @@ definition {
 		}
 
 		task ("Then all of them can be removed at once") {
-			ClickNoError(locator1 = "FrontendDataSet#RESET_FILTERS");
+			FDSFilters.resetFilter();
 		}
 
 		task ("Then the results will be displayed updated accordingly to it") {

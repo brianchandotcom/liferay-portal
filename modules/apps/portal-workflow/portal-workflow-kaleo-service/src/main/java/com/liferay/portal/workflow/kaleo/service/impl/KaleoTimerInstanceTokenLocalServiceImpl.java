@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -324,8 +323,8 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 				StringUtil.toUpperCase(durationScale.getValue()));
 		}
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			groupName, groupName, dueDate, interval, timeUnit);
+		Trigger trigger = _triggerFactory.createTrigger(
+			groupName, groupName, dueDate, null, interval, timeUnit);
 
 		Message message = new Message();
 

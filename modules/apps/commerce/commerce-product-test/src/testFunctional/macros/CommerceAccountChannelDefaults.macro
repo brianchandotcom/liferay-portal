@@ -76,7 +76,7 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro setChannelAccountDefaults {
+	macro setAccountChannelDefaults {
 		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "${accountName}");
 
 		if (isSet(paymentMethod)) {
@@ -84,7 +84,7 @@ definition {
 
 			Click(
 				key_firstColumnValue = "${channelName}",
-				key_secondColumnValue = "${secondColumnValue}",
+				key_secondColumnValue = "${defaultPaymentMethod}",
 				key_table = "PaymentMethod",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 

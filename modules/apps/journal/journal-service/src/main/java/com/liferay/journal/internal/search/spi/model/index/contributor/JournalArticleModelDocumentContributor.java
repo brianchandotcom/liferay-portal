@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -220,9 +219,6 @@ public class JournalArticleModelDocumentContributor
 
 	@Reference
 	private Html _html;
-
-	@Reference
-	private JournalConverter _journalConverter;
 
 	@Reference
 	private Language _language;

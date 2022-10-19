@@ -203,21 +203,6 @@ public interface NotificationQueueEntryModel
 	public void setNotificationTemplateId(long notificationTemplateId);
 
 	/**
-	 * Returns the bcc of this notification queue entry.
-	 *
-	 * @return the bcc of this notification queue entry
-	 */
-	@AutoEscape
-	public String getBcc();
-
-	/**
-	 * Sets the bcc of this notification queue entry.
-	 *
-	 * @param bcc the bcc of this notification queue entry
-	 */
-	public void setBcc(String bcc);
-
-	/**
 	 * Returns the body of this notification queue entry.
 	 *
 	 * @return the body of this notification queue entry
@@ -231,21 +216,6 @@ public interface NotificationQueueEntryModel
 	 * @param body the body of this notification queue entry
 	 */
 	public void setBody(String body);
-
-	/**
-	 * Returns the cc of this notification queue entry.
-	 *
-	 * @return the cc of this notification queue entry
-	 */
-	@AutoEscape
-	public String getCc();
-
-	/**
-	 * Sets the cc of this notification queue entry.
-	 *
-	 * @param cc the cc of this notification queue entry
-	 */
-	public void setCc(String cc);
 
 	/**
 	 * Returns the fully qualified class name of this notification queue entry.
@@ -290,36 +260,6 @@ public interface NotificationQueueEntryModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the from of this notification queue entry.
-	 *
-	 * @return the from of this notification queue entry
-	 */
-	@AutoEscape
-	public String getFrom();
-
-	/**
-	 * Sets the from of this notification queue entry.
-	 *
-	 * @param from the from of this notification queue entry
-	 */
-	public void setFrom(String from);
-
-	/**
-	 * Returns the from name of this notification queue entry.
-	 *
-	 * @return the from name of this notification queue entry
-	 */
-	@AutoEscape
-	public String getFromName();
-
-	/**
-	 * Sets the from name of this notification queue entry.
-	 *
-	 * @param fromName the from name of this notification queue entry
-	 */
-	public void setFromName(String fromName);
-
-	/**
 	 * Returns the priority of this notification queue entry.
 	 *
 	 * @return the priority of this notification queue entry
@@ -361,36 +301,6 @@ public interface NotificationQueueEntryModel
 	 * @param subject the subject of this notification queue entry
 	 */
 	public void setSubject(String subject);
-
-	/**
-	 * Returns the to of this notification queue entry.
-	 *
-	 * @return the to of this notification queue entry
-	 */
-	@AutoEscape
-	public String getTo();
-
-	/**
-	 * Sets the to of this notification queue entry.
-	 *
-	 * @param to the to of this notification queue entry
-	 */
-	public void setTo(String to);
-
-	/**
-	 * Returns the to name of this notification queue entry.
-	 *
-	 * @return the to name of this notification queue entry
-	 */
-	@AutoEscape
-	public String getToName();
-
-	/**
-	 * Sets the to name of this notification queue entry.
-	 *
-	 * @param toName the to name of this notification queue entry
-	 */
-	public void setToName(String toName);
 
 	/**
 	 * Returns the type of this notification queue entry.

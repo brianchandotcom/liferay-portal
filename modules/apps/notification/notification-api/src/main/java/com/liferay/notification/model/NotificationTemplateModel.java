@@ -223,21 +223,6 @@ public interface NotificationTemplateModel
 	public void setObjectDefinitionId(long objectDefinitionId);
 
 	/**
-	 * Returns the bcc of this notification template.
-	 *
-	 * @return the bcc of this notification template
-	 */
-	@AutoEscape
-	public String getBcc();
-
-	/**
-	 * Sets the bcc of this notification template.
-	 *
-	 * @param bcc the bcc of this notification template
-	 */
-	public void setBcc(String bcc);
-
-	/**
 	 * Returns the body of this notification template.
 	 *
 	 * @return the body of this notification template
@@ -337,21 +322,6 @@ public interface NotificationTemplateModel
 	public void setBodyMap(Map<Locale, String> bodyMap, Locale defaultLocale);
 
 	/**
-	 * Returns the cc of this notification template.
-	 *
-	 * @return the cc of this notification template
-	 */
-	@AutoEscape
-	public String getCc();
-
-	/**
-	 * Sets the cc of this notification template.
-	 *
-	 * @param cc the cc of this notification template
-	 */
-	public void setCc(String cc);
-
-	/**
 	 * Returns the description of this notification template.
 	 *
 	 * @return the description of this notification template
@@ -365,122 +335,6 @@ public interface NotificationTemplateModel
 	 * @param description the description of this notification template
 	 */
 	public void setDescription(String description);
-
-	/**
-	 * Returns the from of this notification template.
-	 *
-	 * @return the from of this notification template
-	 */
-	@AutoEscape
-	public String getFrom();
-
-	/**
-	 * Sets the from of this notification template.
-	 *
-	 * @param from the from of this notification template
-	 */
-	public void setFrom(String from);
-
-	/**
-	 * Returns the from name of this notification template.
-	 *
-	 * @return the from name of this notification template
-	 */
-	public String getFromName();
-
-	/**
-	 * Returns the localized from name of this notification template in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized from name of this notification template
-	 */
-	@AutoEscape
-	public String getFromName(Locale locale);
-
-	/**
-	 * Returns the localized from name of this notification template in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized from name of this notification template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getFromName(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized from name of this notification template in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized from name of this notification template
-	 */
-	@AutoEscape
-	public String getFromName(String languageId);
-
-	/**
-	 * Returns the localized from name of this notification template in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized from name of this notification template
-	 */
-	@AutoEscape
-	public String getFromName(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getFromNameCurrentLanguageId();
-
-	@AutoEscape
-	public String getFromNameCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized from names of this notification template.
-	 *
-	 * @return the locales and localized from names of this notification template
-	 */
-	public Map<Locale, String> getFromNameMap();
-
-	/**
-	 * Sets the from name of this notification template.
-	 *
-	 * @param fromName the from name of this notification template
-	 */
-	public void setFromName(String fromName);
-
-	/**
-	 * Sets the localized from name of this notification template in the language.
-	 *
-	 * @param fromName the localized from name of this notification template
-	 * @param locale the locale of the language
-	 */
-	public void setFromName(String fromName, Locale locale);
-
-	/**
-	 * Sets the localized from name of this notification template in the language, and sets the default locale.
-	 *
-	 * @param fromName the localized from name of this notification template
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setFromName(
-		String fromName, Locale locale, Locale defaultLocale);
-
-	public void setFromNameCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized from names of this notification template from the map of locales and localized from names.
-	 *
-	 * @param fromNameMap the locales and localized from names of this notification template
-	 */
-	public void setFromNameMap(Map<Locale, String> fromNameMap);
-
-	/**
-	 * Sets the localized from names of this notification template from the map of locales and localized from names, and sets the default locale.
-	 *
-	 * @param fromNameMap the locales and localized from names of this notification template
-	 * @param defaultLocale the default locale
-	 */
-	public void setFromNameMap(
-		Map<Locale, String> fromNameMap, Locale defaultLocale);
 
 	/**
 	 * Returns the name of this notification template.
@@ -695,105 +549,6 @@ public interface NotificationTemplateModel
 	 */
 	public void setSubjectMap(
 		Map<Locale, String> subjectMap, Locale defaultLocale);
-
-	/**
-	 * Returns the to of this notification template.
-	 *
-	 * @return the to of this notification template
-	 */
-	public String getTo();
-
-	/**
-	 * Returns the localized to of this notification template in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized to of this notification template
-	 */
-	@AutoEscape
-	public String getTo(Locale locale);
-
-	/**
-	 * Returns the localized to of this notification template in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized to of this notification template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getTo(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized to of this notification template in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized to of this notification template
-	 */
-	@AutoEscape
-	public String getTo(String languageId);
-
-	/**
-	 * Returns the localized to of this notification template in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized to of this notification template
-	 */
-	@AutoEscape
-	public String getTo(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getToCurrentLanguageId();
-
-	@AutoEscape
-	public String getToCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized tos of this notification template.
-	 *
-	 * @return the locales and localized tos of this notification template
-	 */
-	public Map<Locale, String> getToMap();
-
-	/**
-	 * Sets the to of this notification template.
-	 *
-	 * @param to the to of this notification template
-	 */
-	public void setTo(String to);
-
-	/**
-	 * Sets the localized to of this notification template in the language.
-	 *
-	 * @param to the localized to of this notification template
-	 * @param locale the locale of the language
-	 */
-	public void setTo(String to, Locale locale);
-
-	/**
-	 * Sets the localized to of this notification template in the language, and sets the default locale.
-	 *
-	 * @param to the localized to of this notification template
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setTo(String to, Locale locale, Locale defaultLocale);
-
-	public void setToCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized tos of this notification template from the map of locales and localized tos.
-	 *
-	 * @param toMap the locales and localized tos of this notification template
-	 */
-	public void setToMap(Map<Locale, String> toMap);
-
-	/**
-	 * Sets the localized tos of this notification template from the map of locales and localized tos, and sets the default locale.
-	 *
-	 * @param toMap the locales and localized tos of this notification template
-	 * @param defaultLocale the default locale
-	 */
-	public void setToMap(Map<Locale, String> toMap, Locale defaultLocale);
 
 	/**
 	 * Returns the type of this notification template.

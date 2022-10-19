@@ -78,7 +78,7 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,26 +98,16 @@ public class NotificationTemplateCacheModel
 		sb.append(modifiedDate);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
-		sb.append(", bcc=");
-		sb.append(bcc);
 		sb.append(", body=");
 		sb.append(body);
-		sb.append(", cc=");
-		sb.append(cc);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", from=");
-		sb.append(from);
-		sb.append(", fromName=");
-		sb.append(fromName);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", recipientType=");
 		sb.append(recipientType);
 		sb.append(", subject=");
 		sb.append(subject);
-		sb.append(", to=");
-		sb.append(to);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append("}");
@@ -167,13 +157,6 @@ public class NotificationTemplateCacheModel
 
 		notificationTemplateImpl.setObjectDefinitionId(objectDefinitionId);
 
-		if (bcc == null) {
-			notificationTemplateImpl.setBcc("");
-		}
-		else {
-			notificationTemplateImpl.setBcc(bcc);
-		}
-
 		if (body == null) {
 			notificationTemplateImpl.setBody("");
 		}
@@ -181,32 +164,11 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setBody(body);
 		}
 
-		if (cc == null) {
-			notificationTemplateImpl.setCc("");
-		}
-		else {
-			notificationTemplateImpl.setCc(cc);
-		}
-
 		if (description == null) {
 			notificationTemplateImpl.setDescription("");
 		}
 		else {
 			notificationTemplateImpl.setDescription(description);
-		}
-
-		if (from == null) {
-			notificationTemplateImpl.setFrom("");
-		}
-		else {
-			notificationTemplateImpl.setFrom(from);
-		}
-
-		if (fromName == null) {
-			notificationTemplateImpl.setFromName("");
-		}
-		else {
-			notificationTemplateImpl.setFromName(fromName);
 		}
 
 		if (name == null) {
@@ -228,13 +190,6 @@ public class NotificationTemplateCacheModel
 		}
 		else {
 			notificationTemplateImpl.setSubject(subject);
-		}
-
-		if (to == null) {
-			notificationTemplateImpl.setTo("");
-		}
-		else {
-			notificationTemplateImpl.setTo(to);
 		}
 
 		if (type == null) {
@@ -266,16 +221,11 @@ public class NotificationTemplateCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectDefinitionId = objectInput.readLong();
-		bcc = objectInput.readUTF();
 		body = (String)objectInput.readObject();
-		cc = objectInput.readUTF();
 		description = objectInput.readUTF();
-		from = objectInput.readUTF();
-		fromName = objectInput.readUTF();
 		name = objectInput.readUTF();
 		recipientType = objectInput.readUTF();
 		subject = objectInput.readUTF();
-		to = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
 
@@ -308,13 +258,6 @@ public class NotificationTemplateCacheModel
 
 		objectOutput.writeLong(objectDefinitionId);
 
-		if (bcc == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(bcc);
-		}
-
 		if (body == null) {
 			objectOutput.writeObject("");
 		}
@@ -322,32 +265,11 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeObject(body);
 		}
 
-		if (cc == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(cc);
-		}
-
 		if (description == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
-		}
-
-		if (from == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(from);
-		}
-
-		if (fromName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(fromName);
 		}
 
 		if (name == null) {
@@ -371,13 +293,6 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeUTF(subject);
 		}
 
-		if (to == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(to);
-		}
-
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -395,16 +310,11 @@ public class NotificationTemplateCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long objectDefinitionId;
-	public String bcc;
 	public String body;
-	public String cc;
 	public String description;
-	public String from;
-	public String fromName;
 	public String name;
 	public String recipientType;
 	public String subject;
-	public String to;
 	public String type;
 
 }

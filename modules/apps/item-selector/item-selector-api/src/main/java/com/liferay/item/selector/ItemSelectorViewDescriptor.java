@@ -44,11 +44,11 @@ public interface ItemSelectorViewDescriptor<T> {
 		return new String[] {"descriptive", "icon", "list"};
 	}
 
-	public default List<DropdownItem> getFilterDropdownItems() {
+	public default List<LabelItem> getFilterLabelItems() {
 		return null;
 	}
 
-	public default List<LabelItem> getFilterLabelItems() {
+	public default List<DropdownItem> getFilterNavigationDropdownItems() {
 		return null;
 	}
 

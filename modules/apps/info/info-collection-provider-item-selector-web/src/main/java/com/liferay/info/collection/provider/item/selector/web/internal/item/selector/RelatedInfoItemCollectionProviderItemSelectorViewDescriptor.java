@@ -75,19 +75,6 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	}
 
 	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterTypeDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_themeDisplay.getLocale(), "filter-by-item-type"));
-			}
-		).build();
-	}
-
-	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
 			() -> Validator.isNotNull(_getSelectedItemType()),
@@ -107,6 +94,19 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 				labelItem.setLabel(
 					LanguageUtil.get(_themeDisplay.getLocale(), "item-type") +
 						": " + modelResource);
+			}
+		).build();
+	}
+
+	@Override
+	public List<DropdownItem> getFilterNavigationDropdownItems() {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterTypeDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_themeDisplay.getLocale(), "filter-by-item-type"));
 			}
 		).build();
 	}

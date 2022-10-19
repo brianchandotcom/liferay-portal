@@ -65,13 +65,13 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		return _itemSelectorViewDescriptor.getFilterDropdownItems();
+	public List<LabelItem> getFilterLabelItems() {
+		return _itemSelectorViewDescriptor.getFilterLabelItems();
 	}
 
 	@Override
-	public List<LabelItem> getFilterLabelItems() {
-		return _itemSelectorViewDescriptor.getFilterLabelItems();
+	public List<DropdownItem> getFilterNavigationDropdownItems() {
+		return _itemSelectorViewDescriptor.getFilterNavigationDropdownItems();
 	}
 
 	@Override

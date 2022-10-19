@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -189,9 +188,6 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

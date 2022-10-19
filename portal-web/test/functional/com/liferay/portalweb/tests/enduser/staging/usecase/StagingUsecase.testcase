@@ -824,15 +824,7 @@ definition {
 			}
 		}
 
-		task ("When: User import a LAR file containing web contents") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-			LAR.importPortlet(
-				larFileName = "HR_WebContent_master.lar",
-				uploadFrom = "dependencies");
-		}
-
-		task ("And: Delete the imported portlets on the staging site then publish it") {
+		task ("When: Delete the imported portlets on the staging site then publish it") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Home",
 				siteName = "Site Name");
@@ -860,58 +852,28 @@ definition {
 			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 		}
 
-		task ("And: Add new content widget to the staging site") {
-			WidgetPages.addRecentContent(assetTitle = "Enrollment Features");
-
+		task ("And: Publish the staging site") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Home",
 				siteName = "Site Name");
-
-			WidgetPages.addRecentContent(assetTitle = "The SPACE Family");
-		}
-
-		task ("And: Configure Barebone decorator for the WCD then publish the staging site") {
-			Portlet.gotoPortletOptions(
-				portletName = "Web Content Display",
-				portletOption = "Look and Feel Configuration");
-
-			IFrame.selectConfigurationFrame();
-
-			Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = "Barebone");
-
-			Navigator.gotoStagedSitePage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			Portlet.viewApplicationDecorator(decorator = "Barebone");
 
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
 		}
 
-		task ("Then: Only the configured and not deleted portlets will be visible from the imported LAR files") {
+		task ("Then: Assert that changes are published to live site") {
 			Navigator.gotoSitePage(
 				pageName = "Home",
 				siteName = "Site Name");
 
 			Portlet.viewNoSpecificPG(portletName = "Activities");
 
-			Portlet.viewApplicationDecorator(decorator = "Barebone");
-
-			AssertTextEquals(
-				index = "2",
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "You're a part of the S.P.A.C.E. family");
-
-			AssertTextEquals.assertPartialText(
-				index = "1",
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "Faculty Meet-and-Greet Brunch");
+			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-			for (var webContentTitle : list "Meet and Greet,Orientation,Physicals,Enrollment Features,The SPACE Family") {
+			for (var webContentTitle : list "Meet and Greet,Orientation,Physicals") {
 				WebContent.viewTitle(
 					onLive = "true",
 					webContentTitle = "${webContentTitle}");

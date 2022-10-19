@@ -394,11 +394,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPERIENCE_MENU_BUTTON</td>
-	<td>//*[@class='page-editor__toolbar-experience']//button[contains(@id,'pageEditorToolbar_experience')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EXPERIENCE_MODAL</td>
 	<td>//div[contains(@class,'modal-content') and contains(.,'New Experience')]</td>
 	<td></td>

@@ -1094,7 +1094,9 @@ definition {
 	macro changeExperience {
 		var key_experienceName = "${newExperience}";
 
-		Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		Click(
+			ariaLabel = "Experience",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Click(locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 
@@ -4048,7 +4050,9 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 	macro openExperienceMenu {
 		if (IsElementNotPresent(locator1 = "PageEditor#EXPERIENCE_MENU")) {
-			Click(locator1 = "PageEditor#EXPERIENCE_MENU_BUTTON");
+			Click(
+				ariaLabel = "Experience",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 		}
 	}
 

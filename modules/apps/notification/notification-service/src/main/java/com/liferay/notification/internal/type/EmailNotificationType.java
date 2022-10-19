@@ -167,26 +167,43 @@ public class EmailNotificationType extends BaseNotificationType {
 				"userLocale", user.getLocale()
 			).build());
 
+		NotificationTemplateRecipient notificationTemplateRecipient =
+			notificationTemplate.getNotificationTemplateRecipient();
+
 		String bcc = _formatContent(
-			notificationTemplate.getBcc(), notificationContext);
-		String body = _formatContent(
+			"bcc", notificationContext,
+			notificationTemplateRecipient.getNotificationTemplateRecipientId());
+
+		String body = _formatLocalizedContent(
 			notificationTemplate.getBodyMap(), notificationContext);
 		String cc = _formatContent(
-			notificationTemplate.getCc(), notificationContext);
+			"cc", notificationContext,
+			notificationTemplateRecipient.getNotificationTemplateRecipientId());
 		String from = _formatContent(
-			notificationTemplate.getFrom(), notificationContext);
-		String fromName = _formatContent(
-			notificationTemplate.getFromNameMap(), notificationContext);
-		String subject = _formatContent(
+			"from", notificationContext,
+			notificationTemplateRecipient.getNotificationTemplateRecipientId());
+		String fromName = _formatLocalizedContent(
+			"fromName", notificationContext,
+			notificationTemplateRecipient.getNotificationTemplateRecipientId());
+		String subject = _formatLocalizedContent(
 			notificationTemplate.getSubjectMap(), notificationContext);
 
+		NotificationTemplateRecipientSetting
+			notificationTemplateRecipientSetting =
+				_notificationTemplateRecipientSettingLocalService.
+					getNotificationTemplateRecipientSetting(
+						"to",
+						notificationTemplateRecipient.
+							getNotificationTemplateRecipientId());
+
 		String to = _formatTo(
-			notificationTemplate.getTo(user.getLocale()), user.getLocale(),
-			notificationContext);
+			notificationTemplateRecipientSetting.getValue(user.getLocale()),
+			user.getLocale(), notificationContext);
 
 		if (Validator.isNull(to)) {
-			to = _formatContent(
-				notificationTemplate.getTo(siteDefaultLocale),
+			to = _formatLocalizedContent(
+				notificationTemplateRecipientSetting.getValue(
+					siteDefaultLocale),
 				siteDefaultLocale,
 				NotificationTermContributorConstants.RECIPIENT,
 				notificationContext);
@@ -346,24 +363,23 @@ public class EmailNotificationType extends BaseNotificationType {
 	}
 
 	private String _formatContent(
-			Map<Locale, String> contentMap,
-			NotificationContext notificationContext)
+			String settingName, NotificationContext notificationContext,
+			long notificationTemplateRecipientId)
 		throws PortalException {
 
-		String content = contentMap.get(
-			(Locale)notificationContext.getAttributeValue("userLocale"));
+		NotificationTemplateRecipientSetting
+			notificationTemplateRecipientSetting =
+				_notificationTemplateRecipientSettingLocalService.
+					getNotificationTemplateRecipientSetting(
+						settingName, notificationTemplateRecipientId);
 
-		content = _formatContent(
-			content,
+		String content = _formatLocalizedContent(
+			notificationTemplateRecipientSetting.getValue(),
 			(Locale)notificationContext.getAttributeValue("userLocale"), null,
 			notificationContext);
 
 		if (Validator.isNull(content)) {
-			content = contentMap.get(
-				(Locale)notificationContext.getAttributeValue(
-					"siteDefaultLocale"));
-
-			return _formatContent(
+			return _formatLocalizedContent(
 				content,
 				(Locale)notificationContext.getAttributeValue(
 					"siteDefaultLocale"),
@@ -373,7 +389,35 @@ public class EmailNotificationType extends BaseNotificationType {
 		return content;
 	}
 
-	private String _formatContent(
+	private String _formatLocalizedContent(
+			Map<Locale, String> contentMap,
+			NotificationContext notificationContext)
+		throws PortalException {
+
+		String content = contentMap.get(
+			(Locale)notificationContext.getAttributeValue("userLocale"));
+
+		content = _formatLocalizedContent(
+			content,
+			(Locale)notificationContext.getAttributeValue("userLocale"), null,
+			notificationContext);
+
+		if (Validator.isNull(content)) {
+			content = contentMap.get(
+				(Locale)notificationContext.getAttributeValue(
+					"siteDefaultLocale"));
+
+			return _formatLocalizedContent(
+				content,
+				(Locale)notificationContext.getAttributeValue(
+					"siteDefaultLocale"),
+				null, notificationContext);
+		}
+
+		return content;
+	}
+
+	private String _formatLocalizedContent(
 			String content, Locale locale,
 			String notificationTermContributorKey,
 			NotificationContext notificationContext)
@@ -420,24 +464,20 @@ public class EmailNotificationType extends BaseNotificationType {
 		return content;
 	}
 
-	private String _formatContent(
-			String content, NotificationContext notificationContext)
+	private String _formatLocalizedContent(
+			String settingName, NotificationContext notificationContext,
+			long notificationTemplateRecipientId)
 		throws PortalException {
 
-		content = _formatContent(
-			content,
-			(Locale)notificationContext.getAttributeValue("userLocale"), null,
+		NotificationTemplateRecipientSetting
+			notificationTemplateRecipientSetting =
+				_notificationTemplateRecipientSettingLocalService.
+					getNotificationTemplateRecipientSetting(
+						settingName, notificationTemplateRecipientId);
+
+		return _formatLocalizedContent(
+			notificationTemplateRecipientSetting.getValueMap(),
 			notificationContext);
-
-		if (Validator.isNull(content)) {
-			return _formatContent(
-				content,
-				(Locale)notificationContext.getAttributeValue(
-					"siteDefaultLocale"),
-				null, notificationContext);
-		}
-
-		return content;
 	}
 
 	private String _formatTo(
@@ -456,7 +496,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			emailAddresses.add(matcher.group());
 		}
 
-		return _formatContent(
+		return _formatLocalizedContent(
 			StringUtil.merge(emailAddresses), locale,
 			NotificationTermContributorConstants.RECIPIENT,
 			notificationContext);

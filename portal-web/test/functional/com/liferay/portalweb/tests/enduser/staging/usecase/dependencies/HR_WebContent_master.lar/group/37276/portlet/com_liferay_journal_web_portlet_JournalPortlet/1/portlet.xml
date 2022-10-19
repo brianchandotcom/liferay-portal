@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_journal_web_portlet_JournalPortlet" private-layout="false" root-portlet-id="com_liferay_journal_web_portlet_JournalPortlet" scope-group-id="37276" scope-layout-type="" scope-layout-uuid="" self-path="/group/37276/portlet/com_liferay_journal_web_portlet_JournalPortlet/1/portlet.xml">
-	<portlet-data path="/group/37276/portlet/com_liferay_journal_web_portlet_JournalPortlet/37276/portlet-data.xml" />
-</portlet>

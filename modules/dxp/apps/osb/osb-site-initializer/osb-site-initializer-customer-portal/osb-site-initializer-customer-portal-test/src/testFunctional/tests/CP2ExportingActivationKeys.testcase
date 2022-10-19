@@ -76,26 +76,35 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150641 | Test Summary: Verify if when the user successfully downloads a key, shows the message Activation key details successfully exported"
+	@ignore = "true"
 	@priority = "3"
 	test AssertTheActivationKeyDownloadMessage {
 
-		// TODO LPS-150641 AssertTheActivationKeyDownloadMessage pending implementation
+		// Needs refactor since it depends on example NASA ICE account
 
-	}
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
-	@description = "Automation ID: LPS-150643 | Test Summary: Verify if when the user try to downloads the keys and it fails shows the message Unable to export keys, please try again"
-	@priority = "3"
-	test AssertTheActivationKeyDownloadErrorMessage {
+			Navigator.openURL();
 
-		// TODO LPS-150643 AssertTheActivationKeyDownloadErrorMessage pending implementation
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
 
-	}
+		task ("Given I go to the test account") {
+            CustomerPortal.search(searchItem = "${testAccount1}");
 
-	@description = "Automation ID: LPS-150645 | Test Summary: Assert if the Export All Key Details option always download all the keys, no matter what filter is been used"
-	@priority = "4"
-	test AssertTheExportAllKeyDetailsDisplayInAnyFilter {
-		
-		// TODO LPS-150645 AssertTheExportAllKeyDetailsDisplayInAnyFilter pending implementation
+            CustomerPortal.enterOnProject(title = "${testAccount1}");
+        }
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
+
+		task ("Then the user is able to export activation keys and receives a success message") {
+			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
+		}
 
 	}
 

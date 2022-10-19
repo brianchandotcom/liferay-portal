@@ -29,7 +29,7 @@ import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -142,7 +142,8 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 				"Unable to connect analytics data source");
 		}
 
-		JSONObject contentJSONObject = _jsonFactory.createJSONObject(content);
+		JSONObject contentJSONObject = JSONFactoryUtil.createJSONObject(
+			content);
 
 		return contentJSONObject.toMap();
 	}
@@ -273,7 +274,7 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 				throw new IllegalArgumentException();
 			}
 
-			return _jsonFactory.createJSONObject(
+			return JSONFactoryUtil.createJSONObject(
 				new String(Base64.decode(connectionToken)));
 		}
 		catch (Exception exception) {
@@ -318,9 +319,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

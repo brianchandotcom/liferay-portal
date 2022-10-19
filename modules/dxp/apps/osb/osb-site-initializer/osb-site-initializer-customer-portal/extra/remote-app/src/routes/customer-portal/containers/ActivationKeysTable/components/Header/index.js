@@ -10,7 +10,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import useGetAccountUserAccount from '../../../../pages/Project/TeamMembers/components/TeamMembersTable/hooks/useGetAccountUserAccounts';
@@ -39,24 +39,13 @@ const ActivationKeysTableHeader = ({
 		userAccountsState: [userAccounts],
 	} = useGetAccountUserAccount(project);
 
-	const [isAdminOrPartnerManager, setIsAdminOrPartnerManager] = useState();
-
-	const filteredAccounts = userAccounts?.filter((userAccount) =>
+	const isAdminOrPartnerManager = userAccounts?.some((userAccount) =>
 		userAccount?.roles?.some(
 			(role) =>
 				role === ROLE_TYPES.admin.key ||
 				role === ROLE_TYPES.partnerManager.key
 		)
 	);
-
-	useEffect(() => {
-		if (filteredAccounts.length) {
-			setIsAdminOrPartnerManager(true);
-		}
-		else {
-			setIsAdminOrPartnerManager(false);
-		}
-	}, [isAdminOrPartnerManager, filteredAccounts]);
 
 	const [status, setStatus] = useState({
 		deactivate: '',

@@ -1314,12 +1314,50 @@ definition {
 	}
 
 	@description = "Verify that the user can delete notification role types"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteNotificationRoleTypes {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNotificationRoleTypes";
 
-		// TODO CanDeleteNotificationRoleTypes pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			description = "Notification Description",
+			name = "New Notification",
+			newNotification = "true",
+			notificationsRoleType = "Organization",
+			notificationsRoleTypeRoleName = "Organization Administrator",
+			notificationTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			notificationTypeOption = "User Notification",
+			recipientTypeOption = "Role Type",
+			singleAction = "true",
+			templateLanguageOption = "FreeMarker");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.addRoleTypeInNotifications(
+			newSection = "New Role Type",
+			roleName = "Account Member",
+			roleType = "Account");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.deleteRoleTypeInNotifications();
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewRoleTypeNotPresentInSidebar(roleType = "Organization");
 	}
 
 	@description = "Verify that the user can delete a specific notification configuration"

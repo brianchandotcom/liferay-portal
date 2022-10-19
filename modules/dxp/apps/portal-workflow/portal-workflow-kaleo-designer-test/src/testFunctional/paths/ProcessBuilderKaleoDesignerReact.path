@@ -536,6 +536,26 @@
 	<td>//span[contains(@class,'label-item label-item-expand')and contains(.,'${key_notificationTypeOption}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ROLE_NAME_FIELD_EMPTY</td>
+	<td>//input[contains(@id,'role-name') and (@value='')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TYPE_FIELD_EMPTY</td>
+	<td>//input[contains(@id,'role-type') and (@value='')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_TRASH_ROLE_TYPE</td>
+	<td>//div[@class='panel-body']//input[contains(@id,'notificationName') and contains(@value,'')]/../..//*[contains(@class, 'icon-trash')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TYPE_NAME_FIELD</td>
+	<td>//input[contains(@id,'role-type')]/..//input[@type='text' and @value ='${key_roleType}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -207,6 +207,26 @@ definition {
 		}
 	}
 
+	macro addRoleTypeInNotifications {
+		Click(
+			key_buttonName = "${newSection}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
+
+		Click.mouseOverClick(locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD_EMPTY");
+
+		Click(
+			key_optionRoleName = "${roleType}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS",
+			value1 = "${roleType}");
+
+		Click.mouseOverClick(locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD_EMPTY");
+
+		Click(
+			key_optionRoleName = "${roleName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS",
+			value1 = "${roleName}");
+	}
+
 	macro backArrowOnSidebar {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BACK_TO_SIDEBAR_BUTTON");
 	}
@@ -323,6 +343,10 @@ definition {
 		}
 
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
+	}
+
+	macro deleteRoleTypeInNotifications {
+		Click.mouseOverClick(locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_ROLE_TYPE");
 	}
 
 	macro diagramSourceSwitchView {
@@ -1840,6 +1864,12 @@ definition {
 		AssertVisible(
 			key_roleName = "${roleName}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD");
+	}
+
+	macro viewRoleTypeNotPresentInSidebar {
+		AssertElementNotPresent(
+			key_roleType = "${roleType}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_NAME_FIELD");
 	}
 
 	macro viewSaveButtonPresent {

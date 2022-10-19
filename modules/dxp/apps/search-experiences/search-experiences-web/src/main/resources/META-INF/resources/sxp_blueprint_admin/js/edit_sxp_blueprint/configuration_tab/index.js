@@ -68,7 +68,7 @@ function ConfigurationTab({
 		setFieldValue('indexConfig', {indexName: event.target.value});
 	};
 
-	const _isDefaultCompanyIndex = () => {
+	const _isCompanyIndex = () => {
 		return indexConfig.indexName === '';
 	};
 
@@ -223,11 +223,11 @@ function ConfigurationTab({
 
 							<ClayRadioGroup
 								onChange={_handleIndexConfigurationRadioChange}
-								value={_isDefaultCompanyIndex()}
+								value={_isCompanyIndex()}
 							>
 								<ClayRadio
 									label={Liferay.Language.get(
-										'default-company-index'
+										'company-index'
 									)}
 									value={true}
 								/>
@@ -241,7 +241,7 @@ function ConfigurationTab({
 								/>
 							</ClayRadioGroup>
 
-							{!_isDefaultCompanyIndex() && (
+							{!_isCompanyIndex() && (
 								<ClaySelect
 									aria-label={Liferay.Language.get(
 										'index-configuration'

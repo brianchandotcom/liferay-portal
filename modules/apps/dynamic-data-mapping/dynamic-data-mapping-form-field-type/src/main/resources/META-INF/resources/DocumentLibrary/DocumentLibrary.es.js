@@ -361,8 +361,9 @@ const Main = ({
 		setErrorMessage(
 			getErrorMessages(
 				initialErrorMessage,
-				objectFieldInvalidExtension,
-				isSignedIn
+				isSignedIn,
+				objectFieldInvalidExtension
+
 			)
 		);
 		setValid(objectFieldInvalidExtension ? false : initialValid);

@@ -21,18 +21,12 @@
 		<!-- Other fields -->
 
 		<column name="notificationTemplateId" type="long" />
-		<column name="bcc" type="String" />
 		<column name="body" type="String" />
-		<column name="cc" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="from" type="String" />
-		<column name="fromName" type="String" />
 		<column name="priority" type="double" />
 		<column name="sentDate" type="Date" />
 		<column name="subject" type="String" />
-		<column name="to" type="String" />
-		<column name="toName" type="String" />
 		<column name="type" type="String" />
 		<column name="status" type="int" />
 
@@ -70,6 +64,55 @@
 			<finder-column name="notificationQueueEntryId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="NotificationRecipient" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="notificationRecipientId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classPK" type="long" />
+		<column name="className" type="String" />
+		<finder name="ClassPK" return-type="NotificationRecipient">
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="NotificationRecipientSetting" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="notificationRecipientSettingId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="notificationRecipientId" type="long" />
+		<column name="name" type="String" />
+		<column localized="true" name="value" type="String" />
+		<finder name="NotificationRecipientId" return-type="Collection">
+			<finder-column name="notificationRecipientId" />
+		</finder>
+		<finder name="N_NRI" return-type="NotificationRecipientSetting">
+			<finder-column name="notificationRecipientId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="NotificationTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -87,16 +130,11 @@
 		<!-- Other fields -->
 
 		<column name="objectDefinitionId" type="long" />
-		<column name="bcc" type="String" />
 		<column localized="true" name="body" type="String" />
-		<column name="cc" type="String" />
 		<column name="description" type="String" />
-		<column name="from" type="String" />
-		<column localized="true" name="fromName" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="recipientType" type="String" />
 		<column localized="true" name="subject" type="String" />
-		<column localized="true" name="to" type="String" />
 		<column name="type" type="String" />
 	</entity>
 	<entity local-service="true" name="NotificationTemplateAttachment" remote-service="false" table="NTemplateAttachment" uuid="false">

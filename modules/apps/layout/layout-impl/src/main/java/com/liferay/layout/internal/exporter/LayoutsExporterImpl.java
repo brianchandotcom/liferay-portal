@@ -59,9 +59,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletException;
 
@@ -86,8 +84,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Override
 	public File exportGroupLayoutPageTemplates(long groupId) throws Exception {
-		Map<Long, LayoutPageTemplateCollection>
-			layoutPageTemplateCollectionKeyMap = new HashMap<>();
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -107,14 +103,9 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 				if (layoutPageTemplateEntry.getType() ==
 						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
 
-					_populateLayoutPageTemplateCollectionKeyMap(
-						layoutPageTemplateCollectionKeyMap,
-						layoutPageTemplateEntry);
-
 					_populatePageTemplatesZipWriter(
-						layoutPageTemplateEntry,
-						layoutPageTemplateCollectionKeyMap,
-						pageDefinitionDTOConverter, zipWriter);
+						layoutPageTemplateEntry, pageDefinitionDTOConverter,
+						zipWriter);
 				}
 				else if (layoutPageTemplateEntry.getType() ==
 							LayoutPageTemplateEntryTypeConstants.
@@ -155,8 +146,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	public File exportPageTemplates(long[] layoutPageTemplateEntryIds)
 		throws Exception {
 
-		Map<Long, LayoutPageTemplateCollection>
-			layoutPageTemplateCollectionKeyMap = new HashMap<>();
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -174,13 +163,9 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					continue;
 				}
 
-				_populateLayoutPageTemplateCollectionKeyMap(
-					layoutPageTemplateCollectionKeyMap,
-					layoutPageTemplateEntry);
-
 				_populatePageTemplatesZipWriter(
-					layoutPageTemplateEntry, layoutPageTemplateCollectionKeyMap,
-					pageDefinitionDTOConverter, zipWriter);
+					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					zipWriter);
 			}
 
 			return zipWriter.getFile();
@@ -327,28 +312,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 	}
 
-	private void _populateLayoutPageTemplateCollectionKeyMap(
-			Map<Long, LayoutPageTemplateCollection>
-				layoutPageTemplateCollectionKeyMap,
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws PortalException {
-
-		long layoutPageTemplateCollectionId =
-			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId();
-
-		if (layoutPageTemplateCollectionKeyMap.containsKey(
-				layoutPageTemplateCollectionId)) {
-
-			return;
-		}
-
-		layoutPageTemplateCollectionKeyMap.put(
-			layoutPageTemplateCollectionId,
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollection(
-					layoutPageTemplateCollectionId));
-	}
-
 	private void _populateMasterLayoutsZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			DTOConverter<LayoutStructure, PageDefinition>
@@ -401,16 +364,16 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	private void _populatePageTemplatesZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			Map<Long, LayoutPageTemplateCollection>
-				layoutPageTemplateCollectionKeyMap,
 			DTOConverter<LayoutStructure, PageDefinition>
 				pageDefinitionDTOConverter,
 			ZipWriter zipWriter)
 		throws Exception {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			layoutPageTemplateCollectionKeyMap.get(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
+			_layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollection(
+					layoutPageTemplateEntry.
+						getLayoutPageTemplateCollectionId());
 
 		String layoutPageTemplateCollectionKey =
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey();

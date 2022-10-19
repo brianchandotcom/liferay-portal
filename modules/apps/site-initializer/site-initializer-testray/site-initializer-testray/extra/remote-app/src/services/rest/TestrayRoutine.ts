@@ -12,9 +12,11 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
+import {SearchBuilder} from '../../util/search';
 import Rest from './Rest';
-import {TestrayRoutine} from './types';
+import {APIResponse, TestrayRoutine} from './types';
 
 type RoutineFormType = typeof yupSchema.routine.__outputType & {
 	projectId: number;
@@ -31,6 +33,39 @@ class TestrayRoutineImpl extends Rest<RoutineFormType, TestrayRoutine> {
 			}),
 			uri: 'routines',
 		});
+	}
+
+	protected async validate(routine: RoutineFormType, id?: number) {
+		const searchBuilder = new SearchBuilder();
+
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
+
+		const filters = searchBuilder
+			.eq('name', routine.name)
+			.and()
+			.eq('projectId', routine.projectId)
+			.build();
+
+		const response = await this.fetcher<APIResponse<TestrayRoutine>>(
+			`/routines?filter=${filters}`
+		);
+
+		if (response?.totalCount) {
+			throw new Error(i18n.sub('the-x-name-already-exists', 'routine'));
+		}
+	}
+
+	protected async beforeCreate(routine: RoutineFormType): Promise<void> {
+		await this.validate(routine);
+	}
+
+	protected async beforeUpdate(
+		id: number,
+		routine: RoutineFormType
+	): Promise<void> {
+		await this.validate(routine, id);
 	}
 }
 

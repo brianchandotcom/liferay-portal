@@ -15,6 +15,7 @@
 package com.liferay.ip.geocoder.internal.segments.field.customizer;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -61,7 +62,8 @@ public class IPGeocoderCountrySegmentsFieldCustomizer
 	@Override
 	public List<Field.Option> getOptions(Locale locale) {
 		return TransformUtil.transform(
-			_countryService.getCountries(),
+			_countryService.getCompanyCountries(
+			CompanyThreadLocal.getCompanyId()),
 			country -> new Field.Option(
 				country.getName(locale), country.getA2()));
 	}

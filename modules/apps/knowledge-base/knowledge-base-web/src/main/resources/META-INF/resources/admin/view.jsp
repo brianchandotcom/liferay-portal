@@ -169,49 +169,48 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 											</aui:a>
 										</h2>
 
-									<span class="text-default">
-
-										<%
-										Date modifiedDate = kbFolder.getModifiedDate();
-
-										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-										%>
-
-										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</span>
-
 										<span class="text-default">
-										<span>
 
 											<%
-											int kbFoldersCount = KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId());
+											Date modifiedDate = kbFolder.getModifiedDate();
+
+											String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 											%>
 
-											<c:choose>
-												<c:when test="<%= kbFoldersCount == 1 %>">
-													<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folder" />
-												</c:when>
-												<c:otherwise>
-													<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folders" />
-												</c:otherwise>
-											</c:choose>
+											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 										</span>
-										<span class="kb-descriptive-details">
+										<span class="text-default">
+											<span>
 
-											<%
-											int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY);
-											%>
+												<%
+												int kbFoldersCount = KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId());
+												%>
 
-											<c:choose>
-												<c:when test="<%= kbArticlesCount == 1 %>">
-													<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-article" />
-												</c:when>
-												<c:otherwise>
-													<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-articles" />
-												</c:otherwise>
-											</c:choose>
+												<c:choose>
+													<c:when test="<%= kbFoldersCount == 1 %>">
+														<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folder" />
+													</c:when>
+													<c:otherwise>
+														<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folders" />
+													</c:otherwise>
+												</c:choose>
+											</span>
+											<span class="kb-descriptive-details">
+
+												<%
+												int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY);
+												%>
+
+												<c:choose>
+													<c:when test="<%= kbArticlesCount == 1 %>">
+														<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-article" />
+													</c:when>
+													<c:otherwise>
+														<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-articles" />
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</span>
-									</span>
 									</liferay-ui:search-container-column-text>
 
 									<liferay-ui:search-container-column-text>
@@ -258,47 +257,46 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 											</aui:a>
 										</h2>
 
-									<span class="text-default">
-
-										<%
-										Date modifiedDate = kbArticle.getModifiedDate();
-
-										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-										%>
-
-										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</span>
-
 										<span class="text-default">
-										<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 
-										<%
-										int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
-										%>
+											<%
+											Date modifiedDate = kbArticle.getModifiedDate();
 
-										<c:if test="<%= childKBArticlesCount > 0 %>">
-											<liferay-portlet:renderURL varImpl="childKBArticlesURL">
-												<portlet:param name="mvcPath" value="/admin/view_kb_articles.jsp" />
-												<portlet:param name="redirect" value="<%= currentURL %>" />
-												<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-												<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-												<portlet:param name="selectedItemId" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-											</liferay-portlet:renderURL>
+											String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+											%>
+
+											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+										</span>
+										<span class="text-default">
+											<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+
+											<%
+											int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+											%>
+
+											<c:if test="<%= childKBArticlesCount > 0 %>">
+												<liferay-portlet:renderURL varImpl="childKBArticlesURL">
+													<portlet:param name="mvcPath" value="/admin/view_kb_articles.jsp" />
+													<portlet:param name="redirect" value="<%= currentURL %>" />
+													<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
+													<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+													<portlet:param name="selectedItemId" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+												</liferay-portlet:renderURL>
+
+												<span class="kb-descriptive-details">
+													<aui:a href="<%= childKBArticlesURL.toString() %>">
+														<liferay-ui:message arguments="<%= childKBArticlesCount %>" key="x-child-articles" />
+													</aui:a>
+												</span>
+											</c:if>
 
 											<span class="kb-descriptive-details">
-												<aui:a href="<%= childKBArticlesURL.toString() %>">
-													<liferay-ui:message arguments="<%= childKBArticlesCount %>" key="x-child-articles" />
-												</aui:a>
+												<liferay-ui:message arguments="<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>" key="priority-x" />
 											</span>
-										</c:if>
-
-										<span class="kb-descriptive-details">
-											<liferay-ui:message arguments="<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>" key="priority-x" />
+											<span class="kb-descriptive-details">
+												<liferay-ui:message arguments="<%= kbArticle.getViewCount() %>" key="x-views" />
+											</span>
 										</span>
-										<span class="kb-descriptive-details">
-											<liferay-ui:message arguments="<%= kbArticle.getViewCount() %>" key="x-views" />
-										</span>
-									</span>
 									</liferay-ui:search-container-column-text>
 
 									<liferay-ui:search-container-column-text>

@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFiel
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
@@ -437,9 +436,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private volatile List<InfoDisplayRequestAttributesContributor>

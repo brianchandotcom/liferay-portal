@@ -21,6 +21,8 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -88,9 +90,17 @@ public class CreateAccountUserMVCActionCommand
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/account_user_registration/error.jsp");
+
+			return;
 		}
 
-		User user = _addUser(actionRequest);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			ticket.getExtraInfo());
+
+		User user = _addUser(
+			actionRequest, ticket.getClassPK(),
+			(long[])jsonObject.get("accountRoleIds"),
+			jsonObject.getString("emailAddress"));
 
 		_ticketLocalService.deleteTicket(ticket);
 
@@ -108,14 +118,16 @@ public class CreateAccountUserMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	private User _addUser(ActionRequest actionRequest) throws Exception {
+	private User _addUser(
+			ActionRequest actionRequest, long accountEntryId,
+			long[] accountRoleIds, String emailAddress)
+		throws Exception {
+
 		boolean autoPassword = true;
 		String password1 = null;
 		String password2 = null;
 		boolean autoScreenName = false;
 		String screenName = ParamUtil.getString(actionRequest, "screenName");
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
@@ -168,14 +180,8 @@ public class CreateAccountUserMVCActionCommand
 			_userService.updatePortrait(user.getUserId(), portraitBytes);
 		}
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
-
 		_accountEntryUserRelLocalService.addAccountEntryUserRels(
 			accountEntryId, new long[] {user.getUserId()});
-
-		long[] accountRoleIds = ParamUtil.getLongValues(
-			actionRequest, "accountRoleIds");
 
 		if (ArrayUtil.isNotEmpty(accountRoleIds)) {
 			_accountRoleLocalService.associateUser(

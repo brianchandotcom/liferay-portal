@@ -14,13 +14,18 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.admin.web.internal.display.context.InvitedAccountUserDisplayContext;
 import com.liferay.account.admin.web.internal.portlet.action.util.TicketUtil;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -56,6 +61,25 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 
 			return "/account_user_registration/error.jsp";
 		}
+
+		InvitedAccountUserDisplayContext invitedAccountUserDisplayContext =
+			new InvitedAccountUserDisplayContext();
+
+		invitedAccountUserDisplayContext.setTicketKey(ticket.getKey());
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				ticket.getExtraInfo());
+
+			invitedAccountUserDisplayContext.setEmailAddress(
+				jsonObject.getString("emailAddress"));
+		}
+		catch (JSONException jsonException) {
+			throw new PortletException(jsonException);
+		}
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, invitedAccountUserDisplayContext);
 
 		return "/account_user_registration/create_account_user.jsp";
 	}

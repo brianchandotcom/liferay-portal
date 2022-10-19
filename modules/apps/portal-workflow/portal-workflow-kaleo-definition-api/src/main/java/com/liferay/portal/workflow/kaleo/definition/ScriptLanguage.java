@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.definition;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -57,7 +58,10 @@ public interface ScriptLanguage {
 		else if (Objects.equals(RUBY.getValue(), value)) {
 			return RUBY;
 		}
-		else if (FUNCTION_REGEX.matcher(value).matches()) {
+
+		Matcher matcher = _pattern.matcher(value);
+
+		if (matcher.matches()) {
 			return new ScriptingLanguageImpl(value);
 		}
 
@@ -65,7 +69,7 @@ public interface ScriptLanguage {
 			value);
 	}
 
-	public static final Pattern FUNCTION_REGEX = Pattern.compile(
+	public static final Pattern _pattern = Pattern.compile(
 		"^function#[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*$");
 
 	public String getValue();

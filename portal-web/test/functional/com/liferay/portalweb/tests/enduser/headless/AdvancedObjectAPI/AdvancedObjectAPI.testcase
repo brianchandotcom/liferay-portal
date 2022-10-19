@@ -202,13 +202,13 @@ definition {
 		}
 
 		task ("Then 'employee' information should be provided with 'manager' information nested as an object") {
-				ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
+			ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
 				expectedEmployeeFirstname = "Bruce",
 				expectedManagerFirstname = "Courtney",
 				expectedManagerId = "${managerId}",
 				nestedField = "r_${relationshipName}_c_${nestedObject}Id",
-				objectId = "${employeeId}",
 				nestedObject = "manager",
+				objectId = "${employeeId}",
 				relationshipName = "supervisor",
 				responseToParse = "${getEmployeesWithManager}");
 		}
@@ -293,8 +293,8 @@ definition {
 				expectedManagerFirstname = "Aaron",
 				expectedManagerId = "${managerId2}",
 				nestedField = "r_${relationshipName}_c_${nestedObject}Id",
-				objectId = "${employeeId1}",
 				nestedObject = "manager",
+				objectId = "${employeeId1}",
 				relationshipName = "supervisor",
 				responseToParse = "${getEmployeesWithManager}");
 		}

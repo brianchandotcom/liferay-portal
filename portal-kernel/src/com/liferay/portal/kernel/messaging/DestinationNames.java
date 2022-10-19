@@ -21,8 +21,6 @@ public interface DestinationNames {
 
 	public static final String ASYNC_SERVICE = "liferay/async_service";
 
-	public static final String AUDIT = "liferay/audit";
-
 	public static final String BACKGROUND_TASK = "liferay/background_task";
 
 	public static final String BACKGROUND_TASK_STATUS =

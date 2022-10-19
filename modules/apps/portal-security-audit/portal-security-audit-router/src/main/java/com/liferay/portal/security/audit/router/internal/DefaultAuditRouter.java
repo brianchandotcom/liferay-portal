@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
@@ -39,11 +35,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -59,7 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = DefaultAuditRouter.class
+	service = AuditRouter.class
 )
 public class DefaultAuditRouter implements AuditRouter {
 
@@ -110,24 +104,6 @@ public class DefaultAuditRouter implements AuditRouter {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		modified(properties);
-
-		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
-
-		proxyMessageListener.setManager(this);
-		proxyMessageListener.setMessageBus(_messageBus);
-
-		_serviceRegistration = bundleContext.registerService(
-			ProxyMessageListener.class, proxyMessageListener,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", DestinationNames.AUDIT
-			).build());
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
 	}
 
 	@Modified
@@ -214,10 +190,5 @@ public class DefaultAuditRouter implements AuditRouter {
 		_auditMessageProcessors = new ConcurrentHashMap<>();
 	private final List<AuditMessageProcessor> _globalAuditMessageProcessors =
 		new CopyOnWriteArrayList<>();
-
-	@Reference
-	private MessageBus _messageBus;
-
-	private ServiceRegistration<ProxyMessageListener> _serviceRegistration;
 
 }

@@ -127,8 +127,6 @@ public class SynchronousDestinationTestRule
 		public void enableSync() {
 			Filter audioProcessorFilter = _registerDestinationFilter(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
-			Filter auditFilter = _registerDestinationFilter(
-				DestinationNames.AUDIT);
 			Filter asyncFilter = _registerDestinationFilter(
 				DestinationNames.ASYNC_SERVICE);
 			Filter backgroundTaskFilter = _registerDestinationFilter(
@@ -163,14 +161,14 @@ public class SynchronousDestinationTestRule
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 
 			_waitForDependencies(
-				audioProcessorFilter, auditFilter, asyncFilter,
-				backgroundTaskFilter, backgroundTaskStatusFilter,
-				commerceBasePriceListFilter, commerceOrderFilter,
-				commercePaymentFilter, commerceShipmentFilter,
-				commerceSubscriptionFilter, ddmStructureReindexFilter,
-				mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
-				segmentsEntryReindexFilter, subscrpitionSenderFilter,
-				tensorflowModelDownloadFilter, videoProcessorFilter);
+				audioProcessorFilter, asyncFilter, backgroundTaskFilter,
+				backgroundTaskStatusFilter, commerceBasePriceListFilter,
+				commerceOrderFilter, commercePaymentFilter,
+				commerceShipmentFilter, commerceSubscriptionFilter,
+				ddmStructureReindexFilter, mailFilter, pdfProcessorFilter,
+				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
+				subscrpitionSenderFilter, tensorflowModelDownloadFilter,
+				videoProcessorFilter);
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -178,7 +176,6 @@ public class SynchronousDestinationTestRule
 			_bufferedIncrementForceSyncSafeCloseable =
 				BufferedIncrementThreadLocal.setWithSafeCloseable(true);
 
-			replaceDestination(DestinationNames.AUDIT);
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
 			replaceDestination(DestinationNames.BACKGROUND_TASK_STATUS);

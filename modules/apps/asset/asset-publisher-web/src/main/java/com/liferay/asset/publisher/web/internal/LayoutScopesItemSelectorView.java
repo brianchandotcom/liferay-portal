@@ -104,8 +104,7 @@ public class LayoutScopesItemSelectorView
 			layoutScopesItemSelectorViewDisplayContext =
 				new LayoutScopesItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
-					groupItemSelectorCriterion, itemSelectedEventName,
-					portletURL);
+					groupItemSelectorCriterion, portletURL);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			servletRequest, servletResponse, groupItemSelectorCriterion,

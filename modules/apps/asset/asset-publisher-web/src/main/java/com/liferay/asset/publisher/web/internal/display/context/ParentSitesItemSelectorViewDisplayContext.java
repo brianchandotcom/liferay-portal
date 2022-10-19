@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,13 +36,9 @@ public class ParentSitesItemSelectorViewDisplayContext
 
 	public ParentSitesItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
-		AssetPublisherHelper assetPublisherHelper,
-		GroupItemSelectorCriterion groupItemSelectorCriterion,
-		String itemSelectedEventName, PortletURL portletURL) {
+		AssetPublisherHelper assetPublisherHelper, PortletURL portletURL) {
 
-		super(
-			httpServletRequest, assetPublisherHelper,
-			groupItemSelectorCriterion, itemSelectedEventName, portletURL);
+		super(httpServletRequest, assetPublisherHelper, portletURL);
 	}
 
 	@Override
@@ -53,7 +48,7 @@ public class ParentSitesItemSelectorViewDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		GroupSearch groupSearch = new GroupSearch(
-			getPortletRequest(), getPortletURL());
+			getPortletRequest(), portletURL);
 
 		Group group = themeDisplay.getSiteGroup();
 

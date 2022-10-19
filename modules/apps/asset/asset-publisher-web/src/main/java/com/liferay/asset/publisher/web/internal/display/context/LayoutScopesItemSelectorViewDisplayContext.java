@@ -41,11 +41,11 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		HttpServletRequest httpServletRequest,
 		AssetPublisherHelper assetPublisherHelper,
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
-		String itemSelectedEventName, PortletURL portletURL) {
+		PortletURL portletURL) {
 
-		super(
-			httpServletRequest, assetPublisherHelper,
-			groupItemSelectorCriterion, itemSelectedEventName, portletURL);
+		super(httpServletRequest, assetPublisherHelper, portletURL);
+
+		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		long groupId = getGroupId();
 
 		GroupSearch groupSearch = new GroupSearch(
-			getPortletRequest(), getPortletURL());
+			getPortletRequest(), portletURL);
 
 		groupSearch.setResultsAndTotal(
 			() -> _filterLayoutGroups(
@@ -122,14 +122,12 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			return _privateLayout;
 		}
 
-		GroupItemSelectorCriterion groupItemSelectorCriterion =
-			getGroupItemSelectorCriterion();
-
-		_privateLayout = groupItemSelectorCriterion.isPrivateLayout();
+		_privateLayout = _groupItemSelectorCriterion.isPrivateLayout();
 
 		return _privateLayout;
 	}
 
+	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 	private Boolean _privateLayout;
 
 }

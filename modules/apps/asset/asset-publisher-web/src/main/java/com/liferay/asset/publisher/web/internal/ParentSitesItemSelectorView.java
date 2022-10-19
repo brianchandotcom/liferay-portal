@@ -101,7 +101,6 @@ public class ParentSitesItemSelectorView
 			parentSitesItemSelectorViewDisplayContext =
 				new ParentSitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
-					groupItemSelectorCriterion, itemSelectedEventName,
 					portletURL);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(

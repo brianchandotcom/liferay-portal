@@ -15,22 +15,15 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,28 +36,12 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	public BaseItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
-		AssetPublisherHelper assetPublisherHelper,
-		GroupItemSelectorCriterion groupItemSelectorCriterion,
-		String itemSelectedEventName, PortletURL portletURL) {
+		AssetPublisherHelper assetPublisherHelper, PortletURL portletURL) {
 
 		_assetPublisherHelper = assetPublisherHelper;
-		_groupItemSelectorCriterion = groupItemSelectorCriterion;
-		_itemSelectedEventName = itemSelectedEventName;
 
 		this.httpServletRequest = httpServletRequest;
 		this.portletURL = portletURL;
-	}
-
-	@Override
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle", "icon");
-
-		return _displayStyle;
 	}
 
 	public long getGroupId() {
@@ -75,46 +52,6 @@ public abstract class BaseItemSelectorViewDisplayContext
 		_groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		return _groupId;
-	}
-
-	@Override
-	public GroupItemSelectorCriterion getGroupItemSelectorCriterion() {
-		return _groupItemSelectorCriterion;
-	}
-
-	@Override
-	public String getItemSelectedEventName() {
-		return _itemSelectedEventName;
-	}
-
-	@Override
-	public PortletRequest getPortletRequest() {
-		return (PortletRequest)httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-	}
-
-	@Override
-	public PortletResponse getPortletResponse() {
-		return (PortletResponse)httpServletRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-	}
-
-	@Override
-	public PortletURL getPortletURL() throws PortletException {
-		return PortletURLBuilder.create(
-			PortletURLUtil.clone(
-				portletURL,
-				PortalUtil.getLiferayPortletResponse(getPortletResponse()))
-		).setPortletResource(
-			ParamUtil.getString(httpServletRequest, "portletResource")
-		).setParameter(
-			"groupId", ParamUtil.getLong(httpServletRequest, "groupId")
-		).setParameter(
-			"plid", ParamUtil.getLong(httpServletRequest, "plid")
-		).setParameter(
-			"privateLayout",
-			ParamUtil.getBoolean(httpServletRequest, "privateLayout")
-		).buildPortletURL();
 	}
 
 	@Override
@@ -147,13 +84,15 @@ public abstract class BaseItemSelectorViewDisplayContext
 		return true;
 	}
 
+	protected PortletRequest getPortletRequest() {
+		return (PortletRequest)httpServletRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+	}
+
 	protected final HttpServletRequest httpServletRequest;
 	protected final PortletURL portletURL;
 
 	private final AssetPublisherHelper _assetPublisherHelper;
-	private String _displayStyle;
 	private Long _groupId;
-	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
-	private final String _itemSelectedEventName;
 
 }

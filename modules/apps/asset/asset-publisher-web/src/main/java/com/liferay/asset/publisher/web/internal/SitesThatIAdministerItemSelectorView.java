@@ -109,7 +109,6 @@ public class SitesThatIAdministerItemSelectorView
 			sitesItemSelectorViewDisplayContext =
 				new SitesThatIAdministerItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
-					groupItemSelectorCriterion, itemSelectedEventName,
 					portletURL);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(

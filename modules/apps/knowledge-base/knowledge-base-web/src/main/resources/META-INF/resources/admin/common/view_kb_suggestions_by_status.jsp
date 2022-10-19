@@ -71,10 +71,6 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 				String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 				%>
 
-				<span class="text-default">
-					<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbComment.getUserName()), modifiedDateDescription} %>" key="x-suggested-x-ago" />
-				</span>
-
 				<h2 class="h5">
 					<liferay-portlet:renderURL varImpl="rowURL">
 						<portlet:param name="mvcPath" value="/admin/common/view_kb_suggestion.jsp" />
@@ -87,6 +83,9 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 					</aui:a>
 				</h2>
 
+				<span class="text-default">
+					<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbComment.getUserName()), modifiedDateDescription} %>" key="x-suggested-x-ago" />
+				</span>
 				<span>
 					<span class="kb-comment-status text-default">
 						<liferay-ui:message key="<%= KBUtil.getStatusLabel(kbComment.getStatus()) %>" />

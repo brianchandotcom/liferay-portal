@@ -155,17 +155,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 									<liferay-ui:search-container-column-text
 										colspan="<%= 2 %>"
 									>
-									<span class="text-default">
-
-										<%
-										Date modifiedDate = kbFolder.getModifiedDate();
-
-										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-										%>
-
-										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</span>
-
 										<liferay-portlet:renderURL varImpl="rowURL">
 											<portlet:param name="mvcPath" value="/admin/view_kb_folders.jsp" />
 											<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -179,6 +168,17 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 												<%= HtmlUtil.escape(kbFolder.getName()) %>
 											</aui:a>
 										</h2>
+
+									<span class="text-default">
+
+										<%
+										Date modifiedDate = kbFolder.getModifiedDate();
+
+										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+										%>
+
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									</span>
 
 										<span class="text-default">
 										<span>
@@ -247,17 +247,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 									<liferay-ui:search-container-column-text
 										colspan="<%= 2 %>"
 									>
-									<span class="text-default">
-
-										<%
-										Date modifiedDate = kbArticle.getModifiedDate();
-
-										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-										%>
-
-										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</span>
-
 										<h2 class="h5">
 
 											<%
@@ -268,6 +257,17 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 												<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 											</aui:a>
 										</h2>
+
+									<span class="text-default">
+
+										<%
+										Date modifiedDate = kbArticle.getModifiedDate();
+
+										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+										%>
+
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									</span>
 
 										<span class="text-default">
 										<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />

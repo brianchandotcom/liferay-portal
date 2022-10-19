@@ -82,7 +82,8 @@ const DragAndDrop = ({
 
 					{acceptedFiles?.map((file, index) => (
 						<li key={index}>
-							File: {file.name} Type: {file.type} Size:{' '}
+							File: {file.name} Type: {file.type}
+							Size:&nbsp;
 							{file.size} bytes
 						</li>
 					))}

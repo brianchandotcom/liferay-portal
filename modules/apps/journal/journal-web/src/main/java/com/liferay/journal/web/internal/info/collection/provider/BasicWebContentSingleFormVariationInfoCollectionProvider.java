@@ -29,7 +29,6 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
@@ -305,9 +304,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -60,22 +60,13 @@ public class NotificationQueueEntryTable
 		notificationTemplateId = createColumn(
 			"notificationTemplateId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> bcc = createColumn(
-		"bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Clob> body = createColumn(
 		"body", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> cc = createColumn(
-		"cc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Long> classPK =
 		createColumn("classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> from =
-		createColumn("from_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> fromName =
-		createColumn(
-			"fromName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Double> priority =
 		createColumn(
 			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
@@ -85,11 +76,6 @@ public class NotificationQueueEntryTable
 	public final Column<NotificationQueueEntryTable, String> subject =
 		createColumn(
 			"subject", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> to = createColumn(
-		"to_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> toName =
-		createColumn(
-			"toName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Integer> status =

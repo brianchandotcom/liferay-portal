@@ -10,20 +10,14 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="notificationTemplateId" type="long" />
-		<field name="bcc" type="String" />
 		<field name="body" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="cc" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="from" type="String" />
-		<field name="fromName" type="String" />
 		<field name="priority" type="double" />
 		<field name="sentDate" type="Date" />
 		<field name="subject" type="String" />
-		<field name="to" type="String" />
-		<field name="toName" type="String" />
 		<field name="type" type="String" />
 		<field name="status" type="int" />
 	</model>
@@ -33,6 +27,32 @@
 		<field name="companyId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="notificationQueueEntryId" type="long" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationRecipient">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="notificationRecipientId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classPK" type="long" />
+		<field name="className" type="String" />
+		<field name="notificationTemplateId" type="long" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationRecipientSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="notificationRecipientSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="notificationRecipientId" type="long" />
+		<field name="name" type="String" />
+		<field localized="true" name="value" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplate">
 		<field name="mvccVersion" type="long" />
@@ -44,18 +64,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
-		<field name="bcc" type="String" />
 		<field localized="true" name="body" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="cc" type="String" />
 		<field name="description" type="String" />
-		<field name="from" type="String" />
-		<field localized="true" name="fromName" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />
-		<field localized="true" name="to" type="String" />
 		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplateAttachment">

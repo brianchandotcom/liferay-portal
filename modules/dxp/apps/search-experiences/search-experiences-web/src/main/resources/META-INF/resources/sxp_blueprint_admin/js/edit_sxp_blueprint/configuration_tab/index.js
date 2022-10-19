@@ -55,7 +55,7 @@ function ConfigurationTab({
 	const _handleIndexConfigurationRadioChange = (value) => {
 		setFieldValue(
 			'indexConfig',
-			value ? {indexName: ''} : {indexName: searchIndexes[0].name}
+			value ? {indexName: ''} : {indexName: searchIndexes[0].suffix}
 		);
 	};
 
@@ -253,9 +253,9 @@ function ConfigurationTab({
 								>
 									{searchIndexes.map((searchIndex) => (
 										<ClaySelect.Option
-											key={searchIndex.name}
-											label={searchIndex.fullName}
-											value={searchIndex.name}
+											key={searchIndex.suffix}
+											label={searchIndex.name}
+											value={searchIndex.suffix}
 										/>
 									))}
 								</ClaySelect>

@@ -1,5 +1,40 @@
 # Poshi Runner Change Log
 
+## 1.0.381
+
+### Other
+
+* [LPS-162149](https://issues.liferay.com/browse/LPS-162149) - Use of library with known vulnerability: jsoup 1.15.1 (multiple components)
+* [LPS-163590](https://issues.liferay.com/browse/LPS-163590) - liferay-npm-bundler re-compiles dependencies across modules resulting in slow build times
+* [LRCI-3233](https://issues.liferay.com/browse/LRCI-3233) - Add ability to set the testray bucket name through Poshi Standalone
+* [LRCI-3244](https://issues.liferay.com/browse/LRCI-3244) - Add SHA to Testray imports for Poshi Standalone
+
+### Runner
+
+* [POSHI-405](https://issues.liferay.com/browse/POSHI-405) - Move Poshi specific warnings to poshi-warnings.xml
+
+### Script
+
+* [POSHI-302](https://issues.liferay.com/browse/POSHI-302) - Improve Poshi file reading error when the default tag and function name don't match
+* [POSHI-412](https://issues.liferay.com/browse/POSHI-412) - Treat all Poshi errors consistently
+* [POSHI-416](https://issues.liferay.com/browse/POSHI-416) - Fix poshi generation for escaped quotes
+
+### Utils
+
+* [POSHI-409](https://issues.liferay.com/browse/POSHI-409) - Fail to execute commands curl  on Windows
+
+### Validation
+
+* [POSHI-393](https://issues.liferay.com/browse/POSHI-393) - As a Poshi test writer, I should be notified when I am using methods that are/will be deprecated
+* [POSHI-399](https://issues.liferay.com/browse/POSHI-399) - Avoid repeated Poshi validation runs
+
+### WebDriver
+
+* [POSHI-157](https://issues.liferay.com/browse/POSHI-157) - As a test writer, I should be able to assert an HTML table's contents
+* [POSHI-401](https://issues.liferay.com/browse/POSHI-401) - Add fixes for using Chrome on remote webdriver
+* [POSHI-408](https://issues.liferay.com/browse/POSHI-408) - Avoid NPE when using LiferaySelenium JavaScript methods
+* [POSHI-417](https://issues.liferay.com/browse/POSHI-417) - Poshi CTRL / COMMAND + key does not work
+
 ## 1.0.371
 
 ### Other

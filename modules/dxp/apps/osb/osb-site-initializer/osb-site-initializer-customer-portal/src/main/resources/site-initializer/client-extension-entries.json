@@ -15,6 +15,10 @@
 			"en_US": "Customer Portal"
 		},
 		"portletCategoryName": "category.remote-apps",
-		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]",
+		"properties": {
+			"provisioning-server-api": "https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0",
+			"okta-session-api": "https://login-dev.liferay.com/api/v1/sessions"
+		}
 	}
 ]

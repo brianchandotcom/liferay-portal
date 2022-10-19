@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
+	@description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
 	@priority = "4"
 	test CanViewQuantityDxpVersionsDropDownList {
 		task ("Go to CP2.0 and join a project") {
@@ -52,17 +52,18 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
-        task ("Go to the product activation page") {   
-            CP2NavigationMenu.goToProductActivation();
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
 
-		    CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-        }
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-		task ("Open the dropdown and assert if have 5 versions") {
-            CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
-        }
+		task ("Open the dropdown and verify that there are 5 DXP versions") {
+			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
+		}
 	}
-    @description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
+
+	@description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
 	@priority = "3"
 	test ConfirmRedirectionToAnotherPage {
 		task ("Go to CP2.0 and join a project") {
@@ -71,24 +72,25 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
-        task ("Go to the product activation page") {
-            CP2NavigationMenu.goToProductActivation();
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
 
-		    CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-        }
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-        task ("Click in the link 'deploying activation keys article' and go to the page") {
-            Click(locator1 = "CustomerPortalSite#DEPLOY_ARTICLE_PAGE");
+		task ("Click in the link 'deploying activation keys article' and go to the page") {
+			Click(locator1 = "CustomerPortalSite#DEPLOY_ARTICLE_PAGE");
 
-            Navigator.selectSpecificWindow(windowTitle = "Deploying Activation Keys – Liferay Help Center"); 
-        }
+			Navigator.selectSpecificWindow(windowTitle = "Deploying Activation Keys – Liferay Help Center");
+		}
 
-		task ("Assert the new page as open and go back to 'Product Activation page' and close the page 'Deploying Activation Keys'") {
-            AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
+		task ("Assert that a new page is opened and go back to 'Product Activation page'") {
+			AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
 
-            Navigator.closeSpecificWindow(
-			closeWindowTitle = "Deploying Activation Keys – Liferay Help Center",
-			selectWindowTitle = "Project - Customer Portal Site - Liferay DXP");
-        }
-    }
+			Navigator.closeSpecificWindow(
+				closeWindowTitle = "Deploying Activation Keys – Liferay Help Center",
+				selectWindowTitle = "Project - Customer Portal Site - Liferay DXP");
+		}
+	}
+
 }

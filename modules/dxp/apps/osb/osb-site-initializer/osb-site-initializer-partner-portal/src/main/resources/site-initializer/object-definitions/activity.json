@@ -347,6 +347,32 @@
 			"name": "externalReferenceCodeSF",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Tactic"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Tactic$]",
+			"name": "Tactic",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type Of Activity"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:TypeActivity$]",
+			"name": "typeActivity",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

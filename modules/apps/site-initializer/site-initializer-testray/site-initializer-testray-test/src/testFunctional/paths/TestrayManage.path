@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_BUTTON_IN_MODAL</td>
+	<td>//div[@class='modal-item-last']//button[@type='button'][normalize-space()='Save']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE_MODAL</td>
 	<td>//button[contains(@type, 'button') and contains(@aria-label, 'close')]</td>
 	<td></td>

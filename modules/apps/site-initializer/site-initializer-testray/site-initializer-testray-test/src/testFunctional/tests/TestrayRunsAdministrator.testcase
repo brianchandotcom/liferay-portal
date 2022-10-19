@@ -99,6 +99,7 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",

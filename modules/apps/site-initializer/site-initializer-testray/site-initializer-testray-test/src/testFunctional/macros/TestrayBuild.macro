@@ -1,7 +1,11 @@
 definition {
 
 	macro createBuild {
-		Click(locator1 = "Testray#ADD_PROJECT");
+		Click(locator1 = "Button#PLUS");
+
+		Click.javaScriptClick(
+			key_picklistOption = "${dropdownItem}",
+			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -10,6 +14,8 @@ definition {
 		Select(
 			locator1 = "TestrayBuild#ROUTINE_ID",
 			value1 = "${routine}");
+
+		TestrayManage.addProductVersionInBuild(key_name = "1.2");
 
 		Select(
 			locator1 = "TestrayBuild#PRODUCT_VERSION",
@@ -78,6 +84,10 @@ definition {
 		TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+		WaitForElementPresent(
+			key_environmentFactors = "Application Server",
+			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
 		for (var listboxItem : list "${listCategory}") {
 			Click(

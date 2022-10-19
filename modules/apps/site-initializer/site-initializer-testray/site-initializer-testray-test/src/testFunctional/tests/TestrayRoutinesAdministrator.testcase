@@ -125,10 +125,22 @@ definition {
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 		}
 
-		task ("When the user goes add a new build") {
+		task ("When the user goes add a new build with enviroments") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "Tomcat 6.0",
+				listOption1 = "Chrome 57");
+
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Routines_4 Build Description",
 				fieldName = "Routines_4 Build",
 				gitHash = "12345",

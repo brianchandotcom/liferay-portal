@@ -215,10 +215,22 @@ definition {
 			Testray.assertItemName(key_name = "Routines_1 Routine");
 		}
 
-		task ("Go to routine page and add a new build") {
+		task ("Go to routine page and add a new build with enviroments") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "Tomcat 6.0",
+				listOption1 = "Chrome 57");
+
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",

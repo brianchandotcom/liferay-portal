@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TYPE_PRODUCT_VERSION_IN_BUILD</td>
+	<td>//div[@class='modal-body']//input[@id='name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GIT_HASH_FIELD</td>
 	<td>//input[contains(@id, 'gitHash')]</td>
 	<td></td>

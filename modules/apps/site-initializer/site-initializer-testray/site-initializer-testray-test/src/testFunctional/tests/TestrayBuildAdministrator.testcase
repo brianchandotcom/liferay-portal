@@ -14,9 +14,9 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.createTestraySite(siteName = "Testray 2");
+			// Testray.createTestraySite(siteName = "Testray 2");
 
-			Refresh();
+			// Refresh();
 		}
 
 		task ("Go to Testray, Create Project and change pagination") {
@@ -61,12 +61,17 @@ definition {
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 		}
 
-		task ("Go to Testray 2 and change the pagination") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Add Environments Factors") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
 		}
 	}
 
@@ -77,22 +82,29 @@ definition {
 
 		Testray.deleteAllProjects();
 
-		Testray.tearDownCP();
+		// Testray.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
 	}
 
 	@description = "This is a test for LPS-156438 - Verify if as an Administrator can Add a Build"
 	@priority = "5"
 	test AdminCanAddBuild {
 		task ("Given that the user add a new build") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
@@ -127,11 +139,18 @@ definition {
 	@priority = "5"
 	test AdminCanDeleteBuild {
 		task ("Given that the user add a new build") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
@@ -152,22 +171,18 @@ definition {
 	@priority = "5"
 	test AdminCanDeleteBuildContainsRuns {
 		task ("Given that the user add a new build with Environments Factors") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
@@ -206,11 +221,18 @@ definition {
 	@priority = "5"
 	test AdminCanEditBuild {
 		task ("Given that the user add a new build") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
@@ -240,11 +262,18 @@ definition {
 	@priority = "5"
 	test AdminCanNotAddDuplicateBuild {
 		task ("Given that the user add a new build") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
@@ -254,6 +283,7 @@ definition {
 
 		task ("When add a build with duplicated name") {
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
@@ -288,11 +318,18 @@ definition {
 	@priority = "5"
 	test AdminCanPromoteBuild {
 		task ("Given that the user add a new build") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+				
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				dropdownItem = "New Build",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",

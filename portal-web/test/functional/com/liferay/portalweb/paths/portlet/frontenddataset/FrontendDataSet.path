@@ -2,13 +2,11 @@
 <head>
 <title>FrontendDataSet</title>
 </head>
-
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">FrontendDataSet</td></tr>
 </thead>
-
 <tbody>
 <tr>
 	<td>DELETE_ACTION_BUTTON</td>
@@ -95,6 +93,16 @@
 	<td>xpath=(//div[@class='dnd-td' and position()='${key_columnIndex}'])[${key_valueIndex}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PLACEHOLDER</td>
+	<td>//input[@placeholder='${key_placeholder}']</td>
+	<td></td>
+</tr>
+<tr>
+    <td>ELLIPSIS</td>
+    <td>//*[@class="dropdown custom-views-actions"]</td>
+    <td></td>
+</tr>
 
 <!--FILTERS-->
 
@@ -160,7 +168,7 @@
 </tr>
 <tr>
 	<td>RESET_FILTERS</td>
-	<td>//*[contains(@class,'management-bar')]//*[@type='button' and contains(text(), 'Reset Filters')]</td>
+	<td>//*[contains(@class,'management-bar')]//*[@type='button' and contains(text(), '${reset_filter}')]</td>
 	<td></td>
 </tr>
 <tr>

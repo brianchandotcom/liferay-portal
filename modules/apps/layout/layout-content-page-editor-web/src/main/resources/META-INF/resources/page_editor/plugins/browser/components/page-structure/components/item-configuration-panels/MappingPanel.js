@@ -16,7 +16,6 @@ import React from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPE_DEFAULT_OPTIONS} from '../../../../../../app/config/constants/editableTypeDefaultOptions';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {useCollectionConfig} from '../../../../../../app/contexts/CollectionItemContext';
 import {
@@ -53,22 +52,31 @@ export function MappingPanel({item}) {
 	);
 
 	const updateEditableValue = (nextEditableValue) => {
+		let nextEditableConfig = {...editableValue.config};
+
+		if (
+			type === EDITABLE_TYPES['date-time'] &&
+			!isMapped(nextEditableValue)
+		) {
+			nextEditableConfig = {};
+		}
+		else if (
+			type === EDITABLE_TYPES.image &&
+			isMapped(nextEditableValue)
+		) {
+			nextEditableConfig = {
+				...editableValue.config,
+				alt: '',
+				imageTitle: '',
+			};
+		}
+
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
 			[processoryKey]: {
 				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
-					config: isMapped(nextEditableValue)
-						? {
-								...EDITABLE_TYPE_DEFAULT_OPTIONS[type],
-								...editableValue.config,
-						  }
-						: !isMapped(nextEditableValue) &&
-						  type === EDITABLE_TYPES['date-time']
-						? {
-								...(editableValue.config === undefined),
-						  }
-						: editableValue.config,
+					config: nextEditableConfig,
 					defaultValue: editableValue.defaultValue,
 					...nextEditableValue,
 				},

@@ -69,8 +69,8 @@ public class Log4jLogFactoryImpl implements LogFactory {
 			}
 
 			for (Class<?> staticClazz : _CLASSES_STATIC_UPGRADE) {
-				if (name.equals(staticClazz)) {
-					return true;
+				if (name.equals(staticClazz.getName())) {
+						return true;
 				}
 			}
 		}

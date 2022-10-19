@@ -26,6 +26,7 @@ import useFormActions from '../../../../../hooks/useFormActions';
 import useFormModal from '../../../../../hooks/useFormModal';
 import i18n from '../../../../../i18n';
 import yupSchema, {yupResolver} from '../../../../../schema/yup';
+import {Liferay} from '../../../../../services/liferay';
 import {
 	APIResponse,
 	TestrayBuild,
@@ -161,6 +162,21 @@ const BuildForm = () => {
 	}
 
 	const _onSubmit = async (data: BuildFormType) => {
+		const hasFactorStacks = data.factorStacks.some((factorStack: any) =>
+			Object.keys(factorStack).some(
+				(key) => !!Object.keys(factorStack[key]).length
+			)
+		);
+
+		if (!hasFactorStacks) {
+			return Liferay.Util.openToast({
+				message: i18n.translate(
+					'at-least-one-environment-stack-is-required'
+				),
+				type: 'danger',
+			});
+		}
+
 		data.caseIds = caseIds;
 
 		if (testrayBuild) {

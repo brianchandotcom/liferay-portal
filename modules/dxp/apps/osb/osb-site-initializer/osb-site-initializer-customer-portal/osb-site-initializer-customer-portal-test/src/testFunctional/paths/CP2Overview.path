@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_CARD_UNIC_CONTENT</td>
+	<td>//*[contains(@class, 'card')]//*[text()='${key_cardContent}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_CARD_CONTAINER</td>
 	<td>//*[contains(@class, 'active cp-sla-card')]//*[contains(@class, 'card card-type-asset')]</td>
 	<td></td>

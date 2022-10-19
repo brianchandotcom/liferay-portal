@@ -14,13 +14,16 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.jwks;
 
+import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.Map;
 
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -28,13 +31,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-
-import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Raymond Augé
@@ -44,8 +40,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
-		"osgi.jaxrs.name=Liferay.Authorization.JWKS",
-		"osgi.jaxrs.resource=true"
+		"osgi.jaxrs.name=Liferay.Authorization.JWKS", "osgi.jaxrs.resource=true"
 	},
 	service = OAuth2ProviderJWKSResource.class
 )
@@ -72,7 +67,8 @@ public class OAuth2ProviderJWKSResource {
 
 		_jwks = _jsonFactory.createJSONObject(
 		).put(
-			"keys", _jsonFactory.createJSONArray(
+			"keys",
+			_jsonFactory.createJSONArray(
 			).put(
 				_jsonFactory.createJSONObject(
 				).put(
@@ -96,7 +92,6 @@ public class OAuth2ProviderJWKSResource {
 	private JSONFactory _jsonFactory;
 
 	private String _jwks;
-
 	private OAuth2AuthorizationServerConfiguration
 		_oAuth2AuthorizationServerConfiguration;
 

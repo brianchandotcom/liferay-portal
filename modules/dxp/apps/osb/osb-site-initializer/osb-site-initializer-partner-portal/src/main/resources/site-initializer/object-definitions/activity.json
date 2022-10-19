@@ -357,7 +357,7 @@
 				"en_US": "Tactic"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Tactic$]",
-			"name": "Tactic",
+			"name": "tactic",
 			"required": false,
 			"type": "String"
 		},
@@ -369,7 +369,7 @@
 			"label": {
 				"en_US": "Type Of Activity"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:TypeActivity$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type Of Activity$]",
 			"name": "typeActivity",
 			"required": false,
 			"type": "String"

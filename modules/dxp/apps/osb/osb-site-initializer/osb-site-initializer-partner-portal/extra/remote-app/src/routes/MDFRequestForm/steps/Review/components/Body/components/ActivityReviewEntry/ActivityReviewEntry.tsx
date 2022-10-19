@@ -52,7 +52,7 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 					},
 					{
 						title: 'Type of Activity',
-						value: mdfRequestActivity.typeActivity.key,
+						value: mdfRequestActivity.typeActivity.name,
 					},
 					{
 						title: 'Tactic',

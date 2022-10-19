@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>SLA_CARD_CONTENT</td>
-	<td>//*[contains(@class, 'cp-sla-card-active')]//*[text()='${key_cardContent}']</td>
+	<td>//*[contains(@class, 'active cp-sla-card')]//*[text()='${key_cardContent}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_CARD_CONTAINER</td>
-	<td>//*[contains(@class, 'cp-sla-card-active')]//*[contains(@class, 'card card-type-asset')]</td>
+	<td>//*[contains(@class, 'active cp-sla-card')]//*[contains(@class, 'card card-type-asset')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>EMPTY_SLA_CARD_MESSAGE</td>
-	<td>//*[contains(@class, 'cp-sla-card')]//*[contains(@class, 'text-paragraph-sm')]</td>
+	<td>//*[contains(@class, 'cp-sla-card-message')]//*[contains(@class, 'text-paragraph-sm')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -9,7 +9,8 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Avangrid Portals";
+	var testAccount = "Test Account Enterprise Search";
+	var testProduct = "Enterprise Search";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -25,7 +26,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -43,6 +44,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146026 | Test Summary: Verify that after clicking the Download Key button the user download the appropriate Elasticsearch license"
+	@ignore = "true"
 	@priority = "4"
 	test CanDownloadTheKeyWhenASubscriptionIsSelected {
 
@@ -53,28 +55,29 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
 		task ("When I click at the download button") {
 			CustomerPortal.clickAtButton(text = "Download Key");
 		}
 
-		//task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
-		//	CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
-		//}
+		task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
+			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
+		}
 
 	}
 
 	@description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"
+	@ignore = "true"
 	@priority = "5"
 	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
 
@@ -85,15 +88,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
 		task ("Assert the list of LES subscriptions terms") {
@@ -102,6 +105,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list their LES subscriptions"
+	@ignore = "true"
 	@priority = "5"
 	test SeeListOfLESSSubscriptions {
 
@@ -112,15 +116,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(title = "${testAccounts}");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
 		task ("Assert the list of LES subscriptions") {

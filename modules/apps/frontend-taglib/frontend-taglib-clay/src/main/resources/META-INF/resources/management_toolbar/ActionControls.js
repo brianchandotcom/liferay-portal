@@ -125,6 +125,7 @@ const ActionControls = ({
 									disabled={disabled}
 									displayType="unstyled"
 									symbol="ellipsis-v"
+									title={Liferay.Language.get('actions')}
 								/>
 							}
 						/>

@@ -14,23 +14,20 @@
 
 package com.liferay.dispatch.rest.internal.resource.v1_0;
 
-import com.liferay.dispatch.executor.DispatchTaskExecutor;
-import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
-import com.liferay.dispatch.executor.DispatchTaskStatus;
-import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger;
 import com.liferay.dispatch.rest.internal.dto.v1_0.util.DispatchTriggerUtil;
 import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
-import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.Date;
 
 import javax.ws.rs.core.Response;
 
@@ -77,54 +74,17 @@ public class DispatchTriggerResourceImpl
 			PermissionThreadLocal.getPermissionChecker(), dispatchTriggerId,
 			ActionKeys.UPDATE);
 
-		com.liferay.dispatch.model.DispatchTrigger dispatchTrigger =
-			_dispatchTriggerService.getDispatchTrigger(dispatchTriggerId);
+		Message message = new Message();
 
-		if (!dispatchTrigger.isOverlapAllowed()) {
-			DispatchLog dispatchLog =
-				_dispatchLogLocalService.fetchLatestDispatchLog(
-					dispatchTriggerId, DispatchTaskStatus.IN_PROGRESS);
+		message.setPayload(
+			JSONUtil.put(
+				"dispatchTriggerId", dispatchTriggerId
+			).toString());
 
-			if (dispatchLog != null) {
-				Date date = new Date();
-
-				_dispatchLogLocalService.addDispatchLog(
-					dispatchTrigger.getUserId(),
-					dispatchTrigger.getDispatchTriggerId(), date,
-					"Only one instance in progress is allowed", null, date,
-					DispatchTaskStatus.CANCELED);
-
-				return Response.status(
-					Response.Status.FORBIDDEN
-				).build();
-			}
-		}
-
-		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
-				dispatchTrigger.getDispatchTaskExecutorType());
-
-		if (dispatchTaskExecutor != null) {
-			dispatchTaskExecutor.execute(
-				dispatchTrigger.getDispatchTriggerId());
-
-			return Response.status(
-				Response.Status.ACCEPTED
-			).build();
-		}
-
-		String message =
-			"Unable to find dispatch task executor of type " +
-				dispatchTrigger.getDispatchTaskExecutorType();
-
-		Date date = new Date();
-
-		_dispatchLogLocalService.addDispatchLog(
-			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
-			date, message, null, date, DispatchTaskStatus.CANCELED);
+		_destination.send(message);
 
 		return Response.status(
-			Response.Status.NOT_FOUND
+			Response.Status.ACCEPTED
 		).build();
 	}
 
@@ -143,11 +103,10 @@ public class DispatchTriggerResourceImpl
 		<com.liferay.dispatch.model.DispatchTrigger>
 			_dispatchTriggerModelResourcePermission;
 
-	@Reference
-	private DispatchLogLocalService _dispatchLogLocalService;
-
-	@Reference
-	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
+	@Reference(
+		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
+	)
+	private Destination _destination;
 
 	@Reference
 	private DispatchTriggerService _dispatchTriggerService;

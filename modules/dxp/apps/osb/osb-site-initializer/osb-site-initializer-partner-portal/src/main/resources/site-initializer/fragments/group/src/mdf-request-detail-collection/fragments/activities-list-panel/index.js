@@ -284,8 +284,7 @@ const Panel = ({children, mdfRequestActivity}) => (
 
 export default function () {
 	const [activities, setActivities] = useState();
-	// eslint-disable-next-line no-console
-	console.log('🚀 ~ file: index.js ~ line 287 ~ activities', activities);
+
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {

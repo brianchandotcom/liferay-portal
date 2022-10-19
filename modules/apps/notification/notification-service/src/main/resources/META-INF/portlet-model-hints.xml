@@ -67,18 +67,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
-		<field name="bcc" type="String" />
 		<field localized="true" name="body" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="cc" type="String" />
 		<field name="description" type="String" />
-		<field name="from" type="String" />
-		<field localized="true" name="fromName" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />
-		<field localized="true" name="to" type="String" />
 		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationTemplateAttachment">

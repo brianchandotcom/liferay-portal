@@ -99,15 +99,10 @@ create table NotificationTemplate (
 	createDate DATE null,
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
-	bcc VARCHAR(75) null,
 	body TEXT null,
-	cc VARCHAR(75) null,
 	description VARCHAR(75) null,
-	from_ VARCHAR(75) null,
-	fromName STRING null,
 	name STRING null,
 	recipientType VARCHAR(75) null,
 	subject STRING null,
-	to_ STRING null,
 	type_ VARCHAR(75) null
 );

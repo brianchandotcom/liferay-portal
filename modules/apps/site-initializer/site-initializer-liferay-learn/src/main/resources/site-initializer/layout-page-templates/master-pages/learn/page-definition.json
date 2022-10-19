@@ -7,7 +7,6 @@
 						"key": "public-sites-navigation"
 					},
 					"fragmentConfig": {
-						"buttonType": "",
 						"darkNav": true,
 						"showAccountMenu": true,
 						"showLanguageMenu": true,
@@ -16,7 +15,14 @@
 					},
 					"fragmentFields": [
 						{
-							"id": "sign-in-link",
+							"id": "close-toggle-btn",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						},
+						{
+							"id": "call-to-action-btn-mobile",
 							"value": {
 								"fragmentLink": {
 								}
@@ -28,44 +34,39 @@
 								"fragmentLink": {
 								}
 							}
+						},
+						{
+							"id": "menu-toggle-btn",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						},
+						{
+							"id": "call-to-action-btn",
+							"value": {
+								"fragmentLink": {
+								}
+							}
 						}
 					],
 					"indexed": true
 				},
+				"pageElements": [
+					{
+						"type": "FragmentDropZone"
+					}
+				],
 				"type": "Fragment"
 			},
 			{
 				"definition": {
-					"fragmentStyle": {
-						"borderWidth": "0",
-						"textAlign": ""
-					},
-					"indexed": true,
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
 					}
 				},
-				"pageElements": [
-					{
-						"definition": {
-							"fragmentSettings": {
-								"unallowedFragments": [
-								]
-							}
-						},
-						"type": "DropZone"
-					}
-				],
-				"type": "Section"
+				"type": "DropZone"
 			}
 		],
 		"type": "Root"

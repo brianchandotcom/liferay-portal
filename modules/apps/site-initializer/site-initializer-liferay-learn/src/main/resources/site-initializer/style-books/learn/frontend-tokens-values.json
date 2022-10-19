@@ -22,9 +22,17 @@
 		"name": "brandColor1",
 		"value": "#0b5fff"
 	},
+	"colorActionPrimaryActiveLighten": {
+		"cssVariableMapping": "color-action-primary-active-lighten",
+		"value": "#0053f050"
+	},
 	"colorActionPrimaryDefault": {
 		"cssVariableMapping": "color-action-primary-default",
 		"value": "#0B5FFF"
+	},
+	"colorActionPrimaryHover": {
+		"cssVariableMapping": "color-action-primary-hover",
+		"value": "#0053F0"
 	},
 	"colorBrandPrimary": {
 		"cssVariableMapping": "color-brand-primary",

@@ -11,3 +11,33 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+/* eslint-disable no-undef */
+
+const menuButtonGroup = fragmentElement.querySelector('.menu-button-group');
+
+const tabletMobileNavSection = fragmentElement.querySelector(
+	'.tablet-mobile-nav-section'
+);
+
+const menuBtn = fragmentElement.querySelector('.menu-btn');
+
+const closeBtn = fragmentElement.querySelector('.close-btn');
+
+const accountMenus = fragmentElement.querySelectorAll('.account');
+
+menuBtn.addEventListener('click', () => {
+	menuButtonGroup.classList.toggle('menu-open');
+	tabletMobileNavSection.classList.toggle('menu-open');
+});
+
+closeBtn.addEventListener('click', () => {
+	menuButtonGroup.classList.toggle('menu-open');
+	tabletMobileNavSection.classList.toggle('menu-open');
+});
+
+accountMenus.forEach((accountMenu) => {
+	accountMenu.addEventListener('click', () =>  {
+		accountMenu.classList.toggle('menu-open');
+	});
+});

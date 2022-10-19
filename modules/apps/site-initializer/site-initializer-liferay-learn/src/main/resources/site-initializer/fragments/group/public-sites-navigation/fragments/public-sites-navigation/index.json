@@ -41,30 +41,6 @@
 					"label": "Dark Nav",
 					"name": "darkNav",
 					"type": "checkbox"
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"description": "Button Type",
-					"label": "Button Type",
-					"name": "buttonType",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "none",
-								"value": ""
-							},
-							{
-								"label": "CTA",
-								"value": "cta"
-							},
-							{
-								"label": "Sign In",
-								"value": "signin"
-							}
-						]
-					}
 				}
 			]
 		}

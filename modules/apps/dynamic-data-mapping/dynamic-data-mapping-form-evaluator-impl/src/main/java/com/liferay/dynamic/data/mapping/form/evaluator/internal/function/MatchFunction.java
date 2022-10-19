@@ -32,7 +32,7 @@ public class MatchFunction
 	@Override
 	public Boolean apply(String value, String regex) {
 		try {
-			Pattern pattern = Pattern.compile(regex);
+			Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
 
 			Matcher matcher = pattern.matcher(value);
 

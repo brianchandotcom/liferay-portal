@@ -1225,8 +1225,6 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Search.searchCP(searchTerm = "${userGroupName}");
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(

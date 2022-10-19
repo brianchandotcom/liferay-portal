@@ -588,8 +588,7 @@ public class UserLocalServiceTest {
 
 		Date passwordModifiedDate = user.getPasswordModifiedDate();
 
-		Assert.assertTrue(
-			passwordModifiedDate.after(oldPasswordModifiedDate));
+		Assert.assertTrue(passwordModifiedDate.after(oldPasswordModifiedDate));
 	}
 
 	@Test

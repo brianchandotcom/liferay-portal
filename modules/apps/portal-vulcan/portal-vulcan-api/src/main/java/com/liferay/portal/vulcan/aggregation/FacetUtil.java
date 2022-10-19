@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.aggregation;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;

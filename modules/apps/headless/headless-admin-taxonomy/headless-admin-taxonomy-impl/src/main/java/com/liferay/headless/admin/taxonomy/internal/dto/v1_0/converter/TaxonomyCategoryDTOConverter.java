@@ -27,6 +27,7 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

@@ -27,6 +27,7 @@ import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.commerce.account.model.impl.CommerceAccountUserRelImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountUserRelLocalServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.HashSet;
 import java.util.List;

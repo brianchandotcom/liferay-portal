@@ -22,7 +22,7 @@ import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormFieldContext;
 import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.dto.v1_0.FormPageContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;

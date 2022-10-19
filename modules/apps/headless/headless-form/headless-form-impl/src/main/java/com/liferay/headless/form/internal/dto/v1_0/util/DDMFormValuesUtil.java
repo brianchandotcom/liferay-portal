@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FormFieldValue;
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Locale;
 import java.util.Map;

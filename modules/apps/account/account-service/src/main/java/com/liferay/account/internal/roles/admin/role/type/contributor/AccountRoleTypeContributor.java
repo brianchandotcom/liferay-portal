@@ -18,12 +18,12 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;

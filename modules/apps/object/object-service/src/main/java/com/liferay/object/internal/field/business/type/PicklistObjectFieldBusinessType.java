@@ -29,6 +29,7 @@ import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
 import java.util.List;

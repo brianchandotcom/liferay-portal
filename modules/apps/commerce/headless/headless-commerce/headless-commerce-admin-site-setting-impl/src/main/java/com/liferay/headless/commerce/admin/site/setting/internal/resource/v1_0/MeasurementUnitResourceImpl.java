@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.admin.site.setting.internal.dto.v1_0.conver
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.MeasurementUnitResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -38,7 +39,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
 import java.util.Map;

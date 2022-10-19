@@ -42,6 +42,7 @@ import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.MessageSubjectComparator;
 import com.liferay.message.boards.util.comparator.MessageURLSubjectComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -72,7 +73,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 

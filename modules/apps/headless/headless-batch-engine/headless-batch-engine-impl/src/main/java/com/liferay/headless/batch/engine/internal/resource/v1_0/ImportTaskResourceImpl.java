@@ -32,6 +32,7 @@ import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;

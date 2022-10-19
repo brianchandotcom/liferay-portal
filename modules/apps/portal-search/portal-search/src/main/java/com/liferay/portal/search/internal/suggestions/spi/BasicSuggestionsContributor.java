@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -53,7 +54,6 @@ import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchResultsPortletKeys;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;

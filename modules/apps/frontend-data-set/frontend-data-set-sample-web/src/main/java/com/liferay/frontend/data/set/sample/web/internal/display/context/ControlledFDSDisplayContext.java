@@ -18,12 +18,12 @@ import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSN
 import com.liferay.frontend.data.set.sample.web.internal.model.UserEntry;
 import com.liferay.frontend.data.set.sample.web.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

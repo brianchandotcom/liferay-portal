@@ -31,6 +31,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProd
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.PinUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,7 +41,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 

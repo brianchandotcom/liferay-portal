@@ -17,7 +17,7 @@ package com.liferay.digital.signature.rest.internal.dto.v1_0.util;
 import com.liferay.digital.signature.rest.dto.v1_0.DSDocument;
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
 import com.liferay.digital.signature.rest.dto.v1_0.DSRecipient;
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 
 /**
  * @author José Abelenda

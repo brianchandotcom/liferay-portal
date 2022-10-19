@@ -28,6 +28,7 @@ import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
 import com.liferay.headless.batch.engine.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

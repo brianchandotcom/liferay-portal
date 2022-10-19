@@ -18,11 +18,11 @@ import com.liferay.object.model.ObjectState;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.base.ObjectStateLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectStateTransitionPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import io.swagger.v3.core.filter.AbstractSpecFilter;

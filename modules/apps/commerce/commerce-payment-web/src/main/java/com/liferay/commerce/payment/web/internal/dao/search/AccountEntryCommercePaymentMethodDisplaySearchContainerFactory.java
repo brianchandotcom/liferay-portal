@@ -18,6 +18,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.web.internal.display.CommercePaymentMethodDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Map;
 

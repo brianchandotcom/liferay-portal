@@ -20,6 +20,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Objects;
 

@@ -18,6 +18,7 @@ import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Objects;
 

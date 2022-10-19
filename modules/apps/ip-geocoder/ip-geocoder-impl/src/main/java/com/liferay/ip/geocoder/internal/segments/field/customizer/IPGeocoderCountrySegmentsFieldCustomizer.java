@@ -14,11 +14,11 @@
 
 package com.liferay.ip.geocoder.internal.segments.field.customizer;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 

@@ -22,7 +22,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Map;
 

@@ -15,12 +15,12 @@
 package com.liferay.object.rest.internal.petra.sql.dsl.expression;
 
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Gabriel Albuquerque

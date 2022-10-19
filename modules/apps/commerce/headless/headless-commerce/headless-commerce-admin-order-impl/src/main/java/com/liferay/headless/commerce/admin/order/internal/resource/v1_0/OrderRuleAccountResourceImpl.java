@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderRuleAccountDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleAccountResource;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -36,7 +37,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Map;
 

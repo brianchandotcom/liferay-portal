@@ -52,6 +52,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameCompa
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -80,7 +81,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
 import java.util.List;

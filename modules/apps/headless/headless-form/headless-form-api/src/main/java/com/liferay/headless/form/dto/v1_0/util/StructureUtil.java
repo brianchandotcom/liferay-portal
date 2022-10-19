@@ -34,13 +34,13 @@ import com.liferay.headless.form.dto.v1_0.FormStructure;
 import com.liferay.headless.form.dto.v1_0.FormSuccessPage;
 import com.liferay.headless.form.dto.v1_0.Grid;
 import com.liferay.headless.form.dto.v1_0.Validation;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collection;
 import java.util.List;

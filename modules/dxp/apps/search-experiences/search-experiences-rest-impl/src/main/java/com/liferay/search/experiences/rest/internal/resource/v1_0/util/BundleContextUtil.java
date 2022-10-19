@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0.util;
 
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 
 import org.osgi.framework.Bundle;

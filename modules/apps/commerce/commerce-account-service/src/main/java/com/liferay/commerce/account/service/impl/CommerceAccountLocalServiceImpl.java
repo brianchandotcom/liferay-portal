@@ -27,6 +27,7 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.account.service.base.CommerceAccountLocalServiceBaseImpl;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 

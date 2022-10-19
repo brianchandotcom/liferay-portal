@@ -27,13 +27,13 @@ import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingOption;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingMethodResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Map;
 

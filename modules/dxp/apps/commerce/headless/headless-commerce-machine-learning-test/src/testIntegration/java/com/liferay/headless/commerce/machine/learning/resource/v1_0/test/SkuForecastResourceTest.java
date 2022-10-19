@@ -20,10 +20,10 @@ import com.liferay.commerce.machine.learning.forecast.SkuCommerceMLForecastManag
 import com.liferay.headless.commerce.machine.learning.client.dto.v1_0.SkuForecast;
 import com.liferay.headless.commerce.machine.learning.client.pagination.Page;
 import com.liferay.headless.commerce.machine.learning.client.pagination.Pagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

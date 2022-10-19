@@ -25,13 +25,13 @@ import com.liferay.batch.planner.rest.resource.v1_0.PlanResource;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Iterator;
 import java.util.List;

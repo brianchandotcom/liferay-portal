@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -33,7 +34,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

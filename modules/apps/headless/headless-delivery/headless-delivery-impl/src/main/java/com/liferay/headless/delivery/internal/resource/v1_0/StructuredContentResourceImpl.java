@@ -68,6 +68,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -111,7 +112,6 @@ import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;

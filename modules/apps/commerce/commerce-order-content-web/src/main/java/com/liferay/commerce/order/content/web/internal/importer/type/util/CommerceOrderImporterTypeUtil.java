@@ -25,6 +25,7 @@ import com.liferay.commerce.order.importer.item.CommerceOrderImporterItemImpl;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

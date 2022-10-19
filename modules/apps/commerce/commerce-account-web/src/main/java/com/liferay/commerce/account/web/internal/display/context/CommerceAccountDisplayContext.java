@@ -32,6 +32,7 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionNameComparator;
 import com.liferay.commerce.util.comparator.CommerceShippingMethodNameComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,7 +49,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -23,13 +23,13 @@ import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderItemShipmentDTOConverter;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemShipmentResource;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

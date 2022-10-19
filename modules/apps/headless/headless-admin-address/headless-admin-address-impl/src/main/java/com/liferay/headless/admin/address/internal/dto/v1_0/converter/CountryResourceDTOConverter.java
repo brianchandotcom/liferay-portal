@@ -16,13 +16,13 @@ package com.liferay.headless.admin.address.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.address.dto.v1_0.Country;
 import com.liferay.headless.admin.address.dto.v1_0.Region;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

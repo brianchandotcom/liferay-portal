@@ -21,6 +21,7 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;

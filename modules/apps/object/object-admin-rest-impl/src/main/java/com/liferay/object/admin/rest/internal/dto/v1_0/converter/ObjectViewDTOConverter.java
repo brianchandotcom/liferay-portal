@@ -23,10 +23,10 @@ import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
 

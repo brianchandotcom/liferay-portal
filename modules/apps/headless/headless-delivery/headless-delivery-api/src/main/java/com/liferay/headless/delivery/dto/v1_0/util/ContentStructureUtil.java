@@ -25,6 +25,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContentStructureField;
 import com.liferay.headless.delivery.dto.v1_0.Option;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
 import java.util.Map;

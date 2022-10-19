@@ -22,10 +22,10 @@ import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountR
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

@@ -22,6 +22,7 @@ import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;

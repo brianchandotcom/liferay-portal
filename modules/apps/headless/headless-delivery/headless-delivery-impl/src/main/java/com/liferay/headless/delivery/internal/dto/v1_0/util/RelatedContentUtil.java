@@ -18,9 +18,9 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
 

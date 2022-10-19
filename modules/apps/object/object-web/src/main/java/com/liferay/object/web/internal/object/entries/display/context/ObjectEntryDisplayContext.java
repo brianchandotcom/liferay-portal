@@ -68,6 +68,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.util.ObjectDefinitionPermissionUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -95,7 +96,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.text.DecimalFormat;

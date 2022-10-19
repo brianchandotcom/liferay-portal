@@ -23,6 +23,7 @@ import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.GroupKeyException;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;

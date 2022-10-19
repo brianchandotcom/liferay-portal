@@ -37,6 +37,7 @@ import com.liferay.headless.delivery.internal.resource.v1_0.BaseBlogPostingResou
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -50,7 +51,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import javax.ws.rs.core.UriInfo;

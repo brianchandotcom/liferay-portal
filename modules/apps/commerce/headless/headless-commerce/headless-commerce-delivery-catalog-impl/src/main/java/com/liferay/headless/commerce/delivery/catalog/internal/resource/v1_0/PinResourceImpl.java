@@ -32,11 +32,11 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

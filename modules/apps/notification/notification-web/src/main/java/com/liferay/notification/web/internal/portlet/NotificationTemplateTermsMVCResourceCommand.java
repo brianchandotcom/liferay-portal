@@ -19,13 +19,13 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

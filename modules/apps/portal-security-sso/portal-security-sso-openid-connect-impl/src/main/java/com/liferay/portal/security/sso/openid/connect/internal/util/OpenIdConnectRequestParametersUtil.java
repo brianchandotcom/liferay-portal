@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.ResponseType;

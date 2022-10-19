@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 import com.liferay.account.admin.web.internal.display.AddressDisplay;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;

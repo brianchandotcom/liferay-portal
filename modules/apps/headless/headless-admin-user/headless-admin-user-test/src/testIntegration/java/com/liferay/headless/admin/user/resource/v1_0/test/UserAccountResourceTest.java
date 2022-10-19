@@ -35,6 +35,7 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
@@ -75,7 +76,6 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
 import java.util.Calendar;

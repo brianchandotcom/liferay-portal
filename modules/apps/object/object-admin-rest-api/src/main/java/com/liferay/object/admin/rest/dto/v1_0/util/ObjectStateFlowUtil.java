@@ -20,8 +20,8 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectStateFlow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectStateTransition;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.service.ObjectStateLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Feliphe Marinho

@@ -25,12 +25,12 @@ import com.liferay.commerce.term.web.internal.model.TermEntry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

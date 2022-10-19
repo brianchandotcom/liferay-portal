@@ -24,8 +24,8 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectStateFlowLocalServiceUtil;
 import com.liferay.object.service.ObjectStateLocalServiceUtil;
 import com.liferay.object.service.ObjectStateTransitionLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 /**
  * @author Feliphe Marinho

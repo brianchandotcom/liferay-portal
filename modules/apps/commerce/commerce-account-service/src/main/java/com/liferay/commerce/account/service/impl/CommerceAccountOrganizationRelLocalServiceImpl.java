@@ -20,10 +20,10 @@ import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.model.impl.CommerceAccountOrganizationRelImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountOrganizationRelLocalServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

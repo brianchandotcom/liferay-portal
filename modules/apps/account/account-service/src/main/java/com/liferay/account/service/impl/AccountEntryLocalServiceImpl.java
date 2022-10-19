@@ -30,6 +30,7 @@ import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -87,7 +88,6 @@ import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import java.io.Serializable;

@@ -16,6 +16,7 @@ package com.liferay.template.web.internal.webdav;
 
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.model.TemplateEntry;

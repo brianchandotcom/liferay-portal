@@ -26,6 +26,7 @@ import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderDTOConverter;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -45,7 +46,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.security.Key;
 

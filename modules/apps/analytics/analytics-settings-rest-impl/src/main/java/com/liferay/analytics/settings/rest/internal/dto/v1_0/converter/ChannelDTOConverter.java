@@ -17,9 +17,9 @@ package com.liferay.analytics.settings.rest.internal.dto.v1_0.converter;
 import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSource;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.suggestions;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -23,7 +24,6 @@ import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfigurati
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.SuggestionsRetriever;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

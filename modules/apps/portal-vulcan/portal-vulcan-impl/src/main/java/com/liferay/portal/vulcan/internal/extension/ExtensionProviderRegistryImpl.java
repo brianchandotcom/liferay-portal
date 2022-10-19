@@ -15,9 +15,9 @@
 package com.liferay.portal.vulcan.internal.extension;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 

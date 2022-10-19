@@ -36,6 +36,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.io.Serializable;

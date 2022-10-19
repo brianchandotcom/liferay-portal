@@ -24,6 +24,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.problem.Problem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
 import java.util.Collections;

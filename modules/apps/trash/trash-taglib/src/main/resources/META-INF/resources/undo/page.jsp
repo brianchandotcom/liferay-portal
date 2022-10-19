@@ -102,4 +102,10 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 	</aui:form>
 </liferay-util:buffer>
 
-<liferay-ui:success key="<%= portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA %>" message="<%= alertMessage %>" />
+<clay:alert
+	autoClose="<%= false %>"
+	cssClass="alert-notifications-fixed"
+	dismissible="<%= true %>"
+	displayType="success"
+	message="<%= alertMessage %>"
+/>

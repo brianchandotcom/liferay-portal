@@ -57,12 +57,13 @@ public class OAuth2ProviderJWKSResource {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
-		_oAuth2AuthorizationServerConfiguration =
-			ConfigurableUtil.createConfigurable(
-				OAuth2AuthorizationServerConfiguration.class, properties);
+		OAuth2AuthorizationServerConfiguration
+			oAuth2AuthorizationServerConfiguration =
+				ConfigurableUtil.createConfigurable(
+					OAuth2AuthorizationServerConfiguration.class, properties);
 
 		JSONObject jwkObject = _jsonFactory.createJSONObject(
-			_oAuth2AuthorizationServerConfiguration.
+			oAuth2AuthorizationServerConfiguration.
 				jwtAccessTokenSigningJSONWebKey());
 
 		_jwks = _jsonFactory.createJSONObject(
@@ -92,7 +93,5 @@ public class OAuth2ProviderJWKSResource {
 	private JSONFactory _jsonFactory;
 
 	private String _jwks;
-	private OAuth2AuthorizationServerConfiguration
-		_oAuth2AuthorizationServerConfiguration;
 
 }

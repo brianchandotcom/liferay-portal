@@ -14,11 +14,9 @@
 
 package com.liferay.notification.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -126,32 +124,6 @@ public class NotificationTemplate implements Serializable {
 	protected Long[] attachmentObjectFieldIds;
 
 	@Schema
-	public String getBcc() {
-		return bcc;
-	}
-
-	public void setBcc(String bcc) {
-		this.bcc = bcc;
-	}
-
-	@JsonIgnore
-	public void setBcc(UnsafeSupplier<String, Exception> bccUnsafeSupplier) {
-		try {
-			bcc = bccUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String bcc;
-
-	@Schema
 	@Valid
 	public Map<String, String> getBody() {
 		return body;
@@ -179,32 +151,6 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> body;
-
-	@Schema
-	public String getCc() {
-		return cc;
-	}
-
-	public void setCc(String cc) {
-		this.cc = cc;
-	}
-
-	@JsonIgnore
-	public void setCc(UnsafeSupplier<String, Exception> ccUnsafeSupplier) {
-		try {
-			cc = ccUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String cc;
 
 	@Schema
 	public Date getDateCreated() {
@@ -289,61 +235,6 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
-
-	@Schema
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	@JsonIgnore
-	public void setFrom(UnsafeSupplier<String, Exception> fromUnsafeSupplier) {
-		try {
-			from = fromUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String from;
-
-	@Schema
-	@Valid
-	public Map<String, String> getFromName() {
-		return fromName;
-	}
-
-	public void setFromName(Map<String, String> fromName) {
-		this.fromName = fromName;
-	}
-
-	@JsonIgnore
-	public void setFromName(
-		UnsafeSupplier<Map<String, String>, Exception> fromNameUnsafeSupplier) {
-
-		try {
-			fromName = fromNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> fromName;
 
 	@Schema
 	public Long getId() {
@@ -456,27 +347,17 @@ public class NotificationTemplate implements Serializable {
 	protected Long objectDefinitionId;
 
 	@Schema
-	@Valid
-	public RecipientType getRecipientType() {
+	public String getRecipientType() {
 		return recipientType;
 	}
 
-	@JsonIgnore
-	public String getRecipientTypeAsString() {
-		if (recipientType == null) {
-			return null;
-		}
-
-		return recipientType.toString();
-	}
-
-	public void setRecipientType(RecipientType recipientType) {
+	public void setRecipientType(String recipientType) {
 		this.recipientType = recipientType;
 	}
 
 	@JsonIgnore
 	public void setRecipientType(
-		UnsafeSupplier<RecipientType, Exception> recipientTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> recipientTypeUnsafeSupplier) {
 
 		try {
 			recipientType = recipientTypeUnsafeSupplier.get();
@@ -491,7 +372,36 @@ public class NotificationTemplate implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RecipientType recipientType;
+	protected String recipientType;
+
+	@Schema
+	@Valid
+	public Object[] getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(Object[] recipients) {
+		this.recipients = recipients;
+	}
+
+	@JsonIgnore
+	public void setRecipients(
+		UnsafeSupplier<Object[], Exception> recipientsUnsafeSupplier) {
+
+		try {
+			recipients = recipientsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object[] recipients;
 
 	@Schema
 	@Valid
@@ -521,35 +431,6 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> subject;
-
-	@Schema
-	@Valid
-	public Map<String, String> getTo() {
-		return to;
-	}
-
-	public void setTo(Map<String, String> to) {
-		this.to = to;
-	}
-
-	@JsonIgnore
-	public void setTo(
-		UnsafeSupplier<Map<String, String>, Exception> toUnsafeSupplier) {
-
-		try {
-			to = toUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> to;
 
 	@Schema
 	public String getType() {
@@ -638,20 +519,6 @@ public class NotificationTemplate implements Serializable {
 			sb.append("]");
 		}
 
-		if (bcc != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"bcc\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(bcc));
-
-			sb.append("\"");
-		}
-
 		if (body != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -660,20 +527,6 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"body\": ");
 
 			sb.append(_toJSON(body));
-		}
-
-		if (cc != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"cc\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(cc));
-
-			sb.append("\"");
 		}
 
 		if (dateCreated != null) {
@@ -716,30 +569,6 @@ public class NotificationTemplate implements Serializable {
 			sb.append(_escape(description));
 
 			sb.append("\"");
-		}
-
-		if (from != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"from\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(from));
-
-			sb.append("\"");
-		}
-
-		if (fromName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fromName\": ");
-
-			sb.append(_toJSON(fromName));
 		}
 
 		if (id != null) {
@@ -795,9 +624,33 @@ public class NotificationTemplate implements Serializable {
 
 			sb.append("\"");
 
-			sb.append(recipientType);
+			sb.append(_escape(recipientType));
 
 			sb.append("\"");
+		}
+
+		if (recipients != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"recipients\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < recipients.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(recipients[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < recipients.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (subject != null) {
@@ -808,16 +661,6 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"subject\": ");
 
 			sb.append(_toJSON(subject));
-		}
-
-		if (to != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"to\": ");
-
-			sb.append(_toJSON(to));
 		}
 
 		if (type != null) {
@@ -845,44 +688,6 @@ public class NotificationTemplate implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("RecipientType")
-	public static enum RecipientType {
-
-		ROLE("role"), TERM("term"), USER("user");
-
-		@JsonCreator
-		public static RecipientType create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (RecipientType recipientType : values()) {
-				if (Objects.equals(recipientType.getValue(), value)) {
-					return recipientType;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private RecipientType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

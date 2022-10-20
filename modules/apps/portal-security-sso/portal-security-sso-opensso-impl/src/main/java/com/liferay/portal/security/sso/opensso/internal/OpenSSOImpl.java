@@ -243,7 +243,8 @@ public class OpenSSOImpl implements OpenSSO {
 
 		String cookieName = getCookieNames(serviceURL)[0];
 
-		return CookiesManagerUtil.getCookieValue(cookieName, httpServletRequest);
+		return CookiesManagerUtil.getCookieValue(
+			cookieName, httpServletRequest);
 	}
 
 	@Override
@@ -448,7 +449,10 @@ public class OpenSSOImpl implements OpenSSO {
 		HttpServletRequest httpServletRequest, String[] cookieNames) {
 
 		for (String cookieName : cookieNames) {
-			if (CookiesManagerUtil.getCookieValue(cookieName, httpServletRequest) != null) {
+			String cookieValue = CookiesManagerUtil.getCookieValue(
+				cookieName, httpServletRequest);
+
+			if (cookieValue != null) {
 				return true;
 			}
 		}

@@ -169,7 +169,9 @@ public class PunchOutLoginPostAction extends Action {
 		cookie.setMaxAge(-1);
 		cookie.setPath(StringPool.SLASH);
 
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie, httpServletRequest, httpServletResponse);
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+			httpServletRequest, httpServletResponse);
 
 		HttpSession httpSession = httpServletRequest.getSession();
 

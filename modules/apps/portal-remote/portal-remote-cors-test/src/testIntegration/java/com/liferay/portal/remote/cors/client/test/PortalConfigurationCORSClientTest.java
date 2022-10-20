@@ -128,7 +128,8 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 		NewCookie cookieSupportNewCookie = newCookies.get(
 			CookiesConstants.NAME_COOKIE_SUPPORT);
-		NewCookie jSessionIdNewCookie = newCookies.get(CookiesConstants.NAME_JSESSIONID);
+		NewCookie jSessionIdNewCookie = newCookies.get(
+			CookiesConstants.NAME_JSESSIONID);
 
 		invocationBuilder = _getWebTarget(
 			"c", "portal", "login"

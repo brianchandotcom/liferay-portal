@@ -331,7 +331,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
 					Boolean.TRUE.toString());
 
-				String domain = CookiesManagerUtil.getDomain(httpServletRequest);
+				String domain = CookiesManagerUtil.getDomain(
+					httpServletRequest);
 
 				if (Validator.isNotNull(domain)) {
 					cookie.setDomain(domain);
@@ -340,7 +341,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				cookie.setMaxAge(CookiesConstants.MAX_AGE);
 				cookie.setPath(StringPool.SLASH);
 
-				CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+				CookiesManagerUtil.addCookie(
+					CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 					httpServletRequest, themeDisplay.getResponse());
 			}
 
@@ -735,7 +737,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		cookie.setMaxAge(CookiesConstants.MAX_AGE);
 		cookie.setPath(StringPool.SLASH);
 
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			themeDisplay.getRequest(), themeDisplay.getResponse());
 	}
 

@@ -389,15 +389,25 @@ public abstract class BaseProfile {
 		HttpServletResponse httpServletResponse) {
 
 		boolean rememberMe = GetterUtil.getBoolean(
-			CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, httpServletRequest));
+			CookiesManagerUtil.getCookieValue(
+				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest));
 
-		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_COMPANY_ID);
-		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
-		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_PASSWORD);
-		deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_REMEMBER_ME);
+		deleteCookie(
+			httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_COMPANY_ID);
+		deleteCookie(
+			httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
+		deleteCookie(
+			httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_PASSWORD);
+		deleteCookie(
+			httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_REMEMBER_ME);
 
 		if (!rememberMe) {
-			deleteCookie(httpServletRequest, httpServletResponse, CookiesConstants.NAME_LOGIN);
+			deleteCookie(
+				httpServletRequest, httpServletResponse,
+				CookiesConstants.NAME_LOGIN);
 		}
 
 		HttpSession httpSession = httpServletRequest.getSession();
@@ -501,20 +511,23 @@ public abstract class BaseProfile {
 			cookie.setPath(portal.getPathContext());
 		}
 
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie, httpServletRequest, httpServletResponse, httpServletRequest.isSecure());
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+			httpServletRequest, httpServletResponse,
+			httpServletRequest.isSecure());
+	}
+
+	protected void addSamlBinding(SamlBinding samlBinding) {
+		_samlBindings.add(samlBinding);
 	}
 
 	protected void deleteCookie(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String cookieName) {
 
-		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
-
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, cookieName);
-	}
-
-	protected void addSamlBinding(SamlBinding samlBinding) {
-		_samlBindings.add(samlBinding);
+		CookiesManagerUtil.deleteCookies(
+			CookiesManagerUtil.getDomain(httpServletRequest),
+			httpServletRequest, httpServletResponse, cookieName);
 	}
 
 	protected void removeSamlBinding(SamlBinding samlBinding) {

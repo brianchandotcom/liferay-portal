@@ -70,13 +70,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_unsetCookie(
-			httpServletRequest, httpServletResponse,
-			themeDisplay.getURLCurrent());
+		_unsetCookie(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -144,9 +138,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			}
 		}
 
-		_unsetCookie(
-			httpServletRequest, httpServletResponse,
-			themeDisplay.getURLCurrent());
+		_unsetCookie(httpServletRequest, httpServletResponse);
 
 		LongStream longStream = Arrays.stream(segmentsExperienceIds);
 
@@ -350,13 +342,14 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		abTestVariantIdCookie.setMaxAge(CookiesConstants.MAX_AGE);
 		abTestVariantIdCookie.setPath(path);
 
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_PERSONALIZATION, abTestVariantIdCookie,
-			httpServletRequest, httpServletResponse);
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_PERSONALIZATION,
+			abTestVariantIdCookie, httpServletRequest, httpServletResponse);
 	}
 
 	private void _unsetCookie(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String path) {
+		HttpServletResponse httpServletResponse) {
 
 		Optional<Cookie> cookieOptional = _getCookieOptional(
 			httpServletRequest);
@@ -367,9 +360,9 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		Cookie cookie = cookieOptional.get();
 
-		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
-
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, cookie.getName());
+		CookiesManagerUtil.deleteCookies(
+			CookiesManagerUtil.getDomain(httpServletRequest),
+			httpServletRequest, httpServletResponse, cookie.getName());
 	}
 
 	private static final String _AB_TEST_VARIANT_ID_COOKIE_NAME =

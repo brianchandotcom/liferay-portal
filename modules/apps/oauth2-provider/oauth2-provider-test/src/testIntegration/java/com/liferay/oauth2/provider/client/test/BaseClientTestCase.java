@@ -170,7 +170,8 @@ public abstract class BaseClientTestCase {
 
 		NewCookie cookieSupportNewCookie = newCookies.get(
 			CookiesConstants.NAME_COOKIE_SUPPORT);
-		NewCookie jSessionIdNewCookie = newCookies.get(CookiesConstants.NAME_JSESSIONID);
+		NewCookie jSessionIdNewCookie = newCookies.get(
+			CookiesConstants.NAME_JSESSIONID);
 
 		invocationBuilder = getInvocationBuilder(hostname, getLoginWebTarget());
 

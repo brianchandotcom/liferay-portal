@@ -67,7 +67,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		String autoPassword = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_PASSWORD, httpServletRequest, false);
 		String rememberMe = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_REMEMBER_ME, httpServletRequest,false);
+			CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false);
 
 		// LEP-5188
 
@@ -131,8 +131,12 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
 
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, CookiesConstants.NAME_PASSWORD);
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_ID);
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_PASSWORD);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

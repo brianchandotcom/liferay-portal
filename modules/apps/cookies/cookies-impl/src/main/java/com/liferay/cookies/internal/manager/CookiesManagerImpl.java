@@ -404,7 +404,8 @@ public class CookiesManagerImpl implements CookiesManager {
 			}
 		}
 
-		httpServletRequest.setAttribute(CookiesManagerImpl.class.getName(), cookiesMap);
+		httpServletRequest.setAttribute(
+			CookiesManagerImpl.class.getName(), cookiesMap);
 
 		return cookiesMap;
 	}

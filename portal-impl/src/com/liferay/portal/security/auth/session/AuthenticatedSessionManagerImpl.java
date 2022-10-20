@@ -170,7 +170,8 @@ public class AuthenticatedSessionManagerImpl
 		}
 
 		Cookie companyIdCookie = new Cookie(
-			CookiesConstants.NAME_COMPANY_ID, String.valueOf(company.getCompanyId()));
+			CookiesConstants.NAME_COMPANY_ID,
+			String.valueOf(company.getCompanyId()));
 
 		if (domain != null) {
 			companyIdCookie.setDomain(domain);
@@ -220,9 +221,11 @@ public class AuthenticatedSessionManagerImpl
 			}
 		}
 
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, companyIdCookie,
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, companyIdCookie,
 			httpServletRequest, httpServletResponse, secure);
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, idCookie,
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, idCookie,
 			httpServletRequest, httpServletResponse, secure);
 
 		if (rememberMe) {
@@ -235,7 +238,8 @@ public class AuthenticatedSessionManagerImpl
 			loginCookie.setMaxAge(loginMaxAge);
 			loginCookie.setPath(StringPool.SLASH);
 
-			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, loginCookie,
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, loginCookie,
 				httpServletRequest, httpServletResponse, secure);
 
 			Cookie passwordCookie = new Cookie(
@@ -249,9 +253,9 @@ public class AuthenticatedSessionManagerImpl
 			passwordCookie.setMaxAge(loginMaxAge);
 			passwordCookie.setPath(StringPool.SLASH);
 
-			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, passwordCookie,
-				httpServletRequest, httpServletResponse,
-				secure);
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, passwordCookie,
+				httpServletRequest, httpServletResponse, secure);
 
 			Cookie rememberMeCookie = new Cookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString());
@@ -263,9 +267,9 @@ public class AuthenticatedSessionManagerImpl
 			rememberMeCookie.setMaxAge(loginMaxAge);
 			rememberMeCookie.setPath(StringPool.SLASH);
 
-			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,
-				httpServletRequest, httpServletResponse,
-				secure);
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,
+				httpServletRequest, httpServletResponse, secure);
 		}
 	}
 
@@ -293,7 +297,8 @@ public class AuthenticatedSessionManagerImpl
 
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_COMPANY_ID, CookiesConstants.NAME_GUEST_LANGUAGE_ID, CookiesConstants.NAME_ID,
+			CookiesConstants.NAME_COMPANY_ID,
+			CookiesConstants.NAME_GUEST_LANGUAGE_ID, CookiesConstants.NAME_ID,
 			CookiesConstants.NAME_PASSWORD, CookiesConstants.NAME_REMEMBER_ME);
 
 		if (!rememberMe) {

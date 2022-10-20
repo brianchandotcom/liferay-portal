@@ -1190,7 +1190,7 @@ public class UserAccountResourceImpl
 			_isPasswordResetRequired(user));
 
 		String cookie = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_JSESSIONID, contextHttpServletRequest,false);
+			CookiesConstants.NAME_JSESSIONID, contextHttpServletRequest, false);
 
 		if ((contextUser.getUserId() == user.getUserId()) && (cookie != null)) {
 			String login = null;

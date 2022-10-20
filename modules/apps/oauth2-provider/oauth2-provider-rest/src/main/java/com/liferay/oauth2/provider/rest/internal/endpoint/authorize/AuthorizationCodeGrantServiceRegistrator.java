@@ -272,7 +272,8 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 			MessageContext messageContext = getMessageContext();
 
-			CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 				messageContext.getHttpServletRequest(),
 				messageContext.getHttpServletResponse());
 

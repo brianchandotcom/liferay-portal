@@ -114,7 +114,8 @@ public class PortalInstances {
 		if (companyId <= 0) {
 			long cookieCompanyId = GetterUtil.getLong(
 				CookiesManagerUtil.getCookieValue(
-					CookiesConstants.NAME_COMPANY_ID, httpServletRequest, false));
+					CookiesConstants.NAME_COMPANY_ID, httpServletRequest,
+					false));
 
 			if (cookieCompanyId > 0) {
 				try {

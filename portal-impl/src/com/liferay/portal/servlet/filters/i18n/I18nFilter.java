@@ -235,7 +235,8 @@ public class I18nFilter extends BasePortalFilter {
 
 		if (Validator.isNull(requestedLanguageId)) {
 			requestedLanguageId = CookiesManagerUtil.getCookieValue(
-				CookiesConstants.NAME_GUEST_LANGUAGE_ID, httpServletRequest, false);
+				CookiesConstants.NAME_GUEST_LANGUAGE_ID, httpServletRequest,
+				false);
 		}
 
 		return requestedLanguageId;

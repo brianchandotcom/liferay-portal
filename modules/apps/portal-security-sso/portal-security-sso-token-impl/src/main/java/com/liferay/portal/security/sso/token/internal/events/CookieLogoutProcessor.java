@@ -38,9 +38,9 @@ public class CookieLogoutProcessor implements LogoutProcessor {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String... parameters) {
 
-		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
-
-		CookiesManagerUtil.deleteCookies(domain, httpServletRequest, httpServletResponse, parameters);
+		CookiesManagerUtil.deleteCookies(
+			CookiesManagerUtil.getDomain(httpServletRequest),
+			httpServletRequest, httpServletResponse, parameters);
 	}
 
 }

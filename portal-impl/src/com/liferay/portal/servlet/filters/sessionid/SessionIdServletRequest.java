@@ -89,7 +89,8 @@ public class SessionIdServletRequest extends HttpServletRequestWrapper {
 			cookie.setPath(StringPool.SLASH);
 		}
 
-		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
 			(HttpServletRequest)super.getRequest(), _httpServletResponse);
 
 		setAttribute(_JSESSIONID_ALREADY_SET, Boolean.TRUE);

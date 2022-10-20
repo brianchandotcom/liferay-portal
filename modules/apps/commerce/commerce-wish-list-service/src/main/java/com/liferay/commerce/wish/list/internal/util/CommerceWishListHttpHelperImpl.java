@@ -90,7 +90,8 @@ public class CommerceWishListHttpHelperImpl
 
 		String cookieName = _getCookieName(groupId);
 
-		String guestUuid = CookiesManagerUtil.getCookieValue(cookieName, httpServletRequest);
+		String guestUuid = CookiesManagerUtil.getCookieValue(
+			cookieName, httpServletRequest);
 
 		CommerceWishList commerceWishList =
 			_commerceWishListLocalService.getDefaultCommerceWishList(
@@ -108,7 +109,8 @@ public class CommerceWishListHttpHelperImpl
 				cookie.setMaxAge(CookiesConstants.MAX_AGE);
 				cookie.setPath(StringPool.SLASH);
 
-				CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+				CookiesManagerUtil.addCookie(
+					CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 					httpServletRequest, httpServletResponse);
 			}
 		}

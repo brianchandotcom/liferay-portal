@@ -1,0 +1,173 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up virtual instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a company Object with a Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				panelCategoryKey = "site_administration.design",
+				pluralLabelName = "Purchase Orders",
+				scope = "site");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a regular role") {
+			JSONRole.addRegularRole(
+				roleKey = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "Roles Regrole Name");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "This is a test for LPS-164125. Form Components should available on Masters Page Template for user with custom permissions."
+	@priority = "4"
+	test MapEntityToFormContainerInMastersPageTemplateAsUserWithViewPermissionForCustomObject {
+		task ("Given a site creator grants the needed permissions to new user") {
+			task ("Add a text field to Object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+			}
+
+			task ("Define the permission of new role") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+					roleTitle = "Roles Regrole Name",
+					roleType = "regular");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "UPDATE",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Roles Regrole Name",
+					roleType = "regular");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet",
+					roleTitle = "Roles Regrole Name",
+					roleType = "regular");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "UPDATE",
+					resourceName = "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+					roleTitle = "Roles Regrole Name",
+					roleType = "regular");
+
+				var objectId = JSONObject.getObjectId(objectName = "PurchaseOrder");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+					roleTitle = "Roles Regrole Name",
+					roleType = "regular");
+			}
+
+			task ("Add a masters page template") {
+				JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+					groupName = "Test Site Name",
+					masterPageTemplateEntryName = "Masters Page Template");
+			}
+
+			task ("Add the role to user") {
+				JSONRole.assignRoleToUser(
+					roleTitle = "Roles Regrole Name",
+					userEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Sign in as new user") {
+				User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			}
+		}
+
+		task ("When the user adds a Form Container to masters page template") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				dropTarget = "Header",
+				fragmentName = "Form Container",
+				scope = "Master");
+
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+		}
+
+		task ("Then the user could select the content type of Form Container") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "None");
+
+			Select(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Purchase Order");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Purchase Order");
+		}
+	}
+
+}

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.ClassLoaderResourceParser;
-import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 

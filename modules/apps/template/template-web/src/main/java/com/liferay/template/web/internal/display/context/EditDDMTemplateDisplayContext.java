@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.template.web.internal.util.TemplateDDMTemplateUtil;
 
 import java.util.Collection;

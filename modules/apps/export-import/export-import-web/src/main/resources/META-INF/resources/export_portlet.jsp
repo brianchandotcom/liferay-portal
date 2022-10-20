@@ -151,6 +151,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															href="javascript:void(0);"
 															label="change"
 															method="get"
+															role="button"
 														/>
 													</li>
 												</ul>
@@ -211,7 +212,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															markupView="lexicon"
 														/>
 
-														<aui:a cssClass="modify-link" href="javascript:void(0);" id="rangeLink" method="get">
+														<aui:a cssClass="modify-link refresh-link" href="javascript:void(0);" id="rangeLink" method="get">
 															<liferay-ui:message key="refresh-counts" />
 														</aui:a>
 													</div>
@@ -407,6 +408,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																		id='<%= "contentLink_" + selPortlet.getRootPortletId() %>'
 																		label="change"
 																		method="get"
+																		role="button"
 																	/>
 																</li>
 															</ul>
@@ -425,7 +427,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 													<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-export-their">
 														<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-														<aui:a cssClass="modify-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" />
+														<aui:a cssClass="modify-link options-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" role="button" />
 
 														<div class="hide" id="<portlet:namespace />contentOptions">
 															<ul class="lfr-tree list-unstyled">

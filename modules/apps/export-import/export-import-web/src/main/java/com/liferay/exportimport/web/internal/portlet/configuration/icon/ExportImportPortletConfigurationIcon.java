@@ -69,7 +69,8 @@ public class ExportImportPortletConfigurationIcon
 
 		StringBundler sb = new StringBundler(13);
 
-		sb.append("Liferay.Portlet.openModal({namespace: '");
+		sb.append(
+			"Liferay.Portlet.openModal({iframeBodyCssClass:'',namespace: '");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

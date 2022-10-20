@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
 
@@ -123,14 +124,26 @@ public class HuggingFaceSentenceTransformer
 				responseJSON = _getResponseJSON(options, text);
 			}
 
-			List<Double> list = JSONUtil.toDoubleList(
-				_getJSONArray(_jsonFactory.createJSONArray(responseJSON)));
+			if (_isJSONArray(responseJSON)) {
+				List<Double> list = JSONUtil.toDoubleList(
+					_getJSONArray(_jsonFactory.createJSONArray(responseJSON)));
 
-			return list.toArray(new Double[0]);
+				return list.toArray(new Double[0]);
+			}
+
+			throw new RuntimeException(responseJSON);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
+	}
+
+	private boolean _isJSONArray(String s) {
+		if (StringUtil.startsWith(s, "[") && StringUtil.endsWith(s, "]")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 
 import java.time.LocalDateTime;
@@ -56,14 +54,13 @@ public class AbortedMultipartUploadCleanerMessageListener
 
 		String className = clazz.getName();
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 1, TimeUnit.DAY);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
 		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
+			this,
+			new SchedulerEntryImpl(
+				className,
+				_triggerFactory.createTrigger(
+					className, className, null, null, 1, TimeUnit.DAY)),
+			DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate

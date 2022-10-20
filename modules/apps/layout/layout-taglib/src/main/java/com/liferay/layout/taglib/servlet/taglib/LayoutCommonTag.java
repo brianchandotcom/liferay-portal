@@ -14,7 +14,9 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -27,7 +29,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
-import com.liferay.taglib.ui.MessageTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,17 +103,30 @@ public class LayoutCommonTag extends IncludeTag {
 		JspWriter jspWriter = pageContext.getOut();
 
 		if (_includeWebServerDisplayNode) {
-			jspWriter.write("<div class=\"alert alert-info\">");
-
-			MessageTag.doTag("node", pageContext);
-
-			jspWriter.write(": ");
+			jspWriter.write("<div class=\"alert-container cadmin container\">");
 			jspWriter.write(
-				StringUtil.toLowerCase(PortalUtil.getComputerName()));
-			jspWriter.write(StringPool.COLON);
-			jspWriter.write(
-				String.valueOf(PortalUtil.getPortalLocalPort(false)));
-			jspWriter.write("</div>");
+				"<div class=\"alert-notifications " +
+					"alert-notifications-fixed\" " +
+						"id=\"WebServerDisplayNodeContainer\">");
+
+			AlertTag alertTag = new AlertTag();
+
+			alertTag.setDismissible(true);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(LanguageUtil.get(themeDisplay.getLocale(), "node"));
+			sb.append(StringPool.COLON);
+			sb.append(StringPool.SPACE);
+			sb.append(StringUtil.toLowerCase(PortalUtil.getComputerName()));
+			sb.append(StringPool.COLON);
+			sb.append(PortalUtil.getPortalLocalPort(false));
+
+			alertTag.setTitle(sb.toString());
+
+			jspWriter.write(alertTag.doTagAsString(pageContext));
+
+			jspWriter.write("</div></div>");
 		}
 
 		jspWriter.write(

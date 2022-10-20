@@ -52,7 +52,9 @@ definition {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/*") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/es/frontend-data-set-test-page/");
+			Navigator.openSpecificURL(url = "${portalURL}/es/home");
+
+			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 		}
 
 		task ("When: on classic tab view") {
@@ -70,18 +72,18 @@ definition {
 
 		task ("And Then: First letter is capitalized for all headers and localized Spanish headers are present") {
 			AssertTextEquals.assertTextCaseSensitive(
-				key_columnName = "Nombre",
-				locator1 = "FrontendDataSet#COLUMN_NAME",
+				key_field = "Nombre",
+				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN",
 				value1 = "Nombre");
 
 			AssertTextEquals.assertTextCaseSensitive(
-				key_columnName = "Apellido",
-				locator1 = "FrontendDataSet#COLUMN_NAME",
+				key_field = "Apellido",
+				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN",
 				value1 = "Apellido");
 
 			AssertTextEquals.assertTextCaseSensitive(
-				key_columnName = "Dirección de correo",
-				locator1 = "FrontendDataSet#COLUMN_NAME",
+				key_field = "Dirección de correo",
+				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN",
 				value1 = "Dirección de correo");
 		}
 	}

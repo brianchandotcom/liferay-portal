@@ -40,6 +40,13 @@ public abstract class BaseValidatorTagSupport extends IncludeTag {
 		addValidatorTag("required", validatorTag);
 	}
 
+	public void addRequiredValidatorTag(String errorMessage) {
+		ValidatorTag validatorTag = new ValidatorTagImpl(
+			"required", errorMessage, null, false);
+
+		addValidatorTag("required", validatorTag);
+	}
+
 	public void addValidatorTag(
 		String validatorName, ValidatorTag validatorTag) {
 

@@ -15,6 +15,7 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,7 +55,17 @@ public class InputTag extends BaseInputTag {
 		addModelValidatorTags();
 
 		if (getRequired()) {
-			addRequiredValidatorTag();
+			String label = getLabel();
+
+			if (label == null) {
+				label = LanguageUtil.get(
+					getRequest(),
+					TextFormatter.format(getName(), TextFormatter.K));
+			}
+
+			addRequiredValidatorTag(
+				LanguageUtil.format(
+					getRequest(), "the-x-field-is-required", label));
 		}
 
 		return super.doStartTag();
@@ -150,6 +161,21 @@ public class InputTag extends BaseInputTag {
 			String validatorErrorMessage = (String)modelValidator.getObject(2);
 			String validatorValue = (String)modelValidator.getObject(3);
 			boolean customValidator = (Boolean)modelValidator.getObject(4);
+
+			if (validatorName.equals("required") &&
+				Validator.isNull(validatorErrorMessage)) {
+
+				String label = getLabel();
+
+				if (label == null) {
+					label = LanguageUtil.get(
+						getRequest(),
+						TextFormatter.format(getName(), TextFormatter.K));
+				}
+
+				validatorErrorMessage = LanguageUtil.format(
+					getRequest(), "the-x-field-is-required", label);
+			}
 
 			ValidatorTag validatorTag = new ValidatorTagImpl(
 				validatorName, validatorErrorMessage, validatorValue,

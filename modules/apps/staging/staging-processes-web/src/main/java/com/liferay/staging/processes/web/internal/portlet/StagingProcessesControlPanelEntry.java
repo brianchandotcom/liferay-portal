@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
 	service = ControlPanelEntry.class
 )

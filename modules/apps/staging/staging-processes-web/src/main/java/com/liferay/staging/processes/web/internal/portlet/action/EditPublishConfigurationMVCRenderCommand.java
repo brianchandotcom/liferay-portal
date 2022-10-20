@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
 		"mvc.command.name=/staging_processes/edit_publish_configuration"

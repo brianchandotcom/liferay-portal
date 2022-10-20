@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingBarPortletKeys.STAGING_BAR,
 		"mvc.command.name=/staging_bar/select_layout_branch"

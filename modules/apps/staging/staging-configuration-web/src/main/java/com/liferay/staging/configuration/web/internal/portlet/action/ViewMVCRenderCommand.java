@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
 		"mvc.command.name=/staging_configuration/view"

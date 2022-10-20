@@ -12,8 +12,18 @@
  * details.
  */
 
-const CaseResultHistory = () => {
-	return <div>CaseResultHistory</div>;
-};
+import EmptyState from '../../../../../../components/EmptyState';
+import Container from '../../../../../../components/Layout/Container';
+import i18n from '../../../../../../i18n';
+
+const CaseResultHistory = () => (
+	<Container>
+		<EmptyState
+			description=" "
+			title={i18n.translate('no-content-yet')}
+			type="EMPTY_SEARCH"
+		/>
+	</Container>
+);
 
 export default CaseResultHistory;

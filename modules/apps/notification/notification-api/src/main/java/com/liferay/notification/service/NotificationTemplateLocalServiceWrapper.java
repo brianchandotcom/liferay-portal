@@ -40,20 +40,12 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				long userId, long objectDefinitionId, String bcc,
-				java.util.Map<java.util.Locale, String> bodyMap, String cc,
-				String description, String from,
-				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, String recipientType,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap, String type,
-				java.util.List<Long> attachmentObjectFieldIds)
+				com.liferay.notification.type.NotificationContext
+					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, recipientType, subjectMap, toMap, type,
-			attachmentObjectFieldIds);
+			notificationContext);
 	}
 
 	/**
@@ -398,20 +390,12 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
-				long notificationTemplateId, long objectDefinitionId,
-				String bcc, java.util.Map<java.util.Locale, String> bodyMap,
-				String cc, String description, String from,
-				java.util.Map<java.util.Locale, String> fromNameMap,
-				String name, String recipientType,
-				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap, String type,
-				java.util.List<Long> attachmentObjectFieldIds)
+				com.liferay.notification.type.NotificationContext
+					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
-			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
-			description, from, fromNameMap, name, recipientType, subjectMap,
-			toMap, type, attachmentObjectFieldIds);
+			notificationContext);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.notification.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.type.NotificationContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -39,8 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -69,12 +68,7 @@ public interface NotificationTemplateLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate addNotificationTemplate(
-			long userId, long objectDefinitionId, String bcc,
-			Map<Locale, String> bodyMap, String cc, String description,
-			String from, Map<Locale, String> fromNameMap, String name,
-			String recipientType, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap, String type,
-			List<Long> attachmentObjectFieldIds)
+			NotificationContext notificationContext)
 		throws PortalException;
 
 	/**
@@ -309,12 +303,7 @@ public interface NotificationTemplateLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, long objectDefinitionId, String bcc,
-			Map<Locale, String> bodyMap, String cc, String description,
-			String from, Map<Locale, String> fromNameMap, String name,
-			String recipientType, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap, String type,
-			List<Long> attachmentObjectFieldIds)
+			NotificationContext notificationContext)
 		throws PortalException;
 
 	/**

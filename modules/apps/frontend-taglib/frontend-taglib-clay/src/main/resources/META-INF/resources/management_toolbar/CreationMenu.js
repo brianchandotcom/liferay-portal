@@ -25,6 +25,75 @@ import LinkOrButton from './LinkOrButton';
 
 import './CreationMenu.scss';
 
+const Item = ({item, onClick}) => {
+	return (
+		<ClayDropDown.Item
+			href={item.href}
+			onClick={(event) => {
+				onClick(event, {item});
+			}}
+			symbolLeft={item.icon}
+			{...getDataAttributes(item.data)}
+		>
+			{unescapeHTML(item.label)}
+		</ClayDropDown.Item>
+	);
+};
+
+const ItemList = ({
+	onItemClick,
+	primaryItems,
+	secondaryItems,
+	visibleItemsCount,
+}) => {
+	let currentItemCount = 0;
+
+	return (
+		<ClayDropDown.ItemList
+			className={classNames({
+				'dropdown-menu-indicator-start': primaryItems.some(
+					(item) => item.icon
+				),
+			})}
+		>
+			{primaryItems?.map((item, index) => {
+				currentItemCount++;
+
+				if (currentItemCount > visibleItemsCount) {
+					return false;
+				}
+
+				return <Item item={item} key={index} />;
+			})}
+
+			{secondaryItems?.map((secondaryItemsGroup, index) => (
+				<ClayDropDown.Group
+					header={secondaryItemsGroup.label}
+					key={index}
+				>
+					{secondaryItemsGroup.items.map((item, index) => {
+						currentItemCount++;
+
+						if (currentItemCount > visibleItemsCount) {
+							return false;
+						}
+
+						return (
+							<Item
+								item={item}
+								key={index}
+								onClick={onItemClick}
+							/>
+						);
+					})}
+
+					{secondaryItemsGroup.separator && <ClayDropDown.Divider />}
+				</ClayDropDown.Group>
+			))}
+		</ClayDropDown.ItemList>
+	);
+};
+
 const CreationMenu = ({
 	maxPrimaryItems,
 	maxSecondaryItems,
@@ -105,66 +174,6 @@ const CreationMenu = ({
 		getVisibleItemsCount()
 	);
 
-	const Item = ({item}) => {
-		return (
-			<ClayDropDown.Item
-				href={item.href}
-				onClick={(event) => {
-					onCreationMenuItemClick(event, {item});
-				}}
-				symbolLeft={item.icon}
-				{...getDataAttributes(item.data)}
-			>
-				{unescapeHTML(item.label)}
-			</ClayDropDown.Item>
-		);
-	};
-
-	const ItemList = () => {
-		let currentItemCount = 0;
-
-		return (
-			<ClayDropDown.ItemList
-				className={classNames({
-					'dropdown-menu-indicator-start': primaryItems.some(
-						(item) => item.icon
-					),
-				})}
-			>
-				{primaryItems?.map((item, index) => {
-					currentItemCount++;
-
-					if (currentItemCount > visibleItemsCount) {
-						return false;
-					}
-
-					return <Item item={item} key={index} />;
-				})}
-
-				{secondaryItems?.map((secondaryItemsGroup, index) => (
-					<ClayDropDown.Group
-						header={secondaryItemsGroup.label}
-						key={index}
-					>
-						{secondaryItemsGroup.items.map((item, index) => {
-							currentItemCount++;
-
-							if (currentItemCount > visibleItemsCount) {
-								return false;
-							}
-
-							return <Item item={item} key={index} />;
-						})}
-
-						{secondaryItemsGroup.separator && (
-							<ClayDropDown.Divider />
-						)}
-					</ClayDropDown.Group>
-				))}
-			</ClayDropDown.ItemList>
-		);
-	};
-
 	return (
 		<>
 			{totalItemsCountRef.current > 1 ? (
@@ -202,6 +211,7 @@ const CreationMenu = ({
 						<>
 							<div className="inline-scroller">
 								<ItemList
+									onItemClick={onCreationMenuItemClick}
 									primaryItems={primaryItems}
 									secondaryItems={secondaryItems}
 									visibleItemsCount={visibleItemsCount}
@@ -241,7 +251,7 @@ const CreationMenu = ({
 						</>
 					) : (
 						<ItemList
-							onCreationMenuItemClick={onCreationMenuItemClick}
+							onItemClick={onCreationMenuItemClick}
 							primaryItems={primaryItems}
 							secondaryItems={secondaryItems}
 							visibleItemsCount={totalItemsCountRef.current}

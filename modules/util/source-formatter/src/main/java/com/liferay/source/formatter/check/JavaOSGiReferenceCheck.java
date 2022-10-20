@@ -95,6 +95,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				moduleSuperClassContent);
 		}
 
+		_checkUnnecessaryVariableInjection(fileName, absolutePath, content);
+
 		return content;
 	}
 
@@ -129,6 +131,84 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				fileName,
 				"Use @Reference instead of calling " + serviceUtilClassName +
 					" directly");
+		}
+	}
+
+	private void _checkUnnecessaryVariableInjection(
+			String fileName, String absolutePath, String content)
+		throws IOException, ParseException {
+
+		if (!absolutePath.contains("-service/") ||
+			!absolutePath.contains("/service/impl/") ||
+			!fileName.endsWith("ServiceImpl.java")) {
+
+			return;
+		}
+
+		BNDSettings bndSettings = getBNDSettings(fileName);
+
+		String bndSettingsContent = bndSettings.getContent();
+
+		if (!bndSettingsContent.contains("-dsannotations-options: inherit")) {
+			return;
+		}
+
+		String serviceBaseClassPath = StringUtil.replace(
+			absolutePath, new String[] {"/service/impl/", "Impl.java"},
+			new String[] {"/service/base/", "BaseImpl.java"});
+
+		File file = new File(serviceBaseClassPath);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!javaTerm.hasAnnotation() || !javaTerm.isJavaVariable() ||
+				!javaTerm.isPrivate()) {
+
+				continue;
+			}
+
+			String fieldTypeClassName = _getFieldTypeClassName(
+				javaTerm, JavaTerm.ACCESS_MODIFIER_PRIVATE, javaClass);
+
+			if (Validator.isNull(fieldTypeClassName)) {
+				continue;
+			}
+
+			JavaClass serviceBaseJavaClass = JavaClassParser.parseJavaClass(
+				serviceBaseClassPath, FileUtil.read(file));
+
+			for (JavaTerm serviceBaseJavaTerm :
+					serviceBaseJavaClass.getChildJavaTerms()) {
+
+				if (!serviceBaseJavaTerm.hasAnnotation() ||
+					!serviceBaseJavaTerm.isJavaVariable() ||
+					!serviceBaseJavaTerm.isProtected()) {
+
+					continue;
+				}
+
+				String serviceBaseFieldTypeClassName = _getFieldTypeClassName(
+					serviceBaseJavaTerm, JavaTerm.ACCESS_MODIFIER_PROTECTED,
+					serviceBaseJavaClass);
+
+				if (Validator.isNull(serviceBaseFieldTypeClassName)) {
+					continue;
+				}
+
+				if (fieldTypeClassName.equals(serviceBaseFieldTypeClassName)) {
+					addMessage(
+						fileName,
+						"Use super class variable '" +
+							serviceBaseJavaTerm.getName() +
+								"' instead of injection",
+						javaTerm.getLineNumber());
+				}
+			}
 		}
 	}
 
@@ -271,6 +351,40 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _getFieldTypeClassName(
+		JavaTerm javaTerm, String accessModifier, JavaClass javaClass) {
+
+		Pattern pattern = Pattern.compile(
+			"@Reference\n\t+" + accessModifier + "\\s(\\S+)\\s+(\\S+\\.)?\\w+");
+
+		Matcher matcher = pattern.matcher(javaTerm.getContent());
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String fieldTypeClassName = matcher.group(1);
+
+		if (!fieldTypeClassName.contains(StringPool.PERIOD)) {
+			fieldTypeClassName = _getFullyQualifiedName(
+				fieldTypeClassName, javaClass);
+		}
+
+		return fieldTypeClassName;
+	}
+
+	private String _getFullyQualifiedName(
+		String className, JavaClass javaClass) {
+
+		for (String importName : javaClass.getImportNames()) {
+			if (importName.endsWith(StringPool.PERIOD + className)) {
+				return importName;
+			}
+		}
+
+		return javaClass.getPackageName() + StringPool.PERIOD + className;
 	}
 
 	private String _getModuleClassContent(String fullClassName)

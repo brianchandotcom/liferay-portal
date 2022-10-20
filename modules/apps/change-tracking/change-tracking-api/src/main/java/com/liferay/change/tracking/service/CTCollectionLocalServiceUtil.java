@@ -322,6 +322,14 @@ public class CTCollectionLocalServiceUtil {
 			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
+	public static List<CTCollection> getExclusivePublishedCTCollections(
+			long modelClassNameId, long modelClassPK)
+		throws PortalException {
+
+		return getService().getExclusivePublishedCTCollections(
+			modelClassNameId, modelClassPK);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

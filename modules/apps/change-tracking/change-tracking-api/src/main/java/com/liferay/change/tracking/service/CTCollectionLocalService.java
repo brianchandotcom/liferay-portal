@@ -280,6 +280,11 @@ public interface CTCollectionLocalService
 		long ctCollectionId, long modelClassNameId, long modelClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTCollection> getExclusivePublishedCTCollections(
+			long modelClassNameId, long modelClassPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

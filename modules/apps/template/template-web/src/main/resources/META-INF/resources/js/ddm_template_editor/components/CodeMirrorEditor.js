@@ -65,25 +65,50 @@ export function CodeMirrorEditor({
 			return;
 		}
 
-		setEditor(
-			CodeMirror(editorWrapper, {
-				autoCloseTags: true,
-				autoRefresh: true,
-				extraKeys: {
-					'Ctrl-Space': 'autocomplete',
+		const hasEnabledTabKey = ({state: {keyMaps}}) =>
+			keyMaps.every((key) => key.name !== 'tabKey');
+
+		const codeMirror = CodeMirror(editorWrapper, {
+			autoCloseTags: true,
+			autoRefresh: true,
+			extraKeys: {
+				'Ctrl-M'(cm) {
+					if (hasEnabledTabKey(cm)) {
+						cm.addKeyMap({
+							'Shift-Tab': false,
+							'Tab': false,
+							'name': 'tabKey',
+						});
+					}
+					else {
+						cm.removeKeyMap('tabKey');
+					}
 				},
-				foldGutter: true,
-				gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-				indentWithTabs: true,
-				inputStyle: 'contenteditable',
-				lineNumbers: true,
-				matchBrackets: true,
-				showHint: true,
-				tabSize: 2,
-				value: initialContentRef.current,
-				viewportMargin: Infinity,
-			})
-		);
+				'Ctrl-Space': 'autocomplete',
+			},
+			foldGutter: true,
+			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+			indentWithTabs: true,
+			inputStyle: 'contenteditable',
+			lineNumbers: true,
+			matchBrackets: true,
+			showHint: true,
+			tabSize: 2,
+			value: initialContentRef.current,
+			viewportMargin: Infinity,
+		});
+
+		setEditor(codeMirror);
+
+		codeMirror.on('focus', (cm) => {
+			if (hasEnabledTabKey(cm)) {
+				cm.addKeyMap({
+					'Shift-Tab': false,
+					'Tab': false,
+					'name': 'tabKey',
+				});
+			}
+		});
 	}, [editorWrapper]);
 
 	useEffect(() => {

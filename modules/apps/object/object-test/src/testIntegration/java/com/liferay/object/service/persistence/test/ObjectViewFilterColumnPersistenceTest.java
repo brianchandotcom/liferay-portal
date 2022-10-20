@@ -17,8 +17,10 @@ package com.liferay.object.service.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.NoSuchObjectViewFilterColumnException;
 import com.liferay.object.model.ObjectViewFilterColumn;
+import com.liferay.object.service.ObjectViewFilterColumnLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -383,6 +386,33 @@ public class ObjectViewFilterColumnPersistenceTest {
 			newObjectViewFilterColumn,
 			objectViewFilterColumns.get(
 				newObjectViewFilterColumn.getPrimaryKey()));
+	}
+
+	@Test
+	public void testActionableDynamicQuery() throws Exception {
+		final IntegerWrapper count = new IntegerWrapper();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			ObjectViewFilterColumnLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<ObjectViewFilterColumn>() {
+
+				@Override
+				public void performAction(
+					ObjectViewFilterColumn objectViewFilterColumn) {
+
+					Assert.assertNotNull(objectViewFilterColumn);
+
+					count.increment();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		Assert.assertEquals(count.getValue(), _persistence.countAll());
 	}
 
 	@Test

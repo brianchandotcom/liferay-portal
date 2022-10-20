@@ -183,6 +183,13 @@ public class ObjectViewFilterColumnWrapper
 		return model.getJSON();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getJSONArray()
+		throws com.liferay.portal.kernel.json.JSONException {
+
+		return model.getJSONArray();
+	}
+
 	/**
 	 * Returns the modified date of this object view filter column.
 	 *
@@ -281,6 +288,11 @@ public class ObjectViewFilterColumnWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	@Override
+	public void persist() {
+		model.persist();
 	}
 
 	/**

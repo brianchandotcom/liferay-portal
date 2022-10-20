@@ -134,7 +134,12 @@ public class AlertTag extends BaseContainerTag {
 		jspWriter.write("</div></div>");
 
 		if (_dismissible) {
-			jspWriter.write("<button class=\"close\" onclick=\"");
+			jspWriter.write("<button aria-label=\"");
+			jspWriter.write(
+				LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					"close"));
+			jspWriter.write("\" class=\"close\" onclick=\"");
 			jspWriter.write("event.target.closest('[role=alert]').remove()\"");
 			jspWriter.write(" type=\"button\">");
 

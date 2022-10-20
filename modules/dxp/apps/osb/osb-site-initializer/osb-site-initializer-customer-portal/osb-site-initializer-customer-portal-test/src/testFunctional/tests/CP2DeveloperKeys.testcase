@@ -43,6 +43,44 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-146189 | Test Summary: Verify that clicking the 'Download Key' button downloads an xml file."
+	@ignore = "true"
+    @priority = "5"
+    test CanViewDownloadsXmlFile {
+
+		// Needs refactor since it depends on example FIFA account
+        
+        task ("Signs in OKTA to update and go to Customer Portal") {
+            CustomerPortal.loginOktaToUpdateCP();
+
+            Navigator.openURL();
+            
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+        }
+
+        task ("Select a project and go to activation page") {
+            CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "DXP");
+        }
+
+		task ("View keys details and click in Download key") {
+            CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Test2");
+
+            CustomerPortal.clickAtButton(text = "Download Key");
+        }
+
+		task ("Assest the success message and the file as downloaded") {
+            Alert.viewSuccessMessage();
+
+            CP2Utils.closeModal();
+
+            CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.3-2022fifaworldcupqatar-fanid.xml");
+        }
+    }
+
 	@description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
 	@priority = "4"
 	test CanViewQuantityDxpVersionsDropDownList {
@@ -84,6 +122,7 @@ definition {
 			CustomerPortal.viewVersions(dropDownItems = "6.2,6.1 GA3,6.1 GA2,6.1 GA1");
 		}
 	}
+
 	@description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
 	@priority = "3"
 	test ConfirmRedirectionToAnotherPage {

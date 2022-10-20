@@ -30,9 +30,16 @@ definition {
 	}
 
 	tearDown {
-		JSONGroup.deleteGroupByName(groupName = "Test Site");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONUser.tearDownNonAdminUsers();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site");
+
+			JSONUser.tearDownNonAdminUsers();
+		}
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the instance level."

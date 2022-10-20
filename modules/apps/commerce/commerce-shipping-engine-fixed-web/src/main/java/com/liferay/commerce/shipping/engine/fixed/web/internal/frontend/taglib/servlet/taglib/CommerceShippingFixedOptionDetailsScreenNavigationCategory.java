@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionQualifierService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.constants.CommerceShippingFixedOptionScreenNavigationConstants;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionsDisplayContext;
@@ -133,10 +132,6 @@ public class CommerceShippingFixedOptionDetailsScreenNavigationCategory
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommerceShippingFixedOptionQualifierService
-		_commerceShippingFixedOptionQualifierService;
 
 	@Reference
 	private CommerceShippingFixedOptionService

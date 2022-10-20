@@ -10,11 +10,11 @@ definition {
 	property testray.main.component.name = "Database Upgrade Framework";
 	property upgrade.reports.enabled = "true";
 
-	@description = "LPS-154683: Upgrade Report provides the version of the database"
+	@description = "LPS-154683: Upgrade Report provides the type and version of the database"
 	@priority = "3"
-	test DatabaseVersionLogged {
+	test DatabaseLogged {
 		property skip.start.app.server = "true";
-		property test.name.skip.portal.instance = "UpgradeReport#DatabaseVersionLogged";
+		property test.name.skip.portal.instance = "UpgradeReport#DatabaseLogged";
 		property testcase.url = "http://www.example.com";
 
 		task ("Look for the upgrade report") {
@@ -25,11 +25,11 @@ definition {
 			echo("${fileContent}");
 		}
 
-		task ("Read the version is correct in the report") {
-			var databaseVersion = Upgrade.getDatabaseVersion();
+		task ("Read the type and version is correct in the report") {
+			var databaseType = PropsUtil.get("database.type");
 
-			if (contains("${fileContent}", "Final portal build number: ${databaseVersion}")) {
-				fail("Database version is not present in upgrade report.");
+			if (!(contains("${fileContent}", "Using ${databaseType} version 5.7"))) {
+				fail("Database type and version is not present in upgrade report.");
 			}
 		}
 	}

@@ -147,7 +147,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, attachmentObjectFieldIds, bcc, body, cc, dateCreated, dateModified, description, from, fromName, id, name, name_i18n, objectDefinitionId, recipientType, subject, to, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, attachmentObjectFieldIds, body, dateCreated, dateModified, description, id, name, name_i18n, objectDefinitionId, recipientType, recipients, subject, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public NotificationTemplate notificationTemplate(

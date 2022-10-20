@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.osgi.util.factory.FactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -58,8 +59,11 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			_log.debug("Activate " + properties);
 		}
 
-		Company company = getCompany(properties);
-		String externalReferenceCode = getExternalReferenceCode(properties);
+		long companyId = FactoryUtil.getCompanyId(
+			properties, companyLocalService);
+
+		String externalReferenceCode = FactoryUtil.getExternalReferenceCode(
+			properties);
 
 		OAuth2ProviderApplicationHeadlessServerConfiguration
 			oAuth2ProviderApplicationHeadlessServerConfiguration =
@@ -71,13 +75,15 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			oAuth2ProviderApplicationHeadlessServerConfiguration.scopes());
 
 		oAuth2Application = _addOrUpdateOAuth2Application(
-			company.getCompanyId(), externalReferenceCode,
+			companyId, externalReferenceCode,
 			oAuth2ProviderApplicationHeadlessServerConfiguration,
 			scopeAliasesList);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("OAuth 2 application " + oAuth2Application);
 		}
+
+		Company company = companyLocalService.getCompanyById(companyId);
 
 		String serviceAddress = getServiceAddress(company);
 

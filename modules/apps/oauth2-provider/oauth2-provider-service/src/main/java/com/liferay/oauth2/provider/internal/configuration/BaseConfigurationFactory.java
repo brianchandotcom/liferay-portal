@@ -28,12 +28,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
-import java.util.Objects;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -68,44 +65,6 @@ public abstract class BaseConfigurationFactory {
 					configMapModel.data()::remove),
 				_configMapName);
 		}
-	}
-
-	protected Company getCompany(Map<String, Object> properties)
-		throws Exception {
-
-		long companyId = GetterUtil.getLong(properties.get("companyId"));
-
-		if (companyId > 0) {
-			return companyLocalService.getCompanyById(companyId);
-		}
-
-		String webId = (String)properties.get(
-			"dxp.lxc.liferay.com.virtualInstanceId");
-
-		if (Validator.isNotNull(webId)) {
-			if (Objects.equals(webId, "default")) {
-				webId = PropsValues.COMPANY_DEFAULT_WEB_ID;
-			}
-
-			return companyLocalService.getCompanyByWebId(webId);
-		}
-
-		throw new IllegalStateException(
-			"The property \"companyId\" or " +
-				"\"dxp.lxc.liferay.com.virtualInstanceId\" must be set");
-	}
-
-	protected String getExternalReferenceCode(Map<String, Object> properties) {
-		String externalReferenceCode = GetterUtil.getString(
-			properties.get(Constants.SERVICE_PID));
-
-		int index = externalReferenceCode.indexOf('~');
-
-		if (index > 0) {
-			externalReferenceCode = externalReferenceCode.substring(index + 1);
-		}
-
-		return externalReferenceCode;
 	}
 
 	protected abstract Log getLog();

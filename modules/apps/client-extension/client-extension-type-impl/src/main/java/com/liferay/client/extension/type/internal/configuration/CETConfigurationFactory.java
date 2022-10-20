@@ -17,6 +17,7 @@ package com.liferay.client.extension.type.internal.configuration;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.osgi.util.factory.FactoryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -26,7 +27,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -90,16 +90,7 @@ public class CETConfigurationFactory {
 	}
 
 	private String _getExternalReferenceCode(Map<String, Object> properties) {
-		String pid = GetterUtil.getString(
-			properties.get(Constants.SERVICE_PID));
-
-		int index = pid.indexOf('~');
-
-		if (index > 0) {
-			pid = pid.substring(index + 1);
-		}
-
-		return "LXC:" + pid;
+		return "LXC:" + FactoryUtil.getExternalReferenceCode(properties);
 	}
 
 	private volatile CET _cet;

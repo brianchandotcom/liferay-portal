@@ -19,24 +19,19 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.configuration.FunctionObjectActionExecutorImplConfiguration;
+import com.liferay.osgi.util.factory.FactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
-import java.util.Objects;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -85,62 +80,25 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	protected void activate(Map<String, Object> properties) throws Exception {
 		_key = StringBundler.concat(
 			ObjectActionExecutorConstants.KEY_FUNCTION, StringPool.POUND,
-			_getExternalReferenceCode(properties));
+			FactoryUtil.getExternalReferenceCode(properties));
 
 		FunctionObjectActionExecutorImplConfiguration
 			functionObjectActionExecutorImplConfiguration =
 				ConfigurableUtil.createConfigurable(
 					FunctionObjectActionExecutorImplConfiguration.class,
 					properties);
-		Company company = _getCompany(properties);
 
-		_location = _getLocation(
-			functionObjectActionExecutorImplConfiguration,
+		_oAuth2Application =
 			_oAuth2ApplicationLocalService.
 				getOAuth2ApplicationByExternalReferenceCode(
-					company.getCompanyId(),
+					FactoryUtil.getCompanyId(properties, _companyLocalService),
 					functionObjectActionExecutorImplConfiguration.
-						oAuth2ApplicationExternalReferenceCode()));
+						oAuth2ApplicationExternalReferenceCode());
+
+		_location = _getLocation(
+			functionObjectActionExecutorImplConfiguration, _oAuth2Application);
 
 		_timeout = functionObjectActionExecutorImplConfiguration.timeout();
-	}
-
-	private Company _getCompany(Map<String, Object> properties)
-		throws Exception {
-
-		long companyId = GetterUtil.getLong(properties.get("companyId"));
-
-		if (companyId > 0) {
-			return _companyLocalService.getCompanyById(companyId);
-		}
-
-		String webId = (String)properties.get(
-			"dxp.lxc.liferay.com.virtualInstanceId");
-
-		if (Validator.isNotNull(webId)) {
-			if (Objects.equals(webId, "default")) {
-				webId = PropsValues.COMPANY_DEFAULT_WEB_ID;
-			}
-
-			return _companyLocalService.getCompanyByWebId(webId);
-		}
-
-		throw new IllegalStateException(
-			"The property \"companyId\" or " +
-				"\"dxp.lxc.liferay.com.virtualInstanceId\" must be set");
-	}
-
-	private String _getExternalReferenceCode(Map<String, Object> properties) {
-		String externalReferenceCode = GetterUtil.getString(
-			properties.get(Constants.SERVICE_PID));
-
-		int index = externalReferenceCode.indexOf('~');
-
-		if (index > 0) {
-			externalReferenceCode = externalReferenceCode.substring(index + 1);
-		}
-
-		return externalReferenceCode;
 	}
 
 	private String _getLocation(

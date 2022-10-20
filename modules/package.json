@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"@liferay/eslint-plugin": "1.4.0",
-		"@liferay/npm-scripts": "47.8.1",
+		"@liferay/npm-scripts": "47.8.2",
 		"acorn": "7.1.0",
 		"alloy-ui": "^3.1.0-deprecated.40",
 		"babel-plugin-incremental-dom": "3.4.0",

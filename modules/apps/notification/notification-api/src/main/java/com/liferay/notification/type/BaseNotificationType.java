@@ -18,6 +18,7 @@ import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
+import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -50,16 +51,17 @@ public abstract class BaseNotificationType implements NotificationType {
 			NotificationContext notificationContext)
 		throws PortalException {
 
-		if (Validator.isNull(
-				notificationContext.getNotificationTemplateName())) {
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
 
+		if (Validator.isNull(notificationTemplate.getName())) {
 			throw new NotificationTemplateNameException("Name is null");
 		}
 
-		if (notificationContext.getObjectDefinitionId() > 0) {
+		if (notificationTemplate.getObjectDefinitionId() > 0) {
 			ObjectDefinition objectDefinition =
 				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-					notificationContext.getObjectDefinitionId());
+					notificationTemplate.getObjectDefinitionId());
 
 			if (objectDefinition == null) {
 				throw new NotificationTemplateObjectDefinitionIdException();
@@ -79,7 +81,7 @@ public abstract class BaseNotificationType implements NotificationType {
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
 				!Objects.equals(
 					objectField.getObjectDefinitionId(),
-					notificationContext.getObjectDefinitionId())) {
+					notificationTemplate.getObjectDefinitionId())) {
 
 				throw new NotificationTemplateAttachmentObjectFieldIdException();
 			}

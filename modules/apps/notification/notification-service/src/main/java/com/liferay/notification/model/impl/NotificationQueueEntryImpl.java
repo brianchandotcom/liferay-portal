@@ -26,4 +26,5 @@ public class NotificationQueueEntryImpl extends NotificationQueueEntryBaseImpl {
 		return NotificationRecipientLocalServiceUtil.
 			getNotificationRecipientByClassPK(getNotificationQueueEntryId());
 	}
+
 }

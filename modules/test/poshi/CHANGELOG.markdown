@@ -16,6 +16,8 @@
 ### Script
 
 * [POSHI-302](https://issues.liferay.com/browse/POSHI-302) - Improve Poshi file reading error when the default tag and function name don't match
+* [POSHI-396](https://issues.liferay.com/browse/POSHI-396) - Change escape character &quot; with \" in Poshi Script
+* [POSHI-397](https://issues.liferay.com/browse/POSHI-39)7 - Ensure that PoshiElementException classes provide necessary information to throw an error
 * [POSHI-412](https://issues.liferay.com/browse/POSHI-412) - Treat all Poshi errors consistently
 * [POSHI-416](https://issues.liferay.com/browse/POSHI-416) - Fix poshi generation for escaped quotes
 
@@ -25,6 +27,7 @@
 
 ### Validation
 
+* [POSHI-360](https://issues.liferay.com/browse/POSHI-360) - Fix validation for missing comma in function usage
 * [POSHI-393](https://issues.liferay.com/browse/POSHI-393) - As a Poshi test writer, I should be notified when I am using methods that are/will be deprecated
 * [POSHI-399](https://issues.liferay.com/browse/POSHI-399) - Avoid repeated Poshi validation runs
 

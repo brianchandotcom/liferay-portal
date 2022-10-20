@@ -299,7 +299,25 @@ definition {
 		}
 
 		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
-			CP2ActivationKeys.generateKeyFlow();
+			CP2ActivationKeys.generateKeyFlow(
+				project = "NASA ICE",
+				product = "Portal");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "Portal");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "6.1 GA1");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
 		}
 
 		task ("Given I fulfill the Environment field") {
@@ -308,7 +326,7 @@ definition {
 				field = "Environment Name");
 		}
 
-		task ("And the '- Remove Activation Key' button should not preset") {
+		task ("And the '- Remove Activation Key' button should not be preset") {
 			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
 		}
 
@@ -348,7 +366,7 @@ definition {
 			CustomerPortal.clickAtButton(text = "Remove Activation Key");
 		}
 
-		task ("Then the '- Remove Activation Key' button should not preset") {
+		task ("Then the '- Remove Activation Key' button should not be preset") {
 			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
 		}
 	}

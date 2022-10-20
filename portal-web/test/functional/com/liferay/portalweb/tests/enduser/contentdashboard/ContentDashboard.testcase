@@ -217,6 +217,63 @@ definition {
 		}
 	}
 
+	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
+	@priority = "3"
+	test BackFromCompareToWebContent {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
+		task ("Given the compare screen for Web Content") {
+			task ("Create a Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Create a version for that web content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+				WebContent.editCP(
+					webContentContentEdit = "Web Content Content Edit",
+					webContentTitleEdit = "Web Content Title Edit");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "Web Content Title Edit");
+			}
+
+			task ("Go to compare screen") {
+				ContentDashboard.openVersionsTab();
+
+				ContentDashboard.clickMenuOfVersion(
+					item = "Compare to...",
+					versionName = "Version 1.1");
+			}
+		}
+
+		task ("When the user clicks on the back button") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then the document is selected and the Info Panel is open to the Versions tab") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+				value1 = "Web Content Title Edit");
+
+			AssertVisible(
+				key_version = "Version 1.0",
+				locator1 = "ContentDashboard#VERSION_ELLIPSIS");
+		}
+	}
+
 	@description = "LPS-162823: Add the View Action to the Version History for Documents and Media"
 	@priority = "3"
 	test BackFromViewDocumentVersion {
@@ -2513,6 +2570,108 @@ definition {
 			AssertVisible(
 				locator1 = "Button#PUBLISH",
 				value1 = "Publish");
+		}
+	}
+
+	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
+	@priority = "3"
+	test CompareToLastVersionWebContent {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
+		task ("Given the compare screen for Web Content") {
+			task ("Create a Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Create a version for that web content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+				WebContent.editCP(
+					webContentContentEdit = "Web Content Content Edit",
+					webContentTitleEdit = "Web Content Title Edit");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "Web Content Title Edit");
+			}
+		}
+
+		task ("When the access to the compare screen from the Compare to action And the most recent version of a Web Content is the one selected") {
+			ContentDashboard.openVersionsTab();
+
+			ContentDashboard.clickMenuOfVersion(
+				item = "Compare to...",
+				versionName = "Version 1.1");
+		}
+
+		task ("Then this version should be compared to itself") {
+			AssertTextEquals(
+				locator1 = "WCViewHistory#COMPARED_VERSION_NEWER",
+				value1 = "Version 1.1");
+
+			AssertTextEquals(
+				locator1 = "WCViewHistory#COMPARED_VERSION_OLDER",
+				value1 = "Version 1.1");
+		}
+	}
+
+	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
+	@priority = "3"
+	test CompareToVersionWebContent {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
+		task ("Given the Versions tab in the Info panel of a Web Content") {
+			task ("Create a Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Create a version for that web content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+				WebContent.editCP(
+					webContentContentEdit = "Web Content Content Edit",
+					webContentTitleEdit = "Web Content Title Edit");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "Web Content Title Edit");
+			}
+		}
+
+		task ("When the user opens the kebab menu of a version And the user clicks on the Compare to action") {
+			ContentDashboard.openVersionsTab();
+
+			ContentDashboard.clickMenuOfVersion(
+				item = "Compare to...",
+				versionName = "Version 1.0");
+		}
+
+		task ("Then the user is redirected to the compare screen for Web Content") {
+			AssertTextEquals(
+				locator1 = "WCViewHistory#VIEW_COMPARE_VERSIONS_CONTENT",
+				value1 = "Web Content Content Edit");
 		}
 	}
 

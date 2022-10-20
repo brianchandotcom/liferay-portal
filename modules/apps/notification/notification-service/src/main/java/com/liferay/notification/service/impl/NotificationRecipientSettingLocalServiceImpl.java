@@ -14,13 +14,17 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.exception.NoSuchNotificationRecipientSettingException;
+import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.base.NotificationRecipientSettingLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Feliphe Marinho
  */
 @Component(
 	property = "model.class.name=com.liferay.notification.model.NotificationRecipientSetting",
@@ -28,4 +32,20 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NotificationRecipientSettingLocalServiceImpl
 	extends NotificationRecipientSettingLocalServiceBaseImpl {
+
+	public NotificationRecipientSetting getNotificationRecipientSetting(
+			long notificationRecipientId, String name)
+		throws NoSuchNotificationRecipientSettingException {
+
+		return notificationRecipientSettingPersistence.findByN_NRI(
+			notificationRecipientId, name);
+	}
+
+	public List<NotificationRecipientSetting> getNotificationRecipientSettings(
+		long notificationRecipientId) {
+
+		return notificationRecipientSettingPersistence.
+			findByNotificationRecipientId(notificationRecipientId);
+	}
+
 }

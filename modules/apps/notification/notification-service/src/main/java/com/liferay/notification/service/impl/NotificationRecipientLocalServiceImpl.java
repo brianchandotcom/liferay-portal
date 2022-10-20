@@ -14,13 +14,14 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.service.base.NotificationRecipientLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Feliphe Marinho
  */
 @Component(
 	property = "model.class.name=com.liferay.notification.model.NotificationRecipient",
@@ -28,4 +29,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NotificationRecipientLocalServiceImpl
 	extends NotificationRecipientLocalServiceBaseImpl {
+
+	public NotificationRecipient getNotificationRecipientByClassPK(
+		long classPK) {
+
+		return notificationRecipientPersistence.fetchByClassPK(classPK);
+	}
+
 }

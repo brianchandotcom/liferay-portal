@@ -154,7 +154,11 @@ function FieldList({
 	};
 
 	const _handleReplaceField = (index) => (newValue) => {
-		onChange(value.map((item, i) => (i === index ? newValue : item)));
+		onChange(
+			value.map((item, i) =>
+				i === index ? {id: item.id, ...newValue} : item
+			)
+		);
 	};
 
 	return (

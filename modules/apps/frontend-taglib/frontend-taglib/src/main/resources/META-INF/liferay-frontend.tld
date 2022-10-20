@@ -206,6 +206,16 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>edit-form-buttons</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormButtonsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>redirect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates an edit form footer that offers additional styling.</description>
 		<name>edit-form-footer</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EditFormFooterTag</tag-class>

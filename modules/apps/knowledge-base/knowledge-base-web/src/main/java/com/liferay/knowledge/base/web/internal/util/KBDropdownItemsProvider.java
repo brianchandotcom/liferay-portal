@@ -958,14 +958,16 @@ public class KBDropdownItemsProvider {
 		long resourceClassNameId = ParamUtil.getLong(
 			_liferayPortletRequest, "resourceClassNameId");
 
-		if (resourceClassNameId == kbArticle.getClassNameId()) {
-			long resourcePrimaryKey = ParamUtil.getLong(
-				_liferayPortletRequest, "resourcePrimKey",
-				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
+		if (resourceClassNameId != kbArticle.getClassNameId()) {
+			return false;
+		}
 
-			if (resourcePrimaryKey == kbArticle.getResourcePrimKey()) {
-				return true;
-			}
+		long resourcePrimaryKey = ParamUtil.getLong(
+			_liferayPortletRequest, "resourcePrimKey",
+			KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
+
+		if (resourcePrimaryKey == kbArticle.getResourcePrimKey()) {
+			return true;
 		}
 
 		return false;
@@ -975,14 +977,16 @@ public class KBDropdownItemsProvider {
 		long parentResourceClassNameId = ParamUtil.getLong(
 			_liferayPortletRequest, "parentResourceClassNameId");
 
-		if (parentResourceClassNameId == kbFolder.getClassNameId()) {
-			long parentResourcePrimaryKey = ParamUtil.getLong(
-				_liferayPortletRequest, "parentResourcePrimKey",
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		if (parentResourceClassNameId != kbFolder.getClassNameId()) {
+			return false;
+		}
 
-			if (parentResourcePrimaryKey == kbFolder.getKbFolderId()) {
-				return true;
-			}
+		long parentResourcePrimaryKey = ParamUtil.getLong(
+			_liferayPortletRequest, "parentResourcePrimKey",
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		if (parentResourcePrimaryKey == kbFolder.getKbFolderId()) {
+			return true;
 		}
 
 		return false;

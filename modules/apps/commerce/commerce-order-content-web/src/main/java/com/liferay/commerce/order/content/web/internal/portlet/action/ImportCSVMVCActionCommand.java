@@ -19,8 +19,6 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceOrderImporterTypeException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.importer.type.util.CommerceOrderImporterTypeUtil;
-import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
-import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -256,13 +254,6 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 
 	private volatile CommerceOrderImporterTypeConfiguration
 		_commerceOrderImporterTypeConfiguration;
-
-	@Reference
-	private CommerceOrderImporterTypeRegistry
-		_commerceOrderImporterTypeRegistry;
-
-	@Reference
-	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

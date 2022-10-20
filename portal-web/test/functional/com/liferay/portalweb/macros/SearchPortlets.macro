@@ -99,7 +99,7 @@ definition {
 			else if ("${vocabularyScope}" == "All Vocabularies") {
 				Check.checkNotVisible(
 					key_radioName = "${vocabularyScope}",
-					locator1 = "MenuItem#ANY_RADIO");
+					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
 			}
 			else {
 				fail("Invalid vocabulary scope. Must be (All Vocabularies|Select Vocabularies).");

@@ -91,6 +91,7 @@ definition {
 	@description = "Bug: LRAC-11339 | Automation ID: LRAC-11364 | Test Summary: A new user created in the admin page can not access that page but the user Test Test can"
 	@priority = "5"
 	test NewUserCanNotAccessAdminPage {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 		var userFirstName = "ac";
 		var userLastName = "ac";
 		var userScreenName = "acnonadmin";

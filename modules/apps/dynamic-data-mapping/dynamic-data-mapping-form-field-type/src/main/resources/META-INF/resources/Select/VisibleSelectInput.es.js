@@ -111,26 +111,28 @@ const VisibleSelectInput = forwardRef(
 							label={selectedLabel()}
 						/>
 					) : (
-						value.map((item) => {
-							const option = options.find(
-								(option) => option.value === item
-							);
+						<ul className="ddm-multiple-select-list">
+							{value.map((item) => {
+								const option = options.find(
+									(option) => option.value === item
+								);
 
-							return (
-								<>
-									{option && (
-										<LabelOptionListItem
-											key={`${option.value}-${option.label}`}
-											onCloseButtonClicked={
-												onCloseButtonClicked
-											}
-											option={option}
-											readOnly={readOnly}
-										/>
-									)}
-								</>
-							);
-						})
+								return (
+									<>
+										{option && (
+											<LabelOptionListItem
+												key={`${option.value}-${option.label}`}
+												onCloseButtonClicked={
+													onCloseButtonClicked
+												}
+												option={option}
+												readOnly={readOnly}
+											/>
+										)}
+									</>
+								);
+							})}
+						</ul>
 					)}
 
 					<a className="select-arrow-down-container">

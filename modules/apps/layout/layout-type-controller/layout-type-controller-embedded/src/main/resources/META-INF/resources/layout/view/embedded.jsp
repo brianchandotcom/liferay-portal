@@ -27,4 +27,4 @@
 	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsProperties.getProperty("embeddedLayoutURL")) %>" width="100%"></iframe>
 </div>
 
-<liferay-ui:layout-common />
+<liferay-layout:layout-common />

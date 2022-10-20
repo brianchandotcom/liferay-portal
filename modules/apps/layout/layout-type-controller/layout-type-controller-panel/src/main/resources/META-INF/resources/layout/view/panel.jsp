@@ -81,4 +81,4 @@
 	</c:otherwise>
 </c:choose>
 
-<liferay-ui:layout-common />
+<liferay-layout:layout-common />

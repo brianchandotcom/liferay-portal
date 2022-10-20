@@ -38,4 +38,4 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 	/>
 </div>
 
-<liferay-ui:layout-common />
+<liferay-layout:layout-common />

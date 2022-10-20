@@ -169,6 +169,117 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-128693. Verify can import a LAR containing WCD between instances."
+	@priority = "3"
+	test CanImportWCDBetweenInstances {
+		property test.name.skip.portal.instance = "WebContentExportImport#CanImportWCDBetweenInstances";
+
+		task ("Given: new site page with a web content display is exported") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			Navigator.openSitePage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			LAR.exportSiteCP(siteScopeName = "Guest");
+
+			var key_larFileName = "${larFileName}";
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("When: The exported data is imported into a new virtual instance site") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addBlankCP(siteName = "Site Name");
+
+			LAR.importSiteCP(
+				baseURL = "http://www.able.com:8080",
+				larFileName = "${larFileName}",
+				siteName = "Site Name");
+
+			Navigator.openSitePage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+		}
+
+		task ("Then: The web content is displayed with no errors") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("And: Assert the usage on the page with the Web Content Display widget appears in the list") {
+			WebContentNavigator.openWebContentAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "Site Name");
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "WC WebContent Title",
+				menuItem = "View Usages");
+
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[1]",
+				value1 = "Test Page Name");
+
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[2]",
+				value1 = "Page");
+
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[3]",
+				value1 = "Web Content Display Widget");
+
+			AssertConsoleTextNotPresent(value1 = "NullPointerException");
+		}
+	}
+
 	@priority = "4"
 	test ExportLARWithNestedWebContent {
 		property testray.component.names = "Web Content Administration";

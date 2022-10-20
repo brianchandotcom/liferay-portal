@@ -3,7 +3,7 @@ definition {
 	macro subscribeViaInfoPanelPG {
 		Click(locator1 = "Icon#INFO");
 
-		Click(locator1 = "Icon#SUBSCRIBE");
+		Click(locator1 = "Icon#SUBSCRIBE_BELL");
 
 		Alert.viewSuccessMessage();
 	}
@@ -44,7 +44,7 @@ definition {
 	macro viewUnsubscribedViaInfoPanel {
 		Click(locator1 = "Icon#INFO");
 
-		AssertVisible(locator1 = "Icon#STAR_UNSUBSCRIBED");
+		AssertVisible(locator1 = "Icon#SUBSCRIBE_BELL");
 	}
 
 }

@@ -45,6 +45,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 
 import 'codemirror/mode/javascript/javascript';
+import {CodeMirrorKeyboardMessage} from '@liferay/layout-content-page-editor-web';
 import CodeMirror from 'codemirror';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
@@ -59,6 +60,8 @@ export function CodeMirrorEditor({
 	const [editor, setEditor] = useState();
 	const [editorWrapper, setEditorWrapper] = useState();
 	const initialContentRef = useRef(content);
+	const [isEnabled, setIsEnabled] = useState(true);
+	const [isFocused, setIsFocused] = useState(null);
 
 	useEffect(() => {
 		if (!editorWrapper) {
@@ -73,7 +76,11 @@ export function CodeMirrorEditor({
 			autoRefresh: true,
 			extraKeys: {
 				'Ctrl-M'(cm) {
-					if (hasEnabledTabKey(cm)) {
+					const tabKeyIsEnabled = hasEnabledTabKey(cm);
+
+					setIsEnabled(tabKeyIsEnabled);
+
+					if (tabKeyIsEnabled) {
 						cm.addKeyMap({
 							'Shift-Tab': false,
 							'Tab': false,
@@ -101,6 +108,8 @@ export function CodeMirrorEditor({
 		setEditor(codeMirror);
 
 		codeMirror.on('focus', (cm) => {
+			setIsFocused(true);
+
 			if (hasEnabledTabKey(cm)) {
 				cm.addKeyMap({
 					'Shift-Tab': false,
@@ -109,6 +118,8 @@ export function CodeMirrorEditor({
 				});
 			}
 		});
+
+		codeMirror.on('blur', () => setIsFocused(false));
 	}, [editorWrapper]);
 
 	useEffect(() => {
@@ -261,10 +272,16 @@ export function CodeMirrorEditor({
 	}, [editor, inputChannel]);
 
 	return (
-		<div
-			className="ddm_template_editor__CodeMirrorEditor"
-			ref={setEditorWrapper}
-		/>
+		<div className="d-flex flex-column flex-grow-1 position-relative">
+			{isFocused ? (
+				<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
+			) : null}
+
+			<div
+				className="ddm_template_editor__CodeMirrorEditor"
+				ref={setEditorWrapper}
+			/>
+		</div>
 	);
 }
 

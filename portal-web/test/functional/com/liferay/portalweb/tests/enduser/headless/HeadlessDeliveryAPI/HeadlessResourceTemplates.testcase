@@ -1,0 +1,74 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogPostingAPI.deleteAllBlogPostings();
+
+			PagesAdmin.tearDownCP();
+
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+			ApplicationDisplayTemplates.deleteCP(widgetTemplateName = "Blogs Test ADT");
+		}
+	}
+
+	@priority = "4"
+	test CanUseServicesInsideTemplates {
+		property portal.acceptance = "true";
+
+		task ("Given three blog postings created") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostings = "3");
+		}
+
+		task ("And Given a template that will print the blog postings headlines sorted desc and filtered by creator name") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+			ApplicationDisplayTemplates.addCP(
+				adtFile = "adt_blogs_sort.ftl",
+				adtType = "Blogs");
+		}
+
+		task ("When adding a template to a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			ApplicationDisplayTemplates.selectPortletADT(
+				portletName = "Blogs",
+				templateName = "Blogs Test ADT");
+		}
+
+		task ("Then blog posting headlines are visible and in the correct order") {
+			AssertTextEquals(
+				key_portletName = "Blogs",
+				locator1 = "Portlet#BODY",
+				value1 = "headline2 headline1 headline0");
+		}
+	}
+
+}

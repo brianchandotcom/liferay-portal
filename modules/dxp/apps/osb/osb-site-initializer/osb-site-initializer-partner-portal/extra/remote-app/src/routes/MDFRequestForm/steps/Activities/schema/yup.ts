@@ -13,7 +13,7 @@ import {OptionHTMLAttributes} from 'react';
 import {array, date, number, object, string} from 'yup';
 
 import {TypeActivityKey} from '../../../../../common/enums/TypeActivityKey';
-import isObjectEmpty from '../../../utils/isObjectEmpty';
+import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
 const activitiesSchema = object({
 	activities: array()

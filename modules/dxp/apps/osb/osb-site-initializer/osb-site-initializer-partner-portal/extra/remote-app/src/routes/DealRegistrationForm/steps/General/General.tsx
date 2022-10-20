@@ -19,8 +19,8 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import DealRegistration from '../../../../common/interfaces/dealRegistration';
 import useCompanyOptions from '../../../MDFRequestForm/steps/Goals/hooks/useCompanyOptions';
-import getPicklistOptions from '../../../MDFRequestForm/utils/getPicklistOptions';
 import {StepType} from '../../enums/stepType';
+import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import useDynamicFieldEntries from '../../hooks/useDynamicFieldEntries';
 import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProps';
 

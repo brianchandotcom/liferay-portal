@@ -24,7 +24,7 @@ import activitiesSchema from './steps/Activities/schema/yup';
 import Goals from './steps/Goals';
 import goalsSchema from './steps/Goals/schema/yup';
 import Review from './steps/Review/Review';
-import isObjectEmpty from './utils/isObjectEmpty';
+import isObjectEmpty from '../../common/utils/isObjectEmpty';
 import submitForm from './utils/submitForm';
 
 const initialFormValues: MDFRequest = {

@@ -12,11 +12,41 @@
 import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
+import {RequestStatus} from '../../common/enums/requestStatus';
 import DealRegistration from '../../common/interfaces/dealRegistration';
 import {StepType} from './enums/stepType';
 import General from './steps/General';
 import generalSchema from './steps/General/schema/yup';
 import Review from './steps/Review';
+
+const initialFormValues: DealRegistration = {
+	additionalContact: {emailAddress: '', firstName: '', lastName: ''},
+	additionalInformationAboutTheOpportunity: '',
+	categories: [],
+	generalMdfActivityAssociated: {},
+	partnerAccountName: {},
+	primaryProspect: {
+		businessUnit: '',
+		department: {},
+		emailAddress: '',
+		firstName: '',
+		jobRole: {},
+		lastName: '',
+		phone: '',
+	},
+	projectNeed: [],
+	projectTimeline: '',
+	prospect: {
+		accountName: '',
+		address: '',
+		city: '',
+		country: {},
+		industry: {},
+		postalCode: '',
+		state: {},
+	},
+	requestStatus: RequestStatus.PENDING,
+};
 
 type StepComponent = {
 	[key in StepType]?: JSX.Element;
@@ -50,7 +80,7 @@ const DealRegistrationForm = () => {
 	};
 
 	return (
-		<PRMFormik initialValues={{} as DealRegistration} onSubmit={onSubmit}>
+		<PRMFormik initialValues={initialFormValues} onSubmit={onSubmit}>
 			{StepFormComponent[step]}
 		</PRMFormik>
 	);

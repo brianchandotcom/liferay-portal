@@ -10,6 +10,7 @@
  */
 
 import {RequestStatus} from '../enums/requestStatus';
+import LiferayAccountBrief from './liferayAccountBrief';
 import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
 
@@ -34,20 +35,20 @@ interface Prospect {
 }
 
 interface AdditionalContact {
-	emailAddress: string;
-	firstName: string;
-	lastName: string;
+	emailAddress?: string;
+	firstName?: string;
+	lastName?: string;
 }
 
 export default interface DealRegistration extends Partial<LiferayObject> {
-	additionalContact: AdditionalContact;
-	additionalInformationAboutTheOpportunity: string;
-	categories: string[];
-	generalMdfActivityAssociated: string;
-	generalPartnerAccountName: string;
-	primaryProspect?: PrimaryProspect;
+	additionalContact?: AdditionalContact;
+	additionalInformationAboutTheOpportunity?: string;
+	categories?: string[];
+	generalMdfActivityAssociated: LiferayAccountBrief;
+	partnerAccountName: LiferayAccountBrief;
+	primaryProspect: PrimaryProspect;
 	projectNeed: string[];
 	projectTimeline: string;
-	prospect?: Prospect;
+	prospect: Prospect;
 	requestStatus?: RequestStatus;
 }

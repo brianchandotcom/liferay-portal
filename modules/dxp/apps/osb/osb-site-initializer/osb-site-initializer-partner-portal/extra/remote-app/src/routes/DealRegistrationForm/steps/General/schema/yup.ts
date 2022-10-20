@@ -10,8 +10,7 @@
  */
 
 import {array, number, object, string} from 'yup';
-
-import isDropDownEmpty from '../../../utils/isDropDownEmpty';
+import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
 const generalSchema = object({
 	additionalContact: object({
@@ -29,7 +28,7 @@ const generalSchema = object({
 	partnerAccountName: object({
 		id: number(),
 		name: string(),
-	}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	primaryProspect: object({
 		businessUnit: string()
 			.max(255, 'reached max characters')
@@ -37,7 +36,7 @@ const generalSchema = object({
 		department: object({
 			key: string(),
 			name: string(),
-		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		emailAddress: string()
 			.max(255, 'reached max characters')
 			.email('must be a valid email')
@@ -48,11 +47,11 @@ const generalSchema = object({
 		jobRole: object({
 			key: string(),
 			name: string(),
-		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		lastName: string()
 			.max(255, 'reached max characters')
 			.required('Required'),
-		phone: string().max(255, 'reached max characters').required('Required'),
+		phone: string().max(20, 'reached max characters').required('Required'),
 	}),
 	projectNeed: array().min(1, 'Required'),
 	projectTimeline: string()
@@ -69,11 +68,11 @@ const generalSchema = object({
 		country: object({
 			key: string(),
 			name: string(),
-		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		industry: object({
 			key: string(),
 			name: string(),
-		}).test('is-empty', 'Required', (value) => !isDropDownEmpty(value)),
+		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		postalCode: string()
 			.max(255, 'reached max characters')
 			.required('Required'),
@@ -81,9 +80,7 @@ const generalSchema = object({
 			key: string(),
 			name: string(),
 		}).test('is-empty', 'Required', (value, context) =>
-			context.parent.country.name === 'US'
-				? !isDropDownEmpty(value)
-				: true
+			context.parent.country.name === 'US' ? !isObjectEmpty(value) : true
 		),
 	}),
 });

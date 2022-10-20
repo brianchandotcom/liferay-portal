@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
+import LiferayPicklist from '../interfaces/liferayPicklist';
 
 export default function getPicklistOptions<T>(
 	options: React.OptionHTMLAttributes<HTMLOptionElement>[],

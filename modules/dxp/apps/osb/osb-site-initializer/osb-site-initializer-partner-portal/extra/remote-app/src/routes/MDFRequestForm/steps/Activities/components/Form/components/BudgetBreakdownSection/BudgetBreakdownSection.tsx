@@ -19,7 +19,7 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import ResumeCard from '../../../../../../../../common/components/ResumeCard';
 import MDFRequestBudget from '../../../../../../../../common/interfaces/mdfRequestBudget';
 import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
-import getPicklistOptions from '../../../../../../utils/getPicklistOptions';
+import getPicklistOptions from '../../../../../../../../common/utils/getPicklistOptions';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
 import getNewBudget from './utils/getNewBudget';
 

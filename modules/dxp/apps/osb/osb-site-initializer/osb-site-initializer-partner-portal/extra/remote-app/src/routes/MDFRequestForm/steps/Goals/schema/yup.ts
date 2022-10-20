@@ -11,7 +11,7 @@
 
 import {array, number, object, string} from 'yup';
 
-import isObjectEmpty from '../../../utils/isObjectEmpty';
+import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
 const goalsSchema = object({
 	campaignName: string()

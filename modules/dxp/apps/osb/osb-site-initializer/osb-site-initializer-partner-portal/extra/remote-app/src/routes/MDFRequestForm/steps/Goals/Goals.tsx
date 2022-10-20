@@ -20,8 +20,8 @@ import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName'
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
-import getPicklistOptions from '../../utils/getPicklistOptions';
-import isObjectEmpty from '../../utils/isObjectEmpty';
+import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
+import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import useCompanyOptions from './hooks/useCompanyOptions';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 

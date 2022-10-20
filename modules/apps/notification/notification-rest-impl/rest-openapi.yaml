@@ -60,14 +60,10 @@ components:
                         format: int64
                         type: integer
                     type: array
-                bcc:
-                    type: string
                 body:
                     additionalProperties:
                         type: string
                     type: object
-                cc:
-                    type: string
                 dateCreated:
                     format: date
                     readOnly: true
@@ -78,12 +74,6 @@ components:
                     type: string
                 description:
                     type: string
-                from:
-                    type: string
-                fromName:
-                    additionalProperties:
-                        type: string
-                    type: object
                 id:
                     format: int64
                     readOnly: true
@@ -98,13 +88,12 @@ components:
                     format: int64
                     type: integer
                 recipientType:
-                    enum: [role, term, user]
                     type: string
+                recipients:
+                    items:
+                        type: object
+                    type: array
                 subject:
-                    additionalProperties:
-                        type: string
-                    type: object
-                to:
                     additionalProperties:
                         type: string
                     type: object

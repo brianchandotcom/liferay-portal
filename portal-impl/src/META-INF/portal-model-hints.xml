@@ -341,7 +341,7 @@
 		<field name="mimeType" type="String" />
 		<field name="title" type="String">
 			<hint name="max-length">255</hint>
-			<validator name="required" />
+			<validator error-message="title-is-required" name="required" />
 		</field>
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />

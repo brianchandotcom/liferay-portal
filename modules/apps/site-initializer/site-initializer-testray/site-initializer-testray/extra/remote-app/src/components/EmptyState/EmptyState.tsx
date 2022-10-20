@@ -25,7 +25,7 @@ const States = {
 	 * When the filters or search results return zero results.
 	 */
 
-	EMPTY_SEARCH: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`,
+	EMPTY_SEARCH: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`,
 
 	/**
 	 * When there are no elements in the data set at a certain level
@@ -63,7 +63,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 		description={
 			description || i18n.translate('sorry-there-are-no-results-found')
 		}
-		imgSrc={type ? States[type] : States.EMPTY_SEARCH}
+		imgSrc={type ? States[type] : States.EMPTY_STATE}
 		title={title || i18n.translate('no-results-found')}
 	>
 		{children}

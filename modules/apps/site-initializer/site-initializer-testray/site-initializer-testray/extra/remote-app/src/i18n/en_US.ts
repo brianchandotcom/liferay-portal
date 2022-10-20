@@ -215,6 +215,7 @@ export default {
 	'new-user-account': 'New User Account',
 	'new-x': 'New {0}',
 	'next': 'Next',
+	'no-content-yet': 'No content yet',
 	'no-password-provided': 'No password provided',
 	'no-permissions': 'No Permissions',
 	'no-results-found': 'No results found',

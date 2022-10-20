@@ -76,9 +76,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

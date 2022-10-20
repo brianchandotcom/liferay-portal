@@ -88,9 +88,9 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href='<%= ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())) %>' type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect='<%= ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())) %>'
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

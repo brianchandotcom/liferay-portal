@@ -42,8 +42,8 @@ CommerceWishList commerceWishList = commerceWishListDisplayContext.getCommerceWi
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+		/>
 	</aui:button-row>
 </aui:form>

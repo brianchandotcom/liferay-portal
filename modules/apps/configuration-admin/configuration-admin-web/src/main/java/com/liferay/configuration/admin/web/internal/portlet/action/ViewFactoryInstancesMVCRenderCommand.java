@@ -145,8 +145,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 				")(mvc.command.name=/configuration_admin",
 				"/view_factory_instances)(configurationPid=*))"),
-			(serviceReference, emitter) -> serviceReference.getProperty(
-				"configurationPid"));
+			(serviceReference, emitter) -> emitter.emit(
+				(String)serviceReference.getProperty("configurationPid")));
 	}
 
 	@Deactivate

@@ -15,19 +15,19 @@ definition {
 
 		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
 
-		TestUtils.assertNotEquals(
+		TestUtils.assertEquals(
 			actual = "${actual}",
 			expected = "${expected}");
 	}
 
-	macro assertSearchResponse {
+	macro assertSearchKeywordNotPresent {
 		if (!(isSet(keywordPosition))) {
 			var keywordPosition = "0";
 		}
 
 		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
 
-		TestUtils.assertEquals(
+		TestUtils.assertNotEquals(
 			actual = "${actual}",
 			expected = "${expected}");
 	}
@@ -97,71 +97,13 @@ definition {
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
-		}
-		else {
+		} else if (!(isSet(parameters))) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
 		}
-		else if (!(isSet(displayLanguageId)) && isSet(groupId) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))) {
-			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?groupId=${groupId} \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
-		}
-		else if (isSet(displayLanguageId) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))) {
-			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?displayLanguageId=${displayLanguageId} \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
-		}
-		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && isSet(page) && !(isSet(size)) && !(isSet(sort))) {
-			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?page=${page} \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
-		}
-		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && isSet(size) && !(isSet(sort))) {
-			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size} \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
-		}
-		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && isSet(sort)) {
-			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?sort=${sort} \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
-		}
-		else {
-			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords \
-				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
-				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
-				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
-		}
-
 		static var apiResponse = JSONCurlUtil.get("${curl}");
 
 		return "${apiResponse}";

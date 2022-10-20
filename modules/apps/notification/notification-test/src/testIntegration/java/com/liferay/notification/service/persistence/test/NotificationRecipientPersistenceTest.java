@@ -146,9 +146,6 @@ public class NotificationRecipientPersistenceTest {
 
 		newNotificationRecipient.setClassName(RandomTestUtil.randomString());
 
-		newNotificationRecipient.setNotificationTemplateId(
-			RandomTestUtil.nextLong());
-
 		_notificationRecipients.add(
 			_persistence.update(newNotificationRecipient));
 
@@ -188,9 +185,6 @@ public class NotificationRecipientPersistenceTest {
 		Assert.assertEquals(
 			existingNotificationRecipient.getClassName(),
 			newNotificationRecipient.getClassName());
-		Assert.assertEquals(
-			existingNotificationRecipient.getNotificationTemplateId(),
-			newNotificationRecipient.getNotificationTemplateId());
 	}
 
 	@Test
@@ -212,10 +206,10 @@ public class NotificationRecipientPersistenceTest {
 	}
 
 	@Test
-	public void testCountByNotificationTemplateId() throws Exception {
-		_persistence.countByNotificationTemplateId(RandomTestUtil.nextLong());
+	public void testCountByClassPK() throws Exception {
+		_persistence.countByClassPK(RandomTestUtil.nextLong());
 
-		_persistence.countByNotificationTemplateId(0L);
+		_persistence.countByClassPK(0L);
 	}
 
 	@Test
@@ -249,7 +243,7 @@ public class NotificationRecipientPersistenceTest {
 			"NotificationRecipient", "mvccVersion", true, "uuid", true,
 			"notificationRecipientId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"classPK", true, "className", true, "notificationTemplateId", true);
+			"classPK", true, "className", true);
 	}
 
 	@Test
@@ -546,10 +540,10 @@ public class NotificationRecipientPersistenceTest {
 		NotificationRecipient notificationRecipient) {
 
 		Assert.assertEquals(
-			Long.valueOf(notificationRecipient.getNotificationTemplateId()),
+			Long.valueOf(notificationRecipient.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
 				notificationRecipient, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "notificationTemplateId"));
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected NotificationRecipient addNotificationRecipient()
@@ -576,9 +570,6 @@ public class NotificationRecipientPersistenceTest {
 		notificationRecipient.setClassPK(RandomTestUtil.nextLong());
 
 		notificationRecipient.setClassName(RandomTestUtil.randomString());
-
-		notificationRecipient.setNotificationTemplateId(
-			RandomTestUtil.nextLong());
 
 		_notificationRecipients.add(_persistence.update(notificationRecipient));
 

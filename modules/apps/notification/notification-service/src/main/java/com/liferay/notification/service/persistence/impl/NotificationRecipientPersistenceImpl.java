@@ -1230,31 +1230,29 @@ public class NotificationRecipientPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"notificationRecipient.companyId = ?";
 
-	private FinderPath _finderPathFetchByNotificationTemplateId;
-	private FinderPath _finderPathCountByNotificationTemplateId;
+	private FinderPath _finderPathFetchByClassPK;
+	private FinderPath _finderPathCountByClassPK;
 
 	/**
-	 * Returns the notification recipient where notificationTemplateId = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.
+	 * Returns the notification recipient where classPK = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the matching notification recipient
 	 * @throws NoSuchNotificationRecipientException if a matching notification recipient could not be found
 	 */
 	@Override
-	public NotificationRecipient findByNotificationTemplateId(
-			long notificationTemplateId)
+	public NotificationRecipient findByClassPK(long classPK)
 		throws NoSuchNotificationRecipientException {
 
-		NotificationRecipient notificationRecipient =
-			fetchByNotificationTemplateId(notificationTemplateId);
+		NotificationRecipient notificationRecipient = fetchByClassPK(classPK);
 
 		if (notificationRecipient == null) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("notificationTemplateId=");
-			sb.append(notificationTemplateId);
+			sb.append("classPK=");
+			sb.append(classPK);
 
 			sb.append("}");
 
@@ -1269,49 +1267,45 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 	/**
-	 * Returns the notification recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the notification recipient where classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
 	 */
 	@Override
-	public NotificationRecipient fetchByNotificationTemplateId(
-		long notificationTemplateId) {
-
-		return fetchByNotificationTemplateId(notificationTemplateId, true);
+	public NotificationRecipient fetchByClassPK(long classPK) {
+		return fetchByClassPK(classPK, true);
 	}
 
 	/**
-	 * Returns the notification recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the notification recipient where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
 	 */
 	@Override
-	public NotificationRecipient fetchByNotificationTemplateId(
-		long notificationTemplateId, boolean useFinderCache) {
+	public NotificationRecipient fetchByClassPK(
+		long classPK, boolean useFinderCache) {
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {notificationTemplateId};
+			finderArgs = new Object[] {classPK};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByNotificationTemplateId, finderArgs, this);
+				_finderPathFetchByClassPK, finderArgs, this);
 		}
 
 		if (result instanceof NotificationRecipient) {
 			NotificationRecipient notificationRecipient =
 				(NotificationRecipient)result;
 
-			if (notificationTemplateId !=
-					notificationRecipient.getNotificationTemplateId()) {
-
+			if (classPK != notificationRecipient.getClassPK()) {
 				result = null;
 			}
 		}
@@ -1321,8 +1315,7 @@ public class NotificationRecipientPersistenceImpl
 
 			sb.append(_SQL_SELECT_NOTIFICATIONRECIPIENT_WHERE);
 
-			sb.append(
-				_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
+			sb.append(_FINDER_COLUMN_CLASSPK_CLASSPK_2);
 
 			String sql = sb.toString();
 
@@ -1335,15 +1328,14 @@ public class NotificationRecipientPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(notificationTemplateId);
+				queryPos.add(classPK);
 
 				List<NotificationRecipient> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByNotificationTemplateId,
-							finderArgs, list);
+							_finderPathFetchByClassPK, finderArgs, list);
 					}
 				}
 				else {
@@ -1352,13 +1344,11 @@ public class NotificationRecipientPersistenceImpl
 
 						if (_log.isWarnEnabled()) {
 							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									notificationTemplateId
-								};
+								finderArgs = new Object[] {classPK};
 							}
 
 							_log.warn(
-								"NotificationRecipientPersistenceImpl.fetchByNotificationTemplateId(long, boolean) with parameters (" +
+								"NotificationRecipientPersistenceImpl.fetchByClassPK(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -1388,33 +1378,31 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 	/**
-	 * Removes the notification recipient where notificationTemplateId = &#63; from the database.
+	 * Removes the notification recipient where classPK = &#63; from the database.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the notification recipient that was removed
 	 */
 	@Override
-	public NotificationRecipient removeByNotificationTemplateId(
-			long notificationTemplateId)
+	public NotificationRecipient removeByClassPK(long classPK)
 		throws NoSuchNotificationRecipientException {
 
-		NotificationRecipient notificationRecipient =
-			findByNotificationTemplateId(notificationTemplateId);
+		NotificationRecipient notificationRecipient = findByClassPK(classPK);
 
 		return remove(notificationRecipient);
 	}
 
 	/**
-	 * Returns the number of notification recipients where notificationTemplateId = &#63;.
+	 * Returns the number of notification recipients where classPK = &#63;.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the number of matching notification recipients
 	 */
 	@Override
-	public int countByNotificationTemplateId(long notificationTemplateId) {
-		FinderPath finderPath = _finderPathCountByNotificationTemplateId;
+	public int countByClassPK(long classPK) {
+		FinderPath finderPath = _finderPathCountByClassPK;
 
-		Object[] finderArgs = new Object[] {notificationTemplateId};
+		Object[] finderArgs = new Object[] {classPK};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1423,8 +1411,7 @@ public class NotificationRecipientPersistenceImpl
 
 			sb.append(_SQL_COUNT_NOTIFICATIONRECIPIENT_WHERE);
 
-			sb.append(
-				_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
+			sb.append(_FINDER_COLUMN_CLASSPK_CLASSPK_2);
 
 			String sql = sb.toString();
 
@@ -1437,7 +1424,7 @@ public class NotificationRecipientPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(notificationTemplateId);
+				queryPos.add(classPK);
 
 				count = (Long)query.uniqueResult();
 
@@ -1454,9 +1441,8 @@ public class NotificationRecipientPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2 =
-			"notificationRecipient.notificationTemplateId = ?";
+	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 =
+		"notificationRecipient.classPK = ?";
 
 	public NotificationRecipientPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1485,8 +1471,8 @@ public class NotificationRecipientPersistenceImpl
 			notificationRecipient.getPrimaryKey(), notificationRecipient);
 
 		finderCache.putResult(
-			_finderPathFetchByNotificationTemplateId,
-			new Object[] {notificationRecipient.getNotificationTemplateId()},
+			_finderPathFetchByClassPK,
+			new Object[] {notificationRecipient.getClassPK()},
 			notificationRecipient);
 	}
 
@@ -1572,14 +1558,12 @@ public class NotificationRecipientPersistenceImpl
 		NotificationRecipientModelImpl notificationRecipientModelImpl) {
 
 		Object[] args = new Object[] {
-			notificationRecipientModelImpl.getNotificationTemplateId()
+			notificationRecipientModelImpl.getClassPK()
 		};
 
+		finderCache.putResult(_finderPathCountByClassPK, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByNotificationTemplateId, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByNotificationTemplateId, args,
-			notificationRecipientModelImpl);
+			_finderPathFetchByClassPK, args, notificationRecipientModelImpl);
 	}
 
 	/**
@@ -2105,16 +2089,15 @@ public class NotificationRecipientPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathFetchByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByNotificationTemplateId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationTemplateId"}, true);
+		_finderPathFetchByClassPK = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
+			new String[] {Long.class.getName()}, new String[] {"classPK"},
+			true);
 
-		_finderPathCountByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByNotificationTemplateId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationTemplateId"}, false);
+		_finderPathCountByClassPK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
+			new String[] {Long.class.getName()}, new String[] {"classPK"},
+			false);
 
 		_setNotificationRecipientUtilPersistence(this);
 	}

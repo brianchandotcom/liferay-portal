@@ -304,6 +304,14 @@ public class NotificationRecipientLocalServiceWrapper
 			notificationRecipientId);
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationRecipient
+		getNotificationRecipientByClassPK(long classPK) {
+
+		return _notificationRecipientLocalService.
+			getNotificationRecipientByClassPK(classPK);
+	}
+
 	/**
 	 * Returns the notification recipient with the matching UUID and company.
 	 *

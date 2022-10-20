@@ -60,4 +60,6 @@ public interface NotificationQueueEntry
 
 			};
 
+	public NotificationRecipient getNotificationRecipient();
+
 }

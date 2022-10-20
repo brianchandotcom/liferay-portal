@@ -375,6 +375,11 @@ public class NotificationTemplateWrapper
 		return model.getNameMap();
 	}
 
+	@Override
+	public NotificationRecipient getNotificationRecipient() {
+		return model.getNotificationRecipient();
+	}
+
 	/**
 	 * Returns the notification template ID of this notification template.
 	 *

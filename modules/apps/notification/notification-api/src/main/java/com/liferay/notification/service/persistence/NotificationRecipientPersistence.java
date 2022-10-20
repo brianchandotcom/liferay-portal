@@ -340,52 +340,49 @@ public interface NotificationRecipientPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns the notification recipient where notificationTemplateId = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.
+	 * Returns the notification recipient where classPK = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the matching notification recipient
 	 * @throws NoSuchNotificationRecipientException if a matching notification recipient could not be found
 	 */
-	public NotificationRecipient findByNotificationTemplateId(
-			long notificationTemplateId)
+	public NotificationRecipient findByClassPK(long classPK)
 		throws NoSuchNotificationRecipientException;
 
 	/**
-	 * Returns the notification recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the notification recipient where classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
 	 */
-	public NotificationRecipient fetchByNotificationTemplateId(
-		long notificationTemplateId);
+	public NotificationRecipient fetchByClassPK(long classPK);
 
 	/**
-	 * Returns the notification recipient where notificationTemplateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the notification recipient where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching notification recipient, or <code>null</code> if a matching notification recipient could not be found
 	 */
-	public NotificationRecipient fetchByNotificationTemplateId(
-		long notificationTemplateId, boolean useFinderCache);
+	public NotificationRecipient fetchByClassPK(
+		long classPK, boolean useFinderCache);
 
 	/**
-	 * Removes the notification recipient where notificationTemplateId = &#63; from the database.
+	 * Removes the notification recipient where classPK = &#63; from the database.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the notification recipient that was removed
 	 */
-	public NotificationRecipient removeByNotificationTemplateId(
-			long notificationTemplateId)
+	public NotificationRecipient removeByClassPK(long classPK)
 		throws NoSuchNotificationRecipientException;
 
 	/**
-	 * Returns the number of notification recipients where notificationTemplateId = &#63;.
+	 * Returns the number of notification recipients where classPK = &#63;.
 	 *
-	 * @param notificationTemplateId the notification template ID
+	 * @param classPK the class pk
 	 * @return the number of matching notification recipients
 	 */
-	public int countByNotificationTemplateId(long notificationTemplateId);
+	public int countByClassPK(long classPK);
 
 	/**
 	 * Caches the notification recipient in the entity cache if it is enabled.

@@ -240,6 +240,10 @@ public interface NotificationRecipientLocalService
 			long notificationRecipientId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationRecipient getNotificationRecipientByClassPK(
+		long classPK);
+
 	/**
 	 * Returns the notification recipient with the matching UUID and company.
 	 *

@@ -277,7 +277,9 @@ definition {
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
-		KBArticle.viewDefaultCP(featureFlag = "true");
+		KBArticle.viewDefaultCP(
+			defaultHome = "true",
+			featureFlag = "true");
 	}
 
 	@description = "This test ensures that a user can edit the kb entry permissions from the navigation pane."

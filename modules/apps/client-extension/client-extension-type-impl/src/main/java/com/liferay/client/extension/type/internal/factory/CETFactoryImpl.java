@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = CETFactory.class)
+@Component(service = CETFactory.class)
 public class CETFactoryImpl implements CETFactory {
 
 	public CETFactoryImpl() {

@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES,
 	service = FDSActionProvider.class
 )

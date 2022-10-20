@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class ClientExtensionWebUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

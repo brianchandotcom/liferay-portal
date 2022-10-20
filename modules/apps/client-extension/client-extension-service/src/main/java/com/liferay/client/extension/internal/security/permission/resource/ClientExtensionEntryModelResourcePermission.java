@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.client.extension.model.ClientExtensionEntry",
 	service = ModelResourcePermission.class
 )

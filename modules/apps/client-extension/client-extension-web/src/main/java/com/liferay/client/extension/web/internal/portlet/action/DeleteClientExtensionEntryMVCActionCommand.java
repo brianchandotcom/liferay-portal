@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
 		"mvc.command.name=/client_extension_admin/delete_client_extension_entry"

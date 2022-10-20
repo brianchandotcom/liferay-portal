@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = CETManager.class)
+@Component(service = CETManager.class)
 public class CETManagerImpl implements CETManager {
 
 	@Override

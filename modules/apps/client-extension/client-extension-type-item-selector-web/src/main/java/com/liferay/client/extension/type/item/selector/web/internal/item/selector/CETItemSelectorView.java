@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(immediate = true, service = ItemSelectorView.class)
+@Component(service = ItemSelectorView.class)
 public class CETItemSelectorView
 	implements ItemSelectorView<CETItemSelectorCriterion> {
 

@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-remote-app-admin",
 		"com.liferay.portlet.display-category=category.hidden",

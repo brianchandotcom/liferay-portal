@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = CETDeployer.class)
+@Component(service = CETDeployer.class)
 public class CETDeployerImpl implements CETDeployer {
 
 	@Override

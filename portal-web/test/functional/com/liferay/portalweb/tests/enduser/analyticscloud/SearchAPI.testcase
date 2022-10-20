@@ -137,9 +137,7 @@ definition {
 		}
 
 		task ("Type keyword in search bar") {
-			for (var keyword : list "${keyword1},${keyword2}") {
-				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
-			}
+			SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
 		}
 
 		task ("Run curl command without optional parameters to get keyword results") {
@@ -249,9 +247,7 @@ definition {
 		}
 
 		task ("Type keyword in search bar") {
-			for (var keyword : list "${keyword1},${keyword2},${keyword3}") {
-				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
-			}
+			SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
 		}
 
 		task ("Run curl command to get keyword results") {

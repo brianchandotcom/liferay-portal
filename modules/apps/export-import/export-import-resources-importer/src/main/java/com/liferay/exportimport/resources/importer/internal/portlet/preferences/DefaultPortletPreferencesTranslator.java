@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Greenwald
  */
 @Component(
-	immediate = true,
 	property = "portlet.preferences.translator.portlet.id=" + ResourcesImporterConstants.PORTLET_ID_DEFAULT,
 	service = PortletPreferencesTranslator.class
 )

@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	immediate = true, property = "content.processor.type=DLReferences",
+	property = "content.processor.type=DLReferences",
 	service = ExportImportContentProcessor.class
 )
 public class DLReferencesExportImportContentProcessor

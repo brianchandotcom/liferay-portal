@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	immediate = true, property = "content.processor.type=LinksToLayouts",
+	property = "content.processor.type=LinksToLayouts",
 	service = ExportImportContentProcessor.class
 )
 public class LinksToLayoutsExportImportContentProcessor

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = AopService.class)
+@Component(service = AopService.class)
 public class ChangesetManagerImpl
 	implements AopService, ChangesetManager, IdentifiableOSGiService {
 

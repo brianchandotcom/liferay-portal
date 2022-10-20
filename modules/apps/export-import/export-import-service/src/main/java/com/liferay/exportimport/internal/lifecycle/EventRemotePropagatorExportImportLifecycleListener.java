@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = ExportImportLifecycleListener.class)
+@Component(service = ExportImportLifecycleListener.class)
 public class EventRemotePropagatorExportImportLifecycleListener
 	implements ExportImportLifecycleListener {
 

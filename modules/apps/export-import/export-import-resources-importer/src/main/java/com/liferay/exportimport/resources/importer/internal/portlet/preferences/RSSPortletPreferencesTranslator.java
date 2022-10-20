@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = "portlet.preferences.translator.portlet.id=com_liferay_rss_web_portlet_RSSPortlet",
 	service = PortletPreferencesTranslator.class
 )

@@ -193,7 +193,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  * @author Zsolt Balogh
  */
-@Component(immediate = true, service = Staging.class)
+@Component(service = Staging.class)
 public class StagingImpl implements Staging {
 
 	@Override

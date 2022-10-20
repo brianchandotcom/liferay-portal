@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = ExportImportLifecycleListener.class)
+@Component(service = ExportImportLifecycleListener.class)
 public class ExportImportProcessCallbackLifecycleListener
 	implements ProcessAwareExportImportLifecycleListener {
 

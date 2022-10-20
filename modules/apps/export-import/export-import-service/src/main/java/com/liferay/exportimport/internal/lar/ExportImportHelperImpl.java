@@ -135,7 +135,7 @@ import org.xml.sax.XMLReader;
  */
 @Component(
 	configurationPid = "com.liferay.staging.configuration.StagingConfiguration",
-	immediate = true, service = ExportImportHelper.class
+	service = ExportImportHelper.class
 )
 public class ExportImportHelperImpl implements ExportImportHelper {
 

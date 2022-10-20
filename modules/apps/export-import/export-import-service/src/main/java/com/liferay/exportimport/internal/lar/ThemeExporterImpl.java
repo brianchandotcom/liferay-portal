@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = ThemeExporter.class)
+@Component(service = ThemeExporter.class)
 public class ThemeExporterImpl implements ThemeExporter {
 
 	@Override

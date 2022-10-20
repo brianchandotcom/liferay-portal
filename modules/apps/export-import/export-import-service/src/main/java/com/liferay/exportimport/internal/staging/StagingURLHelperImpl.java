@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Akos Thurzo
  */
-@Component(immediate = true, service = StagingURLHelper.class)
+@Component(service = StagingURLHelper.class)
 public class StagingURLHelperImpl implements StagingURLHelper {
 
 	@Override

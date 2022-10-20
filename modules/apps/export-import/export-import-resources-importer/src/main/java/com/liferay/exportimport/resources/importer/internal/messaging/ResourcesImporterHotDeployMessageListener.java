@@ -60,7 +60,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.HOT_DEPLOY,
 	service = MessageListener.class
 )

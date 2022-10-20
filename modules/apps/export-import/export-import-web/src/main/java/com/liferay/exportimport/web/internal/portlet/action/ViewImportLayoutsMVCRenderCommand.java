@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.IMPORT,
 		"mvc.command.name=/export_import/view_import_layouts"

@@ -54,10 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  * @since  7.0
  */
-@Component(
-	immediate = true,
-	service = ExportImportConfigurationSettingsMapFactory.class
-)
+@Component(service = ExportImportConfigurationSettingsMapFactory.class)
 public class ExportImportConfigurationSettingsMapFactoryImpl
 	implements ExportImportConfigurationSettingsMapFactory {
 

@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(
-	immediate = true, service = ExportImportProcessCallbackRegistry.class
-)
+@Component(service = ExportImportProcessCallbackRegistry.class)
 public class ExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {
 

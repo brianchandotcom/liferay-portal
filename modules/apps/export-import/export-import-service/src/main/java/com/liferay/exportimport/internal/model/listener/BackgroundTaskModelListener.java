@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Levente Hudák
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class BackgroundTaskModelListener
 	extends BaseModelListener<BackgroundTask> {
 

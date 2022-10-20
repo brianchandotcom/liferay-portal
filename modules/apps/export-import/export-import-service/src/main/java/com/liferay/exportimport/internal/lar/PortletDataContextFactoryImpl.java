@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = PortletDataContextFactory.class)
+@Component(service = PortletDataContextFactory.class)
 public class PortletDataContextFactoryImpl
 	implements PortletDataContextFactory {
 

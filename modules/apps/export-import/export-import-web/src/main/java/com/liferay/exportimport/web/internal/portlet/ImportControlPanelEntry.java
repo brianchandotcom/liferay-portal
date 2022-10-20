@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Julio Camarero
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ExportImportPortletKeys.IMPORT,
 	service = ControlPanelEntry.class
 )

@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
 	service = ModelDocumentContributor.class
 )

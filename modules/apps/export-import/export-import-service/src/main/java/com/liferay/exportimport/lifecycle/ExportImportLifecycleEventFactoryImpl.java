@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = ExportImportLifecycleEventFactory.class)
+@Component(service = ExportImportLifecycleEventFactory.class)
 public class ExportImportLifecycleEventFactoryImpl
 	implements ExportImportLifecycleEventFactory {
 

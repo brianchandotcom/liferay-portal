@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.preferences-unique-per-layout=false",

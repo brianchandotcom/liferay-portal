@@ -47,10 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
-	immediate = true,
-	service = ExportImportConfigurationParameterMapFactory.class
-)
+@Component(service = ExportImportConfigurationParameterMapFactory.class)
 public class ExportImportConfigurationParameterMapFactoryImpl
 	implements ExportImportConfigurationParameterMapFactory {
 

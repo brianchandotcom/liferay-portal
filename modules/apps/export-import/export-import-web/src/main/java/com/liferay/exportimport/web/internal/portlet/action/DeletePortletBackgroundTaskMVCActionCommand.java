@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
 		"mvc.command.name=/export_import/delete_portlet_background_task"

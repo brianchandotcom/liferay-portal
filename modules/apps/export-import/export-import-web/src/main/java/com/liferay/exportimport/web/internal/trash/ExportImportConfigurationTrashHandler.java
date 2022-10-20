@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
 	service = TrashHandler.class
 )

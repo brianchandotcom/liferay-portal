@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, service = PortletDataHandlerStatusMessageSender.class
-)
+@Component(service = PortletDataHandlerStatusMessageSender.class)
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = PortletDataHandlerHelper.class)
+@Component(service = PortletDataHandlerHelper.class)
 public class PortletDataHandlerHelperImpl implements PortletDataHandlerHelper {
 
 	@Override

@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Change Tracking Taglib
+Bundle-SymbolicName: com.liferay.change.tracking.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.change.tracking.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/change-tracking";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /change-tracking-taglib

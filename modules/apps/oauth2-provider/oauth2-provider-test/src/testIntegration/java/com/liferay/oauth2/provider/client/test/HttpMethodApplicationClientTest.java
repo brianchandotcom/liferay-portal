@@ -92,13 +92,20 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 		WebTarget webTarget = getWebTarget("/methods");
 
 		Invocation.Builder builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
+			webTarget.request(), getToken("oauthTestApplicationBefore"));
 
 		Response response = builder.head();
 
 		Assert.assertEquals(200, response.getStatus());
 
 		webTarget = getWebTarget("/methods-with-ignore-missing-scopes-empty");
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationBefore"));
+
+		response = builder.head();
+
+		Assert.assertEquals(403, response.getStatus());
 
 		builder = authorize(
 			webTarget.request(), getToken("oauthTestApplicationAfter"));

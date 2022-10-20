@@ -176,7 +176,6 @@ public class AssetTagIndexerIndexedFieldsTest {
 			Field.SCOPE_GROUP_ID, String.valueOf(assetTag.getGroupId())
 		).put(
 			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
-		).put("subscribed", "false"
 		).put(
 			Field.USER_ID, String.valueOf(assetTag.getUserId())
 		).put(
@@ -188,6 +187,8 @@ public class AssetTagIndexerIndexedFieldsTest {
 			String.valueOf(assetTag.getAssetCount())
 		).put(
 			"name_String_sortable", assetTag.getName()
+		).put(
+			"subscribed", "false"
 		).build();
 
 		_indexedFieldsFixture.populateUID(assetTag, map);

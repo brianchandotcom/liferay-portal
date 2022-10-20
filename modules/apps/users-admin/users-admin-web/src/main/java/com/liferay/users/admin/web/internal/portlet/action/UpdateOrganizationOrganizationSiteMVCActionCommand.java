@@ -111,9 +111,9 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 			organizationId, organization.getParentOrganizationId(),
 			organization.getName(), organization.getType(),
 			organization.getRegionId(), organization.getCountryId(),
-			organization.getStatusId(), organization.getComments(), true, null,
-			site, organization.getAddresses(), emailAddresses, orgLabors,
-			phones, websites, null);
+			organization.getStatusListTypeId(), organization.getComments(),
+			true, null, site, organization.getAddresses(), emailAddresses,
+			orgLabors, phones, websites, null);
 
 		Group organizationGroup = organization.getGroup();
 

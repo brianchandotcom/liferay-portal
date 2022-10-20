@@ -51,14 +51,4 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 	protected abstract TemplateContextHelper getTemplateContextHelper();
 
-	protected ClassLoader getTemplateControlContextClassLoader() {
-		TemplateContextHelper templateContextHelper =
-			getTemplateContextHelper();
-
-		TemplateControlContext templateControlContext =
-			templateContextHelper.getTemplateControlContext();
-
-		return templateControlContext.getClassLoader();
-	}
-
 }

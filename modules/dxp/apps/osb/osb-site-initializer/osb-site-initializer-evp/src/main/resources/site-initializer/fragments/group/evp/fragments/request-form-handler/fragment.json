@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Request Type Trigger",
+	"name": "Request Form Handler",
 	"type": "component"
 }

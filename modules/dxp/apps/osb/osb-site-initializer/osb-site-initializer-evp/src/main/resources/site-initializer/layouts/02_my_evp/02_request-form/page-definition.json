@@ -731,21 +731,114 @@
 					},
 					{
 						"definition": {
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "End",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							},
+							"name": "Buttons Container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/my-evp"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "[$GROUP_KEY$]"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Cancel"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-submit-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "nm",
+										"buttonType": "primary"
+									},
+									"fragmentFields": [
+										{
+											"id": "submit-button-text",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
 							"fragment": {
-								"key": "INPUTS-submit-button"
+								"key": "request-form-handler"
 							},
 							"fragmentConfig": {
-								"buttonSize": "nm",
-								"buttonType": "primary"
 							},
 							"fragmentFields": [
-								{
-									"id": "submit-button-text",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								}
 							],
 							"indexed": true
 						},
@@ -753,10 +846,14 @@
 					},
 					{
 						"definition": {
+							"cssClasses": [
+								"d-none"
+							],
 							"fragment": {
-								"key": "request-type-trigger"
+								"key": "INPUTS-select-from-list"
 							},
 							"fragmentConfig": {
+								"inputFieldId": "ObjectField_requestStatus"
 							},
 							"fragmentFields": [
 							],

@@ -57,8 +57,11 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontWeight": "fontWeightBold",
 								"marginBottom": "4",
+								"shadow": "",
+								"textAlign": "",
 								"textColor": "colorNeutral10"
 							},
 							"indexed": true
@@ -88,8 +91,11 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontWeight": "fontWeightBold",
 								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": "",
 								"textColor": "colorNeutral9"
 							},
 							"indexed": true
@@ -99,7 +105,11 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginBottom": "3"
+								"borderRadius": "",
+								"borderWidth": "0",
+								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -111,6 +121,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -129,7 +140,8 @@
 										"inputHelpText": {
 											"en_US": ""
 										},
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
@@ -137,6 +149,8 @@
 										"borderColor": "colorNeutral7",
 										"borderRadius": "borderRadiusSm",
 										"borderWidth": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "49%"
 									},
@@ -151,12 +165,16 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_organizationSiteSocialMediaLink",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
 										"borderColor": "colorNeutral7",
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "49%"
 									},
@@ -205,8 +223,11 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontWeight": "fontWeightBold",
 								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": "",
 								"textColor": "colorNeutral9"
 							},
 							"indexed": true
@@ -220,12 +241,16 @@
 							},
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_street",
-								"inputRequired": true
+								"inputRequired": true,
+								"placeholder": ""
 							},
 							"fragmentFields": [
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": "",
 								"textColor": "colorNeutral7"
 							},
 							"indexed": true
@@ -235,7 +260,11 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginBottom": "3"
+								"borderRadius": "",
+								"borderWidth": "0",
+								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -247,6 +276,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -262,11 +292,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_city",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "33%"
 									},
@@ -281,11 +315,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_state",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "33%"
 									},
@@ -300,11 +338,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_country",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "33%"
 									},
@@ -318,7 +360,11 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginBottom": "3"
+								"borderRadius": "",
+								"borderWidth": "0",
+								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -329,6 +375,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -344,11 +391,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_zip",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "49%"
 									},
@@ -363,11 +414,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_taxIdentificationNumber",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "49%"
 									},
@@ -416,8 +471,11 @@
 								}
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
 								"fontWeight": "fontWeightBold",
 								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": "",
 								"textColor": "colorNeutral9"
 							},
 							"indexed": true
@@ -431,11 +489,15 @@
 							},
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_contactName",
-								"inputRequired": true
+								"inputRequired": true,
+								"placeholder": ""
 							},
 							"fragmentFields": [
 							],
 							"fragmentStyle": {
+								"borderRadius": "",
+								"shadow": "",
+								"textAlign": "",
 								"textColor": "colorNeutral7"
 							},
 							"indexed": true
@@ -445,8 +507,12 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderRadius": "",
+								"borderWidth": "0",
 								"marginBottom": "3",
-								"marginTop": "3"
+								"marginTop": "3",
+								"shadow": "",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
@@ -457,6 +523,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 1,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -472,11 +539,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_contactEmail",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "49%"
 									},
@@ -491,11 +562,15 @@
 									},
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_contactPhone",
-										"inputRequired": true
+										"inputRequired": true,
+										"placeholder": ""
 									},
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
+										"textAlign": "",
 										"textColor": "colorNeutral7",
 										"width": "49%"
 									},
@@ -513,8 +588,7 @@
 							},
 							"fragmentConfig": {
 								"bottomSpacing": "3",
-								"separatorColor": {
-								}
+								"separatorColor": ""
 							},
 							"fragmentFields": [
 							],
@@ -529,12 +603,16 @@
 							},
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_smallDescription",
-								"inputRequired": true
+								"inputRequired": true,
+								"placeholder": ""
 							},
 							"fragmentFields": [
 							],
 							"fragmentStyle": {
-								"marginBottom": "3"
+								"borderRadius": "",
+								"marginBottom": "3",
+								"shadow": "",
+								"textAlign": ""
 							},
 							"indexed": true
 						},
@@ -566,15 +644,72 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
 								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
-							"name": "Button Container"
+							"name": "Buttons Container"
 						},
 						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/my-evp"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "[$GROUP_KEY$]"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Cancel"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
 							{
 								"definition": {
 									"fragment": {
@@ -599,6 +734,36 @@
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"d-none"
+							],
+							"fragment": {
+								"key": "INPUTS-select-from-list"
+							},
+							"fragmentConfig": {
+								"inputFieldId": "ObjectField_organizationStatus"
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "organization-form-handler"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
 					}
 				],
 				"type": "Form"

@@ -10,8 +10,20 @@
  */
 
 const requestType = document.querySelector('[name="requestType"]');
+const requestStatus = document.querySelector('[name="requestStatus"]');
 const serviceForm = document.getElementsByClassName('.service-form');
 const grantForm = document.getElementsByClassName('.grant-form');
+const grantRequestType = document.querySelector('[name="grantRequestType"]');
+const grantAmount = document.querySelector('[name="grantAmount"]');
+const managerEmailAddress = document.querySelector(
+	'[name="managerEmailAddress"]'
+);
+const totalHoursRequested = document.querySelector(
+	'[name="totalHoursRequested"]'
+);
+const startDate = document.querySelector('[name="startDate"]');
+const endDate = document.querySelector('[name="endDate"]');
+
 document.addEventListener('click', handleDocumentClick);
 
 function updateValue(requestType) {
@@ -23,6 +35,11 @@ function updateValue(requestType) {
 		toggleGrantRequired(grantForm[0]);
 
 		if (!serviceForm[0].classList.contains('d-none')) {
+			managerEmailAddress.value = '';
+			totalHoursRequested.value = 0;
+			startDate.value = '';
+			endDate.value = '';
+
 			serviceForm[0].classList.toggle('d-none');
 			toggleServiceRequired(serviceForm[0]);
 		}
@@ -35,11 +52,17 @@ function updateValue(requestType) {
 		toggleServiceRequired(serviceForm[0]);
 
 		if (!grantForm[0].classList.contains('d-none')) {
+			grantRequestType.value = '';
+			grantAmount.value = 0;
+
 			grantForm[0].classList.toggle('d-none');
 			toggleGrantRequired(grantForm[0]);
 		}
 	}
+
+	requestStatus.value = 'pendingEVPApproval';
 }
+
 function toggleServiceRequired(service) {
 	if (service.querySelector('[name="managerEmailAddress"]').required) {
 		service.querySelector('[name="managerEmailAddress"]').required = false;

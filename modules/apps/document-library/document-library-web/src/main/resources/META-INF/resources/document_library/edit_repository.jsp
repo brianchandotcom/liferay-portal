@@ -56,7 +56,9 @@ renderResponse.setTitle(headerTitle);
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name">
+					<aui:validator errorMessage='<%= LanguageUtil.get(request, "name-is-required") %>' name="required" />
+				</aui:input>
 
 				<aui:input name="description" />
 			</aui:fieldset>

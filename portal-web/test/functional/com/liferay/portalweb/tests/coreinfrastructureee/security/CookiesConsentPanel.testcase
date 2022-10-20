@@ -165,7 +165,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-142518. TC-6 Verify that Cookie Consent Panel could be used to save Cookie Preferences."
+	@description = "This is a use case for LPS-142518. TC-6 Verify that Cookie Consent Panel could be used to save Cookie Preferences. Blocked by LPS-162952."
+	@ignore = "true"
 	@priority = "5"
 	test CookiesConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage {
 		property portal.acceptance = "true";

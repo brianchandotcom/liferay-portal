@@ -1250,7 +1250,7 @@ definition {
 				key_fieldLabel = "${fieldLabel}",
 				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 
-			MenuItem.click(menuItem = "${unit}");
+			DropdownMenuItem.click(menuItem = "${unit}");
 		}
 
 		if (isSet(borderWidth)) {

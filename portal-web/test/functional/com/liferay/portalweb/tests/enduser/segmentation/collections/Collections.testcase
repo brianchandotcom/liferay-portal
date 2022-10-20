@@ -806,7 +806,7 @@ definition {
 	@priority = "4"
 	test DefaultVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
@@ -850,7 +850,7 @@ definition {
 	@priority = "4"
 	test DefaultVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
@@ -925,7 +925,7 @@ definition {
 	@priority = "3"
 	test DeleteVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -971,7 +971,7 @@ definition {
 	@priority = "3"
 	test DeleteVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -1017,7 +1017,7 @@ definition {
 	@priority = "3"
 	test DeprioritizeDisabledForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -1061,7 +1061,7 @@ definition {
 	@priority = "3"
 	test DeprioritizeVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -1120,7 +1120,7 @@ definition {
 	@priority = "3"
 	test DeprioritizeVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -1179,7 +1179,7 @@ definition {
 	@priority = "3"
 	test DynamicCollectionInAssetPublisherSegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
@@ -1290,7 +1290,7 @@ definition {
 	@priority = "4"
 	test DynamicCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create categories") {
@@ -1407,7 +1407,7 @@ definition {
 	@priority = "3"
 	test DynamicCollectionInAssetPublisherSegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create blog, web content and document for the variations") {
 			JSONWebcontent.addWebContent(
@@ -1525,7 +1525,7 @@ definition {
 	@priority = "3"
 	test DynamicCollectionInCollectionDisplaySegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create categories") {
 			JSONCategory.addVocabulary(
@@ -1642,7 +1642,7 @@ definition {
 	@priority = "4"
 	test DynamicCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create categories") {
@@ -1765,7 +1765,7 @@ definition {
 	@priority = "3"
 	test DynamicCollectionInCollectionDisplaySegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create blog, web content and document for the variations") {
 			JSONWebcontent.addWebContent(
@@ -1987,7 +1987,7 @@ definition {
 	@priority = "3"
 	test ManualCollectionInAssetPublisherSegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2") {
@@ -2072,7 +2072,7 @@ definition {
 	@priority = "4"
 	test ManualCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create web content articles") {
@@ -2161,7 +2161,7 @@ definition {
 	@priority = "3"
 	test ManualCollectionInAssetPublisherSegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2,3") {
@@ -2268,7 +2268,7 @@ definition {
 	@priority = "3"
 	test ManualCollectionInCollectionDisplaySegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2") {
@@ -2359,7 +2359,7 @@ definition {
 	@priority = "4"
 	test ManualCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create web content articles") {
@@ -2454,7 +2454,7 @@ definition {
 	@priority = "3"
 	test ManualCollectionInCollectionDisplaySegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2,3") {
@@ -2567,7 +2567,7 @@ definition {
 	@priority = "4"
 	test NewVariationPriorityForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
@@ -2611,7 +2611,7 @@ definition {
 	@priority = "4"
 	test NewVariationPriorityForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a Segment") {
@@ -2924,7 +2924,7 @@ definition {
 	@priority = "3"
 	test PrioritizeDisabledForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -3892,7 +3892,7 @@ definition {
 				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 
 				AssetListsAdmin.addKeywordsFilter(
-					keyWords = "&quot;2 3&quot; &quot;3 4&quot;",
+					keyWords = "\"2 3\" \"3 4\"",
 					queryAndOperator = "${queryAndOperator}",
 					queryContains = "${queryContains}");
 			}

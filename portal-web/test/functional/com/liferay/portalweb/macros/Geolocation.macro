@@ -7,13 +7,13 @@ definition {
 			AssertAttributeValue(
 				attribute1 = "value",
 				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
-				value1 = "{&quot;lat&quot;:${lat},&quot;lng&quot;:${lng}}");
+				value1 = "{\"lat\":${lat},\"lng\":${lng}}");
 		}
 		else if (IsElementPresent(locator1 = "//div[contains(@id,'Location')]")) {
 			AssertAttributeValue(
 				attribute1 = "value",
 				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
-				value1 = "{&quot;latitude&quot;:${lat},&quot;longitude&quot;:${lng}}");
+				value1 = "{\"latitude\":${lat},\"longitude\":${lng}}");
 		}
 	}
 

@@ -120,7 +120,7 @@ definition {
 	@priority = "5"
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile {
 		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CookiesConsentPanel#CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile";
 

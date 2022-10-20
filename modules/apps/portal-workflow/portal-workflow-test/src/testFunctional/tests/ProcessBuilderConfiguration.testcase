@@ -278,11 +278,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "2 Results for &quot;Single Approver&quot;");
+			value1 = "2 Results for \"Single Approver\"");
 
 		AssertTextEquals(
 			locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
-			value1 = "2 Results for &quot;Single Approver&quot;");
+			value1 = "2 Results for \"Single Approver\"");
 
 		AssertTextEquals(
 			key_rowNumber = "1",

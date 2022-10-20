@@ -38,7 +38,7 @@ definition {
 	@priority = "3"
 	test CannotViewPrivateContentAndPageAsGuest {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
-		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
+		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Message Boards";
 

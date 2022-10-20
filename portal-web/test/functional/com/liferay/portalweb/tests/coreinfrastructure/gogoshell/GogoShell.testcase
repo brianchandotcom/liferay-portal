@@ -57,7 +57,7 @@ definition {
 
 		GogoShell.executeCommand(commandName = "disconnect");
 
-		Alert.viewErrorMessage(errorMessage = "Error: The command &quot;Disconnect&quot; is not supported.");
+		Alert.viewErrorMessage(errorMessage = "Error: The command \"Disconnect\" is not supported.");
 
 		AssertConsoleTextNotPresent(value1 = "is not serializable and will prevent this session from being replicated");
 	}

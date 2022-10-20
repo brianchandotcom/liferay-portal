@@ -144,7 +144,7 @@ definition {
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
-			osgiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
+			osgiConfigs = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]");
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 
@@ -178,7 +178,7 @@ definition {
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
-			osgiConfigs = "blacklistComponentNames=[&quot;com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth&quot; ]");
+			osgiConfigs = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]");
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 

@@ -54,7 +54,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-osgi-module-configuration -Dupdate.configuration=&quot;${updateConfiguration}&quot; -Dinstall.patch.cluster.node.index=${bundleIndex}");
+			value1 = "update-osgi-module-configuration -Dupdate.configuration=\"${updateConfiguration}\" -Dinstall.patch.cluster.node.index=${bundleIndex}");
 	}
 
 }

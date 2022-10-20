@@ -456,7 +456,7 @@ definition {
 	@priority = "3"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
-		property osgi.module.configurations = "checkInterval=I&quot;1&quot;";
+		property osgi.module.configurations = "checkInterval=I\"1\"";
 		property test.name.skip.portal.instance = "DatabasePartitioning#ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies";
 
 		task ("Add a new Company") {

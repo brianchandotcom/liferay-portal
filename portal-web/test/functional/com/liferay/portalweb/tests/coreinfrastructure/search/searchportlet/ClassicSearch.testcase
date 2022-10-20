@@ -2,7 +2,7 @@
 definition {
 
 	property osgi.module.configuration.file.names = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config";
-	property osgi.module.configurations = "classicSearchPortletInFrontPage=&quot;true&quot;";
+	property osgi.module.configurations = "classicSearchPortletInFrontPage=\"true\"";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";

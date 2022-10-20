@@ -292,7 +292,7 @@ definition {
 		task ("Then the language key can be viewed in the View page and there is results message") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for &quot;2-synced-contact-data&quot;");
+				value1 = "1 Result for \"2-synced-contact-data\"");
 
 			LanguageOverride.assertLanguageKeyWithoutOverride(
 				languageKey = "2-synced-contact-data",
@@ -384,7 +384,7 @@ definition {
 		task ("Then the language key can be viewed in the View page and there is results message and search for translations") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for &quot;O texto contÃƒÂ©m erro&quot;");
+				value1 = "1 Result for \"O texto contÃƒÂ©m erro\"");
 
 			LanguageOverride.assertSelectedLanguageInListView(
 				currentTranslationOverride = "O texto contÃƒÂ©m erro",
@@ -399,7 +399,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Result for &quot;Le texte contient une erreur&quot;");
+				value1 = "1 Result for \"Le texte contient une erreur\"");
 
 			LanguageOverride.assertSelectedLanguageInListView(
 				currentTranslationOverride = "Le texte contient une erreur",

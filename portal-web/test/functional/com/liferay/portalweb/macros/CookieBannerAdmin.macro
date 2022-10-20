@@ -11,7 +11,7 @@ definition {
 	macro disableDeclineAllButton {
 		AssertClick(
 			locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON",
-			value1 = "Include \&quot;Decline All\&quot; Button");
+			value1 = "Include \\"Decline All\\" Button");
 
 		Button.clickSave();
 	}
@@ -54,7 +54,7 @@ definition {
 		if (isSet(includeDeclineAllButton)) {
 			AssertClick(
 				locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON",
-				value1 = "Include \&quot;Decline All\&quot; Button");
+				value1 = "Include \\"Decline All\\" Button");
 		}
 
 		CookieBannerAdmin.saveConfiguration();

@@ -33,7 +33,7 @@ definition {
 		property elasticsearch.ltr.enabled = "true";
 		property minimum.slave.ram = "24";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration.config";
-		property osgi.module.configurations = "enableSuggestionsEndpoint=B&quot;false&quot;";
+		property osgi.module.configurations = "enableSuggestionsEndpoint=B\"false\"";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";

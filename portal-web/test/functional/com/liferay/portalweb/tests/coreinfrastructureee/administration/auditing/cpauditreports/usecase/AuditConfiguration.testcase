@@ -31,7 +31,7 @@ definition {
 	test CanEnableLogAndConsoleAudit {
 		property log.context.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
-		property osgi.module.configurations = "columns=[&quot;eventType&quot;,&quot;userId&quot;,&quot;userName&quot;]:enabled=B&quot;true&quot;${line.separator}logMessageFormat=&quot;CSV&quot;${line.separator}outputToConsole=B&quot;true&quot;";
+		property osgi.module.configurations = "columns=[\"eventType\",\"userId\",\"userName\"]:enabled=B\"true\"${line.separator}logMessageFormat=\"CSV\"${line.separator}outputToConsole=B\"true\"";
 		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableLogAndConsoleAudit";
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
@@ -64,7 +64,7 @@ definition {
 	@priority = "4"
 	test CanEnableOrDisableAudit {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.configuration.AuditConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;false&quot;";
+		property osgi.module.configurations = "enabled=\"false\"";
 		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableOrDisableAudit";
 
 		ApplicationsMenu.gotoPortlet(
@@ -122,7 +122,7 @@ definition {
 	@priority = "4"
 	test CanEnableOrDisableDatabasePersistence {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;false&quot;";
+		property osgi.module.configurations = "enabled=\"false\"";
 		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableOrDisableDatabasePersistence";
 
 		ApplicationsMenu.gotoPortlet(

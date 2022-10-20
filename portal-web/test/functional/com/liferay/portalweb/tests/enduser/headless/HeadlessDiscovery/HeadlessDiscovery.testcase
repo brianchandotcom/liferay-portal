@@ -50,13 +50,13 @@ definition {
 				groupName = "Guest",
 				site = "true");
 
-			APIExplorer.executeGraphqlQuery(query = "query {structuredContents(siteKey:&quot;${siteId}&quot;){items{title}}}");
+			APIExplorer.executeGraphqlQuery(query = "query {structuredContents(siteKey:\"${siteId}\"){items{title}}}");
 		}
 
 		task ("Then the value in respone equals to the one we created") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#GRAPHQL_RESPONSE",
-				value1 = "&quot;title&quot;: &quot;Web Content Title&quot;");
+				value1 = "\"title\": \"Web Content Title\"");
 		}
 	}
 
@@ -81,13 +81,13 @@ definition {
 				groupName = "Guest",
 				site = "true");
 
-			APIExplorer.executeGraphqlQuery(query = "query{taxonomyVocabularies(siteKey:&quot;${siteId}&quot;){items{name}}}");
+			APIExplorer.executeGraphqlQuery(query = "query{taxonomyVocabularies(siteKey:\"${siteId}\"){items{name}}}");
 		}
 
 		task ("Then the value in respone equals to the one we created") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#GRAPHQL_RESPONSE",
-				value1 = "&quot;name&quot;: &quot;Vocabulary Name&quot;");
+				value1 = "\"name\": \"Vocabulary Name\"");
 		}
 	}
 
@@ -112,13 +112,13 @@ definition {
 				groupName = "Guest",
 				site = "true");
 
-			APIExplorer.executeGraphqlQuery(query = "query{blogPostings(siteKey:&quot;${siteId}&quot;){items{headline}}}");
+			APIExplorer.executeGraphqlQuery(query = "query{blogPostings(siteKey:\"${siteId}\"){items{headline}}}");
 		}
 
 		task ("Then the value in respone equals to the one we created") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#GRAPHQL_RESPONSE",
-				value1 = "&quot;headline&quot;: &quot;headline of my blog posting&quot;");
+				value1 = "\"headline\": \"headline of my blog posting\"");
 		}
 	}
 
@@ -323,7 +323,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
 				method = "postSiteTaxonomyVocabulary",
-				value1 = "&quot;status&quot;: &quot;NOT_ACCEPTABLE&quot;");
+				value1 = "\"status\": \"NOT_ACCEPTABLE\"");
 		}
 
 		task ("And Then assert details message in console") {
@@ -398,7 +398,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
 				method = "postSiteStructuredContentDraft",
-				value1 = "&quot;status&quot;: &quot;BAD_REQUEST&quot;");
+				value1 = "\"status\": \"BAD_REQUEST\"");
 		}
 
 		task ("And Then assert details message in console") {
@@ -473,7 +473,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
 				method = "postSiteStructuredContent",
-				value1 = "&quot;status&quot;: &quot;BAD_REQUEST&quot;");
+				value1 = "\"status\": \"BAD_REQUEST\"");
 		}
 
 		task ("And Then assert details message in console") {

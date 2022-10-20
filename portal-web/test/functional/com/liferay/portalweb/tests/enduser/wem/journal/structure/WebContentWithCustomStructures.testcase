@@ -1683,7 +1683,7 @@ definition {
 				row = "2",
 				webContentColor = "5F5F5F",
 				webContentDate = "11/11/2019",
-				webContentGrid = "true			WebContentNavigator.openWebContentAdmin(siteURLKey = &quot;test-site-name&quot;);",
+				webContentGrid = "true			WebContentNavigator.openWebContentAdmin(siteURLKey = \"test-site-name\");",
 				webContentLinkToPage = "Test Page Name 2",
 				webContentMultipleSelection = "Option 2",
 				webContentNumeric = "8",

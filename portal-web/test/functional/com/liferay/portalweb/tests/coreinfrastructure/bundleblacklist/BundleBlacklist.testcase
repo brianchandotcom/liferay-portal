@@ -2,7 +2,7 @@
 definition {
 
 	property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
-	property osgi.module.configurations = "blacklistBundleSymbolicNames=[&quot;&quot;]";
+	property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"\"]";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Bundle Blacklist";
@@ -163,7 +163,7 @@ definition {
 
 	@priority = "3"
 	test CanEnableBlacklistedModuleJarAfterRestart {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[&quot;com.liferay.gogo.shell.web&quot;]";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleJarAfterRestart";
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
@@ -229,7 +229,7 @@ definition {
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			osgiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");
 
 		WaitForConsoleTextPresent(value1 = "STOPPED ${symbolicName}");
 
@@ -269,7 +269,7 @@ definition {
 
 	@priority = "3"
 	test CanEnableBlacklistedModuleWarAfterRestart {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[&quot;minium-theme&quot;]";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleWarAfterRestart";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
@@ -345,7 +345,7 @@ definition {
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			osgiConfigs = "blacklistBundleSymbolicNames=[&quot;${symbolicName}&quot; ]");
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");
 
 		WaitForConsoleTextPresent(value1 = "STOPPED ${symbolicName}");
 
@@ -376,7 +376,7 @@ definition {
 
 	@priority = "3"
 	test CanRemoveBlacklistedModuleWarViaUI {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[&quot;minium-theme&quot;]";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleWarViaUI";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
@@ -444,7 +444,7 @@ definition {
 
 	@priority = "3"
 	test EnableBlacklistedModuleAfterShutdown {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[&quot;com.liferay.gogo.shell.web&quot;]";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedModuleAfterShutdown";
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(

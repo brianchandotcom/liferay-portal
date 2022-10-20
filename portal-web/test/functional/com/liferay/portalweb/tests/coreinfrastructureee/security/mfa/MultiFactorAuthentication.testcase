@@ -30,7 +30,7 @@ definition {
 	@priority = "4"
 	test AssertDescriptionsOnTOTPConfigurationPage {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertDescriptionsOnTOTPConfigurationPage";
 
 		task ("Enable OTP") {
@@ -285,7 +285,7 @@ definition {
 	test AssertUserIsBlockedAfterReachAllowedFailedAttempts {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertUserIsBlockedAfterReachAllowedFailedAttempts";
 
@@ -607,7 +607,7 @@ definition {
 	test EndUserPermissionCheck {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -661,7 +661,7 @@ definition {
 	@priority = "5"
 	test LoginSuccessfulAfterResetPasswordAsEndUser {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterResetPasswordAsEndUser";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -721,7 +721,7 @@ definition {
 	test LoginSuccessfulAfterRetryTimeout {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterRetryTimeout";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -773,7 +773,7 @@ definition {
 	@priority = "5"
 	test LoginWithIPBasedVerifierEnabled {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierEnabled";
 
@@ -874,7 +874,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabled";
 
@@ -1031,7 +1031,7 @@ definition {
 	test RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -1299,7 +1299,7 @@ definition {
 	@priority = "4"
 	test ViewResourceActionsOfOTPVerificationFailure {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
-		property osgi.module.configurations = "emailFromAddress=&quot;test@liferay.com&quot;${line.separator}emailFromName=&quot;Joe\ Bloggs&quot;";
+		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfOTPVerificationFailure";
 
 		var portalURL = PropsUtil.get("portal.url");

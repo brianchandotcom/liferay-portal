@@ -73,7 +73,7 @@ definition {
 	@priority = "5"
 	test AssertInvalidXRequestId {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
 		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
 
 		var companyId = JSONCompany.getCompanyId();
@@ -163,7 +163,7 @@ definition {
 	@priority = "5"
 	test AssertValidXRequestId {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
 
@@ -187,7 +187,7 @@ definition {
 	@priority = "5"
 	test VerifyCorrectClientIP {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
 		property test.name.skip.portal.instance = "Audit#VerifyCorrectClientIP";
 
 		task ("Add the OSGI configuration file") {

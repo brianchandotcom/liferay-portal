@@ -864,7 +864,7 @@ definition {
 	test LocalDateFormat {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration.config";
-		property osgi.module.configurations = "showCommerceOrderCreateTime=&quot;false&quot;";
+		property osgi.module.configurations = "showCommerceOrderCreateTime=\"false\"";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {

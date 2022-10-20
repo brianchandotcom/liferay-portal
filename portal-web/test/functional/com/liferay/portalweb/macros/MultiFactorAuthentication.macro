@@ -19,7 +19,7 @@ definition {
 		AssertTextEquals(
 			key_fieldName = "emailFromAddress",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
-			value1 = "Template for Email &quot;From&quot; Field Set the sender address on the one-time password email.");
+			value1 = "Template for Email \"From\" Field Set the sender address on the one-time password email.");
 
 		AssertTextEquals(
 			key_fieldName = "failedAttemptsAllowed",

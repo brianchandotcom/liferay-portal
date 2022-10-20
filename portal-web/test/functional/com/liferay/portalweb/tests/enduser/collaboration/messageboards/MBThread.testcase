@@ -688,7 +688,7 @@ definition {
 	@priority = "5"
 	test CanViewImageInThreadWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

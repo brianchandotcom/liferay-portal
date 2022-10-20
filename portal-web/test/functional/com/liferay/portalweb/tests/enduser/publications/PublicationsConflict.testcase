@@ -3,7 +3,7 @@ definition {
 
 	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
-	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
@@ -323,7 +323,7 @@ definition {
 			locator1 = "Message#SUCCESS",
 			value1 = "No unresolved conflicts, ready to publish.");
 
-		Publications.publishPublication(publicationName = "Revert &quot;Publication Name&quot;");
+		Publications.publishPublication(publicationName = "Revert \"Publication Name\"");
 
 		PublicationsNavigator.openPublicationsHistory();
 

@@ -2,7 +2,7 @@
 definition {
 
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
-	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Document Management";

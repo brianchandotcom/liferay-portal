@@ -118,7 +118,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "The folder name cannot contain the following invalid characters: \ // : * ? &quot; < > | ../ /...");
+				value1 = "The folder name cannot contain the following invalid characters: \ // : * ? \" < > | ../ /...");
 		}
 		else {
 			Alert.viewSuccessMessage();

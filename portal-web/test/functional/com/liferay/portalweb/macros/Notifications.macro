@@ -210,7 +210,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Notifications#NOTIFICATIONS_TITLE",
-				value1 = "in the &quot;Content Page Name&quot; page.");
+				value1 = "in the \"Content Page Name\" page.");
 		}
 		else if (isSet(mentioned)) {
 			AssertTextEquals.assertPartialText(

@@ -848,7 +848,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "11 Results for &quot;Test&quot;");
+				value1 = "11 Results for \"Test\"");
 		}
 	}
 

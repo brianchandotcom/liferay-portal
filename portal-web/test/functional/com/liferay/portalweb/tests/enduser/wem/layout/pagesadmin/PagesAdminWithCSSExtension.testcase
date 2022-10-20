@@ -107,7 +107,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 		}
 
 		task ("Given a site designer has a content page template") {
@@ -157,7 +157,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 		}
 
 		task ("When the site designer accesses to Look and Feel settings of Pages") {
@@ -211,7 +211,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 
 			AssertCssValue(
 				locator1 = "//body",
@@ -275,7 +275,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 		}
 
 		task ("Then the site designer could change the CSS extension of content page") {
@@ -307,7 +307,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -339,7 +339,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+				value1 = "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"");
 
 			AssertCssValue(
 				locator1 = "//body",
@@ -413,7 +413,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+				value1 = "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"");
 		}
 	}
 
@@ -583,7 +583,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -645,7 +645,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//body",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 
 			AssertCssValue(
 				locator1 = "//body",

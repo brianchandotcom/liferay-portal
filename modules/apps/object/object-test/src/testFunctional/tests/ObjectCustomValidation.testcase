@@ -2590,7 +2590,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == \"Invalid Entry\")");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
@@ -2697,7 +2697,7 @@ definition {
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == &quot;Invalid Entry&quot;)");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == \"Invalid Entry\")");
 
 		Button.clickSave();
 

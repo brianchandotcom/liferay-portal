@@ -42,7 +42,7 @@ definition {
 	test AdvancedFileSystemStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore";
 		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config";
-		property osgi.module.configurations = "rootDir=&quot;data/document_library1&quot;";
+		property osgi.module.configurations = "rootDir=\"data/document_library1\"";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -233,7 +233,7 @@ definition {
 	test FileSystemStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore";
 		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration.config";
-		property osgi.module.configurations = "rootDir=&quot;data/document_library1&quot;";
+		property osgi.module.configurations = "rootDir=\"data/document_library1\"";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

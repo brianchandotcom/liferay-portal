@@ -21,9 +21,9 @@ definition {
 
 	@priority = "5"
 	test CanOverrideValueSetInConfigFile {
-		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;false&quot;";
+		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
-		property osgi.module.configurations = "articleCommentsEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueSetInConfigFile";
 
@@ -73,7 +73,7 @@ definition {
 
 	@priority = "4"
 	test CanOverrideValueWithoutConfigFile {
-		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;false&quot;";
+		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
 		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueWithoutConfigFile";
 
 		ApplicationsMenu.gotoPortlet(
@@ -96,7 +96,7 @@ definition {
 	@priority = "4"
 	test CanUpdateConfigValueViaUI {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
-		property osgi.module.configurations = "articleCommentsEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
 		property test.name.skip.portal.instance = "SystemSettings#CanUpdateConfigValueViaUI";
 
 		task ("Given assert the Article Comments Enabled is checked for web content in System Settings") {
@@ -178,7 +178,7 @@ definition {
 			Comments.viewNoComments(entryComment = "WC WebContent Content Comment");
 
 			var fileContent = SystemSettings.getConfigFileContent(configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
-			var expectedText = "articleCommentsEnabled=B&quot;false&quot;";
+			var expectedText = "articleCommentsEnabled=B\"false\"";
 
 			if (contains("${fileContent}", "${expectedText}")) {
 				echo("Config file shows updated value: ${expectedText}");

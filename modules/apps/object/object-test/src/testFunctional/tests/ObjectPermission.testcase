@@ -219,7 +219,7 @@ definition {
 	@priority = "5"
 	test CanDeleteSingleObjectEntryWithDeletePermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CanDeleteSingleObjectEntryWithDeletePermission";
@@ -597,7 +597,7 @@ definition {
 	@priority = "4"
 	test CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission";
 
@@ -859,7 +859,7 @@ definition {
 	@priority = "4"
 	test CannotUpdateOwnSingleObjectEntryWithoutPermissionsOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateOwnSingleObjectEntryWithoutPermissionsOwnerPermission";
 
@@ -939,7 +939,7 @@ definition {
 	@priority = "4"
 	test CannotUpdateOwnSingleObjectEntryWithoutUpdateOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateOwnSingleObjectEntryWithoutUpdateOwnerPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -1591,7 +1591,7 @@ definition {
 	@priority = "5"
 	test CanUpdateSingleObjectEntryPermissionsPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectEntryPermissionsPermission";
@@ -1679,7 +1679,7 @@ definition {
 	@priority = "5"
 	test CanUpdateSingleObjectEntryWithUpdatePermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectEntryWithUpdatePermission";
@@ -2113,7 +2113,7 @@ definition {
 	@priority = "5"
 	test CanViewSingleObjectEntryWithViewPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#CanViewSingleObjectEntryWithViewPermission";

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useEffect} from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 
 import useHeader from '../../hooks/useHeader';
@@ -32,7 +33,10 @@ const TestflowOutlet = () => {
 				title: i18n.translate('testflow'),
 			},
 		],
-		useTabs: [
+	});
+
+	useEffect(() => {
+		setTabs([
 			{
 				active: currentPathIsActive,
 				path: '/testflow',
@@ -43,8 +47,8 @@ const TestflowOutlet = () => {
 				path: '/testflow/archived',
 				title: i18n.translate('archived'),
 			},
-		],
-	});
+		]);
+	}, [archivedPathIsActive, currentPathIsActive, setTabs]);
 
 	return <Outlet context={{setDropdownIcon, setHeading, setTabs}} />;
 };

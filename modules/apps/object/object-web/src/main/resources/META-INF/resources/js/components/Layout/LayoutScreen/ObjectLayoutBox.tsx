@@ -96,7 +96,10 @@ export function ObjectLayoutBox({
 											boxIndex,
 											tabIndex,
 										},
-										type: TYPES.DELETE_OBJECT_LAYOUT_BOX,
+										type:
+											type === 'categorization'
+												? TYPES.DELETE_OBJECT_LAYOUT_BOX_CATEGORIZATION
+												: TYPES.DELETE_OBJECT_LAYOUT_BOX_CATEGORIZATION,
 									});
 								}}
 								disabled={disabled}

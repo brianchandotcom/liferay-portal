@@ -19,7 +19,6 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
 import com.liferay.commerce.discount.service.base.CommerceDiscountUsageEntryLocalServiceBaseImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -56,7 +55,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 			userId = 0;
 		}
 
-		long commerceDiscountUsageEntryId = _counterLocalService.increment();
+		long commerceDiscountUsageEntryId = counterLocalService.increment();
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
 			commerceDiscountUsageEntryPersistence.create(
@@ -195,9 +194,6 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 
 	@Reference
 	private CommerceDiscountPersistence _commerceDiscountPersistence;
-
-	@Reference
-	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

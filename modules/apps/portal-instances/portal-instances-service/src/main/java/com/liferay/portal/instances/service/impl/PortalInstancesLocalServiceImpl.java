@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -380,9 +379,6 @@ public class PortalInstancesLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private CompanyService _companyService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

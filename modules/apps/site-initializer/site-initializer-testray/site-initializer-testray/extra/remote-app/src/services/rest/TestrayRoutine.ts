@@ -42,14 +42,14 @@ class TestrayRoutineImpl extends Rest<RoutineFormType, TestrayRoutine> {
 			searchBuilder.ne('id', id).and();
 		}
 
-		const filters = searchBuilder
+		const filter = searchBuilder
 			.eq('name', routine.name)
 			.and()
 			.eq('projectId', routine.projectId)
 			.build();
 
 		const response = await this.fetcher<APIResponse<TestrayRoutine>>(
-			`/routines?filter=${filters}`
+			`/routines?filter=${filter}`
 		);
 
 		if (response?.totalCount) {

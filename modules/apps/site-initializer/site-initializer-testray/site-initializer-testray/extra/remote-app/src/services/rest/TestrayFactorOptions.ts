@@ -42,6 +42,7 @@ class TestrayFactorOptionsImpl extends Rest<FactorOption, TestrayFactorOption> {
 			uri: 'factoroptions',
 		});
 	}
+
 	protected async validate(factorOption: FactorOption, id?: number) {
 		const searchBuilder = new SearchBuilder();
 
@@ -49,10 +50,10 @@ class TestrayFactorOptionsImpl extends Rest<FactorOption, TestrayFactorOption> {
 			searchBuilder.ne('id', id).and();
 		}
 
-		const filters = searchBuilder.eq('name', factorOption.name).build();
+		const filter = searchBuilder.eq('name', factorOption.name).build();
 
 		const response = await this.fetcher<APIResponse<TestrayFactorOption>>(
-			`/factoroptions?filter=${filters}`
+			`/factoroptions?filter=${filter}`
 		);
 
 		if (response?.totalCount) {

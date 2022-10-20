@@ -61,6 +61,7 @@ class TestrayFactorCategoryRest extends Rest<
 			`/${this.uri}/${factorCategoryId}/factorCategoryToOptions?fields=id,name&pageSize=1000`
 		);
 	}
+
 	protected async validate(factorCategory: FactorCategory, id?: number) {
 		const searchBuilder = new SearchBuilder();
 
@@ -68,10 +69,10 @@ class TestrayFactorCategoryRest extends Rest<
 			searchBuilder.ne('id', id).and();
 		}
 
-		const filters = searchBuilder.eq('name', factorCategory.name).build();
+		const filter = searchBuilder.eq('name', factorCategory.name).build();
 
 		const response = await this.fetcher<APIResponse<TestrayFactorCategory>>(
-			`/factorcategories?filter=${filters}`
+			`/factorcategories?filter=${filter}`
 		);
 
 		if (response?.totalCount) {

@@ -29,29 +29,34 @@ class TestrayCaseTypeImpl extends Rest<CaseType, TestrayCaseType> {
 			uri: 'casetypes',
 		});
 	}
-	protected async validate(suite: CaseType, id?: number) {
+
+	protected async validate(caseType: CaseType, id?: number) {
 		const searchBuilder = new SearchBuilder();
 
 		if (id) {
 			searchBuilder.ne('id', id).and();
 		}
 
-		const filters = searchBuilder.eq('name', suite.name).build();
+		const filter = searchBuilder.eq('name', caseType.name).build();
 
 		const response = await this.fetcher<APIResponse<TestrayCaseType>>(
-			`/casetypes?filter=${filters}`
+			`/casetypes?filter=${filter}`
 		);
 
 		if (response?.totalCount) {
 			throw new Error(i18n.sub('the-x-name-already-exists', 'case-type'));
 		}
 	}
-	protected async beforeCreate(suite: CaseType): Promise<void> {
-		await this.validate(suite);
+
+	protected async beforeCreate(caseType: CaseType): Promise<void> {
+		await this.validate(caseType);
 	}
 
-	protected async beforeUpdate(id: number, suite: CaseType): Promise<void> {
-		await this.validate(suite, id);
+	protected async beforeUpdate(
+		id: number,
+		caseType: CaseType
+	): Promise<void> {
+		await this.validate(caseType, id);
 	}
 }
 

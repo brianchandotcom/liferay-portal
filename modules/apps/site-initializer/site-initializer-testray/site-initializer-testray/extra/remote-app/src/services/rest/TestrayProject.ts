@@ -35,10 +35,10 @@ class TestrayProjectImpl extends Rest<Project, TestrayProject> {
 			searchBuilder.ne('id', id).and();
 		}
 
-		const filters = searchBuilder.eq('name', project.name).and().build();
+		const filter = searchBuilder.eq('name', project.name).and().build();
 
 		const response = await this.fetcher<APIResponse<TestrayProject>>(
-			`/projects?filter=${filters}`
+			`/projects?filter=${filter}`
 		);
 
 		if (response?.totalCount) {
@@ -68,6 +68,7 @@ class TestrayProjectImpl extends Rest<Project, TestrayProject> {
 		}
 	}
 }
+
 const testrayProjectImpl = new TestrayProjectImpl();
 
 export {testrayProjectImpl};

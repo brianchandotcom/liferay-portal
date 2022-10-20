@@ -63,6 +63,7 @@ class TestrayCaseRest extends Rest<Case, TestrayCase> {
 			uri: 'cases',
 		});
 	}
+
 	protected async validate(Case: Case, id?: number) {
 		const searchBuilder = new SearchBuilder();
 
@@ -84,6 +85,7 @@ class TestrayCaseRest extends Rest<Case, TestrayCase> {
 			throw new Error(i18n.sub('the-x-name-already-exists', 'case'));
 		}
 	}
+
 	protected async beforeCreate(Case: Case): Promise<void> {
 		await this.validate(Case);
 	}

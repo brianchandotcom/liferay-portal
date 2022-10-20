@@ -12,9 +12,11 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
+import {SearchBuilder, searchUtil} from '../../util/search';
 import Rest from './Rest';
-import {TestrayTask} from './types';
+import {APIResponse, TestrayTask} from './types';
 
 type TaskForm = typeof yupSchema.task.__outputType & {projectId: number};
 
@@ -52,6 +54,38 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask> {
 			}),
 			uri: 'tasks',
 		});
+	}
+
+	public getTasksByBuildId(buildId: number) {
+		return this.fetcher<APIResponse<TestrayTask>>(
+			`/tasks?filter=${searchUtil.eq('buildId', buildId)}`
+		);
+	}
+
+	protected async validate(task: TaskForm, id?: number) {
+		const searchBuilder = new SearchBuilder();
+
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
+
+		const filter = searchBuilder.eq('name', task.name).build();
+
+		const response = await this.fetcher<APIResponse<TestrayTask>>(
+			`/tasks?filter=${filter}`
+		);
+
+		if (response?.totalCount) {
+			throw new Error(i18n.sub('the-x-name-already-exists', 'tasks'));
+		}
+	}
+
+	protected async beforeCreate(task: TaskForm): Promise<void> {
+		await this.validate(task);
+	}
+
+	protected async beforeUpdate(id: number, task: TaskForm): Promise<void> {
+		await this.validate(task, id);
 	}
 }
 export const testrayTaskImpl = new TestrayTaskImpl();

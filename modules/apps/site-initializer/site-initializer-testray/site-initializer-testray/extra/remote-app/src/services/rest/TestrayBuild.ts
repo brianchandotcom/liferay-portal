@@ -164,7 +164,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			searchBuilder.ne('id', id).and();
 		}
 
-		const filters = searchBuilder
+		const filter = searchBuilder
 			.eq('name', build.name)
 			.and()
 			.eq('projectId', build.projectId)
@@ -173,7 +173,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			.build();
 
 		const response = await this.fetcher<APIResponse<TestrayBuild>>(
-			`/builds?filter=${filters}`
+			`/builds?filter=${filter}`
 		);
 
 		if (response?.totalCount) {

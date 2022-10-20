@@ -77,6 +77,44 @@ definition {
 
 	}
 
+	@description = "LPS-158741: Upgrade Report provides the initial, final, and expected portal build number"
+	@priority = "3"
+	test BuildNumberLogged {
+		property skip.start.app.server = "true";
+		property test.name.skip.portal.instance = "UpgradeReport#BuildNumberLogged";
+		property testcase.url = "http://www.example.com";
+
+		task ("Look for the upgrade report") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
+
+			echo("${fileContent}");
+		}
+
+		task ("Read the intial portal build number") {
+			if (!(contains("${fileContent}", "Initial portal build number: 7413"))) {
+				fail("Inital portal build number is not present in upgrade report.");
+			}
+		}
+
+		task ("Read the final portal build number") {
+			var finalBuildVersion = Upgrade.getBuildNumber();
+
+			if (!(contains("${fileContent}", "Final portal build number: ${finalBuildVersion}"))) {
+				fail("Final portal build number is not present in upgrade report.");
+			}
+		}
+
+		task ("Read the expected portal build number") {
+			var expectedBuildVersion = Upgrade.getBuildNumber();
+
+			if (!(contains("${fileContent}", "Expected portal build number: ${expectedBuildVersion}"))) {
+				fail("Expected portal build number is not present in upgrade report.");
+			}
+		}
+	}
+
 	@description = "LPS-154683: Upgrade Report is created when property is set to true"
 	@priority = "4"
 	test ReportGeneratedWhenEnabled {

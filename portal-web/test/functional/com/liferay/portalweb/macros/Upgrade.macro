@@ -1771,14 +1771,16 @@ definition {
 		}
 	}
 
-	macro getDatabaseVersion {
+	macro getBuildNumber {
 		var mysqlStatement = "SELECT buildNumber FROM Release_ WHERE servletContextName='portal';";
 
-		var databaseVersion = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
 
-		echo("## * Database Version is: ${databaseVersion}");
+		var portalBuildNumber = StringUtil.regexReplaceAll("${sqlResults}", "[buildNumber\n]", "");
 
-		return "${databaseVersion}";
+		echo("## * Build Number is: ${portalBuildNumber}");
+
+		return "${portalBuildNumber}";
 	}
 
 	macro ignore404URLs {

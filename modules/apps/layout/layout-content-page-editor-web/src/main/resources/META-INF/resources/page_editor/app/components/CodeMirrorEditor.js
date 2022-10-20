@@ -53,7 +53,9 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/xml/xml';
 import classNames from 'classnames';
 import CodeMirror from 'codemirror';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+
+import CodeMirrorKeyboardMessage from '../../common/components/CodeMirrorKeyboardMessage';
 
 const noop = () => {};
 
@@ -63,6 +65,8 @@ const CodeMirrorEditor = ({
 	mode = 'text/html',
 	onChange = noop,
 }) => {
+	const [isEnabled, setIsEnabled] = useState(true);
+	const [isFocused, setIsFocused] = useState(false);
 	const ref = useRef();
 
 	useEffect(() => {
@@ -75,7 +79,11 @@ const CodeMirrorEditor = ({
 				autoRefresh: true,
 				extraKeys: {
 					'Ctrl-M'(cm) {
-						if (hasEnabledTabKey(cm)) {
+						const tabKeyIsEnabled = hasEnabledTabKey(cm);
+
+						setIsEnabled(tabKeyIsEnabled);
+
+						if (tabKeyIsEnabled) {
 							cm.addKeyMap({
 								'Shift-Tab': false,
 								'Tab': false,
@@ -107,6 +115,8 @@ const CodeMirrorEditor = ({
 			codeMirror.setSize(null, '100%');
 
 			codeMirror.on('focus', (cm) => {
+				setIsFocused(true);
+
 				if (hasEnabledTabKey(cm)) {
 					cm.addKeyMap({
 						'Shift-Tab': false,
@@ -115,11 +125,21 @@ const CodeMirrorEditor = ({
 					});
 				}
 			});
+
+			codeMirror.on('blur', () => setIsFocused(false));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <div className={classNames(className, 'h-100')} ref={ref} />;
+	return (
+		<div className="h-100 position-relative">
+			{isFocused ? (
+				<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
+			) : null}
+
+			<div className={classNames(className, 'h-100')} ref={ref} />
+		</div>
+	);
 };
 
 export default CodeMirrorEditor;

@@ -101,6 +101,7 @@ definition {
 	test RequestKeywordsUsingNoParameters {
 		var keyword1 = "without optional parameters 1";
 		var keyword2 = "without optional parameters 2";
+
 		var keywordList = "${keyword1},${keyword2}";
 
 		task ("Go to Server Administration") {
@@ -144,8 +145,8 @@ definition {
 
 		task ("Assert response returns keyword") {
 			ACApi.assertSearchResponse(
-				keywordPosition = "1",
-				expected = "${keyword2}");
+				expected = "${keyword2}",
+				keywordPosition = "1");
 		}
 	}
 
@@ -155,6 +156,7 @@ definition {
 		var keyword1 = "with size parameters 1";
 		var keyword2 = "with size parameters 2";
 		var keyword3 = "with size parameters 3";
+
 		var keywordList = "${keyword1},${keyword2},${keyword3}";
 		var size = "2";
 
@@ -200,14 +202,14 @@ definition {
 
 		task ("Assert response returns keyword") {
 			ACApi.assertSearchResponse(
-				keywordPosition = "1",
-				expected = "${keyword2}");
+				expected = "${keyword2}",
+				keywordPosition = "1");
 		}
 
 		task ("Assert response does not return keyword") {
 			ACApi.assertSearchKeywordNotPresent(
-				keywordPosition = "2",
-				expected = "${keyword3}");
+				expected = "${keyword3}",
+				keywordPosition = "2");
 		}
 	}
 

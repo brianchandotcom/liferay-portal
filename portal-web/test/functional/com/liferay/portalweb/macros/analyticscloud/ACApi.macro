@@ -1,17 +1,5 @@
 definition {
 
-	macro assertSearchResponse {
-		if (!(isSet(keywordPosition))) {
-			var keywordPosition = "0";
-		}
-
-		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
-
-		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expected}");
-	}
-
 	macro assertSearchKeywordNotPresent {
 		if (!(isSet(keywordPosition))) {
 			var keywordPosition = "0";
@@ -20,6 +8,18 @@ definition {
 		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
 
 		TestUtils.assertNotEquals(
+			actual = "${actual}",
+			expected = "${expected}");
+	}
+
+	macro assertSearchResponse {
+		if (!(isSet(keywordPosition))) {
+			var keywordPosition = "0";
+		}
+
+		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
+
+		TestUtils.assertEquals(
 			actual = "${actual}",
 			expected = "${expected}");
 	}

@@ -62,7 +62,7 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "content-display";
+		return "menu-display";
 	}
 
 	@Override

@@ -130,7 +130,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task ("I generate a new key") {
+		task ("And I go to generate a new key") {
 			CP2ActivationKeys.generateNewKey();
 		}
 
@@ -152,11 +152,11 @@ definition {
 			CustomerPortal.clickAtButton(text = "Next");
 		}
 
-		task ("And The Generate button should be deactivated") {
+		task ("Then The Generate button should be deactivated") {
 			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
 		}
 
-		task ("And I fulfill the Environment and Host name fields") {
+		task ("And when fulfill the Environment and Host name fields") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
 				content = "Environment Test Name",
 				field = "Environment Name");

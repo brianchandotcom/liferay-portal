@@ -1406,6 +1406,10 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
+		Organization.openOrganizationsAdmin();
+
+		Organization.gotoEdit(orgName = "Organization Name");
+
 		Navigator.gotoNavTab(navTab = "Contact");
 
 		Organization.addContactInformation(

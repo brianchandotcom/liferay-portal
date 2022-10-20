@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>REMOVE_URL_ROW</td>
-	<td>//ancestor::div[@class='lfr-form-rows']//div[(@class='lfr-form-row')][${key_index}]//button[contains(@class,'btn btn-icon-only btn-monospaced btn-primary delete-row toolbar-item toolbar-last')]</td>
+	<td>//*[(@class='lfr-form-row')][${key_index}]//button[contains(@class,'delete-row')]</td>
 	<td></td>
 </tr>
 <tr>

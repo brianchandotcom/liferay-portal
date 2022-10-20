@@ -148,10 +148,9 @@ definition {
 		}
 
 		task ("And Then repeatable button - (minus) is not present") {
-			IsNotVisible(
-				key_fieldLabelName = "URL",
+			AssertNotVisible(
 				key_index = "1",
-				locator1 = "RemoteAppsEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
+				locator1 = "RemoteAppsEntry#REMOVE_URL_ROW");
 		}
 	}
 

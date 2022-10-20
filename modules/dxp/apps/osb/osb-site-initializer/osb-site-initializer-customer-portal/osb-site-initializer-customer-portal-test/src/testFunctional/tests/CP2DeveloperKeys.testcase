@@ -45,41 +45,41 @@ definition {
 
 	@description = "Automation ID: LPS-146189 | Test Summary: Verify that clicking the 'Download Key' button downloads an xml file."
 	@ignore = "true"
-    @priority = "5"
-    test CanViewDownloadsXmlFile {
-		
+	@priority = "5"
+	test CanViewDownloadsXmlFile {
+
 		// Needs refactor since it depends on example FIFA account
 
-        task ("Signs in OKTA to update and go to Customer Portal") {
-            CustomerPortal.loginOktaToUpdateCP();
+		task ("Signs in OKTA to update and go to Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
-            Navigator.openURL();
-            
-            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-        }
+			Navigator.openURL();
 
-        task ("Select a project and go to activation page") {
-            CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
 
-            CP2NavigationMenu.goToProductActivation();
+		task ("Select a project and go to activation page") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
 
-            CP2NavigationMenu.clickOnProductButton(product = "DXP");
-        }
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
 
 		task ("View keys details and click in Download key") {
-            CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Test2");
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Test2");
 
-            CustomerPortal.clickAtButton(text = "Download Key");
-        }
+			CustomerPortal.clickAtButton(text = "Download Key");
+		}
 
 		task ("Assest the success message and the file as downloaded") {
-            Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
 
-            CP2Utils.closeModal();
+			CP2Utils.closeModal();
 
-            CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.3-2022fifaworldcupqatar-fanid.xml");
-        }
-    }
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.3-2022fifaworldcupqatar-fanid.xml");
+		}
+	}
 
 	@description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
 	@priority = "4"

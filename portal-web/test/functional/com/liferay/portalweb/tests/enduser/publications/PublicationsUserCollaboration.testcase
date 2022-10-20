@@ -156,6 +156,8 @@ definition {
 
 	@priority = "5"
 	test InviteUserAsAdmin {
+		property portal.acceptance = "true";
+
 		for (var userNumber : list "1,2") {
 			JSONUser.addUser(
 				userEmailAddress = "userea${userNumber}@liferay.com",

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author André de Oliveira
  */
-public class ScopeSearchFacetTermDisplayContext {
+public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 
 	public int getCount() {
 		return _count;
@@ -31,10 +31,6 @@ public class ScopeSearchFacetTermDisplayContext {
 
 	public long getGroupId() {
 		return _groupId;
-	}
-
-	public boolean isSelected() {
-		return _selected;
 	}
 
 	public boolean isShowCount() {
@@ -53,10 +49,6 @@ public class ScopeSearchFacetTermDisplayContext {
 		_groupId = groupId;
 	}
 
-	public void setSelected(boolean selected) {
-		_selected = selected;
-	}
-
 	public void setShowCount(boolean showCount) {
 		_showCount = showCount;
 	}
@@ -64,7 +56,6 @@ public class ScopeSearchFacetTermDisplayContext {
 	private int _count;
 	private String _descriptiveName;
 	private long _groupId;
-	private boolean _selected;
 	private boolean _showCount;
 
 }

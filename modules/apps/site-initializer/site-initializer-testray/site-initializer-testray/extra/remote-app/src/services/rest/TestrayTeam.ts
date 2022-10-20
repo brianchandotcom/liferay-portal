@@ -51,7 +51,7 @@ class TestrayTeamImpl extends Rest<Team, TestrayTeam> {
 			.build();
 
 		const response = await this.fetcher<APIResponse<TestrayTeam>>(
-			`/components?filter=${filter}`
+			`/teams?filter=${filter}`
 		);
 
 		if (response?.items?.length) {

@@ -19,6 +19,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -127,6 +128,34 @@ public class AccountEntryUserRelServiceImpl
 
 		accountEntryUserRelLocalService.deleteAccountEntryUserRels(
 			accountEntryId, accountUserIds);
+	}
+
+	/**
+	 * Invites users to the account by email address. If the email address is
+	 * associated with a registered user, the user will be added to the account
+	 * immediately. Otherwise, an email will be sent to the user to sign up.
+	 * The user will be added to the account upon registration.
+	 *
+	 * @param accountEntryId the primary key of the account
+	 * @param accountRoleIds the primary keys of the account roles that will be
+	 *                          assigned to the user
+	 * @param emailAddress the invited user's email address
+	 * @param inviter the user that makes the invitation request
+	 * @param serviceContext the service context to be applied. Can set the
+	 *                       request used to send the invitation email
+	 */
+	@Override
+	public void inviteUser(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		accountEntryUserRelLocalService.inviteUser(
+			accountEntryId, accountRoleIds, emailAddress, inviter,
+			serviceContext);
 	}
 
 	@Override

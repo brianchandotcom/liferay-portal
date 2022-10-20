@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -123,6 +124,10 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		_assetDisplayPageEntryFormProcessor.process(
+			KBArticle.class.getName(), kbArticle.getKbArticleId(),
+			actionRequest);
+
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction");
 
@@ -226,6 +231,10 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		return redirect;
 	}
+
+	@Reference
+	private AssetDisplayPageEntryFormProcessor
+		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
 	private KBArticleService _kbArticleService;

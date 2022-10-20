@@ -21,6 +21,8 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -67,6 +69,14 @@ public class ObjectFieldDTOConverter
 				indexedLanguageId = objectField.getIndexedLanguageId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectField.getLabelMap());
+
+				if (!GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-164278"))) {
+
+					listTypeDefinitionId =
+						objectField.getListTypeDefinitionId();
+				}
+
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
@@ -81,19 +91,24 @@ public class ObjectFieldDTOConverter
 				system = objectField.getSystem();
 				type = ObjectField.Type.create(objectField.getDBType());
 
-				setListTypeDefinitionExternalReferenceCode(
-					() -> {
-						if (objectField.getListTypeDefinitionId() == 0) {
-							return StringPool.BLANK;
-						}
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-164278"))) {
 
-						ListTypeDefinition listTypeDefinition =
-							_listTypeDefinitionLocalService.
-								fetchListTypeDefinition(
-									objectField.getListTypeDefinitionId());
+					setListTypeDefinitionExternalReferenceCode(
+						() -> {
+							if (objectField.getListTypeDefinitionId() == 0) {
+								return StringPool.BLANK;
+							}
 
-						return listTypeDefinition.getExternalReferenceCode();
-					});
+							ListTypeDefinition listTypeDefinition =
+								_listTypeDefinitionLocalService.
+									fetchListTypeDefinition(
+										objectField.getListTypeDefinitionId());
+
+							return listTypeDefinition.
+								getExternalReferenceCode();
+						});
+				}
 			}
 		};
 	}

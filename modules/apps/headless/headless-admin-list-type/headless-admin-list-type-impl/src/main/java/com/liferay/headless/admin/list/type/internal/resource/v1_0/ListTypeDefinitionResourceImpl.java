@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -131,6 +133,13 @@ public class ListTypeDefinitionResourceImpl
 			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) &&
+			Validator.isNotNull(
+				listTypeDefinition.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.updateListTypeDefinition(
 				listTypeDefinition.getExternalReferenceCode(),
@@ -203,8 +212,15 @@ public class ListTypeDefinitionResourceImpl
 				dateCreated = serviceBuilderListTypeDefinition.getCreateDate();
 				dateModified =
 					serviceBuilderListTypeDefinition.getModifiedDate();
-				externalReferenceCode =
-					serviceBuilderListTypeDefinition.getExternalReferenceCode();
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-164278"))) {
+
+					externalReferenceCode =
+						serviceBuilderListTypeDefinition.
+							getExternalReferenceCode();
+				}
+
 				id = serviceBuilderListTypeDefinition.getListTypeDefinitionId();
 				listTypeEntries = transformToArray(
 					_listTypeEntryLocalService.getListTypeEntries(

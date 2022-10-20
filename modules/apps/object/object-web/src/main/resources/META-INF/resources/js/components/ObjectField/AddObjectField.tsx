@@ -66,7 +66,9 @@ function ModalAddObjectField({
 					toCamelCase(field.label[defaultLanguageId] as string),
 			};
 
-			delete field.listTypeDefinitionId;
+			if (Liferay.FeatureFlags['LPS-164278']) {
+				delete field.listTypeDefinitionId;
+			}
 
 			try {
 				await API.save(apiURL, field, 'POST');

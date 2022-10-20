@@ -14,10 +14,14 @@
 
 package com.liferay.notification.context;
 
+import com.liferay.notification.model.NotificationRecipient;
+import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +48,35 @@ public class NotificationContext {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public NotificationRecipient getNotificationRecipient() {
+		return _notificationRecipient;
+	}
+
+	public List<NotificationRecipientSetting>
+		getNotificationRecipientSettings() {
+
+		return _notificationRecipientSettings;
+	}
+
+	public Map<String, Object> getNotificationRecipientSettingsMap() {
+		Map<String, Object> notificationRecipientSettingsMap = new HashMap<>();
+
+		for (NotificationRecipientSetting notificationRecipientSetting :
+				getNotificationRecipientSettings()) {
+
+			Object value = notificationRecipientSetting.getValue();
+
+			if (Validator.isXml(notificationRecipientSetting.getValue())) {
+				value = notificationRecipientSetting.getValueMap();
+			}
+
+			notificationRecipientSettingsMap.put(
+				notificationRecipientSetting.getName(), value);
+		}
+
+		return notificationRecipientSettingsMap;
 	}
 
 	public NotificationTemplate getNotificationTemplate() {
@@ -80,6 +113,18 @@ public class NotificationContext {
 		_classPK = classPK;
 	}
 
+	public void setNotificationRecipient(
+		NotificationRecipient notificationRecipient) {
+
+		_notificationRecipient = notificationRecipient;
+	}
+
+	public void setNotificationRecipientSettings(
+		List<NotificationRecipientSetting> notificationRecipientSettings) {
+
+		_notificationRecipientSettings = notificationRecipientSettings;
+	}
+
 	public void setNotificationTemplate(
 		NotificationTemplate notificationTemplate) {
 
@@ -102,6 +147,8 @@ public class NotificationContext {
 	private Map<String, Serializable> _attributes;
 	private String _className;
 	private long _classPK;
+	private NotificationRecipient _notificationRecipient;
+	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;
 	private Map<String, Object> _termValues;
 	private String _type;

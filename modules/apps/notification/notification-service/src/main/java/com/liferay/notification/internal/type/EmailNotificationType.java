@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -77,7 +76,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -337,24 +335,10 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		super.validateNotificationTemplate(notificationContext);
 
-		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
+		Map<String, Object> notificationRecipientSettingsMap =
+			notificationContext.getNotificationRecipientSettingsMap();
 
-		NotificationRecipient notificationRecipient =
-			notificationTemplate.getNotificationRecipient();
-
-		List<NotificationRecipientSetting>
-			notificationTemplateRecipientSettings = ListUtil.filter(
-				notificationRecipient.getNotificationRecipientSettings(),
-				notificationTemplateRecipientSetting -> Objects.equals(
-					notificationTemplateRecipientSetting.getName(), "from"));
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			notificationTemplateRecipientSettings.get(0);
-
-		if (!Objects.equals(notificationRecipientSetting.getName(), "from") ||
-			Validator.isNull(notificationRecipientSetting.getValue())) {
-
+		if (Validator.isNull(notificationRecipientSettingsMap.get("from"))) {
 			throw new NotificationTemplateFromException("From is null");
 		}
 	}

@@ -49,7 +49,7 @@ definition {
 				-d type=${organizationType} \
 				-d regionId=${regionId} \
 				-d countryId=${countryId} \
-				-d statusId=12017 \
+				-d statusListTypeId=12017 \
 				-d comments= \
 				-d site=${organizationSite}
 		''';

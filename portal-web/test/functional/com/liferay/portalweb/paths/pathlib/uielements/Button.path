@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLED_BUTTON_SPECIFIC</td>
+	<td>//button[normalize-space()='${key_text}' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ADDRESS</td>
 	<td>//a[contains(@class,'add-address')]</td>
 	<td></td>

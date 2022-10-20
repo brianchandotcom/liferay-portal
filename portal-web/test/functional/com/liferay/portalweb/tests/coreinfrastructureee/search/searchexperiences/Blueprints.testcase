@@ -3588,7 +3588,13 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "Element Source (JSON) is invalid.");
 
-		AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");		
+		AssertElementPresent(
+			key_text = "Done",
+			locator1 = "Button#DISABLED_BUTTON_SPECIFIC");
+
+		Button.clickDone();
+
+		Alert.viewErrorMessage(errorMessage = "Element Source (JSON) is invalid.");
 
 		Button.clickCancel();
 

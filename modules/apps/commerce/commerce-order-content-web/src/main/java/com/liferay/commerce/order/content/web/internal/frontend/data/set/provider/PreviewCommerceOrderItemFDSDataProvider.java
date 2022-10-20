@@ -25,7 +25,6 @@ import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
-import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -340,9 +339,6 @@ public class PreviewCommerceOrderItemFDSDataProvider
 	@Reference
 	private CommerceOrderImporterTypeRegistry
 		_commerceOrderImporterTypeRegistry;
-
-	@Reference
-	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

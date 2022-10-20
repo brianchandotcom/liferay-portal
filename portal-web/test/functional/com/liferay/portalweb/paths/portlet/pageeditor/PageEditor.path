@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_ACTIVE_LABEL_VIEW_DROPDOWN</td>
-	<td>//*[contains(@class, 'dropdown-item')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
+	<td>//*[contains(@class, 'dropdown-item')][contains(.,'${key_experienceName}')]//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -410,7 +410,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_INACTIVE_LABEL_VIEW_DROPDOWN</td>
-	<td>//*[contains(@class, 'dropdown-item')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
+	<td>//*[contains(@class, 'dropdown-item')][contains(.,'${key_experienceName}')]//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 <tr>

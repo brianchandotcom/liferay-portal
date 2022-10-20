@@ -16,8 +16,11 @@ package com.liferay.notification.model.impl;
 
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationRecipientSettingLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -29,6 +32,25 @@ public class NotificationRecipientImpl extends NotificationRecipientBaseImpl {
 
 		return NotificationRecipientSettingLocalServiceUtil.
 			getNotificationRecipientSettings(getNotificationRecipientId());
+	}
+
+	public Map<String, Object> getNotificationRecipientSettingsMap() {
+		Map<String, Object> notificationRecipientSettingsMap = new HashMap<>();
+
+		for (NotificationRecipientSetting notificationRecipientSetting :
+				getNotificationRecipientSettings()) {
+
+			Object value = notificationRecipientSetting.getValue();
+
+			if (Validator.isXml(notificationRecipientSetting.getValue())) {
+				value = notificationRecipientSetting.getValueMap();
+			}
+
+			notificationRecipientSettingsMap.put(
+				notificationRecipientSetting.getName(), value);
+		}
+
+		return notificationRecipientSettingsMap;
 	}
 
 }

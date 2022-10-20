@@ -127,7 +127,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		<div class="sidebar-body">
 
 			<%
-			String tabs1Names = "properties,usages";
+			String tabs1Names = "properties,usages,history";
 
 			if ((article == null) || (journalEditArticleDisplayContext.getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 				tabs1Names = "properties";
@@ -153,6 +153,13 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						<liferay-layout:layout-classed-model-usages-view
 							className="<%= JournalArticle.class.getName() %>"
 							classPK="<%= article.getResourcePrimKey() %>"
+						/>
+					</liferay-ui:section>
+
+					<liferay-ui:section>
+						<liferay-change-tracking:timeline
+							className="<%= JournalArticle.class.getName() %>"
+							classPK="<%= article.getPrimaryKey() %>"
 						/>
 					</liferay-ui:section>
 				</c:if>

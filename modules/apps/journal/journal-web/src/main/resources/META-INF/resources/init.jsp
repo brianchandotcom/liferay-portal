@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/change-tracking" prefix="liferay-change-tracking" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/data-engine" prefix="liferay-data-engine" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@

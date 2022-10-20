@@ -233,20 +233,6 @@ public interface NotificationRecipientModel
 	 */
 	public void setClassName(String className);
 
-	/**
-	 * Returns the notification template ID of this notification recipient.
-	 *
-	 * @return the notification template ID of this notification recipient
-	 */
-	public long getNotificationTemplateId();
-
-	/**
-	 * Sets the notification template ID of this notification recipient.
-	 *
-	 * @param notificationTemplateId the notification template ID of this notification recipient
-	 */
-	public void setNotificationTemplateId(long notificationTemplateId);
-
 	@Override
 	public NotificationRecipient cloneWithOriginalValues();
 

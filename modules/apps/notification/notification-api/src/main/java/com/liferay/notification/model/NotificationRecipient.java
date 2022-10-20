@@ -60,4 +60,9 @@ public interface NotificationRecipient
 
 			};
 
+	public java.util.List<NotificationRecipientSetting>
+		getNotificationRecipientSettings();
+
+	public java.util.Map<String, Object> getNotificationRecipientSettingsMap();
+
 }

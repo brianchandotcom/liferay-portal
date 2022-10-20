@@ -62,10 +62,6 @@ public class NotificationRecipientTable
 	public final Column<NotificationRecipientTable, String> className =
 		createColumn(
 			"className", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationRecipientTable, Long>
-		notificationTemplateId = createColumn(
-			"notificationTemplateId", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
 
 	private NotificationRecipientTable() {
 		super("NotificationRecipient", NotificationRecipientTable::new);

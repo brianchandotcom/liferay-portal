@@ -55,7 +55,6 @@ public class NotificationRecipientWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classPK", getClassPK());
 		attributes.put("className", getClassName());
-		attributes.put("notificationTemplateId", getNotificationTemplateId());
 
 		return attributes;
 	}
@@ -121,13 +120,6 @@ public class NotificationRecipientWrapper
 
 		if (className != null) {
 			setClassName(className);
-		}
-
-		Long notificationTemplateId = (Long)attributes.get(
-			"notificationTemplateId");
-
-		if (notificationTemplateId != null) {
-			setNotificationTemplateId(notificationTemplateId);
 		}
 	}
 
@@ -206,14 +198,16 @@ public class NotificationRecipientWrapper
 		return model.getNotificationRecipientId();
 	}
 
-	/**
-	 * Returns the notification template ID of this notification recipient.
-	 *
-	 * @return the notification template ID of this notification recipient
-	 */
 	@Override
-	public long getNotificationTemplateId() {
-		return model.getNotificationTemplateId();
+	public java.util.List<NotificationRecipientSetting>
+		getNotificationRecipientSettings() {
+
+		return model.getNotificationRecipientSettings();
+	}
+
+	@Override
+	public Map<String, Object> getNotificationRecipientSettingsMap() {
+		return model.getNotificationRecipientSettingsMap();
 	}
 
 	/**
@@ -339,16 +333,6 @@ public class NotificationRecipientWrapper
 	@Override
 	public void setNotificationRecipientId(long notificationRecipientId) {
 		model.setNotificationRecipientId(notificationRecipientId);
-	}
-
-	/**
-	 * Sets the notification template ID of this notification recipient.
-	 *
-	 * @param notificationTemplateId the notification template ID of this notification recipient
-	 */
-	@Override
-	public void setNotificationTemplateId(long notificationTemplateId) {
-		model.setNotificationTemplateId(notificationTemplateId);
 	}
 
 	/**

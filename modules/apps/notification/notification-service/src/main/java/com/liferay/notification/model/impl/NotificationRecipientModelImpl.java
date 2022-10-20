@@ -76,8 +76,7 @@ public class NotificationRecipientModelImpl
 		{"notificationRecipientId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classPK", Types.BIGINT}, {"className", Types.VARCHAR},
-		{"notificationTemplateId", Types.BIGINT}
+		{"classPK", Types.BIGINT}, {"className", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,11 +93,10 @@ public class NotificationRecipientModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("notificationTemplateId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationRecipient (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationRecipientId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classPK LONG,className VARCHAR(75) null,notificationTemplateId LONG)";
+		"create table NotificationRecipient (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationRecipientId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classPK LONG,className VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationRecipient";
@@ -119,13 +117,13 @@ public class NotificationRecipientModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -315,13 +313,6 @@ public class NotificationRecipientModelImpl
 			"className",
 			(BiConsumer<NotificationRecipient, String>)
 				NotificationRecipient::setClassName);
-		attributeGetterFunctions.put(
-			"notificationTemplateId",
-			NotificationRecipient::getNotificationTemplateId);
-		attributeSetterBiConsumers.put(
-			"notificationTemplateId",
-			(BiConsumer<NotificationRecipient, Long>)
-				NotificationRecipient::setNotificationTemplateId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -506,6 +497,15 @@ public class NotificationRecipientModelImpl
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalClassPK() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
+	}
+
 	@Override
 	public String getClassName() {
 		if (_className == null) {
@@ -523,30 +523,6 @@ public class NotificationRecipientModelImpl
 		}
 
 		_className = className;
-	}
-
-	@Override
-	public long getNotificationTemplateId() {
-		return _notificationTemplateId;
-	}
-
-	@Override
-	public void setNotificationTemplateId(long notificationTemplateId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_notificationTemplateId = notificationTemplateId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalNotificationTemplateId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("notificationTemplateId"));
 	}
 
 	@Override
@@ -624,8 +600,6 @@ public class NotificationRecipientModelImpl
 		notificationRecipientImpl.setModifiedDate(getModifiedDate());
 		notificationRecipientImpl.setClassPK(getClassPK());
 		notificationRecipientImpl.setClassName(getClassName());
-		notificationRecipientImpl.setNotificationTemplateId(
-			getNotificationTemplateId());
 
 		notificationRecipientImpl.resetOriginalValues();
 
@@ -657,8 +631,6 @@ public class NotificationRecipientModelImpl
 			this.<Long>getColumnOriginalValue("classPK"));
 		notificationRecipientImpl.setClassName(
 			this.<String>getColumnOriginalValue("className"));
-		notificationRecipientImpl.setNotificationTemplateId(
-			this.<Long>getColumnOriginalValue("notificationTemplateId"));
 
 		return notificationRecipientImpl;
 	}
@@ -792,9 +764,6 @@ public class NotificationRecipientModelImpl
 			notificationRecipientCacheModel.className = null;
 		}
 
-		notificationRecipientCacheModel.notificationTemplateId =
-			getNotificationTemplateId();
-
 		return notificationRecipientCacheModel;
 	}
 
@@ -868,7 +837,6 @@ public class NotificationRecipientModelImpl
 	private boolean _setModifiedDate;
 	private long _classPK;
 	private String _className;
-	private long _notificationTemplateId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -910,8 +878,6 @@ public class NotificationRecipientModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("className", _className);
-		_columnOriginalValues.put(
-			"notificationTemplateId", _notificationTemplateId);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -954,8 +920,6 @@ public class NotificationRecipientModelImpl
 		columnBitmasks.put("classPK", 256L);
 
 		columnBitmasks.put("className", 512L);
-
-		columnBitmasks.put("notificationTemplateId", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

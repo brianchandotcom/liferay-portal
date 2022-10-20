@@ -270,6 +270,12 @@ public class NotificationRecipientLocalServiceUtil {
 		return getService().getNotificationRecipient(notificationRecipientId);
 	}
 
+	public static NotificationRecipient getNotificationRecipientByClassPK(
+		long classPK) {
+
+		return getService().getNotificationRecipientByClassPK(classPK);
+	}
+
 	/**
 	 * Returns the notification recipient with the matching UUID and company.
 	 *

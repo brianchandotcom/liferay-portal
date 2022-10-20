@@ -78,7 +78,7 @@ public class NotificationRecipientCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,8 +100,6 @@ public class NotificationRecipientCacheModel
 		sb.append(classPK);
 		sb.append(", className=");
 		sb.append(className);
-		sb.append(", notificationTemplateId=");
-		sb.append(notificationTemplateId);
 		sb.append("}");
 
 		return sb.toString();
@@ -156,9 +154,6 @@ public class NotificationRecipientCacheModel
 			notificationRecipientImpl.setClassName(className);
 		}
 
-		notificationRecipientImpl.setNotificationTemplateId(
-			notificationTemplateId);
-
 		notificationRecipientImpl.resetOriginalValues();
 
 		return notificationRecipientImpl;
@@ -180,8 +175,6 @@ public class NotificationRecipientCacheModel
 
 		classPK = objectInput.readLong();
 		className = objectInput.readUTF();
-
-		notificationTemplateId = objectInput.readLong();
 	}
 
 	@Override
@@ -219,8 +212,6 @@ public class NotificationRecipientCacheModel
 		else {
 			objectOutput.writeUTF(className);
 		}
-
-		objectOutput.writeLong(notificationTemplateId);
 	}
 
 	public long mvccVersion;
@@ -233,6 +224,5 @@ public class NotificationRecipientCacheModel
 	public long modifiedDate;
 	public long classPK;
 	public String className;
-	public long notificationTemplateId;
 
 }

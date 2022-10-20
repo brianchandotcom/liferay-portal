@@ -60,4 +60,6 @@ public interface NotificationTemplate
 
 			};
 
+	public NotificationRecipient getNotificationRecipient();
+
 }

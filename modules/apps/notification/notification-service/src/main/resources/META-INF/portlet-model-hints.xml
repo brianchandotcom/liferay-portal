@@ -39,7 +39,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classPK" type="long" />
 		<field name="className" type="String" />
-		<field name="notificationTemplateId" type="long" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationRecipientSetting">
 		<field name="mvccVersion" type="long" />

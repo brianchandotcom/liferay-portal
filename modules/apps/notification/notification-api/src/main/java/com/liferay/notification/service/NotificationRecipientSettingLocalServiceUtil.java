@@ -277,6 +277,15 @@ public class NotificationRecipientSettingLocalServiceUtil {
 			notificationRecipientSettingId);
 	}
 
+	public static NotificationRecipientSetting getNotificationRecipientSetting(
+			long notificationRecipientId, String name)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationRecipientSettingException {
+
+		return getService().getNotificationRecipientSetting(
+			notificationRecipientId, name);
+	}
+
 	/**
 	 * Returns the notification recipient setting with the matching UUID and company.
 	 *
@@ -309,6 +318,13 @@ public class NotificationRecipientSettingLocalServiceUtil {
 		getNotificationRecipientSettings(int start, int end) {
 
 		return getService().getNotificationRecipientSettings(start, end);
+	}
+
+	public static List<NotificationRecipientSetting>
+		getNotificationRecipientSettings(long notificationRecipientId) {
+
+		return getService().getNotificationRecipientSettings(
+			notificationRecipientId);
 	}
 
 	/**

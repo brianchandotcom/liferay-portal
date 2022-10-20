@@ -1,13 +1,5 @@
 [
 	{
-		"key": "noGrant",
-		"name": "No Grant",
-		"name_i18n": {
-			"en-US": "No Grant"
-		},
-		"type": "string"
-	},
-	{
 		"key": "proposed",
 		"name": "Proposed",
 		"name_i18n": {

@@ -1,13 +1,5 @@
 [
 	{
-		"key": "approved",
-		"name": "Approved",
-		"name_i18n": {
-			"en-US": "Approved"
-		},
-		"type": "string"
-	},
-	{
 		"key": "rejected",
 		"name": "Rejected",
 		"name_i18n": {

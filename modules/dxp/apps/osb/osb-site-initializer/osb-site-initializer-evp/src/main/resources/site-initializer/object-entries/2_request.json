@@ -5,7 +5,6 @@
 			"endDate": "2022-09-30T00:00:00Z",
 			"fullName": "John Doe",
 			"grantAmount": 0,
-			"grantRequestType": "noGrant",
 			"liferayBranch": "liferayLatam",
 			"managerEmailAddress": "manager@liferay.com",
 			"phoneNumber": "888888888",
@@ -46,7 +45,7 @@
 			"requestBehalf": "globalLocalPoor",
 			"requestDescription": "Grant Request Description",
 			"requestPurposes": "basicHealth",
-			"requestStatus": "approved",
+			"requestStatus": "closed",
 			"requestType": "grant",
 			"totalHoursRequested": 0
 		}

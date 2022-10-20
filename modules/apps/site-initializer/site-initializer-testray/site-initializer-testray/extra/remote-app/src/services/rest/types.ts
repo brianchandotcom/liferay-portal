@@ -60,6 +60,13 @@ export type UserRole = {
 
 export type TestrayBuild = {
 	active: boolean;
+	caseResultBlocked: string;
+	caseResultFailed: string;
+	caseResultInProgress: string;
+	caseResultIncomplete: string;
+	caseResultPassed: string;
+	caseResultTestFix: string;
+	caseResultUntested: string;
 	creator: {
 		name: string;
 	};

@@ -22,7 +22,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
-import {testrayBuildImpl} from '../../../services/rest';
+import {TestrayBuild, testrayBuildImpl} from '../../../services/rest';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -31,7 +31,7 @@ import useBuildActions from './Builds/useBuildActions';
 
 const Routine = () => {
 	const {actions, formModal} = useBuildActions();
-	const {barChart, colors} = useBuildHistory();
+	const {colors, getColumns} = useBuildHistory();
 	const {routineId} = useParams();
 
 	return (
@@ -122,61 +122,81 @@ const Routine = () => {
 						},
 						{
 							clickable: true,
-							key: 'failed',
-							render: () => 0,
+							key: 'caseResultFailed',
+							render: (failed = 0) => failed,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
-							key: 'blocked',
-							render: () => 0,
+							key: 'caseResultBlocked',
+							render: (blocked = 0) => blocked,
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
-							key: 'untested',
-							render: () => 0,
+							key: 'caseResultUntested',
+							render: (untested = 0) => untested,
 							value: i18n.translate('untested'),
 						},
 						{
 							clickable: true,
-							key: 'in_progress',
-							render: () => 0,
+							key: 'caseResultInProgress',
+							render: (inProgress = 0) => inProgress,
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
-							key: 'passed',
-							render: () => 0,
+							key: 'caseResultPassed',
+							render: (passed = 0) => passed,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
-							key: 'test_fix',
-							render: () => 0,
+							key: 'caseResultTestFix',
+							render: (caseResultFailed = 0) => caseResultFailed,
 							value: i18n.translate('test-fix'),
 						},
 						{
 							clickable: true,
 							key: 'total',
-							render: () => 0,
+							render: (_, build: TestrayBuild) =>
+								[
+									build.caseResultBlocked,
+									build.caseResultFailed,
+									build.caseResultInProgress,
+									build.caseResultIncomplete,
+									build.caseResultPassed,
+									build.caseResultTestFix,
+									build.caseResultUntested,
+								]
+									.map((count) => (count ? Number(count) : 0))
+									.reduce(
+										(prevCount, currentCount) =>
+											prevCount + currentCount
+									),
 							value: i18n.translate('total'),
 						},
 						{
 							clickable: true,
 							key: 'metrics',
-							render: () => (
+							render: (_, build: TestrayBuild) => (
 								<ProgressBar
 									items={{
-										blocked: 0,
-										failed: 2,
-										incomplete: 0,
-										passed: 30,
-										test_fix: 0,
+										blocked: Number(
+											build.caseResultBlocked
+										),
+										failed: Number(build.caseResultFailed),
+										incomplete: Number(
+											build.caseResultIncomplete
+										),
+										passed: Number(build.caseResultPassed),
+										test_fix: Number(
+											build.caseResultTestFix
+										),
 									}}
 								/>
 							),
-							size: 'md',
+							size: 'xl',
 							value: i18n.translate('metrics'),
 						},
 					],
@@ -189,7 +209,7 @@ const Routine = () => {
 					filter: searchUtil.eq('routineId', routineId as string),
 				}}
 			>
-				{({totalCount}) =>
+				{({items, totalCount}) =>
 					Boolean(totalCount) && (
 						<div className="graph-container graph-container-sm">
 							<ClayChart
@@ -218,7 +238,7 @@ const Routine = () => {
 								}}
 								data={{
 									colors,
-									columns: barChart.columns,
+									columns: getColumns(items),
 									stack: {
 										normalize: true,
 									},

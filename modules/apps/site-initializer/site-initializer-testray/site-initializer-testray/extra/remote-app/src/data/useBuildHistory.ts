@@ -12,6 +12,7 @@
  * details.
  */
 
+import {TestrayBuild} from '../services/rest';
 import {DATA_COLORS, Statuses} from '../util/constants';
 import {getRandomMaximumValue} from '../util/mock';
 
@@ -33,6 +34,40 @@ const useBuildHistory = () => {
 			[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
 			[Statuses.TEST_FIX]: DATA_COLORS['metrics.test-fix'],
 		},
+		getColumns: (builds: TestrayBuild[]) => [
+			[
+				Statuses.PASSED,
+				...builds.map(({caseResultPassed = 0}) =>
+					Number(caseResultPassed)
+				),
+			],
+			[
+				Statuses.FAILED,
+				...builds.map(({caseResultFailed = 0}) =>
+					Number(caseResultFailed)
+				),
+			],
+			[
+				Statuses.BLOCKED,
+				...builds.map(({caseResultBlocked = 0}) =>
+					Number(caseResultBlocked)
+				),
+			],
+			[
+				Statuses.TEST_FIX,
+				...builds.map(({caseResultTestFix = 0}) =>
+					Number(caseResultTestFix)
+				),
+			],
+			[
+				Statuses.INCOMPLETE,
+				...builds.map(
+					({caseResultInProgress = 0, caseResultUntested = 0}) =>
+						Number(caseResultInProgress) +
+						Number(caseResultUntested)
+				),
+			],
+		],
 		statuses: Object.values(Statuses),
 	};
 };

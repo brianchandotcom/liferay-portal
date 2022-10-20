@@ -430,31 +430,15 @@ definition {
 	}
 
 	macro generateKeyFlow {
-		CustomerPortal.search(searchItem = "NASA ICE");
+		CustomerPortal.search(searchItem = "${project}");
 
-		CustomerPortal.enterOnProject(title = "NASA ICE");
+		CustomerPortal.enterOnProject(title = "${project}");
 
 		CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		CP2NavigationMenu.clickOnProductButton(product = "${product}");
 
 		CP2ActivationKeys.generateNewKey();
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-			field = "Product",
-			option = "Portal");
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-			field = "Version",
-			option = "6.1 GA1");
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-			field = "Key Type",
-			option = "Production");
-
-		CP2ActivationKeys.selectFistActiveSubscriptionInput();
-
-		CustomerPortal.clickAtButton(text = "Next");
 	}
 
 	macro generateNewKey {

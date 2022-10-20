@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceCache;
-import com.liferay.portal.template.BaseTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
+import com.liferay.portal.template.engine.BaseTemplate;
+import com.liferay.portal.template.engine.TemplateContextHelper;
 
 import freemarker.core.ParseException;
 

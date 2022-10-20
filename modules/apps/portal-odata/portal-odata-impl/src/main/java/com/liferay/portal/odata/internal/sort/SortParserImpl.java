@@ -135,7 +135,7 @@ public class SortParserImpl implements SortParser {
 				"Unable to parse sort string: " + sortString);
 		}
 
-		String fieldName = list.get(0);
+		String fieldName = _parserFieldSorting(list.get(0));
 
 		boolean ascending;
 
@@ -181,6 +181,14 @@ public class SortParserImpl implements SortParser {
 		}
 
 		return _ASC_DEFAULT;
+	}
+
+	private String _parserFieldSorting(String fieldName) {
+		fieldName = StringUtil.replace(fieldName, "createDate", "dateCreated");
+		fieldName = StringUtil.replace(
+			fieldName, "modifiedDate", "dateModified");
+
+		return fieldName;
 	}
 
 	private static final boolean _ASC_DEFAULT = true;

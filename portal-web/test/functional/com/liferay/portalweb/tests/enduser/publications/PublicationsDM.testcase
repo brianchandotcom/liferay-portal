@@ -85,6 +85,8 @@ definition {
 
 	@priority = "4"
 	test DeleteDMFolderWithMultipleFiles {
+		property test.assert.warning.exceptions = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONFolder.addFolder(

@@ -27,6 +27,8 @@ definition {
 
 	@priority = "4"
 	test ContentPageChangesCanBeAutomaticallyResolved {
+		property test.assert.warning.exceptions = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

@@ -267,6 +267,113 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-163951. Verify the image thumbnail in asset publisher can be published when using image URL."
+	@priority = "4"
+	test CanPublishWCWithImagesViaAP {
+		property test.name.skip.portal.instance = "RemoteStaging#CanPublishWCWithImagesViaAP";
+
+		task ("Given: Dm image and AP widget on staged site") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Image Description",
+				dmDocumentTitle = "Document_2.jpg",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("And: Get the latest version URL of the added image") {
+			DMNavigator.openToEntryInAdmin(
+				dmDocumentTitle = "Document_2.jpg",
+				groupName = "Site Name",
+				siteURLKey = "site-name");
+
+			var latestVersionURL = DMDocument.getLatestVersionURL();
+		}
+
+		task ("And: Create basic web content with a new image") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				embedImage = "true",
+				navTab = "Documents and Media",
+				uploadFileName = "Document_1.jpg",
+				webContentContent = "Web Content Content A",
+				webContentTitle = "Web Content Title A");
+
+			PortletEntry.publish();
+		}
+
+		task ("And: Create basic web content using the latest version URL") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				embedImage = "true",
+				imageSourceURL = "${latestVersionURL}",
+				webContentContent = "Web Content Content B",
+				webContentTitle = "Web Content Title B");
+
+			PortletEntry.publish();
+		}
+
+		task ("And: Configure that only shows the WC in AP") {
+			Navigator.openSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.configureAssetTypePG(
+				assetSubtype = "Basic Web Content",
+				selectedAsset = "Web Content Article");
+		}
+
+		task ("When: Publsih to remote live") {
+			Navigator.openSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive(remoteStaging = "true");
+		}
+
+		task ("Then: Assert the images are display in AP on remote live site") {
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.openSitePage(
+				baseURL = "http://localhost:9080",
+				pageName = "Staging Test Page",
+				siteName = "Remote Site");
+
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content A",
+				assetTitle = "Web Content Title A",
+				imageThumbnailName = "document_1");
+
+			Navigator.openSitePage(
+				baseURL = "http://localhost:9080",
+				pageName = "Staging Test Page",
+				siteName = "Remote Site");
+
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content B",
+				assetTitle = "Web Content Title B",
+				imageThumbnailName = "document_2");
+		}
+	}
+
 	@description = "This is a use case for LPS-146399. In the publish summary of a remote staging site only the previously published pages should be present."
 	@priority = "3"
 	test OnlyPublishedPagesShouldBePresentInSummary {

@@ -108,9 +108,6 @@ public class ObjectFieldLocalServiceImpl
 			boolean state, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		_validateObjectFieldListTypeDefinitionId(
-			listTypeDefinitionId, businessType);
-
 		name = StringUtil.trim(name);
 
 		ObjectDefinition objectDefinition =
@@ -534,6 +531,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
+		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -601,9 +599,6 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		_validateObjectFieldListTypeDefinitionId(
-			listTypeDefinitionId, businessType);
-
 		if (system) {
 			return objectFieldLocalService.addOrUpdateSystemObjectField(
 				userId, objectDefinitionId, businessType, dbColumnName,
@@ -660,6 +655,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
+		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
 		_validateName(0, objectDefinition, name, system);
 		_validateState(required, state);
 
@@ -996,6 +992,19 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
+	private void _validateListTypeDefinitionId(
+			long listTypeDefinitionId, String businessType)
+		throws PortalException {
+
+		if ((listTypeDefinitionId == 0) &&
+			StringUtil.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			throw new ObjectFieldListTypeDefinitionIdException(
+				"List type definition id must not be null");
+		}
+	}
+
 	private void _validateName(
 			long objectFieldId, ObjectDefinition objectDefinition, String name,
 			boolean system)
@@ -1037,19 +1046,6 @@ public class ObjectFieldLocalServiceImpl
 			(objectField.getObjectFieldId() != objectFieldId)) {
 
 			throw new ObjectFieldNameException.MustNotBeDuplicate(name);
-		}
-	}
-
-	private void _validateObjectFieldListTypeDefinitionId(
-			long listTypeDefinitionId, String businessType)
-		throws PortalException {
-
-		if ((listTypeDefinitionId == 0) &&
-			StringUtil.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			throw new ObjectFieldListTypeDefinitionIdException(
-				"List type definition id must not be null");
 		}
 	}
 

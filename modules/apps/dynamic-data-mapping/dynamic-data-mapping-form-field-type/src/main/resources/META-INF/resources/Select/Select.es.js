@@ -282,6 +282,7 @@ const Trigger = forwardRef(
 );
 
 const Select = ({
+	defaultSearch,
 	multiple,
 	onCloseButtonClicked,
 	onDropdownItemClicked,
@@ -438,7 +439,7 @@ const Select = ({
 				onSetActive={setExpand}
 				ref={menuElementRef}
 			>
-				{options.length > MAX_ITEMS ? (
+				{options.length > MAX_ITEMS || defaultSearch ? (
 					<DropdownListWithSearch
 						currentValue={currentValue}
 						expand={expand}
@@ -462,6 +463,7 @@ const Select = ({
 };
 
 const Main = ({
+	defaultSearch = false,
 	editingLanguageId,
 	fixedOptions = [],
 	label,
@@ -523,6 +525,7 @@ const Main = ({
 			{...otherProps}
 		>
 			<Select
+				defaultSearch={defaultSearch}
 				multiple={multiple}
 				name={`${name}_field`}
 				onCloseButtonClicked={({event, value}) =>

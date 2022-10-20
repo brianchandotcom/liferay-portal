@@ -73,6 +73,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 		).put(
 			"dataSourceType", ddmFormField.getDataSourceType()
 		).put(
+			"defaultSearch",
+			GetterUtil.getBoolean(ddmFormField.getProperty("defaultSearch"))
+		).put(
 			"multiple", getMultiple(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"options",

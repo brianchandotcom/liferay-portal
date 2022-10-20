@@ -148,4 +148,67 @@ definition {
 				expected = "${keyword2}");
 		}
 	}
+
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12146 | Test Summary: Fetch keywords with size parameter "
+	@priority = "3"
+	test RequestKeywordsUsingSize {
+		var keyword1 = "with size parameters 1";
+		var keyword2 = "with size parameters 2";
+		var keyword3 = "with size parameters 3";
+		var keywordList = "${keyword1},${keyword2},${keyword3}";
+		var size = "2";
+
+		task ("Go to Server Administration") {
+			ServerAdministration.openServerAdmin();
+		}
+
+		task ("Get Faro Backend URL") {
+			var faroBackendURL = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
+		}
+
+		task ("Get OSB-Asah-Faro-Backend-Security-Signature") {
+			var osbAsahFaroBackendSS = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
+		}
+
+		task ("Get OSB-Asah-Project-Id") {
+			var osbAsahProjectId = ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Type keyword in search bar") {
+			for (var keyword : list "${keywordList}") {
+				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+			}
+		}
+
+		task ("Run curl command to get keyword results") {
+			ACApi.getSearchKeywords(
+				faroBackendURL = "${faroBackendURL}",
+				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
+				osbAsahProjectId = "${osbAsahProjectId}",
+				size = "${size}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword1}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(
+				keywordPosition = "1",
+				expected = "${keyword2}");
+		}
+
+		task ("Assert response does not return keyword") {
+			ACApi.assertSearchKeywordNotPresent(
+				keywordPosition = "2",
+				expected = "${keyword3}");
+		}
+	}
+
 }

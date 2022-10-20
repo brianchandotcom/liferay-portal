@@ -34,6 +34,10 @@ const DATE_EDITABLE_FORMAT_OPTIONS = {
 
 const DATE_FORMAT_OPTIONS = [
 	{
+		label: Liferay.Language.get('default'),
+		value: '',
+	},
+	{
 		label: 'MM/DD/YY',
 		value: 'MM/dd/yy',
 	},
@@ -80,14 +84,16 @@ export default function DateEditableFormatInput({
 	);
 
 	useEffect(() => {
-		if (
-			getSelectedOption(dateFormat) !==
-			DATE_EDITABLE_FORMAT_OPTIONS.custom
-		) {
-			setEnableCustomInput(false);
-		}
-		else {
-			setEnableCustomInput(true);
+		if (dateFormat) {
+			if (
+				getSelectedOption(dateFormat) !==
+				DATE_EDITABLE_FORMAT_OPTIONS.custom
+			) {
+				setEnableCustomInput(false);
+			}
+			else {
+				setEnableCustomInput(true);
+			}
 		}
 	}, [languageId, dateFormat]);
 

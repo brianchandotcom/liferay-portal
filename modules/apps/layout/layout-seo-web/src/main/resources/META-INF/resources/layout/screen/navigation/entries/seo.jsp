@@ -36,7 +36,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_seo" var="editSEOURL">
+<portlet:actionURL name="/layout/edit_seo" var="editSEOURL">
 	<portlet:param name="mvcRenderCommandName" value="/layout/edit_seo" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="portletResource" value='<%= ParamUtil.getString(request, "portletResource") %>' />

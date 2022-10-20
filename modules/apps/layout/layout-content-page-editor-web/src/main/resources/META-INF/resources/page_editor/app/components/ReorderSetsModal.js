@@ -31,6 +31,7 @@ import {useId} from '../../core/hooks/useId';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
+import useTabsKeyboardNavigation from '../utils/useTabsKeyboardNavigation';
 
 const FRAGMENTS_ID = 'fragments';
 const WIDGETS_ID = 'widgets';
@@ -176,6 +177,15 @@ function Tabs({updateLists}) {
 		[fragments, widgets]
 	);
 
+	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
+		numberOfPanels: tabs.length,
+		selectPanel: (panelIndex) => {
+			const nextPanel = tabs[panelIndex];
+
+			setActiveTabId(nextPanel.id);
+		},
+	});
+
 	useEffect(() => {
 		if (activeTabId === WIDGETS_ID && !widgets) {
 			dispatch(
@@ -189,7 +199,7 @@ function Tabs({updateLists}) {
 	return (
 		<>
 			<ClayTabs className="px-3">
-				{tabs.map(({id, label}) => (
+				{tabs.map(({id, label}, index) => (
 					<ClayTabs.Item
 						active={activeTabId === id}
 						innerProps={{
@@ -198,6 +208,8 @@ function Tabs({updateLists}) {
 						}}
 						key={id}
 						onClick={() => setActiveTabId(id)}
+						onKeyDown={(event) => onTabItemKeyDown(event, index)}
+						ref={(ref) => tabItemRef(ref, index)}
 					>
 						{label}
 					</ClayTabs.Item>

@@ -27,6 +27,7 @@ import {
 } from '../../../app/contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
+import useTabsKeyboardNavigation from '../../../app/utils/useTabsKeyboardNavigation';
 import {useId} from '../../../core/hooks/useId';
 import {useSessionState} from '../../../core/hooks/useSessionState';
 import {COLLECTION_IDS} from './FragmentsSidebar';
@@ -105,6 +106,15 @@ export default function TabsPanel({
 		};
 	}, [setScrollPosition]);
 
+	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
+		numberOfPanels: tabs.length,
+		selectPanel: (panelIndex) => {
+			const tab = tabs[panelIndex];
+
+			setActiveTabId(tab.id);
+		},
+	});
+
 	return (
 		<>
 			<ClayTabs className="flex-shrink-0 page-editor__sidebar__fragments-widgets-panel__tabs px-3">
@@ -124,6 +134,8 @@ export default function TabsPanel({
 								wrapperElementRef.current.scrollTop = 0;
 							}
 						}}
+						onKeyDown={(event) => onTabItemKeyDown(event, index)}
+						ref={(ref) => tabItemRef(ref, index)}
 					>
 						{tab.label}
 					</ClayTabs.Item>

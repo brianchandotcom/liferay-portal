@@ -27,6 +27,7 @@ import {CollectionItemContext} from '../contexts/CollectionItemContext';
 import {useSelector, useSelectorCallback} from '../contexts/StoreContext';
 import selectCanViewItemConfiguration from '../selectors/selectCanViewItemConfiguration';
 import {deepEqual} from '../utils/checkDeepEqual';
+import useTabsKeyboardNavigation from '../utils/useTabsKeyboardNavigation';
 
 export default function ItemConfiguration({activeItemId, activeItemType}) {
 	const collectionContext = useCollectionActiveItemContext();
@@ -73,6 +74,18 @@ function ItemConfigurationContent({
 		[panelsIds]
 	);
 
+	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
+		numberOfPanels: panels.length,
+		selectPanel: (panelIndex) => {
+			const nextPanel = panels[panelIndex];
+
+			setActivePanel({
+				id: nextPanel.id,
+				type: nextPanel.type || null,
+			});
+		},
+	});
+
 	useEffect(() => {
 		if (
 			!panels.length ||
@@ -114,7 +127,7 @@ function ItemConfigurationContent({
 			) : (
 				<>
 					<ClayTabs className="flex-nowrap pt-2 px-3">
-						{panels.map((panel) => (
+						{panels.map((panel, index) => (
 							<ClayTabs.Item
 								active={panel.panelId === activePanel.id}
 								innerProps={{
@@ -127,6 +140,12 @@ function ItemConfigurationContent({
 										id: panel.panelId,
 										type: panel.type || null,
 									});
+								}}
+								onKeyDown={(event) => {
+									onTabItemKeyDown(event, index);
+								}}
+								ref={(ref) => {
+									tabItemRef(ref, index);
 								}}
 							>
 								<span

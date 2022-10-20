@@ -26,6 +26,7 @@ import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import LayoutService from '../../../app/services/LayoutService';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
+import useTabsKeyboardNavigation from '../../../app/utils/useTabsKeyboardNavigation';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useId} from '../../../core/hooks/useId';
 import {useSetStyleBook, useStyleBook} from '../hooks/useStyleBook';
@@ -121,6 +122,13 @@ export default function PageDesignOptionsSidebar() {
 		]
 	);
 
+	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
+		numberOfPanels: tabs.length,
+		selectPanel: (panelIndex) => {
+			setActiveTabId(panelIndex);
+		},
+	});
+
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
 
@@ -154,6 +162,8 @@ export default function PageDesignOptionsSidebar() {
 						}}
 						key={index}
 						onClick={() => setActiveTabId(index)}
+						onKeyDown={(event) => onTabItemKeyDown(event, index)}
+						ref={(ref) => tabItemRef(ref, index)}
 					>
 						{tab.label}
 					</ClayTabs.Item>

@@ -20,6 +20,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -55,6 +57,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectValidationRuleLocalService objectValidationRuleLocalService,
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
 		UserLocalService userLocalService) {
 
 		_dtoConverterRegistry = dtoConverterRegistry;
@@ -64,6 +67,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectValidationRuleLocalService = objectValidationRuleLocalService;
+		_systemObjectDefinitionMetadata = systemObjectDefinitionMetadata;
 		_userLocalService = userLocalService;
 	}
 
@@ -175,8 +179,12 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	}
 
 	private DTOConverter<T, ?> _getDTOConverter() {
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		return (DTOConverter<T, ?>)_dtoConverterRegistry.getDTOConverter(
-			_modelClass.getName());
+			jaxRsApplicationDescriptor.getApplicationName(),
+			_modelClass.getName(), jaxRsApplicationDescriptor.getVersion());
 	}
 
 	private String _getDTOConverterType() {
@@ -351,6 +359,8 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectValidationRuleLocalService
 		_objectValidationRuleLocalService;
+	private final SystemObjectDefinitionMetadata
+		_systemObjectDefinitionMetadata;
 	private final UserLocalService _userLocalService;
 
 }

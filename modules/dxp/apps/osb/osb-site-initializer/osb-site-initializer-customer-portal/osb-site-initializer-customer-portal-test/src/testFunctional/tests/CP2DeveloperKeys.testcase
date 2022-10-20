@@ -113,5 +113,25 @@ definition {
 				selectWindowTitle = "Project - Customer Portal Site - Liferay DXP");
 		}
 	}
+	@description = "Automation ID: LPS-151404 | Test Summary: Verify that the drop-down list contains 4 Portal versions for the user to choose from."
+    @priority = "3"
+    test CanViewThePortalVersionsDropDownList {
+        task ("Go to CP2.0 and join a project") {
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+            CustomerPortal.enterOnProject(
+                status = "Future",
+                title = "Test Account Portal");
+        }
+
+        task ("Go to the product activation page and Portal product") {
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "Portal");
+        }
+
+        task ("Open the dropdown and assert if have 4 versions of Portal") {
+            CustomerPortal.viewVersions(dropDownItems = "6.2,6.1 GA3,6.1 GA2,6.1 GA1");
+        }
+    }
 }

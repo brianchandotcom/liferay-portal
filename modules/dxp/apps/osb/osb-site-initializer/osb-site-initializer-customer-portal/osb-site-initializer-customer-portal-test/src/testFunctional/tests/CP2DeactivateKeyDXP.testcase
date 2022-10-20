@@ -187,4 +187,36 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-150685 | Test Summary: Assert that a pop-up is displayed after the user clicks the disable button."
+	@priority = "5"
+	test CanViewTheDeactivationPopUp {
+
+		// TODO LPS-150685 CanViewTheDeactivationPopUp pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150687 | Test Summary: Assert that no changes were made after the user clicked 'Cancel' in the deactivation modal"
+	@priority = "4"
+	test CanViewThatNoChangesWereMadeAfterClickingCancel {
+		
+		// TODO LPS-150687 CanViewThatNoChangesWereMadeAfterClickingCancel pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150689 | Test Summary: Assert that number of keys on 'All' tab changed after the key was deactivated"
+	@priority = "3"
+	test CanViewChangeTheNumberOfTotalKeys {
+		
+		// TODO LPS-150689 CanViewChangeTheNumberOfTotalKeys pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150690 | Test Summary: Assert that the deactivated key is no longer displayed in the table"
+	@priority = "5"
+	test CannotViewDeactivatedKeysForPortal {
+		
+		// TODO LPS-150690 CannotViewDeactivatedKeysForPortal pending implementation
+
+	}
+
 }

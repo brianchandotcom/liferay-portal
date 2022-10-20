@@ -106,7 +106,8 @@ definition {
 				''';
 
 			static var apiResponse = JSONCurlUtil.get("${curl}");
-		} else if (!(isSet(displayLanguageId)) && isSet(groupId) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))){
+		}
+		else if (!(isSet(displayLanguageId)) && isSet(groupId) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?groupId=${groupId} \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
@@ -114,7 +115,8 @@ definition {
 				''';
 
 			static var apiResponse = JSONCurlUtil.get("${curl}");
-		} else if (isSet(displayLanguageId) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))){
+		}
+		else if (isSet(displayLanguageId) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?displayLanguageId=${displayLanguageId} \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
@@ -122,7 +124,8 @@ definition {
 				''';
 
 			static var apiResponse = JSONCurlUtil.get("${curl}");
-		} else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && isSet(page) && !(isSet(size)) && !(isSet(sort))){
+		}
+		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && isSet(page) && !(isSet(size)) && !(isSet(sort))) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?page=${page} \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
@@ -130,7 +133,8 @@ definition {
 				''';
 
 			static var apiResponse = JSONCurlUtil.get("${curl}");
-		} else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && isSet(size) && !(isSet(sort))){
+		}
+		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && isSet(size) && !(isSet(sort))) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size} \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
@@ -138,7 +142,8 @@ definition {
 				''';
 
 			static var apiResponse = JSONCurlUtil.get("${curl}");
-		} else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && isSet(sort)){
+		}
+		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && isSet(sort)) {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords?sort=${sort} \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
@@ -146,7 +151,8 @@ definition {
 				''';
 
 			static var apiResponse = JSONCurlUtil.get("${curl}");
-		} else {
+		}
+		else {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \

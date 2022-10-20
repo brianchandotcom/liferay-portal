@@ -96,7 +96,7 @@ definition {
 	@priority = "4"
 	test ViewMetricsButtonKebabWhenBlogHasDPT {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {

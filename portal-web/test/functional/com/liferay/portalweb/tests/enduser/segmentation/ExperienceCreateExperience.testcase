@@ -3,7 +3,7 @@ definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
-	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
+	property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Segmentation";

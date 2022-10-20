@@ -866,7 +866,7 @@ definition {
 		}
 
 		task ("Assert the display page contains the web content article's tag and category") {
-			AssertTextPresent(value1 = "meta content=&quot;test tag,category name&quot;");
+			AssertTextPresent(value1 = "meta content=\"test tag,category name\"");
 		}
 	}
 

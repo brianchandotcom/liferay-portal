@@ -165,7 +165,7 @@ definition {
 		var endDate = "2019-08-13";
 		var endTime = "20:50:00.000";
 		var type = "individual";
-		var message = "Wrong range date. &quot;fromDate&quot; cannot be after &quot;toDate&quot;";
+		var message = "Wrong range date. \"fromDate\" cannot be after \"toDate\"";
 
 		task ("Get the token value to create the schedule") {
 			var token = ACApi.getTokenValue();
@@ -224,7 +224,7 @@ definition {
 		var endDate = "2017-06-15";
 		var endTime = "10:20:00.000";
 		var type = "account";
-		var message = "&quot;fromDate&quot; and &quot;toDate&quot; query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
+		var message = "\"fromDate\" and \"toDate\" query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
 
 		task ("Get the token value to create the schedule") {
 			var token = ACApi.getTokenValue();

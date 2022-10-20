@@ -696,7 +696,7 @@ definition {
 				AssertTextEquals(
 					key_text = "font-family",
 					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
-					value1 = "system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+					value1 = "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"");
 
 				AssertTextEquals(
 					key_text = "bold",

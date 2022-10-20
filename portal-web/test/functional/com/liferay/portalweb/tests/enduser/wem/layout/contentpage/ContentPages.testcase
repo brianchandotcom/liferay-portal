@@ -357,7 +357,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Modal#BODY",
-				value1 = "Are you sure you want to delete the page &quot;Test Content Page Name&quot;? It will be removed immediately.");
+				value1 = "Are you sure you want to delete the page \"Test Content Page Name\"? It will be removed immediately.");
 
 			Click(
 				key_text = "Delete",

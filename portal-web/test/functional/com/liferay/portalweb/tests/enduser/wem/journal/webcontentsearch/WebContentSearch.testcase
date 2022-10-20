@@ -227,31 +227,31 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Category Name&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Category Name\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Category&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Category\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Name&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Name\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Category1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Category1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;Category1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"Category1\"");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Name1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Name1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;Name1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"Name1\"");
 	}
 
 	@description = "This is a test for LPS-132425. The user could search web content folder on page."
@@ -307,75 +307,75 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WC WebContent Title&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WC WebContent Title\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WC WebContent Content&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WC WebContent Content\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WC&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WC\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WebContent&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WebContent\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Title&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Title\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Content&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Content\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WC WebContent&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WC WebContent\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WebContent Title&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WebContent Title\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WebContent Content&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WebContent Content\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WC1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WC1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;WC1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"WC1\"");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;WebContent1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"WebContent1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;WebContent1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"WebContent1\"");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Title1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Title1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;Title1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"Title1\"");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;Content1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"Content1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;Content1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"Content1\"");
 	}
 
 	@priority = "5"
@@ -470,31 +470,31 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;tag name&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"tag name\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;tag&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"tag\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;name&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"name\"");
 
 		WebContentSearchPortlet.viewResultsEntry(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;tag1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"tag1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;tag1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"tag1\"");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "&quot;name1&quot;");
+		WebContentSearchPortlet.search(webContentSearchTerm = "\"name1\"");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;name1&quot;");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "\"name1\"");
 	}
 
 }

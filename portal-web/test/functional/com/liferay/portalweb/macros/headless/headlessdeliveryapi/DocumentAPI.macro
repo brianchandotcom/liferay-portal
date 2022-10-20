@@ -130,7 +130,7 @@ definition {
 		var delimiter = " ";
 
 		if (isSet(filePath)) {
-			var fileBody = "-F file=@&quot;${filePath}&quot;";
+			var fileBody = "-F file=@\"${filePath}\"";
 
 			var curl = StringUtil.add("${curl}", "${fileBody}", "${delimiter}");
 		}

@@ -919,7 +919,7 @@ definition {
 	@description = "This is a test for LPS-123118. The page creator can map a fragment to web content template with portlet request model."
 	@priority = "4"
 	test MapTemplateWithPortletRequestModelToFragment {
-		property custom.properties = "configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedVariables=[&quot;httpUtilUnsafe&quot;,&quot;staticFieldGetter&quot;,&quot;staticUtil&quot;,&quot;utilLocator&quot;,&quot;serviceLocator&quot;,]${line.separator}configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedClasses=[&quot;org.glassfish.*&quot;,&quot;org.jboss.*&quot;,&quot;org.springframework.*&quot;,&quot;org.wildfly.*&quot;,&quot;weblogic.*&quot;,]";
+		property custom.properties = "configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedVariables=[\"httpUtilUnsafe\",\"staticFieldGetter\",\"staticUtil\",\"utilLocator\",\"serviceLocator\",]${line.separator}configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedClasses=[\"org.glassfish.*\",\"org.jboss.*\",\"org.springframework.*\",\"org.wildfly.*\",\"weblogic.*\",]";
 
 		task ("Given a page creator has a web content template with portlet request model") {
 			task ("Add a web content template for Basic Web Content structure") {
@@ -929,7 +929,7 @@ definition {
 					structureName = "Basic Web Content",
 					templateDescription = "WC Template Description",
 					templateName = "WC Template Name",
-					templateScript = "<#assign portletRequestModel = objectUtil(&quot;com.liferay.portal.kernel.portlet.PortletRequestModel&quot;, request.getAttribute(&quot;javax.portlet.request&quot;), request.getAttribute(&quot;javax.portlet.response&quot;)) />");
+					templateScript = "<#assign portletRequestModel = objectUtil(\"com.liferay.portal.kernel.portlet.PortletRequestModel\", request.getAttribute(\"javax.portlet.request\"), request.getAttribute(\"javax.portlet.response\")) />");
 			}
 
 			task ("Add a web content") {

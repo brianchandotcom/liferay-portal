@@ -1116,7 +1116,7 @@ definition {
 	test AllowMultiplePriceEntriesInTheSamePriceList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
-		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
+		property osgi.module.configurations = "checkInterval=\"1\"";
 		property portal.acceptance = "false";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -2162,7 +2162,7 @@ definition {
 	test ViewExpiredTierPriceEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommerceTierPriceEntryConfiguration.config";
-		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
+		property osgi.module.configurations = "checkInterval=\"1\"";
 		property portal.acceptance = "false";
 
 		// TODO Review

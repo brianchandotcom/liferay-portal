@@ -268,7 +268,7 @@ definition {
 	@priority = "3"
 	test BlogAuthorInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -300,7 +300,7 @@ definition {
 	@priority = "3"
 	test BlogCategoriesInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Add an internal vocabulary for Test Site Name") {
 			JSONCategory.addVocabulary(
@@ -370,7 +370,7 @@ definition {
 	@priority = "3"
 	test BlogCreationDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -402,7 +402,7 @@ definition {
 	@priority = "3"
 	test BlogDisplayDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -434,7 +434,7 @@ definition {
 	@priority = "3"
 	test BlogIDDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -464,7 +464,7 @@ definition {
 	@priority = "3"
 	test BlogModificationDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -496,7 +496,7 @@ definition {
 	@priority = "5"
 	test BlogsFromDifferentSitesAreListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create another site") {
@@ -546,7 +546,7 @@ definition {
 	@priority = "3"
 	test BlogsMetadata {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a category for Audiente and Staged") {
 			JSONCategory.addCategory(
@@ -586,7 +586,7 @@ definition {
 	@priority = "3"
 	test BlogStatusInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -616,7 +616,7 @@ definition {
 	@priority = "3"
 	test BlogTagsInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog with the tag") {
 			JSONBlog.addEntry(
@@ -649,7 +649,7 @@ definition {
 	@priority = "3"
 	test BlogTitleInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -706,7 +706,7 @@ definition {
 	@priority = "3"
 	test BlogVersionInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -2036,7 +2036,7 @@ definition {
 	@uitest
 	test ClickTitleBlogDPTWithNoPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2125,7 +2125,7 @@ definition {
 	@uitest
 	test ClickTitleBlogDPTWithPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2171,7 +2171,7 @@ definition {
 	@uitest
 	test ClickTitleBlogNoDPTWithNoPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -2251,7 +2251,7 @@ definition {
 	@uitest
 	test ClickTitleBlogNoDPTWithPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -2283,7 +2283,7 @@ definition {
 	@uitest
 	test ClickTitleDocumentDPTWithNoPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2373,7 +2373,7 @@ definition {
 	@uitest
 	test ClickTitleDocumentDPTWithPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2522,7 +2522,7 @@ definition {
 	@priority = "5"
 	test DocumentFromAssetLibraryIsListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Add an Asset Library") {
@@ -2561,7 +2561,7 @@ definition {
 	@priority = "4"
 	test DocumentIconView {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2664,7 +2664,7 @@ definition {
 	@priority = "5"
 	test DocumentsFromDifferentSitesAreListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Add two different sites") {
@@ -2837,7 +2837,7 @@ definition {
 	@priority = "4"
 	test EditBlog {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -2870,7 +2870,7 @@ definition {
 	@priority = "4"
 	test EditDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Add a document") {
@@ -3010,7 +3010,7 @@ definition {
 	@priority = "5"
 	test FilterBlogByAuthorAll {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3039,7 +3039,7 @@ definition {
 	@priority = "5"
 	test FilterBlogByAuthorMe {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3069,7 +3069,7 @@ definition {
 	@priority = "5"
 	test FilterBlogByAuthorOther {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3098,7 +3098,7 @@ definition {
 	@priority = "5"
 	test FilterBlogByCategory {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Add a public vocabulary for Test Site Name") {
@@ -3139,7 +3139,7 @@ definition {
 	@priority = "5"
 	test FilterBlogBySite {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3279,7 +3279,7 @@ definition {
 	@priority = "5"
 	test FilterBlogByTag {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog with the tag") {
@@ -4185,7 +4185,7 @@ definition {
 	@priority = "5"
 	test FilterBySubtypeBlogsEntry {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -4220,7 +4220,7 @@ definition {
 	@priority = "3"
 	test FilterBySubtypeBlogsEntryAndWebContent {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
@@ -5872,7 +5872,7 @@ definition {
 	@priority = "3"
 	test TypeColumnForDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
 		task ("Create document via JSON") {
 			task ("Create a new Document") {

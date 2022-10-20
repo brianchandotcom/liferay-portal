@@ -107,7 +107,7 @@ definition {
 	test AssertRegularRoleIsAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=Administrator";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertRegularRoleIsAssignedToOIDCUser";
 
@@ -155,7 +155,7 @@ definition {
 	@priority = "4"
 	test AssertUserIsLoggedOutWithHigherRefreshToken {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertUserIsLoggedOutWithHigherRefreshToken";
 
 		task ("Startup Keycloak for test") {
@@ -277,7 +277,7 @@ definition {
 	@priority = "4"
 	test ConfigureMultipleOpenIDConnectProviders {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property test.name.skip.portal.instance = "OpenIDConnect#ConfigureMultipleOpenIDConnectProviders";
 
 		var userEmailAddress = PropsUtil.get("email.address.2");
@@ -357,7 +357,7 @@ definition {
 	test MultipleSpacesRoleNameCanBeAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=My Custom Regular Role";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property test.name.skip.portal.instance = "OpenIDConnect#MultipleSpacesRoleNameCanBeAssignedToOIDCUser";
 
 		var userEmailAddress = PropsUtil.get("openid.provider.okta.test.account.email.address");
@@ -500,7 +500,7 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithAuth0 {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAuth0";
 
@@ -530,7 +530,7 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithAzure {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAzure";
 
@@ -560,7 +560,7 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithOkta {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithOkta";
 
@@ -592,7 +592,7 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithPingOne {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithPingOne";
 
@@ -720,7 +720,7 @@ definition {
 	@priority = "5"
 	test VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew";
 

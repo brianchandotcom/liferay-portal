@@ -274,7 +274,7 @@ this-is-a-language-key=This is a language key''',
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "0 Results for &quot;newkey&quot;");
+				value1 = "0 Results for \"newkey\"");
 		}
 	}
 

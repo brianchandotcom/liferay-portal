@@ -44,7 +44,7 @@ definition {
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
-		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
+		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
 
@@ -185,7 +185,7 @@ definition {
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHostFF {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
-		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
+		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
 
 		task ("Add an organization with site") {
@@ -1305,7 +1305,7 @@ definition {
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetType = "Basic Web Content",
-				searchInfo = "3 Results for &quot;Web Content&quot;",
+				searchInfo = "3 Results for \"Web Content\"",
 				searchTerm = "Web Content");
 		}
 

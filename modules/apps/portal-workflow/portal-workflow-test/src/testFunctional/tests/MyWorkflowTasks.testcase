@@ -860,7 +860,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry Title");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Result for &quot;Blogs Entry Title&quot;",
+			key_resultBarMessage = "1 Result for \"Blogs Entry Title\"",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -878,7 +878,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Result for &quot;Blogs Entry&quot;",
+			key_resultBarMessage = "1 Result for \"Blogs Entry\"",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -896,7 +896,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Result for &quot;Review&quot;",
+			key_resultBarMessage = "1 Result for \"Review\"",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -917,7 +917,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Result for &quot;Review&quot;",
+			key_resultBarMessage = "1 Result for \"Review\"",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -935,7 +935,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "New Blog Title");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Result for &quot;New Blog Title&quot;",
+			key_resultBarMessage = "1 Result for \"New Blog Title\"",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
@@ -956,7 +956,7 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
 		AssertElementPresent(
-			key_resultBarMessage = "1 Result for &quot;Blogs Entry&quot;",
+			key_resultBarMessage = "1 Result for \"Blogs Entry\"",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 

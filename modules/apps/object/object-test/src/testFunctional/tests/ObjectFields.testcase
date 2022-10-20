@@ -1935,7 +1935,7 @@ definition {
 	@priority = "4"
 	test DescriptionForEachFieldType {
 		property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectFieldBusinessTypeConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property osgi.module.configurations = "enabled=\"true\"";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147723",
@@ -2162,7 +2162,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
 
-		var helpText = "Input the path of the chosen folder in Documents and Media. An example of a valid path is: &quot;/myDocumentsAndMediaFolder&quot;.";
+		var helpText = "Input the path of the chosen folder in Documents and Media. An example of a valid path is: \"/myDocumentsAndMediaFolder\".";
 
 		AssertElementPresent(
 			key_helpText = "${helpText}",

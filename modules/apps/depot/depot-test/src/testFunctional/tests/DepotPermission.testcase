@@ -1170,13 +1170,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "1 Result for &quot;Depot&quot;");
+			value1 = "1 Result for \"Depot\"");
 
 		Search.searchCP(searchTerm = "No View Permissions");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "0 Results for &quot;No View Permissions&quot;");
+			value1 = "0 Results for \"No View Permissions\"");
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."

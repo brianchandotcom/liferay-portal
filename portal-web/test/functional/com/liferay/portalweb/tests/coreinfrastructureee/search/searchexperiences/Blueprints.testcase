@@ -3020,7 +3020,7 @@ definition {
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "test");
 
-		Alert.viewErrorMessage(errorMessage = "The property &quot;elementDefinitionnnnnnn&quot; is not defined in SXPElement.");
+		Alert.viewErrorMessage(errorMessage = "The property \"elementDefinitionnnnnnn\" is not defined in SXPElement.");
 
 		AssertElementNotPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
@@ -3789,11 +3789,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "&quot;es_ES&quot;: &quot;Título en Español&quot;");
+			value1 = "\"es_ES\": \"Título en Español\"");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "&quot;es_ES&quot;: &quot;Descripción en Español&quot;");
+			value1 = "\"es_ES\": \"Descripción en Español\"");
 
 		var elementSourceJson = '''
 {

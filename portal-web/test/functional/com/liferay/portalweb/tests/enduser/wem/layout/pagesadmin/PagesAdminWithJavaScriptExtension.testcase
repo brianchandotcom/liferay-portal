@@ -169,7 +169,7 @@ definition {
 			AssertCssValue(
 				locator1 = "ControlMenu#HEADING",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 		}
 
 		task ("Given a site designer has a content page template") {
@@ -280,7 +280,7 @@ definition {
 			AssertCssValue(
 				locator1 = "ControlMenu#HEADING",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 		}
 	}
 
@@ -342,7 +342,7 @@ definition {
 			AssertCssValue(
 				locator1 = "ControlMenu#HEADING",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 1",
@@ -351,7 +351,7 @@ definition {
 			AssertCssValue(
 				locator1 = "ControlMenu#HEADING",
 				locator2 = "font-family",
-				value1 = "&quot;Times New Roman&quot;");
+				value1 = "\"Times New Roman\"");
 		}
 	}
 

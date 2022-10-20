@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Suites"
+		"en-US": "Testray Suite Case"
 	},
 	"name": "suiteToSuitesCases",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Suite$]",

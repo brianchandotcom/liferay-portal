@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Build"
+		"en-US": "Testray Run"
 	},
 	"name": "buildToRuns",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Build$]",

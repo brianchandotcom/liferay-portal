@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Subtask"
+		"en-US": "Testray Subtask Issue"
 	},
 	"name": "subtaskToSubtasksIssues",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Subtask$]",

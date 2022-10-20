@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Product Version"
+		"en-US": "Testray Build"
 	},
 	"name": "productVersionToBuilds",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ProductVersion$]",

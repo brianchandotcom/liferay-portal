@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Routine"
+		"en-US": "Testray Factor"
 	},
 	"name": "routineToFactors",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Routine$]",

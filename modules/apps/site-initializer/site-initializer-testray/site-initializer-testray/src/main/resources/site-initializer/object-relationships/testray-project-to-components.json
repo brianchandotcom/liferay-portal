@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Project"
+		"en-US": "Testray Component"
 	},
 	"name": "projectToComponents",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Project$]",

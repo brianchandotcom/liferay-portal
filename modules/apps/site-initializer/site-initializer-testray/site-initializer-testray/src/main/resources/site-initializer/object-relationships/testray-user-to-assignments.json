@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "User"
+		"en-US": "Testray Assignemt"
 	},
 	"name": "userToAssignments",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",

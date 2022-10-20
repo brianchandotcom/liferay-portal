@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "User"
+		"en-US": "Testray SubTask"
 	},
 	"name": "userToSubtasks",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",

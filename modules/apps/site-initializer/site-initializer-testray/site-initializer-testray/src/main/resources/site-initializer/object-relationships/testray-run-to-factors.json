@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Run"
+		"en-US": "Testray Factor"
 	},
 	"name": "runToFactors",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Run$]",

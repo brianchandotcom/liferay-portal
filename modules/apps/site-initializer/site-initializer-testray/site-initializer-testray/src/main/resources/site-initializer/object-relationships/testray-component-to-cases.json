@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Testray Component"
+		"en-US": "Testray Case"
 	},
 	"name": "componentToCases",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Component$]",

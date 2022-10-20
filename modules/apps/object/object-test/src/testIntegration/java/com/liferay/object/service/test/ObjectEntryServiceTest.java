@@ -14,16 +14,27 @@
 
 package com.liferay.object.service.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -38,13 +49,15 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -223,6 +236,111 @@ public class ObjectEntryServiceTest {
 	}
 
 	@Test
+	public void testGetOrDeleteObjectEntryWithAccountEntryRestricted()
+		throws Exception {
+
+		_objectDefinition.setAccountEntryRestricted(true);
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "accountEntry");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"relationship", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship.getObjectFieldId2());
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, "account", null,
+			null, null, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"r_relationship_accountEntryId",
+				accountEntry.getAccountEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		_setUser(_user);
+
+		_resourcePermissionLocalService.addModelResourcePermissions(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			_user.getUserId(), _objectDefinition.getClassName(),
+			String.valueOf(objectEntry.getObjectEntryId()),
+			ModelPermissionsFactory.create(
+				HashMapBuilder.put(
+					RoleConstants.USER,
+					new String[] {ActionKeys.DELETE, ActionKeys.VIEW}
+				).build(),
+				_objectDefinition.getClassName()));
+
+		try {
+			_objectEntryService.getObjectEntry(objectEntry.getObjectEntryId());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionAccountEntryRestrictedException
+					objectDefinitionAccountEntryRestrictedException) {
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"User ", _user.getUserId(),
+					" must have VIEW permission for ",
+					_objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId()),
+				objectDefinitionAccountEntryRestrictedException.getMessage());
+		}
+
+		try {
+			_objectEntryService.deleteObjectEntry(
+				objectEntry.getObjectEntryId());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionAccountEntryRestrictedException
+					objectDefinitionAccountEntryRestrictedException) {
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"User ", _user.getUserId(),
+					" must have DELETE permission for ",
+					_objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId()),
+				objectDefinitionAccountEntryRestrictedException.getMessage());
+		}
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), _user.getUserId());
+
+		Assert.assertNotNull(
+			_objectEntryService.getObjectEntry(objectEntry.getObjectEntryId()));
+
+		_objectEntryService.deleteObjectEntry(objectEntry.getObjectEntryId());
+
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
+			accountEntryUserRel);
+
+		_accountEntryLocalService.deleteAccountEntry(accountEntry);
+	}
+
+	@Test
 	public void testSearchObjectEntries() throws Exception {
 		_setUser(_adminUser);
 
@@ -289,8 +407,8 @@ public class ObjectEntryServiceTest {
 			Assert.assertTrue(
 				message.contains(
 					StringBundler.concat(
-						"User ", String.valueOf(permissionChecker.getUserId()),
-						" must have ", action, " permission for")));
+						"User ", permissionChecker.getUserId(), " must have ",
+						action, " permission for")));
 		}
 	}
 
@@ -322,6 +440,12 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
 	private User _adminUser;
 	private User _defaultUser;
 
@@ -336,6 +460,9 @@ public class ObjectEntryServiceTest {
 
 	@Inject
 	private ObjectEntryService _objectEntryService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	private PermissionChecker _originalPermissionChecker;
 

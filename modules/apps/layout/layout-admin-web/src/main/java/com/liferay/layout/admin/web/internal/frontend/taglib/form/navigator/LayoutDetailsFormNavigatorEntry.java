@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 
@@ -65,10 +64,6 @@ public class LayoutDetailsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/layout/details.jsp";
 	}
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;

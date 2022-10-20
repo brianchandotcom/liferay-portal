@@ -62,7 +62,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					</liferay-util:buffer>
 
 					<aui:field-wrapper label="code">
-						<textarea class="field form-control lfr-textarea" id="<portlet:namespace />widgetScript" onClick="this.select();" readonly="true"><%= HtmlUtil.escape(textAreaContent) %></textarea>
+						<textarea aria-label="<%= LanguageUtil.get(request, "code") %>" class="field form-control lfr-textarea" id="<portlet:namespace />widgetScript" onClick="this.select();" readonly="true"><%= HtmlUtil.escape(textAreaContent) %></textarea>
 					</aui:field-wrapper>
 
 					<aui:input inlineLabel="right" label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' labelCssClass="simple-toggle-switch" name="widgetShowAddAppLink" type="toggle-switch" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("lfrWidgetShowAddAppLink", null), PropsValues.THEME_PORTLET_SHARING_DEFAULT) %>' />

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -146,7 +147,7 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
-		_createListTypeDefinition(objectField);
+		_addListTypeDefinition(objectField);
 
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
@@ -187,7 +188,7 @@ public class ObjectFieldResourceImpl
 					serviceBuilderObjectField.getObjectDefinitionId());
 
 		if (!serviceBuilderobjectDefinition.isApproved()) {
-			_createListTypeDefinition(objectField);
+			_addListTypeDefinition(objectField);
 		}
 
 		return _toObjectField(
@@ -215,10 +216,11 @@ public class ObjectFieldResourceImpl
 							_objectFilterLocalService))));
 	}
 
-	private void _createListTypeDefinition(ObjectField objectField)
+	private void _addListTypeDefinition(ObjectField objectField)
 		throws Exception {
 
-		if (Validator.isNull(
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) ||
+			Validator.isNull(
 				objectField.getListTypeDefinitionExternalReferenceCode())) {
 
 			return;

@@ -26,6 +26,7 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -65,7 +66,8 @@ public class ObjectFieldUtil {
 		long listTypeDefinitionId = GetterUtil.getLong(
 			objectField.getListTypeDefinitionId());
 
-		if ((listTypeDefinitionId != 0) ||
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) ||
+			(listTypeDefinitionId != 0) ||
 			Validator.isNull(
 				objectField.getListTypeDefinitionExternalReferenceCode())) {
 

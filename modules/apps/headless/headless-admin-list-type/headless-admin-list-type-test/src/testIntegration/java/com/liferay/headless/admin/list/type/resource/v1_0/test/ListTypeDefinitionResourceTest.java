@@ -18,10 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +36,26 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ListTypeDefinitionResourceTest
 	extends BaseListTypeDefinitionResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164278", "true"
+			).build());
+
+		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164278", "false"
+			).build());
+
+		super.tearDown();
+	}
 
 	@Override
 	@Test

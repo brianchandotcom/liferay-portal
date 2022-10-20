@@ -58,7 +58,7 @@ public class ExportLayoutPageTemplateEntriesStrutsAction
 
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-		File file = _layoutsExporter.exportGroupLayoutPageTemplates(groupId);
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(groupId);
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(file);
 

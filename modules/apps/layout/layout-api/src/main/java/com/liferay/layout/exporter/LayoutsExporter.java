@@ -21,18 +21,13 @@ import java.io.File;
  */
 public interface LayoutsExporter {
 
-	public File exportDisplayPages(long[] layoutPageTemplateEntryIds)
+	public File exportLayoutPageTemplateEntries(long groupId) throws Exception;
+
+	public File exportLayoutPageTemplateEntries(
+			long[] layoutPageTemplateEntryIds, int type)
 		throws Exception;
 
-	public File exportGroupLayoutPageTemplates(long groupId) throws Exception;
-
-	public File exportMasterLayouts(long[] layoutPageTemplateEntryIds)
-		throws Exception;
-
-	public File exportPageTemplates(long[] layoutPageTemplateEntryIds)
-		throws Exception;
-
-	public File exportUtilityPages(long[] layoutUtilityPageEntryIds)
+	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)
 		throws Exception;
 
 }

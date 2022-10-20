@@ -74,17 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Override
-	public File exportDisplayPages(long[] layoutPageTemplateEntryIds)
-		throws Exception {
-
-		return _exportLayoutPageTemplateEntries(
-			layoutPageTemplateEntryIds,
-			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-			this::_populateDisplayPagesZipWriter);
-	}
-
-	@Override
-	public File exportGroupLayoutPageTemplates(long groupId) throws Exception {
+	public File exportLayoutPageTemplateEntries(long groupId) throws Exception {
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -129,27 +119,17 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	@Override
-	public File exportMasterLayouts(long[] layoutPageTemplateEntryIds)
+	public File exportLayoutPageTemplateEntries(
+			long[] layoutPageTemplateEntryIds, int type)
 		throws Exception {
 
 		return _exportLayoutPageTemplateEntries(
-			layoutPageTemplateEntryIds,
-			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-			this::_populateMasterLayoutsZipWriter);
+			layoutPageTemplateEntryIds, type,
+			this::_populateDisplayPagesZipWriter);
 	}
 
 	@Override
-	public File exportPageTemplates(long[] layoutPageTemplateEntryIds)
-		throws Exception {
-
-		return _exportLayoutPageTemplateEntries(
-			layoutPageTemplateEntryIds,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			this::_populatePageTemplatesZipWriter);
-	}
-
-	@Override
-	public File exportUtilityPages(long[] layoutUtilityPageEntryIds)
+	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)
 		throws Exception {
 
 		DTOConverter<LayoutStructure, PageDefinition>

@@ -78,7 +78,7 @@ public class ExportLayoutUtilityPageEntriesMVCResourceCommand
 		throws PortletException {
 
 		try {
-			return _layoutsExporter.exportUtilityPages(
+			return _layoutsExporter.exportLayoutUtilityPageEntries(
 				layoutUtilityPageEntryIds);
 		}
 		catch (Exception exception) {

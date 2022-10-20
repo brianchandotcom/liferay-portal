@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -52,8 +53,9 @@ public class ExportDisplayPagesMVCResourceCommand
 		throws PortletException {
 
 		try {
-			return _layoutsExporter.exportDisplayPages(
-				layoutPageTemplateEntryIds);
+			return _layoutsExporter.exportLayoutPageTemplateEntries(
+				layoutPageTemplateEntryIds,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

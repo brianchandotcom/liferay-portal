@@ -169,6 +169,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164125. Form Components should not be available on Display Page Template."
+	@priority = "4"
+	test CannotViewFormComponentsOnDisplayPageTemplate {
+		task ("Given a site creator has a display page template") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("When the site creator searches for the Form Components on Fragments and Widgets sidebar of display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Form Components");
+		}
+
+		task ("Then the site creator should not see the Input fragments") {
+			for (var fragmentName : list "Form Container,CAPTCHA,Checkbox,Date,File Upload,Numeric Input,Select from List,Submit Button,Text Input") {
+				AssertElementNotPresent(
+					key_fragmentName = "${fragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-151867 and LPS-149984. The page editor could add Form Container fragment from Form Components set to page. The page editor could map entity to Form Container in content page."
 	@priority = "5"
 	test MapEntityToFormContainerInContentPage {

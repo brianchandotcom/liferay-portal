@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.internal.target;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
@@ -159,9 +158,6 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ApplyToCategoriesCommerceDiscountTargetImpl.class);
-
-	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

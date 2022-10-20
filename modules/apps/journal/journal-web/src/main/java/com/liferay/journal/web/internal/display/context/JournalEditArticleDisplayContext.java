@@ -137,7 +137,8 @@ public class JournalEditArticleDisplayContext {
 			_liferayPortletResponse.getNamespace() + "selectSite";
 
 		return HashMapBuilder.<String, Object>put(
-			"newArticle", _article == null
+			"newArticle",
+			(_article == null) || Validator.isNull(_article.getArticleId())
 		).put(
 			"previewURL",
 			() -> {

@@ -75,9 +75,51 @@ definition {
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
-
-			static var apiResponse = JSONCurlUtil.get("${curl}");
 		}
+		else if (!(isSet(displayLanguageId)) && !(isSet(groupId)) && !(isSet(page)) && !(isSet(size)) && !(isSet(sort))) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+		}
+		else if (isSet(displayLanguageId)) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords?displayLanguageId=${displayLanguageId} \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+		}
+		else if (isSet(groupId)) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords?groupId=${groupId} \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+		}
+		else if (isSet(page)) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords?page=${page} \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+		}
+		else if (isSet(size)) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size} \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+		}
+		else if (isSet(sort)) {
+			var curl = '''
+				${faroBackendURL}/api/1.0/pages/search-keywords?sort=${sort} \
+				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
+				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
+				''';
+		}
+
+		static var apiResponse = JSONCurlUtil.get("${curl}");
 
 		return "${apiResponse}";
 	}

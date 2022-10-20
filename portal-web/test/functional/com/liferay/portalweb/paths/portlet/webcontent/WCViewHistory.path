@@ -14,6 +14,16 @@
 <!--VERSIONS_TABLE-->
 
 <tr>
+	<td>COMPARED_VERSION_NEWER</td>
+	<td>//*[contains(@class,'diff-target-selector')] //*[@class='management-bar-item-title'] | //*[contains(@class,'diff-target-selector') and not(descendant::button)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPARED_VERSION_OLDER</td>
+	<td>//*[contains(@class,'col-md-4')] //*[@class='management-bar-item-title'] | //*[@class='float-right' and not(descendant::button)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_COMPARE_VERSIONS_CONTENT</td>
 	<td>//div[contains(@class,'diff-container-column')]//p</td>
 	<td></td>

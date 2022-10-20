@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.util.PropsValues;
@@ -156,9 +158,13 @@ public class ObjectDefinitionsFieldsDisplayContext
 	}
 
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements() {
-		return ObjectCodeEditorUtil.getCodeEditorElements(
-			true, true, false, objectRequestHelper.getLocale(),
-			getObjectDefinitionId());
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164948"))) {
+			return ObjectCodeEditorUtil.getCodeEditorElements(
+				true, true, false, objectRequestHelper.getLocale(),
+				getObjectDefinitionId());
+		}
+
+		return null;
 	}
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {

@@ -176,6 +176,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 			Field.SCOPE_GROUP_ID, String.valueOf(assetTag.getGroupId())
 		).put(
 			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
+		).put("subscribed", "false"
 		).put(
 			Field.USER_ID, String.valueOf(assetTag.getUserId())
 		).put(

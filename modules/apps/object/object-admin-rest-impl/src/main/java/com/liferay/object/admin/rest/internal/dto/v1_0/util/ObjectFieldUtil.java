@@ -59,20 +59,17 @@ public class ObjectFieldUtil {
 				objectField.getBusinessTypeAsString(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-			return 0L;
+			return 0;
 		}
 
 		long listTypeDefinitionId = GetterUtil.getLong(
 			objectField.getListTypeDefinitionId());
 
-		if (listTypeDefinitionId != 0L) {
-			return listTypeDefinitionId;
-		}
-
-		if (Validator.isNull(
+		if ((listTypeDefinitionId != 0) ||
+			Validator.isNull(
 				objectField.getListTypeDefinitionExternalReferenceCode())) {
 
-			return 0L;
+			return listTypeDefinitionId;
 		}
 
 		ListTypeDefinition listTypeDefinition =
@@ -82,9 +79,7 @@ public class ObjectFieldUtil {
 					objectField.getListTypeDefinitionExternalReferenceCode());
 
 		if (listTypeDefinition == null) {
-			throw new ObjectFieldListTypeDefinitionIdException(
-				"List type definition not found with the external reference " +
-					"code");
+			return 0;
 		}
 
 		return listTypeDefinition.getListTypeDefinitionId();

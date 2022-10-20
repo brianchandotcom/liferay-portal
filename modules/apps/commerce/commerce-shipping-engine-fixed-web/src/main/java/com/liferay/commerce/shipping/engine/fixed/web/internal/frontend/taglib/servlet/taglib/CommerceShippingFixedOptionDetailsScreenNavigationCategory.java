@@ -15,7 +15,6 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -26,7 +25,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -123,12 +121,6 @@ public class CommerceShippingFixedOptionDetailsScreenNavigationCategory
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
-	)
-	private ModelResourcePermission<CommerceChannel>
-		_commerceChannelModelResourcePermission;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

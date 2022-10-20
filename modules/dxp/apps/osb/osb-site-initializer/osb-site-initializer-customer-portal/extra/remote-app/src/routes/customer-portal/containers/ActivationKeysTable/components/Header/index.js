@@ -12,6 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import {useCallback, useMemo, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
+
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import useGetAccountUserAccount from '../../../../pages/Project/TeamMembers/components/TeamMembersTable/hooks/useGetAccountUserAccounts';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
@@ -39,13 +40,21 @@ const ActivationKeysTableHeader = ({
 		userAccountsState: [userAccounts],
 	} = useGetAccountUserAccount(project);
 
-	const isAdminOrPartnerManager = userAccounts?.some((userAccount) =>
-		userAccount?.roles?.some(
-			(role) =>
-				role === ROLE_TYPES.admin.key ||
-				role === ROLE_TYPES.partnerManager.key
-		)
-	);
+	const isAdminOrPartnerManager = useMemo(() => {
+		const currentUser = userAccounts?.find(
+			({id}) => id === +Liferay.ThemeDisplay.getUserId()
+		);
+
+		if (currentUser) {
+			const hasAdminRoles = currentUser?.roles?.some(
+				(role) =>
+					role === ROLE_TYPES.admin.key ||
+					role === ROLE_TYPES.partnerManager.key
+			);
+
+			return hasAdminRoles;
+		}
+	}, [userAccounts]);
 
 	const [status, setStatus] = useState({
 		deactivate: '',

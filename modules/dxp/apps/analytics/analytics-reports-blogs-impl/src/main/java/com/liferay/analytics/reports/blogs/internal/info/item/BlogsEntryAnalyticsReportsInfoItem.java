@@ -17,7 +17,6 @@ package com.liferay.analytics.reports.blogs.internal.info.item;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.layout.display.page.info.item.LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -29,7 +28,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -142,9 +140,6 @@ public class BlogsEntryAnalyticsReportsInfoItem
 	}
 
 	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
@@ -153,9 +148,6 @@ public class BlogsEntryAnalyticsReportsInfoItem
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

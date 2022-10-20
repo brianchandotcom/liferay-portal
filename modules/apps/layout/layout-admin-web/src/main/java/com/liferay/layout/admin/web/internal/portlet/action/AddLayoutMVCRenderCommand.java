@@ -16,14 +16,12 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -45,8 +43,5 @@ public class AddLayoutMVCRenderCommand implements MVCRenderCommand {
 
 		return "/add_layout.jsp";
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

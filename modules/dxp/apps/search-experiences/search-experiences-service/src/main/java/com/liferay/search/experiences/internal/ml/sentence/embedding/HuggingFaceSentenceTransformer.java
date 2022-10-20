@@ -15,7 +15,6 @@
 package com.liferay.search.experiences.internal.ml.sentence.embedding;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -86,10 +85,8 @@ public class HuggingFaceSentenceTransformer
 
 		options.addHeader(
 			HttpHeaders.AUTHORIZATION,
-			StringBundler.concat(
-				"Bearer ${",
-				_sentenceTransformerConfiguration.huggingFaceAccessToken(),
-				"}"));
+			"Bearer " +
+				_sentenceTransformerConfiguration.huggingFaceAccessToken());
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 

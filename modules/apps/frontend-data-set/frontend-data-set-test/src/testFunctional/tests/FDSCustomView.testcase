@@ -192,5 +192,48 @@ definition {
 				key_valueIndex2 = "2");
 		}
 	}
+	@description = "LPS-164602 Frontend Dataset - column labels are not localized "
+    @priority = "4"
+    test ManagementBarCanBeLocalized {
+        task ("site URL localized to Spanish //localhost:8080/es/ and on a customized tab view") {
+            // Navigator.openSpecificURL(url = "http://localhost:8080/es/");
+			var portalURL = PropsUtil.get("portal.url");
+			Navigator.openSpecificURL(url = "${portalURL}/es/frontend-data-set-test-page/");
+        }
+        task ("Filter button is localized ") {
+            AssertTextEquals(
+                locator1 = "FrontendDataSet#FILTER_BUTTON",
+                value1 = "Filtro");
+        }
+        task ("Search help text is localized ") {
+            AssertAttributeValue(
+                attribute1 = "placeholder",
+                key_placeholder = "Buscar",
+                locator1 = "FrontendDataSet#PLACEHOLDER",
+                value1 = "Buscar");
+        }
+        task ("Change Display dropdown items are localized") {
+            AssertTextEquals(
+                locator1 = "FrontendDataSet#FILTER_BUTTON",
+                value1 = "Filtro");
+        }
+        task ("Custom Views dropdown items are localized") {
+            Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+            AssertTextEquals(
+                locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+                value1 = "Vista por defecto");
+        }
+        task ("Ellipsis dropdown 'Save' is localized") {
+            Click(locator1 = "FrontendDataSet#ELLIPSIS");
+            AssertElementPresent(
+                key_itemName = "Guardar vista como",
+                locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+        }
+        task ("Reset Filters link is localized") {
+            AssertElementPresent(
+                locator1 = "FrontendDataSet#RESET_FILTERS",
+                reset_filter = "Restablecer filtros");
+        }
+    }
 
 }

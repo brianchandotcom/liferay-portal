@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,56 +33,77 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF};
+		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
-			_checkIfDeleted(detailAST);
-
+		if (!_checkExtends(detailAST)) {
 			return;
 		}
 
-		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		boolean continueFlag = true;
+		List<DetailAST> ifDetailASTs = getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_IF);
 
-		if (!StringUtil.equals(identDetailAST.getText(), "doUpgrade") ||
-			!_checkExtends(detailAST)) {
+		for (DetailAST curDetailAST : ifDetailASTs) {
+			if (!_checkUnnecessaryJudgement(curDetailAST)) {
+				continueFlag = false;
+			}
+		}
 
+		if (continueFlag) {
+			continueFlag = _checkIfDeleted(detailAST);
+		}
+
+		if (!continueFlag) {
 			return;
 		}
 
-		DetailAST sListDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
+		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_DEF);
 
-		if (sListDetailAST.getChildCount() == 1) {
-			return;
-		}
+		for (DetailAST curDetailAST : methodDefDetailASTs) {
+			DetailAST identDetailAST = curDetailAST.findFirstToken(
+				TokenTypes.IDENT);
 
-		DetailAST firstChildDetailAST = sListDetailAST.getFirstChild();
+			if (!StringUtil.equals(identDetailAST.getText(), "doUpgrade")) {
+				continue;
+			}
 
-		DetailAST nextDetailAST = firstChildDetailAST;
+			DetailAST sListDetailAST = curDetailAST.findFirstToken(
+				TokenTypes.SLIST);
 
-		if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
-			nextDetailAST = _checkMethod(firstChildDetailAST, false);
-		}
+			if (sListDetailAST.getChildCount() == 1) {
+				return;
+			}
 
-		while (nextDetailAST != null) {
-			firstChildDetailAST = nextDetailAST;
-			nextDetailAST = nextDetailAST.getNextSibling();
-		}
+			DetailAST firstChildDetailAST = sListDetailAST.getFirstChild();
 
-		int tokenType = firstChildDetailAST.getType();
+			DetailAST nextDetailAST = firstChildDetailAST;
 
-		while ((tokenType == TokenTypes.SEMI) ||
-			   (tokenType == TokenTypes.RCURLY)) {
+			if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
+				nextDetailAST = _checkMethod(firstChildDetailAST, false);
+			}
 
-			firstChildDetailAST = firstChildDetailAST.getPreviousSibling();
+			while (nextDetailAST != null) {
+				firstChildDetailAST = nextDetailAST;
+				nextDetailAST = nextDetailAST.getNextSibling();
+			}
 
-			tokenType = firstChildDetailAST.getType();
-		}
+			int tokenType = firstChildDetailAST.getType();
 
-		if (tokenType == TokenTypes.EXPR) {
-			_checkMethod(firstChildDetailAST, true);
+			while ((tokenType == TokenTypes.SEMI) ||
+				   (tokenType == TokenTypes.RCURLY)) {
+
+				firstChildDetailAST = firstChildDetailAST.getPreviousSibling();
+
+				tokenType = firstChildDetailAST.getType();
+			}
+
+			if (tokenType == TokenTypes.EXPR) {
+				_checkMethod(firstChildDetailAST, true);
+			}
 		}
 	}
 
@@ -112,17 +134,13 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			e -> StringUtil.equals(e.getText(), "UpgradeProcess"));
 	}
 
-	private void _checkIfDeleted(DetailAST detailAST) {
-		if (!_checkExtends(detailAST)) {
-			return;
-		}
-
+	private boolean _checkIfDeleted(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
 		if (absolutePath.contains(
 				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade")) {
 
-			return;
+			return true;
 		}
 
 		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
@@ -131,7 +149,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		if (ListUtil.isEmpty(methodDefDetailASTs) ||
 			(methodDefDetailASTs.size() > 1)) {
 
-			return;
+			return true;
 		}
 
 		DetailAST methodDefDetailAST = methodDefDetailASTs.get(0);
@@ -140,7 +158,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			TokenTypes.IDENT);
 
 		if (!StringUtil.equals("doUpgrade", identDetailAST.getText())) {
-			return;
+			return true;
 		}
 
 		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
@@ -160,7 +178,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 				(tokenType != TokenTypes.SEMI) &&
 				(tokenType != TokenTypes.RCURLY)) {
 
-				return;
+				return true;
 			}
 
 			if ((tokenType == TokenTypes.SEMI) ||
@@ -176,7 +194,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
 
 			if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
-				return;
+				return true;
 			}
 
 			String methodName = getMethodName(firstChildDetailAST);
@@ -186,13 +204,13 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 				!StringUtil.equals(methodName, "alterTableAddColumn") &&
 				!StringUtil.equals(methodName, "alterTableDropColumn")) {
 
-				return;
+				return true;
 			}
 
 			List<String> parameters = _getParameterList(firstChildDetailAST);
 
 			if (ListUtil.isEmpty(parameters)) {
-				return;
+				return true;
 			}
 
 			if (Validator.isNull(currentMethodName)) {
@@ -206,7 +224,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 					!StringUtil.equals(currentMethodName, methodName) ||
 					!StringUtil.equals(parameters.get(0), parameter1)) {
 
-					return;
+					return true;
 				}
 			}
 
@@ -215,7 +233,11 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 		if (methodCount != 0) {
 			log(detailAST, _MSG_DELETE_CLASS);
+
+			return false;
 		}
+
+		return true;
 	}
 
 	private DetailAST _checkMethod(DetailAST detailAST, boolean lastLine) {
@@ -313,6 +335,119 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		return ListUtil.isNotEmpty(parameters);
 	}
 
+	private boolean _checkUnnecessaryJudgement(DetailAST detailAST) {
+		DetailAST exprDetailAST = detailAST.findFirstToken(TokenTypes.EXPR);
+
+		DetailAST childDetailAST = exprDetailAST.getFirstChild();
+
+		boolean unCheck = false;
+
+		if (childDetailAST.getType() == TokenTypes.LNOT) {
+			unCheck = true;
+			childDetailAST = childDetailAST.getFirstChild();
+		}
+
+		String hasMethodName = getMethodName(childDetailAST);
+
+		if (Validator.isNull(hasMethodName)) {
+			return true;
+		}
+
+		List<String> hasMethodParameters = _getParameters(
+			childDetailAST, hasMethodName);
+
+		if (ListUtil.isEmpty(hasMethodParameters)) {
+			return true;
+		}
+
+		DetailAST sListDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
+
+		if (sListDetailAST.getNextSibling() != null) {
+			return true;
+		}
+
+		childDetailAST = sListDetailAST.getFirstChild();
+
+		int count = 0;
+
+		while (childDetailAST != null) {
+			int tokenType = childDetailAST.getType();
+
+			if ((tokenType != TokenTypes.SEMI) &&
+				(tokenType != TokenTypes.RCURLY)) {
+
+				exprDetailAST = childDetailAST;
+				count++;
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+
+		if (count != 1) {
+			return true;
+		}
+
+		childDetailAST = exprDetailAST.getFirstChild();
+
+		String alterMethodName = getMethodName(childDetailAST);
+
+		if (Validator.isNull(alterMethodName)) {
+			return true;
+		}
+
+		List<String> alterMethodParameters = _getParameters(
+			childDetailAST, alterMethodName);
+
+		if (ListUtil.isEmpty(alterMethodParameters) ||
+			!StringUtil.equals(
+				hasMethodParameters.get(0), alterMethodParameters.get(0))) {
+
+			return true;
+		}
+
+		if (StringUtil.equals(alterMethodName, "alterColumnName")) {
+			String newColumnName = StringUtil.extractFirst(
+				alterMethodParameters.get(2), StringPool.SPACE);
+			String newColumnType = StringUtil.extractFirst(
+				alterMethodParameters.get(2), StringPool.SPACE);
+
+			if ((StringUtil.equals(hasMethodName, "hasColumn") &&
+				 ((unCheck &&
+				   StringUtil.equals(
+					   hasMethodParameters.get(1), newColumnName)) ||
+				  (!unCheck &&
+				   StringUtil.equals(
+					   hasMethodParameters.get(1),
+					   alterMethodParameters.get(1))))) ||
+				(StringUtil.equals(hasMethodName, "hasColumnType") &&
+				 ((unCheck &&
+				   StringUtil.equals(
+					   hasMethodParameters.get(1), newColumnName) &&
+				   StringUtil.equals(
+					   hasMethodParameters.get(2), newColumnType)) ||
+				  (!unCheck &&
+				   StringUtil.equals(
+					   hasMethodParameters.get(1),
+					   alterMethodParameters.get(1)))))) {
+
+				log(detailAST, _MSG_REMOVE_UNNECESSARY_METHOD);
+
+				return false;
+			}
+		}
+		else {
+			if (StringUtil.equals(
+					hasMethodParameters.get(1), alterMethodParameters.get(1))) {
+
+				log(detailAST, _MSG_REMOVE_UNNECESSARY_METHOD);
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private DetailAST _getDetailAST(DetailAST detailAST, boolean lastLine) {
 		if (lastLine) {
 			return detailAST.getPreviousSibling();
@@ -353,7 +488,56 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		return parameters;
 	}
 
+	private List<String> _getParameters(
+		DetailAST detailAST, String methodName) {
+
+		if (!(StringUtil.equals(methodName, "hasColumn") ||
+			  StringUtil.equals(methodName, "hasColumnType") ||
+			  StringUtil.equals(methodName, "alterColumnName") ||
+			  StringUtil.equals(methodName, "alterColumnType") ||
+			  StringUtil.equals(methodName, "alterTableAddColumn") ||
+			  StringUtil.equals(methodName, "alterTableDropColumn"))) {
+
+			return null;
+		}
+
+		DetailAST eListDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
+
+		DetailAST childDetailAST = eListDetailAST.getFirstChild();
+
+		List<String> alterMethodParameters = new ArrayList<>();
+
+		while (childDetailAST != null) {
+			int tokenType = childDetailAST.getType();
+
+			if ((tokenType != TokenTypes.COMMA) &&
+				(tokenType != TokenTypes.EXPR)) {
+
+				return null;
+			}
+
+			if (tokenType == TokenTypes.EXPR) {
+				DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() !=
+						TokenTypes.STRING_LITERAL) {
+
+					return null;
+				}
+
+				alterMethodParameters.add(firstChildDetailAST.getText());
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+
+		return alterMethodParameters;
+	}
+
 	private static final String _MSG_DELETE_CLASS = "delete.class";
+
+	private static final String _MSG_REMOVE_UNNECESSARY_METHOD =
+		"remove.unnecessary.method";
 
 	private static final String _MSG_REPLACE_METHOD = "replace.method";
 

@@ -10,6 +10,7 @@
  */
 
 import {array, number, object, string} from 'yup';
+
 import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
 const generalSchema = object({

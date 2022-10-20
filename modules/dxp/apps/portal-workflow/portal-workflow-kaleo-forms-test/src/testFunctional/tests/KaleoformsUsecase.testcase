@@ -5351,7 +5351,7 @@ definition {
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = "${workflowAssetType}",
 			workflowDefinition = "Single Approver",
-			workflowTask = "Single Approver");
+			workflowTask = "Review");
 	}
 
 }

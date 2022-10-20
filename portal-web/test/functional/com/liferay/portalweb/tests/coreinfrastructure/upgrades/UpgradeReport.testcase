@@ -172,6 +172,16 @@ definition {
 				fail("Upgrade report does not contain expected warnings.");
 			}
 		}
+
+		task ("Read the content. Check for class name and message") {
+			if (!(contains("${fileContent}", "Class name:"))) {
+				fail("Upgrade report does not contain the warning class name.");
+			}
+
+			if (!(contains("${fileContent}", "occurrences of the following warnings: "))) {
+				fail("Upgrade report does not contain the warning message.");
+			}
+		}
 	}
 
 }

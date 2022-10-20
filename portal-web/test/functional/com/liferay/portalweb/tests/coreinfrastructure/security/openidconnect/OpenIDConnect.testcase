@@ -150,7 +150,8 @@ definition {
 		AssertElementNotPresent(locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET");
 	}
 
-	@description = "This is a use case for LPS-124900 TC-4 and LPS-139642 TC-5: Users should be logged out when they don't have a valid access token because a misconfigured refresh token lifetime at Portal."
+	@description = "This is a use case for LPS-124900 TC-4 and LPS-139642 TC-5: Users should be logged out when they don't have a valid access token because a misconfigured refresh token lifetime at Portal. Blocked by LRQA-77889."
+	@ignore = "true"
 	@priority = "4"
 	test AssertUserIsLoggedOutWithHigherRefreshToken {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";

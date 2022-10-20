@@ -14,8 +14,21 @@
 
 package com.liferay.notification.model.impl;
 
+import com.liferay.notification.model.NotificationRecipientSetting;
+import com.liferay.notification.service.NotificationRecipientSettingLocalServiceUtil;
+
+import java.util.List;
+
 /**
- * @author Gabriel Albuquerque
+ * @author Feliphe Marinho
  */
 public class NotificationRecipientImpl extends NotificationRecipientBaseImpl {
+
+	public List<NotificationRecipientSetting>
+		getNotificationRecipientSettings() {
+
+		return NotificationRecipientSettingLocalServiceUtil.
+			getNotificationRecipientSettings(getNotificationRecipientId());
+	}
+
 }

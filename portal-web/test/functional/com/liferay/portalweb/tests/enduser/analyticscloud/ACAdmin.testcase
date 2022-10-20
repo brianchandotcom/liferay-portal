@@ -149,6 +149,8 @@ definition {
 				emailAddress = "${userEmailAddress}",
 				password = "test");
 
+			Open(locator1 = "${analyticsCloudURL}");
+
 			ACAdmin.goToACAdmin();
 		}
 

@@ -43,8 +43,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Minhchau Dang
  * @author Samuel Ziemer
  */
-@Component(immediate = true, service = AbortedMultipartUploadCleaner.class)
-public class AbortedMultipartUploadCleaner extends BaseMessageListener {
+@Component(
+	immediate = true,
+	service = AbortedMultipartUploadCleanerMessageListener.class
+)
+public class AbortedMultipartUploadCleanerMessageListener
+	extends BaseMessageListener {
 
 	@Activate
 	protected void activate() {

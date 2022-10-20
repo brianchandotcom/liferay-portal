@@ -60,8 +60,8 @@ definition {
 
 		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
 			CP2ActivationKeys.generateKeyFlow(
-				project = "NASA ICE",
-				product = "Portal");
+				product = "Portal",
+				project = "NASA ICE");
 
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Product",
@@ -188,8 +188,8 @@ definition {
 
 		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
 			CP2ActivationKeys.generateKeyFlow(
-				project = "NASA ICE",
-				product = "Portal");
+				product = "Portal",
+				project = "NASA ICE");
 
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Product",
@@ -300,8 +300,8 @@ definition {
 
 		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
 			CP2ActivationKeys.generateKeyFlow(
-				project = "NASA ICE",
-				product = "Portal");
+				product = "Portal",
+				project = "NASA ICE");
 
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Product",
@@ -388,8 +388,8 @@ definition {
 
 		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
 			CP2ActivationKeys.generateKeyFlow(
-				project = "NASA ICE",
-				product = "Portal");
+				product = "Portal",
+				project = "NASA ICE");
 
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Product",
@@ -440,8 +440,8 @@ definition {
 
 		task ("Given I fulfill entire flow up to the second phase for Generate New License") {
 			CP2ActivationKeys.generateKeyFlow(
-				project = "NASA ICE",
-				product = "Portal");
+				product = "Portal",
+				project = "NASA ICE");
 
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Product",

@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTPreferencesTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.base.CTPreferencesServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
@@ -130,7 +129,7 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 				}
 			}
 
-			return _ctPreferencesLocalService.getCTPreferences(companyId, 0);
+			return ctPreferencesLocalService.getCTPreferences(companyId, 0);
 		}
 
 		for (CTPreferences ctPreferences :
@@ -157,9 +156,6 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 	)
 	private ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
-
-	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

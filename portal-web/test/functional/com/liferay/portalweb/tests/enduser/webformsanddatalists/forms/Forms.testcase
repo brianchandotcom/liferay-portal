@@ -1011,6 +1011,51 @@ definition {
 			formName = "Copy of Test");
 	}
 
+	@description = "Verify if an unpublished form becomes unavailable on the page"
+	@priority = "4"
+	test CheckUnpublishedFormUnavailableOnPage {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Test Form");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		Form.save();
+
+		AssertElementPresent(
+			key_value = "Share",
+			locator1 = "Form#ANY_DISABLED_BUTTON");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm(formName = "Test Form");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Alert.viewWarningSpecific(warningMessage = "This form is not available or it was not published.");
+	}
+
 	@description = "LPS-69214 - Verify that a confirmation appears when attempting to leave a Form without saving."
 	@priority = "3"
 	test ConfirmationAppearsWhenLeavingFormWithoutSaving {

@@ -20,7 +20,7 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {createCaseTypes, updateCaseTypes} from '../../../services/rest';
+import {testrayCaseTypeImpl} from '../../../services/rest';
 
 type CaseTypeForm = {
 	id?: number;
@@ -47,8 +47,8 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 		onSubmit(
 			{id: form.id, name: form.name},
 			{
-				create: createCaseTypes,
-				update: updateCaseTypes,
+				create: (...params) => testrayCaseTypeImpl.create(...params),
+				update: (...params) => testrayCaseTypeImpl.update(...params),
 			}
 		)
 			.then(onSave)

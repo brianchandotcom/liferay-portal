@@ -12,19 +12,47 @@
  * details.
  */
 
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
+import {SearchBuilder} from '../../util/search';
+import Rest from './Rest';
+import {APIResponse, TestrayCaseType} from './types';
 
 type CaseType = typeof yupSchema.caseType.__outputType;
 
-const adapter = ({name}: CaseType) => ({
-	name,
-});
+class TestrayCaseTypeImpl extends Rest<CaseType, TestrayCaseType> {
+	constructor() {
+		super({
+			adapter: ({name}) => ({
+				name,
+			}),
+			uri: 'casetypes',
+		});
+	}
+	protected async validate(suite: CaseType, id?: number) {
+		const searchBuilder = new SearchBuilder();
 
-const createCaseTypes = (casetype: CaseType) =>
-	fetcher.post('/casetypes', adapter(casetype));
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
 
-const updateCaseTypes = (id: number, casetype: CaseType) =>
-	fetcher.put(`/casetypes/${id}`, adapter(casetype));
+		const filters = searchBuilder.eq('name', suite.name).build();
 
-export {createCaseTypes, updateCaseTypes};
+		const response = await this.fetcher<APIResponse<TestrayCaseType>>(
+			`/casetypes?filter=${filters}`
+		);
+
+		if (response?.totalCount) {
+			throw new Error(i18n.sub('the-x-name-already-exists', 'case-type'));
+		}
+	}
+	protected async beforeCreate(suite: CaseType): Promise<void> {
+		await this.validate(suite);
+	}
+
+	protected async beforeUpdate(id: number, suite: CaseType): Promise<void> {
+		await this.validate(suite, id);
+	}
+}
+
+export const testrayCaseTypeImpl = new TestrayCaseTypeImpl();

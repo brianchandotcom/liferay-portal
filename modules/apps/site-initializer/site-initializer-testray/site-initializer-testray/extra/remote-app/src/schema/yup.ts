@@ -171,7 +171,10 @@ const yupSchema = {
 		id: yup.string(),
 		key: yup.string(),
 		linkTitle: yup.string().required(),
-		linkURL: yup.string().required(),
+		linkURL: yup
+			.string()
+			.url(i18n.translate('the-link-url-must-be-a-valid-url'))
+			.required(),
 		summary: yup.string().required(),
 	}),
 	role: yup.object({

@@ -222,6 +222,7 @@ export default {
 	'no-results-found': 'No results found',
 	'no-x': 'No {0}',
 	'operating-system': 'Operating System',
+	'option': 'Option',
 	'options': 'Options',
 	'order-by': 'Order By',
 	'overview': 'Overview',
@@ -314,6 +315,7 @@ export default {
 	'testray-user': ' User',
 	'tests': 'Tests',
 	'the-component-name-already-exists': 'The component name already exists.',
+	'the-link-url-must-be-a-valid-url': 'The link URL must be a valid URL.',
 	'the-name-already-exists': 'The name already exists.',
 	'the-project-cannot-be-deleted-because-it-has-associated-builds':
 		'The Project cannot be deleted because it has associated builds',

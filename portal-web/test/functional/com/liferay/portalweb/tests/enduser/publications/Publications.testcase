@@ -691,7 +691,7 @@ definition {
 
 	@description = "This is use case for LPS-157264.Changing permissions on a publication shouldn't go into the publication"
 	@priority = "3"
-	test ChangePermissionsOnApublicationShouldGoIntoProduction {
+	test ChangePermissionsOnAPublicationShouldGoIntoProduction {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

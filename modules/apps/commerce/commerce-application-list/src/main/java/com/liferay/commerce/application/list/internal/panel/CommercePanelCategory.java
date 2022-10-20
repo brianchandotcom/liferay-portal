@@ -15,7 +15,6 @@
 package com.liferay.commerce.application.list.internal.panel;
 
 import com.liferay.application.list.BasePanelCategory;
-import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
@@ -69,9 +68,6 @@ public class CommercePanelCategory extends BasePanelCategory {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private PortalPermission _portalPermission;

@@ -25,7 +25,6 @@ import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -201,9 +200,6 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

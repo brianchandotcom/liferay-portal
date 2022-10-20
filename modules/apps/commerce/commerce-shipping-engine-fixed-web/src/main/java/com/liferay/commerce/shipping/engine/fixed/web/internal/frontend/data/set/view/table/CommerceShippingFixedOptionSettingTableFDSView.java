@@ -17,7 +17,6 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.data.se
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
@@ -297,9 +296,6 @@ public class CommerceShippingFixedOptionSettingTableFDSView
 
 		return commerceShippingFixedOptionRel.getZip();
 	}
-
-	@Reference
-	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private CommerceShippingFixedOptionRelService

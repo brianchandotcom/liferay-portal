@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -163,8 +162,5 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
-
-	@Reference
-	private Portal _portal;
 
 }

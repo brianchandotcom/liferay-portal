@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Qi Zhang
  */
-public class CheckExtraJudgementUpgradeProcess extends UpgradeProcess {
+public class CheckUnnecessaryMethodUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

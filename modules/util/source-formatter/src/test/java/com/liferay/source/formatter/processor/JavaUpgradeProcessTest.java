@@ -23,7 +23,9 @@ public class JavaUpgradeProcessTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testCheckExtraJudgement() throws Exception {
-		test("CheckExtraJudgementUpgradeProcess.testjava");
+		test(
+			"CheckUnnecessaryMethodUpgradeProcess.testjava",
+			"Remove unnecessary usages of hasColumn or hasColumnType.", 26);
 	}
 
 	@Test

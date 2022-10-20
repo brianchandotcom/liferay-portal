@@ -14,23 +14,23 @@
 
 package com.liferay.portal.vulcan.internal.template;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
-import com.liferay.portal.kernel.url.URLBuilder;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.internal.template.servlet.HeadlessHttpClientHttpRequestWrapper;
+import com.liferay.portal.vulcan.internal.template.servlet.HeadlessHttpClientHttpResponseWrapper;
 
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,51 +49,46 @@ public class HeadlessHttpClientTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)contextObjects.get(
+			"themeDisplay");
+
 		contextObjects.put(
-			"headlessHttpClient", new HeadlessHttpClient(httpServletRequest));
+			"headlessHttpClient",
+			new HeadlessHttpClient(
+				httpServletRequest, themeDisplay.getResponse()));
 	}
 
 	public class HeadlessHttpClient {
 
-		public HeadlessHttpClient(HttpServletRequest httpServletRequest) {
+		public HeadlessHttpClient(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
+
 			_httpServletRequest = httpServletRequest;
+			_httpServletResponse = httpServletResponse;
 		}
 
 		public Object get(String path) throws Exception {
-			Http.Options options = new Http.Options();
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			options.addHeader(
-				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
+			ServletContext servletContext = ServletContextPool.get(
+				StringPool.BLANK);
 
-			String jSessionId = CookieKeys.getCookie(
-				_httpServletRequest, CookieKeys.JSESSIONID);
+			RequestDispatcher requestDispatcher =
+				servletContext.getRequestDispatcher(Portal.PATH_MODULE + path);
 
-			options.addHeader(
-				HttpHeaders.COOKIE, CookieKeys.JSESSIONID + "=" + jSessionId);
-
-			options.addHeader(
-				PropsValues.WEB_SERVER_FORWARDED_HOST_HEADER,
-				PortalUtil.getForwardedHost(_httpServletRequest));
-			options.addHeader(
-				PropsValues.WEB_SERVER_FORWARDED_PORT_HEADER,
-				String.valueOf(
-					PortalUtil.getForwardedPort(_httpServletRequest)));
-
-			options.setLocation(
-				URLBuilder.create(
-					StringBundler.concat(
-						Http.HTTP, "://localhost:",
-						_httpServletRequest.getServerPort(), Portal.PATH_MODULE,
-						path)
-				).setParameter(
-					"p_auth", AuthTokenUtil.getToken(_httpServletRequest)
-				).build());
+			requestDispatcher.forward(
+				new HeadlessHttpClientHttpRequestWrapper(_httpServletRequest),
+				new HeadlessHttpClientHttpResponseWrapper(
+					new PipingServletResponse(
+						_httpServletResponse, unsyncStringWriter)));
 
 			return JSONFactoryUtil.looseDeserialize(
-				HttpUtil.URLtoString(options));
+				unsyncStringWriter.toString());
 		}
 
 		private final HttpServletRequest _httpServletRequest;
+		private final HttpServletResponse _httpServletResponse;
 
 	}
 

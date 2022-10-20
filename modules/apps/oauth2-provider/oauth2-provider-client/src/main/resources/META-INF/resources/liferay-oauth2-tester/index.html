@@ -3,20 +3,22 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<meta content="initial-scale=1, width=device-width" name="viewport" />
 
 	<title>Liferay - OAuth2 Tester</title>
 
 	<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" rel="stylesheet" />
 </head>
 
-<body style="width: 90%; margin: 3%">
+<body style="margin: 3%; width: 90%;">
 <div class="row">
 	<div class="col-8">
 		<h1 id="title">Liferay OAuth2 Tester</h1>
 
-		<div><p>You must configure an OAuth2 Application in your Liferay Portal and set:</p>
-			<dl class="row" style="padding-left: 1.5rem">
+		<div>
+			<p>You must configure an OAuth2 Application in your Liferay Portal and set:</p>
+
+			<dl class="row" style="padding-left: 1.5rem;">
 				<dt class="col-sm-2">Callback</dt>
 				<dd class="col-sm-10"><span id="callbackUri"></span>url=YOUR_LIFERAY_URL&client_id=YOUR_CLIENT_ID</dd>
 				<dt class="col-sm-2">Scope</dt>
@@ -28,11 +30,11 @@
 	<div class="col-4">
 		<div class="gy-2 row">
 			<div class="col-12">
-				<button id="changeModeButton" class="btn btn-info float-end">Use PKCE Authorization Code Grant Flow</button>
+				<button class="btn btn-info float-end" id="changeModeButton">Use PKCE Authorization Code Grant Flow</button>
 			</div>
 
 			<div class="col-12">
-				<button id="resetButton" class="btn btn-danger float-end">Reset</button>
+				<button class="btn btn-danger float-end" id="resetButton">Reset</button>
 			</div>
 		</div>
 	</div>
@@ -41,7 +43,7 @@
 <div class="accordion" id="accordion">
 	<div class="accordion-item">
 		<h2 class="accordion-header" id="authTab">
-			<button id="authTabButton" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#authTabCollapse" aria-expanded="false" aria-controls="authTabCollapse" disabled>
+			<button aria-controls="authTabCollapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#authTabCollapse" data-bs-toggle="collapse" disabled id="authTabButton" type="button">
 				1. Authorize application
 			</button>
 		</h2>
@@ -49,37 +51,37 @@
 		<div aria-labelledby="authTab" class="accordion-collapse collapse" data-bs-parent="#accordion" id="authTabCollapse">
 			<form class="accordion-body gy-4 row" id="authForm">
 				<div class="col-md-6">
-					<label for="liferayUrl" class="form-label">Liferay URL:</label>
+					<label class="form-label" for="liferayUrl">Liferay URL:</label>
 
-					<input class="form-control" id="liferayUrl" name="liferayUrl" type="text" value="http://localhost:8080" required />
+					<input class="form-control" id="liferayUrl" name="liferayUrl" required type="text" value="http://localhost:8080" />
 				</div>
 
 				<div class="col-md-6">
-					<label for="authorizeUrl" class="form-label">OAuth2 Authorization URL:</label>
+					<label class="form-label" for="authorizeUrl">OAuth2 Authorization URL:</label>
 
 					<input class="form-control" id="authorizeUrl" name="authorizeUrl" type="text" value="/o/oauth2/authorize" />
 				</div>
 
 				<div class="col-12" id="clientIdDiv">
-					<label for="clientId" class="form-label">Client ID:</label>
+					<label class="form-label" for="clientId">Client ID:</label>
 
-					<input class="form-control" id="clientId" name="clientId" type="text" required />
+					<input class="form-control" id="clientId" name="clientId" required type="text" />
 				</div>
 
-				<div class="col-md-3" id="codeChallengeDiv" style="display: none">
-					<label for="codeChallenge" class="form-label">Code Challenge:</label>
+				<div class="col-md-3" id="codeChallengeDiv" style="display: none;">
+					<label class="form-label" for="codeChallenge">Code Challenge:</label>
 
-					<input class="form-control" id="codeChallenge" name="codeChallenge" type="text" disabled readonly />
+					<input class="form-control" disabled id="codeChallenge" name="codeChallenge" readonly type="text" />
 				</div>
 
-				<div class="col-md-6" id="convertedCodeChallengeDiv" style="display: none">
-					<label for="convertedCodeChallenge" class="form-label">Base64 Encoded SHA256 Code Challenge:</label>
+				<div class="col-md-6" id="convertedCodeChallengeDiv" style="display: none;">
+					<label class="form-label" for="convertedCodeChallenge">Base64 Encoded SHA256 Code Challenge:</label>
 
-					<input class="form-control" id="convertedCodeChallenge" name="convertedCodeChallenge" type="text" disabled readonly />
+					<input class="form-control" disabled id="convertedCodeChallenge" name="convertedCodeChallenge" readonly type="text" />
 				</div>
 
 				<div class="col-12">
-					<button class="btn btn-primary" id="generateCodeChallenge" style="display: none">Generate Code Challenge</button>
+					<button class="btn btn-primary" id="generateCodeChallenge" style="display: none;">Generate Code Challenge</button>
 					<button class="btn btn-primary" id="getAuthorizationCode" type="submit">Authorize</button>
 					<button class="btn btn-warning float-end" id="alreadyHaveTokens" type="submit">Already have tokens</button>
 				</div>
@@ -89,7 +91,7 @@
 
 	<div class="accordion-item">
 		<h2 class="accordion-header" id="tokenTab">
-			<button id="tokenTabButton" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tokenTabCollapse" aria-expanded="false" aria-controls="tokenTabCollapse" disabled>
+			<button aria-controls="tokenTabCollapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#tokenTabCollapse" data-bs-toggle="collapse" disabled id="tokenTabButton" type="button">
 				2. Obtain OAuth2 Token
 			</button>
 		</h2>
@@ -97,37 +99,37 @@
 		<div aria-labelledby="tokenTab" class="accordion-collapse collapse" data-parent="#accordion" id="tokenTabCollapse">
 			<form class="accordion-body gy-4 row" id="tokenForm">
 				<div class="col-md-6">
-					<label for="tokenLiferayUrl" class="form-label">Liferay URL:</label>
+					<label class="form-label" for="tokenLiferayUrl">Liferay URL:</label>
 
-					<input class="form-control" id="tokenLiferayUrl" name="tokenLiferayUrl" type="text" disabled readonly />
+					<input class="form-control" disabled id="tokenLiferayUrl" name="tokenLiferayUrl" readonly type="text" />
 				</div>
 
 				<div class="col-md-6">
-					<label for="tokenClientId" class="form-label">Client ID:</label>
+					<label class="form-label" for="tokenClientId">Client ID:</label>
 
-					<input class="form-control" id="tokenClientId" name="tokenClientId" type="text" disabled readonly />
+					<input class="form-control" disabled id="tokenClientId" name="tokenClientId" readonly type="text" />
 				</div>
 
 				<div class="col-md-6">
-					<label for="authCode" class="form-label">Auth Code:</label>
+					<label class="form-label" for="authCode">Auth Code:</label>
 
-					<input class="form-control" id="authCode" name="authCode" type="text" disabled readonly />
+					<input class="form-control" disabled id="authCode" name="authCode" readonly type="text" />
 				</div>
 
 				<div class="col-md-6">
-					<label for="tokenUrl" class="form-label">OAuth2 Token URL:</label>
+					<label class="form-label" for="tokenUrl">OAuth2 Token URL:</label>
 
-					<input class="form-control" id="tokenUrl" name="tokenUrl" type="text" value="/o/oauth2/token" required />
+					<input class="form-control" id="tokenUrl" name="tokenUrl" required type="text" value="/o/oauth2/token" />
 				</div>
 
 				<div class="col-12">
-					<label id="clientSecretOrCodeChallengeLabel" for="clientSecretOrCodeChallenge" class="form-label">Client Secret:</label>
+					<label class="form-label" for="clientSecretOrCodeChallenge" id="clientSecretOrCodeChallengeLabel">Client Secret:</label>
 
-					<input class="form-control" id="clientSecretOrCodeChallenge" name="clientSecretOrCodeChallenge" type="password" required />
+					<input class="form-control" id="clientSecretOrCodeChallenge" name="clientSecretOrCodeChallenge" required type="password" />
 				</div>
 
 				<div class="col-12">
-					<button class="btn btn-primary" id="getToken" >Obtain token</button>
+					<button class="btn btn-primary" id="getToken">Obtain token</button>
 				</div>
 			</form>
 		</div>
@@ -135,7 +137,7 @@
 
 	<div class="accordion-item">
 		<h2 class="accordion-header" id="requestTab">
-			<button id="requestTabButton" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#requestTabCollapse" aria-expanded="false" aria-controls="requestTabCollapse" disabled>
+			<button aria-controls="requestTabCollapse" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#requestTabCollapse" data-bs-toggle="collapse" disabled id="requestTabButton" type="button">
 				3. Test Request
 			</button>
 		</h2>
@@ -144,13 +146,13 @@
 			<div class="accordion-body">
 				<form class="gy-4 row" id="requestForm">
 					<div class="col-md-6">
-						<label for="requestUrl" class="form-label">URL:</label>
+						<label class="form-label" for="requestUrl">URL:</label>
 
-						<input class="form-control" id="requestUrl" name="requestUrl" type="text" value="http://localhost:8080/api/jsonws/user/get-current-user" required />
+						<input class="form-control" id="requestUrl" name="requestUrl" required type="text" value="http://localhost:8080/api/jsonws/user/get-current-user" />
 					</div>
 
 					<div class="col-md-2">
-						<label for="methodType" class="form-label">Method:</label>
+						<label class="form-label" for="methodType">Method:</label>
 
 						<select class="form-select" id="methodType" name="methodType">
 							<option selected>GET</option>
@@ -161,7 +163,7 @@
 					</div>
 
 					<div class="col-md-4">
-						<label for="contentType" class="form-label">Content-Type:</label>
+						<label class="form-label" for="contentType">Content-Type:</label>
 
 						<select class="form-select" id="contentType" name="contentType">
 							<option selected="selected">application/json</option>
@@ -169,19 +171,24 @@
 						</select>
 					</div>
 
-					<div id="parameters" style="display: none">
+					<div id="parameters" style="display: none;">
 						<hr />
 
 						<div class="gy-3 row">
 							<div class="col-12">
-								<p class="h6" style="margin-bottom: 0">Parameters</p>
+								<p class="h6" style="margin-bottom: 0;">Parameters</p>
 							</div>
 
-							<div class="col-md-6"><input type="text" id="paramName0" placeholder="Name" class="form-control form-control-sm" /></div>
-							<div class="col-md-6"><input type="text" id="paramValue0" placeholder="Value" class="form-control form-control-sm" /></div>
+							<div class="col-md-6">
+								<input class="form-control form-control-sm" id="paramName0" placeholder="Name" type="text" />
+							</div>
+
+							<div class="col-md-6">
+								<input class="form-control form-control-sm" id="paramValue0" placeholder="Value" type="text" />
+							</div>
 
 							<div class="col-12">
-								<button id="addParameter" class="btn btn-success btn-sm">Add another parameter</button>
+								<button class="btn btn-sm btn-success" id="addParameter">Add another parameter</button>
 							</div>
 						</div>
 
@@ -189,7 +196,7 @@
 					</div>
 
 					<div class="col-12">
-						<button id="sendRequest" class="btn btn-primary gy-4">Launch Request</button>
+						<button class="btn btn-primary gy-4" id="sendRequest">Launch Request</button>
 					</div>
 				</form>
 
@@ -197,33 +204,33 @@
 
 				<div class="align-items-end gy-3 row">
 					<div class="col-lg-9">
-						<label for="accessToken" class="form-label">Access Token:</label>
+						<label class="form-label" for="accessToken">Access Token:</label>
 
 						<input class="form-control form-control-sm" id="accessToken" name="accessToken" type="text" />
 					</div>
 
 					<div class="col-lg-3 text-end">
-						<button id="refreshTokenButton" class="btn btn-warning btn-sm">Refresh Token</button>
-						<button id="introspectAccessTokenButton" class="btn btn-warning btn-sm">Introspect Access Token</button>
+						<button class="btn btn-sm btn-warning" id="refreshTokenButton">Refresh Token</button>
+						<button class="btn btn-sm btn-warning" id="introspectAccessTokenButton">Introspect Access Token</button>
 					</div>
 
 					<div class="col-lg-9">
-						<label for="refreshToken" class="form-label">Refresh Token:</label>
+						<label class="form-label" for="refreshToken">Refresh Token:</label>
 
 						<input class="form-control form-control-sm" id="refreshToken" name="refreshToken" type="text" />
 					</div>
 
 					<div class="col-lg-3 text-end">
-						<button id="introspectRefreshTokenButton" class="btn btn-warning btn-sm">Introspect Refresh Token</button>
+						<button class="btn btn-sm btn-warning" id="introspectRefreshTokenButton">Introspect Refresh Token</button>
 					</div>
 				</div>
 
 				<hr />
 
 				<div class="col-12">
-					<label for="resultTextArea" class="form-label fw-bold fs-5">Result</label>
+					<label class="form-label fs-5 fw-bold" for="resultTextArea">Result</label>
 
-					<textarea class="form-control" id="resultTextArea" rows="5" disabled readonly></textarea>
+					<textarea class="form-control" disabled id="resultTextArea" readonly rows="5"></textarea>
 				</div>
 			</div>
 		</div>

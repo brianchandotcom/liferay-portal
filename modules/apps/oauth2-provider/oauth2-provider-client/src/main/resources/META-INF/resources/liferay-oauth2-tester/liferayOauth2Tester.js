@@ -12,16 +12,17 @@
  * details.
  */
 
-const liferayUrl = document.getElementById('liferayUrl');
+const accessToken = document.getElementById('accessToken');
 const clientId = document.getElementById('clientId');
 const clientSecretOrCodeChallenge = document.getElementById(
 	'clientSecretOrCodeChallenge'
 );
-const accessToken = document.getElementById('accessToken');
+const liferayUrl = document.getElementById('liferayUrl');
 const refreshToken = document.getElementById('refreshToken');
 const resultTextArea = document.getElementById('resultTextArea');
-let pkceMode = false;
+
 let parameterCount = 1;
+let pkceMode = false;
 
 /**
  * Generates the URL the user will be redirected to for OAuth2 authorization.
@@ -60,9 +61,11 @@ const paramList = () => {
 	const numberOfParams = document.querySelectorAll(
 		`#parameters input[id^="paramName"]`
 	).length;
+
 	for (let i = 0; i < numberOfParams; i++) {
 		const name = document.getElementById(`paramName${i}`).value;
 		const value = document.getElementById(`paramValue${i}`).value;
+
 		if (name.trim() && value.trim()) {
 			data[name] = value;
 		}
@@ -80,6 +83,7 @@ const random = (length = 12) => {
 	const chars =
 		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	let str = '';
+
 	for (let i = 0; i < length; i++) {
 		str += chars.charAt(Math.floor(Math.random() * chars.length));
 	}
@@ -119,6 +123,7 @@ const tokenUrl = () => {
  */
 function completeAccordionItem(name) {
 	document.getElementById(`${name}Button`).classList.add('text-bg-success');
+
 	new bootstrap.Collapse(document.getElementById(`${name}Collapse`), {
 		toggle: false,
 	}).hide();
@@ -130,6 +135,7 @@ function completeAccordionItem(name) {
  */
 function enableAndOpenAccordionItem(name) {
 	document.getElementById(`${name}Button`).disabled = false;
+
 	new bootstrap.Collapse(document.getElementById(`${name}Collapse`), {
 		toggle: false,
 	}).show();
@@ -156,7 +162,7 @@ function encodeFormData(data) {
  * @returns {string} HTML code for a new parameter column.
  */
 function generateNewParamCol(type, id) {
-	return `<div class="col-md-6"><input type="text" id="param${type}${id}" placeholder="${type}" class="form-control form-control-sm" /></div>`;
+	return `<div class="col-md-6"><input class="form-control form-control-sm" id="param${type}${id}" placeholder="${type}" type="text" /></div>`;
 }
 
 /**
@@ -167,8 +173,10 @@ function generateNewParamCol(type, id) {
 function getUrlParameter(parameterName) {
 	const pageUrl = window.location.search.substring(1);
 	const variablesUrl = pageUrl.split('&');
+
 	for (let i = 0; i < variablesUrl.length; i++) {
 		const parameter = variablesUrl[i].split('=');
+
 		if (parameter[0] === parameterName) {
 			return parameter[1];
 		}
@@ -197,6 +205,7 @@ async function sendHttpRequest(
 		'Accept': 'application/json',
 		'Content-Type': contentType,
 	};
+
 	if (authorizationToken) {
 		headers.Authorization = `Bearer ${authorizationToken}`;
 	}
@@ -217,6 +226,7 @@ async function sendHttpRequest(
 	try {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(url, {body, headers, method});
+
 		if (response.ok) {
 			return response.json();
 		}
@@ -267,11 +277,14 @@ document.forms['authForm'].addEventListener(
 	'submit',
 	(event) => {
 		const authorizeUrl = document.getElementById('authorizeUrl');
+
 		event.preventDefault();
+
 		if (pkceMode) {
 			const convertedCodeChallenge = document.getElementById(
 				'convertedCodeChallenge'
 			).value;
+
 			window.location.href = authorizationUri(
 				liferayUrl.value,
 				authorizeUrl.value,
@@ -305,6 +318,7 @@ document.forms['tokenForm'].addEventListener(
 		/* Selected 'Already have tokens' */
 		if (document.getElementById('getToken').innerHTML === 'Next') {
 			completeAccordionItem('tokenTab');
+
 			enableAndOpenAccordionItem('requestTab');
 		}
 		else {
@@ -323,6 +337,7 @@ document.forms['tokenForm'].addEventListener(
 			else {
 				body.client_secret = clientSecretOrCodeChallenge.value;
 			}
+
 			const response = await sendHttpRequest(
 				tokenUrl(),
 				'POST',
@@ -332,8 +347,11 @@ document.forms['tokenForm'].addEventListener(
 
 			if (response) {
 				completeAccordionItem('tokenTab');
+
 				enableAndOpenAccordionItem('requestTab');
+
 				accessToken.value = response.access_token;
+
 				refreshToken.value = response.refresh_token;
 			}
 		}
@@ -350,9 +368,9 @@ document.forms['requestForm'].addEventListener(
 	async (event) => {
 		event.preventDefault();
 
-		const url = document.getElementById('requestUrl').value;
-		const methodType = document.getElementById('methodType').value;
 		const contentType = document.getElementById('contentType').value;
+		const methodType = document.getElementById('methodType').value;
+		const url = document.getElementById('requestUrl').value;
 
 		if (accessToken.value.trim()) {
 			const response = await sendHttpRequest(
@@ -381,10 +399,12 @@ document.forms['requestForm'].addEventListener(
 document.getElementById('methodType').addEventListener('change', (event) => {
 	if (['GET', 'DELETE'].indexOf(event.target.value) !== -1) {
 		document.getElementById('parameters').style.display = 'none';
+
 		document.getElementById('requestForm').classList.add('gy-4');
 	}
 	else {
 		document.getElementById('parameters').style.display = '';
+
 		document.getElementById('requestForm').classList.remove('gy-4');
 	}
 });
@@ -394,14 +414,17 @@ document.getElementById('methodType').addEventListener('change', (event) => {
  */
 document.getElementById('addParameter').addEventListener('click', (event) => {
 	event.preventDefault();
+
 	event.target.parentElement.insertAdjacentHTML(
 		'beforebegin',
 		generateNewParamCol('Name', parameterCount)
 	);
+
 	event.target.parentElement.insertAdjacentHTML(
 		'beforebegin',
 		generateNewParamCol('Value', parameterCount)
 	);
+
 	parameterCount++;
 });
 
@@ -416,17 +439,23 @@ document
 	.getElementById('alreadyHaveTokens')
 	.addEventListener('click', (event) => {
 		event.preventDefault();
+
 		if (document.forms['authForm'].reportValidity()) {
 			completeAccordionItem('authTab');
+
 			if (pkceMode) {
 				completeAccordionItem('tokenTab');
+
 				enableAndOpenAccordionItem('requestTab');
 			}
 			else {
 				enableAndOpenAccordionItem('tokenTab');
+
 				document.getElementById('getToken').innerHTML = 'Next';
+
 				document.getElementById('tokenLiferayUrl').value =
 					liferayUrl.value;
+
 				document.getElementById('tokenClientId').value = clientId.value;
 			}
 		}
@@ -440,6 +469,7 @@ document
 	.getElementById('changeModeButton')
 	.addEventListener('click', (event) => {
 		event.preventDefault();
+
 		if (!pkceMode) {
 			window.location.replace(
 				`${window.location.href.split('?')[0]}?pkce=1`
@@ -457,11 +487,13 @@ document
 	.getElementById('introspectAccessTokenButton')
 	.addEventListener('click', async (event) => {
 		event.preventDefault();
+
 		if (accessToken.value.trim()) {
 			const response = await sendIntrospectRequest(
 				'access_token',
 				accessToken.value.trim()
 			);
+
 			if (response) {
 				resultTextArea.value = JSON.stringify(response, null, 2);
 				resultTextArea.innerHTML = JSON.stringify(response);
@@ -479,11 +511,13 @@ document
 	.getElementById('introspectRefreshTokenButton')
 	.addEventListener('click', async (event) => {
 		event.preventDefault();
+
 		if (refreshToken.value.trim()) {
 			const response = await sendIntrospectRequest(
 				'refresh_token',
 				refreshToken.value.trim()
 			);
+
 			if (response) {
 				resultTextArea.value = JSON.stringify(response, null, 2);
 				resultTextArea.innerHTML = JSON.stringify(response);
@@ -501,15 +535,18 @@ document
 	.getElementById('generateCodeChallenge')
 	.addEventListener('click', (event) => {
 		event.preventDefault();
+
 		const codeChallenge = (document.getElementById(
 			'codeChallenge'
 		).value = random());
 		const codeSHA256 = CryptoJS.SHA256(
 			CryptoJS.enc.Utf8.parse(codeChallenge)
 		);
+
 		document.getElementById(
 			'convertedCodeChallenge'
 		).value = CryptoJS.enc.Base64url.stringify(codeSHA256);
+
 		document.getElementById('getAuthorizationCode').disabled = false;
 	});
 
@@ -520,6 +557,7 @@ document
 	.getElementById('refreshTokenButton')
 	.addEventListener('click', async (event) => {
 		event.preventDefault();
+
 		if (refreshToken.value.trim()) {
 			const body = {
 				client_id: clientId.value,
@@ -553,8 +591,11 @@ document
  */
 document.getElementById('resetButton').addEventListener('click', (event) => {
 	event.preventDefault();
+
 	let url = window.location.href.split('?')[0];
+
 	url += pkceMode ? '?pkce=1' : '';
+
 	window.location.replace(url);
 });
 
@@ -569,11 +610,15 @@ window.addEventListener('load', () => {
 		document.getElementById(
 			'tokenLiferayUrl'
 		).value = liferayUrl.value = decodeURIComponent(getUrlParameter('url'));
+
 		document.getElementById(
 			'tokenClientId'
 		).value = clientId.value = getUrlParameter('client_id');
+
 		document.getElementById('authCode').value = getUrlParameter('code');
+
 		completeAccordionItem('authTab');
+
 		enableAndOpenAccordionItem('tokenTab');
 	}
 	else {
@@ -583,22 +628,33 @@ window.addEventListener('load', () => {
 	/* Switch to PKCE mode. */
 	if (getUrlParameter('pkce')) {
 		pkceMode = true;
+
 		document.title = 'Liferay - OAuth2 Tester - PKCE';
+
 		document.getElementById('title').innerHTML =
 			'Liferay OAuth2 Tester - PKCE';
+
 		document.getElementById('callbackUri').innerHTML =
 			document.getElementById('callbackUri').innerHTML + 'pkce=1&';
+
 		document.getElementById('changeModeButton').innerHTML =
 			'Use Basic Authorization Code Grant Flow';
+
 		document.getElementById('getAuthorizationCode').disabled = true;
+
 		document.getElementById('generateCodeChallenge').style.display = '';
+
 		document.getElementById('codeChallengeDiv').style.display = '';
+
 		document.getElementById('convertedCodeChallengeDiv').style.display = '';
+
 		document
 			.getElementById('clientIdDiv')
 			.classList.replace('col-12', 'col-md-3');
+
 		document.getElementById('tokenTabButton').innerHTML =
 			'2. Exchange code for Access Token';
+
 		document.getElementById('clientSecretOrCodeChallengeLabel').innerHTML =
 			'Code Challenge:';
 	}

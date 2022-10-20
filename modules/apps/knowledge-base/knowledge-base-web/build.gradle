@@ -43,6 +43,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-display-page-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-taglib")
 	compileOnly project(":apps:site-navigation:site-navigation-taglib")

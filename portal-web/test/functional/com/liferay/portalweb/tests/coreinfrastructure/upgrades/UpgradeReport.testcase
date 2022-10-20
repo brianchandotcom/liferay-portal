@@ -174,13 +174,42 @@ definition {
 
 	}
 
-	@description = "LPS-154683: The Upgrade Report logs portal and schema versions."
-	@ignore = "Test Stub"
+	@description = "LPS-158741: The Upgrade Report should list the initial, expected, and final schema versions."
 	@priority = "4"
 	test SchemaVersionsLogged {
+		property skip.start.app.server = "true";
+		property test.name.skip.portal.instance = "UpgradeReport#SchemaVersionsLogged";
+		property testcase.url = "http://www.example.com";
 
-		// TODO The Upgrade Report should list the initial, expected, and final portal versions and schema versions
+		task ("Look for the upgrade report") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
+			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
+
+			echo("${fileContent}");
+		}
+
+		task ("Read the intial schema version") {
+			if (!(contains("${fileContent}", "Initial portal schema version: 13.1.1"))) {
+				fail("Inital schema version is not present in upgrade report.");
+			}
+		}
+
+		task ("Read the final schema version") {
+			var finalSchemaVersion = Upgrade.getSchemaVersion();
+
+			if (!(contains("${fileContent}", "Final portal schema version: ${finalSchemaVersion}"))) {
+				fail("Final schema version is not present in upgrade report.");
+			}
+		}
+
+		task ("Read the expected schema version") {
+			var expectedSchemaVersion = Upgrade.getSchemaVersion();
+
+			if (!(contains("${fileContent}", "Expected portal schema version: ${expectedSchemaVersion}"))) {
+				fail("Expected schema version is not present in upgrade report.");
+			}
+		}
 	}
 
 	@description = "LPS-154683: The Upgrade Report logs total upgrade runtime."

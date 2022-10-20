@@ -1783,6 +1783,18 @@ definition {
 		return "${portalBuildNumber}";
 	}
 
+	macro getSchemaVersion {
+		var mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';";
+
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+
+		var portalSchemaVersion = StringUtil.regexReplaceAll("${sqlResults}", "[schemaVersion\n]", "");
+
+		echo("## * Schema Version is: ${portalSchemaVersion}");
+
+		return "${portalSchemaVersion}";
+	}
+
 	macro ignore404URLs {
 		var portalURL = PropsUtil.get("portal.url");
 

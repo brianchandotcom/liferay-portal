@@ -88,6 +88,10 @@ $productMenuWidth: 320px;
 				> .tbar-nav {
 					flex-wrap: wrap;
 
+					@include media-breakpoint-up(lg) {
+						flex-wrap: nowrap;
+					}
+
 					> .tbar-item {
 						padding: 0.5em;
 					}
@@ -134,7 +138,7 @@ $productMenuWidth: 320px;
 				border: 0;
 			}
 
-			@media (min-width: 768px) {
+			@include media-breakpoint-up(lg) {
 				min-height: $toolbarDesktopHeight;
 
 				> .container-fluid > .tbar-nav {
@@ -161,7 +165,7 @@ $productMenuWidth: 320px;
 				margin-top: $toolbarDesktopHeight;
 			}
 
-			@media (max-width: 769px) {
+			@include media-breakpoint-down(md) {
 				> .container-fluid {
 					margin: 0;
 					padding: 0;

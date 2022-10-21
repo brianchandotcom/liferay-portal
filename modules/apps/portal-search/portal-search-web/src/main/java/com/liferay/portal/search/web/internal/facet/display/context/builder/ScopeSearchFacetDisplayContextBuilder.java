@@ -156,7 +156,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 			new ScopeSearchFacetTermDisplayContext();
 
 		scopeSearchFacetTermDisplayContext.setFrequency(count);
-		scopeSearchFacetTermDisplayContext.setDescriptiveName(
+		scopeSearchFacetTermDisplayContext.setBucketText(
 			_getDescriptiveName(groupId));
 		scopeSearchFacetTermDisplayContext.setGroupId(groupId);
 		scopeSearchFacetTermDisplayContext.setSelected(selected);

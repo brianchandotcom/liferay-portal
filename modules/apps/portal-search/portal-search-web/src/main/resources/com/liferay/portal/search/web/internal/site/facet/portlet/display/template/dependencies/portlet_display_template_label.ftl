@@ -22,7 +22,7 @@
 						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						type="button"
 					>
-						${htmlUtil.escape(entry.getDescriptiveName())}
+						${htmlUtil.escape(entry.getBucketText())}
 
 						<#if entry.isShowCount()>
 							(${entry.getFrequency()})

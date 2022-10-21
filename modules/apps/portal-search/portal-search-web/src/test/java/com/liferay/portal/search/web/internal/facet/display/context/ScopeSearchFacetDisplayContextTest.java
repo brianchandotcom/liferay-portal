@@ -108,7 +108,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			0, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			name, scopeSearchFacetTermDisplayContext.getDescriptiveName());
+			name, scopeSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			groupId, scopeSearchFacetTermDisplayContext.getGroupId());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
@@ -150,7 +150,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			name, scopeSearchFacetTermDisplayContext.getDescriptiveName());
+			name, scopeSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			groupId, scopeSearchFacetTermDisplayContext.getGroupId());
 		Assert.assertFalse(scopeSearchFacetTermDisplayContext.isSelected());
@@ -192,7 +192,7 @@ public class ScopeSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			name, scopeSearchFacetTermDisplayContext.getDescriptiveName());
+			name, scopeSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			groupId, scopeSearchFacetTermDisplayContext.getGroupId());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());

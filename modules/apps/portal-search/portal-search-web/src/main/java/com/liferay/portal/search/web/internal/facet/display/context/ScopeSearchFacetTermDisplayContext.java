@@ -14,16 +14,10 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author André de Oliveira
  */
 public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
-
-	public String getDescriptiveName() throws PortalException {
-		return _descriptiveName;
-	}
 
 	public long getGroupId() {
 		return _groupId;
@@ -31,10 +25,6 @@ public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 
 	public boolean isShowCount() {
 		return _showCount;
-	}
-
-	public void setDescriptiveName(String descriptiveName) {
-		_descriptiveName = descriptiveName;
 	}
 
 	public void setGroupId(long groupId) {
@@ -45,7 +35,6 @@ public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 		_showCount = showCount;
 	}
 
-	private String _descriptiveName;
 	private long _groupId;
 	private boolean _showCount;
 

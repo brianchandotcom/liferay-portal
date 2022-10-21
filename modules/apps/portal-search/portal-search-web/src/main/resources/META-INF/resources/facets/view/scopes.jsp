@@ -72,7 +72,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 
 							<li class="facet-value">
 								<a class="<%= scopeSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= scopeSearchFacetTermDisplayContext.getGroupId() %>" href="javascript:void(0);">
-									<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getDescriptiveName()) %>
+									<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getBucketText()) %>
 
 									<c:if test="<%= scopeSearchFacetTermDisplayContext.isShowCount() %>">
 										<span class="frequency">(<%= scopeSearchFacetTermDisplayContext.getFrequency() %>)</span>

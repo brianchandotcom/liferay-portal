@@ -14,6 +14,8 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
+		JSONRole.deleteRole(roleTitle = "Regular Role");
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {

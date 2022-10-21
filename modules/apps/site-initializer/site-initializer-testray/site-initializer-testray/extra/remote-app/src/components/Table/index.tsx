@@ -53,6 +53,7 @@ export type TableProps<T = any> = {
 	onSelectRow?: (row: any) => void;
 	onSort: (columnTable: string, direction: SortDirection) => void;
 	rowSelectable?: boolean;
+	rowWrap?: boolean;
 	selectedRows?: number[];
 	sort?: Sort;
 };
@@ -69,6 +70,7 @@ const Table: React.FC<TableProps> = ({
 	onSelectRow,
 	onSort,
 	rowSelectable = false,
+	rowWrap = false,
 	selectedRows = [],
 	sort,
 }) => {
@@ -167,99 +169,96 @@ const Table: React.FC<TableProps> = ({
 				</ClayTable.Head>
 
 				<ClayTable.Body>
-					{items.map((item, rowIndex) => {
-						return (
-							<ClayTable.Row
-								active={
-									rowIndex === contextMenuState.rowIndex &&
-									contextMenuState.visible
+					{items.map((item, rowIndex) => (
+						<ClayTable.Row
+							active={
+								rowIndex === contextMenuState.rowIndex &&
+								contextMenuState.visible
+							}
+							className={classNames('table-row', {
+								'text-nowrap': !rowWrap,
+								'text-wrap': rowWrap,
+							})}
+							key={rowIndex}
+							onContextMenu={(event) => {
+								if (displayActionColumn) {
+									handleContext({
+										actions: filteredActions,
+										event,
+										item,
+										rowIndex,
+									});
 								}
-								className="table-row text-nowrap"
-								key={rowIndex}
-								onContextMenu={(event) => {
-									if (displayActionColumn) {
-										handleContext({
-											actions: filteredActions,
-											event,
-											item,
-											rowIndex,
-										});
-									}
-								}}
-								onMouseLeave={() => onMouseLeaveRow()}
-								onMouseOver={() => onMouseOverRow(rowIndex)}
-							>
-								{rowSelectable && onSelectRow && (
-									<ClayTable.Cell>
-										<ClayCheckbox
-											checked={selectedRows.includes(
-												item.id
-											)}
-											onChange={() =>
-												onSelectRow(item.id)
+							}}
+							onMouseLeave={() => onMouseLeaveRow()}
+							onMouseOver={() => onMouseOverRow(rowIndex)}
+						>
+							{rowSelectable && onSelectRow && (
+								<ClayTable.Cell>
+									<ClayCheckbox
+										checked={selectedRows.includes(item.id)}
+										onChange={() => onSelectRow(item.id)}
+									/>
+								</ClayTable.Cell>
+							)}
+
+							{columns.map((column, columnIndex) => (
+								<ClayTable.Cell
+									className={classNames('text-dark', {
+										'cursor-pointer': column.clickable,
+										'table-cell-expand':
+											column.size === 'sm',
+										'table-cell-expand-small':
+											column.size === 'xl',
+										'table-cell-expand-smaller':
+											column.size === 'lg',
+										'table-cell-expand-smallest':
+											column.size === 'md',
+									})}
+									key={columnIndex}
+									onClick={() => {
+										if (column.clickable) {
+											if (onClickRow) {
+												onClickRow(item);
 											}
+
+											if (navigateTo) {
+												navigate(navigateTo(item));
+											}
+										}
+									}}
+								>
+									{column.render
+										? column.render(
+												item[column.key],
+												{
+													...item,
+													rowIndex,
+												},
+												mutate
+										  )
+										: item[column.key]}
+								</ClayTable.Cell>
+							))}
+
+							{displayActionColumn && (
+								<ClayTable.Cell
+									align="right"
+									className="py-0 table-action-column table-cell-expand"
+								>
+									{activeRow === rowIndex ? (
+										<DropDown
+											actions={filteredActions as any}
+											item={item}
+											mutate={mutate}
 										/>
-									</ClayTable.Cell>
-								)}
-
-								{columns.map((column, columnIndex) => (
-									<ClayTable.Cell
-										className={classNames('text-dark', {
-											'cursor-pointer': column.clickable,
-											'table-cell-expand':
-												column.size === 'sm',
-											'table-cell-expand-small':
-												column.size === 'xl',
-											'table-cell-expand-smaller':
-												column.size === 'lg',
-											'table-cell-expand-smallest':
-												column.size === 'md',
-										})}
-										key={columnIndex}
-										onClick={() => {
-											if (column.clickable) {
-												if (onClickRow) {
-													onClickRow(item);
-												}
-
-												if (navigateTo) {
-													navigate(navigateTo(item));
-												}
-											}
-										}}
-									>
-										{column.render
-											? column.render(
-													item[column.key],
-													{
-														...item,
-														rowIndex,
-													},
-													mutate
-											  )
-											: item[column.key]}
-									</ClayTable.Cell>
-								))}
-
-								{displayActionColumn && (
-									<ClayTable.Cell
-										align="right"
-										className="py-0 table-action-column table-cell-expand"
-									>
-										{activeRow === rowIndex ? (
-											<DropDown
-												actions={filteredActions as any}
-												item={item}
-												mutate={mutate}
-											/>
-										) : (
-											<div />
-										)}
-									</ClayTable.Cell>
-								)}
-							</ClayTable.Row>
-						);
-					})}
+									) : (
+										<div />
+									)}
+								</ClayTable.Cell>
+							)}
+						</ClayTable.Row>
+					))}
 				</ClayTable.Body>
 			</ClayTable>
 

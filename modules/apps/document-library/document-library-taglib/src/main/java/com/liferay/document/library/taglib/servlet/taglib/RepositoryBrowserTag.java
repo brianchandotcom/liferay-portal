@@ -102,7 +102,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 				httpServletRequest,
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
-				portletRequest, _getRepositoryId()));
+				portletRequest, _getRepositoryId(), getFolderId()));
 	}
 
 	private long _getFolderId() {

@@ -16,7 +16,6 @@ package com.liferay.document.library.taglib.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
@@ -83,7 +82,7 @@ public class RepositoryBrowserTagDisplayContext {
 		long folderId, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletRequest portletRequest, long repositoryId) {
+		PortletRequest portletRequest, long repositoryId, long rootFolderId) {
 
 		_dlAppService = dlAppService;
 		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
@@ -96,6 +95,7 @@ public class RepositoryBrowserTagDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletRequest = portletRequest;
 		_repositoryId = repositoryId;
+		_rootFolderId = rootFolderId;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -112,7 +112,7 @@ public class RepositoryBrowserTagDisplayContext {
 
 		long folderId = _folderId;
 
-		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		while (folderId != _rootFolderId) {
 			Folder folder = _dlAppService.getFolder(folderId);
 
 			if (folder.isMountPoint()) {
@@ -326,8 +326,7 @@ public class RepositoryBrowserTagDisplayContext {
 		searchContext.setAttribute("paginationType", "regular");
 		searchContext.setAttribute("searchRepositoryId", _repositoryId);
 		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setFolderIds(
-			new long[] {DLFolderConstants.DEFAULT_PARENT_FOLDER_ID});
+		searchContext.setFolderIds(new long[] {_rootFolderId});
 		searchContext.setKeywords(
 			ParamUtil.getString(_httpServletRequest, "keywords"));
 		searchContext.setLocale(_themeDisplay.getSiteDefaultLocale());
@@ -425,6 +424,7 @@ public class RepositoryBrowserTagDisplayContext {
 	private final PortletRequest _portletRequest;
 	private String _repositoryBrowserURL;
 	private final long _repositoryId;
+	private final long _rootFolderId;
 	private SearchContainer<Object> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

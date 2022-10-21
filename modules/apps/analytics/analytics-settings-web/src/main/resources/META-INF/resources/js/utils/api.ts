@@ -55,3 +55,11 @@ export function fetchChannels() {
 		.then((response) => response.json())
 		.then((data) => data);
 }
+
+export function fetchSites() {
+	return fetch('/o/analytics-settings-rest/v1.0/sites', {
+		method: 'GET',
+	})
+		.then((response) => response.json())
+		.then((data) => data);
+}

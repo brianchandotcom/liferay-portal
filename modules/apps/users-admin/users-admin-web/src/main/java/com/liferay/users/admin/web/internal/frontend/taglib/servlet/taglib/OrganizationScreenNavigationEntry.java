@@ -33,25 +33,19 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import com.liferay.users.admin.web.internal.display.context.OrganizationScreenNavigationDisplayContext;
 
-import java.io.IOException;
-
-import java.util.Locale;
-import java.util.function.BiFunction;
-
 import javax.portlet.PortletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 /**
  * @author Drew Brokke
  */
 public class OrganizationScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {
-
-	public static Builder builder() {
-		return new Builder();
-	}
 
 	@Override
 	public String getCategoryKey() {
@@ -172,86 +166,17 @@ public class OrganizationScreenNavigationEntry
 			"/edit_organization_navigation.jsp");
 	}
 
-	public static class Builder {
+	public static class Info {
+		public String categoryKey;
+		public String entryKey;
+		public String jspPath;
+		public JSPRenderer _jspRenderer;
+		public String mvcActionCommandName;
+		public OrganizationService _organizationService;
+		public boolean showControls = true;
+		public boolean showTitle = true;
 
-		public OrganizationScreenNavigationEntry build() {
-			return new OrganizationScreenNavigationEntry(
-				_jspRenderer, _organizationService, _entryKey, _categoryKey,
-				_jspPath, _mvcActionCommandName, _showControls, _showTitle,
-				_visibleBiFunction);
-		}
-
-		public Builder categoryKey(String categoryKey) {
-			_categoryKey = categoryKey;
-
-			return this;
-		}
-
-		public Builder entryKey(String entryKey) {
-			_entryKey = entryKey;
-
-			return this;
-		}
-
-		public Builder jspPath(String jspPath) {
-			_jspPath = jspPath;
-
-			return this;
-		}
-
-		public Builder jspRenderer(JSPRenderer jspRenderer) {
-			_jspRenderer = jspRenderer;
-
-			return this;
-		}
-
-		public Builder mvcActionCommandName(String mvcActionCommandName) {
-			_mvcActionCommandName = mvcActionCommandName;
-
-			return this;
-		}
-
-		public Builder organizationService(
-			OrganizationService organizationService) {
-
-			_organizationService = organizationService;
-
-			return this;
-		}
-
-		public Builder showControls(boolean showControls) {
-			_showControls = showControls;
-
-			return this;
-		}
-
-		public Builder showTitle(boolean showTitle) {
-			_showTitle = showTitle;
-
-			return this;
-		}
-
-		public Builder visibleBiFunction(
-			BiFunction<User, Organization, Boolean> visibleBiFunction) {
-
-			_visibleBiFunction = visibleBiFunction;
-
-			return this;
-		}
-
-		private Builder() {
-		}
-
-		private String _categoryKey;
-		private String _entryKey;
-		private String _jspPath;
-		private JSPRenderer _jspRenderer;
-		private String _mvcActionCommandName;
-		private OrganizationService _organizationService;
-		private boolean _showControls = true;
-		private boolean _showTitle = true;
-
-		private BiFunction<User, Organization, Boolean> _visibleBiFunction =
+		public BiFunction<User, Organization, Boolean> visibleBiFunction =
 			(user, organization) -> {
 				if (organization == null) {
 					return false;
@@ -259,7 +184,68 @@ public class OrganizationScreenNavigationEntry
 
 				return true;
 			};
+	}
 
+	@FunctionalInterface
+	public interface Mod extends Consumer<Info> {
+
+		public default Mod and(Mod... mods) {
+			return info -> {
+				accept(info);
+
+				for (Mod mod : mods) {
+					mod.accept(info);
+				}
+			};
+		}
+
+		public static Mod combine(Mod... mods) {
+			return info -> {
+				for (Mod mod : mods) {
+					mod.accept(info);
+				}
+			};
+		}
+
+		public static Mod withCategoryKey(String categoryKey) {
+			return info -> info.categoryKey = categoryKey;
+		}
+
+		public static Mod withEntryKey(String entryKey) {
+			return info -> info.entryKey = entryKey;
+		}
+		public static Mod withJspPath(String jspPath) {
+			return info -> info.jspPath = jspPath;
+		}
+		public static Mod withMVCActionCommandName(String mvcActionCommandName) {
+			return info -> info.mvcActionCommandName = mvcActionCommandName;
+		}
+
+		public static Mod withHideControls() {
+			return info -> info.showControls = false;
+		}
+
+		public static Mod withHideTitle() {
+			return info -> info.showTitle = false;
+		}
+
+		public static Mod withVisibleBiFunction(BiFunction<User, Organization, Boolean> visibleBiFunction) {
+			return info -> info.visibleBiFunction = visibleBiFunction;
+		}
+
+	}
+
+	public static OrganizationScreenNavigationEntry of(Mod... mods) {
+		Info info = new Info();
+
+		for (Mod mod : mods) {
+			mod.accept(info);
+		}
+
+		return new OrganizationScreenNavigationEntry(
+			info._jspRenderer, info._organizationService, info.entryKey,
+			info.categoryKey, info.jspPath, info.mvcActionCommandName,
+			info.showControls, info.showTitle, info.visibleBiFunction);
 	}
 
 	private OrganizationScreenNavigationEntry(

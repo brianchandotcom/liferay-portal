@@ -36,7 +36,7 @@ import java.util.Locale;
 public class OrgLaborDisplay {
 
 	public OrgLaborDisplay(Locale locale, OrgLabor orgLabor) throws Exception {
-		ListType listType = orgLabor.getType();
+		ListType listType = orgLabor.getListType();
 
 		_title = LanguageUtil.get(
 			locale, StringUtil.toUpperCase(listType.getName()));

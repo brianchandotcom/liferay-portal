@@ -32,11 +32,12 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 	const {observer, onOpenChange, open} = useModal();
 
 	useEffect(() => {
-		const request = async () => {
+		const getProperties = async () => {
 			const response = await fetchProperties();
 			setProperties(response.items);
 		};
-		request();
+
+		getProperties();
 	}, []);
 
 	return (

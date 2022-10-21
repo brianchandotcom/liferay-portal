@@ -29,6 +29,18 @@ export function getApplications(parameters: Parameters = {}) {
 	return axios.get(`${DeliveryAPI}/`);
 }
 
+export function getAllApplications(parameters: Parameters = {}) {
+	const parametersList = Object.keys(parameters);
+
+	if (parametersList.length) {
+		return axios.get(
+			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+		);
+	}
+
+	return axios.get(`${DeliveryAPI}/`);
+}
+
 export function deleteApplicationByExternalReferenceCode(
 	externalReferenceCode: string
 ) {

@@ -535,7 +535,7 @@ public class PropsValues {
 	public static final String DEFAULT_PORTLET_DECORATOR_CSS_CLASS =
 		PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_CSS_CLASS);
 
-	public static final String DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(
+	public static String DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(
 		PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
 
 	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID = PropsUtil.get(

@@ -21,7 +21,6 @@ import com.liferay.commerce.tax.exception.CommerceTaxMethodNameException;
 import com.liferay.commerce.tax.exception.NoSuchTaxMethodException;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
-import com.liferay.commerce.util.CommerceTaxEngineRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -133,9 +132,6 @@ public class EditCommerceTaxMethodMVCActionCommand
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceTaxEngineRegistry _commerceTaxEngineRegistry;
 
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;

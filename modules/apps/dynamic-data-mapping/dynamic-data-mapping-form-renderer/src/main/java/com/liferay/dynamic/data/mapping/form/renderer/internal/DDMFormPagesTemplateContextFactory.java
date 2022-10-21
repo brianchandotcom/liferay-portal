@@ -171,8 +171,8 @@ public class DDMFormPagesTemplateContextFactory {
 		List<Object> columnsTemplateContext = new ArrayList<>();
 
 		for (DDMFormLayoutColumn ddmFormLayoutColumn : ddmFormLayoutColumns) {
-			List<String> ddmFormFieldNames =
-				ddmFormLayoutColumn.getDDMFormFieldNames();
+			List<String> ddmFormFieldNames = new ArrayList<>(
+				ddmFormLayoutColumn.getDDMFormFieldNames());
 
 			if (!GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-164998")) &&
@@ -183,21 +183,20 @@ public class DDMFormPagesTemplateContextFactory {
 			}
 
 			columnsTemplateContext.add(
-				_createColumnTemplateContext(ddmFormLayoutColumn));
+				_createColumnTemplateContext(
+					ddmFormFieldNames, ddmFormLayoutColumn.getSize()));
 		}
 
 		return columnsTemplateContext;
 	}
 
 	private Map<String, Object> _createColumnTemplateContext(
-		DDMFormLayoutColumn ddmFormLayoutColumn) {
+		List<String> ddmFormFiledNames, int size) {
 
 		return HashMapBuilder.<String, Object>put(
-			"fields",
-			_createFieldsTemplateContext(
-				ddmFormLayoutColumn.getDDMFormFieldNames())
+			"fields", _createFieldsTemplateContext(ddmFormFiledNames)
 		).put(
-			"size", ddmFormLayoutColumn.getSize()
+			"size", size
 		).build();
 	}
 

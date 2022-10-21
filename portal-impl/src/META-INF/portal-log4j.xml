@@ -98,7 +98,6 @@
 		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.lar" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" />
-		<Logger level="WARN" name="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.model.Image" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.portlet.InvokerPortlet" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.portlet.RestrictPortletServletRequest" />

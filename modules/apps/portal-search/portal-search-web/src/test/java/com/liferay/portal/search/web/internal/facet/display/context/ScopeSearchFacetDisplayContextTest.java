@@ -113,7 +113,8 @@ public class ScopeSearchFacetDisplayContextTest {
 			String.valueOf(groupId),
 			scopeSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
-		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isShowCount());
+		Assert.assertTrue(
+			scopeSearchFacetTermDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
@@ -156,7 +157,8 @@ public class ScopeSearchFacetDisplayContextTest {
 			String.valueOf(groupId),
 			scopeSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertFalse(scopeSearchFacetTermDisplayContext.isSelected());
-		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isShowCount());
+		Assert.assertTrue(
+			scopeSearchFacetTermDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
@@ -199,7 +201,8 @@ public class ScopeSearchFacetDisplayContextTest {
 			String.valueOf(groupId),
 			scopeSearchFacetTermDisplayContext.getFilterValue());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
-		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isShowCount());
+		Assert.assertTrue(
+			scopeSearchFacetTermDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());

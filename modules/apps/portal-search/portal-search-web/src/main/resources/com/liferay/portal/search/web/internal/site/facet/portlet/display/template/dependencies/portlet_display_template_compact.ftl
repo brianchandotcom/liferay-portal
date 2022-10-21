@@ -24,7 +24,7 @@
 						>
 							${htmlUtil.escape(entry.getBucketText())}
 
-							<#if entry.isShowCount()>
+							<#if entry.isFrequencyVisible()>
 								<small class="term-count">
 									(${entry.getFrequency()})
 								</small>

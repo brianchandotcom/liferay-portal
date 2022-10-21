@@ -18,15 +18,4 @@ package com.liferay.portal.search.web.internal.facet.display.context;
  * @author André de Oliveira
  */
 public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
-
-	public boolean isShowCount() {
-		return _showCount;
-	}
-
-	public void setShowCount(boolean showCount) {
-		_showCount = showCount;
-	}
-
-	private boolean _showCount;
-
 }

@@ -74,7 +74,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 								<a class="<%= scopeSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= scopeSearchFacetTermDisplayContext.getFilterValue() %>" href="javascript:void(0);">
 									<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getBucketText()) %>
 
-									<c:if test="<%= scopeSearchFacetTermDisplayContext.isShowCount() %>">
+									<c:if test="<%= scopeSearchFacetTermDisplayContext.isFrequencyVisible() %>">
 										<span class="frequency">(<%= scopeSearchFacetTermDisplayContext.getFrequency() %>)</span>
 									</c:if>
 								</a>

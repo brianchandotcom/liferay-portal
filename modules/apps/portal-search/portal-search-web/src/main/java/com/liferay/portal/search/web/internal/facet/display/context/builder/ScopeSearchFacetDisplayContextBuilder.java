@@ -161,7 +161,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		scopeSearchFacetTermDisplayContext.setFilterValue(
 			String.valueOf(groupId));
 		scopeSearchFacetTermDisplayContext.setSelected(selected);
-		scopeSearchFacetTermDisplayContext.setShowCount(_showCounts);
+		scopeSearchFacetTermDisplayContext.setFrequencyVisible(_showCounts);
 
 		return scopeSearchFacetTermDisplayContext;
 	}

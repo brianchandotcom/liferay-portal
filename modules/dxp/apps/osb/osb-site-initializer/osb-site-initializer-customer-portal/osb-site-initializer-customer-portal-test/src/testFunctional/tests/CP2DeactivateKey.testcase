@@ -188,11 +188,37 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150685 | Test Summary: Assert that a pop-up is displayed after the user clicks the disable button."
+	@ignore = "true"
 	@priority = "5"
 	test CanViewTheDeactivationPopUp {
 
-		// TODO LPS-150685 CanViewTheDeactivationPopUp pending implementation
+		// Needs refactor since it depends on example NASA ICE account
 
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When the user selects a project in Customer Portal and selects multiple keys to deactivate") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			CP2ActivationKeys.selectAllKeysOnPage();
+
+			Button.click(button = "Deactivate");
+		}
+
+		task ("Then a pop-up with info with deactivation terms will appear") {
+			AssertElementPresent(
+				key_text = "I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation keys.",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
 	}
 
 	@description = "Automation ID: LPS-150687 | Test Summary: Assert that no changes were made after the user clicked 'Cancel' in the deactivation modal"

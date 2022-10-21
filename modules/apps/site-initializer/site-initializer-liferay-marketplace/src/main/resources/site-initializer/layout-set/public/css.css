@@ -1,0 +1,38 @@
+/* source-sans-pro-regular - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/sourceSansPro-regular.ttf$]) format('truetype');
+}
+/* source-sans-pro-italic - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: italic;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/sourceSansPro-Italic.ttf$]) format('truetype');
+}
+/* source-sans-pro-600 - vietnamese_latin_cyrillic */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 600;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/sourceSansPro-semibold.ttf$]) format('truetype'); /* Safari, Android, iOS */
+}
+
+#footer.f-navigation-footer {
+	margin: 0;
+}
+
+#footer.f-navigation-footer .footer-content .footer-navigation .navigation {
+	display: flex;
+}
+
+html body:not(.has-edit-mode-menu) #main-content.layout-content {
+	margin-top: 3.5rem;
+}
+
+html .layout-content .class-toggle {
+	cursor: pointer;
+	position: relative;
+}

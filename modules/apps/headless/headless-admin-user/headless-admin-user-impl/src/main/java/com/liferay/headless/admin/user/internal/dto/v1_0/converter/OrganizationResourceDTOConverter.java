@@ -273,7 +273,7 @@ public class OrganizationResourceDTOConverter
 	}
 
 	private Service _toService(OrgLabor orgLabor) throws Exception {
-		ListType listType = orgLabor.getType();
+		ListType listType = orgLabor.getListType();
 
 		return new Service() {
 			{

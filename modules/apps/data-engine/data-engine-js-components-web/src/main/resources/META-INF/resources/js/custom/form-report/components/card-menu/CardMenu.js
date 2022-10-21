@@ -12,15 +12,15 @@
  * details.
  */
 
+import {ClayVerticalNav} from '@clayui/nav';
 import React, {useContext, useState} from 'react';
 
-import fieldTypes from '../../utils/fieldTypes';
 import {SidebarContext} from '../sidebar/SidebarContext';
 
 const MAX_FIELD_LABEL_LENGTH = 91;
 
-export default function CardShortcut({fields}) {
-	const [itemSelectedIndex, setItemSelectedIndex] = useState();
+export default function CardMenu({fields}) {
+	const [itemSelectedLabel, setItemSelectedLabel] = useState();
 
 	const {portletNamespace} = useContext(SidebarContext);
 
@@ -34,36 +34,30 @@ export default function CardShortcut({fields}) {
 		}
 	};
 
-	const showFieldLabel = (label) => {
+	const newItems = [];
+
+	fields.forEach((field, index) => {
+		let label = field.label;
+
 		if (label.length > MAX_FIELD_LABEL_LENGTH) {
-			return label.substr(0, MAX_FIELD_LABEL_LENGTH) + '...';
+			label = label.substr(0, MAX_FIELD_LABEL_LENGTH) + '...';
 		}
-
-		return label;
-	};
-
-	const shortcuts = fields.map((field, index) => {
-		if (Object.keys(fieldTypes).includes(field.type)) {
-			return (
-				<li key={`card-item-${index}`}>
-					<a
-						className={`${
-							itemSelectedIndex === index ? 'selected' : ''
-						}`}
-						data-senna-off
-						onClick={() => {
-							setItemSelectedIndex(index);
-							scrollToCard(portletNamespace, index);
-						}}
-					>
-						<div className="field-label">
-							{showFieldLabel(field.label)}
-						</div>
-					</a>
-				</li>
-			);
-		}
+		newItems.push({
+			label,
+			onClick: () => {
+				setItemSelectedLabel(label);
+				scrollToCard(portletNamespace, index);
+			},
+		});
 	});
 
-	return <ul>{shortcuts}</ul>;
+	const menu = (
+		<ClayVerticalNav
+			items={newItems}
+			large={true}
+			triggerLabel={itemSelectedLabel ?? newItems[0].label}
+		/>
+	);
+
+	return menu;
 }

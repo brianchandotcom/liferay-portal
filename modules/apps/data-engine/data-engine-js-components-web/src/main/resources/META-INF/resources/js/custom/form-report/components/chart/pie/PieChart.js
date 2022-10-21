@@ -89,7 +89,6 @@ export default function PieChart({data, height, totalEntries, width}) {
 		<div
 			className="lfr-de-recharts pie-chart"
 			style={{
-				display: 'flex',
 				height: '100%',
 				width: '100%',
 			}}

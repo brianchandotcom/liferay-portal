@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import CardMenu from './components/card-menu/CardMenu';
 import CardShortcut from './components/card-shortcut/CardShortcut';
 import CardList from './components/card/CardList';
 import EmptyState from './components/empty-state/EmptyState';
@@ -40,22 +41,28 @@ export default function FormReport({
 	);
 
 	return (
-		<SidebarContextProvider
-			dataEngineModule={dataEngineModule}
-			formReportRecordsFieldValuesURL={formReportRecordsFieldValuesURL}
-			portletNamespace={portletNamespace}
-		>
-			<div className="lfr-de__form-report">
-				<div className="report-cards-area">
+		<div className="lfr-de__form-report">
+			<SidebarContextProvider
+				dataEngineModule={dataEngineModule}
+				formReportRecordsFieldValuesURL={
+					formReportRecordsFieldValuesURL
+				}
+				portletNamespace={portletNamespace}
+			>
+				<div className="lfr-de__form-report--vertical-nav">
+					<CardMenu fields={newFields} />
+				</div>
+
+				<div className="lfr-de__form-report--cards-shortcut">
+					<CardShortcut fields={newFields} />
+				</div>
+
+				<div className="container-fluid container-fluid-max-xl lfr-de__form-report--cards-area">
 					<CardList data={newData} fields={newFields} />
 				</div>
 
-				<div className="report-cards-shortcut">
-					<CardShortcut fields={newFields} />
-				</div>
-			</div>
-
-			<Sidebar />
-		</SidebarContextProvider>
+				<Sidebar />
+			</SidebarContextProvider>
+		</div>
 	);
 }

@@ -31,6 +31,7 @@ import {
 	useActiveItemId,
 	useHoverItem,
 } from '../../../../../app/contexts/ControlsContext';
+import {useMovementTarget} from '../../../../../app/contexts/KeyboardMovementContext';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
@@ -108,6 +109,8 @@ export default function PageStructureSidebar() {
 		setDragAndDropHoveredItemId(itemId);
 	}, []);
 
+	const {itemId: keyboardMovementTargetId} = useMovementTarget();
+
 	const nodes = useMemo(
 		() =>
 			visit(data.items[data.rootItems.main], data.items, {
@@ -117,6 +120,7 @@ export default function PageStructureSidebar() {
 				dragAndDropHoveredItemId,
 				fragmentEntryLinks,
 				isMasterPage,
+				keyboardMovementTargetId,
 				layoutData,
 				mappingFields,
 				masterLayoutData,
@@ -133,6 +137,7 @@ export default function PageStructureSidebar() {
 			dragAndDropHoveredItemId,
 			fragmentEntryLinks,
 			isMasterPage,
+			keyboardMovementTargetId,
 			layoutData,
 			mappingFields,
 			masterLayoutData,
@@ -361,6 +366,7 @@ function visit(
 		fragmentEntryLinks,
 		hasHiddenAncestor,
 		isMasterPage,
+		keyboardMovementTargetId,
 		layoutData,
 		mappingFields,
 		masterLayoutData,
@@ -508,6 +514,7 @@ function visit(
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
 						isMasterPage,
+						keyboardMovementTargetId,
 						layoutData,
 						mappingFields,
 						masterLayoutData,
@@ -528,6 +535,7 @@ function visit(
 					fragmentEntryLinks,
 					hasHiddenAncestor: hasHiddenAncestor || hidden,
 					isMasterPage,
+					keyboardMovementTargetId,
 					layoutData,
 					mappingFields,
 					masterLayoutData,
@@ -551,7 +559,8 @@ function visit(
 		draggable: true,
 		expanded:
 			item.itemId === activeItemId ||
-			dragAndDropHoveredItemId === item.itemId,
+			item.itemId === dragAndDropHoveredItemId ||
+			item.itemId === keyboardMovementTargetId,
 		hidable:
 			!itemInMasterLayout &&
 			isHidable(item, fragmentEntryLinks, layoutData),

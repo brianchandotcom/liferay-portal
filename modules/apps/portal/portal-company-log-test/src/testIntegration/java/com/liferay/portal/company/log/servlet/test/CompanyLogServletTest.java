@@ -143,7 +143,7 @@ public class CompanyLogServletTest {
 
 			Throwable throwable = logEntry.getThrowable();
 
-			Assert.assertEquals(
+			Assert.assertSame(
 				FileNotFoundException.class, throwable.getClass());
 			Assert.assertEquals(message, throwable.getMessage());
 		}
@@ -466,7 +466,7 @@ public class CompanyLogServletTest {
 
 			Throwable throwable = logEntry.getThrowable();
 
-			Assert.assertEquals(clazz, throwable.getClass());
+			Assert.assertSame(clazz, throwable.getClass());
 			Assert.assertEquals(message, throwable.getMessage());
 		}
 	}

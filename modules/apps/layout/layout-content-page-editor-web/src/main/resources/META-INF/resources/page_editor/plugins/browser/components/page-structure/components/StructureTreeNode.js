@@ -65,6 +65,7 @@ import {
 	getFormErrorDescription,
 } from '../../../../../app/utils/getFormErrorDescription';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
+import isItemWidget from '../../../../../app/utils/isItemWidget';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 import useControlledState from '../../../../../core/hooks/useControlledState';
@@ -221,13 +222,18 @@ function StructureTreeNodeContent({
 		[item]
 	);
 
+	const isWidget = useSelectorCallback(
+		(state) => isItemWidget(item, state.fragmentEntryLinks),
+		[item]
+	);
+
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
 		item,
 		computeHover
 	);
 
 	const {handlerRef, isDraggingSource} = useDragItem(
-		{...item, fragmentEntryType},
+		{...item, fragmentEntryType, isWidget},
 		(parentItemId, position) =>
 			dispatch(
 				moveItem({

@@ -46,6 +46,7 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
+import isItemWidget from '../../utils/isItemWidget';
 import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
@@ -112,6 +113,11 @@ function TopperContent({
 		[item]
 	);
 
+	const isWidget = useSelectorCallback(
+		(state) => isItemWidget(item, state.fragmentEntryLinks),
+		[item]
+	);
+
 	const fragmentEntryType = useSelectorCallback(
 		(state) => {
 			if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
@@ -139,11 +145,15 @@ function TopperContent({
 	const {
 		handlerRef: itemHandlerRef,
 		isDraggingSource: itemIsDraggingSource,
-	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
-		if (!isActive) {
-			selectItem(item.itemId);
+	} = useDragItem(
+		{...item, fragmentEntryType, isWidget, name},
+		onDragEnd,
+		() => {
+			if (!isActive) {
+				selectItem(item.itemId);
+			}
 		}
-	});
+	);
 
 	const {
 		handlerRef: topperHandlerRef,

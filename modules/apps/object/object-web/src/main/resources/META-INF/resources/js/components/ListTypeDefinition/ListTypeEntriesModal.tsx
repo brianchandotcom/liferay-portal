@@ -35,6 +35,7 @@ export interface IModalState extends Partial<PickListItem> {
 	itemKey?: string;
 	modalType?: 'add' | 'edit';
 	pickListId?: number;
+	readOnly?: boolean;
 	reloadIframeWindow?: () => void;
 }
 
@@ -47,6 +48,7 @@ function ListTypeEntriesModal() {
 			modalType,
 			name_i18n,
 			pickListId,
+			readOnly,
 			reloadIframeWindow,
 		},
 		setState,
@@ -189,6 +191,7 @@ function ListTypeEntriesModal() {
 
 			<ClayModal.Body>
 				<InputLocalized
+					disabled={readOnly}
 					error={errors.name_i18n}
 					id="locale"
 					label={Liferay.Language.get('name')}
@@ -219,6 +222,7 @@ function ListTypeEntriesModal() {
 						</ClayButton>
 
 						<ClayButton
+							disabled={readOnly}
 							displayType="primary"
 							onClick={handleSave}
 							type="submit"

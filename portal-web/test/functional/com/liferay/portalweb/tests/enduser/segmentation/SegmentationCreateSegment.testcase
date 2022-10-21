@@ -640,7 +640,6 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130347: Segments editor displays a warning if an entity name is not found"
-	@ignore = "true"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOtherSegmentsWarning {

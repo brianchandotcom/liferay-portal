@@ -159,6 +159,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -248,7 +250,7 @@ public class BundleSiteInitializerTest {
 			_assertCPDefinition(group);
 			_assertCPInstanceProperties(group);
 			_assertDDMStructure(group);
-			_assertDDMTemplate(group);
+			_assertDDMTemplates(group);
 			_assertDLFileEntry(group);
 			_assertExpandoColumns(serviceContext);
 			_assertFragmentEntries(group, serviceContext);
@@ -670,14 +672,31 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(ddmStructure.hasField("aField"));
 	}
 
-	private void _assertDDMTemplate(Group group) {
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+	private void _assertDDMTemplates(Group group) {
+		DDMTemplate ddmTemplate1 = _ddmTemplateLocalService.fetchTemplate(
 			group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
 			"TEST DDM TEMPLATE KEY");
 
-		Assert.assertNotNull(ddmTemplate);
-		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+		Assert.assertNotNull(ddmTemplate1);
+		Assert.assertEquals("${aField.getData()}", ddmTemplate1.getScript());
+
+		DDMTemplate ddmTemplate2 = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId(TemplateEntry.class.getName()),
+			"TEST INFO TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate2);
+		Assert.assertEquals("${aField.getData()}", ddmTemplate2.getScript());
+
+		TemplateEntry templateEntry1 =
+			_templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+				ddmTemplate2.getTemplateId());
+
+		Assert.assertNotNull(templateEntry1);
+		Assert.assertEquals(
+			"com.liferay.commerce.product.model.CPDefinition",
+			templateEntry1.getInfoItemClassName());
 	}
 
 	private void _assertDefaultCPDisplayLayout(
@@ -1876,6 +1895,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 	@Inject
 	private UserAccountResource.Factory _userAccountResourceFactory;

@@ -174,6 +174,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.Serializable;
 
@@ -260,6 +262,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyCategoryResource.Factory taxonomyCategoryResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
+		TemplateEntryLocalService templateEntryLocalService,
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserGroupLocalService userGroupLocalService,
@@ -328,6 +331,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyCategoryResourceFactory = taxonomyCategoryResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
+		_templateEntryLocalService = templateEntryLocalService;
 		_themeLocalService = themeLocalService;
 		_userAccountResourceFactory = userAccountResourceFactory;
 		_userGroupLocalService = userGroupLocalService;
@@ -451,7 +455,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(
 				() -> _addOrUpdateDDMTemplates(
-					_ddmStructureLocalService, serviceContext));
+					_ddmStructureLocalService, _templateEntryLocalService,
+					serviceContext));
 			_invoke(
 				() -> _addOrUpdateJournalArticles(
 					_ddmStructureLocalService, _ddmTemplateLocalService,
@@ -1444,6 +1449,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addOrUpdateDDMTemplates(
 			DDMStructureLocalService ddmStructureLocalService,
+			TemplateEntryLocalService templateEntryLocalService,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1459,6 +1465,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(url.openStream()));
+
+			String className = jsonObject.getString(
+				"className", DDMStructure.class.getName());
 
 			long resourceClassNameId = _portal.getClassNameId(
 				jsonObject.getString(
@@ -1479,13 +1488,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(
-					jsonObject.getString(
-						"className", DDMStructure.class.getName())),
+				_portal.getClassNameId(className),
 				jsonObject.getString("ddmTemplateKey"));
 
 			if (ddmTemplate == null) {
-				_ddmTemplateLocalService.addTemplate(
+				ddmTemplate = _ddmTemplateLocalService.addTemplate(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					_portal.getClassNameId(
@@ -1501,6 +1508,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 					TemplateConstants.LANG_TYPE_FTL,
 					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
+
+				if (Objects.equals(className, TemplateEntry.class.getName())) {
+					templateEntryLocalService.addTemplateEntry(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(),
+						ddmTemplate.getTemplateId(), className, null,
+						serviceContext);
+				}
 			}
 			else {
 				_ddmTemplateLocalService.updateTemplate(
@@ -4233,6 +4248,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_taxonomyCategoryResourceFactory;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
+	private final TemplateEntryLocalService _templateEntryLocalService;
 	private final ThemeLocalService _themeLocalService;
 	private final UserAccountResource.Factory _userAccountResourceFactory;
 	private final UserGroupLocalService _userGroupLocalService;

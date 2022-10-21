@@ -301,7 +301,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Category
 
-		mbCategoryPersistence.remove(category);
+		mbCategoryLocalService.deleteMBCategory(category);
 	}
 
 	@Override
@@ -1026,6 +1026,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					getCategoriesAndThreads(
 						category.getGroupId(), category.getCategoryId()),
 					trashEntryId);
+
+				_reindex(MBCategory.class, category);
 			}
 		}
 	}

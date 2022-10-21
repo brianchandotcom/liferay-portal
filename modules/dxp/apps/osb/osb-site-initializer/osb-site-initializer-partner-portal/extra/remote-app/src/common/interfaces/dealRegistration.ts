@@ -10,6 +10,7 @@
  */
 
 import {RequestStatus} from '../enums/requestStatus';
+import MDFRequestActivityDTO from './dto/mdfRequestActivityDTO';
 import LiferayAccountBrief from './liferayAccountBrief';
 import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
@@ -35,17 +36,17 @@ interface Prospect {
 }
 
 interface AdditionalContact {
-	emailAddress?: string;
-	firstName?: string;
-	lastName?: string;
+	emailAddress: string;
+	firstName: string;
+	lastName: string;
 }
 
 export default interface DealRegistration extends Partial<LiferayObject> {
 	additionalContact?: AdditionalContact;
 	additionalInformationAboutTheOpportunity?: string;
-	categories?: string[];
-	generalMdfActivityAssociated: LiferayAccountBrief;
-	partnerAccountName: LiferayAccountBrief;
+	categories: string[];
+	MdfActivityAssociated: MDFRequestActivityDTO;
+	partnerAccount: LiferayAccountBrief;
 	primaryProspect: PrimaryProspect;
 	projectNeed: string[];
 	projectTimeline: string;

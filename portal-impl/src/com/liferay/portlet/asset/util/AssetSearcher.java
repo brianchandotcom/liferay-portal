@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.StringQuery;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -396,17 +395,8 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			long[] filteredAllCategoryIds = AssetUtil.filterCategoryIds(
-				PermissionThreadLocal.getPermissionChecker(), allCategoryIds);
-
-			if (allCategoryIds.length != filteredAllCategoryIds.length) {
-				addImpossibleTerm(queryBooleanFilter, fieldName);
-
-				continue;
-			}
-
 			queryBooleanFilter.add(
-				_getCategoryIdsBooleanFilter(fieldName, filteredAllCategoryIds),
+				_getCategoryIdsBooleanFilter(fieldName, allCategoryIds),
 				BooleanClauseOccur.MUST);
 		}
 	}
@@ -425,20 +415,8 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			long[] filteredAnyCategoryIds = AssetUtil.filterCategoryIds(
-				PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
-
-			filteredAnyCategoryIds = _filterCategoryIdsByVisibilityType(
-				filteredAnyCategoryIds, fieldName);
-
-			if (filteredAnyCategoryIds.length == 0) {
-				addImpossibleTerm(queryBooleanFilter, fieldName);
-
-				continue;
-			}
-
 			categoryIdsQueryBooleanFilter.add(
-				_getCategoryIdsTermsFilter(fieldName, filteredAnyCategoryIds),
+				_getCategoryIdsTermsFilter(fieldName, anyCategoryIds),
 				BooleanClauseOccur.SHOULD);
 		}
 

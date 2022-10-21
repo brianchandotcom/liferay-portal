@@ -20,6 +20,12 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
+		if ("${disableDisplaySelectedResultInContext}" == "true") {
+			Uncheck(
+				checkboxName = "Display Selected Result in Context",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		if ("${displayDocumentForm}" == "true") {
 			Check(
 				checkboxName = "Display Results in Document Form",

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.search.suggest;
 
-import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 
@@ -25,7 +23,6 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
-@MessagingProxy(mode = ProxyMode.SYNC)
 public interface QuerySuggester {
 
 	public String spellCheckKeywords(SearchContext searchContext)

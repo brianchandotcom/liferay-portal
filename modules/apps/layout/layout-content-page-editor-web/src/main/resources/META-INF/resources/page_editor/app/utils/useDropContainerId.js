@@ -12,22 +12,30 @@
  * details.
  */
 
+import {useMovementTarget} from '../contexts/KeyboardMovementContext';
 import {useSelectorRef} from '../contexts/StoreContext';
 import getDropContainerId from './drag-and-drop/getDropContainerId';
 import {useDropTargetData} from './drag-and-drop/useDragAndDrop';
 
 export default function useDropContainerId() {
-	const {item, position} = useDropTargetData();
-	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+	const {item: dropItem, position: dropPosition} = useDropTargetData();
+	const {
+		itemId: keyboardMovementItemId,
+		position: keyboardMovementPosition,
+	} = useMovementTarget();
 
-	if (!item) {
+	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+	const keyboardMovementItem =
+		layoutDataRef.current.items[keyboardMovementItemId];
+
+	if (!dropItem && !keyboardMovementItem) {
 		return null;
 	}
 
 	const dropContainerId = getDropContainerId(
 		layoutDataRef.current,
-		item,
-		position
+		dropItem || keyboardMovementItem,
+		dropPosition || keyboardMovementPosition
 	);
 
 	return dropContainerId;

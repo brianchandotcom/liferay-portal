@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -84,8 +83,5 @@ public class SaveSiteFrontendIconsPacksMVCActionCommand
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Portal _portal;
 
 }

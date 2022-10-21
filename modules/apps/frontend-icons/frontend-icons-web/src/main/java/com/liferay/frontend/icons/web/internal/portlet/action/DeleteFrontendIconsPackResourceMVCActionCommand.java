@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -83,8 +82,5 @@ public class DeleteFrontendIconsPackResourceMVCActionCommand
 	@Reference
 	private FrontendIconsResourcePackRepository
 		_frontendIconsResourcePackRepository;
-
-	@Reference
-	private Portal _portal;
 
 }

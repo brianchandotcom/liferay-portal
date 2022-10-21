@@ -39,7 +39,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CannotViewDeactivatedKeys {
-	
+
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -65,6 +65,40 @@ definition {
 
 			AssertElementNotPresent(
 				key_text = "Test3",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+	}
+
+	@description = "Automation ID: LPS-150690 | Test Summary: Assert that the deactivated key is no longer displayed in the table"
+	@ignore = "true"
+	@priority = "5"
+	test CannotViewDeactivatedKeysForPortal {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
+
+		task ("Then deactivating a key will ensure that key will no longer be available") {
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "testt1");
+
+			Search.searchCP(searchTerm = "testt1");
+
+			AssertElementNotPresent(
+				key_text = "testt1",
 				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
 	}
@@ -107,6 +141,44 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-150689 | Test Summary: Assert that number of keys on 'All' tab changed after the key was deactivated"
+	@ignore = "true"
+	@priority = "3"
+	test CanViewChangeTheNumberOfTotalKeys {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
+
+		task ("Then deactivating a key will ensure that the key will no longer be counted towards the final amount") {
+			VerifyElementPresent(
+				key_value = "4",
+				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
+
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "testt1");
+
+			TableViewBuilder.clearSearch();
+
+			AssertElementPresent(
+				key_value = "3",
+				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
+		}
+	}
+
 	@description = "LPS-148117 - Assert that a pop-up appears after selecting multiple keys to deactivate."
 	@ignore = "true"
 	@priority = "5"
@@ -128,86 +200,6 @@ definition {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			CP2ActivationKeys.selectAllKeysOnPage();
-
-			Button.click(button = "Deactivate");
-		}
-
-		task ("Then a pop-up with info with deactivation terms will appear") {
-			AssertElementPresent(
-				key_text = "I certify that the instances activated with the selected activation keys has have been shut down and that there is no liferay software installed deployed used or executed that is activated with the selected activation keys.",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-	}
-
-	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
-	@ignore = "true"
-	@priority = "4"
-	test NoChangesMadeAfterClickingCancel {
-
-		// Needs refactor since it depends on example FIFA account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When the user selects a project in Customer Portal and selects multiple keys to deactivate") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-
-			Search.searchCP(searchTerm = "test");
-
-			for (var key_environmentName : list "Test2,Test3") {
-				CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "${key_environmentName}");
-			}
-
-			Button.click(button = "Deactivate");
-		}
-
-		task ("Then clicking 'Cancel' will have user stay on DXP Product Activation page and the keys will not be deactivated") {
-			Button.click(button = "Cancel");
-
-			AssertElementPresent(
-				key_productType = "DXP",
-				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
-
-			for (var key_environmentName : list "Test2,Test3") {
-				AssertElementPresent(
-					key_text = "${key_environmentName}",
-					locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
-			}
-		}
-	}
-
-	@description = "Automation ID: LPS-150685 | Test Summary: Assert that a pop-up is displayed after the user clicks the disable button."
-	@ignore = "true"
-	@priority = "5"
-	test CanViewTheDeactivationPopUp {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When the user selects a project in Customer Portal and selects multiple keys to deactivate") {
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 
 			CP2ActivationKeys.selectAllKeysOnPage();
 
@@ -263,49 +255,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-150689 | Test Summary: Assert that number of keys on 'All' tab changed after the key was deactivated"
-	@ignore = "true"
-	@priority = "3"
-	test CanViewChangeTheNumberOfTotalKeys {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-		}
-
-		task ("When the user selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Portal");
-		}
-
-		task ("Then deactivating a key will ensure that the key will no longer be counted towards the final amount") {
-			VerifyElementPresent(
-				key_value = "4",
-				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
-
-			CP2ActivationKeys.deactivateExistingKey(environmentName = "testt1");
-
-			TableViewBuilder.clearSearch();
-
-			AssertElementPresent(
-				key_value = "3",
-				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
-		}
-
-	}
-
-	@description = "Automation ID: LPS-150690 | Test Summary: Assert that the deactivated key is no longer displayed in the table"
+	@description = "Automation ID: LPS-150685 | Test Summary: Assert that a pop-up is displayed after the user clicks the disable button."
 	@ignore = "true"
 	@priority = "5"
-	test CannotViewDeactivatedKeysForPortal {
+	test CanViewTheDeactivationPopUp {
 
 		// Needs refactor since it depends on example NASA ICE account
 
@@ -317,22 +270,68 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("When the user selects a project in Customer Portal") {
+		task ("When the user selects a project in Customer Portal and selects multiple keys to deactivate") {
 			CustomerPortal.enterOnProject(title = "NASA ICE");
 
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			CP2ActivationKeys.selectAllKeysOnPage();
+
+			Button.click(button = "Deactivate");
 		}
 
-		task ("Then deactivating a key will ensure that key will no longer be available") {
-			CP2ActivationKeys.deactivateExistingKey(environmentName = "testt1");
+		task ("Then a pop-up with info with deactivation terms will appear") {
+			AssertElementPresent(
+				key_text = "I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation keys.",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+	}
 
-			Search.searchCP(searchTerm = "testt1");
+	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
+	@ignore = "true"
+	@priority = "4"
+	test NoChangesMadeAfterClickingCancel {
 
-			AssertElementNotPresent(
-				key_text = "testt1",
-				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When the user selects a project in Customer Portal and selects multiple keys to deactivate") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			Search.searchCP(searchTerm = "test");
+
+			for (var key_environmentName : list "Test2,Test3") {
+				CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "${key_environmentName}");
+			}
+
+			Button.click(button = "Deactivate");
+		}
+
+		task ("Then clicking 'Cancel' will have user stay on DXP Product Activation page and the keys will not be deactivated") {
+			Button.click(button = "Cancel");
+
+			AssertElementPresent(
+				key_productType = "DXP",
+				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
+
+			for (var key_environmentName : list "Test2,Test3") {
+				AssertElementPresent(
+					key_text = "${key_environmentName}",
+					locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+			}
 		}
 	}
 

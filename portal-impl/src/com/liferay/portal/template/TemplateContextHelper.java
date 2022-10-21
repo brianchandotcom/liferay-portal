@@ -193,13 +193,6 @@ public class TemplateContextHelper {
 		return Collections.emptySet();
 	}
 
-	public TemplateControlContext getTemplateControlContext() {
-		Thread currentThread = Thread.currentThread();
-
-		return new TemplateControlContext(
-			null, currentThread.getContextClassLoader());
-	}
-
 	public void prepare(
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {

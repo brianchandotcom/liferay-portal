@@ -718,6 +718,59 @@ definition {
 			actionName = "Update Action Name");
 	}
 
+	@description = "LPS-156347 - Verify that the expression works with Webhooks"
+	@priority = "3"
+	test CanUseExpressionWithWebhook {
+		property test.name.skip.portal.instance = "ObjectActions#CanUseExpressionWithWebhook";
+
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 185",
+				objectName = "CustomObject185",
+				pluralLabelName = "Custom Objects 185");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject185");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject185");
+		}
+
+		task ("When an action is created with an Expression using Webhooks") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 185");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Action Name",
+				active = "true",
+				inputExpression = "customObjectField == 'Entry Test'",
+				thenAction = "Webhook",
+				urlAction = "http://localhost:8080",
+				whenAction = "On After Add");
+		}
+
+		task ("Then the action will resolve when the condition is met") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject185",
+				value = "Entry Test");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Action Name",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-146871 - Verify that the Action name is required"
 	@priority = "4"
 	test VerifyActionNameIsRequired {

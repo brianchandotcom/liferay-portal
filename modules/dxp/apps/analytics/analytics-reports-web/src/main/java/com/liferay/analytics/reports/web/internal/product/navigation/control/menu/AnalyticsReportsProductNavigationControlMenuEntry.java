@@ -318,7 +318,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		return Optional.ofNullable(
 			(InfoItemReference)httpServletRequest.getAttribute(
-				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE)
+				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE)
 		).orElseGet(
 			() -> new InfoItemReference(
 				Layout.class.getName(), themeDisplay.getPlid())

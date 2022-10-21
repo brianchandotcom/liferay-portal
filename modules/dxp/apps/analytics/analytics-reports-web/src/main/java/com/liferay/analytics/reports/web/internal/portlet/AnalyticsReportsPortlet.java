@@ -129,7 +129,7 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 		return Optional.ofNullable(
 			(InfoItemReference)httpServletRequest.getAttribute(
-				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE)
+				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE)
 		).orElseGet(
 			() -> Optional.ofNullable(
 				_getClassTypeName(httpServletRequest)

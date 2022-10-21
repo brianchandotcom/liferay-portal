@@ -19,9 +19,10 @@ package com.liferay.analytics.reports.constants;
  */
 public class AnalyticsReportsWebKeys {
 
+	public static final String ANALYTICS_INFO_ITEM_REFERENCE =
+		"ANALYTICS_INFO_ITEM_REFERENCE";
+
 	public static final String ANALYTICS_REPORTS_DISPLAY_CONTEXT =
 		"ANALYTICS_REPORTS_DISPLAY_CONTEXT";
-
-	public static final String INFO_ITEM_REFERENCE = "INFO_ITEM_REFERENCE";
 
 }

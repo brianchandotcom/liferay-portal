@@ -59,7 +59,7 @@ public class
 
 		Assert.assertNull(
 			mockHttpServletRequest.getAttribute(
-				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE));
+				AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE));
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class
 
 			InfoItemReference infoItemReference =
 				(InfoItemReference)mockHttpServletRequest.getAttribute(
-					AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE);
+					AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE);
 
 			Assert.assertEquals(
 				LayoutDisplayPageObjectProvider.class.getName(),

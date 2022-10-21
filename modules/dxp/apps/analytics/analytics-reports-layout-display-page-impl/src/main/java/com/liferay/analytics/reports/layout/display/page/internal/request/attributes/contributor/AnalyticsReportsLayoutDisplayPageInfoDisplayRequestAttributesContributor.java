@@ -53,7 +53,7 @@ public class
 			layoutDisplayPageObjectProvider.getClassNameId());
 
 		httpServletRequest.setAttribute(
-			AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE,
+			AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
 			Optional.ofNullable(
 				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
 					className.getClassName())

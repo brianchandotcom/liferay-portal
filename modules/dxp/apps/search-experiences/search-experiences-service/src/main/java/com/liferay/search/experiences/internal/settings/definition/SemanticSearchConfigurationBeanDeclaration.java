@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.internal.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Petteri Karttunen
  */
 @Component(enabled = false, service = ConfigurationBeanDeclaration.class)
-public class SentenceTransformerConfigurationBeanDeclaration
+public class SemanticSearchConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return SentenceTransformerConfiguration.class;
+		return SemanticSearchConfiguration.class;
 	}
 
 }

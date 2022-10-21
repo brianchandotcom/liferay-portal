@@ -19,14 +19,14 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.search.experiences.web.internal.display.context.SentenceTransformerCompanyConfigurationDisplayContext" %>
+page import="com.liferay.search.experiences.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Map.Entry" %>
 
 <%
-SentenceTransformerCompanyConfigurationDisplayContext sentenceTransformerCompanyConfigurationDisplayContext = (SentenceTransformerCompanyConfigurationDisplayContext)request.getAttribute(SentenceTransformerCompanyConfigurationDisplayContext.class.getName());
+SemanticSearchCompanyConfigurationDisplayContext sentenceTransformerCompanyConfigurationDisplayContext = (SemanticSearchCompanyConfigurationDisplayContext)request.getAttribute(SemanticSearchCompanyConfigurationDisplayContext.class.getName());
 %>
 
 <aui:input name="enabled" type="checkbox" value="<%= sentenceTransformerCompanyConfigurationDisplayContext.isEnabled() %>" />

@@ -26,11 +26,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.search.experiences.configuration.SentenceTransformerConfiguration",
+	id = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	localization = "content/Language",
-	name = "sentence-transformer-configuration-name"
+	name = "semantic-search-configuration-name"
 )
-public interface SentenceTransformerConfiguration {
+public interface SemanticSearchConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();

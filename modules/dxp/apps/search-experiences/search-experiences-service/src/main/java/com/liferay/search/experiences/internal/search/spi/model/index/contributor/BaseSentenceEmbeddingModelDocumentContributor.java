@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +55,7 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 		}
 
 		List<String> languageIds = Arrays.asList(
-			sentenceTransformerConfiguration.languageIds());
+			semanticSearchConfiguration.languageIds());
 
 		for (Locale locale :
 				LanguageUtil.getCompanyAvailableLocales(companyId)) {
@@ -85,9 +85,9 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 
 	protected boolean isAddSentenceEmbedding(Class<?> clazz) {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) &&
-			sentenceTransformerConfiguration.enabled() &&
+			semanticSearchConfiguration.enabled() &&
 			ArrayUtil.contains(
-				sentenceTransformerConfiguration.assetEntryClassNames(),
+				semanticSearchConfiguration.assetEntryClassNames(),
 				clazz.getName(), true)) {
 
 			return true;
@@ -96,8 +96,7 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 		return false;
 	}
 
-	protected volatile SentenceTransformerConfiguration
-		sentenceTransformerConfiguration;
+	protected volatile SemanticSearchConfiguration semanticSearchConfiguration;
 
 	private void _addSentenceEmbeddingField(
 		Document document, String languageId, Double[] sentenceEmbedding) {
@@ -115,7 +114,7 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 	private String _getFieldName(String languageId) {
 		return StringBundler.concat(
 			"text_embedding_",
-			sentenceTransformerConfiguration.embeddingVectorDimensions(),
+			semanticSearchConfiguration.embeddingVectorDimensions(),
 			StringPool.UNDERLINE, languageId);
 	}
 

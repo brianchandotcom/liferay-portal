@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SentenceTransformerConfiguration",
+	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false, immediate = true,
 	property = "search.experiences.sentence.transformer.name=huggingFace",
 	service = SentenceTransformer.class
@@ -53,8 +53,8 @@ public class HuggingFaceSentenceTransformer
 
 	public Double[] getSentenceEmbedding(String text) {
 		String input = getInput(
-			_sentenceTransformerConfiguration.maxCharacterCount(), text,
-			_sentenceTransformerConfiguration.textTruncationStrategy());
+			_semanticSearchConfiguration.maxCharacterCount(), text,
+			_semanticSearchConfiguration.textTruncationStrategy());
 
 		if (Validator.isBlank(input)) {
 			return new Double[0];
@@ -65,8 +65,8 @@ public class HuggingFaceSentenceTransformer
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_sentenceTransformerConfiguration = ConfigurableUtil.createConfigurable(
-			SentenceTransformerConfiguration.class, properties);
+		_semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
+			SemanticSearchConfiguration.class, properties);
 	}
 
 	private JSONArray _getJSONArray(JSONArray jsonArray1) {
@@ -86,12 +86,11 @@ public class HuggingFaceSentenceTransformer
 
 		options.addHeader(
 			HttpHeaders.AUTHORIZATION,
-			"Bearer " +
-				_sentenceTransformerConfiguration.huggingFaceAccessToken());
+			"Bearer " + _semanticSearchConfiguration.huggingFaceAccessToken());
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
-		if (_sentenceTransformerConfiguration.enableGPU()) {
+		if (_semanticSearchConfiguration.enableGPU()) {
 			options.addHeader("x-use-gpu", "true");
 		}
 
@@ -100,7 +99,7 @@ public class HuggingFaceSentenceTransformer
 			StringPool.UTF8);
 		options.setLocation(
 			"https://api-inference.huggingface.co/models/" +
-				_sentenceTransformerConfiguration.model());
+				_semanticSearchConfiguration.model());
 		options.setPost(true);
 
 		return _http.URLtoString(options);
@@ -119,7 +118,7 @@ public class HuggingFaceSentenceTransformer
 
 				options.addHeader("x-wait-for-model", "true");
 				options.setTimeout(
-					_sentenceTransformerConfiguration.modelTimeout() * 1000);
+					_semanticSearchConfiguration.modelTimeout() * 1000);
 
 				responseJSON = _getResponseJSON(options, text);
 			}
@@ -152,7 +151,6 @@ public class HuggingFaceSentenceTransformer
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private volatile SentenceTransformerConfiguration
-		_sentenceTransformerConfiguration;
+	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
 
 }

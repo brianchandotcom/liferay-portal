@@ -19,7 +19,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.internal.ml.sentence.embedding.SentenceEmbeddingRetriever;
 
 import java.util.Map;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SentenceTransformerConfiguration",
+	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false, immediate = true,
 	property = "indexer.class.name=com.liferay.message.boards.model.MBMessage",
 	service = ModelDocumentContributor.class
@@ -58,8 +58,8 @@ public class MBMessageSentenceEmbeddingModelDocumentContributor
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		sentenceTransformerConfiguration = ConfigurableUtil.createConfigurable(
-			SentenceTransformerConfiguration.class, properties);
+		semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
+			SemanticSearchConfiguration.class, properties);
 	}
 
 	@Reference

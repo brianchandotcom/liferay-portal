@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SentenceTransformerConfiguration",
+	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false, immediate = true,
 	property = "search.experiences.sentence.transformer.name=txtai",
 	service = SentenceTransformer.class
@@ -45,8 +45,8 @@ public class TXTAISentenceTransformer
 
 	public Double[] getSentenceEmbedding(String text) {
 		String input = getInput(
-			_sentenceTransformerConfiguration.maxCharacterCount(), text,
-			_sentenceTransformerConfiguration.textTruncationStrategy());
+			_semanticSearchConfiguration.maxCharacterCount(), text,
+			_semanticSearchConfiguration.textTruncationStrategy());
 
 		if (Validator.isBlank(input)) {
 			return new Double[0];
@@ -57,13 +57,12 @@ public class TXTAISentenceTransformer
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_sentenceTransformerConfiguration = ConfigurableUtil.createConfigurable(
-			SentenceTransformerConfiguration.class, properties);
+		_semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
+			SemanticSearchConfiguration.class, properties);
 	}
 
 	private Double[] _getSentenceEmbedding(String text) {
-		String hostAddress =
-			_sentenceTransformerConfiguration.txtaiHostAddress();
+		String hostAddress = _semanticSearchConfiguration.txtaiHostAddress();
 
 		if (!hostAddress.endsWith("/")) {
 			hostAddress += "/";
@@ -90,7 +89,6 @@ public class TXTAISentenceTransformer
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private volatile SentenceTransformerConfiguration
-		_sentenceTransformerConfiguration;
+	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
 
 }

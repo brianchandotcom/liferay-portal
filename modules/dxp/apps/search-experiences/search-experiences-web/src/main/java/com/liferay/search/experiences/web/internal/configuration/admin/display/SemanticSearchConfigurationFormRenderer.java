@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
-import com.liferay.search.experiences.web.internal.display.context.SentenceTransformerCompanyConfigurationDisplayContext;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,15 +58,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SentenceTransformerConfiguration",
+	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false, immediate = true, service = ConfigurationFormRenderer.class
 )
-public class SentenceTransformerConfigurationFormRenderer
+public class SemanticSearchConfigurationFormRenderer
 	implements ConfigurationFormRenderer {
 
 	@Override
 	public String getPid() {
-		return SentenceTransformerConfiguration.class.getName();
+		return SemanticSearchConfiguration.class.getName();
 	}
 
 	@Override
@@ -130,76 +130,72 @@ public class SentenceTransformerConfigurationFormRenderer
 			return;
 		}
 
-		SentenceTransformerCompanyConfigurationDisplayContext
-			sentenceTransformerCompanyConfigurationDisplayContext =
-				new SentenceTransformerCompanyConfigurationDisplayContext();
+		SemanticSearchCompanyConfigurationDisplayContext
+			semanticSearchCompanyConfigurationDisplayContext =
+				new SemanticSearchCompanyConfigurationDisplayContext();
 
-		sentenceTransformerCompanyConfigurationDisplayContext.
+		semanticSearchCompanyConfigurationDisplayContext.
 			setAssetEntryClassNames(
 				ListUtil.fromArray(
-					_sentenceTransformerConfiguration.assetEntryClassNames()));
-		sentenceTransformerCompanyConfigurationDisplayContext.
+					_semanticSearchConfiguration.assetEntryClassNames()));
+		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableAssetEntryClassNames(
 				_getAvailableAssetEntryClassNames(httpServletRequest));
-		sentenceTransformerCompanyConfigurationDisplayContext.
+		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableEmbeddingVectorDimensions(
 				_getAvailableEmbeddingVectorDimensions());
-		sentenceTransformerCompanyConfigurationDisplayContext.
+		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableLanguageDisplayNames(
 				_getAvailableLanguageDisplayNames(httpServletRequest));
-		sentenceTransformerCompanyConfigurationDisplayContext.
+		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableSentenceTranformProviders(
 				_getAvailableSentenceTranformProviders(httpServletRequest));
-		sentenceTransformerCompanyConfigurationDisplayContext.
+		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableTextTruncationStrategies(
 				_getAvailableTextTruncationStrategies(httpServletRequest));
-		sentenceTransformerCompanyConfigurationDisplayContext.setCacheTimeout(
-			_sentenceTransformerConfiguration.cacheTimeout());
-		sentenceTransformerCompanyConfigurationDisplayContext.
+		semanticSearchCompanyConfigurationDisplayContext.setCacheTimeout(
+			_semanticSearchConfiguration.cacheTimeout());
+		semanticSearchCompanyConfigurationDisplayContext.
 			setEmbeddingVectorDimensions(
-				_sentenceTransformerConfiguration.embeddingVectorDimensions());
-		sentenceTransformerCompanyConfigurationDisplayContext.setEnabled(
-			_sentenceTransformerConfiguration.enabled());
-		sentenceTransformerCompanyConfigurationDisplayContext.setEnableGPU(
-			_sentenceTransformerConfiguration.enableGPU());
-		sentenceTransformerCompanyConfigurationDisplayContext.
+				_semanticSearchConfiguration.embeddingVectorDimensions());
+		semanticSearchCompanyConfigurationDisplayContext.setEnabled(
+			_semanticSearchConfiguration.enabled());
+		semanticSearchCompanyConfigurationDisplayContext.setEnableGPU(
+			_semanticSearchConfiguration.enableGPU());
+		semanticSearchCompanyConfigurationDisplayContext.
 			setHuggingFaceAccessToken(
-				_sentenceTransformerConfiguration.huggingFaceAccessToken());
-		sentenceTransformerCompanyConfigurationDisplayContext.setLanguageIds(
-			ListUtil.fromArray(
-				_sentenceTransformerConfiguration.languageIds()));
-		sentenceTransformerCompanyConfigurationDisplayContext.
-			setMaxCharacterCount(
-				_sentenceTransformerConfiguration.maxCharacterCount());
-		sentenceTransformerCompanyConfigurationDisplayContext.setModel(
-			_sentenceTransformerConfiguration.model());
-		sentenceTransformerCompanyConfigurationDisplayContext.setModelTimeout(
-			_sentenceTransformerConfiguration.modelTimeout());
-		sentenceTransformerCompanyConfigurationDisplayContext.
+				_semanticSearchConfiguration.huggingFaceAccessToken());
+		semanticSearchCompanyConfigurationDisplayContext.setLanguageIds(
+			ListUtil.fromArray(_semanticSearchConfiguration.languageIds()));
+		semanticSearchCompanyConfigurationDisplayContext.setMaxCharacterCount(
+			_semanticSearchConfiguration.maxCharacterCount());
+		semanticSearchCompanyConfigurationDisplayContext.setModel(
+			_semanticSearchConfiguration.model());
+		semanticSearchCompanyConfigurationDisplayContext.setModelTimeout(
+			_semanticSearchConfiguration.modelTimeout());
+		semanticSearchCompanyConfigurationDisplayContext.
 			setSentenceTransformProvider(
-				_sentenceTransformerConfiguration.sentenceTransformProvider());
-		sentenceTransformerCompanyConfigurationDisplayContext.
+				_semanticSearchConfiguration.sentenceTransformProvider());
+		semanticSearchCompanyConfigurationDisplayContext.
 			setTextTruncationStrategy(
-				_sentenceTransformerConfiguration.textTruncationStrategy());
-		sentenceTransformerCompanyConfigurationDisplayContext.
-			setTxtaiHostAddress(
-				_sentenceTransformerConfiguration.txtaiHostAddress());
+				_semanticSearchConfiguration.textTruncationStrategy());
+		semanticSearchCompanyConfigurationDisplayContext.setTxtaiHostAddress(
+			_semanticSearchConfiguration.txtaiHostAddress());
 
 		httpServletRequest.setAttribute(
-			SentenceTransformerCompanyConfigurationDisplayContext.class.
-				getName(),
-			sentenceTransformerCompanyConfigurationDisplayContext);
+			SemanticSearchCompanyConfigurationDisplayContext.class.getName(),
+			semanticSearchCompanyConfigurationDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/sentence_transformer/configuration.jsp");
+			"/semantic_search/configuration.jsp");
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_sentenceTransformerConfiguration = ConfigurableUtil.createConfigurable(
-			SentenceTransformerConfiguration.class, properties);
+		_semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
+			SemanticSearchConfiguration.class, properties);
 	}
 
 	private Map<String, String> _getAvailableAssetEntryClassNames(
@@ -313,8 +309,7 @@ public class SentenceTransformerConfigurationFormRenderer
 	@Reference
 	private Language _language;
 
-	private volatile SentenceTransformerConfiguration
-		_sentenceTransformerConfiguration;
+	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.search.experiences.web)",

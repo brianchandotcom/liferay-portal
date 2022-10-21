@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.internal.blueprint.parameter.DoubleArraySXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.IntegerSXPParameter;
 import com.liferay.search.experiences.internal.ml.sentence.embedding.SentenceEmbeddingRetriever;
@@ -53,17 +53,17 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 		ExceptionListener exceptionListener, SearchContext searchContext,
 		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
 
-		SentenceTransformerConfiguration sentenceTransformerConfiguration =
-			_getSentenceTransformerConfiguration(searchContext.getCompanyId());
+		SemanticSearchConfiguration semanticSearchConfiguration =
+			_getSemanticSearchConfiguration(searchContext.getCompanyId());
 
 		sxpParameters.add(
 			new IntegerSXPParameter(
 				"ml.keyword_vector_dimensions", true,
-				sentenceTransformerConfiguration.embeddingVectorDimensions()));
+				semanticSearchConfiguration.embeddingVectorDimensions()));
 
 		Double[] sentenceEmbedding = SentenceTransformerWebCacheItem.get(
 			exceptionListener, _sentenceEmbeddingRetriever,
-			sentenceTransformerConfiguration, searchContext.getKeywords());
+			semanticSearchConfiguration, searchContext.getKeywords());
 
 		if (ArrayUtil.isEmpty(sentenceEmbedding)) {
 			return;
@@ -92,12 +92,12 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 				"ml.keyword_vectors"));
 	}
 
-	private SentenceTransformerConfiguration
-		_getSentenceTransformerConfiguration(long companyId) {
+	private SemanticSearchConfiguration _getSemanticSearchConfiguration(
+		long companyId) {
 
 		try {
 			return _configurationProvider.getCompanyConfiguration(
-				SentenceTransformerConfiguration.class, companyId);
+				SemanticSearchConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			return ReflectionUtil.throwException(configurationException);

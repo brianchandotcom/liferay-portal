@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.search.experiences.blueprint.exception.InvalidWebCacheItemException;
-import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.internal.ml.sentence.embedding.SentenceEmbeddingRetriever;
 
 import java.beans.ExceptionListener;
@@ -36,11 +36,10 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 	public static Double[] get(
 		ExceptionListener exceptionListener,
 		SentenceEmbeddingRetriever sentenceEmbeddingRetriever,
-		SentenceTransformerConfiguration sentenceTransformerConfiguration,
-		String text) {
+		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
-			!sentenceTransformerConfiguration.enabled()) {
+			!semanticSearchConfiguration.enabled()) {
 
 			return new Double[0];
 		}
@@ -49,11 +48,11 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 			return (Double[])WebCachePoolUtil.get(
 				StringBundler.concat(
 					SentenceTransformerWebCacheItem.class.getName(),
-					StringPool.POUND, sentenceTransformerConfiguration.model(),
+					StringPool.POUND, semanticSearchConfiguration.model(),
 					StringPool.POUND, text),
 				new SentenceTransformerWebCacheItem(
-					sentenceEmbeddingRetriever,
-					sentenceTransformerConfiguration, text));
+					sentenceEmbeddingRetriever, semanticSearchConfiguration,
+					text));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -68,11 +67,10 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 
 	public SentenceTransformerWebCacheItem(
 		SentenceEmbeddingRetriever sentenceEmbeddingRetriever,
-		SentenceTransformerConfiguration sentenceTransformerConfiguration,
-		String text) {
+		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		_sentenceEmbeddingRetriever = sentenceEmbeddingRetriever;
-		_sentenceTransformerConfiguration = sentenceTransformerConfiguration;
+		_semanticSearchConfiguration = semanticSearchConfiguration;
 		_text = text;
 	}
 
@@ -88,8 +86,8 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		if (_sentenceTransformerConfiguration.enabled()) {
-			return _sentenceTransformerConfiguration.cacheTimeout();
+		if (_semanticSearchConfiguration.enabled()) {
+			return _semanticSearchConfiguration.cacheTimeout();
 		}
 
 		return 0;
@@ -98,9 +96,8 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SentenceTransformerWebCacheItem.class);
 
+	private final SemanticSearchConfiguration _semanticSearchConfiguration;
 	private final SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
-	private final SentenceTransformerConfiguration
-		_sentenceTransformerConfiguration;
 	private final String _text;
 
 }

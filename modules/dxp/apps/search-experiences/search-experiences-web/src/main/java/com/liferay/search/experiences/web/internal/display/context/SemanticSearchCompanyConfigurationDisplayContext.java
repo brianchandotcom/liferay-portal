@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class SentenceTransformerCompanyConfigurationDisplayContext {
+public class SemanticSearchCompanyConfigurationDisplayContext {
 
 	public List<String> getAssetEntryClassNames() {
 		return _assetEntryClassNames;

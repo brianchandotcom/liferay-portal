@@ -2048,6 +2048,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-164933. Verify that it's possible to view the HTML Title and Description in SEO after changing the page name."
+	@ignore = "true"
 	@priority = "4"
 	test TitleAndDescriptionAreViewableInSEOAfterChangingPageName {
 		task ("Given: Enable local staging with page versioning") {

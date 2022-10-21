@@ -39,6 +39,9 @@ public class ObjectFieldConstants {
 
 	public static final String BUSINESS_TYPE_LONG_TEXT = "LongText";
 
+	public static final String BUSINESS_TYPE_MULTI_SELECT_PICKLIST =
+		"MultiSelectPicklist";
+
 	public static final String BUSINESS_TYPE_PICKLIST = "Picklist";
 
 	public static final String BUSINESS_TYPE_PRECISION_DECIMAL =

@@ -3116,6 +3116,8 @@ definition {
 	Then the web content is expired and it changes its status to Expired"
 	@priority = "4"
 	test ExpireVersionLabel {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -6276,6 +6278,8 @@ definition {
 	Then the Web Content is selected and the Info Panel is open to the Versions tab"
 	@priority = "4"
 	test ViewMoreWCVersionsBackButton {
+		property custom.properties = "feature.flag.LPS-161013=true";
+
 		task ("Create Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",

@@ -102,10 +102,24 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 	</aui:form>
 </liferay-util:buffer>
 
-<clay:alert
-	autoClose="<%= false %>"
-	cssClass="alert-notifications-fixed"
-	dismissible="<%= true %>"
-	displayType="success"
-	message="<%= alertMessage %>"
-/>
+<aui:script>
+	const componentId =
+		'<%= liferayPortletResponse.getNamespace() + "recycleBinAlert" %>';
+
+	Liferay.Util.openToast({
+		toastProps: {
+			tabIndex: '-1',
+			id: componentId,
+		},
+		renderData: {
+			componentId,
+		},
+		autoClose: 15000,
+		message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
+		type: 'success',
+	});
+
+	Liferay.componentReady(componentId).then(() =>
+		document.getElementById(componentId).focus()
+	);
+</aui:script>

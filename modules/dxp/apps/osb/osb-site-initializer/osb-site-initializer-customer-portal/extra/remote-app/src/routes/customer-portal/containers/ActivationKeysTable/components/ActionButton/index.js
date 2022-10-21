@@ -15,6 +15,7 @@ import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants';
+import {getFilteredKeysActionsItems} from '../../utils/constants/columns-definitions/getFilteredKeysActionsItems';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
@@ -109,16 +110,37 @@ const ActionButton = ({
 		productName
 	);
 
-	return (
-		<ButtonDropDown
-			isAdminOrPartnerManager={isAdminOrPartnerManager}
-			items={activationKeysActionsItems}
-			label={i18n.translate('actions')}
-			menuElementAttrs={{
-				className: 'p-0',
-			}}
-		/>
+	const filteredKeysActionsItems = getFilteredKeysActionsItems(
+		project?.accountKey,
+		provisioningServerAPI,
+		sessionId,
+		handleAlertStatus,
+		handleRedirectPage,
+		handleDeactivatePage,
+		productName
 	);
+
+	if (isAdminOrPartnerManager === true) {
+		return (
+			<ButtonDropDown
+				items={activationKeysActionsItems}
+				label={i18n.translate('actions')}
+				menuElementAttrs={{
+					className: 'p-0',
+				}}
+			/>
+		);
+	} else {
+		return (
+			<ButtonDropDown
+				items={filteredKeysActionsItems}
+				label={i18n.translate('actions')}
+				menuElementAttrs={{
+					className: 'p-0',
+				}}
+			/>
+		);
+	}
 };
 
 export default ActionButton;

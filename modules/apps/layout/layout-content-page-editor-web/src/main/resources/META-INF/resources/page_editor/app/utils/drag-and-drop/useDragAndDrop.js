@@ -137,24 +137,16 @@ export function NotDraggableArea({children}) {
 }
 
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
-	const fragmentEntryLinksRef = useSelectorRef(
-		(state) => state.fragmentEntryLinks
-	);
-
-	const getSourceItem = useCallback(
-		() => ({
-			...sourceItem,
-			isWidget: sourceItem.isSymbol
-				? sourceItem.isWidget
-				: isWidget(sourceItem, fragmentEntryLinksRef.current),
-		}),
-		[fragmentEntryLinksRef, sourceItem]
-	);
-
 	const {canDrag, dispatch, layoutDataRef, state} = useContext(
 		DragAndDropContext
 	);
 	const sourceRef = useRef(null);
+
+	const item = {...sourceItem, id: sourceItem.itemId};
+
+	if (!sourceItem.origin) {
+		delete item.origin;
+	}
 
 	const [{isDraggingSource}, handlerRef, previewRef] = useDrag({
 		begin() {
@@ -176,14 +168,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 			});
 		},
 
-		item: {
-			getSourceItem,
-			icon: sourceItem.icon,
-			id: sourceItem.itemId,
-			name: sourceItem.name,
-			type: sourceItem.type,
-			...(sourceItem.origin && {origin: sourceItem.origin}),
-		},
+		item,
 	});
 
 	useEffect(() => {
@@ -274,15 +259,15 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 
 	const [, setDropTargetRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
-		hover({getSourceItem}, monitor) {
-			if (getSourceItem().origin !== targetItem.origin) {
+		hover(source, monitor) {
+			if (source.origin !== targetItem.origin) {
 				return;
 			}
 			computeHover({
 				dispatch,
 				layoutDataRef,
 				monitor,
-				sourceItem: getSourceItem(),
+				sourceItem: source,
 				targetItem,
 				targetRefs,
 				toControlsId,
@@ -462,16 +447,4 @@ function getSiblingPosition(state, parentItem) {
 	}
 
 	return siblingPosition;
-}
-
-function isWidget(item, fragmentEntryLinks) {
-	const {fragmentEntryLinkId} = item.config;
-
-	if (!fragmentEntryLinkId) {
-		return false;
-	}
-
-	const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
-
-	return Boolean(fragmentEntryLink.portletId);
 }

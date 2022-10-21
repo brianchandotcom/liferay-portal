@@ -18,7 +18,6 @@ import com.liferay.frontend.data.set.constants.FDSConstants;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewContextContributor;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -26,7 +25,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -67,8 +65,5 @@ public class CardsFDSViewContextContributor
 			).build()
 		).build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

@@ -31,6 +31,10 @@ import {
 } from '../../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
 import {
+	useMovementSource,
+	useMovementTarget,
+} from '../../contexts/KeyboardMovementContext';
+import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
@@ -91,14 +95,21 @@ function TopperContent({
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
+	const {
+		itemId: keyboardMovementTargetId,
+		position: keyboardMovementPosition,
+	} = useMovementTarget();
 	const selectItem = useSelectItem();
 	const topperLabelId = useId();
 
 	const dropContainerId = useDropContainerId();
 	const isDroppable = useIsDroppable();
+	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
 	const isDropContainer = dropContainerId === item.itemId;
-	const isValidDrop = isDroppable && isOverTarget;
+	const isValidDrop =
+		(isDroppable && isOverTarget) ||
+		keyboardMovementTargetId === item.itemId;
 
 	const isHighlighted =
 		(item.type === LAYOUT_DATA_ITEM_TYPES.row ||
@@ -164,7 +175,12 @@ function TopperContent({
 		}
 	});
 
-	const isDraggingSource = itemIsDraggingSource || topperIsDraggingSource;
+	const keyboardMovementSource = useMovementSource();
+
+	const isDraggingSource =
+		itemIsDraggingSource ||
+		topperIsDraggingSource ||
+		keyboardMovementSource?.itemId === item.itemId;
 
 	return (
 		<div
@@ -173,15 +189,18 @@ function TopperContent({
 			className={classNames(className, 'page-editor__topper', {
 				'active': isActive,
 				'drag-over-bottom':
-					isValidDrop && targetPosition === TARGET_POSITIONS.BOTTOM,
+					isValidDrop &&
+					dropTargetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-left':
-					isValidDrop && targetPosition === TARGET_POSITIONS.LEFT,
+					isValidDrop && dropTargetPosition === TARGET_POSITIONS.LEFT,
 				'drag-over-middle':
-					isValidDrop && targetPosition === TARGET_POSITIONS.MIDDLE,
+					isValidDrop &&
+					dropTargetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-right':
-					isValidDrop && targetPosition === TARGET_POSITIONS.RIGHT,
+					isValidDrop &&
+					dropTargetPosition === TARGET_POSITIONS.RIGHT,
 				'drag-over-top':
-					isValidDrop && targetPosition === TARGET_POSITIONS.TOP,
+					isValidDrop && dropTargetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
 				'drop-container': isDropContainer,
 				'highlighted': isHighlighted,

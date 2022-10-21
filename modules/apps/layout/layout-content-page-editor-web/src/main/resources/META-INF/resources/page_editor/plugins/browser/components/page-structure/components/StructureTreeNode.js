@@ -35,6 +35,8 @@ import {
 } from '../../../../../app/contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
+	useMovementSource,
+	useMovementTarget,
 	useSetMovementSource,
 } from '../../../../../app/contexts/KeyboardMovementContext';
 import {
@@ -238,7 +240,7 @@ function StructureTreeNodeContent({
 		computeHover
 	);
 
-	const {handlerRef, isDraggingSource} = useDragItem(
+	const {handlerRef, isDraggingSource: itemIsDraggingSource} = useDragItem(
 		{...item, fragmentEntryType, isWidget},
 		(parentItemId, position) =>
 			dispatch(
@@ -250,9 +252,23 @@ function StructureTreeNodeContent({
 			)
 	);
 
+	const {
+		itemId: keyboardMovementTargetId,
+		position: keyboardMovementPosition,
+	} = useMovementTarget();
+
+	const dropTargetPosition = targetPosition || keyboardMovementPosition;
+
+	const keyboardMovementSource = useMovementSource();
+
+	const isDraggingSource =
+		itemIsDraggingSource || keyboardMovementSource?.itemId === item.itemId;
+
 	const isDroppable = useIsDroppable();
 
-	const isValidDrop = isDroppable && isOverTarget;
+	const isValidDrop =
+		(isDroppable && isOverTarget) ||
+		keyboardMovementTargetId === item.itemId;
 
 	const onEditName = (nextName) => {
 		const trimmedName = nextName?.trim();
@@ -310,11 +326,13 @@ function StructureTreeNodeContent({
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
-					isValidDrop && targetPosition === TARGET_POSITIONS.BOTTOM,
+					isValidDrop &&
+					dropTargetPosition === TARGET_POSITIONS.BOTTOM,
 				'drag-over-middle':
-					isValidDrop && targetPosition === TARGET_POSITIONS.MIDDLE,
+					isValidDrop &&
+					dropTargetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-top':
-					isValidDrop && targetPosition === TARGET_POSITIONS.TOP,
+					isValidDrop && dropTargetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,

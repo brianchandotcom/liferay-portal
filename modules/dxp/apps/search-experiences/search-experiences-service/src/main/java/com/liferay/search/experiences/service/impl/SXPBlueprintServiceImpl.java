@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.base.SXPBlueprintServiceBaseImpl;
 
 import java.util.Locale;
@@ -78,7 +77,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	public SXPBlueprint getSXPBlueprint(long sxpBlueprintId)
 		throws PortalException {
 
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.getSXPBlueprint(
+		SXPBlueprint sxpBlueprint = sxpBlueprintLocalService.getSXPBlueprint(
 			sxpBlueprintId);
 
 		_sxpBlueprintModelResourcePermission.check(
@@ -94,7 +93,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 		throws PortalException {
 
 		SXPBlueprint sxpBlueprint =
-			_sxpBlueprintLocalService.getSXPBlueprintByExternalReferenceCode(
+			sxpBlueprintLocalService.getSXPBlueprintByExternalReferenceCode(
 				companyId, externalReferenceCode);
 
 		_sxpBlueprintModelResourcePermission.check(
@@ -115,16 +114,13 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 		_sxpBlueprintModelResourcePermission.check(
 			getPermissionChecker(), sxpBlueprintId, ActionKeys.UPDATE);
 
-		return _sxpBlueprintLocalService.updateSXPBlueprint(
+		return sxpBlueprintLocalService.updateSXPBlueprint(
 			getUserId(), sxpBlueprintId, configurationJSON, descriptionMap,
 			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
 	}
 
 	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")
 	private volatile PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.search.experiences.model.SXPBlueprint)"

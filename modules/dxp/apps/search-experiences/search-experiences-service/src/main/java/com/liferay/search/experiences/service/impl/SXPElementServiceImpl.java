@@ -24,7 +24,6 @@ import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.exception.SXPElementReadOnlyException;
 import com.liferay.search.experiences.model.SXPElement;
-import com.liferay.search.experiences.service.SXPElementLocalService;
 import com.liferay.search.experiences.service.base.SXPElementServiceBaseImpl;
 
 import java.util.Locale;
@@ -81,7 +80,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 	@Override
 	public SXPElement getSXPElement(long sxpElementId) throws PortalException {
-		SXPElement sxpElement = _sxpElementLocalService.getSXPElement(
+		SXPElement sxpElement = sxpElementLocalService.getSXPElement(
 			sxpElementId);
 
 		_sxpElementModelResourcePermission.check(
@@ -100,16 +99,13 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 		_sxpElementModelResourcePermission.check(
 			getPermissionChecker(), sxpElementId, ActionKeys.UPDATE);
 
-		return _sxpElementLocalService.updateSXPElement(
+		return sxpElementLocalService.updateSXPElement(
 			getUserId(), sxpElementId, descriptionMap, elementDefinitionJSON,
 			hidden, schemaVersion, titleMap, serviceContext);
 	}
 
 	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")
 	private volatile PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private SXPElementLocalService _sxpElementLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.search.experiences.model.SXPElement)"

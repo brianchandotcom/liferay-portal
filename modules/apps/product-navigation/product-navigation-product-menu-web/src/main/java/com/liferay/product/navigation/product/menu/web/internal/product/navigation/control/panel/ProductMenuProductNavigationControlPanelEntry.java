@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +45,30 @@ public class ProductMenuProductNavigationControlPanelEntry
 
 		User user = permissionChecker.getUser();
 
-		if (permissionChecker.isSignedIn() && user.isSetupComplete()) {
+		if (permissionChecker.isSignedIn() &&
+			(user.isSetupComplete() || _isImpersonated())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isImpersonated() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return false;
+		}
+
+		if (themeDisplay.isImpersonated()) {
 			return true;
 		}
 

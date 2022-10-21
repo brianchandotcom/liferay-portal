@@ -37,10 +37,10 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 
 			<c:choose>
 				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() && (trashURL != null) %>">
-					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
+					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="recycle-bin" />
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message key="the-recycle-bin" />
+					<liferay-ui:message key="recycle-bin" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-util:buffer>
@@ -52,7 +52,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 						<liferay-ui:message arguments="<%= trashedEntriesCount %>" key="x-items-were-removed" translateArguments="<%= false %>" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount, trashLink.trim()} %>" key="x-items-were-moved-to-x" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount, trashLink.trim()} %>" key="x-items-were-moved-to-the-x" translateArguments="<%= false %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -79,7 +79,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 						<liferay-ui:message arguments="<%= trashEntityLink %>" key="the-element-x-was-removed" translateArguments="<%= false %>" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= new Object[] {trashEntityLink, trashLink.trim()} %>" key="the-element-x-was-moved-to-x" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= new Object[] {trashEntityLink, trashLink.trim()} %>" key="the-element-x-was-moved-to-the-x" translateArguments="<%= false %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
@@ -91,6 +91,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 		<div class="alert-footer">
 			<div class="btn-group" role="group">
 				<clay:button
+					aria-label='<%= LanguageUtil.get(request, "undo-deletion") %>'
 					cssClass="alert-btn trash-undo-button"
 					displayType="primary"
 					label="undo"

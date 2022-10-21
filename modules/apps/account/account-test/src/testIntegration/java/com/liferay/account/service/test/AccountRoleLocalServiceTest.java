@@ -19,7 +19,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.model.AccountRoleTable;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
@@ -94,12 +93,9 @@ public class AccountRoleLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry1 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-		_accountEntry2 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-		_accountEntry3 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountEntry1 = AccountEntryTestUtil.addAccountEntry();
+		_accountEntry2 = AccountEntryTestUtil.addAccountEntry();
+		_accountEntry3 = AccountEntryTestUtil.addAccountEntry();
 	}
 
 	@Test
@@ -613,9 +609,6 @@ public class AccountRoleLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry3;
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

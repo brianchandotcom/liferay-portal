@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -191,8 +190,7 @@ public class RoleModelListenerTest {
 
 	@Test(expected = ModelListenerException.class)
 	public void testDeleteRole() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService, WorkflowConstants.STATUS_APPROVED);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),

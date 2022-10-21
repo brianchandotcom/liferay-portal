@@ -57,8 +57,7 @@ public class AccountEntryOrganizationRelLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_organization = OrganizationTestUtil.addOrganization();
 	}
@@ -210,10 +209,8 @@ public class AccountEntryOrganizationRelLocalServiceTest {
 	public void testGetAccountEntryOrganizationRelsByOrganizationId()
 		throws Exception {
 
-		_accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(_accountEntryLocalService));
-		_accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(_accountEntryLocalService));
+		_accountEntries.add(AccountEntryTestUtil.addAccountEntry());
+		_accountEntries.add(AccountEntryTestUtil.addAccountEntry());
 
 		long[] expectedAccountEntryIds = ListUtil.toLongArray(
 			_accountEntries, AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR);

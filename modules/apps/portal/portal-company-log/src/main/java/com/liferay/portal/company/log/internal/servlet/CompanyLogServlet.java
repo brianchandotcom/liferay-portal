@@ -83,22 +83,17 @@ public class CompanyLogServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			PermissionChecker permissionChecker = _getPermissionChecker(
-				httpServletRequest);
-
 			String path = HttpComponentsUtil.fixPath(
 				httpServletRequest.getPathInfo());
 
 			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 			if (pathArray.length == 0) {
-				_listCompaniesLogFiles(
-					permissionChecker, httpServletRequest, httpServletResponse);
+				_listCompaniesLogFiles(httpServletRequest, httpServletResponse);
 			}
 			else if (pathArray.length == 2) {
 				_downloadLogFile(
-					permissionChecker, httpServletRequest, httpServletResponse,
-					pathArray);
+					httpServletRequest, httpServletResponse, pathArray);
 			}
 		}
 		catch (FileNotFoundException fileNotFoundException) {
@@ -121,7 +116,6 @@ public class CompanyLogServlet extends HttpServlet {
 	}
 
 	private void _downloadLogFile(
-			PermissionChecker permissionChecker,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String[] pathArray)
 		throws Exception {
@@ -132,6 +126,9 @@ public class CompanyLogServlet extends HttpServlet {
 			throw new NoSuchCompanyException(
 				"No Company exists with the primary key " + companyId);
 		}
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			httpServletRequest);
 
 		if (!permissionChecker.isCompanyAdmin(companyId)) {
 			throw new PrincipalException.MustBeCompanyAdmin(
@@ -225,10 +222,12 @@ public class CompanyLogServlet extends HttpServlet {
 	}
 
 	private void _listCompaniesLogFiles(
-			PermissionChecker permissionChecker,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			httpServletRequest);
 
 		JSONArray companyLogFilesJSONArray = _jsonFactory.createJSONArray();
 

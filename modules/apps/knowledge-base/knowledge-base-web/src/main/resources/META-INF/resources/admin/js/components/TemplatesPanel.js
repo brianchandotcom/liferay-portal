@@ -64,6 +64,10 @@ export default function TemplatesPanel({items, selectedItemId}) {
 										actions={ActionsDropdown({
 											actions: item.actions,
 										})}
+										className={classnames({
+											'knowledge-base-navigation-item-active':
+												item.id === selectedItemId,
+										})}
 									>
 										<ClayLink
 											displayType="secondary"

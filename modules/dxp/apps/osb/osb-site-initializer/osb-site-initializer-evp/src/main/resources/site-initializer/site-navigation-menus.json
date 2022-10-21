@@ -12,7 +12,7 @@
 				"type": "layout"
 			},
 			{
-				"friendlyURL": "/company",
+				"friendlyURL": "/organization",
 				"privateLayout": false,
 				"type": "layout"
 			}

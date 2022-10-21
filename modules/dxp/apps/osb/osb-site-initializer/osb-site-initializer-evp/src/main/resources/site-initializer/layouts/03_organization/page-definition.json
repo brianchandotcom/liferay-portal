@@ -17,7 +17,7 @@
 						"paddingTop": 0,
 						"widthType": "Fluid"
 					},
-					"name": "Company Container"
+					"name": "Organization Container"
 				},
 				"pageElements": [
 					{
@@ -283,10 +283,10 @@
 												"borderRadius": "",
 												"borderWidth": "",
 												"height": "65px",
-												"maxWidth": "16%",
+												"maxWidth": "14%",
 												"shadow": "",
 												"textAlign": "",
-												"width": "16%"
+												"width": "14%"
 											},
 											"indexed": true,
 											"layout": {
@@ -415,11 +415,11 @@
 												"borderRadius": "",
 												"borderWidth": "",
 												"height": "65px",
-												"maxWidth": "16%",
+												"maxWidth": "14%",
 												"paddingLeft": "2",
 												"shadow": "",
 												"textAlign": "",
-												"width": "16%"
+												"width": "14%"
 											},
 											"indexed": true,
 											"layout": {
@@ -739,7 +739,10 @@
 																		}
 																	],
 																	"fragmentStyle": {
+																		"borderRadius": "",
 																		"maxWidth": "90%",
+																		"shadow": "",
+																		"textAlign": "",
 																		"width": "90%"
 																	},
 																	"indexed": true
@@ -755,11 +758,11 @@
 																"borderRadius": "",
 																"borderWidth": "0",
 																"height": "65px",
-																"maxWidth": "16%",
+																"maxWidth": "14%",
 																"paddingLeft": "2",
 																"shadow": "",
 																"textAlign": "",
-																"width": "16%"
+																"width": "14%"
 															},
 															"indexed": true,
 															"layout": {
@@ -879,12 +882,12 @@
 																"borderRadius": "",
 																"borderWidth": "0",
 																"height": "65px",
-																"maxWidth": "16%",
+																"maxWidth": "14%",
 																"paddingLeft": "2",
 																"paddingRight": "2",
 																"shadow": "",
 																"textAlign": "",
-																"width": "16%"
+																"width": "14%"
 															},
 															"indexed": true,
 															"layout": {
@@ -950,10 +953,10 @@
 																"borderRadius": "",
 																"borderWidth": "0",
 																"height": "65px",
-																"maxWidth": "4%",
+																"maxWidth": "8%",
 																"shadow": "",
 																"textAlign": "",
-																"width": "4%"
+																"width": "8%"
 															},
 															"indexed": true,
 															"layout": {
@@ -977,13 +980,38 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "clay-icon-link"
+																		"key": "DIALECT-dialect-button"
 																	},
 																	"fragmentConfig": {
-																		"iconLink": "request-page",
-																		"iconName": "search-experiences"
+																		"buttonSize": "btn-sm",
+																		"inverted": false,
+																		"style": "primary",
+																		"type": "ghost",
+																		"uppercase": false
 																	},
 																	"fragmentFields": [
+																		{
+																			"id": "link",
+																			"value": {
+																				"fragmentLink": {
+																					"value": {
+																						"href": {
+																							"mapping": {
+																								"fieldKey": "ObjectEntry_displayPageURL",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Details"
+																					}
+																				}
+																			}
+																		}
 																	],
 																	"indexed": true
 																},

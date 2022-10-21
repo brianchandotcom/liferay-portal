@@ -43,10 +43,10 @@ import switchSidebarPanel from '../../thunks/switchSidebarPanel';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
 import {
 	useDragItem,
-	useDropContainerId,
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
+import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
 

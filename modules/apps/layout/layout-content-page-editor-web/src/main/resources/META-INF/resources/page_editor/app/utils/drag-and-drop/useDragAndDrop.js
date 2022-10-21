@@ -56,11 +56,6 @@ export const initialDragDrop = {
 	state: {
 
 		/**
-		 * Id of the closest container of drop item
-		 */
-		dropContainerId: null,
-
-		/**
 		 * Item that is being dragged
 		 */
 		dropItem: null,
@@ -108,8 +103,15 @@ export const initialDragDrop = {
 
 const DragAndDropContext = React.createContext(initialDragDrop);
 
-export function useDropContainerId() {
-	return useContext(DragAndDropContext).state.dropContainerId;
+export function useDropTargetData() {
+	const {dropTargetItem, targetPositionWithMiddle} = useContext(
+		DragAndDropContext
+	).state;
+
+	return {
+		item: dropTargetItem,
+		position: targetPositionWithMiddle,
+	};
 }
 
 export function useIsDroppable() {

@@ -32,7 +32,7 @@ import {
 } from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
-import {useDropContainerId} from '../utils/drag-and-drop/useDragAndDrop';
+import useDropContainerId from '../utils/useDropContainerId';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
 	CollectionItemWithControls,

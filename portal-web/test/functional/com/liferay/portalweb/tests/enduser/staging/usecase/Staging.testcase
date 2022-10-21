@@ -219,6 +219,54 @@ definition {
 		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content");
 	}
 
+	@description = "This is a use case for LPS-29586 and LPS-37405. Verify that the unselected child page cannot be published on local staging."
+	@priority = "3"
+	test AssertCannotPublishUnselectedChildPage {
+		property test.name.skip.portal.instance = "Staging#AssertCannotPublishUnselectedChildPage";
+
+		task ("Given: Enable local staging with a blank site") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
+
+		task ("Given: Add a page with 2 child pages on staging and attempt to publish them to live") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name (Staging)",
+					layoutName = "Test Child Page ${i}",
+					parentLayoutName = "Staging Test Page",
+					site = "false");
+			}
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("When: Select the root node "Pages" in the form and unselect one of the child pages to publish to live") {
+			Staging.configurePublishToLive(
+				checkPageName = "Staging Test Page",
+				uncheckChildPagesNameList = "Test Child Page 2");
+
+			Staging.publishToLive();
+		}
+
+		task ("Then: Assert the unselected child page is not published to live") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			for (var pageNames : list "Staging Test Page,Test Child Page 1") {
+				PagesAdmin.viewPageItemPresent(
+					depth = "1",
+					pageName = "${pageNames}");
+			}
+
+			PagesAdmin.viewPageItemNotPresent(
+				depth = "1",
+				pageName = "Test Child Page 2");
+		}
+	}
+
 	@description = "This is a use case for LPS-90127."
 	@priority = "3"
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {

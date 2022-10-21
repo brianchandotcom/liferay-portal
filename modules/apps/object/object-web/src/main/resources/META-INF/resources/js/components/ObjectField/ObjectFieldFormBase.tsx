@@ -94,7 +94,7 @@ export default function ObjectFieldFormBase({
 	const [picklistDefaultValueQuery, setPicklistDefaultValueQuery] = useState<
 		string
 	>('');
-	const [pickLists, setPickLists] = useState<PickList[]>([]);
+	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
 		TObjectRelationship
@@ -127,8 +127,8 @@ export default function ObjectFieldFormBase({
 		if (values.businessType === 'Picklist') {
 			API.getPickLists().then(setPickLists);
 
-			if (values.state) {
-				API.getPickListItems(values.listTypeDefinitionId!).then(
+			if (values.state && values.listTypeDefinitionId) {
+				API.getPickListItems(values.listTypeDefinitionId).then(
 					setPickListItems
 				);
 			}
@@ -214,6 +214,7 @@ export default function ObjectFieldFormBase({
 			defaultValue: '',
 			indexedAsKeyword,
 			indexedLanguageId,
+			listTypeDefinitionExternalReferenceCode: '',
 			listTypeDefinitionId: 0,
 			objectFieldSettings,
 			state: false,
@@ -332,6 +333,9 @@ export default function ObjectFieldFormBase({
 					onChange={({target: {value}}) => {
 						setValues({
 							defaultValue: '',
+							listTypeDefinitionExternalReferenceCode: pickLists.find(
+								({name}) => name === value
+							)?.externalReferenceCode,
 							listTypeDefinitionId: Number(
 								pickLists.find(({name}) => name === value)?.id
 							),

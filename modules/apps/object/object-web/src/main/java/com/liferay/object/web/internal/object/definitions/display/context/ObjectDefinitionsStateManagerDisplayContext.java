@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -39,10 +40,13 @@ public class ObjectDefinitionsStateManagerDisplayContext
 
 	public ObjectDefinitionsStateManagerDisplayContext(
 		HttpServletRequest httpServletRequest,
+		ListTypeDefinitionService listTypeDefinitionService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
+
+		_listTypeDefinitionService = listTypeDefinitionService;
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
@@ -69,12 +73,15 @@ public class ObjectDefinitionsStateManagerDisplayContext
 	}
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {
-		return ObjectFieldUtil.toJSONObject(objectField);
+		return ObjectFieldUtil.toJSONObject(
+			_listTypeDefinitionService, objectField);
 	}
 
 	@Override
 	protected String getAPIURI() {
 		return "/object-fields?filter=state%20eq%20true";
 	}
+
+	private final ListTypeDefinitionService _listTypeDefinitionService;
 
 }

@@ -28,9 +28,11 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 
 	useEffect(() => {
-		API.getPickListItems(objectField.listTypeDefinitionId).then(
-			setPickListItems
-		);
+		if (objectField?.listTypeDefinitionId) {
+			API.getPickListItems(objectField.listTypeDefinitionId).then(
+				setPickListItems
+			);
+		}
 	}, [objectField.listTypeDefinitionId, setPickListItems]);
 
 	const isStateOptionChecked = ({
@@ -63,6 +65,10 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 	};
 
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
+		if (Liferay.FeatureFlags['LPS-164278']) {
+			delete objectField.listTypeDefinitionId;
+		}
+
 		delete objectField.system;
 
 		try {

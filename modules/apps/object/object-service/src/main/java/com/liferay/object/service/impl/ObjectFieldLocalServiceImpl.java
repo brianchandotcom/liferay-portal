@@ -24,6 +24,7 @@ import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldDefaultValueException;
 import com.liferay.object.exception.ObjectFieldLabelException;
+import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldStateException;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -530,6 +532,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
+		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -653,6 +656,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
+		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
 		_validateName(0, objectDefinition, name, system);
 		_validateState(required, state);
 
@@ -986,6 +990,20 @@ public class ObjectFieldLocalServiceImpl
 		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
 			throw new ObjectFieldLabelException(
 				"Label is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateListTypeDefinitionId(
+			long listTypeDefinitionId, String businessType)
+		throws PortalException {
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) &&
+			(listTypeDefinitionId == 0) &&
+			StringUtil.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			throw new ObjectFieldListTypeDefinitionIdException(
+				"List type definition id must not be null");
 		}
 	}
 

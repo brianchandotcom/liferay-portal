@@ -82,6 +82,7 @@ public class ListTypeDefinitionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"listTypeDefinitionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -94,6 +95,7 @@ public class ListTypeDefinitionModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -104,7 +106,7 @@ public class ListTypeDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ListTypeDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,listTypeDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null)";
+		"create table ListTypeDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,listTypeDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ListTypeDefinition";
 
@@ -130,14 +132,20 @@ public class ListTypeDefinitionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 4L;
+	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -264,6 +272,13 @@ public class ListTypeDefinitionModelImpl
 			(BiConsumer<ListTypeDefinition, String>)
 				ListTypeDefinition::setUuid);
 		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			ListTypeDefinition::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<ListTypeDefinition, String>)
+				ListTypeDefinition::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"listTypeDefinitionId",
 			ListTypeDefinition::getListTypeDefinitionId);
 		attributeSetterBiConsumers.put(
@@ -353,6 +368,35 @@ public class ListTypeDefinitionModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -721,6 +765,8 @@ public class ListTypeDefinitionModelImpl
 
 		listTypeDefinitionImpl.setMvccVersion(getMvccVersion());
 		listTypeDefinitionImpl.setUuid(getUuid());
+		listTypeDefinitionImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		listTypeDefinitionImpl.setListTypeDefinitionId(
 			getListTypeDefinitionId());
 		listTypeDefinitionImpl.setCompanyId(getCompanyId());
@@ -744,6 +790,8 @@ public class ListTypeDefinitionModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		listTypeDefinitionImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		listTypeDefinitionImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		listTypeDefinitionImpl.setListTypeDefinitionId(
 			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
 		listTypeDefinitionImpl.setCompanyId(
@@ -844,6 +892,18 @@ public class ListTypeDefinitionModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			listTypeDefinitionCacheModel.uuid = null;
+		}
+
+		listTypeDefinitionCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			listTypeDefinitionCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			listTypeDefinitionCacheModel.externalReferenceCode = null;
 		}
 
 		listTypeDefinitionCacheModel.listTypeDefinitionId =
@@ -951,6 +1011,7 @@ public class ListTypeDefinitionModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _listTypeDefinitionId;
 	private long _companyId;
 	private long _userId;
@@ -993,6 +1054,8 @@ public class ListTypeDefinitionModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1027,19 +1090,21 @@ public class ListTypeDefinitionModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("listTypeDefinitionId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("listTypeDefinitionId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
+
+		columnBitmasks.put("name", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

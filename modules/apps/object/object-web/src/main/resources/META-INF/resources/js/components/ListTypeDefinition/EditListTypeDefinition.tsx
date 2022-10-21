@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import {
 	API,
 	Card,
+	Input,
 	InputLocalized,
 	SidePanelForm,
 	openToast,
@@ -34,6 +35,9 @@ export default function EditListTypeDefinition({
 	const onSubmit = async (values: PickList) => {
 		try {
 			await API.updatePickList({
+				externalReferenceCode: Liferay.FeatureFlags['LPS-164278']
+					? values.externalReferenceCode
+					: '',
 				id: parseInt(listTypeDefinitionId, 10),
 				name_i18n: values.name_i18n,
 			});
@@ -85,6 +89,26 @@ export default function EditListTypeDefinition({
 								values.name_i18n as LocalizedValue<string>
 							}
 						/>
+
+						{Liferay.FeatureFlags['LPS-164278'] && (
+							<Input
+								autoComplete="off"
+								error={errors.externalReferenceCode}
+								feedbackMessage={Liferay.Language.get(
+									'internal-key-to-reference-the-object-definition'
+								)}
+								label={Liferay.Language.get(
+									'external-reference-code'
+								)}
+								onChange={({target: {value}}) => {
+									setValues({
+										externalReferenceCode: value,
+									});
+								}}
+								required
+								value={values.externalReferenceCode}
+							/>
+						)}
 					</Card>
 
 					<Card title={Liferay.Language.get('items')}>

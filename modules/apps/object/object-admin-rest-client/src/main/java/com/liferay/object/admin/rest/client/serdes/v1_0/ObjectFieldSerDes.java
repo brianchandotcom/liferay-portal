@@ -177,6 +177,22 @@ public class ObjectFieldSerDes {
 			sb.append(_toJSON(objectField.getLabel()));
 		}
 
+		if (objectField.getListTypeDefinitionExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listTypeDefinitionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectField.getListTypeDefinitionExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectField.getListTypeDefinitionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -379,6 +395,16 @@ public class ObjectFieldSerDes {
 			map.put("label", String.valueOf(objectField.getLabel()));
 		}
 
+		if (objectField.getListTypeDefinitionExternalReferenceCode() == null) {
+			map.put("listTypeDefinitionExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"listTypeDefinitionExternalReferenceCode",
+				String.valueOf(
+					objectField.getListTypeDefinitionExternalReferenceCode()));
+		}
+
 		if (objectField.getListTypeDefinitionId() == null) {
 			map.put("listTypeDefinitionId", null);
 		}
@@ -524,6 +550,15 @@ public class ObjectFieldSerDes {
 					objectField.setLabel(
 						(Map)ObjectFieldSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"listTypeDefinitionExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setListTypeDefinitionExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

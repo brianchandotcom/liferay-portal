@@ -87,6 +87,11 @@ public interface ListTypeDefinitionLocalService
 			long userId, Map<Locale, String> nameMap)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ListTypeDefinition addListTypeDefinition(
+			String externalReferenceCode, long userId)
+		throws PortalException;
+
 	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *
@@ -220,6 +225,25 @@ public interface ListTypeDefinitionLocalService
 		long listTypeDefinitionId);
 
 	/**
+	 * Returns the list type definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the list type definition's external reference code
+	 * @return the matching list type definition, or <code>null</code> if a matching list type definition could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeDefinition fetchListTypeDefinitionByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchListTypeDefinitionByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeDefinition fetchListTypeDefinitionByReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
 	 * Returns the list type definition with the matching UUID and company.
 	 *
 	 * @param uuid the list type definition's UUID
@@ -249,6 +273,19 @@ public interface ListTypeDefinitionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ListTypeDefinition getListTypeDefinition(long listTypeDefinitionId)
+		throws PortalException;
+
+	/**
+	 * Returns the list type definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the list type definition's external reference code
+	 * @return the matching list type definition
+	 * @throws PortalException if a matching list type definition could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**
@@ -317,7 +354,8 @@ public interface ListTypeDefinitionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ListTypeDefinition updateListTypeDefinition(
-			long listTypeDefinitionId, Map<Locale, String> nameMap)
+			String externalReferenceCode, long listTypeDefinitionId,
+			Map<Locale, String> nameMap)
 		throws PortalException;
 
 }

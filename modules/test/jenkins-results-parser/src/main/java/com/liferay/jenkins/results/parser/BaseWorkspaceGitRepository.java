@@ -654,26 +654,7 @@ public abstract class BaseWorkspaceGitRepository
 	private void _deleteLockFiles() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		File gitDirectory = gitWorkingDirectory.getGitDirectory();
-
-		String[] lockFilenames = gitDirectory.list(
-			JenkinsResultsParserUtil.newFilenameFilter(".*\\.lock"));
-
-		for (String lockFilename : lockFilenames) {
-			File lockFile = new File(gitDirectory, lockFilename);
-
-			boolean deleted = false;
-
-			if (lockFile.exists() && lockFile.canWrite()) {
-				System.out.println("Deleting lock file " + lockFile.getPath());
-
-				deleted = lockFile.delete();
-			}
-
-			if (!deleted) {
-				System.out.println("Unable to delete " + lockFile.getPath());
-			}
-		}
+		gitWorkingDirectory.deleteLockFiles();
 	}
 
 	private String _getBaseBranchHeadSHA() {

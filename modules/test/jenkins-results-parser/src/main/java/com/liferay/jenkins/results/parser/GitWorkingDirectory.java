@@ -495,6 +495,29 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void deleteLockFiles() {
+		File gitDirectory = getGitDirectory();
+
+		String[] lockFilenames = gitDirectory.list(
+			JenkinsResultsParserUtil.newFilenameFilter(".*\\.lock"));
+
+		for (String lockFilename : lockFilenames) {
+			File lockFile = new File(gitDirectory, lockFilename);
+
+			boolean deleted = false;
+
+			if (lockFile.exists() && lockFile.canWrite()) {
+				System.out.println("Deleting lock file " + lockFile.getPath());
+
+				deleted = lockFile.delete();
+			}
+
+			if (!deleted) {
+				System.out.println("Unable to delete " + lockFile.getPath());
+			}
+		}
+	}
+
 	public void deleteRemoteGitBranch(RemoteGitBranch remoteGitBranch) {
 		deleteRemoteGitBranches(Arrays.asList(remoteGitBranch));
 	}

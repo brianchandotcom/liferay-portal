@@ -168,7 +168,7 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(2, _argumentsList.size());
+		Assert.assertEquals(1, _argumentsList.size());
 
 		// On after create
 
@@ -209,47 +209,6 @@ public class ObjectActionLocalServiceTest {
 
 		Assert.assertEquals("onafteradd", options.getHeader("x-api-key"));
 		Assert.assertEquals("https://onafteradd.com", options.getLocation());
-
-		// On after update
-
-		arguments = _argumentsList.poll();
-
-		options = (Http.Options)arguments[0];
-
-		body = options.getBody();
-
-		Assert.assertEquals(StringPool.UTF8, body.getCharset());
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON, body.getContentType());
-
-		payloadJSONObject = _jsonFactory.createJSONObject(body.getContent());
-
-		Assert.assertEquals(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			payloadJSONObject.getString("objectActionTriggerKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			"John",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
-		Assert.assertEquals(
-			"John",
-			JSONUtil.getValue(
-				payloadJSONObject,
-				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
-				"JSONObject/properties", "Object/firstName"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"Object/status"));
-
-		Assert.assertEquals("onafterupdate", options.getHeader("x-api-key"));
-		Assert.assertEquals("https://onafterupdate.com", options.getLocation());
 
 		// Update object entry
 

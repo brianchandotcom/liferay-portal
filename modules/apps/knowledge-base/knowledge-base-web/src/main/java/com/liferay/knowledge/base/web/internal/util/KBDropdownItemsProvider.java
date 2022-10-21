@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -268,14 +267,12 @@ public class KBDropdownItemsProvider {
 						"/knowledge_base/delete_kb_article"
 					).setRedirect(
 						() -> {
-							if (ListUtil.isNotEmpty(selectedItemAncestorIds)) {
-								if (selectedItemAncestorIds.contains(
-										kbArticle.getResourcePrimKey())) {
+							if (((selectedItemAncestorIds == null) &&
+								 _isKBArticleSelected(kbArticle)) ||
+								((selectedItemAncestorIds != null) &&
+								 selectedItemAncestorIds.contains(
+									 kbArticle.getResourcePrimKey()))) {
 
-									return _getParentNodeURL(kbArticle);
-								}
-							}
-							else if (_isKBArticleSelected(kbArticle)) {
 								return _getParentNodeURL(kbArticle);
 							}
 
@@ -507,15 +504,12 @@ public class KBDropdownItemsProvider {
 						"/knowledge_base/delete_kb_folder"
 					).setRedirect(
 						() -> {
-							if (ListUtil.isNotEmpty(selectedItemAncestorIds)) {
-								if (selectedItemAncestorIds.contains(
-										kbFolder.getKbFolderId())) {
+							if (((selectedItemAncestorIds == null) &&
+								 _isKBFolderSelected(kbFolder)) ||
+								((selectedItemAncestorIds != null) &&
+								 selectedItemAncestorIds.contains(
+									 kbFolder.getKbFolderId()))) {
 
-									return _createKbFolderRenderURL(
-										kbFolder.getParentKBFolderId());
-								}
-							}
-							else if (_isKBFolderSelected(kbFolder)) {
 								return _createKbFolderRenderURL(
 									kbFolder.getParentKBFolderId());
 							}

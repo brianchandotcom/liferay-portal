@@ -16,7 +16,6 @@ package com.liferay.commerce.product.asset.categories.web.internal.exportimport.
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.product.asset.categories.web.internal.constants.CommerceProductAssetCategoriesPortletKeys;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -26,7 +25,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -207,9 +205,6 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
 
@@ -226,8 +221,5 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		target = "(component.name=com.liferay.asset.categories.admin.web.internal.exportimport.data.handler.AssetCategoryPortletDataHandler)"
 	)
 	private PortletDataHandler _portletDataHandler;
-
-	@Reference
-	private Staging _staging;
 
 }

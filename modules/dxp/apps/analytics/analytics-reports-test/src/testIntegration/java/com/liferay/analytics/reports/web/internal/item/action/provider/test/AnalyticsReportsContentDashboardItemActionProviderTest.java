@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.item.action.provider.test;
 
+import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsContentDashboardItemActionProvider;
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockObjectAnalyticsReportsInfoItem;
@@ -108,10 +109,10 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-		mockHttpServletRequest.setAttribute(
-			"INFO_ITEM_REFERENCE",
+			AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
 			new InfoItemReference(MockObject.class.getName(), 0));
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		return mockHttpServletRequest;
 	}

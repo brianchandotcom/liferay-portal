@@ -106,15 +106,15 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			0, scopeSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			name, scopeSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(groupId),
 			scopeSearchFacetTermDisplayContext.getFilterValue());
-		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
+		Assert.assertEquals(
+			0, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(
 			scopeSearchFacetTermDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
 
 		Assert.assertEquals(
 			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());
@@ -150,12 +150,12 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			count, scopeSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			name, scopeSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(groupId),
 			scopeSearchFacetTermDisplayContext.getFilterValue());
+		Assert.assertEquals(
+			count, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertFalse(scopeSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			scopeSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -194,15 +194,15 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			count, scopeSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			name, scopeSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			String.valueOf(groupId),
 			scopeSearchFacetTermDisplayContext.getFilterValue());
-		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
+		Assert.assertEquals(
+			count, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(
 			scopeSearchFacetTermDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
 
 		Assert.assertEquals(
 			parameterValue, scopeSearchFacetDisplayContext.getParameterValue());

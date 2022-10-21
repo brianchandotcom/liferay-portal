@@ -139,6 +139,40 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	}
 
 	@Test
+	public void testProcessActionWithDataDefinitionFromPreviousVersion()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_createMockLiferayPortletActionRequest(
+				"previous_version_valid_data_definition.json",
+				"Imported Structure");
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				_portal.getPortletId(mockLiferayPortletActionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE));
+		Assert.assertNull(
+			SessionErrors.get(
+				mockLiferayPortletActionRequest,
+				"importDataDefinitionErrorMessage"));
+
+		DataDefinition dataDefinition = _getImportedDataDefinition();
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		String previousTextFieldName = "Text1";
+
+		Assert.assertNotEquals(
+			previousTextFieldName, dataDefinitionFields[0].getName());
+	}
+
+	@Test
 	public void testProcessActionWithInvalidDataDefinition() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(

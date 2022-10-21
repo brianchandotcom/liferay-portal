@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -40,9 +41,9 @@ import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.War;
-import org.gradle.api.tasks.bundling.Zip;
 
 /**
  * @author Gregory Amerson
@@ -51,8 +52,8 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
 
 	@Override
 	public void apply(
-		Project project, ClientExtension clientExtension,
-		TaskProvider<Zip> zipTaskProvider) {
+		Project project, Optional<ClientExtension> clientExtensionOptional,
+		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
@@ -68,15 +69,15 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
 
 		war.setEnabled(false);
 
-		zipTaskProvider.configure(
-			new Action<Zip>() {
+		assembleClientExtensionTaskProvider.configure(
+			new Action<Copy>() {
 
 				@Override
 				@SuppressWarnings("serial")
-				public void execute(Zip zip) {
-					zip.dependsOn(buildCSSTask);
+				public void execute(Copy copy) {
+					copy.dependsOn(buildCSSTask);
 
-					zip.into(
+					copy.into(
 						new Callable<String>() {
 
 							@Override
@@ -85,7 +86,7 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
 							}
 
 						},
-						new Closure<Void>(zip) {
+						new Closure<Void>(copy) {
 
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {

@@ -1,9 +1,9 @@
 task runGradleTest
 
 runGradleTest {
-	dependsOn ":sample-iframe:buildClientExtension"
-	dependsOn ":sample-theme-css:buildClientExtension"
-	dependsOn ":sample-theme-favicon:buildClientExtension"
+	dependsOn ":sample-iframe:buildClientExtensionZip"
+	dependsOn ":sample-theme-css:buildClientExtensionZip"
+	dependsOn ":sample-theme-favicon:buildClientExtensionZip"
 
 	doLast {
 		Project sampleIFrameProject = project(":sample-iframe")

@@ -23,10 +23,16 @@ import org.gradle.api.tasks.TaskProvider;
 /**
  * @author Gregory Amerson
  */
-public interface ClientExtensionTypeConfigurer {
+public class ConfigurationRuntimeTypeConfigurer
+	implements ClientExtensionTypeConfigurer {
 
+	@Override
 	public void apply(
 		Project project, Optional<ClientExtension> clientExtensionOptional,
-		TaskProvider<Copy> assembleClientExtensionTaskProvider);
+		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
+
+		assembleClientExtensionTaskProvider.configure(
+			copy -> copy.from("src", copySpec -> copySpec.include("**/*")));
+	}
 
 }

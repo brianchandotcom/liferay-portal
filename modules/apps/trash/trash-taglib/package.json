@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
+	"name": "@liferay/trash-taglib",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "6.0.15"
+}

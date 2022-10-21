@@ -162,7 +162,7 @@ public class InputTag extends BaseInputTag {
 			String validatorValue = (String)modelValidator.getObject(3);
 			boolean customValidator = (Boolean)modelValidator.getObject(4);
 
-			if (validatorName.equals("required") &&
+			if (Objects.equals(validatorName, "required") &&
 				Validator.isNull(validatorErrorMessage)) {
 
 				String label = getLabel();

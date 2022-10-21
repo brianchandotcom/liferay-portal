@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mahmoud Azzam
  */
-@Component(enabled = false, immediate = true, service = ModelListener.class)
+@Component(immediate = true, service = ModelListener.class)
 public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 	@Override

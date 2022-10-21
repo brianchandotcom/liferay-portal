@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "frontend.data.set.name=" + CommercePaymentMethodGroupRelFDSNames.ACCOUNT_ENTRY_DEFAULT_PAYMENTS,
 	service = FDSView.class
 )

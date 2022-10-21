@@ -381,9 +381,9 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void tearDown() {
-		_deleteLockFiles();
-
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		gitWorkingDirectory.deleteLockFiles();
 
 		LocalGitBranch upstreamLocalGitBranch =
 			gitWorkingDirectory.getUpstreamLocalGitBranch();
@@ -649,12 +649,6 @@ public abstract class BaseWorkspaceGitRepository
 
 		return gitWorkingDirectory.createLocalGitBranch(
 			getBranchName(), true, getSenderBranchSHA());
-	}
-
-	private void _deleteLockFiles() {
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		gitWorkingDirectory.deleteLockFiles();
 	}
 
 	private String _getBaseBranchHeadSHA() {

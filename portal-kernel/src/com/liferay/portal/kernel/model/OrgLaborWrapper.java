@@ -215,6 +215,13 @@ public class OrgLaborWrapper
 		return model.getFriOpen();
 	}
 
+	@Override
+	public ListType getListType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getListType();
+	}
+
 	/**
 	 * Returns the list type ID of this org labor.
 	 *
@@ -363,13 +370,6 @@ public class OrgLaborWrapper
 	@Override
 	public int getTueOpen() {
 		return model.getTueOpen();
-	}
-
-	@Override
-	public ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getType();
 	}
 
 	/**

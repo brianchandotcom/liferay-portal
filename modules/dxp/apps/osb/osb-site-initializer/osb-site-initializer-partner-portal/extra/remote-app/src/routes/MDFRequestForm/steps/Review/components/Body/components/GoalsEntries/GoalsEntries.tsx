@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
+import Table from '../../../../../../../../common/components/Table';
 import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
-import Table from '../../../Table';
 
 interface IProps {
 	mdfRequest: MDFRequest;

@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
+import Table from '../../../../../../../../../../common/components/Table';
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
 import getBooleanValue from '../../../../../../../../../../common/utils/getBooleanValue';
 import getIntlNumberFormat from '../../../../../../../../../../common/utils/getIntlNumberFormat';
-import Table from '../../../../../Table';
 
 interface IProps {
 	mdfRequestActivity: MDFRequestActivity;

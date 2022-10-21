@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
+import Table from '../../../../../../../../common/components/Table';
 import {TypeActivityKey} from '../../../../../../../../common/enums/TypeActivityKey';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
 import {Liferay} from '../../../../../../../../common/services/liferay';
 import TableItem from '../../../../interfaces/tableItem';
-import Table from '../../../Table';
 import ActivityContent from './components/ActivityContent';
 import getContentMarketFields from './utils/getContentMarketFields';
 import getDigitalMarketFields from './utils/getDigitalMarketFields';

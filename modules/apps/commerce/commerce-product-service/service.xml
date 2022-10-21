@@ -1112,6 +1112,7 @@
 	<exceptions>
 		<exception>CommerceCatalogProducts</exception>
 		<exception>CommerceCatalogSystem</exception>
+		<exception>CommerceChannelType</exception>
 		<exception>CPAttachmentFileEntryCDNURL</exception>
 		<exception>CPAttachmentFileEntryDisplayDate</exception>
 		<exception>CPAttachmentFileEntryExpirationDate</exception>
@@ -1160,7 +1161,6 @@
 		<exception>DuplicateCProduct</exception>
 		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>DuplicateCPTaxCategory</exception>
-		<exception>InvalidCommerceChannelType</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>
 </service-builder>

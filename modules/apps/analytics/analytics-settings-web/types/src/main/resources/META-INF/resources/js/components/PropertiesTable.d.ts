@@ -14,11 +14,13 @@
 
 import React from 'react';
 export declare type TDataSource = {
+	commerceChannelIds: Array<number>;
 	dataSourceId: string;
 	siteIds: Array<number>;
 };
 export declare type TProperty = {
 	channelId: string;
+	commerceEnabled?: boolean;
 	dataSources: Array<TDataSource>;
 	name: string;
 };

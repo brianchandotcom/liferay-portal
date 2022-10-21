@@ -12,7 +12,12 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const ChannelTab: () => JSX.Element;
+import React from 'react';
+import {TProperty} from './PropertiesTable';
+interface IChannelTabProps {
+	description?: string;
+	displayChannels?: boolean;
+	property: TProperty;
+}
+declare const ChannelTab: React.FC<IChannelTabProps>;
 export default ChannelTab;

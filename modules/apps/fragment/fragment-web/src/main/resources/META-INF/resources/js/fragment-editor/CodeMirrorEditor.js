@@ -395,14 +395,18 @@ const CodeMirrorEditor = ({
 			)}
 
 			<div className="d-flex flex-column flex-grow-1 position-relative">
-				{isFocused ? (
+				{isFocused && !readOnly ? (
 					<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
 				) : null}
 
 				<div
-					aria-label={Liferay.Language.get(
-						'use-ctrl-m-to-enable-or-disable-the-tab-key'
-					)}
+					aria-label={
+						readOnly
+							? null
+							: Liferay.Language.get(
+									'use-ctrl-m-to-enable-or-disable-the-tab-key'
+							  )
+					}
 					className="codemirror-editor-wrapper h-100"
 					ref={ref}
 				></div>

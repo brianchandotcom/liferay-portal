@@ -2348,7 +2348,7 @@ definition {
 			AssertTextEquals(
 				key_locale = StringUtil.replace("${defaultLanguage}", "_", "-"),
 				locator1 = "Translation#TRANSLATION_LANGUAGE_STATUS_LABEL",
-				value1 = "Default Value");
+				value1 = "Default");
 		}
 	}
 

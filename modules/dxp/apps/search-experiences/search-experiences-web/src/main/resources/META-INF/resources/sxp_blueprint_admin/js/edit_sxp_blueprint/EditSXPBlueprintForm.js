@@ -449,8 +449,7 @@ function EditSXPBlueprintForm({
 			// 	facets: [],
 			// 	items: [
 			// 		{
-			// 			name: 'liferay-20097-commerce-ml-forecast',
-			// 			suffix: '20097-commerce-ml-forecast',
+			// 			name: 'search-tuning-rankings',
 			// 		}
 			// 	],
 			// 	lastPage: 1,

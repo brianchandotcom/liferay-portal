@@ -2047,7 +2047,7 @@ definition {
 			webContentTitle = "Web Content Title 2");
 	}
 
-	@description = "This is a use case for LPS-164933. Verify that it's possible to view the HTML Title and Description in SEO after changing the page name."
+	@description = "This is a use case for LPS-164933. Verify that it's possible to view the HTML Title and Description in SEO after changing the page name. Blocked by LPS-164933."
 	@ignore = "true"
 	@priority = "4"
 	test TitleAndDescriptionAreViewableInSEOAfterChangingPageName {

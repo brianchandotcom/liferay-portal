@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -24,6 +25,7 @@ import {fromControlsId} from '../../../../../app/components/layout-data-items/Co
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
+import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -31,6 +33,10 @@ import {
 	useHoveredItemId,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
+import {
+	useDisableKeyboardMovement,
+	useSetMovementSource,
+} from '../../../../../app/contexts/KeyboardMovementContext';
 import {
 	useDispatch,
 	useSelector,
@@ -362,6 +368,17 @@ function StructureTreeNodeContent({
 				role="button"
 			/>
 
+			{Liferay.FeatureFlags['LPS-165659'] && (
+				<MoveButton
+					canUpdate={canUpdatePageStructure}
+					fragmentEntryType={fragmentEntryType}
+					isWidget={isWidget}
+					node={node}
+					nodeRef={nodeRef}
+					selectedViewportSize={selectedViewportSize}
+				/>
+			)}
+
 			<NameLabel
 				editingName={editingName}
 				hidden={node.hidden || node.hiddenAncestor}
@@ -434,7 +451,7 @@ const NameLabel = React.forwardRef(
 		return (
 			<div
 				className={classNames(
-					'page-editor__page-structure__tree-node__name d-flex align-items-center',
+					'page-editor__page-structure__tree-node__name d-flex flex-grow-1 align-items-center',
 					{
 						'page-editor__page-structure__tree-node__name--active': isActive,
 						'page-editor__page-structure__tree-node__name--hidden': hidden,
@@ -531,6 +548,67 @@ const VisibilityButton = ({dispatch, node, selectedViewportSize, visible}) => {
 			<ClayIcon
 				symbol={node.hidden || node.hiddenAncestor ? 'hidden' : 'view'}
 			/>
+		</ClayButton>
+	);
+};
+
+const MoveButton = ({
+	canUpdate,
+	fragmentEntryType,
+	isWidget,
+	node,
+	nodeRef,
+	selectedViewportSize,
+}) => {
+	const setMovementSource = useSetMovementSource();
+	const disableMovement = useDisableKeyboardMovement();
+
+	const buttonRef = useRef(null);
+
+	useEventListener('blur', () => disableMovement(), false, buttonRef.current);
+	useEventListener(
+		'focus',
+		() =>
+			nodeRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center',
+				inline: 'nearest',
+			}),
+		false,
+		buttonRef.current
+	);
+
+	if (
+		selectedViewportSize !== VIEWPORT_SIZES.desktop ||
+		node.itemType === ITEM_TYPES.editable ||
+		node.itemType === ITEM_TYPES.dropZone ||
+		node.isMasterItem ||
+		!node.activable ||
+		!canUpdate
+	) {
+		return null;
+	}
+
+	return (
+		<ClayButton
+			aria-label={sub(Liferay.Language.get('move-x'), [node.name])}
+			className="mr-2 sr-only sr-only-focusable"
+			disabled={node.isMasterItem || node.hiddenAncestor}
+			displayType="unstyled"
+			onClick={() =>
+				setMovementSource({
+					fragmentEntryType,
+					icon: node.icon,
+					isWidget,
+					itemId: node.id,
+					name: node.name,
+					type: node.type,
+				})
+			}
+			onFocus={(event) => event.stopPropagation()}
+			ref={buttonRef}
+		>
+			<ClayIcon symbol="drag" />
 		</ClayButton>
 	);
 };

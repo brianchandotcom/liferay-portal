@@ -652,11 +652,27 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private void _deleteLockFiles() {
-		File packedRefLockFile = new File(
-			getDirectory(), ".git/packed-refs.lock");
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		if (packedRefLockFile.exists()) {
-			JenkinsResultsParserUtil.delete(packedRefLockFile);
+		File gitDirectory = gitWorkingDirectory.getGitDirectory();
+
+		String[] lockFilenames = gitDirectory.list(
+			JenkinsResultsParserUtil.newFilenameFilter(".*\\.lock"));
+
+		for (String lockFilename : lockFilenames) {
+			File lockFile = new File(gitDirectory, lockFilename);
+
+			boolean deleted = false;
+
+			if (lockFile.exists() && lockFile.canWrite()) {
+				System.out.println("Deleting lock file " + lockFile.getPath());
+
+				deleted = lockFile.delete();
+			}
+
+			if (!deleted) {
+				System.out.println("Unable to delete " + lockFile.getPath());
+			}
 		}
 	}
 

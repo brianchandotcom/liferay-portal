@@ -24,6 +24,14 @@ export const BACKSPACE_KEYCODE = 8;
 
 export const D_KEYCODE = 68;
 
+export const END_KEYCODE = 35;
+
+export const ENTER_KEYCODE = 13;
+
+export const ESCAPE_KEYCODE = 27;
+
+export const HOME_KEYCODE = 36;
+
 export const PERIOID_KEYCODE = 190;
 
 export const S_KEYCODE = 83;

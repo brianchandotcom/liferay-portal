@@ -23,7 +23,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -51,8 +50,7 @@ public class DDMFormFieldRendererRegistryImpl
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames();
 
 		if (ddmFormFieldTypeNames.contains(ddmFormFieldType)) {
-			return _bundleContext.getService(
-				_serviceRegistration.getReference());
+			return _defaultDDMFormFieldRenderer;
 		}
 
 		return null;
@@ -61,10 +59,6 @@ public class DDMFormFieldRendererRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		_serviceRegistration = _bundleContext.registerService(
-			DDMFormFieldRenderer.class, new DDMFormFieldFreeMarkerRenderer(),
-			null);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, DDMFormFieldRenderer.class, null,
@@ -89,8 +83,6 @@ public class DDMFormFieldRendererRegistryImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-
-		_serviceRegistration.unregister();
 	}
 
 	private BundleContext _bundleContext;
@@ -98,7 +90,9 @@ public class DDMFormFieldRendererRegistryImpl
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
-	private ServiceRegistration<DDMFormFieldRenderer> _serviceRegistration;
+	@Reference(target = "(ddm.form.field.renderer.type=freemarker)")
+	private DDMFormFieldRenderer _defaultDDMFormFieldRenderer;
+
 	private ServiceTrackerMap<String, DDMFormFieldRenderer> _serviceTrackerMap;
 
 }

@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -3567,6 +3568,25 @@ public class JenkinsResultsParserUtil {
 		if (!delete(sourceFile)) {
 			throw new IOException("Unable to delete " + sourceFile);
 		}
+	}
+
+	public static FilenameFilter newFilenameFilter(String patternString) {
+		final Pattern namePattern = Pattern.compile(patternString);
+
+		return new FilenameFilter() {
+
+			@Override
+			public boolean accept(File dir, String name) {
+				Matcher matcher = namePattern.matcher(name);
+
+				if (matcher.matches()) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
 	}
 
 	public static <T> List<List<T>> partitionByCount(List<T> list, int count) {

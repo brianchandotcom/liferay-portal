@@ -17,7 +17,6 @@ package com.liferay.notification.service.impl;
 import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.base.NotificationTemplateServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +59,7 @@ public class NotificationTemplateServiceImpl
 			getPermissionChecker(), null,
 			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
 
-		return _notificationTemplateLocalService.addNotificationTemplate(
+		return notificationTemplateLocalService.addNotificationTemplate(
 			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
 			fromNameMap, name, recipientType, subjectMap, toMap, type,
 			attachmentObjectFieldIds);
@@ -74,7 +73,7 @@ public class NotificationTemplateServiceImpl
 		_notificationTemplateModelResourcePermission.check(
 			getPermissionChecker(), notificationTemplateId, ActionKeys.DELETE);
 
-		return _notificationTemplateLocalService.deleteNotificationTemplate(
+		return notificationTemplateLocalService.deleteNotificationTemplate(
 			notificationTemplateId);
 	}
 
@@ -88,7 +87,7 @@ public class NotificationTemplateServiceImpl
 			notificationTemplate.getNotificationTemplateId(),
 			ActionKeys.DELETE);
 
-		return _notificationTemplateLocalService.deleteNotificationTemplate(
+		return notificationTemplateLocalService.deleteNotificationTemplate(
 			notificationTemplate);
 	}
 
@@ -100,7 +99,7 @@ public class NotificationTemplateServiceImpl
 		_notificationTemplateModelResourcePermission.check(
 			getPermissionChecker(), notificationTemplateId, ActionKeys.VIEW);
 
-		return _notificationTemplateLocalService.getNotificationTemplate(
+		return notificationTemplateLocalService.getNotificationTemplate(
 			notificationTemplateId);
 	}
 
@@ -117,14 +116,11 @@ public class NotificationTemplateServiceImpl
 		_notificationTemplateModelResourcePermission.check(
 			getPermissionChecker(), notificationTemplateId, ActionKeys.UPDATE);
 
-		return _notificationTemplateLocalService.updateNotificationTemplate(
+		return notificationTemplateLocalService.updateNotificationTemplate(
 			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
 			description, from, fromNameMap, name, recipientType, subjectMap,
 			toMap, type, attachmentObjectFieldIds);
 	}
-
-	@Reference
-	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.notification.model.NotificationTemplate)"

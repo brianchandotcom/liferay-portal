@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.spi.scope.logic;
+package com.liferay.oauth2.provider.rest.internal.scope.logic;
 
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 

@@ -15,7 +15,6 @@
 package com.liferay.oauth2.provider.rest.internal.scope.logic;
 
 import com.liferay.oauth2.provider.rest.internal.jaxrs.feature.RequiresScopeAnnotationFinder;
-import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.oauth2.provider.scope.ScopeChecker;

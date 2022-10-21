@@ -14,8 +14,8 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
+import com.liferay.oauth2.provider.rest.internal.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
-import com.liferay.oauth2.provider.rest.spi.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 

@@ -21,12 +21,14 @@ import React, {useState} from 'react';
 import AssignModal from '../components/AssignModal';
 
 export type TDataSource = {
+	commerceChannelIds: Array<number>;
 	dataSourceId: string;
 	siteIds: Array<number>;
 };
 
 export type TProperty = {
 	channelId: string;
+	commerceEnabled?: boolean;
 	dataSources: Array<TDataSource>;
 	name: string;
 };
@@ -35,9 +37,28 @@ interface IPropertiesTable {
 	properties: Array<TProperty>;
 }
 
-const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
+const PropertiesTable: React.FC<IPropertiesTable> = ({
+	properties: initialProperties,
+}) => {
 	const {observer, onOpenChange, open} = useModal();
-	const [property, setProperty] = useState<TProperty>(properties[0]);
+	const [selectedProperty, setSelectedProperty] = useState<TProperty>(
+		initialProperties[0]
+	);
+
+	const [properties, setProperties] = useState<Array<TProperty>>(
+		initialProperties
+	);
+
+	const handleDisplayCommerceChannels = (index: number) => {
+		const newProperties = properties;
+
+		newProperties[index].commerceEnabled
+			? delete newProperties[index].commerceEnabled
+			: (newProperties[index].commerceEnabled = !newProperties[index]
+					.commerceEnabled);
+
+		setProperties([...newProperties]);
+	};
 
 	return (
 		<ClayTable className="mt-4">
@@ -74,8 +95,11 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 									className="mr-2"
 									columnTextAlignment="end"
 								>
-									{/* TODO: When backend for commerce is completed, display the channels linked*/}
-									-
+									{property?.commerceEnabled ||
+									property.dataSources[0]?.commerceChannelIds
+										? property.dataSources[0]
+												?.commerceChannelIds?.length
+										: '-'}
 								</ClayTable.Cell>
 
 								<ClayTable.Cell
@@ -92,14 +116,13 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 									className="mr-2"
 									columnTextAlignment="end"
 								>
-									{/* TODO: When backend for commerce is completed,
-								create function to connect to commerce */}
-
 									<ClayToggle
-										toggled
-
-										// onToggle={() => setActiveCommerce(!active)}
-
+										onToggle={() => {
+											handleDisplayCommerceChannels(
+												index
+											);
+										}}
+										toggled={property.commerceEnabled}
 									/>
 								</ClayTable.Cell>
 
@@ -108,7 +131,7 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 										displayType="secondary"
 										onClick={() => {
 											onOpenChange(true);
-											setProperty(property);
+											setSelectedProperty(property);
 										}}
 										type="button"
 									>
@@ -125,7 +148,7 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({properties}) => {
 				<AssignModal
 					observer={observer}
 					onCloseModal={() => onOpenChange(false)}
-					property={property}
+					property={selectedProperty}
 				/>
 			)}
 		</ClayTable>

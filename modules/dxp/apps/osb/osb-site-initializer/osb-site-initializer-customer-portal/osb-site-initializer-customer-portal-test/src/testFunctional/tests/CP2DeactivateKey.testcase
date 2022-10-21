@@ -264,10 +264,41 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150689 | Test Summary: Assert that number of keys on 'All' tab changed after the key was deactivated"
+	@ignore = "true"
 	@priority = "3"
 	test CanViewChangeTheNumberOfTotalKeys {
-		
-		// TODO LPS-150689 CanViewChangeTheNumberOfTotalKeys pending implementation
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
+
+		task ("Then deactivating a key will ensure that the key will no longer be counted towards the final amount") {
+			VerifyElementPresent(
+				key_value = "4",
+				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
+
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "testt1");
+
+			TableViewBuilder.clearSearch();
+
+			AssertElementPresent(
+				key_value = "3",
+				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
+		}
 
 	}
 

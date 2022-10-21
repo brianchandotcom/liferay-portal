@@ -15,6 +15,7 @@
 import {LiferayAdapt} from '../../../common/services/liferay/adapter';
 import {axios} from '../../../common/services/liferay/api';
 import {getGuestPermissionToken} from '../../../common/services/token';
+import {Liferay} from '../../../common/utils/liferay';
 
 const RaylifeApplicationAPI = 'o/c/raylifeapplications';
 
@@ -28,6 +29,13 @@ export function getRaylifeApplicationById(raylifeApplicationId) {
  */
 
 const updateRaylifeApplication = async (applicationId, payload = null) => {
+	if (Liferay.ThemeDisplay.getUserName()) {
+		return axios.patch(
+			`${RaylifeApplicationAPI}/${applicationId}`,
+			payload
+		);
+	}
+
 	const {access_token} = await getGuestPermissionToken();
 
 	sessionStorage.setItem('raylife-guest-permission-token', access_token);

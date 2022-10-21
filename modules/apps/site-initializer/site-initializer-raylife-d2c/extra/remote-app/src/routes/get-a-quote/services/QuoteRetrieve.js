@@ -19,6 +19,13 @@ import {Liferay} from '../../../common/utils/liferay';
 const QuoteRetrieveAPI = 'o/c/quoteretrieves';
 
 export async function createQuoteRetrieve(payload) {
+	if (Liferay.ThemeDisplay.getUserName()) {
+		return axios.post(
+			`${QuoteRetrieveAPI}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
+			payload
+		);
+	}
+
 	const {access_token} = await getGuestPermissionToken();
 
 	return axios.post(

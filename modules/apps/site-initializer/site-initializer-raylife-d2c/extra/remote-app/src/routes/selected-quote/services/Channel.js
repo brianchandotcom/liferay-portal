@@ -15,8 +15,10 @@
 import {axios} from '../../../common/services/liferay/api';
 
 const DeliveryAPI = 'o/headless-commerce-admin-channel';
-const ChannelName = 'Raylife Channel';
+const ChannelName = 'Raylife D2C Channel';
 
 export function getChannel() {
-	return axios.get(`${DeliveryAPI}/v1.0/channels?search=${ChannelName}`);
+	return axios.get(
+		`${DeliveryAPI}/v1.0/channels?filter=name eq '${ChannelName}'`
+	);
 }

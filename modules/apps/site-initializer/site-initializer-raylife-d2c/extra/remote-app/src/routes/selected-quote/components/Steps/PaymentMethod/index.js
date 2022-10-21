@@ -16,13 +16,14 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import {useContext, useEffect, useState} from 'react';
-import {setItem} from '../../../../../common/services/liferay/storage';
+import {getItem, setItem} from '../../../../../common/services/liferay/storage';
 import {getLiferaySiteName} from '../../../../../common/utils/liferay';
 import {getWebDavUrl} from '../../../../../common/utils/webdav';
 import {
 	ACTIONS,
 	SelectedQuoteContext,
 } from '../../../context/SelectedQuoteContextProvider';
+import {createAccount} from '../../../services/Account';
 import {
 	checkoutOrder,
 	getPaymentMethodURL,
@@ -43,7 +44,6 @@ const PaymentMethod = () => {
 	const [methods, setMethods] = useState([]);
 	const [
 		{
-			accountId,
 			commerce: {channel, skus},
 			orderId,
 			product: {dataJSON},
@@ -58,6 +58,10 @@ const PaymentMethod = () => {
 	const productDiscount = productPrice - promoPrice;
 
 	const checkedMethod = methods.find(({checked}) => checked);
+
+	const {
+		basics: {businessInformation},
+	} = JSON.parse(getItem('raylife-application-form'));
 
 	function setPaymentFormat(value) {
 		const currency = {
@@ -127,17 +131,29 @@ const PaymentMethod = () => {
 	};
 
 	useEffect(() => {
-		if (!orderId) {
-			createOrder(accountId, channel.id, skus[0].id).then((response) => {
-				const orderId = response.data.id;
-				updateQuoteOrder(orderId);
-				setItem('orderId', orderId);
-				dispatch({
-					payload: orderId,
-					type: ACTIONS.SET_ORDER_ID,
-				});
+		createAccount(
+			`${businessInformation.firstName} ${businessInformation.lastName}`
+		).then((account) => {
+			dispatch({
+				payload: account.id,
+				type: ACTIONS.SET_ACCOUNT_ID,
 			});
-		}
+
+			if (!orderId) {
+				createOrder(account.id, channel.id, skus[0].id).then(
+					(response) => {
+						const orderId = response.data.id;
+						updateQuoteOrder(orderId);
+						setItem('orderId', orderId);
+						dispatch({
+							payload: orderId,
+							type: ACTIONS.SET_ORDER_ID,
+						});
+					}
+				);
+			}
+		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderId]);
 

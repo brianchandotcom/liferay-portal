@@ -15,37 +15,35 @@
 
 const DeliveryAPI = 'o/headless-admin-user';
 
-export async function createAccount(
+const fetchHeadless = async (url, options) => {
+	const response = await fetch(`${window.location.origin}/${url}`, {
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	if (!response.ok) {
+		const error = new Error('An error occurred while fetching the data.');
+
+		error.info = await response.json();
+		error.status = response.status;
+		throw error;
+	}
+
+	const data = await response.json();
+
+	return data;
+};
+
+export function createUserAccount(
 	firstName,
 	lastName,
 	emailAddress,
 	password,
 	captcha
 ) {
-	const fetchHeadless = async (url, options) => {
-		const response = await fetch(`${window.location.origin}/${url}`, {
-			...options,
-			headers: {
-				'Content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-		});
-
-		if (!response.ok) {
-			const error = new Error(
-				'An error occurred while fetching the data.'
-			);
-
-			error.info = await response.json();
-			error.status = response.status;
-			throw error;
-		}
-
-		const data = await response.json();
-
-		return data;
-	};
-
 	const userPayload = {
 		alternateName: `${emailAddress.split('@')[0]}`,
 		emailAddress,
@@ -61,4 +59,17 @@ export async function createAccount(
 			method: 'POST',
 		}
 	);
+}
+
+export function createAccount(name) {
+	const accountPayload = {
+		name,
+		status: 0,
+		type: 'business',
+	};
+
+	return fetchHeadless(`${DeliveryAPI}/v1.0/accounts`, {
+		body: JSON.stringify(accountPayload),
+		method: 'POST',
+	});
 }

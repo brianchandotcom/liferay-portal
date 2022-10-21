@@ -20,6 +20,7 @@ import {GoogleMapsService} from './common/services/google-maps';
 import './common/styles/index.scss';
 import ApplicationContextProvider from './common/context/ApplicationPropertiesProvider';
 import {getGuestPermissionToken} from './common/services/token';
+import {Liferay} from './common/utils/liferay';
 import GetAQuote from './routes/get-a-quote/pages/GetAQuote';
 import QuoteComparison from './routes/quote-comparison/pages/QuoteComparison';
 import SelectedQuote from './routes/selected-quote/pages/SelectedQuote';
@@ -63,7 +64,9 @@ class DirectToCustomerWebComponent extends HTMLElement {
 			GoogleMapsService.setup(properties.googleplaceskey);
 		}
 
-		giveGuestAuthorization();
+		if (!Liferay.ThemeDisplay.getUserName()) {
+			giveGuestAuthorization();
+		}
 
 		ReactDOM.render(
 			<ClayIconProvider>

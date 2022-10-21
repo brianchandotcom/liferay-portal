@@ -81,6 +81,9 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 							"name", "itemSelector"
 						).put(
 							"type", "itemSelector"
+						).put(
+							"typeOptions",
+							JSONUtil.put("itemType", KBArticle.class.getName())
 						),
 						JSONUtil.put(
 							"defaultValue", String.valueOf(_MAX_NESTING_LEVEL)

@@ -51,7 +51,9 @@ export default function TemplatesPanel({items, selectedItemId}) {
 									symbol={ITEM_TYPES_SYMBOL[item.type]}
 								/>
 
-								{item.name}
+								<span className="component-text">
+									{item.name}
+								</span>
 							</ClayLink>
 						</ClayTreeView.ItemStack>
 
@@ -73,7 +75,9 @@ export default function TemplatesPanel({items, selectedItemId}) {
 												}
 											/>
 
-											{item.name}
+											<span className="component-text">
+												{item.name}
+											</span>
 										</ClayLink>
 									</ClayTreeView.Item>
 								);

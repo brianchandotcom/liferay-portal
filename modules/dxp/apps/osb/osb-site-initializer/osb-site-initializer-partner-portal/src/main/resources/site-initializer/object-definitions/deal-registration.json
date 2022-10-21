@@ -4,18 +4,7 @@
 	},
 	"name": "DealRegistration",
 	"objectFields": [
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Additional Information About The Opportunity"
-			},
-			"name": "additionalInformationAboutTheOpportunity",
-			"required": false,
-			"type": "Clob"
-		},
+		
 		{
 			"DBType": "String",
 			"businessType": "Text",
@@ -51,6 +40,17 @@
 			"name": "additionalContactLastName",
 			"required": false,
 			"type": "String"
+		},{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Information About The Opportunity"
+			},
+			"name": "additionalInformationAboutTheOpportunity",
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -70,9 +70,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Business Unit"
+				"en_US": "Primary Prospect Business Unit"
 			},
-			"name": "businessUnit",
+			"name": "primaryProspectBusinessUnit",
 			"required": false,
 			"type": "String"
 		},
@@ -82,10 +82,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Department"
+				"en_US": "Primary Prospect Department"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Departments$]",
-			"name": "department",
+			"name": "primaryProspectDepartment",
 			"required": false,
 			"type": "String"
 		},
@@ -121,7 +121,7 @@
 			"label": {
 				"en_US": "Primary Prospect Job Role"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Deal Registration Job Roles$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Job Roles$]",
 			"name": "primaryProspectJobRole",
 			"required": false,
 			"type": "String"
@@ -168,9 +168,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Project Solution Categories"
+				"en_US": "Project Categories"
 			},
-			"name": "projectSolutionCategories",
+			"name": "projectCategories",
 			"required": false,
 			"type": "Clob"
 		},
@@ -180,9 +180,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Account Name"
+				"en_US": "Prospect Account Name"
 			},
-			"name": "accountName",
+			"name": "prospectAccountName",
 			"required": false,
 			"type": "String"
 		},
@@ -192,9 +192,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Address"
+				"en_US": "Prospect Address"
 			},
-			"name": "address",
+			"name": "prospectAddress",
 			"required": false,
 			"type": "String"
 		},
@@ -204,9 +204,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "City"
+				"en_US": "Prospect City"
 			},
-			"name": "city",
+			"name": "prospectCity",
 			"required": false,
 			"type": "String"
 		},
@@ -216,10 +216,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Country"
+				"en_US": "Prospect Country"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
-			"name": "country",
+			"name": "prospectCountry",
 			"required": false,
 			"type": "String"
 		},
@@ -229,10 +229,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Industry"
+				"en_US": "Prospect Industry"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Deal Registration Industries$]",
-			"name": "industry",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Industries$]",
+			"name": "prospectIndustry",
 			"required": false,
 			"type": "String"
 		},
@@ -244,7 +244,7 @@
 			"label": {
 				"en_US": "Postal Code"
 			},
-			"name": "postalCode",
+			"name": "prospectPostalCode",
 			"required": false,
 			"type": "String"
 		},
@@ -254,10 +254,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "State"
+				"en_US": "Prospect State"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:States$]",
-			"name": "state",
+			"name": "prospectState",
 			"required": false,
 			"type": "String"
 		},

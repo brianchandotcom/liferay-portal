@@ -27,7 +27,10 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -86,21 +89,34 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 	@Override
 	public List<ObjectField> getObjectFields() {
-		return Arrays.asList(
-			createObjectField(
-				"Text", "String", "description", "description", false, true),
-			createObjectField("Text", "String", "name", "name", false, true),
-			createObjectField(
-				"Text", "CPDefinitionId", "String", "product-id", "productId",
-				false, true),
-			createObjectField(
-				"Text", "String", "short-description", "shortDescription",
-				false, true),
-			createObjectField(
-				"Text", "String", "sku", "skuFormatted", false, true),
-			createObjectField(
-				"Text", "String", "thumbnail", "thumbnail", false, true),
-			createObjectField("Text", "String", "uuid", "uuid", false, true));
+		List<ObjectField> objectFields = new ArrayList<>(
+			Arrays.asList(
+				createObjectField(
+					"Text", "String", "description", "description", false,
+					true),
+				createObjectField(
+					"Text", "String", "name", "name", false, true),
+				createObjectField(
+					"Text", "CPDefinitionId", "String", "product-id",
+					"productId", false, true),
+				createObjectField(
+					"Text", "String", "short-description", "shortDescription",
+					false, true),
+				createObjectField(
+					"Text", "String", "sku", "skuFormatted", false, true),
+				createObjectField(
+					"Text", "String", "thumbnail", "thumbnail", false, true),
+				createObjectField(
+					"Text", "String", "uuid", "uuid", false, true)));
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
+			objectFields.add(
+				createObjectField(
+					"Text", "String", "external-reference-code",
+					"externalReferenceCode", false, true));
+		}
+
+		return objectFields;
 	}
 
 	@Override

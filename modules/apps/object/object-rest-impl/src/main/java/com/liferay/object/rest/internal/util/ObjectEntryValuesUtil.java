@@ -29,6 +29,7 @@ import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -51,7 +52,8 @@ public class ObjectEntryValuesUtil {
 
 		Object value = values.get(objectField.getName());
 
-		if (!Objects.equals(
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801")) ||
+			!Objects.equals(
 				objectField.getRelationshipType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
 			(GetterUtil.getLong(value) > 0)) {

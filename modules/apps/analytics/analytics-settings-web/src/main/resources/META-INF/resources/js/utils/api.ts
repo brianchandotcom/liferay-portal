@@ -47,3 +47,11 @@ export function createProperty(name: string) {
 		method: 'POST',
 	});
 }
+
+export function fetchChannels() {
+	return fetch('/o/analytics-settings-rest/v1.0/commerce-channels', {
+		method: 'GET',
+	})
+		.then((response) => response.json())
+		.then((data) => data);
+}

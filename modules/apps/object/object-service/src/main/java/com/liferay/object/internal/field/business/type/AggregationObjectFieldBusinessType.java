@@ -290,7 +290,9 @@ public class AggregationObjectFieldBusinessType
 
 			if ((objectField == null) ||
 				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 				throw new ObjectFieldSettingValueException.InvalidValue(
 					objectFieldName, "filterBy",

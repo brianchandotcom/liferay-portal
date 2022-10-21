@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -377,7 +376,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	public int getStructuresCount(
 		long companyId, long[] groupIds, long classNameId) {
 
-		return _ddmStructureFinder.filterCountByC_G_C_S(
+		return ddmStructureFinder.filterCountByC_G_C_S(
 			companyId, groupIds, classNameId, WorkflowConstants.STATUS_ANY);
 	}
 
@@ -742,8 +741,5 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 	@Reference
 	private DDMSearchHelper _ddmSearchHelper;
-
-	@Reference
-	private DDMStructureFinder _ddmStructureFinder;
 
 }

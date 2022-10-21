@@ -19,23 +19,14 @@ package com.liferay.portal.search.web.internal.facet.display.context;
  */
 public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 
-	public long getGroupId() {
-		return _groupId;
-	}
-
 	public boolean isShowCount() {
 		return _showCount;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
 	}
 
 	public void setShowCount(boolean showCount) {
 		_showCount = showCount;
 	}
 
-	private long _groupId;
 	private boolean _showCount;
 
 }

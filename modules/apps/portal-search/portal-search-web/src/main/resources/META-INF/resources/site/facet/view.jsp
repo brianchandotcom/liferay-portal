@@ -94,7 +94,7 @@ SiteFacetPortletInstanceConfiguration siteFacetPortletInstanceConfiguration = sc
 											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
 												<input
 													class="custom-control-input facet-term"
-													data-term-id="<%= scopeSearchFacetTermDisplayContext.getGroupId() %>"
+													data-term-id="<%= scopeSearchFacetTermDisplayContext.getFilterValue() %>"
 													disabled
 													id="<portlet:namespace />term_<%= i %>"
 													name="<portlet:namespace />term_<%= i %>"

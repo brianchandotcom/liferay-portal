@@ -158,7 +158,8 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		scopeSearchFacetTermDisplayContext.setFrequency(count);
 		scopeSearchFacetTermDisplayContext.setBucketText(
 			_getDescriptiveName(groupId));
-		scopeSearchFacetTermDisplayContext.setGroupId(groupId);
+		scopeSearchFacetTermDisplayContext.setFilterValue(
+			String.valueOf(groupId));
 		scopeSearchFacetTermDisplayContext.setSelected(selected);
 		scopeSearchFacetTermDisplayContext.setShowCount(_showCounts);
 

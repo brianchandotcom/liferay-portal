@@ -45,7 +45,6 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
-import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
@@ -248,7 +247,7 @@ public class ObjectFieldLocalServiceImpl
 		throws PortalException {
 
 		for (ObjectField objectField :
-				_objectFieldPersistence.findByObjectDefinitionId(
+				objectFieldPersistence.findByObjectDefinitionId(
 					objectDefinitionId)) {
 
 			if (Validator.isNotNull(objectField.getRelationshipType())) {
@@ -356,7 +355,7 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public List<ObjectField> getCustomObjectFields(long objectFieldId) {
-		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_S(
+		List<ObjectField> objectFields = objectFieldPersistence.findByODI_S(
 			objectFieldId, false);
 
 		for (ObjectField objectField : objectFields) {
@@ -1097,9 +1096,6 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectFieldBusinessTypeTracker _objectFieldBusinessTypeTracker;
-
-	@Reference
-	private ObjectFieldPersistence _objectFieldPersistence;
 
 	@Reference
 	private ObjectFieldSettingContributorTracker

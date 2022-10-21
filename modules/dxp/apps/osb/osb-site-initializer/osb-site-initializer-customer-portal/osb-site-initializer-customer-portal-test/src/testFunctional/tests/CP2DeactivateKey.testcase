@@ -303,11 +303,37 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150690 | Test Summary: Assert that the deactivated key is no longer displayed in the table"
+	@ignore = "true"
 	@priority = "5"
 	test CannotViewDeactivatedKeysForPortal {
-		
-		// TODO LPS-150690 CannotViewDeactivatedKeysForPortal pending implementation
 
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
+
+		task ("Then deactivating a key will ensure that key will no longer be available") {
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "testt1");
+
+			Search.searchCP(searchTerm = "testt1");
+
+			AssertElementNotPresent(
+				key_text = "testt1",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
 	}
 
 }

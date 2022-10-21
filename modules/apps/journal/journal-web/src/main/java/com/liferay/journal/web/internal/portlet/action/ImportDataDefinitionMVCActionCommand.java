@@ -118,9 +118,9 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _generateFieldName(String fieldName) {
-		int index = fieldName.length() - 8;
-
 		String newFieldName = null;
+
+		int index = fieldName.length() - 8;
 
 		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
 			newFieldName = DDMFormFieldUtil.getDDMFormFieldName(

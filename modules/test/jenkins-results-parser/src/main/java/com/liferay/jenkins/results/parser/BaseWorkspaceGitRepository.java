@@ -381,6 +381,8 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void tearDown() {
+		_deleteLockFiles();
+
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		LocalGitBranch upstreamLocalGitBranch =
@@ -647,6 +649,15 @@ public abstract class BaseWorkspaceGitRepository
 
 		return gitWorkingDirectory.createLocalGitBranch(
 			getBranchName(), true, getSenderBranchSHA());
+	}
+
+	private void _deleteLockFiles() {
+		File packedRefLockFile = new File(
+			getDirectory(), ".git/packed-refs.lock");
+
+		if (packedRefLockFile.exists()) {
+			JenkinsResultsParserUtil.delete(packedRefLockFile);
+		}
 	}
 
 	private String _getBaseBranchHeadSHA() {

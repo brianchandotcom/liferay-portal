@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.object.configuration,\
 	com.liferay.object.constants,\
 	com.liferay.object.deployer,\
+	com.liferay.object.entry.permission.util,\
 	com.liferay.object.exception,\
 	com.liferay.object.field.builder,\
 	com.liferay.object.field.business.type,\

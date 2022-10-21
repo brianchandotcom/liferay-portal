@@ -14,28 +14,17 @@
 
 package com.liferay.account.internal.model.listener;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
-import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.entry.permission.util.ObjectEntryPermissionUtil;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +40,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
-			_validateAccountEntry(objectEntry);
+			ObjectEntryPermissionUtil.checkAccountEntryPermission(
+				_accountEntryLocalService, ObjectActionKeys.ADD_OBJECT_ENTRY,
+				_objectDefinitionLocalService, objectEntry,
+				_objectFieldLocalService, objectEntry.getUserId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -64,58 +56,14 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
-			_validateAccountEntry(objectEntry);
+			ObjectEntryPermissionUtil.checkAccountEntryPermission(
+				_accountEntryLocalService, ActionKeys.UPDATE,
+				_objectDefinitionLocalService, objectEntry,
+				_objectFieldLocalService, objectEntry.getUserId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
-	}
-
-	private void _validateAccountEntry(ObjectEntry objectEntry)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!objectDefinition.isAccountEntryRestricted()) {
-			return;
-		}
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		if (!values.containsKey(objectField.getName())) {
-			return;
-		}
-
-		List<AccountEntry> accountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
-				objectEntry.getUserId(),
-				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		long accountEntryId = GetterUtil.getLong(
-			values.get(objectField.getName()));
-
-		for (AccountEntry accountEntry : accountEntries) {
-			if (accountEntryId == accountEntry.getAccountEntryId()) {
-				return;
-			}
-		}
-
-		throw new ObjectDefinitionAccountEntryRestrictedException(
-			StringBundler.concat(
-				"The account entry ", accountEntryId,
-				" does not exist or the user ", objectEntry.getUserId(),
-				" does not belong to it"));
 	}
 
 	@Reference

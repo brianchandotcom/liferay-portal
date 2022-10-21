@@ -14,33 +14,25 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
+import com.liferay.object.entry.permission.util.ObjectEntryPermissionUtil;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -276,51 +268,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		_portletResourcePermissions.remove(resourceName);
 	}
 
-	private void _checkAccountEntryPermission(
-			ObjectEntry objectEntry, String actionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectEntryId());
-
-		if (!objectDefinition.isAccountEntryRestricted()) {
-			return;
-		}
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		long accountEntryId = MapUtil.getLong(
-			objectEntry.getValues(), objectField.getName());
-
-		if (accountEntryId == 0) {
-			return;
-		}
-
-		long[] accountEntryIds = ListUtil.toLongArray(
-			_accountEntryLocalService.getUserAccountEntries(
-				getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-				null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
-			AccountEntry::getAccountEntryId);
-
-		if (ArrayUtil.contains(accountEntryIds, accountEntryId)) {
-			return;
-		}
-
-		throw new ObjectDefinitionAccountEntryRestrictedException(
-			StringBundler.concat(
-				"User ", getUserId(), " must have ", actionId,
-				" permission for ", objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId()));
-	}
-
 	private void _checkModelResourcePermission(
 			long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException {
@@ -343,7 +290,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
 			actionId);
 
-		_checkAccountEntryPermission(objectEntry, actionId);
+		ObjectEntryPermissionUtil.checkAccountEntryPermission(
+			_accountEntryLocalService, actionId, _objectDefinitionLocalService,
+			objectEntry, _objectFieldLocalService, getUserId());
 	}
 
 	private void _checkPortletResourcePermission(

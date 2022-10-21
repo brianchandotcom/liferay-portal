@@ -353,7 +353,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Upgrades",
-			configurationName = "Data Cleanup",
+			configurationName = "Data Removal",
 			configurationScope = "System Scope");
 
 		var key_settingFieldName = "Remove expired journal articles.";
@@ -380,7 +380,7 @@ definition {
 	@priority = "4"
 	test FileConfigsWillTriggerDataCleanup {
 		property data.archive.type = "data-archive-portal";
-		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config";
+		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config:com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration.config";
 		property osgi.module.configurations = "cleanUpSoftwareCatalogModuleData=B\"true\"${line.separator}removeExpiredJournalArticles=B\"true\"";
 		property portal.version = "6.2.10.21";
 
@@ -419,7 +419,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Upgrades",
-			configurationName = "Data Cleanup",
+			configurationName = "Data Removal",
 			configurationScope = "System Scope");
 
 		var key_settingFieldName = "Remove expired journal articles.";

@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.WarehouseItemDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -413,9 +412,6 @@ public class WarehouseItemResourceImpl
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
 	private WarehouseItemDTOConverter _warehouseItemDTOConverter;

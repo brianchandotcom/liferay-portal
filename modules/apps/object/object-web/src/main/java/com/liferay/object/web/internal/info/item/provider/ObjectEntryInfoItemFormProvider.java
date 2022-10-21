@@ -263,9 +263,15 @@ public class ObjectEntryInfoItemFormProvider
 		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.createDateInfoField
 		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.externalReferenceCodeInfoField
+		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.modifiedDateInfoField
 		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.objectEntryIdInfoField
+		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.publishDateInfoField
+		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.statusInfoField
 		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.userNameInfoField
 		).infoFieldSetEntry(

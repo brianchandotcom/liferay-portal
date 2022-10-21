@@ -135,7 +135,6 @@ public class DataCleanupUpgradeStepRegistrator
 				"com.liferay.change.tracking.store.service",
 				() -> new PublishedCTSContentDataUpgradeProcess(
 					_ctsContentLocalService, _portal));
-
 			_removeModuleData(
 				_dataCleanupConfiguration::removeExpiredJournalArticles,
 				"com.liferay.journal.service",
@@ -177,21 +176,18 @@ public class DataCleanupUpgradeStepRegistrator
 			Supplier<UpgradeProcess> upgradeProcessSupplier)
 		throws UpgradeException {
 
-		if (!booleanSupplier.get()) {
-			return;
+		if (booleanSupplier.get()) {
+			Release release = _releaseLocalService.fetchRelease(
+				servletContextName);
+
+			if (release != null) {
+				UpgradeProcess upgradeProcess = upgradeProcessSupplier.get();
+
+				upgradeProcess.upgrade();
+
+				CacheRegistryUtil.clear();
+			}
 		}
-
-		Release release = _releaseLocalService.fetchRelease(servletContextName);
-
-		if (release == null) {
-			return;
-		}
-
-		UpgradeProcess upgradeProcess = upgradeProcessSupplier.get();
-
-		upgradeProcess.upgrade();
-
-		CacheRegistryUtil.clear();
 	}
 
 	@Reference

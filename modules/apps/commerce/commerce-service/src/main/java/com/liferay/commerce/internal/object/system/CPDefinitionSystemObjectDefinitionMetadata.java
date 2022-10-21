@@ -16,7 +16,9 @@ package com.liferay.commerce.internal.object.system;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionTable;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
@@ -47,6 +49,24 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 		return _cpDefinitionLocalService.deleteCPDefinition(
 			(CPDefinition)baseModel);
+	}
+
+	@Override
+	public BaseModel<?> getBaseModelByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return _cProductLocalService.getCProductByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public String getExternalReferenceCode(long primaryKey)
+		throws PortalException {
+
+		CProduct cProduct = _cProductLocalService.getCProduct(primaryKey);
+
+		return cProduct.getExternalReferenceCode();
 	}
 
 	@Override
@@ -120,5 +140,8 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 }

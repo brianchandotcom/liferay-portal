@@ -50,6 +50,27 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public BaseModel<?> getBaseModelByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return _commercePricingClassLocalService.
+			getCommercePricingClassByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	@Override
+	public String getExternalReferenceCode(long primaryKey)
+		throws PortalException {
+
+		CommercePricingClass commercePricingClass =
+			_commercePricingClassLocalService.getCommercePricingClass(
+				primaryKey);
+
+		return commercePricingClass.getExternalReferenceCode();
+	}
+
+	@Override
 	public String getJaxRsApplicationName() {
 		return "Liferay.Headless.Commerce.Admin.Catalog";
 	}

@@ -2,6 +2,9 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"devDependencies": {
+		"@types/warning": "^3.0.0"
+	},
 	"main": "js/index.js",
 	"name": "@liferay/analytics-settings-web",
 	"scripts": {

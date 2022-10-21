@@ -322,6 +322,76 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9874 | As a Sales Agent, I want to not be able to see accounts and orders when 'Manage Available Accounts' permission is removed"
+	@priority = "4"
+	test CannotViewAccountsAndOrdersAsSalesAgentWithoutPermission {
+		task ("Given 4 accounts are created") {
+			for (var account : list "A,B,C,D") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And 2 accounts are linked to the organization") {
+			for (var account : list "A,B") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = "Account ${account}",
+					organizationName = "Test Organization");
+			}
+		}
+
+		task ("And the account A has a placed order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Account A",
+				orderItems = "MIN55861:1",
+				orderStatus = "1",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+		}
+
+		task ("And the Account B has a pending order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Account B",
+				orderItems = "MIN55861:1",
+				orderStatus = "2",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+		}
+
+		task ("And Manage Available Accounts permission is removed for the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("When the Sales Agent logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("Then the Sales Agent cannot see any Accounts or Orders both into the account selector and the account management") {
+			AssertElementPresent(
+				key_entryName = "Select Account & Order",
+				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No accounts were found.");
+		}
+	}
+
 	@description = "COMMERCE-9872 | As a Sales Agent, I want to not be able to see accounts that are outside the organization I'm part of"
 	@priority = "4"
 	test CannotViewAccountsOutsideOrganizationAsSalesAgent {

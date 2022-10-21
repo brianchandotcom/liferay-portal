@@ -493,6 +493,96 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9995 | Can channel account manager without permission not see accounts"
+	@priority = "4"
+	test CanChannelAccountManagerWithoutPermissionNotSeeAccounts {
+		task ("Given a business accounts is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And Manage Available Accounts permission is removed for the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("And a user with the Sales Agent role and Minium site membership is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And a Channel Account Managers entry is created for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
+				channelName = "Minium Portal",
+				userName = "salesagent");
+		}
+
+		task ("And MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL permission is removed for the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("When the admin navigates to Accounts -> Account -> Channel Defaults") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+		}
+
+		task ("Then the Channel Account Managers entry is still present") {
+			AssertElementPresent(
+				key_firstColumnValue = "Minium Portal",
+				key_secondColumnValue = "Sales Agent",
+				key_table = "defaultUsers",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+		}
+
+		task ("When the Sales Agent logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("Then no accounts are visible") {
+			AssertElementPresent(
+				key_entryName = "Select Account & Order",
+				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No accounts were found.");
+		}
+	}
+
 	@description = "COMMERCE-10005 | Can edit account details as Channel Account Manager"
 	@priority = "4"
 	test CanEditAccountDetailsAsChannelAccountManager {

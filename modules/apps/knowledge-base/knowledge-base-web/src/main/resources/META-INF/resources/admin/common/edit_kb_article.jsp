@@ -129,18 +129,20 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						</aui:fieldset>
 					</c:if>
 
-					<liferay-frontend:fieldset
-						collapsed="<%= true %>"
-						collapsible="<%= true %>"
-						label="display-page"
-					>
-						<liferay-asset:select-asset-display-page
-							classNameId="<%= PortalUtil.getClassNameId(KBArticle.class) %>"
-							classPK="<%= editKBArticleDisplayContext.getKBArticleId() %>"
-							groupId="<%= scopeGroupId %>"
-							showViewInContextLink="<%= true %>"
-						/>
-					</liferay-frontend:fieldset>
+					<c:if test='<%= GetterUtil.getBoolean(com.liferay.portal.kernel.util.PropsUtil.get("feature.flag.LPS-125653")) %>'>
+						<liferay-frontend:fieldset
+							collapsed="<%= true %>"
+							collapsible="<%= true %>"
+							label="display-page"
+						>
+							<liferay-asset:select-asset-display-page
+								classNameId="<%= PortalUtil.getClassNameId(KBArticle.class) %>"
+								classPK="<%= editKBArticleDisplayContext.getKBArticleId() %>"
+								groupId="<%= scopeGroupId %>"
+								showViewInContextLink="<%= true %>"
+							/>
+						</liferay-frontend:fieldset>
+					</c:if>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 						<liferay-asset:asset-categories-selector

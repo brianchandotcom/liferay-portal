@@ -41,7 +41,8 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 				'.ddm-select-dropdown',
 				'.input-localized-content',
 				'.lfr-icon-menu-open',
-				'.multi-panel-sidebar'
+				'.multi-panel-sidebar',
+				'.cke_dialog'
 			)
 		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();

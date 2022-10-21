@@ -127,7 +127,8 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 				'.ddm-form-builder-wrapper',
 				'.multi-panel-sidebar',
 				'.lfr-icon-menu-open',
-				'.input-localized-content'
+				'.input-localized-content',
+				'.cke_dialog'
 			)
 		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();

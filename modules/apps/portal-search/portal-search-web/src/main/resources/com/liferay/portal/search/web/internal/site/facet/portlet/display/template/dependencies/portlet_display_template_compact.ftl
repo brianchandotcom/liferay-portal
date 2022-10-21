@@ -26,7 +26,7 @@
 
 							<#if entry.isShowCount()>
 								<small class="term-count">
-									(${entry.getCount()})
+									(${entry.getFrequency()})
 								</small>
 							</#if>
 						</button>

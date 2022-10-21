@@ -155,7 +155,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext =
 			new ScopeSearchFacetTermDisplayContext();
 
-		scopeSearchFacetTermDisplayContext.setCount(count);
+		scopeSearchFacetTermDisplayContext.setFrequency(count);
 		scopeSearchFacetTermDisplayContext.setDescriptiveName(
 			_getDescriptiveName(groupId));
 		scopeSearchFacetTermDisplayContext.setGroupId(groupId);

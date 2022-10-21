@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 
-	public int getCount() {
-		return _count;
-	}
-
 	public String getDescriptiveName() throws PortalException {
 		return _descriptiveName;
 	}
@@ -35,10 +31,6 @@ public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 
 	public boolean isShowCount() {
 		return _showCount;
-	}
-
-	public void setCount(int count) {
-		_count = count;
 	}
 
 	public void setDescriptiveName(String descriptiveName) {
@@ -53,7 +45,6 @@ public class ScopeSearchFacetTermDisplayContext extends BucketDisplayContext {
 		_showCount = showCount;
 	}
 
-	private int _count;
 	private String _descriptiveName;
 	private long _groupId;
 	private boolean _showCount;

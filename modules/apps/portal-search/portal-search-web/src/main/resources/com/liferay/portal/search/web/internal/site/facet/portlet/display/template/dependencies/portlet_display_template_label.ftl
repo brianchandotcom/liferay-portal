@@ -25,7 +25,7 @@
 						${htmlUtil.escape(entry.getDescriptiveName())}
 
 						<#if entry.isShowCount()>
-							(${entry.getCount()})
+							(${entry.getFrequency()})
 						</#if>
 					</button>
 				</#list>

@@ -75,7 +75,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 									<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getDescriptiveName()) %>
 
 									<c:if test="<%= scopeSearchFacetTermDisplayContext.isShowCount() %>">
-										<span class="frequency">(<%= scopeSearchFacetTermDisplayContext.getCount() %>)</span>
+										<span class="frequency">(<%= scopeSearchFacetTermDisplayContext.getFrequency() %>)</span>
 									</c:if>
 								</a>
 							</li>

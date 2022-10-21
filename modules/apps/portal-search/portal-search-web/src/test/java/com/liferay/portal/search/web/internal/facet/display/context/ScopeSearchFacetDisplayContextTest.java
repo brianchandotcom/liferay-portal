@@ -105,7 +105,8 @@ public class ScopeSearchFacetDisplayContextTest {
 		ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext =
 			scopeSearchFacetTermDisplayContexts.get(0);
 
-		Assert.assertEquals(0, scopeSearchFacetTermDisplayContext.getCount());
+		Assert.assertEquals(
+			0, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
 			name, scopeSearchFacetTermDisplayContext.getDescriptiveName());
 		Assert.assertEquals(
@@ -147,7 +148,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			count, scopeSearchFacetTermDisplayContext.getCount());
+			count, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
 			name, scopeSearchFacetTermDisplayContext.getDescriptiveName());
 		Assert.assertEquals(
@@ -189,7 +190,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			scopeSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			count, scopeSearchFacetTermDisplayContext.getCount());
+			count, scopeSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
 			name, scopeSearchFacetTermDisplayContext.getDescriptiveName());
 		Assert.assertEquals(

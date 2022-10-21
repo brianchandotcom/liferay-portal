@@ -65,6 +65,8 @@ const BreadcrumbFinder: React.FC<BreadcrumbFinderProps> = ({heading}) => {
 						value: Number(projectFlowIds[index] ?? 0),
 					}))
 				);
+			} else {
+				setBreadCrumb([]);
 			}
 		}
 	}, [heading, params, setBreadCrumb]);

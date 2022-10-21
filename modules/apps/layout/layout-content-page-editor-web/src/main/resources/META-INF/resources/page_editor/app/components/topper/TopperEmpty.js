@@ -20,10 +20,10 @@ import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
 import {
-	useDropContainerId,
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
+import useDropContainerId from '../../utils/useDropContainerId';
 
 export default function ({children, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);

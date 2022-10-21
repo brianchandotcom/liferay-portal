@@ -30,7 +30,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.exception.InvalidCommerceChannelTypeException;
+import com.liferay.commerce.product.exception.CommerceChannelTypeException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -75,7 +75,7 @@ public class ProductFeedXMLGenerator {
 		if (!CommerceChannelConstants.CHANNEL_TYPE_SITE.equals(
 				commerceChannel.getType())) {
 
-			throw new InvalidCommerceChannelTypeException(
+			throw new CommerceChannelTypeException(
 				"Cannot generate products XML for channel with ID " +
 					commerceChannelId +
 						" because channel must be site type channel");

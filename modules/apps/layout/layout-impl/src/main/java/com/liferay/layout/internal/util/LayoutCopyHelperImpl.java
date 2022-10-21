@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -886,10 +885,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference
-	private PortletPreferenceValueLocalService
-		_portletPreferenceValueLocalService;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

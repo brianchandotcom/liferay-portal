@@ -69,9 +69,6 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 		return Arrays.asList(
 			createObjectField(
 				"Text", "String", "description", "description", false, true),
-			createObjectField(
-				"Text", "String", "external-reference-code",
-				"externalReferenceCode", false, true),
 			createObjectField("Text", "String", "name", "name", false, true),
 			createObjectField(
 				"Text", "CPDefinitionId", "String", "product-id", "productId",

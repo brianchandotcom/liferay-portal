@@ -70,9 +70,6 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			createObjectField(
 				"Text", "String", "description", "description", false, true),
 			createObjectField(
-				"Text", "String", "external-reference-code",
-				"externalReferenceCode", false, true),
-			createObjectField(
 				"Integer", "Integer", "number-of-products", "productsCount",
 				false, true),
 			createObjectField("Text", "String", "title", "title", false, true));

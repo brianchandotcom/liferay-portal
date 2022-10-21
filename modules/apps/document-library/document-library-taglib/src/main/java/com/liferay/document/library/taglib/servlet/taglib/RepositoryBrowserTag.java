@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.taglib.servlet.taglib;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext;
 import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
@@ -45,8 +46,16 @@ public class RepositoryBrowserTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public long getFolderId() {
+		return _folderId;
+	}
+
 	public long getRepositoryId() {
 		return _repositoryId;
+	}
+
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
 	}
 
 	@Override
@@ -58,6 +67,14 @@ public class RepositoryBrowserTag extends IncludeTag {
 
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		_repositoryId = 0;
 	}
 
 	@Override
@@ -89,7 +106,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 	}
 
 	private long _getFolderId() {
-		return ParamUtil.getLong(getRequest(), "folderId");
+		return ParamUtil.getLong(getRequest(), "folderId", _folderId);
 	}
 
 	private long _getRepositoryId() {
@@ -128,6 +145,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 				"_folderModelResourcePermission",
 				"(model.class.name=" + Folder.class.getName() + ")", false);
 
+	private long _folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	private long _repositoryId;
 
 }

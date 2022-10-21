@@ -33,6 +33,11 @@
 		<tag-class>com.liferay.document.library.taglib.servlet.taglib.RepositoryBrowserTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<name>folderId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>repositoryId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

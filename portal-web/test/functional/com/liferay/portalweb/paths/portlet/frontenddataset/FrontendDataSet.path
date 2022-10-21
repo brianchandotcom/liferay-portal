@@ -85,6 +85,16 @@
 	<td>//*[contains(@class,'pagination-results')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLUMN_NAME</td>
+	<td>//div[contains(text(),'${columnName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_CELL</td>
+	<td>xpath=(//div[@class='dnd-td' and position()='${key_columnIndex}'])[${key_valueIndex}]</td>
+	<td></td>
+</tr>
 
 <!--FILTERS-->
 
@@ -188,6 +198,9 @@
 	<td>//button[contains(@aria-label, "Open Fields Menu")]</td>
 	<td></td>
 </tr>
+
+<!--CUSTOM VIEWS-->
+
 <tr>
 	<td>SELECT_CUSTOM_VIEW</td>
 	<td>//div[contains(@class,'custom-views-selection')]</td>
@@ -201,16 +214,6 @@
 <tr>
 	<td>INPUT_CUSTOM_VIEW_NAME</td>
 	<td>//input[contains(@id,'customViewLabelInput')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLUMN_NAME</td>
-	<td>//div[contains(text(),'${columnName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TABLE_CELL</td>
-	<td>xpath=(//div[@class='dnd-td' and position()='${key_columnIndex}'])[${key_valueIndex}]</td>
 	<td></td>
 </tr>
 <tr>

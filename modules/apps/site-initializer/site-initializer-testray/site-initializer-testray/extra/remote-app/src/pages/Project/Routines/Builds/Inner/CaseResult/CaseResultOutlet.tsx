@@ -13,21 +13,42 @@
  */
 
 import {useEffect} from 'react';
-import {Outlet, useLocation, useParams} from 'react-router-dom';
+import {
+	Outlet,
+	useLocation,
+	useOutletContext,
+	useParams,
+} from 'react-router-dom';
 
 import {useFetch} from '../../../../../../hooks/useFetch';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
-import {testrayCaseResultRest} from '../../../../../../services/rest';
+import {
+	TestrayBuild,
+	TestrayProject,
+	TestrayRoutine,
+	testrayCaseResultRest,
+} from '../../../../../../services/rest';
 import useCaseResultActions from './useCaseResultActions';
+
+type OutletContext = {
+	testrayBuild: TestrayBuild;
+	testrayProject: TestrayProject;
+	testrayRoutine: TestrayRoutine;
+};
 
 const CaseResultOutlet = () => {
 	const {actions} = useCaseResultActions();
 	const {pathname} = useLocation();
 	const {buildId, caseResultId, projectId, routineId} = useParams();
+	const {
+		testrayBuild,
+		testrayProject,
+		testrayRoutine,
+	}: OutletContext = useOutletContext();
 
 	const {
-		data: caseResult,
+		data: testrayCaseResult,
 		mutate: mutateCaseResult,
 	} = useFetch(
 		testrayCaseResultRest.getResource(caseResultId as string),
@@ -36,29 +57,49 @@ const CaseResultOutlet = () => {
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
-	const {context, setHeaderActions, setHeading, setTabs} = useHeader({
+	const {setHeaderActions, setHeading, setTabs} = useHeader({
 		timeout: 300,
 	});
 
-	const maxHeads = context.heading.length >= 4;
+	useEffect(() => {
+		setHeaderActions({
+			actions,
+			item: testrayCaseResult,
+			mutate: mutateCaseResult,
+		});
+	}, [actions, testrayCaseResult, mutateCaseResult, setHeaderActions]);
 
 	useEffect(() => {
-		setHeaderActions({actions, item: caseResult, mutate: mutateCaseResult});
-	}, [actions, caseResult, mutateCaseResult, setHeaderActions]);
-
-	useEffect(() => {
-		if (caseResult && !maxHeads) {
-			setHeading(
-				[
-					{
-						category: i18n.translate('case-result'),
-						title: caseResult?.case?.name || '',
-					},
-				],
-				true
-			);
+		if (testrayCaseResult) {
+			setHeading([
+				{
+					category: i18n.translate('project').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines`,
+					title: testrayProject?.name,
+				},
+				{
+					category: i18n.translate('routine').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
+					title: testrayRoutine?.name,
+				},
+				{
+					category: i18n.translate('build').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}/build/${testrayBuild.id}`,
+					title: testrayBuild?.name,
+				},
+				{
+					category: i18n.translate('case-result'),
+					title: testrayCaseResult?.case?.name || '',
+				},
+			]);
 		}
-	}, [caseResult, maxHeads, setHeading]);
+	}, [
+		setHeading,
+		testrayProject,
+		testrayRoutine,
+		testrayBuild,
+		testrayCaseResult,
+	]);
 
 	useEffect(() => {
 		setTabs([
@@ -75,8 +116,16 @@ const CaseResultOutlet = () => {
 		]);
 	}, [basePath, pathname, setTabs]);
 
-	if (caseResult) {
-		return <Outlet context={{caseResult, mutateCaseResult, projectId}} />;
+	if (testrayCaseResult) {
+		return (
+			<Outlet
+				context={{
+					caseResult: testrayCaseResult,
+					mutateCaseResult,
+					projectId,
+				}}
+			/>
+		);
 	}
 
 	return null;

@@ -155,7 +155,14 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 					</>
 				)}
 
-				<Outlet context={{mutateBuild, testrayBuild}} />
+				<Outlet
+					context={{
+						mutateBuild,
+						testrayBuild,
+						testrayProject,
+						testrayRoutine,
+					}}
+				/>
 			</>
 		);
 	}

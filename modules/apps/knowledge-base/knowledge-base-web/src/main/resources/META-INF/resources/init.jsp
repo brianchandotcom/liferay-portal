@@ -112,7 +112,6 @@ page import="com.liferay.knowledge.base.web.internal.search.KBObjectsSearch" %><
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.DisplayPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission" %><%@
-page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.AdminUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.KBArticleAssetEntriesUtil" %><%@

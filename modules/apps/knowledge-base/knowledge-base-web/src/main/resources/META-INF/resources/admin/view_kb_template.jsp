@@ -39,8 +39,6 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 			</div>
 
 			<%= kbTemplate.getContent() %>
-
-			<liferay-util:include page="/admin/kb_template_comments.jsp" servletContext="<%= application %>" />
 		</div>
 	</div>
 </div>

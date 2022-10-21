@@ -93,6 +93,8 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 				).put(
 					"classPK", article.getResourcePrimKey()
 				).put(
+					"friendlyUrlMap", article.getFriendlyURLMap()
+				).put(
 					"version", article.getVersion()
 				));
 		}

@@ -260,40 +260,65 @@ function AssetDisplayPageSelector({
 						method: form.method,
 					})
 						.then((response) => response.json())
-						.then(({articleId, classPK, error, version}) => {
-							if (error) {
-								openToast({
-									message: Liferay.Language.get(
-										'web-content-could-not-be-previewed-due-to-an-unexpected-error-while-generating-the-draft'
-									),
-									title: Liferay.Language.get('error'),
-									type: 'danger',
-								});
+						.then(
+							({
+								articleId,
+								classPK,
+								error,
+								friendlyUrlMap,
+								version,
+							}) => {
+								if (error) {
+									openToast({
+										message: Liferay.Language.get(
+											'web-content-could-not-be-previewed-due-to-an-unexpected-error-while-generating-the-draft'
+										),
+										title: Liferay.Language.get('error'),
+										type: 'danger',
+									});
+								}
+								else {
+									updateJournalInput({
+										name: 'formDate',
+										namespace,
+										value: Date.now().toString(),
+									});
+
+									updateJournalInput({
+										name: 'articleId',
+										namespace,
+										value: articleId,
+									});
+
+									updateJournalInput({
+										name: 'version',
+										namespace,
+										value: version,
+									});
+
+									Object.entries(friendlyUrlMap).forEach(
+										([languageId, value]) => {
+											updateJournalInput({
+												name: `friendlyURL_${languageId}`,
+												namespace,
+												value,
+											});
+										}
+									);
+
+									openModal({
+										title: Liferay.Language.get('preview'),
+										url: createPortletURL(previewURL, {
+											classPK,
+
+											selPlid:
+												assetDisplayPageSelected?.plid,
+											version,
+										}).toString(),
+									});
+								}
 							}
-							else {
-								updateJournalInput({
-									name: 'formDate',
-									namespace,
-									value: Date.now().toString(),
-								});
-
-								updateJournalInput({
-									name: 'articleId',
-									namespace,
-									value: articleId,
-								});
-
-								openModal({
-									title: Liferay.Language.get('preview'),
-									url: createPortletURL(previewURL, {
-										classPK,
-
-										selPlid: assetDisplayPageSelected?.plid,
-										version,
-									}).toString(),
-								});
-							}
-						})
+						)
 						.catch(() => {
 							openToast({
 								message: Liferay.Language.get(

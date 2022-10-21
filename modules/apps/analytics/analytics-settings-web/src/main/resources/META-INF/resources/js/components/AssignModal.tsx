@@ -48,7 +48,7 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ClayTabs modern>
+				<ClayTabs displayType="underline" modern>
 					<ClayTabs.Item
 						active={activeTabKeyValue === ETabs.Channel}
 						innerProps={{
@@ -68,17 +68,21 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 					>
 						{Liferay.Language.get('sites')}
 					</ClayTabs.Item>
-
-					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-						<ClayTabs.TabPane aria-labelledby="tab-1">
-							<ChannelTab />
-						</ClayTabs.TabPane>
-
-						<ClayTabs.TabPane aria-labelledby="tab-2">
-							<SitesTab />
-						</ClayTabs.TabPane>
-					</ClayTabs.Content>
 				</ClayTabs>
+
+				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
+					<ClayTabs.TabPane aria-labelledby="tab-1">
+						<ChannelTab
+							description="Channels can only be assigned to a single property at a time. Sites belonging to a channel will be automatically selected when a channel has been selected. "
+							displayChannels={!!property?.commerceEnabled}
+							property={property}
+						/>
+					</ClayTabs.TabPane>
+
+					<ClayTabs.TabPane aria-labelledby="tab-2">
+						<SitesTab displayChannels property={property} />
+					</ClayTabs.TabPane>
+				</ClayTabs.Content>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

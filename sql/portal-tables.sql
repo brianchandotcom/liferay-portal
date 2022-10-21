@@ -833,7 +833,7 @@ create table OrgLabor (
 	orgLaborId LONG not null primary key,
 	companyId LONG,
 	organizationId LONG,
-	typeId LONG,
+	listTypeId LONG,
 	sunOpen INTEGER,
 	sunClose INTEGER,
 	monOpen INTEGER,

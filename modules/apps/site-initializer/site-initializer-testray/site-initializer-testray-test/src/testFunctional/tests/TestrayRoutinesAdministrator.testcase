@@ -140,6 +140,7 @@ definition {
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
+				addVersion = "1.2",
 				description = "Routines_4 Build Description",
 				dropdownItem = "New Build",
 				fieldName = "Routines_4 Build",

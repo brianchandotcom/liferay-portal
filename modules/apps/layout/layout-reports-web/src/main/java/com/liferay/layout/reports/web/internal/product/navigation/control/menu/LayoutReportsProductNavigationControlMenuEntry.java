@@ -17,7 +17,6 @@ package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -465,11 +463,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	private Portal _portal;
 
 	private String _portletNamespace;
-
-	@Reference(
-		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;

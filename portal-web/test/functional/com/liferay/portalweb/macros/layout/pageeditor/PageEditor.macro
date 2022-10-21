@@ -1094,9 +1094,7 @@ definition {
 	macro changeExperience {
 		var key_experienceName = "${newExperience}";
 
-		Click(
-			ariaLabel = "Experience",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 

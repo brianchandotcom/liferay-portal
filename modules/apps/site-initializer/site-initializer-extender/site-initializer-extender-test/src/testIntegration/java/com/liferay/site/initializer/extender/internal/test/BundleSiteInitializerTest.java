@@ -822,7 +822,7 @@ public class BundleSiteInitializerTest {
 	private void _assertJournalArticles(Group group) throws Exception {
 		JournalArticle journalArticle1 =
 			_journalArticleLocalService.fetchArticle(
-				group.getGroupId(), "test-journal-article-1");
+				group.getGroupId(), "TEST-JOURNAL-ARTICLE-1");
 
 		Assert.assertNotNull(journalArticle1);
 		Assert.assertEquals(
@@ -832,7 +832,7 @@ public class BundleSiteInitializerTest {
 
 		JournalArticle journalArticle2 =
 			_journalArticleLocalService.fetchArticle(
-				group.getGroupId(), "test-journal-article-2");
+				group.getGroupId(), "TEST-JOURNAL-ARTICLE-2");
 
 		Assert.assertNotNull(journalArticle2);
 		Assert.assertEquals(

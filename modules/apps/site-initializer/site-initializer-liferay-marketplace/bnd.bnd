@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer Liferay Marketplace
+Bundle-SymbolicName: com.liferay.site.initializer.liferay.marketplace
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Liferay Marketplace
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-liferay-marketplace

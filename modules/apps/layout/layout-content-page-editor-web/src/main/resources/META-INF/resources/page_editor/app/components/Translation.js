@@ -195,7 +195,9 @@ export default function Translation({
 
 					<span className="sr-only">
 						{sub(
-							Liferay.Language.get('current-language-x'),
+							Liferay.Language.get(
+								'select-a-language.-current-language-x'
+							),
 							w3cLanguageId
 						)}
 					</span>

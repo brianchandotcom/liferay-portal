@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.internal.util.DDMFormFieldFreeMarkerRendererUtil;
 import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -54,6 +53,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -78,6 +79,16 @@ import javax.servlet.http.HttpServletResponse;
  * @author Pablo Carvalho
  */
 public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
+
+	public Editor getEditor(HttpServletRequest httpServletRequest) {
+		if (Validator.isNull(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT) ||
+			!_editors.containsKey(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
+
+			return _editors.get(_EDITOR_WYSIWYG_DEFAULT);
+		}
+
+		return _editors.get(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT);
+	}
 
 	@Override
 	public String[] getSupportedDDMFormFieldTypes() {
@@ -108,6 +119,19 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addEditor(Editor editor) {
+		_editors.put(editor.getName(), editor);
+	}
+
+	protected void removeEditor(Editor editor) {
+		_editors.remove(editor.getName());
 	}
 
 	private void _addDDMFormFieldOptionHTML(
@@ -533,9 +557,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			).put(
 				"editorName",
 				() -> {
-					Editor editor =
-						DDMFormFieldFreeMarkerRendererUtil.getEditor(
-							httpServletRequest);
+					Editor editor = getEditor(httpServletRequest);
 
 					return editor.getName();
 				}
@@ -773,6 +795,12 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 	private static final String _DEFAULT_READ_ONLY_NAMESPACE = "readonly";
 
+	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
+		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
+
+	private static final String _TEXT_HTML_EDITOR_WYSIWYG_DEFAULT =
+		PropsUtil.get("editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl");
+
 	private static final String _TPL_EXT = ".ftl";
 
 	private static final String _TPL_PATH =
@@ -780,5 +808,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldFreeMarkerRenderer.class);
+
+	private static final Map<String, Editor> _editors =
+		new ConcurrentHashMap<>();
 
 }

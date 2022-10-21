@@ -50,7 +50,7 @@ definition {
 		ACDefinitions.goToDefinitionType(definitionType = "Individuals");
 
 		ACDefinitions.assertIndividualAttributesSource(
-			attributeList = "additionalName,address,birthDate,classPK,contactId,createDate,email,familyName,gender,givenName,jobTitle,modifiedDate,telephone,timeZoneId,userId,uuid",
+			attributeList = "additionalName,address,birthDate,classPK,contactId,createDate,email,familyName,gender,givenName,jobTitle,modifiedDate,telephone,userId,uuid",
 			dataSourceName = "${dataSource}");
 	}
 

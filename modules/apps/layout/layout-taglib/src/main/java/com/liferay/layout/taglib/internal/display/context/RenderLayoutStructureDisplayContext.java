@@ -14,6 +14,7 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -25,6 +26,7 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
@@ -57,7 +59,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
@@ -289,11 +290,10 @@ public class RenderLayoutStructureDisplayContext {
 			"collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
-			Object displayObject = _httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
-
 			String mappedCollectionValue = _getMappedCollectionValue(
-				collectionFieldId, displayObject);
+				collectionFieldId,
+				(InfoItemReference)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
 
 			if (Validator.isNotNull(mappedCollectionValue)) {
 				return mappedCollectionValue;
@@ -356,9 +356,9 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setDisplayObject(
-			_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
+		defaultFragmentRendererContext.setContextInfoItemReference(
+			(InfoItemReference)_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
 		defaultFragmentRendererContext.setLocale(_themeDisplay.getLocale());
 
 		Layout layout = _themeDisplay.getLayout();
@@ -538,8 +538,8 @@ public class RenderLayoutStructureDisplayContext {
 				ServletContextUtil.getFragmentEntryProcessorHelper();
 
 			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
-				_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT),
+				(InfoItemReference)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE),
 				backgroundImageJSONObject.getString("collectionFieldId"),
 				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
 		}
@@ -682,11 +682,10 @@ public class RenderLayoutStructureDisplayContext {
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
-			Object displayObject = _httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
-
 			mappedCollectionValue = _getMappedCollectionValue(
-				collectionFieldId, displayObject);
+				collectionFieldId,
+				(InfoItemReference)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
 		}
 
 		if (Validator.isNotNull(mappedCollectionValue)) {
@@ -956,6 +955,34 @@ public class RenderLayoutStructureDisplayContext {
 		return redirect;
 	}
 
+	private Object _getInfoItem(InfoItemReference infoItemReference) {
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		InfoItemServiceTracker infoItemServiceTracker =
+			ServletContextUtil.getInfoItemServiceTracker();
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		try {
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getMainItemId() {
 		if (Validator.isNotNull(_mainItemId)) {
 			return _mainItemId;
@@ -965,19 +992,13 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	private String _getMappedCollectionValue(
-		String collectionFieldId, Object displayObject) {
-
-		if (!(displayObject instanceof ClassedModel)) {
-			return StringPool.BLANK;
-		}
-
-		ClassedModel classedModel = (ClassedModel)displayObject;
+		String collectionFieldId, InfoItemReference infoItemReference) {
 
 		// LPS-111037
 
-		String className = classedModel.getModelClassName();
+		String className = infoItemReference.getClassName();
 
-		if (classedModel instanceof FileEntry) {
+		if (Objects.equals(className, DLFileEntry.class.getName())) {
 			className = FileEntry.class.getName();
 		}
 
@@ -1000,7 +1021,7 @@ public class RenderLayoutStructureDisplayContext {
 
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(
-				displayObject, collectionFieldId);
+				_getInfoItem(infoItemReference), collectionFieldId);
 
 		if (infoFieldValue == null) {
 			return StringPool.BLANK;

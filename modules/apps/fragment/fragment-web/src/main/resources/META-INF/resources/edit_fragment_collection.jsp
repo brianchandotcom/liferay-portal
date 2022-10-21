@@ -54,8 +54,8 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= fragmentDisplayContext.getRedirect() %>" type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= fragmentDisplayContext.getRedirect() %>"
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

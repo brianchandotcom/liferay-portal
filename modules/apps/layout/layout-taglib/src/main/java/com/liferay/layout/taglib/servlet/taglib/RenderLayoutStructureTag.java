@@ -28,6 +28,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.layout.constants.LayoutWebKeys;
@@ -331,6 +334,17 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 				containerTag.doStartTag();
 
+				String className =
+					renderCollectionLayoutStructureItemDisplayContext.
+						getCollectionItemType();
+
+				InfoItemServiceTracker infoItemServiceTracker =
+					ServletContextUtil.getInfoItemServiceTracker();
+
+				InfoItemDetailsProvider infoItemDetailsProvider =
+					infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemDetailsProvider.class, className);
+
 				for (int i = 0; i < numberOfRows; i++) {
 					RowTag rowTag = new RowTag();
 
@@ -368,14 +382,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 							break;
 						}
 
+						InfoItemDetails infoItemDetails =
+							infoItemDetailsProvider.getInfoItemDetails(
+								collection.get(index));
+
 						httpServletRequest.setAttribute(
-							InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT,
-							collection.get(index));
-						httpServletRequest.setAttribute(
-							InfoDisplayWebKeys.
-								INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE,
-							renderCollectionLayoutStructureItemDisplayContext.
-								getCollectionItemType());
+							InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
+							infoItemDetails.getInfoItemReference());
 
 						ColTag colTag = new ColTag();
 
@@ -403,9 +416,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			}
 			finally {
 				httpServletRequest.removeAttribute(
-					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
-				httpServletRequest.removeAttribute(
-					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE);
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
 
 				httpServletRequest.setAttribute(
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,

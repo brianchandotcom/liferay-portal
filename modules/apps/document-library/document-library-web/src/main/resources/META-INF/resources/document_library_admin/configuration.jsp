@@ -138,8 +138,6 @@ DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServic
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button type="cancel" />
+		<liferay-frontend:edit-form-buttons />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

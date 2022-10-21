@@ -22,6 +22,11 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleNavigationFragmentDisplayContext;
@@ -168,6 +173,31 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
+	private Object _getInfoItem(InfoItemReference infoItemReference) {
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		try {
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
+	}
+
 	private KBArticle _getKBArticle(AssetEntry assetEntry) {
 		if (assetEntry == null) {
 			return null;
@@ -203,16 +233,24 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 					WorkflowConstants.STATUS_ANY);
 			}
 
-			Optional<Object> displayObjectOptional =
-				fragmentRendererContext.getDisplayObjectOptional();
+			Optional<InfoItemReference> contextInfoItemReferenceOptional =
+				fragmentRendererContext.getContextInfoItemReferenceOptional();
 
-			Object displayObject = displayObjectOptional.orElseGet(
-				() -> _getKBArticle(
+			if (contextInfoItemReferenceOptional.isPresent()) {
+				InfoItemReference infoItemReference =
+					contextInfoItemReferenceOptional.get();
+
+				if (Objects.equals(
+						infoItemReference.getClassName(),
+						KBArticle.class.getName())) {
+
+					return (KBArticle)_getInfoItem(infoItemReference);
+				}
+			}
+			else {
+				return _getKBArticle(
 					(AssetEntry)httpServletRequest.getAttribute(
-						WebKeys.LAYOUT_ASSET_ENTRY)));
-
-			if (displayObject instanceof KBArticle) {
-				return (KBArticle)displayObject;
+						WebKeys.LAYOUT_ASSET_ENTRY));
 			}
 
 			return null;
@@ -282,6 +320,9 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 		target = "(item.class.name=com.liferay.knowledge.base.model.KBArticle)"
 	)
 	private InfoItemFriendlyURLProvider<KBArticle> _infoItemFriendlyURLProvider;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private KBArticleService _kbArticleService;

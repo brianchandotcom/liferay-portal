@@ -83,7 +83,8 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		if (collectionMapped) {
 			href = GetterUtil.getString(
 				_fragmentEntryProcessorHelper.getMappedCollectionValue(
-					fragmentEntryProcessorContext.getDisplayObjectOptional(),
+					fragmentEntryProcessorContext.
+						getContextInfoItemReferenceOptional(),
 					configJSONObject,
 					fragmentEntryProcessorContext.getLocale()));
 		}

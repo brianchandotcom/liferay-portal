@@ -17,6 +17,7 @@ package com.liferay.fragment.processor;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -41,8 +42,8 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
-	public Optional<Object> getDisplayObjectOptional() {
-		return Optional.ofNullable(_displayObject);
+	public Optional<InfoItemReference> getContextInfoItemReferenceOptional() {
+		return Optional.ofNullable(_infoItemReference);
 	}
 
 	@Override
@@ -100,8 +101,10 @@ public class DefaultFragmentEntryProcessorContext
 		return _segmentsEntryIds;
 	}
 
-	public void setDisplayObject(Object object) {
-		_displayObject = object;
+	public void setContextInfoItemReference(
+		InfoItemReference infoItemReference) {
+
+		_infoItemReference = infoItemReference;
 	}
 
 	public void setFragmentElementId(String fragmentElementId) {
@@ -132,11 +135,11 @@ public class DefaultFragmentEntryProcessorContext
 		_segmentsEntryIds = segmentsEntryIds;
 	}
 
-	private Object _displayObject;
 	private String _fragmentElementId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private InfoForm _infoForm;
+	private InfoItemReference _infoItemReference;
 	private final Locale _locale;
 	private final String _mode;
 	private long _previewClassNameId;

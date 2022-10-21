@@ -57,9 +57,7 @@ definition {
 
 			Staging.gotoPublishToLive();
 
-			Staging.configurePublishToLive(
-				uncheckChildPages = "true",
-				uncheckChildPagesNameList = "Test Child Page 1,Test Child Page 2");
+			Staging.configurePublishToLive(uncheckChildPagesNameList = "Test Child Page 1,Test Child Page 2");
 
 			Staging.publishToLive(remoteStaging = "true");
 		}

@@ -1,44 +1,4 @@
 {
 	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": false,
-					"label": "Channel Account Manager",
-					"name": "channelAccountManager",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "Channel Finance Manager",
-					"name": "channelFinanceManager",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "Channel General Manager",
-					"name": "channelGeneralManager",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "Channel Global Marketing Manager",
-					"name": "channelGlobalMarketingManager",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "Channel Regional Marketing Manager",
-					"name": "channelRegionalMarketingManager",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
-					"label": "User",
-					"name": "user",
-					"type": "checkbox"
-				}
-			]
-		}
 	]
 }

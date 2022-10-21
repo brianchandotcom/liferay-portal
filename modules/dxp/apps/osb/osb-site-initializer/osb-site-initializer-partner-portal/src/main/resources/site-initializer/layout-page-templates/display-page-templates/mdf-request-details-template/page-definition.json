@@ -5,11 +5,13 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "colorNeutral1",
+						"borderRadius": "",
 						"borderWidth": "0",
 						"paddingBottom": "4",
 						"paddingLeft": "10",
 						"paddingRight": "10",
 						"paddingTop": "6",
+						"shadow": "",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
@@ -46,6 +48,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 2,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -66,6 +69,7 @@
 								"paddingLeft": "4",
 								"paddingRight": "4",
 								"paddingTop": "4",
+								"shadow": "",
 								"textAlign": ""
 							},
 							"indexed": true,
@@ -75,6 +79,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 2,
 								"paddingLeft": 2,
 								"paddingRight": 2,
@@ -87,8 +92,10 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"borderRadius": "",
 										"borderWidth": "0",
 										"paddingBottom": "2",
+										"shadow": "",
 										"textAlign": ""
 									},
 									"indexed": true,
@@ -101,6 +108,7 @@
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -112,7 +120,9 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
 												"borderWidth": "0",
+												"shadow": "",
 												"textAlign": ""
 											},
 											"indexed": true,
@@ -123,6 +133,7 @@
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -166,8 +177,10 @@
 														}
 													],
 													"fragmentStyle": {
+														"borderRadius": "",
 														"fontWeight": "fontWeightBold",
 														"paddingBottom": "1",
+														"shadow": "",
 														"textAlign": "",
 														"textColor": "colorNeutral10"
 													},
@@ -178,7 +191,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
+														"borderRadius": "",
 														"borderWidth": "0",
+														"shadow": "",
 														"textAlign": ""
 													},
 													"indexed": true,
@@ -189,6 +204,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -232,7 +248,9 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"paddingRight": "1",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -266,7 +284,9 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"paddingRight": "1",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -309,7 +329,9 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"paddingRight": "1",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -343,6 +365,8 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -364,12 +388,23 @@
 									"fragment": {
 										"key": "mdf-request-details-status-display"
 									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "mdf-request-manager-status"
+									},
 									"fragmentConfig": {
-										"channelAccountManager": false,
-										"channelFinanceManager": false,
-										"channelGeneralManager": false,
-										"channelGlobalMarketingManager": false,
-										"channelRegionalMarketingManager": false,
+										"channelAccountManager": true,
+										"channelFinanceManager": true,
+										"channelGeneralManager": true,
+										"channelGlobalMarketingManager": true,
+										"channelRegionalMarketingManager": true,
 										"user": false
 									},
 									"fragmentFields": [
@@ -392,6 +427,7 @@
 								"paddingLeft": "4",
 								"paddingRight": "4",
 								"paddingTop": "4",
+								"shadow": "",
 								"textAlign": ""
 							},
 							"indexed": true,
@@ -401,6 +437,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 2,
 								"paddingLeft": 2,
 								"paddingRight": 2,
@@ -445,7 +482,9 @@
 										}
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
 										"fontWeight": "fontWeightBold",
+										"shadow": "",
 										"textAlign": "",
 										"textColor": "colorNeutral9"
 									},
@@ -465,7 +504,9 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
 										"marginTop": "1",
+										"shadow": "",
 										"textAlign": ""
 									},
 									"indexed": true
@@ -491,7 +532,9 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderRadius": "",
 								"borderWidth": "0",
+								"shadow": "",
 								"textAlign": ""
 							},
 							"indexed": true,
@@ -501,6 +544,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -514,6 +558,8 @@
 								"definition": {
 									"fragmentStyle": {
 										"backgroundColor": "colorNeutral1",
+										"borderRadius": "",
+										"shadow": "",
 										"textAlign": ""
 									},
 									"gutters": true,
@@ -578,6 +624,7 @@
 														"paddingLeft": "3",
 														"paddingRight": "4",
 														"paddingTop": "4",
+														"shadow": "",
 														"textAlign": "",
 														"textColor": "colorNeutral10"
 													},
@@ -589,6 +636,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 2,
 														"paddingLeft": 1,
 														"paddingRight": 2,
@@ -632,8 +680,10 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "1",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral9"
 															},
@@ -653,7 +703,9 @@
 															"fragmentFields": [
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"marginTop": "1",
+																"shadow": "",
 																"textAlign": ""
 															},
 															"indexed": true
@@ -662,6 +714,9 @@
 													},
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"indexed": true,
 															"layout": {
 																"borderWidth": 0,
@@ -671,6 +726,7 @@
 																"marginLeft": 0,
 																"marginRight": 0,
 																"marginTop": 0,
+																"opacity": 100,
 																"paddingBottom": 0,
 																"paddingLeft": 0,
 																"paddingRight": 0,
@@ -681,6 +737,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
 																	"indexed": true,
 																	"layout": {
 																		"borderWidth": 0,
@@ -688,6 +747,7 @@
 																		"marginLeft": 0,
 																		"marginRight": 0,
 																		"marginTop": 0,
+																		"opacity": 100,
 																		"paddingBottom": 0,
 																		"paddingLeft": 0,
 																		"paddingRight": 0,
@@ -731,8 +791,10 @@
 																				}
 																			],
 																			"fragmentStyle": {
+																				"borderRadius": "",
 																				"fontWeight": "fontWeightNormal",
 																				"marginBottom": "1",
+																				"shadow": "",
 																				"textAlign": "",
 																				"textColor": "colorNeutral10"
 																			},
@@ -775,8 +837,10 @@
 																				}
 																			],
 																			"fragmentStyle": {
+																				"borderRadius": "",
 																				"fontWeight": "fontWeightNormal",
 																				"marginBottom": "1",
+																				"shadow": "",
 																				"textAlign": "",
 																				"textColor": "colorNeutral8"
 																			},
@@ -815,7 +879,9 @@
 															"fragmentFields": [
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"marginTop": "1",
+																"shadow": "",
 																"textAlign": ""
 															},
 															"indexed": true
@@ -836,6 +902,7 @@
 														"paddingLeft": "3",
 														"paddingRight": "4",
 														"paddingTop": "4",
+														"shadow": "",
 														"textAlign": "",
 														"textColor": "colorNeutral10"
 													},
@@ -847,6 +914,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 2,
 														"paddingLeft": 1,
 														"paddingRight": 2,
@@ -890,8 +958,10 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "1",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorBrandPrimaryLighten2"
 															},
@@ -934,8 +1004,10 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "1",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral9"
 															},
@@ -955,7 +1027,9 @@
 															"fragmentFields": [
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"marginTop": "1",
+																"shadow": "",
 																"textAlign": ""
 															},
 															"indexed": true
@@ -982,7 +1056,9 @@
 												"definition": {
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
+														"borderRadius": "",
 														"borderWidth": "0",
+														"shadow": "",
 														"textAlign": ""
 													},
 													"indexed": true,
@@ -992,6 +1068,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -1010,6 +1087,7 @@
 																"paddingLeft": "3",
 																"paddingRight": "4",
 																"paddingTop": "4",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral10"
 															},
@@ -1021,6 +1099,7 @@
 																"marginLeft": 0,
 																"marginRight": 0,
 																"marginTop": 0,
+																"opacity": 100,
 																"paddingBottom": 2,
 																"paddingLeft": 1,
 																"paddingRight": 2,
@@ -1064,8 +1143,10 @@
 																		}
 																	],
 																	"fragmentStyle": {
+																		"borderRadius": "",
 																		"fontWeight": "fontWeightBold",
 																		"marginBottom": "1",
+																		"shadow": "",
 																		"textAlign": "",
 																		"textColor": "colorBrandPrimaryLighten2"
 																	},
@@ -1108,8 +1189,10 @@
 																		}
 																	],
 																	"fragmentStyle": {
+																		"borderRadius": "",
 																		"fontWeight": "fontWeightBold",
 																		"marginBottom": "1",
+																		"shadow": "",
 																		"textAlign": "",
 																		"textColor": "colorNeutral9"
 																	},
@@ -1129,7 +1212,9 @@
 																	"fragmentFields": [
 																	],
 																	"fragmentStyle": {
+																		"borderRadius": "",
 																		"marginTop": "1",
+																		"shadow": "",
 																		"textAlign": ""
 																	},
 																	"indexed": true
@@ -1645,6 +1730,7 @@
 														"paddingLeft": "4",
 														"paddingRight": "4",
 														"paddingTop": "4",
+														"shadow": "",
 														"textAlign": ""
 													},
 													"indexed": true,
@@ -1654,6 +1740,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
 														"paddingRight": 2,
@@ -1697,7 +1784,9 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"fontWeight": "fontWeightBold",
+																"shadow": "",
 																"textAlign": "",
 																"textColor": "colorNeutral10"
 															},

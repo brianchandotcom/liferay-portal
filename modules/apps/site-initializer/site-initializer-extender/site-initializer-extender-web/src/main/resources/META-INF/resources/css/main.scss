@@ -1,2 +1,18 @@
-.site-initializer-extender-web {
+@import 'atlas-variables';
+
+@mixin default-label {
+	color: #869cad;
+	font-size: 14px;
+}
+
+.remote-port {
+	width: 150px;
+}
+
+.custom-sheet {
+	margin-top: 1.5rem;
+}
+
+.custom-distance {
+	margin-bottom: 16px;
 }

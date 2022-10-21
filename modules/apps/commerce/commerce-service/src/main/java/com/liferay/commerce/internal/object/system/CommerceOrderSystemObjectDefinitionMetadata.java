@@ -51,6 +51,26 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public BaseModel<?> getBaseModelByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return _commerceOrderLocalService.
+			getCommerceOrderByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	@Override
+	public String getExternalReferenceCode(long primaryKey)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(primaryKey);
+
+		return commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
 	public String getJaxRsApplicationName() {
 		return "Liferay.Headless.Commerce.Admin.Order";
 	}

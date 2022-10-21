@@ -49,6 +49,24 @@ public class AddressSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public BaseModel<?> getBaseModelByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return _addressLocalService.getAddressByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public String getExternalReferenceCode(long primaryKey)
+		throws PortalException {
+
+		Address address = _addressLocalService.getAddress(primaryKey);
+
+		return address.getExternalReferenceCode();
+	}
+
+	@Override
 	public String getJaxRsApplicationName() {
 		return "Liferay.Headless.Admin.User";
 	}

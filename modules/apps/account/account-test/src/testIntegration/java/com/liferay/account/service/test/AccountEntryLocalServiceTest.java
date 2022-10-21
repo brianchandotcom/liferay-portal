@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
@@ -60,6 +61,8 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -82,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -253,17 +257,23 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testActivateAccountEntries() throws Exception {
-		long[] accountEntryIds = _addAccountEntries(
+		List<AccountEntry> accountEntries = _addAccountEntries(
 			WorkflowConstants.STATUS_INACTIVE);
 
-		for (long accountEntryId : accountEntryIds) {
-			_assertStatus(accountEntryId, WorkflowConstants.STATUS_INACTIVE);
+		for (AccountEntry accountEntry : accountEntries) {
+			_assertStatus(
+				accountEntry.getAccountEntryId(),
+				WorkflowConstants.STATUS_INACTIVE);
 		}
 
-		_accountEntryLocalService.activateAccountEntries(accountEntryIds);
+		_accountEntryLocalService.activateAccountEntries(
+			ListUtil.toLongArray(
+				accountEntries, AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR));
 
-		for (long accountEntryId : accountEntryIds) {
-			_assertStatus(accountEntryId, WorkflowConstants.STATUS_APPROVED);
+		for (AccountEntry accountEntry : accountEntries) {
+			_assertStatus(
+				accountEntry.getAccountEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
 		}
 	}
 
@@ -314,6 +324,11 @@ public class AccountEntryLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(accountEntry.getAccountEntryId())));
 		Assert.assertTrue(accountEntry.isRestrictMembership());
+
+		_assertStatus(
+			accountEntry, WorkflowConstants.STATUS_APPROVED,
+			TestPropsValues.getUser());
+		Assert.assertFalse(_hasWorkflowInstance(accountEntry));
 	}
 
 	@Test
@@ -377,17 +392,41 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeactivateAccountEntries() throws Exception {
-		long[] accountEntryIds = _addAccountEntries();
+	public void testAddAccountEntryWithWorkflowEnabled() throws Exception {
+		_enableWorkflow();
 
-		for (long accountEntryId : accountEntryIds) {
-			_assertStatus(accountEntryId, WorkflowConstants.STATUS_APPROVED);
+		User user = UserTestUtil.addUser();
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			user.getUserId(), 0L, RandomTestUtil.randomString(50),
+			RandomTestUtil.randomString(50), null, null, null,
+			RandomTestUtil.randomString(50),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertStatus(accountEntry, WorkflowConstants.STATUS_PENDING, user);
+		Assert.assertTrue(_hasWorkflowInstance(accountEntry));
+	}
+
+	@Test
+	public void testDeactivateAccountEntries() throws Exception {
+		List<AccountEntry> accountEntries = _addAccountEntries();
+
+		for (AccountEntry accountEntry : accountEntries) {
+			_assertStatus(
+				accountEntry.getAccountEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
 		}
 
-		_accountEntryLocalService.deactivateAccountEntries(accountEntryIds);
+		_accountEntryLocalService.deactivateAccountEntries(
+			ListUtil.toLongArray(
+				accountEntries, AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR));
 
-		for (long accountEntryId : accountEntryIds) {
-			_assertStatus(accountEntryId, WorkflowConstants.STATUS_INACTIVE);
+		for (AccountEntry accountEntry : accountEntries) {
+			_assertStatus(
+				accountEntry.getAccountEntryId(),
+				WorkflowConstants.STATUS_INACTIVE);
 		}
 	}
 
@@ -424,12 +463,14 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteAccountEntries() throws Exception {
-		long[] accountEntryIds = _addAccountEntries();
+		List<AccountEntry> accountEntries = _addAccountEntries();
 
-		_accountEntryLocalService.deleteAccountEntries(accountEntryIds);
+		_accountEntryLocalService.deleteAccountEntries(
+			ListUtil.toLongArray(
+				accountEntries, AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR));
 
-		for (long accountEntryId : accountEntryIds) {
-			_assertDeleted(accountEntryId);
+		for (AccountEntry accountEntry : accountEntries) {
+			_assertDeleted(accountEntry);
 		}
 	}
 
@@ -437,9 +478,10 @@ public class AccountEntryLocalServiceTest {
 	public void testDeleteAccountEntryByModel() throws Exception {
 		AccountEntry accountEntry = _addAccountEntry();
 
-		_accountEntryLocalService.deleteAccountEntry(accountEntry);
+		accountEntry = _accountEntryLocalService.deleteAccountEntry(
+			accountEntry);
 
-		_assertDeleted(accountEntry.getAccountEntryId());
+		_assertDeleted(accountEntry);
 	}
 
 	@Test
@@ -449,7 +491,7 @@ public class AccountEntryLocalServiceTest {
 		_accountEntryLocalService.deleteAccountEntry(
 			accountEntry.getAccountEntryId());
 
-		_assertDeleted(accountEntry.getAccountEntryId());
+		_assertDeleted(accountEntry);
 	}
 
 	@Test
@@ -1070,6 +1112,10 @@ public class AccountEntryLocalServiceTest {
 
 		Assert.assertArrayEquals(
 			expectedDomains, accountEntry.getDomainsArray());
+
+		_assertStatus(
+			accountEntry, WorkflowConstants.STATUS_APPROVED,
+			TestPropsValues.getUser());
 	}
 
 	@Test
@@ -1130,28 +1176,61 @@ public class AccountEntryLocalServiceTest {
 		Assert.assertEquals(mvccVersion, accountEntry.getMvccVersion());
 	}
 
+	@Test
+	public void testUpdateStatus() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		_assertStatus(
+			accountEntry, WorkflowConstants.STATUS_APPROVED,
+			TestPropsValues.getUser());
+
+		long mvccVersion = accountEntry.getMvccVersion();
+
+		accountEntry = _accountEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+			accountEntry.getStatus(), null, null);
+
+		Assert.assertEquals(mvccVersion, accountEntry.getMvccVersion());
+
+		int expectedStatus = WorkflowConstants.STATUS_DENIED;
+		User user = UserTestUtil.addUser();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		Date modifiedDate = new Date();
+
+		serviceContext.setModifiedDate(modifiedDate);
+
+		accountEntry = _accountEntryLocalService.updateStatus(
+			user.getUserId(), accountEntry.getAccountEntryId(), expectedStatus,
+			serviceContext, null);
+
+		_assertStatus(accountEntry, expectedStatus, user);
+		Assert.assertEquals(modifiedDate, accountEntry.getModifiedDate());
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Rule
 	public TestName testName = new TestName();
 
-	private long[] _addAccountEntries() throws Exception {
+	private List<AccountEntry> _addAccountEntries() throws Exception {
 		return _addAccountEntries(WorkflowConstants.STATUS_APPROVED);
 	}
 
-	private long[] _addAccountEntries(int status) throws Exception {
+	private List<AccountEntry> _addAccountEntries(int status) throws Exception {
 		int size = 5;
 
-		long[] accountEntryIds = new long[size];
+		List<AccountEntry> accountEntries = new ArrayList<>();
 
 		for (int i = 0; i < size; i++) {
-			AccountEntry accountEntry = _addAccountEntry(status);
-
-			accountEntryIds[i] = accountEntry.getAccountEntryId();
+			accountEntries.add(_addAccountEntry(status));
 		}
 
-		return accountEntryIds;
+		return accountEntries;
 	}
 
 	private AccountEntry _addAccountEntry() throws Exception {
@@ -1269,15 +1348,17 @@ public class AccountEntryLocalServiceTest {
 		return accountEntry;
 	}
 
-	private void _assertDeleted(long accountEntryId) throws Exception {
+	private void _assertDeleted(AccountEntry accountEntry) throws Exception {
 		Assert.assertNull(
-			_accountEntryLocalService.fetchAccountEntry(accountEntryId));
+			_accountEntryLocalService.fetchAccountEntry(
+				accountEntry.getAccountEntryId()));
 		Assert.assertEquals(
 			0,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(accountEntryId)));
+				String.valueOf(accountEntry.getAccountEntryId())));
+		Assert.assertFalse(_hasWorkflowInstance(accountEntry));
 	}
 
 	private void _assertGetUserAccountEntriesWithKeywords(
@@ -1362,11 +1443,28 @@ public class AccountEntryLocalServiceTest {
 				baseModelSearchResult.getBaseModels()));
 	}
 
+	private void _assertStatus(
+		AccountEntry accountEntry, int expectedStatus, User expectedUser) {
+
+		Assert.assertEquals(expectedStatus, accountEntry.getStatus());
+		Assert.assertEquals(
+			expectedUser.getUserId(), accountEntry.getStatusByUserId());
+		Assert.assertEquals(
+			expectedUser.getFullName(), accountEntry.getStatusByUserName());
+	}
+
 	private void _assertStatus(long accountEntryId, int expectedStatus) {
 		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
 
 		Assert.assertEquals(expectedStatus, accountEntry.getStatus());
+	}
+
+	private void _enableWorkflow() throws Exception {
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, AccountEntry.class.getName(),
+			0, 0, "Single Approver", 1);
 	}
 
 	private long[] _getAccountUserIds(AccountEntry accountEntry) {
@@ -1387,6 +1485,22 @@ public class AccountEntryLocalServiceTest {
 		return LinkedHashMapBuilder.<String, Object>put(
 			key, value
 		).build();
+	}
+
+	private boolean _hasWorkflowInstance(AccountEntry accountEntry)
+		throws Exception {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+				accountEntry.getCompanyId(),
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+
+		if (workflowInstanceLink != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private BaseModelSearchResult<AccountEntry> _keywordSearch(String keywords)
@@ -1488,5 +1602,12 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

@@ -204,10 +204,8 @@ public class ViewObjectEntriesDisplayContext {
 							objectViewSortColumn.getObjectFieldName(),
 							"createDate", "dateCreated");
 
-						fieldName = StringUtil.replace(
+						return StringUtil.replace(
 							fieldName, "modifiedDate", "dateModified");
-
-						return fieldName;
 					}
 				).build());
 		}

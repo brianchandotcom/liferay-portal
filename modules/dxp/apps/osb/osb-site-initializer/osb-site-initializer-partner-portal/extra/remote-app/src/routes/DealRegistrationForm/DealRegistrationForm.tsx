@@ -23,8 +23,8 @@ const initialFormValues: DealRegistration = {
 	additionalContact: {emailAddress: '', firstName: '', lastName: ''},
 	additionalInformationAboutTheOpportunity: '',
 	categories: [],
-	generalMdfActivityAssociated: {},
-	partnerAccountName: {},
+	mdfActivityAssociated: {},
+	partnerAccount: {},
 	primaryProspect: {
 		businessUnit: '',
 		department: {},

@@ -41,7 +41,7 @@ const General = ({
 		companiesEntries,
 		useCallback(
 			(country, company) => {
-				setFieldValue('partnerAccountName', company);
+				setFieldValue('partnerAccount', company);
 				setFieldValue('prospect.country', country);
 			},
 			[setFieldValue]
@@ -94,8 +94,8 @@ const General = ({
 				<PRMForm.Group>
 					<PRMFormik.Field
 						component={PRMForm.Select}
-						label="Partner Account Name"
-						name="partnerAccountName"
+						label="Partner Account"
+						name="partnerAccount"
 						onChange={onCompanySelected}
 						options={companyOptions}
 						required

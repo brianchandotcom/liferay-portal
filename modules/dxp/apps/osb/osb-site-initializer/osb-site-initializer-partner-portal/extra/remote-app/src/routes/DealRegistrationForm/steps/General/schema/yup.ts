@@ -26,7 +26,7 @@ const generalSchema = object({
 		'reached max characters'
 	),
 	categories: array().min(1, 'Required'),
-	partnerAccountName: object({
+	partnerAccount: object({
 		id: number(),
 		name: string(),
 	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),

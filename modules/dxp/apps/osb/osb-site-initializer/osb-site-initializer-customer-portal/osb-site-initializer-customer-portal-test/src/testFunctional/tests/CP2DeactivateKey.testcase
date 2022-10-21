@@ -36,10 +36,10 @@ definition {
 	}
 
 	@description = "LPS-148120 - Assert that a deactivated key will no longer appear."
+	@ignore = "true"
 	@priority = "5"
 	test CannotViewDeactivatedKeys {
-		property portal.upstream = "quarantine";
-
+	
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -70,9 +70,9 @@ definition {
 	}
 
 	@description = "LPS-148121 - Assert that number of keys on 'All' tab is equal to number of total keys after deactivating."
+	@ignore = "true"
 	@priority = "3"
 	test CanViewChangeInNumberOfKeys {
-		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example FIFA account
 
@@ -108,9 +108,9 @@ definition {
 	}
 
 	@description = "LPS-148117 - Assert that a pop-up appears after selecting multiple keys to deactivate."
+	@ignore = "true"
 	@priority = "5"
 	test CanViewPopUpInformation {
-		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example FIFA account
 
@@ -142,9 +142,9 @@ definition {
 	}
 
 	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
+	@ignore = "true"
 	@priority = "4"
 	test NoChangesMadeAfterClickingCancel {
-		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example FIFA account
 

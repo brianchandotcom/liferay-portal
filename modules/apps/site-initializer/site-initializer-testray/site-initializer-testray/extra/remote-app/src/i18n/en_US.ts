@@ -46,7 +46,7 @@ export default {
 	'assigned-users': 'Assigned Users',
 	'assignee': 'Assignee',
 	'at-least-one-environment-stack-is-required':
-		'At least one environment stack is required',
+		'At least one environment stack is required.',
 	'attachment': 'Attachment',
 	'attachments': 'Attachments',
 	'attachments-x': 'Attachments ({0})',

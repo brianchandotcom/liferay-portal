@@ -14,7 +14,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {ReactNode, useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
@@ -33,36 +32,10 @@ import {getStatusLabel} from '../../../../../../util/constants';
 import {getTimeFromNow} from '../../../../../../util/date';
 import CaseResultHeaderActions from './CaseResultHeaderActions';
 
-type CollapsableItemProps = {
-	children: ReactNode;
-	count: number;
-	title: string;
-};
-
 type TestrayAttachment = {
 	name: string;
 	url: string;
 	value: string;
-};
-
-const CollapsableItem: React.FC<CollapsableItemProps> = ({
-	children,
-	count,
-	title,
-}) => {
-	const [visible, setVisible] = useState(false);
-
-	return (
-		<>
-			<span className="custom-link" onClick={() => setVisible(!visible)}>
-				{`${i18n.translate(
-					visible ? 'hide' : 'show'
-				)} ${count} ${title}`}
-			</span>
-
-			{visible && <div>{children}</div>}
-		</>
-	);
 };
 
 const CaseResult = () => {
@@ -139,34 +112,27 @@ const CaseResult = () => {
 										attachments.length.toString()
 									),
 									value: (
-										<CollapsableItem
-											count={attachments.length}
-											title={i18n.translate('attachment')}
-										>
-											<div className="d-flex flex-column mb-1">
-												{attachments.map(
-													(attachment, index) => (
-														<a
-															className="mt-2"
-															href={
-																attachment.url
-															}
-															key={index}
-															rel="noopener noreferrer"
-															target="_blank"
-														>
-															{attachment.name}
+										<div className="d-flex flex-column mb-1">
+											{attachments.map(
+												(attachment, index) => (
+													<a
+														className="mt-2"
+														href={attachment.url}
+														key={index}
+														rel="noopener noreferrer"
+														target="_blank"
+													>
+														{attachment.name}
 
-															<ClayIcon
-																className="ml-2"
-																fontSize={12}
-																symbol="shortcut"
-															/>
-														</a>
-													)
-												)}
-											</div>
-										</CollapsableItem>
+														<ClayIcon
+															className="ml-2"
+															fontSize={12}
+															symbol="shortcut"
+														/>
+													</a>
+												)
+											)}
+										</div>
 									),
 								},
 								{

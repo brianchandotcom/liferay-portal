@@ -32,6 +32,10 @@ $toolbarZIndex: 971;
 			background-color: $gray-200;
 			color: $dark;
 			font-weight: 600;
+
+			a.link-secondary {
+				color: $dark;
+			}
 		}
 
 		.sidebar {

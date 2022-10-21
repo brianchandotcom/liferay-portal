@@ -12,10 +12,75 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-const SitesTab = () => {
-	return <div>SitesTab</div>;
+import {fetchSites} from '../utils/api';
+import {TProperty} from './PropertiesTable';
+import TabsTemplate, {TData} from './TabsTemplate';
+
+interface ISiteTabProps {
+	description?: string;
+	displayChannels: boolean;
+	property: TProperty;
+}
+
+const SitesTab: React.FC<ISiteTabProps> = ({property}) => {
+	const [items, setItems] = useState<TData>([]);
+	const [selectedAll, setSelectedAll] = useState(false);
+
+	useEffect(() => {
+		const request = async () => {
+			const response = await fetchSites();
+			setItems(response.items);
+		};
+		request();
+	}, []);
+
+	useEffect(() => {
+		setSelectedAll(items.every((item) => item.channelName));
+	}, [items]);
+
+	const handleCheckboxChange = (index: number) => {
+		const newItems = items;
+		newItems[index].channelName
+			? delete newItems[index].channelName
+			: (newItems[index].channelName = property.name);
+
+		setItems([...newItems]);
+	};
+
+	return (
+		<TabsTemplate
+			checked={selectedAll}
+			displayChannels
+			handleCheckboxChange={handleCheckboxChange}
+			handleSelectAll={(checked: boolean) => {
+				const newItems = items.map((item) => {
+					const disabled =
+						item.channelName && item.channelName !== property.name;
+
+					if (disabled) {
+						return item;
+					} else {
+						if (
+							(checked && !item.channelName) ||
+							(checked && item.channelName)
+						) {
+							return {...item, channelName: property.name};
+						} else {
+							delete item.channelName;
+
+							return item;
+						}
+					}
+				});
+				setItems(newItems);
+			}}
+			items={items}
+			property={property}
+			siteTab
+		/>
+	);
 };
 
 export default SitesTab;

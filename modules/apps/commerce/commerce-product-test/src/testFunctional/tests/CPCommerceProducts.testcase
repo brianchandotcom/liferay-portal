@@ -2151,4 +2151,104 @@ definition {
 
 	}
 
+	@description = "This is a test for bug COMMERCE-9999. Verify a product image can be uploaded via headless API with CDN."
+	@priority = "3"
+	test CanUploadProductImageViaAPIUsingCDN {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("Given a buyer user associated with the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When for the product ABS Sensor is uploaded an image using the CDN with API") {
+			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
+				imageTitle = "title2",
+				productERC = "MIN93015minium-initializer",
+				cdnEnabled = "true",
+				cdnURL = "http://mirrors.lax.liferay.com/github.com/liferay/liferay-portal/portal-web/test/functional/com/liferay/portalweb/dependencies/Commerce_Black.jpg");
+		}
+
+		task ("Then there is no error in the logs") {
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+		}
+
+		task ("And the image is uploaded successfully") {
+			CommerceProducts.openProductsAdmin();
+
+			AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+
+			takeScreenshot();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			takeScreenshot();
+
+			AssertElementPresent(
+				key_entryName = "title2",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				key_src = "Commerce_Black.jpg",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_IMAGE");
+
+			var adminImage = CommerceProductImages.getProductMediaSrc(imagePath = "//img[(@class='sticker-img') and contains(@alt,'title2')]");
+		}
+
+		task ("And when the buyer login on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then i can see the product image on Catalog, Product Details, Minicart") {
+			WaitForElementPresent(
+				key_productName = "abs-sensor",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_CATALOG_IMAGE");
+
+			var miniumImage = CommerceProductImages.getProductMediaSrc(imagePath = "//a[contains(@href,'abs-sensor')]//img[contains(@class,'card-picture')]");
+
+			TestUtils.assertEquals(
+				actual = "${adminImage}",
+				expected = "${miniumImage}");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "ABS Sensor",
+				productQuantity = "1");
+
+			Click(
+				key_productName = "abs-sensor",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+
+			FrontStore.assertProductDetails(productImage = "Commerce_Black.jpg");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_productName = "abs-sensor",
+				key_image = "Commerce_Black.jpg",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE_SPECIFIC");
+		}
+	}
+
 }

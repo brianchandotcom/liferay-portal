@@ -2047,6 +2047,66 @@ definition {
 			webContentTitle = "Web Content Title 2");
 	}
 
+	@description = "This is a use case for LPS-164933. Verify that it's possible to view the HTML Title and Description in SEO after changing the page name."
+	@priority = "4"
+	test TitleAndDescriptionAreViewableInSEOAfterChangingPageName {
+		task ("Given: Enable local staging with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Site Name");
+		}
+
+		task ("And: Configure the page to add HTML Title and Description in SEO") {
+			Navigator.openToGroupPagesPortlet(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				portlet = "SEO",
+				site = "false",
+				siteURLKey = "site-name-staging");
+
+			PortletEntry.inputText(
+				fieldLabel = "HTML Title",
+				text = "Page HTML Title");
+
+			PortletEntry.inputText(
+				fieldLabel = "Description",
+				text = "Page Description");
+
+			Button.clickSave();
+		}
+
+		task ("When: Edit the page name in General") {
+			Navigator.openToGroupPagesPortlet(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				portlet = "General",
+				site = "false",
+				siteURLKey = "site-name-staging");
+
+			PagesAdmin.editName(pageNameEdit = "Staging Test Page Edit");
+		}
+
+		task ("Then: Assert the HTML Title and Description are display in SEO") {
+			Navigator.openToGroupPagesPortlet(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				portlet = "SEO",
+				site = "false",
+				siteURLKey = "site-name-staging");
+
+			AssertTextEquals(
+				key_fieldLabel = "HTML Title",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Page HTML Title");
+
+			AssertTextEquals(
+				key_fieldLabel = "Description",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Page Description");
+		}
+	}
+
 	@description = "This is a use case for LPS-89116."
 	@priority = "3"
 	test ValidateFriendlyURLWithSpecialCharacters {

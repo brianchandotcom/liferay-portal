@@ -100,8 +100,7 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(proxy.bean=false)"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected volatile WorkflowDefinitionManager workflowDefinitionManager;
 

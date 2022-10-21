@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -25,8 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -52,19 +49,15 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 
 	@Test(expected = WorkflowException.class)
 	public void testDeleteSaveWorkflowDefinition() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
+		WorkflowDefinition workflowDefinition = _saveWorkflowDefinition();
 
-			WorkflowDefinition workflowDefinition = _saveWorkflowDefinition();
+		_workflowDefinitionManager.undeployWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			workflowDefinition.getName(), workflowDefinition.getVersion());
 
-			_workflowDefinitionManager.undeployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				workflowDefinition.getName(), workflowDefinition.getVersion());
-
-			_workflowDefinitionManager.getWorkflowDefinition(
-				TestPropsValues.getCompanyId(), workflowDefinition.getName(),
-				workflowDefinition.getVersion());
-		}
+		_workflowDefinitionManager.getWorkflowDefinition(
+			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+			workflowDefinition.getVersion());
 	}
 
 	@Test
@@ -465,9 +458,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 	private String _assertInvalid(InputStream inputStream) throws Exception {
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
-
+		try {
 			_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 
 			Assert.fail();

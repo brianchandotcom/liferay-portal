@@ -302,7 +302,7 @@ public class DefaultPortalKaleoManager
 	@Reference
 	protected UserLocalService userLocalService;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	protected WorkflowComparatorFactory workflowComparatorFactory;
 
 	private String _getLocalizedTitle(long companyId, String definitionName)
@@ -350,7 +350,7 @@ public class DefaultPortalKaleoManager
 	@Reference
 	private Localization _localization;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

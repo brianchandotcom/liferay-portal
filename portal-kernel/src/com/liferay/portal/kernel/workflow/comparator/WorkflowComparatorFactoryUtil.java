@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
@@ -186,16 +187,11 @@ public class WorkflowComparatorFactoryUtil {
 		return _workflowComparatorFactory.getTaskUserIdComparator(ascending);
 	}
 
-	public static WorkflowComparatorFactory getWorkflowComparatorFactory() {
-		return _workflowComparatorFactory;
-	}
-
-	public void setWorkflowComparatorFactory(
-		WorkflowComparatorFactory workflowComparatorFactory) {
-
-		_workflowComparatorFactory = workflowComparatorFactory;
-	}
-
-	private static WorkflowComparatorFactory _workflowComparatorFactory;
+	private static volatile WorkflowComparatorFactory
+		_workflowComparatorFactory =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				WorkflowComparatorFactory.class,
+				WorkflowComparatorFactoryUtil.class,
+				"_workflowComparatorFactory", true);
 
 }

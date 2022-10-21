@@ -43,7 +43,7 @@ public class MBModerationUpgradeStepRegistrator
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Reference

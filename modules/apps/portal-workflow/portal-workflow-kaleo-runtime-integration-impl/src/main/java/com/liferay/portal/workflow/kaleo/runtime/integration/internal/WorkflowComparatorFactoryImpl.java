@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "proxy.bean=false", service = WorkflowComparatorFactory.class
-)
+@Component(service = WorkflowComparatorFactory.class)
 public class WorkflowComparatorFactoryImpl
 	implements WorkflowComparatorFactory {
 

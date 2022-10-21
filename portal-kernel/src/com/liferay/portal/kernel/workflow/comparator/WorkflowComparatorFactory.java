@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.workflow.comparator;
 
-import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -27,7 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * @author Michael C. Han
  */
-@MessagingProxy(mode = ProxyMode.SYNC)
 @ProviderType
 public interface WorkflowComparatorFactory {
 

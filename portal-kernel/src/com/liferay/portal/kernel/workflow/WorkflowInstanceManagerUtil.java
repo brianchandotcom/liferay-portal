@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 
 import java.io.Serializable;
@@ -89,10 +90,6 @@ public class WorkflowInstanceManagerUtil {
 		return _workflowInstanceManager.getWorkflowInstanceCount(
 			companyId, workflowDefinitionName, workflowDefinitionVersion,
 			completed);
-	}
-
-	public static WorkflowInstanceManager getWorkflowInstanceManager() {
-		return _workflowInstanceManager;
 	}
 
 	public static List<WorkflowInstance> getWorkflowInstances(
@@ -222,12 +219,9 @@ public class WorkflowInstanceManagerUtil {
 			companyId, workflowInstanceId, workflowContext);
 	}
 
-	public void setWorkflowInstanceManager(
-		WorkflowInstanceManager workflowInstanceManager) {
-
-		_workflowInstanceManager = workflowInstanceManager;
-	}
-
-	private static WorkflowInstanceManager _workflowInstanceManager;
+	private static volatile WorkflowInstanceManager _workflowInstanceManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			WorkflowInstanceManager.class, WorkflowInstanceManagerUtil.class,
+			"_workflowInstanceManager", true);
 
 }

@@ -83,7 +83,7 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	private final List<WorkflowDefinition> _workflowDefinitions =

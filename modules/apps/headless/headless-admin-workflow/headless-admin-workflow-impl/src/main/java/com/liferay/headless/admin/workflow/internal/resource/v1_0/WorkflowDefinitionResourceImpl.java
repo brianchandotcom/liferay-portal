@@ -231,7 +231,7 @@ public class WorkflowDefinitionResourceImpl
 	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

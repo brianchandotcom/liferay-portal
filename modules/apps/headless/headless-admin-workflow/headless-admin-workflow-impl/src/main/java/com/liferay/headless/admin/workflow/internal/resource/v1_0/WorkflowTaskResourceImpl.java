@@ -583,7 +583,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Reference

@@ -33,7 +33,6 @@ import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefin
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -539,16 +536,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 
 	@Override
 	@Test
-	public void testGraphQLGetWorkflowTaskNotFound() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
-
-			super.testGraphQLGetWorkflowTaskNotFound();
-		}
-	}
-
-	@Override
-	@Test
 	public void testPatchWorkflowTaskAssignToUser() throws Exception {
 		WorkflowTask workflowTask = _workflowTasks.pop();
 
@@ -564,21 +551,17 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 					}
 				}));
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
-
-			assertHttpResponseStatusCode(
-				404,
-				workflowTaskResource.patchWorkflowTaskAssignToUserHttpResponse(
-					new WorkflowTaskAssignToUser[] {
-						new WorkflowTaskAssignToUser() {
-							{
-								assigneeId = TestPropsValues.getUserId();
-								workflowTaskId = 0L;
-							}
+		assertHttpResponseStatusCode(
+			404,
+			workflowTaskResource.patchWorkflowTaskAssignToUserHttpResponse(
+				new WorkflowTaskAssignToUser[] {
+					new WorkflowTaskAssignToUser() {
+						{
+							assigneeId = TestPropsValues.getUserId();
+							workflowTaskId = 0L;
 						}
-					}));
-		}
+					}
+				}));
 	}
 
 	@Override
@@ -613,40 +596,34 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 					}
 				}));
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
+		assertHttpResponseStatusCode(
+			404,
+			workflowTaskResource.patchWorkflowTaskChangeTransitionHttpResponse(
+				new ChangeTransition[] {
+					new ChangeTransition() {
+						{
+							transitionName = "join";
+							workflowTaskId = 0L;
+						}
+					}
+				}));
 
-			assertHttpResponseStatusCode(
-				404,
-				workflowTaskResource.
-					patchWorkflowTaskChangeTransitionHttpResponse(
-						new ChangeTransition[] {
-							new ChangeTransition() {
-								{
-									transitionName = "join";
-									workflowTaskId = 0L;
-								}
-							}
-						}));
+		WorkflowTask workflowTask2 = _workflowTasks.pop();
 
-			WorkflowTask workflowTask2 = _workflowTasks.pop();
+		workflowTaskResource.postWorkflowTaskAssignToMe(
+			workflowTask2.getId(), new WorkflowTaskAssignToMe());
 
-			workflowTaskResource.postWorkflowTaskAssignToMe(
-				workflowTask2.getId(), new WorkflowTaskAssignToMe());
-
-			assertHttpResponseStatusCode(
-				404,
-				workflowTaskResource.
-					patchWorkflowTaskChangeTransitionHttpResponse(
-						new ChangeTransition[] {
-							new ChangeTransition() {
-								{
-									transitionName = "non-existent-transition";
-									workflowTaskId = workflowTask2.getId();
-								}
-							}
-						}));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			workflowTaskResource.patchWorkflowTaskChangeTransitionHttpResponse(
+				new ChangeTransition[] {
+					new ChangeTransition() {
+						{
+							transitionName = "non-existent-transition";
+							workflowTaskId = workflowTask2.getId();
+						}
+					}
+				}));
 	}
 
 	@Override
@@ -676,27 +653,23 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 					}
 				}));
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
-
-			assertHttpResponseStatusCode(
-				404,
-				workflowTaskResource.patchWorkflowTaskUpdateDueDateHttpResponse(
-					new WorkflowTaskAssignToMe[] {
-						new WorkflowTaskAssignToMe() {
-							{
-								dueDate = RandomTestUtil.nextDate();
-								workflowTaskId = 0L;
-							}
-						},
-						new WorkflowTaskAssignToMe() {
-							{
-								dueDate = RandomTestUtil.nextDate();
-								workflowTaskId = workflowTask2.getId();
-							}
+		assertHttpResponseStatusCode(
+			404,
+			workflowTaskResource.patchWorkflowTaskUpdateDueDateHttpResponse(
+				new WorkflowTaskAssignToMe[] {
+					new WorkflowTaskAssignToMe() {
+						{
+							dueDate = RandomTestUtil.nextDate();
+							workflowTaskId = 0L;
 						}
-					}));
-		}
+					},
+					new WorkflowTaskAssignToMe() {
+						{
+							dueDate = RandomTestUtil.nextDate();
+							workflowTaskId = workflowTask2.getId();
+						}
+					}
+				}));
 	}
 
 	@Override

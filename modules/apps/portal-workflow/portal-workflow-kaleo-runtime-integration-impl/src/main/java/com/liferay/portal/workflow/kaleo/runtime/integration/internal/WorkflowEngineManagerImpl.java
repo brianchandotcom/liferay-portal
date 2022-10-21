@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(property = "proxy.bean=false", service = WorkflowEngineManager.class)
+@Component(service = WorkflowEngineManager.class)
 public class WorkflowEngineManagerImpl implements WorkflowEngineManager {
 
 	@Override

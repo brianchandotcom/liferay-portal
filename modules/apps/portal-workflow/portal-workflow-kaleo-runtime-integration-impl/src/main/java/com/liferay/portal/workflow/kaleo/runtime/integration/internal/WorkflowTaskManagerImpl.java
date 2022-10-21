@@ -95,7 +95,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-@Component(property = "proxy.bean=false", service = WorkflowTaskManager.class)
+@Component(service = WorkflowTaskManager.class)
 @CTAware
 public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 

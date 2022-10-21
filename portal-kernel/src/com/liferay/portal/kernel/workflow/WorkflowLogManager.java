@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -25,7 +23,6 @@ import java.util.List;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-@MessagingProxy(mode = ProxyMode.SYNC)
 public interface WorkflowLogManager {
 
 	public int getWorkflowLogCountByWorkflowInstance(

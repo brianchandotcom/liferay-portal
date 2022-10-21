@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 
@@ -156,12 +157,11 @@ public class WorkflowDefinitionManagerUtil {
 		_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 	}
 
-	public void setWorkflowDefinitionManager(
-		WorkflowDefinitionManager workflowDefinitionManager) {
-
-		_workflowDefinitionManager = workflowDefinitionManager;
-	}
-
-	private static WorkflowDefinitionManager _workflowDefinitionManager;
+	private static volatile WorkflowDefinitionManager
+		_workflowDefinitionManager =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				WorkflowDefinitionManager.class,
+				WorkflowDefinitionManagerUtil.class,
+				"_workflowDefinitionManager", true);
 
 }

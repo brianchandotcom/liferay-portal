@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.workflow.WorkflowTaskManagerProxyBean;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
 import java.io.Serializable;
@@ -78,7 +78,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 	@Before
 	public void setUp() {
-		_allowedUsers = new ArrayList<>();
+		_allowedUsers.clear();
 		_setUpWorkflowHandlerRegistryUtil();
 	}
 
@@ -255,36 +255,37 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	private static void _setUpWorkflowTaskManagerUtil() throws Exception {
-		WorkflowTaskManagerUtil workflowTaskManagerUtil =
-			new WorkflowTaskManagerUtil();
+		WorkflowTaskManager workflowTaskManager = Mockito.spy(
+			WorkflowTaskManager.class);
 
-		workflowTaskManagerUtil.setWorkflowTaskManager(
-			new WorkflowTaskManagerProxyBean() {
+		WorkflowTask workflowTask = new DefaultWorkflowTask() {
 
-				@Override
-				public WorkflowTask fetchWorkflowTask(long workflowTaskId) {
-					if (workflowTaskId == _VALID_WORKFLOW_TASK_ID) {
-						return new DefaultWorkflowTask() {
+			@Override
+			public Map<String, Serializable> getOptionalAttributes() {
+				return Collections.emptyMap();
+			}
 
-							@Override
-							public Map<String, Serializable>
-								getOptionalAttributes() {
+		};
 
-								return Collections.emptyMap();
-							}
+		Mockito.doReturn(
+			workflowTask
+		).when(
+			workflowTaskManager
+		).fetchWorkflowTask(
+			_VALID_WORKFLOW_TASK_ID
+		);
 
-						};
-					}
+		Mockito.doReturn(
+			_allowedUsers
+		).when(
+			workflowTaskManager
+		).getNotifiableUsers(
+			Mockito.anyLong()
+		);
 
-					return null;
-				}
-
-				@Override
-				public List<User> getNotifiableUsers(long workflowTaskId) {
-					return _allowedUsers;
-				}
-
-			});
+		ReflectionTestUtil.setFieldValue(
+			WorkflowTaskManagerUtil.class, "_workflowTaskManager",
+			workflowTaskManager);
 	}
 
 	private static void _setUpWorkflowTaskPermissionChecker() throws Exception {
@@ -357,7 +358,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
 
-	private static List<User> _allowedUsers;
+	private static final List<User> _allowedUsers = new ArrayList<>();
 
 	private static final ServiceContext _serviceContext = new ServiceContext() {
 

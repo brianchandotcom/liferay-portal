@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 
@@ -42,10 +43,6 @@ public class WorkflowLogManagerUtil {
 			companyId, workflowTaskId, logTypes);
 	}
 
-	public static WorkflowLogManager getWorkflowLogManager() {
-		return _workflowLogManager;
-	}
-
 	public static List<WorkflowLog> getWorkflowLogsByWorkflowInstance(
 			long companyId, long workflowInstanceId, List<Integer> logTypes,
 			int start, int end,
@@ -67,10 +64,9 @@ public class WorkflowLogManagerUtil {
 			companyId, workflowTaskId, logTypes, start, end, orderByComparator);
 	}
 
-	public void setWorkflowLogManager(WorkflowLogManager workflowLogManager) {
-		_workflowLogManager = workflowLogManager;
-	}
-
-	private static WorkflowLogManager _workflowLogManager;
+	private static volatile WorkflowLogManager _workflowLogManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			WorkflowLogManager.class, WorkflowLogManagerUtil.class,
+			"_workflowLogManager", true);
 
 }

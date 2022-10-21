@@ -53,9 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Eduardo Lundgren
  */
-@Component(
-	property = "proxy.bean=false", service = WorkflowDefinitionManager.class
-)
+@Component(service = WorkflowDefinitionManager.class)
 public class WorkflowDefinitionManagerImpl
 	implements WorkflowDefinitionManager {
 

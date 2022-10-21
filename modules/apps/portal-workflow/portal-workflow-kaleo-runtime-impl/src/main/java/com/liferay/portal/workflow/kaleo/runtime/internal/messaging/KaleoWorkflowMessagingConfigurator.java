@@ -19,20 +19,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.kernel.workflow.WorkflowLogManager;
-import com.liferay.portal.kernel.workflow.WorkflowStatusManager;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
-import com.liferay.portal.kernel.workflow.messaging.DefaultWorkflowDestinationEventListener;
 import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinationNames;
 import com.liferay.portal.workflow.kaleo.runtime.internal.timer.messaging.TimerMessageListener;
 
@@ -61,8 +51,6 @@ public class KaleoWorkflowMessagingConfigurator {
 
 		_registerWorkflowDefinitionLinkDestination();
 
-		_registerWorkflowMessageListeners();
-
 		_registerWorkflowTimerDestination();
 
 		_registerSchedulerEventMessageListener();
@@ -71,8 +59,6 @@ public class KaleoWorkflowMessagingConfigurator {
 	@Deactivate
 	protected void deactivate() {
 		_unregisterKaleoWorkflowDestinations();
-
-		_unregisterWorkflowEngineDestinationListener();
 
 		_unregisterWorkflowMessageListeners();
 
@@ -99,22 +85,6 @@ public class KaleoWorkflowMessagingConfigurator {
 		_serviceRegistrations.put(destination.getName(), serviceRegistration);
 	}
 
-	private MessageListener _registerProxyMessageListener(
-		Object manager, String destinationName) {
-
-		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
-
-		proxyMessageListener.setManager(manager);
-		proxyMessageListener.setMessageBus(_messageBus);
-
-		_messageBus.registerMessageListener(
-			destinationName, proxyMessageListener);
-
-		_proxyMessageListeners.put(destinationName, proxyMessageListener);
-
-		return proxyMessageListener;
-	}
-
 	private void _registerSchedulerEventMessageListener() {
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper =
@@ -139,73 +109,6 @@ public class KaleoWorkflowMessagingConfigurator {
 				KaleoRuntimeDestinationNames.WORKFLOW_DEFINITION_LINK);
 
 		_registerDestination(destinationConfiguration);
-	}
-
-	private void _registerWorkflowMessageListeners() {
-		_defaultWorkflowDestinationEventListener =
-			new DefaultWorkflowDestinationEventListener();
-
-		_defaultWorkflowDestinationEventListener.setWorkflowEngineName(
-			"Liferay Kaleo Workflow Engine");
-
-		MessageListener workflowComparatorMessageListener =
-			_registerProxyMessageListener(
-				_workflowComparatorFactory,
-				DestinationNames.WORKFLOW_COMPARATOR);
-
-		_defaultWorkflowDestinationEventListener.
-			setWorkflowComparatorFactoryListener(
-				workflowComparatorMessageListener);
-
-		MessageListener workflowDefinitionManagerProxyMessageListener =
-			_registerProxyMessageListener(
-				_workflowDefinitionManager,
-				DestinationNames.WORKFLOW_DEFINITION);
-
-		_defaultWorkflowDestinationEventListener.
-			setWorkflowDefinitionManagerListener(
-				workflowDefinitionManagerProxyMessageListener);
-
-		MessageListener workflowEngineManagerProxyMessageListener =
-			_registerProxyMessageListener(
-				_workflowEngineManager, DestinationNames.WORKFLOW_ENGINE);
-
-		_defaultWorkflowDestinationEventListener.
-			setWorkflowEngineManagerListener(
-				workflowEngineManagerProxyMessageListener);
-
-		MessageListener workflowInstanceManagerProxyMessageListener =
-			_registerProxyMessageListener(
-				_workflowInstanceManager, DestinationNames.WORKFLOW_INSTANCE);
-
-		_defaultWorkflowDestinationEventListener.
-			setWorkflowInstanceManagerListener(
-				workflowInstanceManagerProxyMessageListener);
-
-		MessageListener workflowLogManagerProxyMessageListener =
-			_registerProxyMessageListener(
-				_workflowLogManager, DestinationNames.WORKFLOW_LOG);
-
-		_defaultWorkflowDestinationEventListener.setWorkflowLogManagerListener(
-			workflowLogManagerProxyMessageListener);
-
-		MessageListener workflowStatusManagerProxyMessageListener =
-			_registerProxyMessageListener(
-				_workflowStatusManager, DestinationNames.WORKFLOW_STATUS);
-
-		_defaultWorkflowDestinationEventListener.
-			setWorkflowStatusManagerListener(
-				workflowStatusManagerProxyMessageListener);
-
-		MessageListener workflowTaskManagerProxyMessageListener =
-			_registerProxyMessageListener(
-				_workflowTaskManager, DestinationNames.WORKFLOW_TASK);
-
-		_defaultWorkflowDestinationEventListener.setWorkflowTaskManagerListener(
-			workflowTaskManagerProxyMessageListener);
-
-		_workflowEngineDestination.addDestinationEventListener(
-			_defaultWorkflowDestinationEventListener);
 	}
 
 	private void _registerWorkflowTimerDestination() {
@@ -266,11 +169,6 @@ public class KaleoWorkflowMessagingConfigurator {
 		_schedulerEventMessageListenerServiceRegistration = null;
 	}
 
-	private void _unregisterWorkflowEngineDestinationListener() {
-		_workflowEngineDestination.removeDestinationEventListener(
-			_defaultWorkflowDestinationEventListener);
-	}
-
 	private void _unregisterWorkflowMessageListeners() {
 		for (Map.Entry<String, MessageListener> entry :
 				_proxyMessageListeners.entrySet()) {
@@ -288,8 +186,6 @@ public class KaleoWorkflowMessagingConfigurator {
 		KaleoWorkflowMessagingConfigurator.class);
 
 	private BundleContext _bundleContext;
-	private DefaultWorkflowDestinationEventListener
-		_defaultWorkflowDestinationEventListener;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
@@ -306,31 +202,5 @@ public class KaleoWorkflowMessagingConfigurator {
 
 	@Reference
 	private TimerMessageListener _timerMessageListener;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowComparatorFactory _workflowComparatorFactory;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowDefinitionManager _workflowDefinitionManager;
-
-	@Reference(
-		target = "(destination.name=" + DestinationNames.WORKFLOW_ENGINE + ")"
-	)
-	private Destination _workflowEngineDestination;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowEngineManager _workflowEngineManager;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowInstanceManager _workflowInstanceManager;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowLogManager _workflowLogManager;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowStatusManager _workflowStatusManager;
-
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowTaskManager _workflowTaskManager;
 
 }

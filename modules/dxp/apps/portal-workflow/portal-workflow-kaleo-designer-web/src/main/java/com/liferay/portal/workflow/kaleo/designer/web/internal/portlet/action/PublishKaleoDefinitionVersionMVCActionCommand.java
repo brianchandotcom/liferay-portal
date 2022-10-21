@@ -174,7 +174,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 	@Reference
 	protected Localization localization;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	protected WorkflowDefinitionManager unproxiedWorkflowDefinitionManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(

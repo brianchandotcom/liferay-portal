@@ -98,7 +98,7 @@ public class WorkflowDefinitionLinkDemoDataCreatorImpl
 	private final List<WorkflowDefinitionLink> _workflowDefinitionLinks =
 		new CopyOnWriteArrayList<>();
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

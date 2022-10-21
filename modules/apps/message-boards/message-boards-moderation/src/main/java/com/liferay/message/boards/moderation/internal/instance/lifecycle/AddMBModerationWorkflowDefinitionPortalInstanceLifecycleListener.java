@@ -92,7 +92,7 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

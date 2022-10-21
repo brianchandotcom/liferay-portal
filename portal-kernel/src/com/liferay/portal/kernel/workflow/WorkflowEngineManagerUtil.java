@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
 import java.util.Map;
 
 /**
@@ -38,20 +40,13 @@ public class WorkflowEngineManagerUtil {
 		return _workflowEngineManager.getVersion();
 	}
 
-	public static WorkflowEngineManager getWorkflowEngineManager() {
-		return _workflowEngineManager;
-	}
-
 	public static boolean isDeployed() {
 		return _workflowEngineManager.isDeployed();
 	}
 
-	public void setWorkflowEngineManager(
-		WorkflowEngineManager workflowEngineManager) {
-
-		_workflowEngineManager = workflowEngineManager;
-	}
-
-	private static WorkflowEngineManager _workflowEngineManager;
+	private static volatile WorkflowEngineManager _workflowEngineManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			WorkflowEngineManager.class, WorkflowEngineManagerUtil.class,
+			"_workflowEngineManager", true);
 
 }

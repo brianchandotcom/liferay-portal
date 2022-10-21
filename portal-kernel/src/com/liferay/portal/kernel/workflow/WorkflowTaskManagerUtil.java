@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.workflow;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 
 import java.io.Serializable;
@@ -168,10 +169,6 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowInstanceId, completed);
 	}
 
-	public static WorkflowTaskManager getWorkflowTaskManager() {
-		return _workflowTaskManager;
-	}
-
 	public static List<WorkflowTask> getWorkflowTasks(
 			long companyId, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
@@ -304,12 +301,9 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowTaskId, comment, dueDate);
 	}
 
-	public void setWorkflowTaskManager(
-		WorkflowTaskManager workflowTaskManager) {
-
-		_workflowTaskManager = workflowTaskManager;
-	}
-
-	private static WorkflowTaskManager _workflowTaskManager;
+	private static volatile WorkflowTaskManager _workflowTaskManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			WorkflowTaskManager.class, WorkflowTaskManagerUtil.class,
+			"_workflowTaskManager", true);
 
 }

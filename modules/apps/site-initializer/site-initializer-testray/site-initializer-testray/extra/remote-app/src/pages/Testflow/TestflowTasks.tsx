@@ -36,23 +36,13 @@ import {
 } from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {assigned} from '../../util/mock';
+import {searchUtil} from '../../util/search';
 
 export const progressScoreItems = [
 	[StatusesProgressScore.SELF, 7000],
 	[StatusesProgressScore.OTHER, 8967],
 	[StatusesProgressScore.INCOMPLETE, 1000],
 ];
-function getTotalCompletedScore(scores: [string, number][]) {
-	let totalCompleted = 0;
-
-	for (const [scoreName, score] of scores) {
-		if (scoreName !== StatusesProgressScore.INCOMPLETE) {
-			totalCompleted += score;
-		}
-	}
-
-	return totalCompleted;
-}
 
 const ShortcutIcon = () => (
 	<ClayIcon className="ml-2" fontSize={12} symbol="shortcut" />
@@ -101,7 +91,7 @@ const TestFlowTasks = () => {
 											type={
 												(SUBTASK_STATUS as any)[
 													testrayTask.dueStatus
-												]?.color
+												]?.label
 											}
 										>
 											{
@@ -196,11 +186,21 @@ const TestFlowTasks = () => {
 				<div className="pb-5">
 					<TaskbarProgress
 						displayTotalCompleted
-						items={progressScoreItems as any}
+						items={[
+							[StatusesProgressScore.SELF, 0],
+							[
+								StatusesProgressScore.OTHER,
+								Number(testrayTask.subtaskScoreCompleted),
+							],
+							[
+								StatusesProgressScore.INCOMPLETE,
+								Number(testrayTask.subtaskScoreIncomplete),
+							],
+						]}
 						legend
 						taskbarClassNames={chartClassNames}
-						totalCompleted={getTotalCompletedScore(
-							progressScoreItems as any
+						totalCompleted={Number(
+							testrayTask.subtaskScoreCompleted
 						)}
 					/>
 				</div>
@@ -266,6 +266,12 @@ const TestFlowTasks = () => {
 							},
 						],
 						navigateTo: () => '/testflow/subtasks',
+					}}
+					variables={{
+						filter: searchUtil.eq(
+							'taskId',
+							testrayTaskId as string
+						),
 					}}
 				/>
 			</Container>

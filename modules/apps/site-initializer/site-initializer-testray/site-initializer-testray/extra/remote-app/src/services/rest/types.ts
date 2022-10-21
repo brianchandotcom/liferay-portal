@@ -240,6 +240,9 @@ export type TestrayTask = {
 	id: number;
 	name: string;
 	r_buildToTasks_c_build?: TestrayBuild;
+	subtaskScore: string;
+	subtaskScoreCompleted: string;
+	subtaskScoreIncomplete: string;
 };
 
 export type TestrayTeam = {

@@ -16,13 +16,18 @@
 import Avatar from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView';
-import ProgressBar from '../../components/ProgressBar';
+import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';
 import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
-import {testrayTaskImpl} from '../../services/rest';
-import {SUBTASK_STATUS} from '../../util/constants';
+import {TestrayTask, testrayTaskImpl} from '../../services/rest';
+import {
+	SUBTASK_STATUS,
+	StatusesProgressScore,
+	chartClassNames,
+} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
+import {getPercentLabel} from '../../util/graph.util';
 import {routines} from '../../util/mock';
 import TestflowModal from './TestflowModal';
 import useTestflowActions from './useTestflowActions';
@@ -68,7 +73,7 @@ const TestFlow = () => {
 						{
 							clickable: true,
 							key: 'name',
-							size: 'sm',
+							size: 'lg',
 							value: i18n.translate('task'),
 						},
 						{
@@ -87,24 +92,58 @@ const TestFlow = () => {
 							clickable: true,
 							key: 'buildName',
 							render: (_, task) => task?.build?.name,
+							size: 'lg',
 							value: i18n.translate('build-name'),
 						},
 						{
 							key: 'score',
-							render: () => '59 / 2172 (3%)',
+							render: (
+								_,
+								{
+									subtaskScore,
+									subtaskScoreCompleted,
+								}: TestrayTask
+							) => (
+								<span>
+									{`${subtaskScoreCompleted} / ${subtaskScore}`}
+
+									<span className="text-gray">
+										{` (${getPercentLabel(
+											(Number(subtaskScoreCompleted) /
+												Number(subtaskScore)) *
+												100
+										)}) `}
+									</span>
+								</span>
+							),
+							size: 'sm',
 							value: i18n.translate('score'),
 						},
 						{
 							key: 'progress',
-							render: () => (
-								<ProgressBar
-									items={{
-										incomplete: 100,
-										passed: 10,
-									}}
+							render: (
+								_,
+								{
+									subtaskScoreCompleted,
+									subtaskScoreIncomplete,
+								}: TestrayTask
+							) => (
+								<TaskbarProgress
+									displayTotalCompleted={false}
+									items={[
+										[
+											StatusesProgressScore.OTHER,
+											Number(subtaskScoreCompleted),
+										],
+										[
+											StatusesProgressScore.INCOMPLETE,
+											Number(subtaskScoreIncomplete),
+										],
+									]}
+									taskbarClassNames={chartClassNames}
 								/>
 							),
-							size: 'sm',
+							size: 'md',
 							value: i18n.translate('progress'),
 						},
 						{
@@ -119,6 +158,7 @@ const TestFlow = () => {
 						},
 					],
 					navigateTo: (item) => `/testflow/${item.id}`,
+					rowWrap: true,
 				}}
 				transformData={(response) =>
 					testrayTaskImpl.transformDataFromList(response)

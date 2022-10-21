@@ -874,6 +874,14 @@ public class ObjectFieldLocalServiceImpl
 			String businessType, String dbType, ObjectField objectField)
 		throws PortalException {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158776")) &&
+			StringUtil.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		ObjectFieldBusinessType objectFieldBusinessType =
 			_objectFieldBusinessTypeTracker.getObjectFieldBusinessType(
 				GetterUtil.getString(businessType));

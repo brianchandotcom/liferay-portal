@@ -44,12 +44,9 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12141 | Test Summary: Request search keywords using all parameters"
 	@priority = "3"
 	test RequestKeywordsUsingAllParameters {
-		var displayLanguageId = "en-US";
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var keyword = "all parameters";
-		var page = "0";
-		var size = "10";
-		var sort = "counts,desc";
+		var parameters = "size=10&displayLanguageId=en-US&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
 
 		task ("Go to Server Administration") {
 			ServerAdministration.openServerAdmin();
@@ -79,14 +76,10 @@ definition {
 
 		task ("Run curl command to get keyword results") {
 			ACApi.getSearchKeywords(
-				displayLanguageId = "${displayLanguageId}",
 				faroBackendURL = "${faroBackendURL}",
-				groupId = "${groupId}",
 				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
 				osbAsahProjectId = "${osbAsahProjectId}",
-				page = "${page}",
-				size = "${size}",
-				sort = "${sort}");
+				parameters = "${parameters}");
 		}
 
 		task ("Assert response returns keyword") {
@@ -101,8 +94,6 @@ definition {
 
 		var keyword1 = "without optional parameters 1";
 		var keyword2 = "without optional parameters 2";
-
-		var keywordList = "${keyword1},${keyword2}";
 
 		task ("Go to Server Administration") {
 			ServerAdministration.openServerAdmin();
@@ -127,7 +118,7 @@ definition {
 		}
 
 		task ("Type keyword in search bar") {
-			for (var keyword : list "${keywordList}") {
+			for (var keyword : list "${keyword1},${keyword2}") {
 				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
 			}
 		}
@@ -156,8 +147,7 @@ definition {
 		var keyword1 = "with size parameters 1";
 		var keyword2 = "with size parameters 2";
 		var keyword3 = "with size parameters 3";
-
-		var keywordList = "${keyword1},${keyword2},${keyword3}";
+		var parameters = "size=2&sort=lastModifiedDate,desc";
 		var size = "2";
 
 		task ("Go to Server Administration") {
@@ -183,7 +173,7 @@ definition {
 		}
 
 		task ("Type keyword in search bar") {
-			for (var keyword : list "${keywordList}") {
+			for (var keyword : list "${keyword1},${keyword2},${keyword3}") {
 				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
 			}
 		}
@@ -193,7 +183,7 @@ definition {
 				faroBackendURL = "${faroBackendURL}",
 				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
 				osbAsahProjectId = "${osbAsahProjectId}",
-				size = "${size}");
+				parameters = "${parameters}");
 		}
 
 		task ("Assert response returns keyword") {

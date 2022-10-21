@@ -11,21 +11,23 @@
 
 import {FormikHelpers} from 'formik';
 
+import DealRegistration from '../../../common/interfaces/dealRegistration';
 import {StepType} from '../enums/stepType';
 
-export default interface DealRegistrationStepProps<T> {
+export default interface DealRegistrationStepProps {
 	onCancel: () => void;
 	onContinue?: (
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>,
+		formikHelpers: Omit<FormikHelpers<DealRegistration>, 'setFieldValue'>,
 		nextStep: StepType
 	) => void;
 	onPrevious?: (previousStep: StepType) => void;
 	onSaveAsDraft?: (
-		values: T,
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+		values: DealRegistration,
+		formikHelpers: Omit<FormikHelpers<DealRegistration>, 'setFieldValue'>
 	) => void;
+
 	onSubmit?: (
-		values: T,
-		formikHelpers: Omit<FormikHelpers<T>, 'setFieldValue'>
+		values: DealRegistration,
+		formikHelpers: Omit<FormikHelpers<DealRegistration>, 'setFieldValue'>
 	) => void;
 }

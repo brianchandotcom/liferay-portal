@@ -4,7 +4,6 @@
 	},
 	"name": "DealRegistration",
 	"objectFields": [
-		
 		{
 			"DBType": "String",
 			"businessType": "Text",
@@ -40,7 +39,8 @@
 			"name": "additionalContactLastName",
 			"required": false,
 			"type": "String"
-		},{
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,

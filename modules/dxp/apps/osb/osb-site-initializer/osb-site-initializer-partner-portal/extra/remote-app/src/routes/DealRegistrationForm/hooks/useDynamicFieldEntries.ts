@@ -20,6 +20,7 @@ export default function useDynamicFieldEntries() {
 	const {data: userAccount} = useGetMyUserAccount();
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
 		LiferayPicklistName.REGIONS,
+		LiferayPicklistName.STATES,
 		LiferayPicklistName.PROJECT_CATEGORIES,
 		LiferayPicklistName.PROJECT_INFORMATIONS,
 		LiferayPicklistName.JOB_ROLES,

@@ -17,9 +17,9 @@ import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
+import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import DealRegistration from '../../../../common/interfaces/dealRegistration';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
-import useCompanyOptions from '../../../MDFRequestForm/steps/Goals/hooks/useCompanyOptions';
 import {StepType} from '../../enums/stepType';
 import useDynamicFieldEntries from '../../hooks/useDynamicFieldEntries';
 import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProps';
@@ -27,7 +27,8 @@ import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProp
 const General = ({
 	onCancel,
 	onContinue,
-}: PRMFormikPageProps & DealRegistrationStepProps<DealRegistration>) => {
+	onSaveAsDraft,
+}: PRMFormikPageProps & DealRegistrationStepProps) => {
 	const {
 		isSubmitting,
 		setFieldValue,
@@ -40,9 +41,8 @@ const General = ({
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		companiesEntries,
 		useCallback(
-			(country, company) => {
+			(company) => {
 				setFieldValue('partnerAccount', company);
-				setFieldValue('prospect.country', country);
 			},
 			[setFieldValue]
 		)
@@ -88,13 +88,21 @@ const General = ({
 		(selected) => setFieldValue('primaryProspect.jobRole', selected)
 	);
 
+	const {
+		onSelected: onStateSelected,
+		options: stateOptions,
+	} = getPicklistOptions(
+		fieldEntries[LiferayPicklistName.STATES],
+		(selected) => setFieldValue('prospect.state', selected)
+	);
+
 	return (
 		<PRMForm name="general" title="Deal Registration">
 			<PRMForm.Section title="General Details">
 				<PRMForm.Group>
 					<PRMFormik.Field
 						component={PRMForm.Select}
-						label="Partner Account"
+						label="Partner Account Name"
 						name="partnerAccount"
 						onChange={onCompanySelected}
 						options={companyOptions}
@@ -159,7 +167,7 @@ const General = ({
 						required
 					/>
 
-					{values.prospect?.country?.name === 'US' && (
+					{values.prospect?.country.name === 'US' && (
 						<PRMFormik.Field
 							component={PRMForm.Select}
 							label="State"
@@ -277,7 +285,7 @@ const General = ({
 							fieldEntries[LiferayPicklistName.PROJECT_CATEGORIES]
 						}
 						label="Project Solution Categories (Select all that apply)"
-						name="categories"
+						name="projectCategories"
 						required
 					/>
 				</PRMForm.Section>
@@ -294,7 +302,11 @@ const General = ({
 
 			<PRMForm.Footer>
 				<div className="d-flex mr-auto">
-					<Button disabled={isSubmitting} displayType={null}>
+					<Button
+						disabled={isSubmitting}
+						displayType={null}
+						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
+					>
 						Save as Draft
 					</Button>
 

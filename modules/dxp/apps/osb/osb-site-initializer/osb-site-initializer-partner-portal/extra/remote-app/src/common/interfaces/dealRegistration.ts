@@ -44,12 +44,12 @@ interface AdditionalContact {
 export default interface DealRegistration extends Partial<LiferayObject> {
 	additionalContact?: AdditionalContact;
 	additionalInformationAboutTheOpportunity?: string;
-	categories: string[];
 	mdfActivityAssociated: Partial<MDFRequestActivityDTO>;
 	partnerAccount: LiferayAccountBrief;
 	primaryProspect: PrimaryProspect;
+	projectCategories: string[];
 	projectNeed: string[];
 	projectTimeline: string;
 	prospect: Prospect;
-	requestStatus: RequestStatus;
+	registrationStatus: RequestStatus;
 }

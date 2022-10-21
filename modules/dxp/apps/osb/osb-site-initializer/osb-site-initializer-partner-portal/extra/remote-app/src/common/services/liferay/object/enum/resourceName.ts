@@ -14,4 +14,5 @@ export enum ResourceName {
 	MDF_REQUEST_SALESFORCE = 'mdfrequestsfs',
 	ACTIVITY_DXP = 'activities',
 	ACTIVITY_SALESFORCE = 'activitysfs',
+	DEAL_REGISTRATION_DXP = 'dealregistrations',
 }

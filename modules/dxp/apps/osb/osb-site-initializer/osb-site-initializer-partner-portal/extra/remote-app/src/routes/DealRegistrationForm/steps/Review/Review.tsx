@@ -14,15 +14,16 @@ import {useFormikContext} from 'formik';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
+import Table from '../../../../common/components/Table';
 import DealRegistration from '../../../../common/interfaces/dealRegistration';
-import Table from '../../../MDFRequestForm/steps/Review/components/Table';
+import {StepType} from '../../enums/stepType';
 import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProps';
 
 const Review = ({
 	onCancel,
-	onSaveAsDraft,
-}: PRMFormikPageProps & DealRegistrationStepProps<DealRegistration>) => {
-	const {values, ...formikHelpers} = useFormikContext<DealRegistration>();
+	onPrevious,
+}: PRMFormikPageProps & DealRegistrationStepProps) => {
+	const {isSubmitting, values} = useFormikContext<DealRegistration>();
 
 	return (
 		<>
@@ -36,11 +37,11 @@ const Review = ({
 					items={[
 						{
 							title: 'Partner Account Name',
-							value: 'Deathray Parent-A*',
+							value: values.partnerAccount.name,
 						},
 						{
 							title: 'MDF Activity Associated',
-							value: 'US',
+							value: 'MDF Activity AssociatedDraft',
 						},
 					]}
 					title="General Details"
@@ -147,7 +148,7 @@ const Review = ({
 						},
 						{
 							title: 'Project Solution Categories',
-							value: values.categories.join(', '),
+							value: values.projectCategories.join(', '),
 						},
 					]}
 					title="Project Information"
@@ -166,24 +167,31 @@ const Review = ({
 
 			<PRMForm.Footer className="bg-neutral-0">
 				<div className="d-flex mr-auto">
-					<Button
-						displayType={null}
-						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
-					>
+					<Button disabled={isSubmitting} type="submit">
 						Save as Draft
 					</Button>
-				</div>
 
-				<div>
 					<Button
 						className="mr-4"
 						displayType="secondary"
 						onClick={onCancel}
 					>
+						Cancel
+					</Button>
+				</div>
+
+				<div className="d-flex mr-auto">
+					<Button
+						className="mr-4"
+						displayType="secondary"
+						onClick={() => onPrevious?.(StepType.GENERAL)}
+					>
 						Back
 					</Button>
 
-					<Button>Continue</Button>
+					<Button disabled={isSubmitting} type="submit">
+						Proceed
+					</Button>
 				</div>
 			</PRMForm.Footer>
 		</>

@@ -206,6 +206,10 @@ public class ObjectEntryLocalServiceImpl
 			user.isDefaultUser(), objectDefinitionId,
 			objectDefinition.getPortletId(), serviceContext, userId, values);
 
+		values = _validatePicklistDefaultValue(
+			_objectFieldLocalService.getObjectFields(objectDefinitionId),
+			values);
+
 		long objectEntryId = counterLocalService.increment();
 
 		_insertIntoTable(
@@ -2844,6 +2848,23 @@ public class ObjectEntryLocalServiceImpl
 				dbColumnName, dbColumnValue,
 				dynamicObjectDefinitionTable.getTableName());
 		}
+	}
+
+	private Map<String, Serializable> _validatePicklistDefaultValue(
+		List<ObjectField> objectFields, Map<String, Serializable> values) {
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+				!values.containsKey(objectField.getName())) {
+
+				values.put(
+					objectField.getName(), objectField.getDefaultValue());
+			}
+		}
+
+		return values;
 	}
 
 	private void _validateTextMaxLength(

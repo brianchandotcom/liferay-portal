@@ -19,8 +19,6 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
-
-			JSONGroup.addGroup(groupName = "Site Name");
 		}
 
 		task ("Connect the DXP to AC") {
@@ -99,6 +97,8 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12142 | Test Summary: Fetch keywords without optional parameters"
 	@priority = "3"
 	test RequestKeywordsUsingNoParameters {
+		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingNoParameters";
+
 		var keyword1 = "without optional parameters 1";
 		var keyword2 = "without optional parameters 2";
 
@@ -197,7 +197,7 @@ definition {
 		}
 
 		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(expected = "${keyword1}");
+			ACApi.assertSearchResponse(expected = "${keyword3}");
 		}
 
 		task ("Assert response returns keyword") {
@@ -208,7 +208,7 @@ definition {
 
 		task ("Assert response does not return keyword") {
 			ACApi.assertSearchKeywordNotPresent(
-				expected = "${keyword3}",
+				expected = "${keyword1}",
 				keywordPosition = "2");
 		}
 	}

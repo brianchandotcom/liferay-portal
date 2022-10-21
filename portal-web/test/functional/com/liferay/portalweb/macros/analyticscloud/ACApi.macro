@@ -71,7 +71,7 @@ definition {
 
 		if (isSet(displayLanguageId) && isSet(groupId) && isSet(page) && isSet(size) && isSet(sort)) {
 			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size}&displayLanguageId=${displayLanguageId}&page=${page}&groupId=${groupId}&sort=${sort} \
+				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size}&displayLanguageId=${displayLanguageId}&page=${page}&groupId=${groupId}&sort=${sort},lastModifiedDate,desc \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
@@ -85,35 +85,35 @@ definition {
 		}
 		else if (isSet(displayLanguageId)) {
 			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?displayLanguageId=${displayLanguageId} \
+				${faroBackendURL}/api/1.0/pages/search-keywords?displayLanguageId=${displayLanguageId}&sort=lastModifiedDate,desc \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
 		}
 		else if (isSet(groupId)) {
 			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?groupId=${groupId} \
+				${faroBackendURL}/api/1.0/pages/search-keywords?groupId=${groupId}&sort=lastModifiedDate,desc \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
 		}
 		else if (isSet(page)) {
 			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?page=${page} \
+				${faroBackendURL}/api/1.0/pages/search-keywords?page=${page}&sort=lastModifiedDate,desc \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
 		}
 		else if (isSet(size)) {
 			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size} \
+				${faroBackendURL}/api/1.0/pages/search-keywords?size=${size}&sort=lastModifiedDate,desc \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
 		}
 		else if (isSet(sort)) {
 			var curl = '''
-				${faroBackendURL}/api/1.0/pages/search-keywords?sort=${sort} \
+				${faroBackendURL}/api/1.0/pages/search-keywords?sort=${sort},lastModifiedDate,desc \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';

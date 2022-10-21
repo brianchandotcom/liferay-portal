@@ -363,7 +363,6 @@ const Main = ({
 				initialErrorMessage,
 				isSignedIn,
 				objectFieldInvalidExtension
-
 			)
 		);
 		setValid(objectFieldInvalidExtension ? false : initialValid);

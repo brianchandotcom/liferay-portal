@@ -16,7 +16,6 @@ package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.base.ListTypeEntryServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
@@ -56,7 +55,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 			getPermissionChecker(),
 			listTypeDefinition.getListTypeDefinitionId(), ActionKeys.UPDATE);
 
-		return _listTypeEntryLocalService.addListTypeEntry(
+		return listTypeEntryLocalService.addListTypeEntry(
 			getUserId(), listTypeDefinitionId, key, nameMap);
 	}
 
@@ -71,7 +70,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return _listTypeEntryLocalService.deleteListTypeEntry(listTypeEntryId);
+		return listTypeEntryLocalService.deleteListTypeEntry(listTypeEntryId);
 	}
 
 	@Override
@@ -82,7 +81,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 		_listTypeDefinitionModelResourcePermission.check(
 			getPermissionChecker(), listTypeDefinitionId, ActionKeys.VIEW);
 
-		return _listTypeEntryLocalService.getListTypeEntries(
+		return listTypeEntryLocalService.getListTypeEntries(
 			listTypeDefinitionId, start, end);
 	}
 
@@ -93,7 +92,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 		_listTypeDefinitionModelResourcePermission.check(
 			getPermissionChecker(), listTypeDefinitionId, ActionKeys.VIEW);
 
-		return _listTypeEntryLocalService.getListTypeEntriesCount(
+		return listTypeEntryLocalService.getListTypeEntriesCount(
 			listTypeDefinitionId);
 	}
 
@@ -108,7 +107,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
 			ActionKeys.VIEW);
 
-		return _listTypeEntryLocalService.getListTypeEntry(listTypeEntryId);
+		return listTypeEntryLocalService.getListTypeEntry(listTypeEntryId);
 	}
 
 	@Override
@@ -123,7 +122,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return _listTypeEntryLocalService.updateListTypeEntry(
+		return listTypeEntryLocalService.updateListTypeEntry(
 			listTypeEntryId, nameMap);
 	}
 
@@ -135,8 +134,5 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 
 	@Reference
 	private ListTypeDefinitionPersistence _listTypeDefinitionPersistence;
-
-	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

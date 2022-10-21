@@ -17,7 +17,6 @@ package com.liferay.list.type.service.impl;
 import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.constants.ListTypeConstants;
 import com.liferay.list.type.model.ListTypeDefinition;
-import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.base.ListTypeDefinitionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,7 +52,7 @@ public class ListTypeDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION);
 
-		return _listTypeDefinitionLocalService.addListTypeDefinition(
+		return listTypeDefinitionLocalService.addListTypeDefinition(
 			getUserId(), nameMap);
 	}
 
@@ -66,7 +65,7 @@ public class ListTypeDefinitionServiceImpl
 			getPermissionChecker(),
 			listTypeDefinition.getListTypeDefinitionId(), ActionKeys.DELETE);
 
-		return _listTypeDefinitionLocalService.deleteListTypeDefinition(
+		return listTypeDefinitionLocalService.deleteListTypeDefinition(
 			listTypeDefinition);
 	}
 
@@ -78,7 +77,7 @@ public class ListTypeDefinitionServiceImpl
 		_listTypeDefinitionModelResourcePermission.check(
 			getPermissionChecker(), listTypeDefinitionId, ActionKeys.DELETE);
 
-		return _listTypeDefinitionLocalService.deleteListTypeDefinition(
+		return listTypeDefinitionLocalService.deleteListTypeDefinition(
 			listTypeDefinitionId);
 	}
 
@@ -89,19 +88,19 @@ public class ListTypeDefinitionServiceImpl
 		_listTypeDefinitionModelResourcePermission.check(
 			getPermissionChecker(), listTypeDefinitionId, ActionKeys.VIEW);
 
-		return _listTypeDefinitionLocalService.getListTypeDefinition(
+		return listTypeDefinitionLocalService.getListTypeDefinition(
 			listTypeDefinitionId);
 	}
 
 	@Override
 	public List<ListTypeDefinition> getListTypeDefinitions(int start, int end) {
-		return _listTypeDefinitionLocalService.getListTypeDefinitions(
+		return listTypeDefinitionLocalService.getListTypeDefinitions(
 			start, end);
 	}
 
 	@Override
 	public int getListTypeDefinitionsCount() {
-		return _listTypeDefinitionLocalService.getListTypeDefinitionsCount();
+		return listTypeDefinitionLocalService.getListTypeDefinitionsCount();
 	}
 
 	@Override
@@ -112,12 +111,9 @@ public class ListTypeDefinitionServiceImpl
 		_listTypeDefinitionModelResourcePermission.check(
 			getPermissionChecker(), listTypeDefinitionId, ActionKeys.UPDATE);
 
-		return _listTypeDefinitionLocalService.updateListTypeDefinition(
+		return listTypeDefinitionLocalService.updateListTypeDefinition(
 			listTypeDefinitionId, nameMap);
 	}
-
-	@Reference
-	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.list.type.model.ListTypeDefinition)"

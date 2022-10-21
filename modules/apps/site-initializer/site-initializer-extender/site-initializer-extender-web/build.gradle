@@ -1,3 +1,9 @@
+buildCSS {
+	imports = [
+		new File(npmInstall.nodeModulesDir, "@clayui/css/src/scss")
+	]
+}
+
 dependencies {
 	dependencies {
 		compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -7,5 +13,8 @@ dependencies {
 		compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 		compileOnly project(":apps:application-list:application-list-api")
 		compileOnly project(":apps:frontend-taglib:frontend-taglib")
+		compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+		compileOnly project(":core:petra:petra-lang")
+		compileOnly project(":core:petra:petra-string")
 	}
 }

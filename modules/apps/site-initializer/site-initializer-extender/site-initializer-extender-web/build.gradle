@@ -14,6 +14,7 @@ dependencies {
 		compileOnly project(":apps:application-list:application-list-api")
 		compileOnly project(":apps:frontend-taglib:frontend-taglib")
 		compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+		compileOnly project(":apps:site:site-api")
 		compileOnly project(":core:petra:petra-lang")
 		compileOnly project(":core:petra:petra-string")
 	}

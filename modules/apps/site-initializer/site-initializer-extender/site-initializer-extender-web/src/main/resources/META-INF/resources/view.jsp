@@ -37,6 +37,9 @@
 				</div>
 			</div>
 
+			<liferay-ui:error key="siteInitializerKeyIsNull" message="site-initializer-is-not-defined-on-type-settings" />
+			<liferay-ui:error key="siteInitializerIsNotDeployed" message='<%= LanguageUtil.format(request, "site-initializer-x-is-not-deployed", SessionErrors.get(renderRequest, "siteInitializerIsNotDeployed"), false) %>' />
+
 			<clay:sheet-footer>
 				<div class="btn-group-item">
 					<div class="btn-group-item">

@@ -191,11 +191,19 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160585 - Verify if as an Administrator I should not be able to add a duplicate routine"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanNotAddDuplicateRoutine {
+		task ("Given that the user add Routine with duplicated name") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-160585 AdminCanNotAddDuplicateRoutine pending implementation
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Then the error message should appear") {
+			Alert.viewErrorMessage(errorMessage = "The Routine name already exists");
+		}
 
 	}
 
@@ -208,7 +216,7 @@ definition {
 			TestrayRoutines.createRoutine(key_name = "");
 		}
 
-		task ("Then the error message should appear") {
+		task ("Then a warning message is displayed") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");

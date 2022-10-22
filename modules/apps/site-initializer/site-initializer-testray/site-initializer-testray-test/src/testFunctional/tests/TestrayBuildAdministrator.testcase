@@ -280,21 +280,21 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156455 - Verify if as an Administrator I should not be able to archive a promoted build"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test AdminCanNotArchivePromotedBuild {
-
-		// TODO LPS-156455 AdminCanNotArchivePromotedBuild pending implementation
-
-	}
-
 	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis using"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test AdminCanNotArchiveBuildInAnalysis {
 
 		// TODO LPS-156557 AdminCanNotArchivedBuildInAnalysis pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156455 - Verify if as an Administrator I should not be able to archive a promoted build"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotArchivePromotedBuild {
+
+		// TODO LPS-156455 AdminCanNotArchivePromotedBuild pending implementation
 
 	}
 

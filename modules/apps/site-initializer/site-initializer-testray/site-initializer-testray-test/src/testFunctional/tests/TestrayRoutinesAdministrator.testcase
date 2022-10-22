@@ -204,7 +204,6 @@ definition {
 		task ("Then the error message should appear") {
 			Alert.viewErrorMessage(errorMessage = "The Routine name already exists");
 		}
-
 	}
 
 	@description = "This is a test for LPS-164145 - Verify that the user can not create a routine if all the required fields are not filled in"

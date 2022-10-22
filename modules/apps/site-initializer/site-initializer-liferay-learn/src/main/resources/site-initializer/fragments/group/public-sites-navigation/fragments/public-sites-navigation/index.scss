@@ -113,14 +113,14 @@ nav.public-sites-navigation {
 
 	.sites {
 		border-radius: 6px;
+		color: var(--color-neutral-10);
 		cursor: pointer;
 
 		.liferay-sites {
 			.liferay-sites-dropdown {
 				background: var(--white);
-				border: 1px solid #c9c9cf;
-				border-radius: 6px;
-				color: var(--color-neutral-3);
+				border-radius: 10px;
+				box-shadow: var(--elevation-fluffy-1);
 				display: none;
 				left: -1.5rem;
 				margin-top: 2.25rem;
@@ -137,13 +137,13 @@ nav.public-sites-navigation {
 
 			.caret-top-icon {
 				display: none;
-				fill: var(--color-action-primary-default-hover);
+				fill: var(--color-action-primary-default);
 			}
 		}
 
 		&.show {
 			.sites-icon svg {
-				fill: var(--color-action-primary-default-hover);
+				fill: var(--color-action-primary-default);
 			}
 
 			.liferay-sites {

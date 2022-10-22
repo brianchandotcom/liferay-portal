@@ -22,6 +22,10 @@
 		"name": "brandColor1",
 		"value": "#0b5fff"
 	},
+	"colorActionPrimaryActive": {
+		"cssVariableMapping": "color-action-primary-active",
+		"value": "#004AD7"
+	},
 	"colorActionPrimaryActiveLighten": {
 		"cssVariableMapping": "color-action-primary-active-lighten",
 		"value": "#0053f050"
@@ -33,6 +37,10 @@
 	"colorActionPrimaryHover": {
 		"cssVariableMapping": "color-action-primary-hover",
 		"value": "#0053F0"
+	},
+	"colorActionPrimaryHoverLighten": {
+		"cssVariableMapping": "color-action-primary-hover-lighten",
+		"value": "#EDF3FE"
 	},
 	"colorBrandPrimary": {
 		"cssVariableMapping": "color-brand-primary",
@@ -53,6 +61,10 @@
 	"display4Weight": {
 		"cssVariableMapping": "display4-weight",
 		"value": "600"
+	},
+	"elevationFluffy1": {
+		"cssVariableMapping": "elevation-fluffy-1",
+		"value": "0px 5px 15px rgba(19, 20, 31, 0.12)"
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",

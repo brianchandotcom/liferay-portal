@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.site.initializer.SiteInitializer;
@@ -81,6 +84,20 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 					ServiceContextThreadLocal.pushServiceContext(
 						new ServiceContext());
+
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-165482"))) {
+
+						UnicodeProperties typeSettingsUnicodeProperties =
+							group.getTypeSettingsProperties();
+
+						typeSettingsUnicodeProperties.setProperty(
+							"siteInitializerKey", _siteInitializer.getKey());
+
+						group = _groupLocalService.updateGroup(
+							group.getGroupId(),
+							typeSettingsUnicodeProperties.toString());
+					}
 
 					_siteInitializer.initialize(group.getGroupId());
 				}

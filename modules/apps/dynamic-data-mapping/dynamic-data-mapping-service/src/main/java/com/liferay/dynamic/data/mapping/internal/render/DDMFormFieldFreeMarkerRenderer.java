@@ -92,17 +92,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
-	public Editor getEditor(HttpServletRequest httpServletRequest) {
-		if (Validator.isNull(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT) ||
-			!_serviceTrackerMap.containsKey(
-				_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
-
-			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
-		}
-
-		return _serviceTrackerMap.getService(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT);
-	}
-
 	@Override
 	public String[] getSupportedDDMFormFieldTypes() {
 		return DDMConstants.SUPPORTED_DDM_FORM_FIELD_TYPES;
@@ -298,6 +287,17 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		}
 
 		return sb.toString();
+	}
+
+	private Editor _getEditor() {
+		if (Validator.isNull(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT) ||
+			!_serviceTrackerMap.containsKey(
+				_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
+
+			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
+		}
+
+		return _serviceTrackerMap.getService(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT);
 	}
 
 	private Map<String, Object> _getFieldContext(
@@ -575,7 +575,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			).put(
 				"editorName",
 				() -> {
-					Editor editor = getEditor(httpServletRequest);
+					Editor editor = _getEditor();
 
 					return editor.getName();
 				}

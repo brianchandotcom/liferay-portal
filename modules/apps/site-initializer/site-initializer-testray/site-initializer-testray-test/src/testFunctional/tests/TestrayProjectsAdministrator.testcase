@@ -148,7 +148,7 @@ definition {
 				key_name = "");
 		}
 
-		task ("Assert Error Message appears") {
+		task ("Assert a warning message is displayed") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");
@@ -241,10 +241,10 @@ definition {
 			Testray.assertItemName(key_name = "Builds_1 Project");
 		}
 
-		task ("Delete project and assert which Error Message appears") {
+		task ("Delete project and assert a warning message is displayed") {
 			Testray.deleteProject(nameProject = "Projects_1 Project");
 
-			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+			Alert.viewErrorMessage(errorMessage = "The Project cannot be deleted because it has associated builds");
 		}
 	}
 

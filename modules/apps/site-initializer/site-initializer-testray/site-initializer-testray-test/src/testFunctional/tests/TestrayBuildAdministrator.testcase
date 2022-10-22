@@ -122,7 +122,7 @@ definition {
 
 	@description = "This is a test for LPS-157540 - Verify if as an Administrator I should be able to archive a build "
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = "3"
 	test AdminCanArchiveBuild {
 
 		// TODO LPS-157540 AdminCanArchiveBuild pending implementation
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156575 - Verify if as an Administrator I should be able to delete a build that contains runs"
-	@priority = "5"
+	@priority = "4"
 	test AdminCanDeleteBuildContainsRuns {
 		task ("Given that the user add a new build with Environments Factors") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -275,23 +275,23 @@ definition {
 				routine = "Routines_1 Routine");
 		}
 
-		task ("Then an error message is displayed") {
-			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+		task ("Then a warning message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "The Build name already exists");
 		}
 	}
 
-	@description = "This is a test for LPS-156455 - Verify if as an Administrator cannot archive Build"
+	@description = "This is a test for LPS-156455 - Verify if as an Administrator I should not be able to archive a promoted build"
 	@ignore = "Test Stub"
 	@priority = "5"
-	test AdminCanNotArchiveBuild {
+	test AdminCanNotArchivePromotedBuild {
 
-		// TODO LPS-156455 AdminCanNotArchiveBuild pending implementation
+		// TODO LPS-156455 AdminCanNotArchivePromotedBuild pending implementation
 
 	}
 
 	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis using"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = "3"
 	test AdminCanNotArchiveBuildInAnalysis {
 
 		// TODO LPS-156557 AdminCanNotArchivedBuildInAnalysis pending implementation
@@ -338,7 +338,7 @@ definition {
 
 	@description = "This is a test for LPS-156586 - Verify if as an Administrator I should be able to sort the Builds Promoted"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = "3"
 	test AdminCanSortBuildPromoted {
 
 		// TODO LPS-156586 AdminCanSortBuildPromoted pending implementation
@@ -356,7 +356,7 @@ definition {
 
 	@description = "This is a test for LPS-156580 - Verify if as an Administrator I should be able to specify a start and end parameter when fetching a build index "
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = "4"
 	test AdminCanSpecifyStartAndEndParameter {
 
 		// TODO LPS-156580 AdminCanSpecifyStartAndEndParameter pending implementation
@@ -365,7 +365,7 @@ definition {
 
 	@description = "This is a test for LPS-156592 - Verify if as an Administrator I should be able to unarchive a build"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = "4"
 	test AdminCanUnarchiveBuilds {
 
 		// TODO LPS-156592 AdminCanUnarchiveBuilds pending implementation

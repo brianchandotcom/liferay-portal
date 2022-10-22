@@ -146,7 +146,7 @@ definition {
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project");
 
-			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+			Alert.viewErrorMessage(errorMessage = "The Product Version name already exists");
 		}
 	}
 
@@ -171,10 +171,9 @@ definition {
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project");
 
-			AssertElementPresent(
-				key_fieldLabel = "Name",
-				key_warningMessage = "name is a required field",
-				locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "name is a required field");
 		}
 	}
 

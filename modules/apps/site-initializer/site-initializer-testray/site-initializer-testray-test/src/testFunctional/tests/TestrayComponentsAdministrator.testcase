@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("Then an error message is displayed") {
-			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+			Alert.viewErrorMessage(errorMessage = "The Component name already exists");
 		}
 	}
 

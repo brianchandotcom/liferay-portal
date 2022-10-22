@@ -369,7 +369,7 @@ definition {
 			TestrayManage.addNewCategory(category = "");
 		}
 
-		task ("Assert which Error Message appears") {
+		task ("Assert a warning message is displayed") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");

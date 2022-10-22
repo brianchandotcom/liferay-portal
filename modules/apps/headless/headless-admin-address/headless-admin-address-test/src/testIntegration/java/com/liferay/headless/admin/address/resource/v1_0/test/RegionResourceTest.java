@@ -332,7 +332,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	protected Region testGraphQLRegion_addRegion() throws Exception {
 		Region region = randomRegion();
 
-		region.setPosition(Double.MAX_VALUE);
+		region.setPosition((double)Integer.MAX_VALUE);
 
 		return _addRegion(region);
 	}

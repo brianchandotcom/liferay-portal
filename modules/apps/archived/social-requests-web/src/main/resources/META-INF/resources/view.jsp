@@ -37,7 +37,7 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(SocialR
 			SocialRequestFeedEntry requestFeedEntry = SocialRequestInterpreterLocalServiceUtil.interpret(socialRequest, themeDisplay);
 		%>
 
-			<aui:row>
+			<clay:row>
 				<aui:col width="<%= 50 %>">
 					<liferay-ui:user-display
 						displayStyle="2"
@@ -95,7 +95,7 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(SocialR
 						</c:otherwise>
 					</c:choose>
 				</aui:col>
-			</aui:row>
+			</clay:row>
 
 			<c:if test="<%= (i + 1) < requests.size() %>">
 				<div class="separator"><!-- --></div>

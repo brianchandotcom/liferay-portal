@@ -66,7 +66,7 @@ int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUAR
 			String[] days = CalendarUtil.getDays(locale);
 			%>
 
-			<aui:row cssClass="clearfix pt-3 weekdays">
+			<div class="clearfix pt-3 row weekdays">
 				<aui:col width="<%= 25 %>">
 					<aui:input inlineLabel="right" label="<%= days[0] %>" name='<%= "weeklyDayPos" + Calendar.SUNDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.SUNDAY, recurrence) %>" />
 
@@ -88,7 +88,7 @@ int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUAR
 				<aui:col width="<%= 25 %>">
 					<aui:input inlineLabel="right" label="<%= days[3] %>" name='<%= "weeklyDayPos" + Calendar.WEDNESDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.WEDNESDAY, recurrence) %>" />
 				</aui:col>
-			</aui:row>
+			</div>
 		</div>
 
 		<div class="<%= (recurrenceType != Recurrence.MONTHLY) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />recurrenceTypeMonthlyTable">

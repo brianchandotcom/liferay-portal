@@ -37,7 +37,10 @@
 					<liferay-ui:message key="enable-social-activity-for" />:
 				</h4>
 
-				<aui:row cssClass="social-activity social-activity-settings" id="settings">
+				<clay:row
+					cssClass="social-activity social-activity-settings"
+					id="settings"
+				>
 					<aui:col cssClass="social-activity-items" width="<%= 20 %>">
 
 						<%
@@ -62,7 +65,7 @@
 					</aui:col>
 
 					<aui:col cssClass="social-activity-details" width="<%= 80 %>" />
-				</aui:row>
+				</clay:row>
 
 				<%
 				List<String> activityDefinitionLanguageKeys = new ArrayList<String>();

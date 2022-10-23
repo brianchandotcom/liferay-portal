@@ -54,7 +54,7 @@ double interestPaid = totalPaid - loanAmount;
 </portlet:renderURL>
 
 <aui:form action="<%= viewLoanURL %>" id="fm" method="post" name="fm">
-	<aui:row>
+	<clay:row>
 		<aui:col width="<%= 50 %>">
 			<aui:fieldset>
 				<aui:field-wrapper>
@@ -82,7 +82,7 @@ double interestPaid = totalPaid - loanAmount;
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:col>
-	</aui:row>
+	</clay:row>
 </aui:form>
 
 <aui:script use="aui-io-request,aui-parse-content">

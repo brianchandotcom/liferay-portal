@@ -58,7 +58,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 	<liferay-ui:error exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 	<liferay-ui:error exception="<%= NoSuchDiscountException.class %>" message="the-inserted-coupon-is-no-longer-valid" />
 
-	<aui:row>
+	<clay:row>
 		<aui:col cssClass="commerce-checkout-summary" width="<%= 70 %>">
 			<ul class="commerce-checkout-summary-header">
 				<li class="autofit-row">
@@ -601,5 +601,5 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 				</div>
 			</c:if>
 		</aui:col>
-	</aui:row>
+	</clay:row>
 </div>

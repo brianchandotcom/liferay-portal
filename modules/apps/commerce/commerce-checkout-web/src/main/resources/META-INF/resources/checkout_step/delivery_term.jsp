@@ -27,13 +27,13 @@ long deliveryCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutSte
 <div id="commerceDeliveryTermContainer">
 	<c:choose>
 		<c:when test="<%= deliveryCommerceTermEntries.isEmpty() %>">
-			<aui:row>
+			<clay:row>
 				<aui:col widht="100">
 					<aui:alert type="info">
 						<liferay-ui:message key="there-are-no-available-delivery-terms" />
 					</aui:alert>
 				</aui:col>
-			</aui:row>
+			</clay:row>
 
 			<aui:script use="aui-base">
 				var continueButton = A.one('#<portlet:namespace />continue');

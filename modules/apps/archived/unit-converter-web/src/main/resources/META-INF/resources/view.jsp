@@ -28,7 +28,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 <portlet:renderURL var="unitURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" />
 
 <aui:form action="<%= unitURL %>" id="fm" method="post" name="fm">
-	<aui:row>
+	<clay:row>
 		<aui:col xs="6">
 			<aui:input label="from" name="fromValue" size="30" type="number" value="<%= unitConverter.getFromValue() %>" />
 
@@ -166,7 +166,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 				</c:if>
 			</aui:select>
 		</aui:col>
-	</aui:row>
+	</clay:row>
 
 	<aui:select id="type" label="Type" name="type">
 		<aui:option label="length" selected="<%= type == 0 %>" value="0" />

@@ -32,7 +32,7 @@ for (int i = 0; i < activityCounters.size(); i++) {
 DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 %>
 
-<aui:row>
+<clay:row>
 	<aui:col cssClass="chart-column" width="<%= chartWidth %>">
 		<div class="group-statistics-chart">
 			<div id="groupStatisticsChart<%= displayActivityCounterNameIndex %>"></div>
@@ -81,7 +81,7 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 			</table>
 		</div>
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <aui:script use="charts">
 	var categories = [<%= StringUtil.merge(categories) %>];

@@ -55,7 +55,7 @@ for (int i = 0; i < activityCounters.size(); i++) {
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 %>
 
-<aui:row>
+<clay:row>
 	<aui:col cssClass="chart-column" width="<%= chartWidth %>">
 		<div class="group-statistics-chart" id="groupStatisticsChart<%= displayActivityCounterNameIndex %>" style="height: <%= displayHeight - 2 %>px;"></div>
 	</aui:col>
@@ -99,7 +99,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 			(<%= lowestActivityCounter.getCurrentValue() %>)<br />
 		</div>
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <aui:script use="charts">
 	var categories = [<%= StringUtil.merge(categories) %>];

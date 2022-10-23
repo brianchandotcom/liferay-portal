@@ -28,11 +28,13 @@ long paymentCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutStep
 	<c:choose>
 		<c:when test="<%= paymentCommerceTermEntries.isEmpty() %>">
 			<clay:row>
-				<aui:col widht="100">
+				<clay:col
+					size="12"
+				>
 					<aui:alert type="info">
 						<liferay-ui:message key="there-are-no-available-payment-terms" />
 					</aui:alert>
-				</aui:col>
+				</clay:col>
 			</clay:row>
 
 			<aui:script use="aui-base">

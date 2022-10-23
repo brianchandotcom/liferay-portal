@@ -29,7 +29,9 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 
 <aui:form action="<%= unitURL %>" id="fm" method="post" name="fm">
 	<clay:row>
-		<aui:col xs="6">
+		<clay:col
+			size="6"
+		>
 			<aui:input label="from" name="fromValue" size="30" type="number" value="<%= unitConverter.getFromValue() %>" />
 
 			<aui:select label="" name="fromUnit">
@@ -96,9 +98,11 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="reaumure" selected="<%= fromId == 4 %>" value="4" />
 				</c:if>
 			</aui:select>
-		</aui:col>
+		</clay:col>
 
-		<aui:col xs="6">
+		<clay:col
+			size="6"
+		>
 			<aui:input disabled="<%= true %>" label="To" name="toValue" size="30" type="input" value="<%= unitConverter.getToValue() %>" />
 
 			<aui:select label="" name="toUnit">
@@ -165,7 +169,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 					<aui:option label="reaumure" selected="<%= toId == 4 %>" value="4" />
 				</c:if>
 			</aui:select>
-		</aui:col>
+		</clay:col>
 	</clay:row>
 
 	<aui:select id="type" label="Type" name="type">

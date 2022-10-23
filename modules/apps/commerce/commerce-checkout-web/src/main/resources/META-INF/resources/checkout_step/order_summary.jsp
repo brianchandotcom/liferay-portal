@@ -59,7 +59,10 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 	<liferay-ui:error exception="<%= NoSuchDiscountException.class %>" message="the-inserted-coupon-is-no-longer-valid" />
 
 	<clay:row>
-		<aui:col cssClass="commerce-checkout-summary" width="<%= 70 %>">
+		<clay:col
+			cssClass="commerce-checkout-summary"
+			size="8"
+		>
 			<ul class="commerce-checkout-summary-header">
 				<li class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
@@ -382,9 +385,12 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 					</div>
 				</li>
 			</ul>
-		</aui:col>
+		</clay:col>
 
-		<aui:col cssClass="commerce-checkout-info" width="<%= 30 %>">
+		<clay:col
+			cssClass="commerce-checkout-info"
+			size="4"
+		>
 
 			<%
 			CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
@@ -600,6 +606,6 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 					</div>
 				</div>
 			</c:if>
-		</aui:col>
+		</clay:col>
 	</clay:row>
 </div>

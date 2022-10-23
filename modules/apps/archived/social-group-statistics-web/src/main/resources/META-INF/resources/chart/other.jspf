@@ -56,11 +56,17 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 %>
 
 <clay:row>
-	<aui:col cssClass="chart-column" width="<%= chartWidth %>">
+	<clay:col
+		cssClass="chart-column"
+		size="<%= String.valueOf(Math.round((chartWidth / 100) * 12)) %>"
+	>
 		<div class="group-statistics-chart" id="groupStatisticsChart<%= displayActivityCounterNameIndex %>" style="height: <%= displayHeight - 2 %>px;"></div>
-	</aui:col>
+	</clay:col>
 
-	<aui:col cssClass="info-column" width="<%= 100 - chartWidth %>">
+	<clay:col
+		cssClass="info-column"
+		size="<%= String.valueOf(12 - Math.round((chartWidth / 100) * 12)) %>"
+	>
 		<div class="group-statistics-info">
 			<liferay-ui:message key="current-value" />: <%= currentValue %><br />
 
@@ -98,7 +104,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 
 			(<%= lowestActivityCounter.getCurrentValue() %>)<br />
 		</div>
-	</aui:col>
+	</clay:col>
 </clay:row>
 
 <aui:script use="charts">

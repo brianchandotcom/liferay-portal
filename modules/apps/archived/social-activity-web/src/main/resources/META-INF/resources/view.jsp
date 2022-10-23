@@ -41,7 +41,10 @@
 					cssClass="social-activity social-activity-settings"
 					id="settings"
 				>
-					<aui:col cssClass="social-activity-items" width="<%= 20 %>">
+					<clay:col
+						cssClass="social-activity-items"
+						size="3"
+					>
 
 						<%
 						for (Map.Entry<String, Boolean> entry : activitySettingsMap.entrySet()) {
@@ -62,9 +65,12 @@
 						}
 						%>
 
-					</aui:col>
+					</clay:col>
 
-					<aui:col cssClass="social-activity-details" width="<%= 80 %>" />
+					<clay:col
+						cssClass="social-activity-details"
+						size="9"
+					/>
 				</clay:row>
 
 				<%

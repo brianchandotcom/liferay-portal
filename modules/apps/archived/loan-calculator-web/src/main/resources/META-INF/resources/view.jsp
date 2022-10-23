@@ -55,7 +55,9 @@ double interestPaid = totalPaid - loanAmount;
 
 <aui:form action="<%= viewLoanURL %>" id="fm" method="post" name="fm">
 	<clay:row>
-		<aui:col width="<%= 50 %>">
+		<clay:col
+			size="6"
+		>
 			<aui:fieldset>
 				<aui:field-wrapper>
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="loanAmount" value="<%= integerFormat.format(loanAmount) %>" />
@@ -69,9 +71,11 @@ double interestPaid = totalPaid - loanAmount;
 					</aui:button-row>
 				</aui:field-wrapper>
 			</aui:fieldset>
-		</aui:col>
+		</clay:col>
 
-		<aui:col width="<%= 50 %>">
+		<clay:col
+			size="6"
+		>
 			<aui:fieldset>
 				<aui:field-wrapper>
 					<aui:input disabled="<%= true %>" name="monthlyPayment" value="<%= integerFormat.format(amountPerPayment) %>" />
@@ -81,7 +85,7 @@ double interestPaid = totalPaid - loanAmount;
 					<aui:input disabled="<%= true %>" name="totalPaid" value="<%= integerFormat.format(totalPaid) %>" />
 				</aui:field-wrapper>
 			</aui:fieldset>
-		</aui:col>
+		</clay:col>
 	</clay:row>
 </aui:form>
 

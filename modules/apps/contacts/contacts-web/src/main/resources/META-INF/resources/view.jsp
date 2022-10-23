@@ -71,11 +71,14 @@ else {
 <c:choose>
 	<c:when test="<%= userPublicPage && (contactsCount <= 0) %>">
 		<clay:row>
-			<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
+			<clay:col
+				cssClass="contacts-center-home"
+				size="12"
+			>
 				<h3 class="header-title">
 					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(scopeGroup.getDescriptiveName(locale)), String.valueOf(contactsCount)} %>" key='<%= userPublicPage ? "x-has-no-connections" : "x-has-no-contacts" %>' translateArguments="<%= false %>" />
 				</h3>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</c:when>
 	<c:otherwise>
@@ -96,10 +99,15 @@ else {
 			<aui:input name="type" type="hidden" value="" />
 
 			<clay:row>
-				<aui:col cssClass="d-flex justify-content-between toolbar" width="<%= 100 %>">
+				<clay:col
+					cssClass="d-flex justify-content-between toolbar"
+					size="12"
+				>
 					<div class="filter-container">
 						<clay:row>
-							<aui:col cssClass="contact-group-filter form-inline">
+							<clay:col
+								cssClass="contact-group-filter form-inline"
+							>
 								<aui:input cssClass="mr-2" label="" name="checkAll" type="checkbox" />
 
 								<c:if test="<%= !userPublicPage %>">
@@ -137,21 +145,25 @@ else {
 										</c:if>
 									</aui:select>
 								</c:if>
-							</aui:col>
+							</clay:col>
 						</clay:row>
 					</div>
 
 					<c:if test="<%= !showOnlySiteMembers && !userPublicPage %>">
 						<aui:button cssClass="add-contact" id="addContact" value="add-contact" />
 					</c:if>
-				</aui:col>
+				</clay:col>
 			</clay:row>
 		</aui:form>
 
 		<clay:row
 			cssClass="contacts-result-container lfr-app-column-view"
 		>
-			<aui:col cssClass="contacts-list" first="<%= true %>" width="<%= 30 %>">
+			<clay:col
+				cssClass="contacts-list"
+				first="<%= true %>"
+				width="4"
+			>
 				<div class="toggle-user">
 					<liferay-ui:icon
 						icon="angle-left"
@@ -169,7 +181,10 @@ else {
 				</div>
 
 				<clay:row>
-					<aui:col cssClass='<%= userPublicPage ? "contacts-result personal-contact-list" : "contacts-result" %>' width="<%= 100 %>">
+					<clay:col
+						cssClass='<%= userPublicPage ? "contacts-result personal-contact-list" : "contacts-result" %>'
+						size="12"
+					>
 
 						<%
 						String lastNameAnchor = StringPool.SPACE;
@@ -306,11 +321,14 @@ else {
 								<a data-end="<%= ContactsConstants.MAX_RESULT_COUNT %>" data-lastNameAnchor="<%= lastNameAnchor %>" href="javascript:void(0);"><liferay-ui:message key="view-more" /> (<%= contactsCount - ContactsConstants.MAX_RESULT_COUNT %>)</a>
 							</div>
 						</c:if>
-					</aui:col>
+					</clay:col>
 				</clay:row>
-			</aui:col>
+			</clay:col>
 
-			<aui:col cssClass="contacts-container" width="<%= 70 %>">
+			<clay:col
+				cssClass="contacts-container"
+				width="8"
+			>
 				<div id="<portlet:namespace />userToolbarButtons"><!-- --></div>
 
 				<div class="hide" id="<portlet:namespace />contactCenterToolbarButtons">
@@ -331,7 +349,10 @@ else {
 						</c:when>
 						<c:otherwise>
 							<clay:row>
-								<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
+								<clay:col
+									cssClass="contacts-center-home"
+									width="12"
+								>
 									<c:choose>
 										<c:when test="<%= !showOnlySiteMembers %>">
 											<liferay-ui:header
@@ -367,7 +388,10 @@ else {
 									%>
 
 									<clay:row>
-										<aui:col cssClass="connections contacts-count" width="<%= 100 %>">
+										<clay:col
+											cssClass="connections contacts-count"
+											width="12"
+										>
 											<c:choose>
 												<c:when test="<%= showOnlySiteMembers %>">
 													<a href="javascript:void(0);"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= (connectionUsersCount == 1) ? "you-have-one-connection-in-this-site" : "you-have-x-connections-in-this-site" %>' translateArguments="<%= false %>" /></a>
@@ -376,20 +400,26 @@ else {
 													<a href="javascript:void(0);"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= (connectionUsersCount == 1) ? "you-have-one-connection" : "you-have-x-connections" %>' translateArguments="<%= false %>" /></a>
 												</c:otherwise>
 											</c:choose>
-										</aui:col>
+										</clay:col>
 									</clay:row>
 
 									<clay:row>
-										<aui:col cssClass="contacts-count followings" width="<%= 100 %>">
+										<clay:col
+											cssClass="contacts-count followings"
+											width="12"
+										>
 											<a href="javascript:void(0);"><liferay-ui:message arguments="<%= String.valueOf(followingUsersCount) %>" key='<%= showOnlySiteMembers ? "you-are-following-x-people-in-this-site" : "you-are-following-x-people" %>' translateArguments="<%= false %>" /></a>
-										</aui:col>
+										</clay:col>
 									</clay:row>
 
 									<c:if test="<%= !showOnlySiteMembers %>">
 										<clay:row>
-											<aui:col cssClass="contacts-count followers" width="<%= 100 %>">
+											<clay:col
+												cssClass="contacts-count followers"
+												size="12"
+											>
 												<a href="javascript:void(0);"><liferay-ui:message arguments="<%= String.valueOf(followerUsersCount) %>" key='<%= (followerUsersCount == 1) ? "you-have-one-follower" : "you-have-x-followers" %>' translateArguments="<%= false %>" /></a>
-											</aui:col>
+											</clay:col>
 										</clay:row>
 
 										<%
@@ -397,33 +427,42 @@ else {
 										%>
 
 										<clay:row>
-											<aui:col cssClass="contacts contacts-count" width="<%= 100 %>">
+											<clay:col
+												cssClass="contacts contacts-count"
+												width="12"
+											>
 												<a href="javascript:void(0);"><liferay-ui:message arguments="<%= String.valueOf(myContactsCount) %>" key='<%= (myContactsCount == 1) ? "view-one-contact" : "view-my-x-contacts" %>' translateArguments="<%= false %>" /></a>
-											</aui:col>
+											</clay:col>
 										</clay:row>
 									</c:if>
 
 									<clay:row>
-										<aui:col cssClass="all contacts-count" width="<%= 100 %>">
+										<clay:col
+											cssClass="all contacts-count"
+											width="12"
+										>
 											<a href="javascript:void(0);"><liferay-ui:message arguments="<%= String.valueOf(allUsersCount) %>" key='<%= (allUsersCount == 1) ? "view-one-user" : "view-all-x-users" %>' translateArguments="<%= false %>" /></a>
-										</aui:col>
+										</clay:col>
 									</clay:row>
 
 									<c:if test="<%= !showOnlySiteMembers && (connectionUsersCount <= 0) && (followingUsersCount <= 0) %>">
 										<clay:row>
-											<aui:col cssClass="contacts-center-introduction" width="<%= 100 %>">
+											<clay:col
+												cssClass="contacts-center-introduction"
+												width="12"
+											>
 												<liferay-ui:message key="contacts-center-lets-you-search-view-and-establish-social-relations-with-other-users" />
-											</aui:col>
+											</clay:col>
 										</clay:row>
 									</c:if>
-								</aui:col>
+								</clay:col>
 							</clay:row>
 						</c:otherwise>
 					</c:choose>
 				</div>
 
 				<div id="<portlet:namespace />selectedUsersView"><!-- --></div>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 
 		<aui:script use="aui-loading-mask-deprecated,datatype-number,liferay-contacts-center">

@@ -149,7 +149,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
@@ -1435,6 +1437,25 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());
 
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, "/test-public-layout");
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		SegmentsExperience segmentsExperience1 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				groupId, "TEST-SEGMENTS-EXPERIENCE-1",
+				_portal.getClassNameId(Layout.class), draftLayout.getClassPK());
+
+		Assert.assertNotNull(segmentsExperience1);
+		Assert.assertEquals(
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsExperience1.getSegmentsEntryId());
+		Assert.assertEquals(
+			"Test Segments Experience 1",
+			segmentsExperience1.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertTrue(segmentsExperience1.isActive());
+
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				groupId, "TEST-SEGMENTS-ENTRY-2", true);
@@ -1446,6 +1467,20 @@ public class BundleSiteInitializerTest {
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.model.User", segmentsEntry2.getType());
+
+		SegmentsExperience segmentsExperience2 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				groupId, "TEST-SEGMENTS-EXPERIENCE-2",
+				_portal.getClassNameId(Layout.class), draftLayout.getClassPK());
+
+		Assert.assertNotNull(segmentsExperience2);
+		Assert.assertEquals(
+			segmentsEntry2.getSegmentsEntryId(),
+			segmentsExperience2.getSegmentsEntryId());
+		Assert.assertEquals(
+			"Test Segments Experience 2",
+			segmentsExperience2.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertTrue(segmentsExperience2.isActive());
 	}
 
 	private void _assertSiteConfiguration(Long groupId) {
@@ -1854,6 +1889,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private ServletContext _servletContext;

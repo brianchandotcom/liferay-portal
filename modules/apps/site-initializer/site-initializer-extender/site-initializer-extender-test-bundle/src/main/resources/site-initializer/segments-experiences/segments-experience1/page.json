@@ -1,0 +1,10 @@
+{
+	"friendlyURL": "/test-public-layout",
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "test-public-layout"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

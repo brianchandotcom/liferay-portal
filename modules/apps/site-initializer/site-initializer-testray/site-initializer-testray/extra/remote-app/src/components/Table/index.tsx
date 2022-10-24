@@ -26,7 +26,6 @@ import {APIResponse} from '../../services/rest';
 import {Action, SortDirection, SortOption} from '../../types';
 import {Permission} from '../../util/permission';
 import ContextMenu from '../ContextMenu';
-import DropDown from '../DropDown/DropDown';
 
 type Column<T = any> = {
 	clickable?: boolean;
@@ -88,22 +87,9 @@ const Table: React.FC<TableProps> = ({
 		setContextMenuState,
 	} = useContextMenu(displayActionColumn);
 
-	const [activeRow, setActiveRow] = useState<number | undefined>();
 	const [sorted, setSorted] = useState<SortDirection>(SortOption.ASC);
 
 	const navigate = useNavigate();
-
-	const onMouseLeaveRow = () => {
-		if (displayActionColumn) {
-			setActiveRow(undefined);
-		}
-	};
-
-	const onMouseOverRow = (rowIndex: number) => {
-		if (displayActionColumn) {
-			setActiveRow(rowIndex);
-		}
-	};
 
 	const changeSort = (key: string) => {
 		onSort(key, sorted);
@@ -163,8 +149,6 @@ const Table: React.FC<TableProps> = ({
 								</>
 							</ClayTable.Cell>
 						))}
-
-						{displayActionColumn && <ClayTable.Cell />}
 					</ClayTable.Row>
 				</ClayTable.Head>
 
@@ -190,8 +174,6 @@ const Table: React.FC<TableProps> = ({
 									});
 								}
 							}}
-							onMouseLeave={() => onMouseLeaveRow()}
-							onMouseOver={() => onMouseOverRow(rowIndex)}
 						>
 							{rowSelectable && onSelectRow && (
 								<ClayTable.Cell>
@@ -240,23 +222,6 @@ const Table: React.FC<TableProps> = ({
 										: item[column.key]}
 								</ClayTable.Cell>
 							))}
-
-							{displayActionColumn && (
-								<ClayTable.Cell
-									align="right"
-									className="py-0 table-action-column table-cell-expand"
-								>
-									{activeRow === rowIndex ? (
-										<DropDown
-											actions={filteredActions as any}
-											item={item}
-											mutate={mutate}
-										/>
-									) : (
-										<div />
-									)}
-								</ClayTable.Cell>
-							)}
 						</ClayTable.Row>
 					))}
 				</ClayTable.Body>

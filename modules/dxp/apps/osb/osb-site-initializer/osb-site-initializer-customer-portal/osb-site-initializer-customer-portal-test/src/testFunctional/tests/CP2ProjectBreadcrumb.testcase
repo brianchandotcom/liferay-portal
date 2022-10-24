@@ -1,3 +1,47 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account DXP,Test Account Enterprise Search,Test Account Partnership,Test Account QA 7.3,Test Account QA 7.4,Test Account No SLA";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
 	@description = "Automation ID: LPS-150596 | Test Summary: Verify when the user clicks on a project name in the Project Breadcrumb, the user is taken to that project's page"
 	@priority = "3"
 	test ClickProjectGoesToProjectPage {
@@ -15,3 +59,33 @@
 			AssertElementPresent(locator1 = "CP2Utils#PROJECT_TITLE");
 		}
 	}
+
+	@description = "Automation ID: LPS-150593 | Test Summary: Verify if the user can search for a project in the list using the search bar, the list should be updated based on the search term"
+	@priority = "4"
+	test SearchUpdatedWithSearchTerm {
+		var key_project = "Test Account Analytics Cloud";
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+		}
+
+		task ("Open the Dropdown BreadCrumb and Serch for a term") {
+			Click(locator1 = "CP2Utils#SVG_DROPDOWN");
+
+			CP2Utils.search(
+				project = "Test Account Analytics Cloud",
+				searchItem = "Test Account Analytics Cloud");
+
+			AssertElementNotPresent(
+				key_project = "Test Account No SLA",
+				locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
+
+			AssertElementPresent(
+				locator1 = "CP2Utils#SVG_DROPDOWN_LIST",
+				value1 = "${searchItem}");
+		}
+	}
+
+}

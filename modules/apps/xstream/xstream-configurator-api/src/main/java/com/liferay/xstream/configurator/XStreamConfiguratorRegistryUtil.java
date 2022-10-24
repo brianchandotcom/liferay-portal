@@ -35,7 +35,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class XStreamConfiguratorRegistryUtil {
 
 	public static ClassLoader getConfiguratorsClassLoader(

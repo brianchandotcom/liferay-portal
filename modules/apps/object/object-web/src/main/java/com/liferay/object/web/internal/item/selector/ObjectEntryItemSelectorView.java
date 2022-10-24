@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.item.selector;
 
 import com.liferay.info.item.selector.InfoItemSelectorView;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
@@ -71,6 +72,7 @@ public class ObjectEntryItemSelectorView
 			   ItemSelectorView<InfoItemItemSelectorCriterion> {
 
 	public ObjectEntryItemSelectorView(
+		InfoPermissionProvider<ObjectEntry> infoPermissionProvider,
 		ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 			itemSelectorViewDescriptorRenderer,
 		ObjectDefinition objectDefinition,
@@ -81,6 +83,7 @@ public class ObjectEntryItemSelectorView
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		Portal portal) {
 
+		_infoPermissionProvider = infoPermissionProvider;
 		_itemSelectorViewDescriptorRenderer =
 			itemSelectorViewDescriptorRenderer;
 		_objectDefinition = objectDefinition;
@@ -139,6 +142,7 @@ public class ObjectEntryItemSelectorView
 			new InfoItemItemSelectorReturnType(),
 			new ObjectEntryItemSelectorReturnType());
 
+	private final InfoPermissionProvider<ObjectEntry> _infoPermissionProvider;
 	private final ItemSelectorViewDescriptorRenderer
 		<InfoItemItemSelectorCriterion> _itemSelectorViewDescriptorRenderer;
 	private final ObjectDefinition _objectDefinition;

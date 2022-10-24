@@ -132,6 +132,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_restContextPathResolverRegistry,
 				_templateInfoItemFieldSetProvider, _userLocalService);
 
+		InfoPermissionProvider infoPermissionProvider =
+			new ObjectEntryInfoPermissionProvider(
+				objectDefinition, _portletLocalService, _portletPermission);
+
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
 				AssetRendererFactory.class,
@@ -237,9 +241,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				InfoPermissionProvider.class,
-				new ObjectEntryInfoPermissionProvider(
-					objectDefinition, _portletLocalService, _portletPermission),
+				InfoPermissionProvider.class, infoPermissionProvider,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(
@@ -248,8 +250,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new ObjectEntryItemSelectorView(
-					_itemSelectorViewDescriptorRenderer, objectDefinition,
-					_objectDefinitionLocalService, _objectEntryLocalService,
+					infoPermissionProvider, _itemSelectorViewDescriptorRenderer,
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryLocalService,
 					_objectEntryManagerTracker.getObjectEntryManager(
 						objectDefinition.getStorageType()),
 					_objectRelatedModelsProviderRegistry,

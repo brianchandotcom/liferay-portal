@@ -229,6 +229,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"3.24.0", "3.25.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectDefinition", "enableObjectEntryHistory BOOLEAN"));
+
+		registry.register(
+			"3.25.0", "3.26.0",
+			new com.liferay.object.internal.upgrade.v3_26_0.
+				ObjectFieldSettingUpgradeProcess(_portalUUID));
 	}
 
 	@Reference

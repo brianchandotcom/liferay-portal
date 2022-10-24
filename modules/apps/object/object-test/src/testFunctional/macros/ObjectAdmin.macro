@@ -183,9 +183,11 @@ definition {
 		}
 
 		if (isSet(fieldPicklist)) {
-			Select(
-				locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST",
-				value1 = "${fieldPicklist}");
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			Click(
+				key_columnOption = "${fieldPicklist}",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 
 			if ("${maskAsState}" == "true") {
 				Check.checkToggleSwitch(locator1 = "ObjectField#MARK_AS_STATE_TOGGLE");

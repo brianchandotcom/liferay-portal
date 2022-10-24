@@ -292,7 +292,7 @@ public class RepositoryBrowserTagDisplayContext {
 			_portletRequest,
 			PortletURLUtil.getCurrent(
 				_liferayPortletRequest, _liferayPortletResponse),
-			null, null);
+			null, "there-are-no-documents-in-this-folder");
 
 		searchContainer.setResultsAndTotal(
 			() -> DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(

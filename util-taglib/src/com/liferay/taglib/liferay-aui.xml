@@ -1211,37 +1211,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component bodyContent="true" dynamicAttributes="false" name="Panel">
-		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
-		<attributes>
-			<attribute>
-				<name>collapsed</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-			</attribute>
-			<attribute>
-				<name>collapsible</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-			</attribute>
-			<attribute>
-				<name>id</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>label</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>localizeLabel</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>true</defaultValue>
-			</attribute>
-		</attributes>
-	</component>
 	<component bodyContent="true" name="Row">
 		<description>Creates a row to hold <![CDATA[<code>&lt;aui:col&gt;</code>]]> components. Deprecated as of Athanasius (7.3.x), replaced by <code>clay:row</code>.</description>
 		<attributes>

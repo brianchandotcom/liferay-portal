@@ -53,6 +53,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.associated.data.display.UADDisplay" %><%@
+page import="com.liferay.user.associated.data.web.internal.configuration.UserLayoutConfiguration" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UADConstants" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UADWebKeys" %><%@
 page import="com.liferay.user.associated.data.web.internal.dao.search.UADExportProcessResultRowSplitter" %><%@

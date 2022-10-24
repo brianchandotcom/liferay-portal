@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
@@ -63,6 +64,8 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferenceValueLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -969,6 +972,54 @@ public class ServicePreAction extends Action {
 
 		if (timeZone == null) {
 			timeZone = company.getTimeZone();
+		}
+
+		// Getting layout properties
+
+		PortalPreferences portalPreferences =
+			PortalPreferencesLocalServiceUtil.fetchPortalPreferences(
+				PortalUtil.getCompanyId(httpServletRequest),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		com.liferay.portal.kernel.portlet.PortalPreferences
+			newPortalPreferences =
+				PortalPreferenceValueLocalServiceUtil.getPortalPreferences(
+					portalPreferences, false);
+
+		if (Validator.isNotNull(
+				newPortalPreferences.getValue(null, "userPrivateLayout"))) {
+
+			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED =
+				GetterUtil.getBoolean(
+					newPortalPreferences.getValue(null, "userPrivateLayout"));
+		}
+
+		if (Validator.isNotNull(
+				newPortalPreferences.getValue(
+					null, "userPrivateLayoutAutoCreate"))) {
+
+			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
+				GetterUtil.getBoolean(
+					newPortalPreferences.getValue(
+						null, "userPrivateLayoutAutoCreate"));
+		}
+
+		if (Validator.isNotNull(
+				newPortalPreferences.getValue(null, "userPublicLayout"))) {
+
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED =
+				GetterUtil.getBoolean(
+					newPortalPreferences.getValue(null, "userPublicLayout"));
+		}
+
+		if (Validator.isNotNull(
+				newPortalPreferences.getValue(
+					null, "userPublicLayoutAutoCreate"))) {
+
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE =
+				GetterUtil.getBoolean(
+					newPortalPreferences.getValue(
+						null, "userPublicLayoutAutoCreate"));
 		}
 
 		// Layouts

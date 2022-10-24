@@ -2324,12 +2324,9 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				Column<?, ?> column = dynamicObjectDefinitionTable.getColumn(
-					objectField.getDBColumnName());
-
 				_setColumn(
-					preparedStatement, index++, column.getSQLType(),
-					values.get(objectField.getName()));
+					dynamicObjectDefinitionTable, index++, objectField,
+					preparedStatement, values);
 			}
 
 			preparedStatement.executeUpdate();
@@ -2573,6 +2570,33 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 	}
 
+	private void _setColumn(
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			int index, ObjectField objectField,
+			PreparedStatement preparedStatement,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		Column<?, ?> column = dynamicObjectDefinitionTable.getColumn(
+			objectField.getDBColumnName());
+
+		Object value = values.get(objectField.getName());
+
+		if (StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			_setColumn(
+				preparedStatement, index, column.getSQLType(),
+				StringUtil.removeChars(
+					String.valueOf(value), CharPool.OPEN_BRACKET,
+					CharPool.CLOSE_BRACKET));
+		}
+		else {
+			_setColumn(preparedStatement, index, column.getSQLType(), value);
+		}
+	}
+
 	/**
 	 * @see com.liferay.portal.upgrade.util.Table#setColumn
 	 */
@@ -2788,12 +2812,9 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				Column<?, ?> column = dynamicObjectDefinitionTable.getColumn(
-					objectField.getDBColumnName());
-
 				_setColumn(
-					preparedStatement, index++, column.getSQLType(),
-					values.get(objectField.getName()));
+					dynamicObjectDefinitionTable, index++, objectField,
+					preparedStatement, values);
 			}
 
 			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);

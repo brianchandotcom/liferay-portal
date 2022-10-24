@@ -3918,6 +3918,10 @@ definition {
 
 		AssertElementPresent(
 			element = "Título em português",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			element = "Título em português",
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME");
 	}
 

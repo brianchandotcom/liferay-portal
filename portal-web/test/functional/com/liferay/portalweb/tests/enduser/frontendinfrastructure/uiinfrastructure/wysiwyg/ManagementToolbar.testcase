@@ -164,8 +164,8 @@ definition {
 
 		task ("And the button is changed to the other order direction") {
 			AssertElementPresent(
-				key_icon = "order-list-down",
-				locator1 = "ManagementBar#ORDER_TOGGLE_BUTTON");
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
 		}
 
 		task ("And a tooltip message will be displayed") {
@@ -177,7 +177,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
-				value1 = "Reverse Order Direction");
+				value1 = "Reverse Sort Direction");
 		}
 	}
 

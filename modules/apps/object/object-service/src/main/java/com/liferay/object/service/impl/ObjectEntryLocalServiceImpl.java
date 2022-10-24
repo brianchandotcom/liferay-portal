@@ -1838,7 +1838,7 @@ public class ObjectEntryLocalServiceImpl
 
 		return _inlineSQLHelper.getPermissionWherePredicate(
 			objectDefinition.getClassName(),
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn(), groupId);
 	}
 
 	private Object _getResult(

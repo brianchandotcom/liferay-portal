@@ -39,7 +39,7 @@ definition {
 	test CanAddMoreThan1Document {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DigitalSignature.createEnvelopeWith2Documents(
+		DigitalSignature.createEnvelopeWithTwoDocuments(
 			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
 			envelopeName = "Poshi Test CanAddMoreThan1Document",

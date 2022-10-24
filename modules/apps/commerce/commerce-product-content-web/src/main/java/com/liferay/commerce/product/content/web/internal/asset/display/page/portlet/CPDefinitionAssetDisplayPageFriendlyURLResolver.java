@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.content.web.internal.asset.display.page.portlet;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -382,10 +381,6 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionAssetDisplayPageFriendlyURLResolver.class);
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

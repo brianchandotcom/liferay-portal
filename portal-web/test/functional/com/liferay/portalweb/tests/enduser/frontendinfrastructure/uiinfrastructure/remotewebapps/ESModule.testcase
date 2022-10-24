@@ -1,0 +1,83 @@
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Remote Apps";
+	property testray.main.component.name = "Remote Apps";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+        task ("Given a custom element with "Use ES Modules" option created") {
+			JSONRemoteApp.addCustomElementRemoteAppEntry(
+				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+				customElementHtmlName = "app-element",
+				customElementName = "ES module Remote App",
+				customElementURL = "https://localhost:8081/runtime.js",
+				customElementUseESM = "true");
+		}
+
+		task ("And Given a widget page created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "My Widget Page");
+		}
+
+		task ("And Given adding the app portlet to the page") {
+			Navigator.gotoPage(pageName = "My Widget Page");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			Type(
+				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+				value1 = "ES module Remote App");
+
+			Portlet._clickAddPortlet(portletName = "ES module Remote App");
+
+			WaitForElementPresent(locator1 = "Message#SUCCESS");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			RemoteApps.tearDown();
+
+			Navigator.gotoPage(pageName = "Home");
+
+			while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
+				var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
+
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "${layoutName}");
+
+				Navigator.gotoPage(pageName = "Home");
+
+				PortalInstances.tearDownCP();
+			}
+		}
+	}
+
+    @description = "LPS-165438. When add a remote app in the html <script> tag with src is rendered as a module type"
+	@priority = "5"
+	test CanRenderCustomElementAsModuleType {
+
+        //To-do CanRenderCustomElementAsModuleType testcase
+
+    }
+
+    @description = "LPS-165439. When add a remote app in the HTML of the page I'm able to see references to react and react-dom"
+	@priority = "5"
+	test CanGenerateTheAMDToESMBridge {
+
+        //To-do CanRenderCustomElementAsModuleType testcase
+    }
+
+}

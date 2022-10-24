@@ -150,15 +150,28 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public ObjectField addOrUpdateCustomObjectField(
 			String externalReferenceCode, long userId, long objectDefinitionId,
-			long listTypeDefinitionId, String businessType, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state,
-			List<ObjectFieldSetting> objectFieldSettings)
+			long objectFieldId, long listTypeDefinitionId, String businessType,
+			String dbType, String defaultValue, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		ObjectField existingObjectField = objectFieldPersistence.fetchByODI_N(
-			objectDefinitionId, name);
+		ObjectField existingObjectField = null;
+
+		if (Validator.isNull(externalReferenceCode)) {
+			existingObjectField = objectFieldPersistence.fetchByPrimaryKey(
+				objectFieldId);
+		}
+		else {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinitionId);
+
+			existingObjectField = objectFieldPersistence.fetchByERC_C_ODI(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				objectDefinitionId);
+		}
 
 		if (existingObjectField == null) {
 			return objectFieldLocalService.addCustomObjectField(
@@ -613,7 +626,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return objectFieldLocalService.addOrUpdateCustomObjectField(
-			externalReferenceCode, userId, objectDefinitionId,
+			externalReferenceCode, userId, objectDefinitionId, objectFieldId,
 			listTypeDefinitionId, businessType, dbType, defaultValue, indexed,
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			state, objectFieldSettings);

@@ -15,9 +15,6 @@
 const {
 	default: SidebarPanelInfoView,
 } = require('../components/SidebarPanelInfoView/SidebarPanelInfoView');
-const {
-	default: SidebarPanelInfoViewCollapsable,
-} = require('../components/SidebarPanelInfoView/SidebarPanelInfoViewCollapsable');
 const {OPEN_PANEL_VALUE} = require('../utils/constants');
 const ActionsComponentPropsTransformer = require('./ActionsComponentPropsTransformer');
 

@@ -16,7 +16,6 @@ import {render} from '@liferay/frontend-js-react-web';
 
 import SidebarPanel from '../components/SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView/SidebarPanelInfoView';
-import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/SidebarPanelInfoViewCollapsable';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 import {
 	DEFAULT_ACTIVE_PANEL_TAB,

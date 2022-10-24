@@ -301,7 +301,11 @@ public class NotificationTemplateLocalServiceTest {
 		Stream<NotificationQueueEntry> stream =
 			notificationQueueEntries.stream();
 
-		Set<String> tos = stream.map(
+		Set<String> tos = stream.filter(
+			notificationQueueEntry ->
+				notificationQueueEntry.getNotificationTemplateId() ==
+					notificationTemplate.getNotificationTemplateId()
+		).map(
 			NotificationQueueEntry::getTo
 		).collect(
 			Collectors.toSet()

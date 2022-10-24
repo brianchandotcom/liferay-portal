@@ -225,6 +225,42 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
+	public void testFilterFindByKeywordsAsSiteMember() throws Exception {
+		User user = UserTestUtil.addGroupUser(
+			_group, RoleConstants.SITE_MEMBER);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		try {
+			DLFileEntryType fileEntryType = addFileEntryType(
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), _user.getUserId()));
+
+			List<DLFileEntryType> fileEntryTypes =
+				DLFileEntryTypeFinderUtil.filterFindByKeywords(
+					_group.getCompanyId(), new long[] {_group.getGroupId()},
+					_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				fileEntryTypes.toString(), 0, fileEntryTypes.size());
+			Assert.assertFalse(
+				fileEntryTypes.toString(),
+				fileEntryTypes.contains(fileEntryType));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
+	@Test
 	public void testFilterFindByKeywordsWithBlankKeywords() throws Exception {
 		DLFileEntryType fileEntryType = addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(

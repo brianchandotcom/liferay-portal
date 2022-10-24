@@ -16,6 +16,7 @@ package com.liferay.data.cleanup.internal.upgrade.util;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Objects;
 
 import org.apache.felix.cm.PersistenceManager;
@@ -32,15 +34,15 @@ import org.apache.felix.cm.PersistenceManager;
  */
 public class ConfigurationUtil {
 
-	public static void resetConfiguration(
-			PersistenceManager persistenceManager, Class<?> clazz)
+	public static <T> T getAndResetConfiguration(
+			PersistenceManager persistenceManager, Class<T> clazz)
 		throws IOException {
 
 		Dictionary<String, Object> properties = persistenceManager.load(
 			clazz.getName());
 
 		if (properties == null) {
-			return;
+			return ConfigurableUtil.createConfigurable(clazz, new HashMap<>());
 		}
 
 		Dictionary<String, Object> newProperties =
@@ -61,6 +63,8 @@ public class ConfigurationUtil {
 		}
 
 		persistenceManager.store(clazz.getName(), newProperties);
+
+		return ConfigurableUtil.createConfigurable(clazz, properties);
 	}
 
 }

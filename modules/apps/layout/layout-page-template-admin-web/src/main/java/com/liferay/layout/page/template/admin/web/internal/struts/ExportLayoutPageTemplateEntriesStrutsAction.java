@@ -16,7 +16,6 @@ package com.liferay.layout.page.template.admin.web.internal.struts;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -89,9 +88,6 @@ public class ExportLayoutPageTemplateEntriesStrutsAction
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
-
-	@Reference
-	private FragmentCompositionService _fragmentCompositionService;
 
 	@Reference
 	private LayoutsExporter _layoutsExporter;

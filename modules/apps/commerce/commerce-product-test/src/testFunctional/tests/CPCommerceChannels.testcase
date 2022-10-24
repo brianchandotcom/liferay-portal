@@ -842,6 +842,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-4270. CheckAvalaraTaxPresence"
+	@priority = "3"
+	test CheckAvalaraTaxPresence {
+		property portal.acceptance = "false";
+		property portal.release = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Settings",
+			portlet = "Avalara Connector");
+
+		CommerceChannels.avalaraConnection();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Click(
+			key_entryName = "Avalara",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertTextEquals(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "Avalara");
+
+		AssertTextEquals(
+			key_text = "Description",
+			locator1 = "TextInput#ANY",
+			value1 = "Avalara Type Rate Description");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Percentage",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Settings");
+
+		AssertElementPresent(
+			key_warningMessage = "Configure Credentials Before Continuing",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Avalara Tax Rates");
+
+		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+	}
+
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -1131,97 +1188,6 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-	}
-
-	@description = "This is a test for COMMERCE-6119. EditAvalaraTaxCalculation"
-	@priority = "3"
-	test EditAvalaraTaxCalculation {
-		property portal.acceptance = "false";
-		property portal.release = "false";
-
-		// TODO Review
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		Click(
-			key_entryName = "Avalara",
-			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Active",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Active",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		CommerceEntry.gotoMenuTab(menuTab = "Settings");
-
-		Type(
-			key_fieldLabel = "Account Number",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		Type(
-			key_fieldLabel = "License Key",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		Type(
-			key_fieldLabel = "Service URL",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		Type(
-			key_fieldLabel = "Company Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		Button.clickSave();
-
-		Refresh();
-
-		Click(
-			key_entryName = "Avalara",
-			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Settings");
-
-		AssertTextEquals(
-			key_fieldLabel = "Account Number",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		AssertTextEquals(
-			key_fieldLabel = "License Key",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		AssertTextEquals(
-			key_fieldLabel = "Service URL",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
-
-		AssertTextEquals(
-			key_fieldLabel = "Company Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Test");
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"

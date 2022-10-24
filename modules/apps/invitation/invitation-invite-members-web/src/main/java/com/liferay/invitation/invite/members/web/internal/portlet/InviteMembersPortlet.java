@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=so-portlet-invite-members",

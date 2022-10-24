@@ -37,8 +37,8 @@ import {useSelectorRef} from '../../contexts/StoreContext';
 import {formIsMapped} from '../formIsMapped';
 import {hasFormParent} from '../hasFormParent';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
-import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
+import getDropData from './getDropData';
 
 export const initialDragDrop = {
 	canDrag: true,
@@ -399,52 +399,16 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 	}
 
 	if (state.dropItem && state.dropTargetItem) {
-		if (state.elevate) {
-			const parentItem =
-				layoutDataRef.current.items[state.dropTargetItem.parentId];
+		const {dropItemId, position} = getDropData({
+			isElevation: state.elevate,
+			layoutDataRef,
+			sourceItemId: state.dropItem.itemId,
+			targetItemId: state.dropTargetItem.itemId,
+			targetPosition: state.targetPositionWithoutMiddle,
+		});
 
-			const position = Math.min(
-				parentItem.children.includes(state.dropItem.itemId)
-					? parentItem.children.length - 1
-					: parentItem.children.length,
-				getSiblingPosition(state, parentItem)
-			);
-
-			onDragEnd(parentItem.itemId, position);
-		}
-		else {
-			const position = state.dropTargetItem.children.includes(
-				state.dropItem.itemId
-			)
-				? state.dropTargetItem.children.length - 1
-				: state.dropTargetItem.children.length;
-
-			onDragEnd(state.dropTargetItem.itemId, position);
-		}
+		onDragEnd(dropItemId, position);
 	}
 
 	dispatch(initialDragDrop.state);
-}
-
-function getSiblingPosition(state, parentItem) {
-	const dropItemPosition = parentItem.children.indexOf(state.dropItem.itemId);
-	const siblingPosition = parentItem.children.indexOf(
-		state.dropTargetItem.itemId
-	);
-
-	if (
-		state.targetPositionWithoutMiddle === TARGET_POSITIONS.BOTTOM ||
-		state.targetPositionWithoutMiddle === TARGET_POSITIONS.RIGHT
-	) {
-		return siblingPosition + 1;
-	}
-	else if (
-		dropItemPosition !== -1 &&
-		dropItemPosition < siblingPosition &&
-		siblingPosition > 0
-	) {
-		return siblingPosition - 1;
-	}
-
-	return siblingPosition;
 }

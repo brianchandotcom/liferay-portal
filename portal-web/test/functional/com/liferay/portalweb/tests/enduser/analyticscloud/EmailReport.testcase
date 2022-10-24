@@ -340,8 +340,6 @@ definition {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 			Open(locator1 = "${analyticsCloudURL}");
-
-			ACLogin.loginAs(emailAddress = "${emailAddress}");
 		}
 
 		task ("Go to admin page") {

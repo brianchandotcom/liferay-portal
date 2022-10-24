@@ -199,6 +199,30 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroupPersistence.update(userGroup);
 	}
 
+	@Override
+	public void addTeamUserGroup(long teamId, UserGroup userGroup) {
+		super.addTeamUserGroup(teamId, userGroup);
+
+		try {
+			reindexUsers(userGroup);
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
+	}
+
+	@Override
+	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
+		super.addTeamUserGroups(teamId, userGroupIds);
+
+		try {
+			reindexUsers(userGroupIds);
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
+	}
+
 	/**
 	 * Adds a user group.
 	 *
@@ -924,6 +948,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
 		_teamPersistence.removeUserGroups(teamId, userGroupIds);
+
+		try {
+			reindexUsers(userGroupIds);
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

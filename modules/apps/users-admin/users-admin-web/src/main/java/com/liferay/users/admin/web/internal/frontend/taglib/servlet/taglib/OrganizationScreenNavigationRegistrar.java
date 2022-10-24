@@ -25,16 +25,16 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib.OrganizationScreenNavigationEntry.Mod;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Drew Brokke
@@ -56,121 +56,96 @@ public class OrganizationScreenNavigationRegistrar {
 			new OrganizationScreenNavigationCategory(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT));
 
+		Mod categoryGeneralMod = Mod.combine(
+			_dependenciesMod,
+			Mod.withCategoryKey(
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL));
+
 		_registerService(
 			ScreenNavigationEntry.class, 10,
-			_getBuilder(
-			).categoryKey(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
-			).entryKey(
-				"information"
-			).jspPath(
-				"/organization/information.jsp"
-			).mvcActionCommandName(
-				"/users_admin/edit_organization"
-			).visibleBiFunction(
-				(user, organization) -> true
-			).build());
-
+			OrganizationScreenNavigationEntry.of(
+				categoryGeneralMod,
+				Mod.withEntryKey("information"),
+				Mod.withJspPath("/organization/information.jsp"),
+				Mod.withMVCActionCommandName("/users_admin/edit_organization"),
+				Mod.withVisibleBiFunction((user, organization) -> true)));
 		_registerService(
 			ScreenNavigationEntry.class, 20,
-			_getBuilder(
-			).categoryKey(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
-			).entryKey(
-				"organization-site"
-			).jspPath(
-				"/organization/organization_site.jsp"
-			).mvcActionCommandName(
-				"/users_admin/update_organization_organization_site"
-			).showControls(
-				false
-			).visibleBiFunction(
-				(user, organization) -> {
-					if (organization == null) {
-						return false;
-					}
+			OrganizationScreenNavigationEntry.of(
+				categoryGeneralMod,
+				Mod.withEntryKey("organization-site"),
+				Mod.withJspPath("/organization/organization_site.jsp"),
+				Mod.withMVCActionCommandName(
+					"/users_admin/update_organization_organization_site"),
+				Mod::hideControls,
+				Mod.withVisibleBiFunction(
+					(user, organization) -> {
+						if (organization == null) {
+							return false;
+						}
 
-					try {
-						if (!_groupPermission.contains(
+						try {
+							if (!_groupPermission.contains(
 								PermissionThreadLocal.getPermissionChecker(),
 								organization.getGroup(), ActionKeys.UPDATE)) {
 
+								return false;
+							}
+						}
+						catch (Exception exception) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(exception);
+							}
+
 							return false;
 						}
+
+						return true;
 					}
-					catch (Exception exception) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(exception);
-						}
-
-						return false;
-					}
-
-					return true;
-				}
-			).build());
-
+				)
+			));
 		_registerService(
 			ScreenNavigationEntry.class, 30,
-			_getBuilder(
-			).categoryKey(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL
-			).entryKey(
-				"security-questions"
-			).jspPath(
-				"/organization/reminder_queries.jsp"
-			).mvcActionCommandName(
-				"/users_admin/update_organization_reminder_queries"
-			).build());
+			OrganizationScreenNavigationEntry.of(
+				categoryGeneralMod,
+				Mod.withEntryKey("security-questions"),
+				Mod.withJspPath("/organization/reminder_queries.jsp"),
+				Mod.withMVCActionCommandName(
+					"/users_admin/update_organization_reminder_queries")));
+
+		Mod categoryContactMod = Mod.combine(
+			_dependenciesMod,
+			Mod.withCategoryKey(
+				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT),
+			Mod::hideControls);
 
 		_registerService(
 			ScreenNavigationEntry.class, 10,
-			_getBuilder(
-			).categoryKey(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
-			).entryKey(
-				"addresses"
-			).jspPath(
-				"/organization/addresses.jsp"
-			).mvcActionCommandName(
-				"/users_admin/update_contact_information"
-			).showControls(
-				false
-			).showTitle(
-				false
-			).build());
-
+			OrganizationScreenNavigationEntry.of(
+				categoryContactMod,
+				Mod.withEntryKey("addresses"),
+				Mod.withJspPath("/organization/addresses.jsp"),
+				Mod.withMVCActionCommandName(
+					"/users_admin/update_contact_information"),
+				Mod::hideTitle));
 		_registerService(
 			ScreenNavigationEntry.class, 20,
-			_getBuilder(
-			).categoryKey(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
-			).entryKey(
-				"contact-information"
-			).jspPath(
-				"/organization/contact_information.jsp"
-			).mvcActionCommandName(
-				"/users_admin/update_contact_information"
-			).showControls(
-				false
-			).build());
-
+			OrganizationScreenNavigationEntry.of(
+				categoryContactMod,
+				Mod.withEntryKey("contact-information"),
+				Mod.withJspPath("/organization/contact_information.jsp"),
+				Mod.withMVCActionCommandName(
+					"/users_admin/update_contact_information")));
 		_registerService(
 			ScreenNavigationEntry.class, 30,
-			_getBuilder(
-			).categoryKey(
-				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT
-			).entryKey(
-				"opening-hours"
-			).jspPath(
-				"/organization/opening_hours.jsp"
-			).mvcActionCommandName(
-				"/users_admin/update_contact_information"
-			).showControls(
-				false
-			).showTitle(
-				false
-			).build());
+			OrganizationScreenNavigationEntry.of(
+				categoryContactMod,
+				Mod.withEntryKey("opening-hours"),
+				Mod.withJspPath("/organization/opening_hours.jsp"),
+				Mod.withMVCActionCommandName(
+					"/users_admin/update_contact_information"),
+				Mod::hideTitle));
+
 	}
 
 	@Deactivate
@@ -178,15 +153,6 @@ public class OrganizationScreenNavigationRegistrar {
 		_serviceRegistrations.forEach(ServiceRegistration::unregister);
 
 		_serviceRegistrations.clear();
-	}
-
-	private OrganizationScreenNavigationEntry.Builder _getBuilder() {
-		return OrganizationScreenNavigationEntry.builder(
-		).jspRenderer(
-			_jspRenderer
-		).organizationService(
-			_organizationService
-		);
 	}
 
 	private <T> void _registerService(
@@ -218,5 +184,10 @@ public class OrganizationScreenNavigationRegistrar {
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
+
+	private final Mod _dependenciesMod = info -> {
+		info._organizationService = _organizationService;
+		info._jspRenderer = _jspRenderer;
+	};
 
 }

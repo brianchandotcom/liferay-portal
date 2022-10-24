@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -269,8 +268,5 @@ public class CommercePricingClassServiceImpl
 	)
 	private ModelResourcePermission<CommercePricingClass>
 		_commercePricingClassResourcePermission;
-
-	@Reference
-	private CompanyService _companyService;
 
 }

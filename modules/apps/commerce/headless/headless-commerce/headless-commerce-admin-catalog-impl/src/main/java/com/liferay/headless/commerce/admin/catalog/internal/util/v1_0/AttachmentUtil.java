@@ -48,9 +48,11 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Alessio Antonio Rendina
@@ -329,6 +331,8 @@ public class AttachmentUtil {
 			contentType = MimeTypesUtil.getContentType(file);
 		}
 
+		uniqueFileName = _appendExtension(contentType, uniqueFileName);
+
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			null, serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, uniqueFileName,
@@ -338,6 +342,24 @@ public class AttachmentUtil {
 		FileUtil.delete(file);
 
 		return fileEntry;
+	}
+
+	private static String _appendExtension(
+		String contentType, String uniqueFileName) {
+
+		String extension = StringPool.BLANK;
+
+		Set<String> extensions = MimeTypesUtil.getExtensions(contentType);
+
+		if (!extensions.isEmpty()) {
+			Iterator<String> iterator = extensions.iterator();
+
+			if (iterator.hasNext()) {
+				extension = iterator.next();
+			}
+		}
+
+		return uniqueFileName.concat(extension);
 	}
 
 	private static boolean _exists(

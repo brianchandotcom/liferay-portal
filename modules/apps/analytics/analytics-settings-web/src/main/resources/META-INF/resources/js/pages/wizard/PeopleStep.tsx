@@ -12,16 +12,31 @@
  * details.
  */
 
-import React from 'react';
+import {ClayToggle} from '@clayui/form';
+import ClayLabel from '@clayui/label';
+import React, {useState} from 'react';
 
 import BasePage from '../../components/BasePage';
 
 const Step = () => {
+	const [syncAll, setSyncAll] = useState(false);
+
 	return (
 		<BasePage
 			description={Liferay.Language.get('sync-people-description')}
 			title={Liferay.Language.get('sync-people')}
-		></BasePage>
+		>
+			<ClayToggle
+				
+				label={Liferay.Language.get('sync-all-contacts-and-accounts')}
+				onToggle={() => setSyncAll(!syncAll)}
+				toggled={syncAll}
+			/>
+
+			<ClayLabel className="ml-4" displayType="info">
+				{Liferay.Language.get('recomended')}
+			</ClayLabel>
+		</BasePage>
 	);
 };
 

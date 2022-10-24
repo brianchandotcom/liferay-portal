@@ -66,8 +66,14 @@ public class AttachmentUtil {
 		throws Exception {
 
 		if (Validator.isNotNull(attachment.getAttachment())) {
-			return addFileEntry(
-				attachment, uniqueFileNameProvider, serviceContext);
+			String base64EncodedContent = attachment.getAttachment();
+
+			File file = FileUtil.createTempFile(
+				Base64.decode(base64EncodedContent));
+
+			return _addFileEntry(
+				file, attachment.getContentType(), uniqueFileNameProvider,
+				serviceContext);
 		}
 
 		if (Validator.isNotNull(attachment.getSrc())) {

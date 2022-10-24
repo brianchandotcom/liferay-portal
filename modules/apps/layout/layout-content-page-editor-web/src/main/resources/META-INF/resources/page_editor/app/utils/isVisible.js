@@ -20,7 +20,6 @@ export default function isVisible(element, globalContext) {
 		computedStyle.visibility !== 'collapse' &&
 		computedStyle.visibility !== 'hidden' &&
 		!element.hasAttribute('hidden') &&
-		!element.hasAttribute('aria-hidden') &&
 		(!parentElement ||
 			parentElement.classList.contains('page-editor__form-children') ||
 			isVisible(parentElement, globalContext))

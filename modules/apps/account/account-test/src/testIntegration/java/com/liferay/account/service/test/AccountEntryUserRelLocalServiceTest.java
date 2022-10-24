@@ -28,6 +28,7 @@ import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -93,8 +93,7 @@ public class AccountEntryUserRelLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_user = UserTestUtil.addUser();
 	}
@@ -410,8 +409,7 @@ public class AccountEntryUserRelLocalServiceTest {
 	@Test
 	public void testAddPersonTypeAccountEntryUserRel() throws Exception {
 		AccountEntry personTypeAccountEntry =
-			AccountEntryTestUtil.addPersonAccountEntry(
-				_accountEntryLocalService);
+			AccountEntryTestUtil.addAccountEntry(AccountEntryArgs.TYPE_PERSON);
 
 		AccountEntryUserRel accountEntryUserRel1 =
 			_addPersonTypeAccountEntryUserRel(
@@ -652,8 +650,7 @@ public class AccountEntryUserRelLocalServiceTest {
 	@Test
 	public void testSetPersonTypeAccountEntryUser() throws Exception {
 		AccountEntry personTypeAccountEntry =
-			AccountEntryTestUtil.addPersonAccountEntry(
-				_accountEntryLocalService);
+			AccountEntryTestUtil.addAccountEntry(AccountEntryArgs.TYPE_PERSON);
 		User user1 = UserTestUtil.addUser();
 
 		_testSetPersonTypeAccountEntryUser(
@@ -749,16 +746,9 @@ public class AccountEntryUserRelLocalServiceTest {
 	}
 
 	private long[] _addAccountEntries(int count) throws Exception {
-		long[] accountEntryIds = new long[count];
-
-		for (int i = 0; i < count; i++) {
-			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-				_accountEntryLocalService);
-
-			accountEntryIds[i] = accountEntry.getAccountEntryId();
-		}
-
-		return accountEntryIds;
+		return ListUtil.toLongArray(
+			AccountEntryTestUtil.addAccountEntries(count),
+			AccountEntry.ACCOUNT_ENTRY_ID_ACCESSOR);
 	}
 
 	private AccountEntryUserRel _addAccountEntryUserRel(long accountEntryId)
@@ -871,9 +861,6 @@ public class AccountEntryUserRelLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	@Inject
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	private final UserInfo _userInfo = new UserInfo();
 

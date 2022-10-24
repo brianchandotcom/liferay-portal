@@ -16,20 +16,18 @@ package com.liferay.account.internal.model.listener.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -55,17 +53,9 @@ public class OrganizationModelListenerTest {
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		_accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(_accountEntryLocalService));
-		_accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(_accountEntryLocalService));
-
-		for (AccountEntry accountEntry : _accountEntries) {
-			_accountEntryOrganizationRelLocalService.
-				addAccountEntryOrganizationRel(
-					accountEntry.getAccountEntryId(),
-					organization.getOrganizationId());
-		}
+		List<AccountEntry> accountEntries =
+			AccountEntryTestUtil.addAccountEntries(
+				2, AccountEntryArgs.withOrganizations(organization));
 
 		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
 			_accountEntryOrganizationRelLocalService.
@@ -73,7 +63,7 @@ public class OrganizationModelListenerTest {
 					organization.getOrganizationId());
 
 		Assert.assertEquals(
-			accountEntryOrganizationRels.toString(), _accountEntries.size(),
+			accountEntryOrganizationRels.toString(), accountEntries.size(),
 			accountEntryOrganizationRels.size());
 
 		_organizationLocalService.deleteOrganization(organization);
@@ -93,12 +83,7 @@ public class OrganizationModelListenerTest {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
-		_accountEntries.add(accountEntry);
-
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry.getAccountEntryId(), organization.getOrganizationId());
+			AccountEntryArgs.withOrganizations(organization));
 
 		_organizationLocalService.deleteOrganization(organization);
 
@@ -108,12 +93,6 @@ public class OrganizationModelListenerTest {
 					accountEntry.getAccountEntryId(),
 					organization.getOrganizationId()));
 	}
-
-	@DeleteAfterTestRun
-	private final List<AccountEntry> _accountEntries = new ArrayList<>();
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountEntryOrganizationRelLocalService

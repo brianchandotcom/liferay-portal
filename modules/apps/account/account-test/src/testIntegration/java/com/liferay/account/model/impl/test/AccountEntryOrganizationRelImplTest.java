@@ -16,7 +16,6 @@ package com.liferay.account.model.impl.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -40,8 +39,7 @@ public class AccountEntryOrganizationRelImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 		_organization = OrganizationTestUtil.addOrganization();
 
 		_accountEntryOrganizationRel =
@@ -80,10 +78,6 @@ public class AccountEntryOrganizationRelImplTest {
 		new LiferayIntegrationTestRule();
 
 	private AccountEntry _accountEntry;
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
-
 	private AccountEntryOrganizationRel _accountEntryOrganizationRel;
 
 	@Inject

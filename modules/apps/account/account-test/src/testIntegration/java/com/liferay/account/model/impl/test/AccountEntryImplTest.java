@@ -16,8 +16,7 @@ package com.liferay.account.model.impl.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Address;
@@ -55,18 +54,14 @@ public class AccountEntryImplTest {
 	public void testFetchOrganizations() throws Exception {
 		OrganizationTestUtil.addOrganization();
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_testFetchOrganizations(accountEntry);
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry.getAccountEntryId(), organization.getOrganizationId());
+			AccountEntryArgs.withOrganizations(organization));
 
 		_testFetchOrganizations(accountEntry, organization);
 	}
@@ -75,26 +70,21 @@ public class AccountEntryImplTest {
 	public void testFetchUsers() throws Exception {
 		UserTestUtil.addUser();
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_testFetchUsers(accountEntry);
 
 		User user = UserTestUtil.addUser();
 
 		accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), user.getUserId());
+			AccountEntryArgs.withUsers(user));
 
 		_testFetchUsers(accountEntry, user);
 	}
 
 	@Test
 	public void testGetAccountEntryGroup() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		Assert.assertEquals(
 			_getAccountEntryGroup(accountEntry),
@@ -107,8 +97,7 @@ public class AccountEntryImplTest {
 
 	@Test
 	public void testGetAccountEntryGroupId() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		Group group = _getAccountEntryGroup(accountEntry);
 
@@ -124,8 +113,7 @@ public class AccountEntryImplTest {
 
 	@Test
 	public void testGetDefaultBillingAddress() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		Assert.assertNull(accountEntry.getDefaultBillingAddress());
 
@@ -139,8 +127,7 @@ public class AccountEntryImplTest {
 
 	@Test
 	public void testGetDefaultShippingAddress() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		Assert.assertNull(accountEntry.getDefaultShippingAddress());
 
@@ -199,13 +186,6 @@ public class AccountEntryImplTest {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Inject
-	private AccountEntryOrganizationRelLocalService
-		_accountEntryOrganizationRelLocalService;
-
-	@Inject
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
 	private AddressLocalService _addressLocalService;

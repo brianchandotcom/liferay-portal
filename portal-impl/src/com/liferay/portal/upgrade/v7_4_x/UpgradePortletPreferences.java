@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.Preference;
@@ -69,8 +71,14 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					preferences);
 			},
 			null);
+	}
 
-		alterTableDropColumn("PortletPreferences", "preferences");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				"PortletPreferences", "preferences")
+		};
 	}
 
 	private void _upgradePortletPreferences(

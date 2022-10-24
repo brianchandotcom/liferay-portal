@@ -16,6 +16,8 @@ package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,8 +32,13 @@ public class UpgradeSchema extends UpgradeProcess {
 		runSQLTemplate("update-7.2.0-7.3.0.sql", false);
 
 		_copyCompanyKey();
+	}
 
-		alterTableDropColumn("Company", "key_");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns("Company", "key_")
+		};
 	}
 
 	private void _copyCompanyKey() throws Exception {

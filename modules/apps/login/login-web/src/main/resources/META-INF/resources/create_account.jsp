@@ -88,6 +88,33 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 		<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreNumbers.class %>">
+
+		<%
+		UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= String.valueOf(upe.minNumbers) %>" key="that-password-must-contain-at-least-x-numbers" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreSymbols.class %>">
+
+		<%
+		UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= String.valueOf(upe.minSymbols) %>" key="that-password-must-contain-at-least-x-symbols" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreUppercase.class %>">
+
+		<%
+		UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-contain-at-least-x-uppercase-characters" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= UserPasswordException.MustComplyWithModelListeners.class %>" message="that-password-is-invalid-please-enter-a-different-password" />
 
 	<liferay-ui:error exception="<%= UserPasswordException.MustComplyWithRegex.class %>">

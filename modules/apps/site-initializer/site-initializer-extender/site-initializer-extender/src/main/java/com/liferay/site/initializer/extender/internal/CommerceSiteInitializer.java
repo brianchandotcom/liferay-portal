@@ -333,16 +333,34 @@ public class CommerceSiteInitializer {
 			_commerceCatalogLocalService.getCommerceCatalogGroup(
 				catalog.getId());
 
-		_cpDefinitionsImporter.importCPDefinitions(
-			JSONFactoryUtil.createJSONArray(json), assetVocabularyName,
-			commerceCatalogGroup.getGroupId(), channel.getId(),
-			ListUtil.toLongArray(
-				commerceInventoryWarehouses,
-				CommerceInventoryWarehouse.
-					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
-			bundleWiring.getClassLoader(),
-			StringUtil.replace(resourcePath, ".json", "/"),
-			serviceContext.getScopeGroupId(), serviceContext.getUserId());
+		List<CPDefinition> cpDefinitions =
+			_cpDefinitionsImporter.importCPDefinitions(
+				JSONFactoryUtil.createJSONArray(json), assetVocabularyName,
+				commerceCatalogGroup.getGroupId(), channel.getId(),
+				ListUtil.toLongArray(
+					commerceInventoryWarehouses,
+					CommerceInventoryWarehouse.
+						COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
+				bundleWiring.getClassLoader(),
+				StringUtil.replace(resourcePath, ".json", "/"),
+				serviceContext.getScopeGroupId(), serviceContext.getUserId());
+
+		if (ListUtil.isEmpty(cpDefinitions)) {
+			return;
+		}
+
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+			if (ListUtil.isEmpty(cpInstances)) {
+				continue;
+			}
+
+			for (CPInstance cpInstance : cpInstances) {
+				_addOrUpdateCommercePriceEntries(
+					cpDefinition, cpInstance, serviceContext);
+			}
+		}
 	}
 
 	private void _addCPInstanceSubscriptions(
@@ -716,16 +734,24 @@ public class CommerceSiteInitializer {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+		BigDecimal price = cpInstance.getPrice();
+
+		if (CommercePriceListConstants.TYPE_PROMOTION.equals(
+				commercePriceList.getType())) {
+
+			price = cpInstance.getPromoPrice();
+		}
+
 		if (commercePriceEntry == null) {
 			_commercePriceEntryLocalService.addCommercePriceEntry(
 				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
-				null, serviceContext);
+				commercePriceList.getCommercePriceListId(), price,
+				BigDecimal.ZERO, serviceContext);
 		}
 		else {
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), BigDecimal.ZERO,
-				null, serviceContext);
+				commercePriceEntry.getCommercePriceEntryId(), price,
+				BigDecimal.ZERO, serviceContext);
 		}
 	}
 

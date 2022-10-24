@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Hai Yu
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class LearnMessageJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

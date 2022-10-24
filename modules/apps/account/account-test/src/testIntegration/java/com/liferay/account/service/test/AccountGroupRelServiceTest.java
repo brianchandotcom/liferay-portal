@@ -92,8 +92,7 @@ public class AccountGroupRelServiceTest {
 	}
 
 	private void _addAccountGroupRel() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
@@ -104,8 +103,7 @@ public class AccountGroupRelServiceTest {
 	}
 
 	private void _deleteAccountGroupRel() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());

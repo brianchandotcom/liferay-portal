@@ -16,20 +16,18 @@ package com.liferay.account.internal.model.listener.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -53,22 +51,16 @@ public class UserModelListenerTest {
 	public void testDeleteUserWithMultipleAccountEntries() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		_accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(_accountEntryLocalService));
-		_accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(_accountEntryLocalService));
-
-		for (AccountEntry accountEntry : _accountEntries) {
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry.getAccountEntryId(), user.getUserId());
-		}
+		List<AccountEntry> accountEntries =
+			AccountEntryTestUtil.addAccountEntries(
+				2, AccountEntryArgs.withUsers(user));
 
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(user.getUserId());
 
 		Assert.assertEquals(
-			accountEntryUserRels.toString(), _accountEntries.size(),
+			accountEntryUserRels.toString(), accountEntries.size(),
 			accountEntryUserRels.size());
 
 		_userLocalService.deleteUser(user);
@@ -85,12 +77,7 @@ public class UserModelListenerTest {
 		User user = UserTestUtil.addUser();
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
-		_accountEntries.add(accountEntry);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), user.getUserId());
+			AccountEntryArgs.withUsers(user));
 
 		Assert.assertTrue(
 			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
@@ -102,12 +89,6 @@ public class UserModelListenerTest {
 			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
 				accountEntry.getAccountEntryId(), user.getUserId()));
 	}
-
-	@DeleteAfterTestRun
-	private final List<AccountEntry> _accountEntries = new ArrayList<>();
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

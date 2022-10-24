@@ -18,12 +18,10 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountRole;
-import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -75,24 +72,18 @@ public class AccountGroupSearchPermissionFilterContributorTest {
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
-		_accountGroupRelLocalService.addAccountGroupRel(
-			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId());
-
-		AccountGroupTestUtil.addAccountGroup(
-			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-		AccountGroupTestUtil.addAccountGroup(
-			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
 		User user = UserTestUtil.addUser();
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), user.getUserId());
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withAccountGroups(accountGroup),
+			AccountEntryArgs.withUsers(user));
+
+		AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+		AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		_assertSearch(user);
 
@@ -147,24 +138,12 @@ public class AccountGroupSearchPermissionFilterContributorTest {
 	}
 
 	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Inject
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
-
-	@Inject
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Inject
 	private AccountGroupService _accountGroupService;
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -61,21 +62,15 @@ public class AccountGroupModelResourcePermissionTest {
 
 	@Test
 	public void testViewAccountGroupsPermissions() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
 		User user = UserTestUtil.addUser();
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), user.getUserId());
 
 		AccountGroup accountGroup1 = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		_accountGroupRelLocalService.addAccountGroupRel(
-			accountGroup1.getAccountGroupId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId());
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withAccountGroups(accountGroup1),
+			AccountEntryArgs.withUsers(user));
 
 		AccountGroup accountGroup2 = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),

@@ -64,8 +64,7 @@ public class AccountRoleModelResourcePermissionTest {
 
 	@Test
 	public void testAccountRolePermissions() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole ownedAccountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
@@ -73,8 +72,7 @@ public class AccountRoleModelResourcePermissionTest {
 
 		_testPermissions(Assert::assertTrue, accountEntry, ownedAccountRole);
 
-		AccountEntry accountEntryB = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntryB = AccountEntryTestUtil.addAccountEntry();
 
 		try (SafeCloseable safeCloseable =
 				AccountRolePermissionThreadLocal.setWithSafeCloseable(
@@ -102,8 +100,7 @@ public class AccountRoleModelResourcePermissionTest {
 
 	@Test
 	public void testAssignUsersPermissions() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
@@ -136,8 +133,7 @@ public class AccountRoleModelResourcePermissionTest {
 
 	@Test
 	public void testViewPermissions() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),

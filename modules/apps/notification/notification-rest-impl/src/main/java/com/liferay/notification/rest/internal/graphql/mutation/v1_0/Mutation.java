@@ -209,6 +209,19 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public NotificationTemplate createNotificationTemplateCopy(
+			@GraphQLName("notificationTemplateId") Long notificationTemplateId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationTemplateResource ->
+				notificationTemplateResource.postNotificationTemplateCopy(
+					notificationTemplateId));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

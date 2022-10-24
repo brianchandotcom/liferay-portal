@@ -95,6 +95,10 @@ public interface NotificationTemplateResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public NotificationTemplate postNotificationTemplateCopy(
+			Long notificationTemplateId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

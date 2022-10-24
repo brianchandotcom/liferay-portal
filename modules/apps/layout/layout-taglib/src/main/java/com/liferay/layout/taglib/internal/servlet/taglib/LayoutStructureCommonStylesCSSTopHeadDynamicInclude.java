@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.internal.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -80,13 +81,15 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			SegmentsExperienceUtil.getSegmentsExperienceId(httpServletRequest));
 		printWriter.print("&t=");
 
-		Date modifiedDate = layout.getModifiedDate();
+		_addModifiedDate(printWriter, layout);
 
-		if (modifiedDate != null) {
-			printWriter.print(modifiedDate.getTime());
-		}
-		else {
-			printWriter.print(System.currentTimeMillis());
+		long masterLayoutPlid = layout.getMasterLayoutPlid();
+
+		if (masterLayoutPlid > 0) {
+			Layout masterLayout = _layoutLocalService.fetchLayout(
+				masterLayoutPlid);
+
+			_addModifiedDate(printWriter, masterLayout);
 		}
 
 		printWriter.print("\" rel=\"stylesheet\" type=\"text/css\">");
@@ -97,6 +100,24 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/top_head.jsp#post");
 	}
+
+	private void _addModifiedDate(PrintWriter printWriter, Layout layout) {
+		if (layout == null) {
+			return;
+		}
+
+		Date modifiedDate = layout.getModifiedDate();
+
+		if (modifiedDate != null) {
+			printWriter.print(modifiedDate.getTime());
+		}
+		else {
+			printWriter.print(System.currentTimeMillis());
+		}
+	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

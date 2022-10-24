@@ -118,9 +118,7 @@ const actions = {
 		}
 
 		showSidebar({
-			View: Liferay.FeatureFlags['LPS-161013']
-				? SidebarPanelInfoView
-				: SidebarPanelInfoViewCollapsable,
+			View: SidebarPanelInfoView,
 			fetchURL,
 			portletNamespace,
 			singlePageApplicationEnabled,

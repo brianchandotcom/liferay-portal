@@ -42,20 +42,18 @@ const DetailsContent = ({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-161013'] && (
-				<>
-					<PreviewActionsDescriptionSection
-						description={description}
-						downloadURL={downloadURL}
-						fetchSharingButtonURL={fetchSharingButtonURL}
-						handleError={handleError}
-						preview={preview}
-						title={title}
-					/>
+			<>
+				<PreviewActionsDescriptionSection
+					description={description}
+					downloadURL={downloadURL}
+					fetchSharingButtonURL={fetchSharingButtonURL}
+					handleError={handleError}
+					preview={preview}
+					title={title}
+				/>
 
-					<Categorization tags={tags} vocabularies={vocabularies} />
-				</>
-			)}
+				<Categorization tags={tags} vocabularies={vocabularies} />
+			</>
 
 			<CollapsibleSection title={Liferay.Language.get('details')}>
 				<div className="sidebar-section">

@@ -55,9 +55,7 @@ const handlePanelStateFromSession = ({
 	}
 
 	ActionsComponentPropsTransformer.showSidebar({
-		View: Liferay.FeatureFlags['LPS-161013']
-			? SidebarPanelInfoView
-			: SidebarPanelInfoViewCollapsable,
+		View: SidebarPanelInfoView,
 		fetchURL: selectedItemFetchURL,
 		portletNamespace: namespace,
 		singlePageApplicationEnabled,

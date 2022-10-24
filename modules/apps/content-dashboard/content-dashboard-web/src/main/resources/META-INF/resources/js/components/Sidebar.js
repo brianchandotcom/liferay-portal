@@ -28,19 +28,11 @@ const SidebarBody = ({children, className}) => {
 	);
 };
 
-const SidebarHeader = ({actionsSlot, children, className, title}) => {
+const SidebarHeader = ({actionsSlot, children, title}) => {
 	const {onClose} = useContext(SidebarContext);
 
 	return (
-		<section
-			className={classNames(
-				'sidebar-header',
-				{
-					'is-sticky': Liferay.FeatureFlags['LPS-161013'],
-				},
-				className
-			)}
-		>
+		<section className="is-sticky sidebar-header">
 			<ClayLayout.ContentRow className="sidebar-section">
 				<ClayLayout.ContentCol
 					className="justify-content-center"

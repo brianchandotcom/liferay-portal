@@ -36,6 +36,7 @@ import {
 import ModalDXPCActivationStatus from '../../ModalDXPCActivationStatus';
 import AlreadySubmittedFormModal from '../AlreadySubmittedModal';
 import ActivationStatusLayout from '../Layout';
+import PopoverIcon from './components/PopoverIcon';
 
 const submittedModalTexts = {
 	paragraph: i18n.translate(
@@ -199,8 +200,14 @@ const ActivationStatusDXPCloud = ({
 				</Button>
 			),
 			id: STATUS_TAG_TYPES.notActivated,
-			subtitle: i18n.translate(
-				'almost-there-setup-lxc-sm-by-finishing-the-activation-form'
+			subtitle: (
+				<>
+					{i18n.translate('almost-there-setup-lxc-sm')}
+
+					<PopoverIcon />
+
+					{i18n.translate('by-finishing-the-activation-form')}
+				</>
 			),
 			title: i18n.translate('activation-status'),
 		},

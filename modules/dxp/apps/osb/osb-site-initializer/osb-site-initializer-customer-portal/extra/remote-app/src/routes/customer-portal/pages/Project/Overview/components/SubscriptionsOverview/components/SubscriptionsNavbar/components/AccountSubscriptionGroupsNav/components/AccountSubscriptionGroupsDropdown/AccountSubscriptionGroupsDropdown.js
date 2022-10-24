@@ -13,7 +13,7 @@ import {Button, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import Skeleton from '../../../../../../../../../../../../../common/components/Skeleton';
-
+import PopoverIcon from '../../../../../../../../../../../components/ActivationStatus/DXPCloud/components/PopoverIcon';
 const AccountSubscriptionGroupsDropdown = ({
 	accountSubscriptionGroups,
 	disabled,
@@ -22,7 +22,6 @@ const AccountSubscriptionGroupsDropdown = ({
 	selectedIndex,
 }) => {
 	const [active, setActive] = useState(false);
-
 	const getDropdownItems = () =>
 		accountSubscriptionGroups?.map((accountSubscriptionGroup, index) => (
 			<DropDown.Item
@@ -32,7 +31,14 @@ const AccountSubscriptionGroupsDropdown = ({
 				onClick={() => onSelect(index)}
 				symbolRight={index === selectedIndex && 'check'}
 			>
-				{accountSubscriptionGroup.name}
+				{accountSubscriptionGroup.name === 'LXC - SM' ? (
+					<>
+						{accountSubscriptionGroup.name}
+						<PopoverIcon />
+					</>
+				) : (
+					accountSubscriptionGroup.name
+				)}
 			</DropDown.Item>
 		));
 
@@ -52,6 +58,12 @@ const AccountSubscriptionGroupsDropdown = ({
 				>
 					{loading ? (
 						<Skeleton height={16} width={80} />
+					) : accountSubscriptionGroups[selectedIndex]?.name ===
+					  'LXC - SM' ? (
+						<>
+							{accountSubscriptionGroups[selectedIndex]?.name}
+							<PopoverIcon />
+						</>
 					) : (
 						accountSubscriptionGroups[selectedIndex]?.name
 					)}
@@ -66,5 +78,4 @@ const AccountSubscriptionGroupsDropdown = ({
 		</DropDown>
 	);
 };
-
 export default AccountSubscriptionGroupsDropdown;

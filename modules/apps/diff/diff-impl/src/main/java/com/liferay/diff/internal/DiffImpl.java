@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Bruno Farache
  */
-@Component(immediate = true, service = com.liferay.diff.Diff.class)
+@Component(service = com.liferay.diff.Diff.class)
 public class DiffImpl implements com.liferay.diff.Diff {
 
 	/**

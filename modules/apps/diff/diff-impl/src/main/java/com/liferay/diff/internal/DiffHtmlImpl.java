@@ -49,7 +49,7 @@ import org.xml.sax.helpers.AttributesImpl;
  *
  * @author Julio Camarero
  */
-@Component(immediate = true, service = DiffHtml.class)
+@Component(service = DiffHtml.class)
 public class DiffHtmlImpl implements DiffHtml {
 
 	/**

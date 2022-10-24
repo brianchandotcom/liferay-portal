@@ -17,7 +17,12 @@ import React from 'react';
 import BasePage from '../../components/BasePage';
 
 const Step = () => {
-	return <BasePage title={Liferay.Language.get('people')}></BasePage>;
+	return (
+		<BasePage
+			description={Liferay.Language.get('sync-people-description')}
+			title={Liferay.Language.get('sync-people')}
+		></BasePage>
+	);
 };
 
 export default Step;

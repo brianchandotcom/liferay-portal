@@ -2,6 +2,7 @@
 definition {
 
 	var baseURL = PropsUtil.get("portal.url");
+
 	property custom.properties = "feature.flag.LPS-135430=true";
 	property osgi.modules.includes = "osb-site-initializer-partner-portal";
 	property portal.release = "false";

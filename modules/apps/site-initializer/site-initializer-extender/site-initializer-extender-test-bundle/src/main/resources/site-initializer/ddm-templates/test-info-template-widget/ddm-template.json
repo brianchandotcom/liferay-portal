@@ -1,0 +1,8 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmStructureKey": "TEST DDM STRUCTURE NAME",
+	"ddmTemplateKey": "TEST INFO TEMPLATE WIDGET",
+	"infoItemClassName": "com.liferay.journal.model.JournalArticle",
+	"name": "Test Widget Template Name",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

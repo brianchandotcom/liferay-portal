@@ -1481,7 +1481,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				DDMStructure ddmStructure =
 					ddmStructureLocalService.fetchStructure(
 						serviceContext.getScopeGroupId(), resourceClassNameId,
-						ddmStructureKey);
+						ddmStructureKey, true);
 
 				ddmStructureId = ddmStructure.getStructureId();
 			}
@@ -1510,11 +1510,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 					false, false, null, null, serviceContext);
 
 				if (Objects.equals(className, TemplateEntry.class.getName())) {
+					String infoItemFormVariationKey = null;
+
+					if (Objects.equals(
+								infoItemClassName,
+								JournalArticle.class.getName())) {
+
+						infoItemFormVariationKey = String.valueOf(
+							ddmStructureId);
+					}
+
 					templateEntryLocalService.addTemplateEntry(
 						serviceContext.getUserId(),
 						serviceContext.getScopeGroupId(),
-						ddmTemplate.getTemplateId(), className, null,
-						serviceContext);
+						ddmTemplate.getTemplateId(), infoItemClassName,
+						infoItemFormVariationKey, serviceContext);
 				}
 			}
 			else {

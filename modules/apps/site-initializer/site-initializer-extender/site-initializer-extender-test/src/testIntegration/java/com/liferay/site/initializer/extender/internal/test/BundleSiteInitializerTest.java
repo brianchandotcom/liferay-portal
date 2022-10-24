@@ -697,6 +697,32 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.commerce.product.model.CPDefinition",
 			templateEntry1.getInfoItemClassName());
+
+		DDMTemplate ddmTemplate3 = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId(TemplateEntry.class.getName()),
+			"TEST INFO TEMPLATE WIDGET");
+
+		Assert.assertNotNull(ddmTemplate3);
+		Assert.assertEquals("${aField.getData()}", ddmTemplate3.getScript());
+
+		TemplateEntry templateEntry2 =
+			_templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+				ddmTemplate3.getTemplateId());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			group.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"TEST DDM STRUCTURE NAME");
+
+		Assert.assertNotNull(templateEntry2);
+		Assert.assertEquals(
+			"com.liferay.journal.model.JournalArticle",
+			templateEntry2.getInfoItemClassName());
+		Assert.assertEquals(
+			String.valueOf(ddmStructure.getStructureId()),
+			templateEntry2.getInfoItemFormVariationKey());
+
 	}
 
 	private void _assertDefaultCPDisplayLayout(

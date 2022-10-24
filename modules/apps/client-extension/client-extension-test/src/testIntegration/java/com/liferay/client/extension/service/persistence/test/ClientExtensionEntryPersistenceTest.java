@@ -15,6 +15,7 @@
 package com.liferay.client.extension.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.exception.NoSuchClientExtensionEntryException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
@@ -237,6 +238,21 @@ public class ClientExtensionEntryPersistenceTest {
 			Time.getShortTimestamp(
 				existingClientExtensionEntry.getStatusDate()),
 			Time.getShortTimestamp(newClientExtensionEntry.getStatusDate()));
+	}
+
+	@Test(
+		expected = DuplicateClientExtensionEntryExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		ClientExtensionEntry clientExtensionEntry = addClientExtensionEntry();
+
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
+
+		newClientExtensionEntry.setExternalReferenceCode(
+			clientExtensionEntry.getExternalReferenceCode());
+
+		_persistence.update(newClientExtensionEntry);
 	}
 
 	@Test

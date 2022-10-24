@@ -37,18 +37,19 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteInitializerExtenderUpdatePanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SiteInitializerExtenderUpdatePortletKeys.
 			SITE_INITIALIZER_EXTENDER_UPDATE;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SiteInitializerExtenderUpdatePortletKeys.SITE_INITIALIZER_EXTENDER_UPDATE + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + SiteInitializerExtenderUpdatePortletKeys.SITE_INITIALIZER_EXTENDER_UPDATE + ")"
 	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
-	}
+	private Portlet _portlet;
 
 }

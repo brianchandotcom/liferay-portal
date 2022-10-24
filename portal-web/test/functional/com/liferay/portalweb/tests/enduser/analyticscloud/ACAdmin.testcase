@@ -169,6 +169,7 @@ definition {
 	@description = "Bug: LRAC-11339 | Automation ID: LRAC-11365 | Test Summary: A new user created in the admin page can be invited to the workspace and see the data, the same user, now with admin permission, also can see the data"
 	@priority = "5"
 	test NewUserIndependentOfRoleCanSeeDataInTheWorkspace {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 		var userFirstName = "ac";
 		var userLastName = "ac";
 		var userScreenName = "acworkspace";
@@ -198,7 +199,7 @@ definition {
 		}
 
 		task ("Navigate to the AC Admin page") {
-			ACUtils.launchAC();
+			Open(locator1 = "${analyticsCloudURL}");
 
 			ACAdmin.goToACAdmin();
 		}

@@ -134,47 +134,6 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
-	public void testFilterCountByKeywordsAsPowerUserWithoutViewPermission()
-		throws Exception {
-
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
-			int initialFileEntryTypesCount =
-				DLFileEntryTypeFinderUtil.filterCountByKeywords(
-					_group.getCompanyId(), new long[] {_group.getGroupId()},
-					_DL_FILE_ENTRY_TYPE_NAME, true);
-
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId());
-
-			serviceContext.setAddGroupPermissions(false);
-			serviceContext.setAddGuestPermissions(false);
-
-			addFileEntryType(serviceContext);
-
-			Assert.assertEquals(
-				initialFileEntryTypesCount,
-				DLFileEntryTypeFinderUtil.filterCountByKeywords(
-					_group.getCompanyId(), new long[] {_group.getGroupId()},
-					_DL_FILE_ENTRY_TYPE_NAME, true));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
-	@Test
 	public void testFilterCountByKeywordsWithBlankKeywords() throws Exception {
 		int initialFileEntryTypesCount =
 			DLFileEntryTypeFinderUtil.filterCountByKeywords(
@@ -256,48 +215,6 @@ public class DLFileEntryTypeFinderTest {
 			Assert.assertEquals(
 				fileEntryTypes.toString(), 1, fileEntryTypes.size());
 			Assert.assertTrue(
-				fileEntryTypes.toString(),
-				fileEntryTypes.contains(fileEntryType));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
-	@Test
-	public void testFilterFindByKeywordsAsPowerUserWithoutViewPermission()
-		throws Exception {
-
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId());
-
-			serviceContext.setAddGroupPermissions(false);
-			serviceContext.setAddGuestPermissions(false);
-
-			DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
-
-			List<DLFileEntryType> fileEntryTypes =
-				DLFileEntryTypeFinderUtil.filterFindByKeywords(
-					_group.getCompanyId(), new long[] {_group.getGroupId()},
-					_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			Assert.assertEquals(
-				fileEntryTypes.toString(), 0, fileEntryTypes.size());
-			Assert.assertFalse(
 				fileEntryTypes.toString(),
 				fileEntryTypes.contains(fileEntryType));
 		}

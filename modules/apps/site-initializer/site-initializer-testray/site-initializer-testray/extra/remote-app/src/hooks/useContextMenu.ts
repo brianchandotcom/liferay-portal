@@ -61,7 +61,9 @@ const useContextMenu = (active: boolean) => {
 				visible: false,
 			});
 
-		window.addEventListener('click', handleClick);
+		if (contextMenuState.visible) {
+			window.addEventListener('click', handleClick);
+		}
 
 		return () => {
 			if (!active) {

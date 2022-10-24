@@ -543,6 +543,39 @@ definition {
 		}
 	}
 
+	@description = "This tests activating an inactive account"
+	@priority = "3"
+	test CanActivateAnInactiveAccount {
+		task ("Given a business account that is Inactive") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name for Test",
+				accountEntryStatus = "Inactive",
+				accountEntryType = "Business");
+		}
+
+		task ("When a user activates it") {
+			Accounts.openAccountsAdmin();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Activate",
+				rowEntry = "Accounts Name for Test");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the account is in Active status and can be viewed in the Active filter") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+		}
+	}
+
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = "4"
 	test CanAddAccountUserViaAssignUser {

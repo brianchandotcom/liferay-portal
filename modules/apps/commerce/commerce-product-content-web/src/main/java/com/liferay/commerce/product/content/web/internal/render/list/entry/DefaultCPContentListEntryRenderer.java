@@ -16,7 +16,6 @@ package com.liferay.commerce.product.content.web.internal.render.list.entry;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -77,9 +76,6 @@ public class DefaultCPContentListEntryRenderer
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/product_publisher/render/list/entry/view.jsp");
 	}
-
-	@Reference
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

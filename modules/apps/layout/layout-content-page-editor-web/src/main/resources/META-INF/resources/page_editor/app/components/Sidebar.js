@@ -95,6 +95,8 @@ export default function Sidebar() {
 	const sidebarWidthRef = useRef(sidebarWidth);
 	sidebarWidthRef.current = sidebarWidth;
 
+	const sidebarContentRef = useRef();
+
 	const panels = useSelector(selectAvailablePanels(config.panels));
 	const sidebarHidden = store.sidebar.hidden;
 	const sidebarOpen = selectSidebarIsOpened(store);
@@ -287,6 +289,10 @@ export default function Sidebar() {
 				sidebarPanelId: panel.sidebarPanelId,
 			})
 		);
+
+		if (open) {
+			sidebarContentRef.current?.focus();
+		}
 	};
 
 	const handleSeparatorKeyDown = (event) => {
@@ -397,6 +403,7 @@ export default function Sidebar() {
 								<ClayButtonWithIcon
 									aria-pressed={active}
 									className={classNames({active})}
+									data-panel-id={panel.sidebarPanelId}
 									data-tooltip-align="left"
 									displayType="unstyled"
 									id={`${sidebarId}${panel.sidebarPanelId}`}
@@ -436,6 +443,8 @@ export default function Sidebar() {
 					})}
 					id={sidebarContentId}
 					onClick={deselectItem}
+					ref={sidebarContentRef}
+					tabIndex="-1"
 				>
 					{hasError ? (
 						<div>

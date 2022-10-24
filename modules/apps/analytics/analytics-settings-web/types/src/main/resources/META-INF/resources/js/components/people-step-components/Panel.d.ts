@@ -13,7 +13,11 @@
  */
 
 import React from 'react';
-import {TGenericComponent} from './WizardPage';
-interface IStepProps extends TGenericComponent {}
-declare const Step: React.FC<IStepProps>;
-export default Step;
+interface IPanelProps {
+	groupLabel: string;
+	groupSection: string;
+	icon: string;
+	title: string;
+}
+declare const Panel: React.FC<IPanelProps>;
+export default Panel;

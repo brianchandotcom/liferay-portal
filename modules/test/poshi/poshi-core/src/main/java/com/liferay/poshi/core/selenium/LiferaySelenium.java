@@ -60,6 +60,8 @@ public interface LiferaySelenium {
 
 	public void assertEditable(String locator) throws Exception;
 
+	public void assertElementAccessible(String locator) throws Exception;
+
 	public void assertElementNotPresent(String locator) throws Exception;
 
 	public void assertElementPresent(String locator) throws Exception;

@@ -1091,45 +1091,6 @@ definition {
 			value1 = "Account Administrator, Account Specific Role");
 	}
 
-	@description = "This test updates an account's status from Active to Inactive asserts change saves successfully."
-	@priority = "4"
-	test CanChangeAccountStatusToInactiveThenActiveViaEdit {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Change Account Status",
-			accountEntryType = "Business");
-
-		Accounts.openAccountsAdmin();
-
-		Accounts.editCP(
-			accountName = "Change Account Status",
-			accountNameEdit = "Edited Account Name",
-			accountStatusEdit = "Inactive");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.viewNoEntry(rowEntry = "Edited Account Name");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-
-		LexiconEntry.viewEntryStatus(
-			rowEntry = "Edited Account Name",
-			rowStatus = "Inactive");
-
-		LexiconEntry.gotoEntry(rowEntry = "Edited Account Name");
-
-		Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.viewEntryStatus(
-			rowEntry = "Edited Account Name",
-			rowStatus = "Active");
-	}
-
 	@description = "This test asserts that address type can be changed from Billing to Shipping and vice versa."
 	@priority = "5"
 	test CanChangeAddressType {

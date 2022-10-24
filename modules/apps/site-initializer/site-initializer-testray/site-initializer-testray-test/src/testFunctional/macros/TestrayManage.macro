@@ -87,9 +87,15 @@ definition {
 	}
 
 	macro deleteAllCasesTypes {
+		Refresh();
+		
 		TestrayLayout.clickManageOnSidebar();
 
 		TestrayManage.selectOptionsManage(itemValue = "Case Types");
+
+		Testray.changePaginationInModal(
+			numberItems = "20",
+			valuePagination = "150");
 
 		while (IsElementPresent(key_projectName = "Case_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case_");

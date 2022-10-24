@@ -108,6 +108,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166555 - Verify if as an Administrator I should not be able to add a duplicate cases types"
+	@priority = "5"
+	test AdminCanNotAddDuplicateCasesTypes {
+		task ("Go to Case Types on Manage Sidebar and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+
+			Testray.changePaginationInModal(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("Create Case Type duplicate and assert the error message should appear") {
+			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
+
+			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
+
+			Alert.viewErrorMessage(errorMessage = "The Case Type name already exists");
+		}
+	}
+
 	@description = "This is a test for LPS-164131 - Verify that the user can not create a case type if all the required fields are not filled in"
 	@priority = "3"
 	test AdminCanViewRequiredField {

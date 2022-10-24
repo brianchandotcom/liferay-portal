@@ -16,7 +16,7 @@ import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 
 const ResultsBar = ({
 	clearResultsURL,
@@ -24,13 +24,23 @@ const ResultsBar = ({
 	itemsTotal,
 	searchValue,
 }) => {
+	const resultsBarRef = useRef();
+
+	useEffect(() => {
+		resultsBarRef.current?.focus();
+	}, [searchValue]);
+
 	return (
 		<>
 			<ManagementToolbar.ResultsBar>
 				<ManagementToolbar.ResultsBarItem
 					expand={!(filterLabelItems?.length > 0)}
 				>
-					<span className="component-text text-truncate-inline">
+					<span
+						className="component-text text-truncate-inline"
+						ref={resultsBarRef}
+						tabIndex={0}
+					>
 						<span className="text-truncate">
 							{sub(
 								itemsTotal === 1

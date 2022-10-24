@@ -37,6 +37,7 @@ const QuestionList = ({
 	search,
 	section,
 	sectionTitle,
+	urlParams = {},
 }) => {
 	if (section) {
 		return (
@@ -45,9 +46,11 @@ const QuestionList = ({
 					activeDelta={pageSize}
 					activePage={page}
 					changeDelta={(pageSize) =>
-						changePage({page, pageSize, search})
+						changePage({...urlParams, page, pageSize, search})
 					}
-					changePage={(page) => changePage({page, pageSize, search})}
+					changePage={(page) =>
+						changePage({...urlParams, page, pageSize, search})
+					}
 					data={questions}
 					emptyState={
 						sectionTitle && !search ? (

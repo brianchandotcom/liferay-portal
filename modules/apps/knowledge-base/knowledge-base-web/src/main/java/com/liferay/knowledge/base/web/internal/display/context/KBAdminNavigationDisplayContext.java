@@ -260,10 +260,7 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"navigationItems", navigationItemsJSONArray
 				).put(
-					"selectedItemId",
-					ParamUtil.getLong(
-						_httpServletRequest, "selectedItemId",
-						KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+					"selectedItemId", _getSelectedItemId()
 				).put(
 					"title", LanguageUtil.get(_httpServletRequest, "templates")
 				));

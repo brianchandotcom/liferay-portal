@@ -71,8 +71,7 @@ public class HeadlessHttpClientTemplateContextContributor
 		public Object get(String path) throws Exception {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			ServletContext servletContext = ServletContextPool.get(
-				StringPool.BLANK);
+			ServletContext servletContext = _getServletContext();
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(Portal.PATH_MODULE + path);
@@ -91,5 +90,15 @@ public class HeadlessHttpClientTemplateContextContributor
 		private final HttpServletResponse _httpServletResponse;
 
 	}
+
+	private ServletContext _getServletContext() {
+		if (_servletContext == null) {
+			_servletContext = ServletContextPool.get(StringPool.BLANK);
+		}
+
+		return _servletContext;
+	}
+
+	private ServletContext _servletContext;
 
 }

@@ -150,7 +150,7 @@ definition {
 		Click(
 			envelopeName = "${envelopeName}",
 			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
-			
+
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_ID");
 	}
 

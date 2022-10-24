@@ -28,6 +28,10 @@ definition {
 	macro gotoPRM {
 		Navigator.openSiteURL(siteName = "Partner Portal");
 
+		if (IsElementPresent(locator1 = "PRMUtils#SIGN_IN")) {
+			Click(locator1 = "PRMUtils#SIGN_IN");
+		}
+
 		Refresh();
 	}
 

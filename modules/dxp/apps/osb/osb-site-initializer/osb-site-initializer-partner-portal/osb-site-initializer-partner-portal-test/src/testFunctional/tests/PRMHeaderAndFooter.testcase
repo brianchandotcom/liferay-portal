@@ -1,6 +1,7 @@
 @component-name = "OSB Site Initializer Partner Portal"
 definition {
 
+	var baseURL = PropsUtil.get("portal.url");
 	property custom.properties = "feature.flag.LPS-135430=true";
 	property osgi.modules.includes = "osb-site-initializer-partner-portal";
 	property portal.release = "false";
@@ -47,7 +48,7 @@ definition {
 		}
 
 		task ("Verify if current URL contains 'partner-portal-name/enablement") {
-			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/enablement");
+			AssertLocation.assertPartialLocation(value1 = "enablement");
 		}
 	}
 
@@ -63,7 +64,7 @@ definition {
 		}
 
 		task ("Verify if current URL contains 'partner-portal-name/home") {
-			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/home");
+			AssertLocation.assertPartialLocation(value1 = "home");
 		}
 	}
 
@@ -79,7 +80,7 @@ definition {
 		}
 
 		task ("Verify if current URL contains 'partner-portal-name/marketing") {
-			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/marketing");
+			AssertLocation.assertPartialLocation(value1 = "marketing");
 		}
 	}
 
@@ -95,7 +96,7 @@ definition {
 		}
 
 		task ("Verify if current URL contains 'partner-portal-name/sales") {
-			AssertLocation.assertPartialLocation(value1 = "${testSiteURL}/sales");
+			AssertLocation.assertPartialLocation(value1 = "sales");
 		}
 	}
 

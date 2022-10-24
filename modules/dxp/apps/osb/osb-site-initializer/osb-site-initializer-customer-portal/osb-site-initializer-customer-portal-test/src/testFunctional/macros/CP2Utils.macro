@@ -55,6 +55,18 @@ definition {
 			value1 = "${role}");
 	}
 
+	macro clickBreadcrumb {
+		var key_project = "${project}";
+
+		Click(locator1 = "CP2Utils#SVG_DROPDOWN");
+
+		CP2Utils.search(
+			project = "${project}",
+			searchItem = "${project}");
+
+		Click(locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
+	}
+
 	macro closeModal {
 		Click(locator1 = "CP2Utils#CLOSE_BUTTON");
 	}
@@ -65,6 +77,14 @@ definition {
 			locator1 = "Icon#SPECIFIC_ELLIPSIS");
 
 		MenuItem.click(menuItem = "${menuItem}");
+	}
+
+	macro search {
+		if (IsElementPresent(locator1 = "CP2Utils#PROJECT_SEARCH")) {
+			Type(
+				locator1 = "CP2Utils#PROJECT_SEARCH",
+				value1 = "${searchItem}");
+		}
 	}
 
 }

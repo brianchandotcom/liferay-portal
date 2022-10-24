@@ -16,158 +16,62 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.search.experiences.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.Map.Entry" %>
+<portlet:defineObjects />
 
 <%
 SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurationDisplayContext = (SemanticSearchCompanyConfigurationDisplayContext)request.getAttribute(SemanticSearchCompanyConfigurationDisplayContext.class.getName());
 %>
 
-<aui:fieldset label="transform-provider-settings">
-	<aui:input helpMessage="sentence-transformer-enabled-help" name="sentenceTransformerEnabled" type="checkbox" value="<%= semanticSearchCompanyConfigurationDisplayContext.isSentenceTransformerEnabled() %>" />
+<div>
+	<span aria-hidden="true" class="loading-animation"></span>
 
-	<%
-	String sentenceTransformProvider = semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider();
-	%>
-
-	<aui:select id="sentenceTransformProvider" name="sentenceTransformProvider" value="<%= sentenceTransformProvider %>">
-
-		<%
-		Map<String, String> availableSentenceTransformProviders = semanticSearchCompanyConfigurationDisplayContext.getAvailableSentenceTranformProviders();
-
-		for (Entry<String, String> entry : availableSentenceTransformProviders.entrySet()) {
-		%>
-
-			<aui:option label="<%= entry.getValue() %>" value="<%= entry.getKey() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<div class="options-container <%= !sentenceTransformProvider.equals("huggingFace") ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />huggingFaceOptionsContainer">
-		<aui:input name="huggingFaceAccessToken" value="<%= semanticSearchCompanyConfigurationDisplayContext.getHuggingFaceAccessToken() %>" />
-
-		<%--
-		TODO Use REST to query ML models
-		--%>
-
-		<aui:input helpMessage="sentence-transformer-model-help" name="model" value='<%= (semanticSearchCompanyConfigurationDisplayContext.getModel() != null) ? semanticSearchCompanyConfigurationDisplayContext.getModel() : "facebook/contriever-msmarco" %>' />
-
-		<aui:input helpMessage="sentence-transformer-model-timeout-help" name="modelTimeout" value="<%= semanticSearchCompanyConfigurationDisplayContext.getModelTimeout() %>">
-			<aui:validator name="required" />
-			<aui:validator name="number" />
-			<aui:validator name="range">[0,60]</aui:validator>
-		</aui:input>
-
-		<aui:input helpMessage="sentence-transformer-enable-gpu-help" name="enableGPU" type="checkbox" value="<%= semanticSearchCompanyConfigurationDisplayContext.isEnableGPU() %>" />
-	</div>
-
-	<div class="options-container <%= !sentenceTransformProvider.equals("txtai") ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />txtAiOptionsContainer">
-		<aui:input helpMessage="sentence-transformer-txtai-host-address-help" label="txtai-host-address" name="txtaiHostAddress" value="<%= semanticSearchCompanyConfigurationDisplayContext.getTxtaiHostAddress() %>" />
-	</div>
-
-	<aui:select helpMessage="sentence-transformer-embedding-vector-dimensions-help" name="embeddingVectorDimensions" value="<%= semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions() %>">
-
-		<%
-		for (String availableEmbeddingVectorDimensions : semanticSearchCompanyConfigurationDisplayContext.getAvailableEmbeddingVectorDimensions()) {
-		%>
-
-			<aui:option label="<%= availableEmbeddingVectorDimensions %>" value="<%= availableEmbeddingVectorDimensions %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-</aui:fieldset>
-
-<aui:fieldset label="indexing-settings">
-	<aui:input helpMessage="sentence-transformer-max-character-count-help" name="maxCharacterCount" value="<%= semanticSearchCompanyConfigurationDisplayContext.getMaxCharacterCount() %>">
-		<aui:validator name="required" />
-		<aui:validator name="number" />
-		<aui:validator name="range">[50,10000]</aui:validator>
-	</aui:input>
-
-	<aui:select helpMessage="sentence-transformer-text-truncation-strategy-help" name="textTruncationStrategy" value="<%= semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy() %>">
-
-		<%
-		Map<String, String> availableTextTruncationStrategies = semanticSearchCompanyConfigurationDisplayContext.getAvailableTextTruncationStrategies();
-
-		for (Entry<String, String> entry : availableTextTruncationStrategies.entrySet()) {
-		%>
-
-			<aui:option label="<%= entry.getValue() %>" value="<%= entry.getKey() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<aui:select helpMessage="sentence-transformer-asset-entry-class-names-help" multiple="<%= true %>" name="assetEntryClassNames" required="<%= true %>">
-
-		<%
-		Map<String, String> availableAssetEntryClassNames = semanticSearchCompanyConfigurationDisplayContext.getAvailableAssetEntryClassNames();
-
-		for (Entry<String, String> entry : availableAssetEntryClassNames.entrySet()) {
-			List<String> assetEntryClassNames = semanticSearchCompanyConfigurationDisplayContext.getAssetEntryClassNames();
-		%>
-
-			<aui:option label="<%= entry.getValue() %>" selected="<%= assetEntryClassNames.contains(entry.getKey()) %>" value="<%= entry.getKey() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
-	<aui:select helpMessage="sentence-transformer-language-ids-help" multiple="<%= true %>" name="languageIds" required="<%= true %>">
-
-		<%
-		Map<String, String> availableLanguageDisplayNames = semanticSearchCompanyConfigurationDisplayContext.getAvailableLanguageDisplayNames();
-
-		for (Entry<String, String> entry : availableLanguageDisplayNames.entrySet()) {
-			List<String> languageIds = semanticSearchCompanyConfigurationDisplayContext.getLanguageIds();
-		%>
-
-			<aui:option label="<%= entry.getValue() %>" selected="<%= languageIds.contains(entry.getKey()) %>" value="<%= entry.getKey() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-</aui:fieldset>
-
-<aui:input helpMessage="sentence-transformer-cache-timeout-help" name="cacheTimeout" value="<%= semanticSearchCompanyConfigurationDisplayContext.getCacheTimeout() %>">
-	<aui:validator name="required" />
-	<aui:validator name="number" />
-	<aui:validator name="min">0</aui:validator>
-</aui:input>
-
-<aui:script>
-	Liferay.Portlet.ready(() => {
-		let A = AUI();
-
-		A.one('#<portlet:namespace />sentenceTransformProvider').on(
-			'change',
-			() => {
-				A.one(
-					'#<portlet:namespace />huggingFaceOptionsContainer'
-				).toggleClass('hide');
-
-				A.one('#<portlet:namespace />txtAiOptionsContainer').toggleClass(
-					'hide'
-				);
-			}
-		);
-	});
-</aui:script>
+	<react:component
+		module="semantic_search/js/configuration/index"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"assetEntryClassNames", semanticSearchCompanyConfigurationDisplayContext.getAssetEntryClassNames()
+			).put(
+				"availableAssetEntryClassNames", semanticSearchCompanyConfigurationDisplayContext.getAvailableAssetEntryClassNames()
+			).put(
+				"availableEmbeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getAvailableEmbeddingVectorDimensions()
+			).put(
+				"availableLanguageDisplayNames", semanticSearchCompanyConfigurationDisplayContext.getAvailableLanguageDisplayNames()
+			).put(
+				"availableSentenceTransformProviders", semanticSearchCompanyConfigurationDisplayContext.getAvailableSentenceTranformProviders()
+			).put(
+				"availableTextTruncationStrategies", semanticSearchCompanyConfigurationDisplayContext.getAvailableTextTruncationStrategies()
+			).put(
+				"cacheTimeout", semanticSearchCompanyConfigurationDisplayContext.getCacheTimeout()
+			).put(
+				"embeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions()
+			).put(
+				"enabled", semanticSearchCompanyConfigurationDisplayContext.isEnabled()
+			).put(
+				"enableGPU", semanticSearchCompanyConfigurationDisplayContext.isEnableGPU()
+			).put(
+				"huggingFaceAccessToken", semanticSearchCompanyConfigurationDisplayContext.getHuggingFaceAccessToken()
+			).put(
+				"languageIds", semanticSearchCompanyConfigurationDisplayContext.getLanguageIds()
+			).put(
+				"maxCharacterCount", semanticSearchCompanyConfigurationDisplayContext.getMaxCharacterCount()
+			).put(
+				"model", semanticSearchCompanyConfigurationDisplayContext.getModel()
+			).put(
+				"modelTimeout", semanticSearchCompanyConfigurationDisplayContext.getModelTimeout()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"sentenceTransformProvider", semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider()
+			).put(
+				"textTruncationStrategy", semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy()
+			).put(
+				"txtaiHostAddress", semanticSearchCompanyConfigurationDisplayContext.getTxtaiHostAddress()
+			).build()
+		%>'
+	/>
+</div>

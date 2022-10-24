@@ -1,0 +1,55 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+boolean jobPreviouslyRun = GetterUtil.getBoolean(request.getAttribute(CommerceAvalaraWebKeys.JOB_PREVIOUSLY_RUN));
+DispatchLog latestDispatchLog = (DispatchLog)GetterUtil.getObject(request.getAttribute(CommerceAvalaraWebKeys.LATEST_DISPATCH_LOG));
+%>
+
+<liferay-frontend:fieldset
+	collapsible="<%= true %>"
+	label="settings"
+>
+	<c:choose>
+		<c:when test="<%= !jobPreviouslyRun || (latestDispatchLog == null) %>">
+			<aui:alert type="warning">
+				<liferay-ui:message key="sync-avalara-tax-rates-to-finish-connector-setup" />
+			</aui:alert>
+			<%@ include file="/buttons/sync_tax_rates.jspf" %>
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.IN_PROGRESS.getStatus() %>">
+				<aui:alert type="info">
+					<liferay-ui:message key="tax-rates-are-syncing" />
+				</aui:alert>
+			</c:if>
+
+			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.FAILED.getStatus() %>">
+				<aui:alert type="danger">
+					<liferay-ui:message key="tax-rate-sync-failed" />
+				</aui:alert>
+
+				<%@ include file="/buttons/sync_tax_rates.jspf" %>
+			</c:if>
+
+			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.SUCCESSFUL.getStatus() %>">
+				<aui:alert type="success">
+					<liferay-ui:message key="tax-rate-sync-completed-successfully" />
+				</aui:alert>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+</liferay-frontend:fieldset>

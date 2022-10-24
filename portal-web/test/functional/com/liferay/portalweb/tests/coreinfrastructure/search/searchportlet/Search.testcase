@@ -550,6 +550,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-165397."
+	@priority = "3"
+	test CanDisableDisplaySelectedResultWithContentPages {
+		task ("Add a New Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Example Page",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Guest",
+				layoutName = "Example Page");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "Example Page");
+
+		SearchResultPortlet.configureSearchResults(disableDisplaySelectedResultInContext = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Example Page");
+
+		Search.gotoResultAssetViaTitle(searchAssetTitle = "Example Page");
+
+		AssertElementNotPresent(locator1 = "Portlet#ERROR");
+
+		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+	}
+
 	@description = "This is a use case for LPS-151026."
 	@priority = "3"
 	test CanHighlightResultsAndDisableHighlighting {
@@ -678,33 +705,6 @@ definition {
 
 			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2022,2021");
 		}
-	}
-
-	@description = "This is a use case for LPS-165397."
-	@priority = "3"
-	test CanUncheckDisplaySelectedResultWithContentPages {
-		task ("Add a New Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Example Page",
-				type = "content");
-
-			JSONLayout.publishLayout(
-				groupName = "Guest",
-				layoutName = "Example Page");
-		}
-
-		SearchPortlets.searchEmbedded(searchTerm = "Example Page");
-
-		SearchResultPortlet.configureSearchResults(disableDisplaySelectedResultInContext = "true");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Example Page");
-
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "Example Page");
-
-		AssertElementNotPresent(locator1 = "Portlet#ERROR");
-
-		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 	}
 
 	@priority = "4"

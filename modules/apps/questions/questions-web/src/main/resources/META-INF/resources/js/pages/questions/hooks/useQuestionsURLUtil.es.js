@@ -87,7 +87,8 @@ const useQuestionsURLUtil = ({context, history, params}) => {
 						: '#'
 				}/questions/${sectionTitle}/new`
 			);
-		} else {
+		}
+		else {
 			historyPushParser(`/questions/${sectionTitle}/new`);
 		}
 

@@ -200,12 +200,12 @@ public class ViewObjectEntriesDisplayContext {
 					objectViewSortColumn.getSortOrder()
 				).setKey(
 					() -> {
-						String fieldName = StringUtil.replace(
+						String objectFieldName = StringUtil.replace(
 							objectViewSortColumn.getObjectFieldName(),
 							"createDate", "dateCreated");
 
 						return StringUtil.replace(
-							fieldName, "modifiedDate", "dateModified");
+							objectFieldName, "modifiedDate", "dateModified");
 					}
 				).build());
 		}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.Document;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -108,7 +110,7 @@ public class UserModelDocumentContributor
 					_roleLocalService.getRoles(roleIds), Role.NAME_ACCESSOR));
 
 			document.addText("screenName", user.getScreenName());
-			document.addKeyword("teamIds", user.getTeamIds());
+			document.addKeyword("teamIds", _getTeamIds(user));
 			document.addKeyword("userGroupIds", user.getUserGroupIds());
 
 			long[] userGroupRoleIds = _getUserGroupRoleIds(user.getUserId());
@@ -201,6 +203,24 @@ public class UserModelDocumentContributor
 		return countryNames;
 	}
 
+	private long[] _getTeamIds(User user) {
+		long[] userGroupIds = user.getUserGroupIds();
+
+		if (userGroupIds.length == 0) {
+			return user.getTeamIds();
+		}
+
+		List<Team> teams = new ArrayList<>();
+
+		for (long userGroupId : user.getUserGroupIds()) {
+			teams.addAll(_teamLocalService.getUserGroupTeams(userGroupId));
+		}
+
+		return ArrayUtil.append(
+			ListUtil.toLongArray(teams, Team.TEAM_ID_ACCESSOR),
+			user.getTeamIds());
+	}
+
 	private long[] _getUserGroupRoleIds(long userId) {
 		Set<Long> userGroupRoleIds = new HashSet<>();
 
@@ -283,5 +303,8 @@ public class UserModelDocumentContributor
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 }

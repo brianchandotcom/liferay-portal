@@ -220,12 +220,14 @@ export const deleteMessageBoardThreadQuery = `
 export const getTagsOrderByDateCreatedQuery = `
 	query keywords(
 		$page: Int!
+		$filter: String
 		$pageSize: Int!
 		$search: String
 		$siteKey: String!
 	) {
 		keywords(
 			page: $page
+			filter: $filter
 			pageSize: $pageSize
 			search: $search
 			siteKey: $siteKey

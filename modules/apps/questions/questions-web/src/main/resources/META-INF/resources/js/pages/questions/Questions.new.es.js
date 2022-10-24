@@ -12,13 +12,22 @@
  * details.
  */
 
-import {useManualQuery} from 'graphql-hooks';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {useManualQuery, useQuery} from 'graphql-hooks';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
-import {getSectionThreadsQuery} from '../../utils/client.es';
+import {
+	getSectionThreadsQuery,
+	getTagsOrderByDateCreatedQuery,
+} from '../../utils/client.es';
 import {getFilterValues} from './components/QuestionFilter.es';
 import QuestionList from './components/QuestionList.es';
 import QuestionsNavigationBar from './components/QuestionNavigationBar.es';
@@ -33,6 +42,22 @@ export default withRouter(({history, location, match: {params}}) => {
 
 	const context = useContext(AppContext);
 	const [getThreadsFiltered] = useManualQuery(getSectionThreadsQuery);
+	const siteKey = context.siteKey;
+
+	const {data, loading: tagLoading} = useQuery(
+		getTagsOrderByDateCreatedQuery,
+		{
+			useCache: false,
+			variables: {
+				filter: 'subscribed eq true',
+				page: 1,
+				pageSize: 20,
+				siteKey,
+			},
+		}
+	);
+
+	const subscribedTags = useMemo(() => data?.keywords?.items || [], [data]);
 
 	const [error, setError] = useState({});
 	const [loading, setLoading] = useState(true);
@@ -76,7 +101,12 @@ export default withRouter(({history, location, match: {params}}) => {
 					sortBy: params.sortBy,
 					taggedWith: params.taggedWith,
 				},
-				params.selectedTags
+				params.taggedWith === 'my-watched-tags'
+					? subscribedTags.map((tag) => ({
+							label: tag.name,
+							value: tag.name,
+					  }))
+					: params.selectedTags
 			);
 
 			const {
@@ -124,7 +154,8 @@ export default withRouter(({history, location, match: {params}}) => {
 
 			setLoading(false);
 		},
-		[getThreadsFiltered, page, search, pageSize, section.id]
+			siteKey,
+			subscribedTags,
 	);
 
 	useEffect(() => {
@@ -146,6 +177,7 @@ export default withRouter(({history, location, match: {params}}) => {
 		taggedWith,
 		search,
 		section.id,
+		tagLoading,
 	]);
 
 	const commonProps = {

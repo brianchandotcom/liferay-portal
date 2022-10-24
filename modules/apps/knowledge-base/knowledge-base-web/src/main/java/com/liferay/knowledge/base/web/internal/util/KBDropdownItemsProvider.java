@@ -123,7 +123,9 @@ public class KBDropdownItemsProvider {
 						"add-child-article"));
 			}
 		).add(
-			() -> _hasSubscription(kbArticle),
+			() ->
+				_hasSubscriptionPermission(kbArticle) &&
+				_hasSubscription(kbArticle),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					PortletURLBuilder.createActionURL(
@@ -142,7 +144,9 @@ public class KBDropdownItemsProvider {
 						"unsubscribe"));
 			}
 		).add(
-			() -> !_hasSubscription(kbArticle),
+			() ->
+				_hasSubscriptionPermission(kbArticle) &&
+				!_hasSubscription(kbArticle),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					PortletURLBuilder.createActionURL(
@@ -879,6 +883,20 @@ public class KBDropdownItemsProvider {
 		if (SubscriptionLocalServiceUtil.isSubscribed(
 				_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
 				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasSubscriptionPermission(KBArticle kbArticle)
+		throws Exception {
+
+		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
+			KBArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), kbArticle,
+				KBActionKeys.SUBSCRIBE)) {
 
 			return true;
 		}

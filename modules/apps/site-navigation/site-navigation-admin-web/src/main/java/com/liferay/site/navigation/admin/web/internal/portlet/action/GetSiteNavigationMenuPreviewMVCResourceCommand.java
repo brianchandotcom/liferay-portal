@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sandro Chinea
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
 		"mvc.command.name=/site_navigation_admin/get_site_navigation_menu_preview"

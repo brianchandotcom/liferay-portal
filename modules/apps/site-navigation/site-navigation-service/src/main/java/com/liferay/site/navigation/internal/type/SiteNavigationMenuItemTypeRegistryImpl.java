@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
+@Component(service = SiteNavigationMenuItemTypeRegistry.class)
 public class SiteNavigationMenuItemTypeRegistryImpl
 	implements SiteNavigationMenuItemTypeRegistry {
 

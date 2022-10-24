@@ -76,7 +76,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true,
 	property = {
 		"service.ranking:Integer=600",
 		"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY

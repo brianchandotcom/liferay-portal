@@ -52,7 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
 		"mvc.command.name=/navigation_menu/add_layout_site_navigation_menu_item"

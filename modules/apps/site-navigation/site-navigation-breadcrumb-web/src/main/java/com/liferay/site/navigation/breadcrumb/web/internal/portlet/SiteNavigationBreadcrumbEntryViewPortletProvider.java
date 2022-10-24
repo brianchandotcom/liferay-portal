@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry",
 	service = ViewPortletProvider.class
 )

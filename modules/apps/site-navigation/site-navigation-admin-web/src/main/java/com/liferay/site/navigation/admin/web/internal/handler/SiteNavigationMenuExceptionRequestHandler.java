@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	immediate = true, service = SiteNavigationMenuExceptionRequestHandler.class
-)
+@Component(service = SiteNavigationMenuExceptionRequestHandler.class)
 public class SiteNavigationMenuExceptionRequestHandler {
 
 	public void handlePortalException(

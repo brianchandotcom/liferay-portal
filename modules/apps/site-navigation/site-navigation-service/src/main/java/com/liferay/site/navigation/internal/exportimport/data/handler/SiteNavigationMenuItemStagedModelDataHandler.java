@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(service = StagedModelDataHandler.class)
 public class SiteNavigationMenuItemStagedModelDataHandler
 	extends BaseStagedModelDataHandler<SiteNavigationMenuItem> {
 

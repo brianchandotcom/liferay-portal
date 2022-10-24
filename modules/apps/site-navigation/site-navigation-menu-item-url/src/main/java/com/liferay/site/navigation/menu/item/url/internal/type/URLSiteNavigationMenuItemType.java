@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = {
 		"service.ranking:Integer=200",
 		"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.URL

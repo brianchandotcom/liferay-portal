@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class NavItemClassNameIdUtil {
 
 	public static long getNavItemClassNameId() {

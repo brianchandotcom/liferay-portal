@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=200",
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_BUILD

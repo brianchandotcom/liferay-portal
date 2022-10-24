@@ -34,6 +34,7 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -192,19 +193,19 @@ definition {
 	@description = "LPS-164602 Frontend Dataset - column labels are not localized "
 	@priority = "4"
 	test ManagementBarCanBeLocalized {
-		task ("site URL localized to Spanish //localhost:8080/es/ and on a customized tab view") {
+		task ("And Given: site URL localized to Spanish //localhost:8080/es/ and when on a customized tab view") {
 			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/es/frontend-data-set-test-page/");
 		}
 
-		task ("Filter button is localized ") {
+		task ("Then Filter button is localized ") {
 			AssertTextEquals(
 				locator1 = "FrontendDataSet#FILTER_BUTTON",
 				value1 = "Filtro");
 		}
 
-		task ("Search help text is localized ") {
+		task ("And Then Search help text is localized ") {
 			AssertAttributeValue(
 				attribute1 = "placeholder",
 				key_placeholder = "Buscar",
@@ -212,13 +213,13 @@ definition {
 				value1 = "Buscar");
 		}
 
-		task ("Change Display dropdown items are localized") {
+		task ("And Then Change Display dropdown items are localized") {
 			AssertTextEquals(
 				locator1 = "FrontendDataSet#FILTER_BUTTON",
 				value1 = "Filtro");
 		}
 
-		task ("Custom Views dropdown items are localized") {
+		task ("And Then Custom Views dropdown items are localized") {
 			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 			AssertTextEquals(
@@ -226,7 +227,7 @@ definition {
 				value1 = "Vista por defecto");
 		}
 
-		task ("Ellipsis dropdown 'Save' is localized") {
+		task ("And Then Ellipsis dropdown 'Save' is localized") {
 			Click(locator1 = "FrontendDataSet#ELLIPSIS");
 
 			AssertElementPresent(
@@ -234,11 +235,10 @@ definition {
 				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 		}
 
-		task ("Reset Filters link is localized") {
+		task ("And Then Reset Filters link is localized") {
 			AssertElementPresent(
 				locator1 = "FrontendDataSet#RESET_FILTERS",
 				reset_filter = "Restablecer filtros");
 		}
 	}
-
 }

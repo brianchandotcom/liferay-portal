@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Shinn Lok
  */
-@Component(immediate = true, service = Words.class)
+@Component(service = Words.class)
 public class WordsImpl implements Words {
 
 	@Override

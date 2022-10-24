@@ -35,12 +35,4 @@ public interface CommerceAvalaraConnectorConfiguration {
 	@Meta.AD(name = "service-url", required = false)
 	public String serviceURL();
 
-	@Meta.AD(name = "company-code", required = false)
-	public String companyCode();
-
-	@Meta.AD(
-		deflt = "false", name = "disabled-document-recording", required = false
-	)
-	public boolean disabledDocumentRecording();
-
 }

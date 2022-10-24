@@ -12,16 +12,60 @@
  * details.
  */
 
-import React from 'react';
+import ClayButton from '@clayui/button';
+import {ClayToggle} from '@clayui/form';
+import ClayLabel from '@clayui/label';
+import React, {useState} from 'react';
 
 import BasePage from '../../components/BasePage';
+import SelectPanels from '../../components/people-step-components/SelectPanels';
+import {ESteps, TGenericComponent} from './WizardPage';
 
-const Step = () => {
+interface IStepProps extends TGenericComponent {}
+
+const Step: React.FC<IStepProps> = ({onChangeStep}) => {
+	const [syncAll, setSyncAll] = useState(false);
+
 	return (
 		<BasePage
 			description={Liferay.Language.get('sync-people-description')}
 			title={Liferay.Language.get('sync-people')}
-		></BasePage>
+		>
+			<div className="general-toggle">
+				<ClayToggle
+					label={Liferay.Language.get(
+						'sync-all-contacts-and-accounts'
+					)}
+					onToggle={() => setSyncAll(!syncAll)}
+					toggled={syncAll}
+				/>
+
+				<ClayLabel className="ml-4" displayType="info">
+					{Liferay.Language.get('recomended')}
+				</ClayLabel>
+			</div>
+
+			<SelectPanels
+				accountsCount={0}
+				organizationsCount={0}
+				usersCount={0}
+			/>
+
+			<BasePage.Footer>
+				<ClayButton.Group spaced>
+					<ClayButton onClick={() => onChangeStep(ESteps.People)}>
+						{Liferay.Language.get('next')}
+					</ClayButton>
+
+					<ClayButton
+						displayType="secondary"
+						onClick={() => window.location.reload()}
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
+				</ClayButton.Group>
+			</BasePage.Footer>
+		</BasePage>
 	);
 };
 

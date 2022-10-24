@@ -130,7 +130,8 @@ const ActionButton = ({
 				}}
 			/>
 		);
-	} else {
+	}
+	else {
 		return (
 			<ButtonDropDown
 				items={filteredKeysActionsItems}

@@ -201,6 +201,8 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 
+import static com.liferay.segments.constants.SegmentsEntryConstants.ID_DEFAULT;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -2970,7 +2972,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							jsonObject.getBoolean("active", true));
 				}
 
-				if (segmentsExperience != null) {
+				if (Validator.isNotNull(segmentsExperience)) {
 					StringUtil.replaceLast(resourcePath, "segments-experiences.json", "");
 
 						if (resourcePath.endsWith("/")) {

@@ -35,14 +35,14 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		if (
 			isElementInnerSelector(
 				target,
+				'.cke_dialog',
 				'.clay-color-dropdown-menu',
 				'.date-picker-dropdown-menu',
 				'.ddm-form-builder-wrapper',
 				'.ddm-select-dropdown',
 				'.input-localized-content',
 				'.lfr-icon-menu-open',
-				'.multi-panel-sidebar',
-				'.cke_dialog'
+				'.multi-panel-sidebar'
 			)
 		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();

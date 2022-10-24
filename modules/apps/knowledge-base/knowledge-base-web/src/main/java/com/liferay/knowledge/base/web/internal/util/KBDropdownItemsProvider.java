@@ -228,7 +228,9 @@ public class KBDropdownItemsProvider {
 		).add(
 			() -> _hasMovePermission(kbArticle),
 			dropdownItem -> {
-				dropdownItem.setHref(
+				dropdownItem.putData("action", "move");
+				dropdownItem.putData(
+					"moveURL",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -245,7 +247,9 @@ public class KBDropdownItemsProvider {
 						"resourceClassNameId", kbArticle.getClassNameId()
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildRenderURL());
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
 				dropdownItem.setIcon("move-folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(

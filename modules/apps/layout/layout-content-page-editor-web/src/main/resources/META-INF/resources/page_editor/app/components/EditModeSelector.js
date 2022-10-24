@@ -65,7 +65,7 @@ export default function EditModeSelector() {
 			trigger={
 				<ClayButton
 					aria-label={sub(
-						Liferay.Language.get('edit-mode-x'),
+						Liferay.Language.get('page-edition-mode-x'),
 						editMode
 					)}
 					className="form-control-select page-editor__edit-mode-selector text-left"

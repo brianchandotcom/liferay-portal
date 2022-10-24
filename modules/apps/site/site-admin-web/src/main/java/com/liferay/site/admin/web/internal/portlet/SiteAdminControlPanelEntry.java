@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + SiteAdminPortletKeys.SITE_ADMIN,
 	service = ControlPanelEntry.class
 )

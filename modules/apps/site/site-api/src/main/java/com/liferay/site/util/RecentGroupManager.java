@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = RecentGroupManager.class)
+@Component(service = RecentGroupManager.class)
 public class RecentGroupManager {
 
 	public void addRecentGroup(

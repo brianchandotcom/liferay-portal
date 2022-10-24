@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ricardo Couso
  */
-@Component(immediate = true, service = AssetRendererFactory.class)
+@Component(service = AssetRendererFactory.class)
 public class SiteAssetRendererFactory extends BaseAssetRendererFactory<Group> {
 
 	public static final String TYPE = "site";

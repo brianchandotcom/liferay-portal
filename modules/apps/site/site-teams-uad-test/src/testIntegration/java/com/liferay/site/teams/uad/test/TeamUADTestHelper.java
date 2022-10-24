@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = TeamUADTestHelper.class)
+@Component(service = TeamUADTestHelper.class)
 public class TeamUADTestHelper {
 
 	public Team addTeam(long userId) throws Exception {

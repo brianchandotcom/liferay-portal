@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = GroupProvider.class)
+@Component(service = GroupProvider.class)
 public class LatentGroupProvider implements GroupProvider {
 
 	@Override

@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
 	service = ControlPanelEntry.class
 )

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = SiteInitializerRegistry.class)
+@Component(service = SiteInitializerRegistry.class)
 public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
 	@Override

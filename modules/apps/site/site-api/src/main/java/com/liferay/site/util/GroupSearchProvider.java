@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = GroupSearchProvider.class)
+@Component(service = GroupSearchProvider.class)
 public class GroupSearchProvider {
 
 	public GroupSearch getGroupSearch(

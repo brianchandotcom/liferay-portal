@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = GroupExceptionRequestHandler.class)
+@Component(service = GroupExceptionRequestHandler.class)
 public class GroupExceptionRequestHandler {
 
 	public void handlePortalException(

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = ModelAdapterBuilder.class)
+@Component(service = ModelAdapterBuilder.class)
 public class StagedGroupModelAdapterBuilder
 	implements ModelAdapterBuilder<Group, StagedGroup> {
 

@@ -22,7 +22,6 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -228,9 +227,6 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 	@Reference
 	private Localization _localization;

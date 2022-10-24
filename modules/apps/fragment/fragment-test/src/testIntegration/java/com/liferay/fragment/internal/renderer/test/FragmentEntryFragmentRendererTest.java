@@ -126,9 +126,7 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
-	public void testNoncacheableFragmentEntryLink()
-		throws Exception {
-
+	public void testNoncacheableFragmentEntryLink() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(false);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -154,7 +152,8 @@ public class FragmentEntryFragmentRendererTest {
 			(PortalCache<String, String>)_multiVMPool.getPortalCache(
 				FragmentEntryLink.class.getName());
 
-		Assert.assertNull(portalCache.get(_getPortalCacheKey(fragmentEntryLink)));
+		Assert.assertNull(
+			portalCache.get(_getPortalCacheKey(fragmentEntryLink)));
 	}
 
 	@Test
@@ -210,18 +209,6 @@ public class FragmentEntryFragmentRendererTest {
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
 
-	private String _getPortalCacheKey(FragmentEntryLink fragmentEntryLink) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(fragmentEntryLink.getFragmentEntryLinkId());
-		sb.append(StringPool.DASH);
-		sb.append(LocaleUtil.US);
-		sb.append(StringPool.DASH);
-		sb.append(fragmentEntryLink.getSegmentsExperienceId());
-
-		return sb.toString();
-	}
-
 	private FragmentEntry _getFragmentEntry(boolean cacheable)
 		throws Exception {
 
@@ -248,6 +235,18 @@ public class FragmentEntryFragmentRendererTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		return mockHttpServletRequest;
+	}
+
+	private String _getPortalCacheKey(FragmentEntryLink fragmentEntryLink) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(fragmentEntryLink.getFragmentEntryLinkId());
+		sb.append(StringPool.DASH);
+		sb.append(LocaleUtil.US);
+		sb.append(StringPool.DASH);
+		sb.append(fragmentEntryLink.getSegmentsExperienceId());
+
+		return sb.toString();
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)

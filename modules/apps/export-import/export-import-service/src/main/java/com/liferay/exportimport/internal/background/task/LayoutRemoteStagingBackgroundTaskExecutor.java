@@ -15,15 +15,15 @@
 package com.liferay.exportimport.internal.background.task;
 
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -52,9 +52,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Máté Thurzó
  */
+@Component(
+	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.LayoutRemoteStagingBackgroundTaskExecutor",
+	service = BackgroundTaskExecutor.class
+)
 public class LayoutRemoteStagingBackgroundTaskExecutor
 	extends BaseStagingBackgroundTaskExecutor {
 
@@ -65,17 +72,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		LayoutRemoteStagingBackgroundTaskExecutor
-			layoutRemoteStagingBackgroundTaskExecutor =
-				new LayoutRemoteStagingBackgroundTaskExecutor();
-
-		layoutRemoteStagingBackgroundTaskExecutor.
-			setBackgroundTaskStatusMessageTranslator(
-				getBackgroundTaskStatusMessageTranslator());
-		layoutRemoteStagingBackgroundTaskExecutor.setIsolationLevel(
-			getIsolationLevel());
-
-		return layoutRemoteStagingBackgroundTaskExecutor;
+		return this;
 	}
 
 	@Override
@@ -136,7 +133,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			stagingRequestId = StagingServiceHttp.createStagingRequest(
 				httpPrincipal, targetGroupId, checksum);
 
-			StagingUtil.transferFileToRemoteLive(
+			_staging.transferFileToRemoteLive(
 				file, stagingRequestId, httpPrincipal);
 
 			markBackgroundTask(
@@ -168,7 +165,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			ExportImportHelperUtil.processBackgroundTaskManifestSummary(
+			_exportImportHelper.processBackgroundTaskManifestSummary(
 				serviceContext.getUserId(), sourceGroupId, backgroundTask,
 				file);
 		}
@@ -230,7 +227,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 				try {
 					layout =
-						ExportImportHelperUtil.getLayoutOrCreateDummyRootLayout(
+						_exportImportHelper.getLayoutOrCreateDummyRootLayout(
 							plid);
 				}
 				catch (NoSuchLayoutException noSuchLayoutException) {
@@ -275,7 +272,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			}
 		}
 
-		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
+		long[] layoutIds = _exportImportHelper.getLayoutIds(layouts);
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
@@ -284,7 +281,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 		settingsMap.put("layoutIds", layoutIds);
 
-		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
+		return _exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 	}
 
@@ -301,7 +298,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		long parentLayoutId = layout.getParentLayoutId();
 
 		while (parentLayoutId > 0) {
-			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
+			Layout parentLayout = _layoutLocalService.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
 			if (StagingServiceHttp.hasRemoteLayout(
@@ -323,5 +320,17 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutRemoteStagingBackgroundTaskExecutor.class);
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
+	@Reference
+	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

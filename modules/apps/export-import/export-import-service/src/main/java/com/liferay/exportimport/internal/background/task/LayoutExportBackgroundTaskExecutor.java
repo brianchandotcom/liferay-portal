@@ -15,13 +15,13 @@
 package com.liferay.exportimport.internal.background.task;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -30,10 +30,17 @@ import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Daniel Kocsis
  * @author Michael C. Han
  */
+@Component(
+	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.LayoutExportBackgroundTaskExecutor",
+	service = BackgroundTaskExecutor.class
+)
 public class LayoutExportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
 
@@ -44,16 +51,7 @@ public class LayoutExportBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		LayoutExportBackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
-			new LayoutExportBackgroundTaskExecutor();
-
-		layoutExportBackgroundTaskExecutor.
-			setBackgroundTaskStatusMessageTranslator(
-				getBackgroundTaskStatusMessageTranslator());
-		layoutExportBackgroundTaskExecutor.setIsolationLevel(
-			getIsolationLevel());
-
-		return layoutExportBackgroundTaskExecutor;
+		return this;
 	}
 
 	@Override
@@ -66,10 +64,10 @@ public class LayoutExportBackgroundTaskExecutor
 		long userId = MapUtil.getLong(
 			exportImportConfiguration.getSettingsMap(), "userId");
 
-		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 
-		BackgroundTaskManagerUtil.addBackgroundTaskAttachment(
+		_backgroundTaskManager.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(),
 			StringBundler.concat(
 				StringUtil.replace(
@@ -80,5 +78,11 @@ public class LayoutExportBackgroundTaskExecutor
 
 		return BackgroundTaskResult.SUCCESS;
 	}
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private ExportImportLocalService _exportImportLocalService;
 
 }

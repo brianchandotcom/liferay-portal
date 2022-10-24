@@ -22,8 +22,8 @@ import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -43,9 +43,16 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Akos Thurzo
  */
+@Component(
+	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.PortletRemoteStagingBackgroundTaskExecutor",
+	service = BackgroundTaskExecutor.class
+)
 public class PortletRemoteStagingBackgroundTaskExecutor
 	extends BaseStagingBackgroundTaskExecutor {
 
@@ -56,17 +63,7 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		PortletRemoteStagingBackgroundTaskExecutor
-			portletRemoteStagingBackgroundTaskExecutor =
-				new PortletRemoteStagingBackgroundTaskExecutor();
-
-		portletRemoteStagingBackgroundTaskExecutor.
-			setBackgroundTaskStatusMessageTranslator(
-				getBackgroundTaskStatusMessageTranslator());
-		portletRemoteStagingBackgroundTaskExecutor.setIsolationLevel(
-			getIsolationLevel());
-
-		return portletRemoteStagingBackgroundTaskExecutor;
+		return this;
 	}
 
 	@Override
@@ -100,7 +97,7 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
-			file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+			file = _exportImportLocalService.exportPortletInfoAsFile(
 				exportImportConfiguration);
 
 			String checksum = FileUtil.getMD5Checksum(file);
@@ -116,7 +113,7 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 			stagingRequestId = StagingServiceHttp.createStagingRequest(
 				httpPrincipal, targetGroupId, checksum);
 
-			StagingUtil.transferFileToRemoteLive(
+			_staging.transferFileToRemoteLive(
 				file, stagingRequestId, httpPrincipal);
 
 			markBackgroundTask(
@@ -194,5 +191,11 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRemoteStagingBackgroundTaskExecutor.class);
+
+	@Reference
+	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

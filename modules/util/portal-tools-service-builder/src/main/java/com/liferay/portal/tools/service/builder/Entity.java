@@ -940,6 +940,14 @@ public class Entity implements Comparable<Entity> {
 		return _remoteService;
 	}
 
+	public boolean hasUpdateImplThrowsPortalException() {
+		if (_serviceBuilder.isVersionGTE_7_4_0() && hasEntityColumn("externalReferenceCode")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hasUuid() {
 		return _uuid;
 	}

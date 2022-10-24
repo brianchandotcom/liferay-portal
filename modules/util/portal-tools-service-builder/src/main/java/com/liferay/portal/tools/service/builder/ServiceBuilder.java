@@ -716,6 +716,12 @@ public class ServiceBuilder {
 
 			_mvccEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("mvcc-enabled"));
+			_shortDuplicateExternalReferenceCodeExceptionEnabled =
+				GetterUtil.getBoolean(
+					rootElement.attributeValue(
+						"short-duplicate-external-reference-code-exception-" +
+							"enabled"),
+					true);
 			_shortNoSuchExceptionEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("short-no-such-exception-enabled"),
 				true);
@@ -1152,6 +1158,25 @@ public class ServiceBuilder {
 		return getDimensions(GetterUtil.getInteger(dims));
 	}
 
+	public String getDuplicateEntityExternalReferenceCodeException(
+		Entity entity) {
+
+		String name = entity.getName();
+
+		if (_shortDuplicateExternalReferenceCodeExceptionEnabled) {
+			String portletShortName = entity.getPortletShortName();
+
+			if (Validator.isNull(portletShortName) ||
+				(name.startsWith(portletShortName) &&
+				 !name.equals(portletShortName))) {
+
+				name = name.substring(portletShortName.length());
+			}
+		}
+
+		return "Duplicate" + name + "ExternalReferenceCode";
+	}
+
 	public Entity getEntity(String name) throws Exception {
 		Entity entity = _entityPool.get(name);
 
@@ -1398,21 +1423,20 @@ public class ServiceBuilder {
 	}
 
 	public String getNoSuchEntityException(Entity entity) {
-		String noSuchEntityException = entity.getName();
+		String name = entity.getName();
 
 		if (_shortNoSuchExceptionEnabled) {
 			String portletShortName = entity.getPortletShortName();
 
 			if (Validator.isNull(portletShortName) ||
-				(noSuchEntityException.startsWith(portletShortName) &&
-				 !noSuchEntityException.equals(portletShortName))) {
+				(name.startsWith(portletShortName) &&
+				 !name.equals(portletShortName))) {
 
-				noSuchEntityException = noSuchEntityException.substring(
-					portletShortName.length());
+				name = name.substring(portletShortName.length());
 			}
 		}
 
-		return "NoSuch" + noSuchEntityException;
+		return "NoSuch" + name;
 	}
 
 	public String getParameterType(JavaParameter parameter) {
@@ -2607,6 +2631,12 @@ public class ServiceBuilder {
 			}
 
 			if (entity.hasEntityColumns()) {
+				if (entity.hasExternalReferenceCode()) {
+					exceptions.add(
+						getDuplicateEntityExternalReferenceCodeException(
+							entity));
+				}
+
 				exceptions.add(getNoSuchEntityException(entity));
 			}
 		}
@@ -8023,6 +8053,7 @@ public class ServiceBuilder {
 	private Set<String> _resourceActionModels = new HashSet<>();
 	private String _resourcesDirName;
 	private String _serviceOutputPath;
+	private boolean _shortDuplicateExternalReferenceCodeExceptionEnabled;
 	private boolean _shortNoSuchExceptionEnabled;
 	private String _springFileName;
 	private String[] _springNamespaces;

@@ -27,6 +27,7 @@ import Breadcrumb from '../../components/Breadcrumb.es';
 import {
 	getSectionThreadsQuery,
 	getTagsOrderByDateCreatedQuery,
+	getThreadsQuery,
 } from '../../utils/client.es';
 import {getFilterValues} from './components/QuestionFilter.es';
 import QuestionList from './components/QuestionList.es';
@@ -40,8 +41,22 @@ const MAX_NUMBER_OF_QUESTIONS = 500;
 export default withRouter(({history, location, match: {params}}) => {
 	const {creatorId, sectionTitle} = params;
 
+	const urlParams = useQuestionsURLParameters(location);
+
+	const {
+		filterBy,
+		page,
+		pageSize,
+		search,
+		selectedTags,
+		sortBy,
+		taggedWith,
+	} = urlParams;
+
 	const context = useContext(AppContext);
 	const [getThreadsFiltered] = useManualQuery(getSectionThreadsQuery);
+	const [getThreads] = useManualQuery(getThreadsQuery);
+
 	const siteKey = context.siteKey;
 
 	const {data, loading: tagLoading} = useQuery(
@@ -65,6 +80,7 @@ export default withRouter(({history, location, match: {params}}) => {
 	const [resultBar, setResultBar] = useState({});
 
 	const {
+		ALL_SECTIONS_ENABLED,
 		allowCreateTopicInRootTopic,
 		section,
 		sectionQuery,
@@ -75,17 +91,6 @@ export default withRouter(({history, location, match: {params}}) => {
 		setError,
 		setLoading,
 	});
-	const urlParams = useQuestionsURLParameters(location);
-
-	const {
-		filterBy,
-		page,
-		pageSize,
-		search,
-		selectedTags,
-		sortBy,
-		taggedWith,
-	} = urlParams;
 
 	const {
 		changePage,
@@ -95,6 +100,8 @@ export default withRouter(({history, location, match: {params}}) => {
 
 	const getMbThreads = useCallback(
 		async (params) => {
+			const fetchAllSections = params.fetchAllSections;
+
 			const filteredValues = getFilterValues(
 				{
 					filterBy: params.filterBy,
@@ -119,11 +126,15 @@ export default withRouter(({history, location, match: {params}}) => {
 				setResultBar(resultBar);
 			}
 
+			const fn = fetchAllSections ? getThreads : getThreadsFiltered;
+
 			try {
-				const {data} = await getThreadsFiltered({
+				const {data} = await fn({
 					variables: {
+						...(fetchAllSections
+							? {siteKey}
+							: {messageBoardSectionId}),
 						filter: filteredValues.filterBy,
-						messageBoardSectionId,
 						page,
 						pageSize,
 						search: _search,
@@ -132,7 +143,9 @@ export default withRouter(({history, location, match: {params}}) => {
 				});
 
 				const messageBoardThreads =
-					data?.messageBoardSectionMessageBoardThreads || {};
+					(fetchAllSections
+						? data?.messageBoardThreads
+						: data?.messageBoardSectionMessageBoardThreads) || {};
 
 				setQuestions({
 					...messageBoardThreads,
@@ -141,8 +154,7 @@ export default withRouter(({history, location, match: {params}}) => {
 							? MAX_NUMBER_OF_QUESTIONS
 							: messageBoardThreads.totalCount,
 				});
-			}
-			catch (error) {
+			} catch (error) {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
@@ -154,13 +166,22 @@ export default withRouter(({history, location, match: {params}}) => {
 
 			setLoading(false);
 		},
+		[
+			getThreads,
+			getThreadsFiltered,
+			page,
+			pageSize,
+			search,
+			section.id,
 			siteKey,
 			subscribedTags,
+		]
 	);
 
 	useEffect(() => {
-		if (section.id) {
+		if ((section.id || ALL_SECTIONS_ENABLED) && !tagLoading) {
 			getMbThreads({
+				fetchAllSections: ALL_SECTIONS_ENABLED,
 				filterBy,
 				messageBoardSectionId: section.id,
 				search,
@@ -178,6 +199,7 @@ export default withRouter(({history, location, match: {params}}) => {
 		search,
 		section.id,
 		tagLoading,
+		ALL_SECTIONS_ENABLED,
 	]);
 
 	const commonProps = {
@@ -226,6 +248,7 @@ export default withRouter(({history, location, match: {params}}) => {
 					creatorId={creatorId}
 					error={error}
 					historyPushParser={historyPushParser}
+					urlParams={urlParams}
 				/>
 			</div>
 		</section>

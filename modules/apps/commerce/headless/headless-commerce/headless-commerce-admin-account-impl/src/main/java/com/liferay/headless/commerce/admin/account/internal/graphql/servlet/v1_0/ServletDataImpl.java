@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.account.internal.graphql.servlet.v1_
 import com.liferay.headless.commerce.admin.account.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.admin.account.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountAddressResource;
+import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelEntryResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountMemberResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountOrganizationResource;
@@ -47,6 +48,8 @@ public class ServletDataImpl implements ServletData {
 			_accountResourceComponentServiceObjects);
 		Mutation.setAccountAddressResourceComponentServiceObjects(
 			_accountAddressResourceComponentServiceObjects);
+		Mutation.setAccountChannelEntryResourceComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects);
 		Mutation.setAccountGroupResourceComponentServiceObjects(
 			_accountGroupResourceComponentServiceObjects);
 		Mutation.setAccountMemberResourceComponentServiceObjects(
@@ -60,6 +63,8 @@ public class ServletDataImpl implements ServletData {
 			_accountResourceComponentServiceObjects);
 		Query.setAccountAddressResourceComponentServiceObjects(
 			_accountAddressResourceComponentServiceObjects);
+		Query.setAccountChannelEntryResourceComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects);
 		Query.setAccountGroupResourceComponentServiceObjects(
 			_accountGroupResourceComponentServiceObjects);
 		Query.setAccountMemberResourceComponentServiceObjects(
@@ -90,6 +95,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountAddressResource>
 		_accountAddressResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AccountChannelEntryResource>
+		_accountChannelEntryResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountGroupResource>

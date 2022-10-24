@@ -37,7 +37,8 @@
 						}
 					],
 					"fragmentStyle": {
-						"fontSize": "0.875rem"
+						"fontSize": "0.875rem",
+						"textAlign": ""
 					},
 					"indexed": true
 				},
@@ -72,6 +73,7 @@
 										"marginTop": "3",
 										"paddingLeft": "1",
 										"paddingTop": "1",
+										"textAlign": "",
 										"textColor": "colorNeutral8"
 									},
 									"indexed": true
@@ -86,7 +88,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#5590ff",
 										"iconColor": "#ffffff",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/"
 									},
 									"fragmentFields": [
 										{
@@ -114,7 +116,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#5fc584",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://help.liferay.com/hc/"
 									},
 									"fragmentFields": [
 										{
@@ -142,7 +144,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#ed8f9f",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/customers"
 									},
 									"fragmentFields": [
 										{
@@ -170,7 +172,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#7bd3d5",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://partner.liferay.com/web/landing/welcome"
 									},
 									"fragmentFields": [
 										{
@@ -198,7 +200,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#8573B2",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://liferay.dev/"
 									},
 									"fragmentFields": [
 										{
@@ -226,7 +228,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#fedc81",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://learn.liferay.com/"
 									},
 									"fragmentFields": [
 										{
@@ -254,7 +256,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#5fbdef",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/web/marketplace"
 									},
 									"fragmentFields": [
 										{
@@ -301,6 +303,7 @@
 										"marginLeft": "3",
 										"marginTop": "3",
 										"paddingLeft": "1",
+										"textAlign": "",
 										"textColor": "colorNeutral8"
 									},
 									"indexed": true
@@ -315,7 +318,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "transparent",
 										"iconColor": "#282934",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/developers"
 									},
 									"fragmentFields": [
 										{
@@ -343,7 +346,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "transparent",
 										"iconColor": "#282934",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/customers"
 									},
 									"fragmentFields": [
 										{
@@ -371,7 +374,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "transparent",
 										"iconColor": "#282934",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/partners"
 									},
 									"fragmentFields": [
 										{

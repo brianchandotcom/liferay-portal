@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.admin.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
+
 import java.util.Map;
 
 /**
@@ -25,10 +27,21 @@ public class IndexActionsDisplayContext {
 		return _data;
 	}
 
+	public String getTextEmbeddingServiceStatus() {
+		return _textEmbeddingServiceStatus;
+	}
+
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
 
+	public void setTextEmbeddingServiceStatus(
+		String textEmbeddingServiceStatus) {
+
+		_textEmbeddingServiceStatus = textEmbeddingServiceStatus;
+	}
+
 	private Map<String, Object> _data;
+	private String _textEmbeddingServiceStatus = StringPool.BLANK;
 
 }

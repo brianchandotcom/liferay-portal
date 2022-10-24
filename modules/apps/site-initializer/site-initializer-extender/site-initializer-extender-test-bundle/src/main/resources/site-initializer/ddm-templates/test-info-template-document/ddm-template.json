@@ -1,0 +1,8 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "TEST INFO TEMPLATE DOCUMENT",
+	"fileEntryTypeKey": "BASIC-DOCUMENT",
+	"infoItemClassName": "com.liferay.portal.kernel.repository.model.FileEntry",
+	"name": "Test Info Template Document Name",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

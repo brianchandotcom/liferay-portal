@@ -723,6 +723,23 @@ public class BundleSiteInitializerTest {
 			String.valueOf(ddmStructure.getStructureId()),
 			templateEntry2.getInfoItemFormVariationKey());
 
+		DDMTemplate ddmTemplate4 = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId(TemplateEntry.class.getName()),
+			"TEST INFO TEMPLATE DOCUMENT");
+
+		Assert.assertNotNull(ddmTemplate4);
+		Assert.assertEquals("${aField.getData()}", ddmTemplate4.getScript());
+
+		TemplateEntry templateEntry3 =
+			_templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+				ddmTemplate4.getTemplateId());
+
+		Assert.assertNotNull(templateEntry3);
+		Assert.assertEquals(
+			"com.liferay.portal.kernel.repository.model.FileEntry",
+			templateEntry3.getInfoItemClassName());
+		Assert.assertEquals("0", templateEntry3.getInfoItemFormVariationKey());
 	}
 
 	private void _assertDefaultCPDisplayLayout(

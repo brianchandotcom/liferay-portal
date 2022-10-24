@@ -27,6 +27,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -217,6 +218,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
@@ -281,6 +283,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
@@ -1473,6 +1476,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString(
 					"resourceClassName", JournalArticle.class.getName()));
 
+			String infoItemClassName = jsonObject.getString(
+				"infoItemClassName");
+
+			if (Objects.equals(
+					infoItemClassName, JournalArticle.class.getName())) {
+
+				resourceClassNameId = _portal.getClassNameId(infoItemClassName);
+			}
+
 			long ddmStructureId = 0;
 
 			String ddmStructureKey = jsonObject.getString("ddmStructureKey");
@@ -1513,6 +1525,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 					String infoItemFormVariationKey = null;
 
 					if (Objects.equals(
+							infoItemClassName, FileEntry.class.getName())) {
+
+						infoItemFormVariationKey = "0";
+
+						DLFileEntryType dlFileEntryType =
+							_dlFileEntryTypeLocalService.fetchFileEntryType(
+								serviceContext.getScopeGroupId(),
+								jsonObject.getString("fileEntryTypeKey"));
+
+						if (dlFileEntryType != null) {
+							infoItemFormVariationKey = String.valueOf(
+								dlFileEntryType.getFileEntryTypeId());
+						}
+					}
+					else if (Objects.equals(
 								infoItemClassName,
 								JournalArticle.class.getName())) {
 
@@ -4198,6 +4225,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;

@@ -64,10 +64,12 @@ import com.liferay.portal.kernel.util.Validator;
 import java.time.Month;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.mail.internet.InternetAddress;
 
@@ -522,7 +524,9 @@ public class AccountEntryUserRelLocalServiceImpl
 				).put(
 					"emailAddress", emailAddress
 				).toString(),
-				null, serviceContext);
+				new Date(
+					System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
+				serviceContext);
 
 			Group guestGroup = _groupLocalService.getGroup(
 				inviter.getCompanyId(), GroupConstants.GUEST);

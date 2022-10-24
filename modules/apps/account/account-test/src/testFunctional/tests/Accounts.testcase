@@ -1947,21 +1947,24 @@ definition {
 	@description = "This is a use case for LPS-101315. Deleting an inactive account will navigate you back to inactive filter."
 	@priority = "3"
 	test CanDeleteAnInactiveAccount {
-		Accounts.openAccountsAdmin();
+		task ("Given a business account that is Inactive") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name for Test",
+				accountEntryStatus = "Inactive",
+				accountEntryType = "Business");
+		}
 
-		Accounts.addInactiveBusinessAccount(
-			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test");
+		task ("When a user deletes it") {
+			Accounts.openAccountsAdmin();
 
-		Accounts.openAccountsAdmin();
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+			Accounts.deleteAccount(accountName = "Accounts Name for Test");
+		}
 
-		Accounts.deleteAccount(accountName = "Accounts Name for Test");
-
-		ManagementBar.viewFilterAndOrder(menuItem = "Inactive");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+		task ("Then the inactive account is successfully deleted") {
+			LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+		}
 	}
 
 	@description = "This test adds a custom field for an account entry and asserts field can be updated."

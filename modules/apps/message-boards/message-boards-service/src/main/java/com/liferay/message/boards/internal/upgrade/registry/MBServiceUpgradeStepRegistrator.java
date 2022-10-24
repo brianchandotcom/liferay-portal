@@ -29,7 +29,6 @@ import com.liferay.message.boards.internal.upgrade.v3_0_0.MBMessageTreePathUpgra
 import com.liferay.message.boards.internal.upgrade.v3_1_0.UrlSubjectUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v6_0_0.MBStatsUserUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v6_3_0.util.MBSuspiciousActivityTable;
-import com.liferay.message.boards.internal.upgrade.v6_4_0.MBSuspiciousActivityUpgradeProcess;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -139,7 +138,13 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register("6.2.0", "6.3.0", MBSuspiciousActivityTable.create());
 
 		registry.register(
-			"6.3.0", "6.4.0", new MBSuspiciousActivityUpgradeProcess());
+			"6.3.0", "6.4.0",
+			UpgradeProcessFactory.alterColumnName(
+				"MBSuspiciousActivity", "type_", "reason VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"MBSuspiciousActivity", "reason", "VARCHAR(255)"),
+			UpgradeProcessFactory.dropColumns(
+				"MBSuspiciousActivity", "description"));
 
 		registry.register(
 			"6.4.0", "6.4.1",

@@ -182,8 +182,8 @@ public class FragmentServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.9.4", "2.10.0",
-			new com.liferay.fragment.internal.upgrade.v2_10_0.
-				FragmentEntryLinkUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"FragmentEntryLink", "deleted BOOLEAN"));
 
 		registry.register(
 			"2.10.0", "2.10.1",

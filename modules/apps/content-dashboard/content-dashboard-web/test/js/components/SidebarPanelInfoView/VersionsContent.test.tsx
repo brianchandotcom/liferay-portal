@@ -103,6 +103,8 @@ const _getComponent = () => {
 	);
 };
 
+Liferay.FeatureFlags['LPS-162924'] = true;
+
 describe('Versions Content component', () => {
 	afterEach(() => {
 		jest.restoreAllMocks();

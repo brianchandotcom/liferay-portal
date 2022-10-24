@@ -9,7 +9,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
       class="content-dashboard sidebar sidebar-light sidebar-sm"
     >
       <section
-        class="sidebar-header is-sticky"
+        class="is-sticky sidebar-header"
       >
         <div
           class="sidebar-section autofit-row"

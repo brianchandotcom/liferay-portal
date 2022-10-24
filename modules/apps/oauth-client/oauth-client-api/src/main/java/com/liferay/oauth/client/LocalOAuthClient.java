@@ -14,12 +14,21 @@
 
 package com.liferay.oauth.client;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.oauth2.provider.model.OAuth2Application;
+
+import java.util.function.Consumer;
 
 /**
  * @author Arthur Chan
  */
+@ProviderType
 public interface LocalOAuthClient {
+
+	public void consumeAccessToken(
+		Consumer<String> accessTokenConsumer,
+		OAuth2Application oAuth2Application, long userId);
 
 	public String requestTokens(
 		OAuth2Application oAuth2Application, long userId);

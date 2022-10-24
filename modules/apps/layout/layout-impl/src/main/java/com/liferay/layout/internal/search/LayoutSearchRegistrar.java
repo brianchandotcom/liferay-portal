@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Vagner B.C
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class LayoutSearchRegistrar {
 
 	@Activate

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Chema Balsas
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ServletContextUtil {
 
 	public static CollectionPaginationHelper getCollectionPaginationHelper() {

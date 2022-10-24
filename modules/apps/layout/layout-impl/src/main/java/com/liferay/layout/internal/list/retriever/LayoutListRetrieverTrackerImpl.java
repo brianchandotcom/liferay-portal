@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = LayoutListRetrieverTracker.class)
+@Component(service = LayoutListRetrieverTracker.class)
 public class LayoutListRetrieverTrackerImpl
 	implements LayoutListRetrieverTracker {
 

@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=test",
 		"com.liferay.portlet.add-default-resource=true",

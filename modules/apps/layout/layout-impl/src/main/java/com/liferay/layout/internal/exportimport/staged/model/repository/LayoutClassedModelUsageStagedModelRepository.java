@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.layout.model.LayoutClassedModelUsage",
 	service = StagedModelRepository.class
 )

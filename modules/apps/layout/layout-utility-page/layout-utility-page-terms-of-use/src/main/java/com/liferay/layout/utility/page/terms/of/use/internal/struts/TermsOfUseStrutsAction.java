@@ -40,10 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, property = "path=/portal/terms_of_use",
-	service = StrutsAction.class
-)
+@Component(property = "path=/portal/terms_of_use", service = StrutsAction.class)
 public class TermsOfUseStrutsAction implements StrutsAction {
 
 	@Override

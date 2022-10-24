@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kapler
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 		"panel.app.order:Integer=400",

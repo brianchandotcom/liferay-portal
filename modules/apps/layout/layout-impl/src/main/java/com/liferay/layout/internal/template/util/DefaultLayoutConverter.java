@@ -52,8 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.layout.internal.configuration.LayoutConverterConfiguration",
-	immediate = true, property = "layout.template.id=default",
-	service = LayoutConverter.class
+	property = "layout.template.id=default", service = LayoutConverter.class
 )
 public class DefaultLayoutConverter implements LayoutConverter {
 

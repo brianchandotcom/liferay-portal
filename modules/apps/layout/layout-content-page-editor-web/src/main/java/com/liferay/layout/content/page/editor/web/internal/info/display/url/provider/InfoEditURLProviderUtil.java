@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class InfoEditURLProviderUtil {
 
 	public static String getURLEdit(

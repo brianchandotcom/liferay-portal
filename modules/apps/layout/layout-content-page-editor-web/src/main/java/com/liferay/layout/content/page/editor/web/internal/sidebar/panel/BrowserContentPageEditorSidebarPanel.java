@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=700",
+	property = "service.ranking:Integer=700",
 	service = ContentPageEditorSidebarPanel.class
 )
 public class BrowserContentPageEditorSidebarPanel

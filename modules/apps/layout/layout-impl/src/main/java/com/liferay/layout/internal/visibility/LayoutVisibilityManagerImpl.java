@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = LayoutVisibilityManager.class)
+@Component(service = LayoutVisibilityManager.class)
 public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 
 	@Override

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_PORTLET,
+	property = "layout.type=" + LayoutConstants.TYPE_PORTLET,
 	service = LayoutTypeController.class
 )
 public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {

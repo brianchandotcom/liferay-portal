@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = FragmentEntryLinkListener.class)
+@Component(service = FragmentEntryLinkListener.class)
 public class PortalCacheFragmentEntryLinkListener
 	implements FragmentEntryLinkListener {
 

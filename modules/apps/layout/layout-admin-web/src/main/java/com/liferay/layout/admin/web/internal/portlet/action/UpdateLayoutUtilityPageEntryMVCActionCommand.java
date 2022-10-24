@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bárbara
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"mvc.command.name=/layout_admin/update_layout_utility_page_entry"

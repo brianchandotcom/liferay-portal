@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=600",
+	property = "service.ranking:Integer=600",
 	service = ContentPageEditorSidebarPanel.class
 )
 public class PageDesignOptionsSidebarPanel

@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Sivanov
  */
 @Component(
-	immediate = true,
 	property = "layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT,
 	service = LayoutTypeAccessPolicy.class
 )

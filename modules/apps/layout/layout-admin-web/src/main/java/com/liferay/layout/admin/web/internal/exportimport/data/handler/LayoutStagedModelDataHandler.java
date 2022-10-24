@@ -163,7 +163,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.layout.configuration.LayoutExportImportConfiguration",
-	immediate = true, service = StagedModelDataHandler.class
+	service = StagedModelDataHandler.class
 )
 public class LayoutStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Layout> {

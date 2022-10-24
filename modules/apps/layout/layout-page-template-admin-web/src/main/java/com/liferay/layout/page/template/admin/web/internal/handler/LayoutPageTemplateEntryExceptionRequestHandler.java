@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	immediate = true,
-	service = LayoutPageTemplateEntryExceptionRequestHandler.class
-)
+@Component(service = LayoutPageTemplateEntryExceptionRequestHandler.class)
 public class LayoutPageTemplateEntryExceptionRequestHandler {
 
 	public JSONObject createErrorJSONObject(

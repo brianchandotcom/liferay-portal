@@ -94,7 +94,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = LayoutCopyHelper.class)
+@Component(service = LayoutCopyHelper.class)
 public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Override

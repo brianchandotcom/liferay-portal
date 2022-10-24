@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 	service = StagedModelRepository.class
 )

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ListObjectReferenceFactoryTracker.class)
+@Component(service = ListObjectReferenceFactoryTracker.class)
 public class ListObjectReferenceTrackerImpl
 	implements ListObjectReferenceFactoryTracker {
 

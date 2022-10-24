@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	immediate = true,
 	property = {
 		"lang.type=" + TemplateConstants.LANG_TYPE_FTL,
 		"type=" + TemplateContextContributor.TYPE_THEME

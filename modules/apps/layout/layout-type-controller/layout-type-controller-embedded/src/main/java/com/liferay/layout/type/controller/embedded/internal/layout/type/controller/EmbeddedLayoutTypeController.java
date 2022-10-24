@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_EMBEDDED,
+	property = "layout.type=" + LayoutConstants.TYPE_EMBEDDED,
 	service = LayoutTypeController.class
 )
 public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {

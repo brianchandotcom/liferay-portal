@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentEntryLinkManager.class)
+@Component(service = FragmentEntryLinkManager.class)
 public class FragmentEntryLinkManager {
 
 	public FragmentEntry getFragmentEntry(

@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = LayoutExceptionRequestHandler.class)
+@Component(service = LayoutExceptionRequestHandler.class)
 public class LayoutExceptionRequestHandler {
 
 	public void handleException(

@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Vagner B.C
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.kernel.model.Layout",
 	service = ModelPreFilterContributor.class
 )

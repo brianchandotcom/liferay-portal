@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Vagner B.C
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.kernel.model.Layout",
 	service = ModelIndexerWriterContributor.class
 )

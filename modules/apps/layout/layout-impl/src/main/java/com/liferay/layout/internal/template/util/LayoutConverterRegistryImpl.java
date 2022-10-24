@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = LayoutConverterRegistry.class)
+@Component(service = LayoutConverterRegistry.class)
 public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 
 	@Override

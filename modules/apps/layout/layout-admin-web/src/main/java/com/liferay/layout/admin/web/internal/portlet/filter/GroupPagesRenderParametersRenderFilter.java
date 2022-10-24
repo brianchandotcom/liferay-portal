@@ -51,7 +51,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Attila Bakay
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 	service = PortletFilter.class
 )

@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Couso
  */
 @Component(
-	immediate = true, property = "extended=true",
-	service = LayoutPrototypePermission.class
+	property = "extended=true", service = LayoutPrototypePermission.class
 )
 public class LayoutPageTemplateEntryLayoutPrototypePermission
 	implements LayoutPrototypePermission {

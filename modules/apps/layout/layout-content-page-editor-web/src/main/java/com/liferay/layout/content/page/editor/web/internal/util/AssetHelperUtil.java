@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class AssetHelperUtil {
 
 	public static List<AssetPublisherAddItemHolder>

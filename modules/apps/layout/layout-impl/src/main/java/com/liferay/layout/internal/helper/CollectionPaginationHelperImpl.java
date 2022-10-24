@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = CollectionPaginationHelper.class)
+@Component(service = CollectionPaginationHelper.class)
 public class CollectionPaginationHelperImpl
 	implements CollectionPaginationHelper {
 

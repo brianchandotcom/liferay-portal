@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration",
-	immediate = true, property = "service.ranking:Integer=500",
+	property = "service.ranking:Integer=500",
 	service = ContentPageEditorSidebarPanel.class
 )
 public class PageContentPageEditorSidebarPanel

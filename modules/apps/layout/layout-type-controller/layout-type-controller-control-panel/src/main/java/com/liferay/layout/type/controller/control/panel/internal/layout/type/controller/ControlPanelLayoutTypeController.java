@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = "layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL,
 	service = LayoutTypeController.class
 )

@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(
-	immediate = true, service = LayoutContentModelResourcePermission.class
-)
+@Component(service = LayoutContentModelResourcePermission.class)
 public class LayoutContentModelResourcePermissionImpl
 	implements LayoutContentModelResourcePermission {
 

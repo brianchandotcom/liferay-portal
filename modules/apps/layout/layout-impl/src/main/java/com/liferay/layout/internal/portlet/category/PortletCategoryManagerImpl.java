@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = PortletCategoryManager.class)
+@Component(service = PortletCategoryManager.class)
 public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
 	public JSONArray getPortletsJSONArray(

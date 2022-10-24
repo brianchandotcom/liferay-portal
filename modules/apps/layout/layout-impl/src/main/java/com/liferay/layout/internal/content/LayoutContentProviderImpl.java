@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = LayoutContentProvider.class)
+@Component(service = LayoutContentProvider.class)
 public class LayoutContentProviderImpl implements LayoutContentProvider {
 
 	@Override

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tamas Molnar
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class LayoutSetPrototypeModelListener
 	extends BaseModelListener<LayoutSetPrototype> {
 

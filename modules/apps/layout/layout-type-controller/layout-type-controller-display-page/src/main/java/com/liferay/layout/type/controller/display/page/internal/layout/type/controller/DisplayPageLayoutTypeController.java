@@ -62,7 +62,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juergen Kappler
  */
 @Component(
-	immediate = true,
 	property = "layout.type=" + LayoutConstants.TYPE_ASSET_DISPLAY,
 	service = LayoutTypeController.class
 )

@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	service = {
 		LayoutLocalizationStagedModelDataHandler.class,
 		StagedModelDataHandler.class

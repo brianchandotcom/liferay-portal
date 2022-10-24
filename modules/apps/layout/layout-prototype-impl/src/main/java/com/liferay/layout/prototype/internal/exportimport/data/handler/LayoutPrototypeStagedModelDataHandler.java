@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniela Zapata Riesco
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(service = StagedModelDataHandler.class)
 public class LayoutPrototypeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutPrototype> {
 

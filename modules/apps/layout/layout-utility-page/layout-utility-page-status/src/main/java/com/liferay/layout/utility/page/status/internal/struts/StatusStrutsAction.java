@@ -39,10 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	immediate = true, property = "path=/portal/status",
-	service = StrutsAction.class
-)
+@Component(property = "path=/portal/status", service = StrutsAction.class)
 public class StatusStrutsAction implements StrutsAction {
 
 	@Override

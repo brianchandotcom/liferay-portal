@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = LayoutsExporter.class)
+@Component(service = LayoutsExporter.class)
 public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Override

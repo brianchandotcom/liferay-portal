@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(service = StagedModelDataHandler.class)
 public class LayoutPageTemplateStructureStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutPageTemplateStructure> {
 

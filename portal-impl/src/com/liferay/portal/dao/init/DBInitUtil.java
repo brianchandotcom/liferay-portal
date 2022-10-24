@@ -76,6 +76,8 @@ public class DBInitUtil {
 		try (Connection connection = _dataSource.getConnection()) {
 			_init(DBManagerUtil.getDB(), connection);
 
+			_dataSource = DBPartitionUtil.wrapDataSource(_dataSource);
+
 			DBPartitionUtil.setDefaultCompanyId(connection);
 		}
 	}
@@ -252,8 +254,8 @@ public class DBInitUtil {
 			return null;
 		}
 
-		DataSource dataSource = DBPartitionUtil.wrapDataSource(
-			DataSourceFactoryUtil.initDataSource(properties));
+		DataSource dataSource = DataSourceFactoryUtil.initDataSource(
+			properties);
 
 		DBManagerUtil.setDB(DialectDetector.getDialect(dataSource), dataSource);
 

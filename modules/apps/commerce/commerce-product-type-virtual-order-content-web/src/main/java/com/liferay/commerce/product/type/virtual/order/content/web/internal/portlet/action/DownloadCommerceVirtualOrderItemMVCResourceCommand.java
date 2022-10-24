@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.type.virtual.order.content.web.internal.portlet.action;
 
 import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderPortletKeys;
-import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,10 +75,6 @@ public class DownloadCommerceVirtualOrderItemMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DownloadCommerceVirtualOrderItemMVCResourceCommand.class);
-
-	@Reference
-	private CommerceVirtualOrderItemLocalService
-		_commerceVirtualOrderItemLocalService;
 
 	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;

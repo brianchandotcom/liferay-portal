@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-        task ("Given a custom element with "Use ES Modules" option created") {
+		task ("Given a custom element with "Use ES Modules" option created") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				customElementHtmlName = "app-element",
@@ -65,19 +65,20 @@ definition {
 		}
 	}
 
-    @description = "LPS-165438. When add a remote app in the html <script> tag with src is rendered as a module type"
-	@priority = "5"
-	test CanRenderCustomElementAsModuleType {
-
-        //To-do CanRenderCustomElementAsModuleType testcase
-
-    }
-
-    @description = "LPS-165439. When add a remote app in the HTML of the page I'm able to see references to react and react-dom"
+	@description = "LPS-165439. When add a remote app in the HTML of the page I'm able to see references to react and react-dom"
 	@priority = "5"
 	test CanGenerateTheAMDToESMBridge {
 
-        //To-do CanRenderCustomElementAsModuleType testcase
-    }
+		// To-do CanGenerateTheAMDToESMBridge testcase
+
+	}
+
+	@description = "LPS-165438. When add a remote app in the html <script> tag with src is rendered as a module type"
+	@priority = "5"
+	test CanRenderCustomElementAsModuleType {
+
+		// To-do CanRenderCustomElementAsModuleType testcase
+
+	}
 
 }

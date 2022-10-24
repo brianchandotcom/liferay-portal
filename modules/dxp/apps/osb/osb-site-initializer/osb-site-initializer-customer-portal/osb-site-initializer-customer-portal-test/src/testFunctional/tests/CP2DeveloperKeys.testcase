@@ -147,9 +147,7 @@ definition {
 		task ("Assert that a new page is opened and go back to 'Product Activation page'") {
 			AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
 
-			Navigator.closeSpecificWindow(
-				closeWindowTitle = "Deploying Activation Keys – Liferay Help Center",
-				selectWindowTitle = "Project - Customer Portal Site - Liferay DXP");
+			Navigator.closeWindow();
 		}
 	}
 

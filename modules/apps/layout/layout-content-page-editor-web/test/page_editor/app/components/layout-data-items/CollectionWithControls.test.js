@@ -64,6 +64,7 @@ const renderCollection = ({
 					dispatch={() => {}}
 					getState={() => ({
 						fragmentEntryLinks: {},
+						layoutData,
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedSegment,
 							UPDATE: hasUpdatePermission,

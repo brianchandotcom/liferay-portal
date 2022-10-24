@@ -85,6 +85,8 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"error",
 				_language.get(actionRequest.getLocale(), errorMessage));
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

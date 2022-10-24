@@ -52,58 +52,81 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			}
 		}
 
-		if (continueFlag) {
-			continueFlag = _checkIfDeleted(detailAST);
+		if (!continueFlag) {
+			return;
 		}
 
-		if (!continueFlag) {
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.contains(
+				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade" +
+					"/v6_") ||
+			absolutePath.contains(
+				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade" +
+					"/v7_0_")) {
+
 			return;
 		}
 
 		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_DEF);
 
+		DetailAST methodDefDetailAST = null;
+
 		for (DetailAST curDetailAST : methodDefDetailASTs) {
-			DetailAST identDetailAST = curDetailAST.findFirstToken(
+			DetailAST iDentDetailAST = curDetailAST.findFirstToken(
 				TokenTypes.IDENT);
 
-			if (!StringUtil.equals(identDetailAST.getText(), "doUpgrade")) {
-				continue;
+			if (StringUtil.equals(iDentDetailAST.getText(), "doUpgrade")) {
+				methodDefDetailAST = curDetailAST;
+
+				break;
 			}
+		}
 
-			DetailAST sListDetailAST = curDetailAST.findFirstToken(
-				TokenTypes.SLIST);
+		if ((methodDefDetailAST == null) ||
+			((methodDefDetailASTs.size() == 1) &&
+			 !_checkIfDeleted(detailAST, methodDefDetailAST))) {
 
-			if (sListDetailAST.getChildCount() == 1) {
-				return;
-			}
+			return;
+		}
 
-			DetailAST firstChildDetailAST = sListDetailAST.getFirstChild();
+		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
+			TokenTypes.SLIST);
 
-			DetailAST nextDetailAST = firstChildDetailAST;
+		if (sListDetailAST.getChildCount() == 1) {
+			return;
+		}
 
-			if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
-				nextDetailAST = _checkMethod(firstChildDetailAST, false);
-			}
+		DetailAST firstChildDetailAST = sListDetailAST.getFirstChild();
 
-			while (nextDetailAST != null) {
-				firstChildDetailAST = nextDetailAST;
-				nextDetailAST = nextDetailAST.getNextSibling();
-			}
+		DetailAST nextDetailAST = firstChildDetailAST;
 
-			int tokenType = firstChildDetailAST.getType();
+		if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
+			nextDetailAST = _checkMethod(firstChildDetailAST, false);
+		}
 
-			while ((tokenType == TokenTypes.SEMI) ||
-				   (tokenType == TokenTypes.RCURLY)) {
+		if (nextDetailAST == null) {
+			return;
+		}
 
-				firstChildDetailAST = firstChildDetailAST.getPreviousSibling();
+		while (nextDetailAST != null) {
+			firstChildDetailAST = nextDetailAST;
+			nextDetailAST = nextDetailAST.getNextSibling();
+		}
 
-				tokenType = firstChildDetailAST.getType();
-			}
+		int tokenType = firstChildDetailAST.getType();
 
-			if (tokenType == TokenTypes.EXPR) {
-				_checkMethod(firstChildDetailAST, true);
-			}
+		while ((tokenType == TokenTypes.SEMI) ||
+			   (tokenType == TokenTypes.RCURLY)) {
+
+			firstChildDetailAST = firstChildDetailAST.getPreviousSibling();
+
+			tokenType = firstChildDetailAST.getType();
+		}
+
+		if (tokenType == TokenTypes.EXPR) {
+			_checkMethod(firstChildDetailAST, true);
 		}
 	}
 
@@ -134,40 +157,36 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			e -> StringUtil.equals(e.getText(), "UpgradeProcess"));
 	}
 
-	private boolean _checkIfDeleted(DetailAST detailAST) {
-		String absolutePath = getAbsolutePath();
+	private boolean _checkIfDeleted(
+		DetailAST detailAST, DetailAST methodDefDetailAST) {
 
-		if (absolutePath.contains(
-				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade")) {
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
 
-			return true;
+		DetailAST childDetailAST = objBlockDetailAST.getFirstChild();
+
+		int objCount = 0;
+
+		while (childDetailAST != null) {
+			int tokenType = childDetailAST.getType();
+
+			if ((tokenType != TokenTypes.LCURLY) &&
+				(tokenType != TokenTypes.RCURLY)) {
+
+				objCount++;
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 
-		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
-			detailAST, true, TokenTypes.METHOD_DEF);
-
-		if (ListUtil.isEmpty(methodDefDetailASTs) ||
-			(methodDefDetailASTs.size() > 1)) {
-
-			return true;
-		}
-
-		DetailAST methodDefDetailAST = methodDefDetailASTs.get(0);
-
-		DetailAST identDetailAST = methodDefDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if (!StringUtil.equals("doUpgrade", identDetailAST.getText())) {
+		if (objCount != 1) {
 			return true;
 		}
 
 		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
 			TokenTypes.SLIST);
 
-		DetailAST childDetailAST = sListDetailAST.getFirstChild();
-
-		String currentMethodName = null;
-		String parameter1 = null;
+		childDetailAST = sListDetailAST.getFirstChild();
 
 		int methodCount = 0;
 
@@ -205,27 +224,6 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 				!StringUtil.equals(methodName, "alterTableDropColumn")) {
 
 				return true;
-			}
-
-			List<String> parameters = _getParameterList(firstChildDetailAST);
-
-			if (ListUtil.isEmpty(parameters)) {
-				return true;
-			}
-
-			if (Validator.isNull(currentMethodName)) {
-				currentMethodName = methodName;
-
-				parameter1 = parameters.get(0);
-			}
-			else {
-				if (StringUtil.equals(currentMethodName, "alterColumnName") ||
-					StringUtil.equals(currentMethodName, "alterColumnType") ||
-					!StringUtil.equals(currentMethodName, methodName) ||
-					!StringUtil.equals(parameters.get(0), parameter1)) {
-
-					return true;
-				}
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();

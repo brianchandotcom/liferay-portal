@@ -156,8 +156,6 @@ definition {
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
-		Button.click(button = "Send");
-
 		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPORTTED_FILE");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

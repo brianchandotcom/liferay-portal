@@ -35,6 +35,7 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -241,4 +242,5 @@ definition {
 				reset_filter = "Restablecer filtros");
 		}
 	}
+
 }

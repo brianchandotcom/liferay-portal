@@ -362,13 +362,6 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	private File _getCanonicalConfigFile(String fileName) throws IOException {
-		File configFile = new File(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
-
-		return configFile.getCanonicalFile();
-	}
-
 	private Dictionary<Object, Object> _getDictionary(String pid)
 		throws IOException {
 
@@ -575,7 +568,9 @@ public class ConfigurationPersistenceManager
 			needSave = false;
 		}
 		else {
-			configFile = _getCanonicalConfigFile(felixFileInstallFileName);
+			configFile = new File(
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+				felixFileInstallFileName);
 		}
 
 		if (needSave) {

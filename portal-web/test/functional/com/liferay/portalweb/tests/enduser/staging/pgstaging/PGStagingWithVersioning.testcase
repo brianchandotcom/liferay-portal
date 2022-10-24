@@ -142,21 +142,40 @@ definition {
 		}
 	}
 
-	@description = "Verify is possible add site pages variation."
+	@description = "This is a test for LPS-36620. Verified that navigation is visible when clicking the site page variation."
 	@priority = "5"
 	test AddSitePagesVariation {
 		property portal.acceptance = "true";
 
-		task ("Give: I add a site page variation") {
+		task ("Give: Add a new site page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Test Page",
+				site = "false");
+		}
+
+		task ("And: Add a site page variation") {
+			Navigator.openStagingSiteURL(siteName = "Site Name");
+
 			Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 		}
 
-		task ("When: I go to Publish To Live screen") {
+		task ("When: Go to Publish To Live screen") {
 			Navigator.openStagingSiteURL(siteName = "Site Name");
 		}
 
 		task ("Then: I can see the site page variation there") {
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
+		}
+
+		task ("When: Click the newly added site page variation") {
+			Click(locator1 = "Staging#SITE_PAGES_VARIATION");
+		}
+
+		task ("Then: Assert the freshly added site page is visible") {
+			AssertVisible(
+				key_pageName = "Test Page",
+				locator1 = "Home#PAGE");
 		}
 	}
 

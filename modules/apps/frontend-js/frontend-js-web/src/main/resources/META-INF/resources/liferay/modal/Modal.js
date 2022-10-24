@@ -443,6 +443,9 @@ const openSelectionModal = ({
 					}
 				);
 			}
+			else {
+				processCloseFn();
+			}
 		}
 		else {
 			onSelect(selectedItem);

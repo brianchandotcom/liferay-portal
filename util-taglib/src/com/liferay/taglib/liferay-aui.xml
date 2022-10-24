@@ -1484,9 +1484,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component dynamicAttributes="false" name="Spacer" parentClass="com.liferay.taglib.TagSupport" writeBaseClass="false" writeJSP="false">
-		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.</description>
-	</component>
 	<component dynamicAttributes="false" name="TranslationManager">
 		<description>Creates a UI component for managing translation of associated content.</description>
 		<attributes>

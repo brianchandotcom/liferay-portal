@@ -21,7 +21,7 @@ export enum LiferayPicklistName {
 	TARGET_MARKETS = 'Target Markets',
 	PROJECT_INFORMATIONS = 'Project Informations',
 	PROJECT_CATEGORIES = 'Project Categories',
-	INDUSTRIES = 'Deal Registration Industries',
+	INDUSTRIES = 'Industries',
 	DEPARTMENTS = 'Departments',
 	JOB_ROLES = 'Job Roles',
 	STATES = 'States',

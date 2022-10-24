@@ -22,8 +22,9 @@ import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProp
 const Review = ({
 	onCancel,
 	onPrevious,
+	onSaveAsDraft
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {isSubmitting, values} = useFormikContext<DealRegistration>();
+	const {isSubmitting, values, ...formikHelpers} = useFormikContext<DealRegistration>();
 
 	return (
 		<>
@@ -163,11 +164,15 @@ const Review = ({
 					]}
 					title="Business Objectives"
 				/>
-			</PRMForm>
+			
 
-			<PRMForm.Footer className="bg-neutral-0">
+			<PRMForm.Footer>
 				<div className="d-flex mr-auto">
-					<Button disabled={isSubmitting} type="submit">
+				<Button
+						disabled={isSubmitting}
+						displayType={null}
+						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
+					>
 						Save as Draft
 					</Button>
 
@@ -180,7 +185,7 @@ const Review = ({
 					</Button>
 				</div>
 
-				<div className="d-flex mr-auto">
+				<div className="d-flex">
 					<Button
 						className="mr-4"
 						displayType="secondary"
@@ -194,6 +199,7 @@ const Review = ({
 					</Button>
 				</div>
 			</PRMForm.Footer>
+			</PRMForm>
 		</>
 	);
 };

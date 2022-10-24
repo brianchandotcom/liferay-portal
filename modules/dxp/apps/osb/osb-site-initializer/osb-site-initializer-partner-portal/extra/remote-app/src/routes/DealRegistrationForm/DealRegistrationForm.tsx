@@ -54,35 +54,6 @@ const initialFormValues: DealRegistration = {
 	registrationStatus: RequestStatus.PENDING,
 };
 
-const initialFormValues: DealRegistration = {
-	additionalContact: {emailAddress: '', firstName: '', lastName: ''},
-	additionalInformationAboutTheOpportunity: '',
-	categories: [],
-	mdfActivityAssociated: {},
-	partnerAccount: {},
-	primaryProspect: {
-		businessUnit: '',
-		department: {},
-		emailAddress: '',
-		firstName: '',
-		jobRole: {},
-		lastName: '',
-		phone: '',
-	},
-	projectNeed: [],
-	projectTimeline: '',
-	prospect: {
-		accountName: '',
-		address: '',
-		city: '',
-		country: {},
-		industry: {},
-		postalCode: '',
-		state: {},
-	},
-	requestStatus: RequestStatus.PENDING,
-};
-
 type StepComponent = {
 	[key in StepType]?: JSX.Element;
 };
@@ -95,15 +66,6 @@ const DealRegistrationForm = () => {
 		Liferay.Util.navigate(
 			`${siteURL}/${PRMPageRoute.DEAL_REGISTRATION_LISTING}`
 		);
-	};
-	const onSaveAsDraft = () => {
-		(
-			values: DealRegistration,
-			formikHelpers: Omit<
-				FormikHelpers<DealRegistration>,
-				'setFieldValue'
-			>
-		) => submitForm(values, formikHelpers, siteURL, RequestStatus.DRAFT);
 	};
 
 	const onContinue = async (
@@ -128,7 +90,20 @@ const DealRegistrationForm = () => {
 			<General
 				onCancel={onCancel}
 				onContinue={onContinue}
-				onSaveAsDraft={onSaveAsDraft}
+				onSaveAsDraft={(
+					values: DealRegistration,
+					formikHelpers: Omit<
+						FormikHelpers<DealRegistration>,
+						'setFieldValue'
+					>
+				) =>
+					submitForm(
+						values,
+						formikHelpers,
+						siteURL,
+						RequestStatus.DRAFT
+					)
+				}
 				validationSchema={generalSchema}
 			/>
 		),
@@ -136,7 +111,20 @@ const DealRegistrationForm = () => {
 			<Review
 				onCancel={onCancel}
 				onPrevious={onPrevious}
-				onSaveAsDraft={onSaveAsDraft}
+				onSaveAsDraft={(
+					values: DealRegistration,
+					formikHelpers: Omit<
+						FormikHelpers<DealRegistration>,
+						'setFieldValue'
+					>
+				) =>
+					submitForm(
+						values,
+						formikHelpers,
+						siteURL,
+						RequestStatus.DRAFT
+					)
+				}
 			/>
 		),
 	};

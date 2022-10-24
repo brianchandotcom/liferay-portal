@@ -26,7 +26,6 @@ resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId");
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey");
 
-String title = null;
 String parentTitle = null;
 double priority = KBArticleConstants.DEFAULT_PRIORITY;
 int targetStatus = status;
@@ -34,7 +33,6 @@ int targetStatus = status;
 if (resourceClassNameId == kbArticleClassNameId) {
 	KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(resourcePrimKey, status);
 
-	title = kbArticle.getTitle();
 	parentTitle = kbArticle.getParentTitle(locale, status);
 	priority = kbArticle.getPriority();
 
@@ -45,34 +43,15 @@ if (resourceClassNameId == kbArticleClassNameId) {
 else {
 	KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(resourcePrimKey);
 
-	title = kbFolder.getName();
 	parentTitle = kbFolder.getParentTitle(locale);
-}
-
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
-if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
-	renderResponse.setTitle(title);
 }
 %>
 
-<c:if test="<%= !portletTitleBasedNavigation %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= false %>"
-		title="<%= title %>"
-	/>
-</c:if>
-
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
+<div>
 	<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
 
 	<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
 		<aui:input name="mvcPath" type="hidden" value="/admin/common/move_object.jsp" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
 		<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />
 		<aui:input name="parentResourceClassNameId" type="hidden" value="<%= String.valueOf(parentResourceClassNameId) %>" />
@@ -103,7 +82,7 @@ if (portletTitleBasedNavigation) {
 			<div class="sheet-footer">
 				<aui:button type="submit" value="move" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<aui:button type="cancel" />
 			</div>
 		</aui:fieldset-group>
 	</aui:form>

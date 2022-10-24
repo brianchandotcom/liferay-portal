@@ -120,7 +120,7 @@ const ActionButton = ({
 		productName
 	);
 
-	if (isAdminOrPartnerManager === true) {
+	if (isAdminOrPartnerManager) {
 		return (
 			<ButtonDropDown
 				items={activationKeysActionsItems}
@@ -130,8 +130,7 @@ const ActionButton = ({
 				}}
 			/>
 		);
-	}
-	else {
+	} else {
 		return (
 			<ButtonDropDown
 				items={filteredKeysActionsItems}

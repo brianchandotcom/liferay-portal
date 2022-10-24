@@ -358,6 +358,33 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertElementAccessible(String locator) throws Exception {
+		WebDriver webDriver = WebDriverUtil.getWebDriver();
+
+		String sourceDirFilePath = LiferaySeleniumUtil.getSourceDirFilePath(
+			getTestDependenciesDirName());
+
+		File file = new File(sourceDirFilePath + "/axe.min.js");
+
+		URI uri = file.toURI();
+
+		URL url = uri.toURL();
+
+		AXE.Builder axeBuilder = new AXE.Builder(webDriver, url);
+
+		axeBuilder = axeBuilder.options(
+			PropsValues.ACCESSIBILITY_STANDARDS_JSON);
+
+		JSONObject jsonObject = axeBuilder.analyze(getWebElement(locator));
+
+		JSONArray jsonArray = jsonObject.getJSONArray("violations");
+
+		if (jsonArray.length() != 0) {
+			throw new Exception(AXE.report(jsonArray));
+		}
+	}
+
+	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
 		Condition elementNotPresentCondition = getElementNotPresentCondition(
 			locator);

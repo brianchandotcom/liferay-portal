@@ -1,10 +1,11 @@
 Bundle-Name: Liferay Change Tracking SPI
 Bundle-SymbolicName: com.liferay.change.tracking.spi
-Bundle-Version: 2.4.1
+Bundle-Version: 2.5.0
 Export-Package:\
 	com.liferay.change.tracking.spi.display,\
 	com.liferay.change.tracking.spi.display.context,\
 	com.liferay.change.tracking.spi.exception,\
+	com.liferay.change.tracking.spi.history,\
 	com.liferay.change.tracking.spi.listener,\
 	com.liferay.change.tracking.spi.reference,\
 	com.liferay.change.tracking.spi.reference.builder,\

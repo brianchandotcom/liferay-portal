@@ -6,7 +6,9 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:change-tracking:change-tracking-api")
+	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":core:osgi-service-tracker-collections")

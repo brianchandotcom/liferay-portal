@@ -66,7 +66,11 @@ public class TimelineDisplayContext {
 	}
 
 	public List<CTCollection> getCTCollections() throws PortalException {
-		return CTCollectionLocalServiceUtil.getExclusivePublishedCTCollections(
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			CTCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				_classNameId);
+
+		return ctCollectionHistoryProvider.getCTCollections(
 			_classNameId, _classPK);
 	}
 

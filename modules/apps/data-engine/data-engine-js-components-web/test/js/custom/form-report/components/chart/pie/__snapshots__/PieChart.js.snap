@@ -4,7 +4,7 @@ exports[`PieChart renders 1`] = `
 <DocumentFragment>
   <div
     class="lfr-de-recharts pie-chart"
-    style="display: flex; height: 100%; width: 100%;"
+    style="height: 100%; width: 100%;"
   >
     <div
       class="recharts-responsive-container"

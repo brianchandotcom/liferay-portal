@@ -66,7 +66,9 @@ definition {
 		task ("Read the type and version is correct in the report") {
 			var databaseType = PropsUtil.get("database.type");
 
-			if (!(contains("${fileContent}", "Using ${databaseType} version 5.7"))) {
+			var databaseVersion = PropsUtil.get("database.${databaseType}.version");
+
+			if (!(contains("${fileContent}", "Using ${databaseType} version ${databaseVersion}"))) {
 				fail("Database type and version is not present in upgrade report.");
 			}
 		}

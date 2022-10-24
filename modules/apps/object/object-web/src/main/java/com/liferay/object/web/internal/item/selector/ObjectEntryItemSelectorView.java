@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.item.selector;
 
+import com.liferay.info.exception.InfoPermissionException;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -116,6 +119,24 @@ public class ObjectEntryItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _objectDefinition.getPluralLabel(locale);
+	}
+
+	@Override
+	public boolean isVisible(
+		InfoItemItemSelectorCriterion itemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
+		try {
+			return _infoPermissionProvider.hasViewPermission(
+				GuestOrUserUtil.getPermissionChecker());
+		}
+		catch (InfoPermissionException | PrincipalException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return false;
 	}
 
 	@Override

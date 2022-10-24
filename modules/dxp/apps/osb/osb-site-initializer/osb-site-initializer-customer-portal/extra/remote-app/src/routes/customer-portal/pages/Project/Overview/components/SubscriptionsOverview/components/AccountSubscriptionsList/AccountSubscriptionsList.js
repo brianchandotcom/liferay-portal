@@ -66,7 +66,11 @@ const AccountSubscriptionsList = ({
 					}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					title={`${selectedAccountSubscriptionGroup?.name} ${currentAccountSubscription?.name}`}
+					title={
+						selectedAccountSubscriptionGroup?.name === 'Other'
+							? `${currentAccountSubscription?.name}`
+							: `${selectedAccountSubscriptionGroup?.name} ${currentAccountSubscription?.name}`
+					}
 				/>
 			)}
 

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -78,8 +77,5 @@ public class DownloadCommerceVirtualOrderItemMVCResourceCommand
 
 	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
-
-	@Reference
-	private Portal _portal;
 
 }

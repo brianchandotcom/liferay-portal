@@ -221,12 +221,12 @@ public class OrganizationScreenNavigationEntry
 			return info -> info.mvcActionCommandName = mvcActionCommandName;
 		}
 
-		public static Mod withHideControls() {
-			return info -> info.showControls = false;
+		public static void hideControls(Info info) {
+			info.showControls = false;
 		}
 
-		public static Mod withHideTitle() {
-			return info -> info.showTitle = false;
+		public static void hideTitle(Info info) {
+			info.showTitle = false;
 		}
 
 		public static Mod withVisibleBiFunction(BiFunction<User, Organization, Boolean> visibleBiFunction) {

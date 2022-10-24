@@ -77,7 +77,7 @@ public class OrganizationScreenNavigationRegistrar {
 				Mod.withJspPath("/organization/organization_site.jsp"),
 				Mod.withMVCActionCommandName(
 					"/users_admin/update_organization_organization_site"),
-				Mod.withHideControls(),
+				Mod::hideControls,
 				Mod.withVisibleBiFunction(
 					(user, organization) -> {
 						if (organization == null) {
@@ -117,7 +117,7 @@ public class OrganizationScreenNavigationRegistrar {
 			_dependenciesMod,
 			Mod.withCategoryKey(
 				UserScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT),
-			Mod.withHideControls());
+			Mod::hideControls);
 
 		_registerService(
 			ScreenNavigationEntry.class, 10,
@@ -127,7 +127,7 @@ public class OrganizationScreenNavigationRegistrar {
 				Mod.withJspPath("/organization/addresses.jsp"),
 				Mod.withMVCActionCommandName(
 					"/users_admin/update_contact_information"),
-				Mod.withHideTitle()));
+				Mod::hideTitle));
 		_registerService(
 			ScreenNavigationEntry.class, 20,
 			OrganizationScreenNavigationEntry.of(
@@ -144,7 +144,7 @@ public class OrganizationScreenNavigationRegistrar {
 				Mod.withJspPath("/organization/opening_hours.jsp"),
 				Mod.withMVCActionCommandName(
 					"/users_admin/update_contact_information"),
-				Mod.withHideTitle()));
+				Mod::hideTitle));
 
 	}
 

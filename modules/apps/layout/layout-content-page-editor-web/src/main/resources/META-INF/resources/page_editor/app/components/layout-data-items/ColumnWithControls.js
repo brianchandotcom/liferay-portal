@@ -34,6 +34,7 @@ import {
 	NotDraggableArea,
 	useSetCanDrag,
 } from '../../utils/drag-and-drop/useDragAndDrop';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -427,7 +428,10 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	);
 
 	return (
-		<TopperEmpty item={item}>
+		<TopperEmpty
+			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
+			item={item}
+		>
 			<Column
 				className={classNames('page-editor__col', {
 					'empty': isItemEmpty(

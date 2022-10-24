@@ -36,7 +36,7 @@ export default function ({children, ...props}) {
 	);
 }
 
-function TopperEmpty({children, item}) {
+function TopperEmpty({children, className, item}) {
 	const containerRef = useRef(null);
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
@@ -65,7 +65,7 @@ function TopperEmpty({children, item}) {
 			<>
 				{React.cloneElement(child, {
 					...child.props,
-					className: classNames(child.props.className, {
+					className: classNames(child.props.className, className, {
 						'drag-over-bottom':
 							isValidDrop &&
 							dropTargetPosition === TARGET_POSITIONS.BOTTOM,

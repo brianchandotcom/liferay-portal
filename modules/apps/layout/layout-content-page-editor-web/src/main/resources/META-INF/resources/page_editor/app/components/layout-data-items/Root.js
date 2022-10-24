@@ -16,6 +16,7 @@ import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {useSelectorCallback} from '../../contexts/StoreContext';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import isItemEmpty from '../../utils/isItemEmpty';
 import TopperEmpty from '../topper/TopperEmpty';
 
@@ -27,7 +28,10 @@ const Root = React.forwardRef(({children, item}, ref) => {
 	);
 
 	return (
-		<TopperEmpty item={item}>
+		<TopperEmpty
+			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
+			item={item}
+		>
 			<div className="page-editor__root" ref={ref}>
 				{isEmpty && (
 					<div className="page-editor__no-fragments-state">

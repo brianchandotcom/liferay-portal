@@ -30,6 +30,7 @@ import {
 	useIsActive,
 	useSelectItem,
 } from '../contexts/ControlsContext';
+import {useMovementTarget} from '../contexts/KeyboardMovementContext';
 import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
 import useDropContainerId from '../utils/useDropContainerId';
@@ -250,16 +251,18 @@ LayoutDataItemContent.propTypes = {
 const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
 	useSetCollectionActiveItemContext(item.itemId);
 
+	const {itemId: keyboardTargetId} = useMovementTarget();
 	const activationOrigin = useActivationOrigin();
 	const isActive = useIsActive()(item.itemId);
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
 		if (
-			isActive &&
-			componentRef.current &&
-			isMounted() &&
-			activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar
+			keyboardTargetId === item.itemId ||
+			(activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar &&
+				componentRef.current &&
+				isMounted() &&
+				isActive)
 		) {
 			componentRef.current.scrollIntoView({
 				behavior: 'smooth',
@@ -267,7 +270,14 @@ const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
 				inline: 'nearest',
 			});
 		}
-	}, [activationOrigin, componentRef, isActive, isMounted]);
+	}, [
+		keyboardTargetId,
+		activationOrigin,
+		componentRef,
+		isActive,
+		isMounted,
+		item,
+	]);
 
 	return null;
 };

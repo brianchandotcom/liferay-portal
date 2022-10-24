@@ -287,9 +287,10 @@ function StructureTreeNodeContent({
 
 	useEffect(() => {
 		if (
-			isActive &&
-			activationOrigin === ITEM_ACTIVATION_ORIGINS.pageEditor &&
-			nodeRef.current
+			item.itemId === keyboardMovementTargetId ||
+			(activationOrigin === ITEM_ACTIVATION_ORIGINS.pageEditor &&
+				nodeRef.current &&
+				isActive)
 		) {
 			nodeRef.current.scrollIntoView({
 				behavior: 'smooth',
@@ -297,7 +298,7 @@ function StructureTreeNodeContent({
 				inline: 'nearest',
 			});
 		}
-	}, [activationOrigin, isActive]);
+	}, [activationOrigin, isActive, keyboardMovementTargetId, item]);
 
 	useEffect(() => {
 		let timeoutId = null;

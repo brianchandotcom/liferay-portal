@@ -46,8 +46,6 @@ if (cur > 0) {
 
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />
-
 		<liferay-util:include page="/designer/view_workflow_definitions.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

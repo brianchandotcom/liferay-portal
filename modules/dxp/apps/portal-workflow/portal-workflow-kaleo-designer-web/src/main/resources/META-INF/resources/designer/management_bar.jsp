@@ -25,6 +25,7 @@
 	searchContainerId="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
 	selectable="<%= false %>"
+	showSearch="<%= true %>"
 	sortingOrder="<%= kaleoDesignerDisplayContext.getOrderByType() %>"
 	sortingURL="<%= kaleoDesignerDisplayContext.getSortingURL() %>"
 />

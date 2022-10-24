@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
@@ -652,9 +651,6 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 		target = "(commerce.inventory.checker.target=CPDefinitionOptionValueRel)"
 	)
 	private CommerceInventoryChecker _commerceInventoryChecker;
-
-	@Reference
-	private CommerceMoneyFactory _commerceMoneyFactory;
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;

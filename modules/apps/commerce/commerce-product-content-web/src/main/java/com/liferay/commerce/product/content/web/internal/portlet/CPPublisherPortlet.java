@@ -25,7 +25,6 @@ import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHe
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -133,9 +132,6 @@ public class CPPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPFriendlyURL _cpFriendlyURL;

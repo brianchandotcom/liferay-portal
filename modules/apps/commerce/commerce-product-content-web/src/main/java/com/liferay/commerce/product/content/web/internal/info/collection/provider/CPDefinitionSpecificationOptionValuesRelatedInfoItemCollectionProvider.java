@@ -18,7 +18,6 @@ import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPOptionCategory;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
@@ -111,9 +110,6 @@ public class
 
 		return cpDefinitionSpecificationOptionValues;
 	}
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService

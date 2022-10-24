@@ -212,7 +212,7 @@ public class CommerceInventoryTestUtil {
 				   serviceContext.getCompanyId(), a3) != null)) {
 
 			a3 = RandomTestUtil.randomString(
-				2, UniqueStringRandomizerBumper.INSTANCE);
+				3, UniqueStringRandomizerBumper.INSTANCE);
 
 			safetyCount++;
 		}

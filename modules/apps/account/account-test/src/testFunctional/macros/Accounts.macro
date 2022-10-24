@@ -350,22 +350,6 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro addInactiveBusinessAccount {
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "${accountName}");
-
-		if (isSet(accountDescription)) {
-			PortletEntry.inputDescription(description = "${accountDescription}");
-		}
-
-		Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro addNewUserToBusinessAccount {
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
@@ -876,13 +860,6 @@ definition {
 			User.changeProfileImage(imageName = "${accountLogoEdit}");
 		}
 
-		if ("${accountStatusEdit}" == "Inactive") {
-			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-		}
-		else if ("${accountStatusEdit}" == "Active") {
-			Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-		}
-
 		if (isSet(customFieldText)) {
 			Type(
 				locator1 = "TextInput#CUSTOM_FIELD",
@@ -938,13 +915,6 @@ definition {
 
 		if (isSet(accountLogoEdit)) {
 			User.changeProfileImage(imageName = "${accountLogoEdit}");
-		}
-
-		if ("${accountStatusEdit}" == "Inactive") {
-			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-		}
-		else if ("${accountStatusEdit}" == "Active") {
-			Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 		}
 
 		if (isSet(customFieldText)) {

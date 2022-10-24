@@ -10,7 +10,7 @@ buildCSS {
 }
 
 dependencies {
-	compile group: "com.deque", name: "axe-selenium", version: "1.1"
+	compile group: "com.deque", name: "axe-selenium", version: "3.0"
 	compile group: "com.github.lewka", name: "ocular", version: "1.0.5"
 	compile group: "com.github.scribejava", name: "scribejava-core", version: "3.2.0"
 	compile group: "com.google.guava", name: "guava", version: "30.1-jre"

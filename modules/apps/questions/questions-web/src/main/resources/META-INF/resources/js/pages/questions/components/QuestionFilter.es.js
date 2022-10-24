@@ -47,22 +47,22 @@ export const filterByOptions = [
 export const sortedByOptions = [
 	{
 		label: Liferay.Language.get('newest'),
-		sortValue: 'dateCreated:asc',
+		sortValue: 'dateCreated:desc',
 		value: 'newest',
 	},
 	{
 		label: Liferay.Language.get('oldest'),
-		sortValue: 'dateCreated:desc',
+		sortValue: 'dateCreated:asc',
 		value: 'oldest',
 	},
 	{
 		label: Liferay.Language.get('recent-activity'),
-		sortValue: 'dateModified:asc',
+		sortValue: 'dateModified:desc',
 		value: 'recent-activity',
 	},
 	{
 		label: Liferay.Language.get('highest-score'),
-		sortValue: 'ratingValueTotalScore:desc',
+		sortValue: 'ratingsStatTotalScore:desc',
 		value: 'highest-score',
 	},
 	{

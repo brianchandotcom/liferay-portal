@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = Normalizer.class)
+@Component(service = Normalizer.class)
 public class NormalizerImpl implements Normalizer {
 
 	@Override

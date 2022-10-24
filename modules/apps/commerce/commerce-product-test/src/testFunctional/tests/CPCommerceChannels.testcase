@@ -547,7 +547,7 @@ definition {
 
 		TestUtils.assertEquals(
 			actual = "${createChannelErrorMessage}",
-			expected = "{errorDescription=Invalid type, message=null, status=400}");
+			expected = "{errorDescription=Invalid channel type, message=null, status=400}");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

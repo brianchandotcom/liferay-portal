@@ -32,7 +32,7 @@ export default function DeserializeUtil(content) {
 }
 
 DeserializeUtil.prototype = {
-	getElements(xmlDefinition) {
+	getElements() {
 		const instance = this;
 
 		const elements = [];
@@ -131,8 +131,7 @@ DeserializeUtil.prototype = {
 				data.actions = node.actions?.length && parseActions(node);
 
 				data.notifications =
-					node.notifications?.length &&
-					parseNotifications(node, xmlDefinition);
+					node.notifications?.length && parseNotifications(node);
 
 				node.notifications?.forEach((notification) => {
 					const roleTypes = notification['role-type'];

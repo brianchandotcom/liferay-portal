@@ -131,6 +131,11 @@ public class ViewNotificationTemplatesDisplayContext {
 					_notificationRequestHelper.getRequest(), "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
+				getAPIURL() + "/{id}/copy", "copy", "copy",
+				LanguageUtil.get(
+					_notificationRequestHelper.getRequest(), "duplicate"),
+				"post", "copy", "async"),
+			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(
 					_notificationRequestHelper.getRequest(), "delete"),

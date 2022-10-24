@@ -14,76 +14,115 @@
 
 package com.liferay.account.service.test.util;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
+import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
+import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Drew Brokke
  */
 public class AccountEntryTestUtil {
 
-	public static AccountEntry addAccountEntry(
-			AccountEntryLocalService accountEntryLocalService)
+	public static List<AccountEntry> addAccountEntries(
+			int number, AccountEntryMod... accountEntryMods)
 		throws Exception {
 
-		return addAccountEntry(
-			accountEntryLocalService, WorkflowConstants.STATUS_APPROVED);
+		List<AccountEntry> accountEntries = new ArrayList<>();
+
+		for (int i = 0; i < number; i++) {
+			accountEntries.add(addAccountEntry(accountEntryMods));
+		}
+
+		return accountEntries;
 	}
 
 	public static AccountEntry addAccountEntry(
-			AccountEntryLocalService accountEntryLocalService, int status)
+			AccountEntryMod... accountEntryMods)
 		throws Exception {
 
-		return accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null, null,
-			RandomTestUtil.randomString(50),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status,
-			ServiceContextTestUtil.getServiceContext());
+		AccountEntryInfo accountEntryInfo = new AccountEntryInfo();
+
+		if (ArrayUtil.isNotEmpty(accountEntryMods)) {
+			for (AccountEntryMod accountEntryMod : accountEntryMods) {
+				accountEntryMod.modify(accountEntryInfo);
+			}
+		}
+
+		return _addAccountEntry(accountEntryInfo);
 	}
 
-	public static AccountEntry addAccountEntry(
-			AccountEntryLocalService accountEntryLocalService, String name,
-			String description)
+	private static AccountEntry _addAccountEntry(
+			AccountEntryInfo accountEntryInfo)
 		throws Exception {
 
-		return accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, name, description, null, null,
-			null, RandomTestUtil.randomString(50),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-	}
+		ServiceContext serviceContext = accountEntryInfo.serviceContext;
 
-	public static AccountEntry addAccountEntry(
-			AccountEntryLocalService accountEntryLocalService, String[] domains)
-		throws Exception {
+		if (serviceContext == null) {
+			User user = UserLocalServiceUtil.getUser(accountEntryInfo.userId);
 
-		return accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), domains, null, null,
-			RandomTestUtil.randomString(50),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-	}
+			Group group = GroupLocalServiceUtil.getGroup(
+				user.getCompanyId(), GroupConstants.GUEST);
 
-	public static AccountEntry addPersonAccountEntry(
-			AccountEntryLocalService accountEntryLocalService)
-		throws Exception {
+			serviceContext = ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+		}
 
-		return accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null, null,
-			RandomTestUtil.randomString(50),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
+		if (ArrayUtil.isNotEmpty(accountEntryInfo.assetTagNames)) {
+			serviceContext.setAssetTagNames(accountEntryInfo.assetTagNames);
+		}
+
+		AccountEntry accountEntry =
+			AccountEntryLocalServiceUtil.addAccountEntry(
+				accountEntryInfo.userId, accountEntryInfo.parentAccountEntryId,
+				accountEntryInfo.name, accountEntryInfo.description,
+				accountEntryInfo.domains, accountEntryInfo.emailAddress,
+				accountEntryInfo.logoBytes, accountEntryInfo.taxIdNumber,
+				accountEntryInfo.type, accountEntryInfo.status, serviceContext);
+
+		if (ArrayUtil.isNotEmpty(accountEntryInfo.accountGroups)) {
+			for (AccountGroup accountGroup : accountEntryInfo.accountGroups) {
+				AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+					accountGroup.getAccountGroupId(),
+					AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId());
+			}
+		}
+
+		if (ArrayUtil.isNotEmpty(accountEntryInfo.organizations)) {
+			AccountEntryOrganizationRelLocalServiceUtil.
+				addAccountEntryOrganizationRels(
+					accountEntry.getAccountEntryId(),
+					ListUtil.toLongArray(
+						Arrays.asList(accountEntryInfo.organizations),
+						Organization.ORGANIZATION_ID_ACCESSOR));
+		}
+
+		if (ArrayUtil.isNotEmpty(accountEntryInfo.users)) {
+			AccountEntryUserRelLocalServiceUtil.addAccountEntryUserRels(
+				accountEntry.getAccountEntryId(),
+				ListUtil.toLongArray(
+					Arrays.asList(accountEntryInfo.users),
+					User.USER_ID_ACCESSOR));
+		}
+
+		return accountEntry;
 	}
 
 }

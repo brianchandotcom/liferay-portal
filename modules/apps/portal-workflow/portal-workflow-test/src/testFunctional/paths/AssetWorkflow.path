@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE_HEADER</td>
-	<td>//span[@data-qa-id="headerTitle" and contains (text(), "Review: ${key_titleValue}")]</td>
+	<td>//ul[@class = 'control-menu-nav' and contains(., 'Review: ${key_titleValue}')]</td>
 	<td></td>
 </tr>
 </tbody>

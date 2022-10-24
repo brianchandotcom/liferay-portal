@@ -70,7 +70,13 @@ public interface AnalyticsConfiguration {
 	public String siteReportingGrouping();
 
 	@Meta.AD(required = false)
+	public boolean syncAllAccounts();
+
+	@Meta.AD(required = false)
 	public boolean syncAllContacts();
+
+	@Meta.AD(required = false)
+	public String[] syncedAccountGroupIds();
 
 	@Meta.AD(required = false)
 	public String[] syncedCommerceChannelIds();

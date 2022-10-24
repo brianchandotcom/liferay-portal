@@ -265,7 +265,7 @@ const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
 				isActive)
 		) {
 			componentRef.current.scrollIntoView({
-				behavior: 'smooth',
+				behavior: 'instant',
 				block: 'center',
 				inline: 'nearest',
 			});

@@ -293,7 +293,7 @@ function StructureTreeNodeContent({
 				isActive)
 		) {
 			nodeRef.current.scrollIntoView({
-				behavior: 'smooth',
+				behavior: 'instant',
 				block: 'center',
 				inline: 'nearest',
 			});
@@ -589,7 +589,7 @@ const MoveButton = ({
 		'focus',
 		() =>
 			nodeRef.current.scrollIntoView({
-				behavior: 'smooth',
+				behavior: 'instant',
 				block: 'center',
 				inline: 'nearest',
 			}),

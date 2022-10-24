@@ -140,7 +140,7 @@ definition {
 		}
 
 		if (!(isSet(sku))) {
-			var sku = "default";
+			var sku = "${productName}_default";
 		}
 
 		var productSpecifications = "";
@@ -238,6 +238,9 @@ definition {
 						"multipleOrderQuantity": ${multipleOrderQuantity}
 					},
 					"productSpecifications": [${productSpecifications}],
+					"shippingConfiguration": {
+                        "freeShipping": false
+                     },
 					"skus": [
 				    {
 				      "cost": "${cost}",
@@ -268,6 +271,16 @@ definition {
 			''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		if (isSet(price)) {
+			var price = "${price}";
+			var priceListName = "${catalogName} Base Price List";
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "${price}",
+				priceListName = "${priceListName}",
+				productSKU = "${sku}");
+		}
 	}
 
 	macro _addCommerceProductImage {

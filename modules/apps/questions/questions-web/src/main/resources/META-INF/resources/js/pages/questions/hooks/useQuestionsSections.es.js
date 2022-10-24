@@ -37,6 +37,8 @@ const useQuestionsSections = ({
 	const [sectionQuery, setSectionQuery] = useState('');
 	const [sectionQueryVariables, setSectionQueryVariables] = useState({});
 
+	const ALL_SECTIONS_ENABLED = sectionTitle === ALL_SECTIONS_ID;
+
 	const context = useContext(AppContext);
 
 	const [getSections] = useManualQuery(getSectionsQuery, {
@@ -70,15 +72,13 @@ const useQuestionsSections = ({
 					setSection(data.messageBoardSections.items[0]);
 					setSectionQuery(getSectionBySectionTitleQuery);
 					setSectionQueryVariables(variables);
-				}
-				else {
+				} else {
 					setSection(null);
 					setError({message: 'Loading Topics', title: 'Error'});
 					setLoading(false);
 				}
 			});
-		}
-		else if (sectionTitle === ALL_SECTIONS_ID) {
+		} else if (ALL_SECTIONS_ENABLED) {
 			const variables = {siteKey: context.siteKey};
 			getSections({
 				variables,
@@ -105,6 +105,7 @@ const useQuestionsSections = ({
 		getSectionBySectionTitle,
 		setError,
 		setLoading,
+		ALL_SECTIONS_ENABLED,
 	]);
 
 	useEffect(() => {
@@ -154,6 +155,7 @@ const useQuestionsSections = ({
 	}, [sectionTitle, section]);
 
 	return {
+		ALL_SECTIONS_ENABLED,
 		allowCreateTopicInRootTopic,
 		section,
 		sectionQuery,

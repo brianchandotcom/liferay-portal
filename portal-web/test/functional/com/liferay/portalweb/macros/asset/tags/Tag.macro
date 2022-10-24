@@ -58,7 +58,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
-		Alert.viewRequiredField();
+		AssertTextEquals(
+			locator1 = "Message#REQUIRED_INFO",
+			value1 = "The Name field is required.");
 	}
 
 	macro cancelEditCP {

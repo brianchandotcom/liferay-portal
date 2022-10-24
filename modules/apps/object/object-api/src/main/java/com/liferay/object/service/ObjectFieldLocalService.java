@@ -95,12 +95,12 @@ public interface ObjectFieldLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addOrUpdateCustomObjectField(
-			String externalReferenceCode, long userId, long objectDefinitionId,
-			long listTypeDefinitionId, String businessType, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state,
-			List<ObjectFieldSetting> objectFieldSettings)
+			String externalReferenceCode, long objectFieldId, long userId,
+			long listTypeDefinitionId, long objectDefinitionId,
+			String businessType, String dbType, String defaultValue,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -406,12 +406,13 @@ public interface ObjectFieldLocalService
 	public ObjectField updateObjectField(ObjectField objectField);
 
 	public ObjectField updateObjectField(
-			String externalReferenceCode, long userId, long objectDefinitionId,
-			long objectFieldId, long listTypeDefinitionId, String businessType,
-			String dbColumnName, String dbTableName, String dbType,
-			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state, boolean system,
+			String externalReferenceCode, long objectFieldId, long userId,
+			long listTypeDefinitionId, long objectDefinitionId,
+			String businessType, String dbColumnName, String dbTableName,
+			String dbType, String defaultValue, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state, boolean system,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException;
 

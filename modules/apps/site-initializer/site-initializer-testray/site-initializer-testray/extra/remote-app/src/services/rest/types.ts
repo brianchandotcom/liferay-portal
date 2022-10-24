@@ -212,8 +212,12 @@ export type TestrayRun = {
 
 export type TestraySubTask = {
 	dueStatus: PickList;
+	id: number;
 	name: string;
+	r_taskToSubtasks_c_task: TestrayTask;
+	r_userToSubtasks_user: UserAccount;
 	score: number;
+	statusUpdateDate: string;
 };
 
 export type TestraySuite = {

@@ -50,7 +50,15 @@ const TestflowOutlet = () => {
 		]);
 	}, [archivedPathIsActive, currentPathIsActive, setTabs]);
 
-	return <Outlet context={{setDropdownIcon, setHeading, setTabs}} />;
+	return (
+		<Outlet
+			context={{
+				setDropdownIcon,
+				setHeading,
+				setTabs,
+			}}
+		/>
+	);
 };
 
 export default TestflowOutlet;

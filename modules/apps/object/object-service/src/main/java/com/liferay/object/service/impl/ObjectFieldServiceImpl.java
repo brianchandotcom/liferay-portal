@@ -121,9 +121,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return objectFieldLocalService.updateObjectField(
-			externalReferenceCode, objectField.getUserId(),
-			objectField.getObjectDefinitionId(), objectFieldId,
-			listTypeDefinitionId, businessType, objectField.getDBColumnName(),
+			externalReferenceCode, objectFieldId, objectField.getUserId(),
+			listTypeDefinitionId, objectField.getObjectDefinitionId(),
+			businessType, objectField.getDBColumnName(),
 			objectField.getDBTableName(), dbType, defaultValue, indexed,
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			state, objectField.isSystem(), objectFieldSettings);

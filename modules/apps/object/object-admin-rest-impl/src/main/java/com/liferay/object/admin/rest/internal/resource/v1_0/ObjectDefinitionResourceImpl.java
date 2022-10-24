@@ -339,14 +339,16 @@ public class ObjectDefinitionResourceImpl
 
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
 			_objectFieldLocalService.updateObjectField(
-				objectField.getExternalReferenceCode(), contextUser.getUserId(),
-				objectDefinitionId, GetterUtil.getLong(objectField.getId()),
+				objectField.getExternalReferenceCode(),
+				GetterUtil.getLong(objectField.getId()),
+				contextUser.getUserId(),
 				ObjectFieldUtil.getListTypeDefinitionId(
 					serviceBuilderObjectDefinition.getCompanyId(),
 					_listTypeDefinitionLocalService, objectField),
-				objectField.getBusinessTypeAsString(), null, null,
-				objectField.getDBTypeAsString(), objectField.getDefaultValue(),
-				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
+				objectDefinitionId, objectField.getBusinessTypeAsString(), null,
+				null, objectField.getDBTypeAsString(),
+				objectField.getDefaultValue(), objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				com.liferay.portal.vulcan.util.LocalizedMapUtil.getLocalizedMap(
 					objectField.getLabel()),

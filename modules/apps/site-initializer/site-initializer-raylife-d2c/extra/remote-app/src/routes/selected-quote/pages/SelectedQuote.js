@@ -31,6 +31,7 @@ import SelectedQuoteContextProvider, {
 const SelectedQuote = () => {
 	const [{sections}] = useContext(SelectedQuoteContext);
 	const [hasError, setHasError] = useState(false);
+	const [createAnAccount, setCreateAnAccount] = useState(false);
 
 	useEffect(() => {
 		const quoteElements = document.querySelector(
@@ -55,10 +56,17 @@ const SelectedQuote = () => {
 				<Panel
 					Right={CheckButton}
 					id="createAnAccount"
-					title="Create a Login or Create an Account"
+					title={
+						createAnAccount
+							? 'Create an Account'
+							: 'Login or Create an Account'
+					}
 					titleNumber="1"
 				>
-					<CreateAnAccount />
+					<CreateAnAccount
+						createAnAccount={createAnAccount}
+						setCreateAnAccount={setCreateAnAccount}
+					/>
 				</Panel>
 
 				<Panel

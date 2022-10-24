@@ -41,7 +41,7 @@ const _isEmailValid = (email) => {
 	return regex.test(email);
 };
 
-export function CreateAnAccount() {
+export function CreateAnAccount({createAnAccount, setCreateAnAccount}) {
 	const [, dispatch] = useContext(SelectedQuoteContext);
 	const [alert, setAlert] = useState(NATURAL_VALUE);
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -52,7 +52,6 @@ export function CreateAnAccount() {
 	const [captcha, setCaptcha] = useState('');
 	const [hasError, setHasError] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [createAnAccount, setCreateAnAccount] = useState(false);
 
 	useEffect(() => {
 		setAlert(NATURAL_VALUE);

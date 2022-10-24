@@ -16,6 +16,7 @@ package com.liferay.account.internal.configuration.persistence.listener.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -60,8 +61,7 @@ public class AccountEntryEmailDomainsConfigurationModelListenerTest {
 		String validDomain = "valid.com";
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService,
-			new String[] {blockedDomain, validDomain});
+			AccountEntryArgs.withDomains(blockedDomain, validDomain));
 
 		Assert.assertTrue(
 			ArrayUtil.contains(accountEntry.getDomainsArray(), blockedDomain));

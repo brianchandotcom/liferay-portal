@@ -57,8 +57,7 @@ public class AccountRoleAssigneesRoleLocalServiceWrapperTest {
 	public void testGetAssigneesTotalForAccountSpecificAccountRole()
 		throws Exception {
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _addAccountRole(
 			accountEntry.getAccountEntryId(), RandomTestUtil.randomString());
@@ -82,10 +81,8 @@ public class AccountRoleAssigneesRoleLocalServiceWrapperTest {
 
 	@Test
 	public void testGetAssigneesTotalForSharedAccountRole() throws Exception {
-		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry();
+		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _addAccountRole(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,

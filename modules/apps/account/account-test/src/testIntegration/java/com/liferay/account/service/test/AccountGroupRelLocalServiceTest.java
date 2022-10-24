@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -57,8 +56,7 @@ public class AccountGroupRelLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
@@ -80,16 +78,8 @@ public class AccountGroupRelLocalServiceTest {
 
 	@Test
 	public void testAddAccountGroupRels() throws Exception {
-		List<AccountEntry> accountEntries = new ArrayList<>();
-
-		accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(
-				_accountEntryLocalService, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
-		accountEntries.add(
-			AccountEntryTestUtil.addAccountEntry(
-				_accountEntryLocalService, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
+		List<AccountEntry> accountEntries =
+			AccountEntryTestUtil.addAccountEntries(2);
 
 		_accountGroupRelLocalService.addAccountGroupRels(
 			_accountGroup.getAccountGroupId(), AccountEntry.class.getName(),

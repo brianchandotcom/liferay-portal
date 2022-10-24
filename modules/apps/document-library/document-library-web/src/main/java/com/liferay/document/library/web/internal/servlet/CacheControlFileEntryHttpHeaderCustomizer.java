@@ -85,7 +85,7 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 		}
 
 		return String.format(
-			"%s, max-age: %d", cacheControlConfiguration.cacheControl(),
+			"%s, max-age= %d", cacheControlConfiguration.cacheControl(),
 			cacheControlConfiguration.maxAge());
 	}
 

@@ -55,6 +55,8 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Adolfo Pérez
  */
@@ -86,15 +88,18 @@ public class KBDropdownItemsProvider {
 			() -> _hasUpdatePermission(kbArticle),
 			dropdownItem -> {
 				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(
+							_liferayPortletRequest,
+							KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+							PortletRequest.RENDER_PHASE)
 					).setMVCPath(
 						"/admin/common/edit_kb_article.jsp"
 					).setRedirect(
 						_currentURL
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildRenderURL());
+					).buildString());
 				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -105,8 +110,11 @@ public class KBDropdownItemsProvider {
 			this::_hasAddPermission,
 			dropdownItem -> {
 				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(
+							_liferayPortletRequest,
+							KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+							PortletRequest.RENDER_PHASE)
 					).setMVCPath(
 						"/admin/common/edit_kb_article.jsp"
 					).setRedirect(
@@ -115,7 +123,7 @@ public class KBDropdownItemsProvider {
 						"parentResourceClassNameId", kbArticle.getClassNameId()
 					).setParameter(
 						"parentResourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildRenderURL());
+					).buildString());
 				dropdownItem.setIcon("document-text");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -168,8 +176,11 @@ public class KBDropdownItemsProvider {
 			() -> _hasHistoryPermission(kbArticle),
 			dropdownItem -> {
 				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(
+							_liferayPortletRequest,
+							KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+							PortletRequest.RENDER_PHASE)
 					).setMVCPath(
 						"/admin/common/kb_history.jsp"
 					).setRedirect(
@@ -182,7 +193,7 @@ public class KBDropdownItemsProvider {
 						"status",
 						_liferayPortletRequest.getAttribute(
 							KBWebKeys.KNOWLEDGE_BASE_STATUS)
-					).buildRenderURL());
+					).buildString());
 				dropdownItem.setIcon("date-time");
 				dropdownItem.setLabel(
 					LanguageUtil.get(

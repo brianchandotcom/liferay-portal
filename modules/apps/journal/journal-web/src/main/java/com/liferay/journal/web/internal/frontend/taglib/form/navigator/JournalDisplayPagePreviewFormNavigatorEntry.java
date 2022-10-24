@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PropsUtil;
 
 import javax.servlet.ServletContext;
 
@@ -52,8 +50,7 @@ public class JournalDisplayPagePreviewFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163074")) &&
-			!isEditDefaultValues(article) &&
+		if (!isEditDefaultValues(article) &&
 			(_isDepotArticle(article) || isGlobalScopeArticle(article))) {
 
 			return true;

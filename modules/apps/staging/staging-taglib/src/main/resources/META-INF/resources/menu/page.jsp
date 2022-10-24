@@ -69,20 +69,5 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 </liferay-portlet:renderURL>
 
 <c:if test="<%= stagingGroup != null %>">
-	<c:choose>
-		<c:when test="<%= onlyActions %>">
-			<%@ include file="/menu/staging_actions.jspf" %>
-		</c:when>
-		<c:otherwise>
-			<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
-				<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-					<aui:nav-item dropdown="<%= true %>" label="staging">
-						<aui:nav-item cssClass="<%= cssClass %>">
-							<%@ include file="/menu/staging_actions.jspf" %>
-						</aui:nav-item>
-					</aui:nav-item>
-				</aui:nav>
-			</aui:nav-bar>
-		</c:otherwise>
-	</c:choose>
+	<%@ include file="/menu/staging_actions.jspf" %>
 </c:if>

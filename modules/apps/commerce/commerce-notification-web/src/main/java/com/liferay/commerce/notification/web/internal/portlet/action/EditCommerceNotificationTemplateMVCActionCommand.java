@@ -19,7 +19,6 @@ import com.liferay.commerce.notification.exception.CommerceNotificationTemplateN
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateTypeException;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -192,10 +191,6 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceNotificationTemplateCommerceAccountGroupRelService
-		_commerceNotificationTemplateCommerceAccountGroupRelService;
 
 	@Reference
 	private CommerceNotificationTemplateService

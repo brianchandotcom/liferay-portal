@@ -65,25 +65,33 @@ PortletURL navigationURL = PortletURLBuilder.createRenderURL(
 ).buildPortletURL();
 %>
 
-<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				navigationURL.setParameter("tabs2", "general");
 
-		<%
-		navigationURL.setParameter("tabs2", "general");
-		%>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs2.equals("general"));
+						navigationItem.setHref(navigationURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "general"));
+					});
 
-		<aui:nav-item href="<%= navigationURL.toString() %>" label="general" selected='<%= tabs2.equals("general") %>' />
+				if (calendar != null) {
+					navigationURL.setParameter("tabs2", "notification-templates");
 
-		<c:if test="<%= calendar != null %>">
-
-			<%
-			navigationURL.setParameter("tabs2", "notification-templates");
-			%>
-
-			<aui:nav-item href="<%= navigationURL.toString() %>" label="notification-templates" selected='<%= tabs2.equals("notification-templates") %>' />
-		</c:if>
-	</aui:nav>
-</aui:nav-bar>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs2.equals("notification-templates"));
+							navigationItem.setHref(navigationURL.toString());
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "notification-templates"));
+						});
+				}
+			}
+		}
+	%>'
+/>
 
 <c:choose>
 	<c:when test='<%= tabs2.equals("general") %>'>

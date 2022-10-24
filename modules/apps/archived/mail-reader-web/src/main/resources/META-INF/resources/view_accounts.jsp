@@ -23,11 +23,7 @@ MailManager mailManager = MailManager.getInstance(request);
 %>
 
 <c:if test="<%= mailManager != null %>">
-	<aui:nav-bar>
-		<aui:nav>
-			<aui:nav-item iconCssClass="icon-plus" label="add-mail-account" onClick="Liferay.Mail.addAccount();" />
-		</aui:nav>
-	</aui:nav-bar>
+	<aui:button icon="icon-plus" onClick="Liferay.Mail.addAccount();" value="add-mail-account" />
 
 	<%
 	List<Account> mailAccounts = mailManager.getAccounts();

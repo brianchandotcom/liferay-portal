@@ -33,42 +33,74 @@ MailManager mailManager = MailManager.getInstance(request);
 	MessagesDisplay messagesDisplay = mailManager.getMessagesDisplay(folderId, pageNumber, messagesPerPage, orderByField, orderByType, keywords);
 	%>
 
-	<aui:nav-bar>
-		<aui:nav>
-			<aui:nav-item dropdown="<%= true %>" label="select">
-				<aui:nav-item cssClass="select-all" label="all" />
-				<aui:nav-item cssClass="select-none" label="none" />
-			</aui:nav-item>
+	<div class="row-fluid">
+		<div class="navbar">
+			<div class="container-fluid container-fluid-max-xl">
+				<ul class="lfr-nav nav">
+					<li class="nav-item">
+						<liferay-ui:icon-menu
+							direction="left-side"
+							icon="<%= StringPool.BLANK %>"
+							markupView="lexicon"
+							message="select"
+							showWhenSingleIcon="<%= true %>"
+						>
+							<aui:icon cssClass="select-all" label="all" />
+							<aui:icon cssClass="select-none" label="none" />
+						</liferay-ui:icon-menu>
+					</li>
+					<li class="nav-item">
+						<aui:icon cssClass="delete-messages" iconClass="icon-remove" label="delete" />
+					</li>
+					<li class="nav-item">
+						<liferay-ui:icon-menu
+							direction="left-side"
+							icon="<%= StringPool.BLANK %>"
+							markupView="lexicon"
+							message="flag"
+							showWhenSingleIcon="<%= true %>"
+						>
+							<aui:icon cssClass="flag-messages" data-flagToggle="true" data-flagType="4" label="flag-as-important" />
+							<aui:icon cssClass="flag-messages" data-flagToggle="false" data-flagType="4" label="remove-flag" />
+							<aui:icon cssClass="flag-messages" data-flagToggle="true" data-flagType="6" label="mark-as-read" />
+							<aui:icon cssClass="flag-messages" data-flagToggle="false" data-flagType="6" label="mark-as-unread" />
+						</liferay-ui:icon-menu>
+					</li>
+					<li class="nav-item">
+						<liferay-ui:icon-menu
+							direction="left-side"
+							icon="<%= StringPool.BLANK %>"
+							markupView="lexicon"
+							message="move"
+							showWhenSingleIcon="<%= true %>"
+						>
 
-			<aui:nav-item cssClass="delete-messages" iconClass="icon-remove" label="delete" />
+							<%
+							Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
-			<aui:nav-item dropdown="<%= true %>" label="flag">
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="true" data-flagType="4" label="flag-as-important" />
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="false" data-flagType="4" label="remove-flag" />
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="true" data-flagType="6" label="mark-as-read" />
-				<aui:nav-item cssClass="flag-messages" data-flagToggle="false" data-flagType="6" label="mark-as-unread" />
-			</aui:nav-item>
+							for (Folder curFolder : FolderLocalServiceUtil.getFolders(folder.getAccountId())) {
+							%>
 
-			<aui:nav-item dropdown="<%= true %>" label="move">
+								<aui:icon cssClass="move-messages" data-folderId="<%= Long.toString(curFolder.getFolderId()) %>" label="<%= curFolder.getDisplayName() %>" />
 
-				<%
-				Folder folder = FolderLocalServiceUtil.getFolder(folderId);
+							<%
+							}
+							%>
 
-				long accountId = folder.getAccountId();
-				%>
+						</liferay-ui:icon-menu>
+					</li>
 
-				<%@ include file="/select_folder.jspf" %>
-			</aui:nav-item>
-
-			<div class="navbar-header navbar-header-right">
-				<liferay-ui:input-search
-					id="keywords"
-					placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-					title='<%= LanguageUtil.get(request, "search-messages") %>'
-				/>
+					<div class="navbar-header navbar-header-right">
+						<liferay-ui:input-search
+							id="keywords"
+							placeholder='<%= LanguageUtil.get(request, "keywords") %>'
+							title='<%= LanguageUtil.get(request, "search-messages") %>'
+						/>
+					</div>
+				</ul>
 			</div>
-		</aui:nav>
-	</aui:nav-bar>
+		</div>
+	</div>
 
 	<c:choose>
 		<c:when test="<%= messagesDisplay.getMessageCount() == 0 %>">

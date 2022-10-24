@@ -51,20 +51,24 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= !print %>">
 	<c:if test="<%= wikiVisualizationHelper.isNodeNavigationVisible() %>">
-		<aui:nav cssClass="nav-tabs">
+		<clay:navigation-bar
+			navigationItems="<%=
+				new JSPNavigationItemList(pageContext) {
+					{
+						for (WikiNode curNode : nodes) {
+							PortletURL viewPageURL = wikiURLHelper.getViewFrontPagePageURL(curNode);
 
-			<%
-			for (WikiNode curNode : nodes) {
-				PortletURL viewPageURL = wikiURLHelper.getViewFrontPagePageURL(curNode);
-			%>
-
-				<aui:nav-item href="<%= viewPageURL.toString() %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" selected="<%= curNode.getNodeId() == node.getNodeId() %>" />
-
-			<%
-			}
-			%>
-
-		</aui:nav>
+							add(
+								navigationItem -> {
+									navigationItem.setActive(curNode.getNodeId() == node.getNodeId());
+									navigationItem.setHref(viewPageURL.toString());
+									navigationItem.setLabel(HtmlUtil.escape(curNode.getName()));
+								});
+						}
+					}
+				}
+			%>"
+		/>
 	</c:if>
 
 	<clay:navigation-bar

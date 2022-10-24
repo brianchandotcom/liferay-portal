@@ -67,7 +67,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 		extended="<%= true %>"
 		title="<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName()) %>"
 	>
-		<aui:nav cssClass="list-group">
+		<div class="list-group">
 
 			<%
 			for (PortletCategory curPortletCategory : portletCategories) {
@@ -101,6 +101,6 @@ PortletURLBuilder.create(
 			}
 			%>
 
-		</aui:nav>
+		</div>
 	</liferay-ui:panel>
 </c:if>

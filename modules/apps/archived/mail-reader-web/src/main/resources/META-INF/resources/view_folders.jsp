@@ -24,10 +24,31 @@ MailManager mailManager = MailManager.getInstance(request);
 
 <c:if test="<%= mailManager != null %>">
 	<div class="controls-list well">
-		<aui:nav cssClass="nav-list">
-			<aui:nav-item cssClass="compose-message" data-messageId="0" data-messageType="new" data-replyMessageId="0" href="javascript:void(0);" iconClass="icon-envelope" label="compose" />
+		<liferay-ui:icon-menu
+			direction="left-side"
+			icon="<%= StringPool.BLANK %>"
+			markupView="lexicon"
+			message="<%= StringPool.BLANK %>"
+			showWhenSingleIcon="<%= true %>"
+		>
 
-			<aui:nav-item cssClass="divider" />
+			<%
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"messageId", 0
+			).put(
+				"messageType", "new"
+			).put(
+				"replyMessageId", 0
+			).build();
+			%>
+
+			<liferay-ui:icon
+				cssClass="compose-message"
+				data="<%= data %>"
+				icon="envelope"
+				message="compose"
+				url="javascript:void(0);"
+			/>
 
 			<%
 			Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
@@ -49,17 +70,47 @@ MailManager mailManager = MailManager.getInstance(request);
 				}
 			%>
 
-				<aui:nav-item cssClass="messages-link" data-accountId="<%= accountId %>" data-folderId="<%= folder.getFolderId() %>" data-keywords="" data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>" data-orderByType="desc" data-pageNumber="1" href="javascript:void(0);" iconClass="<%= folderIcon %>" label='<%= folder.getDisplayName() + " (" + MessageLocalServiceUtil.getFolderUnreadMessagesCount(folder.getFolderId()) + ")" %>' />
+				<liferay-ui:icon
+					cssClass="messages-link"
+					data='<%=
+						HashMapBuilder.<String, Object>put(
+							"accountId", accountId
+						).put(
+							"folderId", folder.getFolderId()
+						).put(
+							"keywords", ""
+						).put(
+							"orderByField", MailConstants.ORDER_BY_SENT_DATE
+						).put(
+							"orderByType", "desc"
+						).put(
+							"pageNumber", 1
+						).build()
+					%>'
+					icon="<%= folderIcon %>"
+					message='<%= folder.getDisplayName() + " (" + MessageLocalServiceUtil.getFolderUnreadMessagesCount(folder.getFolderId()) + ")" %>'
+					url="javascript:void(0);"
+				/>
 
 			<%
 			}
 			%>
 
-			<aui:nav-item cssClass="divider" />
+			<liferay-ui:icon
+				cssClass="manage-folders"
+				data="<%= data %>"
+				icon="cogs"
+				message="manage-folders"
+				url="javascript:void(0);"
+			/>
 
-			<aui:nav-item cssClass="manage-folders" data-messageId="0" data-messageType="new" data-replyMessageId="0" href="javascript:void(0);" iconClass="icon-cogs" label="manage-folders" />
-
-			<aui:nav-item cssClass="edit-account" data-messageId="0" data-messageType="new" data-replyMessageId="0" href="javascript:void(0);" iconClass="icon-cog" label="edit-account" />
-		</aui:nav>
+			<liferay-ui:icon
+				cssClass="edit-account"
+				data="<%= data %>"
+				icon="cog"
+				message="edit-account"
+				url="javascript:void(0);"
+			/>
+		</liferay-ui:icon-menu>
 	</div>
 </c:if>

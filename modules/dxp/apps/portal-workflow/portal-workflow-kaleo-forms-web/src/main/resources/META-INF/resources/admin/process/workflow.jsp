@@ -92,27 +92,27 @@ if (Validator.isNotNull(workflowDefinition)) {
 		<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoFormsAdminDisplayContext.getKaleoProcessId()) %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:nav cssClass="kaleo-process-workflow-nav-tabs nav-bar-workflow nav-tabs">
-		<liferay-portlet:renderURL var="viewPublishedURL">
-			<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-			<portlet:param name="tabs1" value="published" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="historyKey" value="workflow" />
-			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoFormsAdminDisplayContext.getKaleoProcessId()) %>" />
-		</liferay-portlet:renderURL>
+	<clay:navigation-bar
+		navigationItems='<%=
+			new JSPNavigationItemList(pageContext) {
+				{
+					add(
+						navigationItem -> {
+							navigationItem.setActive(kaleoFormsAdminDisplayContext.isTabs1Published());
+							navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/admin/edit_kaleo_process.jsp", "tabs1", "published", "redirect", redirect, "historyKey", "workflow", "kaleoProcessId", kaleoFormsAdminDisplayContext.getKaleoProcessId());
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "published"));
+						});
 
-		<aui:nav-item href="<%= viewPublishedURL %>" label="published" selected="<%= kaleoFormsAdminDisplayContext.isTabs1Published() %>" />
-
-		<liferay-portlet:renderURL var="viewUnpublishedURL">
-			<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-			<portlet:param name="tabs1" value="unpublished" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="historyKey" value="workflow" />
-			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoFormsAdminDisplayContext.getKaleoProcessId()) %>" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item href="<%= viewUnpublishedURL %>" label="unpublished" selected="<%= kaleoFormsAdminDisplayContext.isTabs1Unpublished() %>" />
-	</aui:nav>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(kaleoFormsAdminDisplayContext.isTabs1Unpublished());
+							navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/admin/edit_kaleo_process.jsp", "tabs1", "unpublished", "redirect", redirect, "historyKey", "workflow", "kaleoProcessId", kaleoFormsAdminDisplayContext.getKaleoProcessId());
+							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "unpublished"));
+						});
+				}
+			}
+		%>'
+	/>
 
 	<c:choose>
 		<c:when test="<%= kaleoFormsAdminDisplayContext.isTabs1Published() %>">

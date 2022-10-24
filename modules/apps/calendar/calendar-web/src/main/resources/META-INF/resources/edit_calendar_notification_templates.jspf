@@ -38,22 +38,31 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 	title="<%= calendarName %>"
 />
 
-<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				navigationURL.setParameter("tabs3", "invite-email");
 
-		<%
-		navigationURL.setParameter("tabs3", "invite-email");
-		%>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs3.equals("invite-email"));
+						navigationItem.setHref(navigationURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "invite-email"));
+					});
 
-		<aui:nav-item href="<%= navigationURL.toString() %>" label="invite-email" selected='<%= tabs3.equals("invite-email") %>' />
+				navigationURL.setParameter("tabs3", "reminder-email");
 
-		<%
-		navigationURL.setParameter("tabs3", "reminder-email");
-		%>
-
-		<aui:nav-item href="<%= navigationURL.toString() %>" label="reminder-email" selected='<%= tabs3.equals("reminder-email") %>' />
-	</aui:nav>
-</aui:nav-bar>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs3.equals("reminder-email"));
+						navigationItem.setHref(navigationURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "reminder-email"));
+					});
+			}
+		}
+	%>'
+/>
 
 <liferay-portlet:actionURL name="updateCalendarNotificationTemplate" var="updateCalendarNotificationTemplateURL" />
 

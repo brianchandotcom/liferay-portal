@@ -372,3 +372,23 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/NotificationTemplate"
             tags: ["NotificationTemplate"]
+    "/notification-templates/{notificationTemplateId}/copy":
+        post:
+            operationId: postNotificationTemplateCopy
+            parameters:
+                - in: path
+                  name: notificationTemplateId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+            tags: ["NotificationTemplate"]

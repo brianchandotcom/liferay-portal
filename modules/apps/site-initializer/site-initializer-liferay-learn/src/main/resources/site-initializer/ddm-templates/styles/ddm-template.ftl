@@ -2850,19 +2850,6 @@ overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
 }
-@media (max-width: 767.98px) {
-html:not(#__):not(#___) .lfr-configurator-visibility {
-	opacity: 0.5;
-}
-}
-@media (min-width: 576px) {
-html:not(#__):not(#___) .lfr-configurator-visibility .portlet:hover .portlet-topper, html:not(#__):not(#___) .lfr-configurator-visibility .portlet.focus .portlet-topper, html:not(#__):not(#___) .lfr-configurator-visibility .portlet.open .portlet-topper {
-	opacity: 0.5;
-}
-html:not(#__):not(#___) .lfr-configurator-visibility .portlet-content-editable {
-	opacity: 0.5;
-}
-}
 @media (min-width: 768px) {
 html:not(#__):not(#___) .controls-visible .portlet:hover > .portlet-content-editable, html:not(#__):not(#___) .controls-visible .portlet.open > .portlet-content-editable, html:not(#__):not(#___) .controls-visible .portlet.focus > .portlet-content-editable {
 	border-color: transparent;
@@ -2903,11 +2890,6 @@ position: relative;
 	transform: translateY(-97%);
 }
 }
-@media (min-width: 576px) {
-.lfr-configurator-visibility .portlet:hover .portlet-topper, .lfr-configurator-visibility .portlet.focus .portlet-topper, .lfr-configurator-visibility .portlet.open .portlet-topper {
-	opacity: 0.5;
-}
-}
 
 .portlet-content-editable {
 border-color: transparent;
@@ -2923,11 +2905,6 @@ border-color: transparent;
 	border-color: transparent;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
-}
-}
-@media (min-width: 576px) {
-.lfr-configurator-visibility .portlet-content-editable {
-	opacity: 0.5;
 }
 }
 
@@ -3008,12 +2985,6 @@ text-decoration: none;
 }
 .controls-visible .portlet-topper-toolbar {
 display: block;
-}
-
-@media (max-width: 767.98px) {
-.lfr-configurator-visibility {
-	opacity: 0.5;
-}
 }
 
 .lfr-configurator-visibility .portlet-content .lfr-icon-actions {

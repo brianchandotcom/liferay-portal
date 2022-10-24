@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.asset.model;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
@@ -50,7 +51,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
-	public KBArticleAssetRenderer(HtmlParser htmlParser, KBArticle kbArticle) {
+	public KBArticleAssetRenderer(
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		HtmlParser htmlParser, KBArticle kbArticle) {
+
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
 		_htmlParser = htmlParser;
 		_kbArticle = kbArticle;
 	}
@@ -130,22 +136,30 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
 	@Override
 	public String getURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				KBWebKeys.THEME_DISPLAY);
 
-		return KnowledgeBaseUtil.getKBArticleURL(
-			themeDisplay.getPlid(), _kbArticle.getResourcePrimKey(),
-			_kbArticle.getStatus(), themeDisplay.getPortalURL(), false);
+		return getURLViewInContext(themeDisplay, noSuchEntryRedirect);
 	}
 
 	@Override
 	public String getURLViewInContext(
-		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
+			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
+		throws PortalException {
+
+		String friendlyURL =
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				getClassName(), _kbArticle.getKbArticleId(), themeDisplay);
+
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
+		}
 
 		return KnowledgeBaseUtil.getKBArticleURL(
 			themeDisplay.getPlid(), _kbArticle.getResourcePrimKey(),
@@ -224,6 +238,8 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		return themeDisplay.getScopeGroup();
 	}
 
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private final HtmlParser _htmlParser;
 	private final KBArticle _kbArticle;
 

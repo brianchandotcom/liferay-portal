@@ -37,6 +37,32 @@ import java.util.Objects;
  */
 public class ObjectFieldUtil {
 
+	public static void addListTypeDefinition(
+			long companyId,
+			ListTypeDefinitionLocalService listTypeDefinitionLocalService,
+			ObjectField objectField, long userId)
+		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) ||
+			Validator.isNull(
+				objectField.getListTypeDefinitionExternalReferenceCode())) {
+
+			return;
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					companyId,
+					objectField.getListTypeDefinitionExternalReferenceCode());
+
+		if (listTypeDefinition == null) {
+			listTypeDefinitionLocalService.addListTypeDefinition(
+				objectField.getListTypeDefinitionExternalReferenceCode(),
+				userId);
+		}
+	}
+
 	public static String getDBType(String dbType, String type) {
 		if (Validator.isNull(dbType) && Validator.isNotNull(type)) {
 			if (_log.isWarnEnabled()) {

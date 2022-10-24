@@ -342,5 +342,7 @@ function AssetDisplayPageSelector({
 function updateJournalInput({name, namespace, value}) {
 	const input = document.getElementById(`${namespace}${name}`);
 
-	input.value = value;
+	if (input) {
+		input.value = value;
+	}
 }

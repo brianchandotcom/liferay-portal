@@ -90,7 +90,7 @@ definition {
 
 		AssertClick(
 			locator1 = "RecycleBin#SUCCESS_MESSAGE_CONTENT_LINK",
-			value1 = "the Recycle Bin");
+			value1 = "Recycle Bin");
 
 		SiteAdmin.viewPortletTitle(portletTitle = "Recycle Bin");
 	}

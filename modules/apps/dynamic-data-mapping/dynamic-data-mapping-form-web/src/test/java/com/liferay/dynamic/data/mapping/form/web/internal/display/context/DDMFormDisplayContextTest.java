@@ -70,6 +70,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -631,12 +632,16 @@ public class DDMFormDisplayContextTest {
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext(_mockRenderRequest());
 
+		HashMap<String, String> limitToOneSubmissionPerUser =
+			ddmFormDisplayContext.getLimitToOneSubmissionPerUserProperties();
+
 		Assert.assertEquals(
 			limitToOneSubmissionPerUserBody,
-			ddmFormDisplayContext.getLimitToOneSubmissionPerUserBody());
+			limitToOneSubmissionPerUser.get("limitToOneSubmissionPerUserBody"));
 		Assert.assertEquals(
 			limitToOneSubmissionPerUserHeader,
-			ddmFormDisplayContext.getLimitToOneSubmissionPerUserHeader());
+			limitToOneSubmissionPerUser.get(
+				"limitToOneSubmissionPerUserHeader"));
 	}
 
 	@Test
@@ -689,12 +694,16 @@ public class DDMFormDisplayContextTest {
 		DDMFormDisplayContext ddmFormDisplayContext =
 			_createDDMFormDisplayContext(_mockRenderRequest());
 
+		HashMap<String, String> limitToOneSubmissionPerUser =
+			ddmFormDisplayContext.getLimitToOneSubmissionPerUserProperties();
+
 		Assert.assertEquals(
 			limitToOneSubmissionPerUserBody,
-			ddmFormDisplayContext.getLimitToOneSubmissionPerUserBody());
+			limitToOneSubmissionPerUser.get("limitToOneSubmissionPerUserBody"));
 		Assert.assertEquals(
 			limitToOneSubmissionPerUserHeader,
-			ddmFormDisplayContext.getLimitToOneSubmissionPerUserHeader());
+			limitToOneSubmissionPerUser.get(
+				"limitToOneSubmissionPerUserHeader"));
 	}
 
 	private DDMForm _createDDMForm(

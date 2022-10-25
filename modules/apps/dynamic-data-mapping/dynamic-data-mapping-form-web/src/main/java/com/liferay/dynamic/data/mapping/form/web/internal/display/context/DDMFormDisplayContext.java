@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -96,6 +97,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -436,56 +438,49 @@ public class DDMFormDisplayContext {
 			"formInstanceRecordId");
 	}
 
-	public String getLimitToOneSubmissionPerUserBody() throws PortalException {
-		DDMFormInstance ddmFormInstance = getFormInstance();
-
-		if (ddmFormInstance == null) {
-			return StringPool.BLANK;
-		}
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceSettings.limitToOneSubmissionPerUserBody());
-
-		String limitToOneSubmissionPerUserBody = jsonObject.getString(
-			getDefaultLanguageId());
-
-		if (Validator.isNotNull(limitToOneSubmissionPerUserBody)) {
-			return limitToOneSubmissionPerUserBody;
-		}
-
-		return LanguageUtil.get(
-			_getHttpServletRequest(),
-			"you-can-fill-out-this-form-only-once.-contact-the-owner-of-the-" +
-				"form-if-you-think-this-is-a-mistake");
-	}
-
-	public String getLimitToOneSubmissionPerUserHeader()
+	public HashMap<String, String> getLimitToOneSubmissionPerUserProperties()
 		throws PortalException {
 
-		DDMFormInstance ddmFormInstance = getFormInstance();
+		DDMFormInstance formInstance = getFormInstance();
 
-		if (ddmFormInstance == null) {
-			return StringPool.BLANK;
+		if (formInstance == null) {
+			return _createLimitToOneSubmissionPerUserPropertiesHashMap(
+				StringPool.BLANK, StringPool.BLANK);
 		}
 
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
+		DDMFormInstanceSettings settingsModel = formInstance.getSettingsModel();
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			ddmFormInstanceSettings.limitToOneSubmissionPerUserHeader());
+		JSONObject limitToOneSubmissionPerUserBodyJSONObject =
+			_jsonFactory.createJSONObject(
+				settingsModel.limitToOneSubmissionPerUserBody());
 
-		String limitToOneSubmissionPerUserHeader = jsonObject.getString(
-			getDefaultLanguageId());
+		String limitToOneSubmissionPerUserBody =
+			limitToOneSubmissionPerUserBodyJSONObject.getString(
+				getDefaultLanguageId());
 
-		if (Validator.isNotNull(limitToOneSubmissionPerUserHeader)) {
-			return limitToOneSubmissionPerUserHeader;
+		JSONObject limitToOneSubmissionPerUserHeaderJSONObject =
+			_jsonFactory.createJSONObject(
+				settingsModel.limitToOneSubmissionPerUserHeader());
+
+		String limitToOneSubmissionPerUserHeader =
+			limitToOneSubmissionPerUserHeaderJSONObject.getString(
+				getDefaultLanguageId());
+
+		if (Validator.isNotNull(limitToOneSubmissionPerUserBody) &&
+			Validator.isNotNull(limitToOneSubmissionPerUserHeader)) {
+
+			return _createLimitToOneSubmissionPerUserPropertiesHashMap(
+				limitToOneSubmissionPerUserBody,
+				limitToOneSubmissionPerUserHeader);
 		}
 
-		return LanguageUtil.get(
-			_getHttpServletRequest(), "you-have-already-responded");
+		return _createLimitToOneSubmissionPerUserPropertiesHashMap(
+			LanguageUtil.get(
+				_getHttpServletRequest(),
+				"you-can-fill-out-this-form-only-once.-contact-the-owner-of-" +
+					"the-form-if-you-think-this-is-a-mistake"),
+			LanguageUtil.get(
+				_getHttpServletRequest(), "you-have-already-responded"));
 	}
 
 	public String getRedirectURL() throws PortalException {
@@ -1071,6 +1066,19 @@ public class DDMFormDisplayContext {
 		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
 
 		return ddmFormLayoutRow;
+	}
+
+	private HashMap<String, String>
+		_createLimitToOneSubmissionPerUserPropertiesHashMap(
+			String limitToOneSubmissionPerUserBody,
+			String limitToOneSubmissionPerUserHeader) {
+
+		return HashMapBuilder.put(
+			"limitToOneSubmissionPerUserBody", limitToOneSubmissionPerUserBody
+		).put(
+			"limitToOneSubmissionPerUserHeader",
+			limitToOneSubmissionPerUserHeader
+		).build();
 	}
 
 	private long _getFormInstanceIdFromSession() {

@@ -21,7 +21,6 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedExcept
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,14 +39,9 @@ public class ObjectEntryPermissionUtil {
 
 	public static void checkAccountEntryPermission(
 			AccountEntryLocalService accountEntryLocalService, String actionId,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectEntry objectEntry,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectFieldLocalService objectFieldLocalService, long userId)
 		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
 
 		if (!objectDefinition.isAccountEntryRestricted()) {
 			return;

@@ -44,10 +44,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -134,6 +136,15 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	@Override
 	public Class<?> getSourceItemClass() {
 		return AssetEntry.class;
+	}
+
+	@Override
+	public boolean isAvailable() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166036"))) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(

@@ -17,6 +17,10 @@ import {delegate, openModal} from 'frontend-js-web';
 const KEY_ENTER = 13;
 
 export default function ({namespace}) {
+	if (Liferay.FeatureFlags['LPS-119382']) {
+		return;
+	}
+
 	const layoutsTree = document.getElementById(`${namespace}layoutsTree`);
 
 	const eventDelegates = [];

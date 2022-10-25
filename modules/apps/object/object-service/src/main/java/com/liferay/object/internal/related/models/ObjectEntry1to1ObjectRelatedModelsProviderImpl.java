@@ -21,7 +21,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -43,11 +43,11 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	public ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
-		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 
@@ -77,15 +77,15 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 				objectRelationship.getDeletionType(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
-			_objectEntryLocalService.deleteObjectEntry(
+			_objectEntryService.deleteObjectEntry(
 				objectEntry.getObjectEntryId());
 		}
 		else if (Objects.equals(
 					objectRelationship.getDeletionType(),
 					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE)) {
 
-			_objectEntryLocalService.updateObjectEntry(
-				userId, objectEntry.getObjectEntryId(),
+			_objectEntryService.updateObjectEntry(
+				objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					() -> {
 						ObjectField objectField =
@@ -116,8 +116,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 			long primaryKey2)
 		throws PortalException {
 
-		_objectEntryLocalService.updateObjectEntry(
-			userId, primaryKey1,
+		_objectEntryService.updateObjectEntry(
+			primaryKey1,
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectRelationship objectRelationship =
@@ -151,7 +151,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 			int end)
 		throws PortalException {
 
-		return _objectEntryLocalService.getOneToManyObjectEntries(
+		return _objectEntryService.getOneToManyObjectEntries(
 			groupId, objectRelationshipId, primaryKey, true, 0, 1);
 	}
 
@@ -167,7 +167,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	private final String _className;
-	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

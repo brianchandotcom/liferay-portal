@@ -419,7 +419,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "This field is required.");
+			value1 = "Title is required.");
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 

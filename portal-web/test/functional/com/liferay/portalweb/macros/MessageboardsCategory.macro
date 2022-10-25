@@ -50,7 +50,9 @@ definition {
 			value1 = "Save");
 
 		if ("${categoryWithoutName}" == "true") {
-			Alert.viewRequiredField();
+			AssertTextEquals.assertPartialText(
+				locator1 = "TextInput#REQUIRED_ALERT",
+				value1 = "The Name field is required.");
 		}
 		else {
 			Alert.viewSuccessMessage();

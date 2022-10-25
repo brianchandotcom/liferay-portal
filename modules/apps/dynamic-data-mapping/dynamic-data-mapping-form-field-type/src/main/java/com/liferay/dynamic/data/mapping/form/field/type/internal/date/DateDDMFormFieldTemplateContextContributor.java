@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.time.DayOfWeek;
 import java.time.temporal.WeekFields;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,12 +60,13 @@ public class DateDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		return HashMapBuilder.<String, Object>put(
-			"firstDayOfWeek", _getFirstDayOfWeek()
+			"firstDayOfWeek",
+			_getFirstDayOfWeek(ddmFormFieldRenderingContext.getLocale())
 		).put(
 			"months",
 			Arrays.asList(
 				CalendarUtil.getMonths(
-					LocaleThreadLocal.getThemeDisplayLocale()))
+					ddmFormFieldRenderingContext.getLocale()))
 		).put(
 			"predefinedValue",
 			DDMFormFieldTypeUtil.getPropertyValue(
@@ -82,7 +83,7 @@ public class DateDDMFormFieldTemplateContextContributor
 				CalendarUtil.DAYS_ABBREVIATION
 			).map(
 				day -> _language.get(
-					LocaleThreadLocal.getThemeDisplayLocale(), day)
+					ddmFormFieldRenderingContext.getLocale(), day)
 			).collect(
 				Collectors.toList()
 			)
@@ -91,9 +92,8 @@ public class DateDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	private int _getFirstDayOfWeek() {
-		WeekFields weekFields = WeekFields.of(
-			LocaleThreadLocal.getThemeDisplayLocale());
+	private int _getFirstDayOfWeek(Locale locale) {
+		WeekFields weekFields = WeekFields.of(locale);
 
 		DayOfWeek dayOfWeek = weekFields.getFirstDayOfWeek();
 

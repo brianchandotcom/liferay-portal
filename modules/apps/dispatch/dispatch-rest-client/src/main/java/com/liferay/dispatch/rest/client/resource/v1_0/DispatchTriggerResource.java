@@ -58,10 +58,9 @@ public interface DispatchTriggerResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void postExecuteDispatchTrigger(Long dispatchTriggerId)
-		throws Exception;
+	public void postDispatchTriggerRun(Long dispatchTriggerId) throws Exception;
 
-	public HttpInvoker.HttpResponse postExecuteDispatchTriggerHttpResponse(
+	public HttpInvoker.HttpResponse postDispatchTriggerRunHttpResponse(
 			Long dispatchTriggerId)
 		throws Exception;
 
@@ -214,7 +213,7 @@ public interface DispatchTriggerResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/dispatch-rest/v1.0/dispatchTriggers");
+						"/o/dispatch-rest/v1.0/dispatch-triggers");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -296,7 +295,7 @@ public interface DispatchTriggerResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/dispatch-rest/v1.0/dispatchTriggers");
+						"/o/dispatch-rest/v1.0/dispatch-triggers");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -371,7 +370,7 @@ public interface DispatchTriggerResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/dispatch-rest/v1.0/dispatchTriggers/batch");
+						"/o/dispatch-rest/v1.0/dispatch-triggers/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -379,11 +378,11 @@ public interface DispatchTriggerResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postExecuteDispatchTrigger(Long dispatchTriggerId)
+		public void postDispatchTriggerRun(Long dispatchTriggerId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postExecuteDispatchTriggerHttpResponse(dispatchTriggerId);
+				postDispatchTriggerRunHttpResponse(dispatchTriggerId);
 
 			String content = httpResponse.getContent();
 
@@ -411,7 +410,7 @@ public interface DispatchTriggerResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postExecuteDispatchTriggerHttpResponse(
+		public HttpInvoker.HttpResponse postDispatchTriggerRunHttpResponse(
 				Long dispatchTriggerId)
 			throws Exception {
 
@@ -439,7 +438,7 @@ public interface DispatchTriggerResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/dispatch-rest/v1.0/execute/{dispatchTriggerId}");
+						"/o/dispatch-rest/v1.0/dispatch-triggers/{dispatchTriggerId}/run");
 
 			httpInvoker.path("dispatchTriggerId", dispatchTriggerId);
 

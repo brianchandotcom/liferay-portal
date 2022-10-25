@@ -90,7 +90,7 @@ paths:
             tags: ["DispatchTrigger"]
     "/dispatch-triggers/{dispatchTriggerId}/run":
         post:
-            operationId: postExecuteDispatchTrigger
+            operationId: postDispatchTriggerRun
             parameters:
                 - in: path
                   name: dispatchTriggerId

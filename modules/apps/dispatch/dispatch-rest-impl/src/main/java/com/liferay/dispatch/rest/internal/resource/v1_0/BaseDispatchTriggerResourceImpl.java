@@ -30,10 +30,14 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortField;
+import com.liferay.portal.odata.sort.SortParser;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
@@ -75,7 +79,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatchTriggers'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatch-triggers'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -83,7 +87,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 		}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/dispatchTriggers")
+	@javax.ws.rs.Path("/dispatch-triggers")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<DispatchTrigger> getDispatchTriggersPage() throws Exception {
@@ -93,7 +97,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatchTriggers' -d $'{"active": ___, "companyId": ___, "cronExpression": ___, "dispatchTaskClusterMode": ___, "dispatchTaskExecutorType": ___, "dispatchTaskSettings": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "overlapAllowed": ___, "system": ___, "timeZoneId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatch-triggers' -d $'{"active": ___, "companyId": ___, "cronExpression": ___, "dispatchTaskClusterMode": ___, "dispatchTaskExecutorType": ___, "dispatchTaskSettings": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "overlapAllowed": ___, "system": ___, "timeZoneId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -101,7 +105,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/dispatchTriggers")
+	@javax.ws.rs.Path("/dispatch-triggers")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -114,7 +118,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatchTriggers/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatch-triggers/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -130,7 +134,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 		}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/dispatchTriggers/batch")
+	@javax.ws.rs.Path("/dispatch-triggers/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
@@ -160,7 +164,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/dispatch-rest/v1.0/execute/{dispatchTriggerId}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/dispatch-rest/v1.0/dispatch-triggers/{dispatchTriggerId}/run'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -175,11 +179,11 @@ public abstract class BaseDispatchTriggerResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DispatchTrigger")
 		}
 	)
-	@javax.ws.rs.Path("/execute/{dispatchTriggerId}")
+	@javax.ws.rs.Path("/dispatch-triggers/{dispatchTriggerId}/run")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response postExecuteDispatchTrigger(
+	public Response postDispatchTriggerRun(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("dispatchTriggerId")
@@ -377,6 +381,10 @@ public abstract class BaseDispatchTriggerResourceImpl
 		this.roleLocalService = roleLocalService;
 	}
 
+	public void setSortParserProvider(SortParserProvider sortParserProvider) {
+		this.sortParserProvider = sortParserProvider;
+	}
+
 	public void setVulcanBatchEngineImportTaskResource(
 		VulcanBatchEngineImportTaskResource
 			vulcanBatchEngineImportTaskResource) {
@@ -405,9 +413,49 @@ public abstract class BaseDispatchTriggerResourceImpl
 		}
 		catch (Exception exception) {
 			_log.error("Invalid filter " + filterString, exception);
+
+			return null;
+		}
+	}
+
+	@Override
+	public Sort[] toSorts(String sortString) {
+		if (Validator.isNull(sortString)) {
+			return null;
 		}
 
-		return null;
+		try {
+			SortParser sortParser = sortParserProvider.provide(
+				getEntityModel(Collections.emptyMap()));
+
+			if (sortParser == null) {
+				return null;
+			}
+
+			com.liferay.portal.odata.sort.Sort oDataSort =
+				new com.liferay.portal.odata.sort.Sort(
+					sortParser.parse(sortString));
+
+			List<SortField> sortFields = oDataSort.getSortFields();
+
+			Sort[] sorts = new Sort[sortFields.size()];
+
+			for (int i = 0; i < sortFields.size(); i++) {
+				SortField sortField = sortFields.get(i);
+
+				sorts[i] = new Sort(
+					sortField.getSortableFieldName(
+						contextAcceptLanguage.getPreferredLocale()),
+					!sortField.isAscending());
+			}
+
+			return sorts;
+		}
+		catch (Exception exception) {
+			_log.error("Invalid sort " + sortString, exception);
+
+			return new Sort[0];
+		}
 	}
 
 	protected Map<String, String> addAction(
@@ -519,6 +567,7 @@ public abstract class BaseDispatchTriggerResourceImpl
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
+	protected SortParserProvider sortParserProvider;
 	protected VulcanBatchEngineImportTaskResource
 		vulcanBatchEngineImportTaskResource;
 

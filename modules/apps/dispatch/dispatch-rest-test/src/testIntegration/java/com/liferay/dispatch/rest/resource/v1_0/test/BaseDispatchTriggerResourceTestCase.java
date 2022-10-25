@@ -303,7 +303,7 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 	}
 
 	@Test
-	public void testPostExecuteDispatchTrigger() throws Exception {
+	public void testPostDispatchTriggerRun() throws Exception {
 		Assert.assertTrue(false);
 	}
 

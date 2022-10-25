@@ -1,5 +1,17 @@
 definition {
 
+	macro _goToAssignUsers {
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Assign Users");
+
+		SelectFrame(
+			key_title = "Assign Users to ${accountName}",
+			locator1 = "IFrame#MODAL_ANY");
+	}
+
 	macro _inputAddressDetails {
 		PortletEntry.inputName(name = "${addressName}");
 
@@ -367,13 +379,7 @@ definition {
 	}
 
 	macro addNewUserToBusinessAccount {
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(
-			key_title = "Assign Users to ${accountName}",
-			locator1 = "IFrame#MODAL_ANY");
+		Accounts._goToAssignUsers(accountName = "${accountName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -453,13 +459,7 @@ definition {
 	}
 
 	macro addNewUserWithSameDomain {
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(
-			key_title = "Assign Users to ${accountName}",
-			locator1 = "IFrame#MODAL_ANY");
+		Accounts._goToAssignUsers(accountName = "${accountName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -611,13 +611,7 @@ definition {
 	}
 
 	macro assignUsers {
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(
-			key_title = "Assign Users to ${accountName}",
-			locator1 = "IFrame#MODAL_ANY");
+		Accounts._goToAssignUsers(accountName = "${accountName}");
 
 		Check(
 			key_tableEntry = "${assigneeName}",
@@ -986,13 +980,7 @@ definition {
 	}
 
 	macro viewErrorWhenAddingUserWithBlockedDomain {
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(
-			key_title = "Assign Users to ${accountName}",
-			locator1 = "IFrame#MODAL_ANY");
+		Accounts._goToAssignUsers(accountName = "${accountName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -1589,13 +1577,7 @@ definition {
 	}
 
 	macro viewErrorWhenAddingUserWithInvalidDomain {
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(
-			key_title = "Assign Users to ${accountName}",
-			locator1 = "IFrame#MODAL_ANY");
+		Accounts._goToAssignUsers(accountName = "${accountName}");
 
 		LexiconEntry.gotoAdd();
 

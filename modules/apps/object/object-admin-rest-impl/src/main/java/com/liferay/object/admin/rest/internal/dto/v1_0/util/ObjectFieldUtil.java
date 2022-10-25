@@ -58,6 +58,9 @@ public class ObjectFieldUtil {
 
 		if (!StringUtil.equals(
 				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) &&
+			!StringUtil.equals(
+				objectField.getBusinessTypeAsString(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return 0;

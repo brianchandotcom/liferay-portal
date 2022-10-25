@@ -28,7 +28,7 @@ export default function ContentFilter({
 
 	return (
 		<div className="flex-shrink-0 page-editor__page-contents__content-filter px-3">
-			<p className="page-editor__page-contents__content-filter__help">
+			<p className="mb-4 page-editor__page-contents__content-filter__help">
 				{Liferay.Language.get('content-filtering-help')}
 			</p>
 

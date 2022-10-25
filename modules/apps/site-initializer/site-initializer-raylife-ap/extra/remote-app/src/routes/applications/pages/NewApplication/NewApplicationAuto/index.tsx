@@ -24,6 +24,7 @@ import {
 	createOrUpdateRaylifeApplication,
 	exitRaylifeApplication,
 } from '../../../../../common/services';
+import {createRaylifeAutoQuote} from '../../../../../common/services/Quote';
 import {CONSTANTS} from '../../../../../common/utils/constants';
 import {redirectTo} from '../../../../../common/utils/liferay';
 import {
@@ -104,10 +105,6 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 			});
 		}
 
-		if (state.currentStep === 4) {
-			redirectTo('Applications');
-		}
-
 		if (
 			state.currentStep === 2 &&
 			form[0]?.accidentCitation[0]?.value ===
@@ -137,6 +134,11 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 				dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
 			}
 		);
+
+		if (state.currentStep === 4) {
+			redirectTo('Applications');
+			createRaylifeAutoQuote(state);
+		}
 	};
 
 	const handlePreviousClick = () => {

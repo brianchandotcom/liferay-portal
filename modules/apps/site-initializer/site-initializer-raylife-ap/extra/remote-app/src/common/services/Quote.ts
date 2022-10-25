@@ -13,9 +13,15 @@
  */
 
 import {Parameters, parametersFormater} from '.';
+import {currentDate} from '../utils/dateFormatter';
 import {axios} from './liferay/api';
+const nowDate = currentDate;
 
 const DeliveryAPI = 'o/c/raylifequotes';
+
+type ApplicationStateType = {
+	applicationId: string;
+};
 
 export function getQuotes(parameters: Parameters = {}) {
 	const parametersList = Object.keys(parameters);
@@ -31,4 +37,19 @@ export function getQuotes(parameters: Parameters = {}) {
 
 export function getQuotesById(id: number) {
 	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
+}
+
+const adaptQuoteRequest = ({applicationId}: ApplicationStateType) => ({
+	billingOption: {
+		key: 'payInFull',
+		name: 'Pay in Full',
+	},
+	quoteCreateDate: nowDate,
+	r_applicationToQuotes_c_raylifeApplicationId: applicationId,
+});
+
+export function createRaylifeAutoQuote(state: ApplicationStateType) {
+	const payload = adaptQuoteRequest(state);
+
+	return axios.post(`${DeliveryAPI}/`, payload);
 }

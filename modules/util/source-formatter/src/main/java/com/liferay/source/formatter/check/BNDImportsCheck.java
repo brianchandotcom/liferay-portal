@@ -72,9 +72,9 @@ public class BNDImportsCheck extends BaseFileCheck {
 			String imports = matcher.group();
 
 			String newImports = imports.replaceAll(
-				"(com\\.liferay\\..*?version=\"[\\(\\[].*?,)(?!99\\.0\\.0).*?" +
-					"([\\)\\]]\")",
-				"$199.0.0$2");
+				"(com\\.liferay\\..*?version=\"[\\(\\[].*?,)(?!9999\\.0\\.0)." +
+					"*?([\\)\\]]\")",
+				"$19999.0.0$2");
 
 			if (!imports.equals(newImports)) {
 				return StringUtil.replaceFirst(content, imports, newImports);

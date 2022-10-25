@@ -9,13 +9,21 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+			Testray.createTestraySite(siteName = "Testray 2");
 
-		Refresh();
+			Refresh();
+		}
+
+		task ("Go to Testray, go to Manage Sidebar") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+		}
 	}
 
 	tearDown {
@@ -35,11 +43,7 @@ definition {
 	@description = "This is a test for LPS-157327 - Verify if As an Administrator I should be able to add and delete a Factor Option"
 	@priority = "5"
 	test AdminCanAddAndDeleteFactorOption {
-		task ("Go to Categories on Manage Sidebar and Add Factor Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Factor Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_2 Factor Category");
@@ -77,15 +81,9 @@ definition {
 	@description = "This is a test for LPS-157231 - Verify if as an Administrator I am able to add Factor Categories"
 	@priority = "5"
 	test AdminCanAddCategory {
-		task ("Go to Categories on Manage Sidebar") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories, add a category and check if the category was created") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
-		}
 
-		task ("Add a category and check if the category was created") {
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
 
 			Testray.assertItemName(key_name = "Environments_1 Category");
@@ -95,11 +93,7 @@ definition {
 	@description = "This is a test for LPS-157309 - Verify if as an Administrator I am able to add Options"
 	@priority = "5"
 	test AdminCanAddOptions {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_2 Category");
@@ -129,11 +123,7 @@ definition {
 	@description = "This is a test for LPS-157321 - Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
 	@priority = "5"
 	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
-		task ("Go to Categories on Manage Sidebar and Add two Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add two Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category A");
@@ -204,19 +194,14 @@ definition {
 	@description = "This is a test for LPS-157237 - Verify if as an Administrator I am able to delete Factor Categories"
 	@priority = "5"
 	test AdminCanDeleteCategory {
-		task ("Go to Categories on Manage Sidebar") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories, add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
-		}
 
-		task ("Add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
+		task ("Delete category and check if the category has been deleted") {
 			TestrayManage.deleteCategory(
 				nameCategory = "Environments_4 Category",
 				selectCategories = "Categories");
@@ -228,19 +213,14 @@ definition {
 	@description = "This is a test for LPS-157307 - Verify if as an Administrator I am able to edit Factor Categories"
 	@priority = "5"
 	test AdminCanEditFactorCategories {
-		task ("Go to Categories on Manage Sidebar") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories, create the new category and then edit and state if the name has changed") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
-		}
 
-		task ("Create the new category and then edit and state if the name has changed") {
 			TestrayManage.addNewCategory(category = "Environments_6 Category");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
+		task ("Edit a category and state if the name has edited") {
 			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
 
 			Testray.assertItemName(key_name = "Environments_6 Category Edited");
@@ -250,11 +230,7 @@ definition {
 	@description = "This is a test for LPS-157326 - Verify if as an Administrator I am able to edit the Option by changing the Category"
 	@priority = "5"
 	test AdminCanEditOptionChangingCategory {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add two Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_8 Category A");
@@ -298,11 +274,7 @@ definition {
 	@description = "This is a test for LPS-157323 - Verify if as an Administrator I am able to edit the Option Name"
 	@priority = "5"
 	test AdminCanEditOptionName {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_7 Category");
@@ -338,11 +310,7 @@ definition {
 	@description = "This is a test for LPS-157328 - Verify if As an Administrator I should not be able to add a duplicate Factor Category"
 	@priority = "5"
 	test AdminCanNotAddDuplicateFactorCategory {
-		task ("Go to Categories on Manage Sidebar and Add Category duplicate") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Category duplicate") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
@@ -358,11 +326,7 @@ definition {
 	@description = "This is a test for LPS-166557 - Verify if As an Administrator I should not be able to add a duplicate Factor Options"
 	@priority = "5"
 	test AdminCanNotAddDuplicateFactorOptions {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
@@ -392,11 +356,7 @@ definition {
 	@description = "This is a test for LPS-164136 - Verify that the user can not create a options if all the required fields are not filled in"
 	@priority = "3"
 	test AdminCanViewRequiredField {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Category without name") {
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
@@ -418,11 +378,7 @@ definition {
 	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
 	@priority = "3"
 	test AdminCanViewWarningMessage {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
+		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "");

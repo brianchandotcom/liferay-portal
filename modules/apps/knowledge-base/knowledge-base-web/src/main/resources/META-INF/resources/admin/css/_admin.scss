@@ -84,9 +84,9 @@ $toolbarZIndex: 971;
 		.contextual-sidebar {
 			border-left: 1px $gray-300 solid;
 			box-shadow: none;
-			overflow-y: scroll;
-
 			margin-top: 2.5rem;
+			overflow-y: scroll;
+			z-index: 1;
 
 			.sidebar-body {
 				.collapse-icon {

@@ -208,5 +208,5 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 
 <liferay-frontend:component
 	componentId="<%= ProductNavigationProductMenuWebKeys.PAGES_TREE %>"
-	module="js/PagesTree.es"
+	module="js/PagesTreeEventHandler"
 />

@@ -207,6 +207,7 @@ public class CustomFacetDisplayContextBuilder {
 		customFacetTermDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		customFacetTermDisplayContext.setSelected(isSelected(term));
 		customFacetTermDisplayContext.setFieldName(term);
+		customFacetTermDisplayContext.setFilterValue(term);
 
 		return customFacetTermDisplayContext;
 	}
@@ -250,6 +251,7 @@ public class CustomFacetDisplayContextBuilder {
 		customFacetTermDisplayContext.setFrequencyVisible(_frequenciesVisible);
 		customFacetTermDisplayContext.setSelected(true);
 		customFacetTermDisplayContext.setFieldName(_parameterValues.get(0));
+		customFacetTermDisplayContext.setFilterValue(_parameterValues.get(0));
 
 		return Collections.singletonList(customFacetTermDisplayContext);
 	}

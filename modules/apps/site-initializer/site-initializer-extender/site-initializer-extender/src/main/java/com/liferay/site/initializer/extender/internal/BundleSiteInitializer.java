@@ -1527,8 +1527,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					if (Objects.equals(
 							infoItemClassName, FileEntry.class.getName())) {
 
-						infoItemFormVariationKey = "0";
-
 						DLFileEntryType dlFileEntryType =
 							_dlFileEntryTypeLocalService.fetchFileEntryType(
 								serviceContext.getScopeGroupId(),
@@ -1537,6 +1535,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						if (dlFileEntryType != null) {
 							infoItemFormVariationKey = String.valueOf(
 								dlFileEntryType.getFileEntryTypeId());
+						}
+						else {
+							infoItemFormVariationKey = "0";
 						}
 					}
 					else if (Objects.equals(

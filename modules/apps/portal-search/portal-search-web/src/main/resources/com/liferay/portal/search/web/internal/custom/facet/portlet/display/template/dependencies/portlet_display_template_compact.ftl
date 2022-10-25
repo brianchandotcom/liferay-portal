@@ -19,11 +19,11 @@
 						<button
 							class="btn btn-link btn-unstyled facet-term term-name ${(entry.isSelected())?then('facet-term-selected','facet-term-unselected')}"
 							disabled
-							id="${entry.getFieldName()}"
+							id="${entry.getBucketText()}"
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 							type="button"
 						>
-							${htmlUtil.escape(entry.getFieldName())}
+							${htmlUtil.escape(entry.getBucketText())}
 
 							<#if entry.isFrequencyVisible()>
 								<small class="term-count">

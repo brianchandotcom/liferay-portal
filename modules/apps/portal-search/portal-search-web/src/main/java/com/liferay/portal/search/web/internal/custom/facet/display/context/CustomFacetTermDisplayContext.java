@@ -20,15 +20,4 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
  * @author Wade Cao
  */
 public class CustomFacetTermDisplayContext extends BucketDisplayContext {
-
-	public String getFieldName() {
-		return _fieldName;
-	}
-
-	public void setFieldName(String fieldName) {
-		_fieldName = fieldName;
-	}
-
-	private String _fieldName;
-
 }

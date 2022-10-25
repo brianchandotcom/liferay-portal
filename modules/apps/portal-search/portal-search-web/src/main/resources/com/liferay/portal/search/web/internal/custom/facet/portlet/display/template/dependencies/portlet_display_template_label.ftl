@@ -18,11 +18,11 @@
 					<button
 						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
 						disabled
-						id="${entry.getFieldName()}"
+						id="${entry.getBucketText()}"
 						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						type="button"
 					>
-						${htmlUtil.escape(entry.getFieldName())}
+						${htmlUtil.escape(entry.getBucketText())}
 
 						<#if entry.isFrequencyVisible()>
 							(${entry.getFrequency()})

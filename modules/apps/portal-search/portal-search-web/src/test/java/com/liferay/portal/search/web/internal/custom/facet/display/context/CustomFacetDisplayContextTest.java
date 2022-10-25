@@ -102,6 +102,8 @@ public class CustomFacetDisplayContextTest {
 
 		Assert.assertEquals(0, customFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
+			fieldName, customFacetTermDisplayContext.getBucketText());
+		Assert.assertEquals(
 			fieldName, customFacetTermDisplayContext.getFilterValue());
 		Assert.assertTrue(customFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(customFacetTermDisplayContext.isFrequencyVisible());
@@ -138,6 +140,8 @@ public class CustomFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, customFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
+			fieldName, customFacetTermDisplayContext.getBucketText());
+		Assert.assertEquals(
 			fieldName, customFacetTermDisplayContext.getFilterValue());
 		Assert.assertFalse(customFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(customFacetTermDisplayContext.isFrequencyVisible());
@@ -173,6 +177,8 @@ public class CustomFacetDisplayContextTest {
 
 		Assert.assertEquals(
 			count, customFacetTermDisplayContext.getFrequency());
+		Assert.assertEquals(
+			fieldName, customFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			fieldName, customFacetTermDisplayContext.getFilterValue());
 		Assert.assertTrue(customFacetTermDisplayContext.isSelected());

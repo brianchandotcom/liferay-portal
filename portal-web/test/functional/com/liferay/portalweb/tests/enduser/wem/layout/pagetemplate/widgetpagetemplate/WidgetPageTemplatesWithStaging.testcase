@@ -1,0 +1,99 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Widget Page Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site and a page via JSON") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+		}
+
+		task ("Enable local staging with a new blank site") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-146888. Assert that can publish a widget page template created by another deleted admin user on local staging"
+	@priority = "3"
+	test CanPublishAWidgetPageTemplateCreatedByAnotherDeletedUserOnLocalStaging {
+		task ("Given: Create a new user with Administrator role") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When: The new admin sign-in the staging site and create a new collection under "Page Templates" tab and add a widget page template for it") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name-staging",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				site = "false");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name-staging");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Widget Page Template");
+		}
+
+		task ("And: Go back to login with admin "test" user and delete the new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Then: The "test" user can publish the site to live with no errors") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			AssertConsoleTextNotPresent(value1 = "No User exists with the primary key");
+		}
+	}
+
+}

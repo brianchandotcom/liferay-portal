@@ -360,6 +360,17 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public JobHistory getJobHistory() {
+		if (_jobHistory != null) {
+			return _jobHistory;
+		}
+
+		_jobHistory = HistoryUtil.getJobHistory(this);
+
+		return _jobHistory;
+	}
+
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}

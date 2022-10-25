@@ -66,6 +66,8 @@ public interface Job {
 
 	public Set<String> getDistTypesExcludingTomcat();
 
+	public JobHistory getJobHistory();
+
 	public String getJobName();
 
 	public List<File> getJobPropertiesFiles();

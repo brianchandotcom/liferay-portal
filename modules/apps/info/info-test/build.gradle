@@ -3,7 +3,10 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	testIntegrationCompile project(":apps:expando:expando-api")
 	testIntegrationCompile project(":apps:info:info-api")
+	testIntegrationCompile project(":apps:info:info-collection-provider-item-selector-api")
+	testIntegrationCompile project(":apps:info:info-list-provider-item-selector-api")
 	testIntegrationCompile project(":apps:info:info-test-util")
+	testIntegrationCompile project(":apps:item-selector:item-selector-api")
 	testIntegrationCompile project(":apps:layout:layout-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -148,7 +149,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		List<Layout> layouts = _layoutService.getLayouts(
 			groupId, privateLayout, parentLayoutId, true, start, end);
 
-		JSONObject jsonObject = _toJSONObject(
+		JSONSerializable jsonSerializable = _toJSONSerializable(
 			httpServletRequest, groupId, layouts, total, layoutSetBranch);
 
 		List<Layout> ancestorLayouts = _layoutService.getAncestorLayouts(
@@ -166,15 +167,19 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			ancestorLayoutNames[i] = ancestorLayout.getName(locale);
 		}
 
-		jsonObject.put(
-			"ancestorLayoutIds", ancestorLayoutIds
-		).put(
-			"ancestorLayoutNames", ancestorLayoutNames
-		).put(
-			"start", start
-		);
+		if (jsonSerializable instanceof JSONObject) {
+			JSONObject jsonObject = (JSONObject)jsonSerializable;
 
-		return jsonObject.toString();
+			jsonObject.put(
+				"ancestorLayoutIds", ancestorLayoutIds
+			).put(
+				"ancestorLayoutNames", ancestorLayoutNames
+			).put(
+				"start", start
+			);
+		}
+
+		return jsonSerializable.toString();
 	}
 
 	@Override
@@ -549,10 +554,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
-		JSONObject jsonObject = _toJSONObject(
+		JSONSerializable jsonSerializable = _toJSONSerializable(
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 
-		return jsonObject.toString();
+		return jsonSerializable.toString();
 	}
 
 	private JSONArray _toJSONArray(
@@ -754,7 +759,30 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return jsonArray;
 	}
 
-	private JSONObject _toJSONObject(
+	private JSONSerializable _toJSONSerializable(
+			HttpServletRequest httpServletRequest, long groupId,
+			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
+		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"_toJSONSerializable(groupId=", groupId,
+					", layoutTreeNodes=", layoutTreeNodes,
+					StringPool.CLOSE_PARENTHESIS));
+		}
+
+		JSONArray jsonArray = _toJSONArray(
+			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
+
+		return JSONUtil.put(
+			"layouts", jsonArray
+		).put(
+			"total", layoutTreeNodes.getTotal()
+		);
+	}
+
+	private JSONSerializable _toJSONSerializable(
 			HttpServletRequest httpServletRequest, long groupId,
 			List<Layout> layouts, int total, LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -770,7 +798,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
 			layoutTreeNodesList, total);
 
-		return _toJSONObject(
+		return _toJSONSerializable(
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 

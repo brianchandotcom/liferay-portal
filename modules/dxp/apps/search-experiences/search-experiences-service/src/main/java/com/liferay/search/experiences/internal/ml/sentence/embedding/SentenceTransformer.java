@@ -14,11 +14,14 @@
 
 package com.liferay.search.experiences.internal.ml.sentence.embedding;
 
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+
 /**
  * @author Petteri Karttunen
  */
 public interface SentenceTransformer {
 
-	public Double[] getSentenceEmbedding(String text);
+	public Double[] getSentenceEmbedding(
+		SemanticSearchConfiguration semanticSearchConfiguration, String text);
 
 }

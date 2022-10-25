@@ -16,7 +16,6 @@ package com.liferay.search.experiences.internal.ml.sentence.embedding;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -25,9 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 
 import java.util.List;
-import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false, immediate = true,
 	property = "search.experiences.sentence.transformer.name=txtai",
 	service = SentenceTransformer.class
@@ -43,26 +39,24 @@ import org.osgi.service.component.annotations.Reference;
 public class TXTAISentenceTransformer
 	extends BaseSentenceTransformer implements SentenceTransformer {
 
-	public Double[] getSentenceEmbedding(String text) {
+	public Double[] getSentenceEmbedding(
+		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+
 		String input = getInput(
-			_semanticSearchConfiguration.maxCharacterCount(), text,
-			_semanticSearchConfiguration.textTruncationStrategy());
+			semanticSearchConfiguration.maxCharacterCount(), text,
+			semanticSearchConfiguration.textTruncationStrategy());
 
 		if (Validator.isBlank(input)) {
 			return new Double[0];
 		}
 
-		return _getSentenceEmbedding(input);
+		return _getSentenceEmbedding(semanticSearchConfiguration, input);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
-			SemanticSearchConfiguration.class, properties);
-	}
+	private Double[] _getSentenceEmbedding(
+		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
-	private Double[] _getSentenceEmbedding(String text) {
-		String hostAddress = _semanticSearchConfiguration.txtaiHostAddress();
+		String hostAddress = semanticSearchConfiguration.txtaiHostAddress();
 
 		if (!hostAddress.endsWith("/")) {
 			hostAddress += "/";
@@ -88,7 +82,5 @@ public class TXTAISentenceTransformer
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
 
 }

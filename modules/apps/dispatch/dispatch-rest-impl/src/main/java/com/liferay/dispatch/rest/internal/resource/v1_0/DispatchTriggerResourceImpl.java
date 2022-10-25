@@ -67,7 +67,7 @@ public class DispatchTriggerResourceImpl
 				dispatchTrigger.getName()));
 	}
 
-	public Response postExecuteDispatchTrigger(Long dispatchTriggerId)
+	public Response postDispatchTriggerRun(Long dispatchTriggerId)
 		throws Exception {
 
 		_dispatchTriggerModelResourcePermission.check(

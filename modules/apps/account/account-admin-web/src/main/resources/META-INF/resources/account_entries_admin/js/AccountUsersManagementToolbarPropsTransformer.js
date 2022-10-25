@@ -25,6 +25,42 @@ import {
 	sub,
 } from 'frontend-js-web';
 
+function openSelectAccountUsersModal(
+	accountEntryName,
+	assignAccountUsersURL,
+	selectAccountUsersURL,
+	portletNamespace
+) {
+	openSelectionModal({
+		buttonAddLabel: Liferay.Language.get('assign'),
+		containerProps: {
+			className: '',
+		},
+		iframeBodyCssClass: '',
+		multiple: true,
+		onSelect: (selectedItems) => {
+			if (!selectedItems?.length) {
+				return;
+			}
+
+			const form = document.getElementById(`${portletNamespace}fm`);
+
+			if (form) {
+				const values = selectedItems.map((item) => item.value);
+
+				postForm(form, {
+					data: {
+						accountUserIds: values.join(','),
+					},
+					url: assignAccountUsersURL,
+				});
+			}
+		},
+		title: sub(Liferay.Language.get('assign-users-to-x'), accountEntryName),
+		url: selectAccountUsersURL,
+	});
+}
+
 export default function propsTransformer({
 	additionalProps: {accountEntryName},
 	portletNamespace,
@@ -62,6 +98,18 @@ export default function propsTransformer({
 						}
 					},
 				});
+			}
+		},
+		onCreateButtonClick: (event, {item}) => {
+			const data = item.data;
+
+			if (data?.action === 'selectAccountUsers') {
+				openSelectAccountUsersModal(
+					accountEntryName,
+					data?.assignAccountUsersURL,
+					data?.selectAccountUsersURL,
+					portletNamespace
+				);
 			}
 		},
 		onCreationMenuItemClick: (event, {item}) => {
@@ -125,41 +173,12 @@ export default function propsTransformer({
 				});
 			}
 			else if (action === 'selectAccountUsers') {
-				openSelectionModal({
-					buttonAddLabel: Liferay.Language.get('assign'),
-					containerProps: {
-						className: '',
-					},
-					iframeBodyCssClass: '',
-					multiple: true,
-					onSelect: (selectedItems) => {
-						if (!selectedItems?.length) {
-							return;
-						}
-
-						const form = document.getElementById(
-							`${portletNamespace}fm`
-						);
-
-						if (form) {
-							const values = selectedItems.map(
-								(item) => item.value
-							);
-
-							postForm(form, {
-								data: {
-									accountUserIds: values.join(','),
-								},
-								url: data?.assignAccountUsersURL,
-							});
-						}
-					},
-					title: sub(
-						Liferay.Language.get('assign-users-to-x'),
-						accountEntryName
-					),
-					url: data?.modalURL,
-				});
+				openSelectAccountUsersModal(
+					accountEntryName,
+					data?.assignAccountUsersURL,
+					data?.modalURL,
+					portletNamespace
+				);
 			}
 		},
 	};

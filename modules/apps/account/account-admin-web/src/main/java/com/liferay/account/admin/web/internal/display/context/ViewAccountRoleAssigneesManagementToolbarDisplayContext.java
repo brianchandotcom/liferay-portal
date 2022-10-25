@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -108,6 +109,33 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
+				dropdownItem.putData(
+					"assignAccountUsersURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/account_admin/assign_account_role_users"
+					).setRedirect(
+						currentURLObj
+					).buildString());
+				dropdownItem.putData(
+					"selectAccountUsersURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/account_entries_admin/select_account_users.jsp"
+					).setParameter(
+						"accountEntryId",
+						ParamUtil.getString(
+							httpServletRequest, "accountEntryId")
+					).setParameter(
+						"accountRoleId",
+						ParamUtil.getString(httpServletRequest, "accountRoleId")
+					).setParameter(
+						"showFilter", Boolean.FALSE
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "assign-users"));
 			}

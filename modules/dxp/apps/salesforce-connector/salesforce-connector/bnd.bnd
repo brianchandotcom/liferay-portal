@@ -2,11 +2,11 @@ Bundle-Name: Liferay Salesforce Connector
 Bundle-SymbolicName: com.liferay.salesforce.connector
 Bundle-Version: 1.0.2
 Import-Package:\
-	com.liferay.portal.instance.lifecycle;version="[2.0.0,99.0.0)",\
-	com.liferay.portal.kernel.model;version="[17.1.0,99.0.0)",\
-	com.liferay.portal.kernel.repository.model;version="[11.0.0,99.0.0)",\
-	com.liferay.portal.kernel.service;version="[13.1.0,99.0.0)",\
-	com.liferay.portal.kernel.util;version="[38.5.0,99.0.0)",\
+	com.liferay.portal.instance.lifecycle;version="[2.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.model;version="[17.1.0,9999.0.0)",\
+	com.liferay.portal.kernel.repository.model;version="[11.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.service;version="[13.1.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[38.5.0,9999.0.0)",\
 	\
 	*
 -includeresource:\

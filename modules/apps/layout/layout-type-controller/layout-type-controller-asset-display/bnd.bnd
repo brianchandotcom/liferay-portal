@@ -2,7 +2,7 @@ Bundle-Name: Liferay Layout Type Controller Asset Display
 Bundle-SymbolicName: com.liferay.layout.type.controller.asset.display
 Bundle-Version: 4.0.11
 Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[11.0.0,99.0.0)",\
+	com.liferay.portal.kernel.portlet;version="[11.0.0,9999.0.0)",\
 	\
 	*
 Web-ContextPath: /layout-type-controller-asset-display

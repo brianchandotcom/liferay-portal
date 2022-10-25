@@ -2,6 +2,6 @@ Bundle-Name: Liferay Commerce Punch Out Service
 Bundle-SymbolicName: com.liferay.commerce.punchout.service
 Bundle-Version: 4.0.12
 Import-Package:\
-	com.liferay.portal.kernel.service;version="[4.0.0,99.0.0)",\
+	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
 	\
 	*

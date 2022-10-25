@@ -46,7 +46,9 @@ definition {
 		Button.click(button = "Create");
 
 		if ("${redirectURLVariation}" == "Null") {
-			Alert.viewRequiredField();
+			AssertTextEquals.assertPartialText(
+				locator1 = "TextInput#REQUIRED_ALERT",
+				value1 = "field is required.");
 		}
 		else if ("${sourceURLVariation}" == "Duplicate") {
 			AssertTextEquals.assertPartialText(

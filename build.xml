@@ -953,9 +953,11 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			</else>
 		</if>
 
-		<exec executable="git" failonerror="true">
-			<arg line="clone --branch=master-private --depth=1 --no-checkout --single-branch ${setup.profile.dxp.git.url} git-clone-profile-dxp" />
-		</exec>
+		<retry retrycount="3" retrydelay="60000">
+			<exec executable="git" failonerror="true" timeout="900000">
+				<arg line="clone --branch=master-private --depth=1 --no-checkout --single-branch ${setup.profile.dxp.git.url} git-clone-profile-dxp" />
+			</exec>
+		</retry>
 
 		<exec dir="git-clone-profile-dxp" executable="git" failonerror="true">
 			<arg line="checkout refs/heads/master-private -- working.dir.properties" />

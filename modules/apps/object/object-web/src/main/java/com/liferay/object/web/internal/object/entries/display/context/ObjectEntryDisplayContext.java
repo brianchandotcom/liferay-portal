@@ -70,6 +70,7 @@ import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelpe
 import com.liferay.object.web.internal.util.ObjectDefinitionPermissionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1069,6 +1070,20 @@ public class ObjectEntryDisplayContext {
 
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(listEntry.getKey()));
+		}
+		else if (value instanceof ArrayList) {
+			List<ListEntry> listEntries = (List<ListEntry>)value;
+
+			StringBuilder sb = new StringBuilder(StringPool.OPEN_BRACKET);
+
+			sb.append(
+				StringUtil.merge(
+					ListUtil.toList(listEntries, ListEntry::getKey),
+					StringPool.COMMA_AND_SPACE));
+
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			ddmFormFieldValue.setValue(new UnlocalizedValue(sb.toString()));
 		}
 		else {
 			if (value instanceof Double) {

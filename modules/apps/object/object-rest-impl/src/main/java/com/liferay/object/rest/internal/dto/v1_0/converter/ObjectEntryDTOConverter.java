@@ -63,6 +63,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -135,6 +136,29 @@ public class ObjectEntryDTOConverter
 			dtoConverterContext.getHttpServletRequest(), objectEntryId,
 			dtoConverterContext.getLocale(), uriInfo,
 			dtoConverterContext.getUser());
+	}
+
+	private ListEntry _getListEntry(
+		long listTypeDefinitionId, DTOConverterContext dtoConverterContext,
+		String key) {
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				listTypeDefinitionId, key);
+
+		if (listTypeEntry == null) {
+			return null;
+		}
+
+		return new ListEntry() {
+			{
+				key = listTypeEntry.getKey();
+				name = listTypeEntry.getName(dtoConverterContext.getLocale());
+				name_i18n = LocalizedMapUtil.getI18nMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					listTypeEntry.getNameMap());
+			}
+		};
 	}
 
 	private ObjectEntry[] _getManyToManyRelationshipObjectEntries(
@@ -309,26 +333,38 @@ public class ObjectEntryDTOConverter
 			Serializable serializable = values.get(objectFieldName);
 
 			if (listTypeDefinitionId != 0) {
-				ListTypeEntry listTypeEntry =
-					_listTypeEntryLocalService.fetchListTypeEntry(
-						listTypeDefinitionId, (String)serializable);
+				if (StringUtil.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-				if (listTypeEntry == null) {
+					List<ListEntry> listEntries = new ArrayList<>();
+
+					for (String key :
+							StringUtil.split(
+								(String)serializable,
+								StringPool.COMMA_AND_SPACE)) {
+
+						listEntries.add(
+							_getListEntry(
+								listTypeDefinitionId, dtoConverterContext,
+								key));
+					}
+
+					map.put(objectFieldName, listEntries);
+
 					continue;
 				}
 
-				map.put(
-					objectFieldName,
-					new ListEntry() {
-						{
-							key = listTypeEntry.getKey();
-							name = listTypeEntry.getName(
-								dtoConverterContext.getLocale());
-							name_i18n = LocalizedMapUtil.getI18nMap(
-								dtoConverterContext.isAcceptAllLanguages(),
-								listTypeEntry.getNameMap());
-						}
-					});
+				ListEntry listEntry = _getListEntry(
+					listTypeDefinitionId, dtoConverterContext,
+					(String)serializable);
+
+				if (listEntry == null) {
+					continue;
+				}
+
+				map.put(objectFieldName, listEntry);
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),

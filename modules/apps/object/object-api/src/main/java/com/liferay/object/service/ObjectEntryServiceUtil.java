@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,6 +82,25 @@ public class ObjectEntryServiceUtil {
 		return getService().fetchObjectEntry(objectEntryId);
 	}
 
+	public static List<ObjectEntry> getManyToManyObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, boolean reverse, int start, int end)
+		throws PortalException {
+
+		return getService().getManyToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, reverse, start,
+			end);
+	}
+
+	public static int getManyToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, boolean reverse)
+		throws PortalException {
+
+		return getService().getManyToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related, reverse);
+	}
+
 	public static ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -93,6 +113,24 @@ public class ObjectEntryServiceUtil {
 
 		return getService().getObjectEntry(
 			externalReferenceCode, companyId, groupId);
+	}
+
+	public static List<ObjectEntry> getOneToManyObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, int start, int end)
+		throws PortalException {
+
+		return getService().getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, start, end);
+	}
+
+	public static int getOneToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related)
+		throws PortalException {
+
+		return getService().getOneToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related);
 	}
 
 	/**

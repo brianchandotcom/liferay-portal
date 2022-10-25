@@ -83,6 +83,28 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntry>
+			getManyToManyObjectEntries(
+				long groupId, long objectRelationshipId, long primaryKey,
+				boolean related, boolean reverse, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getManyToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, reverse, start,
+			end);
+	}
+
+	@Override
+	public int getManyToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, boolean reverse)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getManyToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related, reverse);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry getObjectEntry(
 			long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -97,6 +119,27 @@ public class ObjectEntryServiceWrapper
 
 		return _objectEntryService.getObjectEntry(
 			externalReferenceCode, companyId, groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntry>
+			getOneToManyObjectEntries(
+				long groupId, long objectRelationshipId, long primaryKey,
+				boolean related, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, start, end);
+	}
+
+	@Override
+	public int getOneToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getOneToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related);
 	}
 
 	/**

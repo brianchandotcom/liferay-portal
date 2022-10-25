@@ -13,7 +13,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
@@ -21,16 +20,9 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
-import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
-import {useSetCollectionActiveItemContext} from '../contexts/CollectionActiveItemContext';
-import {
-	useActivationOrigin,
-	useIsActive,
-	useSelectItem,
-} from '../contexts/ControlsContext';
-import {useMovementTarget} from '../contexts/KeyboardMovementContext';
+import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
 import useDropContainerId from '../utils/useDropContainerId';
@@ -223,11 +215,6 @@ function LayoutDataItemContent({item, layoutData}) {
 
 	return (
 		<>
-			<LayoutDataItemInteractionFilter
-				componentRef={componentRef}
-				item={item}
-			/>
-
 			<Component item={item} layoutData={layoutData} ref={componentRef}>
 				{item.children.map((childId) => {
 					return (
@@ -246,45 +233,6 @@ function LayoutDataItemContent({item, layoutData}) {
 LayoutDataItemContent.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
 	layoutData: LayoutDataPropTypes.isRequired,
-};
-
-const LayoutDataItemInteractionFilter = ({componentRef, item}) => {
-	useSetCollectionActiveItemContext(item.itemId);
-
-	const {itemId: keyboardTargetId} = useMovementTarget();
-	const activationOrigin = useActivationOrigin();
-	const isActive = useIsActive()(item.itemId);
-	const isMounted = useIsMounted();
-
-	useEffect(() => {
-		if (
-			keyboardTargetId === item.itemId ||
-			(activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar &&
-				componentRef.current &&
-				isMounted() &&
-				isActive)
-		) {
-			componentRef.current.scrollIntoView({
-				behavior: 'instant',
-				block: 'center',
-				inline: 'nearest',
-			});
-		}
-	}, [
-		keyboardTargetId,
-		activationOrigin,
-		componentRef,
-		isActive,
-		isMounted,
-		item,
-	]);
-
-	return null;
-};
-
-LayoutDataItemInteractionFilter.propTypes = {
-	componentRef: PropTypes.object.isRequired,
-	item: getLayoutDataItemPropTypes().isRequired,
 };
 
 function LayoutClassManager({layoutRef}) {

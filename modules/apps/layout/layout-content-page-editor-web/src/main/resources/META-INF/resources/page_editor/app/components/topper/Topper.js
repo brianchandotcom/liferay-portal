@@ -15,15 +15,19 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {useId} from '../../../core/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
+import {useSetCollectionActiveItemContext} from '../../contexts/CollectionActiveItemContext';
 import {
+	useActivationOrigin,
 	useHoverItem,
 	useIsActive,
 	useIsHovered,
@@ -57,7 +61,7 @@ import {TopperLabel} from './TopperLabel';
 
 const MemoizedTopperContent = React.memo(TopperContent);
 
-export default function Topper({children, item, ...props}) {
+export default function Topper({children, item, itemElement, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const canUpdateItemConfiguration = useSelector(
 		selectCanUpdateItemConfiguration
@@ -67,14 +71,22 @@ export default function Topper({children, item, ...props}) {
 
 	if (canUpdatePageStructure || canUpdateItemConfiguration) {
 		return (
-			<MemoizedTopperContent
-				isActive={isActive(item.itemId)}
-				isHovered={isHovered(item.itemId)}
-				item={item}
-				{...props}
-			>
-				{children}
-			</MemoizedTopperContent>
+			<>
+				<TopperInteractionFilter
+					itemElement={itemElement}
+					itemId={item.itemId}
+				/>
+
+				<MemoizedTopperContent
+					isActive={isActive(item.itemId)}
+					isHovered={isHovered(item.itemId)}
+					item={item}
+					itemElement={itemElement}
+					{...props}
+				>
+					{children}
+				</MemoizedTopperContent>
+			</>
 		);
 	}
 
@@ -304,6 +316,44 @@ function TopperContent({
 TopperContent.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
 	itemElement: PropTypes.object,
+};
+
+function TopperInteractionFilter({itemElement, itemId}) {
+	useSetCollectionActiveItemContext(itemId);
+
+	const {itemId: keyboardTargetId} = useMovementTarget();
+	const activationOrigin = useActivationOrigin();
+	const isActive = useIsActive()(itemId);
+	const isMounted = useIsMounted();
+
+	useEffect(() => {
+		if (
+			keyboardTargetId === itemId ||
+			(activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar &&
+				isMounted() &&
+				isActive)
+		) {
+			itemElement.scrollIntoView({
+				behavior: 'instant',
+				block: 'center',
+				inline: 'nearest',
+			});
+		}
+	}, [
+		activationOrigin,
+		isActive,
+		isMounted,
+		itemElement,
+		itemId,
+		keyboardTargetId,
+	]);
+
+	return null;
+}
+
+TopperInteractionFilter.propTypes = {
+	itemElement: PropTypes.object,
+	itemId: PropTypes.string.isRequired,
 };
 
 class TopperErrorBoundary extends React.Component {

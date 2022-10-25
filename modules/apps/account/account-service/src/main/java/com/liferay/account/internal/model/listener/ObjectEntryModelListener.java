@@ -42,8 +42,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		try {
 			ObjectEntryPermissionUtil.checkAccountEntryPermission(
 				_accountEntryLocalService, ObjectActionKeys.ADD_OBJECT_ENTRY,
-				_objectDefinitionLocalService, objectEntry,
-				_objectFieldLocalService, objectEntry.getUserId());
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId()),
+				objectEntry, _objectFieldLocalService, objectEntry.getUserId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -58,8 +59,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		try {
 			ObjectEntryPermissionUtil.checkAccountEntryPermission(
 				_accountEntryLocalService, ActionKeys.UPDATE,
-				_objectDefinitionLocalService, objectEntry,
-				_objectFieldLocalService, objectEntry.getUserId());
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId()),
+				objectEntry, _objectFieldLocalService, objectEntry.getUserId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

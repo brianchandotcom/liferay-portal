@@ -249,16 +249,6 @@ definition {
 			valueName = "${nameTeam}");
 	}
 
-	macro goToEditPage {
-		MouseOver(
-			key_projectName = "${valueName}",
-			locator1 = "Testray#ITEM_NAME");
-
-		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
-
-		MenuItem.clickNoError(menuItem = "Edit");
-	}
-
 	macro selectOptionDropdownCategory {
 		Click(locator1 = "TestrayManage#DROPDOWN_CATEGORIES");
 

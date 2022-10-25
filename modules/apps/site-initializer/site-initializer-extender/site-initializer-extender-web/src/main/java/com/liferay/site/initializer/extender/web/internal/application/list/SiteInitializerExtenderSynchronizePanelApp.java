@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderUpdatePortletKeys;
+import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderSynchronizePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class SiteInitializerExtenderUpdatePanelApp extends BasePanelApp {
+public class SiteInitializerExtenderSynchronizePanelApp extends BasePanelApp {
 
 	@Override
 	public Portlet getPortlet() {
@@ -48,8 +48,8 @@ public class SiteInitializerExtenderUpdatePanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SiteInitializerExtenderUpdatePortletKeys.
-			SITE_INITIALIZER_EXTENDER_UPDATE;
+		return SiteInitializerExtenderSynchronizePortletKeys.
+			SITE_INITIALIZER_EXTENDER_SYNCHRONIZE;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class SiteInitializerExtenderUpdatePanelApp extends BasePanelApp {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + SiteInitializerExtenderUpdatePortletKeys.SITE_INITIALIZER_EXTENDER_UPDATE + ")"
+		target = "(javax.portlet.name=" + SiteInitializerExtenderSynchronizePortletKeys.SITE_INITIALIZER_EXTENDER_SYNCHRONIZE + ")"
 	)
 	private Portlet _portlet;
 

@@ -17,10 +17,10 @@ package com.liferay.site.initializer.extender.web.internal.constants;
 /**
  * @author José Abelenda
  */
-public class SiteInitializerExtenderUpdatePortletKeys {
+public class SiteInitializerExtenderSynchronizePortletKeys {
 
-	public static final String SITE_INITIALIZER_EXTENDER_UPDATE =
+	public static final String SITE_INITIALIZER_EXTENDER_SYNCHRONIZE =
 		"com_liferay_site_initializer_extender_web_" +
-			"SiteInitializerExtenderUpdatePortlet";
+			"SiteInitializerExtenderSynchronizePortlet";
 
 }

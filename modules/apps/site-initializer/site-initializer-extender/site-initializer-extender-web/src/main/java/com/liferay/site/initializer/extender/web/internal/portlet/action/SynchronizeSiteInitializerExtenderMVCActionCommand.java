@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderUpdatePortletKeys;
+import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderSynchronizePortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SiteInitializerExtenderUpdatePortletKeys.SITE_INITIALIZER_EXTENDER_UPDATE,
+		"javax.portlet.name=" + SiteInitializerExtenderSynchronizePortletKeys.SITE_INITIALIZER_EXTENDER_SYNCHRONIZE,
 		"mvc.command.name=/site_initializer_extender/synchronize_site_initializer_extender"
 	},
 	service = MVCActionCommand.class

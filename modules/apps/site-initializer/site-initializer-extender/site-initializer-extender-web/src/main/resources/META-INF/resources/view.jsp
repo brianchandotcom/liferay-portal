@@ -27,7 +27,7 @@
 		<aui:form action="<%= synchronizeSiteInitializerExtenderActionURL %>" method="post" name="fm">
 			<clay:sheet-header>
 				<div class="sheet-title">
-					<liferay-ui:message key="javax.portlet.title.com_liferay_site_initializer_extender_web_SiteInitializerExtenderUpdatePortlet" />
+					<liferay-ui:message key="javax.portlet.title.com_liferay_site_initializer_extender_web_SiteInitializerExtenderSynchronizePortlet" />
 				</div>
 			</clay:sheet-header>
 

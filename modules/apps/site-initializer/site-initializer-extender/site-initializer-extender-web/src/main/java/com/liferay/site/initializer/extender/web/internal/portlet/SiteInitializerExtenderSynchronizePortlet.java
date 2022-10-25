@@ -15,7 +15,7 @@
 package com.liferay.site.initializer.extender.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderUpdatePortletKeys;
+import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderSynchronizePortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -39,12 +39,12 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + SiteInitializerExtenderUpdatePortletKeys.SITE_INITIALIZER_EXTENDER_UPDATE,
+		"javax.portlet.name=" + SiteInitializerExtenderSynchronizePortletKeys.SITE_INITIALIZER_EXTENDER_SYNCHRONIZE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )
-public class SiteInitializerExtenderUpdatePortlet extends MVCPortlet {
+public class SiteInitializerExtenderSynchronizePortlet extends MVCPortlet {
 }

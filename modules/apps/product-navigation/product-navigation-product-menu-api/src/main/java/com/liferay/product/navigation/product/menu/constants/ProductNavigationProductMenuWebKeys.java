@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.product.navigation.product.menu.web.internal.constants;
+package com.liferay.product.navigation.product.menu.constants;
 
 /**
- * @author Pavel Savinov
+ * @author Rubén Pulido
  */
 public class ProductNavigationProductMenuWebKeys {
 
-	public static final String LAYOUTS_TREE_DISPLAY_CONTEXT =
-		"LAYOUTS_TREE_DISPLAY_CONTEXT";
+	public static final String PAGE_TYPE_SELECTED_OPTION =
+		"PAGE_TYPE_SELECTED_OPTION";
 
-	public static final String PAGES_TREE = "PAGES_TREE";
+	public static final String PRIVATE_LAYOUT = "PRIVATE_LAYOUT";
 
-	public static final String PAGES_TREE_EVENT_HANDLER =
-		"PAGES_TREE_EVENT_HANDLER";
-
-	public static final String PANEL_NAME = "PANEL_NAME";
-
-	public static final String PRODUCT_MENU = "PRODUCT_MENU";
+	public static final String PUBLIC_LAYOUT = "PUBLIC_LAYOUT";
 
 }

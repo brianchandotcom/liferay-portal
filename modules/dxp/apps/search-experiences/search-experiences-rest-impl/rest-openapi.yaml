@@ -522,10 +522,16 @@ components:
                 displayName:
                     type: string
             type: object
+        SentenceTransformerValidationResult:
+            properties:
+                errorMessage:
+                    type: string
+                expectedDimensions:
+                    type: integer
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.search.experiences.rest.client', and version '3.0.5'."
+        'com.liferay.search.experiences.rest.client', and version '3.0.6'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -606,40 +612,6 @@ paths:
                                     $ref: "#/components/schemas/KeywordQueryContributor"
                                 type: array
             tags: ["KeywordQueryContributor"]
-    /ml-models:
-        get:
-            operationId: getMLModelsPage
-            parameters:
-                - in: query
-                  name: limit
-                  schema:
-                      type: integer
-                - in: query
-                  name: pipelineTag
-                  schema:
-                      type: string
-                - in: query
-                  name: query
-                  schema:
-                      type: string
-                - in: query
-                  name: tag
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MLModel"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MLModel"
-                                type: array
-            tags: ["MLModel"]
     /model-prefilter-contributors:
         get:
             operationId: getModelPrefilterContributorsPage
@@ -714,6 +686,61 @@ paths:
                                     $ref: "#/components/schemas/SearchableAssetNameDisplay"
                                 type: array
             tags: ["SearchableAssetNameDisplay"]
+    /sentence-transformer/ml-models:
+        get:
+            operationId: getSentenceTransformerMLModelsPage
+            parameters:
+                - in: query
+                  name: limit
+                  schema:
+                      type: integer
+                - in: query
+                  name: pipelineTag
+                  schema:
+                      type: string
+                - in: query
+                  name: query
+                  schema:
+                      type: string
+                - in: query
+                  name: tag
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MLModel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MLModel"
+                                type: array
+            tags: ["MLModel"]
+    /sentence-transformer/validate-configuration:
+        post:
+            operationId: postSentenceTransformerValidateConfiguration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                    application/xml:
+                        schema:
+                            type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SentenceTransformerValidationResult"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SentenceTransformerValidationResult"
+            tags: ["SentenceTransformerValidationResult"]
     /sxp-blueprints:
         get:
             operationId: getSXPBlueprintsPage

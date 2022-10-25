@@ -34,6 +34,7 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBAr
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFolderPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -85,244 +86,56 @@ public class KBDropdownItemsProvider {
 	public List<DropdownItem> getKBArticleDropdownItems(
 		KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
 
-		return DropdownItemListBuilder.add(
-			() -> _hasUpdatePermission(kbArticle),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.create(
-						PortalUtil.getControlPanelPortletURL(
-							_liferayPortletRequest,
-							KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-							PortletRequest.RENDER_PHASE)
-					).setMVCPath(
-						"/admin/common/edit_kb_article.jsp"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildString());
-				dropdownItem.setIcon("pencil");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"edit"));
-			}
-		).add(
-			this::_hasAddPermission,
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.create(
-						PortalUtil.getControlPanelPortletURL(
-							_liferayPortletRequest,
-							KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-							PortletRequest.RENDER_PHASE)
-					).setMVCPath(
-						"/admin/common/edit_kb_article.jsp"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"parentResourceClassNameId", kbArticle.getClassNameId()
-					).setParameter(
-						"parentResourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildString());
-				dropdownItem.setIcon("document-text");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"add-child-article"));
-			}
-		).add(
-			() ->
-				_hasSubscriptionPermission(kbArticle) &&
-				_hasSubscription(kbArticle),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/unsubscribe_kb_article"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildActionURL());
-				dropdownItem.setIcon("bell-off");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"unsubscribe"));
-			}
-		).add(
-			() ->
-				_hasSubscriptionPermission(kbArticle) &&
-				!_hasSubscription(kbArticle),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/subscribe_kb_article"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildActionURL());
-				dropdownItem.setIcon("bell-on");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"subscribe"));
-			}
-		).add(
-			() -> _hasHistoryPermission(kbArticle),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.create(
-						PortalUtil.getControlPanelPortletURL(
-							_liferayPortletRequest,
-							KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-							PortletRequest.RENDER_PHASE)
-					).setMVCPath(
-						"/admin/common/kb_history.jsp"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"resourceClassNameId", kbArticle.getClassNameId()
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).setParameter(
-						"status",
-						_liferayPortletRequest.getAttribute(
-							KBWebKeys.KNOWLEDGE_BASE_STATUS)
-					).buildString());
-				dropdownItem.setIcon("date-time");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"history"));
-			}
-		).add(
-			() -> _hasRSSPermission(kbArticle),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					ResourceURLBuilder.createResourceURL(
-						_liferayPortletResponse
-					).setParameter(
-						"resourceClassNameId", kbArticle.getClassNameId()
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).setResourceID(
-						"kbArticleRSS"
-					).buildString());
-				dropdownItem.setIcon("shortcut");
-				dropdownItem.setLabel("RSS");
-				dropdownItem.setTarget("_blank");
-			}
-		).add(
-			this::_hasPrintPermission,
-			dropdownItem -> {
-				dropdownItem.putData("action", "print");
-				dropdownItem.putData(
-					"printURL",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/print_kb_article.jsp"
-					).setParameter(
-						"resourceClassNameId", kbArticle.getClassNameId()
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).setParameter(
-						"viewMode", Constants.PRINT
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.setIcon("print");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"print"));
-			}
-		).add(
-			() -> _hasMovePermission(kbArticle),
-			dropdownItem -> {
-				dropdownItem.putData("action", "move");
-				dropdownItem.putData(
-					"moveURL",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/move_object.jsp"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"parentResourceClassNameId",
-						kbArticle.getParentResourceClassNameId()
-					).setParameter(
-						"parentResourcePrimKey",
-						kbArticle.getParentResourcePrimKey()
-					).setParameter(
-						"resourceClassNameId", kbArticle.getClassNameId()
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.setIcon("move-folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"move"));
-			}
-		).add(
-			() -> _hasPermissionsPermission(kbArticle),
-			dropdownItem -> {
-				dropdownItem.putData("action", "permissions");
-				dropdownItem.putData(
-					"permissionsURL",
-					PermissionsURLTag.doTag(
-						null, KBArticle.class.getName(), kbArticle.getTitle(),
-						kbArticle.getGroupId(),
-						String.valueOf(kbArticle.getResourcePrimKey()),
-						LiferayWindowState.POP_UP.toString(), null,
-						_liferayPortletRequest.getHttpServletRequest()));
-				dropdownItem.setIcon("password-policies");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"permissions"));
-			}
-		).add(
-			() -> _hasDeletePermission(kbArticle),
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/delete_kb_article"
-					).setRedirect(
-						() -> {
-							if (((selectedItemAncestorIds == null) &&
-								 _isKBArticleSelected(kbArticle)) ||
-								((selectedItemAncestorIds != null) &&
-								 selectedItemAncestorIds.contains(
-									 kbArticle.getResourcePrimKey()))) {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
+				DropdownItemListBuilder.add(
+					() -> _hasUpdatePermission(kbArticle),
+					_getEditDropdownItem(kbArticle)
+				).add(
+					this::_hasAddPermission, _getAddChildDropdownItem(kbArticle)
+				).add(
+					() ->
+						_hasSubscriptionPermission(kbArticle) &&
+						_hasSubscription(kbArticle),
+					_getUnsubscribeDropdownItem(kbArticle)
+				).add(
+					() ->
+						_hasSubscriptionPermission(kbArticle) &&
+						!_hasSubscription(kbArticle),
+					_getSubscribeDropdownItem(kbArticle)
+				).add(
+					() -> _hasHistoryPermission(kbArticle),
+					_getHistoryDropdownItem(kbArticle)
+				).build())
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _hasRSSPermission(kbArticle),
+						_getRSSDropdownItem(kbArticle)
+					).add(
+						this::_hasPrintPermission,
+						_getPrintDropdownItem(kbArticle)
+					).add(
+						() -> _hasMovePermission(kbArticle),
+						_getMoveDropdownItem(kbArticle)
+					).build());
 
-								return _getParentNodeURL(kbArticle);
-							}
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _hasPermissionsPermission(kbArticle),
+						_getPermissionsDropdownItem(kbArticle)
+					).add(
+						() -> _hasDeletePermission(kbArticle),
+						_getDeleteDropdownItem(
+							kbArticle, selectedItemAncestorIds)
+					).build());
 
-							return _currentURL;
-						}
-					).setParameter(
-						"resourcePrimKey", kbArticle.getResourcePrimKey()
-					).buildString());
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"delete"));
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}
@@ -679,6 +492,154 @@ public class KBDropdownItemsProvider {
 		).buildString();
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception> _getAddChildDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_liferayPortletRequest,
+						KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/admin/common/edit_kb_article.jsp"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"parentResourceClassNameId", kbArticle.getClassNameId()
+				).setParameter(
+					"parentResourcePrimKey", kbArticle.getResourcePrimKey()
+				).buildString());
+			dropdownItem.setIcon("document-text");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(),
+					"add-child-article"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
+		KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "delete");
+			dropdownItem.putData(
+				"deleteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/delete_kb_article"
+				).setRedirect(
+					() -> {
+						if (((selectedItemAncestorIds == null) &&
+							 _isKBArticleSelected(kbArticle)) ||
+							((selectedItemAncestorIds != null) &&
+							 selectedItemAncestorIds.contains(
+								 kbArticle.getResourcePrimKey()))) {
+
+							return _getParentNodeURL(kbArticle);
+						}
+
+						return _currentURL;
+					}
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).buildString());
+			dropdownItem.setIcon("trash");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getEditDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_liferayPortletRequest,
+						KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/admin/common/edit_kb_article.jsp"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).buildString());
+			dropdownItem.setIcon("pencil");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getHistoryDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_liferayPortletRequest,
+						KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/admin/common/kb_history.jsp"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"resourceClassNameId", kbArticle.getClassNameId()
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).setParameter(
+					"status",
+					_liferayPortletRequest.getAttribute(
+						KBWebKeys.KNOWLEDGE_BASE_STATUS)
+				).buildString());
+			dropdownItem.setIcon("date-time");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "history"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getMoveDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "move");
+			dropdownItem.putData(
+				"moveURL",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/common/move_object.jsp"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"parentResourceClassNameId",
+					kbArticle.getParentResourceClassNameId()
+				).setParameter(
+					"parentResourcePrimKey",
+					kbArticle.getParentResourcePrimKey()
+				).setParameter(
+					"resourceClassNameId", kbArticle.getClassNameId()
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
+			dropdownItem.setIcon("move-folder");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "move"));
+		};
+	}
+
 	private String _getParentNodeURL(KBArticle kbArticle)
 		throws PortalException {
 
@@ -689,6 +650,27 @@ public class KBDropdownItemsProvider {
 		}
 
 		return _createKBFolderRenderURL(kbArticle.getKbFolderId());
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getPermissionsDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissions");
+			dropdownItem.putData(
+				"permissionsURL",
+				PermissionsURLTag.doTag(
+					null, KBArticle.class.getName(), kbArticle.getTitle(),
+					kbArticle.getGroupId(),
+					String.valueOf(kbArticle.getResourcePrimKey()),
+					LiferayWindowState.POP_UP.toString(), null,
+					_liferayPortletRequest.getHttpServletRequest()));
+			dropdownItem.setIcon("password-policies");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(),
+					"permissions"));
+		};
 	}
 
 	private String _getPermissionsURL(KBFolder kbFolder) throws Exception {
@@ -707,6 +689,97 @@ public class KBDropdownItemsProvider {
 			String.valueOf(kbFolder.getKbFolderId()),
 			LiferayWindowState.POP_UP.toString(), null,
 			_liferayPortletRequest.getHttpServletRequest());
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getPrintDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "print");
+			dropdownItem.putData(
+				"printURL",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/common/print_kb_article.jsp"
+				).setParameter(
+					"resourceClassNameId", kbArticle.getClassNameId()
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).setParameter(
+					"viewMode", Constants.PRINT
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
+			dropdownItem.setIcon("print");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "print"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getRSSDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				ResourceURLBuilder.createResourceURL(
+					_liferayPortletResponse
+				).setParameter(
+					"resourceClassNameId", kbArticle.getClassNameId()
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).setResourceID(
+					"kbArticleRSS"
+				).buildString());
+			dropdownItem.setIcon("shortcut");
+			dropdownItem.setLabel("RSS");
+			dropdownItem.setTarget("_blank");
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getSubscribeDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/subscribe_kb_article"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).buildActionURL());
+			dropdownItem.setIcon("bell-on");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(),
+					"subscribe"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getUnsubscribeDropdownItem(
+		KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/unsubscribe_kb_article"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).buildActionURL());
+			dropdownItem.setIcon("bell-off");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(),
+					"unsubscribe"));
+		};
 	}
 
 	private boolean _hasAddPermission() {

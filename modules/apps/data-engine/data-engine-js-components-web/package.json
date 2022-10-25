@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/data-provider": "3.77.0",
+		"@clayui/data-provider": "3.78.0",
 		"dom-align": "1.12.2",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",

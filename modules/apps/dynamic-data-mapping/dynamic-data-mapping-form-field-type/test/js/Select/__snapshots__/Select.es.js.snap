@@ -30,36 +30,40 @@ exports[`Select calls onChange callback when an item is selected using multisele
         class="form-control results-chosen select-field-trigger multiple-label-list"
         tabindex="0"
       >
-        <li>
-          <span
-            class="label ddm-select-option-label label-dismissible label-secondary"
-            value="item7"
-          >
+        <ul
+          class="ddm-multiple-select-list"
+        >
+          <li>
             <span
-              class="label-item label-item-expand"
+              class="label ddm-select-option-label label-dismissible label-secondary"
+              value="item7"
             >
-              label7
-            </span>
-            <span
-              class="label-item label-item-after"
-            >
-              <button
-                class="close"
-                data-testid="closeButtonitem7"
-                type="button"
+              <span
+                class="label-item label-item-expand"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-times-small"
-                  role="presentation"
+                label7
+              </span>
+              <span
+                class="label-item label-item-after"
+              >
+                <button
+                  class="close"
+                  data-testid="closeButtonitem7"
+                  type="button"
                 >
-                  <use
-                    xlink:href="#times-small"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    class="lexicon-icon lexicon-icon-times-small"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#times-small"
+                    />
+                  </svg>
+                </button>
+              </span>
             </span>
-          </span>
-        </li>
+          </li>
+        </ul>
         <a
           class="select-arrow-down-container"
         >

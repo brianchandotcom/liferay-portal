@@ -12,13 +12,14 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useSessionState} from '@liferay/layout-content-page-editor-web';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 const ROOT_ITEM_ID = '0';
 
@@ -91,6 +92,13 @@ export default function PagesTree({
 										{item.name}
 									</a>
 								</div>
+
+								{item.actions && (
+									<ItemActionsDropdown
+										actions={item.actions}
+										namespace={namespace}
+									/>
+								)}
 							</div>
 						</ClayTreeView.ItemStack>
 
@@ -116,6 +124,13 @@ export default function PagesTree({
 												{item.name}
 											</a>
 										</div>
+
+										{item.actions && (
+											<ItemActionsDropdown
+												actions={item.actions}
+												namespace={namespace}
+											/>
+										)}
 									</div>
 								</ClayTreeView.Item>
 							)}
@@ -145,6 +160,57 @@ PagesTree.propTypes = {
 	isPrivateLayoutsTree: PropTypes.bool.isRequired,
 	items: PropTypes.array.isRequired,
 	selectedLayoutId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+function ItemActionsDropdown({actions, namespace}) {
+	const items = useMemo(
+		() =>
+			actions.map((group) => ({
+				...group,
+				items: group.items.map((item) => {
+					const nextItem = {...item};
+
+					delete nextItem.data;
+
+					if (item.data?.url) {
+						nextItem.onClick = (event) => {
+							event.preventDefault();
+
+							openModal({
+								id: `${namespace}pagesTreeModal`,
+								title: item.data.modalTitle,
+								url: item.data.url,
+							});
+						};
+					}
+
+					return nextItem;
+				}),
+			})),
+		[actions, namespace]
+	);
+
+	return (
+		<ClayDropDownWithItems
+			className="mr-2 text-right"
+			items={items}
+			renderMenuOnClick
+			trigger={
+				<ClayButtonWithIcon
+					className="text-white"
+					displayType="unstyled"
+					onClick={(event) => event.stopPropagation()}
+					small
+					symbol="ellipsis-v"
+				/>
+			}
+		/>
+	);
+}
+
+ItemActionsDropdown.propTypes = {
+	actions: PropTypes.array.isRequired,
+	namespace: PropTypes.string.isRequired,
 };
 
 function openErrorToast() {
